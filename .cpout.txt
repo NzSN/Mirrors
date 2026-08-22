@@ -1,0 +1,39 @@
+./.cp.lean:51:8: error: Tactic `rfl` failed: The left-hand side
+  do
+    let __do_lift ← decEntry (encEntry s)
+    List.mapM.loop decEntry (List.map encEntry ss) [__do_lift]
+is not definitionally equal to the right-hand side
+  do
+    let a ← decEntry (encEntry s)
+    let b ← List.mapM.loop decEntry (List.map encEntry ss) []
+    Except.ok (a :: b)
+
+s : ServiceInfo
+ss : List ServiceInfo
+ih :
+  (∀ (s : ServiceInfo), s ∈ ss → s.host ≠ "") →
+    List.mapM decEntry (List.map encEntry ss) = Except.ok (List.map (fun s => [s]) ss)
+h : ∀ (s_1 : ServiceInfo), s_1 ∈ s :: ss → s_1.host ≠ ""
+hs : s.host ≠ ""
+hss : ∀ (x : ServiceInfo), x ∈ ss → x.host ≠ ""
+⊢ (do
+      let __do_lift ← decEntry (encEntry s)
+      List.mapM.loop decEntry (List.map encEntry ss) [__do_lift]) =
+    do
+    let a ← decEntry (encEntry s)
+    let b ← List.mapM.loop decEntry (List.map encEntry ss) []
+    Except.ok (a :: b)
+./.cp.lean:80:2: error: Tactic `rfl` failed: The left-hand side
+  match Except.ok (List.map (fun s => [s]) l) with
+  | Except.ok ls => Except.ok ls.flatten
+  | Except.error e => Except.error e
+is not definitionally equal to the right-hand side
+  Except.ok l
+
+l : List ServiceInfo
+h : ∀ (s : ServiceInfo), s ∈ l → s.host ≠ ""
+hm : List.mapM decEntry (List.map encEntry l) = Except.ok (List.map (fun s => [s]) l)
+⊢ (match Except.ok (List.map (fun s => [s]) l) with
+    | Except.ok ls => Except.ok ls.flatten
+    | Except.error e => Except.error e) =
+    Except.ok l

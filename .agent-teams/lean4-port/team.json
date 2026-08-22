@@ -1,0 +1,419 @@
+{
+  "name": "lean4-port",
+  "id": "lean4-port",
+  "description": "Port the ModelMirrors mirror (~6k LOC Haskell) to a formally verified Lean 4 core in the Mirrors repo, per Docs/lean4-refactor-design.md: verified pure core (Value/Trace/Diff/Protocol/Jobs/Resource), total JSON codecs with byte-identical wire compat, thin trusted Shell (transports, apalache, Consul, FFI TLS), phased migration 0-7.",
+  "captainSessionId": "session-b5492a9b-e059-46fd-8f2a-0670197738f4",
+  "createdAt": 1787384623909,
+  "members": [
+    {
+      "id": "fc74e4d4-e6e1-4b86-8eb0-40c0a982f369",
+      "name": "core-engineer",
+      "role": "Lean 4 pure-core engineer: Core/* modules and all machine-checked proofs (§6.1-6.5)",
+      "provider": "jlc",
+      "model": "glm-5.2",
+      "joinedAt": 1787384623916,
+      "status": "idle"
+    },
+    {
+      "id": "de7d802d-098f-4085-adef-bfe570ac5e30",
+      "name": "codec-engineer",
+      "role": "Lean 4 codec engineer: Codec/Json total encoders/decoders and §6.6 round-trip proofs",
+      "provider": "jlc",
+      "model": "glm-5.2",
+      "joinedAt": 1787384623937,
+      "status": "idle"
+    },
+    {
+      "id": "a1b73bbf-5411-42c2-86fa-9fd5a02e6b9d",
+      "name": "shell-engineer",
+      "role": "Effectful-shell engineer: Shell/* drivers, transports, apalache adapters, C FFI (TLS/sockets/signals), CLI",
+      "provider": "jlc",
+      "model": "glm-5.2",
+      "joinedAt": 1787384623954,
+      "status": "working"
+    },
+    {
+      "id": "ae725a1c-901a-4d7e-a3f8-e67c3adc3302",
+      "name": "qa-engineer",
+      "role": "QA/fixtures engineer: golden wire corpus, differential tests vs Haskell, interop validation, cutover docs",
+      "provider": "jlc",
+      "model": "glm-5.2",
+      "joinedAt": 1787384623978,
+      "status": "idle"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "t1",
+      "subject": "Scaffold lake project layout",
+      "description": "Create the Lean 4 project skeleton at the root of the Mirrors repo per Docs/lean4-refactor-design.md §5: lakefile.lean with lean_lib roots Core, Codec, Shell; lean-toolchain pinned; batteries dependency at a pinned rev; directory skeleton Core/ Codec/ Shell/ Ffi/ test/; README build instructions. Exit: `lake build` succeeds on the empty skeleton.",
+      "status": "completed",
+      "assignee": "core-engineer",
+      "dependencies": [],
+      "attempt": 1,
+      "createdAt": 1787384719406,
+      "updatedAt": 1787384901334,
+      "attemptId": "4be0672f-b8d7-4ebd-8010-64ca0f7a72f8",
+      "reassigning": false,
+      "output": "Lean 4 lake project scaffolded at repo root per §5. lakefile.lean with lean_lib Core/Codec/Shell (default targets) + batteries pinned at tag v4.33.0 (commit 4488d40d); lean-toolchain pinned to leanprover/lean4:v4.33.0 (chosen to match the batteries rev, installed locally); dirs Core/ Codec/ Shell/ Ffi/ test/ with placeholder modules (Core/Placeholder.lean etc.) and README.md describing each; README build instructions (lake build/lake test, elan, LC_ALL); .gitignore for .lake. Exit criterion met: `lake build` succeeds (fetched batteries, built Core, Codec, Shell). Note for teammates: import Batteries works; root modules are module-docstring-only files and the lib roots are Core.lean/Codec.lean/Shell.lean."
+    },
+    {
+      "id": "t2",
+      "subject": "Phase 0: freeze golden wire fixtures",
+      "description": "Generate the golden JSON wire corpus from the Haskell ModelMirrors test suite (external artifact, pinned by commit): all 39 ClientMessage/MirrorMessage constructors × representative payloads, plus recorded apalache explorer RPC transcripts. Check the corpus into test/fixtures/ of the Mirrors repo. Exit criterion per doc §8 Phase 0: corpus replayed green against the Haskell mirror.",
+      "status": "completed",
+      "assignee": "qa-engineer",
+      "dependencies": [],
+      "attempt": 1,
+      "createdAt": 1787384719471,
+      "updatedAt": 1787385890753,
+      "attemptId": "a896e110-f86b-443d-836c-8ceec3915d43",
+      "reassigning": false,
+      "output": "Golden wire corpus frozen under test/fixtures/ and replayed green against the Haskell mirror (63/63: 24 client + 30 mirror + 9 explorer RPC transcripts). Generated from ModelMirrors@3496251 (read-only external artifact) via Protocol.Format.Json aeson instances and a real Apalache.Rpc.Client session against a loopback mock server. Tools: tools/fixtures/GenGolden.hs, ReplayGolden.hs, run.sh. Coverage: all 19 ClientMessage + 20 MirrorMessage constructors, all Value/DiffHint/JobPhase/JobOutcome/JobKind variants. codec-engineer (t7) can consume the corpus directly."
+    },
+    {
+      "id": "t3",
+      "subject": "Phase 1: Core/Value + proven set equality",
+      "description": "Port Apalache.Types.Value to Core/Value.lean per §5.1: ITF Value (VInt Int | VBool | VStr | VSet (List Value) | VSeq | VTuple | VRecord | VMap | VVariant | VUnserializable | VNull), keeping the list-of-elements VSet representation. Define setEq as a defined relation with a Decidable instance and prove the §6.1 lemma: setEq xs ys ↔ ∀ v, v ∈ xs ↔ v ∈ ys. Use a provably extensional finite map (tree/assoc map, not HashMap — doc §9.3). Port filterMeta/isMetaKey (drops keys #*, action_taken, parameters). No IO.",
+      "status": "completed",
+      "assignee": "core-engineer",
+      "dependencies": [
+        "t1"
+      ],
+      "attempt": 1,
+      "createdAt": 1787384719560,
+      "updatedAt": 1787387832463,
+      "attemptId": "f13d6294-75d8-4a6e-ae1d-444a9bbc302f",
+      "reassigning": false,
+      "output": "Core/Value.lean complete: Value inductive (11 ctors, list-based vset/vrecord/vmap), extensional ValueMap (assoc list), valEq decision procedure with machine-checked refl/symm/trans, setEq §6.1 law (setEq ↔ ∀v, setMem v xs ↔ setMem v ys) + Decidable via setEqBool, filterMeta/isMetaKey. lake build green, zero errors/sorries."
+    },
+    {
+      "id": "t4",
+      "subject": "Phase 1: Core/Trace + §6.2 proofs",
+      "description": "Port Apalache.Trace semantics to Core/Trace.lean: ItfTrace, TraceState, applyParamVars, traceSteps. Prove §6.2: applyParamVars repartitions parameters/stateVars losslessly (union invariant, every key lands in exactly one side); traceSteps preserves length and order and the injected action_taken equals the step's action name. All partiality explicit via Option/Except.",
+      "status": "completed",
+      "assignee": "core-engineer",
+      "dependencies": [
+        "t3"
+      ],
+      "attempt": 1,
+      "createdAt": 1787384719580,
+      "updatedAt": 1787389261499,
+      "attemptId": "5d766eca-261d-4267-98cb-705a72a61eb2",
+      "reassigning": false,
+      "output": "Core/Trace.lean complete: TraceState/ItfTrace/Step structures (assoc-list ValueMap maps per §5.1/§9.3), resplit/applyParamVars/stepOf/traceSteps ports. §6.2 all machine-checked: resplit_lookup_union (pointwise union invariance under parse-time invariant ResplitKeyInv), resplit_exactly_one (every union key lands on exactly one side with original value), resplit_disjoint (sides unconditionally disjoint), applyParamVars_lookup_union (trace-level), traceSteps_length, traceStepsAux_nth/traceSteps_nth (order + idx=j), stepOf_vars_actionTaken + traceSteps_nth_act (injected action_taken = action name, idx/act/params/vars all pinned). lake build green, zero errors/sorries."
+    },
+    {
+      "id": "t5",
+      "subject": "Phase 1: Core/Diff + §6.1 theorems",
+      "description": "Port Engine.Core.diffState to Core/Diff.lean: diffState, DiffHint (7 constructors), Path/PathSeg, capHints with maxDiffHints = 50. Prove §6.1 against the ported definitions: soundness (diffState e a = StatesMatch → filterMeta e ≈ filterMeta a); completeness of the uncapped core; cap correctness (preserves all hints up to 50, appends exactly one HTruncated carrying the path of the first dropped hint); path validity (every hint path navigates to a subterm of e or a, or denotes a missing key on the stated side).",
+      "status": "completed",
+      "assignee": "core-engineer",
+      "dependencies": [
+        "t4"
+      ],
+      "attempt": 1,
+      "createdAt": 1787384719592,
+      "updatedAt": 1787395397584,
+      "attemptId": "b31d136f-94f5-4865-a62b-f871d68f78e5",
+      "reassigning": false,
+      "output": "Core/Diff.lean (1086 lines) fully green: Engine.Core.diffState port (PathSeg/DiffHint/StateDiff, budget-recursion mutual diffValueAux/diffFieldsGo/diffElemsGo, capHints) plus all §6.1 theorems machine-checked: diffValueAux_nil_iff_valEq (soundness+completeness of uncapped core via core_fuel/fields_sound/elems_sound/value_sound), capHints correctness (length/prefix/truncated), diffState_sound/complete, and path validity: Denotes relation + diffValueAux_pathValid (every hint path denotes a subterm of expected or actual; seq/tuple via generalized elems_path with lift lemmas, records/maps via field-headed fields_path/extraHints_path + fieldRec_map conversion, sets via set singleton, variants via varTag lift). `lake env lean Core/Diff.lean` exit 0, 0 errors; `import Core.Diff` added to Core.lean; Core target builds. Junk probe files removed. NOTE: full `lake build` currently fails only in Codec/Json.lean (teammate's WIP module, outside t5 scope)."
+    },
+    {
+      "id": "t6",
+      "subject": "Core/Resource lifecycle model + §6.5 theorems",
+      "description": "Model the Resource ownership protocol abstractly in Core/Resource.lean (no IORef): a resource is a token in {Live, Delivered, Released, ReleaseFailed} × {Owned, Borrowed}. Prove §6.5: cleanup runs at most once; Borrowed cleanup is a no-op; Delivered never cleans up. Encode use-on-non-Live as a type error (linear-style handle) so the finalizer backstop is dead code for in-language uses (doc §9.7).",
+      "status": "completed",
+      "assignee": "core-engineer",
+      "dependencies": [
+        "t1"
+      ],
+      "attempt": 1,
+      "createdAt": 1787384719612,
+      "updatedAt": 1787395761800,
+      "attemptId": "814810b8-b972-49b8-8100-958fd22024f7",
+      "reassigning": false,
+      "output": "Core/Resource.lean created and fully green (lake env lean exit 0; `lake build Core` succeeds). Pure IO-free model of the Haskell Resource.hs ownership protocol: ResourceState (live/delivered/released/releaseFailed) × Provenance (owned/borrowed), releaseStep/transferStep/Op/run (operation sequences with a cleanup-run counter), linear-style `use r h f` requiring h : r.state = live so non-Live use is a type error. §6.5 machine-checked: run_cleanup_at_most_once (count ≤ 1 over any op sequence, via run_no_clean_of_not_live invariant), releaseStep/run_borrowed_never_cleans (Borrowed cleanup no-op, stays borrowed), releaseStep_delivered_noop + run_delivered_never_cleans (Delivered never cleans up). §9.7: use_after_release_unrepresentable + withScope_owned_not_live + finalizer_backstop_dead (after the lexical bracket, no `use` is typeable, so the GC finalizer backstop is dead code for in-language uses); withScope_borrowed_noop and withScope_owned_cleans_once included. Core.lean now imports Core.Resource."
+    },
+    {
+      "id": "t7",
+      "subject": "Phase 2: Codec/Json + §6.6 round-trip proofs",
+      "description": "Implement Codec/Json.lean per §5.2: two total functions per message type — encode : M → Lean.Json and decode : Lean.Json → Except DecodeError M — for all 19 ClientMessage and 20 MirrorMessage constructors, matching the frozen field names/encodings from the Phase 0 golden corpus (aeson sum encoding, Maybe field omission, number formats). Prove §6.6 round-trip: decode (encode m) = Except.ok m for each message type. Exit per §8 Phase 2: 100% fixture round-trip, both directions, byte-identical.",
+      "status": "completed",
+      "assignee": "codec-engineer",
+      "dependencies": [
+        "t3",
+        "t2"
+      ],
+      "attempt": 1,
+      "createdAt": 1787384719629,
+      "updatedAt": 1787397155602,
+      "attemptId": "25bdf601-8c50-4a7b-8d50-4ab90dc4b339",
+      "reassigning": false,
+      "output": "Phase 2 complete. Codec/Json.lean (1853 LOC, 0 sorry): total encoders/decoders for all 19 ClientMessage + 20 MirrorMessage constructors plus ApalacheConfig/SpecConfig/TraceConfig/ValidateResult/TraceGenResult/JobKind/JobPhase/JobOutcome/PathSeg/DiffKind/DiffHint, byte-matching the frozen Phase 0 wire formats. §6.6 value round-trip fully machine-checked: decValueF_encValue (fuel-parameterized, all 11 Value cases, equality up to valEq under wireOk) and public decodeValue_encValue wrapper (documented fuel side-condition: Lean 4.33 Json sizeOf is opaque). Decode recursion uses a lex fuel/structure measure; decRecordF consumes fuel once per record depth, entries structural. Exit criterion: tools/ReplayFixtures.lean (lake env lean --run) reports ALL 54 FIXTURES ROUND-TRIP BYTE-IDENTICAL (client 24 + mirror 30, via Json.compress both directions). lake build green. Caveat for message-level round-trip proofs (if t8/t9 want them): value positions recover up to valEq via decodeValue_encValue; scalar/struct fields round-trip exactly by construction but per-ctor message theorems are not yet stated."
+    },
+    {
+      "id": "t8",
+      "subject": "Differential tests: diff engine and codec vs Haskell",
+      "description": "Per §8 Phase 1/2 exit criteria and §6.6: cross-test the Lean diff engine against the Haskell implementation on QuickCheck-generated value pairs (both directions), and verify the golden corpus decodes/encodes byte-identically in both implementations. Wire into `lake test`. Report any divergence as a bug against the Lean port (or a documented Haskell quirk to be frozen).",
+      "status": "completed",
+      "assignee": "qa-engineer",
+      "dependencies": [
+        "t5",
+        "t7"
+      ],
+      "attempt": 1,
+      "createdAt": 1787384719641,
+      "updatedAt": 1787398579096,
+      "attemptId": "be15eabf-b5c6-42be-a335-1bf3275cbd66",
+      "reassigning": false,
+      "output": "test"
+    },
+    {
+      "id": "t9",
+      "subject": "Phase 3: Core/Protocol session machine + §6.3 refinement",
+      "description": "Port the mirror session protocol to Core/Protocol.lean per §5.3: inductive Phase (idle|validating|generating|ready|stepping|exploring|done, extended with async-job flows), phase-indexed Session structure, and `def step : Session p → ClientMessage → Except ProtocolError (Σ p', Session p' × List MirrorMessage)` so illegal orderings are unrepresentable (no report_state accepted in idle; first-message Register* rule holds by construction). Encode specs/MirrorProtocol.tla's mirror-side transition relation as an inductive predicate TlaStep and prove §6.3: (1) safety refinement — every Core.step transition corresponds to a TlaStep modulo the stated async-job/explorer extensions; (2) no unsolicited output — in each phase the emittable MirrorMessage constructors are exactly the spec'd set.",
+      "status": "completed",
+      "assignee": "core-engineer",
+      "dependencies": [
+        "t7",
+        "t5"
+      ],
+      "attempt": 1,
+      "createdAt": 1787384719649,
+      "updatedAt": 1787399857444,
+      "attemptId": "794b6421-3e02-46db-931b-e70a9e6ff562",
+      "reassigning": false,
+      "output": "Core/Protocol.lean (1265 lines) written and machine-checked green (`lake env lean Core/Protocol.lean` exit 0; `lake build Core` ✔, import added to Core.lean). Contents: Phase (7 TLA+ Ms phases + validatingAsync/generatingAsync async extensions), Flow, tag-abstract ClientMessage/MirrorMessage, ProtocolError, phase-indexed Session p (phantom index, flow payload), Oracles (injected validation outcome, reportState carries matches/lastStep bits like TLA report_matches), step : Session p → ClientMessage → Except ProtocolError (Σ p', Session p' × List MirrorMessage) folding each TLA+ MirrorRecv/MirrorSend pair. Ordering theorems by construction: step_idle_iff_registration (first-message rule), step_idle_reportState (no reportState in idle, by rfl), step_stepping_iff_reportState, step_done_rejects. §6.3: TlaState + inductive TlaStep (25 ctors: 18 spec actions named after specs/MirrorProtocol.tla + 6 explicitly-marked ext* async-job extension steps) + TlaSteps closure; theorem step_refines_tla (every successful step = 1-3 TLA steps from embed s to target with exactly the emitted queue, async flows via ext ctors); theorem no_unsolicited_output (emitted ⊆ AllowedOutputs p, protocolError never emitted) + allowed_outputs_attainable (exactness: every allowed tag has a witness). Note: proving no_unsolicited_output exposed that AllowedOutputs for idle must include explorerReady (registerExploreSession emits it) — table now includes it."
+    },
+    {
+      "id": "t10",
+      "subject": "Phase 3: stdio driver + CLI default mode",
+      "description": "Implement Shell/Mirror/Session.lean as the thin effectful fold per §5.3 — recv line → decode → Core.step → encode → send — with all oracle calls (validateSpecIn, generateTracesIn, explorer RPC) injected as parameters so the core stays pure. Shell/Transport/Stdio.lean via IO.getStdin/getStdout line framing. Main.lean CLI parity for the default stdio mode. Exit per §8 Phase 3: existing stdio integration tests pass against the Lean binary.",
+      "status": "completed",
+      "assignee": "shell-engineer",
+      "dependencies": [
+        "t9"
+      ],
+      "attempt": 1,
+      "createdAt": 1787384719658,
+      "updatedAt": 1787404861039,
+      "attemptId": "2866d28d-4aef-440e-8f69-097b9a913c65",
+      "reassigning": false,
+      "output": "Phase 3 stdio driver + CLI complete. New: Shell/Transport/Stdio.lean (line-framed Transport record over getStdin/getStdout, EOF=none); Shell/Mirror/Session.lean (thin fold recv→decode→Core.step→encode→send over a Σ-phase Core.Session ref; Oracles record injects validateSpec/generateTraces/generateTraceFiles/explorer hooks, stubOracles for Phase 3/5; registerTraces replay fully functional: ITF trace file IO incl. *.itf.json dir expansion, applyParamVars, diffState-driven step_ok/step_mismatch/all_steps_done, multi-trace continuation, Core→Codec DiffHint conversion); Main.lean CLI (default stdio mode; --serve/--server/validate exit 2 until Phase 6; argv via /proc/self/cmdline since Lean 4.33 dropped IO.getArgs); lakefile: lean_exe mirror + lean_exe stdio_smoke (tools/StdioSmoke.lean spawns the real binary, drives clean+mismatch registerTraces sessions) wired into lake test. EXIT CRITERION MET: existing Haskell stdio integration test passes against the Lean binary — ModelMirrors-test 'mbt over stdio/tcp/tls' with MODELMIRRORS_BIN=Lean mirror, MBT_TRANSPORTS=stdio: OK (191s), and lake test fully green (fixtures 63/63 byte-identical + diff differential + stdio smoke). Note: needed specs/ + test/specs/*.tla copies of the Haskell specs in-repo to run that suite from here. Parity gap found for codec-engineer: Haskell FromJSON Value accepts BARE JSON numbers as VInt (clients send them in report_state; ToJSON always emits #bigint so fixtures never showed it); Codec.decodeValue rejects them — Shell.Mirror.Session.normNums works around it driver-side; codec should adopt it and the workaround can then be dropped."
+    },
+    {
+      "id": "t11",
+      "subject": "Phase 4: Core/Jobs + §6.4 theorems",
+      "description": "Port Protocol.AsyncJobs to Core/Jobs.lean: JobId/JobKind/JobPhase/JobOutcome vocabulary and the async job state machine. Prove §6.4: terminal phases (JobDone/JobFailed/JobCancelled) are absorbing; JobUnknown is returned exactly for ids never submitted or evicted; outcome congruence — a completed ValidateJob's JobOutcome payload equals what the synchronous RegisterValidate flow replies (SpecValidated/RegisterError), stated as observational equality of the two pure machines on identical inputs; bound enforcement — validate bounds outside [1, maxValidateBound = 100] are rejected in async and sync paths alike.",
+      "status": "completed",
+      "assignee": "core-engineer",
+      "dependencies": [
+        "t9"
+      ],
+      "attempt": 1,
+      "createdAt": 1787384719666,
+      "updatedAt": 1787401400422,
+      "attemptId": "bd696d00-7b64-41b1-a143-14e19f08abbb",
+      "reassigning": false,
+      "output": "Core/Jobs.lean written (261 lines, no sorry) and green: lake build Core.Jobs ✔ and full lake build ✔ (import added to Core.lean). Vocabulary ported from Haskell Protocol.Core/AsyncJobs@3496251: JobId, JobKind, JobPhase (wire), StoredPhase (JobPhase minus jobUnknown — the store can never hold an unknown job, which makes the JobUnknown theorem exactly true), ValidateResult (valid/invalid split abstractly), JobOutcome, JobEntry, JobEvent, JobStore (list + job-<n> counter), hand-rolled lookupJob, evict, maxValidateBound=100, checkBound, SubmitError, submitValidateJob, registerValidateSync (delegates to Core.step). §6.4 theorems, all machine-checked: (1) terminal_absorbing + isTerminal_of_transition (JobDone/JobFailed/JobCancelled absorbing); (2) queryJobPhase_unknown_iff (JobUnknown iff id not in store) + evicted_becomes_unknown + submitted_not_unknown; (3) outcome_congruence (outcomeTag (oracleValidateOutcome ok) = syncValidateReplyTag ok for all ok — observational equality of async completion and the synchronous RegisterValidate reply via Core.step) + async_completion (completed validate job ends done+terminal with exactly that outcome); (4) bounds_rejected_both_paths + bounds_accepted_submit (bounds outside [1,100] rejected in async submit and sync registerValidate alike, before any state change)."
+    },
+    {
+      "id": "t12",
+      "subject": "Phase 4: Shell job store with Task workers",
+      "description": "Implement the effectful async job store in Shell/ per §5.4: Lean Task-based workers, IO.Mutex/channel-protected store, eviction policy matching the Haskell AsyncJobs semantics (JobUnknown for evicted ids). Exit per §8 Phase 4: async validate/trace-gen parity vs Haskell on recorded workloads.",
+      "status": "completed",
+      "assignee": "shell-engineer",
+      "dependencies": [
+        "t11"
+      ],
+      "attempt": 1,
+      "createdAt": 1787384719676,
+      "updatedAt": 1787406799216,
+      "attemptId": "b7c7427a-4454-4011-8db7-59497111bdb1",
+      "reassigning": false,
+      "output": "Phase 4 done. New: Shell/Jobs/Store.lean (effectful job store port of Haskell AsyncJobs: Std.Mutex-protected table, Std.Semaphore worker slots, one dedicated Task per job, every phase change through Core.Jobs.transition so the §6.4 absorbing law gives double-cancel/cancel-vs-finish safety; capacity-gated submits \"job queue full\", job-N ids, bound guard, unknown ids => jobUnknown/\"unknown\", cooperative CancelToken cancellation, closeJobStore cancels live jobs and retains ids like Haskell, evictJob = effectful image of evicted_becomes_unknown, injectable Runner for Phase 5). Shell/Mirror/Session.lean gains runAsync (async session loop wiring register_*_async/query/await/cancel to the store; sync registers still run inline). Shell/Transport/Mock.lean (test transport pair). tools/JobStoreSpec.lean + lakefile lean_exe jobstore_spec + lake test gate: Lean port of ALL Haskell AsyncJobsSpec fake-runner workloads (round-trips, bad bound, infra failure, unknown id, capacity-1 serialization, cancel running, session close, await timeout, eviction) — 10/10 green; Haskell reference suite ModelMirrors-test -p AsyncJobs 11/11 green (incl. real-apalache integration). Full lake build (46 jobs) + lake test all green. README updated."
+    },
+    {
+      "id": "t13",
+      "subject": "Phase 5: apalache CLI runner + spec materialization",
+      "description": "Implement Shell/Apalache/Cli.lean and SpecSource.lean per §5.4: IO.Process.spawn of apalache-mc (typecheck/check/trace-gen), per-session --run-dir with cwd isolation in a temp dir, LC_ALL=C.UTF-8 requirement, inline spec materialization, ITF trace output parsing feeding Core/Trace. Port the 'cwd = temp dir' isolation as code + regression tests (behavior, not proofs — doc §9.5).",
+      "status": "completed",
+      "assignee": "shell-engineer",
+      "dependencies": [
+        "t10"
+      ],
+      "attempt": 1,
+      "createdAt": 1787384719683,
+      "updatedAt": 1787409072412,
+      "attemptId": "54753111-da5a-4c76-a7db-4e65e2da6ae7",
+      "reassigning": false,
+      "output": "Phase 5 CLI adapter done. Shell/Apalache/SpecSource.lean: MODULE-header parsing, materializeSpec (per-source .tla files, duplicate/no-source errors), Owned/Borrowed acquireSpec + total releaseSpec (no Resource registry in Lean shell; ownership via provenance + release action), freshSessionDir/removeDirRecursive. Shell/Apalache/Cli.lean: apalacheBin (APALACHE_MC override), spawn with LC_ALL=C.UTF-8 and cwd=runDir (the doc-9.5 cwd isolation port), specPath absolutization, typecheck/check/trace arg builders (incl. gated --inv/--view), 255/other/0 exit-code tiers (255=infra, 12/120=SpecInvalid, 0=valid), parseOutputDir, findTraceFiles + in-memory traces via Core types, cancellable spawn wired to Shell.Jobs.CancelToken (kill defensively wrapped — Lean child.kill throws ESRCH on reaped pids). Shell/Apalache/Runner.lean: jobRunner (per-job session dir + owned spec released via finally + onCancel) and syncOracles glue; documented divergence: Haskell materializes inline specs pre-accept, Lean accepts then reports as job_infra_error. tools/ApalacheCliSpec.lean + lakefile gate (APALACHE_MC auto-detected): all green incl. real-apalache 0.57 integration (HourClock validate valid at bound 1, violated-invariant=SpecInvalid at 13, missing operator=infra 255, trace files land under run dir, mirror cwd stays clean, in-memory traces parse, cancel prompt). Full lake build 56 jobs + lake test all five gates green. Two apalache gotchas fixed en route: traceArgs must lead with the check subcommand (usage error otherwise) and --view requires a real state view (empty=gated, matching Haskell's Maybe)."
+    },
+    {
+      "id": "t14",
+      "subject": "Phase 5: explorer JSON-RPC (HTTP client spike)",
+      "description": "Per §8 Phase 5 and §9.2: spike a pure-Lean minimal HTTP/1.1 client (loopback, ephemeral port, JSON bodies, chunked responses, timeouts) vs libcurl FFI — prefer pure Lean if the explorer's HTTP surface allows; document the decision. Implement Shell/Apalache/Explorer.lean JSON-RPC client/server-behavior against the Phase 0 recorded transcripts. Exit: HourClock end-to-end green (validate, trace-gen, replay, explorer session).",
+      "status": "in_progress",
+      "assignee": "shell-engineer",
+      "dependencies": [
+        "t13"
+      ],
+      "attempt": 1,
+      "createdAt": 1787384719693,
+      "updatedAt": 1787409098524,
+      "attemptId": "bcd41c8b-c9f9-43e5-8752-22c830af91d9",
+      "reassigning": false
+    },
+    {
+      "id": "t15",
+      "subject": "Phase 6: TCP + mTLS transports via OpenSSL FFI",
+      "description": "Implement Shell/Transport/Tcp.lean (small C shim over socket/bind/accept or a community socket package; one session per connection, drops logged and survived) and Shell/Transport/Tls.lean via FFI to OpenSSL (or s2n-tls) per §5.4: C shim exposing exactly serveTlsOn/connectTlsPinned-shaped functions, TLS 1.3-only, client certs required, CA/SAN validation, fingerprint extraction, expiry warnings. Keep the shim to connect/accept/read/write + fingerprints; fuzz it; treat the OpenSSL config surface as the #1 review target (§9.1). GC finalizer backstop only at this FFI boundary (§9.7).",
+      "status": "pending",
+      "assignee": "shell-engineer",
+      "dependencies": [
+        "t10"
+      ],
+      "attempt": 0,
+      "createdAt": 1787384719701,
+      "updatedAt": 1787384719701
+    },
+    {
+      "id": "t16",
+      "subject": "Phase 6: Consul registry/discovery + signal handling",
+      "description": "Implement Shell/Registry.lean (Consul HTTP client reusing the Phase 5 HTTP client, JSON via Lean.Data.Json), service discovery, registry heartbeats, and SIGINT/SIGTERM deregistration via a C shim or IO signal hooks (POSIX-only, matching the documented Windows caveat). Exit per §8 Phase 6: --serve/--server/validate --registry CLI parity in Main.lean.",
+      "status": "pending",
+      "assignee": "shell-engineer",
+      "dependencies": [
+        "t14"
+      ],
+      "attempt": 0,
+      "createdAt": 1787384719710,
+      "updatedAt": 1787384719710
+    },
+    {
+      "id": "t17",
+      "subject": "Phase 6: client interop validation",
+      "description": "Verify wire compatibility end-to-end per §2 Goal 2 and §8 Phase 6: existing clients MirrorRust and MirrorECMA interoperate with the Lean mirror without modification, byte for byte on the wire, over stdio, TCP, and mTLS (mutual auth, pinned fingerprints). Build the interop test matrix into CI.",
+      "status": "pending",
+      "assignee": "qa-engineer",
+      "dependencies": [
+        "t15",
+        "t16"
+      ],
+      "attempt": 0,
+      "createdAt": 1787384719720,
+      "updatedAt": 1787384719720
+    },
+    {
+      "id": "t18",
+      "subject": "Phase 7: cutover docs + CHANGELOG",
+      "description": "Per §8 Phase 7: user-facing docs, CHANGELOG, and the deprecation plan for the Haskell build in the ModelMirrors repo. Exit: full test matrix green on both implementations (this repo's Lean binary and the ModelMirrors Haskell build) for one release cycle; then Haskell moves to maintenance.",
+      "status": "pending",
+      "assignee": "qa-engineer",
+      "dependencies": [
+        "t17"
+      ],
+      "attempt": 0,
+      "createdAt": 1787384719734,
+      "updatedAt": 1787384719734
+    },
+    {
+      "id": "t19",
+      "subject": "§6.6 gap: message-level round-trip theorems",
+      "description": "Follow-up to t7. The doc §6.6 requires: for EACH message type M, decode (encode m) = Except.ok m — i.e. message-level round-trip theorems for ClientMessage (19 ctors) and MirrorMessage (20 ctors), not only the value-level round-trip delivered in t7. Close the gap in Codec/Json.lean (or a new Codec/RoundTrip.lean): prove decodeClient (encodeClient m) = ok m and decodeMirror (encodeMirror m) = ok m for all constructors, reusing the value-level decValueF_encValue result (fuel bound defaultFuel = 2^32 is acceptable per the documented deviation). Scalar fields round-trip by construction per t7 notes — the work is assembling the per-constructor proof, handling the aeson sum-encoding tag dispatch and Maybe omission/null cases. Zero sorries; lake build stays green.",
+      "status": "completed",
+      "assignee": "codec-engineer",
+      "dependencies": [
+        "t7"
+      ],
+      "attempt": 1,
+      "createdAt": 1787397218019,
+      "updatedAt": 1787401150248,
+      "attemptId": "4c12258d-865b-47a2-bbc7-72d05fb470d5",
+      "reassigning": false,
+      "output": "§6.6 message-level round-trip theorems proven in Codec/Json.lean (§ 'Message-level round-trip' section, ~900 new lines, 0 sorry): decodeClient_encodeClient : ∀ m, ClientOk m → ∃ m', decodeClient (encodeClient m) = Except.ok m' ∧ ClientEquiv m m' (all 19 client ctors) and decodeMirror_encodeMirror (all 20 mirror ctors). Equality is exact for every ctor without Value positions; ValueMap positions are equal up to mapEqV (extensional, valEq on values), embedded Values/hints up to valEq/optValEq via hintEquiv, trace lists up to listEq (tracesEquiv/JobOutcomeEquiv). Hypotheses: ClientOk/MirrorOk = wireOk + pairwise keys + fuel bounds (2*sizeV+6 ≤ defaultFuel = 2^32) on embedded values. Key infrastructure added: getObjVal?_mkObj_error (missing-key lookup via TreeMap getElem?_ofList_of_contains_eq_false), decStateMap_jStateMap (∃ ws, decode = ok ws ∧ mapEqV via decRecordF_ok+recordBridges+mem_key_unique), decodeValue_bounded, decValues_encValues, decDiffHint_jDiffHint, decHintArr_enc, decTraceGenResult_fields, decJobOutcome_jJobOutcome, plus field-bridge lemmas (str/nat/optFieldStr/optFieldNat/strs/reqField_of_field, decOptSpec absent/present, optFieldNat_absent). Note: refactored inline closures decPathArr/decHintArr into named private defs. Also REPAIRED lakefile.lean (escaped backticks + unqualified output broke all lake builds; teammates' fixtures_replay/diff_cross targets now build and lake test = ALL GREEN, fixtures 54/54 byte-identical). Codec/Json.lean now 3534 LOC, lake build green, 0 sorry."
+    },
+    {
+      "id": "t20",
+      "subject": "Wire parity: align diff hint ORDER with Haskell",
+      "description": "Follow-up to the t8 differential testing, which passed 500/500 but only as sorted MULTISET comparison: Haskell Engine.Core.diffState interleaves hints in sorted-key order, Lean Core.diffState walks expected bindings before extras. Doc §2 Goal 2 requires byte-for-byte wire compatibility, and DiffHints travel as an ordered JSON list inside MirrorMessages — for multi-hint diffs and especially capped diffs (maxDiffHints = 50, where order decides WHICH hints survive and which path HTruncated carries), the two implementations emit observably different bytes. Task: change Core/Diff.lean traversal to reproduce the Haskell hint ordering exactly (sorted-key interleave, matching Engine.Core at ModelMirrors@3496251), update the §6.1 cap-correctness/path-validity proofs as needed, then strengthen tools/DiffCross.lean from multiset to ORDERED list comparison and re-run the 500-case + 5000-case sweeps green. Update test/README.md (remove the frozen-quirk note once aligned, or document precisely if a residual divergence is proven impossible to remove — bring that back to the captain before accepting it). Zero sorries; lake build green.",
+      "status": "completed",
+      "assignee": "core-engineer",
+      "dependencies": [
+        "t9"
+      ],
+      "attempt": 1,
+      "createdAt": 1787398710787,
+      "updatedAt": 1787403591723,
+      "attemptId": "90cba19f-8224-4e24-ba24-36add51d6be5",
+      "reassigning": false,
+      "output": "Wire parity restored. Core/Diff.lean now reproduces the Haskell hint ordering exactly: at every map level (diffValueAux vrecord/vmap arms and diffFields) the per-key hint blocks are stably sorted by key (new sortHintsByKey/insertByKey/segKeyAt), which is provably the Data.Map sorted-key interleave of Engine.Core.diffFields@3496251 — the Haskell per-key block contents are unchanged (same fuel, same values) and blocks are contiguous in both orders, so a stable key sort at each map level IS the Haskell order, including which hints survive capping (capHints applies after, exactly like Haskell splitAt) and which path hTruncated carries. Proved perm_insertByKey/perm_sortHintsByKey (sort = permutation), and bridged all §6.1 proofs through it: sortHintsByKey_nil_iff (soundness/completeness untouched in strength), mem_sortHintsByKey (path validity); diffState_sound/complete/cap lemmas/pathValid all recompile with zero sorries. tools/DiffCross.lean upgraded from sorted-multiset to ORDERED list comparison (byte-level JSON compress strings, order-sensitive) + DIFF_CROSS_CORPUS env override for big sweeps. Results: 500/500 checked-in corpus green, fresh 5000/5000 sweep green (regenerated via .golden-build/gen-diff). test/README.md frozen-quirk note removed and replaced with the ordered-comparison + sweep instructions; Core/Diff.lean module doc updated. No residual divergence to report. FYI: lake build's Shell exe targets are red from teammate WIP (Shell.lean has a doc comment before imports; Main.lean uses IO.getArgs which does not exist in Lean 4.33 core) — pre-existing, outside Core lane; Core+Codec libs and the fixtures_replay/diff_cross exes build and run green."
+    },
+    {
+      "id": "t21",
+      "subject": "Explorer JSON-RPC wire codec + round-trip proofs",
+      "description": "Phase 5 prep, codec lane (feeds shell-engineer's t14 explorer client). The frozen Phase 0 corpus has test/fixtures/explorer_transcripts.jsonl — 9 apalache explorer JSON-RPC exchanges (health, loadSpec, assumeTransition, nextStep, checkInvariant, query, assumeState, rollback, disposeSpec) with raw request bytes from the real Haskell Apalache.Rpc.Client + canned responses. Deliver a Codec/ExplorerRpc.lean: typed request/response structures, total encode/decode matching the recorded bytes exactly (JSON-RPC envelope, method names, param shapes), §6.6-style round-trip theorems for each method (decode (encode r) = ok r up to the Value equivalences already established in Codec/Json.lean), and a fixture gate proving all 9 transcript requests decode + re-encode byte-identically. Zero sorries; lake build + lake test stay green. Coordinate any shared-lemma needs with Core.Value via captain if blocked.",
+      "status": "completed",
+      "assignee": "codec-engineer",
+      "dependencies": [
+        "t7"
+      ],
+      "attempt": 1,
+      "createdAt": 1787401233685,
+      "updatedAt": 1787406179120,
+      "attemptId": "fe3ad6c6-c299-454b-a8f6-6503fc7f798c",
+      "reassigning": false,
+      "output": "Codec/ExplorerRpc.lean (1417 lines, 0 sorry): typed RpcRequest (9 ctors) / RpcResult / RpcResponse for the 9 explorer JSON-RPC methods, total encoders/decoders matching explorer_transcripts.jsonl exactly, §6.6 round-trip theorems decodeRpcRequest_encodeRpcRequest / decodeRpcResult_encodeRpcResult for every constructor (Value positions up to valEq/optValEq under valBounded ∧ v ≠ vnull). Fixture gate extended in tools/ReplayFixtures.lean: all 9 transcript requests AND responses byte-identical. lake test ALL GREEN."
+    },
+    {
+      "id": "t22",
+      "subject": "Core↔Codec message bridge with tag-fidelity proofs",
+      "description": "Close the seam between the two message vocabularies before drift sets in: Core/Protocol.lean:50,61 defines tag-abstract ClientMessage/MirrorMessage (the §6.3-proven session machine), Codec/Json.lean:1323,1349 defines payload-concrete ClientMessage/MirrorMessage (the §6.6-proven wire codec). Today nothing proven connects them — the t10 driver would hand-roll the mapping. Deliver (shape pre-aligned between core-engineer and codec-engineer): (1) mechanical tag extraction protoStep/protoTag : Codec.ClientMessage → Core.ClientMessage and the mirror-direction equivalent; (2) tag-fidelity theorems for all 39 constructors — each concrete ctor maps to its abstract tag; (3) output-side compatibility: every abstract MirrorMessage emittable per Core's AllowedOutputs table has at least one concrete Codec.MirrorMessage encoding to the correct wire tag; (4) the known design point — reportState's matches/lastStep Bools exist only in Core while the Codec message carries the ValueMap payload, so the driver sources those bits (document at the bridge; consistent with the payload-at-driver-boundary split). Put the bridge in Codec/Bridge.lean (or Core-side if imports force it — avoid an import cycle). Zero sorries; lake build + lake test green. shell-engineer's t10 driver should consume this mapping when available — message them when it lands.",
+      "status": "completed",
+      "assignee": "codec-engineer",
+      "dependencies": [
+        "t21"
+      ],
+      "attempt": 1,
+      "createdAt": 1787401573118,
+      "updatedAt": 1787406754940,
+      "attemptId": "14f12500-7afa-490b-8a28-917d8819ae91",
+      "reassigning": false,
+      "output": "Codec/Bridge.lean (0 sorry): protoClientTag : Codec.ClientMessage → Core.ClientMessage (20 ctors; six explorer commands → exploreCmd; reportState maps to placeholder bits with reportStateBridge for the driver to source reportMatches/lastStep — design point documented), protoMirrorTag : Codec.MirrorMessage → Core.MirrorMessage (20 ctors; six explorer results → exploreResult), concreteMirror witness map, 40 per-constructor tag-fidelity theorems, concreteMirror_fidelity, and allowed_outputs_have_concrete (every m ∈ AllowedOutputs p has a concrete codec witness). Wired into Codec.lean. lake build green; lake test ALL GREEN."
+    },
+    {
+      "id": "t23",
+      "subject": "Codec parity: accept bare JSON numbers in decodeValue",
+      "description": "Wire-parity bug found by shell-engineer during t10 integration testing against the REAL Haskell client: Haskell's Value FromJSON instance accepts bare JSON numbers (clients' report_state uses them), but Codec.decodeValue rejects them. shell-engineer added a driver-side workaround (Shell/Mirror/Session.normNums) that must be DROPPED once the codec is fixed. Task: make Codec.decodeValue accept bare JSON numbers exactly the way the Haskell FromJSON instance does at ModelMirros@3496251 (check the instance: does it accept any JSON number as VInt? floats? negatives? match it precisely), extend the §6.6 round-trip theorems and the wireOk predicate if the value domain changed, add fixture cases covering bare-number report_state payloads, then remove Session.normNums and re-run the stdio integration suite + lake test (3 gates) green. Coordinate with shell-engineer for the workaround removal. Zero sorries.",
+      "status": "completed",
+      "assignee": "codec-engineer",
+      "dependencies": [
+        "t22"
+      ],
+      "attempt": 1,
+      "createdAt": 1787404902569,
+      "updatedAt": 1787407489760,
+      "attemptId": "1b7c1338-e4bf-40e3-ae5c-8630087b5065",
+      "reassigning": false,
+      "output": "Codec.decodeValue now accepts bare JSON numbers exactly like Haskell's FromJSON Value (VInt <$> A.parseJSON): decValueF accepts any number whose VALUE is integral (Lean JsonNumber = mantissa×10^(-exponent); divisibility rule), so 12, 2.0→2, -7, 3e2→300, 1.23e5→123000 decode as VInt and 0.5 still errors. Lemmas decValueF_num_integral (general) + decValueF_num; encoding unchanged so §6.6 round-trips untouched; 0 sorry. New decode-only fixture gate test/fixtures/decode_only.jsonl (6 report_state bare-number cases incl. rejection) in tools/ReplayFixtures.lean. normNums dropped from Shell/Mirror/Session.lean by shell-engineer (docstring pointer left); shell re-verified: full lake build green, lake test all 4 gates green, Haskell stdio MBT suite OK (169s) with bare-number report_state flowing through the codec directly."
+    },
+    {
+      "id": "t24",
+      "subject": "Consul registry wire codec (feeds t16)",
+      "description": "Prep work for shell-engineer's t16 (Consul registry/discovery). Read the Haskell sources at /home/nzsn/Repos/ModelMirros (READ-ONLY; pin 3496251): src/Protocol/Registry.hs (119 LOC) and Protocol/Discover — extract the exact Consul agent HTTP API surface they use (service register/deregister payloads, TTL/heartbeat endpoints, health/service discovery query responses, field names + optional-field behavior). Deliver Codec/Consul.lean: typed request/response structures, total encode/decode via Lean.Data.Json matching the Haskell aeson instances exactly, §6.6-style round-trip theorems, and fixture cases derived from the Haskell field usage. Zero sorries; lake build + lake test green. This lets t16 be pure HTTP-transport + wiring work with an already-proven payload layer. Message shell-engineer when it lands.",
+      "status": "completed",
+      "assignee": "codec-engineer",
+      "dependencies": [
+        "t23"
+      ],
+      "attempt": 1,
+      "createdAt": 1787407546001,
+      "updatedAt": 1787410027242,
+      "attemptId": "aba812db-f1a3-495d-ac16-2e4c116363c0",
+      "reassigning": false,
+      "output": "Codec/Consul.lean (231 lines, 0 sorry): typed Consul payload layer extracted from ModelMirros@3496251 src/Protocol/Registry.hs + Discover.hs. ServiceInfo (serviceId/host/port/certFingerprint) with ServiceOk predicate (host ≠ \"\" ∧ port ≤ 65535); ConsulRequest (register/passCheck/deregister/discover) with requestMethod/requestPath/requestBody covering the exact endpoints (PUT /v1/agent/service/register with ID/Name=modelmirros/Address/Port/Meta({} or {cert-sha256})/Check{TTL:30s}; PUT pass/deregister; GET health?passing=true); decodeRegisterBody, decService, decEntry (drops empty-Address and malformed entries, fail-closed per entry like Haskell toServiceInfo), decodeServicesL/decodeServices. Round-trip theorems: decMetaFp_jMeta, decFingerprint_jMeta, decService_encService, decEntry_encEntry, decodeServicesL_encEntries, decodeServices_encodeServices (host-nonempty guard), decodeRegisterBody_encodeRegisterBody. Documented divergence: Port must be an integral JSON number (Haskell rounds fractional). New fixture gate test/fixtures/consul_payloads.jsonl (7 cases: register with/without fingerprint, wrong-name rejection, health with extra Node fields, empty-address drop, missing-Service drop, non-array rejection) wired into tools/ReplayFixtures.lean; gate prints ALL FIXTURES ROUND-TRIP BYTE-IDENTICAL. Codec.lean umbrella restored+extended with import Codec.Consul; lake build Codec green; lake test ALL GREEN. NOTE: I briefly clobbered Codec.lean (umbrella) by a bad write — reconstructed as imports + doc comment; if the original umbrella had extra content beyond the doc header, tell me and I will restore it."
+    }
+  ],
+  "taskSeq": 24
+}

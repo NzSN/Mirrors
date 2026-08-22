@@ -1,0 +1,42 @@
+./.cp.lean:39:2: error: unsolved goals
+case false
+s : ServiceInfo
+h : s.host ≠ ""
+hkeys :
+  List.Pairwise (fun a b => a ≠ b)
+    (List.map Prod.fst
+      [("ID", Json.str s.serviceId), ("Address", Json.str s.host), ("Port", Json.num (JsonNumber.fromNat s.port)),
+        ("Meta", jMeta s.certFingerprint)])
+m0 :
+  ("ID", Json.str s.serviceId) ∈
+    [("ID", Json.str s.serviceId), ("Address", Json.str s.host), ("Port", Json.num (JsonNumber.fromNat s.port)),
+      ("Meta", jMeta s.certFingerprint)]
+m1 :
+  ("Address", Json.str s.host) ∈
+    [("ID", Json.str s.serviceId), ("Address", Json.str s.host), ("Port", Json.num (JsonNumber.fromNat s.port)),
+      ("Meta", jMeta s.certFingerprint)]
+m2 :
+  ("Port", Json.num (JsonNumber.fromNat s.port)) ∈
+    [("ID", Json.str s.serviceId), ("Address", Json.str s.host), ("Port", Json.num (JsonNumber.fromNat s.port)),
+      ("Meta", jMeta s.certFingerprint)]
+m3 :
+  ("Meta", jMeta s.certFingerprint) ∈
+    [("ID", Json.str s.serviceId), ("Address", Json.str s.host), ("Port", Json.num (JsonNumber.fromNat s.port)),
+      ("Meta", jMeta s.certFingerprint)]
+hb : (s.host == "") = false
+⊢ (do
+      let id ← Except.ok s.serviceId
+      let host ← Except.ok s.host
+      let port ← Except.ok s.port
+      let fp ← Except.ok s.certFingerprint
+      if host = "" then pure none
+        else pure (some { serviceId := id, host := host, port := port, certFingerprint := fp })) =
+    Except.ok (some s)
+./.cp.lean:40:4: error: `simp` made no progress
+./.cp.lean:39:10: warning: This simp argument is unused:
+  hb
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

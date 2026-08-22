@@ -1,0 +1,225 @@
+Codec/ExplorerRpc.lean:416:55: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [jTransitionSummary, decTransitionSummary]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:429:34: warning: This simp argument is unused:
+  List.toList_toArray
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:465:49: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [jSpecParameters, decSpecParameters]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:998:86: warning: This simp argument is unused:
+  optJson
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcRequest, encodeParams, reqId, methodName, decodeRpcRequest, Option.map_none,
+    Option.map_some]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:998:95: warning: This simp argument is unused:
+  Option.map_none
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcRequest, encodeParams, reqId, methodName, decodeRpcRequest, optJson, Option.map_some]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:998:112: warning: This simp argument is unused:
+  Option.map_some
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcRequest, encodeParams, reqId, methodName, decodeRpcRequest, optJson, Option.map_none]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1133:65: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1133:73: warning: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1162:65: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1162:73: warning: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1182:65: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1182:73: warning: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1202:65: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1202:73: warning: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1225:65: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1225:73: warning: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1251:69: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, optJson, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1251:86: warning: This simp argument is unused:
+  htrv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1276:69: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, optJson, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1276:86: warning: This simp argument is unused:
+  htrv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1305:73: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, optJson, hopv, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1305:90: warning: This simp argument is unused:
+  hopv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1305:96: warning: This simp argument is unused:
+  htrv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, hopv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1336:73: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, optJson, hopv, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1336:90: warning: This simp argument is unused:
+  hopv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1336:96: warning: This simp argument is unused:
+  htrv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, hopv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1370:73: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, optJson, hopv, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1370:90: warning: This simp argument is unused:
+  hopv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1370:96: warning: This simp argument is unused:
+  htrv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, hopv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1409:73: warning: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, optJson, hopv, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1409:90: warning: This simp argument is unused:
+  hopv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Codec/ExplorerRpc.lean:1409:96: warning: This simp argument is unused:
+  htrv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, hopv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

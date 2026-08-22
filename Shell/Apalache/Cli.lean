@@ -1,0 +1,236 @@
+import Shell.Apalache.SpecSource
+import Shell.Mirror.Session
+import Core.Trace
+import Shell.Jobs.Store
+import Codec.Json
+import Lean
+
+/-!
+# Shell.Apalache.Cli — the apalache-mc CLI adapter (Layer 3, design 5.4)
+
+Port of the Haskell @Apalache.Command@:
+
+* @apalacheBin@ honors the @APALACHE_MC@ override, else @apalache-mc@
+  on @PATH@; every child is spawned with @LC_ALL=C.UTF-8@ (the apalache
+  JVM requirement carried over from the Haskell build).
+* **cwd isolation (doc 9.5):** apalache 0.57 writes
+  @_apalache-out/<Spec>/<timestamp>/@ and @tmp/@ into the process CWD
+  even with @--run-dir@; when a run dir is supplied, the child also runs
+  with @cwd = runDir@ and a relative @specPath@ is absolutized first,
+  so all stray output lands inside the per-session temp dir.
+* Exit-code classification (verified against apalache 0.57, as in the
+  Haskell code): 255 (parse/config/infra) → infra error
+  (@.error@ / register-error tier); typecheck failure (120) or invariant
+  violation (12) → @.ok (.invalid msg)@ (client's verdict); 0 → valid.
+* @runApalacheCancellable@ is the @spawnApalache@ port for the async job
+  model: the child handle is registered on the job's @CancelToken@
+  (@CancelToken.onCancel child.kill@), closing the cancellation
+  kill-window; a late result is discarded by the job store's absorbing
+  transition.
+-/
+
+namespace Shell.Apalache.Cli
+
+/-- The full outcome of one apalache invocation (Haskell @ApalacheResult@). -/
+structure ApalacheResult where
+  exit : UInt32
+  out : String
+  err : String
+deriving Repr
+
+/-- Resolve the apalache binary (Haskell @apalacheBin@). -/
+def apalacheBin : IO String := do
+  match ← IO.getEnv "APALACHE_MC" with
+  | some p => pure p
+  | none => pure "apalache-mc"
+
+/-- The apalache JVM locale requirement (unchanged from Haskell). -/
+private def apalacheEnv : Array (String × Option String) :=
+  #[("LC_ALL", some "C.UTF-8")]
+
+/-- Run one apalache invocation to completion (the
+@readCreateProcessWithExitCode@ port): child @cwd = runDir@ when given,
+@LC_ALL=C.UTF-8@, stdin null. -/
+def runApalache (runDir : Option String) (args : List String) :
+    IO ApalacheResult := do
+  let out ← IO.Process.output
+    { cmd := ← apalacheBin, args := args.toArray,
+      env := apalacheEnv, stdin := .null,
+      cwd := runDir }
+  return ⟨out.exitCode, out.stdout, out.stderr⟩
+
+/-- Run one apalache invocation, cancellable (Haskell @spawnApalache@ +
+the async-job kill wiring): the process handle is registered on the
+token so job cancellation (or session close) terminates the child. -/
+private def killIgnoring {cfg : IO.Process.StdioConfig} (child : IO.Process.Child cfg) : IO Unit := do
+  try child.kill catch _ => pure ()
+
+def runApalacheCancellable (token : Shell.Jobs.CancelToken)
+    (runDir : Option String) (args : List String) : IO ApalacheResult := do
+  let child ← IO.Process.spawn
+    { cmd := ← apalacheBin, args := args.toArray,
+      env := apalacheEnv, stdin := .null,
+      stdout := .piped, stderr := .piped,
+      cwd := runDir }
+  token.onCancel (killIgnoring child)
+  -- drain stderr concurrently so a full pipe cannot deadlock
+  let errTask ← IO.asTask do
+    let h := (child.stderr : IO.FS.Handle)
+    let mut s := ""
+    let mut line ← h.getLine
+    while !line.isEmpty do
+      s := s ++ line
+      line ← h.getLine
+    return s
+  let outH := (child.stdout : IO.FS.Handle)
+  let mut out := ""
+  let mut line ← outH.getLine
+  while !line.isEmpty do
+    out := out ++ line
+    line ← outH.getLine
+  let errResult : Except IO.Error String := errTask.get
+  let err ← match errResult with
+    | .ok s => pure s
+    | .error e => pure s!"stderr drain failed: {e}"
+  let code ← child.wait
+  return ⟨code, out, err⟩
+
+/-- Absolutize a (possibly relative) path against the current dir
+(Haskell @makeAbsolute@): the child's cwd moves to the run dir, so a
+relative spec path would no longer resolve. -/
+def makeAbsolute (path : String) : IO String := do
+  if (path : System.FilePath).isAbsolute then
+    pure path
+  else
+    let cwd ← IO.currentDir
+    pure (cwd.toString ++ "/" ++ path)
+
+/-! ## Argument construction -/
+
+private def optionalArg (pfx : String) (v : Option String) : List String :=
+  match v with
+  | none => []
+  | some v => [pfx ++ v]
+
+private def nonEmpty (s : String) : Option String :=
+  if s.isEmpty then none else some s
+
+/-- @typecheck@ argument list (Haskell @tcArgs@). -/
+def tcArgs (runDir : Option String) (cfg : Codec.ApalacheConfig) : List String :=
+  ["typecheck"] ++ optionalArg "--run-dir=" runDir ++ [cfg.specPath]
+
+/-- @check@ argument list for validation (Haskell @checkArgs@). -/
+def checkArgs (runDir : Option String) (cfg : Codec.ApalacheConfig)
+    (bound : Nat) : List String :=
+  ["check", s!"--length={bound}"]
+    ++ optionalArg "--run-dir=" runDir
+    ++ optionalArg "--inv=" (nonEmpty cfg.invariant)
+    ++ optionalArg "--init=" cfg.initPredicate
+    ++ optionalArg "--next=" cfg.nextPredicate
+    ++ optionalArg "--cinit=" cfg.constInit
+    ++ [cfg.specPath]
+
+/-- @check@ argument list for trace generation (Haskell @traceArgs@):
+@--inv@ is gated on a non-empty invariant exactly like @checkArgs@ — an
+unconditional empty @--inv=@ is an apalache config error (exit 255). -/
+def traceArgs (runDir : Option String) (cfg : Codec.ApalacheConfig)
+    (tc : Codec.TraceConfig) : List String :=
+  ["check"] ++ optionalArg "--inv=" (nonEmpty cfg.invariant)
+    ++ [s!"--length={cfg.lengthBound}", s!"--max-error={tc.numTraces}",
+        "--output-traces"]
+    ++ optionalArg "--run-dir=" runDir
+    ++ optionalArg "--init=" cfg.initPredicate
+    ++ optionalArg "--next=" cfg.nextPredicate
+    ++ optionalArg "--cinit=" cfg.constInit
+    ++ optionalArg "--view=" (nonEmpty tc.view)
+    ++ [cfg.specPath]
+
+/-- Extract the @Output directory: <dir>@ line from apalache output
+(Haskell @parseOutputDir@). -/
+def parseOutputDir (s : String) : Option String :=
+  let rec go : List String → Option String
+    | [] => none
+    | l :: ls =>
+        match l.splitOn ": " with
+        | ["Output directory", rest] => some rest
+        | _ => go ls
+  go (s.splitOn "\n")
+
+/-- The apalache exit-code tier: 255 is infra (@true@ = error tier),
+anything else is a spec verdict (Haskell's case split, shared shape). -/
+def isInfraExit (code : UInt32) : Bool := code == 255
+
+/-! ## The three flows -/
+
+/-- Bounded validation (Haskell @validateSpecIn@): typecheck then check,
+both with @cwd = runDir@; 255 → infra error, other nonzero → spec
+verdict, 0 → valid. Runs over an injected invocation for the async job
+(@validateSpecVia@). -/
+def validateSpecVia (run : Option String → List String → IO ApalacheResult)
+    (runDir : Option String) (cfg : Codec.ApalacheConfig) (bound : Nat) :
+    IO (Except String Codec.ValidateResult) := do
+  let cfg' ← match runDir with
+    | some _ => pure ({ cfg with specPath := ← makeAbsolute cfg.specPath } : Codec.ApalacheConfig)
+    | none => pure cfg
+  let tc ← run runDir (tcArgs runDir cfg')
+  if isInfraExit tc.exit then
+    return .error (tc.out ++ tc.err)
+  else if tc.exit != 0 then
+    return .ok (.invalid (tc.out ++ tc.err))
+  else
+    let c ← run runDir (checkArgs runDir cfg' bound)
+    if isInfraExit c.exit then
+      return .error (c.out ++ c.err)
+    else if c.exit == 0 then
+      return .ok .valid
+    else
+      return .ok (.invalid (c.out ++ c.err))
+
+/-- Direct validation (Haskell @validateSpec@/@validateSpecIn@). -/
+def validateSpecIn (runDir : Option String) (cfg : Codec.ApalacheConfig)
+    (bound : Nat) : IO (Except String Codec.ValidateResult) :=
+  validateSpecVia runApalache runDir cfg bound
+
+/-- All @*.itf.json@ files in a directory, non-recursive (Haskell
+@findTraceFiles@). -/
+def findTraceFiles (dir : String) : IO (List String) := do
+  let entries ← (dir : System.FilePath).readDir
+  return (entries.toList.map (·.path.toString)).filter (·.endsWith ".itf.json")
+
+/-- Trace generation producing trace files (Haskell
+@generateTraceFilesIn@): returns the output dir and the ITF paths in it. -/
+def generateTraceFilesIn (runDir : Option String) (cfg : Codec.ApalacheConfig)
+    (tc : Codec.TraceConfig) : IO (Except String (String × List String)) := do
+  let cfg' ← match runDir with
+    | some _ => pure ({ cfg with specPath := ← makeAbsolute cfg.specPath } : Codec.ApalacheConfig)
+    | none => pure cfg
+  let r ← runApalache runDir (traceArgs runDir cfg' tc)
+  if isInfraExit r.exit then
+    return .error (r.out ++ r.err)
+  else
+    match parseOutputDir (r.out ++ r.err) with
+    | none => return .error "Could not determine output directory from Apalache output"
+    | some outDir =>
+        let paths ← findTraceFiles outDir
+        return .ok (outDir, paths)
+
+/-- Trace generation producing in-memory traces (Haskell
+@generateTracesIn@): output dir from the log line, ITF files parsed,
+param vars applied; no traces → infra error. -/
+def generateTracesIn (runDir : Option String) (cfg : Codec.ApalacheConfig)
+    (tc : Codec.TraceConfig) : IO (Except String (List ItfTrace)) := do
+  let r ← generateTraceFilesIn runDir cfg tc
+  match r with
+  | .error e => return .error e
+  | .ok (_, paths) =>
+      let parsed ← paths.mapM (fun p => Shell.Mirror.readItfTrace p)
+      let traces := parsed.filterMap (fun x => match x with
+        | .ok t => some t | .error _ => none)
+      let pvs := if cfg.paramVars.isEmpty then [] else [cfg.paramVars]
+      let traced := traces.map (applyParamVars pvs)
+      if traced.isEmpty then
+        return .error "No ITF trace files found in output directory"
+      else
+        return .ok traced
+
+end Shell.Apalache.Cli

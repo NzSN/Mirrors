@@ -1,0 +1,6 @@
+{"json":"{\"proto_step\":\"report_state\",\"state\":{\"hour\":12}}","expect":"ok:{\"proto_step\":\"report_state\",\"state\":{\"hour\":{\"#bigint\":\"12\"}}}"}
+{"json":"{\"proto_step\":\"report_state\",\"state\":{\"hour\":2.0}}","expect":"ok:{\"proto_step\":\"report_state\",\"state\":{\"hour\":{\"#bigint\":\"2\"}}}"}
+{"json":"{\"proto_step\":\"report_state\",\"state\":{\"hour\":-7}}","expect":"ok:{\"proto_step\":\"report_state\",\"state\":{\"hour\":{\"#bigint\":\"-7\"}}}"}
+{"json":"{\"proto_step\":\"report_state\",\"state\":{\"hour\":3e2}}","expect":"ok:{\"proto_step\":\"report_state\",\"state\":{\"hour\":{\"#bigint\":\"300\"}}}"}
+{"json":"{\"proto_step\":\"report_state\",\"state\":{\"hour\":1.23e5}}","expect":"ok:{\"proto_step\":\"report_state\",\"state\":{\"hour\":{\"#bigint\":\"123000\"}}}"}
+{"json":"{\"proto_step\":\"report_state\",\"state\":{\"hour\":0.5}}","expect":"error:value: bare JSON number not in ITF grammar"}
