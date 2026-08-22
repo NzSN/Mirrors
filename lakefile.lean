@@ -30,8 +30,6 @@ lean_exe mirror where
   root := `Main
   extraDepTargets := #[`socket_shim_o]
   moreLinkArgs := #[".lake/build/socket_shim.o"]
-  moreLinkArgs := #[".lake/build/lib/socket_shim.a"]
-  moreLinkArgs := #[".lake/build/lib/socket_shim.a"]
 
 /-- Phase 3: stdio session smoke test against the built mirror binary. -/
 @[default_target]
@@ -67,7 +65,8 @@ target socket_shim_o pkg : System.FilePath := do
   inputBinFile o
 
 @[default_target]
-lean_lib Ffi
+lean_lib Ffi where
+  globs := #[.submodules `Ffi]
 
 /-- Phase 5: apalache CLI adapter regression suite
 (tools/ApalacheCliSpec.lean; real-apalache integration runs only with
@@ -77,7 +76,15 @@ lean_exe apalache_cli_spec where
   root := `tools.ApalacheCliSpec
   extraDepTargets := #[`socket_shim_o]
   moreLinkArgs := #[".lake/build/socket_shim.o"]
-  moreLinkArgs := #[".lake/build/lib/socket_shim.a"]
+
+/-- t14: explorer HTTP/JSON-RPC spike, transcript parity, and the
+HourClock explorer end-to-end (real apalache integration runs only
+with APALACHE_MC set, self-skipping otherwise). -/
+@[default_target]
+lean_exe explorer_spec where
+  root := `tools.ExplorerSpec
+  extraDepTargets := #[`socket_shim_o]
+  moreLinkArgs := #[".lake/build/socket_shim.o"]
 
 /-- lake test runs the differential/parity + stdio gates; exit 0 = all green. -/
 @[test_driver]
@@ -118,6 +125,15 @@ script test do
   if out5.exitCode != 0 then
     IO.println s!"apalache_cli_spec FAILED ({out5.exitCode})"
     return out5.exitCode
+  let out6 : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/explorer_spec", args := #[],
+       env := match apalacheMc? with
+              | some p => #[("APALACHE_MC", some p)]
+              | none => #[] } : IO.Process.SpawnArgs)
+  IO.println out6.stdout
+  if out6.exitCode != 0 then
+    IO.println s!"explorer_spec FAILED ({out6.exitCode})"
+    return out6.exitCode
   IO.println "ALL LAKE TESTS GREEN"
   return 0
 

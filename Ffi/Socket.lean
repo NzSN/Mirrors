@@ -13,40 +13,45 @@ HTTP/1.1 framing implemented in auditable Lean is strictly smaller TCB
 than binding libcurl (process-global init, easy-handle lifetimes,
 share objects). TLS remains FFI territory for the TCP+mTLS transport
 (t15) and does not touch this shim.
+
+All results are unboxed @UInt64@ (the unboxed FFI ABI; @Int@ would be
+a boxed object and requires a boxing C shim): sentinel errors use
+@UInt64.max@ as "-1".
 -/
 
 namespace Ffi
 
-/-- Raw fd-based TCP socket operations (all loopback-only). Errors are
-@-1@-style integers from the shim; @dsh_close_fd@ is total. -/
+/-- Sentinel for fd-style failures (the C side's -1). -/
+def fdError : UInt64 := 0xFFFFFFFFFFFFFFFF
+
 @[extern "dsh_socket_tcp"]
-opaque tcpSocket : BaseIO Int
+opaque tcpSocket : BaseIO UInt64
 
 @[extern "dsh_connect_loopback"]
-opaque connectLoopback : @& Int → @& Int → BaseIO Int
+opaque connectLoopback : @& UInt64 → @& UInt64 → BaseIO UInt64
 
 @[extern "dsh_bind_loopback"]
-opaque bindLoopback : @& Int → @& Int → BaseIO Int
+opaque bindLoopback : @& UInt64 → @& UInt64 → BaseIO UInt64
 
 @[extern "dsh_listen_fd"]
-opaque listenFd : @& Int → BaseIO Int
+opaque listenFd : @& UInt64 → BaseIO UInt64
 
 @[extern "dsh_accept_fd"]
-opaque acceptFd : @& Int → BaseIO Int
+opaque acceptFd : @& UInt64 → BaseIO UInt64
 
 @[extern "dsh_local_port"]
-opaque localPort : @& Int → BaseIO Int
+opaque localPort : @& UInt64 → BaseIO UInt64
 
 @[extern "dsh_send_all"]
-opaque sendAll : @& Int → @& ByteArray → BaseIO Int
+opaque sendAll : @& UInt64 → @& ByteArray → UInt64 → BaseIO UInt64
 
 @[extern "dsh_recv_some"]
-opaque recvSome : @& Int → @& ByteArray → BaseIO Int
+opaque recvSome : @& UInt64 → @& ByteArray → UInt64 → BaseIO UInt64
 
 @[extern "dsh_set_rcvtimeo_ms"]
-opaque setRecvTimeoutMs : @& Int → @& Int → BaseIO Int
+opaque setRecvTimeoutMs : @& UInt64 → @& UInt64 → BaseIO UInt64
 
 @[extern "dsh_close_fd"]
-opaque closeFd : @& Int → BaseIO Unit
+opaque closeFd : @& UInt64 → BaseIO Unit
 
 end Ffi

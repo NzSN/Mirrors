@@ -65,6 +65,25 @@ Oracles glue). Regression suite: `tools/ApalacheCliSpec.lean` (unit:
 header parsing/materialization/acquisition/args/output-dir; integration
 vs real apalache 0.57 — runs when `APALACHE_MC` is set, else self-skips).
 
+Phase 5 (explorer JSON-RPC): `Ffi/socket_shim.c` + `Ffi/Socket.lean`
+(loopback TCP only: socket/connect/bind/listen/accept/send/recv with a
+bounded receive timeout; decision: pure-Lean HTTP over this ~150-line
+shim instead of libcurl FFI — no TLS/redirects/auth in the explorer's
+surface), `Shell/Net/Http.lean` (HTTP/1.1 POST framing in Lean:
+one-shot Connection-close mode and a buffered keep-alive mode with
+Content-Length/chunked response parsing; the apalache server's Jetty +
+async jsonrpc4s handlers sporadically answer 200 with an empty body
+when every request arrives on a fresh close-mode socket, so the RPC
+client pins one persistent connection per session like the Haskell
+http-client manager), `Shell/Apalache/Explorer.lean` (JSON-RPC client,
+apalache server lifecycle, explorer session/explore command
+implementations), `Shell/Apalache/Runner.lean` (`runExplore` /
+`runExploreSession` oracle flows). Regression suite:
+`tools/ExplorerSpec.lean` (unit: HTTP spike vs a python loopback peer,
+byte-identical transcript parity; integration vs real apalache 0.57 —
+HourClock explorer session + explore flows; runs when `APALACHE_MC` is
+set or apalache-mc is found at the conventional path, else self-skips).
+
 Re-running the stdio integration suite from this repo (needs the
 Haskell ModelMirrors test binary and `apalache-mc` on PATH, plus the
 spec files under `specs/` and `test/specs/`):

@@ -254,29 +254,32 @@
       "id": "t14",
       "subject": "Phase 5: explorer JSON-RPC (HTTP client spike)",
       "description": "Per §8 Phase 5 and §9.2: spike a pure-Lean minimal HTTP/1.1 client (loopback, ephemeral port, JSON bodies, chunked responses, timeouts) vs libcurl FFI — prefer pure Lean if the explorer's HTTP surface allows; document the decision. Implement Shell/Apalache/Explorer.lean JSON-RPC client/server-behavior against the Phase 0 recorded transcripts. Exit: HourClock end-to-end green (validate, trace-gen, replay, explorer session).",
-      "status": "in_progress",
+      "status": "completed",
       "assignee": "shell-engineer",
       "dependencies": [
         "t13"
       ],
       "attempt": 1,
       "createdAt": 1787384719693,
-      "updatedAt": 1787409098524,
+      "updatedAt": 1787434293593,
       "attemptId": "bcd41c8b-c9f9-43e5-8752-22c830af91d9",
-      "reassigning": false
+      "reassigning": false,
+      "output": "Phase 5 explorer JSON-RPC done. HTTP decision: pure-Lean HTTP/1.1 over ~150-line loopback C socket shim (Ffi/socket_shim.c + Ffi/Socket.lean) instead of libcurl FFI. Shell/Net/Http.lean: one-shot close-mode POST + buffered KEEP-ALIVE mode (Content-Length/chunked parsing). KEY FINDING: apalache 0.57 (Jetty + async jsonrpc4s) sporadically returns 200 with EMPTY body when every request arrives on a fresh Connection:close socket; the RPC client now pins one persistent keep-alive connection per session (like Haskell http-client) — that made HourClock end-to-end fully green. Shell/Apalache/Explorer.lean (client, server lifecycle, session/explore cmds), Runner explore flows wired. tools/ExplorerSpec.lean: HTTP spike vs python peer, byte-identical transcript parity, real-apalache integration (session+explore) — all green; gate wired into `lake test` (all 6 gates green, RC=0). t15 note: Ffi.Socket patterns (UInt64 unboxed FFI, lean_sarray_cptr, cc-compiled shim via custom lake target) reusable for TCP/mTLS."
     },
     {
       "id": "t15",
       "subject": "Phase 6: TCP + mTLS transports via OpenSSL FFI",
       "description": "Implement Shell/Transport/Tcp.lean (small C shim over socket/bind/accept or a community socket package; one session per connection, drops logged and survived) and Shell/Transport/Tls.lean via FFI to OpenSSL (or s2n-tls) per §5.4: C shim exposing exactly serveTlsOn/connectTlsPinned-shaped functions, TLS 1.3-only, client certs required, CA/SAN validation, fingerprint extraction, expiry warnings. Keep the shim to connect/accept/read/write + fingerprints; fuzz it; treat the OpenSSL config surface as the #1 review target (§9.1). GC finalizer backstop only at this FFI boundary (§9.7).",
-      "status": "pending",
+      "status": "claimed",
       "assignee": "shell-engineer",
       "dependencies": [
         "t10"
       ],
-      "attempt": 0,
+      "attempt": 1,
       "createdAt": 1787384719701,
-      "updatedAt": 1787384719701
+      "updatedAt": 1787434399342,
+      "attemptId": "d65b1f36-a132-4c18-8653-6f88afc6b0aa",
+      "reassigning": false
     },
     {
       "id": "t16",

@@ -2,6 +2,10 @@ import Shell.Apalache.Cli
 import Shell.Apalache.SpecSource
 import Shell.Mirror.Session
 import Shell.Jobs.Store
+import Shell.Apalache.Explorer
+import Core.Diff
+import Core.Value
+import Shell.Transport.Mock
 import Codec.Json
 import Lean
 
@@ -28,7 +32,7 @@ first and reports materialization failure as a post-accept
 
 namespace Shell.Apalache
 
-open Shell.Apalache.Cli Shell.Apalache.SpecSource
+open Shell.Apalache.Cli Shell.Apalache.SpecSource Shell.Apalache.Explorer
 
 /-- Run one job body with the standard per-job scaffolding: acquire the
 spec (release on cancel), create the session dir (removal on cancel),
@@ -85,9 +89,173 @@ def jobRunner : Shell.Jobs.Runner where
             return .ok { itfTracePaths := paths,
                          itfTraces := contents.filterMap id }
 
+/-! ## The explorer flows (Haskell MkExploreMirror / MkExploreSession) -/
+
+private def rpcFail (t : Shell.Transport.Transport) (err : RpcError)
+    (kind : String) : IO Unit :=
+  Shell.Mirror.sendMirror t
+    (Codec.MirrorMessage.registerError s!"{kind}: {rpcErrorText err}")
+
+private def stateVar (m : ValueMap) (k : String) : String :=
+  match m.lookup k with
+  | some (.vstr s) => s
+  | _ => "explore"
+
+private def convHintsCore : List DiffHint → List Codec.DiffHint :=
+  fun hs => hs.map Shell.Mirror.convHint
+
+/-- The interactive replay-like explore flow (Haskell @MkExploreMirror@). -/
+partial def exploreFlow (t : Shell.Transport.Transport) (sources : List String)
+    (invs exports : List String) (maxSteps : Nat) : IO Unit := do
+  Shell.Apalache.Explorer.withApalacheServer fun server => do
+    let client ← newRpcClient server.port
+    match ← newExplorer client sources (some "Init") (some "Next") invs exports with
+    | .error err => rpcFail t err "explore register"
+    | .ok expl0 =>
+      match ← exploreInit expl0 with
+      | .error err =>
+          Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
+            (rpcErrorText err))
+      | .ok expl1 =>
+        Shell.Mirror.sendMirror t (Codec.MirrorMessage.specValidated .valid)
+        exploreLoop t expl1 invs maxSteps 0
+where
+  exploreLoop (t : Shell.Transport.Transport) expl invs maxSteps stepIdx := do
+    match ← exploreQueryState expl with
+    | .error err =>
+        Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
+          (rpcErrorText err))
+    | .ok expected =>
+        let action := stateVar expected "action_taken"
+        if stepIdx == 0 then
+          Shell.Mirror.sendMirror t (Codec.MirrorMessage.initialState action expected)
+        else
+          Shell.Mirror.sendMirror t (Codec.MirrorMessage.nextStep action expected)
+        let some line ← t.recv
+          | Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError "client closed")
+        match Lean.Json.parse line with
+        | .error e =>
+            Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError e)
+        | .ok j =>
+          match Codec.decodeClient j with
+          | .error e =>
+              Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError e.msg)
+          | .ok (.reportState actual) =>
+              match diffState expected actual with
+              | .stateMismatch e a hints =>
+                  Shell.Mirror.sendMirror t
+                    (Codec.MirrorMessage.stepMismatch e a (convHintsCore hints))
+              | .statesMatch =>
+                  match ← exploreAssumeState expl actual with
+                  | .error err =>
+                      Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
+                        (rpcErrorText err))
+                  | .ok (expl', _) =>
+                      Shell.Mirror.sendMirror t Codec.MirrorMessage.stepOk
+                      let violated ←
+                        if invs.isEmpty then pure false
+                        else match ← exploreCheck expl' 0 with
+                          | .ok (.invViolated, _) => pure true
+                          | _ => pure false
+                      if violated then
+                        Shell.Mirror.sendMirror t
+                          (Codec.MirrorMessage.stepMismatch [] [] [])
+                      else if stepIdx + 1 >= maxSteps then
+                        Shell.Mirror.sendMirror t Codec.MirrorMessage.allStepsDone
+                      else
+                        match ← exploreNext expl' 0 with
+                        | .error err =>
+                            Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
+                              (rpcErrorText err))
+                        | .ok (_, .transDisabled) =>
+                            Shell.Mirror.sendMirror t Codec.MirrorMessage.allStepsDone
+                        | .ok (expl'', _) =>
+                            exploreLoop t expl'' invs maxSteps (stepIdx + 1)
+          | .ok _ =>
+              Shell.Mirror.sendMirror t
+                (Codec.MirrorMessage.protocolError "expected report_state")
+
+/-- The interactive explorer session flow (Haskell @MkExploreSession@). -/
+partial def exploreSessionFlow (t : Shell.Transport.Transport) (sources : List String)
+    (invs exports : List String) : IO Unit := do
+  Shell.Apalache.Explorer.withApalacheServer fun server => do
+    let client ← newRpcClient server.port
+    match ← newExplorer client sources (some "Init") (some "Next") invs exports with
+    | .error err => rpcFail t err "explore register"
+    | .ok expl0 =>
+      let ps := expl0.params
+      Shell.Mirror.sendMirror t (Codec.MirrorMessage.explorerReady
+        ps.initTransitions.length ps.nextTransitions.length ps.stateInvariants.length)
+      sessionLoop t expl0
+where
+  sessionLoop (t : Shell.Transport.Transport) expl := do
+    let some line ← t.recv
+      | Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError "client closed")
+    match Lean.Json.parse line with
+    | .error e =>
+        Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError e)
+    | .ok j =>
+      match Codec.decodeClient j with
+      | .error e =>
+          Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError e.msg)
+      | .ok m =>
+        let replyFail (err : RpcError) := do
+          Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
+            (rpcErrorText err))
+          sessionLoop t expl
+        match m with
+        | .exploreDone =>
+            let _ ← exploreDispose expl
+            Shell.Mirror.sendMirror t Codec.MirrorMessage.exploreSessionDone
+        | .exploreAssumeTransition tid =>
+            match ← assumeTransition expl.client
+                { sessionId := expl.sessionId, transitionId := tid,
+                  checkEnabled := true, timeoutSec := none } with
+            | .error err => replyFail err
+            | .ok atr =>
+                Shell.Mirror.sendMirror t (Codec.MirrorMessage.exploreTransitionStatus
+                  (transitionStatusText atr.status))
+                sessionLoop t { expl with snapshot := atr.snapshotId }
+        | .exploreNextStep =>
+            match ← nextStep expl.client expl.sessionId with
+            | .error err => replyFail err
+            | .ok nsr =>
+                Shell.Mirror.sendMirror t (Codec.MirrorMessage.exploreStepDone
+                  nsr.newStepNo)
+                sessionLoop t { expl with snapshot := nsr.snapshotId }
+        | .exploreQueryState =>
+            match ← exploreQueryState expl with
+            | .error err => replyFail err
+            | .ok st =>
+                Shell.Mirror.sendMirror t (Codec.MirrorMessage.exploreState st)
+                sessionLoop t expl
+        | .exploreCheckInvariant iid =>
+            match ← exploreCheck expl iid with
+            | .error err => replyFail err
+            | .ok (st, _) =>
+                Shell.Mirror.sendMirror t (Codec.MirrorMessage.exploreInvariantStatus
+                  (invariantStatusText st))
+                sessionLoop t expl
+        | .exploreAssumeState eqs =>
+            match ← exploreAssumeState expl eqs with
+            | .error err => replyFail err
+            | .ok (expl', st) =>
+                Shell.Mirror.sendMirror t (Codec.MirrorMessage.exploreAssumeStatus
+                  (transitionStatusText st))
+                sessionLoop t expl'
+        | .exploreRollback snap =>
+            match ← exploreRollback expl snap with
+            | .error err => replyFail err
+            | .ok expl' =>
+                Shell.Mirror.sendMirror t (Codec.MirrorMessage.exploreRollbackDone snap)
+                sessionLoop t expl'
+        | _ =>
+            Shell.Mirror.sendMirror t
+              (Codec.MirrorMessage.protocolError
+                "unexpected message in explore session")
+
 /-- The sync-session oracles backed by real apalache: validation, trace
-generation, and trace-file production run with per-flow session dirs;
-the explorer flows remain Phase-5 stubs (t14). -/
+generation, trace-file production, and the two explorer flows (t14). -/
 def syncOracles : Shell.Mirror.Oracles where
   validateSpec := fun cfg spec _bound => do
     match ← acquireSpec spec cfg with
@@ -121,11 +289,9 @@ def syncOracles : Shell.Mirror.Oracles where
               | .ok j => pure ((Codec.decodeValue j).toOption))
             return .ok ({ itfTracePaths := paths,
                            itfTraces := contents.filterMap id } : Codec.TraceGenResult)
-  runExplore t _ _ _ _ :=
-    Shell.Mirror.sendMirror t (Codec.MirrorMessage.registerError
-      "apalache explorer adapter lands in Phase 5 (t14)")
-  runExploreSession t _ _ _ := do
-    Shell.Mirror.sendMirror t (Codec.MirrorMessage.registerError
-      "apalache explorer adapter lands in Phase 5 (t14)")
+  runExplore := fun t spec invs exports maxSteps =>
+    exploreFlow t spec.sources invs exports maxSteps
+  runExploreSession := fun t spec invs exports =>
+    exploreSessionFlow t spec.sources invs exports
 
 end Shell.Apalache
