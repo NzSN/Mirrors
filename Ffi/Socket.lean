@@ -33,6 +33,19 @@ opaque connectLoopback : @& UInt64 → @& UInt64 → BaseIO UInt64
 @[extern "dsh_bind_loopback"]
 opaque bindLoopback : @& UInt64 → @& UInt64 → BaseIO UInt64
 
+/-- t15: bind the IPv4 wildcard (all interfaces). -/
+@[extern "dsh_bind_any"]
+opaque bindAny : @& UInt64 → @& UInt64 → BaseIO UInt64
+
+/-- t15: connect to an IPv4 dotted address. -/
+@[extern "dsh_connect_ipv4"]
+opaque connectIpv4 : @& UInt64 → @& String → @& UInt64 → BaseIO UInt64
+
+/-- t15: textual "ip:port" of the socket's peer; @some "" never —
+returns @none on failure. -/
+@[extern "dsh_peer_desc"]
+opaque peerDescRaw : @& UInt64 → @& ByteArray → UInt64 → BaseIO UInt64
+
 @[extern "dsh_listen_fd"]
 opaque listenFd : @& UInt64 → BaseIO UInt64
 

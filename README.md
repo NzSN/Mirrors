@@ -84,6 +84,28 @@ byte-identical transcript parity; integration vs real apalache 0.57 —
 HourClock explorer session + explore flows; runs when `APALACHE_MC` is
 set or apalache-mc is found at the conventional path, else self-skips).
 
+Phase 6 (TCP + mTLS transports): `Shell/Transport/Tcp.lean`
+(connectTcp/listenTcp/serveTcpOn over `Ffi/socket_shim.c`: one
+session per connection, per-session line framing, peer drops logged
+and survived, SO_REUSEADDR, ephemeral-port support) and
+`Shell/Transport/Tls.lean` + `Ffi/tls_shim.c` (OpenSSL 3 FFI:
+serveTlsOn/connectTlsPinned/certFingerprintSHA256/warnIfNearExpiry
+parity with the Haskell TLS transport). The shim is deliberately
+thin — connect/accept/read/write plus fingerprints and expiry
+arithmetic — and the OpenSSL policy surface is explicit in it:
+TLS 1.3 only, client certificates required
+(SSL_VERIFY_PEER|SSL_VERIFY_FAIL_IF_NO_PEER_CERT), CA chain
+validation, server certs must carry a SAN, private keys must be
+0600, and clients pin the peer fingerprint. SSL_CTX/SSL objects are
+Lean external objects freed by GC finalizers — the only finalizer
+backstop in the codebase (§9.7). Regression suite:
+`tools/TransportSpec.lean` (generates a throwaway PKI with the
+openssl CLI at test time, runs TCP echo + drop-survival, mTLS echo
+with fingerprint pinning, and negatives: wrong pin, untrusted
+client cert, TLS 1.2-only peer, certificate-less client, no-SAN
+server cert, group-readable key, near-expiry arithmetic; skips
+itself when the openssl CLI is missing).
+
 Re-running the stdio integration suite from this repo (needs the
 Haskell ModelMirrors test binary and `apalache-mc` on PATH, plus the
 spec files under `specs/` and `test/specs/`):

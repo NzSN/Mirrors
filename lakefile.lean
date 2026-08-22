@@ -64,6 +64,29 @@ target socket_shim_o pkg : System.FilePath := do
       error s!"leanc failed for socket shim: {out.stderr}"
   inputBinFile o
 
+/- t15: compile the OpenSSL TLS shim with cc + openssl cflags
+(pkg-config); mtime-guarded like the socket shim. -/
+target tls_shim_o pkg : System.FilePath := do
+  let src := pkg.dir / "Ffi" / "tls_shim.c"
+  let o := pkg.buildDir / "tls_shim.o"
+  let fresh ← do
+    let oe ← IO.Process.output { cmd := "test", args := #["-nt", o.toString, src.toString] }
+    pure (oe.exitCode == 0)
+  if !fresh then do
+    let cc ← match (← IO.getEnv "CC") with
+      | some c => pure c
+      | none => pure "cc"
+    let leanPrefix ← IO.Process.output { cmd := "lean", args := #["--print-prefix"] }
+    let prefixStr := leanPrefix.stdout.trim
+    let pc ← IO.Process.output { cmd := "pkg-config", args := #["--cflags", "openssl"] }
+    let pcArgs := (pc.stdout.trim.splitOn " ").filter (· != "")
+    let out ← IO.Process.output
+      { cmd := cc, args := #["-c", src.toString, "-o", o.toString,
+                             "-I", prefixStr ++ "/include"] ++ pcArgs }
+    if out.exitCode != 0 then
+      error s!"cc failed for TLS shim: {out.stderr}"
+  inputBinFile o
+
 @[default_target]
 lean_lib Ffi where
   globs := #[.submodules `Ffi]
@@ -85,6 +108,15 @@ lean_exe explorer_spec where
   root := `tools.ExplorerSpec
   extraDepTargets := #[`socket_shim_o]
   moreLinkArgs := #[".lake/build/socket_shim.o"]
+
+/-- t15: TCP + mTLS transport regression suite (generates a throwaway
+PKI with the openssl CLI at test time; skips itself when the openssl
+CLI is missing). -/
+@[default_target]
+lean_exe transport_spec where
+  root := `tools.TransportSpec
+  extraDepTargets := #[`socket_shim_o, `tls_shim_o]
+  moreLinkArgs := #[".lake/build/socket_shim.o", ".lake/build/tls_shim.o", "-lssl", "-lcrypto"]
 
 /-- lake test runs the differential/parity + stdio gates; exit 0 = all green. -/
 @[test_driver]
@@ -134,6 +166,12 @@ script test do
   if out6.exitCode != 0 then
     IO.println s!"explorer_spec FAILED ({out6.exitCode})"
     return out6.exitCode
+  let out7 : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/transport_spec", args := #[] } : IO.Process.SpawnArgs)
+  IO.println out7.stdout
+  if out7.exitCode != 0 then
+    IO.println s!"transport_spec FAILED ({out7.exitCode})"
+    return out7.exitCode
   IO.println "ALL LAKE TESTS GREEN"
   return 0
 

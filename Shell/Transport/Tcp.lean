@@ -1,0 +1,143 @@
+import Ffi.Socket
+import Shell.Transport.Stdio
+import Batteries
+
+/-!
+# TCP transport (t15, design 5.4)
+
+Port of @Protocol.Transport.Tcp@ (151 LOC Haskell) onto the @Ffi.Socket@
+shim: one protocol session per connection, sequential accept loop; a
+client that drops mid-session logs to stderr and the loop survives.
+Line framing identical to the stdio transport (one JSON message per
+line, LF/CRLF stripped on receive, LF appended and flushed on send).
+
+Addresses: the shim is IPv4; @localhost@ resolves to @127.0.0.1@, and
+@serveTcpOn ""@ binds the all-interfaces wildcard like the Haskell
+version. Any other host must be an IPv4 dotted literal.
+-/
+
+namespace Shell.Transport.Tcp
+
+open Shell.Transport
+
+private def peerDesc (fd : UInt64) : IO String := do
+  let buf := ByteArray.mk ((List.replicate 64 0).toArray)
+  let n ← Ffi.peerDescRaw fd buf 63
+  if n == Ffi.fdError then return "?"
+  return String.fromUTF8? (buf.extract 0 n.toNat) |>.getD "?"
+
+/-- A buffered line-framed transport over one connected TCP socket. -/
+structure TcpTransport where
+  fd : UInt64
+  buf : IO.Ref ByteArray
+
+def tcpClose (t : TcpTransport) : IO Unit := Ffi.closeFd t.fd
+
+private def recvBuf : ByteArray := ByteArray.mk ((List.replicate 65536 0).toArray)
+
+private def hasLf (b : ByteArray) : Bool :=
+  let rec go (i : Nat) : Bool :=
+    if i >= b.size then false else if b.get! i == 10 then true else go (i + 1)
+  go 0
+
+private partial def findLf (b : ByteArray) (i : Nat) : Option Nat :=
+  if i >= b.size then none
+  else if b.get! i == 10 then some i
+  else findLf b (i + 1)
+
+/-- Build the line-framed @Transport@ over a connected socket. -/
+def tcpTransport (t : TcpTransport) : Transport :=
+  { recv := do
+      let mut acc ← t.buf.get
+      let mut found := true
+      let mut eof := false
+      while found && !eof do
+        if hasLf acc then
+          found := false
+        else
+          let n ← Ffi.recvSome t.fd recvBuf 65536
+          if n == 0 || n == Ffi.fdError then
+            eof := true
+          else
+            acc := acc.append (recvBuf.extract 0 n.toNat)
+      if eof && acc.isEmpty then
+        return none
+      else
+        match findLf acc 0 with
+        | none =>
+            t.buf.set (ByteArray.mk (#[] : Array UInt8))
+            return some (stripEol (String.fromUTF8? acc |>.getD ""))
+        | some i =>
+            let line := acc.extract 0 i
+            t.buf.set (acc.extract (i + 1) acc.size)
+            return some (stripEol (String.fromUTF8? line |>.getD ""))
+    send := fun s => do
+      let bs := (s ++ "\n").toUTF8
+      let r ← Ffi.sendAll t.fd bs bs.size.toUInt64
+      if r == Ffi.fdError then
+        throw (IO.userError "tcp send failed") }
+
+/-- Connect to @host:port@ and return a ready transport (Haskell
+@connectTcp@). @host@ is @localhost@ or an IPv4 dotted literal. -/
+def connectTcp (host : String) (port : Nat) : IO (Except String Transport) := do
+  let ip := if host == "localhost" || host.isEmpty then "127.0.0.1" else host
+  let fd ← Ffi.tcpSocket
+  if fd == Ffi.fdError then return .error "socket creation failed"
+  let r ← Ffi.connectIpv4 fd ip port.toUInt64
+  if r == Ffi.fdError then
+    Ffi.closeFd fd
+    return .error s!"connect to {host}:{port} failed"
+  return .ok (tcpTransport ⟨fd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩)
+
+/-- Open a listening socket bound to @host@ (empty = all interfaces,
+@localhost@ = loopback) and return the listener fd plus the bound port
+(port 0 picks an ephemeral port). -/
+def listenTcp (host : String) (port : Nat) : IO (Except String (UInt64 × Nat)) := do
+  let fd ← Ffi.tcpSocket
+  if fd == Ffi.fdError then return .error "socket creation failed"
+  let r ← if host == "localhost" then Ffi.bindLoopback fd port.toUInt64
+          else Ffi.bindAny fd port.toUInt64
+  if r == Ffi.fdError then
+    Ffi.closeFd fd
+    return .error s!"bind {host}:{port} failed"
+  let lrc ← Ffi.listenFd fd
+  if lrc == Ffi.fdError then
+    Ffi.closeFd fd
+    return .error "listen failed"
+  let actual ← Ffi.localPort fd
+  if actual == Ffi.fdError then
+    Ffi.closeFd fd
+    return .error "getsockname failed"
+  return .ok (fd, actual.toNat)
+
+private partial def loopAccept (lfd : UInt64) (session : Transport → IO Unit) : IO Unit := do
+  let cfd ← Ffi.acceptFd lfd
+  if cfd == Ffi.fdError then
+    IO.eprintln "tcp: accept failed; continuing"
+  else
+    let peer ← peerDesc cfd
+    let t := tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩
+    try
+      session t
+    catch e =>
+      IO.eprintln s!"tcp: session with {peer} ended: {e}"
+    Ffi.closeFd cfd
+  loopAccept lfd session
+
+/-- Serve one session per accepted connection, sequentially, forever
+(Haskell @serveTcpOn@ / @serveTcp@). Session errors and abrupt peer
+drops are logged to stderr and the accept loop survives; the loop only
+exits if binding the listener fails. -/
+partial def serveTcpOn (host : String) (port : Nat)
+    (session : Transport → IO Unit) : IO Unit := do
+  match ← listenTcp host port with
+  | .error e => throw (IO.userError s!"serveTcpOn: {e}")
+  | .ok (lfd, bound) =>
+      IO.eprintln s!"tcp: listening on {if host.isEmpty then "*" else host}:{bound}"
+      loopAccept lfd session
+
+/-- Haskell @serveTcp@: bind the all-interfaces wildcard. -/
+def serveTcp (port : Nat) (session : Transport → IO Unit) : IO Unit :=
+  serveTcpOn "" port session
+
+end Shell.Transport.Tcp

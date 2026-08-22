@@ -11,6 +11,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/select.h>
+#include <stdio.h>
 
 /* lean_bytearray_cptr is static inline in lean.h; byte-array data
    lives directly after the object header. */
@@ -50,6 +51,62 @@ LEAN_EXPORT uint64_t dsh_connect_loopback(uint64_t fd, uint64_t port) {
     if (getsockopt((int)fd, SOL_SOCKET, SO_ERROR, &soerr, &len) != 0 || soerr != 0) return (uint64_t)(int64_t)-1;
     fcntl((int)fd, F_SETFL, flags);
     return 0;
+}
+
+/* t15: bind the IPv4 wildcard 0.0.0.0 (Haskell serveTcp binds all
+   interfaces when no host is given). */
+LEAN_EXPORT uint64_t dsh_bind_any(uint64_t fd, uint64_t port) {
+    int one = 1;
+    setsockopt((int)fd, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+    struct sockaddr_in addr;
+    memset(&addr, 0, sizeof(addr));
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons((uint16_t)port);
+    addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    return (uint64_t)(int64_t)bind((int)fd, (struct sockaddr*)&addr, sizeof(addr));
+}
+
+/* t15: connect to an IPv4 dotted address (Lean resolves "localhost").
+   Same nonblocking+select discipline as dsh_connect_loopback. */
+LEAN_EXPORT uint64_t dsh_connect_ipv4(uint64_t fd, lean_object const *ip, uint64_t port) {
+    struct sockaddr_in addr;
+    memset(&addr, 0, sizeof(addr));
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons((uint16_t)port);
+    if (inet_pton(AF_INET, lean_string_cstr((lean_object *)ip), &addr.sin_addr) != 1)
+        return (uint64_t)(int64_t)-1;
+    int flags = fcntl((int)fd, F_GETFL, 0);
+    fcntl((int)fd, F_SETFL, flags | O_NONBLOCK);
+    int rc = connect((int)fd, (struct sockaddr*)&addr, sizeof(addr));
+    if (rc != 0 && errno != EINPROGRESS) return (uint64_t)(int64_t)-1;
+    fd_set wset;
+    FD_ZERO(&wset);
+    FD_SET((int)fd, &wset);
+    struct timeval tv;
+    tv.tv_sec = 5;
+    tv.tv_usec = 0;
+    if (select((int)fd + 1, NULL, &wset, NULL, &tv) <= 0) return (uint64_t)(int64_t)-1;
+    int soerr = 0;
+    socklen_t len = sizeof(soerr);
+    if (getsockopt((int)fd, SOL_SOCKET, SO_ERROR, &soerr, &len) != 0 || soerr != 0) return (uint64_t)(int64_t)-1;
+    fcntl((int)fd, F_SETFL, flags);
+    return 0;
+}
+
+/* t15: textual peer address "ip:port" of a connected/accepted socket,
+   for connection logging; -1 on error. */
+LEAN_EXPORT uint64_t dsh_peer_desc(uint64_t fd, uint8_t *out, uint64_t cap, uint64_t unused) {
+    (void)unused;
+    struct sockaddr_in addr;
+    socklen_t len = sizeof(addr);
+    if (getpeername((int)fd, (struct sockaddr*)&addr, &len) != 0) return (uint64_t)(int64_t)-1;
+    char buf[64];
+    snprintf(buf, sizeof(buf), "%s:%u", inet_ntoa(addr.sin_addr), (unsigned)ntohs(addr.sin_port));
+    size_t n = strlen(buf);
+    if (n >= cap) n = cap ? cap - 1 : 0;
+    memcpy(out, buf, n);
+    out[n] = 0;
+    return (uint64_t)n;
 }
 
 LEAN_EXPORT uint64_t dsh_bind_loopback(uint64_t fd, uint64_t port) {
