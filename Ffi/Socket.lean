@@ -67,4 +67,29 @@ opaque setRecvTimeoutMs : @& UInt64 → @& UInt64 → BaseIO UInt64
 @[extern "dsh_close_fd"]
 opaque closeFd : @& UInt64 → BaseIO Unit
 
+/-- t16: resolve an IPv4 host name (getaddrinfo) into @buf@; returns
+the dotted-address string length, or the fd sentinel on failure. -/
+@[extern "dsh_resolve_host"]
+opaque resolveHostRaw : @& String → @& ByteArray → UInt64 → BaseIO UInt64
+
+/-- t16: wait until @fd@ is readable or @ms@ ms elapse; returns 1
+readable / 0 timeout / fdError sentinel on select failure. -/
+@[extern "dsh_wait_readable"]
+opaque waitReadable : @& UInt64 → @& UInt64 → BaseIO UInt64
+
+/-- t16: install SIGINT/SIGTERM handlers (no SA_RESTART, so blocked
+accept/recv calls return EINTR); POSIX only, like the Haskell server. -/
+@[extern "dsh_install_exit_signals"]
+opaque installExitSignals : BaseIO Unit
+
+/-- t16: @1@ once SIGINT or SIGTERM has been delivered. -/
+@[extern "dsh_signal_fired"]
+opaque signalFired : BaseIO UInt64
+
+/-- t16: terminate the process with @code@ (POSIX exit(3); used after
+signal cleanup because a live dedicated task keeps the runtime
+alive). -/
+@[extern "dsh_exit"]
+opaque exitWith : UInt64 → BaseIO Unit
+
 end Ffi

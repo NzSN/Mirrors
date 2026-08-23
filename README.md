@@ -106,6 +106,33 @@ client cert, TLS 1.2-only peer, certificate-less client, no-SAN
 server cert, group-readable key, near-expiry arithmetic; skips
 itself when the openssl CLI is missing).
 
+Phase 6 registry/signals/CLI (completing the transports phase):
+`Ffi/socket_shim.c` grew t16 primitives — getaddrinfo IPv4 host
+resolution (registry URLs are configurable addresses, not
+loopback-only, matching the Haskell CLI), SIGINT/SIGTERM handlers
+installed WITHOUT SA_RESTART plus a signal flag, a select-based
+wait-readable so the accept loops poll instead of blocking (which
+also keeps heartbeat tasks schedulable), and a POSIX exit shim.
+`Shell/Net/Http.lean` generalizes to arbitrary hosts
+(`requestTo`/`postTo`/`putTo` — Consul's agent API is PUT-based;
+plain HTTP per design 9.2). `Shell/Registry.lean` ports
+Protocol.Registry: registerService (30s TTL, failures → false),
+heartbeat (10s loop as a task), best-effort deregister, and
+discoverServices failing closed per entry. `Shell/Client.lean` ports
+the client message exchange (`runClientValidate`).
+`Shell/Cli.lean` + `Main.lean` complete the CLI surface:
+`--serve <port> [--bind]`, `--server <port> --tls --cert --key --ca
+[--registry] [--jobs] [--bind]` (register/heartbeat/deregister;
+SIGTERM → deregister + exit 0 — verified against a mock Consul), and
+`validate` with direct TCP/mTLS or registry discovery
+(candidateFingerprint/--pin override, tryCandidates ordering).
+Sequential accept loop (one session per connection); --jobs is
+accepted for parity and reserved for the Phase 4 job store. Gate:
+`tools/RegistrySpec.lean` (mock Consul via tools/mock_consul.py:
+parser parity units, register/heartbeat/deregister recorded,
+discovery fail-closed parsing, dead-registry [], and the SIGTERM
+deregistration e2e with a throwaway PKI).
+
 Re-running the stdio integration suite from this repo (needs the
 Haskell ModelMirrors test binary and `apalache-mc` on PATH, plus the
 spec files under `specs/` and `test/specs/`):

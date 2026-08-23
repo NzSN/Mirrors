@@ -111,17 +111,31 @@ def listenTcp (host : String) (port : Nat) : IO (Except String (UInt64 × Nat)) 
   return .ok (fd, actual.toNat)
 
 private partial def loopAccept (lfd : UInt64) (session : Transport → IO Unit) : IO Unit := do
-  let cfd ← Ffi.acceptFd lfd
-  if cfd == Ffi.fdError then
-    IO.eprintln "tcp: accept failed; continuing"
-  else
-    let peer ← peerDesc cfd
-    let t := tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩
-    try
-      session t
-    catch e =>
-      IO.eprintln s!"tcp: session with {peer} ended: {e}"
-    Ffi.closeFd cfd
+  -- poll instead of blocking in accept(2): check the signal flag
+  -- every iteration (the signal may land on any thread) so cleanup
+  -- happens promptly and other tasks stay schedulable
+  let sig0 ← Ffi.signalFired
+  if sig0 == 1 then
+    return ()
+  let ready ← Ffi.waitReadable lfd 200
+  if ready == 1 then
+    let cfd ← Ffi.acceptFd lfd
+    if cfd == Ffi.fdError then
+      let sig ← Ffi.signalFired
+      if sig == 1 then
+        return ()
+      else
+        IO.eprintln "tcp: accept failed; continuing"
+    else
+      let peer ← peerDesc cfd
+      let t := tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩
+      try
+        session t
+      catch e =>
+        IO.eprintln s!"tcp: session with {peer} ended: {e}"
+      Ffi.closeFd cfd
+  else if ready == Ffi.fdError then
+    return ()
   loopAccept lfd session
 
 /-- Serve one session per accepted connection, sequentially, forever

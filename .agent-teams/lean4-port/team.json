@@ -12,7 +12,7 @@
       "provider": "jlc",
       "model": "glm-5.2",
       "joinedAt": 1787384623916,
-      "status": "working"
+      "status": "idle"
     },
     {
       "id": "de7d802d-098f-4085-adef-bfe570ac5e30",
@@ -39,7 +39,7 @@
       "provider": "jlc",
       "model": "glm-5.2",
       "joinedAt": 1787384623978,
-      "status": "idle"
+      "status": "working"
     }
   ],
   "tasks": [
@@ -286,30 +286,33 @@
       "id": "t16",
       "subject": "Phase 6: Consul registry/discovery + signal handling",
       "description": "Implement Shell/Registry.lean (Consul HTTP client reusing the Phase 5 HTTP client, JSON via Lean.Data.Json), service discovery, registry heartbeats, and SIGINT/SIGTERM deregistration via a C shim or IO signal hooks (POSIX-only, matching the documented Windows caveat). Exit per §8 Phase 6: --serve/--server/validate --registry CLI parity in Main.lean.",
-      "status": "in_progress",
+      "status": "completed",
       "assignee": "shell-engineer",
       "dependencies": [
         "t14"
       ],
       "attempt": 1,
       "createdAt": 1787384719710,
-      "updatedAt": 1787437525612,
+      "updatedAt": 1787443863586,
       "attemptId": "c751c93f-0cde-4c40-9e47-87daa0ff4f48",
-      "reassigning": false
+      "reassigning": false,
+      "output": "Phase 6 registry/discovery + signals + full CLI complete; lake test fully green with 8 gates (ALL LAKE TESTS GREEN, RC=0). Per captain guidance I verified the Haskell pin first: soRegistry/voRegistry are free-form URLs (ServerOpts.hs/ValidateOpts.hs, test uses http://r) — no loopback assumption, so the socket shim got GENERAL IPv4 connect + getaddrinfo hostname resolution (dsh_resolve_host) plus plain-HTTP registry per 9.2. New: Ffi socket_shim t16 primitives (resolve_host, SIGINT/SIGTERM handlers without SA_RESTART + signal flag, wait_readable select polling so accept loops poll every 200ms keeping heartbeat tasks schedulable, exit shim because a live dedicated task keeps the runtime alive); Shell/Net/Http requestTo/postTo/putTo (Consul agent API is PUT-based); Shell/Registry.lean (parseRegistryUrl http-only, registerService 30s TTL fail->false, heartbeatOnce 10s loop, deregisterService best-effort, discoverServices fail-closed per entry, advertisedHost/serviceId); Shell/Client.lean (sendMsg/recvMsg, runClientValidate); Shell/Cli.lean + Main.lean: --serve, --server (register/heartbeat/deregister; SIGTERM -> deregister + exit 0 verified), validate with direct TCP/mTLS or registry discovery (candidateFingerprint --pin override, tryCandidates order+diagnostics parity); full ServerOpts/ValidateOpts parser ports incl. all error cases. Gate tools/RegistrySpec.lean (8th): 32 checks — parser parity, URL cases, candidate logic, live mock Consul (tools/mock_consul.py) register/heartbeat/deregister recorded, discovery parsing with empty-address drop + per-entry fail-closed, dead registry -> [], and the SIGTERM deregistration e2e with a throwaway PKI. Sequential accept loop (one session per connection); --jobs accepted for CLI parity, reserved for the Phase 4 job store. Fixed en route: TLS client sockets now carry SO_RCVTIMEO 5s (a rejecting peer that closes without close_notify previously wedged recv forever)."
     },
     {
       "id": "t17",
       "subject": "Phase 6: client interop validation",
       "description": "Verify wire compatibility end-to-end per §2 Goal 2 and §8 Phase 6: existing clients MirrorRust and MirrorECMA interoperate with the Lean mirror without modification, byte for byte on the wire, over stdio, TCP, and mTLS (mutual auth, pinned fingerprints). Build the interop test matrix into CI.",
-      "status": "pending",
+      "status": "in_progress",
       "assignee": "qa-engineer",
       "dependencies": [
         "t15",
         "t16"
       ],
-      "attempt": 0,
+      "attempt": 1,
       "createdAt": 1787384719720,
-      "updatedAt": 1787384719720
+      "updatedAt": 1787443877038,
+      "attemptId": "22966bcf-437d-4d4c-9c2e-d3d95ae90167",
+      "reassigning": false
     },
     {
       "id": "t18",
@@ -424,17 +427,33 @@
       "id": "t25",
       "subject": "§9.1 security review: TLS FFI shim (flagged #1 review target)",
       "description": "The doc §9.1 designates the OpenSSL config surface as the #1 code-review target of the entire port, and t15 just landed it. Perform an adversarial review of Ffi/tls_shim.c + Ffi/Tls.lean (+ Shell/Transport/Tls.lean call sites): (1) TLS 1.3-only enforcement — can a peer negotiate down (SSL_CTX_set_min_proto_version correct, no SECLEVEL/ cipher-suite footguns)? (2) client certs truly required on the server side (SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT set on the right ctx, verify callback behavior); (3) CA chain + SAN validation cannot be bypassed (hostname/SAN check order, X509_verify_cert error handling, wildcard rules vs Haskell tls package behavior at ModelMirros@3496251); (4) fingerprint extraction correctness (SHA-256 over DER of the peer cert, empty-chain handling); (5) C memory safety: every error path frees what it allocated, no use-after-free across the Lean external-object boundary, GC finalizers idempotent and exactly the §9.7 backstop; (6) the two ABI gotchas shell reported (Option ctor ABI, ByteArray out-params) — verify the sentinel/lean_sarray_cptr fixes are complete, no remaining instance; (7) error propagation: no swallowed OpenSSL errors (ERR_get_error drained), no partial-read/write bugs. Also review tools/TransportSpec.lean negative tests for coverage gaps (suggest missing cases, e.g. expired cert, wrong-CA client, SAN mismatch). Deliverable: a written review report (Docs/tls-ffi-review.md) with findings classified blocker/major/minor; file any blocker/major fixes back to shell-engineer via the captain. This is a REVIEW task — do not rewrite the shim yourself.",
-      "status": "claimed",
+      "status": "completed",
       "assignee": "core-engineer",
       "dependencies": [
         "t15"
       ],
       "attempt": 1,
       "createdAt": 1787437578168,
-      "updatedAt": 1787437578171,
+      "updatedAt": 1787437863444,
       "attemptId": "7c3d38eb-bf6d-4fc2-a330-553cb4dd3594",
+      "reassigning": false,
+      "output": "Adversarial review of the TLS FFI shim delivered as Docs/tls-ffi-review.md (199 lines). Findings: 1 BLOCKER (B1: handshake-failure sentinels are NULL-payload external objects; when GC'd, ssl_finalizer calls SSL_shutdown(NULL) and segfaults — every rejected handshake arms a random crash; fix: NULL guard in ssl_finalizer), 3 MAJOR (M1: server-side key-permission check entirely missing — key_perms_ok is only called in the client ctx — and the existing group-readable-key negative test is vacuous because it reuses the no-SAN cert; M2: certDaysRemaining wraps negative days through UInt64.toNat so the expired-cert warning branch is dead code — expired certs produce no warning; M3: SSL_set1_host never matches iPAddress SANs (fail-closed for IP-literal hosts, comment claims otherwise) and OpenSSL CN-fallback diverges from tls-package SAN-only policy — recommend set1_ip_asc + NEVER_CHECK_SUBJECT), 8 MINOR (load_chain X509 leaks, leaf_has_san accepts any GeneralName, NULL-chain error path misleading, single-thread g_err assumption, nonblocking WANT_* hazards, unbounded recv line buffer, wrong sentinel class on one error path, isNull inhabitant assumption). Verified sound: TLS 1.3 pin (min=max, no cipher/SECLEVEL footguns), client certs required on server ctx with default verification path, fingerprint SHA-256/DER correctness + CLI parity, startup chain validation, both ABI gotchas fully resolved (lean_sarray_cptr everywhere, sentinel instead of Option ctors), error draining, single-free ownership incl. BIO_NOCLOSE. 8 concrete negative-test additions suggested (expired cert, SAN mismatch, wrong-CA client, unchainable server cert, cert/key mismatch, garbage cert file, IP-literal connect, oversized line). Review-only: no code changed."
+    },
+    {
+      "id": "t26",
+      "subject": "Fix t25 TLS review findings (1 blocker, 3 majors)",
+      "description": "Apply the fixes from Docs/tls-ffi-review.md (core-engineer's §9.1 review of your t15 shim). BLOCKER (fix first): ssl_finalizer must guard NULL — handshake-failure sentinels are NULL-payload external objects that get GC'd, SSL_shutdown(NULL) segfaults; trivially armed by the existing cert-less-client negative test. MAJORS: (M1) dsh_tls_server_ctx never calls key_perms_ok — the check is client-only, so the group-readable-key negative test is vacuous (it reuses the no-SAN cert); apply perms check server-side and make the test non-vacuous. (M2) certDaysRemaining's d.toNat wraps negative days to huge Nats — the expired-cert warning is dead code; fix with signed reinterpretation in the Lean wrapper + add an expired-cert negative test. (M3) hostname pinning: SSL_set1_host does not match IP SANs (fail-closed, shim comment wrong) and OpenSSL CN-fallback diverges from the Haskell tls package's SAN-only policy — use SSL_set1_ip_asc for IP-literal hosts + X509_CHECK_FLAG_NEVER_CHECK_SUBJECT; document wildcard rules. Then work the 8 minors and add the 8 suggested negative tests from the report (expired cert, client-side SAN mismatch, wrong-CA client, unchainable server cert, cert/key mismatch, garbage cert file, IP-literal connect, oversized line) as far as they are reproducible. Exit: all review findings resolved or explicitly accepted with rationale in Docs/tls-ffi-review.md; transport_spec extended; lake build + all 7 gates green. Have core-engineer re-review the diff before closing.",
+      "status": "in_progress",
+      "assignee": "shell-engineer",
+      "dependencies": [
+        "t25"
+      ],
+      "attempt": 1,
+      "createdAt": 1787437913259,
+      "updatedAt": 1787443903546,
+      "attemptId": "5314c3bf-74f1-472a-8873-8f26aa489e90",
       "reassigning": false
     }
   ],
-  "taskSeq": 25
+  "taskSeq": 26
 }

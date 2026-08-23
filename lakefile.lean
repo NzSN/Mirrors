@@ -28,8 +28,8 @@ lean_exe diff_cross where
 @[default_target]
 lean_exe mirror where
   root := `Main
-  extraDepTargets := #[`socket_shim_o]
-  moreLinkArgs := #[".lake/build/socket_shim.o"]
+  extraDepTargets := #[`socket_shim_o, `tls_shim_o]
+  moreLinkArgs := #[".lake/build/socket_shim.o", ".lake/build/tls_shim.o", "-lssl", "-lcrypto"]
 
 /-- Phase 3: stdio session smoke test against the built mirror binary. -/
 @[default_target]
@@ -118,6 +118,15 @@ lean_exe transport_spec where
   extraDepTargets := #[`socket_shim_o, `tls_shim_o]
   moreLinkArgs := #[".lake/build/socket_shim.o", ".lake/build/tls_shim.o", "-lssl", "-lcrypto"]
 
+/-- t16: registry/discovery + signal-handling gate (mock Consul via
+python3; the SIGTERM tier needs the openssl CLI for a throwaway PKI
+and self-skips that tier without it). -/
+@[default_target]
+lean_exe registry_spec where
+  root := `tools.RegistrySpec
+  extraDepTargets := #[`socket_shim_o, `tls_shim_o]
+  moreLinkArgs := #[".lake/build/socket_shim.o", ".lake/build/tls_shim.o", "-lssl", "-lcrypto"]
+
 /-- lake test runs the differential/parity + stdio gates; exit 0 = all green. -/
 @[test_driver]
 script test do
@@ -172,6 +181,12 @@ script test do
   if out7.exitCode != 0 then
     IO.println s!"transport_spec FAILED ({out7.exitCode})"
     return out7.exitCode
+  let out8 : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/registry_spec", args := #[] } : IO.Process.SpawnArgs)
+  IO.println out8.stdout
+  if out8.exitCode != 0 then
+    IO.println s!"registry_spec FAILED ({out8.exitCode})"
+    return out8.exitCode
   IO.println "ALL LAKE TESTS GREEN"
   return 0
 

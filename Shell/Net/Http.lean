@@ -120,6 +120,33 @@ structure Conn where
   fd : UInt64
   buf : IO.Ref ByteArray
 
+/-- Resolve an IPv4 host name to a dotted address (getaddrinfo via the
+shim); dotted literals and @localhost@ pass through unchanged. -/
+def resolveHost (host : String) : IO (Except String String) := do
+  if host == "localhost" then return .ok "127.0.0.1"
+  if host == "127.0.0.1" then return .ok host
+  let buf := ByteArray.mk ((List.replicate 64 0).toArray)
+  let n ← Ffi.resolveHostRaw host buf 63
+  if n == Ffi.fdError then
+    return .error s!"cannot resolve host: {host}"
+  return .ok (String.fromUTF8? (buf.extract 0 n.toNat) |>.getD "")
+
+/-- t16: open a connection to an arbitrary IPv4 host (registry
+addresses are configurable URLs, not loopback-only). -/
+def openConnTo (host : String) (port : Nat) (timeoutMs : Nat) :
+    IO (Except String Conn) := do
+  match ← resolveHost host with
+  | .error e => return .error e
+  | .ok ip =>
+    let fd ← Ffi.tcpSocket
+    if fd == Ffi.fdError then return .error "socket creation failed"
+    let _ ← Ffi.setRecvTimeoutMs fd (timeoutMs.toUInt64)
+    let conn ← Ffi.connectIpv4 fd ip port.toUInt64
+    if conn == Ffi.fdError then
+      Ffi.closeFd fd
+      return .error s!"connect to {host}:{port} failed"
+    return .ok ⟨fd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩
+
 def openConn (port : Nat) (timeoutMs : Nat) : IO (Except String Conn) := do
   let fd ← Ffi.tcpSocket
   if fd == Ffi.fdError then return .error "socket creation failed"
@@ -254,15 +281,15 @@ private def recvAll (fd : UInt64) : IO (Except String ByteArray) := do
       bufRef.modify (fun acc => acc.append (recvBuf.extract 0 n.toNat))
   return .ok (← bufRef.get)
 
-/-- One-shot HTTP/1.1 POST of a JSON body to @localhost:<port><path>@
-with a bounded wait (Connection: close, response read to EOF). -/
-def post (port : Nat) (path : String) (body : String)
-    (timeoutMs : Nat := 30000) : IO (Except String HttpResponse) := do
-  match ← openConn port timeoutMs with
+/-- t16: one-shot request with an arbitrary method to an arbitrary
+IPv4 host (registry URLs use PUT). -/
+def requestTo (method : String) (host : String) (port : Nat) (path : String)
+    (body : String) (timeoutMs : Nat := 30000) : IO (Except String HttpResponse) := do
+  match ← openConnTo host port timeoutMs with
   | .error e => return .error e
   | .ok c =>
-      let req := "POST " ++ path ++ " HTTP/1.1\r\n"
-        ++ "Host: localhost:" ++ toString port ++ "\r\n"
+      let req := method ++ " " ++ path ++ " HTTP/1.1\r\n"
+        ++ "Host: " ++ host ++ ":" ++ toString port ++ "\r\n"
         ++ "Content-Type: application/json\r\n"
         ++ "Content-Length: " ++ toString body.length ++ "\r\n"
         ++ "Connection: close\r\n\r\n"
@@ -294,5 +321,21 @@ def post (port : Nat) (path : String) (body : String)
             match (headerValue hdrTail "Content-Length") >>= (·.toNat?) with
             | some n => return .ok ⟨status, ascii (bodyB.extract 0 (min n bodyB.size))⟩
             | none => return .ok ⟨status, ascii bodyB⟩
+
+/-- t16: one-shot POST to an arbitrary IPv4 host (registry URLs). -/
+def postTo (host : String) (port : Nat) (path : String) (body : String)
+    (timeoutMs : Nat := 30000) : IO (Except String HttpResponse) :=
+  requestTo "POST" host port path body timeoutMs
+
+/-- t16: one-shot PUT (Consul's agent API verbs). -/
+def putTo (host : String) (port : Nat) (path : String) (body : String)
+    (timeoutMs : Nat := 30000) : IO (Except String HttpResponse) :=
+  requestTo "PUT" host port path body timeoutMs
+
+/-- One-shot HTTP/1.1 POST of a JSON body to @localhost:<port><path>@
+with a bounded wait (Connection: close, response read to EOF). -/
+def post (port : Nat) (path : String) (body : String)
+    (timeoutMs : Nat := 30000) : IO (Except String HttpResponse) :=
+  postTo "localhost" port path body timeoutMs
 
 end Shell.Net.Http

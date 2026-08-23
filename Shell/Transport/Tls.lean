@@ -1,6 +1,7 @@
 import Ffi.Socket
 import Ffi.Tls
 import Shell.Transport.Tcp
+import Shell.Net.Http
 import Shell.Transport.Stdio
 
 /-!
@@ -153,22 +154,36 @@ def tlsTransport (t : TlsSession) : Transport :=
 
 private partial def loop (lfd : UInt64) (ctx : Ffi.TlsCtx)
     (session : Transport → IO Unit) : IO Unit := do
-  let cfd ← Ffi.acceptFd lfd
-  if cfd == Ffi.fdError then
-    IO.eprintln "tls: accept failed; continuing"
-  else
-    let ssl ← Ffi.tlsAcceptRaw ctx cfd
-    let nul ← Ffi.sslIsNull ssl
-    if nul == 1 then
-      IO.eprintln s!"tls: handshake rejected ({← Ffi.tlsErrmsg})"
+  -- poll instead of blocking in accept(2): check the signal flag
+  -- every iteration (the signal may land on any thread, not
+  -- necessarily the one inside select) and stop for cleanup
+  let sig0 ← Ffi.signalFired
+  if sig0 == 1 then
+    return ()
+  let ready ← Ffi.waitReadable lfd 200
+  if ready == 1 then
+    let cfd ← Ffi.acceptFd lfd
+    if cfd == Ffi.fdError then
+      let sig ← Ffi.signalFired
+      if sig == 1 then
+        return ()
+      else
+        IO.eprintln "tls: accept failed; continuing"
     else
-      let t := { ssl, buf := ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)) }
-      try
-        session (tlsTransport t)
-      catch e =>
-        IO.eprintln s!"tls: session ended: {e}"
-      tlsClose t
-    Ffi.closeFd cfd
+      let ssl ← Ffi.tlsAcceptRaw ctx cfd
+      let nul ← Ffi.sslIsNull ssl
+      if nul == 1 then
+        IO.eprintln s!"tls: handshake rejected ({← Ffi.tlsErrmsg})"
+      else
+        let t := { ssl, buf := ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)) }
+        try
+          session (tlsTransport t)
+        catch e =>
+          IO.eprintln s!"tls: session ended: {e}"
+        tlsClose t
+      Ffi.closeFd cfd
+  else if ready == Ffi.fdError then
+    return ()
   loop lfd ctx session
 
 /-- TLS accept loop (Haskell @serveTlsOn@ / @serveTlsConcurrentOn@,
@@ -187,14 +202,18 @@ partial def serveTlsOn (host : String) (port : Nat) (files : TlsFiles)
           IO.eprintln s!"tls: listening on {if host.isEmpty then "*" else host}:{bound} (mTLS, TLS 1.3)"
           loop lfd ctx session
 
-/-- Connect and pin the peer certificate fingerprint (Haskell
-@connectTlsPinned@): after the handshake, the peer's SHA-256 fingerprint
-must equal @expectedFp@, else the connection fails. -/
-def connectTlsPinned (ctx : Ffi.TlsCtx) (host : String) (port : Nat)
-    (expectedFp : String) : IO (Except String Transport) := do
-  let ip := if host == "localhost" then "127.0.0.1" else host
+/-- Shared connect: resolve, TCP connect, TLS 1.3 handshake with CA and
+SAN validation. Returns the session's SSL object on success. -/
+private def tlsHandshake (ctx : Ffi.TlsCtx) (host : String) (port : Nat) :
+    IO (Except String Ffi.TlsSsl) := do
+  let ip ← match ← Shell.Net.Http.resolveHost host with
+    | .ok i => pure i
+    | .error e => return .error e
   let fd ← Ffi.tcpSocket
   if fd == Ffi.fdError then return .error "socket creation failed"
+  -- bounded reads: a peer that vanishes without close_notify must not
+  -- wedge the client forever (SO_RCVTIMEO surfaces as a read error)
+  let _ ← Ffi.setRecvTimeoutMs fd 5000
   let crc ← Ffi.connectIpv4 fd ip port.toUInt64
   if crc == Ffi.fdError then
     Ffi.closeFd fd
@@ -204,18 +223,33 @@ def connectTlsPinned (ctx : Ffi.TlsCtx) (host : String) (port : Nat)
   if nul == 1 then
     Ffi.closeFd fd
     return .error s!"TLS handshake failed: {← Ffi.tlsErrmsg}"
-  else
-    match ← peerCertFingerprintSHA256 ssl with
-        | none =>
-            Ffi.closeFd fd
-            return .error "peer presented no certificate"
-        | some fp =>
-            if fp != expectedFp then
-              Ffi.tlsClose ssl
-              Ffi.closeFd fd
-              return .error
-                s!"certificate fingerprint mismatch for {host}:{port} (want {expectedFp}, got {fp})"
-            else
-              return .ok (tlsTransport ⟨ssl, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩)
+  return .ok ssl
+
+/-- Connect over mutually-authenticated TLS 1.3 with CA/SAN validation
+but no fingerprint pin (Haskell @connectTls@ — used when neither
+@--pin@ nor registry metadata provides a fingerprint). -/
+def connectTls (ctx : Ffi.TlsCtx) (host : String) (port : Nat) :
+    IO (Except String Transport) := do
+  match ← tlsHandshake ctx host port with
+  | .error e => return .error e
+  | .ok ssl =>
+      return .ok (tlsTransport ⟨ssl, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩)
+
+/-- Connect and pin the peer certificate fingerprint (Haskell
+@connectTlsPinned@): after the handshake, the peer's SHA-256 fingerprint
+must equal @expectedFp@, else the connection fails. -/
+def connectTlsPinned (ctx : Ffi.TlsCtx) (host : String) (port : Nat)
+    (expectedFp : String) : IO (Except String Transport) := do
+  match ← tlsHandshake ctx host port with
+  | .error e => return .error e
+  | .ok ssl =>
+      match ← peerCertFingerprintSHA256 ssl with
+      | none => return .error "peer presented no certificate"
+      | some fp =>
+          if fp != expectedFp then
+            return .error
+              s!"certificate fingerprint mismatch for {host}:{port} (want {expectedFp}, got {fp})"
+          else
+            return .ok (tlsTransport ⟨ssl, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩)
 
 end Shell.Transport.Tls

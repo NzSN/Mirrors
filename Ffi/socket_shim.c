@@ -12,6 +12,7 @@
 #include <arpa/inet.h>
 #include <sys/select.h>
 #include <stdio.h>
+#include <netdb.h>
 
 /* lean_bytearray_cptr is static inline in lean.h; byte-array data
    lives directly after the object header. */
@@ -165,4 +166,90 @@ LEAN_EXPORT uint64_t dsh_set_rcvtimeo_ms(uint64_t fd, uint64_t ms) {
 
 LEAN_EXPORT void dsh_close_fd(uint64_t fd) {
     if (fd >= 0) close((int)fd);
+}
+
+/* ---------- t16: accept-loop polling ---------- */
+
+/* Wait until fd is readable or ms milliseconds elapse (select).
+ * Returns 1 readable, 0 timeout, -1 error. Lets the Lean accept loop
+ * poll instead of blocking forever in accept(2), so heartbeat tasks
+ * get scheduled and EINTR-free signal checks happen between waits. */
+LEAN_EXPORT uint64_t dsh_wait_readable(uint64_t fd, uint64_t ms, uint64_t unused) {
+    (void)unused;
+    fd_set rset;
+    FD_ZERO(&rset);
+    FD_SET((int)fd, &rset);
+    struct timeval tv;
+    tv.tv_sec = ms / 1000;
+    tv.tv_usec = (ms % 1000) * 1000;
+    int rc = select((int)fd + 1, &rset, NULL, NULL, &tv);
+    if (rc < 0) return (uint64_t)(int64_t)-1;
+    return (uint64_t)(rc > 0 ? 1 : 0);
+}
+
+/* ---------- t16: hostname resolution ---------- */
+
+/* Resolve an IPv4 host name (or pass through dotted literals) into the
+ * caller's ByteArray. Registry URLs carry arbitrary host names, so the
+ * HTTP client needs getaddrinfo; IPv4-only to match the shim's
+ * sockaddr_in surface. Returns the string length, or -1. */
+LEAN_EXPORT uint64_t dsh_resolve_host(lean_object *name, lean_object *outobj,
+                                      uint64_t cap, uint64_t unused) {
+    (void)unused;
+    uint8_t *out = dsh_ba_ptr(outobj);
+    struct addrinfo hints, *res = NULL;
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+    int rc = getaddrinfo(lean_string_cstr(name), NULL, &hints, &res);
+    if (rc != 0 || !res) return (uint64_t)(int64_t)-1;
+    struct sockaddr_in *a = (struct sockaddr_in *)res->ai_addr;
+    char ip[INET_ADDRSTRLEN];
+    if (!inet_ntop(AF_INET, &a->sin_addr, ip, sizeof(ip))) {
+        freeaddrinfo(res);
+        return (uint64_t)(int64_t)-1;
+    }
+    freeaddrinfo(res);
+    size_t n = strlen(ip);
+    if (n >= cap) n = cap ? cap - 1 : 0;
+    memcpy(out, ip, n);
+    out[n] = 0;
+    return (uint64_t)n;
+}
+
+/* ---------- t16: SIGINT/SIGTERM handling ---------- */
+
+/* Set without SA_RESTART so a blocked accept()/recv() returns EINTR and
+ * the Lean accept loop can observe the flag and run cleanup. Only
+ * async-signal-safe operations inside the handler. */
+#include <signal.h>
+
+static volatile sig_atomic_t dsh_signaled = 0;
+
+static void dsh_on_exit_signal(int sig) {
+    (void)sig;
+    dsh_signaled = 1;
+}
+
+LEAN_EXPORT void dsh_install_exit_signals(uint64_t unused) {
+    (void)unused;
+    struct sigaction sa;
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = dsh_on_exit_signal;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0; /* no SA_RESTART: interrupt blocking calls */
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGTERM, &sa, NULL);
+}
+
+LEAN_EXPORT uint64_t dsh_signal_fired(uint64_t unused) {
+    (void)unused;
+    return (uint64_t)dsh_signaled;
+}
+
+/* t16: terminate the process (the heartbeat task thread would
+ * otherwise keep the runtime alive after the accept loop returns). */
+LEAN_EXPORT void dsh_exit(uint64_t code, uint64_t unused) {
+    (void)unused;
+    exit((int)code);
 }
