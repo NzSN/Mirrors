@@ -197,3 +197,57 @@ Suggested additions:
   Shell/Transport/Tls.lean); M1 test rewrite + coverage items 1-7
   in tools/TransportSpec.lean.
 - This review did not modify any code (review-only task).
+
+## Resolution (t26, shell-engineer)
+
+All findings addressed in Ffi/tls_shim.c, Ffi/Tls.lean,
+Shell/Transport/Tls.lean, and tools/TransportSpec.lean:
+
+- **B1 fixed**: ssl_finalizer guards NULL before SSL_shutdown/SSL_free.
+- **M1 fixed**: dsh_tls_server_ctx calls key_perms_ok before anything
+  else; the negative test now uses the good server cert with a
+  chmod-640 copy of the matching key (non-vacuous — the SAN and chain
+  checks pass, only perms can reject).
+- **M2 fixed**: certDaysRemaining sign-extends the UInt64 (high-bit
+  test via d >>> 63) instead of UInt64.toNat; negative days are real
+  Ints and the expired-certificate warning fires. Verified: the
+  expired-cert fixture (openssl -days 0) reports days <= 0 and warns.
+- **M3 fixed**: dsh_tls_connect pins via X509_VERIFY_PARAM —
+  X509_VERIFY_PARAM_set1_ip_asc for IP literals (inet_pton probe),
+  set1_host otherwise, plus X509_CHECK_FLAG_NEVER_CHECK_SUBJECT
+  (SAN-only, no CN fallback). Documented ACCEPTED divergence: wildcard
+  matching stays OpenSSL's leftmost-label rule (stricter than
+  x509-validation's anywhere-in-label rule; fail-closed, safe).
+  Positive IP-literal test added (SAN IP:127.0.0.1 + connect to
+  127.0.0.1 now completes the echo).
+- **m1 fixed**: load_chain results freed with sk_X509_pop_free.
+- **m2 fixed**: leaf_has_san counts only GenDNS/GenIPADD entries.
+- **m3 fixed**: explicit NULL-chain guard after load_chain (real
+  error from load_chain surfaces); garbage/empty-file tests cover it.
+- **m4 documented**: g_err carries a single-threaded comment; to be
+  made thread-local if a concurrent handshake path ever lands.
+- **m5 documented**: WANT_READ/WANT_WRITE handling annotated as
+  blocking-fd-only.
+- **m6 fixed**: tlsTransport.recv enforces a 1 MiB line cap (throw),
+  defense-in-depth beyond the Haskell side (Tcp.hs hGetLine is itself
+  unbounded); negative test sends a single 1.5 MiB line and asserts
+  rejection + server survival.
+- **m7 fixed**: the client load_verify_locations failure sentinel
+  uses ctx_class().
+- **m8 documented**: is_null comment notes it is only applied to
+  shim-produced values.
+
+Additional fixes made while resolving the findings:
+
+- Startup chain validation (server ctx) sets
+  X509_V_FLAG_NO_CHECK_TIME: expiry is warn-only at startup per
+  policy (warnIfNearExpiry), while handshake-time verification stays
+  strict. Previously an expired-but-validly-chained server cert was
+  hard-rejected at startup, contradicting the warn-only policy.
+
+All 8 suggested negative tests are in tools/TransportSpec.lean:
+expired cert (ctx still created + days <= 0), client-side SAN
+mismatch (other.example SAN vs localhost pin), wrong-CA client,
+unchainable server cert, cert/key mismatch, garbage + empty cert
+files (ctx and fingerprint), IP-literal connect (now positive via
+M3), oversized line. Gate green: TRANSPORT SPEC: all green.

@@ -1,0 +1,88 @@
+ALL FIXTURES ROUND-TRIP BYTE-IDENTICAL
+
+DIFF ENGINE DIFFERENTIAL (test/fixtures/diff_cases.jsonl): 500/500 cases agree with Haskell
+
+clean session: #[spec_validated, initial_state, step_ok, next_step, step_ok, initial_state, step_ok, next_step, step_ok, next_step, step_ok, all_steps_done]
+mismatch session: #[spec_validated, initial_state, step_ok, next_step, step_mismatch]
+STDIO SMOKE GREEN
+
+JOBSTORE PARITY GREEN
+
+APALACHE CLI GREEN
+
+EXPLORER SPEC: all green
+
+ok: pki: server cert signed
+ok: pki: client cert signed
+ok: pki: nosan cert signed
+ok: pki: rogue cert signed
+ok: pki: soon-expiry cert signed
+ok: pki: other-san cert signed
+ok: pki: stray (unchainable) cert signed
+ok: pki: expired cert signed
+ok: server ctx (good PKI)
+ok: server ctx rejected: no SAN
+ok: server ctx rejected: group-readable key (non-vacuous)
+ok: server ctx rejected: unchainable cert
+ok: server ctx rejected: cert/key mismatch
+ok: server ctx rejected: garbage cert file
+ok: server ctx rejected: empty cert file
+ok: fingerprint of garbage cert is none
+ok: expired cert: ctx still created (warn-only)
+ok: expired cert days <= 0 (M2)
+ok: client ctx (good PKI)
+ok: fingerprint matches openssl CLI
+ok: soon cert days in [1,2]
+ok: long cert days > 300
+ok: tcp echo round trip
+ok: tcp server survived peer drop
+ok: mtls echo round trip (TLS 1.3, pinned fp)
+ok: ip-literal connect (M3)
+ok: oversized line rejected (m6)
+ok: server alive after oversized line
+ok: mtls wrong fingerprint rejected
+ok: client with wrong CA rejected by handshake
+ok: other-san ctx (locally valid)
+ok: client hostname SAN mismatch rejected
+ok: rogue client ctx (locally valid)
+ok: mtls untrusted client cert rejected by server
+ok: tls1.2-only peer rejected (no echo)
+ok: certificate-less client rejected (no echo)
+dbg before ip: pid 217050
+TRANSPORT SPEC: all green
+
+ok: serve cli: ok
+ok: serve cli: bind
+ok: serve cli: bad port
+ok: server opts: happy
+ok: server opts: defaults jobs=4
+ok: server opts: no tls
+ok: server opts: dup port
+ok: server opts: unknown
+ok: validate: direct happy
+ok: validate: registry needs tls
+ok: validate: registry+host rejected
+ok: validate: pin requires tls
+ok: url: bare host
+ok: url: scheme + path
+ok: url: default port
+ok: url: https rejected
+ok: url: bad port
+ok: candidateFingerprint: pin wins
+ok: candidateFingerprint: registry fp
+ok: candidateFingerprint: none
+ok: tryCandidates: empty
+ok: tryCandidates: order + diagnostics
+ok: mock consul started
+ok: registerService ok
+ok: register request recorded
+ok: heartbeat request recorded
+ok: deregister request recorded
+ok: discover parses + drops empty + fails closed
+ok: dead registry -> []
+ok: server child registered with consul
+ok: SIGTERM -> deregistered + exit 0
+REGISTRY SPEC: all green
+
+ALL LAKE TESTS GREEN
+RC=0

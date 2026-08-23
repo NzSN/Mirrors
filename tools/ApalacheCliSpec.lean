@@ -122,12 +122,12 @@ def unitArgs (fails : Failures) : IO Unit := do
     (checkArgs none { cfg with invariant := "" } 10 ==
       ["check", "--length=10", "--init=I", "--next=N", "--cinit=CInit", "S.tla"])
   check fails "traceArgs"
-    (traceArgs (some "/rd") cfg { numTraces := 3, view := "" } ==
+    (traceArgs (some "/rd") cfg { numTraces := 3, view := none } ==
       ["check", "--inv=Inv", "--length=13", "--max-error=3", "--output-traces",
        "--run-dir=/rd", "--init=I", "--next=N", "--cinit=CInit",
        "S.tla"])
   check fails "traceArgs: view gated"
-    (traceArgs none { cfg with invariant := "" } { numTraces := 1, view := "untyped" } ==
+    (traceArgs none { cfg with invariant := "" } { numTraces := 1, view := some "untyped" } ==
       ["check", "--length=13", "--max-error=1", "--output-traces", "--init=I",
        "--next=N", "--cinit=CInit", "--view=untyped", "S.tla"])
   check fails "parseOutputDir: found"
@@ -172,7 +172,7 @@ def integration (fails : Failures) : IO Unit := do
       | .error _ => check fails "int: missing op is infra" true
       | .ok _ => check fails "int: missing op is infra" false "unexpectedly a verdict"
       -- trace generation into a run dir
-      match ← generateTraceFilesIn (some runDir) hcCfg { numTraces := 1, view := "" } with
+      match ← generateTraceFilesIn (some runDir) hcCfg { numTraces := 1, view := none } with
       | .error e => check fails "int: trace files" false e
       | .ok (outDir, paths) => do
           check fails "int: trace paths" (!paths.isEmpty) (toString (repr paths))
@@ -182,7 +182,7 @@ def integration (fails : Failures) : IO Unit := do
             match ← Shell.Mirror.readItfTrace p with
             | .error e => check fails "int: trace parses" false e
             | .ok tr => check fails "int: trace states" (!tr.traceStates.isEmpty)
-      match ← generateTracesIn (some runDir) hcCfg { numTraces := 1, view := "" } with
+      match ← generateTracesIn (some runDir) hcCfg { numTraces := 1, view := none } with
       | .error e => check fails "int: in-memory traces" false e
       | .ok ts => check fails "int: in-memory traces" (!ts.isEmpty)
       let stray3 ← ("_apalache-out" : System.FilePath).pathExists
@@ -192,7 +192,7 @@ def integration (fails : Failures) : IO Unit := do
       let startMs ← IO.monoMsNow
       let task ← IO.asTask (prio := Task.Priority.dedicated)
         (runApalacheCancellable token (some runDir)
-          (traceArgs (some runDir) hcCfg { numTraces := 10, view := "" }))
+          (traceArgs (some runDir) hcCfg { numTraces := 10, view := none }))
       IO.sleep 3000
       token.flag.set true
       (← token.cleanup.get)

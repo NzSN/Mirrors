@@ -272,16 +272,38 @@ def syncOracles : Shell.Mirror.Oracles where
         let r ← try generateTracesIn (some dir) cfg' tc
           finally (do releaseSpec res; removeSessionDir dir)
         return r
-  generateTraceFiles := fun cfg spec tc => do
+  generateTraceFiles := fun cfg spec dest tc => do
     match ← acquireSpec spec cfg with
     | .error e => return .error e
     | .ok (res, cfg') =>
         let dir ← freshSessionDir
-        let r ← try generateTraceFilesIn (some dir) cfg' tc
+        -- Port of MkRunMirrorGenTraces: generate into the session dir,
+        -- optionally copy into the client's destPath (creating it), then
+        -- read the *final* paths for inlining — all before the session
+        -- dir is removed (reading after cleanup would hit ENOENT).
+        let finalPaths? ←
+          try
+            let r ← generateTraceFilesIn (some dir) cfg' tc
+            match r with
+            | .error _ => pure (none : Option (List String))
+            | .ok (outDir, paths) =>
+                match dest with
+                | some d =>
+                    if d != "" && d != outDir then
+                      IO.FS.createDirAll d
+                      let finals ← paths.mapM (fun (p : String) => do
+                        let fname := (p : System.FilePath).fileName.getD p
+                        let target := ((d : System.FilePath) / fname).toString
+                        let txt ← IO.FS.readFile p
+                        IO.FS.writeFile target txt
+                        pure target)
+                      pure (some finals)
+                    else pure (some paths)
+                | none => pure (some paths)
           finally (do releaseSpec res; removeSessionDir dir)
-        match r with
-        | .error e => return .error e
-        | .ok (_, paths) =>
+        match finalPaths? with
+        | none => return .error "trace generation failed"
+        | some paths =>
             let contents ← paths.mapM (fun (p : String) => do
               let txt ← IO.FS.readFile p
               match Lean.Json.parse txt with

@@ -61,9 +61,11 @@ opaque tlsWriteAll : @& TlsSsl → @& ByteArray → UInt64 → BaseIO UInt64
 @[extern "dsh_tls_read"]
 opaque tlsRead : @& TlsSsl → @& ByteArray → UInt64 → BaseIO UInt64
 
-/-- Best-effort close_notify (never frees; GC owns the object). -/
+/-- Best-effort close_notify (never frees; GC owns the object). Returns 0
+(kept as UInt64 to match the C ABI exactly; a Unit return leaves the
+runtime to interpret the raw 0 register as a boxed result). -/
 @[extern "dsh_tls_close"]
-opaque tlsClose : @& TlsSsl → BaseIO Unit
+opaque tlsClose : @& TlsSsl → BaseIO UInt64
 
 /-- Writes the 64-char lowercase hex SHA-256 of the peer leaf cert into
 the buffer; returns @tlsError@ when the peer presented no certificate. -/

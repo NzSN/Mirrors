@@ -1284,7 +1284,9 @@ structure SpecConfig where
 
 structure TraceConfig where
   numTraces : Nat
-  view : String
+  -- Haskell Apalache/Types.hs: view is Maybe Text (null when absent); the
+  -- --view= arg is passed whenever it is Some.
+  view : Option String
   deriving Repr
 
 /-! ## Job and explorer result types -/
@@ -1408,7 +1410,7 @@ def jSpecConfig (s : SpecConfig) : Json :=
   Json.mkObj [("sources", Json.arr (strsJson s.sources).toArray)]
 
 def jTraceConfig (t : TraceConfig) : Json :=
-  Json.mkObj [("numTraces", Json.num t.numTraces), ("view", Json.str t.view)]
+  Json.mkObj [("numTraces", Json.num t.numTraces), ("view", optStr t.view)]
 
 def jValidateResult : ValidateResult → Json
   | .valid => Json.str "valid"
@@ -1501,9 +1503,28 @@ def encodeClient : ClientMessage → Json
          | some s => [("spec", jSpecConfig s)]
          | none => []))
   | .registerGenTracesAsync cfg dest spec tcfg =>
-      Json.mkObj [("apalacheConfig", jApalacheConfig cfg),
-        ("destPath", optStr dest), ("proto_step", Json.str "register_trace_gen_async"),
-        ("spec", optJson (jSpecConfig <$> spec)), ("traceConfig", jTraceConfig tcfg)]
+      -- Haskell Format/Json.hs omits destPath/spec entirely when absent
+      -- (unlike the sync register_trace_gen, which emits explicit nulls).
+      Json.mkObj (match dest, spec with
+        | some d, some s =>
+            [("apalacheConfig", jApalacheConfig cfg),
+             ("proto_step", Json.str "register_trace_gen_async"),
+             ("traceConfig", jTraceConfig tcfg),
+             ("destPath", Json.str d), ("spec", jSpecConfig s)]
+        | some d, none =>
+            [("apalacheConfig", jApalacheConfig cfg),
+             ("proto_step", Json.str "register_trace_gen_async"),
+             ("traceConfig", jTraceConfig tcfg),
+             ("destPath", Json.str d)]
+        | none, some s =>
+            [("apalacheConfig", jApalacheConfig cfg),
+             ("proto_step", Json.str "register_trace_gen_async"),
+             ("traceConfig", jTraceConfig tcfg),
+             ("spec", jSpecConfig s)]
+        | none, none =>
+            [("apalacheConfig", jApalacheConfig cfg),
+             ("proto_step", Json.str "register_trace_gen_async"),
+             ("traceConfig", jTraceConfig tcfg)])
   | .queryJob jobId =>
       Json.mkObj [("jobId", Json.str jobId), ("proto_step", Json.str "query_job")]
   | .awaitJob jobId timeout =>
@@ -1598,7 +1619,15 @@ def reqField (j : Json) (k : String) (f : Json → Dec α) : Dec α :=
   | .ok none => derr s!"missing field: {k}"
   | .error e => .error e
 
-private def optFieldStr (j : Json) (k : String) : Dec (Option String) := jOptStr j k
+/-- Optional string field with full Haskell `.:?` semantics: an absent key
+(JavaScript clients omit optional fields where the Haskell clients send
+explicit `null`s) decodes as `none`, as does a JSON `null`. -/
+private def optFieldStr (j : Json) (k : String) : Dec (Option String) :=
+  match j.getObjVal? k with
+  | .ok Json.null => .ok none
+  | .ok (.str s) => .ok (some s)
+  | .error _ => .ok none
+  | _ => derr s!"field {k}: string or null expected"
 
 private def optFieldNat (j : Json) (k : String) : Dec (Option Nat) :=
   match j.getObjVal? k with
@@ -1618,12 +1647,17 @@ def reqStrs (j : Json) (k : String) : Dec (List String) := do
   | x => derr s!"field {k}: expected string array"
 
 private def decApalacheConfig (j : Json) : Dec ApalacheConfig := do
+  -- Field defaults mirror Haskell Apalache/Types.hs: invariant .!= "",
+  -- lengthBound .!= 10, paramVars .!= "" (JS clients may omit them).
   let constInit ← optFieldStr j "constInit"
   let initPredicate ← optFieldStr j "initPredicate"
-  let invariant ← reqStr j "invariant"
-  let lengthBound ← reqNat j "lengthBound"
+  let inv? ← optFieldStr j "invariant"
+  let invariant := inv?.getD ""
+  let lb? ← optFieldNat j "lengthBound"
+  let lengthBound := match lb? with | some n => n | none => 10
   let nextPredicate ← optFieldStr j "nextPredicate"
-  let paramVars ← reqStr j "paramVars"
+  let pv? ← optFieldStr j "paramVars"
+  let paramVars := pv?.getD ""
   let specPath ← reqStr j "specPath"
   return { constInit, initPredicate, invariant, lengthBound, nextPredicate, paramVars, specPath }
 
@@ -1632,8 +1666,11 @@ private def decSpecConfig (j : Json) : Dec SpecConfig := do
   return { sources }
 
 private def decTraceConfig (j : Json) : Dec TraceConfig := do
-  let numTraces ← reqNat j "numTraces"
-  let view ← reqStr j "view"
+  -- Haskell: numTraces .!= 1, view .!= Nothing (empty view is equivalent
+  -- to no view when the arg is only passed when non-empty).
+  let nt? ← optFieldNat j "numTraces"
+  let numTraces := match nt? with | some n => n | none => 1
+  let view ← optFieldStr j "view"
   return { numTraces, view }
 
 private def decStateMap (j : Json) : Dec ValueMap :=
@@ -2056,9 +2093,14 @@ private theorem decApalacheConfig_jApalacheConfig (c : ApalacheConfig) :
     ("paramVars", Json.str c.paramVars),
     ("specPath", Json.str c.specPath)] : List (String × Json)) := by simp
   simp only [jApalacheConfig, decApalacheConfig, reqStr, reqNat]
-  rw [optFieldStr_mkObj hkeys m1, optFieldStr_mkObj hkeys m2, str_of_mkObj hkeys m3,
-      nat_of_mkObj hkeys m4, optFieldStr_mkObj hkeys m5, str_of_mkObj hkeys m6,
+  rw [optFieldStr_mkObj hkeys m1, optFieldStr_mkObj hkeys m2,
+      optFieldStr_mkObj hkeys
+        (show ("invariant", optStr (some c.invariant)) ∈ _ by simp [optStr]),
+      optFieldNat_mkObj hkeys m4, optFieldStr_mkObj hkeys m5,
+      optFieldStr_mkObj hkeys
+        (show ("paramVars", optStr (some c.paramVars)) ∈ _ by simp [optStr]),
       str_of_mkObj hkeys m7]
+  simp
   rfl
 
 private theorem decSpecConfig_jSpecConfig (s : SpecConfig) :
@@ -2071,16 +2113,17 @@ private theorem decTraceConfig_jTraceConfig (t : TraceConfig) :
     decTraceConfig (jTraceConfig t) = Except.ok t := by
   have hkeys : (([
     ("numTraces", Json.num (JsonNumber.fromNat t.numTraces)),
-    ("view", Json.str t.view)] : List (String × Json)).map Prod.fst).Pairwise
+    ("view", optStr t.view)] : List (String × Json)).map Prod.fst).Pairwise
       (fun a b => a ≠ b) := by simp
   have m1 : ("numTraces", Json.num (JsonNumber.fromNat t.numTraces)) ∈ ([
     ("numTraces", Json.num (JsonNumber.fromNat t.numTraces)),
-    ("view", Json.str t.view)] : List (String × Json)) := by simp
-  have m2 : ("view", Json.str t.view) ∈ ([
+    ("view", optStr t.view)] : List (String × Json)) := by simp
+  have m2 : ("view", optStr t.view) ∈ ([
     ("numTraces", Json.num (JsonNumber.fromNat t.numTraces)),
-    ("view", Json.str t.view)] : List (String × Json)) := by simp
+    ("view", optStr t.view)] : List (String × Json)) := by simp
   simp only [jTraceConfig, decTraceConfig, reqStr, reqNat]
-  rw [nat_of_mkObj hkeys m1, str_of_mkObj hkeys m2]
+  rw [optFieldNat_mkObj hkeys m1, optFieldStr_mkObj hkeys m2]
+  simp
   rfl
 
 private theorem decOptSpec_of_field {l : List (String × Json)} {spec : Option SpecConfig}
@@ -2169,6 +2212,13 @@ theorem getObjVal?_mkObj_error {l : List (String × Json)} {k : String}
   have hnone' : (Std.TreeMap.Raw.ofList l compare).get? k = none := hnone
   simp only [Json.mkObj, Json.getObjVal?, hnone']
   exact ⟨_, rfl⟩
+
+private theorem optFieldStr_absent {l : List (String × Json)} {k : String}
+    (hkeys : (l.map Prod.fst).Pairwise (fun a b => a ≠ b))
+    (hnm : ∀ v, (k, v) ∉ l) :
+    optFieldStr (Json.mkObj l) k = Except.ok none := by
+  obtain ⟨e, he⟩ := getObjVal?_mkObj_error hkeys hnm
+  simp only [optFieldStr, he]
 
 private theorem decOptSpec_absent {l : List (String × Json)}
     (hkeys : (l.map Prod.fst).Pairwise (fun a b => a ≠ b))
@@ -2595,47 +2645,150 @@ theorem decodeClient_encodeClient :
           rfl
   | registerGenTracesAsync cfg dest spec tcfg =>
       refine ⟨.registerGenTracesAsync cfg dest spec tcfg, ?_, rfl⟩
-      have hkeys : (([
-        ("apalacheConfig", jApalacheConfig cfg),
-        ("destPath", optStr dest),
-        ("proto_step", Json.str "register_trace_gen_async"),
-        ("spec", optJson (jSpecConfig <$> spec)),
-        ("traceConfig", jTraceConfig tcfg)] : List (String × Json)).map Prod.fst).Pairwise
-          (fun a b => a ≠ b) := by simp
-      have mt : ("proto_step", Json.str "register_trace_gen_async") ∈ ([
-        ("apalacheConfig", jApalacheConfig cfg),
-        ("destPath", optStr dest),
-        ("proto_step", Json.str "register_trace_gen_async"),
-        ("spec", optJson (jSpecConfig <$> spec)),
-        ("traceConfig", jTraceConfig tcfg)] : List (String × Json)) := by simp
-      have ma : ("apalacheConfig", jApalacheConfig cfg) ∈ ([
-        ("apalacheConfig", jApalacheConfig cfg),
-        ("destPath", optStr dest),
-        ("proto_step", Json.str "register_trace_gen_async"),
-        ("spec", optJson (jSpecConfig <$> spec)),
-        ("traceConfig", jTraceConfig tcfg)] : List (String × Json)) := by simp
-      have md : ("destPath", optStr dest) ∈ ([
-        ("apalacheConfig", jApalacheConfig cfg),
-        ("destPath", optStr dest),
-        ("proto_step", Json.str "register_trace_gen_async"),
-        ("spec", optJson (jSpecConfig <$> spec)),
-        ("traceConfig", jTraceConfig tcfg)] : List (String × Json)) := by simp
-      have ms : ("spec", optJson (jSpecConfig <$> spec)) ∈ ([
-        ("apalacheConfig", jApalacheConfig cfg),
-        ("destPath", optStr dest),
-        ("proto_step", Json.str "register_trace_gen_async"),
-        ("spec", optJson (jSpecConfig <$> spec)),
-        ("traceConfig", jTraceConfig tcfg)] : List (String × Json)) := by simp
-      have mc : ("traceConfig", jTraceConfig tcfg) ∈ ([
-        ("apalacheConfig", jApalacheConfig cfg),
-        ("destPath", optStr dest),
-        ("proto_step", Json.str "register_trace_gen_async"),
-        ("spec", optJson (jSpecConfig <$> spec)),
-        ("traceConfig", jTraceConfig tcfg)] : List (String × Json)) := by simp
-      simp only [encodeClient, decodeClient, reqStr]
-      rw [str_of_mkObj hkeys mt, apField hkeys ma, optFieldStr_mkObj hkeys md,
-          decOptSpec_of_field hkeys ms, tcfgField hkeys mc]
-      rfl
+      -- The encoder omits destPath/spec when absent (Haskell parity), so
+      -- the object shape depends on both options; case-split.
+      cases dest with
+      | none => cases spec with
+        | none =>
+            have hkeys : (([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg)] : List (String × Json)).map Prod.fst).Pairwise
+                (fun a b => a ≠ b) := by simp
+            have mt : ("proto_step", Json.str "register_trace_gen_async") ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg)] : List (String × Json)) := by simp
+            have ma : ("apalacheConfig", jApalacheConfig cfg) ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg)] : List (String × Json)) := by simp
+            have mc : ("traceConfig", jTraceConfig tcfg) ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg)] : List (String × Json)) := by simp
+            have hnod : ∀ v, ("destPath", v) ∉ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg)] : List (String × Json)) := by simp
+            have hnos : ∀ v, ("spec", v) ∉ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg)] : List (String × Json)) := by simp
+            simp only [encodeClient, decodeClient, reqStr]
+            rw [str_of_mkObj hkeys mt, apField hkeys ma, tcfgField hkeys mc,
+                optFieldStr_absent hkeys hnod, decOptSpec_absent hkeys hnos]
+            rfl
+        | some s =>
+            have hkeys : (([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("spec", jSpecConfig s)] : List (String × Json)).map Prod.fst).Pairwise
+                (fun a b => a ≠ b) := by simp
+            have mt : ("proto_step", Json.str "register_trace_gen_async") ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("spec", jSpecConfig s)] : List (String × Json)) := by simp
+            have ma : ("apalacheConfig", jApalacheConfig cfg) ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("spec", jSpecConfig s)] : List (String × Json)) := by simp
+            have ms : ("spec", optJson (jSpecConfig <$> some s)) ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("spec", jSpecConfig s)] : List (String × Json)) := by simp [optJson]
+            have mc : ("traceConfig", jTraceConfig tcfg) ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("spec", jSpecConfig s)] : List (String × Json)) := by simp
+            have hnod : ∀ v, ("destPath", v) ∉ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("spec", jSpecConfig s)] : List (String × Json)) := by simp
+            simp only [encodeClient, decodeClient, reqStr]
+            rw [str_of_mkObj hkeys mt, apField hkeys ma, decOptSpec_of_field hkeys ms,
+                tcfgField hkeys mc, optFieldStr_absent hkeys hnod]
+            rfl
+      | some d => cases spec with
+        | none =>
+            have hkeys : (([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("destPath", Json.str d)] : List (String × Json)).map Prod.fst).Pairwise
+                (fun a b => a ≠ b) := by simp
+            have mt : ("proto_step", Json.str "register_trace_gen_async") ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("destPath", Json.str d)] : List (String × Json)) := by simp
+            have ma : ("apalacheConfig", jApalacheConfig cfg) ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("destPath", Json.str d)] : List (String × Json)) := by simp
+            have md : ("destPath", optStr (some d)) ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("destPath", Json.str d)] : List (String × Json)) := by simp [optStr]
+            have mc : ("traceConfig", jTraceConfig tcfg) ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("destPath", Json.str d)] : List (String × Json)) := by simp
+            simp only [encodeClient, decodeClient, reqStr]
+            rw [str_of_mkObj hkeys mt, apField hkeys ma, optFieldStr_mkObj hkeys md,
+                tcfgField hkeys mc]
+            rfl
+        | some s =>
+            have hkeys : (([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("destPath", Json.str d),
+              ("spec", jSpecConfig s)] : List (String × Json)).map Prod.fst).Pairwise
+                (fun a b => a ≠ b) := by simp
+            have mt : ("proto_step", Json.str "register_trace_gen_async") ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("destPath", Json.str d),
+              ("spec", jSpecConfig s)] : List (String × Json)) := by simp
+            have ma : ("apalacheConfig", jApalacheConfig cfg) ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("destPath", Json.str d),
+              ("spec", jSpecConfig s)] : List (String × Json)) := by simp
+            have md : ("destPath", optStr (some d)) ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("destPath", Json.str d),
+              ("spec", jSpecConfig s)] : List (String × Json)) := by simp [optStr]
+            have ms : ("spec", optJson (jSpecConfig <$> some s)) ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("destPath", Json.str d),
+              ("spec", jSpecConfig s)] : List (String × Json)) := by simp [optJson]
+            have mc : ("traceConfig", jTraceConfig tcfg) ∈ ([
+              ("apalacheConfig", jApalacheConfig cfg),
+              ("proto_step", Json.str "register_trace_gen_async"),
+              ("traceConfig", jTraceConfig tcfg),
+              ("destPath", Json.str d),
+              ("spec", jSpecConfig s)] : List (String × Json)) := by simp
+            simp only [encodeClient, decodeClient, reqStr]
+            rw [str_of_mkObj hkeys mt, apField hkeys ma, optFieldStr_mkObj hkeys md,
+                decOptSpec_of_field hkeys ms, tcfgField hkeys mc]
+            rfl
   | queryJob jobId =>
       refine ⟨.queryJob jobId, ?_, rfl⟩
       have hkeys : (([("jobId", Json.str jobId), ("proto_step", Json.str "query_job")] :

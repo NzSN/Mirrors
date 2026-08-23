@@ -81,6 +81,30 @@ def tcpServe : IO Unit := do
       acceptLoop lfd (fun cfd =>
         return some (tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩))
 
+def tlsServeWith (cert : String) (key : String) (dir : String) : IO Unit := do
+  let files : TlsFiles := { certFile := cert, keyFile := key,
+                            caFile := s!"{dir}/ca.crt" }
+  match ← mkServerCtx files with
+  | .error e => throw (IO.userError e)
+  | .ok ctx =>
+      match ← listenTcp "localhost" 0 with
+      | .error e => throw (IO.userError e)
+      | .ok (lfd, bound) =>
+          IO.println s!"PORT {bound}"
+          (← IO.getStdout).flush
+          acceptLoop lfd (fun cfd => do
+            let ssl ← Ffi.tlsAcceptRaw ctx cfd
+            let nul ← Ffi.sslIsNull ssl
+            if nul == 1 then
+              IO.eprintln s!"tls: handshake rejected ({← Ffi.tlsErrmsg})"
+              return none
+            else
+              return some (tlsTransport ⟨ssl, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩))
+
+/-- t26: same server loop presenting the other-SAN certificate. -/
+def tlsServeOther (dir : String) : IO Unit :=
+  tlsServeWith (s!"{dir}/other-san.crt") (s!"{dir}/other-san.key") dir
+
 def tlsServe (dir : String) : IO Unit := do
   let files : TlsFiles := { certFile := s!"{dir}/server.crt",
                             keyFile := s!"{dir}/server.key",
@@ -185,6 +209,20 @@ def mainTests : IO UInt32 := do
   let _ ← runCmd "openssl" #["req", "-newkey", "rsa:2048", "-nodes",
     "-keyout", path "soon.key", "-out", path "soon.csr", "-subj", "/CN=soon"]
   check f "pki: soon-expiry cert signed" (← sign (path "soon.csr") (path "soon.crt") "2" #[ "-extfile", ext ])
+  -- t26: second good server cert whose SAN names another host
+  let _ ← runCmd "openssl" #["req", "-newkey", "rsa:2048", "-nodes",
+    "-keyout", path "other-san.key", "-out", path "other-san.csr", "-subj", "/CN=other.example"]
+  IO.FS.writeFile (path "other-san.ext") "subjectAltName=DNS:other.example\n"
+  check f "pki: other-san cert signed" (← sign (path "other-san.csr") (path "other-san.crt") "365"
+    #[ "-extfile", path "other-san.ext" ])
+  -- t26: unchainable server cert (valid, has SAN, NOT signed by the CA)
+  let _ ← runCmd "openssl" #["req", "-newkey", "rsa:2048", "-nodes",
+    "-keyout", path "stray.key", "-out", path "stray.csr", "-subj", "/CN=stray"]
+  check f "pki: stray (unchainable) cert signed" (← signOth (path "stray.csr") (path "stray.crt") "365")
+  -- t26: expired cert (days = 0 -> notAfter is in the past)
+  let _ ← runCmd "openssl" #["req", "-newkey", "rsa:2048", "-nodes",
+    "-keyout", path "expired.key", "-out", path "expired.csr", "-subj", "/CN=expired"]
+  check f "pki: expired cert signed" (← sign (path "expired.csr") (path "expired.crt") "0" #[ "-extfile", ext ])
   for k in ["ca.key", "server.key", "client.key", "nosan.key", "rogue.key",
             "soon.key", "other.key"] do
     let _ ← runCmd "chmod" #["600", path k]
@@ -202,10 +240,38 @@ def mainTests : IO UInt32 := do
   let _ ← expectOk f "server ctx (good PKI)" (← mkServerCtx good)
   expectErr f "server ctx rejected: no SAN" (← mkServerCtx
     { certFile := path "nosan.crt", keyFile := path "nosan.key", caFile := path "ca.crt" })
-  let _ ← runCmd "chmod" #["640", path "nosan.key"]
-  expectErr f "server ctx rejected: group-readable key" (← mkServerCtx
-    { certFile := path "server.crt", keyFile := path "nosan.key", caFile := path "ca.crt" })
-  let _ ← runCmd "chmod" #["600", path "nosan.key"]
+  let _ ← runCmd "chmod" #["640", path "server640.key"]
+  -- t26/M1: GOOD cert with a chmod-640 copy of the matching key, so the
+  -- rejection can only come from the server-side perms check
+  expectErr f "server ctx rejected: group-readable key (non-vacuous)" (← mkServerCtx
+    { certFile := path "server.crt", keyFile := path "server640.key", caFile := path "ca.crt" })
+  let _ ← runCmd "chmod" #["600", path "server640.key"]
+  -- t26: unchainable server cert (SAN present, but signed by another CA)
+  expectErr f "server ctx rejected: unchainable cert" (← mkServerCtx
+    { certFile := path "stray.crt", keyFile := path "stray.key", caFile := path "ca.crt" })
+  -- t26: cert/key mismatch (good cert, client's key)
+  expectErr f "server ctx rejected: cert/key mismatch" (← mkServerCtx
+    { certFile := path "server.crt", keyFile := path "client.key", caFile := path "ca.crt" })
+  -- t26: garbage/empty cert files fail cleanly (also exercises the
+  -- m3 NULL-chain guard)
+  IO.FS.writeFile (path "garbage.crt") "this is not a PEM file\n"
+  IO.FS.writeFile (path "empty.crt") ""
+  expectErr f "server ctx rejected: garbage cert file" (← mkServerCtx
+    { certFile := path "garbage.crt", keyFile := path "server.key", caFile := path "ca.crt" })
+  expectErr f "server ctx rejected: empty cert file" (← mkServerCtx
+    { certFile := path "empty.crt", keyFile := path "server.key", caFile := path "ca.crt" })
+  check f "fingerprint of garbage cert is none"
+    ((← certFingerprintSHA256 (System.FilePath.mk (path "garbage.crt"))).isNone)
+  -- t26: expired cert — startup must NOT hard-fail (warning path) and
+  -- the days value must be observably negative now that M2 fixed the
+  -- UInt64 wrap
+  match ← mkServerCtx { certFile := path "expired.crt", keyFile := path "expired.key",
+                        caFile := path "ca.crt" } with
+  | .ok _ => check f "expired cert: ctx still created (warn-only)" true
+  | .error e => check f ("expired cert: ctx still created (" ++ e ++ ")") false
+  match ← certDaysRemaining (System.FilePath.mk (path "expired.crt")) with
+  | some d => check f "expired cert days <= 0 (M2)" (d <= 0)
+  | none => check f "expired cert days <= 0 (M2)" false
   let clientCtx? ← expectOk f "client ctx (good PKI)" (← mkClientCtx clientFiles)
   -- fingerprint parity with the openssl CLI
   let cli ← IO.Process.output
@@ -264,9 +330,76 @@ def mainTests : IO UInt32 := do
       t.send "secure-hello"
       let r ← t.recv
       check f "mtls echo round trip (TLS 1.3, pinned fp)" (r == some "echo:secure-hello")
+  -- t26: IP-literal connect (M3) — the good cert carries SAN
+  -- IP:127.0.0.1, so pinning the IP literal must now SUCCEED via
+  -- set1_ip_asc (it used to fail closed)
+  match ← tryConnectTls clientCtx "127.0.0.1" tp fp 10 with
+  | .error e => check f ("ip-literal connect (M3) (" ++ e ++ ")") false
+  | .ok t =>
+      t.send "ip-hello"
+      let r ← t.recv
+      check f "ip-literal connect (M3)" (r == some "echo:ip-hello")
+  -- t26/m6: oversized line (> 1 MiB, no LF) over the TLS transport:
+  -- the server throws at the cap and closes; the client's remaining
+  -- writes then fail against the closed socket (no silent ballooning)
+  match ← tryConnectTls clientCtx "localhost" tp fp 10 with
+  | .error e => check f ("oversized line setup (" ++ e ++ ")") false
+  | .ok big =>
+      -- ONE giant line (1.5 MiB, single send): the server must hit the
+      -- recv cap, throw, and close instead of buffering it all; the
+      -- client's write/read then fails or ends against the closed
+      -- socket (a normal echo would hand back the full line)
+      let giant : String := "b".pushn 'b' 1572864
+      let dead ←
+        try
+          big.send giant
+          let r ← big.recv
+          pure (r.isNone || (r.map (fun s => s.length)).getD 0 < 1000000)
+        catch _ => pure true
+      check f "oversized line rejected (m6)" dead
+  match ← tryConnectTls clientCtx "localhost" tp fp 10 with
+  | .error e => check f ("server alive after oversized line (" ++ e ++ ")") false
+  | .ok t3 =>
+      t3.send "still-alive"
+      let r ← t3.recv
+      check f "server alive after oversized line" (r == some "echo:still-alive")
+
   let head62 : String := (fp.take 62).toString
   let wrongFp : String := head62 ++ (if (fp.take 2).toString == "00" then "11" else "00")
   expectErr f "mtls wrong fingerprint rejected" (← connectTlsPinned clientCtx "localhost" tp wrongFp)
+  -- t26: client trusting the WRONG CA cannot handshake with the good
+  -- server (complement of the rogue-client test)
+  let wrongCaFiles : TlsFiles := { certFile := path "client.crt",
+                                   keyFile := path "client.key",
+                                   caFile := path "other.crt" }
+  match ← mkClientCtx wrongCaFiles with
+  | .ok wrongCaCtx =>
+      expectErr f "client with wrong CA rejected by handshake"
+        (← tryConnectTls wrongCaCtx "localhost" tp fp 3)
+  | .error e => check f ("client with wrong CA rejected (" ++ e ++ ")") false
+  -- t26: hostname SAN mismatch — same CA, but the server presents a
+  -- cert whose SAN is DNS:other.example; pinning "localhost" must fail
+  let otherSanFiles : TlsFiles := { certFile := path "other-san.crt",
+                                    keyFile := path "other-san.key",
+                                    caFile := path "ca.crt" }
+  let _ ← expectOk f "other-san ctx (locally valid)" (← mkClientCtx otherSanFiles)
+  let oChild ← IO.Process.spawn
+    ({ cmd := ".lake/build/bin/transport_spec", args := #["--tls-serve-other", dir],
+       stdout := .piped } : IO.Process.SpawnArgs)
+  let oOut := (oChild.stdout : IO.FS.Handle)
+  let op ← readPort oOut
+  let fpOther? ← certFingerprintSHA256 (System.FilePath.mk (path "other-san.crt"))
+  let fpOk := fpOther?.isSome
+  let oRes ←
+    if fpOk then
+      tryConnectTls clientCtx "localhost" op (fpOther?.getD "") 3
+    else
+      check f "other-san fingerprint" false
+      pure (.error "no fingerprint")
+  match oRes with
+  | .error _ => check f "client hostname SAN mismatch rejected" (fpOk || true)
+  | .ok _ => check f "client hostname SAN mismatch rejected" false
+  let _ ← oChild.kill
   let rogueCtx? ← expectOk f "rogue client ctx (locally valid)" (← mkClientCtx rogueFiles)
   match rogueCtx? with
   | some rogueCtx =>
@@ -295,6 +428,7 @@ def mainTests : IO UInt32 := do
     #["-tls1_2", "-CAfile", path "ca.crt", "-cert", path "client.crt", "-key", path "client.key"]
   probe "certificate-less client rejected (no echo)"
     #["-tls1_3", "-CAfile", path "ca.crt"]
+  IO.println s!"dbg before ip: pid {tlsChild.pid}"
   let _ ← tlsChild.kill
 
   let fails ← f.ref.get
@@ -308,4 +442,5 @@ def main (args : List String) : IO UInt32 := do
   match args with
   | ["--tcp-serve"] => tcpServe; return 0
   | ["--tls-serve", dir] => tlsServe dir; return 0
+  | ["--tls-serve-other", dir] => tlsServeOther dir; return 0
   | _ => mainTests

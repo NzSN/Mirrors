@@ -142,7 +142,7 @@ def traceArgs (runDir : Option String) (cfg : Codec.ApalacheConfig)
     ++ optionalArg "--init=" cfg.initPredicate
     ++ optionalArg "--next=" cfg.nextPredicate
     ++ optionalArg "--cinit=" cfg.constInit
-    ++ optionalArg "--view=" (nonEmpty tc.view)
+    ++ optionalArg "--view=" tc.view
     ++ [cfg.specPath]
 
 /-- Extract the @Output directory: <dir>@ line from apalache output

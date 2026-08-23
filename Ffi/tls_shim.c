@@ -24,6 +24,9 @@
 #include <openssl/pem.h>
 #include <openssl/bio.h>
 #include <sys/stat.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <string.h>
 #include <stdint.h>
 #include <time.h>
@@ -37,6 +40,10 @@ static lean_external_class *g_ssl_class = NULL;
 static void ctx_finalizer(void *p) { SSL_CTX_free((SSL_CTX *)p); }
 static void ssl_finalizer(void *p) {
     SSL *s = (SSL *)p;
+    /* B1 (review): failure sentinels are NULL-payload externals of this
+     * class; SSL_shutdown(NULL) is not a no-op and would segfault in the
+     * GC finalizer. Guard first. */
+    if (!s) return;
     /* best effort; the socket itself is closed by the Lean layer */
     SSL_shutdown(s);
     SSL_free(s);
@@ -65,6 +72,10 @@ static lean_object *mk_null_ext(lean_external_class *cls) {
 
 /* ---------- error reporting ---------- */
 
+/* m4 (review): g_err is a single global — valid under today's
+ * single-threaded, sequential accept-loop usage (one handshake at a
+ * time, errmsg consumed immediately after a failed call). Before any
+ * concurrent handshake path lands, make this thread-local. */
 static char g_err[512];
 
 static void set_err(const char *msg) {
@@ -119,11 +130,19 @@ static STACK_OF(X509) *load_chain(const char *file) {
     return sk;
 }
 
+/* m2 (review): only DNS and IP SAN entries count; email/URI/other
+ * GeneralNames must not satisfy the SAN-required policy. */
 static int leaf_has_san(X509 *leaf) {
     GENERAL_NAMES *sans = X509_get_ext_d2i(leaf, NID_subject_alt_name, NULL, NULL);
-    int n = sans ? sk_GENERAL_NAME_num(sans) : 0;
-    if (sans) GENERAL_NAMES_free(sans);
-    return n > 0;
+    int found = 0;
+    if (sans) {
+        for (int i = 0; i < sk_GENERAL_NAME_num(sans); i++) {
+            GENERAL_NAME *gn = sk_GENERAL_NAME_value(sans, i);
+            if (gn->type == GEN_DNS || gn->type == GEN_IPADD) { found = 1; break; }
+        }
+        GENERAL_NAMES_free(sans);
+    }
+    return found;
 }
 
 static X509_STORE *open_store(const char *ca_file) {
@@ -143,6 +162,11 @@ static X509_STORE *open_store(const char *ca_file) {
 static int chain_validates(X509_STORE *store, STACK_OF(X509) *chain) {
     X509_STORE_CTX *c = X509_STORE_CTX_new();
     if (!c) { set_err("X509_STORE_CTX_new failed"); return 0; }
+    /* startup validation is TRUST and SHAPE only: expiry is a
+     * warn-only path (warnIfNearExpiry / the expired-cert negative
+     * test), so the time check is disabled here. Handshake-time
+     * verification stays strict. */
+    X509_STORE_set_flags(store, X509_V_FLAG_NO_CHECK_TIME);
     /* untrusted = everything after the leaf; the leaf goes in slots */
     STACK_OF(X509) *untrusted = sk_X509_new_null();
     for (int i = 1; i < sk_X509_num(chain); i++)
@@ -177,17 +201,27 @@ LEAN_EXPORT lean_object *dsh_tls_server_ctx(lean_object *cert, lean_object *key,
     const char *keyf = lean_string_cstr(key);
     const char *caf = lean_string_cstr(ca);
 
+    /* M1 (review): the key-permission policy applies to BOTH roles;
+     * previously it was client-only, so the server loaded any
+     * group-readable key file. */
+    if (!key_perms_ok(keyf)) return mk_null_ext(ctx_class());
+
     STACK_OF(X509) *chain = load_chain(certf);
+    /* m3 (review): fail with the real error when the cert file is
+     * missing/unreadable/empty instead of falling through to a
+     * misleading "no SAN". load_chain has already set g_err. */
+    if (!chain) return mk_null_ext(ctx_class());
     X509 *leaf = sk_X509_value(chain, 0);
     if (!leaf_has_san(leaf)) {
         snprintf(g_err, sizeof(g_err),
                  "server certificate %s has no Subject Alternative Name (DNS or IP)", certf);
-        sk_X509_free(chain);
+        sk_X509_pop_free(chain, X509_free);
         return mk_null_ext(ctx_class());
     }
     X509_STORE *store = open_store(caf);
+    if (!store) { sk_X509_pop_free(chain, X509_free); return mk_null_ext(ctx_class()); }
     int chain_ok = chain_validates(store, chain);
-    sk_X509_free(chain);
+    sk_X509_pop_free(chain, X509_free);
     if (!chain_ok) { X509_STORE_free(store); return mk_null_ext(ctx_class()); }
 
     SSL_CTX *c = base_ctx(TLS_server_method());
@@ -231,7 +265,9 @@ LEAN_EXPORT lean_object *dsh_tls_client_ctx(lean_object *cert, lean_object *key,
     if (SSL_CTX_load_verify_locations(c, caf, NULL) != 1) {
         SSL_CTX_free(c);
         set_err("cannot load CA file for verification");
-        return mk_null_ext(ssl_class());
+        /* m7 (review): a CTX failure must carry the CTX class, not the
+         * SSL class (is_null accepts both, but keep it honest) */
+        return mk_null_ext(ctx_class());
     }
     /* server chain verified against the CA; hostname (SAN) is pinned
      * per-connection via SSL_set1_host in dsh_tls_connect */
@@ -239,6 +275,9 @@ LEAN_EXPORT lean_object *dsh_tls_client_ctx(lean_object *cert, lean_object *key,
     return lean_alloc_external(ctx_class(), c);
 }
 
+/* m8 (review): only ever applied to values produced by this shim
+ * (external objects or the NULL sentinel); a hypothetical call on the
+ * .mk constructor inhabitant would be a programming error. */
 LEAN_EXPORT uint64_t dsh_tls_is_null(lean_object *o, uint64_t unused) {
     (void)unused;
     lean_external_class *cls = lean_get_external_class(o);
@@ -270,10 +309,29 @@ LEAN_EXPORT lean_object *dsh_tls_connect(lean_object *ctx, lean_object *host,
     SSL *s = SSL_new(c);
     if (!s) { set_err("SSL_new failed"); return mk_null_ext(ssl_class()); }
     if (SSL_set_fd(s, (int)fd) != 1) { SSL_free(s); set_err("SSL_set_fd failed"); return mk_null_ext(ssl_class()); }
-    /* CA/SAN validation: verify the peer against the loaded CA AND the
-     * expected hostname (covers SAN DNS/IP entries) */
-    if (SSL_set1_host(s, lean_string_cstr(host)) != 1) {
-        SSL_free(s); set_err("SSL_set1_host failed"); return mk_null_ext(ssl_class());
+    /* M3 (review): hostname/IP pinning parity with the Haskell tls
+     * package (x509-validation): X509_check_host (what SSL_set1_host
+     * drives) never matches iPAddress SANs, and OpenSSL falls back to
+     * the Subject CN when no dNSName SAN exists. Pin via the verify
+     * params instead: IP literal -> set1_ip_asc, else set1_host, and
+     * NEVER_CHECK_SUBJECT in both cases (SAN-only policy).
+     *
+     * Accepted divergence: wildcard matching. X509_check_host matches a
+     * wildcard in the LEFTMOST label only; x509-validation matches a
+     * wildcard anywhere within a label. Stricter is fail-closed and
+     * safe; documented rather than reimplemented. */
+    {
+        X509_VERIFY_PARAM *param = SSL_get0_param(s);
+        struct in_addr a4;
+        struct in6_addr a6;
+        const char *h = lean_string_cstr(host);
+        int ok;
+        if (inet_pton(AF_INET, h, &a4) == 1 || inet_pton(AF_INET6, h, &a6) == 1)
+            ok = X509_VERIFY_PARAM_set1_ip_asc(param, h) == 1;
+        else
+            ok = X509_VERIFY_PARAM_set1_host(param, h, 0) == 1;
+        if (!ok) { SSL_free(s); set_err("cannot set expected peer name"); return mk_null_ext(ssl_class()); }
+        X509_VERIFY_PARAM_set_hostflags(param, X509_CHECK_FLAG_NEVER_CHECK_SUBJECT);
     }
     int r = SSL_connect(s);
     if (r != 1) {
@@ -303,6 +361,9 @@ LEAN_EXPORT uint64_t dsh_tls_read(lean_object *ssl, lean_object *bufobj, uint64_
     (void)unused;
     SSL *s = (SSL *)lean_get_external_data(ssl);
     uint8_t *buf = lean_sarray_cptr(bufobj);
+    /* m5 (review): WANT_READ/WANT_WRITE spin assumes a BLOCKING fd
+     * (every socket this shim sees is blocking). Do not set
+     * O_NONBLOCK on fds passed here without reworking this loop. */
     for (;;) {
         int n = SSL_read(s, buf, (size_t)cap);
         if (n > 0) return (uint64_t)n;
@@ -314,11 +375,26 @@ LEAN_EXPORT uint64_t dsh_tls_read(lean_object *ssl, lean_object *bufobj, uint64_
     }
 }
 
-/* best-effort close_notify; memory freed by the GC finalizer */
+/* best-effort close_notify; memory freed by the GC finalizer.
+ * m7 (interop t17): on a blocking fd SSL_shutdown blocks waiting for the
+ * peer's close_notify even after ours was sent — and the session loop has
+ * usually already consumed the peer's via SSL_read, so the sequential
+ * accept server wedges here until the peer's TCP socket dies (MirrorECMA
+ * re-opens one connection per scenario, so the whole matrix stalls).
+ * Make the shutdown unidirectional and non-blocking: flip the BIOs to
+ * nbio, send our close_notify, restore. */
 LEAN_EXPORT uint64_t dsh_tls_close(lean_object *ssl, uint64_t unused) {
     (void)unused;
     SSL *s = (SSL *)lean_get_external_data(ssl);
+    BIO *rbio = SSL_get_rbio(s);
+    BIO *wbio = SSL_get_wbio(s);
+    /* every fd this shim sees is blocking (see dsh_tls_read), so a plain
+     * set/restore is safe; BIO_get_nbio is a header macro, not a symbol */
+    if (rbio != NULL) BIO_set_nbio(rbio, 1);
+    if (wbio != NULL) BIO_set_nbio(wbio, 1);
     SSL_shutdown(s);
+    if (rbio != NULL) BIO_set_nbio(rbio, 0);
+    if (wbio != NULL) BIO_set_nbio(wbio, 0);
     ERR_clear_error();
     return 0;
 }
@@ -367,7 +443,7 @@ LEAN_EXPORT uint64_t dsh_tls_cert_fp_file(lean_object *path, lean_object *outobj
     STACK_OF(X509) *chain = load_chain(lean_string_cstr(path));
     if (!chain) return (uint64_t)(int64_t)-1;
     int r = fp_of_x509(sk_X509_value(chain, 0), out65);
-    sk_X509_free(chain);
+    sk_X509_pop_free(chain, X509_free);
     return r == 0 ? 0 : (uint64_t)(int64_t)-1;
 }
 
@@ -382,13 +458,13 @@ LEAN_EXPORT uint64_t dsh_tls_cert_days(lean_object *path, uint64_t unused) {
     struct tm tmv;
     time_t expiry;
     if (!ASN1_TIME_to_tm(not_after, &tmv)) {
-        sk_X509_free(chain);
+        sk_X509_pop_free(chain, X509_free);
         set_err("bad notAfter in certificate");
         return (uint64_t)(int64_t)-1000000;
     }
     expiry = timegm(&tmv);
     time_t now = time(NULL);
-    sk_X509_free(chain);
+    sk_X509_pop_free(chain, X509_free);
     long days = (long)((expiry - now) / 86400);
     return (uint64_t)(int64_t)days;
 }

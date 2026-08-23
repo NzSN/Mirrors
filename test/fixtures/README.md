@@ -39,3 +39,12 @@ Regenerate + replay-gate:
     tools/fixtures/run.sh
 
 (The Lean codec work in Phase 2 consumes these files as its 100% round-trip acceptance target.)
+
+decode_only.jsonl lines 7-16 (JS-client wire shape, t17): MirrorECMA omits
+optional keys where Haskell clients send explicit nulls. Generated with
+    ghc flags as in run.sh, tools/fixtures/GenDecodeOnly.hs
+    ./.golden-build/gen-decode-only < .golden-build/js_shape_cases.txt
+Expectations come from the pinned Haskell FromJSON+ToJSON (absent == null,
+Apalache/Types.hs defaults). These pin the per-constructor encoder
+asymmetry: register_trace_gen_async / register_validate* / await_job omit
+absent optional keys; register / register_trace_gen emit explicit nulls.

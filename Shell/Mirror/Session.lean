@@ -64,8 +64,11 @@ structure Oracles where
   /- generateTracesIn: produce in-memory traces for the replay flow. -/
   generateTraces : Codec.ApalacheConfig → Option Codec.SpecConfig → Codec.TraceConfig →
     IO (Except String (List ItfTrace))
-  /- generateTraceFilesIn: produce trace files (register_trace_gen). -/
-  generateTraceFiles : Codec.ApalacheConfig → Option Codec.SpecConfig → Codec.TraceConfig →
+  /- generateTraceFilesIn: produce trace files (register_trace_gen),
+  honoring the client's optional destPath (copy + re-path, Haskell
+  MkRunMirrorGenTraces). -/
+  generateTraceFiles : Codec.ApalacheConfig → Option Codec.SpecConfig →
+    Option String → Codec.TraceConfig →
     IO (Except String Codec.TraceGenResult)
   /- The full explorer mirror flow (register_explore): owns the wire
   exchange after the register is accepted. -/
@@ -94,7 +97,7 @@ def stubOracles : Oracles where
     pure (.error "apalache validate adapter lands in Phase 5")
   generateTraces _ _ _ :=
     pure (.error "apalache trace-generation adapter lands in Phase 5")
-  generateTraceFiles _ _ _ :=
+  generateTraceFiles _ _ _ _ :=
     pure (.error "apalache trace-generation adapter lands in Phase 5")
   runExplore t _ _ _ _ :=
     sendMirror t (Codec.MirrorMessage.registerError
@@ -361,7 +364,7 @@ private def dispatch (t : Shell.Transport.Transport) (sess : SessionRef)
           | .error e => sendError t (errText e)
           runReplayFlow t sess traces
   | .registerGenTraces cfg _dest spec tcfg =>
-      let r ← orc.generateTraceFiles cfg spec tcfg
+      let r ← orc.generateTraceFiles cfg spec _dest tcfg
       match r with
       | .error e => sendMirror t (Codec.MirrorMessage.registerError e)
       | .ok res => sendMirror t (Codec.MirrorMessage.genTracesDone res)
@@ -375,9 +378,9 @@ private def dispatch (t : Shell.Transport.Transport) (sess : SessionRef)
         | .error e => sendMirror t (Codec.MirrorMessage.registerError e)
         | .ok v => sendMirror t (Codec.MirrorMessage.specValidated v)
   | .registerExplore spec exports invariants maxSteps =>
-      orc.runExplore t spec exports invariants maxSteps
+      orc.runExplore t spec invariants exports maxSteps
   | .registerExploreSession spec exports invariants =>
-      orc.runExploreSession t spec exports invariants
+      orc.runExploreSession t spec invariants exports
   | .registerValidateAsync _ _ _ | .registerGenTracesAsync _ _ _ _
   | .queryJob _ | .awaitJob _ _ | .cancelJob _ =>
       sendMirror t (Codec.MirrorMessage.registerError "async jobs arrive in Phase 4")

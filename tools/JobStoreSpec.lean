@@ -105,7 +105,7 @@ def hcCfg : Codec.ApalacheConfig where
   paramVars := ""
   specPath := "HourClock.tla"
 
-def hcTc : Codec.TraceConfig := { numTraces := 1, view := "utf8" }
+def hcTc : Codec.TraceConfig := { numTraces := 1, view := some "utf8" }
 
 def startAsync (mirror : InMem) (store : Shell.Jobs.JobStore) : IO Unit := do
   let _task ← IO.asTask (prio := Task.Priority.dedicated)

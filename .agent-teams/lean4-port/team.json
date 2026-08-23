@@ -21,7 +21,7 @@
       "provider": "jlc",
       "model": "glm-5.2",
       "joinedAt": 1787384623937,
-      "status": "idle"
+      "status": "working"
     },
     {
       "id": "a1b73bbf-5411-42c2-86fa-9fd5a02e6b9d",
@@ -30,7 +30,7 @@
       "provider": "jlc",
       "model": "glm-5.2",
       "joinedAt": 1787384623954,
-      "status": "working"
+      "status": "idle"
     },
     {
       "id": "ae725a1c-901a-4d7e-a3f8-e67c3adc3302",
@@ -302,7 +302,7 @@
       "id": "t17",
       "subject": "Phase 6: client interop validation",
       "description": "Verify wire compatibility end-to-end per §2 Goal 2 and §8 Phase 6: existing clients MirrorRust and MirrorECMA interoperate with the Lean mirror without modification, byte for byte on the wire, over stdio, TCP, and mTLS (mutual auth, pinned fingerprints). Build the interop test matrix into CI.",
-      "status": "in_progress",
+      "status": "completed",
       "assignee": "qa-engineer",
       "dependencies": [
         "t15",
@@ -310,22 +310,26 @@
       ],
       "attempt": 1,
       "createdAt": 1787384719720,
-      "updatedAt": 1787443877038,
+      "updatedAt": 1787448924820,
       "attemptId": "22966bcf-437d-4d4c-9c2e-d3d95ae90167",
-      "reassigning": false
+      "reassigning": false,
+      "output": "FULL interop matrix GREEN (tools/interop/run.sh RC=0): MirrorECMA unmodified client — all scenarios (register, register_traces, register_trace_gen w/ destPath+inlining, register_explore, register_explore_session, inline specs) over stdio, TCP, AND mTLS, plus harness TLS negatives (wrong pin, wrong-CA/rogue client, key mode) and registry discovery/failover/fail-closed; Haskell validate — VALID over TCP and mTLS (pinned SHA-256 fp), wrong pin fails fast, rogue client rejected at handshake. mTLS leg surfaced+fixed a critical TLS bug invisible to transport_spec (one connection per server there): sequential TLS connections wedged — (a) Ffi.tlsClose declared BaseIO Unit vs uint64_t-returning C (raw 0 read as boxed null; task never resumed; now BaseIO UInt64), (b) SSL_shutdown blocked on already-consumed peer close_notify (dsh_tls_close now non-blocking around shutdown). Also documented gotcha: exes don't relink on C-only changes (rm bin/mirror + .o). Verification: lake build green, lake test ALL GREEN, full matrix RC=0. Deliverables: tools/interop/run.sh, hs-mtls.sh, INTEROP.md (updated matrix + bug log + MirrorRust t18 flag), decode_only.jsonl JS-shape fixtures + GenDecodeOnly.hs, .github/workflows/interop.yml. Minor known divergence flagged for shell: out-of-order job message pre-register answers register_error vs Haskell protocol_error."
     },
     {
       "id": "t18",
       "subject": "Phase 7: cutover docs + CHANGELOG",
       "description": "Per §8 Phase 7: user-facing docs, CHANGELOG, and the deprecation plan for the Haskell build in the ModelMirrors repo. Exit: full test matrix green on both implementations (this repo's Lean binary and the ModelMirrors Haskell build) for one release cycle; then Haskell moves to maintenance.",
-      "status": "pending",
+      "status": "completed",
       "assignee": "qa-engineer",
       "dependencies": [
         "t17"
       ],
-      "attempt": 0,
+      "attempt": 1,
       "createdAt": 1787384719734,
-      "updatedAt": 1787384719734
+      "updatedAt": 1787449173489,
+      "attemptId": "b65460db-e57a-4cb7-bd4d-841777c6fb16",
+      "reassigning": false,
+      "output": "Phase 7 cutover docs complete. Deliverables: (1) README.md — final-state status (all phases 0-6 complete), Phase-6 interop section, pointers to cutover/CHANGELOG/INTEROP; (2) CHANGELOG.md (new) — Added/Fixed/Accepted-divergences/Known-open-items incl. the interop-found fixes (absent-vs-null optFieldStr, encoder asymmetry, TLS sequential-connection wedge ABI+shutdown); (3) Docs/cutover.md (new) — pinned codec semantics contract (absent==null .:?, per-constructor encoder asymmetry, Haskell defaults, normNums/bare-number ITF semantics), accepted wildcard-scope divergence (stricter OpenSSL leftmost-label rule), pre-register job-message error divergence flagged OPEN, MirrorRust leg documented as OPEN/substituted (Haskell validate as second client per captain ruling) with run-before-deprecation criteria, 5-step Haskell deprecation plan (soak, close open legs, freeze ModelMirros@3496251 as read-only oracle in CI, announce, removal criteria), verification commands. Verification: lake build green (473 jobs) after all edits."
     },
     {
       "id": "t19",
@@ -443,16 +447,17 @@
       "id": "t26",
       "subject": "Fix t25 TLS review findings (1 blocker, 3 majors)",
       "description": "Apply the fixes from Docs/tls-ffi-review.md (core-engineer's §9.1 review of your t15 shim). BLOCKER (fix first): ssl_finalizer must guard NULL — handshake-failure sentinels are NULL-payload external objects that get GC'd, SSL_shutdown(NULL) segfaults; trivially armed by the existing cert-less-client negative test. MAJORS: (M1) dsh_tls_server_ctx never calls key_perms_ok — the check is client-only, so the group-readable-key negative test is vacuous (it reuses the no-SAN cert); apply perms check server-side and make the test non-vacuous. (M2) certDaysRemaining's d.toNat wraps negative days to huge Nats — the expired-cert warning is dead code; fix with signed reinterpretation in the Lean wrapper + add an expired-cert negative test. (M3) hostname pinning: SSL_set1_host does not match IP SANs (fail-closed, shim comment wrong) and OpenSSL CN-fallback diverges from the Haskell tls package's SAN-only policy — use SSL_set1_ip_asc for IP-literal hosts + X509_CHECK_FLAG_NEVER_CHECK_SUBJECT; document wildcard rules. Then work the 8 minors and add the 8 suggested negative tests from the report (expired cert, client-side SAN mismatch, wrong-CA client, unchainable server cert, cert/key mismatch, garbage cert file, IP-literal connect, oversized line) as far as they are reproducible. Exit: all review findings resolved or explicitly accepted with rationale in Docs/tls-ffi-review.md; transport_spec extended; lake build + all 7 gates green. Have core-engineer re-review the diff before closing.",
-      "status": "in_progress",
+      "status": "completed",
       "assignee": "shell-engineer",
       "dependencies": [
         "t25"
       ],
-      "attempt": 1,
+      "attempt": 2,
       "createdAt": 1787437913259,
-      "updatedAt": 1787443903546,
-      "attemptId": "5314c3bf-74f1-472a-8873-8f26aa489e90",
-      "reassigning": false
+      "updatedAt": 1787446685310,
+      "attemptId": "f5d82ef2-ee6a-489c-95b2-05c2486da826",
+      "reassigning": false,
+      "output": "t26 complete: all t25 TLS review findings resolved — B1 ssl_finalizer NULL guard; M1 server-side key_perms_ok with non-vacuous negative test; M2 sign-extended certDaysRemaining ((d >>> 63) two's-complement reinterpretation) so the expired warning fires; M3 X509_VERIFY_PARAM pinning (set1_ip_asc for IP literals via inet_pton probe, set1_host otherwise, NEVER_CHECK_SUBJECT SAN-only policy; wildcard leftmost-label rule documented as accepted stricter divergence; IP-literal connect now a positive test). Minors m1-m8 all fixed or documented (pop_free chain frees, DNS/IP-only SAN filter, explicit NULL-chain guard, g_err/WANT_* assumption comments, 1 MiB recv line cap with a real 1.5 MiB single-line negative test, ctx_class sentinel, is_null comment). Plus a scoped policy fix: X509_V_FLAG_NO_CHECK_TIME on the startup-only store (strict at handshake, warn-only at startup). All 8 suggested negative tests added. Verification: transport_spec all green; lake build clean; full lake test green (8 gates, RC=0) — run independently by me and by the re-reviewer. core-engineer re-review verdict: PASS, no residual findings (verified in code, gates rerun independently). Rationale recorded in the Resolution section of Docs/tls-ffi-review.md."
     }
   ],
   "taskSeq": 26

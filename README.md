@@ -36,6 +36,16 @@ pinned `batteries` rev. Keep `LC_ALL=C.UTF-8` when running the mirror
 
 ## Status
 
+FINAL STATE — all phases (0-6) complete. Cutover plan and Haskell
+deprecation: `Docs/cutover.md`. Change log: `CHANGELOG.md`.
+The full client interop matrix (stdio + TCP + mTLS, two real unmodified
+clients, TLS + registry negatives) is green via `tools/interop/run.sh`
+— see `tools/interop/INTEROP.md`. Known open item: the MirrorRust
+interop leg was not run (no MirrorRust client available in this
+environment); the Haskell `validate` client substitutes as the
+second client, and the Rust leg remains open until a MirrorRust build is
+run against this mirror over stdio/TCP/mTLS (`Docs/cutover.md`).
+
 Phases 0-4 done (fixtures, core, codecs, session machine + stdio
 driver, and the async job store with Task workers). Phase 4 parity:
 `tools/JobStoreSpec.lean` ports the Haskell `AsyncJobsSpec` fake-runner
@@ -127,7 +137,18 @@ SIGTERM → deregister + exit 0 — verified against a mock Consul), and
 `validate` with direct TCP/mTLS or registry discovery
 (candidateFingerprint/--pin override, tryCandidates ordering).
 Sequential accept loop (one session per connection); --jobs is
-accepted for parity and reserved for the Phase 4 job store. Gate:
+accepted for parity and reserved for the Phase 4 job store.
+
+Phase 6 interop (client validation): `tools/interop/run.sh` runs the
+full matrix — the unmodified MirrorECMA TypeScript smoke suite over
+stdio, TCP (`--serve`), and mTLS (`--server --tls`, pinned
+fingerprints) including its TLS negatives (wrong pin, wrong-CA/rogue
+client, key mode) and registry discovery/failover/fail-closed
+scenarios, plus the Haskell `validate` client over TCP and mTLS
+(pinned fingerprint, wrong-pin and rogue-client negatives fail fast).
+This leg surfaced and fixed a sequential-TLS-connection wedge invisible
+to the unit suite (FFI ABI mismatch on tlsClose + a blocking SSL_shutdown);
+details in `tools/interop/INTEROP.md`. Gate:
 `tools/RegistrySpec.lean` (mock Consul via tools/mock_consul.py:
 parser parity units, register/heartbeat/deregister recorded,
 discovery fail-closed parsing, dead-registry [], and the SIGTERM

@@ -1,0 +1,46 @@
+name: interop
+
+# Phase 6 client interop matrix (tools/interop/run.sh; see
+# tools/interop/INTEROP.md). Requires apalache-mc on PATH, the Haskell
+# ModelMirros cabal build (read-only), and the MirrorECMA checkout.
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "Core/**"
+      - "Codec/**"
+      - "Shell/**"
+      - "tools/interop/**"
+      - "lakefile.lean"
+
+jobs:
+  interop:
+    runs-on: ubuntu-latest
+    env:
+      ECMA_REPO: ${{ github.workspace }}/../MirrorECMA
+      HS_BIN: ${{ github.workspace }}/../ModelMirrors/dist-newstyle/build/x86_64-linux/ghc-9.14.1/ModelMirrors-0.1.1.0/x/ModelMirrors/build/ModelMirrors/ModelMirrors
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: Mirrors
+      - uses: actions/checkout@v4
+        with:
+          repository: informal-systems/MirrorECMA   # adjust to the real remote
+          path: MirrorECMA
+      - uses: actions/checkout@v4
+        with:
+          repository: informalsystems/ModelMirrors   # adjust to the real remote
+          path: ModelMirros
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+      - name: Build Haskell reference client (validate)
+        run: |
+          cabal update
+          cabal build ModelMirros:exe:ModelMirrors --project-dir="$GITHUB_WORKSPACE/../ModelMirros"
+      - name: Install apalache
+        run: |
+          curl -sL https://github.com/informalsystems/apalache/releases/latest/download/apalache.tgz | tar xz
+          echo "$PWD/apalache/bin" >> "$GITHUB_PATH"
+      - name: Interop matrix (stdio + TCP)
+        run: bash tools/interop/run.sh

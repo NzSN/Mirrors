@@ -58,7 +58,15 @@ def certDaysRemaining (path : System.FilePath) : IO (Option Int) := do
   let d ← Ffi.tlsCertDaysRaw path.toString
   -- the C sentinel is (uint64)(int64)-1000000, i.e. 0 - 1000000 wrapped
   if d == (0 : UInt64) - 1000000 then return none
-  return some d.toNat
+  -- M2 (review): the C side returns (uint64)(int64)days, so a negative
+  -- (expired) count wraps into a huge UInt64; reinterpret signed here
+  -- instead of via UInt64.toNat, which would turn -3 days into
+  -- 2^64 - 3 and silently kill the expiry warning.
+  if (d >>> 63) != 0 then
+    -- high bit set: sign-extend the two's-complement value
+    return some (Int.ofNat d.toNat - 18446744073709551616)
+  else
+    return some (Int.ofNat d.toNat)
 
 /-- Warn (stderr) when the certificate expires within 7 days or is
 already expired (Haskell @warnIfNearExpiry@). -/
@@ -102,7 +110,7 @@ structure TlsSession where
 the peer already dropped. The SSL object itself is freed by the GC
 finalizer backstop in the shim (design 9.7). -/
 def tlsClose (t : TlsSession) : IO Unit := do
-  try Ffi.tlsClose t.ssl catch _ => pure ()
+  try let _ ← Ffi.tlsClose t.ssl catch _ => pure ()
 
 private def hasLf (b : ByteArray) : Bool :=
   let rec go (i : Nat) : Bool :=
@@ -122,10 +130,18 @@ def tlsTransport (t : TlsSession) : Transport :=
       let mut acc ← t.buf.get
       let mut found := true
       let mut eof := false
+      -- m6 (review): bounded line buffer — a peer that never sends LF
+      -- must not balloon server memory. The Haskell side (Tcp.hs
+      -- hGetLine) is itself unbounded; we adopt the review's 1 MiB
+      -- cap as defense-in-depth.
+      if acc.size > 1048576 then
+        throw (IO.userError "TLS line exceeds 1 MiB cap")
       while found && !eof do
         if hasLf acc then
           found := false
         else
+          if acc.size > 1048576 then
+            throw (IO.userError "TLS line exceeds 1 MiB cap")
           let n ← Ffi.tlsRead t.ssl recvBuf 65536
           if n == 0 || n == Ffi.tlsError then
             eof := true
