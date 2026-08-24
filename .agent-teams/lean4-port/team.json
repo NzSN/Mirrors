@@ -30,7 +30,7 @@
       "provider": "jlc",
       "model": "glm-5.2",
       "joinedAt": 1787384623954,
-      "status": "idle"
+      "status": "working"
     },
     {
       "id": "ae725a1c-901a-4d7e-a3f8-e67c3adc3302",
@@ -472,7 +472,34 @@
       "attemptId": "f87a11fd-3844-462d-94bf-b00d856c550b",
       "reassigning": false,
       "output": "t27 complete: --bind no longer silently ignored and empty usage fixed. (1) Shim: new dsh_bind_addr (inet_pton, SO_REUSEADDR) in Ffi/socket_shim.c + Ffi.bindAddr decl. (2) listenTcp now resolves the bind host (empty = wildcard; IPv4 literals direct; names via getaddrinfo/resolveHost — Haskell serveTcpOn AI_PASSIVE parity) and FAILS LOUDLY: unresolvable or unbindable addresses abort startup with a clear error; the old code bound 0.0.0.0 for any value except the literal string localhost (security-relevant: unauthenticated --serve mode was exposed on all interfaces despite a loopback-only --bind). (3) Parity verified, not an extension: Haskell ServerOpts has soBind/scBind and Tcp.hs serveTcpOn resolves the bind host via getAddrInfo; documented in cliUsage help. (4) transport_spec regressions added: listenTcp binds 127.0.0.1 / rejects unresolvable name / rejects invalid literal; e2e --tcp-serve-bind 127.0.0.1 child reachable via loopback and NOT reachable via the non-loopback local address (hostname -I first entry; skips when absent). (5) cliUsage full usage block added (Shell/Cli.lean); parser errors use it and Main prints it + exit 2 for unknown modes (bare 'usage: ' with nothing after is gone; verified: mirror --bogus-flag prints the block, mirror --serve p --bind nosuch.invalid aborts with 'cannot resolve bind address'). Verification: lake build clean, transport_spec all green (new checks included), full lake test ALL GREEN (8 gates, RC=0). Manual runtime check: --serve 19022 --bind 127.0.0.1 reachable on loopback and blocked on 172.30.63.116."
+    },
+    {
+      "id": "t28",
+      "subject": "Fix duplicate all_steps_done in replay flows (wire parity)",
+      "description": "Captain's DeterministicCounter check found a Lean wire-parity bug: on a clean replay the Lean mirror emits all_steps_done TWICE (27 messages vs Haskell's 26 for the identical upstream MainSpec DeterministicCounter input; verified empirically against both binaries). Root cause in Shell/Mirror/Session.lean: replayStep (line ~286-287) sends allStepsDone on the last matching step — that is the TLA+-faithful emission (MirrorRecvReportAllDone) — and runReplayFlow (line ~330-331) sends it AGAIN as a wrapper with no spec counterpart. Fix: delete the wrapper emission at runReplayFlow (keep replayStep's lastStep emission). Result: success tail = exactly one all_steps_done (matches Haskell byte count AND the TLA+ model); mismatch tail stays step_mismatch-only (already spec-faithful, pinned by counter_spec). stdio_smoke never saw this because its client stops reading at the first all_steps_done. Required test work: (1) extend tools/CounterSpec.lean with a DeterministicCounter scenario using test/specs/DeterministicCounter.tla (byte-identical copy already committed): drive the exact upstream input shape (register invariant=TraceComplete bound=5 paramVars=\"\", client model increments count+step_count on each inc) and assert the FULL 26-message sequence byte-for-byte vs the upstream expectation (spec_validated + (initial_state, 5x(step_ok,next_step), step_ok) x2 traces + all_steps_done, exactly ONE all_steps_done); read output to EOF so duplicates can't hide. (2) harden tools/StdioSmoke.lean to also read to EOF and assert exactly one all_steps_done. (3) full lake test green (all 9 gates). Files: Shell/Mirror/Session.lean, tools/CounterSpec.lean, tools/StdioSmoke.lean.",
+      "status": "completed",
+      "assignee": "shell-engineer",
+      "dependencies": [],
+      "attempt": 1,
+      "createdAt": 1787540685277,
+      "updatedAt": 1787541277117,
+      "attemptId": "bd8ea1b2-3c41-475d-a23b-8ed8985c42f6",
+      "reassigning": false,
+      "output": "t28 complete: duplicate all_steps_done fixed. (1) Shell/Mirror/Session.lean runReplayFlow no longer sends all_steps_done as a wrapper after a clean replayAll — replayStep's last-matching-step emission (MirrorRecvReportAllDone) is the single TLA+-faithful source; docstring records the t28 fix. (2) tools/CounterSpec.lean new scenario 4: DeterministicCounter wire parity — pipes the byte-exact upstream MainSpec testEndToEnd input (register invariant=TraceComplete bound=5 paramVars='' numTraces=1 + 12 scripted report_state lines with count/action_taken/step_count), reads the mirror stdout to EOF, and asserts the FULL 26-message proto_step sequence (spec_validated + (initial_state, 5x(step_ok,next_step), step_ok) x2 + all_steps_done) plus exactly one all_steps_done; verified output shows exactly 26 messages matching the sequence. (3) tools/StdioSmoke.lean hardened: after the terminal message both sessions drain stdout to EOF (blank-line-is-EOF line protocol), extra lines are recorded as tags, and the gate now asserts exactly one all_steps_done on the clean session and zero on the mismatch session. Verification: lake build clean; counter_spec COUNTER SPEC GREEN (with APALACHE_MC); stdio_smoke STDIO SMOKE GREEN; full lake test ALL GREEN (all 9 gates, RC=0)."
+    },
+    {
+      "id": "t29",
+      "subject": "Live-check findings: validate run-dir isolation + pin case-sensitivity",
+      "description": "Two bugs found by the captain's live mTLS server-mode check: (1) RUN-DIR ISOLATION BREACH: Shell/Apalache/Runner.lean:264 — the syncOracles VALIDATE path calls `validateSpecIn none cfg' _bound` (no run dir), so every register/validate session runs apalache with the MIRROR'S cwd and litters _apalache-out/<spec>/ + tmp there (observed live in the Mirrors repo root: _apalache-out/Counter.tla, DeterministicCounter.tla, server/ from real sessions). The trace-gen paths (lines 271-286) correctly use freshSessionDir; the validate path must too (create dir, pass it, clean up per SpecSource ownership). The t13 gate only tested validateSpecIn (some runDir) explicitly, never the syncOracles wiring — add a regression: a full register-with-validation session must leave the mirror cwd clean (assert no _apalache-out/ and tmp/ appear in cwd after the session; e.g. in CounterSpec or ApalacheCliSpec). Also add _apalache-out/ and tmp/ to .gitignore. (2) PIN CASE-SENSITIVITY: Shell/Transport/Tls.lean:265 compares `fp != expectedFp` with plain string equality; the shim reports LOWERCASE hex while `openssl x509 -fingerprint` prints UPPERCASE, so a pasted openssl pin false-mismatches (observed live: 'want 2736AD74..., got 2736ad74...' → fast-fail). Fix: normalize both sides (e.g. toLower) before comparing; check what Haskell's connectTlsPinned does at ModelMirros@3496251 and match it if it normalizes, otherwise document as a robustness improvement. Add a mixed-case pin test to transport_spec. Full lake test green (9 gates); verify the gates themselves no longer litter the repo root.",
+      "status": "claimed",
+      "assignee": "shell-engineer",
+      "dependencies": [],
+      "attempt": 1,
+      "createdAt": 1787541538026,
+      "updatedAt": 1787541538034,
+      "attemptId": "d3951a9a-8dac-4c64-bf35-6023826fb482",
+      "reassigning": false
     }
   ],
-  "taskSeq": 27
+  "taskSeq": 29
 }

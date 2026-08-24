@@ -321,14 +321,16 @@ private def replayAll (t : Shell.Transport.Transport) (sess : SessionRef)
   return clean
 
 /-- The in-memory-traces replay flow shared by @register@ and
-@register_traces@: @spec_validated@, replay, @all_steps_done@ on a clean
-run (ports of @MkRunMirror@ / @MkRunMirrorWithTraces@). -/
+@register_traces@: @spec_validated@, replay (ports of @MkRunMirror@ /
+@MkRunMirrorWithTraces@). The @all_steps_done@ tail is emitted by
+replayStep on the LAST matching step (MirrorRecvReportAllDone) — t28
+removed a duplicate wrapper emission here that sent it a second time
+on a clean run (27 messages vs Haskell's 26; the TLA+ model reports
+all-done exactly once, via the last-step handler). -/
 private def runReplayFlow (t : Shell.Transport.Transport) (sess : SessionRef)
     (traces : List ItfTrace) : IO Unit := do
   sendMirror t (Codec.MirrorMessage.specValidated Codec.ValidateResult.valid)
-  let clean ← replayAll t sess traces
-  if clean then
-    sendMirror t Codec.MirrorMessage.allStepsDone
+  let _ ← replayAll t sess traces
 
 /-- Dispatch one decoded client message (the register dispatch of
 @RecvMsg@/step @exec@, with the oracle outcomes folded in). -/

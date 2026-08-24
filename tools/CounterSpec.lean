@@ -226,6 +226,62 @@ def main : IO UInt32 := do
       ((mm3.splitOn "\"extra\"").length > 1) mm3
     checkC fails "extra: hint path is step_count"
       ((mm3.splitOn "step_count").length > 1) mm3
+    -- 4. t28: DeterministicCounter wire parity — exact upstream input
+    -- (MainSpec testEndToEnd) and the FULL expected 26-message
+    -- sequence; reads stdout to EOF so a duplicate all_steps_done
+    -- cannot hide behind a client that stops at the first one.
+    let dcBin := ".lake/build/bin/mirror"
+    let dcReport (c a s : String) : String :=
+      "{\"proto_step\":\"report_state\",\"state\":{" ++
+      "\"count\":{\"#bigint\":\"" ++ c ++ "\"}" ++
+      ",\"action_taken\":\"" ++ a ++ "\"" ++
+      ",\"step_count\":{\"#bigint\":\"" ++ s ++ "\"}}}"
+    let dcTrace : List String :=
+      [dcReport "0" "init" "0"] ++
+      [dcReport "1" "inc" "1", dcReport "2" "inc" "2", dcReport "3" "inc" "3",
+       dcReport "4" "inc" "4", dcReport "5" "inc" "5"]
+    let dcRegister : String :=
+      "{\"proto_step\":\"register\",\"apalacheConfig\":{" ++
+      "\"specPath\":\"test/specs/DeterministicCounter.tla\"," ++
+      "\"initPredicate\":null,\"nextPredicate\":null,\"constInit\":null," ++
+      "\"invariant\":\"TraceComplete\",\"lengthBound\":5,\"paramVars\":\"\"}," ++
+      "\"traceConfig\":{\"numTraces\":1,\"view\":null}}"
+    let dcInput := (dcRegister :: (dcTrace ++ dcTrace)).map (· ++ "\n") |>.foldl (· ++ ·) ""
+    let dcChild ← IO.Process.spawn
+      ({ cmd := dcBin, args := #[], stdin := .piped, stdout := .piped :
+        IO.Process.SpawnArgs })
+    let (dcOut, _) ← dcChild.takeStdin
+    dcOut.putStr dcInput
+    dcOut.flush
+    -- read to EOF: mirror exits when the replay completes
+    -- read to EOF: the mirror exits after the replay, and the line
+    -- protocol never emits blank lines, so an empty getLine is EOF —
+    -- nothing after it can hide a duplicate all_steps_done
+    let h := (dcChild.stdout : IO.FS.Handle)
+    let mut dcOutText := ""
+    let mut dcL ← h.getLine
+    while !dcL.isEmpty do
+      dcOutText := dcOutText ++ dcL
+      dcL ← h.getLine
+    let dcLines := dcOutText.splitOn "\n" |>.filter (fun l => !l.isEmpty)
+    let dcTraceMsgs : List String :=
+      ["initial_state", "step_ok", "next_step", "step_ok", "next_step",
+       "step_ok", "next_step", "step_ok", "next_step", "step_ok", "next_step",
+       "step_ok"]
+    let dcExpected := ["spec_validated"] ++ dcTraceMsgs ++ dcTraceMsgs ++ ["all_steps_done"]
+    checkC fails "dc: exact message count (26)"
+      (dcLines.length == dcExpected.length)
+      s!"got {dcLines.length}, want {dcExpected.length}: {dcLines}"
+    let dcTags := dcLines.map (fun l =>
+      match l.splitOn "\"proto_step\":\"" with
+      | [_, rest] => (rest.splitOn "\"").head?.getD "?"
+      | _ => "?")
+    IO.println s!"dc session: {dcLines.length} messages: {dcTags}"
+    checkC fails "dc: full proto_step sequence byte-parity"
+      (dcTags == dcExpected) s!"got {dcTags}"
+    checkC fails "dc: exactly one all_steps_done"
+      (dcTags.countP (· == "all_steps_done") == 1) s!"got {dcTags.countP (· == "all_steps_done")}"
+    let _ ← dcChild.wait
     let fs ← fails.get
     if fs.isEmpty then
       IO.println "COUNTER SPEC GREEN"

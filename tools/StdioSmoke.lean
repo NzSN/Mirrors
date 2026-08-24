@@ -107,6 +107,26 @@ def driveSession (bin : String) (tracePaths : List String)
   while go do
     let l ← (child.stdout : IO.FS.Handle).getLine
     go ← handleLine out st steps corruptAtStep l
+  -- t28: read to EOF so a duplicate all_steps_done (or any trailing
+  -- junk) cannot hide behind a client that stops at the first
+  -- terminal message; the line protocol never emits blank lines, so
+  -- an empty getLine is EOF
+  let h := (child.stdout : IO.FS.Handle)
+  let mut l2 ← h.getLine
+  while !l2.isEmpty do
+    let l2c := Shell.Transport.stripEol l2
+    if !l2c.isEmpty then
+      match Lean.Json.parse l2c with
+      | .ok j =>
+          let tag := match j.getObjVal? "proto_step" with
+            | .ok (.str s) => s
+            | _ => "?"
+          let (seen, sc) ← st.get
+          st.set (seen.push tag, sc)
+      | .error _ =>
+          let (seen, sc) ← st.get
+          st.set (seen.push "UNPARSEABLE", sc)
+    l2 ← h.getLine
   -- best-effort cleanup
   try child.kill catch _ => pure ()
   let (seen, _) ← st.get
@@ -130,6 +150,7 @@ def main : IO UInt32 := do
   -- 1. clean replay
   let seen ← driveSession bin [p1, p2] steps none
   IO.println s!"clean session: {seen}"
+  let doneCount := seen.toList.countP (· == "all_steps_done")
   let ok1 := seen ==
     #["spec_validated",
       "initial_state", "step_ok",
@@ -143,9 +164,11 @@ def main : IO UInt32 := do
   IO.println s!"mismatch session: {seen2}"
   let ok2 := seen2 ==
     #["spec_validated", "initial_state", "step_ok", "next_step", "step_mismatch"]
-  if ok1 && ok2 then
+  let ok2b := (seen2.toList.countP (· == "all_steps_done")) == 0
+  let ok1b := doneCount == 1
+  if ok1 && ok2 && ok1b && ok2b then
     IO.println "STDIO SMOKE GREEN"
     return 0
   else
-    IO.eprintln s!"STDIO SMOKE FAILED (clean={ok1} mismatch={ok2})"
+    IO.eprintln s!"STDIO SMOKE FAILED (clean={ok1} mismatch={ok2} one-all-done={ok1b} mismatch-no-all-done={ok2b} doneCount={doneCount})"
     return 1
