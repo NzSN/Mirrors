@@ -1,5 +1,0 @@
-77:  | query (operatorValue : Option Value) (sessionId : String) (state : Value)
-188:  | .query operatorValue sessionId state trace =>
-190:        ("operatorValue", optJson (encValue <$> operatorValue)),
-333:      let operatorValue ← decOptNullValue r "operatorValue"
-337:      return .query operatorValue sessionId state trace
