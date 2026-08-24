@@ -1,5 +1,6 @@
 import Ffi.Socket
 import Shell.Transport.Stdio
+import Shell.Net.Http
 import Batteries
 
 /-!
@@ -89,17 +90,33 @@ def connectTcp (host : String) (port : Nat) : IO (Except String Transport) := do
     return .error s!"connect to {host}:{port} failed"
   return .ok (tcpTransport ⟨fd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩)
 
-/-- Open a listening socket bound to @host@ (empty = all interfaces,
-@localhost@ = loopback) and return the listener fd plus the bound port
-(port 0 picks an ephemeral port). -/
+/-- Open a listening socket bound to @host@ and return the listener fd
+plus the bound port (port 0 picks an ephemeral port). Empty host = the
+all-interfaces wildcard; otherwise the address is resolved (IPv4
+literals directly, names via getaddrinfo — Haskell @serveTcpOn@ uses
+AI_PASSIVE resolution the same way). An unresolvable or unbindable
+host is a HARD error: t27 removed the old silent wildcard fallback
+that exposed an unauthenticated --bind-restricted server on every
+interface. -/
 def listenTcp (host : String) (port : Nat) : IO (Except String (UInt64 × Nat)) := do
   let fd ← Ffi.tcpSocket
   if fd == Ffi.fdError then return .error "socket creation failed"
-  let r ← if host == "localhost" then Ffi.bindLoopback fd port.toUInt64
-          else Ffi.bindAny fd port.toUInt64
-  if r == Ffi.fdError then
-    Ffi.closeFd fd
-    return .error s!"bind {host}:{port} failed"
+  match host with
+  | "" =>
+      let r ← Ffi.bindAny fd port.toUInt64
+      if r == Ffi.fdError then
+        Ffi.closeFd fd
+        return .error s!"bind {host}:{port} failed"
+  | h =>
+      match ← Shell.Net.Http.resolveHost h with
+      | .error e =>
+          Ffi.closeFd fd
+          return .error s!"cannot resolve bind address {h}: {e}"
+      | .ok ip =>
+          let r ← Ffi.bindAddr fd ip port.toUInt64
+          if r == Ffi.fdError then
+            Ffi.closeFd fd
+            return .error s!"bind {h} ({ip}):{port} failed"
   let lrc ← Ffi.listenFd fd
   if lrc == Ffi.fdError then
     Ffi.closeFd fd

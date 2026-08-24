@@ -33,6 +33,11 @@ opaque connectLoopback : @& UInt64 → @& UInt64 → BaseIO UInt64
 @[extern "dsh_bind_loopback"]
 opaque bindLoopback : @& UInt64 → @& UInt64 → BaseIO UInt64
 
+/-- t27: bind to an explicit IPv4 dotted address (no wildcard
+fallback; failure is a hard error at the caller). -/
+@[extern "dsh_bind_addr"]
+opaque bindAddr : @& UInt64 → @& String → @& UInt64 → BaseIO UInt64
+
 /-- t15: bind the IPv4 wildcard (all interfaces). -/
 @[extern "dsh_bind_any"]
 opaque bindAny : @& UInt64 → @& UInt64 → BaseIO UInt64

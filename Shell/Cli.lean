@@ -32,6 +32,27 @@ Option parsers are ports of the hand-rolled Haskell parsers
 test suite can cover them directly.
 -/
 
+/-
+## usage
+
+Full CLI usage block (t27: previously a bare "usage: " prefix was
+printed with nothing after it). --bind is CLI parity: Haskell
+ServerOpts has soBind/scBind and Tcp.hs serveTcpOn resolves the bind
+host via getAddrInfo AI_PASSIVE — same semantics here.
+-/
+def cliUsage : String :=
+  "usage: mirror <mode> [options]\n" ++
+  "  default            stdio mirror session (one session on stdin/stdout)\n" ++
+  "  --serve <port> [--bind <addr>]\n" ++
+  "                     plain TCP mirror server (--bind defaults to all\n" ++
+  "                     interfaces; an unresolvable bind address fails loudly)\n" ++
+  "  --server <port> --tls --cert <c> --key <k> --ca <a>\n" ++
+  "       [--registry <url>] [--jobs <n>] [--bind <addr>]\n" ++
+  "                     mTLS mirror server; --registry registers with Consul\n" ++
+  "  validate (--host <h> --port <p> | --registry <url> --tls --cert <c>\n" ++
+  "            --key <k> --ca <a>) [--pin <fp>] [--bound <n>] --spec <file>\n" ++
+  "                     validate a TLA+ spec against a mirror (mTLS)\n"
+
 /-! ## argv -/
 
 /-- The Lean 4.33 IO refactor dropped IO.getArgs; read argv from
@@ -97,7 +118,7 @@ def parseServeCli (argv : List String) : Except String (Nat × Option String) :=
   match argv with
   | [p] => parseServeNum p none
   | [p, "--bind", addr] => parseServeNum p (some addr)
-  | _ => .error "usage: ModelMirrors --serve <port> [--bind <addr>]"
+  | _ => .error cliUsage
 
 private def optOr (name : String) : Option String → Except String String
   | some v => .ok v

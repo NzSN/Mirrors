@@ -21,7 +21,7 @@
       "provider": "jlc",
       "model": "glm-5.2",
       "joinedAt": 1787384623937,
-      "status": "working"
+      "status": "idle"
     },
     {
       "id": "a1b73bbf-5411-42c2-86fa-9fd5a02e6b9d",
@@ -39,7 +39,7 @@
       "provider": "jlc",
       "model": "glm-5.2",
       "joinedAt": 1787384623978,
-      "status": "working"
+      "status": "idle"
     }
   ],
   "tasks": [
@@ -458,7 +458,21 @@
       "attemptId": "f5d82ef2-ee6a-489c-95b2-05c2486da826",
       "reassigning": false,
       "output": "t26 complete: all t25 TLS review findings resolved — B1 ssl_finalizer NULL guard; M1 server-side key_perms_ok with non-vacuous negative test; M2 sign-extended certDaysRemaining ((d >>> 63) two's-complement reinterpretation) so the expired warning fires; M3 X509_VERIFY_PARAM pinning (set1_ip_asc for IP literals via inet_pton probe, set1_host otherwise, NEVER_CHECK_SUBJECT SAN-only policy; wildcard leftmost-label rule documented as accepted stricter divergence; IP-literal connect now a positive test). Minors m1-m8 all fixed or documented (pop_free chain frees, DNS/IP-only SAN filter, explicit NULL-chain guard, g_err/WANT_* assumption comments, 1 MiB recv line cap with a real 1.5 MiB single-line negative test, ctx_class sentinel, is_null comment). Plus a scoped policy fix: X509_V_FLAG_NO_CHECK_TIME on the startup-only store (strict at handshake, warn-only at startup). All 8 suggested negative tests added. Verification: transport_spec all green; lake build clean; full lake test green (8 gates, RC=0) — run independently by me and by the re-reviewer. core-engineer re-review verdict: PASS, no residual findings (verified in code, gates rerun independently). Rationale recorded in the Resolution section of Docs/tls-ffi-review.md."
+    },
+    {
+      "id": "t27",
+      "subject": "Fix --bind silently ignored (security) + empty usage text",
+      "description": "Live smoke test by the captain found: `mirror --serve 18724 --bind 127.0.0.1` listens on 0.0.0.0. Root cause: Shell/Transport/Tcp.lean:98 — `if host == \"localhost\" then Ffi.bindLoopback fd port else Ffi.bindAny fd port`, so ANY bind value except the literal string \"localhost\" (IPv4 literals like 127.0.0.1 included) silently binds the wildcard. This is security-relevant: `--serve` is an UNAUTHENTICATED plain-TCP server, so a user restricting to loopback gets all-interfaces exposure instead. Fix properly: (1) extend the socket shim with bind-to-address (inet_pton for IPv4 literals; you already have dsh_resolve_host/getaddrinfo from t16 — reuse it for names), honor arbitrary --bind values in serveTcpOn/serveTlsOn; (2) if a value cannot be resolved/bound, FAIL LOUDLY at startup — never silently fall back to wildcard; (3) check the Haskell parity question: if Haskell's serveTcp has no bind support at all, document --bind as a Lean extension in the CLI help; (4) add bind-address regression checks to transport_spec (bind 127.0.0.1 → not reachable via a non-loopback local address, e.g. hostname -I first entry; bind bogus → startup error); (5) ALSO fix the empty usage text: `mirror --bogus-flag` currently prints `usage: ` with nothing after it — print the full CLI usage block. lake build + all gates green when done.",
+      "status": "completed",
+      "assignee": "shell-engineer",
+      "dependencies": [],
+      "attempt": 1,
+      "createdAt": 1787535970815,
+      "updatedAt": 1787536677051,
+      "attemptId": "f87a11fd-3844-462d-94bf-b00d856c550b",
+      "reassigning": false,
+      "output": "t27 complete: --bind no longer silently ignored and empty usage fixed. (1) Shim: new dsh_bind_addr (inet_pton, SO_REUSEADDR) in Ffi/socket_shim.c + Ffi.bindAddr decl. (2) listenTcp now resolves the bind host (empty = wildcard; IPv4 literals direct; names via getaddrinfo/resolveHost — Haskell serveTcpOn AI_PASSIVE parity) and FAILS LOUDLY: unresolvable or unbindable addresses abort startup with a clear error; the old code bound 0.0.0.0 for any value except the literal string localhost (security-relevant: unauthenticated --serve mode was exposed on all interfaces despite a loopback-only --bind). (3) Parity verified, not an extension: Haskell ServerOpts has soBind/scBind and Tcp.hs serveTcpOn resolves the bind host via getAddrInfo; documented in cliUsage help. (4) transport_spec regressions added: listenTcp binds 127.0.0.1 / rejects unresolvable name / rejects invalid literal; e2e --tcp-serve-bind 127.0.0.1 child reachable via loopback and NOT reachable via the non-loopback local address (hostname -I first entry; skips when absent). (5) cliUsage full usage block added (Shell/Cli.lean); parser errors use it and Main prints it + exit 2 for unknown modes (bare 'usage: ' with nothing after is gone; verified: mirror --bogus-flag prints the block, mirror --serve p --bind nosuch.invalid aborts with 'cannot resolve bind address'). Verification: lake build clean, transport_spec all green (new checks included), full lake test ALL GREEN (8 gates, RC=0). Manual runtime check: --serve 19022 --bind 127.0.0.1 reachable on loopback and blocked on 172.30.63.116."
     }
   ],
-  "taskSeq": 26
+  "taskSeq": 27
 }

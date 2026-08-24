@@ -110,6 +110,22 @@ LEAN_EXPORT uint64_t dsh_peer_desc(uint64_t fd, uint8_t *out, uint64_t cap, uint
     return (uint64_t)n;
 }
 
+/* t27: bind to an explicit IPv4 dotted address (resolved by the Lean
+   layer via getaddrinfo, mirroring Haskell serveTcpOn's AI_PASSIVE
+   resolution). Never falls back to the wildcard on failure — the
+   caller treats -1 as a hard error. */
+LEAN_EXPORT uint64_t dsh_bind_addr(uint64_t fd, lean_object const *ip, uint64_t port) {
+    int one = 1;
+    setsockopt((int)fd, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+    struct sockaddr_in addr;
+    memset(&addr, 0, sizeof(addr));
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons((uint16_t)port);
+    if (inet_pton(AF_INET, lean_string_cstr((lean_object *)ip), &addr.sin_addr) != 1)
+        return (uint64_t)(int64_t)-1;
+    return (uint64_t)(int64_t)bind((int)fd, (struct sockaddr*)&addr, sizeof(addr));
+}
+
 LEAN_EXPORT uint64_t dsh_bind_loopback(uint64_t fd, uint64_t port) {
     int one = 1;
     setsockopt((int)fd, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));

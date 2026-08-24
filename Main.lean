@@ -19,8 +19,14 @@ def main : IO UInt32 := do
       | .error e => IO.eprintln e; return 2
       | .ok opts => serveOne opts
   | "validate" :: rest => validateCli rest
-  | _ =>
+  | [] =>
       -- default mode: stdio mirror session (Haskell: run StdioTransport)
       let t ← Shell.Transport.stdio
       Shell.Mirror.run t Shell.Apalache.syncOracles
       return 0
+  | _ =>
+      -- t27: unknown mode — print the full usage block instead of
+      -- silently falling into the stdio session
+      IO.eprintln "unknown mode; see usage below"
+      IO.eprintln cliUsage
+      return 2

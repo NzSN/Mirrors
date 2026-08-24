@@ -152,7 +152,16 @@ details in `tools/interop/INTEROP.md`. Gate:
 `tools/RegistrySpec.lean` (mock Consul via tools/mock_consul.py:
 parser parity units, register/heartbeat/deregister recorded,
 discovery fail-closed parsing, dead-registry [], and the SIGTERM
-deregistration e2e with a throwaway PKI).
+deregistration e2e with a throwaway PKI). t27 hardened --bind:
+listenTcp resolves the bind address (IPv4 literals directly, names
+via getaddrinfo — Haskell serveTcpOn parity with AI_PASSIVE) and
+FAILS LOUDLY on unresolvable/unbindable values; the old silent
+wildcard fallback (any --bind value other than the literal
+"localhost" bound 0.0.0.0 — security-relevant for the unauthenticated
+--serve mode) is gone. Bind regressions live in transport_spec
+(loopback reachability + non-loopback block + bad-address startup
+errors), and an unknown CLI mode now prints the full usage block
+instead of an empty "usage: " line.
 
 Re-running the stdio integration suite from this repo (needs the
 Haskell ModelMirrors test binary and `apalache-mc` on PATH, plus the

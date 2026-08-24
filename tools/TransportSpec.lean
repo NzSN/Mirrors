@@ -72,6 +72,17 @@ partial def acceptLoop (lfd : UInt64) (mk : UInt64 → IO (Option Transport)) : 
     Ffi.closeFd cfd
   acceptLoop lfd mk
 
+/-- t27: TCP server bound to an explicit address (bind regression
+tier). -/
+def tcpServeBind (addr : String) : IO Unit := do
+  match ← listenTcp addr 0 with
+  | .error e => throw (IO.userError e)
+  | .ok (lfd, bound) =>
+      IO.println s!"PORT {bound}"
+      (← IO.getStdout).flush
+      acceptLoop lfd (fun cfd =>
+        return some (tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩))
+
 def tcpServe : IO Unit := do
   match ← listenTcp "localhost" 0 with
   | .error e => throw (IO.userError e)
@@ -291,6 +302,13 @@ def mainTests : IO UInt32 := do
   | some d => check f "long cert days > 300" (d > 300)
   | none => check f "long cert days > 300" false
 
+  -- t27: bind-address regression units
+  match ← listenTcp "127.0.0.1" 0 with
+  | .ok _ => check f "listenTcp binds 127.0.0.1" true
+  | .error e => check f ("listenTcp binds 127.0.0.1 (" ++ e ++ ")") false
+  expectErr f "listenTcp rejects unresolvable bind name" (← listenTcp "nosuch.invalid.t27" 0)
+  expectErr f "listenTcp rejects invalid bind literal" (← listenTcp "999.999.999.999" 0)
+
   -- tier 2: TCP (server in a child process)
   let tcpChild ← IO.Process.spawn
     ({ cmd := ".lake/build/bin/transport_spec", args := #["--tcp-serve"],
@@ -310,6 +328,31 @@ def mainTests : IO UInt32 := do
       let r2 ← t2.recv
       check f "tcp server survived peer drop" (r2 == some "echo:again")
   let _ ← tcpChild.kill
+
+  -- t27: --bind isolation: a server bound to 127.0.0.1 must NOT be
+  -- reachable on a non-loopback local address (regression for the
+  -- silent wildcard fallback)
+  let hostIpo ← IO.Process.output
+    { cmd := "bash", args := #["-c", "hostname -I | awk '{print $1}'"] }
+  let hostIp := Shell.Transport.stripEol hostIpo.stdout
+  let bindChild ← IO.Process.spawn
+    ({ cmd := ".lake/build/bin/transport_spec", args := #["--tcp-serve-bind", "127.0.0.1"],
+       stdout := .piped } : IO.Process.SpawnArgs)
+  let bindOut := (bindChild.stdout : IO.FS.Handle)
+  let bp ← readPort bindOut
+  match ← tryConnect "localhost" bp 25 with
+  | .error e => check f ("bind 127.0.0.1 reachable via loopback (" ++ e ++ ")") false
+  | .ok tb =>
+      tb.send "bind-hello"
+      let rb ← tb.recv
+      check f "bind 127.0.0.1 reachable via loopback" (rb == some "echo:bind-hello")
+  if hostIp.isEmpty || hostIp == "127.0.0.1" then
+    check f "bind isolation: non-loopback address probe" true -- no second IP; skip
+  else
+    match ← connectTcp hostIp bp with
+    | .ok _ => check f "bind 127.0.0.1 NOT reachable via non-loopback addr" false
+    | .error _ => check f "bind 127.0.0.1 NOT reachable via non-loopback addr" true
+  let _ ← bindChild.kill
 
   -- tier 3: mTLS
   let some clientCtx := clientCtx?
@@ -441,6 +484,7 @@ def mainTests : IO UInt32 := do
 def main (args : List String) : IO UInt32 := do
   match args with
   | ["--tcp-serve"] => tcpServe; return 0
+  | ["--tcp-serve-bind", addr] => tcpServeBind addr; return 0
   | ["--tls-serve", dir] => tlsServe dir; return 0
   | ["--tls-serve-other", dir] => tlsServeOther dir; return 0
   | _ => mainTests
