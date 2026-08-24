@@ -1,0 +1,354 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Mirrors — Verified Lean 4 Mirror Architecture",
+    "output": "Docs/architecture-overview.html",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1400,
+      860
+    ],
+    "views": [
+      {
+        "id": "wire-path",
+        "label": "Client wire path",
+        "focus": [
+          "clients",
+          "transports",
+          "session",
+          "core",
+          "codec"
+        ],
+        "note": "One JSONL session: transport lines through the thin driver into the proven state machine."
+      },
+      {
+        "id": "verified-core",
+        "label": "The proven core",
+        "focus": [
+          "core",
+          "codec",
+          "tla"
+        ],
+        "note": "Everything in the verified boundary is pure and theorem-covered; the session machine refines the TLA+ model."
+      },
+      {
+        "id": "effect-boundary",
+        "label": "Trusted effect boundary",
+        "focus": [
+          "transports",
+          "cli",
+          "jobs",
+          "ffi",
+          "registry",
+          "apalache",
+          "consul"
+        ],
+        "note": "The TCB: thin, audited IO and C shims — trusted, not proved."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "ffi",
+      "type": "security",
+      "label": "Ffi shims (C)",
+      "sublabel": "OpenSSL TLS 1.3 · sockets · signals",
+      "pos": [
+        280,
+        110
+      ],
+      "size": [
+        160,
+        62
+      ],
+      "tag": "TCB · reviewed"
+    },
+    {
+      "id": "tla",
+      "type": "external",
+      "label": "MirrorProtocol.tla",
+      "sublabel": "model-level spec @3496251",
+      "pos": [
+        760,
+        110
+      ],
+      "size": [
+        180,
+        62
+      ]
+    },
+    {
+      "id": "clients",
+      "type": "external",
+      "label": "Clients",
+      "sublabel": "MirrorECMA · MirrorRust · Haskell",
+      "pos": [
+        40,
+        330
+      ],
+      "size": [
+        170,
+        66
+      ],
+      "tag": "wire protocol"
+    },
+    {
+      "id": "transports",
+      "type": "backend",
+      "label": "Shell.Transport",
+      "sublabel": "Stdio · Tcp · Tls (mTLS)",
+      "pos": [
+        280,
+        330
+      ],
+      "size": [
+        160,
+        66
+      ]
+    },
+    {
+      "id": "session",
+      "type": "backend",
+      "label": "Shell.Mirror.Session",
+      "sublabel": "thin fold over Core.step",
+      "pos": [
+        510,
+        330
+      ],
+      "size": [
+        180,
+        66
+      ]
+    },
+    {
+      "id": "core",
+      "type": "backend",
+      "label": "Core.* (pure)",
+      "sublabel": "Value·Trace·Diff·Protocol·Jobs·Resource",
+      "pos": [
+        760,
+        330
+      ],
+      "size": [
+        190,
+        70
+      ],
+      "tag": "§6.1–6.5 proven"
+    },
+    {
+      "id": "cli",
+      "type": "backend",
+      "label": "Main + Shell.Cli",
+      "sublabel": "stdio · --serve · --server · validate",
+      "pos": [
+        280,
+        540
+      ],
+      "size": [
+        160,
+        62
+      ]
+    },
+    {
+      "id": "jobs",
+      "type": "backend",
+      "label": "Shell.Jobs",
+      "sublabel": "async job store · Task workers",
+      "pos": [
+        510,
+        540
+      ],
+      "size": [
+        160,
+        62
+      ]
+    },
+    {
+      "id": "codec",
+      "type": "backend",
+      "label": "Codec.* (pure)",
+      "sublabel": "Json · ExplorerRpc · Bridge · Consul",
+      "pos": [
+        990,
+        330
+      ],
+      "size": [
+        190,
+        70
+      ],
+      "tag": "§6.6 round-trips"
+    },
+    {
+      "id": "apalache",
+      "type": "external",
+      "label": "apalache-mc",
+      "sublabel": "JVM oracle · CLI + explorer RPC",
+      "pos": [
+        990,
+        540
+      ],
+      "size": [
+        160,
+        70
+      ],
+      "tag": "trusted"
+    },
+    {
+      "id": "registry",
+      "type": "backend",
+      "label": "Shell.Registry",
+      "sublabel": "register · heartbeat · discover",
+      "pos": [
+        760,
+        720
+      ],
+      "size": [
+        170,
+        62
+      ]
+    },
+    {
+      "id": "consul",
+      "type": "external",
+      "label": "Consul",
+      "sublabel": "service discovery (plain HTTP)",
+      "pos": [
+        990,
+        720
+      ],
+      "size": [
+        150,
+        62
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "verified pure core — no IO, machine-checked",
+      "wraps": [
+        "core",
+        "codec"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "clients",
+      "to": "transports",
+      "label": "JSONL wire",
+      "variant": "emphasis"
+    },
+    {
+      "from": "transports",
+      "to": "session",
+      "label": "lines"
+    },
+    {
+      "from": "session",
+      "to": "core",
+      "label": "Core.step",
+      "variant": "emphasis",
+      "labelAt": [
+        725,
+        314
+      ]
+    },
+    {
+      "from": "core",
+      "to": "tla",
+      "label": "refines (theorem)",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "labelAt": [
+        905,
+        246
+      ]
+    },
+    {
+      "from": "codec",
+      "to": "core",
+      "label": "tag bridge (proven)",
+      "variant": "dashed",
+      "labelAt": [
+        970,
+        314
+      ]
+    },
+    {
+      "from": "session",
+      "to": "apalache",
+      "label": "validate · explore"
+    },
+    {
+      "from": "session",
+      "to": "jobs",
+      "label": "async submit",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "jobs",
+      "to": "apalache",
+      "label": "worker spawn",
+      "variant": "dashed",
+      "labelAt": [
+        830,
+        620
+      ]
+    },
+    {
+      "from": "transports",
+      "to": "ffi",
+      "label": "extern calls",
+      "variant": "security",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "from": "cli",
+      "to": "registry",
+      "label": "--registry"
+    },
+    {
+      "from": "registry",
+      "to": "consul",
+      "label": "HTTP"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "What is proved (zero sorry)",
+      "items": [
+        "§6.1 diff engine sound/complete, caps, paths",
+        "§6.2 trace pipeline losslessness",
+        "§6.3 session machine refines TLA+ model",
+        "§6.4 jobs: terminal-once, outcome congruence",
+        "§6.5 resources; §6.6 codec round-trips"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "What is trusted (TCB)",
+      "items": [
+        "OpenSSL + ~300 lines of C shims",
+        "Shell drivers, HTTP client, job store",
+        "apalache/JVM, OS — explicitly inventoried",
+        "TLS shim passed adversarial review (t25/t26)"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Wire contract",
+      "items": [
+        "JSON-lines, byte-for-byte vs Haskell",
+        "70 golden fixtures byte-identical",
+        "diff engine 500/500 ordered parity",
+        "MirrorECMA unmodified: full matrix green"
+      ]
+    }
+  ]
+}
