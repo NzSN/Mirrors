@@ -127,6 +127,14 @@ lean_exe registry_spec where
   extraDepTargets := #[`socket_shim_o, `tls_shim_o]
   moreLinkArgs := #[".lake/build/socket_shim.o", ".lake/build/tls_shim.o", "-lssl", "-lcrypto"]
 
+/-- Counter end-to-end: register flow (validate + trace-gen + replay)
+against test/specs/Counter.tla with a scripted echo client; ports the
+intent of the stale upstream MainSpec.testCounterEndToEnd with corrected
+expectations (tools/CounterSpec.lean; APALACHE_MC-gated, self-skips). -/
+@[default_target]
+lean_exe counter_spec where
+  root := `tools.CounterSpec
+
 /-- lake test runs the differential/parity + stdio gates; exit 0 = all green. -/
 @[test_driver]
 script test do
@@ -187,6 +195,15 @@ script test do
   if out8.exitCode != 0 then
     IO.println s!"registry_spec FAILED ({out8.exitCode})"
     return out8.exitCode
+  let out9 : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/counter_spec", args := #[],
+       env := match apalacheMc? with
+              | some p => #[("APALACHE_MC", some p)]
+              | none => #[] } : IO.Process.SpawnArgs)
+  IO.println out9.stdout
+  if out9.exitCode != 0 then
+    IO.println s!"counter_spec FAILED ({out9.exitCode})"
+    return out9.exitCode
   IO.println "ALL LAKE TESTS GREEN"
   return 0
 
