@@ -2,3 +2,14 @@
 /build
 .golden-build/
 _apalache-out/
+tmp/
+
+# agent-team runtime state (live mailboxes, not source)
+.agent-teams/
+
+# scratch debris from agent probe files
+*.log
+.tlog
+.*.py
+.*.lean
+.*.txt

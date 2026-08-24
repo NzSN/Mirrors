@@ -1,3 +1,0 @@
-366:  def sizeM : ValueMap → Nat
-373:theorem sizeM_cons (k : String) (v : Value) (m : ValueMap) :
-388:theorem sizeV_mem_map {k : String} {v : Value} {m : ValueMap} (h : (k, v) ∈ m) :

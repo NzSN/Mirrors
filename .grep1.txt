@@ -1,2 +1,0 @@
-603:def decValueF : Nat → Json → Dec Value
-608:  | fu+1, .num _ => derr "value: bare JSON number not in ITF grammar"

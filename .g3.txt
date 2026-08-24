@@ -1,7 +1,0 @@
-1020:theorem decValueF_encValue :
-1244:  decValueF_encValue (sizeV v) v hw (Nat.le_refl _) defaultFuel hfuel
-2102:  decValueF_encValue (sizeV v) v h.1 (Nat.le_refl _) defaultFuel (by
-2117:    exact decValueF_encValue 2147483645 v hwok hszv F hF
-2100:theorem decodeValue_bounded (v : Value) (h : valBounded v) :
-2832:      obtain ⟨w, hw, hval⟩ := decodeValue_bounded v (hb v (by simp))
-2852:  obtain ⟨w, hw, hval⟩ := decodeValue_bounded v hb
