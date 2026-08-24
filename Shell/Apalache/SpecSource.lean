@@ -47,16 +47,31 @@ def moduleName (src : String) : Except String String :=
 private initialize dirCounter : IO.Ref Nat ← IO.mkRef 0
 
 private def tempBase : IO String := do
-  match ← IO.getEnv "TMPDIR" with
-  | some t => pure t
-  | none => pure "/tmp"
+  -- t30: on Windows prefer TEMP/TMP (MSYS converts those to native
+  -- paths when spawning native binaries; TMPDIR stays POSIX-style and
+  -- would resolve against the wrong drive root). The windows-dev box
+  -- has a broken global TEMP pointing at a nonexistent D:\.local\TMP,
+  -- so only an EXISTING dir is accepted; otherwise fall back to the
+  -- platform default, and finally the cwd.
+  let envCands : Array (Option String) ←
+    if System.Platform.isWindows then
+      pure #[← IO.getEnv "TEMP", ← IO.getEnv "TMP", ← IO.getEnv "TMPDIR"]
+    else
+      pure #[← IO.getEnv "TMPDIR"]
+  let cands := envCands.filterMap id ++
+    (if System.Platform.isWindows then ["C:/Windows/Temp", "."] else ["/tmp", "."])
+  for c in cands do
+    if ← (c : System.FilePath).pathExists then return c
+  return "."
 
 /-- A fresh spec temp dir (Haskell @freshSpecDir@): retry with a new
 counter on collision. -/
+private def pathSep : String := if System.Platform.isWindows then "\\" else "/"
+
 private partial def freshSpecDir : IO String := do
   let tmp ← tempBase
   let n ← dirCounter.modifyGet (fun m => (m, m + 1))
-  let dir := tmp ++ "/modelmirrors-spec-" ++ toString n
+  let dir := tmp ++ pathSep ++ "modelmirrors-spec-" ++ toString n
   try
     IO.FS.createDir dir
     return dir
@@ -147,7 +162,7 @@ def freshSessionDir : IO String := do
   let tmp ← tempBase
   let n ← dirCounter.modifyGet (fun m => (m, m + 1))
   let ms ← IO.monoMsNow
-  let dir := tmp ++ "/modelmirrors-session-" ++ toString n ++ "-" ++ toString ms
+  let dir := tmp ++ pathSep ++ "modelmirrors-session-" ++ toString n ++ "-" ++ toString ms
   try IO.FS.createDir dir
   catch _ => IO.FS.createDir (dir ++ "-x")
   return dir

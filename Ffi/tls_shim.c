@@ -23,11 +23,23 @@
 #include <openssl/x509v3.h>
 #include <openssl/pem.h>
 #include <openssl/bio.h>
+/* t30: the OpenSSL API surface used here is portable; only the POSIX
+ * socket headers differ (inet_pton lives in ws2tcpip.h on Windows). */
 #include <sys/stat.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+#if defined(_WIN32)
+#  include <winsock2.h>
+#  include <ws2tcpip.h>
+#else
+#  include <sys/socket.h>
+#  include <netinet/in.h>
+#  include <arpa/inet.h>
+#endif
 #include <string.h>
+#if defined(_WIN32)
+/* t30: MinGW has no timegm; _mkgmtime is the UTC equivalent */
+#  include <time.h>
+#  define timegm(tm) _mkgmtime(tm)
+#endif
 #include <stdint.h>
 #include <time.h>
 #include <stdio.h>
@@ -105,6 +117,12 @@ LEAN_EXPORT uint64_t dsh_tls_errmsg(lean_object *outobj, uint64_t cap, uint64_t 
 static int key_perms_ok(const char *key_file) {
     struct stat st;
     if (stat(key_file, &st) != 0) { set_err("key file not found"); return 0; }
+#ifdef _WIN32
+    /* t30: MinGW stat does not populate POSIX permission bits; ACLs
+     * govern access on Windows. The file's existence check above (and
+     * the OpenSSL key load that follows) is the effective gate. */
+    return 1;
+#endif
     if (st.st_mode & (S_IRGRP|S_IWGRP|S_IXGRP|S_IROTH|S_IWOTH|S_IXOTH)) {
         snprintf(g_err, sizeof(g_err),
                  "key file %s must not be accessible by group/other (chmod 0600)",

@@ -55,15 +55,41 @@ def cliUsage : String :=
 
 /-! ## argv -/
 
-/-- The Lean 4.33 IO refactor dropped IO.getArgs; read argv from
-/proc/self/cmdline (POSIX — same platform caveat as the signal
-handling). -/
+/-- The Lean 4.33 IO refactor dropped IO.getArgs. POSIX: read argv
+from /proc/self/cmdline. Windows (t30): that file does not exist — use
+the dsh_win_argv shim (GetCommandLineA tokenizer) instead. -/
+private def splitNul (s : String) : List String :=
+  (s.splitOn (String.singleton (Char.ofNat 0))).filter (fun x => !x.isEmpty)
+
 def getArgsIO : IO (List String) := do
-  let r ← try pure (some (← IO.FS.readFile "/proc/self/cmdline")) catch _ => pure none
-  match r with
-  | none => return []
-  | some s =>
-      return ((s.splitOn (String.singleton (Char.ofNat 0))).drop 1).filter (fun x => !x.isEmpty)
+  if System.Platform.isWindows then
+    let buf := ByteArray.mk ((List.replicate 8192 0).toArray)
+    let r ← Ffi.winArgvRaw buf 8191
+    let argc := (r >>> 32).toNat
+    let total := (r &&& 0xFFFFFFFF).toNat
+    let bytes := buf.extract 0 total
+    -- collect exactly argc NUL-terminated strings
+    let mut out : List String := []
+    let mut cur : String := ""
+    let mut seen : Nat := 0
+    let mut i := 0
+    while seen < argc && i < bytes.size do
+      let c := bytes.get! i
+      if c == 0 then
+        out := out ++ [cur]
+        cur := ""
+        seen := seen + 1
+      else
+        cur := cur.push (Char.ofUInt8 c)
+      i := i + 1
+    -- argv[0] is the program name; drop it like the /proc path does
+    return out.drop 1
+  else
+    let r ← try pure (some (← IO.FS.readFile "/proc/self/cmdline")) catch _ => pure none
+    match r with
+    | none => return []
+    | some s =>
+        return ((s.splitOn (String.singleton (Char.ofNat 0))).drop 1).filter (fun x => !x.isEmpty)
 
 /-! ## --serve / --server option parsing (Protocol.ServerOpts port) -/
 

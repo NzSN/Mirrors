@@ -178,7 +178,7 @@ def main : IO UInt32 := do
       IO.eprintln "SKIP counter_spec (APALACHE_MC not set)"
       return 0
   | some _ => do
-    let bin := ".lake/build/bin/mirror"
+    let bin := ".lake/build/bin/mirror" ++ (if System.Platform.isWindows then ".exe" else "")
     -- 1. conforming echo client follows the generated trace
     let (seen, _) ← driveCounter bin .none
     IO.println s!"conform session: {seen}"
@@ -239,7 +239,7 @@ def main : IO UInt32 := do
     -- (MainSpec testEndToEnd) and the FULL expected 26-message
     -- sequence; reads stdout to EOF so a duplicate all_steps_done
     -- cannot hide behind a client that stops at the first one.
-    let dcBin := ".lake/build/bin/mirror"
+    let dcBin := ".lake/build/bin/mirror" ++ (if System.Platform.isWindows then ".exe" else "")
     let dcReport (c a s : String) : String :=
       "{\"proto_step\":\"report_state\",\"state\":{" ++
       "\"count\":{\"#bigint\":\"" ++ c ++ "\"}" ++

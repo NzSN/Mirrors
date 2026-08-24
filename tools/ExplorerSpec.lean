@@ -49,8 +49,11 @@ private def spikeUnused : Nat := 0
 Content-Length, chunked decoding, recv-timeout on a silent endpoint,
 and connect refusal on a dead port. -/
 def httpSpike (fails : Failures) : IO Unit := do
+  -- t30: python3 on windows-dev is the useless WindowsApps stub;
+  -- use python there
+  let py := if System.Platform.isWindows then "python" else "python3"
   let proc ← IO.Process.spawn
-    { cmd := "python3", args := #["tools/http_test_server.py"],
+    { cmd := py, args := #["tools/http_test_server.py"],
       stdin := .null, stdout := .piped, stderr := .null }
   let outH := (proc.stdout : IO.FS.Handle)
   let portLine ← outH.getLine

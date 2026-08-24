@@ -107,8 +107,9 @@ def main : IO UInt32 := do
   let portfile := dir ++ "/port"
   let _ ← runCmd "rm" #["-f", log, portfile]
   IO.FS.writeFile discover "[]"
+  let py := if System.Platform.isWindows then "python" else "python3"
   let mock ← IO.Process.spawn
-    ({ cmd := "python3",
+    ({ cmd := py,
        args := #["tools/mock_consul.py", portfile, log, discover] } :
       IO.Process.SpawnArgs)
   let mut tries := 50
@@ -190,7 +191,7 @@ def main : IO UInt32 := do
           let _ ← runCmd "rm" #["-f", log]
           -- concrete port so the child is simple to probe
           let srv2 ← IO.Process.spawn
-            ({ cmd := ".lake/build/bin/mirror",
+            ({ cmd := ".lake/build/bin/mirror" ++ (if System.Platform.isWindows then ".exe" else ""),
                args := #["--server", "19007", "--tls", "--cert", p "server.crt",
                          "--key", p "server.key", "--ca", p "ca.crt",
                          "--registry", s!"http://localhost:{rport}"] } :
@@ -205,6 +206,15 @@ def main : IO UInt32 := do
             IO.sleep 100
             t2 := t2 - 1
           check f "server child registered with consul" registered
+          if System.Platform.isWindows then
+            -- t30: no graceful SIGTERM delivery to a native Windows
+            -- child (Lean kill = TerminateProcess; services are stopped
+            -- hard by nssm too). Deregistration on shutdown is a
+            -- POSIX-only guarantee on this platform.
+            try srv2.kill catch _ => pure ()
+            let _ ← try srv2.wait catch _ => pure 0
+            IO.eprintln "SKIP SIGTERM tier (no graceful SIGTERM on Windows)"
+          else
           -- SIGTERM (not SIGKILL): the handler must deregister+exit 0
           let _ ← runCmd "kill" #["-TERM", toString srv2.pid]
           let st ← srv2.wait

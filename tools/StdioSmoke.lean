@@ -146,7 +146,7 @@ def main : IO UInt32 := do
     | .error e => IO.eprintln s!"smoke: fixture parse failed: {e}"; return 1
     | .ok ts => pure ts
   let steps := (traces.map traceSteps).flatten
-  let bin := ".lake/build/bin/mirror"
+  let bin := ".lake/build/bin/mirror" ++ (if System.Platform.isWindows then ".exe" else "")
   -- 1. clean replay
   let seen ← driveSession bin [p1, p2] steps none
   IO.println s!"clean session: {seen}"

@@ -146,11 +146,15 @@ def traceArgs (runDir : Option String) (cfg : Codec.ApalacheConfig)
     ++ [cfg.specPath]
 
 /-- Extract the @Output directory: <dir>@ line from apalache output
-(Haskell @parseOutputDir@). -/
+(Haskell @parseOutputDir@). t30: apalache on Windows emits CRLF line
+endings, so a trailing carriage return is stripped — otherwise the
+parsed path does not exist and trace discovery fails with a confusing
+ENOENT. -/
 def parseOutputDir (s : String) : Option String :=
   let rec go : List String → Option String
     | [] => none
     | l :: ls =>
+        let l := l.dropRightWhile (fun c => c == '\r' || c == ' ')
         match l.splitOn ": " with
         | ["Output directory", rest] => some rest
         | _ => go ls

@@ -2,6 +2,39 @@ import Lake
 import Lean
 open Lake DSL
 
+/-- t30: shim build/link platform knobs. pkg-config is unavailable on
+the windows-dev box, so the OpenSSL include/lib dirs are hardcoded
+there (overridable via OSSL_INC / OSSL_LIB env vars) and the socket
+shim additionally links ws2_32. The Linux path is unchanged. -/
+def winCC : String := "gcc"
+
+def osslInc : IO String := do
+  match ← IO.getEnv "OSSL_INC" with
+  | some p => pure p
+  | none => pure (if System.Platform.isWindows then "/d/Programs/msys2/ucrt64/include" else "")
+
+def osslLib : IO String := do
+  match ← IO.getEnv "OSSL_LIB" with
+  | some p => pure p
+  | none => pure (if System.Platform.isWindows then "/d/Programs/msys2/ucrt64/lib" else "")
+
+/-- t30: link args for exes that use both shims (mirror, registry_spec,
+transport_spec). -/
+def shimLinkArgs : Array String :=
+  if System.Platform.isWindows then
+    #[".lake/build/socket_shim.o", ".lake/build/tls_shim.o",
+      "-L" ++ "/d/Programs/msys2/ucrt64/lib", "-lssl", "-lcrypto", "-lws2_32"]
+  else
+    #[".lake/build/socket_shim.o", ".lake/build/tls_shim.o", "-lssl", "-lcrypto"]
+
+/-- t30: link args for exes that use only the socket shim. -/
+def sockLinkArgs : Array String :=
+  if System.Platform.isWindows then
+    #[".lake/build/socket_shim.o", "-lws2_32"]
+  else
+    #[".lake/build/socket_shim.o"]
+
+
 package mirrors
 
 @[default_target]
@@ -29,7 +62,7 @@ lean_exe diff_cross where
 lean_exe mirror where
   root := `Main
   extraDepTargets := #[`socket_shim_o, `tls_shim_o]
-  moreLinkArgs := #[".lake/build/socket_shim.o", ".lake/build/tls_shim.o", "-lssl", "-lcrypto"]
+  moreLinkArgs := shimLinkArgs
 
 /-- Phase 3: stdio session smoke test against the built mirror binary. -/
 @[default_target]
@@ -54,7 +87,7 @@ target socket_shim_o pkg : System.FilePath := do
   if !fresh then do
     let cc ← match (← IO.getEnv "CC") with
       | some c => pure c
-      | none => pure "cc"
+      | none => pure (if System.Platform.isWindows then winCC else "cc")
     let leanPrefix ← IO.Process.output { cmd := "lean", args := #["--print-prefix"] }
     let prefixStr := leanPrefix.stdout.trim
     let out ← IO.Process.output
@@ -75,11 +108,17 @@ target tls_shim_o pkg : System.FilePath := do
   if !fresh then do
     let cc ← match (← IO.getEnv "CC") with
       | some c => pure c
-      | none => pure "cc"
+      | none => pure (if System.Platform.isWindows then winCC else "cc")
     let leanPrefix ← IO.Process.output { cmd := "lean", args := #["--print-prefix"] }
     let prefixStr := leanPrefix.stdout.trim
-    let pc ← IO.Process.output { cmd := "pkg-config", args := #["--cflags", "openssl"] }
-    let pcArgs := (pc.stdout.trim.splitOn " ").filter (· != "")
+    -- t30: pkg-config is broken on windows-dev; hardcode the msys2
+    -- ucrt64 OpenSSL include dir there (env-overridable)
+    let pcArgs ←
+      if System.Platform.isWindows then
+        pure #["-I", ← osslInc]
+      else
+        let pc ← IO.Process.output { cmd := "pkg-config", args := #["--cflags", "openssl"] }
+        pure (((pc.stdout.trim.splitOn " ").filter (· != "")).toArray)
     let out ← IO.Process.output
       { cmd := cc, args := #["-c", src.toString, "-o", o.toString,
                              "-I", prefixStr ++ "/include"] ++ pcArgs }
@@ -98,7 +137,7 @@ APALACHE_MC set, self-skipping otherwise). -/
 lean_exe apalache_cli_spec where
   root := `tools.ApalacheCliSpec
   extraDepTargets := #[`socket_shim_o]
-  moreLinkArgs := #[".lake/build/socket_shim.o"]
+  moreLinkArgs := sockLinkArgs
 
 /-- t14: explorer HTTP/JSON-RPC spike, transcript parity, and the
 HourClock explorer end-to-end (real apalache integration runs only
@@ -107,7 +146,7 @@ with APALACHE_MC set, self-skipping otherwise). -/
 lean_exe explorer_spec where
   root := `tools.ExplorerSpec
   extraDepTargets := #[`socket_shim_o]
-  moreLinkArgs := #[".lake/build/socket_shim.o"]
+  moreLinkArgs := sockLinkArgs
 
 /-- t15: TCP + mTLS transport regression suite (generates a throwaway
 PKI with the openssl CLI at test time; skips itself when the openssl
@@ -116,7 +155,7 @@ CLI is missing). -/
 lean_exe transport_spec where
   root := `tools.TransportSpec
   extraDepTargets := #[`socket_shim_o, `tls_shim_o]
-  moreLinkArgs := #[".lake/build/socket_shim.o", ".lake/build/tls_shim.o", "-lssl", "-lcrypto"]
+  moreLinkArgs := shimLinkArgs
 
 /-- t16: registry/discovery + signal-handling gate (mock Consul via
 python3; the SIGTERM tier needs the openssl CLI for a throwaway PKI
@@ -125,7 +164,7 @@ and self-skips that tier without it). -/
 lean_exe registry_spec where
   root := `tools.RegistrySpec
   extraDepTargets := #[`socket_shim_o, `tls_shim_o]
-  moreLinkArgs := #[".lake/build/socket_shim.o", ".lake/build/tls_shim.o", "-lssl", "-lcrypto"]
+  moreLinkArgs := shimLinkArgs
 
 /-- Counter end-to-end: register flow (validate + trace-gen + replay)
 against test/specs/Counter.tla with a scripted echo client; ports the

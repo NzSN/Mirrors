@@ -97,4 +97,12 @@ alive). -/
 @[extern "dsh_exit"]
 opaque exitWith : UInt64 → BaseIO Unit
 
+/-- t30 (Windows only): argv via GetCommandLineA. Writes NUL-separated
+args into the buffer; returns (argc <<< 32) ||| bytesWritten. The
+Linux build never links this (getArgsIO reads /proc/self/cmdline
+there); the decl exists so the same Shell.Cli source compiles on both
+platforms. -/
+@[extern "dsh_win_argv"]
+opaque winArgvRaw : @& ByteArray → @& UInt64 → BaseIO UInt64
+
 end Ffi
