@@ -261,8 +261,12 @@ def syncOracles : Shell.Mirror.Oracles where
     match ← acquireSpec spec cfg with
     | .error e => return .error e
     | .ok (res, cfg') =>
-        let r ← try validateSpecIn none cfg' _bound
-          finally releaseSpec res
+        -- t29: validate in a FRESH session dir like the trace paths —
+        -- passing none ran apalache with the mirror's cwd and littered
+        -- _apalache-out/<spec>/ + tmp/ into the repo root
+        let dir ← freshSessionDir
+        let r ← try validateSpecIn (some dir) cfg' _bound
+          finally (do releaseSpec res; removeSessionDir dir)
         return r
   generateTraces := fun cfg spec tc => do
     match ← acquireSpec spec cfg with

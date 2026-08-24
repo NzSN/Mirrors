@@ -201,6 +201,15 @@ def main : IO UInt32 := do
     -- stepping session: init + at least one tick.
     checkC fails "conform: at least one tick"
       (sends.length >= 2) s!"sends={sends.length}"
+    -- t29: run-dir isolation — a full register-with-validation
+    -- session must not litter the mirror cwd (no _apalache-out/ or
+    -- tmp/ created in the repo root by the validate path)
+    let litter1 ← ("_apalache-out" : System.FilePath).pathExists
+    let litter2 ← ("tmp" : System.FilePath).pathExists
+    checkC fails "run-dir isolation: no _apalache-out in cwd" (!litter1)
+      (if litter1 then "_apalache-out exists" else "")
+    checkC fails "run-dir isolation: no tmp in cwd" (!litter2)
+      (if litter2 then "tmp exists" else "")
     -- 2. corrupted count -> mismatch mentioning count, no trailing
     -- all_steps_done (spec-faithful tail; Haskell quirk documented
     -- in the module header)

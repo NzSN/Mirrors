@@ -30,7 +30,7 @@
       "provider": "jlc",
       "model": "glm-5.2",
       "joinedAt": 1787384623954,
-      "status": "working"
+      "status": "idle"
     },
     {
       "id": "ae725a1c-901a-4d7e-a3f8-e67c3adc3302",
@@ -491,14 +491,15 @@
       "id": "t29",
       "subject": "Live-check findings: validate run-dir isolation + pin case-sensitivity",
       "description": "Two bugs found by the captain's live mTLS server-mode check: (1) RUN-DIR ISOLATION BREACH: Shell/Apalache/Runner.lean:264 — the syncOracles VALIDATE path calls `validateSpecIn none cfg' _bound` (no run dir), so every register/validate session runs apalache with the MIRROR'S cwd and litters _apalache-out/<spec>/ + tmp there (observed live in the Mirrors repo root: _apalache-out/Counter.tla, DeterministicCounter.tla, server/ from real sessions). The trace-gen paths (lines 271-286) correctly use freshSessionDir; the validate path must too (create dir, pass it, clean up per SpecSource ownership). The t13 gate only tested validateSpecIn (some runDir) explicitly, never the syncOracles wiring — add a regression: a full register-with-validation session must leave the mirror cwd clean (assert no _apalache-out/ and tmp/ appear in cwd after the session; e.g. in CounterSpec or ApalacheCliSpec). Also add _apalache-out/ and tmp/ to .gitignore. (2) PIN CASE-SENSITIVITY: Shell/Transport/Tls.lean:265 compares `fp != expectedFp` with plain string equality; the shim reports LOWERCASE hex while `openssl x509 -fingerprint` prints UPPERCASE, so a pasted openssl pin false-mismatches (observed live: 'want 2736AD74..., got 2736ad74...' → fast-fail). Fix: normalize both sides (e.g. toLower) before comparing; check what Haskell's connectTlsPinned does at ModelMirros@3496251 and match it if it normalizes, otherwise document as a robustness improvement. Add a mixed-case pin test to transport_spec. Full lake test green (9 gates); verify the gates themselves no longer litter the repo root.",
-      "status": "claimed",
+      "status": "completed",
       "assignee": "shell-engineer",
       "dependencies": [],
       "attempt": 1,
       "createdAt": 1787541538026,
-      "updatedAt": 1787541538034,
+      "updatedAt": 1787542701486,
       "attemptId": "d3951a9a-8dac-4c64-bf35-6023826fb482",
-      "reassigning": false
+      "reassigning": false,
+      "output": "t29 complete. (1) RUN-DIR ISOLATION: Shell/Apalache/Runner.lean syncOracles.validateSpec now creates a freshSessionDir, calls validateSpecIn (some dir), and removes it in the finally (mirroring the trace-gen paths) — the validate path no longer runs apalache in the mirror cwd. While adding the regression I found a SECOND litter source the check exposed: Shell/Apalache/Explorer.lean startApalacheServer spawned the apalache explorer server with no cwd, so server mode wrote _apalache-out/server + tmp/<timestamp> into the caller's cwd during every explorer flow/gate; ApalacheServer now carries its runDir, the server is spawned with cwd = fresh session dir, and stopApalacheServer removes it (also on the not-healthy path). .gitignore gained _apalache-out/ and tmp/. Regression: CounterSpec now asserts after a full register-with-validation session that neither _apalache-out/ nor tmp/ exists in cwd. (2) PIN CASE-SENSITIVITY: connectTlsPinned compares lowercased fingerprints on both sides (shim reports lowercase hex, openssl CLI prints uppercase); checked Haskell at the pin — Discover.hs candidateFingerprint does no normalization, so this is documented in the docstring as a Lean robustness improvement, not parity change. transport_spec gained a mixed-case pin test (uppercase openssl-style pin connects and completes the echo). Verification: lake build clean; transport_spec all green; counter_spec COUNTER SPEC GREEN with zero litter; full lake test ALL GREEN (9 gates, RC=0) with an explicit post-suite litter check of the repo root showing it stays clean."
     }
   ],
   "taskSeq": 29

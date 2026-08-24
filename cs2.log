@@ -1,0 +1,5 @@
+conform session: #[spec_validated, initial_state, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, initial_state, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, all_steps_done]
+corrupt-count session: #[spec_validated, initial_state, step_mismatch]
+extra-key session: #[spec_validated, initial_state, step_mismatch]
+dc session: 26 messages: [spec_validated, initial_state, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, initial_state, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, all_steps_done]
+COUNTER SPEC GREEN

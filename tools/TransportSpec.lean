@@ -382,6 +382,16 @@ def mainTests : IO UInt32 := do
       t.send "ip-hello"
       let r ← t.recv
       check f "ip-literal connect (M3)" (r == some "echo:ip-hello")
+  -- t29: mixed-case pin — an UPPERCASE (openssl CLI style) pin must
+  -- connect, not false-mismatch against the shim's lowercase hex
+  let upFp := (fp.map (fun c =>
+    if c >= 'a' && c <= 'z' then Char.ofNat (c.toNat - 32) else c))
+  match ← tryConnectTls clientCtx "localhost" tp upFp 10 with
+  | .error e => check f ("mixed-case pin connect (" ++ e ++ ")") false
+  | .ok t =>
+      t.send "case-hello"
+      let r ← t.recv
+      check f "mixed-case pin connect (t29)" (r == some "echo:case-hello")
   -- t26/m6: oversized line (> 1 MiB, no LF) over the TLS transport:
   -- the server throws at the cap and closes; the client's remaining
   -- writes then fail against the closed socket (no silent ballooning)
@@ -410,6 +420,7 @@ def mainTests : IO UInt32 := do
   let head62 : String := (fp.take 62).toString
   let wrongFp : String := head62 ++ (if (fp.take 2).toString == "00" then "11" else "00")
   expectErr f "mtls wrong fingerprint rejected" (← connectTlsPinned clientCtx "localhost" tp wrongFp)
+
   -- t26: client trusting the WRONG CA cannot handshake with the good
   -- server (complement of the rogue-client test)
   let wrongCaFiles : TlsFiles := { certFile := path "client.crt",

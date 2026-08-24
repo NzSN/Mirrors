@@ -253,7 +253,12 @@ def connectTls (ctx : Ffi.TlsCtx) (host : String) (port : Nat) :
 
 /-- Connect and pin the peer certificate fingerprint (Haskell
 @connectTlsPinned@): after the handshake, the peer's SHA-256 fingerprint
-must equal @expectedFp@, else the connection fails. -/
+must equal @expectedFp@, else the connection fails. t29: the comparison
+is case-insensitive — hex fingerprints are conventionally printed
+lowercase by this shim and UPPERCASE by the openssl CLI
+(@x509 -fingerprint@), and a pasted pin from either source must both
+work (the Haskell side has no normalization; this is a Lean robustness
+improvement, not a parity change). -/
 def connectTlsPinned (ctx : Ffi.TlsCtx) (host : String) (port : Nat)
     (expectedFp : String) : IO (Except String Transport) := do
   match ← tlsHandshake ctx host port with
@@ -262,7 +267,7 @@ def connectTlsPinned (ctx : Ffi.TlsCtx) (host : String) (port : Nat)
       match ← peerCertFingerprintSHA256 ssl with
       | none => return .error "peer presented no certificate"
       | some fp =>
-          if fp != expectedFp then
+          if fp.toLower != expectedFp.toLower then
             return .error
               s!"certificate fingerprint mismatch for {host}:{port} (want {expectedFp}, got {fp})"
           else

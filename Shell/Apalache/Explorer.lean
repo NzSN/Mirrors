@@ -1,5 +1,6 @@
 import Shell.Net.Http
 import Shell.Apalache.Cli
+import Shell.Apalache.SpecSource
 import Core.Value
 import Codec.Json
 import Shell.Mirror.Session
@@ -430,6 +431,9 @@ def encodeB64 (s : String) : String := Id.run do
 structure ApalacheServer where
   port : Nat
   process : IO.Process.Child { stdin := .null, stdout := .piped, stderr := .inherit }
+  /-- t29: run dir for the server process; removed on stop (apalache
+  server mode writes _apalache-out/server and tmp/ into its cwd). -/
+  runDir : Option String
 
 /-- Pick an ephemeral loopback port (Haskell @freePort@): bind port 0,
 read the assigned port, close. -/
@@ -454,10 +458,15 @@ transport carries protocol JSON there), health-polled until ready. -/
 def startApalacheServer (mPort : Option Nat) : IO ApalacheServer := do
   let bin ← Shell.Apalache.Cli.apalacheBin
   let port := mPort.getD (← freePort)
+  -- t29: run the server with a FRESH session dir as cwd — server mode
+  -- otherwise litters _apalache-out/server + tmp/ into the caller's
+  -- cwd (observed in the repo root during live checks)
+  let dir ← Shell.Apalache.SpecSource.freshSessionDir
   let child ← IO.Process.spawn
     { cmd := bin, args := #["server", s!"--port={port}", "--server-type=explorer"],
       env := #[("LC_ALL", some "C.UTF-8")], stdin := .null,
-      stdout := .piped, stderr := .inherit }
+      stdout := .piped, stderr := .inherit,
+      cwd := some dir }
   let outH := (child.stdout : IO.FS.Handle)
   let _task ← IO.asTask (prio := Task.Priority.dedicated) do
     let mut line ← outH.getLine
@@ -473,13 +482,17 @@ def startApalacheServer (mPort : Option Nat) : IO ApalacheServer := do
     | _ => IO.sleep 500; tries := tries + 1
   if !ready then
     killIgnoring child
+    Shell.Apalache.SpecSource.removeSessionDir dir
     throw (IO.userError "apalache explorer server did not become healthy")
-  return ⟨port, child⟩
+  return ⟨port, child, some dir⟩
 
-/-- Terminate + reap the server (total). -/
+/-- Terminate + reap the server (total); removes its run dir (t29). -/
 def stopApalacheServer (server : ApalacheServer) : IO Unit := do
   killIgnoring server.process
   let _ ← server.process.wait
+  match server.runDir with
+  | some d => Shell.Apalache.SpecSource.removeSessionDir d
+  | none => pure ()
 
 /-- Run with a started explorer server, guaranteeing shutdown
 (Haskell @withApalacheServer@). -/

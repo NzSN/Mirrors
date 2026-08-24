@@ -43,6 +43,7 @@ ok: bind 127.0.0.1 reachable via loopback
 ok: bind 127.0.0.1 NOT reachable via non-loopback addr
 ok: mtls echo round trip (TLS 1.3, pinned fp)
 ok: ip-literal connect (M3)
+ok: mixed-case pin connect (t29)
 ok: oversized line rejected (m6)
 ok: server alive after oversized line
 ok: mtls wrong fingerprint rejected
@@ -53,7 +54,7 @@ ok: rogue client ctx (locally valid)
 ok: mtls untrusted client cert rejected by server
 ok: tls1.2-only peer rejected (no echo)
 ok: certificate-less client rejected (no echo)
-dbg before ip: pid 245131
+dbg before ip: pid 249338
 TRANSPORT SPEC: all green
 
 ok: serve cli: ok
@@ -97,3 +98,5 @@ COUNTER SPEC GREEN
 
 ALL LAKE TESTS GREEN
 RC=0
+LITTER:
+LITTER-END
