@@ -48,13 +48,30 @@ partial def sessionNoStore (t : Shell.Transport.Transport) : IO Unit := do
   | none => return ()
   | some _ => sessionNoStore t
 
+/-- Variant: NO CLIENT AT ALL. Hypothesis: the trigger is a dedicated
+task completing while the main thread is parked inside a BLOCKING FFI
+call (the shim's select), not sockets per se. Listen, then loop:
+spawn a trivial dedicated task, park 200ms in waitReadable. -/
+partial def noClientLoop (lfd : UInt64) : IO Unit := do
+  let _t ← IO.asTask (prio := .dedicated) (pure ())
+  let _ ← Ffi.waitReadable lfd 200
+  noClientLoop lfd
+
 def main : IO Unit := do
   let mux ← Std.Mutex.new 0
   let sem ← Std.Semaphore.new 1
   let store := (⟨mux, sem⟩ : FakeStore)
   let args ← _root_.getArgsIO
-  IO.eprintln "mincrash: listening on 127.0.0.1:19500"
   match args with
-  | ["no-recv"]  => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (sessionNoRecv store)
-  | ["no-store"] => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 sessionNoStore
-  | _ => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (session store)
+  | ["no-client"] =>
+      match ← Shell.Transport.Tcp.listenTcp "127.0.0.1" 19501 with
+      | .error e => throw (IO.userError e)
+      | .ok (lfd, _) =>
+          IO.eprintln "mincrash no-client: spawning tasks while parked in select"
+          noClientLoop lfd
+  | _ =>
+      IO.eprintln "mincrash: listening on 127.0.0.1:19500"
+      match args with
+      | ["no-recv"]  => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (sessionNoRecv store)
+      | ["no-store"] => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 sessionNoStore
+      | _ => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (session store)
