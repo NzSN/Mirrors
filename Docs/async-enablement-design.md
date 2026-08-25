@@ -114,7 +114,40 @@ All existing 9 gates must stay green; the Windows build must keep
 compiling (the t30 platform branches are untouched by this work —
 `runAsync` uses only Task/Mutex/transport).
 
-## 6. Decisions (signed off)
+## 6. Known issue: Windows (t31 follow-up, post-landing)
+
+Async server sessions are **Linux-only**. On windows-dev the
+concurrent accept loop (session tasks over the shared store)
+reproducibly segfaults the process whenever a session completes
+quickly (e.g. rapid connect/disconnect, 6/6 runs); the crash is
+inside the Lean 4.33 runtime task machinery (lthread worker applying
+a task closure; crash address resolves into libleanshared static
+code, not our shims or module code). Isolation experiments:
+
+- trivial tasks (300 spawn/complete cycles) on Windows: clean;
+- sync sessions on session tasks: clean (300-connection Linux stress
+  also clean; Linux async sessions clean and fully gated green);
+- any session task that so much as *binds* the JobStore value (its
+  Std.Mutex/Std.Semaphore external objects) — even created inside
+  the task, even unused — crashes on quick teardown;
+- holding task references, per-connection recv buffers, task
+  priorities, and top-level task bodies all make no difference;
+  a Windows cdb capture (dump + linker map) pinned the fault to the
+  Lean runtime, not application code.
+
+Windows builds therefore branch to the t30 sync sequential sessions
+(serveTcpOn/serveTlsOn + mirrorSession) in both server modes; the
+async_spec gate self-skips on Windows; the r-windev service runs the
+sync build. Revisit when the Lean Windows runtime fixes task/external
+object teardown (then restore serveTcpConcurrentOn/serveTlsConcurrentOn
+in Shell/Cli.lean and drop the AsyncSpec skip).
+
+Also fixed while chasing this (real bug independent of the crash):
+the TCP transport's 64 KiB receive scratch was a single shared
+module-level buffer — a latent cross-connection data race once
+sessions run concurrently. It is now allocated per connection.
+
+## 7. Decisions (signed off)
 
 - **D1 — `--jobs` semantics**: ✅ **capacity = N** — the flag becomes
   the store's concurrency bound; default stays 4 (matches the parser
@@ -125,7 +158,7 @@ compiling (the t30 platform branches are untouched by this work —
 - **D3 — stdio**: ✅ **sync-only**, Haskell parity; async is a
   server-mode feature.
 
-## 7. Rollout
+## 8. Rollout
 
 1. Wire `runAsync` into the `--serve`/`--server` accept loops
    (store created once in `serveOne`/TCP equivalent).

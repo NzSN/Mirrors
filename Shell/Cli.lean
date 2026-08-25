@@ -273,19 +273,35 @@ private def asyncMirrorSession (store : Shell.Jobs.JobStore)
     (t : Shell.Transport.Transport) : IO Unit :=
   Shell.Mirror.runAsync t Shell.Apalache.syncOracles store
 
-/-- Plain TCP mirror server (Haskell @serveCli@). t31: the server runs
+/- Plain TCP mirror server (Haskell @serveCli@). t31: the server runs
 concurrent ASYNC sessions — one @runAsync@ session per accepted
 connection over ONE process-shared job store (job ids are unique across
 connections), each connection on its own task. The store's capacity and
 worker-slot count use the server default of 4 (the @--server@ mode's
-@--jobs@ flag sizes its own store). -/
+@--jobs@ flag sizes its own store).
+
+Windows exception (t31 follow-up): sessions there run SEQUENTIALLY on
+the accept thread (the t30 branch): a Lean 4.33 runtime bug on Windows
+makes a per-connection task that touches the shared job store (its
+Std.Mutex/Semaphore external objects) segfault the process when the
+session completes quickly (reproducible on rapid connect/disconnect;
+never reproduced on Linux, 300-connection stress clean). Async jobs
+still run on their own store tasks on Windows; only cross-connection
+session concurrency is lost. See Docs/async-enablement-design.md. -/
 def serveCli (argv : List String) : IO UInt32 := do
   match parseServeCli argv with
   | .error e => IO.eprintln e; return 2
   | .ok (port, bind) =>
       let store ← Shell.Jobs.newJobStoreWith 4 Shell.Apalache.jobRunner
-      Shell.Transport.Tcp.serveTcpConcurrentOn (bind.getD "") port
-        (asyncMirrorSession store)
+      if System.Platform.isWindows then
+        -- Windows: sync sequential sessions (t30 behavior). Async
+        -- sessions are Linux-only until the Lean 4.33 Windows runtime
+        -- bug (segfault on quick session-task teardown touching the
+        -- store; see Docs/async-enablement-design.md) is resolved.
+        Shell.Transport.Tcp.serveTcpOn (bind.getD "") port mirrorSession
+      else
+        Shell.Transport.Tcp.serveTcpConcurrentOn (bind.getD "") port
+          (asyncMirrorSession store)
       return 0
 
 /-- The heartbeat loop (Haskell @heartbeatLoop@): every 10s, forever,
@@ -345,10 +361,16 @@ def serveOne (opts : ServerOpts) : IO UInt32 := do
                 pure none
   let bind := opts.bind.getD ""
   let store ← Shell.Jobs.newJobStoreWith (max 1 opts.jobs) Shell.Apalache.jobRunner
-  let rc ←
-    try
+  -- Windows: sync sequential sessions (t30 behavior); see serveCli.
+  let serve : IO Unit :=
+    if System.Platform.isWindows then
+      Shell.Transport.Tls.serveTlsOn bind opts.port files mirrorSession
+    else
       Shell.Transport.Tls.serveTlsConcurrentOn bind opts.port files
         (asyncMirrorSession store)
+  let rc ←
+    try
+      serve
       pure (0 : UInt32)
     catch _ => pure (2 : UInt32)
   -- finally-block parity: best-effort deregistration on the way out

@@ -50,7 +50,10 @@ single process-shared job store; --jobs N sizes it (capacity and
 worker slots, default 4). A connection ending cancels and evicts
 exactly its own jobs. The stdio default mode stays sync-only (Haskell
 parity): async registers answer register_error there (divergence tag
-already listed below). Live-gated by tools/AsyncSpec.lean.
+already listed below). Live-gated by tools/AsyncSpec.lean (self-skipping on Windows, where
+async server sessions are withdrawn pending a Lean 4.33 runtime fix —
+see Docs/async-enablement-design.md §6; Windows serves the t30 sync
+sequential sessions).
 
 ## 3. Accepted divergences
 

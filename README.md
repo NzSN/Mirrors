@@ -146,6 +146,13 @@ cancel_job answer from it, and a connection ending cancels + evicts
 exactly its own jobs (Haskell endSession semantics) — other
 sessions' jobs are unaffected. The stdio default mode stays sync-only
 (Haskell parity): async registers there answer register_error.
+WINDOWS CAVEAT (t31 follow-up): async server sessions are Linux-only.
+A Lean 4.33 Windows runtime bug makes any session task that touches
+the shared job store segfault the process on quick session teardown
+(reproducible on rapid connect/disconnect; 300-connection Linux
+stress clean, all Linux gates green). Windows builds therefore serve
+the t30 sync sequential sessions in both modes and the async_spec
+gate self-skips there; see Docs/async-enablement-design.md §8.
 Live-gated by tools/AsyncSpec.lean (APALACHE_MC): validate/trace-gen
 round-trips over real TCP and mTLS connections, sync/async outcome
 congruence, cancel, unknown-id, and multi-connection concurrency.

@@ -24,6 +24,18 @@ byte-for-byte JSON-lines wire compatibility with ModelMirros@3496251
   children, sync/async congruence, cancel, unknown-id, and
   two-connection concurrency.
 
+## t31 follow-up — Windows async rollback + transport fix (2026-08-25)
+
+- Windows: async server sessions withdrawn. A Lean 4.33 Windows
+  runtime bug (session task touching the shared job store segfaults
+  on quick teardown; see Docs/async-enablement-design.md §6) makes
+  both concurrent and sequential async serving unsafe there. Windows
+  builds now serve t30 sync sequential sessions in --serve/--server;
+  async_spec self-skips on Windows; the r-windev service was rolled
+  back to the sync binary. Linux is unaffected and fully gated.
+- Tcp.lean: the shared 64 KiB receive scratch is now per-connection
+  (latent cross-connection data race under concurrent sessions).
+
 ## 0.1.0 — Lean 4 port, phases 0-6 complete (2026-08-23)
 
 ### Added

@@ -31,15 +31,14 @@ private def peerDesc (fd : UInt64) : IO String := do
 structure TcpTransport where
   fd : UInt64
   buf : IO.Ref ByteArray
+  /-- t31: per-connection 64 KiB receive scratch. A single shared
+module-level buffer was a latent cross-connection data race once
+sessions run concurrently, and the shared constant was implicated in a
+Windows-only heap corruption segfault; allocating it per connection
+(in the accept thread, before the session task starts) removes both. -/
+  rbuf : ByteArray
 
 def tcpClose (t : TcpTransport) : IO Unit := Ffi.closeFd t.fd
-
-/-- t31: initialize (not def) so the shared 64 KiB receive buffer is
-allocated once on the main thread at startup — a plain def thunk first
-evaluated inside a session task raced the runtime and segfaulted the
-Windows build on quick connect/disconnect cycles. -/
-private initialize recvBuf : ByteArray ← do
-  return ByteArray.mk ((List.replicate 65536 0).toArray)
 
 private def hasLf (b : ByteArray) : Bool :=
   let rec go (i : Nat) : Bool :=
@@ -61,11 +60,11 @@ def tcpTransport (t : TcpTransport) : Transport :=
         if hasLf acc then
           found := false
         else
-          let n ← Ffi.recvSome t.fd recvBuf 65536
+          let n ← Ffi.recvSome t.fd t.rbuf 65536
           if n == 0 || n == Ffi.fdError then
             eof := true
           else
-            acc := acc.append (recvBuf.extract 0 n.toNat)
+            acc := acc.append (t.rbuf.extract 0 n.toNat)
       if eof && acc.isEmpty then
         return none
       else
@@ -93,7 +92,8 @@ def connectTcp (host : String) (port : Nat) : IO (Except String Transport) := do
   if r == Ffi.fdError then
     Ffi.closeFd fd
     return .error s!"connect to {host}:{port} failed"
-  return .ok (tcpTransport ⟨fd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩)
+  return .ok (tcpTransport ⟨fd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)),
+    ByteArray.mk ((List.replicate 65536 0).toArray)⟩)
 
 /-- Open a listening socket bound to @host@ and return the listener fd
 plus the bound port (port 0 picks an ephemeral port). Empty host = the
@@ -150,7 +150,7 @@ private partial def loopAccept (lfd : UInt64) (session : Transport → IO Unit) 
         IO.eprintln "tcp: accept failed; continuing"
     else
       let peer ← peerDesc cfd
-      let t := tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩
+      let t := tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)), ByteArray.mk ((List.replicate 65536 0).toArray)⟩
       try
         session t
       catch e =>
@@ -176,17 +176,13 @@ partial def serveTcpOn (host : String) (port : Nat)
 def serveTcp (port : Nat) (session : Transport → IO Unit) : IO Unit :=
   serveTcpOn "" port session
 
-/--- t31: concurrent variant of @serveTcpOn@ (Haskell
-@serveTcpConcurrent@): each accepted connection gets its session on a
-task, so slow or async-job-holding sessions never block the
-accept loop or each other. Connection lifecycle (close on drop) moves
-into the per-connection task. -/
 /-- t31: per-connection body, top-level like @Shell.Jobs.jobThread@
 (the store's job tasks, whose bodies are top-level functions, are the
 one task shape that has never crashed on Windows). -/
 private def runTcpConn (session : Transport → IO Unit) (peer : String)
     (cfd : UInt64) : IO Unit := do
-  let t := tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩
+  let t := tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)),
+      ByteArray.mk ((List.replicate 65536 0).toArray)⟩
   try
     session t
   catch e =>
