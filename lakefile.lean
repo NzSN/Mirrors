@@ -186,6 +186,15 @@ lean_exe async_spec where
 /-- lake test runs the differential/parity + stdio gates; exit 0 = all green. -/
 @[test_driver]
 script test do
+  -- Build first: the gates below exec .lake/build/bin/* directly, and a
+  -- silently skipped rebuild would run STALE binaries (a green-looking
+  -- run once shipped on a tree where transport_spec did not compile).
+  let pre : IO.Process.Output ← IO.Process.output
+    ({ cmd := "lake", args := #["build"] } : IO.Process.SpawnArgs)
+  if pre.exitCode != 0 then
+    IO.println "lake build FAILED before test run:"
+    IO.eprintln pre.stderr
+    return pre.exitCode
   let out1 : IO.Process.Output ← IO.Process.output ({ cmd := ".lake/build/bin/fixtures_replay", args := #[] } : IO.Process.SpawnArgs)
   IO.println out1.stdout
   if out1.exitCode != 0 then

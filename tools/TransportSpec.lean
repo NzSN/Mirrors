@@ -81,7 +81,7 @@ def tcpServeBind (addr : String) : IO Unit := do
       IO.println s!"PORT {bound}"
       (← IO.getStdout).flush
       acceptLoop lfd (fun cfd =>
-        return some (tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩))
+        return some (tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)), ByteArray.mk ((List.replicate 65536 0).toArray)⟩))
 
 def tcpServe : IO Unit := do
   match ← listenTcp "localhost" 0 with
@@ -90,7 +90,7 @@ def tcpServe : IO Unit := do
       IO.println s!"PORT {bound}"
       (← IO.getStdout).flush
       acceptLoop lfd (fun cfd =>
-        return some (tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩))
+        return some (tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)), ByteArray.mk ((List.replicate 65536 0).toArray)⟩))
 
 def tlsServeWith (cert : String) (key : String) (dir : String) : IO Unit := do
   let files : TlsFiles := { certFile := cert, keyFile := key,
