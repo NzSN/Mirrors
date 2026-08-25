@@ -174,6 +174,15 @@ expectations (tools/CounterSpec.lean; APALACHE_MC-gated, self-skips). -/
 lean_exe counter_spec where
   root := `tools.CounterSpec
 
+/--- t31: REAL async flows over live mirror server children (plain TCP
+and mTLS modes) against real apalache (tools/AsyncSpec.lean; runs only
+with APALACHE_MC set, self-skipping otherwise). -/
+@[default_target]
+lean_exe async_spec where
+  root := `tools.AsyncSpec
+  extraDepTargets := #[`socket_shim_o, `tls_shim_o]
+  moreLinkArgs := shimLinkArgs
+
 /-- lake test runs the differential/parity + stdio gates; exit 0 = all green. -/
 @[test_driver]
 script test do
@@ -243,6 +252,15 @@ script test do
   if out9.exitCode != 0 then
     IO.println s!"counter_spec FAILED ({out9.exitCode})"
     return out9.exitCode
+  let out10 : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/async_spec", args := #[],
+       env := match apalacheMc? with
+              | some p => #[("APALACHE_MC", some p)]
+              | none => #[] } : IO.Process.SpawnArgs)
+  IO.println out10.stdout
+  if out10.exitCode != 0 then
+    IO.println s!"async_spec FAILED ({out10.exitCode})"
+    return out10.exitCode
   IO.println "ALL LAKE TESTS GREEN"
   return 0
 

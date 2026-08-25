@@ -416,9 +416,13 @@ def run (t : Shell.Transport.Transport) (orc : Oracles) : IO Unit := do
 
 /-! ## The async session loop (Phase 4, design §5) -/
 
-/-- One async-session dispatch; @false@ ends the session. -/
+/-- One async-session dispatch; @false@ ends the session. The session
+tracks the ids it submitted so its end can cancel/evict exactly its own
+jobs (Haskell @endSession@) even when the store is shared by a whole
+server process (t31). -/
 private def dispatchAsync (t : Shell.Transport.Transport) (sess : SessionRef)
-    (orc : Oracles) (store : Shell.Jobs.JobStore) (m : Codec.ClientMessage) :
+    (orc : Oracles) (store : Shell.Jobs.JobStore)
+    (mine : IO.Ref (List JobId)) (m : Codec.ClientMessage) :
     IO Bool := do
   match m with
   | .registerValidateAsync cfg bound spec =>
@@ -426,6 +430,7 @@ private def dispatchAsync (t : Shell.Transport.Transport) (sess : SessionRef)
       match r with
       | .error e => sendMirror t (Codec.MirrorMessage.registerError e)
       | .ok jid =>
+          mine.modify (fun ids => ids ++ [jid])
           sendMirror t (Codec.MirrorMessage.jobAccepted jid.text .validate)
       return true
   | .registerGenTracesAsync cfg dest spec tcfg =>
@@ -433,6 +438,7 @@ private def dispatchAsync (t : Shell.Transport.Transport) (sess : SessionRef)
       match r with
       | .error e => sendMirror t (Codec.MirrorMessage.registerError e)
       | .ok jid =>
+          mine.modify (fun ids => ids ++ [jid])
           sendMirror t (Codec.MirrorMessage.jobAccepted jid.text .genTraces)
       return true
   | .queryJob jid =>
@@ -477,28 +483,37 @@ session's jobs are cancelled (Haskell @endSession@ semantics). -/
 def runAsync (t : Shell.Transport.Transport) (orc : Oracles)
     (store : Shell.Jobs.JobStore) : IO Unit := do
   let sess ← IO.mkRef (⟨Phase.idle, ({ flow := Flow.none } : Session Phase.idle)⟩ : (p : Phase) × Session p)
+  -- t31: the store may be shared by a whole server process; session end
+  -- cancels + evicts exactly THIS session's jobs (the image of the
+  -- per-session Haskell store disappearing), never other sessions' jobs
+  let mine ← IO.mkRef ([] : List JobId)
+  let endSession : IO Unit := do
+    let ids ← mine.get
+    for jid in ids do
+      Shell.Jobs.cancelJob store jid
+      Shell.Jobs.evictJob store jid
   let mut loop := true
   while loop do
     let line ← t.recv
     match line with
     | none =>
         -- EOF: kill the session's jobs and end
-        Shell.Jobs.closeJobStore store
+        endSession
         loop := false
     | some l =>
       match Lean.Json.parse l with
       | .error e =>
           sendError t e
-          Shell.Jobs.closeJobStore store
+          endSession
           loop := false
       | .ok j =>
         match Codec.decodeClient j with
         | .error e =>
             sendError t e.msg
-            Shell.Jobs.closeJobStore store
+            endSession
             loop := false
         | .ok m =>
-            let keep ← dispatchAsync t sess orc store m
+            let keep ← dispatchAsync t sess orc store mine m
             loop := keep
 
 end Shell.Mirror

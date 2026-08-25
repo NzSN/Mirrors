@@ -71,23 +71,27 @@ def jobRunner : Shell.Jobs.Runner where
         token.onCancel do
           releaseSpec res
           removeSessionDir dir
+        -- t31: the file read-back must happen INSIDE the try, before the
+        -- finally removes the session dir (reading after the finally
+        -- raced the directory deletion and crashed the job body)
         let r ← try
-          generateTraceFilesIn (some dir) cfg' tc
+          match ← generateTraceFilesIn (some dir) cfg' tc with
+          | .error e => pure (.error e)
+          | .ok (_, paths) =>
+              -- read the generated files back as raw ITF values (parity:
+              -- the client receives the file contents)
+              do
+                let contents ← paths.mapM (fun (p : String) => do
+                  let txt ← IO.FS.readFile p
+                  match Lean.Json.parse txt with
+                  | .error _ => pure none
+                  | .ok j => pure ((Codec.decodeValue j).toOption))
+                pure (.ok (⟨paths, contents.filterMap id⟩ :
+                  Codec.TraceGenResult))
         finally
           releaseSpec res
           removeSessionDir dir
-        match r with
-        | .error e => return .error e
-        | .ok (_, paths) =>
-            -- read the generated files back as raw ITF values (parity:
-            -- the client receives the file contents)
-            let contents ← paths.mapM (fun (p : String) => do
-              let txt ← IO.FS.readFile p
-              match Lean.Json.parse txt with
-              | .error _ => pure none
-              | .ok j => pure ((Codec.decodeValue j).toOption))
-            return .ok { itfTracePaths := paths,
-                         itfTraces := contents.filterMap id }
+        return r
 
 /-! ## The explorer flows (Haskell MkExploreMirror / MkExploreSession) -/
 

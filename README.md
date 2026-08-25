@@ -136,8 +136,19 @@ the client message exchange (`runClientValidate`).
 SIGTERM → deregister + exit 0 — verified against a mock Consul), and
 `validate` with direct TCP/mTLS or registry discovery
 (candidateFingerprint/--pin override, tryCandidates ordering).
-Sequential accept loop (one session per connection); --jobs is
-accepted for parity and reserved for the Phase 4 job store.
+Concurrent accept (one session per connection, each on its own task);
+--jobs N sizes the process-shared async job store (live-job capacity
+and concurrently running apalache bodies; default 4). Both server
+modes run ASYNC sessions (t31): register_validate_async /
+register_gen_traces_async fork dedicated job tasks over the ONE shared
+store (job ids unique across connections), await_job / query_job /
+cancel_job answer from it, and a connection ending cancels + evicts
+exactly its own jobs (Haskell endSession semantics) — other
+sessions' jobs are unaffected. The stdio default mode stays sync-only
+(Haskell parity): async registers there answer register_error.
+Live-gated by tools/AsyncSpec.lean (APALACHE_MC): validate/trace-gen
+round-trips over real TCP and mTLS connections, sync/async outcome
+congruence, cancel, unknown-id, and multi-connection concurrency.
 
 Phase 6 interop (client validation): `tools/interop/run.sh` runs the
 full matrix — the unmodified MirrorECMA TypeScript smoke suite over

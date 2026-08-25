@@ -261,8 +261,8 @@ private def jobThread (store : JobStore) (jid : JobId)
         match ← body token with
         | .ok o => pure o
         | .error e => pure (Codec.JobOutcome.infraError e)
-      catch _ =>
-        pure (Codec.JobOutcome.infraError "job body crashed")
+      catch e =>
+        pure (Codec.JobOutcome.infraError s!"job body crashed: {e}")
     match outcome with
     | .infraError msg => applyEvent store jid (.failInfra msg) (some outcome)
     | _ => applyEvent store jid (.complete (toCoreOutcome outcome)) (some outcome)

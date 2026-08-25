@@ -218,6 +218,50 @@ partial def serveTlsOn (host : String) (port : Nat) (files : TlsFiles)
           IO.eprintln s!"tls: listening on {if host.isEmpty then "*" else host}:{bound} (mTLS, TLS 1.3)"
           loop lfd ctx session
 
+/-- t31: concurrent variant of @serveTlsOn@ (Haskell
+@serveTlsConcurrentOn@): handshake + session + close run on a dedicated
+task per accepted connection, so one slow session never blocks the
+accept loop. -/
+partial def serveTlsConcurrentOn (host : String) (port : Nat) (files : TlsFiles)
+    (session : Transport → IO Unit) : IO Unit := do
+  match ← mkServerCtx files with
+  | .error e => throw (IO.userError s!"serveTlsConcurrentOn: {e}")
+  | .ok ctx =>
+      match ← Shell.Transport.Tcp.listenTcp host port with
+      | .error e => throw (IO.userError s!"serveTlsConcurrentOn: {e}")
+      | .ok (lfd, bound) =>
+          IO.eprintln s!"tls: listening on {if host.isEmpty then "*" else host}:{bound} (mTLS, TLS 1.3, concurrent)"
+          let rec loop : IO Unit := do
+            let sig0 ← Ffi.signalFired
+            if sig0 == 1 then return ()
+            let ready ← Ffi.waitReadable lfd 200
+            if ready == 1 then
+              let cfd ← Ffi.acceptFd lfd
+              if cfd == Ffi.fdError then
+                let sig ← Ffi.signalFired
+                if sig == 1 then return ()
+                IO.eprintln "tls: accept failed; continuing"
+              else
+                let _task ← IO.asTask (prio := Task.Priority.dedicated) do
+                  let ssl ← Ffi.tlsAcceptRaw ctx cfd
+                  let nul ← Ffi.sslIsNull ssl
+                  if nul == 1 then
+                    IO.eprintln s!"tls: handshake rejected ({← Ffi.tlsErrmsg})"
+                  else
+                    let t := { ssl, buf := ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)) }
+                    try
+                      session (tlsTransport t)
+                    catch e =>
+                      IO.eprintln s!"tls: session ended: {e}"
+                    tlsClose t
+                  Ffi.closeFd cfd
+                loop
+            else if ready == Ffi.fdError then
+              return ()
+            else
+              loop
+          loop
+
 /-- Shared connect: resolve, TCP connect, TLS 1.3 handshake with CA and
 SAN validation. Returns the session's SSL object on success. -/
 private def tlsHandshake (ctx : Ffi.TlsCtx) (host : String) (port : Nat) :

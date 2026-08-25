@@ -171,4 +171,41 @@ partial def serveTcpOn (host : String) (port : Nat)
 def serveTcp (port : Nat) (session : Transport → IO Unit) : IO Unit :=
   serveTcpOn "" port session
 
+/-- t31: concurrent variant of @serveTcpOn@ (Haskell
+@serveTcpConcurrent@): each accepted connection gets its session on a
+dedicated task, so slow or async-job-holding sessions never block the
+accept loop or each other. Connection lifecycle (close on drop) moves
+into the per-connection task. -/
+partial def serveTcpConcurrentOn (host : String) (port : Nat)
+    (session : Transport → IO Unit) : IO Unit := do
+  match ← listenTcp host port with
+  | .error e => throw (IO.userError s!"serveTcpConcurrentOn: {e}")
+  | .ok (lfd, bound) =>
+      IO.eprintln s!"tcp: listening on {if host.isEmpty then "*" else host}:{bound} (concurrent)"
+      let rec loop : IO Unit := do
+        let sig0 ← Ffi.signalFired
+        if sig0 == 1 then return ()
+        let ready ← Ffi.waitReadable lfd 200
+        if ready == 1 then
+          let cfd ← Ffi.acceptFd lfd
+          if cfd == Ffi.fdError then
+            let sig ← Ffi.signalFired
+            if sig == 1 then return ()
+            IO.eprintln "tcp: accept failed; continuing"
+          else
+            let peer ← peerDesc cfd
+            let _task ← IO.asTask (prio := Task.Priority.dedicated) do
+              let t := tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩
+              try
+                session t
+              catch e =>
+                IO.eprintln s!"tcp: session with {peer} ended: {e}"
+              Ffi.closeFd cfd
+            loop
+        else if ready == Ffi.fdError then
+          return ()
+        else
+          loop
+      loop
+
 end Shell.Transport.Tcp

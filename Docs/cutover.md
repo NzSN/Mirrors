@@ -41,6 +41,17 @@ These semantics are pinned by fixtures + the Haskell oracle
   always emit #bigint. Non-integral bare numbers are rejected with a
   decode error.
 
+## 2b. Async modes (t31) — WIRED
+
+The async job machinery (Core.Jobs machine + Shell.Jobs store + the
+runAsync session loop) is now wired into the shipped binary: --serve
+(TCP) and --server (mTLS) run one async session per connection over a
+single process-shared job store; --jobs N sizes it (capacity and
+worker slots, default 4). A connection ending cancels and evicts
+exactly its own jobs. The stdio default mode stays sync-only (Haskell
+parity): async registers answer register_error there (divergence tag
+already listed below). Live-gated by tools/AsyncSpec.lean.
+
 ## 3. Accepted divergences
 
 - TLS wildcard scope: the OpenSSL shim accepts only leftmost-label

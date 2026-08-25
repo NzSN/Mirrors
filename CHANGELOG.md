@@ -4,6 +4,26 @@ All notable changes to the Lean 4 port of ModelMirrors. The port target is
 byte-for-byte JSON-lines wire compatibility with ModelMirros@3496251
 (Haskell); divergences are listed as ACCEPTED with rationale.
 
+## t31 — async validate/trace-gen enabled in production modes (2026-08-25)
+
+- --serve (TCP) and --server (mTLS) now run concurrent ASYNC sessions:
+  one runAsync session per connection over ONE process-shared job store
+  (job ids unique across connections); --jobs N sizes the store
+  (capacity + worker slots, default 4). Session end cancels + evicts
+  exactly that session's jobs.
+- Fixed a latent bug this wiring exposed: Shell.Apalache.jobRunner
+  genTraces read the generated trace files AFTER the try/finally that
+  removes the session dir — the read raced the deletion and crashed the
+  job body. Reads now happen inside the try.
+- Store job-thread crash reports now include the exception text.
+- stdio default mode stays sync-only (Haskell parity; the
+  register_error vs Haskell protocol_error tag divergence for stdio
+  async rejects remains documented).
+- New gate: tools/AsyncSpec.lean (APALACHE_MC-gated) — async
+  validate/trace-gen round-trips over live --serve and --server --tls
+  children, sync/async congruence, cancel, unknown-id, and
+  two-connection concurrency.
+
 ## 0.1.0 — Lean 4 port, phases 0-6 complete (2026-08-23)
 
 ### Added

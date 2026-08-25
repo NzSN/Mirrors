@@ -267,12 +267,25 @@ def parseValidateOpts (argv : List String) : Except String ValidateOpts :=
 private def mirrorSession (t : Shell.Transport.Transport) : IO Unit :=
   Shell.Mirror.run t Shell.Apalache.syncOracles
 
-/-- Plain TCP mirror server (Haskell @serveCli@). -/
+/-- t31: async session body — one connection = one @runAsync@ session
+over the process-shared job store. -/
+private def asyncMirrorSession (store : Shell.Jobs.JobStore)
+    (t : Shell.Transport.Transport) : IO Unit :=
+  Shell.Mirror.runAsync t Shell.Apalache.syncOracles store
+
+/-- Plain TCP mirror server (Haskell @serveCli@). t31: the server runs
+concurrent ASYNC sessions — one @runAsync@ session per accepted
+connection over ONE process-shared job store (job ids are unique across
+connections), each connection on its own task. The store's capacity and
+worker-slot count use the server default of 4 (the @--server@ mode's
+@--jobs@ flag sizes its own store). -/
 def serveCli (argv : List String) : IO UInt32 := do
   match parseServeCli argv with
   | .error e => IO.eprintln e; return 2
   | .ok (port, bind) =>
-      Shell.Transport.Tcp.serveTcpOn (bind.getD "") port mirrorSession
+      let store ← Shell.Jobs.newJobStoreWith 4 Shell.Apalache.jobRunner
+      Shell.Transport.Tcp.serveTcpConcurrentOn (bind.getD "") port
+        (asyncMirrorSession store)
       return 0
 
 /-- The heartbeat loop (Haskell @heartbeatLoop@): every 10s, forever,
@@ -288,8 +301,12 @@ private partial def heartbeatLoop (url : Shell.Registry.RegistryUrl) (sid : Stri
 registry when configured, start the heartbeat task, serve, deregister
 on exit; SIGINT/SIGTERM trigger deregistration and a clean exit (the
 signal-aware accept loop returns when the flag is set). Concurrency
-note: the accept loop is sequential (one session at a time); @--jobs@
-is accepted for CLI parity and reserved for the Phase 4 job store. -/
+(t31): every accepted connection gets its own async session task over
+ONE process-shared job store; @--jobs N@ sizes that store — both its
+live-job capacity and its worker-slot count (concurrently running
+apalache bodies), default 4. A session's jobs are cancelled and
+evicted when its connection ends (Haskell @endSession@); other
+sessions' jobs are unaffected. -/
 def serveOne (opts : ServerOpts) : IO UInt32 := do
   Ffi.installExitSignals
   let files : Shell.Transport.Tls.TlsFiles :=
@@ -327,9 +344,11 @@ def serveOne (opts : ServerOpts) : IO UInt32 := do
                 IO.eprintln "warning: service registration failed; serving unregistered"
                 pure none
   let bind := opts.bind.getD ""
+  let store ← Shell.Jobs.newJobStoreWith (max 1 opts.jobs) Shell.Apalache.jobRunner
   let rc ←
     try
-      Shell.Transport.Tls.serveTlsOn bind opts.port files mirrorSession
+      Shell.Transport.Tls.serveTlsConcurrentOn bind opts.port files
+        (asyncMirrorSession store)
       pure (0 : UInt32)
     catch _ => pure (2 : UInt32)
   -- finally-block parity: best-effort deregistration on the way out
