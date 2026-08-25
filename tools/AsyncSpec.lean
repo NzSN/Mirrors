@@ -150,6 +150,19 @@ def scenarioTcp (fails : Failures) : IO Unit := do
   | .ok (.jobStatus _ .unknown) => checkA fails "d: unknown id" true
   | .ok m => checkA fails "d: unknown id" false (toString (repr m))
   | .error e => checkA fails "d: recv" false e
+  -- (8) bounds outside [1,100] rejected on the async path
+  csend c1 (.registerValidateAsync dcCfg 0 none)
+  match ← crecv c1 with
+  | .ok (.registerError e) =>
+      checkA fails "8: bound 0 rejected" (e.contains "outside allowed range") e
+  | .ok m => checkA fails "8: bound 0" false (toString (repr m))
+  | .error e => checkA fails "8: bound 0 recv" false e
+  csend c1 (.registerValidateAsync dcCfg 101 none)
+  match ← crecv c1 with
+  | .ok (.registerError e) =>
+      checkA fails "8: bound 101 rejected" (e.contains "outside allowed range") e
+  | .ok m => checkA fails "8: bound 101" false (toString (repr m))
+  | .error e => checkA fails "8: bound 101 recv" false e
   -- (e) concurrency: two jobs on c1 + one on a second connection
   match ← Shell.Transport.Tcp.connectTcp "127.0.0.1" 19100 with
   | .error e => checkA fails "e: second conn" false e
@@ -164,6 +177,16 @@ def scenarioTcp (fails : Failures) : IO Unit := do
       (r1.isOk && r2.isOk && r3.isOk)
       s!"{repr r1} {repr r2} {repr r3}"
     if let .ok j1 := r1 then
+      -- §5.5 cross-connection visibility: the OTHER connection can
+      -- query this job id (any non-unknown phase proves visibility)
+      csend c2 (.queryJob j1)
+      match ← crecv c2 with
+      | .ok (.jobStatus _ ph) =>
+          let vis := match ph with | .unknown => false | _ => true
+          checkA fails "e: cross-conn visibility" vis (toString (repr ph))
+      | .ok (.jobResult _ _) => checkA fails "e: cross-conn visibility" true
+      | .ok m => checkA fails "e: cross-conn visibility" false (toString (repr m))
+      | .error e => checkA fails "e: cross-conn recv" false e
       match ← awaitValid c1 j1 with
       | .error e => checkA fails "e: job1" false e
       | .ok v =>
@@ -255,6 +278,56 @@ def scenarioMtls (fails : Failures) : IO Unit := do
         try srv.kill catch _ => pure ()
         let _ ← srv.wait
 
+/-- §5.6 capacity: a --jobs 1 server runs ONE live job; a second
+submission while the first is live fails with the queue-full
+register_error (the store's parity-tested capacity semantics). -/
+def scenarioCapacity (fails : Failures) (p : String → String) : IO Unit := do
+  let srv ← IO.Process.spawn
+    ({ cmd := mirrorBin,
+       args := #["--server", "19102", "--tls", "--jobs", "1",
+                 "--cert", p "server.crt", "--key", p "server.key",
+                 "--ca", p "ca.crt"],
+       stdin := .null : IO.Process.SpawnArgs })
+  let mut up := false
+  let mut tries : Nat := 25
+  while !up && tries > 0 do
+    match ← Shell.Transport.Tcp.connectTcp "127.0.0.1" 19102 with
+    | .ok _ => up := true
+    | .error _ => IO.sleep 200; tries := tries - 1
+  if !up then checkA fails "6: server up" false "never listened"
+  match ← Shell.Transport.Tls.mkClientCtx
+      { certFile := p "client.crt", keyFile := p "client.key", caFile := p "ca.crt" } with
+  | .error e =>
+      checkA fails "6: client ctx" false e
+      try srv.kill catch _ => pure (); let _ ← srv.wait
+  | .ok ctx =>
+    match ← Shell.Transport.Tls.connectTls ctx "localhost" 19102 with
+    | .error e =>
+        checkA fails "6: mTLS connect" false e
+        try srv.kill catch _ => pure (); let _ ← srv.wait
+    | .ok c =>
+        csend c (.registerValidateAsync dcCfg 3 none)
+        match ← expectAccepted c with
+        | .error e =>
+            checkA fails "6: first accepted" false e
+            try srv.kill catch _ => pure (); let _ ← srv.wait
+        | .ok jid =>
+            -- job 1 is live (apalache runs for seconds): the second
+            -- submit must hit the capacity bound synchronously
+            csend c (.registerValidateAsync dcCfg 3 none)
+            match ← crecv c with
+            | .ok (.registerError e) =>
+                checkA fails "6: queue full" (e.contains "queue full") e
+            | .ok m => checkA fails "6: queue full" false (toString (repr m))
+            | .error e => checkA fails "6: recv" false e
+            match ← awaitValid c jid with
+            | .error e => checkA fails "6: first job" false e
+            | .ok v =>
+                let okv := match v with | .valid => true | _ => false
+                checkA fails "6: first job valid" okv (toString (repr v))
+            try srv.kill catch _ => pure ()
+            let _ ← srv.wait
+
 def main : IO UInt32 := do
   let fails ← IO.mkRef ([] : List String)
   match ← IO.getEnv "APALACHE_MC" with
@@ -264,6 +337,9 @@ def main : IO UInt32 := do
       scenarioTcp fails
       IO.eprintln "[async: mTLS scenario]"
       scenarioMtls fails
+      IO.eprintln "[async: capacity scenario (--jobs 1)]"
+      let p (n : String) : String := ".lake/build/tmp-async-pki/" ++ n
+      scenarioCapacity fails p
       let fs ← fails.get
       if fs.isEmpty then
         IO.eprintln "ASYNC SPEC: all green"
