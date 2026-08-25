@@ -174,6 +174,14 @@ expectations (tools/CounterSpec.lean; APALACHE_MC-gated, self-skips). -/
 lean_exe counter_spec where
   root := `tools.CounterSpec
 
+/-- Minimal crash demo for the Lean 4.33 Windows task-teardown AV
+(tools/MinCrash.lean; Docs/lean-windows-teardown-analysis.md).
+NOT a gate: no test_driver wiring, no default target. -/
+lean_exe mincrash where
+  root := `tools.MinCrash
+  extraDepTargets := #[`socket_shim_o]
+  moreLinkArgs := sockLinkArgs
+
 /--- t31: REAL async flows over live mirror server children (plain TCP
 and mTLS modes) against real apalache (tools/AsyncSpec.lean; runs only
 with APALACHE_MC set, self-skipping otherwise). -/
