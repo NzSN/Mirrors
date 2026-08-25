@@ -52,7 +52,7 @@ def main : IO Unit := do
   let mux ← Std.Mutex.new 0
   let sem ← Std.Semaphore.new 1
   let store := (⟨mux, sem⟩ : FakeStore)
-  let args ← Shell.Cli.getArgsIO
+  let args ← _root_.getArgsIO
   IO.eprintln "mincrash: listening on 127.0.0.1:19500"
   match args with
   | ["no-recv"]  => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (sessionNoRecv store)
