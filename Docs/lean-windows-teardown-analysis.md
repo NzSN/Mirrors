@@ -68,6 +68,31 @@ a wide, shallow shape with LeanExternal leaves whose finalizer
 widens the teardown window in which the losing interleaving can pick
 up a freed/zeroed slot.
 
+## Minimal demo (t32 follow-up, captain)
+
+`tools/MinCrash.lean` (~50 lines + the socket shim) reproduces the
+crash **6/6** on Windows with a bare connect/close client, distilling
+the server to: concurrent accept loop (main parks in the shim's
+`select`), first connection spawns a dedicated task whose closure
+captures the connection record, task ends at client close.
+
+Bisection variants (all 6/6 on Windows unless noted):
+
+| Variant | Closure captures | Result |
+| ------- | ---------------- | ------ |
+| default | store (mutex+sem) + transport, recv to EOF | DEAD |
+| `no-recv` | store + transport, returns immediately | DEAD |
+| `no-store` | transport only (fd + IO.Ref + 64 KiB scratch), recv to EOF | DEAD |
+| `no-client` | nothing — trivial dedicated tasks while main parks in `waitReadable`, no accept | **ALIVE** |
+
+So the external objects (Std.Mutex/Semaphore) are **not necessary**;
+the necessary ingredients are: (a) fresh process, (b) main thread in
+the accept loop, (c) a dedicated task capturing the accepted
+connection's record (fd + IO.Ref + big ByteArray closure graph), (d)
+quick completion. Compare `tools/WinTaskCrash.lean` (task + mutex, no
+accept loop): survives — the accept-loop/transport-capture ingredient
+is the missing piece there.
+
 ## Minimal repro status (honest)
 
 `tools/WinTaskCrash.lean` (committed, NOT wired into gates) spawns
