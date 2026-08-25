@@ -179,8 +179,8 @@ lean_exe counter_spec where
 NOT a gate: no test_driver wiring, no default target. -/
 lean_exe mincrash where
   root := `tools.MinCrash
-  extraDepTargets := #[`socket_shim_o]
-  moreLinkArgs := sockLinkArgs
+  extraDepTargets := #[`socket_shim_o, `tls_shim_o]
+  moreLinkArgs := shimLinkArgs
 
 /--- t31: REAL async flows over live mirror server children (plain TCP
 and mTLS modes) against real apalache (tools/AsyncSpec.lean; runs only
