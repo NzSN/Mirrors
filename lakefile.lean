@@ -266,3 +266,7 @@ script test do
 
 require batteries from git
   "https://github.com/leanprover-community/batteries" @ "v4.33.0"
+
+/-- t32: minimal Windows task-teardown crash repro; NOT run by gates. -/
+lean_exe wintaskcrash where
+  root := `tools.WinTaskCrash
