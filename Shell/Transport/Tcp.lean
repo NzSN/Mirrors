@@ -34,7 +34,12 @@ structure TcpTransport where
 
 def tcpClose (t : TcpTransport) : IO Unit := Ffi.closeFd t.fd
 
-private def recvBuf : ByteArray := ByteArray.mk ((List.replicate 65536 0).toArray)
+/-- t31: initialize (not def) so the shared 64 KiB receive buffer is
+allocated once on the main thread at startup — a plain def thunk first
+evaluated inside a session task raced the runtime and segfaulted the
+Windows build on quick connect/disconnect cycles. -/
+private initialize recvBuf : ByteArray ← do
+  return ByteArray.mk ((List.replicate 65536 0).toArray)
 
 private def hasLf (b : ByteArray) : Bool :=
   let rec go (i : Nat) : Bool :=
@@ -171,41 +176,60 @@ partial def serveTcpOn (host : String) (port : Nat)
 def serveTcp (port : Nat) (session : Transport → IO Unit) : IO Unit :=
   serveTcpOn "" port session
 
-/-- t31: concurrent variant of @serveTcpOn@ (Haskell
+/--- t31: concurrent variant of @serveTcpOn@ (Haskell
 @serveTcpConcurrent@): each accepted connection gets its session on a
-dedicated task, so slow or async-job-holding sessions never block the
+task, so slow or async-job-holding sessions never block the
 accept loop or each other. Connection lifecycle (close on drop) moves
 into the per-connection task. -/
+/-- t31: per-connection body, top-level like @Shell.Jobs.jobThread@
+(the store's job tasks, whose bodies are top-level functions, are the
+one task shape that has never crashed on Windows). -/
+private def runTcpConn (session : Transport → IO Unit) (peer : String)
+    (cfd : UInt64) : IO Unit := do
+  let t := tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩
+  try
+    session t
+  catch e =>
+    IO.eprintln s!"tcp: session with {peer} ended: {e}"
+  Ffi.closeFd cfd
+
+private partial def loopAcceptConcurrent (lfd : UInt64)
+    (liveTasks : IO.Ref (Array (Task (Except IO.Error Unit))))
+    (session : Transport → IO Unit) : IO Unit := do
+  let sig0 ← Ffi.signalFired
+  if sig0 == 1 then
+    return ()
+  let ready ← Ffi.waitReadable lfd 200
+  if ready == 1 then
+    let cfd ← Ffi.acceptFd lfd
+    if cfd == Ffi.fdError then
+      let sig ← Ffi.signalFired
+      if sig == 1 then
+        return ()
+      else
+        IO.eprintln "tcp: accept failed; continuing"
+    else
+      let peer ← peerDesc cfd
+      let task ← IO.asTask (prio := .dedicated) (runTcpConn session peer cfd)
+      -- keep the task reference live until the runtime retires it:
+      -- dropping the only reference immediately lets the GC free the
+      -- task object (and its closure) while the worker thread may
+      -- still be tearing down (observed as a Windows-only segfault on
+      -- quick connect-disconnect cycles)
+      liveTasks.modify (fun ts => ts.push task)
+      if (← liveTasks.get).size > 128 then
+        liveTasks.set (#[] : Array (Task (Except IO.Error Unit)))
+  else if ready == Ffi.fdError then
+    return ()
+  loopAcceptConcurrent lfd liveTasks session
+
 partial def serveTcpConcurrentOn (host : String) (port : Nat)
     (session : Transport → IO Unit) : IO Unit := do
   match ← listenTcp host port with
   | .error e => throw (IO.userError s!"serveTcpConcurrentOn: {e}")
   | .ok (lfd, bound) =>
       IO.eprintln s!"tcp: listening on {if host.isEmpty then "*" else host}:{bound} (concurrent)"
-      let rec loop : IO Unit := do
-        let sig0 ← Ffi.signalFired
-        if sig0 == 1 then return ()
-        let ready ← Ffi.waitReadable lfd 200
-        if ready == 1 then
-          let cfd ← Ffi.acceptFd lfd
-          if cfd == Ffi.fdError then
-            let sig ← Ffi.signalFired
-            if sig == 1 then return ()
-            IO.eprintln "tcp: accept failed; continuing"
-          else
-            let peer ← peerDesc cfd
-            let _task ← IO.asTask (prio := Task.Priority.dedicated) do
-              let t := tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩
-              try
-                session t
-              catch e =>
-                IO.eprintln s!"tcp: session with {peer} ended: {e}"
-              Ffi.closeFd cfd
-            loop
-        else if ready == Ffi.fdError then
-          return ()
-        else
-          loop
-      loop
+      let liveTasks ← IO.mkRef (#[] : Array (Task (Except IO.Error Unit)))
+      loopAcceptConcurrent lfd liveTasks session
 
 end Shell.Transport.Tcp
