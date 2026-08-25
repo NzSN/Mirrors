@@ -1,4 +1,5 @@
 import Shell.Transport.Tcp
+import Shell.Cli
 import Std.Sync.Mutex
 import Std.Sync.Semaphore
 
@@ -34,9 +35,26 @@ partial def session (store : FakeStore) (t : Shell.Transport.Transport) : IO Uni
   | none => return ()
   | some _ => session store t
 
+/-- Variant: bind the store but never recv (task returns immediately
+after accept). -/
+def sessionNoRecv (store : FakeStore) (_t : Shell.Transport.Transport) : IO Unit := do
+  store.mux.atomically (pure ())
+  let _sem := store.sem
+  return ()
+
+/-- Variant: recv to EOF but no external objects in the closure. -/
+partial def sessionNoStore (t : Shell.Transport.Transport) : IO Unit := do
+  match ← t.recv with
+  | none => return ()
+  | some _ => sessionNoStore t
+
 def main : IO Unit := do
   let mux ← Std.Mutex.new 0
   let sem ← Std.Semaphore.new 1
   let store := (⟨mux, sem⟩ : FakeStore)
+  let args ← Shell.Cli.getArgsIO
   IO.eprintln "mincrash: listening on 127.0.0.1:19500"
-  Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (session store)
+  match args with
+  | ["no-recv"]  => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (sessionNoRecv store)
+  | ["no-store"] => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 sessionNoStore
+  | _ => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (session store)
