@@ -51,12 +51,27 @@ client closes**, 8/8 runs. Notably:
   connections on one process never crash (measured: 60–300 cycles clean
   when the first teardown does not fire).
 - Trivial tasks (300 spawn/complete cycles): clean. Sync sessions on
-  task threads: clean. A task that merely *binds* a
-  `Std.Mutex`/`Std.Semaphore` (never uses it) crashes.
-- A <60-line standalone repro spawning the first dedicated task with
-  mutex/semaphore bindings does **NOT** reproduce it — the session
-  task's wider closure graph (transport + IO + store) appears
-  necessary. (Included: `tools/WinTaskCrash.lean` variants a–e.)
+  task threads: clean.
+
+### Minimal demo (`tools/MinCrash.lean`, non-gate target)
+
+A ~70-line program using the real `serveTcpConcurrentOn` accept loop
+with a dummy per-connection session (no protocol, no store) crashes
+6/6 with the same bare connect/close. Bisection matrix:
+
+| Variant | Result |
+| --- | --- |
+| full MinCrash (accept loop + session task) | DEAD 6/6 |
+| session task does not `recv` (binds the transport only) | DEAD 6/6 |
+| no store at all — task captures just the connection record (fd + `IO.Ref` + 64 KiB `ByteArray`) | DEAD 6/6 |
+| no client — trivial dedicated tasks while main parks in `waitReadable`, no accept | ALIVE |
+| first dedicated task binding `Std.Mutex`/`Std.Semaphore`, no accept loop (`tools/WinTaskCrash.lean` a–e) | ALIVE |
+
+So external objects are **not necessary**: the necessary ingredients
+are the accept loop spawning a task that captures the connection
+record. An earlier hypothesis that binding external objects suffices
+was an artifact of the server's wider closure graph; they may still
+widen the teardown race window but are not required.
 
 ## Stack (cdb, map + nm symbolized, image base 0x140000000)
 
