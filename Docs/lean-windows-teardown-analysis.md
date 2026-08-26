@@ -121,10 +121,19 @@ task: started → store externals bound → recv EOF → RETURNING
 ```
 
 i.e. **no Lean code incurs the crash** — it fires strictly *after* the
-session body returns, inside the runtime's task teardown. And the
-tracing itself suppresses it: `trace` 0/5 vs `default` 5/5 on Windows
-(a textbook heisenbug — eprintln's serialization closes the race
-window; matches the earlier 13/13 eprintln-stabilized observation).
+session body returns, inside the runtime's task teardown.
+
+CORRECTION (trace2): the suppression was NOT the logging. `mincrash
+trace2` — the PRODUCTION `serveTcpConcurrentOn` accept loop (with its
+`liveTasks` refs and `runTcpConn` close wrapper) running the traced
+session — crashes 5/5 WITH full logging, printing the complete sequence
+through `task: RETURNING`. The hand-copied traced loop survived 0/5
+because it omitted `runTcpConn`'s connection-close (and the liveTasks
+retention), not because eprintln perturbs timing. Conclusion: the
+connection close inside the task is part of the trigger set; print
+tracing does NOT suppress the crash on the faithful path. (The earlier
+eprintln-stabilized observation was on a different code state and
+should be re-read in this light.)
 
 ## Minimal repro status (honest)
 
