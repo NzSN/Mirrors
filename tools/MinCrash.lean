@@ -100,6 +100,23 @@ partial def acceptTrivialLoop (lfd : UInt64) : IO Unit := do
       Ffi.closeFd cfd
   acceptTrivialLoop lfd
 
+/-- Variant: PURE-CYCLE — the last cell. Task captures the record
+(IO.Ref + 64 KiB ByteArray, like the connection closure) and finishes;
+the main thread does the accept-loop's WAKE-CYCLE pattern (200ms sleep,
+small allocation) but never touches the shim. If this crashes, the FFI
+is not necessary at all. -/
+def pureCycle : IO Unit := do
+  let big := ByteArray.mk ((List.replicate 65536 0).toArray)
+  let ref ← IO.mkRef big
+  let _t ← IO.asTask (prio := .dedicated) (do
+    let b ← ref.get
+    IO.eprintln s!"task ran, payload {b.size} bytes")
+  IO.eprintln "pure-cycle: main wake-cycling 5s (no FFI)"
+  for _ in [0:25] do
+    IO.sleep 200
+    let _junk := ByteArray.mk ((List.replicate 128 0).toArray)
+  IO.eprintln "pure-cycle: survived"
+
 def main : IO Unit := do
   let mux ← Std.Mutex.new 0
   let sem ← Std.Semaphore.new 1
@@ -108,6 +125,7 @@ def main : IO Unit := do
   match args with
   | ["pure-sleep"] => pureSleep
   | ["pure-park"] => purePark
+  | ["pure-cycle"] => pureCycle
   | ["accept-trivial"] =>
       match ← Shell.Transport.Tcp.listenTcp "127.0.0.1" 19503 with
       | .error e => throw (IO.userError e)
