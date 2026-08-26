@@ -176,6 +176,14 @@ partial def serveTcpOn (host : String) (port : Nat)
 def serveTcp (port : Nat) (session : Transport → IO Unit) : IO Unit :=
   serveTcpOn "" port session
 
+/-- Opt-in teardown tracing for the crash investigation (zero cost
+unless DSH_TCP_DEBUG is set): timestamps the exact post-session steps
+so a crash dump shows whether closeFd ran. -/
+private def tcpDbg (msg : String) : IO Unit := do
+  match ← IO.getEnv "DSH_TCP_DEBUG" with
+  | some _ => IO.eprintln s!"[tcp] {msg}"
+  | none => pure ()
+
 /-- t31: per-connection body, top-level like @Shell.Jobs.jobThread@
 (the store's job tasks, whose bodies are top-level functions, are the
 one task shape that has never crashed on Windows). -/
@@ -187,7 +195,9 @@ private def runTcpConn (session : Transport → IO Unit) (peer : String)
     session t
   catch e =>
     IO.eprintln s!"tcp: session with {peer} ended: {e}"
+  tcpDbg s!"session body returned (fd={cfd})"
   Ffi.closeFd cfd
+  tcpDbg s!"closeFd done (fd={cfd}) — task teardown next"
 
 private partial def loopAcceptConcurrent (lfd : UInt64)
     (liveTasks : IO.Ref (Array (Task (Except IO.Error Unit))))
