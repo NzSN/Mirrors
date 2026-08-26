@@ -62,16 +62,27 @@ def awaitValid (c : Shell.Transport.Transport) (jid : String) :
   | .ok (.jobResult _ (.validate v)) => return .ok v
   | .ok m => return .error s!"expected job_result(validate), got {repr m}"
 
-/-- Poll-connect until the server is listening (max ~5s). -/
+/-- Raw TCP liveness probe: connect and CLOSE. connectTcp's Transport
+has no close and dropping it leaks the fd — a connected-but-silent
+client that parks a pool worker forever (with --jobs 1 that wedges the
+whole server; Docs/worker-pool-impl-status.md §4). -/
+def probeTcp (host : String) (port : Nat) : IO Bool := do
+  let ip := if host == "localhost" || host.isEmpty then "127.0.0.1" else host
+  let fd ← Ffi.tcpSocket
+  if fd == Ffi.fdError then return false
+  let r ← Ffi.connectIpv4 fd ip port.toUInt64
+  Ffi.closeFd fd
+  return r != Ffi.fdError
+
+/-- Poll-connect until the server is listening (max ~5s). Probes close
+their sockets; the caller opens its real session connection after. -/
 partial def waitServer (host : String) (port : Nat) (tries : Nat) :
-    IO (Except String Shell.Transport.Transport) := do
-  match ← Shell.Transport.Tcp.connectTcp host port with
-  | .ok t => return .ok t
-  | .error e =>
-      if tries == 0 then return .error s!"server never came up: {e}"
-      else do
-        IO.sleep 200
-        waitServer host port (tries - 1)
+    IO (Except String Unit) := do
+  if ← probeTcp host port then
+    return .ok ()
+  if tries == 0 then return .error "server never came up"
+  IO.sleep 200
+  waitServer host port (tries - 1)
 
 /-! ## specs under test -/
 
@@ -101,8 +112,11 @@ def scenarioTcp (fails : Failures) : IO Unit := do
     ({ cmd := mirrorBin, args := #["--serve", "19100"],
        stdin := .null : IO.Process.SpawnArgs })
   let c1 ← match ← waitServer "127.0.0.1" 19100 25 with
-    | .ok t => pure t
     | .error e => checkA fails "tcp server up" false e; return ()
+    | .ok () =>
+        match ← Shell.Transport.Tcp.connectTcp "127.0.0.1" 19100 with
+        | .ok t => pure t
+        | .error e => checkA fails "tcp server up" false e; return ()
   -- (a) async validate + sync congruence
   csend c1 (.registerValidateAsync dcCfg 3 none)
   match ← expectAccepted c1 with
@@ -249,13 +263,14 @@ def scenarioMtls (fails : Failures) : IO Unit := do
                  "--ca", p "ca.crt"],
        stdin := .null : IO.Process.SpawnArgs })
   -- wait for the TLS listener by polling the plain TCP side (connect
-  -- then drop; the TLS handshake is expected to fail on a plain conn)
+  -- then close; the TLS handshake is expected to fail on a plain conn)
   let mut up := false
   let mut tries : Nat := 25
   while !up && tries > 0 do
-    match ← Shell.Transport.Tcp.connectTcp "127.0.0.1" 19101 with
-    | .ok _ => up := true
-    | .error _ => IO.sleep 200; tries := tries - 1
+    if ← probeTcp "127.0.0.1" 19101 then
+      up := true
+    else
+      IO.sleep 200; tries := tries - 1
   if !up then checkA fails "f: server up" false "never listened"
   match ← Shell.Transport.Tls.mkClientCtx
       { certFile := p "client.crt", keyFile := p "client.key", caFile := p "ca.crt" } with
@@ -291,9 +306,10 @@ def scenarioCapacity (fails : Failures) (p : String → String) : IO Unit := do
   let mut up := false
   let mut tries : Nat := 25
   while !up && tries > 0 do
-    match ← Shell.Transport.Tcp.connectTcp "127.0.0.1" 19102 with
-    | .ok _ => up := true
-    | .error _ => IO.sleep 200; tries := tries - 1
+    if ← probeTcp "127.0.0.1" 19102 then
+      up := true
+    else
+      IO.sleep 200; tries := tries - 1
   if !up then checkA fails "6: server up" false "never listened"
   match ← Shell.Transport.Tls.mkClientCtx
       { certFile := p "client.crt", keyFile := p "client.key", caFile := p "ca.crt" } with

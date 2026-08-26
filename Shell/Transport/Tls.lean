@@ -237,11 +237,20 @@ partial def serveTlsConcurrentOn (host : String) (port : Nat) (files : TlsFiles)
           IO.eprintln s!"tls: listening on {if host.isEmpty then "*" else host}:{bound} (mTLS, TLS 1.3, worker pool, {max 1 workers} workers)"
           let q ← Shell.Transport.Tcp.ConnQueue.new
           Shell.Transport.Tcp.spawnPool workers q (fun cfd _peer => do
+            -- t33 fix (impl-status §4): bound the handshake. A
+            -- connected-but-silent client must not park a pool worker
+            -- forever (t31's unbounded tasks absorbed this; the bounded
+            -- pool does not). The shim treats the SO_RCVTIMEO read
+            -- timeout as handshake failure, and the timeout is cleared
+            -- right after success so session reads stay blocking
+            -- (dsh_tls_read spins on WANT_READ otherwise).
+            let _ ← Ffi.setRecvTimeoutMs cfd 10000
             let ssl ← Ffi.tlsAcceptRaw ctx cfd
             let nul ← Ffi.sslIsNull ssl
             if nul == 1 then
               IO.eprintln s!"tls: handshake rejected ({← Ffi.tlsErrmsg})"
             else
+              let _ ← Ffi.setRecvTimeoutMs cfd 0
               let t := { ssl, buf := ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)) }
               try
                 session (tlsTransport t)

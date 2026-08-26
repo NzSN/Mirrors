@@ -190,7 +190,10 @@ def awaitJob (store : JobStore) (jid : JobId) (timeout : Option Nat) :
 
 private def acquireSlot (store : JobStore) : IO Unit := do
   let p ← store.slots.acquire
-  let _acquired : Option Unit := Task.get p.result?
+  -- t33 fix: IO.wait, NOT Task.get — Task.get on the unresolved promise
+  -- task returns immediately (Lean 4.33; Docs/worker-pool-impl-status.md
+  -- §3), which silently disabled the worker-slot throttle since t31.
+  let _acquired ← IO.wait p.result?
 
 private def releaseSlot (store : JobStore) : IO Unit := store.slots.release
 

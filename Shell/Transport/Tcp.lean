@@ -195,7 +195,12 @@ def new (capacity : Nat := 128) : BaseIO ConnQueue := do
 
 private def acquireWait (s : Std.Semaphore) : IO Unit := do
   let p ← s.acquire
-  let _acquired : Option Unit := Task.get p.result?
+  -- t33 fix: IO.wait, NOT Task.get — Task.get on the unresolved promise
+  -- task returns immediately (Lean 4.33, both platforms, any task
+  -- priority; Docs/worker-pool-impl-status.md §3), which spun workers
+  -- on phantom queue entries and disabled the spaces bound. IO.wait is
+  -- the documented blocking wait and probes clean.
+  let _ ← IO.wait p.result?
   return ()
 
 /-- Enqueue one accepted connection; blocks when the backlog is full. -/
@@ -205,15 +210,24 @@ def push (q : ConnQueue) (cfd : UInt64) (peer : String) : IO Unit := do
   q.items.release
 
 /-- Dequeue the oldest pending connection; blocks until one arrives. -/
-def pop (q : ConnQueue) : IO (UInt64 × String) := do
+partial def pop (q : ConnQueue) : IO (UInt64 × String) := do
   acquireWait q.items
-  let item ← q.mu.atomically do
+  let item? ← q.mu.atomically do
     let items ← get
     match items with
-    | [] => return (0, "")  -- unreachable (items counted by the semaphore)
-    | x :: rest => set rest; return x
-  q.spaces.release
-  return item
+    | [] => return none
+    | x :: rest => set rest; return some x
+  match item? with
+  | some item =>
+      q.spaces.release
+      return item
+  | none =>
+      -- Unreachable while the semaphore counts entries. Re-wait instead
+      -- of fabricating (0, "") (the old fallback): a phantom fd 0 went
+      -- straight into session handlers and closeFd, closing the
+      -- process's own stdin.
+      IO.eprintln "tcp: ConnQueue.pop: permit without entry (queue desync); re-waiting"
+      pop q
 
 end ConnQueue
 
