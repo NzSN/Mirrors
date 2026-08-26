@@ -84,6 +84,22 @@ Bisection variants (all 6/6 on Windows unless noted):
 | `no-recv` | store + transport, returns immediately | DEAD |
 | `no-store` | transport only (fd + IO.Ref + 64 KiB scratch), recv to EOF | DEAD |
 | `no-client` | nothing — trivial dedicated tasks while main parks in `waitReadable`, no accept | **ALIVE** |
+| `accept-trivial` | nothing — real accept, but the task is trivial and never touches the fd | **ALIVE** (0/6) |
+| `pure-sleep` | record (IO.Ref + 64 KiB ByteArray), main in `IO.sleep` — no FFI at all | **ALIVE** (0/3) |
+| `pure-park` | record, main parked in the shim's `select`, no accept | **ALIVE** (0/3) |
+| `pure-cycle` | record, main wake-cycling with allocations — no FFI at all | **ALIVE** (0/5) |
+
+**Is the FFI necessary?** Empirically yes for every repro we have:
+the crash needs the CONJUNCTION of (a) a real accepted connection
+(`acceptFd`'s fresh fd, closed during teardown) and (b) the session
+task capturing the connection record. Neither alone suffices
+(accept-trivial and pure-* are all clean). The FFI's role is
+structural — it manufactures the per-connection fd lifecycle that
+interleaves with the task teardown; the fault itself is 100% inside
+libleanshared (no shim frames in the stack). A universal negative
+(some pure-Lean program could never trigger the same race) is NOT
+proven — the honest statement is: within this matrix, FFI involvement
+is necessary.
 
 So the external objects (Std.Mutex/Semaphore) are **not necessary**;
 the necessary ingredients are: (a) fresh process, (b) main thread in
