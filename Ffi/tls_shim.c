@@ -43,19 +43,45 @@
 #include <stdint.h>
 #include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+/* ---------- debug logging (env-gated, off by default) ----------
+ * DSH_TLS_DEBUG=1: lifecycle events (ctx, handshake, close, finalizers)
+ * DSH_TLS_DEBUG=2: + per-call read/write byte counts
+ * Logging is to stderr and OFF unless requested — the shim is the
+ * security TCB, so production runs stay byte-quiet, and tracing must
+ * never change wire behavior (it may, of course, change timing). */
+static int g_dbg = -1;
+static int tls_dbg(void) {
+    if (g_dbg < 0) {
+        const char *e = getenv("DSH_TLS_DEBUG");
+        g_dbg = e ? atoi(e) : 0;
+    }
+    return g_dbg;
+}
+#define TLS_LOG(lvl, ...) do { \
+    if (tls_dbg() >= (lvl)) { \
+        fprintf(stderr, "[tls] " __VA_ARGS__); \
+        fputc('\n', stderr); fflush(stderr); \
+    } \
+} while (0)
 
 /* ---------- external-object classes (finalizer backstop, 9.7) ---------- */
 
 static lean_external_class *g_ctx_class = NULL;
 static lean_external_class *g_ssl_class = NULL;
 
-static void ctx_finalizer(void *p) { SSL_CTX_free((SSL_CTX *)p); }
+static void ctx_finalizer(void *p) {
+    TLS_LOG(1, "finalizer: SSL_CTX_free %p", p);
+    SSL_CTX_free((SSL_CTX *)p);
+}
 static void ssl_finalizer(void *p) {
     SSL *s = (SSL *)p;
     /* B1 (review): failure sentinels are NULL-payload externals of this
      * class; SSL_shutdown(NULL) is not a no-op and would segfault in the
      * GC finalizer. Guard first. */
-    if (!s) return;
+    if (!s) { TLS_LOG(1, "finalizer: NULL sentinel SSL (skipped)"); return; }
+    TLS_LOG(1, "finalizer: SSL_shutdown+SSL_free %p", p);
     /* best effort; the socket itself is closed by the Lean layer */
     SSL_shutdown(s);
     SSL_free(s);
@@ -258,6 +284,7 @@ LEAN_EXPORT lean_object *dsh_tls_server_ctx(lean_object *cert, lean_object *key,
     /* client certificates REQUIRED: reject handshakes without one */
     SSL_CTX_set_verify(c, SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT, NULL);
     X509_STORE_free(store); /* CTX holds its own reference */
+    TLS_LOG(1, "server ctx created (cert=%s, SAN ok, chain ok, client certs required)", certf);
     return lean_alloc_external(ctx_class(), c);
 }
 
@@ -290,6 +317,7 @@ LEAN_EXPORT lean_object *dsh_tls_client_ctx(lean_object *cert, lean_object *key,
     /* server chain verified against the CA; hostname (SAN) is pinned
      * per-connection via SSL_set1_host in dsh_tls_connect */
     SSL_CTX_set_verify(c, SSL_VERIFY_PEER, NULL);
+    TLS_LOG(1, "client ctx created (cert=%s)", certf);
     return lean_alloc_external(ctx_class(), c);
 }
 
@@ -311,12 +339,16 @@ LEAN_EXPORT lean_object *dsh_tls_accept(lean_object *ctx, uint64_t fd, uint64_t 
     SSL *s = SSL_new(c);
     if (!s) { set_err("SSL_new failed"); return mk_null_ext(ssl_class()); }
     if (SSL_set_fd(s, (int)fd) != 1) { SSL_free(s); set_err("SSL_set_fd failed"); return mk_null_ext(ssl_class()); }
+    TLS_LOG(1, "accept: handshake start fd=%llu", (unsigned long long)fd);
     int r = SSL_accept(s);
     if (r != 1) {
         set_err("TLS accept (handshake) failed");
+        TLS_LOG(1, "accept: FAILED fd=%llu (%s)", (unsigned long long)fd, g_err);
         SSL_free(s);
         return mk_null_ext(ssl_class());
     }
+    TLS_LOG(1, "accept: ok fd=%llu %s %s ssl=%p", (unsigned long long)fd,
+            SSL_get_version(s), SSL_get_cipher(s), (void *)s);
     return lean_alloc_external(ssl_class(), s);
 }
 
@@ -351,12 +383,17 @@ LEAN_EXPORT lean_object *dsh_tls_connect(lean_object *ctx, lean_object *host,
         if (!ok) { SSL_free(s); set_err("cannot set expected peer name"); return mk_null_ext(ssl_class()); }
         X509_VERIFY_PARAM_set_hostflags(param, X509_CHECK_FLAG_NEVER_CHECK_SUBJECT);
     }
+    TLS_LOG(1, "connect: handshake start fd=%llu host=%s", (unsigned long long)fd,
+            lean_string_cstr(host));
     int r = SSL_connect(s);
     if (r != 1) {
         set_err("TLS connect (handshake) failed");
+        TLS_LOG(1, "connect: FAILED host=%s (%s)", lean_string_cstr(host), g_err);
         SSL_free(s);
         return mk_null_ext(ssl_class());
     }
+    TLS_LOG(1, "connect: ok host=%s %s %s ssl=%p", lean_string_cstr(host),
+            SSL_get_version(s), SSL_get_cipher(s), (void *)s);
     return lean_alloc_external(ssl_class(), s);
 }
 
@@ -368,9 +405,15 @@ LEAN_EXPORT uint64_t dsh_tls_write_all(lean_object *ssl, lean_object *bufobj, ui
     uint64_t off = 0;
     while (off < len) {
         int n = SSL_write(s, buf + off, (size_t)(len - off));
-        if (n <= 0) { set_err("TLS write failed"); return (uint64_t)(int64_t)-1; }
+        if (n <= 0) {
+            set_err("TLS write failed");
+            TLS_LOG(2, "write: FAILED ssl=%p after %llu/%llu bytes", (void *)s,
+                    (unsigned long long)off, (unsigned long long)len);
+            return (uint64_t)(int64_t)-1;
+        }
         off += (uint64_t)n;
     }
+    TLS_LOG(2, "write: %llu bytes ssl=%p", (unsigned long long)off, (void *)s);
     return off;
 }
 
@@ -384,11 +427,12 @@ LEAN_EXPORT uint64_t dsh_tls_read(lean_object *ssl, lean_object *bufobj, uint64_
      * O_NONBLOCK on fds passed here without reworking this loop. */
     for (;;) {
         int n = SSL_read(s, buf, (size_t)cap);
-        if (n > 0) return (uint64_t)n;
+        if (n > 0) { TLS_LOG(2, "read: %d bytes ssl=%p", n, (void *)s); return (uint64_t)n; }
         int err = SSL_get_error(s, n);
-        if (err == SSL_ERROR_ZERO_RETURN) return 0; /* clean EOF */
+        if (err == SSL_ERROR_ZERO_RETURN) { TLS_LOG(2, "read: EOF ssl=%p", (void *)s); return 0; }
         if (err == SSL_ERROR_WANT_READ || err == SSL_ERROR_WANT_WRITE) continue;
         set_err("TLS read failed");
+        TLS_LOG(2, "read: FAILED ssl=%p (%s)", (void *)s, g_err);
         return (uint64_t)(int64_t)-1;
     }
 }
@@ -404,6 +448,7 @@ LEAN_EXPORT uint64_t dsh_tls_read(lean_object *ssl, lean_object *bufobj, uint64_
 LEAN_EXPORT uint64_t dsh_tls_close(lean_object *ssl, uint64_t unused) {
     (void)unused;
     SSL *s = (SSL *)lean_get_external_data(ssl);
+    TLS_LOG(1, "close: unidirectional shutdown ssl=%p", (void *)s);
     BIO *rbio = SSL_get_rbio(s);
     BIO *wbio = SSL_get_wbio(s);
     /* every fd this shim sees is blocking (see dsh_tls_read), so a plain
@@ -450,6 +495,7 @@ LEAN_EXPORT uint64_t dsh_tls_peer_fp(lean_object *ssl, lean_object *outobj, uint
     if (!peer) { set_err("peer presented no certificate"); return (uint64_t)(int64_t)-1; }
     int r = fp_of_x509(peer, out65);
     X509_free(peer);
+    if (r == 0) TLS_LOG(1, "peer fingerprint: %s", out65);
     return r == 0 ? 0 : (uint64_t)(int64_t)-1;
 }
 
