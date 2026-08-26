@@ -101,12 +101,28 @@ def traced2Main : IO Unit := do
   IO.eprintln "mincrash trace2: production serveTcpConcurrentOn + traced session, :19500"
   Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (tracedSession store)
 
+/-- Variant: PACED — production loop, session paces the teardown
+window: after recv EOF, sleep 1ms before returning (so the task's
+teardown is delayed past the vulnerable interleaving). Tests the
+cheap workaround: keep per-connection tasks, pad the window. -/
+partial def sessionPaced (store : FakeStore) (t : Shell.Transport.Transport) : IO Unit := do
+  store.mux.atomically (pure ())
+  match ← t.recv with
+  | none => IO.sleep 1   -- pace the teardown window
+  | some _ => sessionPaced store t
+
+def pacedMain : IO Unit := do
+  let store : FakeStore := ⟨← Std.Mutex.new 0, ← Std.Semaphore.new 1⟩
+  IO.eprintln "mincrash paced: production loop + 1ms end-of-session pace, :19500"
+  Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (sessionPaced store)
+
 def main : IO Unit := do
   let mux ← Std.Mutex.new 0
   let sem ← Std.Semaphore.new 1
   let store := (⟨mux, sem⟩ : FakeStore)
   let args ← _root_.getArgsIO
   match args with
+  | ["paced"] => pacedMain
   | ["trace"] => tracedMain
   | ["trace2"] => traced2Main
   | ["no-client"] =>
