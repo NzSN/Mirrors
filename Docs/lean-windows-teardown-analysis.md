@@ -109,6 +109,23 @@ quick completion. Compare `tools/WinTaskCrash.lean` (task + mutex, no
 accept loop): survives — the accept-loop/transport-capture ingredient
 is the missing piece there.
 
+## Trace localization (t32 follow-up)
+
+A fully instrumented variant (`mincrash trace`: eprintln at every
+Lean-level step of the accept loop and session task) shows every
+application step completing cleanly:
+
+```
+main: accepted fd=… → spawning → task spawned, looping to select
+task: started → store externals bound → recv EOF → RETURNING
+```
+
+i.e. **no Lean code incurs the crash** — it fires strictly *after* the
+session body returns, inside the runtime's task teardown. And the
+tracing itself suppresses it: `trace` 0/5 vs `default` 5/5 on Windows
+(a textbook heisenbug — eprintln's serialization closes the race
+window; matches the earlier 13/13 eprintln-stabilized observation).
+
 ## Minimal repro status (honest)
 
 `tools/WinTaskCrash.lean` (committed, NOT wired into gates) spawns
