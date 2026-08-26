@@ -92,6 +92,15 @@ def tracedMain : IO Unit := do
       IO.eprintln "mincrash trace: listening on 127.0.0.1:19500"
       tracedLoop store lfd
 
+/-- Variant: TRACE2 — the REAL production concurrent accept loop
+(serveTcpConcurrentOn, with its liveTasks refs and runTcpConn wrapper)
+running the traced session. Separates "my hand-copied loop suppressed
+it" from "tracing the session body suppressed it". -/
+def traced2Main : IO Unit := do
+  let store : FakeStore := ⟨← Std.Mutex.new 0, ← Std.Semaphore.new 1⟩
+  IO.eprintln "mincrash trace2: production serveTcpConcurrentOn + traced session, :19500"
+  Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (tracedSession store)
+
 def main : IO Unit := do
   let mux ← Std.Mutex.new 0
   let sem ← Std.Semaphore.new 1
@@ -99,6 +108,7 @@ def main : IO Unit := do
   let args ← _root_.getArgsIO
   match args with
   | ["trace"] => tracedMain
+  | ["trace2"] => traced2Main
   | ["no-client"] =>
       match ← Shell.Transport.Tcp.listenTcp "127.0.0.1" 19501 with
       | .error e => throw (IO.userError e)
