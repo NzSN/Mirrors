@@ -1,31 +1,23 @@
-import Std.Sync.Mutex
-import Std.Sync.Semaphore
-
 /-!
-# MinCrash — PURE variant harness (FFI-free)
+# MinCrash — 100% pure Lean variant harness (no FFI, no externals)
 
-FFI-free companion of the Windows task-teardown crash investigation
-(Docs/lean-windows-teardown-analysis.md). The socket-based variants that
-actually crash (accept loop + dedicated task capturing the connection
-record) were REMOVED per request — they live in git history (commit
-078bd71 era) and on windows-dev at /d/ModelMirrors/lean4-mincrash.
+Purest form of the Windows task-teardown crash bisection harness
+(Docs/lean-windows-teardown-analysis.md). No FFI modules, no external
+objects (Std.Mutex/Semaphore removed too — they are runtime-C-backed
+externals): only ordinary Lean heap objects in task closures.
 
-What remains is the pure-Lean control/bisection harness: dedicated tasks
-capturing various closure payloads (records, toolchain externals) under
-different main-thread parking patterns. All variants SURVIVE on Windows
-(0 crashes) — that is the finding: within this matrix, the crash needs
-the socket-FFI accept lifecycle in conjunction with the task closure.
+The variants that actually crash (socket accept loop + dedicated task
+capturing the connection record) were removed per request; they live in
+git history (commit 078bd71 era) and on windows-dev at
+/d/ModelMirrors/lean4-mincrash. Every variant below SURVIVES on Windows
+— the control group establishing that pure-Lean task churn with heap
+payloads does not trigger the crash.
 
-Usage: mincrash-lean <variant>
+Usage: mincrash <variant>
   record-sleep   task captures IO.Ref + 64 KiB ByteArray; main IO.sleep
   record-cycle   same task; main wake-cycles with small allocations
-  externals      task binds Std.Mutex + Std.Semaphore; main sleeps
   spawn-loop     200 trivial dedicated tasks while main cycles
 -/
-
-structure FakeStore where
-  mux : Std.Mutex Nat
-  sem : Std.Semaphore
 
 def bigPayload : ByteArray := ByteArray.mk ((List.replicate 65536 0).toArray)
 
@@ -49,16 +41,6 @@ def recordCycle : IO Unit := do
     let _junk := ByteArray.mk ((List.replicate 128 0).toArray)
   IO.eprintln "record-cycle: survived"
 
-def externals : IO Unit := do
-  let store : FakeStore := ⟨← Std.Mutex.new 0, ← Std.Semaphore.new 1⟩
-  let _t ← IO.asTask (prio := .dedicated) (do
-    store.mux.atomically (pure ())
-    let _sem := store.sem
-    IO.eprintln "task ran, externals bound")
-  IO.eprintln "externals: main parking 5s"
-  IO.sleep 5000
-  IO.eprintln "externals: survived"
-
 partial def spawnLoop (n : Nat) : IO Unit := do
   if n == 0 then return ()
   let _t ← IO.asTask (prio := .dedicated) (pure ())
@@ -75,6 +57,5 @@ def main (args : List String) : IO Unit := do
   match args with
   | ["record-sleep"] => recordSleep
   | ["record-cycle"] => recordCycle
-  | ["externals"] => externals
   | ["spawn-loop"] => spawnLoopMain
-  | _ => IO.eprintln "usage: mincrash-lean <record-sleep|record-cycle|externals|spawn-loop>"
+  | _ => IO.eprintln "usage: mincrash <record-sleep|record-cycle|spawn-loop>"
