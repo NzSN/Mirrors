@@ -329,13 +329,6 @@ def scenarioCapacity (fails : Failures) (p : String → String) : IO Unit := do
             let _ ← srv.wait
 
 def main : IO UInt32 := do
-  if System.Platform.isWindows then
-    -- t31 follow-up: async server sessions are Linux-only (Lean 4.33
-    -- Windows runtime bug: a session task touching the shared job
-    -- store segfaults the process on quick teardown; the Windows
-    -- builds serve sync sequential sessions, so this gate skips).
-    IO.eprintln "ASYNC SPEC: skipped on Windows (sync-only server there)"
-    return 0
   let fails ← IO.mkRef ([] : List String)
   match ← IO.getEnv "APALACHE_MC" with
   | none => IO.eprintln "SKIP async_spec (APALACHE_MC not set)"; return 0

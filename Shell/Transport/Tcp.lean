@@ -176,6 +176,88 @@ partial def serveTcpOn (host : String) (port : Nat)
 def serveTcp (port : Nat) (session : Transport → IO Unit) : IO Unit :=
   serveTcpOn "" port session
 
+/-- t33: bounded connection queue for the worker-pool server model
+(Docs/worker-pool-design.md). Two semaphores form the classic bounded
+producer/consumer queue: workers block on @items@, the accept loop
+blocks on @spaces@ when the backlog is full (the kernel listen backlog
+then holds the clients — no drops, no silent loss). -/
+structure ConnQueue where
+  items : Std.Semaphore
+  spaces : Std.Semaphore
+  mu : Std.Mutex (List (UInt64 × String))
+
+namespace ConnQueue
+
+def new (capacity : Nat := 128) : BaseIO ConnQueue := do
+  return { items := ← Std.Semaphore.new 0,
+           spaces := ← Std.Semaphore.new (max 1 capacity),
+           mu := ← Std.Mutex.new [] }
+
+private def acquireWait (s : Std.Semaphore) : IO Unit := do
+  let p ← s.acquire
+  let _acquired : Option Unit := Task.get p.result?
+  return ()
+
+/-- Enqueue one accepted connection; blocks when the backlog is full. -/
+def push (q : ConnQueue) (cfd : UInt64) (peer : String) : IO Unit := do
+  acquireWait q.spaces
+  q.mu.atomically (modify fun items => items ++ [(cfd, peer)])
+  q.items.release
+
+/-- Dequeue the oldest pending connection; blocks until one arrives. -/
+def pop (q : ConnQueue) : IO (UInt64 × String) := do
+  acquireWait q.items
+  let item ← q.mu.atomically do
+    let items ← get
+    match items with
+    | [] => return (0, "")  -- unreachable (items counted by the semaphore)
+    | x :: rest => set rest; return x
+  q.spaces.release
+  return item
+
+end ConnQueue
+
+/-- t33: one long-lived connection worker (Docs/worker-pool-design.md):
+block on the queue, handle one connection, loop. Workers NEVER return
+in normal operation — the Lean 4.33 Windows task-teardown race
+(Docs/lean-windows-teardown-analysis.md) fires on task COMPLETION, so
+the pool removes completion instead of pacing it. -/
+partial def connWorker (q : ConnQueue) (handle : UInt64 → String → IO Unit) : IO Unit := do
+  let (cfd, peer) ← q.pop
+  handle cfd peer
+  connWorker q handle
+
+/-- t33: spawn @max 1 workers@ dedicated pool workers on @q@. -/
+def spawnPool (workers : Nat) (q : ConnQueue)
+    (handle : UInt64 → String → IO Unit) : IO Unit := do
+  for _ in [0:max 1 workers] do
+    let _ ← IO.asTask (prio := Task.Priority.dedicated) (connWorker q handle)
+
+/-- t33: the pool-model accept loop (Haskell concurrent serve shape):
+signal-aware select poll, accept, enqueue. The loop never spawns a
+session task; workers consume the queue. On the signal flag it returns
+(the caller's direct-exit path then ends the process with workers still
+parked — no exit-time teardown race). -/
+partial def loopAcceptPool (lfd : UInt64) (q : ConnQueue) : IO Unit := do
+  let sig0 ← Ffi.signalFired
+  if sig0 == 1 then
+    return ()
+  let ready ← Ffi.waitReadable lfd 200
+  if ready == 1 then
+    let cfd ← Ffi.acceptFd lfd
+    if cfd == Ffi.fdError then
+      let sig ← Ffi.signalFired
+      if sig == 1 then
+        return ()
+      else
+        IO.eprintln "tcp: accept failed; continuing"
+    else
+      let peer ← peerDesc cfd
+      q.push cfd peer
+  else if ready == Ffi.fdError then
+    return ()
+  loopAcceptPool lfd q
+
 /-- Opt-in teardown tracing for the crash investigation (zero cost
 unless DSH_TCP_DEBUG is set): timestamps the exact post-session steps
 so a crash dump shows whether closeFd ran. -/
@@ -199,43 +281,14 @@ private def runTcpConn (session : Transport → IO Unit) (peer : String)
   Ffi.closeFd cfd
   tcpDbg s!"closeFd done (fd={cfd}) — task teardown next"
 
-private partial def loopAcceptConcurrent (lfd : UInt64)
-    (liveTasks : IO.Ref (Array (Task (Except IO.Error Unit))))
-    (session : Transport → IO Unit) : IO Unit := do
-  let sig0 ← Ffi.signalFired
-  if sig0 == 1 then
-    return ()
-  let ready ← Ffi.waitReadable lfd 200
-  if ready == 1 then
-    let cfd ← Ffi.acceptFd lfd
-    if cfd == Ffi.fdError then
-      let sig ← Ffi.signalFired
-      if sig == 1 then
-        return ()
-      else
-        IO.eprintln "tcp: accept failed; continuing"
-    else
-      let peer ← peerDesc cfd
-      let task ← IO.asTask (prio := .dedicated) (runTcpConn session peer cfd)
-      -- keep the task reference live until the runtime retires it:
-      -- dropping the only reference immediately lets the GC free the
-      -- task object (and its closure) while the worker thread may
-      -- still be tearing down (observed as a Windows-only segfault on
-      -- quick connect-disconnect cycles)
-      liveTasks.modify (fun ts => ts.push task)
-      if (← liveTasks.get).size > 128 then
-        liveTasks.set (#[] : Array (Task (Except IO.Error Unit)))
-  else if ready == Ffi.fdError then
-    return ()
-  loopAcceptConcurrent lfd liveTasks session
-
 partial def serveTcpConcurrentOn (host : String) (port : Nat)
-    (session : Transport → IO Unit) : IO Unit := do
+    (session : Transport → IO Unit) (workers : Nat := 4) : IO Unit := do
   match ← listenTcp host port with
   | .error e => throw (IO.userError s!"serveTcpConcurrentOn: {e}")
   | .ok (lfd, bound) =>
-      IO.eprintln s!"tcp: listening on {if host.isEmpty then "*" else host}:{bound} (concurrent)"
-      let liveTasks ← IO.mkRef (#[] : Array (Task (Except IO.Error Unit)))
-      loopAcceptConcurrent lfd liveTasks session
+      IO.eprintln s!"tcp: listening on {if host.isEmpty then "*" else host}:{bound} (worker pool, {max 1 workers} workers)"
+      let q ← ConnQueue.new
+      spawnPool workers q (fun cfd peer => runTcpConn session peer cfd)
+      loopAcceptPool lfd q
 
 end Shell.Transport.Tcp

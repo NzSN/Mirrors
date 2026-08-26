@@ -218,49 +218,38 @@ partial def serveTlsOn (host : String) (port : Nat) (files : TlsFiles)
           IO.eprintln s!"tls: listening on {if host.isEmpty then "*" else host}:{bound} (mTLS, TLS 1.3)"
           loop lfd ctx session
 
-/-- t31: concurrent variant of @serveTlsOn@ (Haskell
-@serveTlsConcurrentOn@): handshake + session + close run on a dedicated
-task per accepted connection, so one slow session never blocks the
-accept loop. -/
+/-- t33: concurrent variant of @serveTlsOn@ (Haskell
+@serveTlsConcurrentOn@), WORKER-POOL model (Docs/worker-pool-design.md):
+the accept loop only accepts and enqueues; a fixed pool of long-lived
+workers (never completing in normal operation — the Windows
+task-teardown race fires on task completion) each run the handshake +
+session + close for one connection at a time. Note the shim's m4 caveat:
+@dsh_tls_errmsg@'s global is shared, so concurrent handshake failure
+messages may interleave (same as the t31 model; results are unaffected). -/
 partial def serveTlsConcurrentOn (host : String) (port : Nat) (files : TlsFiles)
-    (session : Transport → IO Unit) : IO Unit := do
+    (session : Transport → IO Unit) (workers : Nat := 4) : IO Unit := do
   match ← mkServerCtx files with
   | .error e => throw (IO.userError s!"serveTlsConcurrentOn: {e}")
   | .ok ctx =>
       match ← Shell.Transport.Tcp.listenTcp host port with
       | .error e => throw (IO.userError s!"serveTlsConcurrentOn: {e}")
       | .ok (lfd, bound) =>
-          IO.eprintln s!"tls: listening on {if host.isEmpty then "*" else host}:{bound} (mTLS, TLS 1.3, concurrent)"
-          let rec loop : IO Unit := do
-            let sig0 ← Ffi.signalFired
-            if sig0 == 1 then return ()
-            let ready ← Ffi.waitReadable lfd 200
-            if ready == 1 then
-              let cfd ← Ffi.acceptFd lfd
-              if cfd == Ffi.fdError then
-                let sig ← Ffi.signalFired
-                if sig == 1 then return ()
-                IO.eprintln "tls: accept failed; continuing"
-              else
-                let _task ← IO.asTask (prio := Task.Priority.dedicated) do
-                  let ssl ← Ffi.tlsAcceptRaw ctx cfd
-                  let nul ← Ffi.sslIsNull ssl
-                  if nul == 1 then
-                    IO.eprintln s!"tls: handshake rejected ({← Ffi.tlsErrmsg})"
-                  else
-                    let t := { ssl, buf := ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)) }
-                    try
-                      session (tlsTransport t)
-                    catch e =>
-                      IO.eprintln s!"tls: session ended: {e}"
-                    tlsClose t
-                  Ffi.closeFd cfd
-                loop
-            else if ready == Ffi.fdError then
-              return ()
+          IO.eprintln s!"tls: listening on {if host.isEmpty then "*" else host}:{bound} (mTLS, TLS 1.3, worker pool, {max 1 workers} workers)"
+          let q ← Shell.Transport.Tcp.ConnQueue.new
+          Shell.Transport.Tcp.spawnPool workers q (fun cfd _peer => do
+            let ssl ← Ffi.tlsAcceptRaw ctx cfd
+            let nul ← Ffi.sslIsNull ssl
+            if nul == 1 then
+              IO.eprintln s!"tls: handshake rejected ({← Ffi.tlsErrmsg})"
             else
-              loop
-          loop
+              let t := { ssl, buf := ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)) }
+              try
+                session (tlsTransport t)
+              catch e =>
+                IO.eprintln s!"tls: session ended: {e}"
+              tlsClose t
+            Ffi.closeFd cfd)
+          Shell.Transport.Tcp.loopAcceptPool lfd q
 
 /-- Shared connect: resolve, TCP connect, TLS 1.3 handshake with CA and
 SAN validation. Returns the session's SSL object on success. -/

@@ -293,15 +293,11 @@ def serveCli (argv : List String) : IO UInt32 := do
   | .error e => IO.eprintln e; return 2
   | .ok (port, bind) =>
       let store ← Shell.Jobs.newJobStoreWith 4 Shell.Apalache.jobRunner
-      if System.Platform.isWindows then
-        -- Windows: sync sequential sessions (t30 behavior). Async
-        -- sessions are Linux-only until the Lean 4.33 Windows runtime
-        -- bug (segfault on quick session-task teardown touching the
-        -- store; see Docs/async-enablement-design.md) is resolved.
-        Shell.Transport.Tcp.serveTcpOn (bind.getD "") port mirrorSession
-      else
-        Shell.Transport.Tcp.serveTcpConcurrentOn (bind.getD "") port
-          (asyncMirrorSession store)
+      -- t33: worker-pool sessions on BOTH platforms (the pool's
+      -- never-completing workers eliminate the Windows task-teardown
+      -- race; Docs/worker-pool-design.md).
+      Shell.Transport.Tcp.serveTcpConcurrentOn (bind.getD "") port
+        (asyncMirrorSession store)
       return 0
 
 /-- The heartbeat loop (Haskell @heartbeatLoop@): every 10s, forever,
@@ -361,13 +357,10 @@ def serveOne (opts : ServerOpts) : IO UInt32 := do
                 pure none
   let bind := opts.bind.getD ""
   let store ← Shell.Jobs.newJobStoreWith (max 1 opts.jobs) Shell.Apalache.jobRunner
-  -- Windows: sync sequential sessions (t30 behavior); see serveCli.
+  -- t33: worker-pool sessions on BOTH platforms (see serveCli).
   let serve : IO Unit :=
-    if System.Platform.isWindows then
-      Shell.Transport.Tls.serveTlsOn bind opts.port files mirrorSession
-    else
-      Shell.Transport.Tls.serveTlsConcurrentOn bind opts.port files
-        (asyncMirrorSession store)
+    Shell.Transport.Tls.serveTlsConcurrentOn bind opts.port files
+      (asyncMirrorSession store) (workers := max 1 opts.jobs)
   let rc ←
     try
       serve
