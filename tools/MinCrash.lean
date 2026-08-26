@@ -48,6 +48,36 @@ partial def sessionNoStore (t : Shell.Transport.Transport) : IO Unit := do
   | none => return ()
   | some _ => sessionNoStore t
 
+/-- Variant: PURE — no shim calls at all. One dedicated task captures a
+fresh record (IO.Ref + 64 KiB ByteArray, the same shape the connection
+closure carries); the main thread then parks in IO.sleep (a runtime
+condvar wait, NOT our FFI). Tests whether the FFI is necessary at all. -/
+def pureSleep : IO Unit := do
+  let big := ByteArray.mk ((List.replicate 65536 0).toArray)
+  let ref ← IO.mkRef big
+  let t ← IO.asTask (prio := .dedicated) (do
+    let b ← ref.get
+    IO.eprintln s!"task ran, payload {b.size} bytes")
+  IO.eprintln "pure-sleep: main parking 5s while task tears down"
+  IO.sleep 5000
+  IO.eprintln s!"pure-sleep: survived (task: {t.get.isOk})"
+
+/-- Variant: PURE-PARK — same task, but the main thread parks in the
+shim's blocking select (waitReadable on a listener, no accept).
+Separates "parked in blocking FFI" from "parked in runtime sleep". -/
+def purePark : IO Unit := do
+  match ← Shell.Transport.Tcp.listenTcp "127.0.0.1" 19502 with
+  | .error e => throw (IO.userError e)
+  | .ok (lfd, _) =>
+      let big := ByteArray.mk ((List.replicate 65536 0).toArray)
+      let ref ← IO.mkRef big
+      let _t ← IO.asTask (prio := .dedicated) (do
+        let b ← ref.get
+        IO.eprintln s!"task ran, payload {b.size} bytes")
+      IO.eprintln "pure-park: main parking in shim select 5s"
+      let _ ← Ffi.waitReadable lfd 5000
+      IO.eprintln "pure-park: survived"
+
 /-- Variant: NO CLIENT AT ALL. Hypothesis: the trigger is a dedicated
 task completing while the main thread is parked inside a BLOCKING FFI
 call (the shim's select), not sockets per se. Listen, then loop:
@@ -63,6 +93,8 @@ def main : IO Unit := do
   let store := (⟨mux, sem⟩ : FakeStore)
   let args ← _root_.getArgsIO
   match args with
+  | ["pure-sleep"] => pureSleep
+  | ["pure-park"] => purePark
   | ["no-client"] =>
       match ← Shell.Transport.Tcp.listenTcp "127.0.0.1" 19501 with
       | .error e => throw (IO.userError e)
