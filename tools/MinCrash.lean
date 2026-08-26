@@ -57,12 +57,48 @@ partial def noClientLoop (lfd : UInt64) : IO Unit := do
   let _ ← Ffi.waitReadable lfd 200
   noClientLoop lfd
 
+/-- Variant: TRACE — the crashing default path with an eprintln at
+every step (own accept loop; production Tcp.lean untouched). stderr
+shows exactly which Lean-level step precedes the teardown crash. -/
+partial def tracedSession (store : FakeStore) (t : Shell.Transport.Transport) : IO Unit := do
+  IO.eprintln "  task: started"
+  store.mux.atomically (pure ())
+  IO.eprintln "  task: store externals bound"
+  match ← t.recv with
+  | none => IO.eprintln "  task: recv EOF"
+  | some _ => IO.eprintln "  task: recv data"
+  IO.eprintln "  task: RETURNING (teardown next)"
+
+partial def tracedLoop (store : FakeStore) (lfd : UInt64) : IO Unit := do
+  let ready ← Ffi.waitReadable lfd 200
+  if ready == 1 then
+    let cfd ← Ffi.acceptFd lfd
+    IO.eprintln s!"main: accepted fd={cfd}"
+    if cfd != Ffi.fdError then
+      IO.eprintln "main: spawning session task"
+      let _task ← IO.asTask (prio := .dedicated) do
+        let tr := Shell.Transport.Tcp.tcpTransport
+          ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)),
+            ByteArray.mk ((List.replicate 65536 0).toArray)⟩
+        tracedSession store tr
+      IO.eprintln "main: task spawned, looping to select"
+  tracedLoop store lfd
+
+def tracedMain : IO Unit := do
+  let store : FakeStore := ⟨← Std.Mutex.new 0, ← Std.Semaphore.new 1⟩
+  match ← Shell.Transport.Tcp.listenTcp "127.0.0.1" 19500 with
+  | .error e => throw (IO.userError e)
+  | .ok (lfd, _) =>
+      IO.eprintln "mincrash trace: listening on 127.0.0.1:19500"
+      tracedLoop store lfd
+
 def main : IO Unit := do
   let mux ← Std.Mutex.new 0
   let sem ← Std.Semaphore.new 1
   let store := (⟨mux, sem⟩ : FakeStore)
   let args ← _root_.getArgsIO
   match args with
+  | ["trace"] => tracedMain
   | ["no-client"] =>
       match ← Shell.Transport.Tcp.listenTcp "127.0.0.1" 19501 with
       | .error e => throw (IO.userError e)
