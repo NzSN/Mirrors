@@ -135,6 +135,16 @@ tracing does NOT suppress the crash on the faithful path. (The earlier
 eprintln-stabilized observation was on a different code state and
 should be re-read in this light.)
 
+FINAL LOCALIZATION (DSH_TCP_DEBUG trace points inside the production
+runTcpConn): with prints inserted between the session body return and
+the closeFd, the log proves BOTH complete —
+`[tcp] session body returned (fd=…)` then `[tcp] closeFd done` — and
+the crash vanishes (0/5 vs 5/5 uninstrumented). So every application
+step including the fd close completes; the crash is strictly in the
+final task teardown, and the race window is narrow enough that a
+single eprintln anywhere in the [body-return → closeFd] slice
+suppresses it.
+
 ## Minimal repro status (honest)
 
 `tools/WinTaskCrash.lean` (committed, NOT wired into gates) spawns
