@@ -87,6 +87,19 @@ partial def noClientLoop (lfd : UInt64) : IO Unit := do
   let _ ← Ffi.waitReadable lfd 200
   noClientLoop lfd
 
+/-- Variant: ACCEPT-TRIVIAL — accept a real connection (main does the
+full wake/accept/FFI cycle) but the spawned task is trivial (captures
+nothing, never touches the fd). Separates accept-cycle timing from
+closure-graph content. -/
+partial def acceptTrivialLoop (lfd : UInt64) : IO Unit := do
+  let ready ← Ffi.waitReadable lfd 200
+  if ready == 1 then
+    let cfd ← Ffi.acceptFd lfd
+    if cfd != Ffi.fdError then
+      let _t ← IO.asTask (prio := .dedicated) (pure ())
+      Ffi.closeFd cfd
+  acceptTrivialLoop lfd
+
 def main : IO Unit := do
   let mux ← Std.Mutex.new 0
   let sem ← Std.Semaphore.new 1
@@ -95,6 +108,12 @@ def main : IO Unit := do
   match args with
   | ["pure-sleep"] => pureSleep
   | ["pure-park"] => purePark
+  | ["accept-trivial"] =>
+      match ← Shell.Transport.Tcp.listenTcp "127.0.0.1" 19503 with
+      | .error e => throw (IO.userError e)
+      | .ok (lfd, _) =>
+          IO.eprintln "mincrash accept-trivial: listening on 19503"
+          acceptTrivialLoop lfd
   | ["no-client"] =>
       match ← Shell.Transport.Tcp.listenTcp "127.0.0.1" 19501 with
       | .error e => throw (IO.userError e)
