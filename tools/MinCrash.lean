@@ -1,61 +1,77 @@
+import Shell.Transport.Tcp
+import Shell.Cli
+import Std.Sync.Mutex
+import Std.Sync.Semaphore
+
 /-!
-# MinCrash — 100% pure Lean variant harness (no FFI, no externals)
+# Minimal crash demo — Lean 4.33 Windows task-teardown AV
 
-Purest form of the Windows task-teardown crash bisection harness
-(Docs/lean-windows-teardown-analysis.md). No FFI modules, no external
-objects (Std.Mutex/Semaphore removed too — they are runtime-C-backed
-externals): only ordinary Lean heap objects in task closures.
+Distills the vulnerable mirror configuration to its skeleton:
 
-The variants that actually crash (socket accept loop + dedicated task
-capturing the connection record) were removed per request; they live in
-git history (commit 078bd71 era) and on windows-dev at
-/d/ModelMirrors/lean4-mincrash. Every variant below SURVIVES on Windows
-— the control group establishing that pure-Lean task churn with heap
-payloads does not trigger the crash.
+* main thread runs the concurrent accept loop, parking in the socket
+  shim's select between connections;
+* the FIRST connection of a fresh process spawns a dedicated task whose
+  closure binds a record of Std.Mutex / Std.Semaphore external objects
+  plus the connection transport;
+* the task recvs until EOF and returns.
 
-Usage: mincrash <variant>
-  record-sleep   task captures IO.Ref + 64 KiB ByteArray; main IO.sleep
-  record-cycle   same task; main wake-cycles with small allocations
-  spawn-loop     200 trivial dedicated tasks while main cycles
+On Windows (MinGW-w64, Lean 4.33.0) the process segfaults
+(0xC0000005 in lean_dec_ref_cold) ~11-16ms after the client closes.
+On Linux it is stable. See Docs/lean-windows-teardown-analysis.md.
+
+Driver: spawn, sleep 3, connect, close, poll for exit code.
 -/
 
-def bigPayload : ByteArray := ByteArray.mk ((List.replicate 65536 0).toArray)
+structure FakeStore where
+  mux : Std.Mutex Nat
+  sem : Std.Semaphore
 
-def recordSleep : IO Unit := do
-  let ref ← IO.mkRef bigPayload
-  let _t ← IO.asTask (prio := .dedicated) (do
-    let b ← ref.get
-    IO.eprintln s!"task ran, payload {b.size} bytes")
-  IO.eprintln "record-sleep: main parking 5s"
-  IO.sleep 5000
-  IO.eprintln "record-sleep: survived"
+/-- The session task body: bind the store's externals (touch the mutex),
+then drain the transport to EOF, exactly like the mirror's recv loop. -/
+partial def session (store : FakeStore) (t : Shell.Transport.Transport) : IO Unit := do
+  store.mux.atomically (pure ())
+  let _sem := store.sem          -- binding suffices per the analysis
+  match ← t.recv with
+  | none => return ()
+  | some _ => session store t
 
-def recordCycle : IO Unit := do
-  let ref ← IO.mkRef bigPayload
-  let _t ← IO.asTask (prio := .dedicated) (do
-    let b ← ref.get
-    IO.eprintln s!"task ran, payload {b.size} bytes")
-  IO.eprintln "record-cycle: main wake-cycling 5s"
-  for _ in [0:25] do
-    IO.sleep 200
-    let _junk := ByteArray.mk ((List.replicate 128 0).toArray)
-  IO.eprintln "record-cycle: survived"
+/-- Variant: bind the store but never recv (task returns immediately
+after accept). -/
+def sessionNoRecv (store : FakeStore) (_t : Shell.Transport.Transport) : IO Unit := do
+  store.mux.atomically (pure ())
+  let _sem := store.sem
+  return ()
 
-partial def spawnLoop (n : Nat) : IO Unit := do
-  if n == 0 then return ()
+/-- Variant: recv to EOF but no external objects in the closure. -/
+partial def sessionNoStore (t : Shell.Transport.Transport) : IO Unit := do
+  match ← t.recv with
+  | none => return ()
+  | some _ => sessionNoStore t
+
+/-- Variant: NO CLIENT AT ALL. Hypothesis: the trigger is a dedicated
+task completing while the main thread is parked inside a BLOCKING FFI
+call (the shim's select), not sockets per se. Listen, then loop:
+spawn a trivial dedicated task, park 200ms in waitReadable. -/
+partial def noClientLoop (lfd : UInt64) : IO Unit := do
   let _t ← IO.asTask (prio := .dedicated) (pure ())
-  IO.sleep 50
-  spawnLoop (n - 1)
+  let _ ← Ffi.waitReadable lfd 200
+  noClientLoop lfd
 
-def spawnLoopMain : IO Unit := do
-  IO.eprintln "spawn-loop: 200 trivial dedicated tasks"
-  spawnLoop 200
-  IO.sleep 2000
-  IO.eprintln "spawn-loop: survived"
-
-def main (args : List String) : IO Unit := do
+def main : IO Unit := do
+  let mux ← Std.Mutex.new 0
+  let sem ← Std.Semaphore.new 1
+  let store := (⟨mux, sem⟩ : FakeStore)
+  let args ← _root_.getArgsIO
   match args with
-  | ["record-sleep"] => recordSleep
-  | ["record-cycle"] => recordCycle
-  | ["spawn-loop"] => spawnLoopMain
-  | _ => IO.eprintln "usage: mincrash <record-sleep|record-cycle|spawn-loop>"
+  | ["no-client"] =>
+      match ← Shell.Transport.Tcp.listenTcp "127.0.0.1" 19501 with
+      | .error e => throw (IO.userError e)
+      | .ok (lfd, _) =>
+          IO.eprintln "mincrash no-client: spawning tasks while parked in select"
+          noClientLoop lfd
+  | _ =>
+      IO.eprintln "mincrash: listening on 127.0.0.1:19500"
+      match args with
+      | ["no-recv"]  => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (sessionNoRecv store)
+      | ["no-store"] => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 sessionNoStore
+      | _ => Shell.Transport.Tcp.serveTcpConcurrentOn "127.0.0.1" 19500 (session store)
