@@ -83,19 +83,23 @@ readable / 0 timeout / fdError sentinel on select failure. -/
 opaque waitReadable : @& UInt64 → @& UInt64 → BaseIO UInt64
 
 /-- t16: install SIGINT/SIGTERM handlers (no SA_RESTART, so blocked
-accept/recv calls return EINTR); POSIX only, like the Haskell server. -/
+accept/recv calls return EINTR); POSIX only, like the Haskell server.
+t33 DID: returns UInt64 (not Unit) so the C shim's value-return
+register is boxed as a plain scalar, never misread as a boxed result
+(see closeFd's identical root-fix comment). -/
 @[extern "dsh_install_exit_signals"]
-opaque installExitSignals : BaseIO Unit
+opaque installExitSignals : BaseIO UInt64
 
 /-- t16: @1@ once SIGINT or SIGTERM has been delivered. -/
 @[extern "dsh_signal_fired"]
 opaque signalFired : BaseIO UInt64
 
 /-- t16: terminate the process with @code@ (POSIX exit(3); used after
-signal cleanup because a live dedicated task keeps the runtime
-alive). -/
+signal cleanup because a live dedicated task keeps the runtime alive).
+t33 DID: UInt64 return (never observed — exit never returns — but keeps
+the extern prototype consistent with the uint64_t C shim). -/
 @[extern "dsh_exit"]
-opaque exitWith : UInt64 → BaseIO Unit
+opaque exitWith : UInt64 → BaseIO UInt64
 
 /-- t30 (Windows only): argv via GetCommandLineA. Writes NUL-separated
 args into the buffer; returns (argc <<< 32) ||| bytesWritten. The

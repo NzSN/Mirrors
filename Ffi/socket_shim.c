@@ -258,8 +258,16 @@ LEAN_EXPORT uint64_t dsh_set_rcvtimeo_ms(uint64_t fd, uint64_t ms) {
 #endif
 }
 
-LEAN_EXPORT void dsh_close_fd(uint64_t fd) {
+LEAN_EXPORT lean_object* dsh_close_fd(uint64_t fd) {
     if (fd >= 0) DSH_CLOSE(fd);
+    /* t33 root fix (ffi-auditor t2, preferred variant): the Lean decl is
+     * BaseIO Unit, whose codegen prototype is lean_object* and CONSUMES
+     * the return as the io-ok envelope's boxed payload. A void return
+     * left RAX = closesocket's 0 on real sockets -> NULL payload ->
+     * connWorker dec-ref'd NULL -> SIGSEGV after every rejected
+     * handshake. lean_box(0) is a tagged scalar (dec-safe), exactly what
+     * the emitter stores into ctor(0,1,0){field0=ret}. */
+    return lean_box(0);
 }
 
 /* ---------- t16: accept-loop polling ---------- */
@@ -330,7 +338,7 @@ static void dsh_on_exit_signal(int sig) {
     dsh_signaled = 1;
 }
 
-LEAN_EXPORT void dsh_install_exit_signals(uint64_t unused) {
+LEAN_EXPORT uint64_t dsh_install_exit_signals(uint64_t unused) {
     (void)unused;
 #ifdef _WIN32
     /* no sigaction/SA_RESTART on Windows: plain signal() sets the same
@@ -347,6 +355,10 @@ LEAN_EXPORT void dsh_install_exit_signals(uint64_t unused) {
     sigaction(SIGINT, &sa, NULL);
     sigaction(SIGTERM, &sa, NULL);
 #endif
+    /* t33 DID (defense-in-depth, captain follow-up): UInt64 return 0 —
+     * like the dsh_close_fd fixed pattern, a plain UInt64 value return
+     * removes any ambiguity for the BaseIO UInt64 decl. */
+    return 0;
 }
 
 LEAN_EXPORT uint64_t dsh_signal_fired(uint64_t unused) {
@@ -397,7 +409,11 @@ LEAN_EXPORT uint64_t dsh_win_argv(lean_object *outobj, uint64_t cap, uint64_t un
 
 /* t16: terminate the process (the heartbeat task thread would
  * otherwise keep the runtime alive after the accept loop returns). */
-LEAN_EXPORT void dsh_exit(uint64_t code, uint64_t unused) {
+LEAN_EXPORT uint64_t dsh_exit(uint64_t code, uint64_t unused) {
     (void)unused;
     exit((int)code);
+    /* t33 DID (defense-in-depth, captain follow-up): UInt64 return 0;
+     * unreachable (exit never returns) but must match the BaseIO UInt64
+     * decl's uint64_t prototype. */
+    return 0;
 }

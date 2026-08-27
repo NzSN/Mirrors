@@ -320,7 +320,8 @@ apalache bodies), default 4. A session's jobs are cancelled and
 evicted when its connection ends (Haskell @endSession@); other
 sessions' jobs are unaffected. -/
 def serveOne (opts : ServerOpts) : IO UInt32 := do
-  Ffi.installExitSignals
+  -- t33 DID: bind + discard the UInt64 result (decl is now BaseIO UInt64)
+  let _ ← Ffi.installExitSignals
   let files : Shell.Transport.Tls.TlsFiles :=
     { certFile := opts.cert, keyFile := opts.key, caFile := opts.ca }
   let regEnv ← IO.getEnv "MODELMIRRORS_REGISTRY"
@@ -370,7 +371,8 @@ def serveOne (opts : ServerOpts) : IO UInt32 := do
   match mReg with
   | some (url, sid) => Shell.Registry.deregisterService url sid
   | none => pure ()
-  Ffi.exitWith (rc.toUInt64)
+  -- t33 DID: bind + discard (decl is now BaseIO UInt64)
+  let _ ← Ffi.exitWith (rc.toUInt64)
   return rc
 
 /-! ## validate mode (client) -/
