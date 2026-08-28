@@ -117,7 +117,17 @@ def runApalacheCancellable (token : Shell.Jobs.CancelToken)
     (runDir : Option String) (args : List String) : IO ApalacheResult := do
   let child ← spawnApalacheEof args.toArray runDir
   token.onCancel (killIgnoring child)
-  collectApalache child
+  let r ← collectApalache child
+  -- FFI-hardening/t4 (secondary retention, analyzer t2): the token's
+  -- kill-closure pins the Child (hProcess + 2 pipe externals) in the
+  -- job table until session close, ~3 handles/job. The child has
+  -- EXITED here (wait happened inside collectApalache), so the
+  -- kill-closure is dead weight — drop it so the Child becomes
+  -- collectable and the handles are closed immediately (FLAT handle
+  -- trend under the 300-cycle stress). Cancellation racing this point
+  -- runs the old closure harmlessly (kill of an exited child).
+  token.onCancel (pure ())
+  return r
 
 /-- Absolutize a (possibly relative) path against the current dir
 (Haskell @makeAbsolute@): the child's cwd moves to the run dir, so a
@@ -255,13 +265,16 @@ def findTraceFiles (dir : String) : IO (List String) := do
   return (entries.toList.map (·.path.toString)).filter (·.endsWith ".itf.json")
 
 /-- Trace generation producing trace files (Haskell
-@generateTraceFilesIn@): returns the output dir and the ITF paths in it. -/
-def generateTraceFilesIn (runDir : Option String) (cfg : Codec.ApalacheConfig)
+@generateTraceFilesIn@): returns the output dir and the ITF paths in it.
+Runs over an injected invocation so the async job can use the
+cancellable spawn (Haskell @generateTraceFilesVia@). -/
+def generateTraceFilesVia (run : Option String → List String → IO ApalacheResult)
+    (runDir : Option String) (cfg : Codec.ApalacheConfig)
     (tc : Codec.TraceConfig) : IO (Except String (String × List String)) := do
   let cfg' ← match runDir with
     | some _ => pure ({ cfg with specPath := ← makeAbsolute cfg.specPath } : Codec.ApalacheConfig)
     | none => pure cfg
-  let r ← runApalache runDir (traceArgs runDir cfg' tc)
+  let r ← run runDir (traceArgs runDir cfg' tc)
   if let some e := noOutputError r then
     return .error e
   else if isInfraExit r.exit then
@@ -272,6 +285,14 @@ def generateTraceFilesIn (runDir : Option String) (cfg : Codec.ApalacheConfig)
     | some outDir =>
         let paths ← findTraceFiles outDir
         return .ok (outDir, paths)
+
+/-- Direct trace-file generation (Haskell @generateTraceFilesIn@): the
+sync @syncOracles@ path runs apalache uncancellable; the async job
+(@Runner.jobRunner@) uses the cancellable @generateTraceFilesVia@ so a
+cancelled trace-gen terminates the child. -/
+def generateTraceFilesIn (runDir : Option String) (cfg : Codec.ApalacheConfig)
+    (tc : Codec.TraceConfig) : IO (Except String (String × List String)) :=
+  generateTraceFilesVia runApalache runDir cfg tc
 
 /-- Trace generation producing in-memory traces (Haskell
 @generateTracesIn@): output dir from the log line, ITF files parsed,

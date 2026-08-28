@@ -1,6 +1,6 @@
 # t33 Worker-Pool — Implementation Status & Validation Blockers
 
-> Status: **REDEPLOYED + VALIDATED — Defect D fix in, remote stress-proof pending**
+> Status: **REDEPLOYED + VALIDATED; Defect D fixed & verified — second redeploy (Defect-D build) + round-2 FFI commit pending**
 > (updated 2026-08-27; defects §3/§4 fixed in `7d5f47d`; defect §4a —
 > the crash that blocked the re-validation — root-caused and fixed
 > 2026-08-27 in the `Ffi/socket_shim.c` / `Ffi/Socket.lean` /
@@ -220,7 +220,7 @@ probes survive (rejects logged 1:1, zero spam), 4/4 full mTLS session
 cycles, 20/20 TCP churn, `async_spec` ALL GREEN ×3, full
 `lake test` GREEN (10/10, real apalache).
 
-## 4b. Defect D — instant `invalid ""` without apalache under sustained load — ✅ FIXED (remote stress-proof pending)
+## 4b. Defect D — instant `invalid ""` without apalache under sustained load — ✅ FIXED (verified 2026-08-28)
 
 Found by the 300-cycle stress (2026-08-28, artifacts
 `D:\ModelMirrors\tmp\stress300.*`): on dev-tree instances driven
@@ -259,8 +259,43 @@ the config field.
    reports `infraError "apalache produced no output (exit N)"`
    instead of a bogus `invalid ""`.
 Local verification: build green, branch-logic #eval 6/6, gates green.
-Remote 300-cycle stress proof on the fixed build is **pending** (t4);
-the Lean-runtime handle leak itself is an upstream-candidate issue.
+The Lean-runtime handle leak itself is an upstream-candidate issue.
+
+**Remote verification (2026-08-28, lean4-ffi):** 300/300 mixed cycles
+(200 real-apalache validates, 100 cancels, 0 failures/transients, wall
+854 s) with a **flat handle trend (184 → 185**; pre-fix reference:
+184 → 782); async_spec ALL GREEN ×2; cancel-kill spot-check passed
+(cancelled trace-gen terminates its java child). A secondary retention
+was found and fixed during verification: the cancel-token kill-closure
+pinned each Child (~3 handles/job) until session close — now dropped
+after child exit. Independent re-validation (empiricist): clean-box
+fresh server 3/3 VALID, handles stable.
+**Runbook note:** a box that has run leaky builds carries a
+stray-process handle/desktop-heap reservoir — children of ANY new
+server then die at the loader with 0xC0000142 (also the classic
+Session-0 desktop-heap exhaustion symptom). Sweep stray
+mirror/java/python processes (by explicit PID — never
+`taskkill /IM`) before judging any run.
+**Go/no-go for any green-run window:** `tasklist` must show ZERO
+mirror/java/python strays except production (`ModelMirrors.exe`,
+PID 25704) and any designated specimen; sweep otherwise.
+**Deployment note:** the live service binary (1adbbbcb) predates this
+fix and still leaks ~1 handle per apalache spawn — a second redeploy
+with the Defect-D-fixed binary is owed.
+
+**Box-level caveat (2026-08-28 final pass):** the windows-dev box
+carries a *cumulative* session-0 spawn-resource debt that recovers by
+idle time: after a burst of ~30 cumulative spawns across test servers,
+ALL mirror instances' children flip to 0xC0000142 loader death in
+unison (fresh servers start green, then flip). Under nonzero debt the
+clang-built apalache wrapper is more fragile than the gcc one (dies
+first); at zero debt both are clean (20/20 VALID each). The pre-fix
+production binary degrades after ~3 own-spawns under debt (old
+`invalid ""` lie), while the fixed build at worst reports the honest
+infraError. One unresolved observation: during one heavily-indebted
+run the FIXED dev server itself exited mid-run — not reproduced in the
+clean-window 300-cycle stress; watch under future load. Production
+(8999) stayed alive and serving throughout all of this.
 
 ## 5. Recommended sequence — status at `7d5f47d`
 

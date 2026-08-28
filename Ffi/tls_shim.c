@@ -59,7 +59,12 @@
  * Logging is to stderr and OFF unless requested — the shim is the
  * security TCB, so production runs stay byte-quiet, and tracing must
  * never change wire behavior (it may, of course, change timing). */
-static int g_dbg = -1;
+/* FFI-hardening round 2 (#3): g_dbg was a plain shared int lazily
+ * written by whichever thread first called tls_dbg() — a data race
+ * across pool workers. It is now thread-local (same _Thread_local
+ * pattern as g_err): each thread resolves DSH_TLS_DEBUG exactly once,
+ * and there is no shared mutable state to race at all. */
+static _Thread_local int g_dbg = -1;
 static int tls_dbg(void) {
     if (g_dbg < 0) {
         const char *e = getenv("DSH_TLS_DEBUG");
@@ -209,9 +214,35 @@ static STACK_OF(X509) *load_chain(const char *file) {
     if (!b) { set_err("cannot open certificate file"); return NULL; }
     STACK_OF(X509) *sk = sk_X509_new_null();
     X509 *x;
+    /* FFI-hardening round 2 (#5): distinguish a CLEAN end-of-stream
+     * from a trailing parse error. Verified against OpenSSL 3.0.13:
+     * PEM_read_bio_X509 leaves the benign PEM_R_NO_START_LINE (108) in
+     * the queue at a clean EOF (inter-block junk is skipped), while a
+     * truncated cert or trailing PEM garbage leaves BAD_END_LINE /
+     * BAD_BASE64_DECODE. Clear the queue first, then only treat a
+     * residual NON-NO_START_LINE error as malformed — never accept a
+     * corrupted tail as a silently shorter chain. */
+    ERR_clear_error();
     while ((x = PEM_read_bio_X509(b, NULL, NULL, NULL)) != NULL)
         sk_X509_push(sk, x);
+    int malformed = 0;
+    {
+        unsigned long e = ERR_peek_last_error();
+        if (e != 0) {
+            if (ERR_GET_LIB(e) == ERR_LIB_PEM &&
+                ERR_GET_REASON(e) == PEM_R_NO_START_LINE) {
+                ERR_clear_error(); /* clean-EOF marker; not an error */
+            } else {
+                malformed = 1;
+            }
+        }
+    }
     BIO_free(b);
+    if (malformed) {
+        sk_X509_pop_free(sk, X509_free);
+        set_err("malformed PEM in certificate file");
+        return NULL;
+    }
     if (sk_X509_num(sk) == 0) {
         sk_X509_free(sk);
         snprintf(g_err, sizeof(g_err), "no certificates in %s", file);
@@ -321,6 +352,11 @@ LEAN_EXPORT lean_object *dsh_tls_server_ctx(lean_object *cert, lean_object *key,
     if (!chain_ok) { X509_STORE_free(store); return mk_null_ext(ctx_class()); }
 
     SSL_CTX *c = base_ctx(TLS_server_method());
+    /* FFI-hardening round 2 (#1, HIGH): base_ctx returns NULL on
+     * SSL_CTX_new failure or TLS-version-pin failure — guard before the
+     * use_certificate_chain_file(NULL) call or the TCB NULL-derefs
+     * (client path already guarded below). */
+    if (!c) { X509_STORE_free(store); return mk_null_ext(ctx_class()); }
     if (SSL_CTX_use_certificate_chain_file(c, certf) != 1 ||
         SSL_CTX_use_PrivateKey_file(c, keyf, SSL_FILETYPE_PEM) != 1 ||
         SSL_CTX_check_private_key(c) != 1) {
@@ -394,6 +430,9 @@ LEAN_EXPORT lean_object *dsh_tls_accept(lean_object *ctx, uint64_t fd, uint64_t 
     SSL_CTX *c = (SSL_CTX *)lean_get_external_data(ctx);
     SSL *s = SSL_new(c);
     if (!s) { set_err("SSL_new failed"); return mk_null_ext(ssl_class()); }
+    /* SSL_set_fd's socket parameter is int-typed; the values this shim
+     * ever sees are small winsock SOCKETs / POSIX fds that stay
+     * int-representable (documented constraint, FFI-hardening r2 #2). */
     if (SSL_set_fd(s, (int)fd) != 1) { SSL_free(s); set_err("SSL_set_fd failed"); return mk_null_ext(ssl_class()); }
     TLS_LOG(1, "accept: handshake start fd=%llu", (unsigned long long)fd);
     int r = SSL_accept(s);
@@ -414,6 +453,8 @@ LEAN_EXPORT lean_object *dsh_tls_connect(lean_object *ctx, lean_object *host,
     SSL_CTX *c = (SSL_CTX *)lean_get_external_data(ctx);
     SSL *s = SSL_new(c);
     if (!s) { set_err("SSL_new failed"); return mk_null_ext(ssl_class()); }
+    /* SSL_set_fd's socket parameter is int-typed; socket values here stay
+     * int-representable (see dsh_tls_accept note, FFI-hardening r2 #2). */
     if (SSL_set_fd(s, (int)fd) != 1) { SSL_free(s); set_err("SSL_set_fd failed"); return mk_null_ext(ssl_class()); }
     /* M3 (review): hostname/IP pinning parity with the Haskell tls
      * package (x509-validation): X509_check_host (what SSL_set1_host
@@ -458,6 +499,11 @@ LEAN_EXPORT uint64_t dsh_tls_write_all(lean_object *ssl, lean_object *bufobj, ui
     (void)unused;
     SSL *s = (SSL *)lean_get_external_data(ssl);
     const uint8_t *buf = lean_sarray_cptr(bufobj);
+    /* FFI-hardening round 2 (#6): never trust len from the Lean side —
+     * reject a len that exceeds the ByteArray's real size so a future
+     * Lean-side logic bug cannot become an OOB read in the TCB. */
+    if (len > (uint64_t)lean_sarray_size(bufobj))
+        return (uint64_t)(int64_t)-1;
     uint64_t off = 0;
     while (off < len) {
         int n = SSL_write(s, buf + off, (size_t)(len - off));
@@ -478,6 +524,10 @@ LEAN_EXPORT uint64_t dsh_tls_read(lean_object *ssl, lean_object *bufobj, uint64_
     (void)unused;
     SSL *s = (SSL *)lean_get_external_data(ssl);
     uint8_t *buf = lean_sarray_cptr(bufobj);
+    /* FFI-hardening round 2 (#6): cap must not exceed the ByteArray's
+     * real size — an oversized cap would let SSL_read write OOB. */
+    if (cap > (uint64_t)lean_sarray_size(bufobj))
+        return (uint64_t)(int64_t)-1;
     /* m5 (review): WANT_READ/WANT_WRITE spin assumes a BLOCKING fd
      * (every socket this shim sees is blocking). Do not set
      * O_NONBLOCK on fds passed here without reworking this loop. */

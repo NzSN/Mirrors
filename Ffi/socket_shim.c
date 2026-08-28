@@ -29,13 +29,22 @@ typedef long long ssize_t; /* MinGW usually provides it; guard anyway */
 #  ifndef MSG_NOSIGNAL
 #    define MSG_NOSIGNAL 0 /* no SIGPIPE concept on Windows */
 #  endif
-static int dsh_wsa_ready = 0;
-static void dsh_wsa_init(void) {
-    if (!dsh_wsa_ready) {
-        WSADATA d;
-        WSAStartup(MAKEWORD(2, 2), &d);
-        dsh_wsa_ready = 1;
-    }
+/* FFI-hardening round 2 (#4): the lazy WSAStartup was an
+ * unsynchronized check-then-set race, and its return value was ignored
+ * (marked ready even when WSAStartup failed). Now once-guarded
+ * (InitOnce; winsock2.h wins over windows.h include order here) and the
+ * result is recorded; callers bail when startup failed. */
+static INIT_ONCE g_wsa_once = INIT_ONCE_STATIC_INIT;
+static int g_wsa_ok = 0;
+static BOOL CALLBACK wsa_once_init(PINIT_ONCE once, PVOID param, PVOID *ctx) {
+    (void)once; (void)param; (void)ctx;
+    WSADATA d;
+    g_wsa_ok = (WSAStartup(MAKEWORD(2, 2), &d) == 0);
+    return TRUE;
+}
+static int dsh_wsa_init(void) {
+    InitOnceExecuteOnce(&g_wsa_once, wsa_once_init, NULL, NULL);
+    return g_wsa_ok;
 }
 static int dsh_set_nonblock(uint64_t fd) {
     u_long on = 1;
@@ -117,7 +126,7 @@ static struct sockaddr_in loopback_addr(uint16_t port) {
 
 LEAN_EXPORT uint64_t dsh_socket_tcp(void) {
 #ifdef _WIN32
-    dsh_wsa_init();
+    if (!dsh_wsa_init()) return (uint64_t)(int64_t)-1;
     SOCKET s = socket(AF_INET, SOCK_STREAM, 0);
     if (s == INVALID_SOCKET) return (uint64_t)(int64_t)-1;
     return (uint64_t)s;
@@ -156,7 +165,9 @@ fail:
    interfaces when no host is given). */
 LEAN_EXPORT uint64_t dsh_bind_any(uint64_t fd, uint64_t port) {
     int one = 1;
-    setsockopt((int)fd, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+    /* FFI-hardening r2 (#2, HIGH): bare (int)fd truncates the winsock
+     * SOCKET (64-bit) — always go through DSH_SOCK. */
+    setsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
@@ -200,7 +211,7 @@ LEAN_EXPORT uint64_t dsh_peer_desc(uint64_t fd, uint8_t *out, uint64_t cap, uint
     (void)unused;
     struct sockaddr_in addr;
     socklen_t len = sizeof(addr);
-    if (getpeername((int)fd, (struct sockaddr*)&addr, &len) != 0) return (uint64_t)(int64_t)-1;
+    if (getpeername(DSH_SOCK(fd), (struct sockaddr*)&addr, &len) != 0) return (uint64_t)(int64_t)-1;
     char buf[64];
     snprintf(buf, sizeof(buf), "%s:%u", inet_ntoa(addr.sin_addr), (unsigned)ntohs(addr.sin_port));
     size_t n = strlen(buf);
@@ -216,7 +227,8 @@ LEAN_EXPORT uint64_t dsh_peer_desc(uint64_t fd, uint8_t *out, uint64_t cap, uint
    caller treats -1 as a hard error. */
 LEAN_EXPORT uint64_t dsh_bind_addr(uint64_t fd, lean_object const *ip, uint64_t port) {
     int one = 1;
-    setsockopt((int)fd, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+    /* FFI-hardening r2 (#2): DSH_SOCK, never (int)fd (winsock SOCKET truncation). */
+    setsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
@@ -228,7 +240,8 @@ LEAN_EXPORT uint64_t dsh_bind_addr(uint64_t fd, lean_object const *ip, uint64_t 
 
 LEAN_EXPORT uint64_t dsh_bind_loopback(uint64_t fd, uint64_t port) {
     int one = 1;
-    setsockopt((int)fd, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+    /* FFI-hardening r2 (#2): DSH_SOCK, never (int)fd (winsock SOCKET truncation). */
+    setsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
     struct sockaddr_in addr = loopback_addr((uint16_t)port);
     return (uint64_t)(int64_t)bind(DSH_SOCK(fd), (struct sockaddr*)&addr, sizeof(addr));
 }
@@ -256,6 +269,10 @@ LEAN_EXPORT uint64_t dsh_local_port(uint64_t fd) {
 
 LEAN_EXPORT uint64_t dsh_send_all(uint64_t fd, lean_object const *buf, uint64_t len, uint64_t unused) {
     uint8_t const *p = dsh_ba_ptr((lean_object *)buf);
+    /* FFI-hardening round 2 (#6): len must not exceed the ByteArray's
+     * real size — reject an oversized len instead of reading OOB. */
+    if (len > (uint64_t)lean_sarray_size((lean_object *)(uintptr_t)buf))
+        return (uint64_t)(int64_t)-1;
     uint64_t off = 0;
     while (off < len) {
         ssize_t n = send(DSH_SOCK(fd), p + off, len - off, MSG_NOSIGNAL);
@@ -271,6 +288,10 @@ LEAN_EXPORT uint64_t dsh_send_all(uint64_t fd, lean_object const *buf, uint64_t 
 
 LEAN_EXPORT uint64_t dsh_recv_some(uint64_t fd, lean_object *buf, uint64_t cap, uint64_t unused) {
     uint8_t *p = dsh_ba_ptr(buf);
+    /* FFI-hardening round 2 (#6): cap must not exceed the ByteArray's
+     * real size — an oversized cap would let recv write OOB. */
+    if (cap > (uint64_t)lean_sarray_size(buf))
+        return (uint64_t)(int64_t)-1;
     for (;;) {
         ssize_t n = recv(DSH_SOCK(fd), p, cap, 0);
         if (n < 0 && dsh_sock_interrupted()) continue;
@@ -334,7 +355,7 @@ LEAN_EXPORT uint64_t dsh_resolve_host(lean_object *name, lean_object *outobj,
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
 #ifdef _WIN32
-    dsh_wsa_init();
+    if (!dsh_wsa_init()) return (uint64_t)(int64_t)-1;
 #endif
     int rc = getaddrinfo(lean_string_cstr(name), NULL, &hints, &res);
     if (rc != 0 || !res) return (uint64_t)(int64_t)-1;

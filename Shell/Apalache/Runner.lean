@@ -74,8 +74,11 @@ def jobRunner : Shell.Jobs.Runner where
         -- t31: the file read-back must happen INSIDE the try, before the
         -- finally removes the session dir (reading after the finally
         -- raced the directory deletion and crashed the job body)
+        -- t4: cancellable spawn (generateTraceFilesVia + the cancellable
+        -- runner) so a cancelled trace-gen terminates the apalache child
+        -- (Kill wiring identical to the validate path).
         let r ← try
-          match ← generateTraceFilesIn (some dir) cfg' tc with
+          match ← generateTraceFilesVia (runApalacheCancellable token) (some dir) cfg' tc with
           | .error e => pure (.error e)
           | .ok (_, paths) =>
               -- read the generated files back as raw ITF values (parity:
