@@ -1,6 +1,6 @@
 # t33 Worker-Pool — Implementation Status & Validation Blockers
 
-> Status: **r-windev FULLY GREEN — stress & redeploy pending**
+> Status: **REDEPLOYED + VALIDATED — Defect D fix in, remote stress-proof pending**
 > (updated 2026-08-27; defects §3/§4 fixed in `7d5f47d`; defect §4a —
 > the crash that blocked the re-validation — root-caused and fixed
 > 2026-08-27 in the `Ffi/socket_shim.c` / `Ffi/Socket.lean` /
@@ -50,13 +50,25 @@
    Aug 26 18:28 (`D:\ModelMirrors\tmp\async-pool2.log`) FAILED with
    **1,395,410 `tls: handshake rejected` lines in 28 s** — the §3/§4
    defects, superseded.
-3. **300-cycle stress** — ⏳ **AWAITING RE-RUN**. Pre-fix attempts
-   (`pool-mtls.log` 1.78M lines/4.3s, `churn.log` 1.43M lines/3.4s)
-   were pure spam storms, not clean stress runs (~**414k rejected
-   handshakes/s with 4 workers**).
-4. **Service redeploy** — not done; the live service still runs the
-   Aug 25 binary (`SERVICE_RUNNING`, PID 47176); no
-   `ModelMirrors.exe.old18` backup exists.
+3. **300-cycle stress** — ⚠️ **RUN 2026-08-27/28, new defect signal
+   (see §4b)**. 4× full 300-cycle mixes (submit/await/cancel, 4-conn
+   pool) on the dev tree: 100/100 trace-gen+cancel cycles clean, zero
+   crashes/hangs/spam (server logs stayed at the single listening line;
+   the 10 s handshake guard fired correctly on a stalled accept) — but
+   all validate awaits returned instant `{"validate":{"invalid":""}}`
+   **without apalache ever spawning** after a per-instance onset of
+   0–24 healthy jobs. Short runs (≤16 cycles) and the live hammer were
+   unaffected. Pre-fix attempts (`pool-mtls.log` 1.78M lines,
+   `churn.log` 1.43M lines) were pure spam storms.
+4. **Service redeploy** — ✅ **DONE 2026-08-28**: `.old18` backup
+   (sha-verified), live service now runs the fixed build
+   (`1adbbbcb…`, nssm, PID 25704, `--jobs 4`). Live validation:
+   single + 4-way concurrent async validates all `valid` (cross-conn
+   visibility OK), 10 plain probes survived, log 1:1 with activity,
+   `mirror.exe validate --host 192.168.150.219` → VALID (note: the
+   production cert SAN is `IP:192.168.150.219` only — not localhost).
+   100-cycle live hammer: 100/100 valid, avg 4.16 s/job, service WSS
+   54.2 → 73.4 MB (+35% over 101 validates — monitor).
 5. **Hard rollback condition** — was triggered by the pre-fix
    failure; the release stays held until the fixed head re-validates on
    r-windev (§5 steps 4–5).
@@ -208,6 +220,48 @@ probes survive (rejects logged 1:1, zero spam), 4/4 full mTLS session
 cycles, 20/20 TCP churn, `async_spec` ALL GREEN ×3, full
 `lake test` GREEN (10/10, real apalache).
 
+## 4b. Defect D — instant `invalid ""` without apalache under sustained load — ✅ FIXED (remote stress-proof pending)
+
+Found by the 300-cycle stress (2026-08-28, artifacts
+`D:\ModelMirrors\tmp\stress300.*`): on dev-tree instances driven
+with a 4-connection pool through 300 submit/await/cancel cycles,
+validate jobs begin returning `{"validate":{"invalid":""}}`
+**instantly with no apalache process ever spawned**. Onset varies per
+server instance (job #0–#24); 4/4 long runs affected, short runs
+(≤16 cycles) and the 100-cycle live hammer never hit it.
+
+**Root cause (proven 2026-08-28, defect-d-hunt team):** Lean 4.33
+`IO.Process.spawn` on Windows **leaks one inheritable handle per
+child when `stdin := .null`** (runtime: the NUL-device handle is
+created inheritable and never closed in the parent; measured linear
+growth, e.g. 161 → 2161 handles over 2000 spawns). Every
+`CreateProcess` duplicates the accumulated leaked set into the new
+child's handle table; once it bloats past the loader's tolerance the
+child dies **before `main()`** with exit `0xC0000142` (3221225794)
+and empty output — which `validateSpecVia` mapped to
+`.ok (.invalid "")` (exit ∉ {0, 255}), so the mirror *lied* that the
+spec was invalid. Explains the varying onset (table-size threshold),
+the instant empty-output failures, and why manual python spawns never
+reproduced it (clean parent handle tables). Both async and SYNC paths
+leaked: `IO.Process.output` forces `stdin := .null` regardless of
+the config field.
+
+**Fix (this change):**
+1. `Shell/Apalache/Cli.lean`: new `spawnApalacheEof` helper —
+   `stdin := .piped`, then `child.takeStdin` and drop the write end
+   (child still sees stdin EOF; verified **0-leak**). Both
+   `runApalache` (rewritten off `IO.Process.output`) and
+   `runApalacheCancellable` route through it; drain/wait/cancel-kill
+   semantics unchanged.
+2. Mapping hardening in `validateSpecVia` + `generateTraceFilesIn`:
+   a child exiting nonzero with **empty** stdout+stderr (or an exit
+   code outside apalache's documented 120/12 spec-verdict set) now
+   reports `infraError "apalache produced no output (exit N)"`
+   instead of a bogus `invalid ""`.
+Local verification: build green, branch-logic #eval 6/6, gates green.
+Remote 300-cycle stress proof on the fixed build is **pending** (t4);
+the Lean-runtime handle leak itself is an upstream-candidate issue.
+
 ## 5. Recommended sequence — status at `7d5f47d`
 
 1. ✅ **DONE** — the two `IO.wait` fixes (pool + job store) and the
@@ -225,9 +279,11 @@ cycles, 20/20 TCP churn, `async_spec` ALL GREEN ×3, full
    async_spec's TCP scenario plus a leaked server child holding the
    capture pipe (3 subsequent runs of the same binary clean — likely a
    test-side send race on a closing socket; watch for recurrence).
-5. ⏳ **PENDING** — only then: redeploy (backup `.old18`), live mTLS
-   validate, 100-cycle hammer, and the §6/CHANGELOG/README/cutover doc
-   updates. The `--serve --jobs` deviation (§1) also remains open.
+5. ⚠️ **MOSTLY DONE** — redeploy (`.old18` backup) ✅, live mTLS
+   validate ✅, 100-cycle hammer ✅ (all 2026-08-28, see §2 items 3–4).
+   Remaining: resolve §4b (Defect D), then the §6/CHANGELOG/README/
+   cutover doc updates. The `--serve --jobs` deviation (§1) also
+   remains open.
 
 ## Appendix — phantom-acquire repro (SemProbe2)
 

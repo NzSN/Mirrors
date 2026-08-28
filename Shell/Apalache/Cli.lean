@@ -48,52 +48,76 @@ def apalacheBin : IO String := do
 private def apalacheEnv : Array (String × Option String) :=
   #[("LC_ALL", some "C.UTF-8")]
 
-/-- Run one apalache invocation to completion (the
-@readCreateProcessWithExitCode@ port): child @cwd = runDir@ when given,
-@LC_ALL=C.UTF-8@, stdin null. -/
-def runApalache (runDir : Option String) (args : List String) :
-    IO ApalacheResult := do
-  let out ← IO.Process.output
-    { cmd := ← apalacheBin, args := args.toArray,
-      env := apalacheEnv, stdin := .null,
-      cwd := runDir }
-  return ⟨out.exitCode, out.stdout, out.stderr⟩
+/-- Drain one pipe to EOF (shared by both apalache flows). -/
+private def drainToEnd (h : IO.FS.Handle) : IO String := do
+  let mut s := ""
+  let mut line ← h.getLine
+  while !line.isEmpty do
+    s := s ++ line
+    line ← h.getLine
+  return s
 
-/-- Run one apalache invocation, cancellable (Haskell @spawnApalache@ +
-the async-job kill wiring): the process handle is registered on the
-token so job cancellation (or session close) terminates the child. -/
-private def killIgnoring {cfg : IO.Process.StdioConfig} (child : IO.Process.Child cfg) : IO Unit := do
-  try child.kill catch _ => pure ()
-
-def runApalacheCancellable (token : Shell.Jobs.CancelToken)
-    (runDir : Option String) (args : List String) : IO ApalacheResult := do
-  let child ← IO.Process.spawn
-    { cmd := ← apalacheBin, args := args.toArray,
-      env := apalacheEnv, stdin := .null,
+/-- Spawn apalache with stdin EOF and NO inheritable handle leak
+(Defect D root cause, analyzer t2): @IO.Process.output@ and
+@stdin := .null@ leak exactly +1 handle per spawn on Windows
+(src/runtime/process.cpp setup_stdio NUL case). Spawning
+@stdin := .piped@ and immediately @takeStdin@ + dropping the write end
+gives the child stdin EOF without creating the NUL handle — 0 leak,
+analyzer-measured. The returned child's config has stdin already taken
+(@Stdio.null@), stdout/stderr still piped for drain, kill still works. -/
+private def spawnApalacheEof (args : Array String) (runDir : Option String) :
+    IO (IO.Process.Child { stdin := .null, stdout := .piped, stderr := .piped }) := do
+  let child0 ← IO.Process.spawn
+    { cmd := ← apalacheBin, args := args,
+      env := apalacheEnv, stdin := .piped,
       stdout := .piped, stderr := .piped,
       cwd := runDir }
-  token.onCancel (killIgnoring child)
-  -- drain stderr concurrently so a full pipe cannot deadlock
+  let (wh, child) ← child0.takeStdin
+  let _ := wh -- drop the write end: child sees stdin EOF, no leak
+  return child
+
+/-- The concrete child shape both apalache flows use after the
+takeStdin workaround: stdin taken (null), stdout+stderr piped. -/
+private abbrev ApalacheChild :=
+  IO.Process.Child ({ stdin := .null, stdout := .piped, stderr := .piped } : IO.Process.StdioConfig)
+
+/-- Drain stdout+stderr concurrently and wait for the child (shared by
+both apalache flows; stderr drains in a task so a full pipe cannot
+deadlock the stdout drain). -/
+private def collectApalache (child : ApalacheChild) : IO ApalacheResult := do
   let errTask ← IO.asTask do
-    let h := (child.stderr : IO.FS.Handle)
-    let mut s := ""
-    let mut line ← h.getLine
-    while !line.isEmpty do
-      s := s ++ line
-      line ← h.getLine
-    return s
-  let outH := (child.stdout : IO.FS.Handle)
-  let mut out := ""
-  let mut line ← outH.getLine
-  while !line.isEmpty do
-    out := out ++ line
-    line ← outH.getLine
+    drainToEnd (child.stderr : IO.FS.Handle)
+  let out ← drainToEnd (child.stdout : IO.FS.Handle)
   let errResult : Except IO.Error String := errTask.get
   let err ← match errResult with
     | .ok s => pure s
     | .error e => pure s!"stderr drain failed: {e}"
   let code ← child.wait
   return ⟨code, out, err⟩
+
+/-- Run one apalache invocation to completion (the
+@readCreateProcessWithExitCode@ port): child @cwd = runDir@ when given,
+@LC_ALL=C.UTF-8@, stdin EOF via the takeStdin workaround (NOT
+@IO.Process.output@ — that forces @stdin := .null@ on Windows and leaks
++1 inheritable handle per spawn, the Defect D accumulation). -/
+def runApalache (runDir : Option String) (args : List String) :
+    IO ApalacheResult := do
+  let child ← spawnApalacheEof args.toArray runDir
+  collectApalache child
+
+/-- Run one apalache invocation, cancellable (Haskell @spawnApalache@ +
+the async-job kill wiring): the process handle is registered on the
+token so job cancellation (or session close) terminates the child.
+stdin goes through the same takeStdin EOF workaround as @runApalache@.
+-/
+private def killIgnoring {cfg : IO.Process.StdioConfig} (child : IO.Process.Child cfg) : IO Unit := do
+  try child.kill catch _ => pure ()
+
+def runApalacheCancellable (token : Shell.Jobs.CancelToken)
+    (runDir : Option String) (args : List String) : IO ApalacheResult := do
+  let child ← spawnApalacheEof args.toArray runDir
+  token.onCancel (killIgnoring child)
+  collectApalache child
 
 /-- Absolutize a (possibly relative) path against the current dir
 (Haskell @makeAbsolute@): the child's cwd moves to the run dir, so a
@@ -164,6 +188,25 @@ def parseOutputDir (s : String) : Option String :=
 anything else is a spec verdict (Haskell's case split, shared shape). -/
 def isInfraExit (code : UInt32) : Bool := code == 255
 
+/-! ## Silent-child / undocumented-exit classification (Defect D) -/
+
+/-- apalache's documented spec-verdict exit codes (120 = typecheck
+failure, 12 = invariant violation). Any other nonzero code — besides
+the 255 infra tier — means the child did not produce a verdict at all,
+so the spec-verdict tier must not fire. -/
+def isSpecVerdictExit (code : UInt32) : Bool := code == 120 || code == 12
+
+/-- A child that exits nonzero with EMPTY stdout+stderr (all streams
+drained to EOF, nothing captured) is an infra failure: the run never
+produced a verdict, so reporting .invalid "" would lie to the client
+that the spec is invalid. Checked BEFORE the exit tier so the 255 /
+empty-output corner also gets a real message. -/
+def noOutputError (r : ApalacheResult) : Option String :=
+  if r.exit != 0 && (r.out ++ r.err).isEmpty then
+    some s!"apalache produced no output (exit {r.exit})"
+  else
+    none
+
 /-! ## The three flows -/
 
 /-- Bounded validation (Haskell @validateSpecIn@): typecheck then check,
@@ -177,13 +220,23 @@ def validateSpecVia (run : Option String → List String → IO ApalacheResult)
     | some _ => pure ({ cfg with specPath := ← makeAbsolute cfg.specPath } : Codec.ApalacheConfig)
     | none => pure cfg
   let tc ← run runDir (tcArgs runDir cfg')
-  if isInfraExit tc.exit then
+  if let some e := noOutputError tc then
+    return .error e
+  else if isInfraExit tc.exit then
+    return .error (tc.out ++ tc.err)
+  else if tc.exit != 0 && !isSpecVerdictExit tc.exit then
+    -- undocumented nonzero exit: the child did not run apalache to a
+    -- verdict (wrapper/launcher failure) — infra tier, never a verdict
     return .error (tc.out ++ tc.err)
   else if tc.exit != 0 then
     return .ok (.invalid (tc.out ++ tc.err))
   else
     let c ← run runDir (checkArgs runDir cfg' bound)
-    if isInfraExit c.exit then
+    if let some e := noOutputError c then
+      return .error e
+    else if isInfraExit c.exit then
+      return .error (c.out ++ c.err)
+    else if c.exit != 0 && !isSpecVerdictExit c.exit then
       return .error (c.out ++ c.err)
     else if c.exit == 0 then
       return .ok .valid
@@ -209,7 +262,9 @@ def generateTraceFilesIn (runDir : Option String) (cfg : Codec.ApalacheConfig)
     | some _ => pure ({ cfg with specPath := ← makeAbsolute cfg.specPath } : Codec.ApalacheConfig)
     | none => pure cfg
   let r ← runApalache runDir (traceArgs runDir cfg' tc)
-  if isInfraExit r.exit then
+  if let some e := noOutputError r then
+    return .error e
+  else if isInfraExit r.exit then
     return .error (r.out ++ r.err)
   else
     match parseOutputDir (r.out ++ r.err) with

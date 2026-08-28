@@ -35,6 +35,14 @@
 #  include <arpa/inet.h>
 #endif
 #include <string.h>
+/* FFI-hardening (#1): once-guards for the external-class lazy
+ * registration paths — InitOnceExecuteOnce on Windows (kernel32, no
+ * extra link deps), pthread_once elsewhere (in libc on this glibc). */
+#if defined(_WIN32)
+#  include <windows.h>
+#else
+#  include <pthread.h>
+#endif
 #if defined(_WIN32)
 /* t30: MinGW has no timegm; _mkgmtime is the UTC equivalent */
 #  include <time.h>
@@ -66,7 +74,13 @@ static int tls_dbg(void) {
     } \
 } while (0)
 
-/* ---------- external-object classes (finalizer backstop, 9.7) ---------- */
+/* ---------- external-object classes (finalizer backstop, 9.7) ----------
+ * FFI-hardening (#1, audit VERIFIED): the lazy registration below was
+ * unsynchronized — pool workers could race ssl_class() on the first
+ * concurrent handshakes. Both classes are now registered EAGERLY at
+ * first ctx creation (main thread, before the pool spawns), and the
+ * lazy paths are once-guarded (Win32 InitOnceExecuteOnce, pthread_once
+ * elsewhere) so double registration is impossible on any code path. */
 
 static lean_external_class *g_ctx_class = NULL;
 static lean_external_class *g_ssl_class = NULL;
@@ -78,26 +92,57 @@ static void ctx_finalizer(void *p) {
 static void ssl_finalizer(void *p) {
     SSL *s = (SSL *)p;
     /* B1 (review): failure sentinels are NULL-payload externals of this
-     * class; SSL_shutdown(NULL) is not a no-op and would segfault in the
-     * GC finalizer. Guard first. */
+     * class; SSL_free(NULL) is not a no-op and would crash the GC.
+     * FFI-hardening (#5, audit VERIFIED): the finalizer is deliberately
+     * BORING — SSL_free only. It previously called a BLOCKING
+     * SSL_shutdown, the exact wedge dsh_tls_close was reworked to avoid
+     * (a blocking finalizer parks a GC worker on a dead peer). Explicit
+     * dsh_tls_close owns the graceful close_notify attempt. */
     if (!s) { TLS_LOG(1, "finalizer: NULL sentinel SSL (skipped)"); return; }
-    TLS_LOG(1, "finalizer: SSL_shutdown+SSL_free %p", p);
-    /* best effort; the socket itself is closed by the Lean layer */
-    SSL_shutdown(s);
+    TLS_LOG(1, "finalizer: SSL_free %p", p);
     SSL_free(s);
 }
 static void noop_foreach(void *p, lean_object *o) { (void)p; (void)o; }
 
+#if defined(_WIN32)
+static INIT_ONCE g_ctx_once = INIT_ONCE_STATIC_INIT;
+static INIT_ONCE g_ssl_once = INIT_ONCE_STATIC_INIT;
+static BOOL CALLBACK ctx_once_init(PINIT_ONCE once, PVOID param, PVOID *ctx) {
+    (void)once; (void)ctx;
+    *(lean_external_class **)param = lean_register_external_class(ctx_finalizer, noop_foreach);
+    return TRUE;
+}
+static BOOL CALLBACK ssl_once_init(PINIT_ONCE once, PVOID param, PVOID *ctx) {
+    (void)once; (void)ctx;
+    *(lean_external_class **)param = lean_register_external_class(ssl_finalizer, noop_foreach);
+    return TRUE;
+}
 static lean_external_class *ctx_class(void) {
-    if (!g_ctx_class)
-        g_ctx_class = lean_register_external_class(ctx_finalizer, noop_foreach);
+    InitOnceExecuteOnce(&g_ctx_once, ctx_once_init, &g_ctx_class, NULL);
     return g_ctx_class;
 }
 static lean_external_class *ssl_class(void) {
-    if (!g_ssl_class)
-        g_ssl_class = lean_register_external_class(ssl_finalizer, noop_foreach);
+    InitOnceExecuteOnce(&g_ssl_once, ssl_once_init, &g_ssl_class, NULL);
     return g_ssl_class;
 }
+#else
+static pthread_once_t g_ctx_once = PTHREAD_ONCE_INIT;
+static pthread_once_t g_ssl_once = PTHREAD_ONCE_INIT;
+static void ctx_once_init(void) {
+    g_ctx_class = lean_register_external_class(ctx_finalizer, noop_foreach);
+}
+static void ssl_once_init(void) {
+    g_ssl_class = lean_register_external_class(ssl_finalizer, noop_foreach);
+}
+static lean_external_class *ctx_class(void) {
+    pthread_once(&g_ctx_once, ctx_once_init);
+    return g_ctx_class;
+}
+static lean_external_class *ssl_class(void) {
+    pthread_once(&g_ssl_once, ssl_once_init);
+    return g_ssl_class;
+}
+#endif
 
 /* ---------- Option boxing helpers ---------- */
 
@@ -110,11 +155,12 @@ static lean_object *mk_null_ext(lean_external_class *cls) {
 
 /* ---------- error reporting ---------- */
 
-/* m4 (review): g_err is a single global — valid under today's
- * single-threaded, sequential accept-loop usage (one handshake at a
- * time, errmsg consumed immediately after a failed call). Before any
- * concurrent handshake path lands, make this thread-local. */
-static char g_err[512];
+/* FFI-hardening (#2, audit VERIFIED): g_err is thread-local — the
+ * former single global let concurrent handshake failure messages
+ * interleave (the retired m4 caveat). dsh_tls_errmsg now always
+ * returns the calling thread's own error. C11 _Thread_local: MSYS2 gcc
+ * and Linux gcc both support it. */
+static _Thread_local char g_err[512];
 
 static void set_err(const char *msg) {
     unsigned long e = ERR_peek_last_error();
@@ -241,6 +287,12 @@ static SSL_CTX *base_ctx(const SSL_METHOD *m) {
 LEAN_EXPORT lean_object *dsh_tls_server_ctx(lean_object *cert, lean_object *key,
                                             lean_object *ca, uint64_t unused) {
     (void)unused;
+    /* FFI-hardening (#1): eager external-class registration on the
+     * creating (main) thread — before any pool worker exists — so the
+     * first concurrent handshakes never race lazy registration; the
+     * once-guards in ctx_class/ssl_class cover every other ordering. */
+    (void)ctx_class();
+    (void)ssl_class();
     const char *certf = lean_string_cstr(cert);
     const char *keyf = lean_string_cstr(key);
     const char *caf = lean_string_cstr(ca);
@@ -293,6 +345,10 @@ LEAN_EXPORT lean_object *dsh_tls_server_ctx(lean_object *cert, lean_object *key,
 LEAN_EXPORT lean_object *dsh_tls_client_ctx(lean_object *cert, lean_object *key,
                                             lean_object *ca, uint64_t unused) {
     (void)unused;
+    /* FFI-hardening (#1): eager external-class registration, same as
+     * the server path (main thread, before any workers exist). */
+    (void)ctx_class();
+    (void)ssl_class();
     const char *certf = lean_string_cstr(cert);
     const char *keyf = lean_string_cstr(key);
     const char *caf = lean_string_cstr(ca);

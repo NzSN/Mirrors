@@ -223,9 +223,10 @@ partial def serveTlsOn (host : String) (port : Nat) (files : TlsFiles)
 the accept loop only accepts and enqueues; a fixed pool of long-lived
 workers (never completing in normal operation — the Windows
 task-teardown race fires on task completion) each run the handshake +
-session + close for one connection at a time. Note the shim's m4 caveat:
-@dsh_tls_errmsg@'s global is shared, so concurrent handshake failure
-messages may interleave (same as the t31 model; results are unaffected). -/
+session + close for one connection at a time. The shim's error buffer is
+thread-local (FFI-hardening #2; the m4 interleaving caveat is retired),
+so @dsh_tls_errmsg@ returns each calling thread's own failure message
+and concurrent handshake failures cannot interleave. -/
 partial def serveTlsConcurrentOn (host : String) (port : Nat) (files : TlsFiles)
     (session : Transport → IO Unit) (workers : Nat := 4) : IO Unit := do
   match ← mkServerCtx files with

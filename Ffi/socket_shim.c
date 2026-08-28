@@ -52,7 +52,7 @@ static int dsh_clear_nonblock(uint64_t fd) {
 #  include <sys/socket.h>
 #  include <netinet/in.h>
 #  include <arpa/inet.h>
-#  include <sys/select.h>
+#  include <poll.h>
 #  include <netdb.h>
 #  define DSH_SOCK(fd) ((int)(fd))
 #  define DSH_CLOSE(fd) close((int)(fd))
@@ -65,6 +65,40 @@ static int dsh_clear_nonblock(uint64_t fd) {
     return fcntl((int)fd, F_SETFL, flags & ~O_NONBLOCK);
 }
 #endif
+
+/* FFI-hardening (#3, audit VERIFIED): Winsock reports errors via
+ * WSAGetLastError(), NOT errno — the old dsh_send_all/dsh_recv_some
+ * EINTR checks therefore silently never retried on Windows. One shared
+ * helper, platform-correct for both paths. */
+static int dsh_sock_interrupted(void) {
+#ifdef _WIN32
+    return WSAGetLastError() == WSAEINTR;
+#else
+    return errno == EINTR;
+#endif
+}
+
+/* FFI-hardening (#4, audit VERIFIED): poll()/WSAPoll() replaces
+ * select() + FD_SET so any valid fd works without the FD_SETSIZE
+ * ceiling (a select() on an fd >= FD_SETSIZE corrupts the fd set; on
+ * Windows it is also undefined). WSAPoll is Vista+ and MSYS2 provides
+ * it. Returns the number of fds with revents (1), 0 on timeout, -1 on
+ * error. */
+static int dsh_poll_wait(uint64_t fd, short events, int ms) {
+#ifdef _WIN32
+    WSAPOLLFD pfd;
+#else
+    struct pollfd pfd;
+#endif
+    pfd.fd = DSH_SOCK(fd);
+    pfd.events = events;
+    pfd.revents = 0;
+#ifdef _WIN32
+    return WSAPoll(&pfd, 1, ms);
+#else
+    return poll(&pfd, 1, ms);
+#endif
+}
 
 /* lean_bytearray_cptr is static inline in lean.h; byte-array data
    lives directly after the object header. */
@@ -93,27 +127,29 @@ LEAN_EXPORT uint64_t dsh_socket_tcp(void) {
 }
 
 LEAN_EXPORT uint64_t dsh_connect_loopback(uint64_t fd, uint64_t port) {
-    // nonblocking connect + select with a 5s deadline, then back to blocking
+    // nonblocking connect + poll with a 5s deadline, then back to blocking
     dsh_set_nonblock(fd);
     struct sockaddr_in addr = loopback_addr((uint16_t)port);
     int rc = connect(DSH_SOCK(fd), (struct sockaddr*)&addr, sizeof(addr));
 #ifdef _WIN32
-    if (rc != 0 && WSAGetLastError() != WSAEWOULDBLOCK) return (uint64_t)(int64_t)-1;
+    if (rc != 0 && WSAGetLastError() != WSAEWOULDBLOCK) goto fail;
 #else
-    if (rc != 0 && errno != EINPROGRESS) return -1;
+    if (rc != 0 && errno != EINPROGRESS) goto fail;
 #endif
-    fd_set wset;
-    FD_ZERO(&wset);
-    FD_SET(DSH_SOCK(fd), &wset);
-    struct timeval tv;
-    tv.tv_sec = 5;
-    tv.tv_usec = 0;
-    if (select((int)fd + 1, NULL, &wset, NULL, &tv) <= 0) return (uint64_t)(int64_t)-1;
+    /* POLLOUT at connect completion (success OR refusal); SO_ERROR
+     * distinguishes — same semantics as the old select() writable set */
+    if (dsh_poll_wait(fd, POLLOUT, 5000) <= 0) goto fail;
     int soerr = 0;
     socklen_t len = sizeof(soerr);
-    if (getsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_ERROR, (char *)&soerr, &len) != 0 || soerr != 0) return (uint64_t)(int64_t)-1;
+    if (getsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_ERROR, (char *)&soerr, &len) != 0 || soerr != 0) goto fail;
     dsh_clear_nonblock(fd);
     return 0;
+fail:
+    /* FFI-hardening (audit low-pri): never leave the fd nonblocking —
+     * restore on EVERY failure exit (callers close the fd today, but a
+     * reused/leaked fd must not inherit nonblocking mode). */
+    dsh_clear_nonblock(fd);
+    return (uint64_t)(int64_t)-1;
 }
 
 /* t15: bind the IPv4 wildcard 0.0.0.0 (Haskell serveTcp binds all
@@ -130,7 +166,7 @@ LEAN_EXPORT uint64_t dsh_bind_any(uint64_t fd, uint64_t port) {
 }
 
 /* t15: connect to an IPv4 dotted address (Lean resolves "localhost").
-   Same nonblocking+select discipline as dsh_connect_loopback. */
+   Same nonblocking+poll discipline as dsh_connect_loopback. */
 LEAN_EXPORT uint64_t dsh_connect_ipv4(uint64_t fd, lean_object const *ip, uint64_t port) {
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
@@ -141,22 +177,21 @@ LEAN_EXPORT uint64_t dsh_connect_ipv4(uint64_t fd, lean_object const *ip, uint64
     dsh_set_nonblock(fd);
     int rc = connect(DSH_SOCK(fd), (struct sockaddr*)&addr, sizeof(addr));
 #ifdef _WIN32
-    if (rc != 0 && WSAGetLastError() != WSAEWOULDBLOCK) return (uint64_t)(int64_t)-1;
+    if (rc != 0 && WSAGetLastError() != WSAEWOULDBLOCK) goto fail;
 #else
-    if (rc != 0 && errno != EINPROGRESS) return (uint64_t)(int64_t)-1;
+    if (rc != 0 && errno != EINPROGRESS) goto fail;
 #endif
-    fd_set wset;
-    FD_ZERO(&wset);
-    FD_SET(DSH_SOCK(fd), &wset);
-    struct timeval tv;
-    tv.tv_sec = 5;
-    tv.tv_usec = 0;
-    if (select((int)fd + 1, NULL, &wset, NULL, &tv) <= 0) return (uint64_t)(int64_t)-1;
+    if (dsh_poll_wait(fd, POLLOUT, 5000) <= 0) goto fail;
     int soerr = 0;
     socklen_t len = sizeof(soerr);
-    if (getsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_ERROR, (char *)&soerr, &len) != 0 || soerr != 0) return (uint64_t)(int64_t)-1;
+    if (getsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_ERROR, (char *)&soerr, &len) != 0 || soerr != 0) goto fail;
     dsh_clear_nonblock(fd);
     return 0;
+fail:
+    /* FFI-hardening (audit low-pri): restore blocking on every failure
+     * exit so a reused/leaked fd never inherits nonblocking mode. */
+    dsh_clear_nonblock(fd);
+    return (uint64_t)(int64_t)-1;
 }
 
 /* t15: textual peer address "ip:port" of a connected/accepted socket,
@@ -225,7 +260,7 @@ LEAN_EXPORT uint64_t dsh_send_all(uint64_t fd, lean_object const *buf, uint64_t 
     while (off < len) {
         ssize_t n = send(DSH_SOCK(fd), p + off, len - off, MSG_NOSIGNAL);
         if (n < 0) {
-            if (errno == EINTR) continue;
+            if (dsh_sock_interrupted()) continue;
             return (uint64_t)(int64_t)-1;
         }
         off += (uint64_t)n;
@@ -238,7 +273,7 @@ LEAN_EXPORT uint64_t dsh_recv_some(uint64_t fd, lean_object *buf, uint64_t cap, 
     uint8_t *p = dsh_ba_ptr(buf);
     for (;;) {
         ssize_t n = recv(DSH_SOCK(fd), p, cap, 0);
-        if (n < 0 && errno == EINTR) continue;
+        if (n < 0 && dsh_sock_interrupted()) continue;
         return (uint64_t)(int64_t)n; // 0 = EOF, max = error
         (void)unused;
     }
@@ -272,19 +307,14 @@ LEAN_EXPORT lean_object* dsh_close_fd(uint64_t fd) {
 
 /* ---------- t16: accept-loop polling ---------- */
 
-/* Wait until fd is readable or ms milliseconds elapse (select).
+/* Wait until fd is readable or ms milliseconds elapse (poll; see
+ * dsh_poll_wait, FFI-hardening #4).
  * Returns 1 readable, 0 timeout, -1 error. Lets the Lean accept loop
  * poll instead of blocking forever in accept(2), so heartbeat tasks
  * get scheduled and EINTR-free signal checks happen between waits. */
 LEAN_EXPORT uint64_t dsh_wait_readable(uint64_t fd, uint64_t ms, uint64_t unused) {
     (void)unused;
-    fd_set rset;
-    FD_ZERO(&rset);
-    FD_SET(DSH_SOCK(fd), &rset);
-    struct timeval tv;
-    tv.tv_sec = ms / 1000;
-    tv.tv_usec = (ms % 1000) * 1000;
-    int rc = select((int)fd + 1, &rset, NULL, NULL, &tv);
+    int rc = dsh_poll_wait(fd, POLLIN, (int)ms);
     if (rc < 0) return (uint64_t)(int64_t)-1;
     return (uint64_t)(rc > 0 ? 1 : 0);
 }
