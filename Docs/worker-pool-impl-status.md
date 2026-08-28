@@ -167,7 +167,7 @@ to a pool server hung indefinitely.
   instead of returning `(0, "")`, whose downstream `closeFd 0` closes
   fd 0 on any future regression.
 
-## 4a. Defect C — `closeFd` void/`BaseIO Unit` ABI mismatch (critical) — ✅ FIXED 2026-08-27 (uncommitted)
+## 4a. Defect C — `closeFd` void/`BaseIO Unit` ABI mismatch (critical) — ✅ FIXED in `3b85848` (2026-08-27)
 
 Found during the r-windev re-validation: after `7d5f47d`, the pool
 mTLS server **segfaulted (exit 139 / 0xC0000005) deterministically** on
