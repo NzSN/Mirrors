@@ -7,6 +7,9 @@ tmp/
 # agent-team runtime state (live mailboxes, not source)
 .agent-teams/
 
+# agent-team debugging artifacts (probe binaries, PEM fixtures, scratch scripts)
+.agent-teams-results/
+
 # scratch debris from agent probe files
 *.log
 .tlog
