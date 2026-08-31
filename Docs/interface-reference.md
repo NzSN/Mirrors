@@ -4,7 +4,9 @@
 > wire shapes (pinned by `test/fixtures/*.jsonl`, the golden corpus every
 > message is byte-verified against). Covers both the **synchronous** flows
 > and the **asynchronous** job interfaces.
-> Related: `architecture-overview.md`, `async-enablement-design.md`,
+> Related: `client-implementation-guide.md` (the conformance
+> specification layered on these wire shapes),
+> `architecture-overview.md`, `async-enablement-design.md`,
 > `cutover.md` (divergences from the Haskell implementation).
 
 ## 1. Transports and CLI modes
