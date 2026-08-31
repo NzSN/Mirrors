@@ -28,7 +28,7 @@
 | Never-completing dedicated workers, `loopAcceptPool` | ✅ `Tcp.lean:255–273` (fix head); reused by TLS |
 | API unchanged (`serveTcpConcurrentOn`/`serveTlsConcurrentOn`), Windows sync branch deleted | ✅ pool on both platforms from `Cli.lean` |
 | `--jobs N` sizes the pool on `--server` | ✅ `serveTlsConcurrentOn … (workers := max 1 opts.jobs)` |
-| `--serve` gains `--jobs` | ✅ **FIXED 2026-08-31** — `parseServeCli` accepts `<port> [--bind <addr>] [--jobs <n>]` in any order (rejecting duplicates/unknown/non-numeric); `serveCli` sizes both the job store and the pool with `max 1 jobs` (default 4). `registry_spec` parser gates + live smoke ("worker pool, 2 workers" with `--jobs 2`, 4 by default) green; `lake test` 10/10 green |
+| `--serve` gains `--jobs` | ✅ **FIXED 2026-08-31** — `parseServeCli` accepts `<port> [--bind <addr>] [--jobs <n>]` in any order (rejecting duplicates/unknown/non-numeric); `serveCli` sizes both the job store and the pool with `max 1 jobs` (default 4). `registry_spec` parser gates + live smoke ("worker pool, 2 workers" with `--jobs 2`, 4 by default) green; `lake test` 10/10 green. Synced to `lean4-ffi` and re-validated on Windows later the same day (binary `382beaf1…`: registry_spec green incl. the 5 new gates; `--jobs 2` → 2 workers, default → 4, `--jobs 2 --bind` correct; tree sha256-verified 104/104 at `df8b9cb`) |
 | `async_spec` Windows self-skip removed | ✅ (`APALACHE_MC` gate retained) |
 | windows-dev tree synced + built | ✅ `D:\ModelMirrors\lean4-pool` byte-identical to HEAD + the §4a fix (sha256-verified both directions 2026-08-27; remote `lake build` 479 jobs green). Re-synced 2026-08-31: `D:\ModelMirrors\lean4-ffi` byte-identical to HEAD `4963304` (104/104 tracked files, sha256-verified; includes the `d357a94` round-2 FFI sources) |
 
@@ -391,7 +391,8 @@ clean-window 300-cycle stress; watch under future load. Production
    backup `.old19`, hash-gated swap of `a2c23054…`, flat handle
    trend live). (b) the doc updates are DONE too (§2 item 6,
    2026-08-31). The `--serve --jobs` deviation (§1) was fixed
-   2026-08-31 (local; awaiting sync + its own remote validation).
+   2026-08-31 — synced to `lean4-ffi` and re-validated on Windows
+   the same day (§1 row).
 
 ## Appendix — phantom-acquire repro (SemProbe2)
 
