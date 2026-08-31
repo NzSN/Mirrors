@@ -378,7 +378,7 @@ clean-window 300-cycle stress; watch under future load. Production
    `tmp/` or `_apalache-out/` debris at the repo root (false
    positive — the gate checks cwd, not provenance); keep the worktree
    root clean of scratch dirs (`D:\ModelMirrors\tmp\` instead).
-5. ⚠️ **MOSTLY DONE** — re-checked 2026-08-31: the 2026-08-28
+5. ✅ **DONE** — re-checked 2026-08-31: the 2026-08-28
    redeploy stands (nssm `ModelMirrors` SERVICE_RUNNING,
    `D:\ModelMirrors\bin\ModelMirrors.exe.old18` backup present, 8999
    LISTENING), live mTLS validate ✅ re-verified (full apalache-backed
