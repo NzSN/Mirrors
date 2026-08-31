@@ -1,10 +1,16 @@
 # t33 Worker-Pool — Implementation Status & Validation Blockers
 
-> Status: **REDEPLOYED + VALIDATED; Defect D fixed & verified — second redeploy (Defect-D build) + round-2 FFI commit pending**
-> (updated 2026-08-27; defects §3/§4 fixed in `7d5f47d`; defect §4a —
-> the crash that blocked the re-validation — root-caused and fixed
-> 2026-08-27 in the `Ffi/socket_shim.c` / `Ffi/Socket.lean` /
-> `Shell/Cli.lean` change carrying this doc update)
+> Status: **REDEPLOYED + VALIDATED; Defect D fixed, verified, and
+> DEPLOYED — second redeploy (Defect-D build `a2c23054…`) done
+> 2026-08-31 (backup `.old19` = `1adbbbcb…`, sha-verified); round-2
+> FFI committed + pushed (`d357a94`)**
+> (updated 2026-08-31: `lean4-ffi` tree re-synced byte-identical to
+> HEAD `4963304` and re-validated with a 4-way concurrent mTLS
+> `Counter.tla` load — §2 item 7. Earlier: defects §3/§4 fixed in
+> `7d5f47d`; defect §4a — the crash that blocked the re-validation —
+> root-caused and fixed 2026-08-27 in the `Ffi/socket_shim.c` /
+> `Ffi/Socket.lean` / `Shell/Cli.lean` change carrying this doc
+> update)
 > Companion to: `worker-pool-design.md` (the t33 design / acceptance bar)
 > Head under test: `1f47435` ("t33: worker-pool accept loops on both
 > platforms …") when the defects below were found; fix head `7d5f47d`
@@ -22,9 +28,9 @@
 | Never-completing dedicated workers, `loopAcceptPool` | ✅ `Tcp.lean:255–273` (fix head); reused by TLS |
 | API unchanged (`serveTcpConcurrentOn`/`serveTlsConcurrentOn`), Windows sync branch deleted | ✅ pool on both platforms from `Cli.lean` |
 | `--jobs N` sizes the pool on `--server` | ✅ `serveTlsConcurrentOn … (workers := max 1 opts.jobs)` |
-| `--serve` gains `--jobs` | ⚠️ **deviation** — `parseServeCli` still parses only `port [--bind]`; pool size is the hardcoded default 4 |
+| `--serve` gains `--jobs` | ✅ **FIXED 2026-08-31** — `parseServeCli` accepts `<port> [--bind <addr>] [--jobs <n>]` in any order (rejecting duplicates/unknown/non-numeric); `serveCli` sizes both the job store and the pool with `max 1 jobs` (default 4). `registry_spec` parser gates + live smoke ("worker pool, 2 workers" with `--jobs 2`, 4 by default) green; `lake test` 10/10 green |
 | `async_spec` Windows self-skip removed | ✅ (`APALACHE_MC` gate retained) |
-| windows-dev tree synced + built | ✅ `D:\ModelMirrors\lean4-pool` byte-identical to HEAD + the §4a fix (sha256-verified both directions 2026-08-27; remote `lake build` 479 jobs green) |
+| windows-dev tree synced + built | ✅ `D:\ModelMirrors\lean4-pool` byte-identical to HEAD + the §4a fix (sha256-verified both directions 2026-08-27; remote `lake build` 479 jobs green). Re-synced 2026-08-31: `D:\ModelMirrors\lean4-ffi` byte-identical to HEAD `4963304` (104/104 tracked files, sha256-verified; includes the `d357a94` round-2 FFI sources) |
 
 ## 2. Acceptance criteria verdict
 
@@ -50,19 +56,31 @@
    Aug 26 18:28 (`D:\ModelMirrors\tmp\async-pool2.log`) FAILED with
    **1,395,410 `tls: handshake rejected` lines in 28 s** — the §3/§4
    defects, superseded.
-3. **300-cycle stress** — ⚠️ **RUN 2026-08-27/28, new defect signal
-   (see §4b)**. 4× full 300-cycle mixes (submit/await/cancel, 4-conn
-   pool) on the dev tree: 100/100 trace-gen+cancel cycles clean, zero
-   crashes/hangs/spam (server logs stayed at the single listening line;
-   the 10 s handshake guard fired correctly on a stalled accept) — but
-   all validate awaits returned instant `{"validate":{"invalid":""}}`
-   **without apalache ever spawning** after a per-instance onset of
-   0–24 healthy jobs. Short runs (≤16 cycles) and the live hammer were
-   unaffected. Pre-fix attempts (`pool-mtls.log` 1.78M lines,
-   `churn.log` 1.43M lines) were pure spam storms.
-4. **Service redeploy** — ✅ **DONE 2026-08-28**: `.old18` backup
-   (sha-verified), live service now runs the fixed build
-   (`1adbbbcb…`, nssm, PID 25704, `--jobs 4`). Live validation:
+3. **300-cycle stress** — ✅ **GREEN; re-verified 2026-08-31 at
+   HEAD**. 4× full 300-cycle mixes (submit/await/cancel, 4-conn
+   pool) on the dev tree 2026-08-27/28: 100/100 trace-gen+cancel cycles
+   clean, zero crashes/hangs/spam — but all validate awaits returned
+   instant `{"validate":{"invalid":""}}` **without apalache ever
+   spawning** after a per-instance onset of 0–24 healthy jobs (Defect D,
+   §4b — fixed). Pre-fix attempts (`pool-mtls.log` 1.78M lines,
+   `churn.log` 1.43M lines) were pure spam storms. **Re-run
+   2026-08-31** (`lean4-ffi` binary `a2c23054…` = `d357a94`
+   content, `--server … --jobs 4`, `stress300v2.py`): **300/300
+   cycles clean — 200/200 validates awaited `valid`, 100/100
+   trace-gens accepted + cancelled, 0 failures, 0 transients, 0
+   reconnects, wall 841 s; server log = the single listening line; zero
+   java/mirror strays post-run** (mid-run children all reaped,
+   cancel-kill included).
+4. **Service redeploy** — ✅ **DONE 2026-08-28** (`.old18` backup,
+   sha-verified; build `1adbbbcb…`, nssm, `--jobs 4`) and **second
+   (Defect-D) redeploy DONE 2026-08-31**: backup `.old19`
+   (sha256-verified = `1adbbbcb…`), live service now runs the
+   Defect-D build `a2c23054…` (deploy hash-gated before start).
+   Post-deploy validation same day: single + 4-way concurrent live mTLS
+   validates all returned the designed verdicts; **service handle count
+   flat at 162 across 10 further sequential apalache validates** (the
+   +147→162 one-time step is first-session infrastructure; marginal
+   trend 0 — pre-fix reference was +1/spawn linear). Live validation:
    single + 4-way concurrent async validates all `valid` (cross-conn
    visibility OK), 10 plain probes survived, log 1:1 with activity,
    `mirror.exe validate --host 192.168.150.219` → VALID (note: the
@@ -72,10 +90,36 @@
 5. **Hard rollback condition** — was triggered by the pre-fix
    failure; the release stays held until the fixed head re-validates on
    r-windev (§5 steps 4–5).
-6. **Docs** — `worker-pool-design.md` and the `architecture-overview.md`
-   "Server concurrency (t33 worker pool)" section now exist;
-   `async-enablement-design.md` §6 re-enable note, CHANGELOG, README and
-   cutover updates are all still pending.
+6. **Docs** — ✅ **DONE 2026-08-31**: `worker-pool-design.md` and the
+   `architecture-overview.md` "Server concurrency (t33 worker pool)"
+   section exist; the remaining four landed today — CHANGELOG t33 entry
+   (pool + defects A–D + FFI rounds + `--serve --jobs` + redeploy),
+   README "Server concurrency (t33)" paragraph, cutover §2b t33
+   supersession note, and the `async-enablement-design.md` §6
+   SUPERSEDED banner.
+7. **4-way concurrent mTLS validate (2026-08-31, lean4-ffi @ `4963304`
+   sources)** — ✅ **GREEN**: `mirror.exe --server 19293 --tls …
+   --jobs 4` (banner: "worker pool, 4 workers"), then four concurrent
+   `validate --spec specs/Counter.tla --cinit CInit --inv TraceComplete
+   --bound 5` clients (pinned mTLS). All 4 completed with the designed
+   verdict — `TraceComplete` counterexample at state 4
+   (`0→3→6→9→12`); total wall ≈5 s ≈ single-job latency (serialized
+   would be ~20 s), so pool concurrency is real; each session got an
+   isolated atomic run dir (`modelmirrors-session-{3,4,6,8}-…`); server
+   stayed healthy with zero log spam. Environment gotchas pinned during
+   the run: fresh 7-day PKI in `lean4-ffi/tmp/mtls-t4/` (the
+   `D:\ModelMirrors\certs` set fails verification);
+   `MSYS2_ARG_CONV_EXCL=*` must stay scoped to the openssl calls only —
+   exported globally it stops git-bash translating `/d/…` paths for the
+   native `mirror.exe` (client dies "key file not found"); and
+   `APALACHE_MC=D:/ModelMirrors/bin/apalache-mc.exe` remains mandatory
+   (bare `apalache-mc` is unspawnable — only `.bat`/ `.sh` exist).
+   The `lean4-ffi` binary under test (sha256 `a2c23054…`, built
+   Aug 28 21:44) LOOKS one commit stale (the `d357a94` commit timestamp
+   is Aug 29 00:00 +0800) but is not: it contains the round-2 FFI marker
+   ("malformed PEM in certificate file") and a 2026-08-31 `lake build`
+   reproduced it hash-identically — the sources were synced to r-windev
+   before being committed locally.
 
 ## 3. Defect A — the semaphore wait never blocks (critical) — ✅ FIXED in `7d5f47d`
 
@@ -279,9 +323,19 @@ mirror/java/python processes (by explicit PID — never
 **Go/no-go for any green-run window:** `tasklist` must show ZERO
 mirror/java/python strays except production (`ModelMirrors.exe`,
 PID 25704) and any designated specimen; sweep otherwise.
-**Deployment note:** the live service binary (1adbbbcb) predates this
-fix and still leaks ~1 handle per apalache spawn — a second redeploy
-with the Defect-D-fixed binary is owed.
+**Deployment note:** ✅ **REDEPLOYED 2026-08-31.** The live service
+binary (1adbbbcb) predated this fix and leaked ~1 handle per apalache
+spawn; the second redeploy swapped in the Defect-D build
+(`a2c23054…`, content-complete for `d357a94`: marker-string +
+hash-identical rebuild verified; deploy hash-gated before start).
+Backup: `ModelMirrors.exe.old19` (sha256-verified =
+`1adbbbcb651b…`) — rollback: stop service, `cp .old19
+ModelMirrors.exe`, start. Live post-deploy evidence: flat handle
+trend (162 across 10 sequential validates), 5/5 concurrent+single
+validates with designed verdicts.
+(Note: the live "ModelMirrors.exe" service IS this Lean 4 build
+deployed under the production name — not the Haskell reference
+binary.)
 
 **Box-level caveat (2026-08-28 final pass):** the windows-dev box
 carries a *cumulative* session-0 spawn-resource debt that recovers by
@@ -305,20 +359,39 @@ clean-window 300-cycle stress; watch under future load. Production
    timeout added.
 3. ✅ **DONE** — Linux: `lake build` + all 10 non-apalache gates green;
    live probe/mTLS smoke passed (see `7d5f47d` commit log).
-4. ⚠️ **PARTIAL** — r-windev rebuild ✅, `async_spec` with
-   `APALACHE_MC=D:\ModelMirrors\bin\apalache-mc.exe` ✅ GREEN
-   (2026-08-27, after the §4a fix; 3 consecutive green runs; zero spam —
-   logs grow only with real connections, rejects 1:1), full
-   `lake test` ✅ GREEN. 300-cycle stress (submit/await/cancel mix)
-   still owed. One transient seen once: a `tcp send failed` in
-   async_spec's TCP scenario plus a leaked server child holding the
-   capture pipe (3 subsequent runs of the same binary clean — likely a
-   test-side send race on a closing socket; watch for recurrence).
-5. ⚠️ **MOSTLY DONE** — redeploy (`.old18` backup) ✅, live mTLS
-   validate ✅, 100-cycle hammer ✅ (all 2026-08-28, see §2 items 3–4).
-   Remaining: resolve §4b (Defect D), then the §6/CHANGELOG/README/
-   cutover doc updates. The `--serve --jobs` deviation (§1) also
-   remains open.
+4. ✅ **DONE** — r-windev rebuild ✅ (2026-08-31: hash-identical
+   rebuild proves the `lean4-ffi` binary carries `d357a94` content),
+   `async_spec` with `APALACHE_MC=D:\ModelMirrors\bin\apalache-mc.exe`
+   ✅ GREEN (2026-08-27, after the §4a fix; 3 consecutive green runs;
+   zero spam — logs grow only with real connections, rejects 1:1), full
+   `lake test` ✅ GREEN — **re-run 2026-08-31 at `d357a94` content:
+   ALL LAKE TESTS GREEN (10/10, real apalache; async_spec's green
+   verdict is exit-code-gated by the driver — its own output goes to
+   stderr and is not echoed by `lake test`)**, and the 300-cycle
+   stress (submit/await/cancel mix) is now done and green (§2 item 3,
+   2026-08-31). One transient seen once (2026-08-27): a `tcp send
+   failed` in async_spec's TCP scenario plus a leaked server child
+   holding the capture pipe (3 subsequent runs of the same binary clean
+   — likely a test-side send race on a closing socket; watch for
+   recurrence — not seen in any 2026-08-31 run). Housekeeping note:
+   counter_spec's run-dir isolation gate also fails on PRE-EXISTING
+   `tmp/` or `_apalache-out/` debris at the repo root (false
+   positive — the gate checks cwd, not provenance); keep the worktree
+   root clean of scratch dirs (`D:\ModelMirrors\tmp\` instead).
+5. ⚠️ **MOSTLY DONE** — re-checked 2026-08-31: the 2026-08-28
+   redeploy stands (nssm `ModelMirrors` SERVICE_RUNNING,
+   `D:\ModelMirrors\bin\ModelMirrors.exe.old18` backup present, 8999
+   LISTENING), live mTLS validate ✅ re-verified (full apalache-backed
+   `Counter.tla` validate through production returned the designed
+   `TraceComplete` counterexample; connect via `192.168.150.219`, not
+   `127.0.0.1` — the production cert SAN is IP-only, and a loopback
+   attempt fails with "certificate verify failed"), 100-cycle hammer ✅
+   (2026-08-28, not re-run). (a) was completed later the same day:
+   the Defect-D redeploy is DONE (§2 item 4 / §4b deployment note —
+   backup `.old19`, hash-gated swap of `a2c23054…`, flat handle
+   trend live). (b) the doc updates are DONE too (§2 item 6,
+   2026-08-31). The `--serve --jobs` deviation (§1) was fixed
+   2026-08-31 (local; awaiting sync + its own remote validation).
 
 ## Appendix — phantom-acquire repro (SemProbe2)
 

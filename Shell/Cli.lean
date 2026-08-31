@@ -18,7 +18,7 @@ CLI parity with the Haskell @app/Main.hs@ surface:
 - default (no args): the stdio mirror session (Phase 3/5, fully
   functional with the apalache-backed oracles when apalache is
   available).
-- @--serve <port> [--bind <addr>]@: plain TCP mirror server.
+- @--serve <port> [--bind <addr>] [--jobs n]@: plain TCP mirror server.
 - @--server <port> --tls --cert --key --ca [--registry URL] [--jobs n]
   [--bind addr]@: mTLS mirror server; with @--registry@ (or
   @MODELMIRRORS_REGISTRY@) it registers with Consul, heartbeats the
@@ -43,9 +43,10 @@ host via getAddrInfo AI_PASSIVE — same semantics here.
 def cliUsage : String :=
   "usage: mirror <mode> [options]\n" ++
   "  default            stdio mirror session (one session on stdin/stdout)\n" ++
-  "  --serve <port> [--bind <addr>]\n" ++
+  "  --serve <port> [--bind <addr>] [--jobs <n>]\n" ++
   "                     plain TCP mirror server (--bind defaults to all\n" ++
-  "                     interfaces; an unresolvable bind address fails loudly)\n" ++
+  "                     interfaces; an unresolvable bind address fails loudly;\n" ++
+  "                     --jobs sizes the worker pool and job store, default 4)\n" ++
   "  --server <port> --tls --cert <c> --key <k> --ca <a>\n" ++
   "       [--registry <url>] [--jobs <n>] [--bind <addr>]\n" ++
   "                     mTLS mirror server; --registry registers with Consul\n" ++
@@ -133,18 +134,49 @@ private def reqInt (name : String) (cur : Option Nat)
           if cur.isSome then .error s!"duplicate --{name}" else set n more
       | none => .error s!"invalid --{name}: {v}"
 
-private def parseServeNum (p : String) (b : Option String) :
-    Except String (Nat × Option String) :=
-  match p.toNat? with
-  | some n => if n > 0 then .ok (n, b) else .error s!"invalid port: {p}"
-  | none => .error s!"invalid port: {p}"
+private structure ServeOptsC where
+  port : Option Nat := none
+  bind : Option String := none
+  jobs : Option Nat := none
 
-/-- Parse @--serve@ tokens: @<port>@ or @<port> --bind <addr>@. -/
-def parseServeCli (argv : List String) : Except String (Nat × Option String) :=
-  match argv with
-  | [p] => parseServeNum p none
-  | [p, "--bind", addr] => parseServeNum p (some addr)
-  | _ => .error cliUsage
+private partial def serveCliGo (s : ServeOptsC) : List String → Except String ServeOptsC
+  | [] => pure s
+  | a :: as =>
+      match a with
+      -- reqString/reqInt are ServerOptsC-specialized; mirror their
+      -- message shapes here for ServeOptsC.
+      | "--bind" =>
+          match as with
+          | [] => .error "option bind requires an argument"
+          | v :: more =>
+              if s.bind.isSome then .error "duplicate --bind"
+              else serveCliGo { s with bind := some v } more
+      | "--jobs" =>
+          match as with
+          | [] => .error "option jobs requires an argument"
+          | v :: more =>
+              match v.toNat? with
+              | some n =>
+                  if s.jobs.isSome then .error "duplicate --jobs"
+                  else serveCliGo { s with jobs := some n } more
+              | none => .error s!"invalid --jobs: {v}"
+      | other =>
+          if other.startsWith "--" then .error s!"unknown option: {other}"
+          else match other.toNat? with
+            | some n =>
+                if n == 0 then .error s!"invalid port: {other}"
+                else if s.port.isSome then .error s!"duplicate port argument: {other}"
+                else serveCliGo { s with port := some n } as
+            | none => .error s!"invalid port: {other}"
+
+/-- Parse @--serve@ tokens: @<port> [--bind <addr>] [--jobs <n>]@ in any
+order (t33 follow-up: closes the design-doc deviation — the pool size
+used to be the hardcoded default 4). Returns @(port, bind, jobs)@ with
+@jobs@ defaulting to 4. -/
+def parseServeCli (argv : List String) : Except String (Nat × Option String × Nat) := do
+  let s ← serveCliGo {} argv
+  let some port := s.port | .error "missing required port (expected a positive integer)"
+  return (port, s.bind, s.jobs.getD 4)
 
 private def optOr (name : String) : Option String → Except String String
   | some v => .ok v
@@ -277,8 +309,9 @@ private def asyncMirrorSession (store : Shell.Jobs.JobStore)
 concurrent ASYNC sessions — one @runAsync@ session per accepted
 connection over ONE process-shared job store (job ids are unique across
 connections), each connection on its own task. The store's capacity and
-worker-slot count use the server default of 4 (the @--server@ mode's
-@--jobs@ flag sizes its own store).
+the pool's worker count come from @--jobs N@ (default 4), same as the
+@--server@ mode (t33 follow-up: @--serve@ gained the flag; the pool
+size used to be the hardcoded default 4).
 
 Windows exception (t31 follow-up): sessions there run SEQUENTIALLY on
 the accept thread (the t30 branch): a Lean 4.33 runtime bug on Windows
@@ -291,13 +324,13 @@ session concurrency is lost. See Docs/async-enablement-design.md. -/
 def serveCli (argv : List String) : IO UInt32 := do
   match parseServeCli argv with
   | .error e => IO.eprintln e; return 2
-  | .ok (port, bind) =>
-      let store ← Shell.Jobs.newJobStoreWith 4 Shell.Apalache.jobRunner
+  | .ok (port, bind, jobs) =>
+      let store ← Shell.Jobs.newJobStoreWith (max 1 jobs) Shell.Apalache.jobRunner
       -- t33: worker-pool sessions on BOTH platforms (the pool's
       -- never-completing workers eliminate the Windows task-teardown
       -- race; Docs/worker-pool-design.md).
       Shell.Transport.Tcp.serveTcpConcurrentOn (bind.getD "") port
-        (asyncMirrorSession store)
+        (asyncMirrorSession store) (workers := max 1 jobs)
       return 0
 
 /-- The heartbeat loop (Haskell @heartbeatLoop@): every 10s, forever,

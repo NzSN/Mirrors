@@ -46,6 +46,14 @@ environment); the Haskell `validate` client substitutes as the
 second client, and the Rust leg remains open until a MirrorRust build is
 run against this mirror over stdio/TCP/mTLS (`Docs/cutover.md`).
 
+Server concurrency (t33): `--serve`/`--server` accept loops are
+bounded worker pools on both platforms — never-completing dedicated
+workers draining a connection queue, which also retired the Windows
+sync-sequential fallback (`Docs/async-enablement-design.md` §6).
+`--jobs N` sizes the pool and the process-shared async job store in
+both server modes (default 4). Design + validation record:
+`Docs/worker-pool-design.md`, `Docs/worker-pool-impl-status.md`.
+
 Phases 0-4 done (fixtures, core, codecs, session machine + stdio
 driver, and the async job store with Task workers). Phase 4 parity:
 `tools/JobStoreSpec.lean` ports the Haskell `AsyncJobsSpec` fake-runner

@@ -50,10 +50,15 @@ single process-shared job store; --jobs N sizes it (capacity and
 worker slots, default 4). A connection ending cancels and evicts
 exactly its own jobs. The stdio default mode stays sync-only (Haskell
 parity): async registers answer register_error there (divergence tag
-already listed below). Live-gated by tools/AsyncSpec.lean (self-skipping on Windows, where
-async server sessions are withdrawn pending a Lean 4.33 runtime fix —
-see Docs/async-enablement-design.md §6; Windows serves the t30 sync
-sequential sessions).
+already listed below). Live-gated by tools/AsyncSpec.lean.
+
+t33 update (2026-08-31): the Windows withdrawal described in
+Docs/async-enablement-design.md §6 is SUPERSEDED — both server modes
+now run worker-pool sessions on both platforms (the pool's
+never-completing workers eliminate the Windows task-teardown race),
+async_spec is unskipped and green on Windows, and the r-windev
+service runs the pooled build (Defect-D redeploy 2026-08-31). See
+Docs/worker-pool-design.md / Docs/worker-pool-impl-status.md.
 
 ## 3. Accepted divergences
 

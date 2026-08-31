@@ -48,10 +48,18 @@ def main : IO UInt32 := do
 
   -- tier 1: parsers
   check f "serve cli: ok" (parseServeCli ["9000"] ==
-    .ok (9000, none))
+    .ok (9000, none, 4))
   check f "serve cli: bind" (parseServeCli ["9000", "--bind", "127.0.0.1"] ==
-    .ok (9000, some "127.0.0.1"))
+    .ok (9000, some "127.0.0.1", 4))
   check f "serve cli: bad port" ((parseServeCli ["x"]) |> isErr)
+  check f "serve cli: jobs" (parseServeCli ["9000", "--jobs", "2"] ==
+    .ok (9000, none, 2))
+  check f "serve cli: jobs + bind any order"
+    (parseServeCli ["9000", "--jobs", "2", "--bind", "127.0.0.1"] ==
+      .ok (9000, some "127.0.0.1", 2))
+  check f "serve cli: dup jobs" ((parseServeCli ["9000", "--jobs", "2", "--jobs", "3"]) |> isErr)
+  check f "serve cli: bad jobs" ((parseServeCli ["9000", "--jobs", "x"]) |> isErr)
+  check f "serve cli: unknown opt" ((parseServeCli ["9000", "--bogus"]) |> isErr)
   let so1 := parseServerOpts
     ["9000", "--tls", "--cert", "c", "--key", "k", "--ca", "a",
      "--registry", "http://r", "--jobs", "2"]

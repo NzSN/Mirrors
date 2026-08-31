@@ -116,6 +116,14 @@ compiling (the t30 platform branches are untouched by this work —
 
 ## 6. Known issue: Windows (t31 follow-up, post-landing)
 
+> **SUPERSEDED 2026-08-31 by t33** (`Docs/worker-pool-design.md` /
+> `Docs/worker-pool-impl-status.md`): the worker-pool accept loop's
+> never-completing workers eliminate the teardown race described below —
+> Windows no longer branches to the t30 sync sequential sessions,
+> async_spec is unskipped and green there, and the r-windev service runs
+> the pooled build (Defect-D redeploy 2026-08-31, flat handle trend).
+> The narrative below is kept as the record of the original defect.
+
 Async server sessions are **Linux-only**. On windows-dev the
 concurrent accept loop (session tasks over the shared store)
 reproducibly segfaults the process whenever a session completes

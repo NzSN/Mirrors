@@ -4,6 +4,48 @@ All notable changes to the Lean 4 port of ModelMirrors. The port target is
 byte-for-byte JSON-lines wire compatibility with ModelMirros@3496251
 (Haskell); divergences are listed as ACCEPTED with rationale.
 
+## t33 — worker-pool server concurrency on both platforms; Defect D fixed + deployed (2026-08-31)
+
+- --serve/--server accept loops are bounded worker pools on BOTH
+  platforms (ConnQueue + never-completing dedicated workers;
+  Docs/worker-pool-design.md): the Windows sync-sequential branch (t31
+  follow-up) is deleted — the pool's never-completing workers eliminate
+  the Lean 4.33 Windows task-teardown race that forced it. Transport
+  API unchanged; --jobs N sizes the pool on --server.
+- --serve gains --jobs N (default 4) — sizes both the job store and the
+  worker pool; it was a hardcoded 4.
+- Fixes found by the pool validation (Docs/worker-pool-impl-status.md):
+  - Semaphore waits never blocked (Task.get on the unresolved promise
+    task returns immediately) — ConnQueue.acquireWait and the job
+    store's acquireSlot now use IO.wait; ConnQueue.pop re-waits on a
+    permit/entry desync instead of returning a phantom (0,"") whose
+    closeFd closed fd 0. Kills the ~100k/s-per-worker handshake-reject
+    storms.
+  - Silent-connection starvation: accepted fds get a 10 s SO_RCVTIMEO
+    handshake guard, cleared on success; async_spec up-polls no longer
+    leak probe connections.
+  - closeFd ABI crash: a BaseIO Unit extern returning void built a NULL
+    io-ok payload → SIGSEGV on the first rejected probe (Windows;
+    latent on Linux). dsh_close_fd now returns lean_box(0).
+  - Defect D: Lean 4.33 IO.Process.spawn on Windows leaked one
+    inheritable handle per child (stdin := .null), degrading under
+    sustained load to child-loader death (0xC0000142) whose empty
+    output was misreported as an instant {"validate":{"invalid":""}}.
+    spawnApalacheEof (piped stdin, dropped write end) is 0-leak;
+    empty-output nonzero exits now report an honest infraError; the
+    cancel-token kill-closure retention (pinned each Child until
+    session close) is dropped after child exit.
+- FFI hardening rounds 1-2 (verified audit): thread-local TLS error and
+  debug state, NULL-guarded server-ctx store free, DSH_SOCK at the
+  (int)fd truncation sites (winsock SOCKET is 64-bit), InitOnce-guarded
+  WSAStartup, malformed-PEM chain rejection, bounds defense on
+  send/recv length arguments.
+- async_spec no longer self-skips on Windows; r-windev gates green
+  (lake test 10/10 with real apalache; 300/300 mixed submit/await/
+  cancel stress clean — 0 failures/transients; live service redeployed
+  with the Defect-D build 2026-08-31, flat handle trend; backups
+  .old18/.old19).
+
 ## t31 — async validate/trace-gen enabled in production modes (2026-08-25)
 
 - --serve (TCP) and --server (mTLS) now run concurrent ASYNC sessions:
