@@ -2,7 +2,7 @@ name: interop
 
 # Phase 6 client interop matrix (tools/interop/run.sh; see
 # tools/interop/INTEROP.md). Requires apalache-mc on PATH, the Haskell
-# ModelMirros cabal build (read-only), and the MirrorECMA checkout.
+# ModelMirros cabal build (read-only), and all three non-Lean client checkouts.
 on:
   workflow_dispatch:
   pull_request:
@@ -17,30 +17,50 @@ jobs:
   interop:
     runs-on: ubuntu-latest
     env:
-      ECMA_REPO: ${{ github.workspace }}/../MirrorECMA
-      HS_BIN: ${{ github.workspace }}/../ModelMirrors/dist-newstyle/build/x86_64-linux/ghc-9.14.1/ModelMirrors-0.1.1.0/x/ModelMirrors/build/ModelMirrors/ModelMirrors
+      ECMA_REPO: ${{ github.workspace }}/MirrorECMA
+      CPP_REPO: ${{ github.workspace }}/MirrorCPP
+      RUST_REPO: ${{ github.workspace }}/MirrorRust
     steps:
       - uses: actions/checkout@v4
         with:
           path: Mirrors
       - uses: actions/checkout@v4
         with:
-          repository: informal-systems/MirrorECMA   # adjust to the real remote
+          repository: NzSN/MirrorECMA
           path: MirrorECMA
       - uses: actions/checkout@v4
         with:
-          repository: informalsystems/ModelMirrors   # adjust to the real remote
-          path: ModelMirros
+          repository: NzSN/MirrorCPP
+          path: MirrorCPP
+      - uses: actions/checkout@v4
+        with:
+          repository: NzSN/MirrorRust
+          path: MirrorRust
+      - uses: actions/checkout@v4
+        with:
+          repository: NzSN/ModelMirrors
+          path: ModelMirrors
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: MirrorECMA/package-lock.json
+      - name: Install MirrorECMA dependencies
+        working-directory: MirrorECMA
+        run: npm ci
+      - uses: dtolnay/rust-toolchain@stable
       - uses: leanprover/lean-action@v1
         with:
           auto-config: false
       - name: Build Haskell reference client (validate)
         run: |
           cabal update
-          cabal build ModelMirros:exe:ModelMirrors --project-dir="$GITHUB_WORKSPACE/../ModelMirros"
+          cabal build ModelMirros:exe:ModelMirrors --project-dir="$GITHUB_WORKSPACE/ModelMirrors"
+          echo "HS_BIN=$(cabal list-bin ModelMirros:exe:ModelMirrors --project-dir="$GITHUB_WORKSPACE/ModelMirrors")" >> "$GITHUB_ENV"
       - name: Install apalache
         run: |
           curl -sL https://github.com/informalsystems/apalache/releases/latest/download/apalache.tgz | tar xz
           echo "$PWD/apalache/bin" >> "$GITHUB_PATH"
       - name: Interop matrix (stdio + TCP)
+        working-directory: Mirrors
         run: bash tools/interop/run.sh

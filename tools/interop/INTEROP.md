@@ -19,10 +19,14 @@ cert rejected at handshake.
 |-------------------|-------|-----|------|
 | MirrorECMA (TS)   | run.sh (smoke suite) | run.sh (smoke suite over \`--serve\`) | run.sh (smoke suite over \`--server --tls\`, pinned + negatives + registry) |
 | Haskell \`validate\` (ModelMirrors) | n/a (TCP client) | run.sh | run.sh (hs-mtls.sh: pinned fp + wrong-pin/rogue negatives) |
-| MirrorRust        | not present on this machine; Haskell validate substitutes as the second client (captain-approved) |
+| MirrorCPP         | `real_mirror_hourclock` | same suite over `--serve` | same suite over `--server --tls` with ephemeral PKI |
+| MirrorLean        | `test/Smoke.lean` | transport/integration gates | `ServerModeSmoke.lean` with ephemeral PKI |
+| MirrorRust        | `tests/smoke.rs` | `tests/server_mode_smoke.rs` over `--serve` | same suite over `--server --tls`, pinned + negatives |
 
-Runner: \`tools/interop/run.sh\` (also wired as the CI job
-\`.github/workflows/interop.yml\`).
+Runner: `tools/interop/run.sh` (also wired as the CI job
+`.github/workflows/interop.yml`). It runs the MirrorECMA, MirrorCPP, and
+MirrorRust unit/golden suites plus their live Counter replay and transport
+negatives before the Haskell reference-client legs.
 
 What run.sh does:
 
@@ -51,13 +55,15 @@ fingerprints (SHA-256 hex of the DER) and negative cases.
 - The ECMA checkout and the Haskell tree are consumed read-only; all
   writable scratch state lives under \`.golden-build/\` in this repo.
 
-## MirrorRust coverage gap (t18 cutover flag)
+## Non-Lean client gates
 
-MirrorRust does not exist in this environment; the interop matrix covers
-MirrorECMA + the Haskell reference client only. The t18 cutover/deprecation
-notes must NOT claim MirrorRust interop coverage — the Rust leg remains
-open until a MirrorRust client is available and run against the Lean
-mirror (stdio/TCP/mTLS).
+- MirrorECMA runs its canonical-corpus Jest tests and full standalone smoke
+  suite, including async, TLS, and registry negatives.
+- MirrorCPP runs its complete CTest suite; `real_mirror_hourclock` replays the
+  authoritative Counter model over stdio, TCP, and mTLS.
+- MirrorRust runs `cargo test` with the canonical corpus and real mirror
+  enabled; its server-mode suite covers TCP, mTLS, registry pinning/failover,
+  mismatch rejection, and asynchronous job semantics.
 
 ## decode_only.jsonl: JS-client wire shape
 

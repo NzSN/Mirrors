@@ -74,25 +74,27 @@ Docs/worker-pool-design.md / Docs/worker-pool-impl-status.md.
   observable on the wire for a malformed session. Track as an open
   item; MirrorECMA does not exercise it.
 
-## 4. MirrorRust leg — OPEN / substituted
+## 4. Non-Lean client legs — implementation and runner green
 
-The interop matrix substitutes the Haskell ModelMirros validate
-client as the second real client (captain ruling: substitution
-ACCEPTED; the Haskell client is the reference wire consumer).
-MirrorRust was NOT run: no MirrorRust client is available in this
-environment. The leg stays open: before final deprecation of the
-Haskell implementation, run a MirrorRust client against the Lean
-mirror over stdio, TCP, and mTLS (pinned fingerprints + negatives),
-following tools/interop/INTEROP.md. Only MirrorECMA + Haskell
-coverage may be claimed today.
+`tools/interop/run.sh` runs the MirrorECMA, MirrorCPP, and MirrorRust
+unit/golden suites and their live gates against this Lean mirror. MirrorRust
+now covers stdio, plain TCP, TLS 1.3 mTLS, registry discovery/pinning/failover,
+async jobs, and positive plus deliberately incorrect Counter replay. The mTLS
+gate uses an ephemeral PKI and covers SAN-only verification, TLS-version
+rejection, client authentication, case-insensitive correct pinning, wrong-pin
+rejection, and POSIX key-permission rejection.
+
+The implementation and runner legs are green as of 2026-09-01. The Haskell
+reference client remains in the matrix as an independent compatibility oracle,
+not as a substitute for a missing non-Lean client gate.
 
 ## 5. Haskell deprecation plan
 
 1. Soak: run both implementations side by side; diff wire transcripts
    on real workloads (the golden corpus + tools/interop/run.sh give
    the automated version of this).
-2. Close the open legs: MirrorRust interop (§4) and the pre-register
-   job-message error harmonization (§3).
+2. Close the open legs: top-level MirrorRust runner/CI wiring (§4) and the
+   pre-register job-message error harmonization (§3).
 3. Freeze ModelMirros@3496251 as the read-only reference artifact
    (fixtures oracle + differential test binary). It stays pinned in
    CI (.github/workflows/interop.yml) as the oracle.
