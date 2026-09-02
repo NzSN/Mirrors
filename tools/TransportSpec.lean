@@ -52,6 +52,12 @@ def expectErr (f : Failures) (name : String) (e : Except String α) : IO Unit :=
   | .error _ => check f name true
   | .ok _ => check f name false
 
+def throws (action : IO α) : IO Bool := do
+  try
+    let _ ← action
+    return false
+  catch _ => return true
+
 /-- One exchange per connection: read a line, echo it, end the session
 (the accept loop then closes the socket and takes the next client). -/
 def echoSession (t : Transport) : IO Unit := do
@@ -175,10 +181,24 @@ partial def tryConnectTls (ctx : Ffi.TlsCtx) (host : String) (port : Nat) (fp : 
 
 def mainTests : IO UInt32 := do
   let f ← newFailures
+
+  -- Uniform JSONL framing limits are independent of OpenSSL availability.
+  let exact := String.ofList (List.replicate maxProtocolLineBytes 'x')
+  check f "framing accepts exactly 65535 UTF-8 bytes"
+    (!(← throws (validateProtocolLine exact)))
+  let tooLarge := exact.push 'x'
+  check f "framing rejects 65536 UTF-8 bytes"
+    (← throws (validateProtocolLine tooLarge))
+  check f "framing rejects embedded newline"
+    (← throws (validateProtocolLine "{}\n{}"))
+  check f "framing rejects invalid UTF-8"
+    (← throws (decodeProtocolUtf8 (ByteArray.mk #[0xff])))
+
   let ov ← IO.Process.output { cmd := "openssl", args := #["version"] }
   if ov.exitCode != 0 then
     IO.println "transport spec: skipped (openssl CLI missing)"
-    return 0
+    let n ← f.ref.get
+    return if n == 0 then 0 else 1
 
   -- throwaway PKI
   let dir : String := ".lake/build/tmp-pki"
@@ -392,16 +412,11 @@ def mainTests : IO UInt32 := do
       t.send "case-hello"
       let r ← t.recv
       check f "mixed-case pin connect (t29)" (r == some "echo:case-hello")
-  -- t26/m6: oversized line (> 1 MiB, no LF) over the TLS transport:
-  -- the server throws at the cap and closes; the client's remaining
-  -- writes then fail against the closed socket (no silent ballooning)
+  -- Oversized send: the client-side transport now rejects before any bytes
+  -- flow. The server must remain healthy for the following connection.
   match ← tryConnectTls clientCtx "localhost" tp fp 10 with
   | .error e => check f ("oversized line setup (" ++ e ++ ")") false
   | .ok big =>
-      -- ONE giant line (1.5 MiB, single send): the server must hit the
-      -- recv cap, throw, and close instead of buffering it all; the
-      -- client's write/read then fails or ends against the closed
-      -- socket (a normal echo would hand back the full line)
       let giant : String := "b".pushn 'b' 1572864
       let dead ←
         try
@@ -410,6 +425,14 @@ def mainTests : IO UInt32 := do
           pure (r.isNone || (r.map (fun s => s.length)).getD 0 < 1000000)
         catch _ => pure true
       check f "oversized line rejected (m6)" dead
+      -- The oversized payload was rejected locally before the TLS session
+      -- wrote bytes. Finish that otherwise-live sequential test connection so
+      -- the child accept loop can service the next probe.
+      try
+        big.send "release-after-local-rejection"
+        let _ ← big.recv
+        pure ()
+      catch _ => pure ()
   match ← tryConnectTls clientCtx "localhost" tp fp 10 with
   | .error e => check f ("server alive after oversized line (" ++ e ++ ")") false
   | .ok t3 =>

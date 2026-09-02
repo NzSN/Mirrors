@@ -84,9 +84,10 @@ structure Session (p : Phase) where
   flow : Flow
   deriving Repr
 
-/-- The injected validation oracle: the abstract outcome of spec
-validation for a registration (the driver runs the real apalache call
-and supplies the bit). -/
+/-- The injected registration-admission oracle. For ordinary registrations it
+is the abstract validation outcome; stepping registrations additionally fold
+required model-interface negotiation into this bit. Keeping one control bit
+preserves the existing oracle interface while making admission fail closed. -/
 structure Oracles where
   validationOk : Bool
   deriving Repr
@@ -113,7 +114,9 @@ def step (orc : Oracles) {p : Phase} (s : Session p) (c : ClientMessage) :
         .ok ⟨.stepping, ⟨.traces⟩, [.specValidated, .initialState]⟩
       else .ok ⟨.done, ⟨.traces⟩, [.registerError]⟩
   | .idle, _, .registerTraces =>
-      .ok ⟨.stepping, ⟨.traces⟩, [.specValidated, .initialState]⟩
+      if orc.validationOk then
+        .ok ⟨.stepping, ⟨.traces⟩, [.specValidated, .initialState]⟩
+      else .ok ⟨.done, ⟨.traces⟩, [.registerError]⟩
   | .idle, _, .registerGenTraces =>
       .ok ⟨.idle, ⟨.traces⟩, [.genTracesDone]⟩
   | .idle, _, .registerExploreSession =>
@@ -236,6 +239,12 @@ theorem step_idle_reportState (orc : Oracles) (s : Session .idle)
     (m l : Bool) :
     step orc s (.reportState m l) = .error (.outOfOrder
       "message not accepted in this phase") := rfl
+
+/-- A replay-only registration denied by validation/interface admission ends
+with exactly one registration error and never emits an initial state. -/
+theorem step_registerTraces_admission_rejected (s : Session .idle) :
+    step { validationOk := false } s .registerTraces =
+      .ok ⟨.done, (⟨.traces⟩ : Session .done), [.registerError]⟩ := rfl
 
 /-- While stepping, only reportState is accepted. -/
 theorem step_stepping_iff_reportState (orc : Oracles)
@@ -367,6 +376,11 @@ inductive TlaStep : TlaState → TlaState → Prop where
       TlaStep ⟨.idle, f, q, m⟩ ⟨.validating, .traces, q, m⟩
   | recvRegisterTraces (f : Flow) (q : List MirrorMessage) (m : Bool) :
       TlaStep ⟨.idle, f, q, m⟩ ⟨.ready, .traces, q ++ [.specValidated], m⟩
+  /-- Extension: a replay registration can now fail admission before
+  stepping (model-interface negotiation `require` failure). This uses no new
+  wire tag or phase and leaves the legacy successful transition unchanged. -/
+  | extRecvRegisterTracesError (f : Flow) (q : List MirrorMessage) (m : Bool) :
+      TlaStep ⟨.idle, f, q, m⟩ ⟨.done, .traces, q ++ [.registerError], m⟩
   | recvRegisterGenTraces (f : Flow) (q : List MirrorMessage) (m : Bool) :
       TlaStep ⟨.idle, f, q, m⟩ ⟨.generating, .traces, q, m⟩
   | recvRegisterExplore (f : Flow) (q : List MirrorMessage) (m : Bool) :
@@ -500,11 +514,19 @@ theorem step_refines_tla (orc : Oracles) {p : Phase} (s : Session p)
         (TlaSteps.trans (TlaStep.sendRegisterError _ _ _)
           (TlaSteps.refl _))
   | .idle, .registerTraces =>
-    simp only [step, Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
-    obtain ⟨rfl, rfl, rfl⟩ := h
-    exact TlaSteps.trans (TlaStep.recvRegisterTraces _ _ _)
-      (TlaSteps.trans (TlaStep.sendInitialState _ _ _)
-        (TlaSteps.refl _))
+    simp only [step] at h
+    by_cases hv : orc.validationOk = true
+    · rw [if_pos hv] at h
+      simp only [Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
+      obtain ⟨rfl, rfl, rfl⟩ := h
+      exact TlaSteps.trans (TlaStep.recvRegisterTraces _ _ _)
+        (TlaSteps.trans (TlaStep.sendInitialState _ _ _)
+          (TlaSteps.refl _))
+    · rw [if_neg hv] at h
+      simp only [Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
+      obtain ⟨rfl, rfl, rfl⟩ := h
+      exact TlaSteps.trans (TlaStep.extRecvRegisterTracesError _ _ _)
+        (TlaSteps.refl _)
   | .idle, .registerGenTraces =>
     simp only [step, Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
     obtain ⟨rfl, rfl, rfl⟩ := h
@@ -800,15 +822,25 @@ theorem no_unsolicited_output (orc : Oracles) {p : Phase} (s : Session p)
       · nomatch h2
   | .idle, .registerTraces =>
     simp only [step] at h
-    simp only [Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
-    obtain ⟨rfl, rfl, rfl⟩ := h
-    intro m hmem
-    simp only [AllowedOutputs]
-    rcases List.mem_cons.mp hmem with rfl | h2
-    · simp
-    · rcases List.mem_cons.mp h2 with rfl | h3
+    by_cases hv : orc.validationOk = true
+    · rw [if_pos hv] at h
+      simp only [Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
+      obtain ⟨rfl, rfl, rfl⟩ := h
+      intro m hmem
+      simp only [AllowedOutputs]
+      rcases List.mem_cons.mp hmem with rfl | h2
       · simp
-      · nomatch h3
+      · rcases List.mem_cons.mp h2 with rfl | h3
+        · simp
+        · nomatch h3
+    · rw [if_neg hv] at h
+      simp only [Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
+      obtain ⟨rfl, rfl, rfl⟩ := h
+      intro m hmem
+      simp only [AllowedOutputs]
+      rcases List.mem_cons.mp hmem with rfl | h2
+      · simp
+      · nomatch h2
   | .idle, .registerGenTraces =>
     simp only [step] at h
     simp only [Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
@@ -1268,6 +1300,7 @@ theorem tlaStep_preserves_phaseOk {a b : TlaState} (h : TlaStep a b)
   cases h with
   | recvRegister => simp [specPhases, phaseOkP]
   | recvRegisterTraces => simp [specPhases, phaseOkP]
+  | extRecvRegisterTracesError => simp [specPhases, phaseOkP]
   | recvRegisterGenTraces => simp [specPhases, phaseOkP]
   | recvRegisterExplore => simp [specPhases, phaseOkP]
   | recvRegisterExploreSession => simp [specPhases, phaseOkP]
@@ -1363,9 +1396,16 @@ theorem emit_initialState_target_stepping (orc : Oracles) {p : Phase} (s : Sessi
       obtain ⟨rfl, rfl, rfl⟩ := h
       exact absurd hmem (by decide)
   | .registerTraces =>
-    simp only [step, Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
-    obtain ⟨rfl, rfl, rfl⟩ := h
-    exact ⟨rfl, rfl⟩
+    simp only [step] at h
+    by_cases hv : orc.validationOk = true
+    · rw [if_pos hv] at h
+      simp only [Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
+      obtain ⟨rfl, rfl, rfl⟩ := h
+      exact ⟨rfl, rfl⟩
+    · rw [if_neg hv] at h
+      simp only [Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
+      obtain ⟨rfl, rfl, rfl⟩ := h
+      exact absurd hmem (by decide)
   | .registerGenTraces => simp only [step, Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h; obtain ⟨rfl, rfl, rfl⟩ := h; exact absurd hmem (by decide)
   | .registerExploreSession =>
     simp only [step] at h
@@ -1430,7 +1470,17 @@ theorem emit_explorerReady_target_exploring (orc : Oracles) {p : Phase} (s : Ses
       simp only [Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
       obtain ⟨rfl, rfl, rfl⟩ := h
       exact absurd hmem (by decide)
-  | .registerTraces => simp only [step, Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h; obtain ⟨rfl, rfl, rfl⟩ := h; exact absurd hmem (by decide)
+  | .registerTraces =>
+    simp only [step] at h
+    by_cases hv : orc.validationOk = true
+    · rw [if_pos hv] at h
+      simp only [Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
+      obtain ⟨rfl, rfl, rfl⟩ := h
+      exact absurd hmem (by decide)
+    · rw [if_neg hv] at h
+      simp only [Except.ok.injEq, Sigma.mk.injEq, Prod.mk.injEq] at h
+      obtain ⟨rfl, rfl, rfl⟩ := h
+      exact absurd hmem (by decide)
   | .registerExplore =>
     simp only [step] at h
     by_cases hv : orc.validationOk = true

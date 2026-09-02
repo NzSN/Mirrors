@@ -51,8 +51,8 @@ behind `Core.step` is theorem-covered.
 | 2 | Transports | `Shell.Transport.{Stdio,Tcp,Tls}` | trusted | line framing over stdio / plain TCP / mTLS (TLS 1.3, mutual auth, fingerprint pinning) |
 | 3 | Ffi shims | `Ffi/` (`tls_shim.c`, `socket_shim.c`) | trusted, reviewed | OpenSSL TLS, sockets, signals, process exit, recv timeouts; unproven TCB, adversarially reviewed (`tls-ffi-review.md`) |
 | 4 | Session driver | `Shell.Mirror` | trusted | the thin fold: recv → decode → `Core.step` → encode → send; sync and async (`runAsync`) variants |
-| 5 | Pure core | `Core.{Value,Trace,Diff,Protocol,Jobs,Resource}` | **verified** | phase-indexed session machine + async job machine + ITF value/trace/diff domain; all theorems here |
-| 6 | Codecs | `Codec.{Json,ExplorerRpc,Bridge,Consul}` | **verified** | total wire codecs; `Bridge` is the proven Core↔wire tag mapping (40 tag-fidelity theorems) |
+| 5 | Pure core | `Core.{Value,Trace,Diff,Protocol,Jobs,Resource,ModelInterface}` | **verified** | phase-indexed session machine, model-interface resolver/preflight/negotiation, async jobs, and ITF value/trace/diff domain |
+| 6 | Codecs | `Codec.{Json,ExplorerRpc,Bridge,Consul,StrictJson,ModelInterfaceJson,ModelInterfaceDistributionJson}` | **verified** | total wire/compiler codecs, duplicate-aware JSON preflight, and the proven Core↔wire tag mapping |
 | 7 | Job store | `Shell.Jobs.Store` | trusted | process-shared async jobs: Mutex-protected table, semaphore-bounded `Task` workers, capacity = `--jobs` |
 | 8 | apalache adapter | `Shell.Apalache` | trusted | spawns `apalache-mc` (validate/trace-gen), explorer HTTP/JSON-RPC client, per-session run dirs |
 | 9 | apalache-mc | external (JVM) | oracle | the actual model checker |
@@ -125,7 +125,9 @@ main thread                     N long-lived workers (spawned once,
 | `Core.Protocol` | phase-indexed session machine | §6.3 refinement vs `MirrorProtocol.tla`, no unsolicited output |
 | `Core.Jobs` | async job machine | §6.4 terminal-once, outcome congruence, bounds |
 | `Core.Resource` | lifecycle model | §6.5 cleanup-at-most-once; dead finalizer |
+| `Core.ModelInterface` | compiler IR, deterministic resolution, trace preflight, negotiation, SHA-256 | resolver/policy/protocol-gating laws plus executable canonical vectors |
 | `Codec.Json` | total wire codecs (39 ctors) | §6.6 round-trips, value + message level |
+| `Codec.StrictJson` + model-interface codecs | duplicate-aware bounded JSON and strict contract/descriptor negotiation envelopes | canonical round trips, digest correspondence, absent-field compatibility |
 | `Codec.ExplorerRpc` | explorer JSON-RPC codec | per-method round-trips |
 | `Codec.Bridge` | Core↔Codec tag mapping | 40 tag-fidelity theorems |
 | `Codec.Consul` | Consul payload codec | round-trips, fail-closed decode |
@@ -157,9 +159,10 @@ Haskell validate client green. Two documented divergences where Lean
 follows the TLA+ spec rather than Haskell's quirks (mismatch tail;
 wildcard scope), plus open items tracked in `cutover.md`.
 
-## Test pyramid (10 lake gates)
+## Test pyramid (12 lake gates)
 
-fixtures_replay → diff_cross → stdio_smoke → jobstore_spec →
+fixtures_replay → diff_cross → model_interface_spec →
+model_interface_distribution_spec → stdio_smoke → jobstore_spec →
 apalache_cli_spec → explorer_spec → transport_spec → registry_spec →
 counter_spec (end-to-end MBT conformance vs real apalache) → async_spec
 (live async flows over real server children, `APALACHE_MC`-gated). Plus

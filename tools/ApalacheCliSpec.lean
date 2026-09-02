@@ -3,6 +3,7 @@ import Shell.Apalache.SpecSource
 import Shell.Apalache.Runner
 import Shell.Mirror.Session
 import Codec.Json
+import Codec.StrictJson
 import Lean
 
 /-!
@@ -48,6 +49,20 @@ def hcSrc : String :=
   "Inv == hr >= 1 /\\ hr <= 12\n" ++
   "=======================================\n"
 
+def largeItfTraceJson : String :=
+  "{" ++
+  "\"vars\":[\"action_taken\",\"payload\"]," ++
+  "\"states\":[{" ++
+    "\"action_taken\":\"init\"," ++
+    "\"payload\":\"" ++ String.ofList (List.replicate 70000 'x') ++ "\"" ++
+  "}]}"
+
+def smallItfTraceJson : String :=
+  "{" ++
+  "\"vars\":[\"action_taken\",\"count\"]," ++
+  "\"states\":[{\"action_taken\":\"init\",\"count\":0}]" ++
+  "}"
+
 /-! ## Unit: MODULE header + materialization -/
 
 def unitModuleName (fails : Failures) : IO Unit := do
@@ -61,6 +76,10 @@ def unitModuleName (fails : Failures) : IO Unit := do
   | .ok n => check fails "moduleName: no header" false n
   check fails "moduleName: missing name" (isErrOf (moduleName "---- MODULE ----\n"))
   check fails "moduleName: bad keyword" (isErrOf (moduleName "---- MODULEX Foo ----\n"))
+  check fails "moduleName: path traversal"
+    (isErrOf (moduleName "---- MODULE ../../target ----\n"))
+  check fails "moduleName: path separator"
+    (isErrOf (moduleName "---- MODULE nested/target ----\n"))
 
 def unitMaterialize (fails : Failures) : IO Unit := do
   match ← materializeSpec { sources := [] } with
@@ -105,6 +124,244 @@ def unitAcquire (fails : Failures) : IO Unit := do
       let still ← match res.dir with | some d => (d : System.FilePath).pathExists | none => pure false
       check fails "acquire: owned released" (!still)
 
+def unitBorrowedCounterClosure (fails : Failures) : IO Unit := do
+  match ← borrowedSourceDigests "specs/Counter.tla" with
+  | .error error =>
+      check fails "borrowed closure: Counter resolves" false error
+  | .ok [source] =>
+      check fails "borrowed closure: Counter module"
+        (source.moduleName == "Counter") source.moduleName
+      check fails "borrowed closure: logical filename only"
+        (source.logicalPath == "Counter.tla") source.logicalPath
+      check fails "borrowed closure: normalized Counter digest"
+        (source.contentSha256 ==
+          "405b4ffb80464cdf919d986e142b180e044c41caf8e6aabe978db0e8e7aa0340")
+        source.contentSha256
+  | .ok sources =>
+      check fails "borrowed closure: Counter resolves" false
+        (toString (repr sources))
+
+def digestFor (name : String)
+    (sources : List Core.ModelInterface.SourceDigest) : Option String :=
+  (sources.find? (fun source => source.moduleName == name)).map
+    (·.contentSha256)
+
+def closureASource : String :=
+  "---- MODULE A ----\n" ++
+  "EXTENDS Naturals\n" ++
+  "Child == INSTANCE B\n" ++
+  "Quoted == \"INSTANCE Ghost\"\n" ++
+  "\\* EXTENDS Missing\n" ++
+  "AValue == B!BValue\n" ++
+  "====\n"
+
+def closureBSource (value : Nat) : String :=
+  "---- MODULE B ----\n" ++
+  "EXTENDS A\n" ++
+  s!"BValue == {value}\n" ++
+  "====\n"
+
+def unitBorrowedRecursiveClosure (fails : Failures) : IO Unit := do
+  let dir ← freshSessionDir
+  let rootPath := dir ++ "/A.tla"
+  let childPath := dir ++ "/B.tla"
+  IO.FS.writeFile rootPath (closureASource.replace "\n" "\r\n")
+  IO.FS.writeFile childPath (closureBSource 1)
+  let first ← match ← borrowedSourceDigests rootPath with
+    | .error error =>
+        check fails "borrowed closure: recursive cycle resolves" false error
+        pure []
+    | .ok sources => pure sources
+  check fails "borrowed closure: recursive cycle deduplicated"
+    (first.map (fun source => (source.moduleName, source.logicalPath)) ==
+      [("A", "A.tla"), ("B", "B.tla")]) (toString (repr first))
+  check fails "borrowed closure: no absolute paths"
+    (first.all fun source =>
+      !source.logicalPath.contains "/" &&
+      !source.logicalPath.contains "\\" &&
+      !source.logicalPath.contains dir) (toString (repr first))
+
+  IO.FS.writeFile rootPath closureASource
+  let normalized ← match ← borrowedSourceDigests rootPath with
+    | .error error =>
+        check fails "borrowed closure: LF rewrite resolves" false error
+        pure []
+    | .ok sources => pure sources
+  check fails "borrowed closure: CRLF normalization stable"
+    (decide (first = normalized))
+
+  IO.FS.writeFile childPath (closureBSource 2)
+  let changed ← match ← borrowedSourceDigests rootPath with
+    | .error error =>
+        check fails "borrowed closure: changed sibling resolves" false error
+        pure []
+    | .ok sources => pure sources
+  check fails "borrowed closure: unchanged root digest stable"
+    (digestFor "A" first == digestFor "A" changed)
+  check fails "borrowed closure: sibling change updates digest"
+    ((digestFor "B" first).isSome &&
+      digestFor "B" first != digestFor "B" changed)
+
+  IO.FS.writeFile rootPath
+    "---- MODULE A ----\nEXTENDS Option, Variants\n====\n"
+  match ← borrowedSourceDigests rootPath with
+  | .error error =>
+      check fails "borrowed closure: Apalache standard modules resolve" false error
+  | .ok sources =>
+      check fails "borrowed closure: Apalache standard modules are external"
+        (sources.map (·.moduleName) == ["A"]) (toString (repr sources))
+  removeDirRecursive dir
+
+def checkClosureError {alpha : Type} (fails : Failures) (name needle : String)
+    (result : Except String alpha) : IO Unit :=
+  match result with
+  | .error error => check fails name (error.contains needle) error
+  | .ok _ => check fails name false "expected closure resolution error"
+
+def unitBorrowedClosureFailures (fails : Failures) : IO Unit := do
+  let dir ← freshSessionDir
+  let rootPath := dir ++ "/A.tla"
+  let childPath := dir ++ "/B.tla"
+  IO.FS.writeFile rootPath closureASource
+  IO.FS.writeFile childPath (closureBSource 1)
+
+  checkClosureError fails "borrowed closure: module total bounded" "module limit 1"
+    (← borrowedSourceDigests rootPath
+      (limits := { defaultBorrowedSourceLimits with maxModules := 1 }))
+  checkClosureError fails "borrowed closure: file bytes bounded" "file byte limit 1"
+    (← borrowedSourceDigests rootPath
+      (limits := { defaultBorrowedSourceLimits with maxFileBytes := 1 }))
+  checkClosureError fails "borrowed closure: total bytes bounded" "total byte limit"
+    (← borrowedSourceDigests rootPath
+      (limits := { defaultBorrowedSourceLimits with
+        maxTotalBytes := closureASource.toUTF8.size }))
+  checkClosureError fails "borrowed closure: depth bounded" "depth limit 0"
+    (← borrowedSourceDigests rootPath
+      (limits := { defaultBorrowedSourceLimits with maxDepth := 0 }))
+
+  IO.FS.writeFile childPath "this is readable but not a TLA module\n"
+  let malformed ← borrowedSourceDigests rootPath
+  match malformed with
+  | .error error =>
+      check fails "borrowed closure: malformed local module fails"
+        (error.contains "B.tla" && error.contains "no MODULE header") error
+  | .ok sources =>
+      check fails "borrowed closure: malformed local module fails" false
+        (toString (repr sources))
+  removeDirRecursive dir
+
+private def makeSourceSymlink (target link : System.FilePath) :
+    IO (Except String Unit) := do
+  let output ← IO.Process.output {
+    cmd := "ln"
+    args := #["-s", "--", target.toString, link.toString]
+  }
+  if output.exitCode == 0 then return .ok ()
+  return .error output.stderr
+
+def unitBorrowedClosureSymlinks (fails : Failures) : IO Unit := do
+  if System.Platform.isWindows then
+    check fails "borrowed closure: symlink cases skipped on Windows" true
+  else
+    let dir ← freshSessionDir
+    let realRoot : System.FilePath := dir ++ "/RealA.tla"
+    let linkedRoot : System.FilePath := dir ++ "/A.tla"
+    IO.FS.writeFile realRoot closureASource
+    match ← makeSourceSymlink realRoot linkedRoot with
+    | .error error =>
+        check fails "borrowed closure: create root symlink" false error
+    | .ok () =>
+        checkClosureError fails "borrowed closure: root symlink rejected"
+          "symbolic link" (← borrowedSourceDigests linkedRoot.toString)
+
+    IO.FS.removeFile linkedRoot
+    IO.FS.writeFile linkedRoot closureASource
+    let realChild : System.FilePath := dir ++ "/RealB.tla"
+    let linkedChild : System.FilePath := dir ++ "/B.tla"
+    IO.FS.writeFile realChild (closureBSource 1)
+    match ← makeSourceSymlink realChild linkedChild with
+    | .error error =>
+        check fails "borrowed closure: create sibling symlink" false error
+    | .ok () =>
+        checkClosureError fails "borrowed closure: sibling symlink rejected"
+          "symbolic link" (← borrowedSourceDigests linkedRoot.toString)
+    removeDirRecursive dir
+
+def unitBorrowedTraceSnapshot (fails : Failures) : IO Unit := do
+  let dir ← freshSessionDir
+  let rootPath := dir ++ "/A.tla"
+  let childPath := dir ++ "/B.tla"
+  let originalRoot := closureASource
+  let originalChild := closureBSource 1
+  let changedRoot := originalRoot.replace "AValue == B!BValue" "AValue == 99"
+  let changedChild := closureBSource 2
+  IO.FS.writeFile rootPath originalRoot
+  IO.FS.writeFile childPath originalChild
+  let cfg : Codec.ApalacheConfig :=
+    { constInit := none, initPredicate := none, invariant := "", lengthBound := 1,
+      nextPredicate := none, paramVars := "", specPath := rootPath }
+  let seenRoot ← IO.mkRef ""
+  let seenChild ← IO.mkRef ""
+  let seenPath ← IO.mkRef ""
+  let generate := fun (_ : Option String) (acquired : Codec.ApalacheConfig)
+      (_ : Codec.TraceConfig) (_ : Bool) (_ : Bool) => do
+    -- This mutation models the borrowed files changing after provenance was
+    -- captured but before Apalache opens its configured source path.
+    IO.FS.writeFile rootPath changedRoot
+    IO.FS.writeFile childPath changedChild
+    seenPath.set acquired.specPath
+    seenRoot.set (← IO.FS.readFile acquired.specPath)
+    let acquiredDir := (acquired.specPath : System.FilePath).parent.getD "."
+    seenChild.set (← IO.FS.readFile (acquiredDir / "B.tla"))
+    return .ok ({ traces := [default] } : Shell.Mirror.TraceBundle)
+  let result ← Shell.Apalache.generateSyncTraceBundleVia generate cfg none
+    { numTraces := 1, view := none } true false
+  match result with
+  | .error error =>
+      check fails "borrowed snapshot: negotiated generation succeeds" false error
+  | .ok bundle =>
+      check fails "borrowed snapshot: Apalache root is immutable capture"
+        ((← seenRoot.get) == originalRoot)
+      check fails "borrowed snapshot: Apalache dependency is immutable capture"
+        ((← seenChild.get) == originalChild)
+      check fails "borrowed snapshot: config does not retain borrowed root"
+        ((← seenPath.get) != rootPath) (← seenPath.get)
+      check fails "borrowed snapshot: manifest matches captured root"
+        (digestFor "A" bundle.sources ==
+          some "3ab90b08dc4db7dcf79c3c493a0da13ad5aa6c50637a91751a07dd40add10e19")
+      check fails "borrowed snapshot: manifest matches captured dependency"
+        (digestFor "B" bundle.sources ==
+          some "2a08b2faeac3127728c8a5087454908caf00bb3482a72e805b452ffd7320c5ea")
+      let snapshotStill ← ((← seenPath.get) : System.FilePath).pathExists
+      check fails "borrowed snapshot: released after generation" (!snapshotStill)
+
+  let legacyPath ← IO.mkRef ""
+  let generateLegacy := fun (_ : Option String) (acquired : Codec.ApalacheConfig)
+      (_ : Codec.TraceConfig) (_ : Bool) (_ : Bool) => do
+    legacyPath.set acquired.specPath
+    return .ok ({ traces := [default] } : Shell.Mirror.TraceBundle)
+  match ← Shell.Apalache.generateSyncTraceBundleVia generateLegacy cfg none
+      { numTraces := 1, view := none } false false with
+  | .error error =>
+      check fails "borrowed snapshot: legacy generation succeeds" false error
+  | .ok bundle =>
+      check fails "borrowed snapshot: legacy path remains borrowed"
+        ((← legacyPath.get) == rootPath) (← legacyPath.get)
+      check fails "borrowed snapshot: legacy has no source manifest"
+        bundle.sources.isEmpty (toString (repr bundle.sources))
+
+  let missingCfg := { cfg with specPath := dir ++ "/Missing.tla" }
+  match ← Shell.Apalache.generateSyncTraceBundleVia generateLegacy missingCfg none
+      { numTraces := 1, view := none } true false with
+  | .error error =>
+      check fails "borrowed snapshot: unavailable capture preserves generation" false error
+  | .ok bundle =>
+      check fails "borrowed snapshot: unavailable capture has no manifest"
+        bundle.sources.isEmpty (toString (repr bundle.sources))
+      check fails "borrowed snapshot: unavailable capture uses legacy path"
+        ((← legacyPath.get) == missingCfg.specPath) (← legacyPath.get)
+  removeDirRecursive dir
+
 /-! ## Unit: args and output-dir parsing -/
 
 def unitArgs (fails : Failures) : IO Unit := do
@@ -133,6 +390,122 @@ def unitArgs (fails : Failures) : IO Unit := do
   check fails "parseOutputDir: found"
     (parseOutputDir "foo\nOutput directory: /a/b\nbar" == some "/a/b")
   check fails "parseOutputDir: absent" (match parseOutputDir "no line here" with | .none => true | .some _ => false)
+
+/-! ## Unit: disk ITF artifact parsing -/
+
+def unitDiskTraceLimits (fails : Failures) : IO Unit := do
+  check fails "disk ITF: separate bounded artifact profile"
+    (Shell.Mirror.itfTraceArtifactLimits.maxBytes ==
+        Shell.Mirror.maxItfTraceArtifactBytes &&
+      Shell.Mirror.maxItfTraceArtifactBytes == 16 * 1024 * 1024 &&
+      Shell.Mirror.itfTraceArtifactLimits.maxDepth ==
+        Codec.StrictJson.defaultLimits.maxDepth)
+  check fails "disk ITF: fixture exceeds wire limit"
+    (largeItfTraceJson.toUTF8.size > Codec.StrictJson.defaultLimits.maxBytes)
+  let dir ← freshSessionDir
+  let path := dir ++ "/large.itf.json"
+  IO.FS.writeFile path largeItfTraceJson
+  match ← Shell.Mirror.readItfTrace path with
+  | .error error =>
+      check fails "legacy disk ITF: valid large artifact accepted" false error
+  | .ok trace =>
+      check fails "legacy disk ITF: valid large artifact accepted"
+        (trace.traceStates.length == 1)
+  match ← Shell.Mirror.readItfTraceBundle path with
+  | .error error =>
+      check fails "disk ITF: valid large artifact accepted" false error
+  | .ok bundle =>
+      check fails "disk ITF: valid large artifact accepted"
+        (bundle.traces.length == 1)
+  match Codec.StrictJson.parseString largeItfTraceJson with
+  | .error error =>
+      check fails "wire JSON: same large payload rejected"
+        (error.kind == .tooLarge) (toString error)
+  | .ok _ =>
+      check fails "wire JSON: same large payload rejected" false
+  removeDirRecursive dir
+
+def unitGeneratedTraceParseFailure (fails : Failures) : IO Unit := do
+  let dir ← freshSessionDir
+  let validPath := dir ++ "/valid.itf.json"
+  let invalidPath := dir ++ "/invalid.itf.json"
+  IO.FS.writeFile validPath smallItfTraceJson
+  IO.FS.writeFile invalidPath "{"
+  let cfg : Codec.ApalacheConfig :=
+    { constInit := none, initPredicate := none, invariant := "", lengthBound := 1,
+      nextPredicate := none, paramVars := "", specPath := "S.tla" }
+  let generateFiles := fun (_ : Option String) (_ : Codec.ApalacheConfig)
+      (_ : Codec.TraceConfig) =>
+    pure (.ok (dir, [validPath, invalidPath]))
+  match ← generateTraceBundleVia generateFiles none cfg
+      { numTraces := 2, view := none } with
+  | .error error =>
+      check fails "generated traces: one parse failure rejects bundle"
+        (error == "generated ITF trace failed strict parsing" &&
+          !error.contains dir) error
+  | .ok bundle =>
+      check fails "generated traces: one parse failure rejects bundle" false
+        s!"silently retained {bundle.traces.length} trace(s)"
+  removeDirRecursive dir
+
+def unitGeneratedTraceResourceFallback (fails : Failures) : IO Unit := do
+  let path := "test/fixtures/model-interface/counter/counter.itf.json"
+  let raw ← IO.FS.readFile path
+  let cfg : Codec.ApalacheConfig :=
+    { constInit := none, initPredicate := none, invariant := "", lengthBound := 3,
+      nextPredicate := none, paramVars := "parameters", specPath := "Counter.tla" }
+  let calls ← IO.mkRef 0
+  let generateFiles := fun (_ : Option String) (_ : Codec.ApalacheConfig)
+      (_ : Codec.TraceConfig) => do
+    calls.modify (· + 1)
+    return .ok ("generated-output", [path, path])
+  let exact : Shell.Mirror.NegotiatedTraceLoadLimits := {
+    maxFiles := 2
+    maxAggregateBytes := raw.toUTF8.size * 2
+    maxTraces := 2
+    maxStates := 6
+  }
+  match ← generateTraceBundleVia generateFiles none cfg
+      { numTraces := 2, view := none } true false exact with
+  | .error error =>
+      check fails "generated limits: exact budgets accepted" false error
+  | .ok bundle =>
+      check fails "generated limits: exact evidence retained"
+        (bundle.traces.length == 2 && bundle.evidence.isSome &&
+          !bundle.evidenceInvalid)
+
+  let beforeRequired ← calls.get
+  match ← generateTraceBundleVia generateFiles none cfg
+      { numTraces := 2, view := none } true false
+      { exact with maxFiles := 1 } with
+  | .ok _ =>
+      check fails "generated limits require: fails before legacy parse" false
+  | .error error =>
+      check fails "generated limits require: stable resource error"
+        (error == "generated ITF trace exceeded negotiated resource limits")
+        error
+  check fails "generated limits require: generator invoked once"
+    ((← calls.get) == beforeRequired + 1)
+
+  let expectFallback (label : String)
+      (limits : Shell.Mirror.NegotiatedTraceLoadLimits) : IO Unit := do
+    let before ← calls.get
+    match ← generateTraceBundleVia generateFiles none cfg
+        { numTraces := 2, view := none } true true limits with
+    | .error error => check fails (label ++ ": legacy fallback") false error
+    | .ok bundle =>
+        check fails (label ++ ": traces retained")
+          (bundle.traces.length == 2)
+        check fails (label ++ ": evidence unavailable")
+          (bundle.evidence.isNone && !bundle.evidenceInvalid)
+    check fails (label ++ ": generator invoked once")
+      ((← calls.get) == before + 1)
+
+  expectFallback "generated limits file-count" { exact with maxFiles := 1 }
+  expectFallback "generated limits aggregate-byte"
+    { exact with maxAggregateBytes := exact.maxAggregateBytes - 1 }
+  expectFallback "generated limits trace-count" { exact with maxTraces := 1 }
+  expectFallback "generated limits state-count" { exact with maxStates := 5 }
 
 /-! ## Integration against real apalache -/
 
@@ -217,7 +590,15 @@ def main : IO UInt32 := do
   run "moduleName" unitModuleName
   run "materialize" unitMaterialize
   run "acquire" unitAcquire
+  run "borrowed-counter-closure" unitBorrowedCounterClosure
+  run "borrowed-recursive-closure" unitBorrowedRecursiveClosure
+  run "borrowed-closure-failures" unitBorrowedClosureFailures
+  run "borrowed-closure-symlinks" unitBorrowedClosureSymlinks
+  run "borrowed-trace-snapshot" unitBorrowedTraceSnapshot
   run "args" unitArgs
+  run "disk-trace-limits" unitDiskTraceLimits
+  run "generated-trace-parse-failure" unitGeneratedTraceParseFailure
+  run "generated-trace-resource-fallback" unitGeneratedTraceResourceFallback
   run "integration" integration
   let fs ← fails.get
   if fs.isEmpty then

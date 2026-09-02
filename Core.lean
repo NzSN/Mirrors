@@ -4,6 +4,7 @@ import Core.Resource
 import Core.Protocol
 import Core.Jobs
 import Core.Value
+import Core.ModelInterface
 
 /-!
 # The verified pure core (Layer 0, design §5.1)

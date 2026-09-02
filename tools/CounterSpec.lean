@@ -170,6 +170,16 @@ def checkC (fails : IO.Ref (List String)) (name : String) (ok : Bool)
     if detail.isEmpty then fails.modify (· ++ [name])
     else fails.modify (· ++ [s!"{name}: {detail}"])
 
+private def cwdArtifactSnapshot (path : System.FilePath) :
+    IO (Option (List String)) := do
+  if ← path.isDir then
+    let entries ← path.readDir
+    return some (entries.toList.map (·.fileName) |>.mergeSort (· ≤ ·))
+  else if ← path.pathExists then
+    return some ["<non-directory>"]
+  else
+    return none
+
 def main : IO UInt32 := do
   let fails ← IO.mkRef ([] : List String)
   let bin? ← IO.getEnv "APALACHE_MC"
@@ -179,6 +189,8 @@ def main : IO UInt32 := do
       return 0
   | some _ => do
     let bin := ".lake/build/bin/mirror" ++ (if System.Platform.isWindows then ".exe" else "")
+    let apalacheOutBefore ← cwdArtifactSnapshot "_apalache-out"
+    let tmpBefore ← cwdArtifactSnapshot "tmp"
     -- 1. conforming echo client follows the generated trace
     let (seen, _) ← driveCounter bin .none
     IO.println s!"conform session: {seen}"
@@ -204,12 +216,14 @@ def main : IO UInt32 := do
     -- t29: run-dir isolation — a full register-with-validation
     -- session must not litter the mirror cwd (no _apalache-out/ or
     -- tmp/ created in the repo root by the validate path)
-    let litter1 ← ("_apalache-out" : System.FilePath).pathExists
-    let litter2 ← ("tmp" : System.FilePath).pathExists
-    checkC fails "run-dir isolation: no _apalache-out in cwd" (!litter1)
-      (if litter1 then "_apalache-out exists" else "")
-    checkC fails "run-dir isolation: no tmp in cwd" (!litter2)
-      (if litter2 then "tmp exists" else "")
+    let apalacheOutAfter ← cwdArtifactSnapshot "_apalache-out"
+    let tmpAfter ← cwdArtifactSnapshot "tmp"
+    checkC fails "run-dir isolation: _apalache-out unchanged"
+      (apalacheOutAfter == apalacheOutBefore)
+      s!"before={apalacheOutBefore}, after={apalacheOutAfter}"
+    checkC fails "run-dir isolation: tmp unchanged"
+      (tmpAfter == tmpBefore)
+      s!"before={tmpBefore}, after={tmpAfter}"
     -- 2. corrupted count -> mismatch mentioning count, no trailing
     -- all_steps_done (spec-faithful tail; Haskell quirk documented
     -- in the module header)

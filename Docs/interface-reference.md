@@ -15,10 +15,12 @@
 | ---- | ------- | --------- | ------------ |
 | stdio (default) | `mirror` | stdin/stdout, newline-delimited | **sync only** — one register flow per process |
 | TCP daemon | `mirror --serve <port> [--bind <addr>] [--jobs N]` | plain TCP, JSONL | **async** — one session per connection, concurrent |
-| mTLS daemon | `mirror --server <port> --tls --cert C --key K --ca A [--registry URL] [--jobs N] [--bind B]` | TLS 1.3, mutual auth, JSONL | **async** — one session per connection, concurrent |
+| mTLS daemon | `mirror --server <port> --tls --cert C --key K --ca A [--registry URL] [--jobs N] [--bind B] [--model-interface-allow-client FP[,FP...]] [--model-interface-descriptor-read]` | TLS 1.3, mutual auth, JSONL | **async** — one session per connection, concurrent |
 | validate client | `mirror validate --host H --port P [--tls …] [--pin FP] --spec S.tla` | outgoing TCP/mTLS | client of the sync validate flow |
 
-Framing everywhere: **one JSON object per line** (UTF-8, `\n`-terminated).
+Framing everywhere: **one JSON object per line** (valid UTF-8,
+`\n`-terminated), with at most **65,535 payload bytes** before the newline.
+The bound is enforced before JSON parsing and after final response encoding.
 mTLS policy: TLS 1.3 only, client certificate required, CA chain + SAN
 hostname/IP verification, optional SHA-256 fingerprint pin
 (`--pin`, case-insensitive), client key must be `0600` (POSIX).
@@ -94,7 +96,52 @@ sorted-key order as the Haskell implementation.
 ```
 No validation phase (fast path): `spec_validated` immediately, then
 the replay loop above. Directory paths expand to their `*.itf.json`
-entries (sorted).
+entries (sorted). Each disk ITF artifact is bounded at 16 MiB. Negotiated
+registrations additionally require strict duplicate-free JSON and compatible
+typed metadata across the complete trace bundle, and cap that bundle at 256
+files, 64 MiB of source JSON, 256 traces, and 65,536 states.
+
+#### Optional model-interface negotiation
+
+`register` and `register_traces` may carry a strict `modelInterface` field.
+Its schema is `mirrors.model-interface-negotiation/v1`; it requests either an
+exact digest check (`verify`) or the language-neutral descriptor
+(`descriptor`). The inline companion contract is resolver input. Mirrors never
+sends executable adapter code.
+
+Shape excerpt (the inline value must be a complete strict `ContractV1`):
+
+```json
+{
+  "modelInterface": {
+    "schema": "mirrors.model-interface-negotiation/v1",
+    "request": "verify",
+    "policy": "require",
+    "acceptDescriptorSchemas": ["mirrors.model-interface-descriptor/v1"],
+    "expectedSemanticDigest": "sha256:<64 lowercase hex>",
+    "contract": { "inline": { "schema": "mirrors.model-interface/v1" } }
+  }
+}
+```
+
+On a match, the existing `spec_validated` message carries an optional
+`modelInterface` reply with status `matched`. Descriptor requests return
+`resolved` plus the canonical descriptor, or `not_modified` when
+`ifNoneMatch` equals the resolved digest. Required failures keep the existing
+`register_error` tag and add a structured status/code; they emit no
+`initial_state`.
+
+When this field is absent, registration and reply bytes remain identical to
+the legacy protocol. Local stdio permits verification and descriptor reads;
+plain TCP has no model-interface scope. mTLS transport authentication alone
+also grants no model-interface scope. `--model-interface-allow-client` accepts
+a comma-separated list of exact client certificate SHA-256 fingerprints and
+grants those principals verify scope; `--model-interface-descriptor-read`
+additionally grants the listed principals descriptor-read scope. The latter
+flag is rejected without a nonempty allowlist. Cache/accounting identity
+includes the verified peer principal as well as its CA realm. Full schemas,
+policy precedence, limits, and client invariants are specified in
+[`model-interface-runtime-distribution-design.md`](model-interface-runtime-distribution-design.md).
 
 ### 3.3 `register_trace_gen` — generate traces, then done
 ```json

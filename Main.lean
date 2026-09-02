@@ -22,7 +22,7 @@ def main : IO UInt32 := do
   | [] =>
       -- default mode: stdio mirror session (Haskell: run StdioTransport)
       let t ← Shell.Transport.stdio
-      Shell.Mirror.run t Shell.Apalache.syncOracles
+      runLocalStdioSession t
       return 0
   | _ =>
       -- t27: unknown mode — print the full usage block instead of

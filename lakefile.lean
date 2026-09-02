@@ -38,13 +38,16 @@ def sockLinkArgs : Array String :=
 package mirrors
 
 @[default_target]
-lean_lib Core
+lean_lib Core where
+  globs := #[.submodules `Core]
 
 @[default_target]
-lean_lib Codec
+lean_lib Codec where
+  globs := #[.submodules `Codec]
 
 @[default_target]
-lean_lib Shell
+lean_lib Shell where
+  globs := #[.submodules `Shell]
 
 /-- Phase 0/2: golden wire corpus byte-identity replay (tools/ReplayFixtures.lean). -/
 @[default_target]
@@ -56,6 +59,23 @@ lean_exe fixtures_replay where
 @[default_target]
 lean_exe diff_cross where
   root := `tools.DiffCross
+
+/-- Deterministic model-interface compiler, distribution policy, cache, strict
+JSON, and TypeScript-emitter gate. -/
+@[default_target]
+lean_exe model_interface_spec where
+  root := `tools.ModelInterfaceSpec
+
+/-- In-memory JSONL negotiation and replay gate for runtime model-interface
+distribution. -/
+@[default_target]
+lean_exe model_interface_distribution_spec where
+  root := `tools.ModelInterfaceDistributionSpec
+
+/-- Development-time model-interface compiler CLI. -/
+@[default_target]
+lean_exe model_interface_gen where
+  root := `tools.ModelInterfaceGen
 
 /-- Phase 3: the mirror CLI binary (default stdio mode). -/
 @[default_target]
@@ -213,6 +233,53 @@ script test do
   if out2.exitCode != 0 then
     IO.println s!"diff_cross FAILED ({out2.exitCode})"
     return out2.exitCode
+  let outMi : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/model_interface_spec", args := #[] } : IO.Process.SpawnArgs)
+  IO.println outMi.stdout
+  if outMi.exitCode != 0 then
+    IO.println s!"model_interface_spec FAILED ({outMi.exitCode})"
+    return outMi.exitCode
+  let outMiDistribution : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/model_interface_distribution_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outMiDistribution.stdout
+  if outMiDistribution.exitCode != 0 then
+    IO.println s!"model_interface_distribution_spec FAILED ({outMiDistribution.exitCode})"
+    return outMiDistribution.exitCode
+  let outMiGolden : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/model_interface_gen", args := #[
+      "check",
+      "--spec", "specs/Counter.tla",
+      "--contract", "test/fixtures/model-interface/counter/Counter.mirror-interface.json",
+      "--evidence", "test/fixtures/model-interface/counter/counter.itf.json",
+      "--param-var", "parameters",
+      "--lock", "test/fixtures/model-interface/counter/Counter.mirror-interface.lock.json",
+      "--target", "mirrorecma-v1",
+      "--out", "test/fixtures/model-interface/counter/generated"
+    ] } : IO.Process.SpawnArgs)
+  IO.println outMiGolden.stdout
+  if outMiGolden.exitCode != 0 then
+    IO.eprintln outMiGolden.stderr
+    IO.println s!"model_interface_gen check FAILED ({outMiGolden.exitCode})"
+    return outMiGolden.exitCode
+  let outMiPreflight : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/model_interface_gen", args := #[
+      "preflight",
+      "--lock", "test/fixtures/model-interface/counter/Counter.mirror-interface.lock.json",
+      "--trace", "test/fixtures/model-interface/counter/counter.itf.json",
+      "--require-all-actions"
+    ] } : IO.Process.SpawnArgs)
+  IO.println outMiPreflight.stdout
+  if outMiPreflight.exitCode != 0 then
+    IO.eprintln outMiPreflight.stderr
+    IO.println s!"model_interface_gen preflight FAILED ({outMiPreflight.exitCode})"
+    return outMiPreflight.exitCode
+  let expectedMiPreflight ← IO.FS.readBinFile
+    "test/fixtures/model-interface/counter/Counter.mirror-interface.coverage.json"
+  if outMiPreflight.stdout.toUTF8 != expectedMiPreflight then
+    IO.eprintln "model_interface_gen preflight coverage differed from exact golden bytes"
+    IO.eprintln s!"actual: {outMiPreflight.stdout}"
+    return 1
   let out3 : IO.Process.Output ← IO.Process.output ({ cmd := ".lake/build/bin/stdio_smoke", args := #[] } : IO.Process.SpawnArgs)
   IO.println out3.stdout
   if out3.exitCode != 0 then

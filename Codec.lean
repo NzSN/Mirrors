@@ -2,6 +2,9 @@ import Codec.Json
 import Codec.ExplorerRpc
 import Codec.Bridge
 import Codec.Consul
+import Codec.StrictJson
+import Codec.ModelInterfaceJson
+import Codec.ModelInterfaceDistributionJson
 
 /-!
 # Layer 1: total JSON codecs (design §5.2)

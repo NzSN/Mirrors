@@ -281,6 +281,19 @@ MirrorRecvRegisterTraces ==
   /\ action_taken' = "MirrorRecvRegisterTraces"
   /\ UNCHANGED <<client_phase, report_matches, faulted, client_closed, mirror_closed>>
 
+\* A stepping registration may fail admission before any replay output (for
+\* example, required model-interface negotiation or trace preflight). This is
+\* an alternative to MirrorRecvRegisterTraces, not an extra wire round trip.
+MirrorRecvRegisterTracesError ==
+  /\ client_to_mirror /= <<>> /\ Head(client_to_mirror) = REGISTER_TRACES
+  /\ mirror_phase = "idle"
+  /\ mirror_phase' = "done"
+  /\ mirror_flow' = "traces"
+  /\ client_to_mirror' = Tail(client_to_mirror)
+  /\ mirror_to_client' = Append(mirror_to_client, REGISTER_ERROR)
+  /\ action_taken' = "MirrorRecvRegisterTracesError"
+  /\ UNCHANGED <<client_phase, report_matches, faulted, client_closed, mirror_closed>>
+
 MirrorRecvRegisterGenTraces ==
   /\ client_to_mirror /= <<>> /\ Head(client_to_mirror) = REGISTER_TRACE_GEN
   /\ mirror_phase = "idle"
@@ -491,6 +504,7 @@ Next ==
   \/ ClientRecvExploreDoneAck
   \/ MirrorRecvRegister
   \/ MirrorRecvRegisterTraces
+  \/ MirrorRecvRegisterTracesError
   \/ MirrorRecvRegisterGenTraces
   \/ MirrorRecvRegisterExplore
   \/ MirrorRecvRegisterExploreSession

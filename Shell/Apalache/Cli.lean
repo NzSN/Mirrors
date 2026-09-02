@@ -294,23 +294,67 @@ def generateTraceFilesIn (runDir : Option String) (cfg : Codec.ApalacheConfig)
     (tc : Codec.TraceConfig) : IO (Except String (String × List String)) :=
   generateTraceFilesVia runApalache runDir cfg tc
 
-/-- Trace generation producing in-memory traces (Haskell
-@generateTracesIn@): output dir from the log line, ITF files parsed,
-param vars applied; no traces → infra error. -/
-def generateTracesIn (runDir : Option String) (cfg : Codec.ApalacheConfig)
-    (tc : Codec.TraceConfig) : IO (Except String (List ItfTrace)) := do
-  let r ← generateTraceFilesIn runDir cfg tc
+/-- Trace generation producing replay traces plus raw typed evidence over an
+injected trace-file generator. The injection is the Apalache process boundary;
+disk discovery and ITF parsing remain the real production path. -/
+def generateTraceBundleVia
+    (generateFiles : Option String → Codec.ApalacheConfig → Codec.TraceConfig →
+      IO (Except String (String × List String)))
+    (runDir : Option String) (cfg : Codec.ApalacheConfig)
+    (tc : Codec.TraceConfig) (preserveEvidence : Bool := true)
+    (allowResourceFallback : Bool := false)
+    (limits : Shell.Mirror.NegotiatedTraceLoadLimits :=
+      Shell.Mirror.negotiatedTraceLoadLimitsV1) :
+    IO (Except String Shell.Mirror.TraceBundle) := do
+  let r ← generateFiles runDir cfg tc
   match r with
   | .error e => return .error e
   | .ok (_, paths) =>
-      let parsed ← paths.mapM (fun p => Shell.Mirror.readItfTrace p)
-      let traces := parsed.filterMap (fun x => match x with
-        | .ok t => some t | .error _ => none)
+      let legacyBundle : IO (Except String Shell.Mirror.TraceBundle) := do
+        let mut traces := []
+        for path in paths do
+          match ← Shell.Mirror.readItfTrace path with
+          | .error _ => return .error "generated ITF trace failed parsing"
+          | .ok trace => traces := traces ++ [trace]
+        return .ok { traces }
+      let bundle ← if preserveEvidence then
+          match ← Shell.Mirror.loadTraceBundleWithLimitsClassified paths limits with
+          | .ok bundle => pure bundle
+          | .error (.invalidInput _) =>
+              return .error "generated ITF trace failed strict parsing"
+          | .error (.resourceLimit _) =>
+              -- The files already exist, so optional negotiation can retain
+              -- legacy replay without launching Apalache a second time. No
+              -- evidence crosses this fallback: `prefer` becomes unavailable,
+              -- while `require` remains terminal in the session policy.
+              if allowResourceFallback then
+                match ← legacyBundle with
+                | .ok bundle => pure bundle
+                | .error error => return .error error
+              else
+                return .error "generated ITF trace exceeded negotiated resource limits"
+        else
+          match ← legacyBundle with
+          | .ok bundle => pure bundle
+          | .error error => return .error error
       let pvs := if cfg.paramVars.isEmpty then [] else [cfg.paramVars]
-      let traced := traces.map (applyParamVars pvs)
+      let traced := bundle.traces.map (applyParamVars pvs)
       if traced.isEmpty then
         return .error "No ITF trace files found in output directory"
       else
-        return .ok traced
+        return .ok { bundle with traces := traced }
+
+/-- Direct trace generation producing replay traces plus raw typed evidence. -/
+def generateTraceBundleIn (runDir : Option String) (cfg : Codec.ApalacheConfig)
+    (tc : Codec.TraceConfig) (preserveEvidence : Bool := true)
+    (allowResourceFallback : Bool := false) :
+    IO (Except String Shell.Mirror.TraceBundle) :=
+  generateTraceBundleVia generateTraceFilesIn runDir cfg tc preserveEvidence
+    allowResourceFallback
+
+/-- Legacy list-only wrapper retained for focused callers/tests. -/
+def generateTracesIn (runDir : Option String) (cfg : Codec.ApalacheConfig)
+    (tc : Codec.TraceConfig) : IO (Except String (List ItfTrace)) := do
+  return (← generateTraceBundleIn runDir cfg tc false).map (·.traces)
 
 end Shell.Apalache.Cli

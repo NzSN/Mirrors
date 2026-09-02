@@ -261,6 +261,63 @@ where
               (Codec.MirrorMessage.protocolError
                 "unexpected message in explore session")
 
+/-! ## Trace generation with source identity -/
+
+/-- Generate the trace bundle used by a synchronous registration. For a
+negotiated borrowed spec, the source closure is captured into a mirror-owned
+snapshot before the injected Apalache boundary runs. The returned source
+manifest is derived from exactly that capture.
+
+If capture is unavailable, trace generation retains the legacy borrowed path
+but returns no source manifest. This preserves `prefer` fallback behavior while
+ensuring that a descriptor is never built from bytes different from those
+Apalache was asked to execute. -/
+def generateSyncTraceBundleVia
+    (generateBundle : Option String → Codec.ApalacheConfig →
+      Codec.TraceConfig → Bool → Bool →
+        IO (Except String Shell.Mirror.TraceBundle))
+    (cfg : Codec.ApalacheConfig) (spec : Option Codec.SpecConfig)
+    (tc : Codec.TraceConfig) (preserveInterfaceEvidence : Bool)
+    (allowResourceFallback : Bool) :
+    IO (Except String Shell.Mirror.TraceBundle) := do
+  let acquisition : Except String
+      (SpecRes × Codec.ApalacheConfig ×
+        List Core.ModelInterface.SourceDigest) ←
+    if preserveInterfaceEvidence then
+      match spec with
+      | none =>
+          match ← acquireBorrowedSpecSnapshot cfg with
+          | .ok snapshot => pure (.ok snapshot)
+          | .error _ =>
+              -- No source manifest may accompany this fallback: the borrowed
+              -- files can still change before the process opens them.
+              match ← acquireSpec none cfg with
+              | .error error => pure (.error error)
+              | .ok (resource, acquiredCfg) =>
+                  pure (.ok (resource, acquiredCfg, []))
+      | some inline =>
+          match ← acquireSpec (some inline) cfg with
+          | .error error => pure (.error error)
+          | .ok (resource, acquiredCfg) =>
+              let sources := (inlineSourceDigests inline).toOption.getD []
+              pure (.ok (resource, acquiredCfg, sources))
+    else
+      match ← acquireSpec spec cfg with
+      | .error error => pure (.error error)
+      | .ok (resource, acquiredCfg) =>
+          pure (.ok (resource, acquiredCfg, []))
+  match acquisition with
+  | .error error => return .error error
+  | .ok (resource, acquiredCfg, sources) =>
+      let dir ← freshSessionDir
+      let result ← try
+          generateBundle (some dir) acquiredCfg tc preserveInterfaceEvidence
+            allowResourceFallback
+        finally
+          releaseSpec resource
+          removeSessionDir dir
+      return result.map fun bundle => { bundle with sources := sources }
+
 /-- The sync-session oracles backed by real apalache: validation, trace
 generation, trace-file production, and the two explorer flows (t14). -/
 def syncOracles : Shell.Mirror.Oracles where
@@ -275,14 +332,9 @@ def syncOracles : Shell.Mirror.Oracles where
         let r ← try validateSpecIn (some dir) cfg' _bound
           finally (do releaseSpec res; removeSessionDir dir)
         return r
-  generateTraces := fun cfg spec tc => do
-    match ← acquireSpec spec cfg with
-    | .error e => return .error e
-    | .ok (res, cfg') =>
-        let dir ← freshSessionDir
-        let r ← try generateTracesIn (some dir) cfg' tc
-          finally (do releaseSpec res; removeSessionDir dir)
-        return r
+  generateTraces := generateSyncTraceBundleVia
+    (fun runDir cfg tc preserve allowFallback =>
+      generateTraceBundleIn runDir cfg tc preserve allowFallback)
   generateTraceFiles := fun cfg spec dest tc => do
     match ← acquireSpec spec cfg with
     | .error e => return .error e

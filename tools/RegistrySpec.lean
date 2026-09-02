@@ -41,6 +41,10 @@ def runCmd (cmd : String) (args : Array String) : IO String := do
 def fakeTransport : Shell.Transport.Transport :=
   { recv := pure none, send := fun _ => pure () }
 
+def clientFingerprintA : String := String.ofList (List.replicate 64 'a')
+def clientFingerprintB : String := String.ofList (List.replicate 64 'b')
+def clientCaFingerprint : String := String.ofList (List.replicate 64 'c')
+
 def main : IO UInt32 := do
   let f ← newFailures
   let ov ← IO.Process.output { cmd := "openssl", args := #["version"] }
@@ -67,6 +71,72 @@ def main : IO UInt32 := do
     .ok (9000, 2))
   let so2 := parseServerOpts ["9000", "--tls", "--cert", "c", "--key", "k", "--ca", "a"]
   check f "server opts: defaults jobs=4" (so2.map (fun o => o.jobs) == .ok 4)
+  check f "server opts: model-interface access defaults disabled"
+    (so2.map (fun o =>
+      (o.modelInterfacePolicy.allowedPeerFingerprints,
+       o.modelInterfacePolicy.descriptorRead)) == .ok ([], false))
+  let defaultAuth := Shell.ModelInterface.Auth.authenticatedTls
+    clientCaFingerprint clientFingerprintA {}
+  check f "mTLS auth: CA trust alone grants no model-interface access"
+    (defaultAuth.map Shell.ModelInterface.Auth.runtimeAccess ==
+      .ok Shell.ModelInterface.Runtime.Access.disabled)
+  let verifyOpts := parseServerOpts
+    ["9000", "--tls", "--cert", "c", "--key", "k", "--ca", "a",
+     "--model-interface-allow-client", clientFingerprintA.toUpper]
+  check f "server opts: allowlisted fingerprint is normalized"
+    (verifyOpts.map (fun o => o.modelInterfacePolicy.allowedPeerFingerprints) ==
+      .ok [clientFingerprintA])
+  let verifyAuth := verifyOpts.bind fun options =>
+    Shell.ModelInterface.Auth.authenticatedTls clientCaFingerprint
+      clientFingerprintA options.modelInterfacePolicy
+  check f "mTLS auth: allowlisted client receives verify-only access"
+    (verifyAuth.map Shell.ModelInterface.Auth.runtimeAccess ==
+      .ok Shell.ModelInterface.Runtime.Access.verifyOnly)
+  let unlistedAuth := verifyOpts.bind fun options =>
+    Shell.ModelInterface.Auth.authenticatedTls clientCaFingerprint
+      clientFingerprintB options.modelInterfacePolicy
+  check f "mTLS auth: unlisted client remains model-interface disabled"
+    (unlistedAuth.map Shell.ModelInterface.Auth.runtimeAccess ==
+      .ok Shell.ModelInterface.Runtime.Access.disabled)
+  let descriptorOpts := parseServerOpts
+    ["9000", "--tls", "--cert", "c", "--key", "k", "--ca", "a",
+     "--model-interface-allow-client", clientFingerprintA ++ "," ++ clientFingerprintB,
+     "--model-interface-descriptor-read"]
+  check f "server opts: descriptor-read policy is explicit"
+    (descriptorOpts.map (fun o => o.modelInterfacePolicy.descriptorRead) == .ok true)
+  let descriptorAuth := descriptorOpts.bind fun options =>
+    Shell.ModelInterface.Auth.authenticatedTls clientCaFingerprint
+      clientFingerprintB options.modelInterfacePolicy
+  check f "mTLS auth: descriptor-read policy grants descriptor access"
+    (descriptorAuth.map Shell.ModelInterface.Auth.runtimeAccess ==
+      .ok Shell.ModelInterface.Runtime.Access.descriptor)
+  let peerAAuth := Shell.ModelInterface.Auth.authenticatedTls
+    clientCaFingerprint clientFingerprintA {}
+  let peerBAuth := Shell.ModelInterface.Auth.authenticatedTls
+    clientCaFingerprint clientFingerprintB {}
+  check f "mTLS auth: authorization scope carries peer principal"
+    (peerAAuth.map (fun auth =>
+      (Shell.ModelInterface.Auth.authorizationScope auth).principalId) ==
+        .ok (some ("tls-cert-sha256:" ++ clientFingerprintA)))
+  check f "mTLS auth: distinct peers have distinct cache scopes"
+    (match peerAAuth, peerBAuth with
+     | .ok peerA, .ok peerB =>
+         Shell.ModelInterface.Auth.authorizationScope peerA !=
+           Shell.ModelInterface.Auth.authorizationScope peerB
+     | _, _ => false)
+  check f "server opts: descriptor-read requires an allowlist"
+    (parseServerOpts
+      ["9000", "--tls", "--cert", "c", "--key", "k", "--ca", "a",
+       "--model-interface-descriptor-read"] |> isErr)
+  check f "server opts: malformed client fingerprint rejected"
+    (parseServerOpts
+      ["9000", "--tls", "--cert", "c", "--key", "k", "--ca", "a",
+       "--model-interface-allow-client", "not-a-fingerprint"] |> isErr)
+  check f "server opts: duplicate normalized client fingerprint rejected"
+    (parseServerOpts
+      ["9000", "--tls", "--cert", "c", "--key", "k", "--ca", "a",
+       "--model-interface-allow-client",
+       clientFingerprintA ++ "," ++ clientFingerprintA.toUpper] |> isErr)
   check f "server opts: no tls" ((parseServerOpts ["9000", "--cert", "c", "--key", "k", "--ca", "a"]) |> isErr)
   let so3 := parseServerOpts ["9000", "9001", "--tls", "--cert", "c", "--key", "k", "--ca", "a"]
   check f "server opts: dup port" (so3 |> isErr)

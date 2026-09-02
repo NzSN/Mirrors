@@ -125,6 +125,18 @@ must have mode `0600` on POSIX. Add `--registry http://consul:8500`, or set
 `MODELMIRRORS_REGISTRY`, to register the server and publish its certificate
 fingerprint.
 
+Transport authentication alone does not authorize model-interface negotiation.
+To permit digest verification for selected clients, pass their certificate
+SHA-256 fingerprints as one comma-separated allowlist:
+
+```bash
+--model-interface-allow-client <64-hex-fingerprint>[,<64-hex-fingerprint>...]
+```
+
+Add `--model-interface-descriptor-read` to grant those same clients full
+descriptor-read scope. Without the allowlist, negotiated model-interface access
+is disabled while legacy mTLS registrations remain available.
+
 ### Validate from the CLI
 
 Validate a local specification through a plain TCP server:

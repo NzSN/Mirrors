@@ -5,6 +5,7 @@ import Shell.Transport.Tls
 import Shell.Registry
 import Shell.Client
 import Shell.Apalache.Runner
+import Shell.ModelInterface.Auth
 import Codec.Json
 import Codec.Consul
 
@@ -20,7 +21,8 @@ CLI parity with the Haskell @app/Main.hs@ surface:
   available).
 - @--serve <port> [--bind <addr>] [--jobs n]@: plain TCP mirror server.
 - @--server <port> --tls --cert --key --ca [--registry URL] [--jobs n]
-  [--bind addr]@: mTLS mirror server; with @--registry@ (or
+  [--bind addr] [--model-interface-allow-client fp[,fp...]]
+  [--model-interface-descriptor-read]@: mTLS mirror server; with @--registry@ (or
   @MODELMIRRORS_REGISTRY@) it registers with Consul, heartbeats the
   TTL check every 10s, and deregisters best-effort on SIGINT/SIGTERM
   and on normal exit (Phase 6).
@@ -49,7 +51,12 @@ def cliUsage : String :=
   "                     --jobs sizes the worker pool and job store, default 4)\n" ++
   "  --server <port> --tls --cert <c> --key <k> --ca <a>\n" ++
   "       [--registry <url>] [--jobs <n>] [--bind <addr>]\n" ++
-  "                     mTLS mirror server; --registry registers with Consul\n" ++
+  "       [--model-interface-allow-client <fp[,fp...]>]\n" ++
+  "       [--model-interface-descriptor-read]\n" ++
+  "                     mTLS server; model-interface access is disabled unless\n" ++
+  "                     the verified client SHA-256 fingerprint is allowlisted;\n" ++
+  "                     allowlisted clients get verify scope, and the descriptor\n" ++
+  "                     flag additionally grants descriptor-read scope\n" ++
   "  validate (--host <h> --port <p> | --registry <url> --tls --cert <c>\n" ++
   "            --key <k> --ca <a>) [--pin <fp>] [--bound <n>] --spec <file>\n" ++
   "                     validate a TLA+ spec against a mirror (mTLS)\n"
@@ -102,6 +109,7 @@ structure ServerOpts where
   registry : Option String
   jobs : Nat
   bind : Option String
+  modelInterfacePolicy : Shell.ModelInterface.Auth.TlsApplicationPolicy := {}
   deriving Repr
 
 private structure ServerOptsC where
@@ -113,6 +121,8 @@ private structure ServerOptsC where
   registry : Option String := none
   jobs : Option Nat := none
   bind : Option String := none
+  modelInterfaceAllowClient : Option String := none
+  modelInterfaceDescriptorRead : Bool := false
 
 private def reqString (name : String) (cur : Option String)
     (set : String → List String → Except String ServerOptsC)
@@ -183,8 +193,10 @@ private def optOr (name : String) : Option String → Except String String
   | none => .error s!"missing required --{name}"
 
 /-- Parse @--server@ tokens: positional port plus @--tls --cert --key
---ca [--registry] [--jobs] [--bind]@ in any order (order-independent,
-rejects unknown options, duplicates, and non-numeric values). -/
+--ca [--registry] [--jobs] [--bind]@ and the optional model-interface client
+fingerprint allowlist/descriptor-read grant in any order. Unknown options,
+duplicates, malformed fingerprints, and descriptor-read without an allowlist
+are rejected. -/
 private partial def serverOptsGo (s : ServerOptsC) : List String → Except String ServerOptsC
   | [] => pure s
   | a :: as =>
@@ -197,6 +209,14 @@ private partial def serverOptsGo (s : ServerOptsC) : List String → Except Stri
       | "--registry" => reqString "registry" s.registry (fun v r => serverOptsGo { s with registry := some v } r) as
       | "--bind" => reqString "bind" s.bind (fun v r => serverOptsGo { s with bind := some v } r) as
       | "--jobs" => reqInt "jobs" s.jobs (fun v r => serverOptsGo { s with jobs := some v } r) as
+      | "--model-interface-allow-client" =>
+          reqString "model-interface-allow-client" s.modelInterfaceAllowClient
+            (fun v r => serverOptsGo { s with modelInterfaceAllowClient := some v } r) as
+      | "--model-interface-descriptor-read" =>
+          if s.modelInterfaceDescriptorRead then
+            throw "duplicate --model-interface-descriptor-read"
+          else
+            serverOptsGo { s with modelInterfaceDescriptorRead := true } as
       | other =>
           if other.startsWith "--" then throw s!"unknown option: {other}"
           else match other.toNat? with
@@ -213,8 +233,16 @@ def parseServerOpts (argv : List String) : Except String ServerOpts := do
   let cert ← optOr "cert" s.cert
   let key ← optOr "key" s.key
   let ca ← optOr "ca" s.ca
+  let allowedPeerFingerprints ← match s.modelInterfaceAllowClient with
+    | none => pure []
+    | some raw => Shell.ModelInterface.Auth.parseFingerprintAllowlist raw
+  if s.modelInterfaceDescriptorRead && allowedPeerFingerprints.isEmpty then
+    throw "--model-interface-descriptor-read requires --model-interface-allow-client"
   return { port, cert, key, ca, registry := s.registry,
-           jobs := s.jobs.getD 4, bind := s.bind }
+           jobs := s.jobs.getD 4, bind := s.bind,
+           modelInterfacePolicy := {
+             allowedPeerFingerprints
+             descriptorRead := s.modelInterfaceDescriptorRead } }
 
 /-! ## validate option parsing (Protocol.ValidateOpts port) -/
 
@@ -296,14 +324,22 @@ def parseValidateOpts (argv : List String) : Except String ValidateOpts :=
 
 /-! ## server modes -/
 
-private def mirrorSession (t : Shell.Transport.Transport) : IO Unit :=
+/-- Run the local stdio session under its explicit trusted principal/realm. -/
+def runLocalStdioSession (t : Shell.Transport.Transport) : IO Unit :=
   Shell.Mirror.run t Shell.Apalache.syncOracles
+    (Shell.ModelInterface.Auth.runtimeAccess Shell.ModelInterface.Auth.localStdio)
+    (Shell.ModelInterface.Auth.authorizationScope Shell.ModelInterface.Auth.localStdio)
 
 /-- t31: async session body — one connection = one @runAsync@ session
 over the process-shared job store. -/
 private def asyncMirrorSession (store : Shell.Jobs.JobStore)
+    (interfaceService : Shell.ModelInterface.Runtime.Service)
+    (auth : Shell.ModelInterface.Auth.SessionAuthContext)
     (t : Shell.Transport.Transport) : IO Unit :=
   Shell.Mirror.runAsync t Shell.Apalache.syncOracles store
+    (Shell.ModelInterface.Auth.runtimeAccess auth)
+    (Shell.ModelInterface.Auth.authorizationScope auth)
+    (some interfaceService)
 
 /- Plain TCP mirror server (Haskell @serveCli@). t31: the server runs
 concurrent ASYNC sessions — one @runAsync@ session per accepted
@@ -326,11 +362,15 @@ def serveCli (argv : List String) : IO UInt32 := do
   | .error e => IO.eprintln e; return 2
   | .ok (port, bind, jobs) =>
       let store ← Shell.Jobs.newJobStoreWith (max 1 jobs) Shell.Apalache.jobRunner
+      let interfaceService ← Shell.ModelInterface.Runtime.Service.new
+        (maxConcurrent := max 1 jobs)
       -- t33: worker-pool sessions on BOTH platforms (the pool's
       -- never-completing workers eliminate the Windows task-teardown
       -- race; Docs/worker-pool-design.md).
       Shell.Transport.Tcp.serveTcpConcurrentOn (bind.getD "") port
-        (asyncMirrorSession store) (workers := max 1 jobs)
+        (asyncMirrorSession store interfaceService
+          Shell.ModelInterface.Auth.unauthenticatedTcp)
+        (workers := max 1 jobs)
       return 0
 
 /-- The heartbeat loop (Haskell @heartbeatLoop@): every 10s, forever,
@@ -391,10 +431,24 @@ def serveOne (opts : ServerOpts) : IO UInt32 := do
                 pure none
   let bind := opts.bind.getD ""
   let store ← Shell.Jobs.newJobStoreWith (max 1 opts.jobs) Shell.Apalache.jobRunner
+  let interfaceService ← Shell.ModelInterface.Runtime.Service.new
+    (maxConcurrent := max 1 opts.jobs)
+  let clientCaFingerprint ←
+    match ← Shell.Transport.Tls.certFingerprintSHA256 files.caFile with
+    | some fingerprint => pure fingerprint
+    | none =>
+        throw (IO.userError
+          s!"cannot derive model-interface authorization realm from client CA {files.caFile}")
   -- t33: worker-pool sessions on BOTH platforms (see serveCli).
   let serve : IO Unit :=
-    Shell.Transport.Tls.serveTlsConcurrentOn bind opts.port files
-      (asyncMirrorSession store) (workers := max 1 opts.jobs)
+    Shell.Transport.Tls.serveTlsConcurrentOnWithPeerFingerprint
+      bind opts.port files (fun peerFingerprint transport => do
+        let auth ← match Shell.ModelInterface.Auth.authenticatedTls
+            clientCaFingerprint peerFingerprint opts.modelInterfacePolicy with
+          | .ok auth => pure auth
+          | .error error => throw (IO.userError s!"mTLS authorization: {error}")
+        asyncMirrorSession store interfaceService auth transport)
+      (workers := max 1 opts.jobs)
   let rc ←
     try
       serve

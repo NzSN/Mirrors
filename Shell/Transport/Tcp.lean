@@ -50,10 +50,28 @@ private partial def findLf (b : ByteArray) (i : Nat) : Option Nat :=
   else if b.get! i == 10 then some i
   else findLf b (i + 1)
 
+private def stripTrailingCrBytes (b : ByteArray) : ByteArray :=
+  if b.size > 0 && b.get! (b.size - 1) == 13 then
+    b.extract 0 (b.size - 1)
+  else b
+
+private def validatePartialLine (b : ByteArray) : IO Unit := do
+  match findLf b 0 with
+  | some i =>
+      let payload := stripTrailingCrBytes (b.extract 0 i)
+      if payload.size > maxProtocolLineBytes then
+        throw (IO.userError s!"TCP line exceeds {maxProtocolLineBytes} UTF-8 bytes")
+  | none =>
+      let allowance :=
+        if b.size > 0 && b.get! (b.size - 1) == 13 then 1 else 0
+      if b.size > maxProtocolLineBytes + allowance then
+        throw (IO.userError s!"TCP line exceeds {maxProtocolLineBytes} UTF-8 bytes")
+
 /-- Build the line-framed @Transport@ over a connected socket. -/
 def tcpTransport (t : TcpTransport) : Transport :=
   { recv := do
       let mut acc ← t.buf.get
+      validatePartialLine acc
       let mut found := true
       let mut eof := false
       while found && !eof do
@@ -65,18 +83,21 @@ def tcpTransport (t : TcpTransport) : Transport :=
             eof := true
           else
             acc := acc.append (t.rbuf.extract 0 n.toNat)
+            validatePartialLine acc
       if eof && acc.isEmpty then
         return none
       else
         match findLf acc 0 with
         | none =>
             t.buf.set (ByteArray.mk (#[] : Array UInt8))
-            return some (stripEol (String.fromUTF8? acc |>.getD ""))
+            let payload := stripTrailingCrBytes acc
+            return some (← decodeProtocolUtf8 payload)
         | some i =>
-            let line := acc.extract 0 i
+            let line := stripTrailingCrBytes (acc.extract 0 i)
             t.buf.set (acc.extract (i + 1) acc.size)
-            return some (stripEol (String.fromUTF8? line |>.getD ""))
+            return some (← decodeProtocolUtf8 line)
     send := fun s => do
+      validateProtocolLine s
       let bs := (s ++ "\n").toUTF8
       let r ← Ffi.sendAll t.fd bs bs.size.toUInt64
       if r == Ffi.fdError then

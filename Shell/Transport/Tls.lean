@@ -122,47 +122,56 @@ private partial def findLf (b : ByteArray) (i : Nat) : Option Nat :=
   else if b.get! i == 10 then some i
   else findLf b (i + 1)
 
+private def stripTrailingCrBytes (b : ByteArray) : ByteArray :=
+  if b.size > 0 && b.get! (b.size - 1) == 13 then
+    b.extract 0 (b.size - 1)
+  else b
+
+private def validatePartialLine (b : ByteArray) : IO Unit := do
+  match findLf b 0 with
+  | some i =>
+      let payload := stripTrailingCrBytes (b.extract 0 i)
+      if payload.size > maxProtocolLineBytes then
+        throw (IO.userError s!"TLS line exceeds {maxProtocolLineBytes} UTF-8 bytes")
+  | none =>
+      let allowance :=
+        if b.size > 0 && b.get! (b.size - 1) == 13 then 1 else 0
+      if b.size > maxProtocolLineBytes + allowance then
+        throw (IO.userError s!"TLS line exceeds {maxProtocolLineBytes} UTF-8 bytes")
+
 /-- Line-framed @Transport@ over an established TLS session (the
 Haskell recv-line-over-decrypted-stream loop). -/
 def tlsTransport (t : TlsSession) : Transport :=
   let recvBuf := ByteArray.mk ((List.replicate 65536 0).toArray)
   { recv := do
       let mut acc ← t.buf.get
+      validatePartialLine acc
       let mut found := true
       let mut eof := false
-      -- m6 (review): bounded line buffer — a peer that never sends LF
-      -- must not balloon server memory. The Haskell side (Tcp.hs
-      -- hGetLine) is itself unbounded; we adopt the review's 1 MiB
-      -- cap as defense-in-depth.
-      if acc.size > 1048576 then
-        throw (IO.userError "TLS line exceeds 1 MiB cap")
       while found && !eof do
         if hasLf acc then
           found := false
         else
-          if acc.size > 1048576 then
-            throw (IO.userError "TLS line exceeds 1 MiB cap")
           let n ← Ffi.tlsRead t.ssl recvBuf 65536
           if n == 0 || n == Ffi.tlsError then
             eof := true
           else
             acc := acc.append (recvBuf.extract 0 n.toNat)
+            validatePartialLine acc
       if eof && acc.isEmpty then
         return none
       else
-        let rec findLf (i : Nat) : Option Nat :=
-          if i >= acc.size then none
-          else if acc.get! i == 10 then some i
-          else findLf (i + 1)
-        match findLf 0 with
+        match findLf acc 0 with
         | none =>
             t.buf.set (ByteArray.mk (#[] : Array UInt8))
-            return some ((String.fromUTF8? acc |>.getD ""))
+            let payload := stripTrailingCrBytes acc
+            return some (← decodeProtocolUtf8 payload)
         | some i =>
-            let line := acc.extract 0 i
+            let line := stripTrailingCrBytes (acc.extract 0 i)
             t.buf.set (acc.extract (i + 1) acc.size)
-            return some (Shell.Transport.stripEol (String.fromUTF8? line |>.getD ""))
+            return some (← decodeProtocolUtf8 line)
     send := fun s => do
+        validateProtocolLine s
         let bs := (s ++ "\n").toUTF8
         let r ← Ffi.tlsWriteAll t.ssl bs bs.size.toUInt64
         if r == Ffi.tlsError then
@@ -227,13 +236,14 @@ session + close for one connection at a time. The shim's error buffer is
 thread-local (FFI-hardening #2; the m4 interleaving caveat is retired),
 so @dsh_tls_errmsg@ returns each calling thread's own failure message
 and concurrent handshake failures cannot interleave. -/
-partial def serveTlsConcurrentOn (host : String) (port : Nat) (files : TlsFiles)
-    (session : Transport → IO Unit) (workers : Nat := 4) : IO Unit := do
+private partial def serveTlsConcurrentOnImpl (errorContext host : String)
+    (port : Nat) (files : TlsFiles)
+    (session : String → Transport → IO Unit) (workers : Nat) : IO Unit := do
   match ← mkServerCtx files with
-  | .error e => throw (IO.userError s!"serveTlsConcurrentOn: {e}")
+  | .error e => throw (IO.userError s!"{errorContext}: {e}")
   | .ok ctx =>
       match ← Shell.Transport.Tcp.listenTcp host port with
-      | .error e => throw (IO.userError s!"serveTlsConcurrentOn: {e}")
+      | .error e => throw (IO.userError s!"{errorContext}: {e}")
       | .ok (lfd, bound) =>
           IO.eprintln s!"tls: listening on {if host.isEmpty then "*" else host}:{bound} (mTLS, TLS 1.3, worker pool, {max 1 workers} workers)"
           let q ← Shell.Transport.Tcp.ConnQueue.new
@@ -253,13 +263,39 @@ partial def serveTlsConcurrentOn (host : String) (port : Nat) (files : TlsFiles)
             else
               let _ ← Ffi.setRecvTimeoutMs cfd 0
               let t := { ssl, buf := ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)) }
-              try
-                session (tlsTransport t)
-              catch e =>
-                IO.eprintln s!"tls: session ended: {e}"
+              match ← peerCertFingerprintSHA256 ssl with
+              | none =>
+                  IO.eprintln
+                    "tls: verified peer certificate has no available SHA-256 fingerprint"
+              | some fingerprint =>
+                  try
+                    session fingerprint (tlsTransport t)
+                  catch e =>
+                    IO.eprintln s!"tls: session ended: {e}"
               tlsClose t
             Ffi.closeFd cfd)
           Shell.Transport.Tcp.loopAcceptPool lfd q
+
+/--
+Concurrent mTLS server whose callback receives the SHA-256 fingerprint of the
+client leaf certificate after the TLS 1.3 handshake and client-CA validation
+have succeeded. A verified connection without an extractable fingerprint is
+closed without entering the session.
+-/
+partial def serveTlsConcurrentOnWithPeerFingerprint
+    (host : String) (port : Nat) (files : TlsFiles)
+    (session : String → Transport → IO Unit) (workers : Nat := 4) : IO Unit :=
+  serveTlsConcurrentOnImpl "serveTlsConcurrentOnWithPeerFingerprint"
+    host port files session workers
+
+/--
+Backward-compatible concurrent mTLS server. Existing callers and tests retain
+the original callback shape; peer identity is intentionally discarded.
+-/
+partial def serveTlsConcurrentOn (host : String) (port : Nat) (files : TlsFiles)
+    (session : Transport → IO Unit) (workers : Nat := 4) : IO Unit :=
+  serveTlsConcurrentOnImpl "serveTlsConcurrentOn" host port files
+    (fun _fingerprint transport => session transport) workers
 
 /-- Shared connect: resolve, TCP connect, TLS 1.3 handshake with CA and
 SAN validation. Returns the session's SSL object on success. -/
