@@ -36,8 +36,20 @@ structure TlsFiles where
   keyFile : System.FilePath
   caFile : System.FilePath
 
+private def freshZeroedBuffer (size : Nat) : IO ByteArray := do
+  -- Do not construct FFI output buffers from a closed pure expression such as
+  -- `ByteArray.mk ((List.replicate size 0).toArray)`. Native compilation may
+  -- share that immutable value across calls, while the C shim necessarily
+  -- writes through `lean_sarray_cptr`; a later fingerprint call can then read
+  -- bytes left by an earlier call. Building from a fresh capacity allocation
+  -- gives each invocation uniquely owned mutable storage at the FFI boundary.
+  let mut bytes := ByteArray.emptyWithCapacity size
+  for _ in [0:size] do
+    bytes := bytes.push 0
+  return bytes
+
 private def fpOfRaw (run : ByteArray → UInt64 → BaseIO UInt64) : IO (Option String) := do
-  let buf := ByteArray.mk ((List.replicate 65 0).toArray)
+  let buf ← freshZeroedBuffer 65
   let n ← liftM (run buf 64)
   if n == Ffi.tlsError then return none
   return some (String.fromUTF8? (buf.extract 0 64) |>.getD "")

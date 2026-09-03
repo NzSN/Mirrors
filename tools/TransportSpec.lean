@@ -1,6 +1,7 @@
 import Shell.Transport.Tcp
 import Shell.Transport.Tls
 import Shell.Transport.Stdio
+import Shell.ModelInterface.Auth
 
 /-!
 # t15 gate: TCP + mTLS transports
@@ -315,6 +316,41 @@ def mainTests : IO UInt32 := do
       if fp != cliFp then IO.eprintln s!"dbg fp lean={fp} cli={cliFp}"
       check f "fingerprint matches openssl CLI" (fp == cliFp && fp.length == 64)
   | none => check f "fingerprint matches openssl CLI" false
+  -- Regression: the CLI fingerprints the configured client CA immediately
+  -- before obtaining the accepted peer leaf fingerprint. Every call must own
+  -- its output buffer; otherwise the later read can return the earlier CA
+  -- digest and an exactly allowlisted mTLS client is denied.
+  let clientCli ← IO.Process.output
+    { cmd := "openssl", args := #["x509", "-in", path "client.crt",
+      "-noout", "-fingerprint", "-sha256"] }
+  let clientRaw := (clientCli.stdout.splitOn "=").getLast?.getD ""
+  let clientCliFp :=
+    (String.ofList (clientRaw.toList.filter
+      (fun c => c != ':' && c != '\n' && c != '\r'))).toLower
+  let caFp? ← certFingerprintSHA256 (System.FilePath.mk (path "ca.crt"))
+  let clientFp? ← certFingerprintSHA256
+    (System.FilePath.mk (path "client.crt"))
+  match clientFp? with
+  | some clientFp =>
+      check f "sequential certificate fingerprints keep distinct output"
+        (clientFp == clientCliFp)
+  | none =>
+      check f "sequential certificate fingerprints keep distinct output" false
+  match caFp?, clientFp? with
+  | some caFp, some clientFp =>
+      let allowed := Shell.ModelInterface.Auth.authenticatedTls caFp clientFp
+        { allowedPeerFingerprints := [clientCliFp] }
+      check f "mTLS leaf fingerprint grants exact allowlisted verify scope"
+        (allowed.map Shell.ModelInterface.Auth.runtimeAccess ==
+          .ok .verifyOnly)
+      let denied := Shell.ModelInterface.Auth.authenticatedTls caFp clientFp
+        { allowedPeerFingerprints := [String.ofList (List.replicate 64 '0')] }
+      check f "mTLS leaf fingerprint denies a non-allowlisted principal"
+        (denied.map Shell.ModelInterface.Auth.runtimeAccess ==
+          .ok .disabled)
+  | _, _ =>
+      check f "mTLS leaf fingerprint grants exact allowlisted verify scope" false
+      check f "mTLS leaf fingerprint denies a non-allowlisted principal" false
   match ← certDaysRemaining (System.FilePath.mk (path "soon.crt")) with
   | some d => check f "soon cert days in [1,2]" (d == 1 || d == 2)
   | none => check f "soon cert days in [1,2]" false
