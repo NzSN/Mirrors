@@ -11,10 +11,13 @@ stdio + TCP daemon + mTLS daemon) PLUS the harness TLS negatives (wrong
 pin, wrong-CA/rogue client, key-mode) and registry discovery/failover/
 fail-closed. Haskell `validate`: VALID over TCP and over mTLS with pinned
 fingerprint; wrong pin fails fast (fingerprint mismatch); rogue client
-cert rejected at handshake. The compiled model-interface D3 slice additionally
-verifies the generated Counter digest before adapter construction, completes
-real replay over stdio and allowlisted mTLS, rejects a wrong digest or
-non-allowlisted client before SUT calls, and retains ordinary `step_mismatch`.
+cert rejected at handshake. The model-interface D3+D4 slice additionally
+verifies the generated Counter digest before adapter construction; exercises
+dynamic descriptor `resolved -> not_modified` cache reuse over stdio; completes
+compiled verification and authorized descriptor read over allowlisted mTLS;
+rejects wrong digests, missing descriptor-read scope, and non-allowlisted
+clients before application callbacks; and keeps wrong observers on ordinary
+`step_mismatch`.
 
 ## Matrix
 
@@ -41,13 +44,14 @@ What run.sh does:
    \`.lake/build/bin/mirror\`. The suite exercises register,
    register_traces, register_trace_gen (destPath copy + inline traces),
    register_explore, register_explore_session, inline specs, and repeats
-   every scenario over TCP against \`mirror --serve\`. \`RUNFILES\` is set to
-   \`.golden-build/rf\` (a bazel-style layout with \`_main\` symlinked at the
-   ECMA repo) so the harness resolves its fixtures and skips the upstream
-   TLS/registry scenarios.
-3. Typechecks and runs MirrorECMA's standalone compiled model-interface Counter
+   every scenario over TCP against \`mirror --serve\`, followed by its mTLS,
+   TLS-negative, and registry scenarios.
+3. Typechecks and runs MirrorECMA's standalone D3+D4 model-interface Counter
    slice. It checks the generated lock/source bytes, exact digest negotiation,
-   fail-closed ordering, and authorized mTLS using only local adapter code.
+   fail-closed ordering, dynamic `resolved -> not_modified` cache reuse,
+   source-free local handlers, wrong-observer `step_mismatch`, allowlisted mTLS
+   verification and descriptor read, descriptor-read denial, and no-allowlist
+   denial.
 4. Starts \`mirror --serve\` and runs the Haskell ModelMirrors \`validate\`
    client against it over TCP.
 
@@ -65,7 +69,8 @@ fingerprints (SHA-256 hex of the DER) and negative cases.
 
 - MirrorECMA runs its canonical-corpus Jest tests and full standalone smoke
   suite, including async, TLS, registry negatives, strict inbound framing, and
-  compiled model-interface verification.
+  D3 compiled model-interface verification and D4 dynamic descriptor/cache
+  replay, including descriptor-read authorization negatives.
 - MirrorCPP runs its complete CTest suite; `real_mirror_hourclock` replays the
   authoritative Counter model over stdio, TCP, and mTLS.
 - MirrorRust runs `cargo test` with the canonical corpus and real mirror

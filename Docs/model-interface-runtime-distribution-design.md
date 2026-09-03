@@ -1,7 +1,7 @@
 # Runtime Model-Interface Distribution — Design
 
-> Status: **Mirrors compiler/distribution and MirrorECMA compiled verification
-> implemented; dynamic descriptor mode and static-client registries planned**
+> Status: **Mirrors compiler/distribution plus MirrorECMA compiled verification
+> and dynamic descriptor mode implemented; static-client registries planned**
 > Compiler contract:
 > [`model-interface-compiler-design.md`](model-interface-compiler-design.md)
 > Cross-language generated interface:
@@ -42,9 +42,23 @@ MirrorECMA's D3 compiled-verification path is implemented in its sibling repo:
   allowlisted mTLS, with wrong-digest and unauthorized paths making zero SUT
   calls and an incorrect observer reaching ordinary `step_mismatch`.
 
-The remaining external-client work is D4's optional MirrorECMA dynamic handler
-registry plus D5's exact-digest registries for MirrorCPP, MirrorRust, and
-MirrorLean. Existing handwritten `StateComputer` entry points remain unchanged.
+MirrorECMA's optional D4 dynamic development path is also implemented:
+
+- descriptor requests/replies use strict codecs, the Lean-compatible canonical
+  JSON projection, and the same domain-separated semantic digest as Mirrors;
+- an explicitly constructed bounded cache revalidates content and correlates
+  `ifNoneMatch`/`not_modified` to the exact request;
+- an exact local handler/observer registry performs source-free native
+  conversion, action dispatch, lifecycle enforcement, and permanent poisoning;
+- malformed descriptors, cache misses, digest/type/registry mismatches, and
+  unauthorized delivery make zero application callbacks;
+- the Counter smoke covers stdio `resolved -> not_modified`, authorized mTLS
+  descriptor read, denial without descriptor-read scope, and a wrong observer
+  reaching ordinary `step_mismatch`.
+
+The remaining external-client work is D5's exact-digest registries for
+MirrorCPP, MirrorRust, and MirrorLean. Existing handwritten `StateComputer`
+entry points remain unchanged.
 
 The development-time TypeScript emitter now exports
 `<Model>ModelInterface = { semanticDigest, contract } as const`. The contract
@@ -1022,8 +1036,8 @@ from server `register_error`, generated binding errors, and Mirrors
 
 ### 16.4 Dynamic MirrorECMA option
 
-MirrorECMA may additionally interpret a descriptor at runtime through a local
-handler registry keyed by stable descriptor IDs:
+MirrorECMA additionally implements descriptor interpretation at runtime
+through a local handler registry keyed by stable descriptor IDs:
 
 ```ts
 interface DynamicHandlerRegistry {
@@ -1060,6 +1074,12 @@ not authorize binding creation. During replay, all inputs decode before
 mutation, expected state and `prevState` remain hidden, exactly one action is
 followed by one observation pass, and an invalid observer value poisons the
 binding.
+
+The implementation uses strict descriptor decoding and canonical identity
+verification before caching, a bounded content-verified LRU, and request-bound
+`ifNoneMatch` correlation. Its unit and live Counter gates cover zero-callback
+failure paths, cache corruption/misses, lifecycle poisoning, stdio cache reuse,
+and mTLS descriptor-read authorization.
 
 ## 17. Security model
 
@@ -1382,14 +1402,19 @@ Exit: required mismatch emits no `initial_state`; legacy behavior is unchanged.
 Exit: Counter verifies and replays over stdio and mTLS; plain TCP fails closed
 unless the trusted-deployment opt-in is explicitly exercised.
 
-### D4: descriptor retrieval and dynamic development mode
+### D4: descriptor retrieval and dynamic development mode — implemented
 
-- Add descriptor caching and `ifNoneMatch` in MirrorECMA.
-- Add optional local handler registry interpreter.
-- Keep dynamic execution source-free and development-oriented.
+- MirrorECMA implements a bounded, content-verified descriptor cache and sends
+  `ifNoneMatch` only for the exact verified digest recorded in the request.
+- Its local handler/observer registry is validated exactly before callbacks and
+  drives the existing replay loop through descriptor-defined native conversion.
+- Dynamic execution is source-free, development-oriented, and permanently
+  poisons a binding after input, handler, observer, output, or reentrancy failure.
 
-Exit: a dynamic client can retrieve a descriptor and bind local handlers
-without evaluating remote code.
+Exit evidence: Counter retrieves `resolved`, reuses `not_modified`, and replays
+local handlers over stdio and authorized mTLS without evaluating remote code;
+descriptor-read denial and pre-binding failures make zero callbacks, while a
+behaviorally wrong observer reaches ordinary `step_mismatch`.
 
 ### D5: static clients
 

@@ -56,7 +56,10 @@ cp -r "$ECMA/specs" "$RUNDIR/"
   SPEC="$MIRRORS/specs/Counter.tla" \
   node "$MIRRORS/.golden-build/ecma-interop/test/smoke.test.js")
 
-echo "== MirrorECMA negotiated model-interface: stdio + authorized mTLS =="
+echo "== MirrorECMA negotiated model-interface D3+D4: stdio + authorized mTLS =="
+# Covers compiled matched verification, dynamic resolved -> not_modified cache
+# reuse, wrong-observer step_mismatch, allowlisted mTLS verification, authorized
+# descriptor read, denial without descriptor-read scope, and no-allowlist denial.
 (cd "$RUNDIR" && LC_ALL=C.UTF-8 \
   MIRRORS_ROOT="$MIRRORS" MIRRORECMA_ROOT="$ECMA" \
   MIRROR_BIN="$LEAN_BIN" APALACHE_MC="$APALACHE_MC_BIN" \

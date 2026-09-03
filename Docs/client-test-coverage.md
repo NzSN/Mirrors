@@ -1,20 +1,22 @@
 # Non-Lean client conformance-test coverage
 
-Status: complete for the normative C1–C27 client rules in
-`Docs/client-implementation-guide.md`. This matrix covers MirrorECMA,
-MirrorCPP, and MirrorRust. It is executable conformance evidence, not a formal
-proof of the non-Lean implementations.
+Status: MirrorECMA and MirrorRust have executable coverage for the normative
+C1–C27 client rules in `Docs/client-implementation-guide.md`. MirrorCPP has one
+known C2 gap: outbound size is bounded, but its stdio/TCP/TLS inbound
+accumulators do not yet enforce the 65,535-byte payload cap. This matrix is
+executable conformance evidence, not a formal proof of the non-Lean
+implementations.
 
 | Rules | Required behavior | MirrorECMA | MirrorCPP | MirrorRust |
 | --- | --- | --- | --- | --- |
-| C1–C3 | Strict JSONL framing, 65,535-byte inbound/outbound limit, `proto_step` dispatch, additive fields | `transport.test.ts`, `protocol.test.ts`, canonical corpus; byte-level fatal UTF-8 framing | framing/transport tests, protocol additive-field test, full golden corpus | `transport.rs`, protocol additive-field test, canonical supported-message corpus |
+| C1–C3 | Strict JSONL framing, 65,535-byte inbound/outbound limit, `proto_step` dispatch, additive fields | `transport.test.ts`, `protocol.test.ts`, canonical corpus; strict LF termination and byte-level fatal UTF-8 framing | outbound limit, framing/transport tests, protocol additive-field test, full golden corpus; **known C2 gap: inbound accumulators are not capped** | `transport.rs`, protocol additive-field test, canonical supported-message corpus |
 | C4–C7 | Legal session opening/termination, clean or peer-first close, no protocol heartbeat assumption | one-shot/`Connection` tests; disconnect eviction and query-based liveness in live smoke | phase-guard, fault-close, and transport EOF tests | one-shot APIs plus protocol-error poisoning, transport close, and live disconnect eviction |
 | C8–C12 | Exactly one report per driven state, full ITF state, terminal mismatch, arbitrary integers, no fixed trace length | real Counter replay plus deliberately extra-key mismatch over stdio/TCP/mTLS | real Counter replay plus deliberately extra-key mismatch over stdio/TCP/mTLS; value/diff corpus | real Counter replay plus deliberately extra-key mismatch over stdio/TCP/mTLS; arbitrary-precision codec tests |
 | C13–C16 | Inline dependency closure, optional absent/null parity, `constInit`/`paramVars`, validate bounds | spec resolver, canonical corpus, authoritative Counter, no-write bound tests | spec resolver, `decode_only` corpus, authoritative Counter, bound registration error | spec resolver, normalized absent/null corpus, authoritative Counter, no-write bound tests |
 | C17–C23 | Cross-connection job IDs, long-poll/idempotence, cancellation, sync/async congruence, unknown, queue pressure, unordered completion | scripted async suite and live reverse-await/cancel/evict/queue-full matrix | scripted async suite and real sync/async comparison plus reverse awaits | scripted async suite and real cross-connection/reverse-await/cancel/evict/queue-full matrix |
 | C24–C27 | TLS 1.3 mTLS, SAN-only identity, fingerprint pinning, key permissions | real TLS 1.2 rejection, rogue client, CN-only, wrong pin, registry failover, mode 0644 | TLS fixture suite: TLS 1.2, wrong CA, CN-only, pins, registry, mode 0644 | real TLS 1.2 rejection, rogue client, CN-only, wrong pin, registry failover/override, mode 0644 |
 
-The error obligations in section 9 are also covered: `register_error`, poisoned
+The error obligations in section 10 are also covered: `register_error`, poisoned
 `protocol_error`, terminal `step_mismatch`, and `infraError` distinct from a
 validation verdict.
 
@@ -34,8 +36,28 @@ verification slice through `model-interface-protocol.test.ts`,
 - real Counter replay over stdio and allowlisted mTLS, plus an intentionally
   incorrect observer reaching ordinary `step_mismatch`.
 
-Descriptor interpretation and `ifNoneMatch` caching remain the separate D4
-development-mode scope.
+## Dynamic model-interface D4 coverage
+
+MirrorECMA's development-only dynamic path is covered by
+`model-interface-descriptor.test.ts`, `model-interface-dynamic.test.ts`,
+`model-interface-runner.test.ts`, and `model-interface-counter.smoke.ts`:
+
+- strict descriptor/reply/failure codecs and byte-identical Lean-compatible
+  canonical descriptor hashing, including the fixed Counter digest;
+- bounded content-verified LRU caching, exact request correlation for
+  `ifNoneMatch`/`not_modified`, and missing/corrupt cache rejection;
+- exact local handler and observer IDs, source-free conversion for supported
+  native types, alias dispatch, all-inputs-before-mutation, and permanent
+  lifecycle poisoning;
+- zero callbacks and no `report_state` for malformed/wrong-digest descriptors,
+  unsupported types, missing cache entries, registry mismatches, and denied
+  descriptor access;
+- real Counter `resolved -> not_modified` replay over stdio, authorized mTLS
+  descriptor read, denial without descriptor-read scope, exactly-once cleanup,
+  and a wrong observer reaching ordinary `step_mismatch`.
+
+D5 exact-digest registries for MirrorCPP, MirrorRust, and MirrorLean, and the
+proposed common portable cross-language fixture suite, remain planned.
 
 ## One-command gate
 
