@@ -7,7 +7,7 @@ proof of the non-Lean implementations.
 
 | Rules | Required behavior | MirrorECMA | MirrorCPP | MirrorRust |
 | --- | --- | --- | --- | --- |
-| C1–C3 | Strict JSONL framing, 65,535-byte outbound limit, `proto_step` dispatch, additive fields | `transport.test.ts`, `protocol.test.ts`, canonical corpus | framing/transport tests, protocol additive-field test, full golden corpus | `transport.rs`, protocol additive-field test, canonical supported-message corpus |
+| C1–C3 | Strict JSONL framing, 65,535-byte inbound/outbound limit, `proto_step` dispatch, additive fields | `transport.test.ts`, `protocol.test.ts`, canonical corpus; byte-level fatal UTF-8 framing | framing/transport tests, protocol additive-field test, full golden corpus | `transport.rs`, protocol additive-field test, canonical supported-message corpus |
 | C4–C7 | Legal session opening/termination, clean or peer-first close, no protocol heartbeat assumption | one-shot/`Connection` tests; disconnect eviction and query-based liveness in live smoke | phase-guard, fault-close, and transport EOF tests | one-shot APIs plus protocol-error poisoning, transport close, and live disconnect eviction |
 | C8–C12 | Exactly one report per driven state, full ITF state, terminal mismatch, arbitrary integers, no fixed trace length | real Counter replay plus deliberately extra-key mismatch over stdio/TCP/mTLS | real Counter replay plus deliberately extra-key mismatch over stdio/TCP/mTLS; value/diff corpus | real Counter replay plus deliberately extra-key mismatch over stdio/TCP/mTLS; arbitrary-precision codec tests |
 | C13–C16 | Inline dependency closure, optional absent/null parity, `constInit`/`paramVars`, validate bounds | spec resolver, canonical corpus, authoritative Counter, no-write bound tests | spec resolver, `decode_only` corpus, authoritative Counter, bound registration error | spec resolver, normalized absent/null corpus, authoritative Counter, no-write bound tests |
@@ -17,6 +17,25 @@ proof of the non-Lean implementations.
 The error obligations in section 9 are also covered: `register_error`, poisoned
 `protocol_error`, terminal `step_mismatch`, and `infraError` distinct from a
 validation verdict.
+
+## Compiled model-interface D3 coverage
+
+MirrorECMA additionally covers the runtime-distribution design's compiled
+verification slice through `model-interface-protocol.test.ts`,
+`model-interface-runner.test.ts`, and `model-interface-counter.smoke.ts`:
+
+- strict duplicate-aware contract/request/reply decoding and exact digest
+  syntax;
+- exact immutable adapter lookup, factory creation only after `matched`, and
+  exactly-once binding disposal;
+- old-server `prefer` only through an explicit fresh fallback factory;
+- zero factory/SUT calls for missing negotiation, wrong digest, malformed
+  replies, unauthorized mTLS, and framing failures;
+- real Counter replay over stdio and allowlisted mTLS, plus an intentionally
+  incorrect observer reaching ordinary `step_mismatch`.
+
+Descriptor interpretation and `ifNoneMatch` caching remain the separate D4
+development-mode scope.
 
 ## One-command gate
 

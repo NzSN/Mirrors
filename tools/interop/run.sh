@@ -14,6 +14,7 @@ ECMA="${ECMA_REPO:-/home/nzsn/Repos/MirrorECMA}"
 CPP="${CPP_REPO:-/home/nzsn/Repos/MirrorCPP}"
 RUST="${RUST_REPO:-/home/nzsn/Repos/MirrorRust}"
 HS_BIN="${HS_BIN:-/home/nzsn/Repos/ModelMirros/dist-newstyle/build/x86_64-linux/ghc-9.14.1/ModelMirrors-0.1.1.0/x/ModelMirrors/build/ModelMirrors/ModelMirrors}"
+APALACHE_MC_BIN="${APALACHE_MC:-/home/nzsn/.local/bin/apalache/bin/apalache-mc}"
 RF="$MIRRORS/.golden-build/rf"
 
 cd "$MIRRORS"
@@ -38,6 +39,8 @@ echo "== MirrorECMA unit + canonical wire-corpus tests =="
 (cd "$ECMA" && MIRRORS_FIXTURES="$MIRRORS/test/fixtures" \
   NODE_OPTIONS="--experimental-vm-modules" \
   ./node_modules/.bin/jest --runInBand)
+(cd "$ECMA" && ./node_modules/.bin/tsc \
+  -p tsconfig.model-interface.json --noEmit)
 
 echo "== MirrorECMA interop: stdio + TCP + mTLS + registry =="
 # Run from a writable copy of the client assets: the spawned mirror shells
@@ -52,6 +55,14 @@ cp -r "$ECMA/specs" "$RUNDIR/"
 (cd "$RUNDIR" && LC_ALL=C.UTF-8 MIRROR_BIN="$LEAN_BIN" \
   SPEC="$MIRRORS/specs/Counter.tla" \
   node "$MIRRORS/.golden-build/ecma-interop/test/smoke.test.js")
+
+echo "== MirrorECMA negotiated model-interface: stdio + authorized mTLS =="
+(cd "$RUNDIR" && LC_ALL=C.UTF-8 \
+  MIRRORS_ROOT="$MIRRORS" MIRRORECMA_ROOT="$ECMA" \
+  MIRROR_BIN="$LEAN_BIN" APALACHE_MC="$APALACHE_MC_BIN" \
+  TS_NODE_PROJECT="$ECMA/tsconfig.model-interface.json" \
+  node --loader "$ECMA/node_modules/ts-node/esm.mjs" \
+    "$ECMA/test/model-interface-counter.smoke.ts")
 
 echo "== MirrorCPP conformance: unit/golden + real stdio/TCP/mTLS =="
 CPP_BUILD="$MIRRORS/.golden-build/mirrorcpp"

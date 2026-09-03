@@ -3,7 +3,7 @@
 Unmodified real clients must interoperate with the Lean mirror over the
 JSON-lines wire protocol, byte-for-byte, on every transport.
 
-Status (2026-08-23, post-t26): FULL MATRIX GREEN. MirrorECMA smoke suite
+Status (2026-09-03): FULL MATRIX GREEN. MirrorECMA smoke suite
 GREEN over stdio, TCP, AND mTLS (register, register_traces,
 register_trace_gen incl. destPath copy + trace inlining, register_explore,
 register_explore_session, inline multi-module specs; 18 scenario runs over
@@ -11,7 +11,10 @@ stdio + TCP daemon + mTLS daemon) PLUS the harness TLS negatives (wrong
 pin, wrong-CA/rogue client, key-mode) and registry discovery/failover/
 fail-closed. Haskell `validate`: VALID over TCP and over mTLS with pinned
 fingerprint; wrong pin fails fast (fingerprint mismatch); rogue client
-cert rejected at handshake.
+cert rejected at handshake. The compiled model-interface D3 slice additionally
+verifies the generated Counter digest before adapter construction, completes
+real replay over stdio and allowlisted mTLS, rejects a wrong digest or
+non-allowlisted client before SUT calls, and retains ordinary `step_mismatch`.
 
 ## Matrix
 
@@ -42,7 +45,10 @@ What run.sh does:
    \`.golden-build/rf\` (a bazel-style layout with \`_main\` symlinked at the
    ECMA repo) so the harness resolves its fixtures and skips the upstream
    TLS/registry scenarios.
-3. Starts \`mirror --serve\` and runs the Haskell ModelMirrors \`validate\`
+3. Typechecks and runs MirrorECMA's standalone compiled model-interface Counter
+   slice. It checks the generated lock/source bytes, exact digest negotiation,
+   fail-closed ordering, and authorized mTLS using only local adapter code.
+4. Starts \`mirror --serve\` and runs the Haskell ModelMirrors \`validate\`
    client against it over TCP.
 
 The mTLS legs run the same unmodified clients with pinned leaf
@@ -58,7 +64,8 @@ fingerprints (SHA-256 hex of the DER) and negative cases.
 ## Non-Lean client gates
 
 - MirrorECMA runs its canonical-corpus Jest tests and full standalone smoke
-  suite, including async, TLS, and registry negatives.
+  suite, including async, TLS, registry negatives, strict inbound framing, and
+  compiled model-interface verification.
 - MirrorCPP runs its complete CTest suite; `real_mirror_hourclock` replays the
   authoritative Counter model over stdio, TCP, and mTLS.
 - MirrorRust runs `cargo test` with the canonical corpus and real mirror
