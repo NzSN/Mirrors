@@ -239,6 +239,10 @@ function encodeCounterObservation(observation: CounterObservation): State {
 }
 
 export const CounterSemanticDigest = "193d6cc187d05c18f02ad483a44f8ad0c1634b02083df241df08b9281b045d1c" as const;
+export const CounterModelInterface = {
+  semanticDigest: CounterSemanticDigest,
+  contract: {"actions":[{"id":"Tick","inputs":[{"from":{"path":[{"field":"parameters"},{"field":"stride"}],"root":"stepParameters"},"id":"Stride"}],"wireAction":"tick","wireAliases":[]}],"initializers":[{"id":"Initialize","inputs":[],"wireAction":"init","wireAliases":[]}],"interfaceVersion":"1.0.0","model":{"module":"Counter","source":"specs/Counter.tla"},"observations":[{"id":"Count","provenance":"implementation","wireName":"count"}],"schema":"mirrors.model-interface/v1","wire":{"actionVariable":"action_taken","parameterVariable":"parameters"}},
+} as const;
 
 export type CounterBindingErrorCode =
   | "configuration_mismatch"

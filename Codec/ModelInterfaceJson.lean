@@ -712,6 +712,7 @@ def encodeLock (lock : LockedModelInterface) : Json :=
   match encodeSemanticDescriptorWithOrigins false
       { descriptor with schema := lockSchemaV1 } with
   | .obj fields => Json.mkObj (fields.toList ++ [
+      ("contract", encodeContract lock.contract),
       ("provenance", encodeLockProvenance lock.provenance),
       ("provenanceDigest", .str lock.provenanceDigest),
       ("semanticDigest", .str lock.semanticDigest)])
@@ -758,17 +759,20 @@ def decodeLock (json : Json) : DecodeResult LockedModelInterface := do
   let context := "lock"
   let allowed := ["schema", "interfaceVersion", "model", "resolverSemanticsVersion",
     "comparisonPolicyVersion", "runProfile", "initializers", "actions", "observations",
-    "semanticDigest", "provenanceDigest", "provenance"]
+    "contract", "semanticDigest", "provenanceDigest", "provenance"]
   let fields ← checkObject context allowed allowed json
   let schema ← decodeString "lock.schema" (← required context fields "schema")
   if schema != lockSchemaV1 then fail "lock.schema" s!"expected '{lockSchemaV1}'"
   let descriptorFields := fields.filter fun field =>
-    field.1 != "semanticDigest" && field.1 != "provenanceDigest" && field.1 != "provenance"
+    field.1 != "contract" && field.1 != "semanticDigest" &&
+      field.1 != "provenanceDigest" && field.1 != "provenance"
   let descriptorJson := Json.mkObj (("schema", .str descriptorSchemaV1) ::
     descriptorFields.filter fun field => field.1 != "schema")
   let descriptor ← decodeSemanticDescriptorWithOrigins false descriptorJson
   return {
     toSemanticDescriptor := descriptor
+    contract := normalizeContractV1
+      (← decodeContract (← required context fields "contract"))
     semanticDigest := ← decodeDigestHex "lock.semanticDigest"
       (← required context fields "semanticDigest")
     provenanceDigest := ← decodeDigestHex "lock.provenanceDigest"

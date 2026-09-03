@@ -1,4 +1,5 @@
 import Core.ModelInterface
+import Codec.ModelInterfaceJson
 import Lean.Data.Json
 
 /-!
@@ -525,7 +526,7 @@ private def renderObservationEncoder (modelName : String)
     s!"  exactKeys(observation as unknown as Record<string, unknown>, [{String.intercalate ", " nativeKeys}], {tsString (modelName ++ "Observation")});",
     "  const state = Object.create(null) as State;"] ++ assignments ++ ["  return state;", "}"]
 
-private def renderBinding (modelName semanticDigest : String)
+private def renderBinding (modelName semanticDigest contractJson : String)
     (configuredParamVar : Option String) (actions : List ResolvedAction) : String :=
   let actions := sortedBy (fun a => a.id) actions
   let actionIds := actions.map (fun a => tsString a.id)
@@ -535,6 +536,10 @@ private def renderBinding (modelName semanticDigest : String)
   let expectedParamVar := configuredParamVar.getD ""
   lines <|
     [s!"export const {modelName}SemanticDigest = {tsString semanticDigest} as const;",
+     s!"export const {modelName}ModelInterface = " ++ "{",
+     s!"  semanticDigest: {modelName}SemanticDigest,",
+     s!"  contract: {contractJson},",
+     "} as const;",
      "",
      s!"export type {modelName}BindingErrorCode =",
      "  | \"configuration_mismatch\"",
@@ -636,7 +641,9 @@ private def renderModule (lock : LockedModelInterface) : EmitResult (String × S
     (renderShapeConstForObservation modelName)
   let inputDecoders ← actions.mapM renderInputDecoder
   let observationEncoder := renderObservationEncoder modelName observations
-  let binding := renderBinding modelName lock.semanticDigest
+  let contractJson := Lean.Json.compress
+    (Codec.ModelInterfaceJson.encodeContract lock.contract)
+  let binding := renderBinding modelName lock.semanticDigest contractJson
     lock.runProfile.configuredParamVar actions
   let sourcePath := s!"{modelName}Mirror.generated.ts"
   let header := lines [

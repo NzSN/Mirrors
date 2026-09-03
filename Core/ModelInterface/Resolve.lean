@@ -191,6 +191,32 @@ mutual
 
 end
 
+private def normalizeContractInput (input : ContractInput) : ContractInput :=
+  { input with expectedType := input.expectedType.map canonicalizeModelType }
+
+private def normalizeContractAction (action : ContractAction) : ContractAction :=
+  { action with
+      wireAliases := sortStrings action.wireAliases
+      inputs := (action.inputs.map normalizeContractInput).toArray.qsort
+        (fun a b => compare a.id b.id == .lt) |>.toList }
+
+private def normalizeContractObservation
+    (observation : ContractObservation) : ContractObservation :=
+  { observation with
+      expectedType := observation.expectedType.map canonicalizeModelType }
+
+/-- Normalize every set-like contract collection while preserving semantic
+sequence/path order. This is the exact contract retained by resolved and lock
+artifacts. -/
+def normalizeContractV1 (contract : ContractV1) : ContractV1 :=
+  { contract with
+      initializers := (contract.initializers.map normalizeContractAction).toArray.qsort
+        (fun a b => compare a.id b.id == .lt) |>.toList
+      actions := (contract.actions.map normalizeContractAction).toArray.qsort
+        (fun a b => compare a.id b.id == .lt) |>.toList
+      observations := (contract.observations.map normalizeContractObservation).toArray.qsort
+        (fun a b => compare a.id b.id == .lt) |>.toList }
+
 mutual
 
   /-- Structural well-formedness independent of any target-language profile. -/
@@ -994,7 +1020,7 @@ def semanticDescriptorWellFormedV1 (descriptor : SemanticDescriptor) : Bool :=
 /-! ## Public resolver -/
 
 def resolve (input : ResolveInput) : CompileResult ResolvedModelInterface :=
-  let contract := input.contract.value
+  let contract := normalizeContractV1 input.contract.value
   let required := requiredObservationVars input.evidence input.runProfile
   let initResults := contract.initializers.map (fun action =>
     resolveAction action .initialize input.evidence input.runProfile input.contract.location)
@@ -1022,7 +1048,7 @@ def resolve (input : ResolveInput) : CompileResult ResolvedModelInterface :=
       contractSha256 := input.contractSha256
       evidenceSha256 := input.evidence.evidenceSha256
       sources := sortSources input.sources }
-  finishCompile (some { toSemanticDescriptor := descriptor, provenance }) diagnostics
+  finishCompile (some { toSemanticDescriptor := descriptor, contract, provenance }) diagnostics
 
 /-- Attach shell-computed canonical digests without changing resolution
 diagnostics or rerunning resolution. -/

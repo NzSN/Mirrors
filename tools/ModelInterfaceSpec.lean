@@ -94,6 +94,42 @@ def counterContract : ContractV1 where
 def counterRunProfile : RunProfile where
   configuredParamVar := some "parameters"
 
+def shuffledContract : ContractV1 :=
+  let tick := counterContract.actions.head?.getD {
+    id := "Tick"
+    wireAction := "tick"
+  }
+  { counterContract with
+      actions := [
+        { tick with
+            wireAliases := ["tick-z", "tick-a"]
+            inputs := [
+              { id := "StrideZ"
+                fromRoot := .stepParameters
+                path := [.field "parameters", .field "stride"] },
+              { id := "StrideA"
+                fromRoot := .stepParameters
+                path := [.field "parameters", .field "stride"] }] },
+        { id := "Alpha", wireAction := "alpha" }
+      ] }
+
+def nestedExpectedTypeContract : ContractV1 :=
+  let nested : ModelType := .record [
+    { wireName := "zeta"
+      type := .variant [
+        { tag := "Zulu", payload := .int },
+        { tag := "Alpha", payload := .bool }] },
+    { wireName := "alpha", type := .str }
+  ]
+  { shuffledContract with
+      actions := shuffledContract.actions.map fun action =>
+        if action.id == "Tick" then
+          { action with inputs := action.inputs.map fun input =>
+              if input.id == "StrideZ" then
+                { input with expectedType := some nested }
+              else input }
+        else action }
+
 def counterResolveInput (evidence : ModelEvidence) : ResolveInput where
   contract := Located.unlocated counterContract
   evidence := evidence
@@ -101,7 +137,9 @@ def counterResolveInput (evidence : ModelEvidence) : ResolveInput where
   compilerVersion := "model-interface-spec"
   contractSha256 :=
     Core.ModelInterface.Sha256.digestDomainHex
-      "mirrors-model-interface-contract/v1" "counter-contract".toUTF8
+      Shell.ModelInterface.Compiler.contractDigestDomain
+      (Codec.ModelInterfaceJson.canonicalBytes
+        (Codec.ModelInterfaceJson.encodeContract counterContract))
 
 def resolvedSemanticBytes (resolved : ResolvedModelInterface) : ByteArray :=
   (toString (repr resolved.semanticDescriptor)).toUTF8
@@ -251,6 +289,46 @@ def scenarioCounterResolution (fails : Failures) :
   check fails "counter resolve: stride is int"
     (resolved.actions.head?.bind (fun action =>
       action.inputs.head?.map (·.projection.type)) == some .int)
+  let canonicalContractBytes := Codec.ModelInterfaceJson.canonicalBytes
+    (Codec.ModelInterfaceJson.encodeContract counterContract)
+  check fails "counter resolve: retains exact normalized contract"
+    (Codec.ModelInterfaceJson.canonicalBytes
+      (Codec.ModelInterfaceJson.encodeContract resolved.contract) ==
+        canonicalContractBytes)
+  let whitespaceContract := " \n\t" ++
+    Codec.ModelInterfaceJson.canonicalString
+      (Codec.ModelInterfaceJson.encodeContract counterContract) ++ "\n "
+  match Codec.ModelInterfaceJson.parseContractString whitespaceContract with
+  | .error error =>
+      check fails "counter contract: insignificant whitespace parses" false error
+  | .ok parsed =>
+      check fails "counter contract: whitespace canonicalizes identically"
+        (Codec.ModelInterfaceJson.canonicalBytes
+          (Codec.ModelInterfaceJson.encodeContract parsed) == canonicalContractBytes)
+  let normalized := normalizeContractV1 nestedExpectedTypeContract
+  check fails "contract normalization: actions sorted by stable id"
+    (normalized.actions.map (·.id) == ["Alpha", "Tick"])
+  let tick := normalized.actions.find? (·.id == "Tick")
+  check fails "contract normalization: aliases sorted"
+    (tick.map (·.wireAliases) == some ["tick-a", "tick-z"])
+  check fails "contract normalization: inputs sorted by stable id"
+    (tick.map (fun action => action.inputs.map (·.id)) ==
+      some ["StrideA", "StrideZ"])
+  let nestedType := tick.bind fun action =>
+    action.inputs.find? (·.id == "StrideZ") |>.bind (·.expectedType)
+  let recordNames := match nestedType with
+    | some (.record fields) => fields.map (·.wireName)
+    | _ => []
+  let variantTags := match nestedType with
+    | some (.record fields) =>
+        match fields.find? (·.wireName == "zeta") with
+        | some { type := .variant cases, .. } => cases.map (·.tag)
+        | _ => []
+    | _ => []
+  check fails "contract normalization: nested record fields sorted"
+    (recordNames == ["alpha", "zeta"])
+  check fails "contract normalization: nested variant cases sorted"
+    (variantTags == ["Alpha", "Zulu"])
 
   let bytes1 := resolvedSemanticBytes resolved
   let bytes2 := resolvedSemanticBytes resolvedAgain
@@ -603,7 +681,11 @@ def runtimeDescriptorRequest :
   request := .descriptor
   policy := .require
   acceptDescriptorSchemas := [descriptorSchemaV1]
-  contract := .inline counterContract
+  contract := .inline shuffledContract
+
+private def resolutionContractRepr?
+    (resolution : Shell.ModelInterface.Runtime.Resolution) : Option String :=
+  resolution.lock.map fun lock => toString (repr lock.contract)
 
 def scenarioRuntimeCache (fails : Failures) : IO Unit := do
   let evidence ← match Shell.ModelInterface.Evidence.fromString
@@ -613,6 +695,7 @@ def scenarioRuntimeCache (fails : Failures) : IO Unit := do
         check fails "runtime cache: evidence parses" false error
         return
   let service ← Shell.ModelInterface.Runtime.Service.new 8 (1024 * 1024) 1
+  let expectedContractRepr := toString (repr (normalizeContractV1 shuffledContract))
   let scopeA : Shell.ModelInterface.Runtime.AuthorizationScope := {
     securityRealm := "realm-a"
     principalId := some "principal-a"
@@ -633,6 +716,11 @@ def scenarioRuntimeCache (fails : Failures) : IO Unit := do
   check fails "runtime cache: hit preserves semantic identity"
     (first.resolution.lock.bind (fun lock => some lock.semanticDigest) ==
       second.resolution.lock.bind (fun lock => some lock.semanticDigest))
+  check fails "runtime cache: miss carries normalized contract"
+    (resolutionContractRepr? first.resolution == some expectedContractRepr)
+  check fails "runtime cache: hit reconstructs identical normalized contract"
+    (resolutionContractRepr? second.resolution ==
+      resolutionContractRepr? first.resolution)
   check fails "runtime cache: one entry after hit"
     ((← Shell.ModelInterface.Cache.entryCount service.cache) == 1)
 
@@ -710,7 +798,11 @@ def scenarioRuntimeCache (fails : Failures) : IO Unit := do
     ((← Shell.ModelInterface.Runtime.resolutionRunCount expiringService) == 2)
 
   let flightService ← Shell.ModelInterface.Runtime.Service.new
-    8 (1024 * 1024) 4 32 16
+    8 (1024 * 1024) 1 32 16
+  -- Hold the sole resolver permit while callers enter the keyed in-flight
+  -- table, ensuring this test exercises followers rather than later hits.
+  let heldPermit ← flightService.resolutionSlots.acquire
+  let _ ← IO.wait heldPermit.result?
   let mut flightTasks := []
   for _ in List.range 16 do
     let task ← IO.asTask (prio := Task.Priority.dedicated)
@@ -718,16 +810,30 @@ def scenarioRuntimeCache (fails : Failures) : IO Unit := do
         (some runtimeDescriptorRequest) (some evidence) (some "parameters")
         (compilerVersion := "model-interface-spec"))
     flightTasks := task :: flightTasks
+  IO.sleep 20
+  flightService.resolutionSlots.release
   let mut flightOk := true
+  let mut flightContractsOk := true
+  let mut flightMisses := 0
   for task in flightTasks do
     match task.get with
     | .ok result =>
         if result.resolution.decision.status != some .resolved then
           flightOk := false
-    | .error _ => flightOk := false
+        if resolutionContractRepr? result.resolution != some expectedContractRepr then
+          flightContractsOk := false
+        if !result.cacheHit then
+          flightMisses := flightMisses + 1
+    | .error _ =>
+        flightOk := false
+        flightContractsOk := false
   check fails "runtime cache: concurrent callers resolve" flightOk
   check fails "runtime cache: identical misses are single-flight"
     ((← Shell.ModelInterface.Runtime.resolutionRunCount flightService) == 1)
+  check fails "runtime cache: test observes at least one in-flight follower"
+    (flightMisses > 1) (toString flightMisses)
+  check fails "runtime cache: in-flight followers carry identical normalized contracts"
+    flightContractsOk
 
 def counterTrace : ItfTrace where
   traceVars := ["action_taken", "count", "parameters"]
@@ -1038,6 +1144,12 @@ def scenarioEmitter (fails : Failures)
         (source.contains "export interface CounterObservation")
       check fails "emitter: port"
         (source.contains "export interface CounterPort")
+      check fails "emitter: inert model-interface metadata"
+        (source.contains "export const CounterModelInterface = {" &&
+          source.contains "semanticDigest: CounterSemanticDigest," &&
+          source.contains ("contract: " ++
+            Codec.ModelInterfaceJson.canonicalString
+              (Codec.ModelInterfaceJson.encodeContract resolved.contract) ++ ","))
       check fails "emitter: StateComputer"
         (source.contains "readonly computer: StateComputer")
       check fails "emitter: config check"
@@ -1150,8 +1262,27 @@ def scenarioSemanticIdentityAndLargeLock (fails : Failures)
     descriptorDigestDomainV1 changedSemanticBytes
   check fails "semantic identity: type origins do not change digest"
     (digest == changedDigest)
+  let validProvenanceDigest := Core.ModelInterface.Sha256.digestDomainHex
+    Shell.ModelInterface.Compiler.provenanceDigestDomain
+    (Codec.ModelInterfaceJson.canonicalProvenanceBytes resolved.provenance)
+  let validLock := resolved.withDigests digest validProvenanceDigest
+  check fails "lock contract: valid authenticated contract verifies"
+    (Shell.ModelInterface.Compiler.verifyLock validLock).isOk
+  let mutatedContract := {
+    validLock.contract with interfaceVersion := "9.9.9" }
+  let mutatedLock := { validLock with contract := mutatedContract }
+  check fails "lock contract: mutation with stale digest is rejected"
+    (!(Shell.ModelInterface.Compiler.verifyLock mutatedLock).isOk)
+  match Codec.ModelInterfaceJson.encodeLock validLock with
+  | .obj fields =>
+      let missingContract := Lean.Json.mkObj
+        (fields.toList.filter (fun field => field.1 != "contract"))
+      check fails "lock contract: field is required in lock v1"
+        (!(Codec.ModelInterfaceJson.decodeLock missingContract).isOk)
+  | _ => check fails "lock contract: lock encoder returns object" false
   let lockWithOrigins : LockedModelInterface := {
     toSemanticDescriptor := descriptor
+    contract := resolved.contract
     semanticDigest := digest
     provenanceDigest := String.ofList (List.replicate 64 '0')
     provenance := resolved.provenance
@@ -1188,6 +1319,7 @@ def scenarioSemanticIdentityAndLargeLock (fails : Failures)
     Shell.ModelInterface.Compiler.provenanceDigestDomain provenanceBytes
   let largeLock : LockedModelInterface := {
     toSemanticDescriptor := descriptor
+    contract := resolved.contract
     semanticDigest := digest
     provenanceDigest := provenanceDigest
     provenance := largeProvenance
@@ -1204,6 +1336,36 @@ def scenarioSemanticIdentityAndLargeLock (fails : Failures)
 
   let temporaryRoot ← IO.FS.createTempDir
   try
+    let loadThenEmit (path : System.FilePath) := do
+      match ← Shell.ModelInterface.Compiler.loadVerifiedLock path.toString with
+      | .error error =>
+          return (.error error : Except Shell.ModelInterface.Compiler.CompilerError
+            Shell.ModelInterface.Emit.TypeScript.GeneratedTree)
+      | .ok lock =>
+          return Shell.ModelInterface.Compiler.emitTarget
+            Shell.ModelInterface.Compiler.mirrorecmaTarget lock
+    let validContractPath := temporaryRoot / "valid-contract.lock.json"
+    IO.FS.writeBinFile validContractPath
+      (Codec.ModelInterfaceJson.canonicalFileBytes
+        (Codec.ModelInterfaceJson.encodeLock validLock))
+    check fails "lock contract e2e: verified lock reaches target emission"
+      ((← loadThenEmit validContractPath).isOk)
+    let missingContractPath := temporaryRoot / "missing-contract.lock.json"
+    match Codec.ModelInterfaceJson.encodeLock validLock with
+    | .obj fields =>
+        IO.FS.writeBinFile missingContractPath
+          (Codec.ModelInterfaceJson.canonicalFileBytes <| Lean.Json.mkObj
+            (fields.toList.filter (fun field => field.1 != "contract")))
+    | _ => pure ()
+    check fails "lock contract e2e: missing contract stops before emission"
+      (compilerRejected (← loadThenEmit missingContractPath))
+    let tamperedContractPath := temporaryRoot / "tampered-contract.lock.json"
+    IO.FS.writeBinFile tamperedContractPath
+      (Codec.ModelInterfaceJson.canonicalFileBytes
+        (Codec.ModelInterfaceJson.encodeLock mutatedLock))
+    check fails "lock contract e2e: tampered contract stops before emission"
+      (compilerRejected (← loadThenEmit tamperedContractPath))
+
     let lockPath := temporaryRoot / "large.lock.json"
     IO.FS.writeBinFile lockPath largeLockBytes
     match ← Shell.ModelInterface.Compiler.loadVerifiedLock lockPath.toString with

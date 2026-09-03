@@ -220,6 +220,10 @@ def verifyLock (lock : LockedModelInterface) : Except CompilerError Unit := do
     (MIJson.canonicalSemanticDescriptorBytes lock.semanticDescriptor)
   if semantic != lock.semanticDigest then
     return ← finding "lock semantic digest does not match its descriptor"
+  let contract := domainDigest contractDigestDomain
+    (MIJson.canonicalBytes (MIJson.encodeContract lock.contract))
+  if contract != lock.provenance.contractSha256 then
+    return ← finding "lock contract digest does not match its canonical contract"
   let provenance := domainDigest provenanceDigestDomain
     (MIJson.canonicalProvenanceBytes lock.provenance)
   if provenance != lock.provenanceDigest then

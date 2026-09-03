@@ -227,7 +227,8 @@ private def unsupported (request : Codec.ModelInterfaceDistributionJson.RequestV
 
 private def negotiateDescriptor
     (request : Codec.ModelInterfaceDistributionJson.RequestV1)
-    (descriptor : SemanticDescriptor) (provenance : LockProvenance)
+    (contract : ContractV1) (descriptor : SemanticDescriptor)
+    (provenance : LockProvenance)
     (diagnostics : List Diagnostic) (access : Access) : Resolution :=
   let semanticDigest := digestDescriptor descriptor
   let provenanceDigest := digestProvenance provenance
@@ -243,6 +244,7 @@ private def negotiateDescriptor
   let status := decision.status.getD .unavailable
   let lock : LockedModelInterface := {
     toSemanticDescriptor := descriptor
+    contract := normalizeContractV1 contract
     semanticDigest := semanticDigest
     provenanceDigest := provenanceDigest
     provenance := provenance
@@ -312,7 +314,7 @@ def resolve (request : Option Codec.ModelInterfaceDistributionJson.RequestV1)
           match resolved.value with
           | none => unavailable request resolved.diagnostics
           | some interface =>
-              negotiateDescriptor request interface.semanticDescriptor
+              negotiateDescriptor request interface.contract interface.semanticDescriptor
                 interface.provenance resolved.diagnostics access
 
 /-! ## Effectful scoped resolution cache -/
@@ -493,7 +495,7 @@ private def resolutionFromArtifact
     (artifact : ResolutionArtifact) : Resolution :=
   match artifact.descriptor with
   | some descriptor =>
-      negotiateDescriptor request descriptor
+      negotiateDescriptor request contract descriptor
         (provenanceOf contract evidence sources compilerVersion)
         artifact.diagnostics access
   | none => unavailable request artifact.diagnostics
@@ -512,7 +514,7 @@ private def cachedResolution? (service : Service) (key : Cache.ScopedResolutionK
   | .error _ => return none
   | .ok descriptor =>
       let provenance := provenanceOf contract evidence sources compilerVersion
-      return some (negotiateDescriptor request descriptor provenance [] access)
+      return some (negotiateDescriptor request contract descriptor provenance [] access)
 
 private def acquireResolutionSlot (service : Service) : IO Unit := do
   let permit ← service.resolutionSlots.acquire

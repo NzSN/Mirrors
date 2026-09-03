@@ -319,12 +319,18 @@ structure LockProvenance where
 
 /-- A fully resolved interface before the shell computes canonical digests. -/
 structure ResolvedModelInterface extends SemanticDescriptor where
+  /-- Canonical companion contract used to resolve this interface. It is lock
+  metadata, not part of the runtime semantic descriptor or semantic digest. -/
+  contract : ContractV1
   provenance : LockProvenance
   deriving Repr
 
 /-- A checked-in lock after the shell has hashed the canonical semantic and
 provenance projections. -/
 structure LockedModelInterface extends SemanticDescriptor where
+  /-- Canonical companion contract authenticated by
+  `provenance.contractSha256`. -/
+  contract : ContractV1
   semanticDigest : SemanticDigest
   provenanceDigest : ProvenanceDigest
   provenance : LockProvenance
@@ -337,6 +343,7 @@ def ResolvedModelInterface.withDigests (r : ResolvedModelInterface)
     (semanticDigest : SemanticDigest) (provenanceDigest : ProvenanceDigest) :
     LockedModelInterface where
   toSemanticDescriptor := r.toSemanticDescriptor
+  contract := r.contract
   semanticDigest := semanticDigest
   provenanceDigest := provenanceDigest
   provenance := r.provenance
