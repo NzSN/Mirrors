@@ -263,6 +263,8 @@ object before rebuilding after C-only edits.
   conformance rules and error handling.
 - [Non-Lean client test coverage](Docs/client-test-coverage.md) — executable
   C1–C27 evidence mapped across MirrorECMA, MirrorCPP, and MirrorRust.
+- [Generated model-interface specification](Docs/generated-model-interface-spec.md)
+  — language-neutral port, binding, lifecycle, and target-profile contract.
 - [Lean 4 refactor design](Docs/lean4-refactor-design.md) — original goals,
   proof obligations, and phase plan.
 - [Worker-pool design](Docs/worker-pool-design.md) and

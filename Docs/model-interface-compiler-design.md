@@ -5,6 +5,8 @@
 > Parent design: [`model-interface-generation-design.md`](model-interface-generation-design.md)
 > Runtime distribution:
 > [`model-interface-runtime-distribution-design.md`](model-interface-runtime-distribution-design.md)
+> Cross-language generated interface:
+> [`generated-model-interface-spec.md`](generated-model-interface-spec.md)
 > Scope: freeze the version-1 compiler inputs, canonical intermediate
 > representation, resolver, diagnostics, TypeScript emitter, CLI behavior,
 > proof claims, fixtures, and Counter vertical slice.
@@ -558,6 +560,52 @@ data.
   "model": {
     "module": "Counter"
   },
+  "contract": {
+    "schema": "mirrors.model-interface/v1",
+    "interfaceVersion": "1.0.0",
+    "model": {
+      "module": "Counter",
+      "source": "specs/Counter.tla"
+    },
+    "wire": {
+      "actionVariable": "action_taken",
+      "parameterVariable": "parameters"
+    },
+    "initializers": [
+      {
+        "id": "Initialize",
+        "wireAction": "init",
+        "wireAliases": [],
+        "inputs": []
+      }
+    ],
+    "actions": [
+      {
+        "id": "Tick",
+        "wireAction": "tick",
+        "wireAliases": [],
+        "inputs": [
+          {
+            "id": "Stride",
+            "from": {
+              "root": "stepParameters",
+              "path": [
+                { "field": "parameters" },
+                { "field": "stride" }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "observations": [
+      {
+        "id": "Count",
+        "wireName": "count",
+        "provenance": "implementation"
+      }
+    ]
+  },
   "runProfile": {
     "actionVariable": "action_taken",
     "configuredParamVar": "parameters",
@@ -623,6 +671,13 @@ Coverage counts and unseen-action obligations are deliberately absent.
 Evidence-origin annotations remain structured compiler diagnostics. They are
 not serialized into the lock or runtime descriptor because they are neither
 adapter semantics nor a separately authenticated provenance projection.
+
+The lock does serialize the exact normalized companion `contract`. This is
+build metadata outside `SemanticDescriptor`, so adding it does not change the
+semantic digest or the runtime-distributable descriptor. Lock v1 requires the
+field. `provenance.contractSha256` is recomputed from its canonical bytes when
+a lock is loaded; a missing or mutated contract therefore fails before target
+emission. The provenance digest in turn authenticates `contractSha256`.
 
 ### 8.2 Semantic and provenance digests
 
@@ -992,6 +1047,21 @@ The TypeScript file declaration order is fixed:
 8. binding implementation;
 9. public binding factory.
 
+The module also exports inert registration metadata without adding executable
+behavior or changing the existing port/binding APIs:
+
+```ts
+export const CounterSemanticDigest = "..." as const;
+export const CounterModelInterface = {
+  semanticDigest: CounterSemanticDigest,
+  contract: { /* canonical companion contract */ },
+} as const;
+```
+
+Clients pass this contract in registration and select the local adapter by the
+semantic digest. The implementation adapter itself is never generated into or
+stored in this metadata.
+
 The header contains:
 
 ```text
@@ -1330,6 +1400,8 @@ expected lock or coverage report.
 | `coverage-gap` | Valid lock plus `MIC-P-COVERAGE-001` obligation |
 | `deterministic-diagnostics` | Shuffled evidence order yields identical diagnostic JSON |
 | `deterministic-lock` | Repeated resolution produces identical bytes |
+| `lock-contract-authentication` | Missing or mutated embedded contract is rejected |
+| `contract-whitespace` | Insignificant input whitespace produces identical canonical contract bytes |
 | `target-name-collision` | TypeScript lowering fails with `MIC-E-NAME-001` |
 | `target-opaque-type` | TypeScript lowering rejects opaque ITF |
 

@@ -1,9 +1,11 @@
 # Runtime Model-Interface Distribution — Design
 
-> Status: **Mirrors compiler, negotiation server, scoped cache, authorization,
-> and preflight implemented; external client runners/registries remain planned**
+> Status: **Mirrors compiler/distribution and MirrorECMA compiled verification
+> implemented; dynamic descriptor mode and static-client registries planned**
 > Compiler contract:
 > [`model-interface-compiler-design.md`](model-interface-compiler-design.md)
+> Cross-language generated interface:
+> [`generated-model-interface-spec.md`](generated-model-interface-spec.md)
 > Parent architecture:
 > [`model-interface-generation-design.md`](model-interface-generation-design.md)
 > Current protocol reference: [`interface-reference.md`](interface-reference.md)
@@ -27,11 +29,29 @@ The Mirrors-side version-1 path is implemented:
 - always-on pure and mock-session gates in `model_interface_spec` and
   `model_interface_distribution_spec`.
 
-The external-client work in D3-D5 is deliberately not part of this repository
-change. MirrorECMA still needs its negotiated runner/dynamic handler registry;
-MirrorCPP, MirrorRust, and MirrorLean still need exact-digest adapter
-registries. Until those land, existing clients continue to use the unchanged
-legacy `StateComputer` entry points.
+MirrorECMA's D3 compiled-verification path is implemented in its sibling repo:
+
+- strict verification request/reply codecs leave the frozen legacy protocol
+  module unchanged;
+- `runClientNegotiated` and `runClientWithTracesNegotiated` select an exact
+  immutable local adapter registration only after a validated `matched` reply;
+- legacy and negotiated entry points share one replay implementation, while
+  fresh bindings and explicit legacy fallbacks are disposed exactly once;
+- inbound stdio/TCP/TLS framing is raw-byte bounded with fatal UTF-8 decoding;
+- the generated Counter binding completes real replay over stdio and
+  allowlisted mTLS, with wrong-digest and unauthorized paths making zero SUT
+  calls and an incorrect observer reaching ordinary `step_mismatch`.
+
+The remaining external-client work is D4's optional MirrorECMA dynamic handler
+registry plus D5's exact-digest registries for MirrorCPP, MirrorRust, and
+MirrorLean. Existing handwritten `StateComputer` entry points remain unchanged.
+
+The development-time TypeScript emitter now exports
+`<Model>ModelInterface = { semanticDigest, contract } as const`. The contract
+comes from the authenticated local compiler lock: lock verification recomputes
+`provenance.contractSha256` before emission. This closes the metadata handoff
+needed by a client runner without placing the contract in the runtime semantic
+descriptor or changing its digest.
 
 ## 1. Purpose
 
@@ -157,9 +177,9 @@ interpreter and continues directly into the same replay session.
 
 ### 6.2 Runtime verification
 
-A compiled version-1 binding embeds both its semantic digest and the canonical
-companion contract used to generate it. Registration sends both because the
-server needs the contract to resolve the interface. Among local adapter
+A compiled version-1 binding exports both its semantic digest and the canonical
+companion contract used to generate it as inert data. Registration sends both
+because the server needs the contract to resolve the interface. Among local adapter
 selection fields, only the semantic digest crosses the wire: `adapterId`,
 target profile, and binding-contract version remain client-local.
 
@@ -1352,7 +1372,7 @@ Exit: codec and pure policy tests pass without session integration.
 
 Exit: required mismatch emits no `initial_state`; legacy behavior is unchanged.
 
-### D3: MirrorECMA verification
+### D3: MirrorECMA verification — implemented
 
 - Add negotiation request/reply codecs.
 - Add `runClientNegotiated` and exact adapter-provider lookup.
