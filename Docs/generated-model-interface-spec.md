@@ -2,8 +2,8 @@
 
 > Status: **proposed normative version 1**
 >
-> The `mirrorecma-v1` target is the reference implementation. The
-> `mirrorcpp-v1`, `mirrorrust-v1`, and `mirrorlean-v1` profiles are specified
+> The `mirrorecma-v1` reference target and `mirrorcpp-v1` static target are
+> implemented. The `mirrorrust-v1` and `mirrorlean-v1` profiles are specified
 > here for subsequent implementation.
 >
 > Compiler design:
@@ -15,15 +15,17 @@
 ## 0. Implementation status
 
 Mirrors currently implements the canonical lock, semantic digest, normalized
-contract handoff, ownership manifest, and `mirrorecma-v1` emitter. MirrorECMA
-implements exact-digest adapter selection and exercises the generated Counter
-binding over local stdio and allowlisted mTLS server mode.
+contract handoff, ownership manifests, and the `mirrorecma-v1` and
+`mirrorcpp-v1` emitters. MirrorECMA and MirrorCPP implement exact-digest adapter
+selection and exercise their generated Counter bindings over local stdio and
+allowlisted mTLS server mode.
 
 The common portable-profile check, cross-language recording vectors,
-`mirrorcpp-v1`, `mirrorrust-v1`, `mirrorlean-v1`, and their negotiated client
-registries remain implementation work. Consequently, this document is the
-normative target for that work; the existing TypeScript output is the
-behavioral reference, not evidence that all four profiles already conform.
+`mirrorrust-v1`, `mirrorlean-v1`, and their negotiated client registries remain
+implementation work. The C++ emitter has direct executable coverage for the
+portable type baseline, but that is not yet the proposed shared vector suite.
+Consequently, this document remains the normative target for the remaining
+work; two implemented outputs are not evidence that all four profiles conform.
 
 ## 1. Purpose
 
@@ -974,7 +976,7 @@ Version-1 profile identifiers are:
 | Client | Profile | Status |
 | --- | --- | --- |
 | MirrorECMA | `mirrorecma-v1` | Implemented reference profile. |
-| MirrorCPP | `mirrorcpp-v1` | Planned second profile. |
+| MirrorCPP | `mirrorcpp-v1` | Implemented static C++23 profile. |
 | MirrorRust | `mirrorrust-v1` | Planned static profile. |
 | MirrorLean | `mirrorlean-v1` | Planned static profile. |
 
@@ -991,6 +993,39 @@ target profile defines those choices separately as an interpretation of MITL.
 A target-profile specification is conforming only when it states `⟦τ⟧L`,
 `nameL`, `CompL`, ownership, and rendering rules and demonstrates the common
 judgments and dynamics. Adding a new target profile does not modify MITL.
+
+### 15.2 `mirrorcpp-v1`
+
+`mirrorcpp-v1` emits one `<Model>Mirror.generated.hpp` header plus
+`.model-interface-generated.json`. It requires C++23 and the public
+`mirrorcpp/mirrorcpp.hpp` API and targets
+`mirrors.state-computer/v1`.
+
+Its native interpretation is:
+
+| MITL type | Generated C++ type |
+| --- | --- |
+| `Int` | `mirrorcpp::Value::Int` |
+| `Bool`, `Str`, `Null` | `bool`, `std::string`, `MirrorNull` |
+| `Set[T]`, `Seq[T]` | `MirrorSet<T>`, `MirrorSeq<T>` |
+| `Tup[T...]` | `MirrorTuple<T...>` |
+| `Rec[l:T...]` | `MirrorRecord<RecordField<"l", T>...>` |
+| `Map[Str,T]` | `MirrorMap<T>` |
+| `Var[c:T...]` | `MirrorVariant<VariantCase<"c", T>...>` |
+
+The profile supports `field`, `index`, and `variantValue` paths. It rejects
+non-string map keys and opaque types with `MIC-E-TYPE-001`, and rejects
+`mapKey` paths with `MIC-E-PATH-001`. Stable model/action/input/observation IDs
+must be portable ASCII C++ identifiers; keywords, leading underscores, and
+collisions after lowercasing the first letter fail with `MIC-E-NAME-001`.
+
+Generated `BindingError` derives from
+`mirrorcpp::ModelInterfaceBindingError`. The generated binding classifies
+input, dispatch, adapter, observation, configuration, lifecycle, and
+reentrancy failures and permanently poisons itself after a failed callback.
+MirrorCPP's negotiated runner converts that internal carrier into
+`ErrorKind::model_interface`, preserves the stable code, disposes the binding,
+and keeps ordinary server `step_mismatch` separate.
 
 ## 16. Generated metadata and owned files
 
@@ -1264,14 +1299,15 @@ the shared interface; target source models remain private implementation.
 4. Extract language-neutral emitter validation only where the current
    TypeScript implementation and the C++ implementation demonstrate actual
    duplication.
-5. Implement `mirrorcpp-v1` from the existing Counter lock.
+5. Implement `mirrorcpp-v1` from the existing Counter lock. **Done.**
 6. Add a fallible negotiated-runner hook without breaking existing
-   `StateComputer` callers.
-7. Require C++ and TypeScript to pass identical judgment, recording, and real Counter
-   acceptance tests.
+   `StateComputer` callers. **Done in MirrorCPP.**
+7. Require C++ and TypeScript to pass identical judgment, recording, and real
+   Counter acceptance tests. **Real Counter acceptance is implemented; common
+   judgment/recording vectors remain.**
 8. Implement `mirrorrust-v1` and `mirrorlean-v1` from the same lock and vectors.
 9. Add all generated targets to `model_interface_gen check` and the top-level
-   interop matrix.
+   interop matrix. **Done for TypeScript and C++; pending for Rust and Lean.**
 
 ## 24. Acceptance criteria
 

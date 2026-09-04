@@ -225,15 +225,15 @@ the exact interface Mirrors resolved from the registration's spec, contract,
 typed trace evidence, and run profile. It distributes **data**, never an
 implementation adapter or executable code.
 
-The Mirrors server and MirrorECMA's compiled-verification and dynamic-descriptor
-paths are implemented. The MirrorCPP, MirrorRust, and MirrorLean static
-registries are planned. Implement only the profile your client can honestly
-advertise:
+The Mirrors server, MirrorECMA's compiled-verification and dynamic-descriptor
+paths, and MirrorCPP's static compiled-verification path are implemented.
+MirrorRust and MirrorLean static registries are planned. Implement only the
+profile your client can honestly advertise:
 
 | Client profile | Request | Local executable behavior | Version-1 use |
 | --- | --- | --- | --- |
 | Legacy stepping | no `modelInterface` field | caller supplies `StateComputer` | Existing, unchanged entry points |
-| Compiled verification | `verify` | precompiled generated binding plus application adapter | Default production profile; implemented in MirrorECMA |
+| Compiled verification | `verify` | precompiled generated binding plus application adapter | Default production profile; implemented in MirrorECMA and MirrorCPP |
 | Dynamic descriptor | `descriptor` | local handler/observer registry interpreted by MirrorECMA | Development-only; implemented in MirrorECMA |
 
 The three artifacts have deliberately different owners:
@@ -269,13 +269,13 @@ is:
 
 /path/to/Mirrors/.lake/build/bin/model_interface_gen generate \
   --lock generated/Counter.mirror-interface.lock.json \
-  --target mirrorecma-v1 \
-  --out generated/mirrorecma
+  --target mirrorcpp-v1 \
+  --out generated/mirrorcpp
 ```
 
-The implemented target is currently `mirrorecma-v1`; new target profiles must
-obey `generated-model-interface-spec.md`. Check the generated tree in CI instead
-of repairing it there:
+The implemented targets are `mirrorecma-v1` and `mirrorcpp-v1`; new target
+profiles must obey `generated-model-interface-spec.md`. Check the generated
+tree in CI instead of repairing it there:
 
 ```sh
 /path/to/Mirrors/.lake/build/bin/model_interface_gen check \
@@ -284,8 +284,8 @@ of repairing it there:
   --evidence traces/counter.itf.json \
   --param-var parameters \
   --lock generated/Counter.mirror-interface.lock.json \
-  --target mirrorecma-v1 \
-  --out generated/mirrorecma
+  --target mirrorcpp-v1 \
+  --out generated/mirrorcpp
 
 /path/to/Mirrors/.lake/build/bin/model_interface_gen preflight \
   --lock generated/Counter.mirror-interface.lock.json \
@@ -299,6 +299,16 @@ complete normalized companion contract. The application implements the
 generated port and registers a factory that combines that adapter with the
 generated binding. The contract, lock, descriptor, generated binding, and
 implementation adapter are not interchangeable.
+
+For MirrorCPP, add the generated directory to the application include path,
+implement the generated `<Model>Port`, and register an `AdapterFactory` under
+the exact `{semanticDigest, adapterId, "mirrorcpp-v1",
+"mirrors.state-computer/v1"}` key. The factory owns the port and generated
+binding for one session and returns their generated `StateComputer` through a
+`LocalBinding`. Call `run_client_negotiated` or
+`run_client_with_traces_negotiated`; do not send the extension manually or use
+the descriptor APIs. A complete Counter construction is exercised by
+MirrorCPP's `test/integration/real_mirror_test.cpp`.
 
 - **MI3.** A compiled client **MUST** embed the compiler-produced semantic
   digest and normalized contract, select a precompiled binding, and perform no
@@ -551,7 +561,7 @@ stricter wildcard SAN scope; case-insensitive `--pin`.
    missing, malformed, unauthorized, and wrong-digest replies. Also test one
    behaviorally wrong observer after a successful match so ordinary
    `step_mismatch` remains reachable.
-8. **Implemented client reference**: MirrorECMA's
+8. **Implemented client references**: MirrorECMA's
    `model-interface-protocol.test.ts`, `model-interface-descriptor.test.ts`,
    `model-interface-dynamic.test.ts`, `model-interface-runner.test.ts`, and
    `model-interface-counter.smoke.ts` demonstrate MI5–MI18 over scripted
@@ -559,7 +569,11 @@ stricter wildcard SAN scope; case-insensitive `--pin`.
    descriptor identity, verified cache reuse, zero-callback failures, dynamic
    lifecycle poisoning, descriptor-read denial, and ordinary
    `step_mismatch`. The top-level `tools/interop/run.sh` gate includes both D3
-   compiled verification and D4 dynamic descriptor replay.
+   compiled verification and D4 dynamic descriptor replay. MirrorCPP's
+   `model_interface_test.cpp`, `generated_model_interface_test.cpp`, and
+   `real_mirror_test.cpp` cover the static D5 codec/registry/binding path,
+   portable generated types, stdio/mTLS authorization, cleanup, and ordinary
+   `step_mismatch`.
 
 For a client claiming the compiled-verification profile, the minimum negative
 matrix is: duplicate/unknown nested fields, noncanonical and wrong digests,
@@ -574,6 +588,7 @@ Every pre-match case must assert zero SUT and zero adapter-factory calls.
 | ------ | -------- | --------- |
 | `mirror validate` (this repo) | Lean 4 | sync validate over TCP/mTLS, registry discovery, pinning |
 | MirrorECMA (`test/smoke.test.ts`, `test/model-interface-*.ts`) | TypeScript | stdio/TCP/mTLS, registry, TLS negatives, D3 compiled verification, D4 dynamic descriptor/cache replay |
+| MirrorCPP (`test/unit/model_interface_test.cpp`, `test/unit/generated_model_interface_test.cpp`, `test/integration/real_mirror_test.cpp`) | C++23 | stdio/TCP/mTLS, registry/TLS negatives, D5 static exact-digest verification and generated Counter replay |
 | Haskell `ModelMirrors validate` | Haskell | the reference wire consumer |
 | `tools/CounterSpec.lean` | Lean 4 | full MBT replay incl. mismatch negatives |
 | `stress300v2.py` | Python | async jobs, connection pooling, cancel |

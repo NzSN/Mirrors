@@ -262,6 +262,22 @@ script test do
     IO.eprintln outMiGolden.stderr
     IO.println s!"model_interface_gen check FAILED ({outMiGolden.exitCode})"
     return outMiGolden.exitCode
+  let outMiCppGolden : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/model_interface_gen", args := #[
+      "check",
+      "--spec", "specs/Counter.tla",
+      "--contract", "test/fixtures/model-interface/counter/Counter.mirror-interface.json",
+      "--evidence", "test/fixtures/model-interface/counter/counter.itf.json",
+      "--param-var", "parameters",
+      "--lock", "test/fixtures/model-interface/counter/Counter.mirror-interface.lock.json",
+      "--target", "mirrorcpp-v1",
+      "--out", "test/fixtures/model-interface/counter/generated-cpp"
+    ] } : IO.Process.SpawnArgs)
+  IO.println outMiCppGolden.stdout
+  if outMiCppGolden.exitCode != 0 then
+    IO.eprintln outMiCppGolden.stderr
+    IO.println s!"model_interface_gen C++ check FAILED ({outMiCppGolden.exitCode})"
+    return outMiCppGolden.exitCode
   let outMiPreflight : IO.Process.Output ← IO.Process.output
     ({ cmd := ".lake/build/bin/model_interface_gen", args := #[
       "preflight",

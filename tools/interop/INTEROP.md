@@ -3,7 +3,7 @@
 Unmodified real clients must interoperate with the Lean mirror over the
 JSON-lines wire protocol, byte-for-byte, on every transport.
 
-Status (2026-09-03): FULL MATRIX GREEN. MirrorECMA smoke suite
+Status (2026-09-04): FULL MATRIX GREEN. MirrorECMA smoke suite
 GREEN over stdio, TCP, AND mTLS (register, register_traces,
 register_trace_gen incl. destPath copy + trace inlining, register_explore,
 register_explore_session, inline multi-module specs; 18 scenario runs over
@@ -17,7 +17,10 @@ dynamic descriptor `resolved -> not_modified` cache reuse over stdio; completes
 compiled verification and authorized descriptor read over allowlisted mTLS;
 rejects wrong digests, missing descriptor-read scope, and non-allowlisted
 clients before application callbacks; and keeps wrong observers on ordinary
-`step_mismatch`.
+`step_mismatch`. MirrorCPP additionally generates the same Counter interface
+through `mirrorcpp-v1`, selects its compiled adapter by the exact four-part key,
+and exercises negotiated replay over stdio and allowlisted mTLS with
+wrong-digest and unauthorized zero-SUT negatives.
 
 ## Matrix
 
@@ -72,7 +75,10 @@ fingerprints (SHA-256 hex of the DER) and negative cases.
   D3 compiled model-interface verification and D4 dynamic descriptor/cache
   replay, including descriptor-read authorization negatives.
 - MirrorCPP runs its complete CTest suite; `real_mirror_hourclock` replays the
-  authoritative Counter model over stdio, TCP, and mTLS.
+  authoritative Counter model over stdio, TCP, and mTLS. Its D5 static
+  model-interface leg checks strict negotiation codecs, the generated portable
+  C++23 binding, exact registry selection, cleanup, stdio success, allowlisted
+  mTLS success, and pre-construction digest/authorization failures.
 - MirrorRust runs `cargo test` with the canonical corpus and real mirror
   enabled; its server-mode suite covers TCP, mTLS, registry pinning/failover,
   mismatch rejection, and asynchronous job semantics.

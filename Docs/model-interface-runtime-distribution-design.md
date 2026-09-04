@@ -1,7 +1,8 @@
 # Runtime Model-Interface Distribution — Design
 
-> Status: **Mirrors compiler/distribution plus MirrorECMA compiled verification
-> and dynamic descriptor mode implemented; static-client registries planned**
+> Status: **Mirrors compiler/distribution, MirrorECMA compiled/dynamic modes,
+> and MirrorCPP static compiled verification implemented; Rust/Lean static
+> registries planned**
 > Compiler contract:
 > [`model-interface-compiler-design.md`](model-interface-compiler-design.md)
 > Cross-language generated interface:
@@ -56,9 +57,24 @@ MirrorECMA's optional D4 dynamic development path is also implemented:
   descriptor read, denial without descriptor-read scope, and a wrong observer
   reaching ordinary `step_mismatch`.
 
-The remaining external-client work is D5's exact-digest registries for
-MirrorCPP, MirrorRust, and MirrorLean. Existing handwritten `StateComputer`
-entry points remain unchanged.
+MirrorCPP's static D5 path is implemented in its sibling repo:
+
+- the `mirrorcpp-v1` emitter produces deterministic C++23 ports, portable
+  native codecs, a generated `StateComputer` binding, inert digest/contract
+  metadata, and an ownership manifest from the same verified lock;
+- `run_client_negotiated` and `run_client_with_traces_negotiated` strictly
+  decode the first reply and invoke one exact four-part registry selection only
+  after `matched` (or an explicit `prefer` fallback);
+- session-local bindings recheck digest/configuration, convert classified
+  binding failures into `ErrorKind::model_interface`, and attempt disposal
+  exactly once with primary-error precedence;
+- stdio and allowlisted mTLS Counter replay, wrong-digest and unauthorized
+  zero-SUT paths, wrong-observer `step_mismatch`, strict codec negatives, and
+  the complete portable type baseline are executable tests.
+
+The remaining external-client work is D5 for MirrorRust and MirrorLean plus
+the common cross-language recording/vector suite. Existing handwritten
+`StateComputer` entry points remain unchanged in every client.
 
 The development-time TypeScript emitter now exports
 `<Model>ModelInterface = { semanticDigest, contract } as const`. The contract
@@ -1416,16 +1432,20 @@ local handlers over stdio and authorized mTLS without evaluating remote code;
 descriptor-read denial and pre-binding failures make zero callbacks, while a
 behaviorally wrong observer reaches ordinary `step_mismatch`.
 
-### D5: static clients
+### D5: static clients — MirrorCPP implemented; Rust/Lean planned
 
-- Add exact digest verification and adapter registries to MirrorCPP,
-  MirrorRust, and MirrorLean.
-- Reuse the same descriptor fixture and semantic digest.
-- Keep runtime descriptor interpretation/retrieval out of these static clients;
-  they verify and select only precompiled bindings.
-- Add the top-level interop matrix legs.
+- MirrorCPP implements exact digest verification, an immutable exact-key
+  adapter registry, and generated `mirrorcpp-v1` bindings using the Counter
+  fixture and semantic digest.
+- MirrorCPP keeps descriptor interpretation/retrieval out of the runtime and
+  selects only precompiled local bindings.
+- The top-level interop matrix covers its negotiated Counter path over stdio
+  and allowlisted mTLS, including zero-SUT authorization and digest failures.
+- MirrorRust and MirrorLean still need equivalent exact-digest registries and
+  generated target profiles.
 
-Exit: all clients select precompiled adapters by one language-neutral digest.
+Partial exit: MirrorECMA and MirrorCPP select precompiled adapters by one
+language-neutral digest. Full exit waits for MirrorRust and MirrorLean.
 
 ## 22. Rejected alternatives
 

@@ -3,6 +3,7 @@ import Core.ModelInterface.Sha256
 import Codec.StrictJson
 import Shell.ModelInterface.Cache
 import Shell.ModelInterface.Evidence
+import Shell.ModelInterface.Emit.Cpp
 import Shell.ModelInterface.Emit.TypeScript
 import Shell.ModelInterface.Runtime
 import Shell.ModelInterface.Compiler
@@ -1224,6 +1225,80 @@ def scenarioEmitter (fails : Failures)
     (emitterErrorIs "MIC-E-PATH-001"
       (Shell.ModelInterface.Emit.TypeScript.emitTypeScript overflowLock))
 
+def scenarioCppEmitter (fails : Failures)
+    (resolved : ResolvedModelInterface) : IO Unit := do
+  let semantic := Core.ModelInterface.Sha256.digestDomainHex
+    "mirrors-model-interface-lock/v1" (resolvedSemanticBytes resolved)
+  let provenance := Core.ModelInterface.Sha256.digestDomainHex
+    "mirrors-model-interface-provenance/v1" "counter-provenance".toUTF8
+  let lock := resolved.withDigests semantic provenance
+  let first := Shell.ModelInterface.Emit.Cpp.emitCpp lock
+  let second := Shell.ModelInterface.Emit.Cpp.emitCpp lock
+  let deterministic := match first, second with
+    | .ok a, .ok b => a == b
+    | .error a, .error b => a == b
+    | _, _ => false
+  check fails "cpp emitter: deterministic" deterministic
+  match first with
+  | .error diagnostics =>
+      check fails "cpp emitter: Counter succeeds" false (toString (repr diagnostics))
+  | .ok tree =>
+      check fails "cpp emitter: sorted owned paths"
+        (tree.files.map (·.relativePath) ==
+          [".model-interface-generated.json", "CounterMirror.generated.hpp"])
+      let some file := tree.files.find? (·.relativePath == "CounterMirror.generated.hpp")
+        | check fails "cpp emitter: generated header exists" false
+          return
+      let some source := String.fromUTF8? file.bytes
+        | check fails "cpp emitter: generated header is UTF-8" false
+          return
+      check fails "cpp emitter: final LF" (source.endsWith "\n")
+      check fails "cpp emitter: profile header"
+        (source.contains "target-profile: mirrorcpp-v1")
+      check fails "cpp emitter: inert metadata"
+        (source.contains "CounterModelInterface" && source.contains semantic)
+      check fails "cpp emitter: typed Counter port"
+        (source.contains "struct TickInput" &&
+          source.contains "mirrorcpp::Value::Int stride" &&
+          source.contains "struct CounterPort")
+      check fails "cpp emitter: StateComputer binding"
+        (source.contains "mirrorcpp::StateComputer computer")
+      check fails "cpp emitter: lifecycle and coverage"
+        (source.contains "Lifecycle::poisoned" &&
+          source.contains "assert_all_actions_covered")
+      check fails "cpp emitter: portable composite codecs"
+        (source.contains "struct MirrorSet" &&
+          source.contains "struct MirrorSeq" &&
+          source.contains "struct MirrorTuple" &&
+          source.contains "struct MirrorRecord" &&
+          source.contains "struct MirrorMap" &&
+          source.contains "struct MirrorVariant")
+  let some observation := lock.observations.head?
+    | check fails "cpp emitter: observation prerequisite" false
+      return
+  let unsupported := { lock with observations := [
+    { observation with type := .opaqueItf "target-owned handle" }
+  ] }
+  check fails "cpp emitter: unsupported types fail at emission"
+    (emitterErrorIs "MIC-E-TYPE-001"
+      (Shell.ModelInterface.Emit.Cpp.emitCpp unsupported))
+  let some transition := lock.actions.head?
+    | check fails "cpp emitter: transition prerequisite" false
+      return
+  let collision := { lock with actions := [
+    { transition with id := "Tick", wireAction := "tick" },
+    { transition with id := "tick", wireAction := "lower-tick" }
+  ] }
+  check fails "cpp emitter: lowered action collision rejected"
+    (emitterErrorIs "MIC-E-NAME-001"
+      (Shell.ModelInterface.Emit.Cpp.emitCpp collision))
+  let keyword := { lock with actions := [
+    { transition with id := "Class", wireAction := "class-action" }
+  ] }
+  check fails "cpp emitter: keyword action rejected"
+    (emitterErrorIs "MIC-E-NAME-001"
+      (Shell.ModelInterface.Emit.Cpp.emitCpp keyword))
+
 private def compilerRejected {α : Type}
     (result : Except Shell.ModelInterface.Compiler.CompilerError α) : Bool :=
   match result with
@@ -1839,6 +1914,10 @@ def run : IO UInt32 := do
     match ← resolvedRef.get with
     | some resolved => scenarioEmitter fails resolved
     | none => check fails "emitter: prerequisite resolution" false
+  scenario "cpp-emitter" do
+    match ← resolvedRef.get with
+    | some resolved => scenarioCppEmitter fails resolved
+    | none => check fails "cpp emitter: prerequisite resolution" false
   scenario "semantic-identity-and-large-lock" do
     match ← resolvedRef.get with
     | some resolved => scenarioSemanticIdentityAndLargeLock fails resolved

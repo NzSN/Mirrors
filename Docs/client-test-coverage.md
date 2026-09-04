@@ -1,15 +1,14 @@
 # Non-Lean client conformance-test coverage
 
-Status: MirrorECMA and MirrorRust have executable coverage for the normative
-C1–C27 client rules in `Docs/client-implementation-guide.md`. MirrorCPP has one
-known C2 gap: outbound size is bounded, but its stdio/TCP/TLS inbound
-accumulators do not yet enforce the 65,535-byte payload cap. This matrix is
-executable conformance evidence, not a formal proof of the non-Lean
-implementations.
+Status: MirrorECMA, MirrorCPP, and MirrorRust have executable coverage for the
+normative C1–C27 client rules in `Docs/client-implementation-guide.md`.
+MirrorCPP now enforces the 65,535-byte inbound payload cap in its shared
+stdio/TCP framing path and its TLS accumulator. This matrix is executable
+conformance evidence, not a formal proof of the non-Lean implementations.
 
 | Rules | Required behavior | MirrorECMA | MirrorCPP | MirrorRust |
 | --- | --- | --- | --- | --- |
-| C1–C3 | Strict JSONL framing, 65,535-byte inbound/outbound limit, `proto_step` dispatch, additive fields | `transport.test.ts`, `protocol.test.ts`, canonical corpus; strict LF termination and byte-level fatal UTF-8 framing | outbound limit, framing/transport tests, protocol additive-field test, full golden corpus; **known C2 gap: inbound accumulators are not capped** | `transport.rs`, protocol additive-field test, canonical supported-message corpus |
+| C1–C3 | Strict JSONL framing, 65,535-byte inbound/outbound limit, `proto_step` dispatch, additive fields | `transport.test.ts`, `protocol.test.ts`, canonical corpus; strict LF termination and byte-level fatal UTF-8 framing | inbound/outbound limit over stdio/TCP/TLS, framing/transport tests, protocol additive-field test, full golden corpus | `transport.rs`, protocol additive-field test, canonical supported-message corpus |
 | C4–C7 | Legal session opening/termination, clean or peer-first close, no protocol heartbeat assumption | one-shot/`Connection` tests; disconnect eviction and query-based liveness in live smoke | phase-guard, fault-close, and transport EOF tests | one-shot APIs plus protocol-error poisoning, transport close, and live disconnect eviction |
 | C8–C12 | Exactly one report per driven state, full ITF state, terminal mismatch, arbitrary integers, no fixed trace length | real Counter replay plus deliberately extra-key mismatch over stdio/TCP/mTLS | real Counter replay plus deliberately extra-key mismatch over stdio/TCP/mTLS; value/diff corpus | real Counter replay plus deliberately extra-key mismatch over stdio/TCP/mTLS; arbitrary-precision codec tests |
 | C13–C16 | Inline dependency closure, optional absent/null parity, `constInit`/`paramVars`, validate bounds | spec resolver, canonical corpus, authoritative Counter, no-write bound tests | spec resolver, `decode_only` corpus, authoritative Counter, bound registration error | spec resolver, normalized absent/null corpus, authoritative Counter, no-write bound tests |
@@ -56,8 +55,26 @@ MirrorECMA's development-only dynamic path is covered by
   descriptor read, denial without descriptor-read scope, exactly-once cleanup,
   and a wrong observer reaching ordinary `step_mismatch`.
 
-D5 exact-digest registries for MirrorCPP, MirrorRust, and MirrorLean, and the
-proposed common portable cross-language fixture suite, remain planned.
+## Static model-interface D5 coverage
+
+MirrorCPP covers its compiled-only D5 profile through
+`model_interface_test.cpp`, `generated_model_interface_test.cpp`, and the real
+mirror integration suite:
+
+- strict duplicate-aware verification request/reply/failure decoding,
+  canonical branded digests, and exact four-part immutable adapter lookup;
+- zero factory/SUT calls for missing, malformed, wrong-digest, unregistered,
+  ambiguous, and unauthorized paths, with explicit-only `prefer` fallback;
+- generated C++23 typed ports and checked codecs for arbitrary integers and the
+  complete portable primitive/container/map/variant baseline;
+- input-before-mutation, lifecycle poison/reentrancy, classified adapter and
+  observation errors, binding digest/config checks, and exactly-once cleanup
+  with primary-error precedence;
+- real generated Counter replay over stdio and allowlisted mTLS, denial without
+  the allowlist, and a wrong observer reaching ordinary `step_mismatch`.
+
+D5 exact-digest registries for MirrorRust and MirrorLean, and the proposed
+common portable cross-language fixture suite, remain planned.
 
 ## One-command gate
 

@@ -18,10 +18,10 @@ def usage : String := String.intercalate "\n" [
   "usage:",
   "  model_interface_gen resolve --spec FILE --contract FILE --evidence FILE",
   "    [--param-var NAME] --lock FILE [--diagnostics json]",
-  "  model_interface_gen generate --lock FILE --target mirrorecma-v1 --out DIR",
+  "  model_interface_gen generate --lock FILE --target mirrorecma-v1|mirrorcpp-v1 --out DIR",
   "    [--diagnostics json]",
   "  model_interface_gen check --spec FILE --contract FILE --evidence FILE",
-  "    [--param-var NAME] --lock FILE --target mirrorecma-v1 --out DIR",
+  "    [--param-var NAME] --lock FILE --target mirrorecma-v1|mirrorcpp-v1 --out DIR",
   "    [--diagnostics json]",
   "  model_interface_gen preflight --lock FILE --trace PATH",
   "    [--require-all-actions] [--diagnostics json]"
@@ -102,8 +102,8 @@ private def inputsOf (options : RawOptions) : Except String InputPaths := do
 
 private def checkedTarget (options : RawOptions) : Except String String := do
   let target ← requireOption "--target" options.target
-  if target != mirrorecmaTarget then
-    throw s!"unsupported --target {target}; expected {mirrorecmaTarget}"
+  if target != mirrorecmaTarget && target != mirrorcppTarget then
+    throw s!"unsupported --target {target}; expected {mirrorecmaTarget} or {mirrorcppTarget}"
   return target
 
 private def diagnosticsMode (options : RawOptions) : Except String DiagnosticsMode :=

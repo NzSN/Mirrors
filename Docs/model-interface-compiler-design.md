@@ -1,7 +1,7 @@
 # Model Interface Compiler — Detailed Design
 
-> Status: **TypeScript/Counter vertical slice implemented in Mirrors; later
-> target profiles remain planned**
+> Status: **TypeScript and C++ Counter target slices implemented in Mirrors;
+> Rust/Lean profiles and common recording vectors remain planned**
 > Parent design: [`model-interface-generation-design.md`](model-interface-generation-design.md)
 > Runtime distribution:
 > [`model-interface-runtime-distribution-design.md`](model-interface-runtime-distribution-design.md)
@@ -16,14 +16,14 @@
 Mirrors now contains the pure model-interface types, deterministic resolver,
 canonical contract/descriptor/lock codecs, pure SHA-256, strict ITF evidence
 normalization, trace preflight/coverage, the `mirrorecma-v1` TypeScript emitter,
-safe owned-file publication, and the standalone `model_interface_gen`
-executable. Counter resolve/generate/check, generated TypeScript compilation
-against MirrorECMA, a mutable recording adapter, and real session replay are
-covered by the implementation gates and validation harnesses.
+the `mirrorcpp-v1` C++23 emitter, safe owned-file publication, and the
+standalone `model_interface_gen` executable. Counter resolve/generate/check,
+generated TypeScript/C++ compilation, typed bindings, and real session replay
+are covered by the implementation gates and validation harnesses.
 
-The version-1 TypeScript slice is the implemented target. The C++ second target
-and the later shared multi-emitter abstraction remain follow-up work, as
-specified by M5.
+The TypeScript and C++ version-1 slices are implemented. Shared portable
+judgment/recording vectors and the later Rust/Lean targets remain follow-up
+work as specified by M5 and the cross-language specification.
 
 ## 1. Purpose
 
@@ -1181,6 +1181,31 @@ sorted relative paths owned by this generation. A later `generate` invocation
 may replace or remove only files listed in the previous valid manifest. It
 must never clean an output directory broadly or delete unowned files.
 
+### 13.8 `mirrorcpp-v1` profile
+
+The second target emits:
+
+```text
+CounterMirror.generated.hpp
+.model-interface-generated.json
+```
+
+The header uses MirrorCPP's public C++23 `Value`, `State`, `ApalacheConfig`,
+and `StateComputer` interfaces. It exposes `<Model>SemanticDigest`, inert
+`<Model>ModelInterface` metadata, typed input/observation structs, a synchronous
+`<Model>Port`, checked native codecs, `<Model>Binding`, and `bind_<model>`.
+
+The complete portable baseline is supported with distinct wrapper types for
+sets, sequences, tuples, records, string-keyed maps, and variants. Integers use
+`mirrorcpp::Value::Int` without narrowing. `opaqueItf`, non-string map keys,
+and `mapKey` paths fail during emission. C++ identifier validation is
+deterministic and rejects invalid ASCII spellings, keywords, leading
+underscores, and lower-first collisions with `MIC-E-NAME-001`.
+
+Generated mechanical errors derive from MirrorCPP's classified binding-error
+carrier. The negotiated runtime converts them to a fallible public result,
+while direct `StateComputer` callers retain the existing callable shape.
+
 ## 14. CLI design
 
 The compiler is a separate executable:
@@ -1525,13 +1550,18 @@ Exit: the full Counter vertical slice is always-on.
 
 ### M5: C++ second target
 
-- Define `mirrorcpp-v1` target shape exactly.
-- Add C++ lowering and rendering from the same lock.
-- Extract a shared emitter interface now that two adapters exist.
+- Define `mirrorcpp-v1` target shape exactly. **Done.**
+- Add C++ lowering and rendering from the same lock. **Done.**
+- Dispatch both emitters through the shared target seam. **Done.**
+- Compile and exercise the generated Counter binding through the negotiated
+  MirrorCPP runtime. **Done.**
 - Compare both targets using common raw `StateComputer` stimuli, normalized
-  recording logs, and canonical `report_state` bytes.
+  recording logs, and canonical `report_state` bytes. **Pending shared vector
+  work; each target currently has direct behavioral tests.**
 
-Exit: TypeScript and C++ have equivalent behavior from one semantic lock.
+Partial exit: both compiling targets and real Counter paths come from one
+semantic lock. The shared recording-log comparison remains before claiming the
+full M5 equivalence exit.
 
 Rust, Lean, scaffolding, compatibility migration helpers, and async profiles
 follow only after the two-target seam is stable.
@@ -1570,13 +1600,14 @@ The compiler design is implemented when:
 1. The strict Counter contract and normalized evidence resolve to canonical,
    byte-stable lock JSON.
 2. Independent input ordering and formatting produce identical semantic
-   digests and generated TypeScript.
+   digests and deterministic generated target trees.
 3. Contract/evidence conflicts produce stable structured diagnostics with no
    absolute paths.
 4. Exact observation completeness is derived from the same parameter and meta
    semantics used by `Core.Trace` and `Core.Value`.
 5. Coverage changes do not change the lock or generated source.
-6. `mirrorecma-v1` lowers the lock to deterministic, compiling TypeScript.
+6. `mirrorecma-v1` and `mirrorcpp-v1` lower the same lock to deterministic,
+   compiling TypeScript and C++23 outputs.
 7. The generated implementation port exposes only typed initializer/action
    methods and complete observations.
 8. The generated binding never exposes expected transition state or
@@ -1600,7 +1631,7 @@ The compiler has two high-leverage interfaces:
 
 ```text
 resolve(normalized model facts) -> semantic lock
-emitTypeScript(semantic lock)   -> generated tree
+emitTarget(profile, semantic lock) -> generated tree
 ```
 
 Everything else—source loading, evidence collection, filesystem writes,
