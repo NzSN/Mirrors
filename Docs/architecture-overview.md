@@ -1,5 +1,7 @@
 # Mirrors — Architecture Overview
 
+> Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
+
 > Companion to the interactive diagram `architecture-overview.html`
 > (open it in a browser; source spec: `architecture-overview.json`).
 > Audience: anyone who needs the system's shape in five minutes.
@@ -90,15 +92,24 @@ Illegal protocol orderings are **unrepresentable** (phase-indexed
 Both server modes use one model on both platforms
 (`Docs/worker-pool-design.md`):
 
+```text
+ServerState ≜ ⟨Q, W₁, ..., Wₙ, J⟩
+length(Q) ≤ 128    Wi ∈ {idle, serving(connection)}
+
+Q = connection :: Q′    Wi = idle
+─────────────────────────────────────────────────────────────
+⟨Q, Wi, J⟩ ⟶assign ⟨Q′, serving(connection), J⟩
+
+session(connection) ended    connection closed
+─────────────────────────────────────────────────────────────
+⟨Q, serving(connection), J⟩ ⟶return-to-pool ⟨Q, idle, J⟩
 ```
-main thread                     N long-lived workers (spawned once,
-  signal flag check              dedicated Tasks that NEVER return —
-  park in select(200ms)          the Lean 4.33 Windows task-teardown
-  acceptFd ──▶ ConnQueue ──▶     race fires on task completion, so the
-  (Mutex+2 sems, capacity 128;   pool removes completion structurally)
-  push blocks when full; the     worker: pop → run session → closeFd
-  kernel backlog holds clients)  → loop
-```
+
+The displayed configurations omit unchanged workers. `J` is the shared job
+store; connection cleanup retains the documented cancellation/eviction of
+that connection's jobs, which is performed before the second rule applies.
+The worker task remains alive across that rule. Full-queue producers and
+empty-queue workers suspend; the accept loop retains its 200 ms signal poll.
 
 - One `runAsync` session per connection over **one process-shared job
   store** (job ids unique across connections; a connection's end

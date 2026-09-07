@@ -1,15 +1,17 @@
 # Runtime Model-Interface Distribution — Design
 
+> Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
+
 > Status: **Mirrors compiler/distribution, MirrorECMA compiled/dynamic modes,
 > and MirrorCPP static compiled verification implemented; Rust/Lean static
 > registries planned**
 > Compiler contract:
-> [`model-interface-compiler-design.md`](model-interface-compiler-design.md)
+> [`model-interface-compiler-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-compiler-design.md)
 > Cross-language generated interface:
-> [`generated-model-interface-spec.md`](generated-model-interface-spec.md)
+> [`generated-model-interface-spec.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/generated-model-interface-spec.md)
 > Parent architecture:
-> [`model-interface-generation-design.md`](model-interface-generation-design.md)
-> Current protocol reference: [`interface-reference.md`](interface-reference.md)
+> [`model-interface-generation-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-generation-design.md)
+> Current protocol reference: [`interface-reference.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/interface-reference.md)
 
 ## 0. Implementation status
 
@@ -214,14 +216,23 @@ selection fields, only the semantic digest crosses the wire: `adapterId`,
 target profile, and binding-contract version remain client-local.
 
 ```text
-compiled client digest
-        -> register request
-        -> Mirrors resolves or loads descriptor
-        -> exact digest match
-        -> spec_validated
-        -> client selects local adapter
-        -> initial_state / next_step replay
+metadata.semanticDigest = ι
+reply is a strictly valid matched response for the same registration and ι
+──────────────────────────────────────────────────────────────────────────
+σ; metadata; reply ⊢ authorize ⇓ k : Matched(σ,ι)
+
+R; key(metadata, adapterConfig) ⊢ select ⇓ factory
+
+Γ ⊢ factory : AdapterFactory    Γ ⊢ k : Matched(σ,ι)
+Γ ⊢ config : EffectiveConfig
+────────────────────────────────────────────────────────
+Γ ⊢ createBinding(factory, k, config) ÷ LocalBinding
 ```
+
+The server first resolves or loads the descriptor for the registration.
+The client checks its returned identity before introducing `k`; a queued
+`initial_state` provides no such witness. A constructed binding is rechecked
+before the shared replay loop begins.
 
 On a required mismatch, no replay begins. On an old server that does not return
 negotiation data, a required client closes the connection before invoking the
@@ -470,22 +481,48 @@ Under `require`, only `matched`, `resolved`, and `not_modified` may accompany
 When `expectedSemanticDigest` is present, `mismatch` becomes `register_error`
 under both policies. Status selection otherwise uses this precedence:
 
+For a structurally valid request `q`, let `A` mean that a descriptor schema
+was accepted and let `r` be the resolution result. When `r = ok(d)`, define
+`pinOK(q,d)` as an absent expected digest or an exact digest match, and
+`cacheHit(q,d)` as an exact `ifNoneMatch` match. `fits(q,d)` checks both the
+descriptor bytes and the final resolved envelope. The following disjoint
+rules express the precedence:
+
 ```text
-if no accepted schema:
-  unsupported
-else if resolution fails:
-  unavailable
-else if expectedSemanticDigest exists and differs:
-  mismatch
-else if request = verify:
-  matched
-else if ifNoneMatch equals the resolved digest:
-  not_modified
-else if descriptor bytes or the final envelope exceed their limit:
-  too_large
-else:
-  resolved with descriptor
+¬A
+─────────────────────────────
+q; A; r ⊢ status ⇓ unsupported
+
+A    r = error(ε)
+─────────────────────────────
+q; A; r ⊢ status ⇓ unavailable
+
+A    r = ok(d)    ¬pinOK(q,d)
+─────────────────────────────
+q; A; r ⊢ status ⇓ mismatch
+
+A    r = ok(d)    pinOK(q,d)    q.request = verify
+────────────────────────────────────────────────
+q; A; r ⊢ status ⇓ matched
+
+A    r = ok(d)    pinOK(q,d)    q.request = descriptor    cacheHit(q,d)
+────────────────────────────────────────────────────────────────────
+q; A; r ⊢ status ⇓ not_modified
+
+A    r = ok(d)    pinOK(q,d)    q.request = descriptor
+¬cacheHit(q,d)    ¬fits(q,d)
+────────────────────────────────────────────────────
+q; A; r ⊢ status ⇓ too_large
+
+A    r = ok(d)    pinOK(q,d)    q.request = descriptor
+¬cacheHit(q,d)    fits(q,d)
+────────────────────────────────────────────────────
+q; A; r ⊢ status ⇓ resolved(d)
 ```
+
+Parsing, access denial, and invalid field combinations retain their specified
+terminal errors; the rules do not turn them into a permitted fallback.
+Resolution is attempted only after the relevant authorization checks.
 
 Policy conversion to `register_error` happens after status selection. A
 version-1 mismatch never carries descriptor bytes.
@@ -530,32 +567,45 @@ environment values, or raw internal diagnostics.
 The pure negotiation model is:
 
 ```text
-request absent
-  -> legacy
+SuccessStatus ≜ {matched, resolved, not_modified}
+NonPinStatus ≜ {unsupported, unavailable, too_large}
 
-request present
-  -> parse request
-  -> select mutually accepted descriptor schema
-  -> authorize contract/model access
-  -> resolve or load descriptor
-  -> verify canonical descriptor digest
-  -> apply request mode and policy
+request = none
+──────────────────────────────
+request ⊢ negotiation ⇓ legacy
 
-legacy
-  -> original spec_validated bytes
+q is strictly decoded    schema and access checks permit resolution
+q ⊢ descriptor d resolved and its canonical identity verified
+q; true; ok(d) ⊢ status ⇓ t    q.policy; t ⊢ disposition ⇓ decision
+────────────────────────────────────────────────────────────────────
+some(q) ⊢ negotiation ⇓ decision
 
-matched/resolved/not_modified
-  -> extended spec_validated
-  -> normal replay
+t ∈ SuccessStatus
+─────────────────────────────────────────────
+policy; t ⊢ disposition ⇓ accept(t)
 
-required failure
-  -> extended register_error
-  -> terminal; no initial_state
+t ∈ NonPinStatus
+─────────────────────────────────────────────
+prefer; t ⊢ disposition ⇓ preferredFailure(t)
 
-preferred non-pin failure
-  -> extended spec_validated with failure status
-  -> legacy replay only if client explicitly permits fallback
+t ∉ SuccessStatus
+─────────────────────────────────────────────
+require; t ⊢ disposition ⇓ reject(t)
+
+policy; mismatch ⊢ disposition ⇓ reject(mismatch)
 ```
+
+The second rule shows the successful-resolution branch. An unsupported
+schema or failed resolution supplies its status directly under §9.1 before
+the same policy judgment is applied. Malformed or unauthorized requests take
+their terminal-error branch independently of this success rule.
+
+`legacy` preserves the original first-reply bytes and performs no extra
+compiler work. `accept` decorates `spec_validated` and permits ordinary replay.
+`reject` decorates `register_error` and terminates without `initial_state`.
+`preferredFailure` decorates `spec_validated`; the client may proceed only
+through its explicit permitted legacy fallback. These are internal judgment
+outcomes, not additional wire phases or messages.
 
 Server invariants:
 
@@ -627,11 +677,18 @@ sha256:<64 lowercase hexadecimal characters>
 All implementations use one branded internal value:
 
 ```text
-SemanticDigest = exactly 32 bytes
+SemanticDigest ≜ ByteVector[32]
+⊢ d : SemanticDigest
+─────────────────────────────────────────────────────
+d ⊢ renderWire ⇓ "sha256:" ++ lowerHex(d)
 
-parseWire("sha256:<64 lowercase hex>") -> SemanticDigest
-renderWire(SemanticDigest)              -> canonical string
+w = "sha256:" ++ h    h is exactly 64 lowercase hex digits
+──────────────────────────────────────────────────────────
+w ⊢ parseWire ⇓ bytes(h) : SemanticDigest
 ```
+
+Every other wire spelling is rejected. `ByteVector[32]` fixes the byte count;
+the rendering rule is not a permissive normalization of arbitrary strings.
 
 Clients do not compare arbitrary digest strings.
 
@@ -706,12 +763,17 @@ lookup and quota accounting; none is part of the descriptor's semantic digest.
 ### 13.2 Cache shape
 
 ```text
-resolution index:
-  ScopedResolutionKey -> semanticDigest | stable failure summary
+ResolutionIndex ≜ ScopedResolutionKey ⇀ Result[SemanticDigest, StableFailure]
+DescriptorStore ≜ SemanticDigest ⇀ CanonicalDescriptorBytes
 
-descriptor store:
-  semanticDigest -> canonical immutable descriptor bytes
+store(digest) = bytes    lengthValid(bytes)    hash(bytes) = digest
+────────────────────────────────────────────────────────────────
+store ⊢ digest verified-hit bytes
 ```
+
+The maps are partial and bounded; an absent key is a miss. `hash` uses the
+specified domain-separated semantic digest. Authorization and index scoping
+are separate premises of any operation that returns a descriptor to a caller.
 
 Cache invariants:
 
@@ -727,8 +789,13 @@ Cache invariants:
 Each cache entry has one lifecycle:
 
 ```text
-building -> ready | failed | quarantined
+bytes and digest verified       resolution fails       integrity check fails
+─────────────────────────       ─────────────────      ─────────────────────
+building ⟶publish ready         building ⟶fail failed   entry ⟶quarantine quarantined
 ```
+
+Only `ready` is readable. `entry` denotes an entry being built or revalidated;
+quarantine prevents it from being returned as a verified hit.
 
 Only fully verified `ready` entries are visible. Identical in-flight builds are
 single-flight. Ready entries are pinned while a reply uses them; eviction never
@@ -766,19 +833,17 @@ logical quota charging remain scope-specific.
 
 Runtime orchestration receives an explicit context:
 
-```lean
-inductive TransportTrust where
-  | localStdio
-  | authenticatedTls
-  | unauthenticatedTcp
-
-structure SessionAuthContext where
-  trust          : TransportTrust
-  principalId    : Option String
-  tenantId       : Option String
-  securityRealm  : String
-  scopes         : List String
+```text
+TransportTrust ≜ Sum[
+  localStdio:1, authenticatedTls:1, unauthenticatedTcp:1]
+SessionAuthContext ≜ Prod[
+  trust:TransportTrust, principalId:Option[Str], tenantId:Option[Str],
+  securityRealm:Str, scopes:Seq[Str]]
 ```
+
+The trusted transport supplies this context. Constructing a record with the
+same field names from submitted data does not establish an authorization
+judgment.
 
 The accept/session seam constructs this context; the compiler never derives
 authorization from descriptor contents. An mTLS deployment that wants
@@ -857,33 +922,43 @@ requires descriptor-read scope.
 The session shell compiles against the same trace bundle used for replay:
 
 ```text
-register
-  -> acquire/materialize exact spec
-  -> generate raw typed traces
-  -> preserve normalized type evidence
-  -> apply configured paramVars for replay
-  -> resolve descriptor from source + contract + evidence + run profile
-  -> negotiate digest/descriptor
-  -> spec_validated
-  -> replay the same processed traces
+prepare(source, contract, register(config)) ≜
+  raw ← generateTypedTraces(config);
+  E ← normalizeEvidence(raw);
+  T ← applyConfiguredParameters(config, raw);
+  d ← resolveChecked(source, contract, E, config);
+  ret(⟨descriptor=d, bundle=⟨rawEvidence=E, traces=T⟩⟩)
 
-register_traces
-  -> load raw trace files with strict evidence parser
-  -> resolve descriptor
-  -> apply configured paramVars
-  -> negotiate
-  -> spec_validated
-  -> replay those traces
+prepare(source, contract, register_traces(config, paths)) ≜
+  raw ← loadStrictTypedTraces(paths);
+  E ← normalizeEvidence(raw);
+  d ← resolveChecked(source, contract, E, config);
+  T ← applyConfiguredParameters(config, raw);
+  ret(⟨descriptor=d, bundle=⟨rawEvidence=E, traces=T⟩⟩)
+
+withExactSpec(registration; source.
+  prepared ← prepare(source, contract, registration);
+  decision ← negotiate(prepared.descriptor, request);
+  outcome ← coreRegistrationStep(registration, decision);
+  dispatchRegistration(outcome, decision, prepared.bundle.traces))
 ```
+
+The source scope acquires/materializes the exact spec and owns its cleanup.
+`prepare` is a command form with one case for each registration kind. Its
+notation abbreviates the registration's full configuration. Evidence is
+normalized before repartition can discard metadata, and both descriptor
+resolution and replay use this single preparation. The two command cases
+retain their stated resolution/repartition order. Neither permits regenerating
+or reloading a different trace set for replay.
+`dispatchRegistration` follows the `Core.step` acceptance or rejection result
+as required in §18.2.
 
 The current `ItfTrace` parser discards `#meta.varTypes`. Compiler integration
 therefore needs a richer trace bundle rather than attempting to recover type
 evidence after parsing:
 
-```lean
-structure TraceBundle where
-  rawEvidence : ModelEvidence
-  traces      : List ItfTrace
+```text
+TraceBundle ≜ Prod[rawEvidence:ModelEvidence, traces:Seq[ItfTrace]]
 ```
 
 The ordinary replay core continues to consume `List ItfTrace`. Distribution
@@ -903,7 +978,9 @@ They send no negotiation request and retain legacy behavior.
 
 ### 16.2 Negotiated runner
 
-Clients add two source-compatible stepping interfaces:
+Clients expose two source-compatible stepping entry points. The retained
+call shapes below identify the native API names; the judgments that follow
+specify their shared behavior:
 
 ```text
 runClientNegotiated(
@@ -926,20 +1003,23 @@ runClientWithTracesNegotiated(
 The adapter source is explicit:
 
 ```text
-NegotiatedAdapterSource =
-  | Compiled {
-      adapterId,
-      targetProfile,
-      bindingContractVersion,
-      registry,
-      fallbackFactory?
-    }
-  | DynamicHandlers {
-      handlers,
-      observations,
-      descriptorCache
-    }
+NegotiatedAdapterSource ≜ Sum[
+  compiled:Prod[
+    adapterId:AdapterId, targetProfile:TargetProfileId,
+    bindingContractVersion:StateComputerContractVersion,
+    registry:CompiledAdapterRegistry, fallbackFactory:Option[AdapterFactory]],
+  dynamicHandlers:Prod[
+    handlers:ActionHandlers, observations:ObservationHandlers,
+    descriptorCache:DescriptorCache]]
+
+source = compiled(c)        source = dynamicHandlers(h)
+────────────────────       ────────────────────────────
+source ⊢ mode verify       source ⊢ mode descriptor
 ```
+
+`compiled` and `dynamicHandlers` are semantic sum tags, corresponding to the
+`Compiled` and `DynamicHandlers` alternatives described here. The concrete
+native API retains its documented spelling.
 
 `Compiled` requires `request = verify`. `DynamicHandlers` requires
 `request = descriptor`. Invalid combinations fail before registration.
@@ -962,10 +1042,18 @@ Legacy and negotiated runners converge on one internal replay loop after the
 registration result:
 
 ```text
-receiveRegistrationResult
-  -> negotiate and create local binding when requested
-  -> shared replayLoop(StateComputer)
+ChosenComputer ≜ StateComputer × (1 → Comp[1])
+Γ ⊢ chooseComputer(registration, selection) ÷ ChosenComputer
+
+withChosenComputer(connection, registration, selection; computer.
+  replay(connection, computer))
 ```
+
+The command produces a computer and its cleanup operation; it may perform
+checked binding construction. The resource scope installs that cleanup before
+exposing the computer. Legacy and negotiated alternatives use the same
+`replay` command and terminal-message rules. Typing the command does not run
+the chooser or its factory.
 
 Clients must not duplicate the `initial_state`, `next_step`, mismatch,
 transport-close, and terminal-message logic for negotiated mode.
@@ -979,16 +1067,26 @@ The semantic digest identifies an interface, not one unique SUT adapter.
 Applications therefore use a local key:
 
 ```text
-CompiledAdapterKey = {
-  semanticDigest,
-  adapterId,
-  targetProfile,
-  stateComputerContractVersion
-}
+CompiledAdapterKey ≜ Prod[
+  semanticDigest:SemanticDigest, adapterId:AdapterId,
+  targetProfile:TargetProfileId,
+  stateComputerContractVersion:StateComputerContractVersion]
 
-CompiledAdapterRegistry
-  CompiledAdapterKey -> AdapterFactory
+matches(R, k) ≜ [ f | (k′, f) ∈ R and k′ = k ]
+
+matches(R, k) = [f]
+────────────────────────
+R; k ⊢ select ⇓ f
+
+matches(R, k) = []                  length(matches(R, k)) > 1
+──────────────────────────────     ─────────────────────────────
+R; k ⊢ select ⇑ not-registered     R; k ⊢ select ⇑ ambiguous
 ```
+
+`R` is the immutable collection of registered key/factory pairs. Key equality
+compares all four components exactly. These semantic failures map to
+`adapter_not_registered` and `adapter_ambiguous`; no factory is invoked while
+deciding the judgment.
 
 Among adapter-selection fields, the wire carries only `semanticDigest`; the
 inline companion contract is separate resolver input. `adapterId` is explicit
@@ -998,14 +1096,17 @@ Factories create fresh per-session handles rather than returning a mutable
 singleton:
 
 ```text
-LocalBinding = {
-  semanticDigest : SemanticDigest,
-  computer : StateComputer,
-  assertCompatibleConfig(config),
-  coverage(),
-  dispose  : effectful cleanup
-}
+LocalBinding ≜ Prod[
+  semanticDigest:SemanticDigest, computer:StateComputer,
+  assertCompatibleConfig:EffectiveConfig → Comp[1],
+  coverage:1 → Comp[Coverage], dispose:1 → Comp[1]]
+
+AdapterFactory ≜ EffectiveConfig → Comp[LocalBinding]
 ```
+
+`Coverage` denotes the profile's observation of executed stable action IDs;
+profiles may make that component optional. Cleanup is an effectful command,
+and the record type alone does not enforce fresh allocation or disposal.
 
 Registry lookup before connection is pure and invokes no SUT. Factory creation
 occurs only after successful required negotiation, performs no remote retrieval,
@@ -1015,9 +1116,8 @@ and effective `paramVars`, then disposes the binding exactly once on success,
 
 Generated Counter code embeds:
 
-```text
-CounterBinding.semanticDigest
-```
+`CounterBinding.semanticDigest : SemanticDigest` is the concrete metadata
+projection corresponding to the binding's semantic identity.
 
 The application registers its local implementation adapter under that exact
 key. Lookup is exact; there is no version range or structural “best match”.
@@ -1053,7 +1153,8 @@ from server `register_error`, generated binding errors, and Mirrors
 ### 16.4 Dynamic MirrorECMA option
 
 MirrorECMA additionally implements descriptor interpretation at runtime
-through a local handler registry keyed by stable descriptor IDs:
+through a local handler registry keyed by stable descriptor IDs. This
+retained block is a concrete TypeScript API reference:
 
 ```ts
 interface DynamicHandlerRegistry {
@@ -1172,9 +1273,14 @@ the current golden corpus.
 The abstract tag inventory does not change:
 
 ```text
-register -> specValidated -> initialState -> ...
-register -> registerError
+idle ⟶register accepted      accepted ⟶specValidated stepping
+idle ⟶register rejected      rejected ⟶registerError done
 ```
+
+`accepted` and `rejected` denote the decision alternatives within registration,
+not new protocol phases. The accepted branch continues with the existing
+`initialState`/stepping behavior; the rejected branch has only its terminal
+error output.
 
 No new phase is required, and Bridge tag-fidelity remains about the same
 constructors. Server-enforced `policy = require` does, however, add a new
@@ -1189,32 +1295,46 @@ extend:
 
 The abstract input becomes, conceptually:
 
-```lean
-structure Oracles where
-  validationOk : Bool
-  interfaceOk  : Bool
+```text
+Oracles ≜ Prod[validationOk:Bool, interfaceOk:Bool]
 ```
 
 No request and every accepted/preferred outcome set `interfaceOk = true`.
 Required negotiation failure sets it to `false`:
 
 ```text
-register succeeds iff validationOk && interfaceOk
-register_traces succeeds iff interfaceOk
+O.validationOk = true    O.interfaceOk = true
+────────────────────────────────────────────
+O ⊢ register accepted
 
-failure -> phase done + exactly [registerError]
-success -> existing stepping outputs
+O.interfaceOk = true
+─────────────────────────────
+O ⊢ register_traces accepted
+
+no acceptance derivation for registration under O
+─────────────────────────────────────────────────
+O ⊢ registration ⇓ (done, [registerError])
 ```
+
+The first two rules exhaust the acceptance conditions for these registration
+kinds. Their accepted transitions retain the existing ordered stepping
+outputs. Absence of a derivation here is decidable from the finite Boolean
+inputs; it is not a general negation-as-failure rule for effectful programs.
 
 The shell must not bypass `Core.step` by sending `register_error` directly:
 
 ```text
-resolve negotiation
--> derive interfaceOk
--> call Core.step
--> accepted: set stepping, send extended spec_validated, run replay
--> rejected: set done, send extended register_error, never run replay
+decision ← resolveNegotiation(registration);
+O ← deriveOracles(validationResult, decision);
+outcome ← coreStep(session, registration, O);
+dispatchCoreOutcome(outcome, decision, traceBundle)
 ```
+
+`deriveOracles` and `coreStep` lift pure decisions into the shell command.
+`dispatchCoreOutcome` sends the returned accepted first reply and enters
+replay, or sends the returned terminal error and closes the flow. Decorating
+that first reply with negotiation data does not permit bypassing the Core
+transition or starting replay after rejection.
 
 An async server connection must terminate this rejected synchronous flow rather
 than return to the session loop.

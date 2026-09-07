@@ -1,5 +1,7 @@
 # TLS FFI shim security review (t25, design doc section 9.1 target #1)
 
+> Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
+
 Scope: Ffi/tls_shim.c, Ffi/Tls.lean, Shell/Transport/Tls.lean,
 tools/TransportSpec.lean, against the Haskell reference
 (Protocol/Transport/Tls.hs, tls/crypton) at ModelMirros@3496251.
@@ -22,9 +24,9 @@ SAN parity gap.
 ### BLOCKER
 
 **B1. Failure sentinels crash the GC finalizer (NULL SSL into
-SSL_shutdown).** dsh_tls_accept and dsh_tls_connect return
-mk_null_ext(ssl_class()) on handshake failure: an *external object
-with NULL payload*. That object is an ordinary Lean value handed back
+SSL_shutdown).** dsh_tls_accept and dsh_tls_connect represent handshake
+failure with an SSL-class *external object with NULL payload*. That object is
+an ordinary Lean value handed back
 to the Lean layer (tlsServe / connectTlsPinned check sslIsNull, then
 drop it). When it is collected, ssl_finalizer runs
 SSL_shutdown((SSL*)NULL) before SSL_free - SSL_shutdown does not
@@ -32,9 +34,18 @@ accept NULL and dereferences it. Every rejected handshake in the
 long-running accept loop therefore arms a segfault at an arbitrary
 later GC point. Reproduce trivially: run the tls server, point an
 openssl s_client without a client cert at it (the spec does exactly
-this), force a GC, crash. Fix: first line of ssl_finalizer must be
-`if (!s) return;`. (ctx_finalizer is safe: SSL_CTX_free(NULL) is a
-documented no-op.)
+this), force a GC, crash. The required fix is the guarded finalization rule:
+
+```text
+payloadH(handle) = null
+─────────────────────────────────────────────────────
+⟨H; finalizeSSL(handle)⟩ ⇓ ⟨H; ()⟩
+```
+
+The absent-payload branch invokes no shutdown or free operation. A non-null
+payload takes the native finalization branch. This specifies the boundary
+guard; it is not a type-safety proof of the C shim. (`ctx_finalizer` is safe:
+`SSL_CTX_free(NULL)` is a documented no-op.)
 
 ### MAJOR
 
@@ -53,14 +64,26 @@ dsh_tls_server_ctx before anything else, and rewrite the test to use
 the good server cert with a chmod-640 copy of server.key.
 
 **M2. Expired-certificate warnings can never fire (UInt64-to-Nat
-wrap).** The C shim returns days as (uint64)(int64)days (negative
-when expired); certDaysRemaining does `some d.toNat`, which turns a
-negative days (e.g. -3 = 0xFFFF...FFFD) into a huge Nat. Then
-warnIfNearExpiry compares `days < 7` (false for huge) and `days < 0`
+wrap).** The C shim returns a signed day count through an unsigned
+64-bit word. The old `certDaysRemaining` wrapper interpreted that word as a
+natural number, turning negative days (e.g. -3 = 0xFFFF...FFFD) into a huge
+Nat. Then warnIfNearExpiry compares `days < 7` (false for huge) and `days < 0`
 - impossible for a Nat, so the "is expired" branch is dead code. Net
 effect: an expired server/client certificate produces NO warning at
-startup. Fix in the Lean wrapper: reinterpret the UInt64 as a signed
-value (negative branch when the high bit is set) and keep Int.
+startup. The corrected decoding judgment retains the signed interpretation:
+
+```text
+0 ≤ u < 2^63
+──────────────────────────────────────────
+u : Word64 ⊢ signedDays ⇓ u : Int
+
+2^63 ≤ u < 2^64
+──────────────────────────────────────────
+u : Word64 ⊢ signedDays ⇓ (u - 2^64) : Int
+```
+
+The two ranges are disjoint and exhaustive. This interpretation preserves
+negative expiry values for the warning logic.
 
 **M3. Hostname pinning does not cover IP SANs, and OpenSSL falls
 back to CN when no DNS SAN exists - both diverge from the Haskell
@@ -208,9 +231,9 @@ Shell/Transport/Tls.lean, and tools/TransportSpec.lean:
   else; the negative test now uses the good server cert with a
   chmod-640 copy of the matching key (non-vacuous — the SAN and chain
   checks pass, only perms can reject).
-- **M2 fixed**: certDaysRemaining sign-extends the UInt64 (high-bit
-  test via d >>> 63) instead of UInt64.toNat; negative days are real
-  Ints and the expired-certificate warning fires. Verified: the
+- **M2 fixed**: certDaysRemaining implements the `signedDays` interpretation
+  above by testing the high bit; negative days are real Ints and the
+  expired-certificate warning fires. Verified: the
   expired-cert fixture (openssl -days 0) reports days <= 0 and warns.
 - **M3 fixed**: dsh_tls_connect pins via X509_VERIFY_PARAM —
   X509_VERIFY_PARAM_set1_ip_asc for IP literals (inet_pton probe),

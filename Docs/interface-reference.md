@@ -141,7 +141,7 @@ additionally grants the listed principals descriptor-read scope. The latter
 flag is rejected without a nonempty allowlist. Cache/accounting identity
 includes the verified peer principal as well as its CA realm. Full schemas,
 policy precedence, limits, and client invariants are specified in
-[`model-interface-runtime-distribution-design.md`](model-interface-runtime-distribution-design.md).
+[`model-interface-runtime-distribution-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-runtime-distribution-design.md).
 
 ### 3.3 `register_trace_gen` — generate traces, then done
 ```json

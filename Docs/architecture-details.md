@@ -1,5 +1,7 @@
 # Mirrors — Architecture Details
 
+> Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
+
 > Module-by-module companion to `architecture-overview.md`.
 > Read that first; this is the reference.
 
@@ -56,12 +58,23 @@ surviving hints on both implementations. Differentially tested:
 500/500 ordered, 5000-case sweeps, zero divergence.
 
 ### Core.Protocol — the session machine (the centerpiece)
-Phase-indexed: `Session p` with `p : Phase` (7 TLA+ phases + 2 async
-extensions). `step` takes a message and returns
-`Except ProtocolError (Σ p', Session p' × List MirrorMessage)` —
-illegal orderings are unrepresentable (no `report_state` case in
-`idle`). §6.3 encodes `specs/MirrorProtocol.tla`'s mirror-side
-relation as `TlaStep` and proves:
+The state is phase-indexed, with 7 TLA+ phases and 2 async extensions.
+Its successful-step judgment packages the next phase with the corresponding
+session and ordered outputs:
+
+```text
+StepOutcome ≜ Sum[
+  accepted:(∃p:Phase. Session(p) × Seq[MirrorMessage]),
+  rejected:ProtocolError]
+
+s : Session(p); input : ClientMessage ⊢ step ⇓ result : StepOutcome
+idle; reportState ⊢ step ⇓ rejected(outOfOrder)
+```
+
+The second line abbreviates the result for any idle session and report
+payload. No successful derivation accepts that pair; the input message itself
+can still be represented and rejected. §6.3 encodes
+`specs/MirrorProtocol.tla`'s mirror-side relation as `TlaStep` and proves:
 - `step_refines_tla`: every machine step decomposes into 1–3 spec
   actions (queue semantics absorbed);
 - `no_unsolicited_output` + `allowed_outputs_attainable`: per-phase
@@ -80,11 +93,21 @@ congruence with the sync `RegisterValidate` flow, bound enforcement
 [1,100] on both paths.
 
 ### Core.Resource — lifecycle model
-Abstract token in `{Live,Delivered,Released,ReleaseFailed} ×
-{Owned,Borrowed}`. §6.5: cleanup at most once over arbitrary op
-sequences; `use` requires a proof the handle is `Live` — so the
-GC-finalizer backstop is *provably dead code* in-language and exists
-only at the FFI boundary (doc §9.7).
+The abstract resource carries a value, a label, a lifecycle state in
+`{Live, Delivered, Released, ReleaseFailed}`, and `Owned` or `Borrowed`
+provenance. Its pure use operation has a proof premise:
+
+```text
+Γ ⊢ r : Resource(α)    Γ ⊢ h : r.state = Live    Γ ⊢ f : α → β
+──────────────────────────────────────────────────────────────
+Γ ⊢ use(r, h, f) : β
+```
+
+This restates the dependent argument of `Core.Resource.use`. §6.5 proves
+at-most-once cleanup for threaded operation sequences and the lexical bracket's
+cleanup properties. Those pure token proofs do not supply a linear discipline
+for copied host handles; the effectful owner must maintain actual liveness.
+Native GC finalizers remain the FFI backstop described in §9.7.
 
 ### Codec.* — the wire layer
 Total `encode`/`decode` per message family with §6.6 round-trips at

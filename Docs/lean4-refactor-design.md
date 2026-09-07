@@ -1,5 +1,7 @@
 # Refactoring ModelMirrors via Lean 4 — Design Doc
 
+> Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
+
 > Status: proposal — implemented in **this repository** (`Mirrors`), as a
 > standalone checkout separate from the ModelMirrors Haskell repo.
 > Scope: port the ModelMirrors mirror (currently ~6,000 lines of GHC2024
@@ -180,43 +182,64 @@ Faithful, definitionally-simple ports. Design rules:
 `Protocol.Format.Json` (413 LOC of orphan aeson instances) becomes two
 total functions per message type:
 
-```lean
-encodeClient : ClientMessage → Lean.Json
-decodeClient : Lean.Json → Except DecodeError ClientMessage
+```text
+encClient : ClientMessage → Json
+decClient : Json → Result[ClientMessage, DecodeError]
+
+j = encClient(message)
+─────────────────────────────────
+message ⊢ encode ⇓ j
+
+decClient(j) = ok(message)          decClient(j) = error(ε)
+─────────────────────────          ───────────────────────
+j ⊢ decode ⇓ message               j ⊢ decode ⇑ ε
 ```
 
-with round-trip theorems (§6.6). Field names and encodings are pinned by
-golden fixtures extracted from the Haskell test suite *before* any Lean
-code ships, so aeson quirks (sum encoding, `Maybe` field omission, number
-formats) are frozen as data, not rediscovered.
+`encClient` and `decClient` denote the fixed canonical codec functions; the
+judgments are their graphs. Encoding is total on client messages. Decoding
+returns either a well-formed message or a classified error, with round-trip
+obligations relating the two judgments.
+
+The round-trip theorems are specified in §6.6. Field names and encodings are
+pinned by golden fixtures extracted from the Haskell test suite *before* any
+Lean code ships, so aeson quirks (sum encoding, `Maybe` field omission,
+number formats) are frozen as data, not rediscovered.
 
 ### 5.3 Layer 2 — the session machine as a type
 
 The mirror loop (`Protocol.Mirror.run`, 778 LOC of hand-threaded state)
 becomes a finite, explicit transition function over a phase-indexed state:
 
-```lean
-inductive Phase | idle | validating | generating | ready | stepping | exploring | done
+```text
+p ::= idle | validating | generating | ready | stepping | exploring | done
+⊢ Session(p) type
 
-structure Session (p : Phase) where ...
+StepOutcome ≜ Sum[
+  accepted:(∃p:Phase. Session(p) × Seq[MirrorMessage]),
+  rejected:ProtocolError]
 
-def step : Session p → ClientMessage →
-  Except ProtocolError (Σ p', Session p' × List MirrorMessage)
+s : Session(p); input : ClientMessage ⊢ step ⇓ result : StepOutcome
 ```
+
+`Phase` is the finite type of phase constructors above. The existential
+result packages the next phase with a session of that phase and its ordered
+output. An invalid input has an explicit rejection alternative; the type
+does not imply that every message is legal in every phase.
 
 - `Phase` mirrors `Ms` in `specs/MirrorProtocol.tla`
   (`{"idle","validating","generating","ready","stepping","exploring","done"}`),
   extended with the async-job flows that postdate the TLA+ spec.
-- Illegal orderings are *unrepresentable*: there is no `step` case
-  accepting `report_state` in phase `idle`, so the first-message rule and
-  the replay ordering (`initial_state → report_state → step_ok → …`) hold
-  by construction. The remaining runtime `protocol_error` covers decode
-  failures and oracle failures only.
-- The effectful driver in `Shell.Mirror.Session` is a thin fold —
-  `recv line → decode → Core.step → encode → send` — with all oracle calls
-  (`validateSpecIn`, `generateTracesIn`, explorer RPC) injected as
-  parameters, so the core stays pure and the §6.3 refinement proof never
-  mentions IO.
+- Successful transitions obey the phase discipline: there is no accepted
+  `report_state` transition in `idle`. A well-formed message in the wrong
+  phase is still representable and returns the Core `outOfOrder` error.
+  Decode and oracle failures are handled separately by the shell. The
+  first-message and replay-order properties concern accepted transitions.
+- The effectful driver in `Shell.Mirror.Session` interprets the pure
+  transition judgment. Its command first receives and decodes one message,
+  obtains the required oracle inputs, decides `step`, and encodes/sends the
+  resulting ordered output. Oracle operations such as `validateSpecIn`,
+  `generateTracesIn`, and explorer RPC are injected parameters; they remain
+  outside the pure §6.3 refinement theorem.
 
 ### 5.4 Layer 3 — effect boundary (the TCB)
 

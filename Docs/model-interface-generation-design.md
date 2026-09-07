@@ -1,5 +1,7 @@
 # Deterministic Model-Interface Generation — Design
 
+> Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
+
 > Status: **Mirrors compiler and `mirrorecma-v1` emitter implemented; client
 > negotiation libraries and static C++/Rust/Lean emitters remain planned**
 > Scope: generate a model-specific implementation interface and a binding to
@@ -9,18 +11,22 @@
 > `client-implementation-guide.md`, `interface-reference.md`, and
 > `client-test-coverage.md`.
 > Detailed compiler contract:
-> [`model-interface-compiler-design.md`](model-interface-compiler-design.md).
+> [`model-interface-compiler-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-compiler-design.md).
 > Runtime descriptor distribution:
-> [`model-interface-runtime-distribution-design.md`](model-interface-runtime-distribution-design.md).
+> [`model-interface-runtime-distribution-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-runtime-distribution-design.md).
 
 ## 1. Problem
 
 Every existing client ultimately accepts the same low-level computation:
 
 ```text
-(action name, parameters or initial state, previous reported state)
-    -> next reported state
+ReplayInput ≜ Prod[action:Str, payload:State, previous:State]
+StateComputer ≜ ReplayInput → Comp[State]
 ```
+
+This is the semantic function type of the seam. `Comp` records the SUT effect
+and possible failure; its synchronous native representation remains the
+existing client API.
 
 MirrorECMA calls this `StateComputer`; MirrorCPP, MirrorRust, and MirrorLean
 provide equivalent interfaces. This is a useful stable seam, but it is a raw
@@ -40,10 +46,17 @@ deterministic, model-specific interface for the LLM to implement. For example,
 nothing mechanically turns the Counter model into this requirement:
 
 ```text
-initialize()
-tick(stride : Int)
-observe() -> { count : Int }
+TickInput ≜ Prod[Stride:Int]
+CounterObservation ≜ Prod[Count:Int]
+CounterPort ≜ Prod[
+  Initialize:1 → Comp[1],
+  Tick:TickInput → Comp[1],
+  observe:1 → Comp[CounterObservation]]
 ```
+
+The product labels are stable interface IDs. A target profile maps them to
+native method and field names, such as `initialize`, `tick`, `stride`, and
+`count`, without changing their meaning.
 
 The missing module is a **Model Interface Compiler**. It generates that
 implementation-facing interface and a deep binding from it to the existing
@@ -255,15 +268,19 @@ implementation adapter. The rest of the expected initial state remains hidden.
 The companion contract normally omits types that can be resolved from the
 model. For Counter:
 
-```tla
-\* @type: Int;
-count,
-\* @type: { stride: Int };
-parameters,
+```text
+E ⊢ count : Int
+E ⊢ parameters : Rec[stride:Int]
+Rec[stride:Int] ⊢ field(stride) : Int
 ```
 
-resolves the generated `count` and `stride` types to arbitrary-precision
-integers. If typed evidence is absent or ambiguous, resolution fails unless an
+Here `E` consists of authoritative declaration/type evidence, including the
+model's Apalache annotations. The first two judgments describe its variable
+types; the third derives the projected input type. No sampled value is used
+as a type-introduction rule.
+
+These derivations resolve the generated `count` and `stride` types to
+arbitrary-precision integers. If typed evidence is absent or ambiguous, resolution fails unless an
 explicit contract type is supplied and independently checked.
 
 The normalized type grammar must cover the existing ITF value domain:
@@ -300,7 +317,9 @@ timestamps nor machine-specific absolute paths.
 
 ## 8. Generated implementation interface
 
-For MirrorECMA, Counter output should resemble:
+The semantic port is `CounterPort` from §1. The following retained block
+is a concrete TypeScript API reference, showing the target-specific native
+spelling of that interface:
 
 ```ts
 export interface TickInput {
@@ -354,23 +373,26 @@ still represent actions as a closed sum.
 The LLM receives the generated port, its invariants, and the relevant SUT
 source. It does not receive raw protocol responsibilities.
 
-```ts
-class CounterAdapter implements CounterPort {
-  constructor(private readonly sut: RealCounter) {}
+```text
+Γ ⊢ sut : RealCounter
+Γ ⊢ reset(sut) ÷ 1
+Γ, n:Int ⊢ incrementBy(sut, n) ÷ 1
+Γ ⊢ currentCount(sut) ÷ Int
 
-  initialize(): void {
-    this.sut.reset();
-  }
+P ≜ ⟨
+  Initialize = λ(_:1). cmd(reset(sut)),
+  Tick = λ(i:TickInput). cmd(incrementBy(sut, i.Stride)),
+  observe = λ(_:1). cmd(n ← currentCount(sut); ret(⟨Count=n⟩))
+⟩
 
-  tick({ stride }: TickInput): void {
-    this.sut.incrementBy(stride);
-  }
-
-  observe(): CounterObservation {
-    return { count: this.sut.currentCount() };
-  }
-}
+Γ ⊢ P : CounterPort
 ```
+
+`reset`, `incrementBy`, and `currentCount` are primitive commands whose
+semantics are the corresponding operations on the supplied real SUT. These
+assumptions specify the adapter seam; they do not assert that the SUT agrees
+with the Counter model. In particular, the observation is obtained from the
+implementation, rather than derived from the previous expected count.
 
 The adapter owns only irreducible application semantics:
 
@@ -392,29 +414,26 @@ The adapter must not:
 
 Conceptually, `bindCounter` produces this behavior:
 
-```ts
-const computer: StateComputer = (action, payload, _previousState) => {
-  switch (action) {
-    case "init":
-      port.initialize();
-      break;
+```text
+computerM(P) ≜ λ(args:ReplayInput). cmd(
+  a ← classify(M, args.action);
+  input ← projectAndDecodeAll(M, a, args.payload);
+  _ ← invoke(P, a, input);
+  observation ← observe(P);
+  report ← encodeObservation(M, observation);
+  ret(report))
 
-    case "tick":
-      port.tick({
-        stride: decodeRequiredBigInt(
-          payload,
-          ["parameters", "stride"],
-        ),
-      });
-      break;
-
-    default:
-      throw new UnknownActionError(action);
-  }
-
-  return encodeObservation(port.observe());
-};
+Γ ⊢ P : Port(M)
+────────────────────────────────────
+Γ ⊢ computerM(P) : StateComputer
 ```
+
+`classify` maps `init` to `Initialize` and `tick` to `Tick`; every other
+unaccepted label fails. Counter's `Tick` projection selects
+`field(parameters) / field(stride)` and validates an integer before the port
+is invoked. `args.previous` is never selected by this term. Command binding
+ensures that failed classification, projection, decoding, or invocation does
+not execute a later stage.
 
 The actual generated implementation additionally handles lifecycle state,
 typed path diagnostics, poisoning, observation validation, deterministic key
@@ -462,23 +481,29 @@ state side. `Core.Diff.diffState` then compares `filterMeta` projections, where
 Define the required observation keys from the actual comparison input:
 
 ```text
-ComparableVars = keys(filterMeta(step.vars))
+ComparableVars(s) ≜ dom(filterMeta(s.vars))
 ```
 
 At the model level this is approximately:
 
 ```text
-trace variables
-  - configured paramVars
-  - action_taken
-  - parameters
-  - #* metadata
+processed(T, p) ≜ applyParamVars(p, T)
+Meta ≜ { k | k starts with "#" ∨ k = "action_taken" ∨ k = "parameters" }
+ComparableVars(s) = dom(s.vars) ∖ Meta
+    for s ∈ traceSteps(processed(T, p))
 ```
+
+`p` is the configured parameter-variable list. These names denote the actual
+Core trace and filtering semantics; the subtraction applies only at the root,
+after repartition.
 
 The compiler requires exact observation coverage:
 
 ```text
-generated observation variables = ComparableVars
+∀s ∈ traceSteps(processed(T, p)).
+  { wireNameM(o) | o ∈ observations(M) } = ComparableVars(s)
+────────────────────────────────────────────────────────────
+M; p ⊢ T observation-complete
 ```
 
 If a normal compared variable such as `step_count` cannot be observed from the
@@ -537,12 +562,16 @@ the existing structured diff hints.
 The compiler should expose a small interface:
 
 ```text
-resolve(specSources, companionContract, typeEvidence)
-  -> LockedModelInterface | Diagnostics
+sources; contract; evidence ⊢ resolve ⇓ ℓ
+sources; contract; evidence ⊢ resolve ⇑ diagnostics
 
-emit(lockedInterface, targetProfile)
-  -> GeneratedFiles
+profile; ℓ ⊢ emit ⇓ generatedTree
+profile; ℓ ⊢ emit ⇑ diagnostics
 ```
+
+The success and failure judgments expose the same small semantic interface
+for each target. Resolving and emitting are pure decisions over normalized
+inputs; loading sources and publishing output remain shell commands.
 
 `resolve` hides:
 

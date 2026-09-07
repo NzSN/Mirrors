@@ -1,5 +1,7 @@
 # Async Operations Enablement — Design
 
+> Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
+
 > Status: **approved** (D1–D3 signed off; implementation released as t31)
 > Scope: expose the already-built, already-proven async job machinery —
 > validate-only (`register_validate_async`) and trace-gen-only
@@ -39,17 +41,26 @@ limitation — its `Main.hs` wires only `run`.)
 
 ## 2. Target topology
 
+Let `ρ` name a server process, `J` its one shared store, and `σ` a
+connection session. The target topology has these interface judgments:
+
+```text
+Γ ⊢ J : JobStore(ρ, N)    Γ ⊢ c : Connection(ρ, σ)
+────────────────────────────────────────────────────
+Γ ⊢ serveAsync(c, J) ÷ 1
+
+Γ ⊢ J : JobStore(ρ, N)    Γ ⊢ id : JobName(ρ)
+────────────────────────────────────────────────────
+Γ ⊢ queryStatus(J, id) ÷ JobStatus
 ```
-mirror --server 8999 --tls ... --jobs N
-        │
-        ├─ JobStore (ONE per process; capacity = N)
-        │     ├─ Task job-1 (validate)   ── apalache child
-        │     └─ Task job-2 (trace-gen)  ── apalache child
-        │
-        └─ accept loop
-              ├─ connection 1 → runAsync transport orc store
-              └─ connection 2 → runAsync transport orc store
-```
+
+Every session receives the same `J`, while a stored job records its owning
+session separately. `JobName(ρ)` identifies the lookup namespace, not evidence
+that an ID is currently stored: an absent or evicted ID still yields
+`unknown`. Queries are store operations under the connection's existing
+protocol discipline; these types do not authorize an out-of-phase first
+message. Per-job commands own their Apalache children and the store's bounded
+execution slots.
 
 - **One store per server process.** Job ids are unique per store; any
   connection may `job_query`/`job_await`/`job_cancel` any id —

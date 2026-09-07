@@ -1,5 +1,7 @@
 # Worker-Pool Server Concurrency — Design
 
+> Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
+
 > Status: **approved, in implementation** (t33, shell-engineer)
 > Supersedes: the per-connection dedicated-task model of t31, and the
 > t31-follow-up Windows sync fallback.
@@ -27,15 +29,30 @@ Options weighed:
 
 ## 2. Design
 
+Let `Q` be the bounded sequence of accepted connections and `W` map each
+of the fixed `N` workers to `idle` or `serving(c)`. The central transitions
+are:
+
+```text
+length(Q) < 128    c is an accepted connection
+──────────────────────────────────────────────
+⟨Q, W⟩ ⟶enqueue(c) ⟨Q ++ [c], W⟩
+
+Q = c :: Q′    W(i) = idle
+───────────────────────────────────────────────────
+⟨Q, W⟩ ⟶assign(i) ⟨Q′, W[i ↦ serving(c)]⟩
+
+W(i) = serving(c)    the session has ended and c has been closed
+───────────────────────────────────────────────────────────────
+⟨Q, W⟩ ⟶sessionEnd(i) ⟨Q, W[i ↦ idle]⟩
 ```
-accept loop (main thread)                 N long-lived workers
-  signal flag check                       (spawned once at startup,
-  park in select(200ms) ──┐                never return in normal
-  acceptFd ───────────────┴─► bounded ──►  operation)
-                                queue      worker_i: sem.wait → pop →
-                           (Mutex+Sem+     runTcpConn → loop)
-                            IO.Ref List)
-```
+
+All other worker states are preserved. No enqueue rule applies to a full
+queue, and no assignment rule applies to an empty queue; semaphore waits
+implement those suspended states. A session ending returns its worker to
+`idle`, not to a completed-task state. The accept loop still polls the signal
+flag through `select(200ms)`. These are queue/worker semantics, not a new wire
+protocol or a claim of scheduler fairness.
 
 1. **Unchanged API.** `serveTcpConcurrentOn` /`serveTlsConcurrentOn`
    keep names and signatures; `Shell/Cli.lean` does not change. The

@@ -1,5 +1,7 @@
 # t33 Worker-Pool — Implementation Status & Validation Blockers
 
+> Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
+
 > Status: **REDEPLOYED + VALIDATED; Defect D fixed, verified, and
 > DEPLOYED — second redeploy (Defect-D build `a2c23054…`) done
 > 2026-08-31 (backup `.old19` = `1adbbbcb…`, sha-verified); round-2
@@ -130,13 +132,20 @@
 > fabricating `(0, "")` (`Tcp.lean:224–230`). The narrative below is
 > kept as the record of the defect and the probe that pinned it down.
 
-`ConnQueue.acquireWait` (and the job store's `acquireSlot`) wait on
-`Std.Semaphore.acquire`'s promise with:
+The historical `ConnQueue.acquireWait` and job-store `acquireSlot` used
+`Task.get` on the semaphore-acquisition promise. The observed behavior is
+expressed by this transition:
 
-```lean
-let p ← s.acquire
-let _acquired : Option Unit := Task.get p.result?
+```text
+H(p) = pending    p is an acquisition promise for a zero-permit semaphore
+────────────────────────────────────────────────────────────────────────
+⟨H; historicalTaskGet(p)⟩ ⇓ ⟨H; returnedWithoutPermit⟩
 ```
+
+`returnedWithoutPermit` names the observed control-flow result of the probe;
+it is not a Lean constructor or an asserted intended semantics of `Task.get`.
+The pending-promise state is unchanged, so the return provides no evidence
+that a semaphore permit was acquired.
 
 **`Task.get` on the unresolved promise task returns immediately** — it
 does not park the thread. Confirmed with a 50-line network-free probe
@@ -170,12 +179,22 @@ throttled since t31. Masked so far because `slots == capacity` and the
 store's capacity list-check fires first, so nothing observable breaks —
 but the throttle is dead code as written.
 
-**Fix (one line per site):**
+**Fix:** use `IO.wait` at both sites. Its required waiting behavior is:
 
-```lean
-let p ← s.acquire
-let _ ← IO.wait p.result?
+```text
+H(p) = pending
+───────────────────────────────────────
+⟨H; waitPermit(p)⟩ ↦ ⟨H; suspended(p)⟩
+
+H′(p) = resolved(some(()))
+────────────────────────────────────────
+⟨H′; suspended(p)⟩ ⇓ ⟨H′; permitAcquired⟩
 ```
+
+The second rule applies only after resolution with an acquired permit. A
+cancelled or unsuccessful acquisition is not `permitAcquired`. `waitPermit`
+denotes the fixed `IO.wait` path; the runnable historical probe is retained
+in the appendix so the empirical result can still be reproduced.
 
 Proven by the probe (0 phantom acquires, both priorities).
 

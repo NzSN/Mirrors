@@ -1,5 +1,7 @@
 # Mirrors — Client Implementation Guide & Conformance Specification
 
+> Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
+
 > How to implement a client of the Mirrors mirror server, and the
 > normative rules a conforming client must obey.
 > Companion docs: `interface-reference.md` (exact wire shapes — the
@@ -326,15 +328,24 @@ MirrorCPP's `test/integration/real_mirror_test.cpp`.
 The generated metadata supplies the two variable parts of a compiled request:
 
 ```text
-modelInterface = {
-  schema: "mirrors.model-interface-negotiation/v1",
-  request: "verify",
-  policy: "require",
-  acceptDescriptorSchemas: ["mirrors.model-interface-descriptor/v1"],
-  expectedSemanticDigest: renderWire(generated.semanticDigest),
-  contract: { inline: generated.contract }
-}
+q ≜ ⟨
+  schema = "mirrors.model-interface-negotiation/v1",
+  request = "verify",
+  policy = "require",
+  acceptDescriptorSchemas = ["mirrors.model-interface-descriptor/v1"],
+  expectedSemanticDigest = renderWire(metadata.semanticDigest),
+  contract = ⟨inline=metadata.contract⟩
+⟩
+
+Γ ⊢ metadata : GeneratedMetadata
+──────────────────────────────────────
+Γ ⊢ q : CompiledVerificationRequest
 ```
+
+This is an inert semantic record expression. Its labels and strings are the
+existing wire fields; encoding renders that record as the strict version-1
+request. The typing assumption concerns verified generated metadata, not an
+arbitrary object read from the network.
 
 `renderWire` emits exactly `sha256:` followed by 64 lowercase hexadecimal
 characters. Parse it into a branded 32-byte/native digest value and compare
@@ -411,12 +422,10 @@ A semantic digest identifies an interface, not a unique application adapter.
 Compiled clients therefore use an immutable local registry keyed by:
 
 ```text
-{
-  semanticDigest,
-  adapterId,
-  targetProfile,
-  stateComputerContractVersion
-}
+AdapterKey ≜ Prod[
+  semanticDigest:SemanticDigest, adapterId:AdapterId,
+  targetProfile:TargetProfileId,
+  stateComputerContractVersion:StateComputerContractVersion]
 ```
 
 Registry lookup may occur before opening the connection, but it is pure: it
@@ -424,14 +433,16 @@ returns a factory without constructing the SUT. After `matched`, the runner
 invokes exactly that factory to create one fresh session-local binding:
 
 ```text
-LocalBinding = {
-  semanticDigest,
-  computer: StateComputer,
-  assertCompatibleConfig(effectiveConfig),
-  coverage?(),
-  dispose()
-}
+LocalBinding ≜ Prod[
+  semanticDigest:SemanticDigest, computer:StateComputer,
+  assertCompatibleConfig:EffectiveConfig → Comp[1],
+  coverage:Option[1 → Comp[Coverage]],
+  dispose:1 → Comp[1]]
 ```
+
+`Coverage` is the profile's coverage-report type. Configuration validation and
+disposal are commands with explicit failure outcomes. Freshness and disposal
+are runner obligations in addition to this product shape.
 
 - **MI11.** Registry lookup **MUST** use the exact four-part key and return
   exactly one factory. It **MUST NOT** guess “latest”, search version ranges,
@@ -446,22 +457,33 @@ LocalBinding = {
   transport failure, a thrown `StateComputer`, and binding-validation failure.
   A cleanup failure is secondary to an earlier primary failure.
 
-Implementation skeleton:
+The runner can be expressed as this command term. `Authorization` is a
+checked sum whose alternatives carry either `Matched(σ,ι)` or an explicit
+legacy `FallbackPermit(σ)`:
 
 ```text
-key, factory = registry.lookupExact(generated metadata, local adapter config) // pure
-send(extendRegistration(base registration, verify request))
-first = readOneBoundedUtf8Line()
-authorization = decodeStrictlyAndAuthorize(first, policy, key.semanticDigest)
-binding = authorization == matched ? factory(config) : explicitFallback(config)
-try:
-  require binding.semanticDigest == key.semanticDigest
-  binding.assertCompatibleConfig(config)
-  replayLoop(binding.computer)
-finally:
-  binding.disposeExactlyOnce()
-  connection.close()
+factory ← lookupExact(registry, key(metadata, localAdapterConfig));
+withConnection(target; σ, connection.
+  _ ← sendRegistration(connection, baseRegistration, metadata, policy);
+  first ← receiveBoundedFirstReply(connection);
+  authority ← validateFirstReply(connection, first, policy, metadata, explicitFallback);
+  withLocalBinding(
+    case authority of
+      matched(k) . createBinding(factory, k, config)
+      fallback(k) . createFallback(explicitFallback, k, config);
+    binding.
+      _ ← checkBindingIdentityAndConfig(binding, metadata, config);
+      replay(connection, binding.computer)))
 ```
+
+`case` enters exactly the branch of the validated sum. The first reply cannot
+introduce a fallback permit after a digest mismatch, malformed response, or
+authorization denial, and cannot do so without the caller's separate fallback
+factory. A fallback permit is not a `Matched` witness and supplies no sandbox
+authority. Lookup is pure; checked acquisition and replay are sequential.
+The binding scope registers cleanup during construction and attempts disposal
+exactly once after a binding is returned, including validation or replay
+failure. The connection scope closes the transport on every terminal path.
 
 Keep failure families distinct: structured server negotiation failures,
 client-local selection/configuration failures, generated-binding conversion or
@@ -746,23 +768,157 @@ The required lifecycle is the same across client languages:
   A worker echoing an interface digest **MUST NOT** be treated as artifact
   authenticity, caller authorization, or proof of honest observations.
 
-Conceptual client integration (names below are not shipped APIs):
+Conceptual client integration, expressed as a small typed command language:
+
+We follow the distinction between **syntax**, **statics**, and **dynamics** in
+Robert Harper's [Practical Foundations for Programming Languages](https://www.cs.cmu.edu/~rwh/pfpl/).
+The command notation follows his
+[Modernized Algol supplement](https://www.cs.cmu.edu/~rwh/pfpl/supplements/ma-derived.pdf).
+The indexed interface types and resource scopes below are our own illustrative
+extension. They are neither shipped APIs nor a completed formalization of §13.
+
+First define the **metalanguage judgments** used to describe client programs:
 
 ```text
-orchestrator = startOwnedOrConnectTrusted(requiredCapabilities)
-session = orchestrator.openSession(trustedPolicy)
-try:
-  artifact = session.prepareSubmission(authoringOrPrebuiltInput)
-  runNegotiatedMirrorsReplay(factory = afterAuthorizedMatch => {
-    worker = session.acquireExecution(artifact, verifiedPublicManifest)
-    // On factory failure, release any partially acquired worker immediately.
-    return bindNativePort(worker.proxy,
-                          dispose = releaseWorkerOnceThroughSession)
-  })
-finally:
-  session.closeAndAwaitCleanup()  // also covers partial factory failure
-  closeOwnedConnectionsAndProcess()
+Γ ⊢ e : τ                    expression e has type τ under assumptions Γ
+Γ ⊢ m ÷ τ                    command m produces a τ if it returns normally
+⟨H; m⟩ ↦ ⟨H′; m′⟩          one execution step changes resource state H to H′
 ```
+
+Here `Γ` is a typing context such as `s : Session(σ)`. `H` records actual
+sessions, validated authorities, owned resources, and their lifecycle states.
+Judgments and inference rules belong to the metalanguage; expressions `e` and
+commands `m` belong to the small object language being specified.
+
+The expression `cmd(m)` suspends a command and has type `τ cmd`. Executing it
+can perform effects, fail, or wait; possessing that expression is not the same
+as possessing a result of type `τ`. The basic typing rules are:
+
+$$
+\frac{\Gamma \vdash m \div \tau}
+     {\Gamma \vdash \operatorname{cmd}(m) : \tau\;\mathrm{cmd}}
+\qquad
+\frac{\Gamma \vdash e : \tau\;\mathrm{cmd}
+      \quad \Gamma,x:\tau \vdash m \div \tau'}
+     {\Gamma \vdash \operatorname{bnd}(e;x.m) \div \tau'}
+$$
+
+Write `x ← m₁; m₂` for `bnd(cmd(m₁); x.m₂)`: execute `m₁`, then bind its
+successful result to `x` in `m₂`. A failure does not enter that continuation.
+
+Use the following abstract types. In this sketch, `σ` is a fresh name for one
+evaluation session and its single Mirrors registration; `ι` identifies the
+exact model interface. A multi-registration extension would need a separate
+registration index. These names are specification indices, not wire fields.
+
+| Type | Meaning |
+| --- | --- |
+| `Gate` | Compatible trusted process connection, recording whether the facade owns or attaches to the process |
+| `Session(σ)` | Handle to that session under its fixed trusted policy and principal |
+| `Artifact(σ)` | Supervisor-owned frozen submission snapshot |
+| `Manifest(ι)` | Verified public interface manifest |
+| `Replay(σ,ι)` | Trusted Mirrors connection and replay state for the registration |
+| `Matched(σ,ι)` | Evidence that the required registration checks in §9 succeeded for that session and interface |
+| `Admission(σ,ι)` | Supervisor-issued launch ticket fixing the admitted artifact, public manifest, runtime, and backend policy |
+| `Worker(σ,ι)` | Restricted worker whose public-port handshake and managed creation succeeded |
+| `Binding(σ,ι)` | Trusted generated binding over that worker's public port |
+
+The client cannot construct `Matched` or `Admission` values from arbitrary
+bytes. Their introduction operations belong to the trusted replay driver and
+MirrorGate respectively. A digest alone introduces neither value. The admission
+ticket retains the artifact hash, runtime, policy, and owner as distinct data;
+they are not identified with `ι`.
+
+The central **static requirement** for execution-worker acquisition is:
+
+$$
+\frac{\Gamma \vdash s : \mathrm{Session}(\sigma)
+      \quad \Gamma \vdash k : \mathrm{Matched}(\sigma,\iota)
+      \quad \Gamma \vdash d : \mathrm{Admission}(\sigma,\iota)}
+     {\Gamma \vdash \operatorname{acquireWorker}(s,k,d)
+       \div \mathrm{Worker}(\sigma,\iota)}
+$$
+
+The common indices require the same session and interface. The artifact and
+launch configuration come from `d`; there is no independent caller-selected
+artifact argument that could replace the admitted one. The runtime also checks
+that the session is live and that the authorities and principal remain valid.
+`acquireWorker` registers partial resources with the supervisor before they can
+be orphaned, launches only inside the admitted backend, and returns a `Worker`
+only after the handshake and managed creation checks. Failure during acquisition
+releases partial resources through the same session.
+
+The whole evaluation can now be written as an object-language command:
+
+```text
+withGate(requiredCapabilities; g.
+  withSession(g, trustedPolicy; σ, s.
+    a ← prepareSubmission(s, submission);
+    d ← admit(s, a, publicManifest, runtime);
+    withRequiredReplay(s, privateConfig, generatedMetadata; n, k.
+      withWorker(s, k, d; w.
+        withBinding(n, w, generatedMetadata; b.
+          replay(n, b))))))
+```
+
+Each dot binds names in the following command. `withSession` generates `σ`
+and binds `s : Session(σ)`. `withRequiredReplay` performs registration and
+strict required negotiation before entering its body with
+`n : Replay(σ,ι)` and `k : Matched(σ,ι)`; `publicManifest` and
+`generatedMetadata` must describe that same `ι`. It retains the validated
+first reply and connection for `replay`, so registration is not repeated.
+`withWorker` scopes `acquireWorker`; `withBinding` checks and scopes the trusted
+binding. The remaining operations implement the lifecycle already described
+above. Preparation and admission may precede negotiation without launching an
+execution worker. A negotiation failure never enters the `withWorker` body.
+
+These `with...` forms are resource-management primitives, not abbreviations
+for ordinary function application. Their **dynamic contract** installs cleanup
+responsibility during acquisition, including before a handle is returned. Each
+scope finishes its body or handles a terminal failure, then awaits its cleanup
+before propagating the outcome. Worker release goes through the supervisor's
+ownership table even when requested by binding disposal or an outer scope.
+Disconnect and timeout also trigger the supervisor's cleanup path.
+
+For example, logical release is an atomic transition:
+
+$$
+\frac{\operatorname{owner}_{H}(w)=s
+      \quad \operatorname{state}_{H}(w)\in\{\mathrm{allocated},\mathrm{live}\}}
+     {\langle H;\operatorname{release}(s,w)\rangle
+       \mapsto
+       \langle H[w\mapsto\mathrm{closing}];\operatorname{stopAndAwait}(w)\rangle}
+$$
+
+The update changes only the resource's lifecycle state; `stopAndAwait` initiates
+its teardown and waits for completion or a cleanup deadline. A repeated release
+of a closing resource joins the same cleanup; release of a closed resource has
+no additional effect. A different owner is rejected before any resource mutation.
+Only confirmed teardown marks the resource closed; an expired cleanup deadline
+without confirmation is a cleanup failure. `withGate` closes owned connections
+and terminates an owned process; attaching to a process grants no authority to
+terminate it.
+
+Let `ok(v)` and `fail(ε)` denote terminal outcomes, with distinct failure tags
+for the families in SO7, including Mirrors mismatch. Cleanup combines with the
+body outcome as follows; secondary cleanup errors remain in trusted diagnostics:
+
+```text
+finish(ok(v),   cleanup-ok)       = ok(v)
+finish(fail(ε), cleanup-ok)       = fail(ε)
+finish(ok(v),   cleanup-fail(δ))  = fail(δ)
+finish(fail(ε), cleanup-fail(δ))  = fail(ε)
+```
+
+Thus `Matched` expresses the authority supplied to the original
+`afterAuthorizedMatch` continuation, while the resource scopes express its
+`try/finally` obligations. Ordinary typing here does not prohibit copying a
+handle or establish exactly-once destruction: at-most-once logical release
+comes from the supervisor transitions. The sketch also does not prove bounded
+physical teardown, information-flow security, or honest SUT observations.
+Those require backend, timing, and disclosure assumptions plus the acceptance
+evidence in §13.6. All commands above execute in the trusted evaluator; only
+the declared public port operations reach the worker.
 
 ### 13.4 Failure, authority, and cleanup
 

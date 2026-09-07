@@ -1,5 +1,7 @@
 # Generated Model Interface — Cross-Language Specification
 
+> Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
+
 > Status: **proposed normative version 1**
 >
 > The `mirrorecma-v1` reference target and `mirrorcpp-v1` static target are
@@ -7,10 +9,10 @@
 > here for subsequent implementation.
 >
 > Compiler design:
-> [`model-interface-compiler-design.md`](model-interface-compiler-design.md)
+> [`model-interface-compiler-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-compiler-design.md)
 >
 > Runtime negotiation:
-> [`model-interface-runtime-distribution-design.md`](model-interface-runtime-distribution-design.md)
+> [`model-interface-runtime-distribution-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-runtime-distribution-design.md)
 
 ## 0. Implementation status
 
@@ -136,12 +138,10 @@ compiler provenance, adapter ID, and coverage MUST NOT affect it.
 Runtime adapter selection MUST use the exact tuple:
 
 ```text
-{
-  semanticDigest,
-  adapterId,
-  targetProfile,
-  stateComputerContractVersion
-}
+AdapterKey ≜ Prod[
+  semanticDigest:SemanticDigest, adapterId:AdapterId,
+  targetProfile:TargetProfileId,
+  stateComputerContractVersion:StateComputerContractVersion]
 ```
 
 Names, model versions, compatible ranges, and structural guesses MUST NOT
@@ -181,26 +181,17 @@ MUST NOT be exposed through the generated implementation port.
 The resolved, portable definitions used by every emitter are:
 
 ```text
-ResolvedInput = {
-  id   : StableInputId,
-  from : { root: initialState | stepParameters, path: PathSegment[] },
-  type : ModelType
-}
+Root ≜ Sum[initialState:1, stepParameters:1]
+Phase ≜ Sum[initialize:1, transition:1]
+Projection ≜ Prod[root:Root, path:Seq[PathSegment]]
 
-ResolvedAction = {
-  id          : StableActionId,
-  phase       : initialize | transition,
-  wireAction  : String,
-  wireAliases : String[],
-  inputs      : ResolvedInput[]
-}
-
-ResolvedObservation = {
-  id         : StableObservationId,
-  wireName   : String,
-  type       : ModelType,
-  provenance : implementation
-}
+ResolvedInput ≜ Prod[id:StableInputId, from:Projection, type:ModelType]
+ResolvedAction ≜ Prod[
+  id:StableActionId, phase:Phase, wireAction:Str,
+  wireAliases:Seq[Str], inputs:Seq[ResolvedInput]]
+ResolvedObservation ≜ Prod[
+  id:StableObservationId, wireName:Str, type:ModelType,
+  provenance:Sum[implementation:1]]
 ```
 
 Actions, inputs, aliases, and observations are already normalized by the
@@ -211,25 +202,22 @@ For specification purposes, every generated module exports the following
 semantic interface. Native spelling is defined by the target profile.
 
 ```text
-GeneratedMetadata = {
-  semanticDigest : SemanticDigest,
-  contract       : ContractV1
-}
+GeneratedMetadata ≜ Prod[semanticDigest:SemanticDigest, contract:ContractV1]
+Coverage ≜ Map[StableActionId, Nat]
+Binding(M) ≜ Prod[
+  computer:StateComputer,
+  coverage:1 → Comp[Coverage],
+  assertAllActionsCovered:1 → Comp[1]]
 
-Port = {
-  one synchronous handler for each declared initializer,
-  one synchronous handler for each declared transition action,
-  observe() -> complete Observation
-}
-
-Binding = {
-  computer                  : StateComputer,
-  coverage()                : Map<StableActionId, Nat>,
-  assertAllActionsCovered() : Unit
-}
-
-bind(port, effectiveConfig) -> Binding
+Γ ⊢ P : Port(M)    Γ ⊢ config : EffectiveConfig
+───────────────────────────────────────────
+Γ ⊢ bind(M, P, config) ÷ Binding(M)
 ```
+
+`Port(M)` is the finite product of declared action handlers and a complete
+observation command, defined in §8.5. `bind` is checked construction: an
+incompatible configuration has a failure outcome before a port operation.
+`Coverage` is an interface-level finite map, not an additional model variable.
 
 `GeneratedMetadata`, `Port`, `Binding`, and `bind` are conceptual names. A
 profile MUST produce model-specific native names as described in section 12.
@@ -479,9 +467,10 @@ Port(M) = Prod[
 ```
 
 Here `1` is the command-result singleton, not the model `Null` encoding.
-`Comp[τ]` is an interface computation type: it performs the local SUT effect,
-terminates with a value of type `τ`, or signals an adapter failure. It is not a
-serializable MITL model type. Its target interpretation is synchronous at the
+`Comp[τ] ≜ τ cmd` is the interface computation type from the shared
+notation. If execution terminates normally it produces a `τ`; it may instead
+fail, wait, or diverge. It is not a serializable MITL model type and does not
+assert termination. Its target interpretation is synchronous at the
 StateComputer seam and is prescribed by the target profile.
 
 The closed action command type is the labeled sum:
@@ -776,26 +765,39 @@ decoded Mirrors value equality.
 Every binding starts in `fresh` and implements this state machine:
 
 ```text
-fresh --initializer success--> initialized
-initialized --initializer success--> initialized
-initialized --transition success--> initialized
-fresh --transition-----------> poisoned
-fresh/initialized --failure--> poisoned
-poisoned --any callback------> poisoned
+q ∈ {fresh, initialized}   initializer succeeds
+──────────────────────────────────────────────
+q ⟶initializer initialized
+
+transition succeeds
+──────────────────────────────────────────────
+initialized ⟶transition initialized
+
+fresh ⟶transition poisoned
+q ⟶failure poisoned             when q ∈ {fresh, initialized}
+poisoned ⟶callback poisoned      with no port invocation
 ```
+
+These phase transitions abbreviate the full success and failure judgments
+below. The last rule rejects the callback; it performs no further SUT effect.
 
 For each successful callback, the exact order is:
 
 ```text
-classify wire action or alias
--> verify initializer/transition lifecycle
--> project and validate all inputs
--> invoke exactly one port handler
--> invoke observe exactly once
--> validate and encode the complete observation
--> increment coverage for the primary stable action ID
--> return report state
+a ← classify(M, wireAction);
+_ ← checkPhase(q, phaseM(a));
+input ← projectAndDecodeAll(M, a, payload);
+_ ← invoke(P, a, input);
+observation ← observe(P);
+report ← validateAndEncode(M, observation);
+_ ← incrementCoverage(primaryId(a));
+ret(report)
 ```
+
+The command-binding semantics fixes this left-to-right order. All input
+checks precede the single application action; observation is invoked once
+only after that action succeeds. Any failed command aborts the continuation
+and selects the poisoning outcome.
 
 The binding dynamics are summarized by two judgments:
 
@@ -808,6 +810,7 @@ Here `M` is a well-formed interface, `P : Port(M)`, and `q` is `fresh` or
 `initialized`. A successful initializer rule has the shape:
 
 ```text
+q ∈ {fresh, initialized}
 classifyM(wireAction) = a       phaseM(a) = initialize
 project/decodeM,L(a, payload) = ok(input)
 P.a(input) ⇓ ok(())             P.observe() ⇓ ok(obs)
@@ -923,7 +926,9 @@ semantic lock before the first SUT action. Version 1 requires exact agreement
 for the effective parameter variable:
 
 ```text
-normalize(runtime.paramVars) == lock.runProfile.configuredParamVar
+normalize(runtime.paramVars) = lock.runProfile.configuredParamVar
+───────────────────────────────────────────────────────────────
+lock ⊢ runtime compatible
 ```
 
 The empty client value normalizes to `none`. A mismatch returns
@@ -936,16 +941,19 @@ singletons.
 The client runtime exposes this language-neutral local shape:
 
 ```text
-LocalBinding = {
-  semanticDigest          : SemanticDigest,
-  computer                : StateComputer,
-  assertCompatibleConfig  : EffectiveConfig -> Unit,
-  coverage?               : Unit -> Map<StableActionId, Nat>,
-  dispose                 : Unit -> Effect<Unit>
-}
+LocalBinding ≜ Prod[
+  semanticDigest:SemanticDigest,
+  computer:StateComputer,
+  assertCompatibleConfig:EffectiveConfig → Comp[1],
+  coverage:Option[1 → Comp[Map[StableActionId, Nat]]],
+  dispose:1 → Comp[1]]
 
-AdapterFactory = EffectiveConfig -> Effect<LocalBinding>
+AdapterFactory ≜ EffectiveConfig → Comp[LocalBinding]
 ```
+
+`dispose` and configuration validation are commands, so failures remain
+explicit outcomes. This product type does not impose a linear-use rule;
+session-local construction and exactly-once disposal are runner obligations.
 
 The factory composes the deterministic generated binding with the
 application-owned implementation adapter and cleanup. The runner rechecks the
@@ -1033,10 +1041,7 @@ Every generated target module MUST expose the semantic digest and normalized
 contract in client-native inert data:
 
 ```text
-GeneratedMetadata = {
-  semanticDigest : SemanticDigest,
-  contract       : ContractV1
-}
+GeneratedMetadata ≜ Prod[semanticDigest:SemanticDigest, contract:ContractV1]
 ```
 
 The metadata MUST NOT include executable handler bodies, SUT locations,
@@ -1045,14 +1050,15 @@ credentials, package names to load, or network URLs.
 Every generated tree includes an ownership manifest with this abstract shape:
 
 ```text
-GeneratedOwnershipManifest = {
-  schema          : "mirrors.model-interface-generated/v1",
-  targetProfile   : TargetProfileId,
-  profileVersion  : Nat,
-  semanticDigest  : SemanticDigest,
-  files           : SortedList[RelativePath]
-}
+GeneratedOwnershipManifest ≜ Prod[
+  schema:Singleton["mirrors.model-interface-generated/v1"],
+  targetProfile:TargetProfileId, profileVersion:Nat,
+  semanticDigest:SemanticDigest, files:SortedSeq[RelativePath]]
 ```
+
+`Singleton[s]` contains only the schema string `s`; `SortedSeq` carries the
+documented ordering invariant. These types describe the semantic record and
+preserve the existing manifest field names and encoding.
 
 The file list is target-specific and sorted. Generation may replace or remove
 only paths owned by the preceding valid manifest. It MUST NOT recursively
@@ -1096,16 +1102,22 @@ or authorize executable adapter code.
 The required runtime sequence is:
 
 ```text
-load inert generated metadata
--> resolve exact local adapter registry key without constructing the SUT
--> send normalized contract and expected semantic digest
--> receive and validate `matched`
--> recheck exact digest
--> create one fresh local binding
--> recheck binding digest and effective configuration
--> enter the existing replay loop through StateComputer
--> dispose the local binding exactly once
+factory ← lookupExact(registry, key(metadata, localAdapterConfig));
+withConnection(target; σ, connection.
+  _ ← sendRequiredRegistration(connection, config, metadata);
+  first ← receiveFirst(connection);
+  k ← validateMatched(connection, first, metadata);
+  withLocalBinding(createBinding(factory, k, config); binding.
+    _ ← checkBindingIdentityAndConfig(binding, metadata, config);
+    replay(connection, binding.computer)))
 ```
+
+`metadata : GeneratedMetadata` is already verified inert input. Lookup is a
+pure checked decision and does not construct an adapter. Successful required
+validation introduces `k : Matched(σ,ι)` for the expected interface `ι`;
+construction cannot enter its continuation on failure. The connection and
+binding scopes install cleanup during acquisition, preserve primary failures,
+and dispose a constructed binding exactly once.
 
 Under required negotiation, no implementation handler, observer, SUT
 constructor, or adapter factory may run before `matched` is validated.
@@ -1253,11 +1265,16 @@ The compiler implementation exposes pure decision procedures corresponding to
 the specification judgments:
 
 ```text
-wellFormedType       : Type -> Bool
-modelValueHasType    : Type × ModelValue -> Bool
-modelValueEquivalent : Type × ModelValue × ModelValue -> Bool
-pathResultType       : Type × Path -> Option[Type]
+⊢ τ type                       type well-formedness
+⊢ v : τ                        model-value typing
+v ≃τ w                         type-indexed equivalence
+τ ⊢ π : υ                      path result typing
 ```
+
+The native helpers `wellFormedType`, `modelValueHasType`,
+`modelValueEquivalent`, and `pathResultType` decide these judgments within
+the specified bounds. Their accepted results must correspond to derivations;
+the helpers' return carriers do not replace the definitions of the judgments.
 
 Statics and equivalence are defined once in the pure compiler module; target
 emitters do not redefine them. Generated target codecs are interpretations of
@@ -1267,16 +1284,20 @@ Once the second target exists, Mirrors should expose one target dispatch
 interface while retaining target-specific implementations:
 
 ```text
-emitGeneratedInterface :
-  TargetProfile × LockedModelInterface
-  -> GeneratedTree + List[EmitDiagnostic]
+L; ℓ ⊢ emit ⇓ tree
+L; ℓ ⊢ emit ⇑ diagnostics
 ```
+
+Here `L : TargetProfile` and `ℓ : LockedModelInterface`. The native entry
+point is `emitGeneratedInterface`; target-specific decisions remain behind
+this common successful-or-rejected emission judgment.
 
 The public compiler interface remains small:
 
 ```text
-resolve(normalized facts) -> semantic lock
-emitGeneratedInterface(profile, semantic lock) -> generated tree
+I ⊢ resolve ⇓ (ℓ, D)    L; ℓ ⊢ emit ⇓ tree
+───────────────────────────────────────────
+L; I ⊢ compile ⇓ (tree, D)
 ```
 
 Each target emitter is an adapter behind that seam. Shared code SHOULD cover

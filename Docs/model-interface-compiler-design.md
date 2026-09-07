@@ -1,12 +1,14 @@
 # Model Interface Compiler — Detailed Design
 
+> Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
+
 > Status: **TypeScript and C++ Counter target slices implemented in Mirrors;
 > Rust/Lean profiles and common recording vectors remain planned**
-> Parent design: [`model-interface-generation-design.md`](model-interface-generation-design.md)
+> Parent design: [`model-interface-generation-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-generation-design.md)
 > Runtime distribution:
-> [`model-interface-runtime-distribution-design.md`](model-interface-runtime-distribution-design.md)
+> [`model-interface-runtime-distribution-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-runtime-distribution-design.md)
 > Cross-language generated interface:
-> [`generated-model-interface-spec.md`](generated-model-interface-spec.md)
+> [`generated-model-interface-spec.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/generated-model-interface-spec.md)
 > Scope: freeze the version-1 compiler inputs, canonical intermediate
 > representation, resolver, diagnostics, TypeScript emitter, CLI behavior,
 > proof claims, fixtures, and Counter vertical slice.
@@ -89,23 +91,17 @@ files / flags / optional external tools
               |
               v
 Shell.ModelInterface
-  - load strict JSON
-  - resolve source closure
-  - normalize raw type evidence
-  - hash canonical bytes
-  - atomically write generated files
+  load strict JSON, source closure, and normalized evidence
+  publish generated files atomically after pure emission
               |
               v
 Core.ModelInterface
-  resolve(contract, evidence, run profile, provenance)
-       -> lock + structured diagnostics
-  preflight(lock, raw traces)
-       -> coverage report + structured diagnostics
+  I ⊢ resolve ⇓ (lock, diagnostics)
+  lock; rawTraces ⊢ preflight ⇓ (coverage, diagnostics)
               |
               v
 Shell.ModelInterface.Emit.TypeScript
-  emitTypeScript(lock, target profile)
-       -> generated tree + structured diagnostics
+  targetProfile; lock ⊢ emit ⇓ (generatedTree, diagnostics)
 ```
 
 The pure resolver knows nothing about the filesystem, current directory,
@@ -115,37 +111,37 @@ normalized values.
 
 ## 4. Compiler interfaces
 
-The following Lean-like declarations describe semantic interfaces rather than
-committing to exact implementation syntax.
+The interfaces below are labeled product types and evaluation judgments.
+They describe normalized data and pure computation independently of native
+implementation syntax.
 
-```lean
-structure ResolveInput where
-  contract       : Located ContractV1
-  evidence       : ModelEvidence
-  runProfile     : RunProfile
-  sources        : List SourceDigest
-  previousLock   : Option LockedModelInterface := none
+```text
+ResolveInput ≜ Prod[
+  contract:Located[ContractV1], evidence:ModelEvidence,
+  runProfile:RunProfile, sources:Seq[SourceDigest],
+  previousLock:Option[LockedModelInterface]]
 
-structure CompileResult (α : Type) where
-  value           : Option α
-  diagnostics     : List Diagnostic
+CompileResult[τ] ≜ Prod[value:Option[τ], diagnostics:Seq[Diagnostic]]
 
-def resolve : ResolveInput → CompileResult LockedModelInterface
+PreflightInput ≜ Prod[
+  lock:LockedModelInterface, traces:Seq[RawTraceEvidence],
+  requireAllActions:Bool]
 
-structure PreflightInput where
-  lock             : LockedModelInterface
-  traces           : List RawTraceEvidence
-  requireAllActions : Bool := false
+TargetProfile ≜ Prod[id:Str, profileVersion:Nat]
 
-def preflight : PreflightInput → CompileResult CoverageReport
+I : ResolveInput    I ⊢ resolve ⇓ (ℓ, D)
+────────────────────────────────────────
+⊢ ⟨value=some(ℓ), diagnostics=D⟩ : CompileResult[LockedModelInterface]
 
-structure TargetProfile where
-  id                : String
-  profileVersion    : Nat
-
-def emitTypeScript :
-  TargetProfile → LockedModelInterface → CompileResult GeneratedTree
+J : PreflightInput ⊢ preflight ⇓ (coverage, D)
+p : TargetProfile; ℓ : LockedModelInterface ⊢ emit ⇓ (tree, D)
 ```
+
+The default previous lock is `none`; the default coverage requirement is
+`false`. The success judgments produce a well-formed artifact and may retain
+non-error diagnostics. Their failure counterparts, written `⇑ D`, produce
+`⟨value=none, diagnostics=D⟩`. These are requirements on the pure decisions,
+not declarations of an effectful file-writing API.
 
 `CompileResult.value` is present exactly when the requested artifact is safe to
 use. Warnings and obligations may accompany a value. Any error diagnostic
@@ -158,15 +154,19 @@ unknown root variable.
 
 ### 4.1 Generated tree
 
-```lean
-structure GeneratedFile where
-  relativePath : String
-  bytes        : ByteArray
-  executable   : Bool := false
+```text
+GeneratedFile ≜ Prod[relativePath:Str, bytes:Seq[Byte], executable:Bool]
+GeneratedTree ≜ Prod[files:Seq[GeneratedFile]]
 
-structure GeneratedTree where
-  files        : List GeneratedFile
+∀f ∈ files. validRelativePath(f.relativePath) ∧ f.executable = false
+paths(files) are unique and sorted
+────────────────────────────────────────────────────────────────────
+⊢ ⟨files=files⟩ generated-tree
 ```
+
+`paths` projects the `relativePath` labels. The judgment includes the path and
+ordering conditions below; a value with the product shape alone does not
+establish them.
 
 Invariants:
 
@@ -287,9 +287,11 @@ Trace samples alone never resolve a type.
 The run profile records the protocol configuration that affects trace
 repartition:
 
-```lean
-structure RunProfile where
-  configuredParamVar : Option String
+```text
+RunProfile ≜ Prod[configuredParamVar:Option[Str]]
+
+normalizeParam("") ≜ none
+normalizeParam(name) ≜ some(name)       when name ≠ ""
 ```
 
 For the current client interface, this is derived from
@@ -308,11 +310,8 @@ fact at client startup.
 The effectful shell resolves the root module and its `EXTENDS`/`INSTANCE`
 closure. The pure resolver receives only logical identities and digests:
 
-```lean
-structure SourceDigest where
-  moduleName     : String
-  logicalPath    : String
-  contentSha256  : String
+```text
+SourceDigest ≜ Prod[moduleName:Str, logicalPath:Str, contentSha256:Str]
 ```
 
 Logical paths use `/`, are relative to the declared source root, and are sorted
@@ -324,23 +323,17 @@ LF before hashing. The source manifest never contains local absolute paths.
 The pure resolver does not parse arbitrary TLA+ or invoke Apalache. An evidence
 adapter normalizes supported sources into:
 
-```lean
-inductive EvidenceOrigin where
-  | apalacheTypecheck
-  | itfVarTypes
-  | contractAssertion
+```text
+EvidenceOrigin ≜ Sum[
+  apalacheTypecheck:1, itfVarTypes:1, contractAssertion:1]
 
-structure TypeFact where
-  modelPath      : ModelPath
-  type           : ModelType
-  origin         : EvidenceOrigin
-  location       : SourceLocation
+TypeFact ≜ Prod[
+  modelPath:ModelPath, type:ModelType,
+  origin:EvidenceOrigin, location:SourceLocation]
 
-structure ModelEvidence where
-  traceVars      : List String
-  itfParamVars   : List String
-  typeFacts      : List TypeFact
-  evidenceSha256 : String
+ModelEvidence ≜ Prod[
+  traceVars:Seq[Str], itfParamVars:Seq[Str],
+  typeFacts:Seq[TypeFact], evidenceSha256:Str]
 ```
 
 The initial implementation accepts raw typed ITF JSON and extracts:
@@ -350,7 +343,7 @@ The initial implementation accepts raw typed ITF JSON and extracts:
 - `#meta.varTypes`;
 - source locations in the evidence artifact.
 
-Unlike [`Shell.Mirror.parseItfTrace`](../Shell/Mirror/Session.lean), the
+Unlike [`Shell.Mirror.parseItfTrace`](https://github.com/NzSN/Mirrors/blob/main/Shell/Mirror/Session.lean), the
 evidence/preflight parser must preserve malformed and duplicate-key evidence.
 It must not turn a missing or non-string `action_taken` into an empty string,
 and it must not drop undeclared state keys before reporting them.
@@ -373,28 +366,25 @@ only by `preflight`. Consequently:
 
 ### 6.1 Structural type algebra
 
-```lean
-inductive ModelType where
-  | int
-  | bool
-  | str
-  | null
-  | set      (element : ModelType)
-  | seq      (element : ModelType)
-  | tuple    (elements : List ModelType)
-  | record   (fields : List ModelField)
-  | map      (key value : ModelType)
-  | variant  (cases : List VariantCase)
-  | opaqueItf (description : String)
+```text
+τ ::= Int | Bool | Str | Null
+    | Set[τ] | Seq[τ] | Tup[τ₁, ..., τₙ]
+    | Rec[l₁:τ₁, ..., lₙ:τₙ]
+    | Map[τk, τv] | Var[c₁:τ₁, ..., cₙ:τₙ]
+    | OpaqueItf[description]
 
-structure ModelField where
-  wireName : String
-  type     : ModelType
+ModelField ≜ Prod[wireName:Str, type:ModelType]
+VariantCase ≜ Prod[tag:Str, payload:ModelType]
 
-structure VariantCase where
-  tag      : String
-  payload  : ModelType
+∀j. ⊢ τⱼ type    labels l₁, ..., lₙ are nonempty and distinct
+────────────────────────────────────────────────────────────
+⊢ Rec[l₁:τ₁, ..., lₙ:τₙ] type
 ```
+
+`ModelType` is the inductively generated syntax of finite `τ` terms. Variants
+have the analogous distinct-tag rule. `OpaqueItf` is an explicitly opted-in
+extension, subject to the target restrictions below; it is not a way to admit
+an otherwise ill-typed portable value.
 
 Type invariants:
 
@@ -415,22 +405,21 @@ closed and contain every declared field.
 
 ### 6.2 Paths
 
-```lean
-inductive PathRoot where
-  | initialState
-  | stepParameters
+```text
+Root ≜ Sum[initialState:1, stepParameters:1]
+segment ::= field(name) | index(i) | mapKey(literal) | variantValue(tag)
+π ::= emptyPath | segment / π
 
-inductive PathSegment where
-  | field        (name : String)
-  | index        (index : Nat)
-  | mapKey       (key : CanonicalItfLiteral)
-  | variantValue (tag : String)
+InputProjection ≜ Prod[root:Root, path:Seq[PathSegment], type:ModelType]
 
-structure InputProjection where
-  root     : PathRoot
-  path     : List PathSegment
-  type     : ModelType
+τroot ⊢ π : τ
 ```
+
+Here `emptyPath` denotes the empty path, and `PathSegment` is the syntax of
+`segment`. Names and tags are strings, `i` is a natural number, and `literal`
+is a canonical ITF literal. The path judgment assigns the selected value's
+type; it does not assert that every runtime container contains the requested
+element.
 
 Path order is semantic and is never sorted.
 
@@ -451,22 +440,15 @@ resolver diagnostic rather than silently falling back to raw ITF.
 
 ### 6.3 Resolved actions
 
-```lean
-inductive ActionPhase where
-  | initialize
-  | transition
+```text
+ActionPhase ≜ Sum[initialize:1, transition:1]
 
-structure ResolvedInput where
-  id         : StableId
-  projection : InputProjection
-  typeOrigin : List EvidenceOrigin
+ResolvedInput ≜ Prod[
+  id:StableId, projection:InputProjection, typeOrigin:Seq[EvidenceOrigin]]
 
-structure ResolvedAction where
-  id          : StableId
-  phase       : ActionPhase
-  wireAction  : String
-  wireAliases : List String
-  inputs      : List ResolvedInput
+ResolvedAction ≜ Prod[
+  id:StableId, phase:ActionPhase, wireAction:Str,
+  wireAliases:Seq[Str], inputs:Seq[ResolvedInput]]
 ```
 
 Actions sort by stable ID. Inputs sort by stable ID. Alias arrays sort by wire
@@ -475,13 +457,12 @@ canonicalization.
 
 ### 6.4 Resolved observations
 
-```lean
-structure ResolvedObservation where
-  id          : StableId
-  wireName    : String
-  type        : ModelType
-  provenance  : ObservationProvenance
-  typeOrigin  : List EvidenceOrigin
+```text
+ResolvedObservation ≜ Prod[
+  id:StableId, wireName:Str, type:ModelType,
+  provenance:ObservationProvenance, typeOrigin:Seq[EvidenceOrigin]]
+
+ObservationProvenance ≜ Sum[implementation:1]
 ```
 
 Version 1 supports only `implementation` provenance. An LLM adapter may
@@ -500,14 +481,16 @@ similar-looking independent rule.
 Let:
 
 ```text
-effectiveParamVars =
-  unique(itfParamVars ++ configuredParamVar.toList)
-
-requiredObservationVars =
-  traceVars
-    - effectiveParamVars
-    - every root name k for which Core.Value.isMetaKey(k) is true
+names(none) ≜ []                   names(some(x)) ≜ [x]
+P ≜ stableUnique(itfParamVars ++ names(configuredParamVar))
+Meta ≜ { k | Core.Value.isMetaKey(k) }
+Req ≜ set(traceVars) ∖ set(P) ∖ Meta
 ```
+
+`P` is the ordered effective-parameter list; `Req` is the set of required
+observation variables. `stableUnique` retains the first occurrence, and `++`
+is sequence concatenation. The metadata predicate is the existing Core
+predicate, with the root-only interpretation described next.
 
 `Core.Value.isMetaKey` is root-only. A top-level variable named `parameters`
 is filtered even when it is not the configured parameter variable; a nested
@@ -515,19 +498,24 @@ record field named `parameters` remains compared.
 
 For a concrete trace, preflight additionally checks the actual pipeline:
 
-```lean
-let processed := applyParamVars configuredParamVar.toList trace
-let steps := traceSteps processed
-
-for step in steps do
-  let actualKeys := (filterMeta step.vars).map Prod.fst
-  require actualKeys.toFinset = requiredObservationVars.toFinset
+```text
+T′ ≜ applyParamVars(names(configuredParamVar), T)
+∀s ∈ traceSteps(T′). dom(filterMeta(s.vars)) = Req
+────────────────────────────────────────────────────────
+Req; configuredParamVar ⊢ T comparison-schema
 ```
+
+The semantic functions `applyParamVars`, `traceSteps`, and `filterMeta` here
+are precisely those of the Core trace pipeline. `dom` denotes the set of
+root keys. The rule checks every resulting step; it does not approximate the
+pipeline from a sampled state.
 
 The contract is complete exactly when:
 
 ```text
-set(observations.map wireName) = set(requiredObservationVars)
+{ o.wireName | o ∈ observations } = Req
+────────────────────────────────────────
+Req ⊢ observations complete
 ```
 
 Additional constraints:
@@ -771,18 +759,21 @@ Generated source obeys target-profile rules:
 Resolution is a deterministic pure pipeline:
 
 ```text
-1. Validate contract structure and stable identifiers.
-2. Normalize source and evidence provenance.
-3. Normalize and reconcile structural type facts.
-4. Resolve the effective parameter partition.
-5. Validate initializer/action identity and label sets.
-6. Construct typed initial-state and step-parameter roots.
-7. Resolve every action input path.
-8. Derive required observation variables from exact Core semantics.
-9. Resolve observations and require exact completeness.
-10. Optionally classify compatibility against a previous lock.
-11. Canonicalize the semantic IR and compute digests.
+I ⊢ contract well-formed             I ⊢ provenance normalized
+I ⊢ evidence reconciled             I ⊢ parameters partitioned
+I ⊢ action labels disjoint          I ⊢ roots typed
+I ⊢ every input projection typed    I ⊢ comparison schema Req
+Req ⊢ observations complete         I ⊢ compatibility classified
+I ⊢ canonical interface ℓ with digests and diagnostics D
+──────────────────────────────────────────────────────────────
+I ⊢ resolve ⇓ (ℓ, D)
 ```
+
+These premises describe the resolver's obligations in dependency order.
+Compatibility is conditional on a previous lock. The decision procedure
+accumulates independent diagnostics and suppresses errors derived from an
+already invalid prerequisite; the inference rule does not prescribe an
+early-exit implementation.
 
 ### 10.1 Type fact reconciliation
 
@@ -803,13 +794,15 @@ widen, or replace it.
 ### 10.2 Parameter partition
 
 ```text
-configuredParamVar = normalize(runProfile.configuredParamVar)
-
-require contract.wire.parameterVariable = configuredParamVar
-
-effectiveParamVars =
-  stableUnique(evidence.itfParamVars ++ configuredParamVar.toList)
+p ≜ normalize(runProfile.configuredParamVar)
+contract.wire.parameterVariable = p
+P ≜ stableUnique(evidence.itfParamVars ++ names(p))
+────────────────────────────────────────────────────
+contract; evidence; runProfile ⊢ parameter-partition (p, P)
 ```
+
+`normalize` uses the absent/empty parameter convention in §5.2, and `names`
+is defined in §7. A failed equality is a configuration diagnostic.
 
 The resolver records original ITF parameter variables separately from the
 configured extra parameter variable because they have different provenance.
@@ -853,9 +846,12 @@ repartition and root-meta removal. The step root is a record of effective
 parameter variables. Therefore Counter resolves:
 
 ```text
-stepParameters
-  .parameters        : { stride : Int }
-  .stride            : Int
+R ≜ Rec[parameters:Rec[stride:Int]]
+
+R ⊢ field(parameters) : Rec[stride:Int]
+Rec[stride:Int] ⊢ field(stride) : Int
+──────────────────────────────────────────────────────
+R ⊢ field(parameters) / field(stride) : Int
 ```
 
 ### 10.5 Observation resolution
@@ -894,30 +890,15 @@ change whether the new lock itself is valid.
 
 Diagnostics are structured data. Human strings are rendered after sorting.
 
-```lean
-inductive Severity where
-  | error
-  | warning
-  | obligation
-
-structure DiagnosticSubject where
-  kind      : String
-  stableId  : Option String
-
-structure SourceLocation where
-  source    : String
-  pointer   : Option String
-  line      : Option Nat
-  column    : Option Nat
-
-structure Diagnostic where
-  code       : String
-  severity   : Severity
-  stage      : String
-  subject    : DiagnosticSubject
-  primary    : SourceLocation
-  related    : List SourceLocation
-  arguments  : List (String × String)
+```text
+Severity ≜ Sum[error:1, warning:1, obligation:1]
+DiagnosticSubject ≜ Prod[kind:Str, stableId:Option[Str]]
+SourceLocation ≜ Prod[
+  source:Str, pointer:Option[Str], line:Option[Nat], column:Option[Nat]]
+Diagnostic ≜ Prod[
+  code:Str, severity:Severity, stage:Str, subject:DiagnosticSubject,
+  primary:SourceLocation, related:Seq[SourceLocation],
+  arguments:Seq[Str × Str]]
 ```
 
 Logical source names use normalized workspace-relative paths. Absolute paths
@@ -926,13 +907,17 @@ never appear in diagnostics, locks, or generated files.
 Diagnostics have a total order:
 
 ```text
-stage ordinal
--> canonical source ID
--> pointer / line / column
--> code
--> subject kind and stable ID
--> canonical arguments
+orderKey(d) ≜ ⟨stageOrdinal(d), canonicalSource(d),
+  location(d), code(d), subject(d), canonicalArguments(d)⟩
+
+orderKey(d₁) ≤lex orderKey(d₂)
+────────────────────────────────
+d₁ ≤diagnostic d₂
 ```
+
+`location` orders pointer, line, and column as specified by the canonical
+location representation; `subject` orders kind and stable ID. `≤lex` is
+lexicographic order, not execution order.
 
 Related locations and arguments are independently sorted and deduplicated.
 
@@ -1010,12 +995,13 @@ Preflight never modifies the lock, contract, trace, or generated files.
 The conceptual long-term seam is:
 
 ```text
-semantic lock
-    -> target lowering
-target-specific model
-    -> deterministic rendering
-generated tree
+p; ℓ ⊢ lower ⇓ targetModel    p; targetModel ⊢ render ⇓ tree
+───────────────────────────────────────────────────────────
+p; ℓ ⊢ emit ⇓ tree
 ```
+
+Both judgments are pure. File publication is a later shell command, so
+successful emission does not itself mutate an output directory.
 
 Only one emitter exists in Phase 1, so introducing a generic emitter structure
 then would be hypothetical indirection. Implement `emitTypeScript` directly.
@@ -1048,7 +1034,8 @@ The TypeScript file declaration order is fixed:
 9. public binding factory.
 
 The module also exports inert registration metadata without adding executable
-behavior or changing the existing port/binding APIs:
+behavior or changing the existing port/binding APIs. This retained block is
+the concrete TypeScript metadata API reference:
 
 ```ts
 export const CounterSemanticDigest = "..." as const;
@@ -1105,7 +1092,8 @@ identity.
 
 ### 13.5 Generated implementation port
 
-Counter emits:
+Counter's semantic port is `Port(M)` for the resolved Counter interface. Its
+concrete TypeScript API reference is:
 
 ```ts
 export interface TickInput {
@@ -1128,6 +1116,9 @@ The LLM-written adapter sees no raw ITF values, expected transition state, or
 
 ### 13.6 Generated binding interface
 
+The concrete TypeScript API below realizes the abstract binding product and
+checked construction judgment; its public names remain target-specific.
+
 ```ts
 export interface CounterBinding {
   readonly computer: StateComputer;
@@ -1148,10 +1139,20 @@ different parameter partition.
 The binding state machine is:
 
 ```text
-fresh -> initialized -> initialized -> ...
-  |           |              |
-  +-----------+--------------+-> poisoned
+q ∈ {fresh, initialized}   initializer succeeds
+──────────────────────────────────────────────
+q ⟶initializer initialized
+
+transition succeeds                 callback fails
+──────────────────────────────      ───────────────────────
+initialized ⟶transition initialized  fresh/initialized ⟶error poisoned
+
+fresh ⟶transition poisoned          poisoned ⟶callback poisoned
 ```
+
+These are projections of the binding's full execution relation. Poisoned
+callbacks fail before another port invocation; the last transition does not
+mean that the SUT is called again.
 
 An initializer is accepted in `fresh` or `initialized` and resets the SUT for
 a new trace. A transition is accepted only in `initialized`. Any decode,
@@ -1160,15 +1161,19 @@ adapter, observation, or encoding failure moves permanently to `poisoned`.
 For one successful callback the order is exact:
 
 ```text
-classify action
--> decode and validate every input
--> call exactly one initializer/action method
--> call observe exactly once
--> validate exact observation shape and types
--> encode the report State
--> increment coverage
--> return State
+a ← classify(M, wireAction);
+_ ← checkPhase(q, a);
+input ← projectAndDecodeAll(M, a, payload);
+_ ← invoke(P, a, input);
+observation ← observe(P);
+report ← validateAndEncode(M, observation);
+_ ← incrementCoverage(primaryId(a));
+ret(report)
 ```
+
+This is a command term under `P : Port(M)`. Sequencing enforces the stated
+order. Any stage failure propagates and poisons the binding; no continuation
+after that stage is executed.
 
 `prevState` is ignored and never captured by the generated port. Only declared
 initializer inputs are projected from `initial_state`; other oracle fields are
@@ -1437,7 +1442,7 @@ path before introducing a premature multi-emitter abstraction.
 
 ### 19.1 Inputs
 
-- [`specs/Counter.tla`](../specs/Counter.tla);
+- [`specs/Counter.tla`](https://github.com/NzSN/Mirrors/blob/main/specs/Counter.tla);
 - `test/fixtures/model-interface/counter/Counter.mirror-interface.json`;
 - pinned normalized type evidence containing:
   - `count : Int`;
@@ -1449,20 +1454,16 @@ path before introducing a premature multi-emitter abstraction.
 ### 19.2 Expected semantic lock
 
 ```text
-initializer Initialize
-  wire label: init
-  inputs: none
+M ⊢ Initialize initializer       labelM(Initialize) = "init"
+InM(Initialize) ≜ 1
 
-transition Tick
-  wire label: tick
-  input Stride: stepParameters.parameters.stride : Int
+M ⊢ Tick transition              labelM(Tick) = "tick"
+InM(Tick) ≜ Prod[Stride:Int]
+Rec[parameters:Rec[stride:Int]]
+  ⊢ field(parameters) / field(stride) : Int
 
-observation Count
-  wire name: count
-  type: Int
-
-effective parameter variables: [parameters]
-comparable variables: [count]
+ObsM ≜ Prod[Count:Int]            wireNameM(Count) = "count"
+P ≜ ["parameters"]               Req ≜ {"count"}
 ```
 
 ### 19.3 Expected TypeScript behavior
@@ -1630,8 +1631,9 @@ The compiler design is implemented when:
 The compiler has two high-leverage interfaces:
 
 ```text
-resolve(normalized model facts) -> semantic lock
-emitTarget(profile, semantic lock) -> generated tree
+I ⊢ resolve ⇓ (ℓ, D)    p; ℓ ⊢ emit ⇓ tree
+───────────────────────────────────────────
+p; I ⊢ compile ⇓ (tree, D)
 ```
 
 Everything else—source loading, evidence collection, filesystem writes,

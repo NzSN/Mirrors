@@ -34,13 +34,13 @@ differential tests, and client interop tests.
   round-trip and behavioral proofs across the pure core and codecs.
 
 For exact client messages and behavior, see the
-[interface reference](Docs/interface-reference.md) and
-[client implementation guide](Docs/client-implementation-guide.md).
+[interface reference](https://github.com/NzSN/Mirrors/blob/main/Docs/interface-reference.md) and
+[client implementation guide](https://github.com/NzSN/Mirrors/blob/main/Docs/client-implementation-guide.md).
 
 ## Requirements
 
 - [elan](https://github.com/leanprover/elan). The repository pins Lean
-  `v4.33.0` in [`lean-toolchain`](lean-toolchain).
+  `v4.33.0` in [`lean-toolchain`](https://github.com/NzSN/Mirrors/blob/main/lean-toolchain).
 - A C compiler, OpenSSL 3 development files, and `pkg-config` on Linux.
 - `apalache-mc` for actual model-checking operations and the live integration
   tests. Put it on `PATH` or set `APALACHE_MC` to its executable.
@@ -78,7 +78,7 @@ and registry suites also self-skip individual external-tool tiers when their
 requirements are unavailable.
 
 To run the full cross-language matrix against MirrorECMA and the Haskell
-reference client, follow [`tools/interop/INTEROP.md`](tools/interop/INTEROP.md)
+reference client, follow [`tools/interop/INTEROP.md`](https://github.com/NzSN/Mirrors/blob/main/tools/interop/INTEROP.md)
 and run `tools/interop/run.sh` after providing its external client checkouts.
 
 ## Usage
@@ -200,11 +200,11 @@ Apalache adapter ──► apalache-mc
 | External oracles | Apalache, Consul, OS | Model checking, discovery, and runtime services |
 
 Every successful pure protocol transition is related to the model in
-[`specs/MirrorProtocol.tla`](specs/MirrorProtocol.tla) by the refinement
-theorem in [`Core/Protocol.lean`](Core/Protocol.lean). The shell and native
+[`specs/MirrorProtocol.tla`](https://github.com/NzSN/Mirrors/blob/main/specs/MirrorProtocol.tla) by the refinement
+theorem in [`Core/Protocol.lean`](https://github.com/NzSN/Mirrors/blob/main/Core/Protocol.lean). The shell and native
 boundary are deliberately outside that proof claim and are covered by runtime,
 negative, and interop tests instead. See the
-[architecture overview](Docs/architecture-overview.md) for the complete trust
+[architecture overview](https://github.com/NzSN/Mirrors/blob/main/Docs/architecture-overview.md) for the complete trust
 boundary and data flow.
 
 ## Repository layout
@@ -244,8 +244,8 @@ compatibility.
 
 Known compatibility differences, the remaining top-level interop-runner
 integration, and the Haskell deprecation criteria are tracked in
-[`Docs/cutover.md`](Docs/cutover.md).
-Notable implementation changes are recorded in [`CHANGELOG.md`](CHANGELOG.md).
+[`Docs/cutover.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/cutover.md).
+Notable implementation changes are recorded in [`CHANGELOG.md`](https://github.com/NzSN/Mirrors/blob/main/CHANGELOG.md).
 
 One Lake build-system caveat remains: changing only a C shim may not relink an
 existing executable. Remove the affected `.lake/build/bin/*` binary and shim
@@ -253,25 +253,29 @@ object before rebuilding after C-only edits.
 
 ## Documentation
 
-- [Architecture overview](Docs/architecture-overview.md) — five-minute system
+- [Semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md)
+  — PFPL-style judgments, abstract interface types, effectful commands, and
+  resource-scope semantics used in the design explanations.
+
+- [Architecture overview](https://github.com/NzSN/Mirrors/blob/main/Docs/architecture-overview.md) — five-minute system
   map and trust boundaries.
-- [Architecture details](Docs/architecture-details.md) — module-level data and
+- [Architecture details](https://github.com/NzSN/Mirrors/blob/main/Docs/architecture-details.md) — module-level data and
   control flow.
-- [Supported interface reference](Docs/interface-reference.md) — complete
+- [Supported interface reference](https://github.com/NzSN/Mirrors/blob/main/Docs/interface-reference.md) — complete
   protocol messages and CLI transport modes.
-- [Client implementation guide](Docs/client-implementation-guide.md) — client
+- [Client implementation guide](https://github.com/NzSN/Mirrors/blob/main/Docs/client-implementation-guide.md) — client
   conformance rules and error handling.
-- [Non-Lean client test coverage](Docs/client-test-coverage.md) — executable
+- [Non-Lean client test coverage](https://github.com/NzSN/Mirrors/blob/main/Docs/client-test-coverage.md) — executable
   C1–C27 evidence mapped across MirrorECMA, MirrorCPP, and MirrorRust.
-- [Generated model-interface specification](Docs/generated-model-interface-spec.md)
+- [Generated model-interface specification](https://github.com/NzSN/Mirrors/blob/main/Docs/generated-model-interface-spec.md)
   — language-neutral port, binding, lifecycle, and target-profile contract.
-- [Lean 4 refactor design](Docs/lean4-refactor-design.md) — original goals,
+- [Lean 4 refactor design](https://github.com/NzSN/Mirrors/blob/main/Docs/lean4-refactor-design.md) — original goals,
   proof obligations, and phase plan.
-- [Worker-pool design](Docs/worker-pool-design.md) and
-  [implementation status](Docs/worker-pool-impl-status.md) — concurrency model
+- [Worker-pool design](https://github.com/NzSN/Mirrors/blob/main/Docs/worker-pool-design.md) and
+  [implementation status](https://github.com/NzSN/Mirrors/blob/main/Docs/worker-pool-impl-status.md) — concurrency model
   and cross-platform validation.
-- [TLS FFI review](Docs/tls-ffi-review.md) — TLS policy and native-boundary
+- [TLS FFI review](https://github.com/NzSN/Mirrors/blob/main/Docs/tls-ffi-review.md) — TLS policy and native-boundary
   security review.
-- [Final review](Docs/final-review.md) — acceptance audit and proof review.
-- [Cutover plan](Docs/cutover.md) — compatibility differences and remaining
+- [Final review](https://github.com/NzSN/Mirrors/blob/main/Docs/final-review.md) — acceptance audit and proof review.
+- [Cutover plan](https://github.com/NzSN/Mirrors/blob/main/Docs/cutover.md) — compatibility differences and remaining
   migration work.
