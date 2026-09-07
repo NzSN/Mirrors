@@ -20,6 +20,9 @@
 > **MI** are additionally mandatory for a client that advertises version-1
 > runtime model-interface support. The Haskell compatibility statement applies
 > to registrations without that optional extension.
+> Rules prefixed **SO** in §13 define the shared sandbox-orchestration design
+> required of clients that advertise that profile once implemented. They do not
+> change the existing Mirrors wire protocol or imply current client support.
 
 ## 1. Where a client can attach
 
@@ -465,6 +468,11 @@ client-local selection/configuration failures, generated-binding conversion or
 lifecycle failures, transport failures, and ordinary Mirrors `step_mismatch`
 are not interchangeable verdicts.
 
+For sandboxed evaluation, the local port is a proxy to a restricted worker.
+The factory acquires that worker through the shared orchestration process in
+§13; it does not implement its own sandbox workflow. The model-facing binding
+and replay driver remain trusted, and MI8–MI13 still gate their application calls.
+
 - **MI14.** Client-local negotiation failures **SHOULD** expose stable codes
   such as `negotiation_missing`, `descriptor_digest_invalid`,
   `adapter_not_registered`, `adapter_ambiguous`, `binding_digest_mismatch`,
@@ -582,6 +590,10 @@ missing extension from an old server, every unexpected status, structured
 digest/config mismatch, factory failure, replay failure, and dispose failure.
 Every pre-match case must assert zero SUT and zero adapter-factory calls.
 
+Clients implementing shared sandbox orchestration additionally run the
+cross-language lifecycle and isolation acceptance matrix in §13.6. Passing this
+section's Mirrors wire tests alone does not establish sandbox support.
+
 ## 12. Reference clients
 
 | Client | Language | Exercises |
@@ -592,3 +604,236 @@ Every pre-match case must assert zero SUT and zero adapter-factory calls.
 | Haskell `ModelMirrors validate` | Haskell | the reference wire consumer |
 | `tools/CounterSpec.lean` | Lean 4 | full MBT replay incl. mismatch negatives |
 | `stress300v2.py` | Python | async jobs, connection pooling, cancel |
+
+## 13. Shared sandbox orchestration (design profile)
+
+### 13.1 Status and architectural decision
+
+Users enter through their chosen Mirrors client, such as MirrorECMA or
+MirrorCPP. Shared orchestration belongs to a language-neutral MirrorGate process;
+each client supplies a native facade over that process. MirrorECMA must not
+become the mandatory orchestration runtime for clients in other languages.
+
+This section records the target design. MirrorGate currently implements a
+Python supervisor, authoring/build/execution profiles, Node and Rust worker
+shims, public-port RPC, and a trusted Node proxy. Its MirrorECMA integration is
+an evaluator example with explicit glue. A complete versioned orchestration
+control protocol and equivalent client facades are not yet implemented. Existing
+worker support does not establish support for this orchestration profile in a
+language client; a Rust worker, for example, can be driven by a trusted Node
+evaluator without a Rust evaluator facade.
+
+Implementation references in the MirrorGate repository:
+
+- [Architecture](https://github.com/NzSN/MirrorGate/blob/main/docs/architecture.md): trust and repository ownership.
+- [Sandbox walkthrough](https://github.com/NzSN/MirrorGate/blob/main/docs/sandbox-design.md) and
+  [backend guide](https://github.com/NzSN/MirrorGate/blob/main/docs/linux-bubblewrap.md): implemented enforcement.
+- [Worker protocol v1](https://github.com/NzSN/MirrorGate/blob/main/docs/protocol-v1.md): frozen public-port RPC.
+- [Evaluator example](https://github.com/NzSN/MirrorGate/blob/main/integrations/mirrorecma/README.md): current
+  integration and required compatible companion revisions.
+
+MirrorGate owns the shared control contract and conformance fixtures when
+introduced. This section defines client obligations; it does not invent wire
+operations or extend v1.
+
+- **SO1.** A client advertising shared sandbox orchestration **MUST** delegate
+  common stage transitions, sandbox admission, artifact handoff, worker lifecycle,
+  cancellation, and cleanup to the shared MirrorGate process implementation.
+  Native facades **MUST NOT** independently reimplement that state machine or
+  embed a second language client's evaluator as an implicit prerequisite.
+- **SO2.** A client **SHOULD** expose one native evaluation entry point that
+  starts a compatible local orchestration process or connects to an explicitly
+  configured trusted instance. A separate manual daemon-start step **SHOULD NOT**
+  be necessary for local use. The facade **MUST** distinguish process ownership
+  from session ownership: it closes its own sessions and terminates a process
+  only when it owns that process. Sharing an implementation does not require
+  all users or evaluations to share one global daemon.
+
+### 13.2 Ownership and the three channels
+
+```mermaid
+flowchart TB
+    User["User: native client API"] --> Facade["Language-specific facade"]
+    subgraph Trusted["Trusted evaluator environment"]
+        Facade <-->|"Versioned orchestration control"| Gate["Shared MirrorGate orchestration process"]
+        Driver["Trusted replay driver + generated binding"]
+        Facade --> Driver
+        Driver <-->|"Mirrors model protocol"| Mirrors["Mirrors + Apalache"]
+        Driver <-->|"Worker handle / lifecycle coordination"| Gate
+        Driver --> Proxy["Typed public-port proxy"]
+    end
+    subgraph Restricted["Restricted environments"]
+        Authoring["Authoring tools"]
+        Build["Submission build"]
+        Worker["Language shim + adapter + actual SUT"]
+    end
+    Gate -->|"Manage"| Authoring
+    Gate -->|"Freeze source, build, freeze artifact"| Build
+    Gate -->|"Launch, restrict, terminate"| Worker
+    Proxy <-->|"Public-port RPC over managed transport"| Worker
+```
+
+The process boundary provides a reusable implementation, not isolation by itself.
+The chosen backend must still enforce the restrictions on submitted code.
+
+| Owner | Implements |
+| --- | --- |
+| Mirrors | Model-interface resolution/generation, model operations through Apalache, trace replay decisions, state comparison |
+| Shared MirrorGate process | Authoring/build/execution workflow, approved tool mediation, snapshots and identities, backend admission, worker/resource ownership, cancellation and teardown |
+| Language client facade | Native API, control-channel codec, compatible process startup/connection, native result/error mapping |
+| Trusted client replay driver and binding | Existing Mirrors negotiation/replay, model-input projection, public-port proxy calls, observation encoding into `report_state` |
+| Runtime shim and application adapter | Native invocation, supported value conversion, real SUT actions and observations inside the sandbox |
+| Trusted operator/evaluator host | Private specification and credential custody, allowed profiles, public-context export, agent tool exposure, result-disclosure policy |
+
+- **SO3.** Implementations **MUST** keep orchestration control, the Mirrors
+  model protocol, and public-port worker RPC distinct. The control channel
+  belongs to trusted callers; it is not an additional worker capability.
+  Existing `GateSession` Python calls and administrative CLI flags are not a
+  versioned cross-language control protocol. Worker `hello/create/invoke`
+  messages **MUST NOT** be repurposed to select host mounts or private specs.
+- **SO4.** The model-facing generated binding and replay driver **MUST** remain
+  trusted. Only declared initializer/action inputs, actual observations, and
+  permitted lifecycle controls cross the worker boundary. Raw Mirrors messages,
+  `StateComputer`/`ReplayComputer` arguments, expected states, private trace
+  coordinates, specifications, and credentials **MUST NOT** be forwarded to
+  submitted code. Language clients retain their native binding/value conversion;
+  this is not permission to duplicate shared orchestration policy.
+
+### 13.3 Common evaluation lifecycle
+
+The shared process coordinates stage transitions. The language client continues
+to speak the existing Mirrors protocol through a trusted replay driver; worker
+transport may be relayed by the shared process or provided as a session-scoped
+channel. Neither arrangement transfers model comparison to MirrorGate.
+
+The required lifecycle is the same across client languages:
+
+1. The facade starts/connects to the trusted process and checks control-protocol
+   compatibility and required backend/runtime capabilities before submission work.
+2. The evaluator supplies trusted configuration and a verified public interface
+   contract. If authoring is requested, the shared process provides a restricted
+   authoring session; the agent host exposes only its approved tools and context.
+3. The controller stops submission writers. The shared process freezes source,
+   executes the submitted build in the build profile, and freezes the resulting
+   artifact. For a prebuilt submission it admits and freezes that artifact
+   directly. Dependency preparation also stays outside private evaluation data.
+4. The trusted replay driver performs Mirrors registration and validates the
+   model-interface reply under §9. It does not authorize worker startup merely
+   because a reply or an artifact exists.
+5. After successful required negotiation, the binding factory requests a fresh
+   execution worker from the shared process for the selected artifact, public
+   manifest, runtime, and policy. The proxy validates the worker handshake before
+   managed adapter creation and public initialization.
+6. The binding decodes a model step into public inputs, invokes the worker port,
+   obtains the required observation, and sends `report_state` to Mirrors.
+   Mirrors returns a verdict; the trusted driver reports completion/failure to
+   orchestration without disclosing private diagnostics to the worker.
+7. Every terminal path releases the binding and worker session, closes owned
+   transports, and completes shared-process cleanup. The evaluator returns only
+   the result permitted by its disclosure policy.
+
+- **SO5.** Execution-worker launch **MUST** wait for successful required model
+  negotiation and backend admission. This includes native artifact startup,
+  whose loader/pre-main code can run before a shim handshake. The shim **MUST**
+  additionally gate its managed adapter factory on valid `hello/create`.
+  Authoring and build may precede negotiation only under their own restricted
+  profiles; MI8's zero-callback requirement concerns evaluation binding/SUT
+  construction, not separately authorized source preparation.
+- **SO6.** Source/artifact handoff **MUST** use supervisor-owned snapshots with
+  recorded identities, not a live writable authoring mount in evaluation.
+  Protocol version, public semantic digest, artifact hash, runtime profile,
+  backend policy, and private model revision **MUST** remain separate identities.
+  A worker echoing an interface digest **MUST NOT** be treated as artifact
+  authenticity, caller authorization, or proof of honest observations.
+
+Conceptual client integration (names below are not shipped APIs):
+
+```text
+orchestrator = startOwnedOrConnectTrusted(requiredCapabilities)
+session = orchestrator.openSession(trustedPolicy)
+try:
+  artifact = session.prepareSubmission(authoringOrPrebuiltInput)
+  runNegotiatedMirrorsReplay(factory = afterAuthorizedMatch => {
+    worker = session.acquireExecution(artifact, verifiedPublicManifest)
+    // On factory failure, release any partially acquired worker immediately.
+    return bindNativePort(worker.proxy,
+                          dispose = releaseWorkerOnceThroughSession)
+  })
+finally:
+  session.closeAndAwaitCleanup()  // also covers partial factory failure
+  closeOwnedConnectionsAndProcess()
+```
+
+### 13.4 Failure, authority, and cleanup
+
+- **SO7.** Clients **MUST** preserve separate failures for control compatibility,
+  backend admission, build failure, model negotiation, worker transport/protocol,
+  application failure, timeout/cancellation, and Mirrors `step_mismatch`.
+  Failure to establish requested isolation **MUST NOT** fall back to a raw
+  subprocess. The model-interface `prefer` policy does not authorize a weaker
+  sandbox, public disclosure, or retry of a failed mutation.
+- **SO8.** The shared process **MUST** be the authority for session resource
+  ownership and bounded forced teardown. Client disposal releases the session's
+  worker handle; it does not create an independent competing cleanup loop.
+  Success, mismatch, partial construction, callback failure, cancellation,
+  disconnect, and timeout **MUST** converge on at-most-once logical release and
+  bounded cleanup. Cooperative cancellation is not proof that code has stopped.
+  Preserve the primary error if cleanup also fails. Closing one session **MUST
+  NOT** terminate resources owned by another session or an attached shared daemon.
+- **SO9.** A shared control endpoint **MUST** restrict administration to trusted
+  callers and bind handles to the owning session/principal. Submitted artifacts
+  and agent requests **MUST NOT** select or expand host mounts, permissions,
+  credentials, or management access. A remote control transport requires its
+  own authenticated authorization contract; Mirrors mTLS authorization does
+  not automatically authorize MirrorGate control operations.
+- **SO10.** The agent host **MUST** mediate every access-capable implementation
+  tool and keep private data out of prompts, retrieval, and tool results.
+  Detailed evaluator reports remain trusted unless explicitly released by
+  policy. Ordinary client APIs that return private mismatch diagnostics are
+  not suitable agent-facing tools without this disclosure boundary. Sandboxing
+  **MUST NOT** be advertised as proving observation fidelity or preventing all
+  information inference from permitted inputs and verdicts.
+
+### 13.5 Implementing a language facade
+
+- **SO11.** Before advertising support, each facade **MUST** implement the same
+  versioned MirrorGate control contract and shared fixtures. MirrorGate must
+  first specify framing and bounds, version/capability negotiation, request
+  correlation, session/handle ownership, events/results, stable error families,
+  cancellation/disconnect behavior, and cleanup completion. SDKs **MUST NOT**
+  independently invent command sequences or parse human CLI diagnostics as
+  this contract. Backend capability reporting **MUST** distinguish enforced
+  guarantees from unavailable features and per-process/UID limits from aggregate
+  quotas. The existing frozen worker v1 contract remains independently versioned.
+
+A facade may present futures, promises, callbacks, or blocking methods according
+to its language. It must preserve the shared lifecycle and cancellation ordering.
+This facade is separate from a runtime shim: a C++ client can drive a Node worker,
+and a TypeScript client can drive a Rust worker when those combinations are
+supported. Sharing a binary ABI or installing MirrorECMA is not required.
+
+### 13.6 Acceptance matrix and support claims
+
+- **SO12.** A client **MUST** pass common control/lifecycle fixtures and actual
+  backend tests for every advertised profile. At least two language facades
+  **MUST** demonstrate equivalent outcomes through the same orchestration
+  implementation before it is claimed as verified across client languages.
+  Record client language, worker runtime, control version, and backend separately.
+  Existing Node/Rust worker conformance alone does not meet that criterion.
+
+| Acceptance case | Required evidence |
+| --- | --- |
+| Same correct and faulty SUT through two facades | Equivalent public operations and observations; correct result passes and real defect reaches Mirrors mismatch |
+| Missing/incompatible control version or backend | Terminal admission failure, no unrestricted fallback |
+| Missing, malformed, unauthorized, or wrong-digest model negotiation | Zero evaluation-worker launches and zero binding/SUT factory calls |
+| Worker handshake or native value mismatch | No managed adapter dispatch; submitted native startup remains sandboxed |
+| Authoring/build/execution private-access attempts | Actual denial through each exposed tool/profile, including submission-controlled build hooks |
+| Edits after source/artifact freeze | Active evaluation uses the recorded snapshot |
+| Timeout, cancellation, EOF, client disconnect, partial factory failure | Bounded worker/descendant cleanup with the primary failure retained |
+| Concurrent sessions and forged handles | No cross-session access or cleanup; attaching clients do not kill the shared process |
+| Private canaries in model config/reports | Absent from worker traffic, public mounts, and agent-visible context/results |
+| Missing platform or backend evidence | Unsupported or unavailable reported explicitly; no passing isolation claim |
+
+Run the existing Mirrors client gates in §11 as well as MirrorGate's applicable
+shared conformance and required-backend tests. Local results, hosted CI, release
+availability, and future design requirements must be recorded separately.
