@@ -2,37 +2,74 @@ import Lake
 import Lean
 open Lake DSL
 
-/-- t30: shim build/link platform knobs. pkg-config is unavailable on
-the windows-dev box, so the OpenSSL include/lib dirs are hardcoded
-there (overridable via OSSL_INC / OSSL_LIB env vars) and the socket
-shim additionally links ws2_32. The Linux path is unchanged. -/
-def winCC : String := "gcc"
+/-- Native compiler selection is read at target-fetch time, so environment
+changes are not frozen in the compiled lakefile. -/
+def shimCompiler : IO String := do
+  return (← IO.getEnv "CC").getD
+    (if System.Platform.isWindows then "gcc" else "cc")
+
+def opensslPkgConfig (args : Array String) : IO String := do
+  let out ← IO.Process.output { cmd := "pkg-config", args := args.push "openssl" }
+  if out.exitCode != 0 then
+    throw <| IO.userError s!"pkg-config failed for OpenSSL: {out.stderr}"
+  return out.stdout.trimAscii.toString
 
 def osslInc : IO String := do
   match ← IO.getEnv "OSSL_INC" with
   | some p => pure p
-  | none => pure (if System.Platform.isWindows then "/d/Programs/msys2/ucrt64/include" else "")
+  | none =>
+    if System.Platform.isWindows then
+      pure "/d/Programs/msys2/ucrt64/include"
+    else
+      opensslPkgConfig #["--variable=includedir"]
 
 def osslLib : IO String := do
   match ← IO.getEnv "OSSL_LIB" with
   | some p => pure p
   | none => pure (if System.Platform.isWindows then "/d/Programs/msys2/ucrt64/lib" else "")
 
-/-- t30: link args for exes that use both shims (mirror, registry_spec,
-transport_spec). -/
-def shimLinkArgs : Array String :=
-  if System.Platform.isWindows then
-    #[".lake/build/socket_shim.o", ".lake/build/tls_shim.o",
-      "-L" ++ "/d/Programs/msys2/ucrt64/lib", "-lssl", "-lcrypto", "-lws2_32"]
-  else
-    #[".lake/build/socket_shim.o", ".lake/build/tls_shim.o", "-lssl", "-lcrypto"]
-
-/-- t30: link args for exes that use only the socket shim. -/
+/-- ws2_32 is required by both socket and TLS consumers on Windows. -/
 def sockLinkArgs : Array String :=
-  if System.Platform.isWindows then
-    #[".lake/build/socket_shim.o", "-lws2_32"]
-  else
-    #[".lake/build/socket_shim.o"]
+  if System.Platform.isWindows then #["-lws2_32"] else #[]
+
+/-- The C source, selected headers, compiler identity, and flags all feed the
+object trace. `moreLinkObjs` below carries that trace into executable linking. -/
+def buildShim (pkg : Package) (stem : String) (tls : Bool) : FetchM (Job System.FilePath) := do
+  let cc ← shimCompiler
+  let version ← IO.Process.output { cmd := cc, args := #["--version"] }
+  if version.exitCode != 0 then
+    error s!"cannot identify C compiler '{cc}': {version.stderr}"
+  let leanInclude ← getLeanIncludeDir
+  let mut args := #["-I", leanInclude.toString]
+  let mut headerJobs := #[
+    ← inputDir leanInclude true (·.extension == some "h"),
+    ← inputDir (pkg.dir / "Ffi") true (·.extension == some "h")]
+  if tls then
+    let includeDir ← osslInc
+    let cflags ←
+      if System.Platform.isWindows || (← IO.getEnv "OSSL_INC").isSome then
+        pure #["-I", includeDir]
+      else
+        pure (((← opensslPkgConfig #["--cflags"]).splitOn " ").filter (· != "")).toArray
+    args := args ++ cflags
+    headerJobs := headerJobs.push <|
+      ← inputDir (System.FilePath.mk includeDir / "openssl") true (·.extension == some "h")
+  let srcJob ← inputTextFile (pkg.dir / "Ffi" / s!"{stem}.c")
+  let headersJob := Job.collectArray headerJobs "shim headers"
+  let srcJob ← srcJob.bindM fun src => headersJob.mapM fun _ => do
+    addLeanTrace
+    addPureTrace (cc, version.stdout, version.stderr) "C compiler"
+    return src
+  buildO (pkg.buildDir / s!"{stem}.o") srcJob #[] args cc
+
+/-- A library directory override is traced at fetch time and reflected in -L;
+this also works after the lakefile has been elaborated and cached. -/
+def opensslLibrary (name : String) : FetchM (Job Dynlib) := Job.async do
+  let dir ← osslLib
+  addPureTrace (name, dir) "OpenSSL library"
+  addPlatformTrace
+  return { name, path := if dir.isEmpty then nameToSharedLib name
+    else System.FilePath.mk dir / nameToSharedLib name }
 
 
 package mirrors
@@ -81,8 +118,9 @@ lean_exe model_interface_gen where
 @[default_target]
 lean_exe mirror where
   root := `Main
-  extraDepTargets := #[`socket_shim_o, `tls_shim_o]
-  moreLinkArgs := shimLinkArgs
+  moreLinkObjs := #[`@/socket_shim_o, `@/tls_shim_o]
+  moreLinkLibs := #[`@/openssl_ssl, `@/openssl_crypto]
+  moreLinkArgs := sockLinkArgs
 
 /-- Phase 3: stdio session smoke test against the built mirror binary. -/
 @[default_target]
@@ -95,56 +133,14 @@ fake-runner workloads (tools/JobStoreSpec.lean). -/
 lean_exe jobstore_spec where
   root := `tools.JobStoreSpec
 
-/-- t14: the C socket shim backing Ffi.Socket (loopback TCP only). -/
-/- t14: compile the loopback socket shim with leanc into the build dir
-(no extern_lib DSL on this Lake version; mtime-guarded). -/
-target socket_shim_o pkg : System.FilePath := do
-  let src := pkg.dir / "Ffi" / "socket_shim.c"
-  let o := pkg.buildDir / "socket_shim.o"
-  let fresh ← do
-    let oe ← IO.Process.output { cmd := "test", args := #["-nt", o.toString, src.toString] }
-    pure (oe.exitCode == 0)
-  if !fresh then do
-    let cc ← match (← IO.getEnv "CC") with
-      | some c => pure c
-      | none => pure (if System.Platform.isWindows then winCC else "cc")
-    let leanPrefix ← IO.Process.output { cmd := "lean", args := #["--print-prefix"] }
-    let prefixStr := leanPrefix.stdout.trim
-    let out ← IO.Process.output
-      { cmd := cc, args := #["-c", src.toString, "-o", o.toString,
-                             "-I", prefixStr ++ "/include"] }
-    if out.exitCode != 0 then
-      error s!"leanc failed for socket shim: {out.stderr}"
-  inputBinFile o
+/-- Content-tracked native objects; requested executables link these jobs. -/
+target socket_shim_o pkg : System.FilePath := buildShim pkg "socket_shim" false
 
-/- t15: compile the OpenSSL TLS shim with cc + openssl cflags
-(pkg-config); mtime-guarded like the socket shim. -/
-target tls_shim_o pkg : System.FilePath := do
-  let src := pkg.dir / "Ffi" / "tls_shim.c"
-  let o := pkg.buildDir / "tls_shim.o"
-  let fresh ← do
-    let oe ← IO.Process.output { cmd := "test", args := #["-nt", o.toString, src.toString] }
-    pure (oe.exitCode == 0)
-  if !fresh then do
-    let cc ← match (← IO.getEnv "CC") with
-      | some c => pure c
-      | none => pure (if System.Platform.isWindows then winCC else "cc")
-    let leanPrefix ← IO.Process.output { cmd := "lean", args := #["--print-prefix"] }
-    let prefixStr := leanPrefix.stdout.trim
-    -- t30: pkg-config is broken on windows-dev; hardcode the msys2
-    -- ucrt64 OpenSSL include dir there (env-overridable)
-    let pcArgs ←
-      if System.Platform.isWindows then
-        pure #["-I", ← osslInc]
-      else
-        let pc ← IO.Process.output { cmd := "pkg-config", args := #["--cflags", "openssl"] }
-        pure (((pc.stdout.trim.splitOn " ").filter (· != "")).toArray)
-    let out ← IO.Process.output
-      { cmd := cc, args := #["-c", src.toString, "-o", o.toString,
-                             "-I", prefixStr ++ "/include"] ++ pcArgs }
-    if out.exitCode != 0 then
-      error s!"cc failed for TLS shim: {out.stderr}"
-  inputBinFile o
+target tls_shim_o pkg : System.FilePath := buildShim pkg "tls_shim" true
+
+target openssl_ssl : Dynlib := opensslLibrary "ssl"
+
+target openssl_crypto : Dynlib := opensslLibrary "crypto"
 
 @[default_target]
 lean_lib Ffi where
@@ -156,7 +152,7 @@ APALACHE_MC set, self-skipping otherwise). -/
 @[default_target]
 lean_exe apalache_cli_spec where
   root := `tools.ApalacheCliSpec
-  extraDepTargets := #[`socket_shim_o]
+  moreLinkObjs := #[`@/socket_shim_o]
   moreLinkArgs := sockLinkArgs
 
 /-- t14: explorer HTTP/JSON-RPC spike, transcript parity, and the
@@ -165,7 +161,7 @@ with APALACHE_MC set, self-skipping otherwise). -/
 @[default_target]
 lean_exe explorer_spec where
   root := `tools.ExplorerSpec
-  extraDepTargets := #[`socket_shim_o]
+  moreLinkObjs := #[`@/socket_shim_o]
   moreLinkArgs := sockLinkArgs
 
 /-- t15: TCP + mTLS transport regression suite (generates a throwaway
@@ -174,8 +170,9 @@ CLI is missing). -/
 @[default_target]
 lean_exe transport_spec where
   root := `tools.TransportSpec
-  extraDepTargets := #[`socket_shim_o, `tls_shim_o]
-  moreLinkArgs := shimLinkArgs
+  moreLinkObjs := #[`@/socket_shim_o, `@/tls_shim_o]
+  moreLinkLibs := #[`@/openssl_ssl, `@/openssl_crypto]
+  moreLinkArgs := sockLinkArgs
 
 /-- t16: registry/discovery + signal-handling gate (mock Consul via
 python3; the SIGTERM tier needs the openssl CLI for a throwaway PKI
@@ -183,8 +180,9 @@ and self-skips that tier without it). -/
 @[default_target]
 lean_exe registry_spec where
   root := `tools.RegistrySpec
-  extraDepTargets := #[`socket_shim_o, `tls_shim_o]
-  moreLinkArgs := shimLinkArgs
+  moreLinkObjs := #[`@/socket_shim_o, `@/tls_shim_o]
+  moreLinkLibs := #[`@/openssl_ssl, `@/openssl_crypto]
+  moreLinkArgs := sockLinkArgs
 
 /-- Counter end-to-end: register flow (validate + trace-gen + replay)
 against test/specs/Counter.tla with a scripted echo client; ports the
@@ -199,8 +197,9 @@ lean_exe counter_spec where
 NOT a gate: no test_driver wiring, no default target. -/
 lean_exe mincrash where
   root := `tools.MinCrash
-  extraDepTargets := #[`socket_shim_o, `tls_shim_o]
-  moreLinkArgs := shimLinkArgs
+  moreLinkObjs := #[`@/socket_shim_o, `@/tls_shim_o]
+  moreLinkLibs := #[`@/openssl_ssl, `@/openssl_crypto]
+  moreLinkArgs := sockLinkArgs
 
 /--- t31: REAL async flows over live mirror server children (plain TCP
 and mTLS modes) against real apalache (tools/AsyncSpec.lean; runs only
@@ -208,8 +207,9 @@ with APALACHE_MC set, self-skipping otherwise). -/
 @[default_target]
 lean_exe async_spec where
   root := `tools.AsyncSpec
-  extraDepTargets := #[`socket_shim_o, `tls_shim_o]
-  moreLinkArgs := shimLinkArgs
+  moreLinkObjs := #[`@/socket_shim_o, `@/tls_shim_o]
+  moreLinkLibs := #[`@/openssl_ssl, `@/openssl_crypto]
+  moreLinkArgs := sockLinkArgs
 
 /-- lake test runs the differential/parity + stdio gates; exit 0 = all green. -/
 @[test_driver]
@@ -223,6 +223,12 @@ script test do
     IO.println "lake build FAILED before test run:"
     IO.eprintln pre.stderr
     return pre.exitCode
+  let asyncEmitter : IO.Process.Output ← IO.Process.output
+    ({ cmd := "python3", args := #["tools/check-async-emitter.py"] } : IO.Process.SpawnArgs)
+  IO.println asyncEmitter.stdout
+  if asyncEmitter.exitCode != 0 then
+    IO.eprintln asyncEmitter.stderr
+    return asyncEmitter.exitCode
   let out1 : IO.Process.Output ← IO.Process.output ({ cmd := ".lake/build/bin/fixtures_replay", args := #[] } : IO.Process.SpawnArgs)
   IO.println out1.stdout
   if out1.exitCode != 0 then

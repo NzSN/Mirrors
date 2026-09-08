@@ -128,7 +128,7 @@ Implementations MUST keep the following axes distinct:
 | Semantic digest | 32-byte SHA-256 | Exact interface selection across all languages. |
 | Target profile | `mirrorecma-v1` | Native source and client-runtime lowering rules. |
 | Profile version | `1` | Generated-source compatibility for that target. |
-| StateComputer contract | `mirrors.state-computer/v1` | Client replay seam expected by the binding. |
+| StateComputer contract | `mirrors.state-computer/v1` or `mirrors.async-state-computer/v1` | Local client replay seam expected by the selected profile. |
 | Adapter ID | Application-defined string | Selects one local SUT adapter for an interface. |
 
 The semantic digest is calculated once by Mirrors:
@@ -207,8 +207,10 @@ Actions, inputs, aliases, and observations are already normalized by the
 resolver. Emitters MUST preserve their identities and MUST NOT merge, infer,
 or omit entries.
 
-For specification purposes, every generated module exports the following
-semantic interface. Native spelling is defined by the target profile.
+For specification purposes, the synchronous baseline exports the following
+semantic interface. Native spelling is defined by the target profile. The
+optional asynchronous interpretation is specified in section 15.2; metadata,
+action/input/observation identities, and coverage meaning are shared.
 
 ```text
 GeneratedMetadata ≜ Prod[semanticDigest:SemanticDigest, contract:ContractV1]
@@ -246,12 +248,13 @@ For an action with no inputs, its handler takes no input argument. For an
 action with one or more inputs, its handler takes exactly one generated,
 closed input record. Fields are identified semantically by input stable ID.
 
-Handlers are synchronous in version 1. A target profile MUST reject an adapter
-that returns a deferred computation through this interface. An asynchronous
-generated interface requires a new additive StateComputer contract version.
+Handlers are synchronous under `mirrors.state-computer/v1`; that profile MUST
+reject a deferred computation. The optional `mirrors.async-state-computer/v1`
+contract permits awaiting actions and observations as specified in section 15.2.
+It MUST NOT silently change the synchronous port or its contract identity.
 
 A handler semantically returns `Unit`. It MAY signal an implementation failure
-through the target profile's prescribed synchronous error mechanism.
+through the target profile's prescribed error mechanism.
 
 ### 7.2 Observation
 
@@ -479,8 +482,9 @@ Here `1` is the command-result singleton, not the model `Null` encoding.
 `Comp[τ] ≜ τ cmd` is the interface computation type from the shared
 notation. If execution terminates normally it produces a `τ`; it may instead
 fail, wait, or diverge. It is not a serializable MITL model type and does not
-assert termination. Its target interpretation is synchronous at the
-StateComputer seam and is prescribed by the target profile.
+assert termination. Its target interpretation is synchronous for the baseline
+contract; the async profile awaits the computation at its distinct local seam.
+Both preserve the observation and failure ordering prescribed by the profile.
 
 The closed action command type is the labeled sum:
 
@@ -594,8 +598,8 @@ Every target realization must provide:
 - finite ordered interpretations of `Seq` and `Tup`;
 - finite labeled-product and labeled-sum interpretations for `Rec` and `Var`;
 - checked representations of `Set` and `Map` that preserve `≃τ`;
-- a representation of `Comp[τ]` that sequences one synchronous computation
-  and preserves classified failure; and
+- a representation of `Comp[τ]` that sequences one computation under the
+  selected local contract and preserves classified failure; and
 - total checked conversions between supported native values and model values.
 
 Two MITL types may share a target carrier only when the generated shape still
@@ -1160,6 +1164,21 @@ This sequence is transport-independent after authorization. Local stdio is
 trusted. Plain TCP has no model-interface authority in version 1. An mTLS
 server grants verification only when the operator allowlists the exact client
 leaf certificate fingerprint.
+
+For MirrorECMA dynamic descriptor interpretation, the equivalent construction
+barrier is successful validation of `resolved` or a valid cached `not_modified`.
+Its deferred `createRegistry` factory MUST run after that barrier and the
+required authorization checks. Once the factory returns a scope, cleanup MUST
+be attempted exactly once even if registry validation fails before a binding
+exists. The compatibility form accepting a prebuilt registry only delays
+callbacks; it cannot establish that the caller created no SUT beforehand.
+A caller claiming zero construction before verification must use deferred
+construction or enforce the equivalent lifecycle externally.
+
+MirrorECMA's local dynamic interpreter supports descriptor `opaqueItf` through
+validated branded `OpaqueItfValue` snapshots. This is separate from the
+portable generated subset and does not permit a static emitter to replace an
+unsupported type with an unchecked native value.
 
 ## 19. Compatibility
 

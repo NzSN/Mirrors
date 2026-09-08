@@ -18,13 +18,14 @@ def usage : String := String.intercalate "\n" [
   "usage:",
   "  model_interface_gen resolve --spec FILE --contract FILE --evidence FILE",
   "    [--param-var NAME] --lock FILE [--diagnostics json]",
-  "  model_interface_gen generate --lock FILE --target mirrorecma-v1|mirrorecma-async-v1|mirrorcpp-v1 --out DIR",
+  "  model_interface_gen generate --lock FILE --target TARGET --out DIR",
   "    [--diagnostics json]",
   "  model_interface_gen check --spec FILE --contract FILE --evidence FILE",
-  "    [--param-var NAME] --lock FILE --target mirrorecma-v1|mirrorecma-async-v1|mirrorcpp-v1 --out DIR",
+  "    [--param-var NAME] --lock FILE --target TARGET --out DIR",
   "    [--diagnostics json]",
   "  model_interface_gen preflight --lock FILE --trace PATH",
-  "    [--require-all-actions] [--diagnostics json]"
+  "    [--require-all-actions] [--diagnostics json]",
+  "  TARGET: mirrorecma-v1 | mirrorecma-async-v1 | mirrorcpp-v1"
 ]
 
 private inductive DiagnosticsMode where

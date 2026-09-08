@@ -1,66 +1,143 @@
 name: interop
 
-# Phase 6 client interop matrix (tools/interop/run.sh; see
-# tools/interop/INTEROP.md). Requires apalache-mc on PATH, the Haskell
-# ModelMirros cabal build (read-only), and all three non-Lean client checkouts.
 on:
   workflow_dispatch:
+    inputs:
+      ecma_ref:
+        description: 'Matching MirrorECMA commit SHA (empty uses checked baseline)'
+        required: false
+        type: string
   pull_request:
     paths:
-      - "Core/**"
-      - "Codec/**"
-      - "Shell/**"
-      - "tools/interop/**"
-      - "lakefile.lean"
+      - 'Core/**'
+      - 'Codec/**'
+      - 'Shell/**'
+      - 'Ffi/**'
+      - 'specs/**'
+      - 'test/fixtures/**'
+      - 'tools/interop/**'
+      - 'tools/ci/**'
+      - 'tools/ModelInterface*.lean'
+      - 'tools/check-native-rebuild.sh'
+      - 'lakefile.lean'
+      - 'lean-toolchain'
+      - 'lake-manifest.json'
+      - '.github/workflows/interop.yml'
+
+permissions:
+  contents: read
 
 jobs:
+  native-build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install native prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y build-essential libssl-dev pkg-config
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+      - name: Verify incremental C build dependencies
+        run: bash tools/check-native-rebuild.sh
+
   interop:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
     env:
       ECMA_REPO: ${{ github.workspace }}/MirrorECMA
       CPP_REPO: ${{ github.workspace }}/MirrorCPP
       RUST_REPO: ${{ github.workspace }}/MirrorRust
+      HS_REPO: ${{ github.workspace }}/ModelMirrors
+      INTEROP_VERIFY_PINS: '1'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           path: Mirrors
-      - uses: actions/checkout@v4
+      - name: Read pinned tool and client versions
+        id: versions
+        working-directory: Mirrors
+        env:
+          REQUESTED_ECMA_REF: ${{ inputs.ecma_ref }}
+        run: |
+          source tools/ci/versions.env
+          ECMA_REF="${REQUESTED_ECMA_REF:-$ECMA_BASELINE}"
+          [[ "$ECMA_REF" =~ ^[0-9a-f]{40}$ ]] || { echo 'Expected a full MirrorECMA commit SHA'; exit 1; }
+          printf 'node=%s\npnpm=%s\njava=%s\nrust=%s\nghc=%s\ncabal=%s\n' "$NODE_VERSION" "$PNPM_VERSION" "$JAVA_VERSION" "$RUST_VERSION" "$GHC_VERSION" "$CABAL_VERSION" >> "$GITHUB_OUTPUT"
+          printf 'ecma=%s\ncpp=%s\nrust_client=%s\nhaskell=%s\n' "$ECMA_REF" "$CPP_BASELINE" "$RUST_BASELINE" "$HS_BASELINE" >> "$GITHUB_OUTPUT"
+          printf 'ECMA_REF=%s\n' "$ECMA_REF" >> "$GITHUB_ENV"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: NzSN/MirrorECMA
+          ref: ${{ steps.versions.outputs.ecma }}
           path: MirrorECMA
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: NzSN/MirrorCPP
+          ref: ${{ steps.versions.outputs.cpp }}
           path: MirrorCPP
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: NzSN/MirrorRust
+          ref: ${{ steps.versions.outputs.rust_client }}
           path: MirrorRust
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: NzSN/ModelMirrors
+          ref: ${{ steps.versions.outputs.haskell }}
           path: ModelMirrors
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: MirrorECMA/package-lock.json
-      - name: Install MirrorECMA dependencies
+          node-version: ${{ steps.versions.outputs.node }}
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+        with:
+          version: ${{ steps.versions.outputs.pnpm }}
+          package_json_file: MirrorECMA/package.json
+          run_install: false
+          cache: true
+          cache_dependency_path: MirrorECMA/pnpm-lock.yaml
+      - name: Install locked MirrorECMA dependencies
         working-directory: MirrorECMA
-        run: npm ci
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: leanprover/lean-action@v1
+        run: pnpm install --frozen-lockfile
+      - name: Install native prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y build-essential cmake libssl-dev pkg-config libboost-dev zlib1g-dev
+      - uses: dtolnay/rust-toolchain@d1031067263f94b142dd6c0ce24c5eb9d02d52a0 # master, pinned
         with:
+          toolchain: ${{ steps.versions.outputs.rust }}
+      - uses: haskell-actions/setup@6037f33647c3f17758a2356c80fc4a53d7e0685d # v2
+        with:
+          ghc-version: ${{ steps.versions.outputs.ghc }}
+          cabal-version: ${{ steps.versions.outputs.cabal }}
+      - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1
+        with:
+          lake-package-directory: Mirrors
           auto-config: false
-      - name: Build Haskell reference client (validate)
+          build: false
+          test: false
+          lint: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: ${{ steps.versions.outputs.java }}
+      - name: Build pinned Haskell reference client
+        working-directory: ModelMirrors
         run: |
+          source "$GITHUB_WORKSPACE/Mirrors/tools/ci/versions.env"
           cabal update
-          cabal build ModelMirros:exe:ModelMirrors --project-dir="$GITHUB_WORKSPACE/ModelMirrors"
-          echo "HS_BIN=$(cabal list-bin ModelMirros:exe:ModelMirrors --project-dir="$GITHUB_WORKSPACE/ModelMirrors")" >> "$GITHUB_ENV"
-      - name: Install apalache
+          cabal build ModelMirrors:exe:ModelMirrors --index-state="$HACKAGE_INDEX_STATE"
+          printf 'HS_BIN=%s\n' "$(cabal list-bin ModelMirrors:exe:ModelMirrors)" >> "$GITHUB_ENV"
+      - name: Install checked Apalache release
+        working-directory: Mirrors
         run: |
-          curl -sL https://github.com/informalsystems/apalache/releases/latest/download/apalache.tgz | tar xz
-          echo "$PWD/apalache/bin" >> "$GITHUB_PATH"
-      - name: Interop matrix (stdio + TCP)
+          bash tools/ci/install-apalache.sh "$RUNNER_TEMP/apalache"
+          printf 'APALACHE_MC=%s/bin/apalache-mc\n' "$RUNNER_TEMP/apalache" >> "$GITHUB_ENV"
+      - name: Interop matrix (stdio, TCP, and mTLS; all live prerequisites required)
         working-directory: Mirrors
         run: bash tools/interop/run.sh

@@ -55,25 +55,111 @@ What run.sh does:
    source-free local handlers, wrong-observer `step_mismatch`, allowlisted mTLS
    verification and descriptor read, descriptor-read denial, and no-allowlist
    denial.
-4. Starts \`mirror --serve\` and runs the Haskell ModelMirrors \`validate\`
+4. Compiles MirrorECMA's generated Counter tutorial and standalone acceptance
+   harness once into `.golden-build/ecma-generated-counter`. The harness runs
+   the same emitted executable as the tutorial's package commands, with the
+   client root as its working directory. It compares the tutorial model with
+   `specs/Counter.tla`, runs compiler `check` and required-action preflight, and
+   proves that stale generated output is detected without repair in a temporary
+   fixture copy. Supplied-trace replay must cover Initialize and Tick with
+   `APALACHE_MC` set to a nonexistent path; the faulty implementation must exit
+   1 with the actual `tick`/`count` state mismatch. Missing tools or arbitrary
+   failures do not satisfy that negative case. An executable `APALACHE_MC`
+   enables the additional `--live` case, which must generate fresh traces and
+   cover both actions through the same adapter. The full matrix requires live
+   Apalache up front and always enables this tier; the focused client command
+   below makes it optional.
+5. Starts \`mirror --serve\` and runs the Haskell ModelMirrors \`validate\`
    client against it over TCP.
 
 The mTLS legs run the same unmodified clients with pinned leaf
 fingerprints (SHA-256 hex of the DER) and negative cases.
 
+## Reproducible CI and local setup
+
+MirrorECMA now has its own focused push/PR workflow. It installs the checked
+`pnpm-lock.yaml` with `pnpm install --frozen-lockfile`, runs all three typechecks
+and Jest, and checks compiler freshness and the passing/faulty generated Counter
+executables. It needs only Mirrors, Lean, Node/pnpm, and native build headers.
+Java, Apalache, Haskell, Rust and C++ clients are unnecessary for that offline
+client gate. From MirrorECMA:
+
+```bash
+pnpm install --frozen-lockfile
+MIRRORS_ROOT=../Mirrors bash scripts/ci/check.sh
+```
+
+The client gate checks the published compiler revision recorded in
+`MirrorECMA/scripts/ci/versions.env`. To test a coordinated newer server commit,
+set `MIRRORS_REF` to its full 40-character SHA. Its manual workflow offers the
+same `mirrors_ref` input and a `live` checkbox. Publish and verify a matching
+server commit before updating the checked baseline; never pin an unpublished
+future change. Current synchronous generated artifacts remain compatible with
+the baseline even when separate asynchronous targets evolve.
+
+The broader Mirrors workflow keeps the full matrix. `tools/ci/versions.env`
+records exact tool versions and explicit published client commit baselines;
+`workflow_dispatch.ecma_ref` accepts a full matching MirrorECMA SHA. All checkout
+revisions, dirty files, and tool versions are printed. Hosted runs enforce the
+client pins with `INTEROP_VERIFY_PINS=1`. The runner is `ubuntu-24.04`; OS package
+patch levels and existing C++ FetchContent policy remain outside the exact pins.
+Haskell resolution uses a fixed index-state and Rust uses its checked lockfile.
+GitHub action implementations are pinned by commit SHA.
+
+Full local interop consumes sibling `MirrorECMA`, `MirrorCPP`, `MirrorRust`, and
+`ModelMirrors` checkouts by default. Override their paths using `ECMA_REPO`,
+`CPP_REPO`, `RUST_REPO`, and `HS_REPO`. First build the Haskell reference with
+`cabal build ModelMirrors:exe:ModelMirrors` in its checkout, then supply the
+absolute path returned by `cabal list-bin ModelMirrors:exe:ModelMirrors` as
+`HS_BIN`. The matrix requires that already built executable and a live
+`APALACHE_MC`; missing prerequisites fail before the Lean build. For example:
+
+```bash
+HS_BIN=/absolute/path/to/ModelMirrors \
+APALACHE_MC=/absolute/path/to/apalache/bin/apalache-mc \
+  bash tools/interop/run.sh
+```
+
+Both workflows install the exact Apalache 0.61.0 versioned archive through a
+SHA-256-checking helper. The full matrix always requires live generation; the
+focused client workflow installs Java and Apalache only when live coverage was
+explicitly requested. A failed live prerequisite is a failure, not a skipped
+test. The separate native CI job runs `bash tools/check-native-rebuild.sh`.
+
+The [design](../../../MirrorECMA/docs/superpowers/specs/2026-09-06-reproducible-ci-design.md)
+and [task plan](../../../MirrorECMA/docs/superpowers/plans/2026-09-06-reproducible-ci.md)
+record version provenance, acceptance evidence, and hosted/full-matrix limits.
+
 ## Environment notes
 
-- apalache-mc 0.57.0 at \`~/.local/bin/apalache/bin/apalache-mc\`; the JSON-RPC
-  explorer endpoint is \`/rpc\`.
+- The checked release is apalache-mc 0.61.0; set `APALACHE_MC` explicitly or
+  put `apalache-mc` on PATH. The JSON-RPC explorer endpoint is `/rpc`.
 - The ECMA checkout and the Haskell tree are consumed read-only; all
-  writable scratch state lives under \`.golden-build/\` in this repo.
+  compiled interop output lives under \`.golden-build/\` in this repo. The
+  generated Counter harness creates and removes its stale-output fixture in
+  the system temporary directory; Mirrors isolates live Apalache work in
+  session temporary directories.
+- The generated Counter gate receives `MIRRORECMA_ROOT`, `MIRRORS_ROOT`, and
+  `MIRROR_BIN` from the matrix's existing root and binary settings. Override
+  `MODEL_INTERFACE_GEN` for a compiler outside
+  `$MIRRORS_ROOT/.lake/build/bin/model_interface_gen`. To run this gate alone
+  from the MirrorECMA root:
+
+  ```bash
+  MIRRORS_ROOT=../Mirrors pnpm run smoke:generated-counter
+  MIRRORS_ROOT=../Mirrors APALACHE_MC=/path/to/apalache-mc \
+    pnpm run smoke:generated-counter --live
+  ```
 
 ## Non-Lean client gates
 
 - MirrorECMA runs its canonical-corpus Jest tests and full standalone smoke
   suite, including async, TLS, registry negatives, strict inbound framing, and
   D3 compiled model-interface verification and D4 dynamic descriptor/cache
-  replay, including descriptor-read authorization negatives.
+  replay, including descriptor-read authorization negatives. The generated
+  Counter tutorial adds artifact provenance, offline passing/faulty executable
+  acceptance, and explicitly enabled live-generation coverage; see the
+  [client tutorial](../../../MirrorECMA/examples/generated-counter/README.md).
 - MirrorCPP runs its complete CTest suite; `real_mirror_hourclock` replays the
   authoritative Counter model over stdio, TCP, and mTLS. Its D5 static
   model-interface leg checks strict negotiation codecs, the generated portable

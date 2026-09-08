@@ -48,6 +48,9 @@ def generatedPublicationLockPath : String := ".model-interface-generation.lock"
 def mirrorecmaTarget : String := "mirrorecma-v1"
 def mirrorecmaAsyncTarget : String := "mirrorecma-async-v1"
 def mirrorcppTarget : String := "mirrorcpp-v1"
+
+def supportedTarget (target : String) : Bool :=
+  target == mirrorecmaTarget || target == mirrorecmaAsyncTarget || target == mirrorcppTarget
 def maxModelInterfaceItfArtifactBytes : Nat := 16 * 1024 * 1024
 def maxCompilerArtifactBytes : Nat := 16 * 1024 * 1024
 
@@ -583,6 +586,7 @@ def writeLock (path : String) (compilation : Compilation) :
 private structure OwnershipManifest where
   files : List String
   semanticDigest : String
+  targetProfile : String
   deriving Repr
 
 private def jsonFields : Lean.Json → Except String (List (String × Lean.Json))
@@ -626,9 +630,7 @@ private def parseOwnershipManifest (raw : ByteArray) : Except String OwnershipMa
   if schema != "mirrors.model-interface-generated/v1" then
     throw "unsupported generated ownership manifest schema"
   let target ← jsonString "manifest.targetProfile" (← requiredJson fields "targetProfile")
-  if target != mirrorecmaTarget && target != mirrorecmaAsyncTarget &&
-      target != mirrorcppTarget then
-    throw "ownership manifest target is not supported"
+  if !supportedTarget target then throw "ownership manifest target is unsupported"
   let version ← jsonNat "manifest.profileVersion" (← requiredJson fields "profileVersion")
   if version != 1 then throw "unsupported generated ownership profile version"
   let digest ← jsonString "manifest.semanticDigest" (← requiredJson fields "semanticDigest")
@@ -642,7 +644,7 @@ private def parseOwnershipManifest (raw : ByteArray) : Except String OwnershipMa
     throw "generated ownership manifest may not own the publication lock"
   if !files.contains generatedManifestPath then
     throw "generated ownership manifest does not own itself"
-  return { files, semanticDigest := digest }
+  return { files, semanticDigest := digest, targetProfile := target }
 
 private def readOwnershipManifest (out : String) :
     IO (Except CompilerError (Option OwnershipManifest)) := do
@@ -701,6 +703,14 @@ private def writeGeneratedTreeUnlocked (out : String)
   let previous ← match previousResult with
     | .ok value => pure value
     | .error error => return .error error
+  let some manifestFile := tree.files.find? (·.relativePath == generatedManifestPath)
+    | return finding "emitter output does not include its ownership manifest"
+  let nextManifest ← match parseOwnershipManifest manifestFile.bytes with
+    | .ok value => pure value
+    | .error error => return finding s!"emitter returned an invalid ownership manifest: {error}"
+  if let some previous := previous then
+    if previous.targetProfile != nextManifest.targetProfile then
+      return finding "refusing to replace generated output owned by a different target profile"
   let previouslyOwned := previous.map (·.files) |>.getD []
   let newPaths := tree.files.map (·.relativePath)
   match previouslyOwned.find? fun oldPath =>

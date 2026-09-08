@@ -10,22 +10,59 @@ set -euo pipefail
 
 MIRRORS="$(cd "$(dirname "$0")/../.." && pwd)"
 LEAN_BIN="${LEAN_BIN:-$MIRRORS/.lake/build/bin/mirror}"
-ECMA="${ECMA_REPO:-/home/nzsn/Repos/MirrorECMA}"
-CPP="${CPP_REPO:-/home/nzsn/Repos/MirrorCPP}"
-RUST="${RUST_REPO:-/home/nzsn/Repos/MirrorRust}"
-HS_BIN="${HS_BIN:-/home/nzsn/Repos/ModelMirros/dist-newstyle/build/x86_64-linux/ghc-9.14.1/ModelMirrors-0.1.1.0/x/ModelMirrors/build/ModelMirrors/ModelMirrors}"
-APALACHE_MC_BIN="${APALACHE_MC:-/home/nzsn/.local/bin/apalache/bin/apalache-mc}"
+ECMA="${ECMA_REPO:-$MIRRORS/../MirrorECMA}"
+CPP="${CPP_REPO:-$MIRRORS/../MirrorCPP}"
+RUST="${RUST_REPO:-$MIRRORS/../MirrorRust}"
+HS="${HS_REPO:-$MIRRORS/../ModelMirrors}"
+APALACHE_MC_BIN="${APALACHE_MC:-$(command -v apalache-mc || true)}"
 RF="$MIRRORS/.golden-build/rf"
 
 cd "$MIRRORS"
-lake build
-
-for checkout in "$ECMA" "$CPP" "$RUST"; do
+source tools/ci/versions.env
+for checkout in "$ECMA" "$CPP" "$RUST" "$HS"; do
   if [[ ! -d "$checkout" ]]; then
     echo "missing client checkout: $checkout" >&2
     exit 1
   fi
 done
+if [[ ! -x "$APALACHE_MC_BIN" ]]; then
+  echo "full interop requires live Apalache; set APALACHE_MC to its executable" >&2
+  exit 1
+fi
+: "${HS_BIN:?set HS_BIN to the already built ModelMirrors executable}"
+[[ -x "$HS_BIN" ]] || { echo "missing Haskell binary: $HS_BIN" >&2; exit 1; }
+export HS_BIN LEAN_BIN HS_REPO="$HS" APALACHE_MC="$APALACHE_MC_BIN"
+
+echo "== revisions and tool versions =="
+for checkout in "$MIRRORS" "$ECMA" "$CPP" "$RUST" "$HS"; do
+  printf '%s: %s\n' "$checkout" "$(git -C "$checkout" rev-parse HEAD)"
+  git -C "$checkout" status --short
+done
+node --version
+pnpm --version
+lake --version
+rustc --version
+ghc --version
+cabal --version
+java -version
+"$APALACHE_MC_BIN" version
+cmake --version
+cc --version
+openssl version
+if [[ "${INTEROP_VERIFY_PINS:-0}" == 1 ]]; then
+  for entry in "$ECMA:${ECMA_REF:-$ECMA_BASELINE}" "$CPP:$CPP_BASELINE" \
+    "$RUST:$RUST_BASELINE" "$HS:$HS_BASELINE"; do
+    checkout="${entry%:*}"
+    expected="${entry##*:}"
+    [[ "$(git -C "$checkout" rev-parse HEAD)" == "$expected" ]] || {
+      echo "checkout does not match baseline: $checkout ($expected)" >&2; exit 1;
+    }
+  done
+  [[ "$(node --version)" == "v$NODE_VERSION" ]]
+  [[ "$(pnpm --version)" == "$PNPM_VERSION" ]]
+  [[ "$("$APALACHE_MC_BIN" version)" == "$APALACHE_VERSION" ]]
+fi
+lake build
 
 mkdir -p .golden-build/ecma-interop "$RF"
 ln -sfn "$ECMA" "$RF/_main"   # bazel-style runfiles layout for the harness
@@ -38,7 +75,7 @@ echo "== compiling MirrorECMA smoke suite (unmodified sources) =="
 echo "== MirrorECMA unit + canonical wire-corpus tests =="
 (cd "$ECMA" && MIRRORS_FIXTURES="$MIRRORS/test/fixtures" \
   NODE_OPTIONS="--experimental-vm-modules" \
-  ./node_modules/.bin/jest --runInBand)
+  ./node_modules/.bin/jest --runInBand --no-watchman)
 (cd "$ECMA" && ./node_modules/.bin/tsc \
   -p tsconfig.model-interface.json --noEmit)
 
@@ -67,6 +104,22 @@ echo "== MirrorECMA negotiated model-interface D3+D4: stdio + authorized mTLS ==
   node --loader "$ECMA/node_modules/ts-node/esm.mjs" \
     "$ECMA/test/model-interface-counter.smoke.ts")
 
+echo "== MirrorECMA generated Counter tutorial: artifacts + replay + real bug =="
+# Build the documented executable and acceptance harness once, without writing
+# into the client checkout. The harness launches that executable from ECMA's
+# root and keeps its stale-output negative fixture in a temporary directory.
+COUNTER_BUILD="$MIRRORS/.golden-build/ecma-generated-counter"
+mkdir -p "$COUNTER_BUILD"
+printf '%s\n' '{"type":"module"}' > "$COUNTER_BUILD/package.json"
+(cd "$ECMA" && ./node_modules/.bin/tsc \
+  -p tsconfig.examples.json --outDir "$COUNTER_BUILD")
+COUNTER_SMOKE_ARGS=(--live)
+(cd "$RUNDIR" && LC_ALL=C.UTF-8 \
+  MIRRORS_ROOT="$MIRRORS" MIRRORECMA_ROOT="$ECMA" \
+  MIRROR_BIN="$LEAN_BIN" APALACHE_MC="$APALACHE_MC_BIN" \
+  MODEL_INTERFACE_GEN="${MODEL_INTERFACE_GEN:-$MIRRORS/.lake/build/bin/model_interface_gen}" \
+  node "$COUNTER_BUILD/test/generated-counter.smoke.js" "${COUNTER_SMOKE_ARGS[@]}")
+
 echo "== MirrorCPP conformance: unit/golden + real stdio/TCP/mTLS =="
 CPP_BUILD="$MIRRORS/.golden-build/mirrorcpp"
 cmake -S "$CPP" -B "$CPP_BUILD" -DMIRRORCPP_BUILD_TESTS=ON
@@ -79,7 +132,7 @@ echo "== MirrorRust conformance: unit/golden + real stdio/TCP/mTLS/registry =="
   CARGO_TARGET_DIR="$MIRRORS/.golden-build/mirrorrust-target" \
   MIRRORS_FIXTURES="$MIRRORS/test/fixtures" \
   MIRROR_BIN="$LEAN_BIN" SPEC="$MIRRORS/specs/Counter.tla" \
-  cargo test -- --nocapture)
+  cargo test --locked -- --nocapture)
 
 echo "== Haskell validate client over TCP =="
 # The mirror shells out to apalache, which writes _apalache-out/ under its

@@ -30,6 +30,8 @@ differential tests, and client interop tests.
   fingerprint pinning.
 - A built-in client for validating a TLA+ specification against a running
   mirror.
+- Deterministic generated TypeScript interfaces for synchronous and asynchronous
+  implementation adapters, with exact semantic-digest negotiation.
 - A phase-indexed protocol machine that refines the TLA+ protocol model, plus
   round-trip and behavioral proofs across the pure core and codecs.
 
@@ -61,10 +63,9 @@ lake test
 ```
 
 The main executable is written to `.lake/build/bin/mirror` (or
-`mirror.exe` on Windows). `lake test` rebuilds the project and runs ten gates:
-fixture replay, differential state diffs, stdio smoke, async job-store tests,
-Apalache CLI and explorer tests, TCP/mTLS transport tests, registry tests, the
-Counter end-to-end flow, and live async server flows.
+`mirror.exe` on Windows). `lake test` rebuilds the project and runs the gates
+defined in `lakefile.lean`, including fixture replay, state diffs, model-interface
+checks, stdio, jobs, Apalache/explorer, transport, registry, and Counter flows.
 
 Tests that require a real Apalache installation self-skip unless
 `APALACHE_MC` is set. For example:
@@ -77,6 +78,17 @@ The mirror sets `LC_ALL=C.UTF-8` for Apalache child processes. The transport
 and registry suites also self-skip individual external-tool tiers when their
 requirements are unavailable.
 
+C shim changes, included headers, compiler identity, and OpenSSL settings are
+tracked by Lake. Rebuild normally after a native change. Verify incremental
+behavior with `bash tools/check-native-rebuild.sh`; the
+[native build design](Docs/native-build-design.md) explains the tracked inputs.
+
+MirrorECMA has a focused push/PR gate for its locked dependencies, TypeScript
+checks, unit tests, and runnable examples. It uses a published compiler baseline
+and an explicit full-SHA override for coordinated revisions. The broader Mirrors
+workflow pins its external clients and tools in [tools/ci/versions.env](tools/ci/versions.env)
+and runs the native rebuild gate separately.
+
 To run the full cross-language matrix against MirrorECMA and the Haskell
 reference client, follow [`tools/interop/INTEROP.md`](https://github.com/NzSN/Mirrors/blob/main/tools/interop/INTEROP.md)
 and run `tools/interop/run.sh` after providing its external client checkouts.
@@ -86,8 +98,9 @@ and run `tools/interop/run.sh` after providing its external client checkouts.
 ### Standard input/output
 
 With no arguments, the mirror reads and writes one JSON object per line on
-standard input/output. This mode intentionally supports synchronous protocol
-flows only.
+standard input/output. This mode supports synchronous protocol flows. A client may still await a
+local asynchronous SUT operation before sending `report_state`; that does not
+submit a server asynchronous job.
 
 ```bash
 APALACHE_MC=/path/to/apalache-mc .lake/build/bin/mirror
@@ -224,6 +237,23 @@ boundary and data flow.
 
 ## Clients
 
+For a first application integration, follow MirrorECMA's
+[generated Counter tutorial](https://github.com/NzSN/MirrorECMA/tree/main/examples/generated-counter#readme):
+connect a real TypeScript implementation to a generated port, replay a known
+trace locally, observe a real implementation mismatch, then generate fresh
+traces with Apalache. The first replay uses this Lean server over stdio.
+The [work queue](https://github.com/NzSN/MirrorECMA/tree/main/examples/work-queue#readme)
+adds asynchronous operations, retry/reset scenarios, and structured sequence
+coverage. MirrorECMA also exposes JSON-safe run reports and deferred dynamic
+registry factories; see its
+[replay and async guide](https://github.com/NzSN/MirrorECMA/blob/main/docs/replay-and-async.md).
+
+The compiler supports `mirrorecma-v1` and the additive `mirrorecma-async-v1`
+target. They share the lock, descriptor schema, and semantic digest, while using
+distinct local computer contracts. The
+[client guide](Docs/client-implementation-guide.md#97-optional-local-asynchronous-replay)
+defines this distinction and the cancellation/lifecycle obligations.
+
 - [MirrorCPP](https://github.com/NzSN/MirrorCPP)
 - [MirrorLean](https://github.com/NzSN/MirrorLean)
 - [MirrorRust](https://github.com/NzSN/MirrorRust)
@@ -246,10 +276,6 @@ Known compatibility differences, the remaining top-level interop-runner
 integration, and the Haskell deprecation criteria are tracked in
 [`Docs/cutover.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/cutover.md).
 Notable implementation changes are recorded in [`CHANGELOG.md`](https://github.com/NzSN/Mirrors/blob/main/CHANGELOG.md).
-
-One Lake build-system caveat remains: changing only a C shim may not relink an
-existing executable. Remove the affected `.lake/build/bin/*` binary and shim
-object before rebuilding after C-only edits.
 
 ## Documentation
 

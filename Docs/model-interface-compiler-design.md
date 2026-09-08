@@ -1625,9 +1625,9 @@ support.
   tooling should not enlarge the production CLI.
 - **Recursive output-directory cleanup:** only manifest-owned generated files
   may be replaced or removed.
-- **Implicit asynchronous blocking:** async SUT support requires an explicit
-  future interface rather than hidden blocking inside synchronous
-  `StateComputer`.
+- **Implicit asynchronous blocking:** async SUT support uses the explicit
+  `mirrorecma-async-v1` profile and `mirrors.async-state-computer/v1` contract;
+  synchronous `StateComputer` behavior remains unchanged.
 
 ## 22. Acceptance criteria
 

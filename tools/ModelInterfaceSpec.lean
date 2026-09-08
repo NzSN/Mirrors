@@ -1901,7 +1901,10 @@ def scenarioFilesystemHardening (fails : Failures)
           bytes := ByteArray.mk (Array.replicate (8 * 1024 * 1024) 0x61) },
         { relativePath := "zz-victim.txt", bytes := "GENERATED".toUTF8 },
         { relativePath := Shell.ModelInterface.Compiler.generatedManifestPath
-          bytes := "{}\n".toUTF8 }
+          bytes := (Shell.ModelInterface.Emit.TypeScript.renderOwnershipManifest
+            (String.ofList (List.replicate 64 '0'))
+            ["00-delay.bin", "zz-victim.txt",
+              Shell.ModelInterface.Compiler.generatedManifestPath]).toUTF8 }
       ]
     }
     let injection ← IO.asTask (prio := Task.Priority.dedicated)

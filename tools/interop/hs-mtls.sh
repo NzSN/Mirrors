@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-set -u
-cd /home/nzsn/Repos/Mirrors
+set -euo pipefail
+MIRRORS="$(cd "$(dirname "$0")/../.." && pwd)"
+LEAN_BIN="${LEAN_BIN:-$MIRRORS/.lake/build/bin/mirror}"
+: "${HS_BIN:?set HS_BIN to the built ModelMirrors executable}"
+cd "$MIRRORS"
 D=.golden-build/mtls
 rm -rf "$D" && mkdir -p "$D"
 cd "$D"
@@ -19,30 +22,40 @@ openssl x509 -req -in rogue-client.csr -CA rogue-ca.crt -CAkey rogue-ca.key -CAc
 chmod 600 rogue-ca.key rogue-client.key
 FP=$(openssl x509 -in server.crt -outform DER | openssl dgst -sha256 | awk '{print $2}')
 echo "server fingerprint: $FP"
-HS=/home/nzsn/Repos/ModelMirros/dist-newstyle/build/x86_64-linux/ghc-9.14.1/ModelMirrors-0.1.1.0/x/ModelMirrors/build/ModelMirrors/ModelMirrors
-cd /home/nzsn/Repos/Mirrors
+cd "$MIRRORS"
 PORT=$((31000 + RANDOM % 4000))
-.lake/build/bin/mirror --server "$PORT" --tls --cert "$D/server.crt" --key "$D/server.key" --ca "$D/ca.crt" &
+"$LEAN_BIN" --server "$PORT" --tls --cert "$D/server.crt" --key "$D/server.key" --ca "$D/ca.crt" &
 SRV=$!
 trap 'kill $SRV 2>/dev/null || true' EXIT
 for i in $(seq 1 50); do (echo > /dev/tcp/127.0.0.1/$PORT) 2>/dev/null && break; sleep 0.2; done
 
 echo "== Haskell validate over mTLS (pinned) =="
-LC_ALL=C.UTF-8 timeout 240 "$HS" validate --host 127.0.0.1 --port "$PORT" --tls \
+LC_ALL=C.UTF-8 timeout 240 "$HS_BIN" validate --host 127.0.0.1 --port "$PORT" --tls \
   --cert "$D/client.crt" --key "$D/client.key" --ca "$D/ca.crt" --pin "$FP" \
   --spec .golden-build/specs/HourClock.tla --inv Inv --bound 10
-echo "POSITIVE_RC=$?"
+echo "Haskell pinned mTLS validation passed"
+
+expect_tls_failure() {
+  local label="$1" pattern="$2" log="$D/$1.log" rc=0
+  shift 2
+  "$@" >"$log" 2>&1 || rc=$?
+  cat "$log"
+  if [[ "$rc" -le 0 || "$rc" -ge 124 ]] || \
+    ! grep -Eiq "$pattern" "$log"; then
+    echo "$label: expected a specific TLS rejection, got exit $rc" >&2
+    exit 1
+  fi
+}
 
 echo "== negative: wrong pin =="
-LC_ALL=C.UTF-8 timeout 60 "$HS" validate --host 127.0.0.1 --port "$PORT" --tls \
+expect_tls_failure wrong-pin 'fingerprint mismatch' \
+  env LC_ALL=C.UTF-8 timeout 60 "$HS_BIN" validate --host 127.0.0.1 --port "$PORT" --tls \
   --cert "$D/client.crt" --key "$D/client.key" --ca "$D/ca.crt" --pin 0000000000000000000000000000000000000000000000000000000000000000 \
   --spec .golden-build/specs/HourClock.tla --inv Inv --bound 10
-echo "WRONGPIN_RC=$?"
 
 echo "== negative: rogue client cert =="
-LC_ALL=C.UTF-8 timeout 60 "$HS" validate --host 127.0.0.1 --port "$PORT" --tls \
+expect_tls_failure rogue-client 'certificate|handshake|unknown.?ca|TLS.*(error|alert)' \
+  env LC_ALL=C.UTF-8 timeout 60 "$HS_BIN" validate --host 127.0.0.1 --port "$PORT" --tls \
   --cert "$D/rogue-client.crt" --key "$D/rogue-client.key" --ca "$D/ca.crt" \
   --spec .golden-build/specs/HourClock.tla --inv Inv --bound 10
-echo "ROGUE_RC=$?"
-
-kill $SRV 2>/dev/null
+echo "Haskell mTLS positive and rejection gates passed"

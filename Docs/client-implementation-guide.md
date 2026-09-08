@@ -246,7 +246,11 @@ profile your client can honestly advertise:
 | --- | --- | --- | --- |
 | Legacy stepping | no `modelInterface` field | caller supplies `StateComputer` | Existing, unchanged entry points |
 | Compiled verification | `verify` | precompiled generated binding plus application adapter | Default production profile; implemented in MirrorECMA and MirrorCPP |
-| Dynamic descriptor | `descriptor` | local handler/observer registry interpreted by MirrorECMA | Development-only; implemented in MirrorECMA |
+| Dynamic descriptor | `descriptor` | local handler/observer registry interpreted by MirrorECMA | Development-only; implemented in MirrorECMA with deferred factory scopes |
+
+MirrorECMA additionally supports a local asynchronous replay profile for compiled
+and dynamic bindings. It uses the same registration extension and descriptor
+schema; it does not add server job messages. See section 9.7.
 
 The three artifacts have deliberately different owners:
 
@@ -285,8 +289,11 @@ is:
   --out generated/mirrorcpp
 ```
 
-The implemented targets are `mirrorecma-v1` and `mirrorcpp-v1`; new target
-profiles must obey `generated-model-interface-spec.md`. Check the generated
+The implemented targets are `mirrorecma-v1`, `mirrorecma-async-v1`, and
+`mirrorcpp-v1`. The async TypeScript target uses the separate local
+`mirrors.async-state-computer/v1` contract; section 9.7 defines the replay
+obligations and section 15.2 of `generated-model-interface-spec.md` defines
+the generated API. All targets obey that specification. Check the generated
 tree in CI instead of repairing it there:
 
 ```sh
@@ -327,7 +334,8 @@ MirrorCPP's `test/integration/real_mirror_test.cpp`.
   runtime descriptor interpretation, code generation, dynamic loading, or
   artifact retrieval. Generated files **MUST NOT** be hand-edited.
 - **MI4.** The build and runtime configurations **MUST** agree on the effective
-  `paramVars` value and `mirrors.state-computer/v1` behavior. A configuration
+  `paramVars` value and the selected local computer contract
+  (`mirrors.state-computer/v1`, or the optional async contract in section 9.7). A configuration
   mismatch is a local failure before any application handler or observer runs.
 
 ### 9.2 Encode the registration extension
@@ -516,6 +524,19 @@ and replay driver remain trusted, and MI8–MI13 still gate their application ca
 It is not the runtime path for C++, Rust, Lean, or normal production TypeScript
 clients.
 
+The deferred factory form supplies inert `contract`/`semanticDigest` metadata
+and `createRegistry(config, verifiedDescriptor)`. It **MUST** invoke the factory
+only after schema, digest, cache, and authorization validation. Each returned
+scope contains an exact registry and optional cleanup; the runner **MUST** own
+and attempt that cleanup exactly once even if later registry/binding validation
+fails. A factory that throws before returning owns its partial-resource cleanup.
+
+MirrorECMA retains a prebuilt `registry` form for compatibility. It delays
+callbacks, but the caller may already have created its SUT. That form does not
+by itself establish MI8's zero-construction guarantee; applications advertising
+that guarantee **MUST** defer construction through the factory form or an
+equivalent externally enforced lifecycle.
+
 - **MI15.** Before caching or using `resolved`, a descriptor client **MUST**
   validate its strict schema, exact `descriptorBytes`, structural limits, and
   canonical semantic digest. It **MUST** enforce the 32,768-byte inline
@@ -533,6 +554,13 @@ clients.
   performs exactly one observation pass after an action, and permanently
   poisons the binding after an invalid observer value. It never constructs
   handler bodies from descriptor content.
+
+MirrorECMA represents dynamic `opaqueItf` values with a validated, deeply
+readonly `OpaqueItfValue` wrapper. Inputs and observers preserve the complete
+protocol value and arbitrary-precision integers, with bounded depth/node checks
+and structural uniqueness checks. Native records and variants are not opaque
+wrappers. This satisfies descriptor interpretation without widening the portable
+generated profile, whose TypeScript emitters still reject opaque lock types.
 
 ### 9.6 Transport authorization is separate from identity
 
@@ -553,6 +581,60 @@ limits, and security rationale are normative in
 `model-interface-runtime-distribution-design.md`. Generated port, binding,
 adapter, value-conversion, and lifecycle semantics are normative in
 `generated-model-interface-spec.md`.
+
+### 9.7 Optional local asynchronous replay
+
+This section applies when a client advertises asynchronous implementation
+operations. It is an additive client-runtime profile, independent of server
+`register_*_async` jobs. The synchronous `StateComputer` contract and existing
+callers remain source-compatible. Descriptor, lock, negotiation, and wire state
+schemas remain version 1.
+
+For compiled MirrorECMA bindings, the exact adapter key **MUST** pair
+`mirrorecma-async-v1` with `mirrors.async-state-computer/v1`. The synchronous
+profile remains paired with `mirrors.state-computer/v1`; compatible semantic
+digests **MUST NOT** substitute one local computer contract for another.
+Dynamic factory scopes opt in with `execution: "async"` and an asynchronous
+local handler registry.
+
+A conforming async binding **MUST** validate all inputs before mutation, await
+one action, await one complete observation pass, encode the observation, and
+only then allow one `report_state`. Invocations **MUST** remain serial and
+non-reentrant. An initializer **MUST** finish resetting the SUT before its
+observation. Failed or cancelled bindings **MUST NOT** execute another handler
+or report a late result. The application defines when an operation's returned
+promise means its state is observable; returning before that boundary is an
+adapter error, not a relaxation of the model.
+
+MirrorECMA passes `ReplayContext` with a terminal `AbortSignal`, one-based trace
+index, and zero-based state index (initialization is state zero). Optional
+`actionTimeoutMs` covers the computer invocation, including observation;
+`receiveTimeoutMs` covers each inbound wait, including registration. Abort and
+timeout errors remain distinct from `step_mismatch`. The runner **MUST** suppress
+late state reports and attempt owned cleanup. Cooperative cancellation does
+not undo mutations or forcibly stop callbacks ignoring the signal. Readiness,
+factory initialization, and disposal are outside those per-operation timers;
+applications needing bounds there must provide them at those boundaries.
+
+### 9.8 Optional structured replay reports
+
+MirrorECMA's additive `WithReport` runners preserve existing void-returning
+entry points and throw on failure. Their immutable
+`mirrorecma.replay-report/v1` snapshots contain progress, wire-action/adjacent-pair
+coverage, and structured failure context. That schema is local and does not
+alter the server protocol. Failure snapshots are recoverable through
+`replayReportFromError` once the replay lifecycle exists; primitive thrown
+values and earlier validation/readiness failures may have no report.
+
+A report **MUST** distinguish submitted states from matched states and matched
+transitions from initialization. JSON serialization **MUST** preserve unbounded
+integers and ITF constructors; MirrorECMA uses `#bigint` decimal strings. A
+bounded coverage map **MUST** expose its limits and omitted-event counts; totals
+remain independent of retained distinct labels. Action/sequence counts are
+execution evidence, not state-space coverage.
+
+The [MirrorECMA replay guide](../../MirrorECMA/docs/replay-and-async.md) gives
+current APIs, stable error access, factory examples, and concrete limits.
 
 ## 10. Errors and divergences a client must absorb
 
