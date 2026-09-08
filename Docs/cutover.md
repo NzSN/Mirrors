@@ -1,11 +1,12 @@
 # Cutover plan: Haskell ModelMirros → Lean 4 Mirrors
 
-Status: 2026-08-23. The Lean port is feature-complete for phases 0-6
-and green on every gate (lake build, lake test — 8 gates, fixtures
-replay byte-identical, differential stdio vs the Haskell test binary,
-job-store parity, apalache CLI, explorer, transport, registry) and on
-the full client interop matrix (tools/interop/run.sh: stdio + TCP +
-mTLS, MirrorECMA + Haskell validate, TLS/registry negatives).
+Status: source inventory refreshed 2026-09-08. The Lean port implements the
+original phases 0–6, pooled async server sessions on both platforms,
+model-interface compilation/negotiation, and the product-version CLI. The
+[documentation index](README.md) lists the current 12 test executables,
+compiler checks, and external tiers. The interop runner includes MirrorECMA,
+MirrorCPP, MirrorRust, and the Haskell reference client. Dated results below
+remain evidence of their recorded runs, not a current hosted-CI or service check.
 
 ## 1. Final state
 
@@ -56,8 +57,8 @@ t33 update (2026-08-31): the Windows withdrawal described in
 Docs/async-enablement-design.md §6 is SUPERSEDED — both server modes
 now run worker-pool sessions on both platforms (the pool's
 never-completing workers eliminate the Windows task-teardown race),
-async_spec is unskipped and green on Windows, and the r-windev
-service runs the pooled build (Defect-D redeploy 2026-08-31). See
+async_spec was unskipped and validated on Windows, and the ledger records a
+pooled r-windev service redeploy on 2026-08-31. See
 Docs/worker-pool-design.md / Docs/worker-pool-impl-status.md.
 
 ## 3. Accepted divergences
@@ -67,12 +68,13 @@ Docs/worker-pool-design.md / Docs/worker-pool-impl-status.md.
   accepts wildcards anywhere in the label. The Lean behavior is
   stricter and fail-closed. Documented in Docs/tls-ffi-review.md;
   accepted by the captain.
-- Out-of-order job message before register (NOT yet accepted as
+- Async job messages in synchronous stdio mode (NOT yet accepted as
   permanent): Lean answers register_error ("async jobs arrive in
   Phase 4"), Haskell answers protocol_error ("Expected Register
   message"). Trivial to harmonize if desired; flagged because it is
-  observable on the wire for a malformed session. Track as an open
-  item; MirrorECMA does not exercise it.
+  observable on that wire path. Server-mode job controls are supported,
+  including a query from another connection without a new registration.
+  Track the stdio error-tag choice as an open item.
 
 ## 4. Non-Lean client legs — implementation and runner green
 
@@ -93,8 +95,8 @@ not as a substitute for a missing non-Lean client gate.
 1. Soak: run both implementations side by side; diff wire transcripts
    on real workloads (the golden corpus + tools/interop/run.sh give
    the automated version of this).
-2. Close the open legs: top-level MirrorRust runner/CI wiring (§4) and the
-   pre-register job-message error harmonization (§3).
+2. Keep the implemented MirrorRust runner/CI wiring (§4) in the regression
+   matrix and decide the stdio async-message error harmonization (§3).
 3. Freeze ModelMirros@3496251 as the read-only reference artifact
    (fixtures oracle + differential test binary). It stays pinned in
    CI (.github/workflows/interop.yml) as the oracle.

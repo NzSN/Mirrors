@@ -78,6 +78,9 @@ common portable cross-language fixture suite, remain planned.
 
 ## One-command gate
 
+This is the base client/negotiation matrix. Async compiler/runtime and shared
+sandbox coverage are listed separately below.
+
 From the Mirrors repository:
 
 ```sh
@@ -93,3 +96,38 @@ MirrorRust does not currently expose the optional explorer APIs. Its canonical
 wire test therefore covers every message family in its advertised public API;
 the C1–C27 rules do not require a client to implement every optional register
 flow. MirrorECMA and MirrorCPP retain explorer coverage.
+
+## Async generated replay and tutorial coverage
+
+MirrorECMA's `async-replay-report.test.ts` and `generated-async-counter.test.ts`
+cover exact async registry selection, one awaited operation at a time,
+input-before-mutation, action/observation ordering, poisoning/reentrancy,
+monotonic deadlines, cancellation and late results, structured mismatch
+diagnostics, and preservation of primary failures during cleanup. The report
+runner tests also preserve immediate encoding for synchronous callbacks.
+
+Mirrors' `lake test` checks the compiler-owned `generated-async` Counter output
+alongside sync TypeScript and C++ output. MirrorECMA's `check:sandbox` compiles
+the async generated binding and its facade/example. The synchronous
+`smoke:generated-counter` separately validates model provenance, generated-file
+freshness without repair, required-action preflight, and real correct/faulty
+replay; add `--live` with an explicit Apalache executable for fresh generation.
+The [application manual](mirrorecma-typescript-mbt-user-manual.md) gives the
+runnable workflow.
+
+## Experimental shared sandbox acceptance
+
+`sandbox-model.test.ts`, `sandbox-facade.test.ts`,
+`sandbox-failure-paths.test.ts`, and `sandbox-authoring-output.test.ts` cover
+the trusted MirrorECMA facade's manifest, lifecycle, disclosure, cancellation,
+and cleanup behavior. These client tests do not establish real isolation.
+
+Actual backend evidence belongs to MirrorGate's required `scripts/test.sh`,
+the prepared MirrorECMA `smoke:sandbox` gate, and the shared
+`conformance/control-v1/run` matrix. The
+[acceptance ledger](https://github.com/NzSN/MirrorECMA/blob/main/docs/shared-orchestration-acceptance.md)
+records the 2026-09-08 local TypeScript/C++ facade, Node/Rust worker,
+owned-stdio/attached-Unix, Linux/Bubblewrap matrix and the later fresh-authoring
+experiment. Those are dated local results; hosted CI, released generic C++
+facade support, and additional platforms are separate claims. The base interop
+runner does not invoke that sandbox matrix.

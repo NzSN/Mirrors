@@ -2,7 +2,9 @@
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
-> Status: **approved, in implementation** (t33, shell-engineer)
+> Status: **implemented on Linux and Windows** (t33). The
+> [implementation ledger](worker-pool-impl-status.md) records August 2026
+> validation and redeploys; it is not a current remote-health check.
 > Supersedes: the per-connection dedicated-task model of t31, and the
 > t31-follow-up Windows sync fallback.
 > Context docs: `lean-windows-teardown-analysis.md` (the crash),
@@ -11,7 +13,7 @@
 
 ## 1. Problem
 
-The async server (t31) spawns one dedicated `Task` per connection.
+The original async server (t31) spawned one dedicated `Task` per connection.
 On Windows (Lean 4.33, MinGW-w64) the **completion** of such a task —
 in the accept-loop + connection-record-closure configuration — trips a
 reference-count teardown race inside the runtime
@@ -54,20 +56,19 @@ implement those suspended states. A session ending returns its worker to
 flag through `select(200ms)`. These are queue/worker semantics, not a new wire
 protocol or a claim of scheduler fairness.
 
-1. **Unchanged API.** `serveTcpConcurrentOn` /`serveTlsConcurrentOn`
-   keep names and signatures; `Shell/Cli.lean` does not change. The
-   Windows sync branch in `Cli.lean` is deleted — the pool replaces it
-   on both platforms (uniformity beats special cases; Linux gains a
-   bounded-thread server too).
+1. **Server entry points.** `serveTcpConcurrentOn` /`serveTlsConcurrentOn`
+   retain their entry-point names and accept a worker count. The CLI calls
+   them on both platforms; the former Windows sync branch was removed.
+   Linux and Windows use the same bounded connection-worker design.
 2. **Queue.** `Std.Mutex` + `Std.Semaphore` + `IO.Ref (List …)`.
    Workers block on the semaphore (no spin), pop under the mutex, and
    run the existing `runTcpConn` unchanged (transport construction,
    exception containment, `closeFd`). Bounded pending queue (128);
    beyond that the accept loop simply waits — the kernel listen backlog
    holds the clients (no drop-oldest, no silent loss).
-3. **Sizing.** Pool size = `--jobs N` (default 4) on both server
-   modes; `--serve` gains the flag (Haskell-compatible usage
-   preserved: port and `--bind` keep their positions).
+3. **Sizing.** Pool size and live-job capacity are `max 1 N` for `--jobs N`
+   (default 4) on both server modes. `--serve` accepts the port, `--bind`, and
+   `--jobs` in any order and rejects duplicate or unknown arguments.
 4. **Shutdown.** Signal flag → stop accepting → the shim's direct
    `dsh_exit` (it exists precisely because parked dedicated tasks keep
    the runtime alive). Workers are never torn down — no exit-time race
@@ -89,11 +90,15 @@ Residual risk: shutdown-time teardown — addressed by `dsh_exit` with
 workers parked (section 2.4). Lean-side queue state is plain heap data,
 no new external objects.
 
-## 4. Acceptance criteria (t33 exit bar)
+## 4. Historical acceptance criteria (t33 exit bar)
+
+The following was the t33 rollout bar. Results are retained in the
+[implementation ledger](worker-pool-impl-status.md); the current gate
+inventory is in the [documentation index](README.md).
 
 1. Full `lake test` 10/10 green on Linux.
 2. On windows-dev: build green; `async_spec` **un-skipped and green**
-   (it self-skips on Windows today).
+   (removing the unconditional Windows skip present before t33).
 3. **Stress**: 300 rapid connect/disconnect cycles with real async
    sessions (submit/await/cancel mix) against a locally-run pool
    `mirror.exe` — zero crashes.

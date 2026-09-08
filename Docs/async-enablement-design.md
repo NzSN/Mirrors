@@ -2,7 +2,9 @@
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
-> Status: **approved** (D1–D3 signed off; implementation released as t31)
+> Status: **implemented** (t31 server wiring, superseded by the t33 connection
+> pool on both Linux and Windows). Current source checked 2026-09-08; the
+> Windows incident and rollout sections retain their historical evidence.
 > Scope: expose the already-built, already-proven async job machinery —
 > validate-only (`register_validate_async`) and trace-gen-only
 > (`register_trace_gen_async`) — in the production server modes.
@@ -12,9 +14,9 @@
 ## 1. Background
 
 The wire protocol has five async messages: `register_validate_async`,
-`register_trace_gen_async`, `job_query`, `job_await`,
-`job_cancel`. In the Lean port every layer beneath the transport is
-done and verified:
+`register_trace_gen_async`, `query_job`, `await_job`,
+`cancel_job`. The pure job laws are machine-checked; the shell supplies the
+effectful implementation and runtime tests:
 
 - **`Core.Jobs`** — the job state machine with §6.4 machine-checked:
   terminal phases absorbing; `JobUnknown` exactly for
@@ -27,19 +29,21 @@ done and verified:
   the apalache child; 10/10 Haskell `AsyncJobsSpec` parity scenarios
   green; `newJobStoreWith capacity runner` already parameterized.
 - **`Shell.Mirror.runAsync`** — the async session loop: submit →
-  `job_accepted`, `job_query`/`job_await` → `job_status` /
-  `job_result`, `job_cancel` → `job_status(job_cancelled)`;
-  a sync register mid-session still runs inline; EOF/decode-failure
-  closes the store (cancel live jobs, evict ids).
+  `job_accepted`, `query_job`/`await_job` → `job_status` or
+  `job_result`, `cancel_job` → `job_status` with the resulting phase
+  (`cancelled` for a live job that was cancelled). A sync registration still
+  runs inline. EOF/decode-failure cancels and evicts only that connection's
+  jobs; the process-shared store and other connections' jobs remain available.
 - **`Shell.Apalache.Runner`** — the real runner (per-job session dir,
   owned-spec release, cancel-kill) already plugs into the store.
 
-**The gap:** no production mode calls `runAsync`. stdio runs one sync
-`run`; the `--serve`/`--server` accept loops run sync sessions;
-`--jobs` is parsed but reserved. (The Haskell mirror has the same
-limitation — its `Main.hs` wires only `run`.)
+**Original gap, now closed:** t31 connected `runAsync` to both server modes.
+The current CLI creates one store per server, and t33 dispatches connections
+through long-lived workers on both platforms. Stdio remains synchronous.
+This document concerns model-checking jobs, not the separate promise-returning
+application ports in `mirrorecma-async-v1`.
 
-## 2. Target topology
+## 2. Implemented topology
 
 Let `ρ` name a server process, `J` its one shared store, and `σ` a
 connection session. The target topology has these interface judgments:
@@ -63,15 +67,15 @@ message. Per-job commands own their Apalache children and the store's bounded
 execution slots.
 
 - **One store per server process.** Job ids are unique per store; any
-  connection may `job_query`/`job_await`/`job_cancel` any id —
+  connection may `query_job`/`await_job`/`cancel_job` any id —
   matches the Haskell store's process-wide visibility.
-- **One async session per connection**, sequential accept loop
-  (unchanged); sessions share the store.
-- **`--jobs N` gains real semantics**: store capacity = N (semaphore
-  bounds *concurrently running* job bodies; submissions beyond capacity
-  are queued by the store, queue-full → `register_error`, per the
-  existing parity-tested semantics). Default 4 (the parser's current
-  `getD 4`), `--jobs 1` serializes job execution.
+- **One async session per connection**, dispatched by the bounded connection
+  pool; sessions share the store.
+- **`--jobs N` sizes both pools**: `max 1 N` connection workers, live-job
+  capacity, and job-worker slots; default 4. Pending plus running jobs count
+  against capacity. A submission beyond it is rejected synchronously with
+  `register_error` / `job queue full`; it is not admitted to an extra job
+  queue. The connection queue's separate bound is 128.
 
 ## 3. Semantics preserved by construction
 
@@ -79,9 +83,9 @@ execution slots.
 | -------- | ------ |
 | Async validate result ≡ sync validate reply | §6.4 theorem `outcome_congruence` (proof, not test) |
 | Terminal phases absorbing; cancel-vs-finish race safe | §6.4 + cooperative-cancel doc |
-| Bounds outside [1,100] rejected on submit (sync and async) | §6.4 theorem |
+| Validation bounds outside [1,100] rejected on submit (sync and async) | §6.4 theorem |
 | Unknown/evicted id → `JobUnknown`, never spurious | `StoredPhase` typing |
-| Session teardown cancels its jobs, then ids evict to `JobUnknown` | `closeJobStore` (Haskell `endSession` parity) |
+| Session teardown cancels its jobs, then ids evict to `JobUnknown` | `runAsync`'s `endSession`: `cancelJob` followed by `evictJob` for each owned id |
 | apalache child dies on cancel | `CancelToken` + `runApalacheCancellable` (t13) |
 
 **No changes to `Core.Jobs`, the proofs, or the codec.** This is
@@ -104,26 +108,26 @@ wiring + configuration only — the theorems keep compiling unmodified.
 Over a live TCP session against the locally built binary, real apalache:
 
 1. `register_validate_async` DeterministicCounter bound 3 →
-   `job_accepted` → `job_await` → `job_result` with
+   `job_accepted` → `await_job` → `job_result` with
    `SpecValid` — and assert the payload **equals** the sync
    `register_validate` reply for the same config (empirical
    congruence).
 2. `register_trace_gen_async` Counter (`constInit CInit`,
    `inv TraceComplete`, bound 5) → `job_result` with non-empty
    generated traces; destPath copy semantics checked.
-3. Cancel: submit long trace-gen (numTraces 10), `job_cancel` →
-   `job_cancelled`; apalache child verified gone.
-4. `job_query` bogus id → `job_unknown`.
+3. Cancel: submit long trace-gen (numTraces 10), `cancel_job` →
+   `job_status` with phase `cancelled`; check that the Apalache child is gone.
+4. `query_job` with a bogus id → `job_status` with phase `unknown`.
 5. Two concurrent jobs on one connection + a second connection
    querying the first's job id (cross-connection visibility).
-6. Capacity: `--jobs 1`, submit 2 jobs → second waits; third beyond
-   queue → `register_error`.
+6. Capacity: `--jobs 1`, keep one job live; a second submission is rejected
+   immediately with `register_error` containing `job queue full`.
 7. mTLS variant of (1) via the existing throwaway-PKI pattern.
 8. Negative: bound 0 and bound 101 rejected on the async path.
 
-All existing 9 gates must stay green; the Windows build must keep
-compiling (the t30 platform branches are untouched by this work —
-`runAsync` uses only Task/Mutex/transport).
+Run the complete `lake test` inventory listed in the [documentation index](README.md).
+`tools/AsyncSpec.lean` has no unconditional Windows skip; the live tool and
+platform prerequisites still apply. The Windows results below are dated runs.
 
 ## 6. Known issue: Windows (t31 follow-up, post-landing)
 
@@ -131,11 +135,12 @@ compiling (the t30 platform branches are untouched by this work —
 > `Docs/worker-pool-impl-status.md`): the worker-pool accept loop's
 > never-completing workers eliminate the teardown race described below —
 > Windows no longer branches to the t30 sync sequential sessions,
-> async_spec is unskipped and green there, and the r-windev service runs
-> the pooled build (Defect-D redeploy 2026-08-31, flat handle trend).
+> async_spec was unskipped and validated there, and the ledger records the
+> 2026-08-31 pooled service redeploy and flat handle trend. This is historical
+> deployment evidence, not a current service-health check.
 > The narrative below is kept as the record of the original defect.
 
-Async server sessions are **Linux-only**. On windows-dev the
+At the original t31 incident, async server sessions were **Linux-only**. On windows-dev the
 concurrent accept loop (session tasks over the shared store)
 reproducibly segfaults the process whenever a session completes
 quickly (e.g. rapid connect/disconnect, 6/6 runs); the crash is
@@ -177,7 +182,7 @@ sessions run concurrently. It is now allocated per connection.
 - **D3 — stdio**: ✅ **sync-only**, Haskell parity; async is a
   server-mode feature.
 
-## 8. Rollout
+## 8. Original rollout plan (completed; see t33 ledger)
 
 1. Wire `runAsync` into the `--serve`/`--server` accept loops
    (store created once in `serveOne`/TCP equivalent).

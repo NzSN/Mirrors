@@ -2,9 +2,12 @@
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
-> Status: proposal — implemented in **this repository** (`Mirrors`), as a
-> standalone checkout separate from the ModelMirrors Haskell repo.
-> Scope: port the ModelMirrors mirror (currently ~6,000 lines of GHC2024
+> Status: **historical port design, implemented in this repository** (`Mirrors`),
+> as a standalone checkout separate from the ModelMirrors Haskell repo.
+> Future-tense implementation plans and original source counts below describe
+> that design milestone; see the [documentation index](README.md) for current
+> interfaces and subsequent additions.
+> Scope: port the ModelMirrors mirror (then ~6,000 lines of GHC2024
 > Haskell, 33 library modules, in the ModelMirrors repo) to Lean 4, turning
 > the informally-tested core into a formally verified core, while keeping
 > the JSON-lines wire protocol bit-for-bit compatible with existing clients

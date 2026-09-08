@@ -4840,7 +4840,7 @@
       </div>
     </div>
 
-    <script id="archify-guided-views-data" type="application/json">[{"id":"wire-path","label":"Client wire path","focus":["clients","transports","session","core","codec"],"note":"One JSONL session: transport lines through the thin driver into the proven state machine."},{"id":"verified-core","label":"The proven core","focus":["core","codec","tla"],"note":"Everything in the verified boundary is pure and theorem-covered; the session machine refines the TLA+ model."},{"id":"effect-boundary","label":"Trusted effect boundary","focus":["transports","cli","jobs","ffi","registry","apalache","consul"],"note":"The TCB: thin, audited IO and C shims — trusted, not proved."}]</script>
+    <script id="archify-guided-views-data" type="application/json">[{"id":"wire-path","label":"Client wire path","focus":["clients","transports","session","core","codec"],"note":"One JSONL session: transport lines through the thin driver into the proven state machine."},{"id":"verified-core","label":"The proven core","focus":["core","codec","tla"],"note":"Pure transition and codec laws are machine-checked; the session machine refines the TLA+ model."},{"id":"effect-boundary","label":"Trusted effect boundary","focus":["transports","cli","jobs","ffi","registry","apalache","consul"],"note":"The TCB: thin, audited IO and C shims — trusted, not proved."}]</script>
 
     <div class="guided-views no-print" id="guided-views" hidden aria-label="Guided diagram views">
       <button id="guided-view-prev" type="button" aria-label="Previous guided view" title="Previous guided view ([)">&#8592;</button>
@@ -4951,8 +4951,8 @@
         <text data-detail="context" x="850" y="155" class="t-muted" font-size="9" text-anchor="middle">model-level spec @3496251</text>
         </g>
 
-        <g id="node-clients" data-node-id="clients" data-node-label="Clients" tabindex="0" role="button" aria-label="Focus Clients, MirrorECMA · MirrorRust · Haskell, Architecture component" aria-pressed="false" data-node-kind="external" data-node-sublabel="MirrorECMA · MirrorRust · Haskell" data-node-tag="wire protocol" data-node-context="Architecture component">
-          <title>Clients · MirrorECMA · MirrorRust · Haskell · Architecture component · wire protocol</title>
+        <g id="node-clients" data-node-id="clients" data-node-label="Clients" tabindex="0" role="button" aria-label="Focus Clients, ECMA · C++ · Rust · Haskell, Architecture component" aria-pressed="false" data-node-kind="external" data-node-sublabel="ECMA · C++ · Rust · Haskell" data-node-tag="wire protocol" data-node-context="Architecture component">
+          <title>Clients · ECMA · C++ · Rust · Haskell · Architecture component · wire protocol</title>
           <rect x="40" y="330" width="170" height="66" rx="6" class="c-mask"/>
           <rect x="40" y="330" width="170" height="66" rx="6" class="c-external" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(46 336) scale(0.6875)">
@@ -4960,7 +4960,7 @@
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
           <text data-detail-anchor x="125" y="361" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Clients</text>
-        <text data-detail="context" x="125" y="377" class="t-muted" font-size="8.1" text-anchor="middle">MirrorECMA · MirrorRust · Haskell</text>
+        <text data-detail="context" x="125" y="377" class="t-muted" font-size="8.1" text-anchor="middle">ECMA · C++ · Rust · Haskell</text>
         <text data-detail="fine" x="125" y="388" class="t-external" font-size="7" text-anchor="middle">wire protocol</text>
         </g>
 
@@ -4986,27 +4986,27 @@
         <text data-detail="context" x="600" y="377" class="t-muted" font-size="9" text-anchor="middle">thin fold over Core.step</text>
         </g>
 
-        <g id="node-core" data-node-id="core" data-node-label="Core.* (pure)" tabindex="0" role="button" aria-label="Focus Core.* (pure), Value·Trace·Diff·Protocol·Jobs·Resource, verified pure core — no IO, machine-checked" aria-pressed="false" data-node-kind="backend" data-node-sublabel="Value·Trace·Diff·Protocol·Jobs·Resource" data-node-tag="§6.1–6.5 proven" data-node-context="verified pure core — no IO, machine-checked">
-          <title>Core.* (pure) · Value·Trace·Diff·Protocol·Jobs·Resource · verified pure core — no IO, machine-checked · §6.1–6.5 proven</title>
+        <g id="node-core" data-node-id="core" data-node-label="Core.* (pure)" tabindex="0" role="button" aria-label="Focus Core.* (pure), Protocol · ModelInterface · values, verified pure core — no IO, machine-checked" aria-pressed="false" data-node-kind="backend" data-node-sublabel="Protocol · ModelInterface · values" data-node-tag="§6.1–6.5 proven" data-node-context="verified pure core — no IO, machine-checked">
+          <title>Core.* (pure) · Protocol · ModelInterface · values · verified pure core — no IO, machine-checked · §6.1–6.5 proven</title>
           <rect x="760" y="330" width="190" height="70" rx="6" class="c-mask"/>
           <rect x="760" y="330" width="190" height="70" rx="6" class="c-backend" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(766 336) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-detail-anchor x="855" y="363" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Core.* (pure)</text>
-        <text data-detail="context" x="855" y="379" class="t-muted" font-size="7.7" text-anchor="middle">Value·Trace·Diff·Protocol·Jobs·Resource</text>
+        <text data-detail="context" x="855" y="379" class="t-muted" font-size="7.7" text-anchor="middle">Protocol · ModelInterface · values</text>
         <text data-detail="fine" x="855" y="392" class="t-backend" font-size="7" text-anchor="middle">§6.1–6.5 proven</text>
         </g>
 
-        <g id="node-cli" data-node-id="cli" data-node-label="Main + Shell.Cli" tabindex="0" role="button" aria-label="Focus Main + Shell.Cli, stdio · --serve · --server · validate, Architecture component" aria-pressed="false" data-node-kind="backend" data-node-sublabel="stdio · --serve · --server · validate" data-node-context="Architecture component">
-          <title>Main + Shell.Cli · stdio · --serve · --server · validate · Architecture component</title>
+        <g id="node-cli" data-node-id="cli" data-node-label="Main + Shell.Cli" tabindex="0" role="button" aria-label="Focus Main + Shell.Cli, --version · stdio · servers · validate, Architecture component" aria-pressed="false" data-node-kind="backend" data-node-sublabel="--version · stdio · servers · validate" data-node-context="Architecture component">
+          <title>Main + Shell.Cli · --version · stdio · servers · validate · Architecture component</title>
           <rect x="280" y="540" width="160" height="62" rx="6" class="c-mask"/>
           <rect x="280" y="540" width="160" height="62" rx="6" class="c-backend" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(286 546) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-detail-anchor x="360" y="569" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Main + Shell.Cli</text>
-        <text data-detail="context" x="360" y="585" class="t-muted" font-size="6.8" text-anchor="middle">stdio · --serve · --server · validate</text>
+        <text data-detail="context" x="360" y="585" class="t-muted" font-size="6.8" text-anchor="middle">--version · stdio · servers · validate</text>
         </g>
 
         <g id="node-jobs" data-node-id="jobs" data-node-label="Shell.Jobs" tabindex="0" role="button" aria-label="Focus Shell.Jobs, async job store · Task workers, Architecture component" aria-pressed="false" data-node-kind="backend" data-node-sublabel="async job store · Task workers" data-node-context="Architecture component">
@@ -5020,15 +5020,15 @@
         <text data-detail="context" x="590" y="585" class="t-muted" font-size="8.4" text-anchor="middle">async job store · Task workers</text>
         </g>
 
-        <g id="node-codec" data-node-id="codec" data-node-label="Codec.* (pure)" tabindex="0" role="button" aria-label="Focus Codec.* (pure), Json · ExplorerRpc · Bridge · Consul, verified pure core — no IO, machine-checked" aria-pressed="false" data-node-kind="backend" data-node-sublabel="Json · ExplorerRpc · Bridge · Consul" data-node-tag="§6.6 round-trips" data-node-context="verified pure core — no IO, machine-checked">
-          <title>Codec.* (pure) · Json · ExplorerRpc · Bridge · Consul · verified pure core — no IO, machine-checked · §6.6 round-trips</title>
+        <g id="node-codec" data-node-id="codec" data-node-label="Codec.* (pure)" tabindex="0" role="button" aria-label="Focus Codec.* (pure), Wire · RPC · model-interface codecs, verified pure core — no IO, machine-checked" aria-pressed="false" data-node-kind="backend" data-node-sublabel="Wire · RPC · model-interface codecs" data-node-tag="§6.6 round-trips" data-node-context="verified pure core — no IO, machine-checked">
+          <title>Codec.* (pure) · Wire · RPC · model-interface codecs · verified pure core — no IO, machine-checked · §6.6 round-trips</title>
           <rect x="990" y="330" width="190" height="70" rx="6" class="c-mask"/>
           <rect x="990" y="330" width="190" height="70" rx="6" class="c-backend" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(996 336) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-detail-anchor x="1085" y="363" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Codec.* (pure)</text>
-        <text data-detail="context" x="1085" y="379" class="t-muted" font-size="8.4" text-anchor="middle">Json · ExplorerRpc · Bridge · Consul</text>
+        <text data-detail="context" x="1085" y="379" class="t-muted" font-size="8.4" text-anchor="middle">Wire · RPC · model-interface codecs</text>
         <text data-detail="fine" x="1085" y="392" class="t-backend" font-size="7" text-anchor="middle">§6.6 round-trips</text>
         </g>
 
@@ -5333,8 +5333,8 @@
           <h3>What is trusted (TCB)</h3>
         </div>
         <ul>
-          <li>&bull; OpenSSL + ~300 lines of C shims</li>
-          <li>&bull; Shell drivers, HTTP client, job store</li>
+          <li>&bull; OpenSSL + socket and TLS C shims</li>
+          <li>&bull; Shell drivers, interface compiler/cache, jobs</li>
           <li>&bull; apalache/JVM, OS — explicitly inventoried</li>
           <li>&bull; TLS shim passed adversarial review (t25/t26)</li>
         </ul>
@@ -5349,7 +5349,7 @@
           <li>&bull; JSON-lines, byte-for-byte vs Haskell</li>
           <li>&bull; 70 golden fixtures byte-identical</li>
           <li>&bull; diff engine 500/500 ordered parity</li>
-          <li>&bull; MirrorECMA unmodified: full matrix green</li>
+          <li>&bull; Interop: ECMA, C++, Rust, Haskell clients</li>
         </ul>
       </div>
     </div>

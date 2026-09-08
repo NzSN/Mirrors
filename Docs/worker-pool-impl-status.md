@@ -1,5 +1,11 @@
 # t33 Worker-Pool — Implementation Status & Validation Blockers
 
+> **Dated implementation and deployment ledger (August 2026).** Commit IDs,
+> test counts, binaries, and remote paths below belong to those recorded runs.
+> No current Windows deployment or upstream issue status is asserted by this
+> ledger. See the [documentation index](README.md) for today's source inventory
+> and the [worker-pool design](worker-pool-design.md) for implemented behavior.
+
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
 > Status: **REDEPLOYED + VALIDATED; Defect D fixed, verified, and

@@ -1,5 +1,11 @@
 # TLS FFI shim security review (t25, design doc section 9.1 target #1)
 
+> **Historical t25/t26 review.** The initial findings and subsequent re-review
+> are preserved below; an initial finding is not a claim that the defect is
+> still present. Later worker-pool and FFI changes are recorded in the
+> [implementation ledger](worker-pool-impl-status.md). Consult current source
+> and tests before making a new security or deployment claim.
+
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
 Scope: Ffi/tls_shim.c, Ffi/Tls.lean, Shell/Transport/Tls.lean,

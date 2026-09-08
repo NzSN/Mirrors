@@ -8,6 +8,7 @@
 > Deep-dive: `architecture-details.md`. Design rationale:
 > `lean4-refactor-design.md`. Acceptance audit: `final-review.md`.
 > Product versions and local installation: [versioning.md](versioning.md).
+> Current implementation and validation inventory: [documentation index](README.md).
 
 Mirrors is the Lean 4 port of the ModelMirrors mirror: a conformance
 checker that sits between a client state machine and the apalache model
@@ -19,8 +20,9 @@ proved functions are the executed functions, with no extraction gap.
 
 A **thin, trusted effectful shell** drives a **pure, machine-checked
 core**: every line from a client flows
-`transport → decode → Core.step → encode → transport`, and everything
-behind `Core.step` is theorem-covered.
+`transport → decode → Core.step → encode → transport`. The pure session
+transitions and domain laws are machine-checked; transport, orchestration,
+and external model-checker behavior remain outside that proof boundary.
 
 ## Component map
 
@@ -85,8 +87,10 @@ behind `Core.step` is theorem-covered.
 | `Core.Protocol` → `MirrorProtocol.tla` | refinement theorem (proof, not test) | proof |
 | everything → Haskell mirror | parity oracle: 70 golden fixtures, 500/500 diff cases, MirrorECMA interop | differential test |
 
-Illegal protocol orderings are **unrepresentable** (phase-indexed
-`Session p`), so whole classes of bugs are type errors, not test cases.
+Phase-indexed `Session p` states constrain successful transitions. Invalid
+client messages remain representable and are rejected by the session machine;
+the refinement proof covers the pure transition relation, not arbitrary shell
+or external-tool behavior.
 
 ## Server concurrency (t33 worker pool)
 
@@ -115,8 +119,9 @@ empty-queue workers suspend; the accept loop retains its 200 ms signal poll.
 - One `runAsync` session per connection over **one process-shared job
   store** (job ids unique across connections; a connection's end
   cancels and evicts exactly its own jobs).
-- Pool size = `--jobs N` (default 4) on `--server`; `--serve` uses the
-  default of 4 (the flag is not parsed there — known deviation).
+- Both `--serve` and `--server` accept `--jobs N` (default 4). The CLI uses
+  `max 1 N` for both connection workers and live-job capacity; a submission
+  exceeding the live-job capacity fails immediately with `register_error`.
 - Shutdown: signal flag → accept loop returns → direct `dsh_exit` with
   workers parked — no exit-time teardown either.
 - Parking caveat: the queue's semaphore wait must use `IO.wait`,
@@ -162,6 +167,22 @@ TLA+ spec is the model-level contract the core *refines by proof*. The
 pinned Haskell implementation (`ModelMirros@3496251`) is the parity
 oracle for fixtures and differential tests.
 
+## Model interfaces and sandboxed application replay
+
+`model_interface_gen` produces a lock and typed bindings for synchronous
+TypeScript, experimental asynchronous TypeScript, and C++. The runtime verifies
+or distributes an inert model descriptor before selecting a local adapter;
+`Shell.ModelInterface` owns filesystem, authorization, cache, and emitter
+effects while `Core.ModelInterface` owns pure resolution and policy.
+
+MirrorECMA can run a local application adapter directly, or use the experimental
+MirrorGate facade with a trusted generated public-port proxy. MirrorGate owns
+restricted authoring/build/execution and resource cleanup; Mirrors retains
+model execution and comparison. See the [TypeScript user manual](mirrorecma-typescript-mbt-user-manual.md)
+and the [orchestration diagram and ownership table](client-implementation-guide.md#132-ownership-and-the-three-channels).
+The interactive overview above focuses on the session/runtime path; it does
+not depict every compiler or sandbox component.
+
 ## The wire contract
 
 Byte-for-byte compatible with the Haskell mirror: 70 golden fixtures
@@ -171,11 +192,16 @@ Haskell validate client green. Two documented divergences where Lean
 follows the TLA+ spec rather than Haskell's quirks (mismatch tail;
 wildcard scope), plus open items tracked in `cutover.md`.
 
-## Test pyramid (12 lake gates)
+## Validation inventory
 
 fixtures_replay → diff_cross → model_interface_spec →
 model_interface_distribution_spec → stdio_smoke → jobstore_spec →
 apalache_cli_spec → explorer_spec → transport_spec → registry_spec →
 counter_spec (end-to-end MBT conformance vs real apalache) → async_spec
-(live async flows over real server children, `APALACHE_MC`-gated). Plus
-the interop matrix (MirrorECMA + Haskell client) and the TLS review.
+(live async flows over real server children). These are the 12 test
+executables. `lake test` also checks generated sync/async TypeScript and C++
+artifacts and the exact Counter preflight report. Live tiers use `APALACHE_MC`
+or the Lake script's developer-local fallback; missing prerequisites can skip
+individual tiers. The separate interop matrix covers MirrorECMA, MirrorCPP,
+MirrorRust, and the Haskell client. See the [index](README.md) for commands and
+the distinction between base interop, sandbox acceptance, and historical reviews.

@@ -253,6 +253,10 @@ object before rebuilding after C-only edits.
 
 ## Documentation
 
+- [TypeScript MBT user manual](Docs/mirrorecma-typescript-mbt-user-manual.md)
+  — use MirrorECMA to test application source through generated adapters,
+  replay traces, diagnose mismatches, and add CI checks.
+
 - [Semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md)
   — PFPL-style judgments, abstract interface types, effectful commands, and
   resource-scope semantics used in the design explanations.

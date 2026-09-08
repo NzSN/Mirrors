@@ -30,7 +30,7 @@
           "codec",
           "tla"
         ],
-        "note": "Everything in the verified boundary is pure and theorem-covered; the session machine refines the TLA+ model."
+        "note": "Pure transition and codec laws are machine-checked; the session machine refines the TLA+ model."
       },
       {
         "id": "effect-boundary",
@@ -82,7 +82,7 @@
       "id": "clients",
       "type": "external",
       "label": "Clients",
-      "sublabel": "MirrorECMA · MirrorRust · Haskell",
+      "sublabel": "ECMA · C++ · Rust · Haskell",
       "pos": [
         40,
         330
@@ -125,7 +125,7 @@
       "id": "core",
       "type": "backend",
       "label": "Core.* (pure)",
-      "sublabel": "Value·Trace·Diff·Protocol·Jobs·Resource",
+      "sublabel": "Protocol · ModelInterface · values",
       "pos": [
         760,
         330
@@ -140,7 +140,7 @@
       "id": "cli",
       "type": "backend",
       "label": "Main + Shell.Cli",
-      "sublabel": "stdio · --serve · --server · validate",
+      "sublabel": "--version · stdio · servers · validate",
       "pos": [
         280,
         540
@@ -168,7 +168,7 @@
       "id": "codec",
       "type": "backend",
       "label": "Codec.* (pure)",
-      "sublabel": "Json · ExplorerRpc · Bridge · Consul",
+      "sublabel": "Wire · RPC · model-interface codecs",
       "pos": [
         990,
         330
@@ -334,8 +334,8 @@
       "dot": "amber",
       "title": "What is trusted (TCB)",
       "items": [
-        "OpenSSL + ~300 lines of C shims",
-        "Shell drivers, HTTP client, job store",
+        "OpenSSL + socket and TLS C shims",
+        "Shell drivers, interface compiler/cache, jobs",
         "apalache/JVM, OS — explicitly inventoried",
         "TLS shim passed adversarial review (t25/t26)"
       ]
@@ -347,7 +347,7 @@
         "JSON-lines, byte-for-byte vs Haskell",
         "70 golden fixtures byte-identical",
         "diff engine 500/500 ordered parity",
-        "MirrorECMA unmodified: full matrix green"
+        "Interop: ECMA, C++, Rust, Haskell clients"
       ]
     }
   ]

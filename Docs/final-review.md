@@ -1,5 +1,12 @@
 # Final Review — Lean 4 ModelMirrors Port
 
+> **Historical review of commit `5734c12`.** The findings and counts below
+> describe that port milestone. Later work added Windows argv support,
+> connection pools, more test gates, MirrorRust interop, model interfaces, and
+> version inspection. Use the [documentation index](README.md) and
+> [cutover status](cutover.md) for current implementation guidance; this review
+> is not a fresh audit of the current tree.
+
 > Reviewer: team captain (independent of the implementing members)
 > Date: project completion, commit 5734c12
 > Method: claim-by-claim verification against the design doc

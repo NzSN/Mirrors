@@ -2,8 +2,9 @@
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
-> Status: **Mirrors compiler and `mirrorecma-v1` emitter implemented; client
-> negotiation libraries and static C++/Rust/Lean emitters remain planned**
+> Status: **sync/async TypeScript and C++ generation, MirrorECMA compiled/dynamic
+> negotiation, and MirrorCPP compiled negotiation implemented; Rust/Lean
+> generated targets and static registries remain planned**
 > Scope: generate a model-specific implementation interface and a binding to
 > the existing client-side `StateComputer` interface for MirrorECMA,
 > MirrorCPP, MirrorRust, and MirrorLean.
@@ -41,8 +42,9 @@ protocol-facing interface:
 - each language repeats dispatch, decoding, observation assembly, and error
   handling.
 
-An LLM can write this glue, but Mirrors does not currently produce a
-deterministic, model-specific interface for the LLM to implement. For example,
+Before this compiler, an LLM had to write this glue without a deterministic,
+model-specific interface from Mirrors. This design supplies that interface.
+For example,
 nothing mechanically turns the Counter model into this requirement:
 
 ```text
@@ -462,10 +464,12 @@ ordering, and coverage.
 15. After an adapter or validation failure, the binding is poisoned; later
     calls fail rather than continuing from possibly partial SUT mutation.
 
-The current `StateComputer` interfaces are synchronous. Version 1 therefore
-generates synchronous ports. A future asynchronous form must be additive—for
-example `AsyncStateComputer` and `bindCounterAsync`—because a JavaScript
-`Promise` cannot honestly pass through the current synchronous interface.
+The original `StateComputer` interface and `mirrorecma-v1` port remain
+synchronous. The additive experimental `mirrorecma-async-v1` target now emits
+promise-returning ports and `bindCounterAsync`, using MirrorECMA's distinct
+async computer contract and report runners. It does not pass promises through
+the synchronous interface. See the [compiler design](model-interface-compiler-design.md)
+and [generated profile specification](generated-model-interface-spec.md).
 
 ## 12. Observation completeness
 

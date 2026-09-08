@@ -1,5 +1,12 @@
 # Lean 4.33 (MinGW-w64/Windows) task-teardown crash — analysis (t32)
 
+> **Historical investigation of the pre-pool t31 server.** The temporary
+> Windows synchronous fallback recommended below was superseded by the
+> [t33 worker pool](worker-pool-design.md). Current code uses pooled async
+> server sessions on both Linux and Windows. The
+> [August validation ledger](worker-pool-impl-status.md) records the resulting
+> tests and redeploys; the scratch binaries and paths below are historical.
+
 Outcome: the crash is pinned to a **NULL object pointer reaching
 `lean_dec_ref_cold` inside the Lean runtime** while a dedicated task
 worker thread tears down / executes the session-task closure chain.
@@ -170,7 +177,7 @@ mirror --serve PORT, sleep 3, connect, close, poll rc ->
 - /d/ModelMirrors/tmp/onecrash.py, connclose.py — minimal drivers.
 - /d/ModelMirrors/lean4-async — vulnerable checkout + wintaskcrash.
 
-## Recommendation
+## Original recommendation (superseded by t33)
 
 Upstream issue with: the stack above, the v4.33.0 runtime frames, the
 one-cycle driver, and the observation that the task closure graph must

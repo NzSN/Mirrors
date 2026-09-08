@@ -1213,6 +1213,12 @@ worker port proxy. It contains stable operation IDs and portable types. It does
 not replace the full private contract in `ModelInterface` metadata and does not
 authenticate an arbitrary caller or artifact.
 
+The emitter also supplies `bind<Model>AsyncPublicPort`, which maps generated
+methods to stable public action/observation IDs through the trusted generic
+port proxy. MirrorECMA's experimental sandbox facade uses this compiler-owned
+mapping; handwritten runtime shims and adapters still invoke and observe the
+real implementation. See [client orchestration](client-implementation-guide.md#13-shared-sandbox-orchestration-experimental-profile).
+
 ### 13.9 `mirrorcpp-v1` profile
 
 The second target emits:

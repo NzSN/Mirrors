@@ -2,7 +2,8 @@
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
-> Status: **proposed normative version 1**
+> Status: **version-1 contract with three implemented target slices;
+> remaining profiles and common conformance work are specified below**
 >
 > The synchronous `mirrorecma-v1` reference target, the additive experimental
 > `mirrorecma-async-v1` target, and the `mirrorcpp-v1` static target are
@@ -10,6 +11,10 @@
 > orchestration, not a support claim for that larger workflow. The
 > `mirrorrust-v1` and `mirrorlean-v1` profiles are specified here for
 > subsequent implementation.
+> The experimental shared orchestration implementation is tracked separately
+> in the [client guide](client-implementation-guide.md#13-shared-sandbox-orchestration-experimental-profile)
+> and the companion acceptance ledger; implementing an emitter alone does not
+> establish that larger profile's support.
 >
 > Compiler design:
 > [`model-interface-compiler-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-compiler-design.md)

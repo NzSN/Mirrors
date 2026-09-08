@@ -1,5 +1,8 @@
 # Mirrors — Client Implementation Guide & Conformance Specification
 
+> Testing an application with the existing TypeScript client? Start with the
+> [MirrorECMA MBT user manual](mirrorecma-typescript-mbt-user-manual.md).
+
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
 > How to implement a client of the Mirrors mirror server, and the
@@ -22,9 +25,10 @@
 > **MI** are additionally mandatory for a client that advertises version-1
 > runtime model-interface support. The Haskell compatibility statement applies
 > to registrations without that optional extension.
-> Rules prefixed **SO** in §13 define the shared sandbox-orchestration design
-> required of clients that advertise that profile once implemented. They do not
-> change the existing Mirrors wire protocol or imply current client support.
+> Rules prefixed **SO** in §13 define the shared sandbox-orchestration profile.
+> Its experimental implementation and local acceptance scope are recorded in
+> §13.1; these requirements do not imply released support for every client or
+> change the existing Mirrors wire protocol.
 
 ## 1. Where a client can attach
 
@@ -58,12 +62,15 @@ and shared job store exist precisely to make that cheap — see §7).
 
 ## 3. Session lifecycle
 
-- **C4.** The first message on a session **MUST** be a `register*`
-  message (`register`, `register_traces`, `register_trace_gen`,
-  `register_validate`, `register_explore*`, or the async variants).
-  Anything else is rejected out-of-phase (`protocol_error`; the
-  session machine — `Core/Protocol.lean` — makes illegal orderings
-  unrepresentable, and the TLA+ spec proves no unsolicited output).
+- **C4.** A replay, validation, trace-generation, or exploration flow **MUST**
+  begin with a `register*` message (`register`, `register_traces`,
+  `register_trace_gen`, `register_validate`, `register_explore*`, or the async
+  variants). Server-mode `query_job`, `await_job`, and `cancel_job` may operate
+  on an existing job ID without a new registration on the querying connection;
+  unknown IDs return `job_status` with phase `unknown`. Stdio rejects async
+  operations with `register_error`. The pure phase-indexed session machine
+  constrains successful transitions; malformed inputs remain representable
+  and are rejected at the shell/codec or protocol boundary.
 - **C5.** After a terminal mirror message (`all_steps_done`,
   `gen_traces_done`, `spec_validated` for validate-only,
   `explorer_session_done`, `step_mismatch`, `register_error`, or
@@ -158,7 +165,7 @@ divergence, §10).
 ```
 client → register_validate_async | register_trace_gen_async
 mirror → job_accepted {jobId, kind}      (synchronous; full queue → register_error)
-client → query_job {jobId}               → job_status {phase}
+client → query_job {jobId}               → job_result {outcome} | job_status {phase}
 client → await_job {jobId[, timeoutSecs]} → job_result {outcome} | job_status
 client → cancel_job {jobId}              → job_result | job_status
 ```
@@ -627,7 +634,9 @@ section's Mirrors wire tests alone does not establish sandbox support.
 | `tools/CounterSpec.lean` | Lean 4 | full MBT replay incl. mismatch negatives |
 | `stress300v2.py` | Python | async jobs, connection pooling, cancel |
 
-## 13. Shared sandbox orchestration (design profile)
+<a id="13-shared-sandbox-orchestration-design-profile"></a>
+
+## 13. Shared sandbox orchestration (experimental profile)
 
 ### 13.1 Status and architectural decision
 
@@ -961,8 +970,8 @@ the declared public port operations reach the worker.
 ### 13.5 Implementing a language facade
 
 - **SO11.** Before advertising support, each facade **MUST** implement the same
-  versioned MirrorGate control contract and shared fixtures. MirrorGate must
-  first specify framing and bounds, version/capability negotiation, request
+  versioned MirrorGate control contract and shared fixtures. MirrorGate control
+  v1 specifies framing and bounds, version/capability negotiation, request
   correlation, session/handle ownership, events/results, stable error families,
   cancellation/disconnect behavior, and cleanup completion. SDKs **MUST NOT**
   independently invent command sequences or parse human CLI diagnostics as

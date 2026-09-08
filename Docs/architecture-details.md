@@ -14,7 +14,7 @@ Shell/         effectful drivers, oracles, CLI           [trusted]
 Ffi/           C shims: tls_shim.c, socket_shim.c        [trusted, reviewed]
 Main.lean      CLI entry (default stdio mirror)
 test/          golden fixtures, specs, README
-tools/         9 lake test gates + fixture generators + interop
+tools/         test executables, interface compiler, fixtures, interop
 specs/         TLA+ reference copies for the test suite
 Docs/          design, reviews, cutover, this file
 ```
@@ -39,7 +39,7 @@ Two deliberate choices drive everything downstream:
 `parameters` — the conformance comparison's meta-key rule.
 
 ### Core.Trace — the trace pipeline
-`parseItfTrace` splits ITF states into action / parameters / state
+`Shell.Mirror.parseItfTrace` parses ITF states into action / parameters / state
 vars; `applyParamVars` repartitions by the config's `paramVars`
 (e.g. Counter's `"parameters"` record moves to the params side so the
 client's report isn't diffed against it); `traceSteps` injects
@@ -121,6 +121,16 @@ tag-fidelity theorems — the seam can't drift. Explorer JSON-RPC and
 Consul codecs mirror the pinned Haskell field behavior (fail-closed
 decode, empty-address drops).
 
+### Core.ModelInterface and model-interface codecs
+
+`Core/ModelInterface/` defines structural types, deterministic resolution,
+canonical SHA-256 identity, trace preflight/coverage, and distribution policy.
+`Codec.StrictJson`, `Codec.ModelInterfaceJson`, and
+`Codec.ModelInterfaceDistributionJson` implement duplicate-aware bounded JSON
+and the contract/lock/descriptor/negotiation envelopes. Their proofs and
+fixtures cover the stated pure laws; they do not prove that arbitrary evidence
+describes a TLA+ model or that an application adapter reports honest state.
+
 ## 3. The trusted shell
 
 - **Shell.Mirror.Session** — the §5.3 thin fold; all oracle calls
@@ -140,10 +150,15 @@ decode, empty-address drops).
   around apalache/Jetty's empty-200-on-fresh-connection quirk).
 - **Shell.Jobs** — Mutex+Semaphore store, dedicated `Task` per job,
   parity suite ports all 10 Haskell `AsyncJobsSpec` scenarios.
+- **Shell.ModelInterface** — filesystem/compiler operations, typed evidence
+  loading, sync/async TypeScript and C++ emitters, runtime resolution,
+  authorization, and bounded scoped caching. The CLI is
+  `tools/ModelInterfaceGen.lean`; see the [compiler contract](model-interface-compiler-design.md).
 - **Shell.Registry / Cli / Client** — Consul register/heartbeat/
   deregister/discover (fail-closed), full CLI surface
-  (`--serve`/`--server --tls`/`validate` incl. registry discovery +
-  `--pin`), SIGINT/SIGTERM deregistration.
+  (`--version`/`--serve`/`--server --tls`/`validate` incl. registry discovery +
+  `--pin`), SIGINT/SIGTERM deregistration. `Shell.Version` supplies the declared
+  product version; both server modes use the same connection-pool strategy.
 
 ## 4. The C shims (TCB core)
 
@@ -162,13 +177,13 @@ sentinels + `is_null`), `ByteArray` out-params as `lean_object*`
 
 - **Proofs:** §6.1–§6.6 all machine-checked; `#print axioms` audit:
   nothing beyond `propext`/`Classical.choice`/`Quot.sound`.
-- **Gates (lake test, 9):** fixtures_replay (70 byte-identical),
-  diff_cross (ordered parity), stdio_smoke, jobstore_spec,
-  apalache_cli_spec, explorer_spec, transport_spec (throwaway PKI, 16
-  negative cases), registry_spec (mock Consul, SIGTERM e2e),
-  counter_spec (Counter + DeterministicCounter MBT e2e).
-- **Interop:** MirrorECMA unmodified (jest 120/120 + tsx smoke) and
-  Haskell validate client, over stdio/TCP/mTLS.
+- **Lake:** 12 test executables plus three generated-target freshness checks
+  and exact Counter preflight coverage. The [documentation index](README.md)
+  lists the executables and external-tier behavior from `lakefile.lean`.
+- **Interop:** MirrorECMA, MirrorCPP, MirrorRust, and the Haskell reference
+  client over their supported stdio/TCP/mTLS paths; see
+  [the executable matrix](../tools/interop/INTEROP.md). Async replay and sandbox
+  tests have additional companion gates, described in [client coverage](client-test-coverage.md).
 - **Review:** `tls-ffi-review.md` (1 blocker, 3 majors, 8 minors — all
   fixed and re-reviewed PASS).
 
@@ -178,7 +193,9 @@ sentinels + `is_null`), `ByteArray` out-params as `lean_object*`
    TLA+ spec (`STEP_MISMATCH` only). *Spec-faithful.*
 2. Wildcard scope stricter than `x509-validation` (fail-closed).
    *Accepted.*
-3. Pre-register job message: `register_error` vs Haskell
-   `protocol_error`. *Open harmonization candidate.*
-4. MirrorRust leg unrun (client unavailable); `--pin` case-insensitive
-   (Lean robustness improvement over Haskell). See `cutover.md`.
+3. Async job messages in synchronous stdio mode: `register_error` vs Haskell
+   `protocol_error`. *Open harmonization candidate.* Server job controls do
+   not require a new registration on the querying connection.
+4. `--pin` is case-insensitive (Lean robustness improvement over Haskell).
+   MirrorRust's base-wire leg is implemented and wired into the matrix; its
+   generated model-interface target remains planned. See `cutover.md`.

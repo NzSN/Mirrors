@@ -35,8 +35,10 @@ mTLS policy: TLS 1.3 only, client certificate required, CA chain + SAN
 hostname/IP verification, optional SHA-256 fingerprint pin
 (`--pin`, case-insensitive), client key must be `0600` (POSIX).
 
-`--jobs N` sizes the server's async job store (live-job capacity and
-worker slots; default 4).
+`--jobs N` sizes connection workers and the async job store (live-job capacity
+and worker slots) in both server modes. It defaults to 4; the CLI clamps zero
+to 1. Pending and running jobs both consume capacity; an additional submission
+is rejected synchronously when that capacity is full.
 
 ## 2. Shared structures
 
@@ -204,7 +206,7 @@ its own jobs.
  "destPath": null, "traceConfig": {"numTraces": 1, "view": null}}
 ```
 Immediate reply: `{"proto_step": "job_accepted", "jobId": "job-0",
-"kind": "validate" | "gen_traces"}`. Bounds outside [1,100] or a full
+"kind": "validate" | "gen_traces"}`. Validation bounds outside [1,100] or a full
 queue → `register_error` synchronously at submit.
 
 ### 4.2 Operate: `query_job` / `await_job` / `cancel_job`
@@ -239,5 +241,5 @@ validate job's outcome payload **equals** the synchronous
 Documented divergences from the Haskell implementation (details in
 `cutover.md`): mismatch tail is spec-faithful (no trailing
 `all_steps_done` after `step_mismatch`); error-tag choice on
-out-of-phase job messages; stricter (fail-closed) wildcard SAN scope;
+async job messages in stdio mode; stricter (fail-closed) wildcard SAN scope;
 case-insensitive `--pin` (Lean robustness improvement).
