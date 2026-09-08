@@ -7,6 +7,7 @@
 > Audience: anyone who needs the system's shape in five minutes.
 > Deep-dive: `architecture-details.md`. Design rationale:
 > `lean4-refactor-design.md`. Acceptance audit: `final-review.md`.
+> Product versions and local installation: [versioning.md](versioning.md).
 
 Mirrors is the Lean 4 port of the ModelMirrors mirror: a conformance
 checker that sits between a client state machine and the apalache model
@@ -39,7 +40,7 @@ behind `Core.step` is theorem-covered.
   |                                 (validate, trace-gen, explore)         |
   +----------------------------------------------------------------------+
 
-   CLI modes: stdio | --serve (TCP) | --server --tls (mTLS) | validate
+   CLI modes: --version | stdio | --serve (TCP) | --server --tls (mTLS) | validate
    --registry --> Shell.Registry --HTTP--> Consul (discovery)
 
    Core.Protocol --refines (6.3 theorem)--> MirrorProtocol.tla
@@ -61,7 +62,7 @@ behind `Core.step` is theorem-covered.
 | 10 | Server accept paths | `Shell.Transport.Tcp/Tls` + `Shell.Cli` | trusted | **t33 worker pool** (below) |
 | 11 | Registry client | `Shell.Registry` | trusted | register/heartbeat/deregister/discover + fingerprint pin lookup |
 | 12 | Consul | external | oracle | service discovery over plain HTTP |
-| 13 | CLI | `Main.lean`, `Shell.Cli` | trusted | modes: stdio (default), `--serve`, `--server --tls`, `validate` |
+| 13 | CLI | `Main.lean`, `Shell.Cli`, `Shell.Version` | trusted | modes: `--version`, stdio (default), `--serve`, `--server --tls`, `validate`; compiled product version |
 | 14 | TLA+ reference | `specs/MirrorProtocol.tla` | spec | the model-level contract the session machine refines by proof |
 
 ## Relations

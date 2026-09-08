@@ -28,6 +28,7 @@ CLI parity with the Haskell @app/Main.hs@ surface:
   and on normal exit (Phase 6).
 - @validate ...@: client mode — direct @--host@ and @--port@ or registry
   discovery over mTLS with optional @--pin@ (Phase 6).
+- @--version@: print the Mirrors product version and exit.
 
 Option parsers are ports of the hand-rolled Haskell parsers
 (@Protocol.ServerOpts@ / @Protocol.ValidateOpts@), kept pure so the
@@ -44,6 +45,7 @@ host via getAddrInfo AI_PASSIVE — same semantics here.
 -/
 def cliUsage : String :=
   "usage: mirror <mode> [options]\n" ++
+  "  --version          print the Mirrors product version and exit\n" ++
   "  default            stdio mirror session (one session on stdin/stdout)\n" ++
   "  --serve <port> [--bind <addr>] [--jobs <n>]\n" ++
   "                     plain TCP mirror server (--bind defaults to all\n" ++

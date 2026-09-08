@@ -133,6 +133,19 @@ def driveSession (bin : String) (tracePaths : List String)
   return seen
 
 def main : IO UInt32 := do
+  let bin := ".lake/build/bin/mirror" ++ (if System.Platform.isWindows then ".exe" else "")
+  -- Version inspection must exit successfully without entering a protocol session.
+  let version ← IO.Process.output { cmd := bin, args := #["--version"] }
+  if version.exitCode != 0 || version.stdout != "Mirrors 0.0.1\n" || !version.stderr.isEmpty then
+    IO.eprintln s!"smoke: --version failed (exit={version.exitCode}, stdout={version.stdout}, stderr={version.stderr})"
+    return 1
+  -- The standalone mode rejects extra arguments instead of ignoring them.
+  for args in #[#["--version", "extra"], #["--version", "--version"], #["--version", "--serve", "9000"]] do
+    let invalid ← IO.Process.output { cmd := bin, args := args }
+    if invalid.exitCode != 2 || !invalid.stdout.isEmpty || invalid.stderr.isEmpty then
+      IO.eprintln s!"smoke: invalid --version invocation accepted: {args}"
+      return 1
+  IO.println "version CLI: output and argument validation passed"
   -- fixture directory (deterministic; removed first for idempotence)
   let dir := ".lake/tmp/stdio-smoke"
   try IO.FS.removeDirAll dir catch _ => pure ()
@@ -146,7 +159,6 @@ def main : IO UInt32 := do
     | .error e => IO.eprintln s!"smoke: fixture parse failed: {e}"; return 1
     | .ok ts => pure ts
   let steps := (traces.map traceSteps).flatten
-  let bin := ".lake/build/bin/mirror" ++ (if System.Platform.isWindows then ".exe" else "")
   -- 1. clean replay
   let seen ← driveSession bin [p1, p2] steps none
   IO.println s!"clean session: {seen}"

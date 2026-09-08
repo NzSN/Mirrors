@@ -8,17 +8,27 @@
 > specification layered on these wire shapes),
 > `architecture-overview.md`, `async-enablement-design.md`,
 > `cutover.md` (divergences from the Haskell implementation).
+> Product releases: [versioning and installation](versioning.md).
 
 ## 1. Transports and CLI modes
 
 | Mode | Command | Transport | Session kind |
 | ---- | ------- | --------- | ------------ |
+| version | `mirror --version` | stdout | prints `Mirrors 0.0.1` followed by a newline and exits successfully |
 | stdio (default) | `mirror` | stdin/stdout, newline-delimited | **sync only** — one register flow per process |
 | TCP daemon | `mirror --serve <port> [--bind <addr>] [--jobs N]` | plain TCP, JSONL | **async** — one session per connection, concurrent |
 | mTLS daemon | `mirror --server <port> --tls --cert C --key K --ca A [--registry URL] [--jobs N] [--bind B] [--model-interface-allow-client FP[,FP...]] [--model-interface-descriptor-read]` | TLS 1.3, mutual auth, JSONL | **async** — one session per connection, concurrent |
 | validate client | `mirror validate --host H --port P [--tls …] [--pin FP] --spec S.tla` | outgoing TCP/mTLS | client of the sync validate flow |
 
-Framing everywhere: **one JSON object per line** (valid UTF-8,
+`--version` is a standalone mode: it needs no model, Apalache process, or
+server configuration. It writes nothing to stderr and exits with status `0`.
+Additional arguments (including a repeated `--version`) are rejected with
+status `2`. Installing the executable as `ModelMirrors` preserves the same
+behavior: `ModelMirrors --version` prints the Mirrors product identity.
+The version is compiled into the executable; it does not identify a Git commit
+or indicate whether the build used a modified working tree.
+
+Protocol framing: **one JSON object per line** (valid UTF-8,
 `\n`-terminated), with at most **65,535 payload bytes** before the newline.
 The bound is enforced before JSON parsing and after final response encoding.
 mTLS policy: TLS 1.3 only, client certificate required, CA chain + SAN

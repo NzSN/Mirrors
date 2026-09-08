@@ -1,4 +1,5 @@
 import Shell.Cli
+import Shell.Version
 
 /-!
 # Main — dispatch (Layer 3)
@@ -13,6 +14,9 @@ executable around it.
 def main : IO UInt32 := do
   let args ← getArgsIO
   match args with
+  | ["--version"] =>
+      IO.println s!"Mirrors {Shell.Version.version}"
+      return 0
   | "--serve" :: rest => serveCli rest
   | "--server" :: rest =>
       match parseServerOpts rest with
