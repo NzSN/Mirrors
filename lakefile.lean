@@ -262,6 +262,22 @@ script test do
     IO.eprintln outMiGolden.stderr
     IO.println s!"model_interface_gen check FAILED ({outMiGolden.exitCode})"
     return outMiGolden.exitCode
+  let outMiAsyncGolden : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/model_interface_gen", args := #[
+      "check",
+      "--spec", "specs/Counter.tla",
+      "--contract", "test/fixtures/model-interface/counter/Counter.mirror-interface.json",
+      "--evidence", "test/fixtures/model-interface/counter/counter.itf.json",
+      "--param-var", "parameters",
+      "--lock", "test/fixtures/model-interface/counter/Counter.mirror-interface.lock.json",
+      "--target", "mirrorecma-async-v1",
+      "--out", "test/fixtures/model-interface/counter/generated-async"
+    ] } : IO.Process.SpawnArgs)
+  IO.println outMiAsyncGolden.stdout
+  if outMiAsyncGolden.exitCode != 0 then
+    IO.eprintln outMiAsyncGolden.stderr
+    IO.println s!"model_interface_gen async check FAILED ({outMiAsyncGolden.exitCode})"
+    return outMiAsyncGolden.exitCode
   let outMiCppGolden : IO.Process.Output ← IO.Process.output
     ({ cmd := ".lake/build/bin/model_interface_gen", args := #[
       "check",

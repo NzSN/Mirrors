@@ -636,14 +636,20 @@ MirrorCPP. Shared orchestration belongs to a language-neutral MirrorGate process
 each client supplies a native facade over that process. MirrorECMA must not
 become the mandatory orchestration runtime for clients in other languages.
 
-This section records the target design. MirrorGate currently implements a
-Python supervisor, authoring/build/execution profiles, Node and Rust worker
-shims, public-port RPC, and a trusted Node proxy. Its MirrorECMA integration is
-an evaluator example with explicit glue. A complete versioned orchestration
-control protocol and equivalent client facades are not yet implemented. Existing
-worker support does not establish support for this orchestration profile in a
-language client; a Rust worker, for example, can be driven by a trusted Node
-evaluator without a Rust evaluator facade.
+This section defines the orchestration profile and its acceptance obligations.
+The experimental implementation includes MirrorGate control v1 over owned
+stdio and attached Unix connections, managed Node and C++ SDKs, Node and Rust
+workers, and MirrorECMA's native `evaluateSandboxed` facade. Mirrors emits the
+additive `mirrorecma-async-v1` generated binding used by that facade. A native
+MirrorCPP acceptance integration drives the same Gate controller through the
+existing compiled C++ binding and real Mirrors comparison.
+
+The [MirrorECMA acceptance ledger](https://github.com/NzSN/MirrorECMA/blob/main/docs/shared-orchestration-acceptance.md)
+records local implementation evidence separately from hosted CI and released
+package compatibility. The C++ integration is an acceptance fixture and
+reusable integration seam, not a released generic MirrorCPP package API.
+Existing worker support alone does not establish this orchestration profile;
+a Rust worker can, for example, be driven by either evaluator language.
 
 Implementation references in the MirrorGate repository:
 
@@ -651,11 +657,13 @@ Implementation references in the MirrorGate repository:
 - [Sandbox walkthrough](https://github.com/NzSN/MirrorGate/blob/main/docs/sandbox-design.md) and
   [backend guide](https://github.com/NzSN/MirrorGate/blob/main/docs/linux-bubblewrap.md): implemented enforcement.
 - [Worker protocol v1](https://github.com/NzSN/MirrorGate/blob/main/docs/protocol-v1.md): frozen public-port RPC.
-- [Evaluator example](https://github.com/NzSN/MirrorGate/blob/main/integrations/mirrorecma/README.md): current
-  integration and required compatible companion revisions.
+- [Control v1](https://github.com/NzSN/MirrorGate/blob/main/docs/orchestration-control-v1.md): shared
+  framing, authority, lifecycle, and cleanup contract.
+- [Evaluator integration](https://github.com/NzSN/MirrorGate/blob/main/integrations/mirrorecma/README.md):
+  packed-SDK acceptance and required compatible companion checkouts.
 
-MirrorGate owns the shared control contract and conformance fixtures when
-introduced. This section defines client obligations; it does not invent wire
+MirrorGate owns the shared control contract and conformance fixtures.
+This section defines client obligations; it does not invent wire
 operations or extend v1.
 
 - **SO1.** A client advertising shared sandbox orchestration **MUST** delegate

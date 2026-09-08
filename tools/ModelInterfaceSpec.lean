@@ -5,6 +5,7 @@ import Shell.ModelInterface.Cache
 import Shell.ModelInterface.Evidence
 import Shell.ModelInterface.Emit.Cpp
 import Shell.ModelInterface.Emit.TypeScript
+import Shell.ModelInterface.Emit.TypeScriptAsync
 import Shell.ModelInterface.Runtime
 import Shell.ModelInterface.Compiler
 
@@ -1225,6 +1226,88 @@ def scenarioEmitter (fails : Failures)
     (emitterErrorIs "MIC-E-PATH-001"
       (Shell.ModelInterface.Emit.TypeScript.emitTypeScript overflowLock))
 
+def scenarioAsyncEmitter (fails : Failures)
+    (resolved : ResolvedModelInterface) : IO Unit := do
+  let semantic := Core.ModelInterface.Sha256.digestDomainHex
+    "mirrors-model-interface-lock/v1" (resolvedSemanticBytes resolved)
+  let provenance := Core.ModelInterface.Sha256.digestDomainHex
+    "mirrors-model-interface-provenance/v1" "counter-provenance".toUTF8
+  let lock := resolved.withDigests semantic provenance
+  let first := Shell.ModelInterface.Emit.TypeScriptAsync.emitTypeScriptAsync lock
+  let second := Shell.ModelInterface.Emit.TypeScriptAsync.emitTypeScriptAsync lock
+  let deterministic := match first, second with
+    | .ok a, .ok b => a == b
+    | .error a, .error b => a == b
+    | _, _ => false
+  check fails "async emitter: deterministic result" deterministic
+  match first with
+  | .error diagnostics =>
+      check fails "async emitter: Counter succeeds" false
+        (toString (repr diagnostics))
+  | .ok tree =>
+      check fails "async emitter: sorted owned paths"
+        (tree.files.map (·.relativePath) ==
+          [".model-interface-generated.json", "CounterMirror.generated.ts"])
+      let some manifestFile := tree.files.find?
+          (·.relativePath == ".model-interface-generated.json")
+        | check fails "async emitter: ownership manifest exists" false
+          return
+      let some manifest := String.fromUTF8? manifestFile.bytes
+        | check fails "async emitter: ownership manifest is UTF-8" false
+          return
+      check fails "async emitter: distinct target profile"
+        (manifest.contains "\"targetProfile\":\"mirrorecma-async-v1\"" &&
+          manifest.contains ("\"semanticDigest\":\"" ++ semantic ++ "\""))
+      let some sourceFile := tree.files.find?
+          (·.relativePath == "CounterMirror.generated.ts")
+        | check fails "async emitter: generated source exists" false
+          return
+      let some source := String.fromUTF8? sourceFile.bytes
+        | check fails "async emitter: generated source is UTF-8" false
+          return
+      check fails "async emitter: imports separate async computer contract"
+        (source.contains "AsyncStateComputer, ReplayContext" &&
+          source.contains "CounterAsyncStateComputerContractVersion = \"mirrors.async-state-computer/v1\"")
+      check fails "async emitter: context reaches only native port calls"
+        (source.contains "initialize(context: ReplayContext): Promise<void>" &&
+          source.contains "tick(input: TickInput, context: ReplayContext): Promise<void>" &&
+          source.contains "observe(context: ReplayContext): Promise<CounterObservation>")
+      check fails "async emitter: input-object computer and binder"
+        (source.contains "readonly computer: AsyncStateComputer" &&
+          source.contains "export function bindCounterAsync(" &&
+          source.contains "async ({ action, payload, previous: _previous }, context)" &&
+          source.contains "assertCompatibleConfig: assertCounterCompatibleConfig")
+      check fails "async emitter: guard held across awaited action and observation"
+        (source.contains "let busy = false" &&
+          source.contains "if (busy)" &&
+          source.contains "await awaitPortOperation(port.tick(input, context), context)" &&
+          source.contains "await awaitPortOperation(port.observe(context), context)" &&
+          source.contains "finally {\n      busy = false;")
+      check fails "async emitter: cancellation and monotonic deadline are active"
+        (source.contains "context.signal.addEventListener(\"abort\"" &&
+          source.contains "performance.now() >= context.deadline" &&
+          source.contains "const armDeadline = (): void =>" &&
+          source.contains "if (remaining <= 0)" &&
+          source.contains "setTimeout(armDeadline, Math.min(Math.max(1, Math.ceil(remaining))" &&
+          source.contains "Promise.resolve(operation).then(" &&
+          source.contains "operation_cancelled" &&
+          source.contains "deadline_exceeded")
+      check fails "async emitter: public manifest is sanitized and digest-bound"
+        (source.contains
+          ("export const CounterPublicManifest = {\"actions\":[{\"id\":\"Tick\",\"inputs\":[{\"id\":\"Stride\",\"type\":{\"kind\":\"int\"}}]}]," ++
+           "\"initializers\":[{\"id\":\"Initialize\",\"inputs\":[]}]," ++
+           "\"interfaceDigest\":\"" ++ semantic ++ "\"," ++
+           "\"observations\":[{\"id\":\"Count\",\"type\":{\"kind\":\"int\"}}]," ++
+           "\"schema\":\"mirrorgate.port/v1\"} as const;"))
+      check fails "async emitter: shared semantic identity retained"
+        (source.contains ("CounterSemanticDigest = \"" ++ semantic ++ "\""))
+      check fails "async emitter: mechanical stable-ID public port adapter"
+        (source.contains "export interface AsyncPublicPort" &&
+          source.contains "export function bindCounterAsyncPublicPort(" &&
+          source.contains "publicPort.invoke(\"Initialize\"" &&
+          source.contains "values[\"Stride\"] = input.stride" &&
+          source.contains "count: values[\"Count\"] as bigint")
+
 def scenarioCppEmitter (fails : Failures)
     (resolved : ResolvedModelInterface) : IO Unit := do
   let semantic := Core.ModelInterface.Sha256.digestDomainHex
@@ -1914,6 +1997,10 @@ def run : IO UInt32 := do
     match ← resolvedRef.get with
     | some resolved => scenarioEmitter fails resolved
     | none => check fails "emitter: prerequisite resolution" false
+  scenario "typescript-async-emitter" do
+    match ← resolvedRef.get with
+    | some resolved => scenarioAsyncEmitter fails resolved
+    | none => check fails "async emitter: prerequisite resolution" false
   scenario "cpp-emitter" do
     match ← resolvedRef.get with
     | some resolved => scenarioCppEmitter fails resolved

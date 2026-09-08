@@ -4,9 +4,12 @@
 
 > Status: **proposed normative version 1**
 >
-> The `mirrorecma-v1` reference target and `mirrorcpp-v1` static target are
-> implemented. The `mirrorrust-v1` and `mirrorlean-v1` profiles are specified
-> here for subsequent implementation.
+> The synchronous `mirrorecma-v1` reference target, the additive experimental
+> `mirrorecma-async-v1` target, and the `mirrorcpp-v1` static target are
+> implemented. The async profile is a prerequisite for shared sandbox
+> orchestration, not a support claim for that larger workflow. The
+> `mirrorrust-v1` and `mirrorlean-v1` profiles are specified here for
+> subsequent implementation.
 >
 > Compiler design:
 > [`model-interface-compiler-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-compiler-design.md)
@@ -17,17 +20,18 @@
 ## 0. Implementation status
 
 Mirrors currently implements the canonical lock, semantic digest, normalized
-contract handoff, ownership manifests, and the `mirrorecma-v1` and
-`mirrorcpp-v1` emitters. MirrorECMA and MirrorCPP implement exact-digest adapter
-selection and exercise their generated Counter bindings over local stdio and
-allowlisted mTLS server mode.
+contract handoff, ownership manifests, and the `mirrorecma-v1`,
+`mirrorecma-async-v1`, and `mirrorcpp-v1` emitters. MirrorECMA and MirrorCPP
+implement exact-digest adapter selection and exercise their generated Counter
+bindings over local stdio and allowlisted mTLS server mode.
 
 The common portable-profile check, cross-language recording vectors,
 `mirrorrust-v1`, `mirrorlean-v1`, and their negotiated client registries remain
 implementation work. The C++ emitter has direct executable coverage for the
 portable type baseline, but that is not yet the proposed shared vector suite.
 Consequently, this document remains the normative target for the remaining
-work; two implemented outputs are not evidence that all four profiles conform.
+work; three implemented outputs are not evidence that every specified profile
+conforms.
 
 ## 1. Purpose
 
@@ -984,11 +988,15 @@ Version-1 profile identifiers are:
 | Client | Profile | Status |
 | --- | --- | --- |
 | MirrorECMA | `mirrorecma-v1` | Implemented reference profile. |
+| MirrorECMA | `mirrorecma-async-v1` | Implemented experimental async emission profile. |
 | MirrorCPP | `mirrorcpp-v1` | Implemented static C++23 profile. |
 | MirrorRust | `mirrorrust-v1` | Planned static profile. |
 | MirrorLean | `mirrorlean-v1` | Planned static profile. |
 
-All four profiles target `mirrors.state-computer/v1` semantics. A profile MUST
+The synchronous profiles target `mirrors.state-computer/v1`. The additive
+`mirrorecma-async-v1` profile targets
+`mirrors.async-state-computer/v1`; choosing it does not change the descriptor,
+contract schema, semantic digest, or model comparison. A profile MUST
 use the client's public `Value`, `State`, and replay interfaces rather than
 generating an independent JSON or protocol stack.
 
@@ -1002,7 +1010,28 @@ A target-profile specification is conforming only when it states `⟦τ⟧L`,
 `nameL`, `CompL`, ownership, and rendering rules and demonstrates the common
 judgments and dynamics. Adding a new target profile does not modify MITL.
 
-### 15.2 `mirrorcpp-v1`
+### 15.2 `mirrorecma-async-v1`
+
+`mirrorecma-async-v1` emits the same model-specific native types, projections,
+value codecs, semantic digest, and inert normalized contract as
+`mirrorecma-v1`. Its port methods return promises and receive a local
+`ReplayContext` containing an `AbortSignal` and an absolute monotonic deadline.
+No context field is added to model or worker wire data.
+
+The generated computer consumes `ReplayInput` plus `ReplayContext`. It permits
+one callback at a time, holds that guard across the action and observation
+awaits, and increments coverage only after one observation has been encoded.
+Callback failure, cancellation, deadline expiry, and reentrant use poison the
+binding. Pending promises retain rejection handlers after cancellation, and a
+late action completion cannot invoke observation or report state.
+
+The generated module also exposes a sanitized `mirrorgate.port/v1` manifest
+containing only the semantic interface digest and stable initializer, action,
+input, and observation IDs with their portable types. Wire labels,
+projections, model paths, expected state, and runtime loading information are
+absent from that public manifest.
+
+### 15.3 `mirrorcpp-v1`
 
 `mirrorcpp-v1` emits one `<Model>Mirror.generated.hpp` header plus
 `.model-interface-generated.json`. It requires C++23 and the public

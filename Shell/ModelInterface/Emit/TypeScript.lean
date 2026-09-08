@@ -146,94 +146,94 @@ private def modelBaseName (moduleName : String) : EmitResult String :=
         fail "MIC-E-NAME-001"
           s!"model module {moduleName} is not a TypeScript identifier"
 
-private partial def renderTsType : ModelType → EmitResult String
+private partial def renderTsType (profile : String) : ModelType → EmitResult String
   | .int => pure "bigint"
   | .bool => pure "boolean"
   | .str => pure "string"
   | .null => pure "null"
   | .set element => do
-      let t ← renderTsType element
+      let t ← renderTsType profile element
       pure s!"MirrorSet<{t}>"
   | .seq element => do
-      let t ← renderTsType element
+      let t ← renderTsType profile element
       pure s!"readonly ({t})[]"
   | .tuple elements => do
-      let ts ← elements.mapM renderTsType
+      let ts ← elements.mapM (renderTsType profile)
       pure s!"readonly [{String.intercalate ", " ts}]"
   | .record fields => do
       let fields := sortedBy (fun f => f.wireName) fields
       let rendered ← fields.mapM fun field => do
-        let t ← renderTsType field.type
+        let t ← renderTsType profile field.type
         pure s!"readonly {tsString field.wireName}: {t};"
       pure ("{ " ++ String.intercalate " " rendered ++ " }")
   | .map .str value => do
-      let v ← renderTsType value
+      let v ← renderTsType profile value
       pure s!"MirrorMap<string, {v}>"
   | .map _ _ =>
       fail "MIC-E-TYPE-001"
-        "mirrorecma-v1 supports only string-keyed ITF maps"
+        s!"{profile} supports only string-keyed ITF maps"
   | .variant cases => do
       let cases := sortedBy (fun c => c.tag) cases
       let rendered ← cases.mapM fun c => do
-        let payload ← renderTsType c.payload
+        let payload ← renderTsType profile c.payload
         pure ("{ readonly tag: " ++ tsString c.tag ++
           "; readonly value: " ++ payload ++ " }")
       pure (String.intercalate " | " rendered)
   | .opaqueItf description =>
       fail "MIC-E-TYPE-001"
-        s!"mirrorecma-v1 cannot emit opaque ITF type: {description}"
+        s!"{profile} cannot emit opaque ITF type: {description}"
 
-private partial def renderShape : ModelType → EmitResult String
+private partial def renderShape (profile : String) : ModelType → EmitResult String
   | .int => pure "{ kind: \"int\" }"
   | .bool => pure "{ kind: \"bool\" }"
   | .str => pure "{ kind: \"str\" }"
   | .null => pure "{ kind: \"null\" }"
   | .set element => do
-      let e ← renderShape element
+      let e ← renderShape profile element
       pure ("{ kind: \"set\", element: " ++ e ++ " }")
   | .seq element => do
-      let e ← renderShape element
+      let e ← renderShape profile element
       pure ("{ kind: \"seq\", element: " ++ e ++ " }")
   | .tuple elements => do
-      let es ← elements.mapM renderShape
+      let es ← elements.mapM (renderShape profile)
       pure ("{ kind: \"tuple\", elements: [" ++ String.intercalate ", " es ++ "] }")
   | .record fields => do
       let fields := sortedBy (fun f => f.wireName) fields
       let fs ← fields.mapM fun field => do
-        let t ← renderShape field.type
+        let t ← renderShape profile field.type
         pure s!"[{tsString field.wireName}, {t}]"
       pure ("{ kind: \"record\", fields: [" ++ String.intercalate ", " fs ++ "] }")
   | .map .str value => do
-      let v ← renderShape value
+      let v ← renderShape profile value
       pure ("{ kind: \"map\", key: { kind: \"str\" }, value: " ++ v ++ " }")
   | .map _ _ =>
       fail "MIC-E-TYPE-001"
-        "mirrorecma-v1 supports only string-keyed ITF maps"
+        s!"{profile} supports only string-keyed ITF maps"
   | .variant cases => do
       let cases := sortedBy (fun c => c.tag) cases
       let cs ← cases.mapM fun c => do
-        let t ← renderShape c.payload
+        let t ← renderShape profile c.payload
         pure s!"[{tsString c.tag}, {t}]"
       pure ("{ kind: \"variant\", cases: [" ++ String.intercalate ", " cs ++ "] }")
   | .opaqueItf description =>
       fail "MIC-E-TYPE-001"
-        s!"mirrorecma-v1 cannot emit opaque ITF type: {description}"
+        s!"{profile} cannot emit opaque ITF type: {description}"
 
-private def renderPathSegment : PathSegment → EmitResult String
+private def renderPathSegment (profile : String) : PathSegment → EmitResult String
   | .field name => pure ("{ kind: \"field\", name: " ++ tsString name ++ " }")
   | .index index =>
       if index ≤ maxSafeJavaScriptInteger then
         pure ("{ kind: \"index\", index: " ++ toString index ++ " }")
       else
         fail "MIC-E-PATH-001"
-          s!"mirrorecma-v1 path index {index} exceeds Number.MAX_SAFE_INTEGER"
+          s!"{profile} path index {index} exceeds Number.MAX_SAFE_INTEGER"
   | .variantValue tag =>
       pure ("{ kind: \"variantValue\", tag: " ++ tsString tag ++ " }")
   | .mapKey _ =>
-      fail "MIC-E-PATH-001" "mirrorecma-v1 does not yet lower mapKey paths"
+      fail "MIC-E-PATH-001" s!"{profile} does not yet lower mapKey paths"
 
-private def renderPath (projection : InputProjection) : EmitResult String := do
-  let segments ← projection.path.mapM renderPathSegment
+private def renderPath (profile : String) (projection : InputProjection) : EmitResult String := do
+  let segments ← projection.path.mapM (renderPathSegment profile)
   pure s!"[{String.intercalate ", " segments}]"
 
 /-!
@@ -444,18 +444,18 @@ private def runtimeSupport : String := lines [
   "}"
 ]
 
-private def renderInputInterface (action : ResolvedAction) : EmitResult String := do
+private def renderInputInterface (profile : String) (action : ResolvedAction) : EmitResult String := do
   if action.inputs.isEmpty then return ""
   let fields ← (sortedBy (fun i => i.id) action.inputs).mapM fun input => do
-    let t ← renderTsType input.projection.type
+    let t ← renderTsType profile input.projection.type
     pure s!"  readonly {nativeFieldName input.id}: {t};"
   pure <| lines
     ([s!"export interface {action.id}Input " ++ "{"] ++ fields ++ ["}"])
 
-private def renderObservationInterface (modelName : String)
+private def renderObservationInterface (profile modelName : String)
     (observations : List ResolvedObservation) : EmitResult String := do
   let fields ← (sortedBy (fun o => o.id) observations).mapM fun observation => do
-    let t ← renderTsType observation.type
+    let t ← renderTsType profile observation.type
     pure s!"  readonly {nativeFieldName observation.id}: {t};"
   pure <| lines
     ([s!"export interface {modelName}Observation " ++ "{"] ++ fields ++ ["}"])
@@ -466,24 +466,24 @@ private def renderPortMethod (action : ResolvedAction) : String :=
   else
     s!"  {nativeFieldName action.id}(input: {action.id}Input): void;"
 
-private def renderShapeConstForInput (action : ResolvedAction)
+private def renderShapeConstForInput (profile : String) (action : ResolvedAction)
     (input : ResolvedInput) : EmitResult String := do
-  let shape ← renderShape input.projection.type
+  let shape ← renderShape profile input.projection.type
   pure s!"const {nativeFieldName action.id}_{input.id}Shape: TypeShape = {shape};"
 
-private def renderShapeConstForObservation (modelName : String)
+private def renderShapeConstForObservation (profile modelName : String)
     (observation : ResolvedObservation) : EmitResult String := do
-  let shape ← renderShape observation.type
+  let shape ← renderShape profile observation.type
   pure s!"const {lowerFirst modelName}{observation.id}ObservationShape: TypeShape = {shape};"
 
-private def renderInputDecoder (action : ResolvedAction) : EmitResult String := do
+private def renderInputDecoder (profile : String) (action : ResolvedAction) : EmitResult String := do
   if action.inputs.isEmpty then return ""
   let fields ← (sortedBy (fun i => i.id) action.inputs).mapM fun input => do
-    let path ← renderPath input.projection
+    let path ← renderPath profile input.projection
     let root := match input.projection.root with
       | .initialState => "comparableInitialState(payload)"
       | .stepParameters => "payload"
-    let nativeType ← renderTsType input.projection.type
+    let nativeType ← renderTsType profile input.projection.type
     let name := nativeFieldName input.id
     let shapeName := s!"{nativeFieldName action.id}_{input.id}Shape"
     let label := tsString (action.id ++ "." ++ input.id)
@@ -631,15 +631,16 @@ private def renderModule (lock : LockedModelInterface) : EmitResult (String × S
   let actions := initializers ++ transitions
   let observations := sortedBy (fun o => o.id) lock.observations
 
-  let inputInterfaces ← actions.mapM renderInputInterface
-  let observationInterface ← renderObservationInterface modelName observations
+  let inputInterfaces ← actions.mapM (renderInputInterface targetProfile)
+  let observationInterface ← renderObservationInterface targetProfile modelName observations
   let portMethods := actions.map renderPortMethod
   let inputShapeGroups ← actions.mapM fun action =>
-    (sortedBy (fun i => i.id) action.inputs).mapM (renderShapeConstForInput action)
+    (sortedBy (fun i => i.id) action.inputs).mapM
+      (renderShapeConstForInput targetProfile action)
   let inputShapes := inputShapeGroups.flatten
   let observationShapes ← observations.mapM
-    (renderShapeConstForObservation modelName)
-  let inputDecoders ← actions.mapM renderInputDecoder
+    (renderShapeConstForObservation targetProfile modelName)
+  let inputDecoders ← actions.mapM (renderInputDecoder targetProfile)
   let observationEncoder := renderObservationEncoder modelName observations
   let contractJson := Lean.Json.compress
     (Codec.ModelInterfaceJson.encodeContract lock.contract)
@@ -665,6 +666,95 @@ private def renderModule (lock : LockedModelInterface) : EmitResult (String × S
     inputDecoders.filter (· != "") ++
     [observationEncoder, binding]
   pure (sourcePath, source)
+
+/-!
+The async TypeScript profile shares the existing name, type, projection, and
+codec lowering above.  This small seam exposes rendered semantic fragments to
+the effect-specific emitter without introducing a second model interpretation
+or a general target-language AST.
+-/
+namespace Shared
+
+/-- Lowered TypeScript fragments whose meaning is independent of whether port
+operations are invoked synchronously or awaited. -/
+structure LoweredModule where
+  modelName : String
+  initializers : List ResolvedAction
+  transitions : List ResolvedAction
+  actions : List ResolvedAction
+  observations : List ResolvedObservation
+  inputInterfaces : List String
+  observationInterface : String
+  inputShapes : List String
+  observationShapes : List String
+  inputDecoders : List String
+  observationEncoder : String
+  contractJson : String
+  configuredParamVar : Option String
+
+/-- Validate and lower the common TypeScript representation once. -/
+def lowerModule (target : String) (lock : LockedModelInterface) :
+    EmitResult LoweredModule := do
+  if lockContainsPrototypeKey lock then
+    fail "MIC-E-NAME-001" s!"{target} rejects the reserved wire key __proto__"
+  let _ ← validateNativeNamespaces lock
+  let modelName ← modelBaseName lock.modelModule
+  let initializers := sortedBy (fun a => a.id) lock.initializers
+  let transitions := sortedBy (fun a => a.id) lock.actions
+  let actions := initializers ++ transitions
+  let observations := sortedBy (fun o => o.id) lock.observations
+  let inputInterfaces ← actions.mapM (renderInputInterface target)
+  let observationInterface ← renderObservationInterface target modelName observations
+  let inputShapeGroups ← actions.mapM fun action =>
+    (sortedBy (fun i => i.id) action.inputs).mapM
+      (renderShapeConstForInput target action)
+  let observationShapes ← observations.mapM
+    (renderShapeConstForObservation target modelName)
+  let inputDecoders ← actions.mapM (renderInputDecoder target)
+  pure {
+    modelName
+    initializers
+    transitions
+    actions
+    observations
+    inputInterfaces
+    observationInterface
+    inputShapes := inputShapeGroups.flatten
+    observationShapes
+    inputDecoders
+    observationEncoder := renderObservationEncoder modelName observations
+    contractJson := Lean.Json.compress
+      (Codec.ModelInterfaceJson.encodeContract lock.contract)
+    configuredParamVar := lock.runProfile.configuredParamVar
+  }
+
+def sortByKey { α : Type } (key : α → String) (xs : List α) : List α :=
+  sortedBy key xs
+
+def sortStrings (xs : List String) : List String := sortedStrings xs
+def joinLines (xs : List String) : String := lines xs
+def finalLf (source : String) : String := withFinalLf source
+def quote (value : String) : String := tsString value
+def nativeName (stableId : String) : String := nativeFieldName stableId
+def lowerName (value : String) : String := lowerFirst value
+def runtime : String := runtimeSupport
+def typeName (target : String) (type : ModelType) : EmitResult String :=
+  renderTsType target type
+
+/-- Render a version-1 ownership manifest for a concrete TypeScript profile. -/
+def ownershipManifest (target semanticDigest : String)
+    (ownedPaths : List String) : String :=
+  let paths := sortedStrings ownedPaths
+  let json := Lean.Json.mkObj [
+    ("files", .arr (paths.map Lean.Json.str).toArray),
+    ("profileVersion", .num profileVersion),
+    ("schema", .str "mirrors.model-interface-generated/v1"),
+    ("semanticDigest", .str semanticDigest),
+    ("targetProfile", .str target)
+  ]
+  withFinalLf (Lean.Json.compress json)
+
+end Shared
 
 /-- Render the canonical ownership manifest for a generated tree. -/
 def renderOwnershipManifest (semanticDigest : String) (ownedPaths : List String) : String :=

@@ -7,6 +7,7 @@ import Shell.Apalache.SpecSource
 import Shell.ModelInterface.Evidence
 import Shell.ModelInterface.Emit.Cpp
 import Shell.ModelInterface.Emit.TypeScript
+import Shell.ModelInterface.Emit.TypeScriptAsync
 import Lean
 
 /-!
@@ -45,6 +46,7 @@ def provenanceDigestDomain : String := "mirrors-model-interface-provenance/v1"
 def generatedManifestPath : String := ".model-interface-generated.json"
 def generatedPublicationLockPath : String := ".model-interface-generation.lock"
 def mirrorecmaTarget : String := "mirrorecma-v1"
+def mirrorecmaAsyncTarget : String := "mirrorecma-async-v1"
 def mirrorcppTarget : String := "mirrorcpp-v1"
 def maxModelInterfaceItfArtifactBytes : Nat := 16 * 1024 * 1024
 def maxCompilerArtifactBytes : Nat := 16 * 1024 * 1024
@@ -251,6 +253,8 @@ def emitTarget (target : String) (lock : LockedModelInterface) :
   let _ ← verifyLock lock
   let emitted := if target == mirrorecmaTarget then
       Emit.TypeScript.emitTypeScript lock
+    else if target == mirrorecmaAsyncTarget then
+      Emit.TypeScriptAsync.emitTypeScriptAsync lock
     else if target == mirrorcppTarget then
       Emit.Cpp.emitCpp lock
     else
@@ -622,7 +626,8 @@ private def parseOwnershipManifest (raw : ByteArray) : Except String OwnershipMa
   if schema != "mirrors.model-interface-generated/v1" then
     throw "unsupported generated ownership manifest schema"
   let target ← jsonString "manifest.targetProfile" (← requiredJson fields "targetProfile")
-  if target != mirrorecmaTarget && target != mirrorcppTarget then
+  if target != mirrorecmaTarget && target != mirrorecmaAsyncTarget &&
+      target != mirrorcppTarget then
     throw "ownership manifest target is not supported"
   let version ← jsonNat "manifest.profileVersion" (← requiredJson fields "profileVersion")
   if version != 1 then throw "unsupported generated ownership profile version"

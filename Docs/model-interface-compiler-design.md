@@ -2,8 +2,9 @@
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
-> Status: **TypeScript and C++ Counter target slices implemented in Mirrors;
-> Rust/Lean profiles and common recording vectors remain planned**
+> Status: **synchronous and experimental async TypeScript plus C++ Counter
+> target slices implemented in Mirrors; Rust/Lean profiles and common
+> recording vectors remain planned**
 > Parent design: [`model-interface-generation-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-generation-design.md)
 > Runtime distribution:
 > [`model-interface-runtime-distribution-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-runtime-distribution-design.md)
@@ -18,14 +19,15 @@
 Mirrors now contains the pure model-interface types, deterministic resolver,
 canonical contract/descriptor/lock codecs, pure SHA-256, strict ITF evidence
 normalization, trace preflight/coverage, the `mirrorecma-v1` TypeScript emitter,
-the `mirrorcpp-v1` C++23 emitter, safe owned-file publication, and the
-standalone `model_interface_gen` executable. Counter resolve/generate/check,
+the additive `mirrorecma-async-v1` TypeScript emitter, the `mirrorcpp-v1` C++23
+emitter, safe owned-file publication, and the standalone
+`model_interface_gen` executable. Counter resolve/generate/check,
 generated TypeScript/C++ compilation, typed bindings, and real session replay
 are covered by the implementation gates and validation harnesses.
 
-The TypeScript and C++ version-1 slices are implemented. Shared portable
-judgment/recording vectors and the later Rust/Lean targets remain follow-up
-work as specified by M5 and the cross-language specification.
+The synchronous and async TypeScript plus C++ version-1 slices are implemented.
+Shared portable judgment/recording vectors and the later Rust/Lean targets
+remain follow-up work as specified by M5 and the cross-language specification.
 
 ## 1. Purpose
 
@@ -66,7 +68,9 @@ The following choices are frozen for the first implementation:
    values never infer or widen types.
 4. The existing `StateComputer` interface remains unchanged.
 5. Initializer and transition wire labels are disjoint.
-6. Generated implementation ports are synchronous.
+6. The original generated implementation port is synchronous. The additive
+   `mirrorecma-async-v1` target has a distinct promise-returning port and
+   computer contract; it does not widen the original interface.
 7. The implementation port exposes per-action methods plus `observe()`.
 8. Every observation represents exactly one complete top-level model variable.
    Leaf-by-leaf assembly of a model variable is deferred.
@@ -81,6 +85,9 @@ The following choices are frozen for the first implementation:
 14. The compiler is a separate Lake executable named `model_interface_gen`.
 15. Normal resolution consumes pinned evidence and never requires a live
     Apalache process.
+16. Async emission reuses the TypeScript name, type, projection, and codec
+    lowering. It changes only the native effect interpretation and profile
+    identity.
 
 ## 3. Module shape
 
@@ -1186,7 +1193,27 @@ sorted relative paths owned by this generation. A later `generate` invocation
 may replace or remove only files listed in the previous valid manifest. It
 must never clean an output directory broadly or delete unowned files.
 
-### 13.8 `mirrorcpp-v1` profile
+### 13.8 `mirrorecma-async-v1` profile
+
+The async TypeScript target emits the same two relative file names into a
+separate output directory and records `mirrorecma-async-v1` in its header and
+ownership manifest. It preserves the lock's semantic digest and canonical
+contract and exports `mirrors.async-state-computer/v1` as its local computer
+contract identity.
+
+Each initializer or transition port method receives `ReplayContext`; methods
+with inputs receive the decoded input first. `observe` also receives the
+context. All return promises. The generated computer checks the monotonic
+deadline and abort signal before port invocation and after every await. Its
+single-flight guard spans action and observation, and all failures poison the
+binding before a caller can start another operation.
+
+The generated `PublicManifest` is a deterministic, sanitized projection for a
+worker port proxy. It contains stable operation IDs and portable types. It does
+not replace the full private contract in `ModelInterface` metadata and does not
+authenticate an arbitrary caller or artifact.
+
+### 13.9 `mirrorcpp-v1` profile
 
 The second target emits:
 
@@ -1564,8 +1591,10 @@ Partial exit: both compiling targets and real Counter paths come from one
 semantic lock. The shared recording-log comparison remains before claiming the
 full M5 equivalence exit.
 
-Rust, Lean, scaffolding, compatibility migration helpers, and async profiles
-follow only after the two-target seam is stable.
+Rust, Lean, scaffolding, compatibility migration helpers, and shared recording
+vectors remain follow-up work. The experimental async TypeScript profile is a
+prerequisite slice; it does not by itself establish sandbox-orchestration
+support.
 
 ## 21. Rejected version-1 choices
 

@@ -11,6 +11,7 @@ import Shell.ModelInterface.Runtime
 import Shell.ModelInterface.Auth
 import Shell.ModelInterface.Compiler
 import Shell.ModelInterface.Emit.TypeScript
+import Shell.ModelInterface.Emit.TypeScriptAsync
 
 /-!
 # Layer 3: the effectful shell — trusted, thin, audited (design 5.4)
