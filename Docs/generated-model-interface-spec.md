@@ -34,6 +34,17 @@ The common portable-profile check, cross-language recording vectors,
 `mirrorrust-v1`, `mirrorlean-v1`, and their negotiated client registries remain
 implementation work. The C++ emitter has direct executable coverage for the
 portable type baseline, but that is not yet the proposed shared vector suite.
+The compiler also implements proposal-only `scaffold` generation from a bounded
+TLA+ root and strict raw ITF evidence. Its unsealed actions are finite-trace
+observations, not a closed action universe, and the proposal is not a sealed
+companion contract or an input accepted by target generation.
+An optional compiler-owned trace-projection plan can convert bounded integer-key
+function fields into a portable sequence-of-records comparison view before
+scaffold synthesis. Raw evidence must still exactly match the current source.
+The implemented commands operate on one evidence document or trace per
+invocation. Reviewed proposal sealing, multi-evidence synthesis, corpus-level
+projection manifests, and an implementation-side Gate adapter kit remain
+follow-up work; none is implied by the current scaffold or emitter status.
 Consequently, this document remains the normative target for the remaining
 work; three implemented outputs are not evidence that every specified profile
 conforms.
@@ -1427,3 +1438,28 @@ That combination gives all client languages one semantic interface while
 allowing each language to retain idiomatic types, ownership, and errors. The
 LLM maps the real implementation only to the small generated port. Mirrors and
 the deterministic binding continue to own every mechanical protocol concern.
+
+Scaffold proposals preserve observations whose inferred types include maps with
+non-string keys and attach target-support obligations to them. Those obligations
+must be resolved by an implemented target profile or an explicitly reviewed
+portable projection before generation. Merely producing a proposal does not
+make an `Int -> ...` model field representable by `mirrorecma-async-v1`.
+
+The implemented version-1 trace projection is explicit and content addressed.
+A plan must consume every raw/source variable exactly once through either an
+exact copy or a bounded `Map[Int,T]` zip. A zip produces `Seq[Record]`, so an RBT
+plan can expose one `Nodes` observation without leaving integer-key map target
+obligations. The projection receipt binds source, raw evidence, canonical plan,
+and canonical output hashes. A projected scaffold proposal embeds the
+raw/plan/output hash triple alongside its existing source and normalized
+evidence hashes.
+
+The version-1 projector bounds construction work at 250,000
+state/domain/field nodes and canonical projected output at 16 MiB. Both bounds
+fail before output publication. Paired projected-trace and receipt publication
+uses canonical per-target locks, acquired in sorted order, across the complete
+backup/publish/rollback transaction.
+
+This projection is part of evidence preparation, not target emission or model
+semantics. Its finite integer domain is reviewed input. It neither establishes
+a closed action universe nor seals the generated proposal as a contract.

@@ -28,6 +28,10 @@ are covered by the implementation gates and validation harnesses.
 The synchronous and async TypeScript plus C++ version-1 slices are implemented.
 Shared portable judgment/recording vectors and the later Rust/Lean targets
 remain follow-up work as specified by M5 and the cross-language specification.
+Scaffolding and projection are deliberately narrower than the remaining
+review workflow: each invocation consumes one evidence document or projects
+one trace, and no compiler command currently promotes a reviewed proposal into
+a sealed companion contract.
 
 ## 1. Purpose
 
@@ -1326,14 +1330,94 @@ requested report path; writing such a report is never implicit.
 model_interface_gen scaffold
   --spec specs/Counter.tla
   --evidence counter.itf.json
-  --contract specs/Counter.mirror-interface.json
+  --param-var parameters
+  [--projection specs/Counter.trace-projection.json]
+  --proposal specs/Counter.mirror-interface.proposal.json
+  [--replace]
+  [--diagnostics json]
 ```
 
-`scaffold` is deferred until after the Counter vertical slice. It may propose
-types and observed actions, but inferred actions are marked unsealed. It never
-overwrites an existing contract without an explicit replace flag.
+`scaffold` is implemented as proposal generation. It bounded-reads the TLA+
+root and one strict ITF evidence document, checks that the evidence `vars`
+exactly match the source `VARIABLE`/`VARIABLES` declarations, and reads string
+`action_taken` labels directly from raw state objects. It does not decode other
+state values while classifying the first state as initialization evidence and
+later states as transition evidence; integer-key `#map` values can therefore
+remain opaque during this step. Labels are retained independently for both
+phases: if a later state repeats an initializer label, synthesis rejects the
+phase overlap instead of silently discarding that evidence.
 
-### 14.6 Exit codes and output
+The only output is a strict `mirrors.model-interface-scaffold/v1` proposal
+envelope. Observed initializers and actions are explicitly unsealed. A proposal
+does not seal a companion contract, establish a closed action universe, or
+authorize generation. A human must review action phases, parameter projections,
+stable identifiers, and observation ownership before producing the companion
+contract consumed by `resolve`.
+
+By default publication uses exclusive create. `--replace` stages a sibling
+temporary file and atomically replaces a regular-file proposal. Any source,
+evidence, synthesis, or validation finding occurs before publication and leaves
+the requested path untouched. Non-string-key map observations remain in the
+proposal and carry target-support obligations; scaffolding does not claim that
+the portable async profile can lower them.
+
+When `--projection PLAN` is supplied, scaffold still validates the TLA+
+variables against the raw evidence before reading or applying the plan. It then
+uses the same in-memory projector as `project-trace` and synthesizes actions,
+comparison variables, and types from the projected evidence. The proposal
+provenance adds the raw-evidence, canonical-plan, and canonical-projected-output
+hashes. The source hash remains the independently derived TLA+ source hash.
+Projection changes the comparison representation; it does not weaken the
+separate raw/source exactness check.
+
+### 14.6 Project trace
+
+```text
+model_interface_gen project-trace
+  --spec specs/RBT.tla
+  --evidence raw-rbt.itf.json
+  --projection specs/RBT.trace-projection.json
+  --out projected-rbt.itf.json
+  --receipt projected-rbt.receipt.json
+  [--replace]
+  [--diagnostics json]
+```
+
+`project-trace` is the compiler-owned boundary for an explicit, bounded, lossy
+representation change. Version 1 can copy variables exactly and zip a declared
+finite integer domain across several `Map[Int,T]` variables into one
+`Seq[Record]` observation. Every raw/source variable must be consumed exactly
+once. Output names, record fields, domains, state keys, types, duplicates, and
+resource limits are checked before publication. State values are transformed
+as strict JSON; the command does not route integer-key maps through
+`Core.Value`. Version 1 rejects a projection whose state/domain/field work
+estimate exceeds 250,000 nodes and rejects canonical projected ITF larger than
+16 MiB. The work bound is checked before constructing projected states; the
+byte bound is checked before hashing or publication.
+
+The projected ITF and strict receipt are separate outputs. The receipt binds
+domain-separated hashes of normalized source bytes, exact raw evidence bytes,
+the canonical plan, and canonical projected ITF bytes, plus exact input/output
+variable sets. Both destinations and overwrite conflicts are validated before
+either file is published. Default mode is exclusive create; `--replace` stages
+both files and treats them as one rollback unit. A finding leaves both requested
+artifacts unchanged.
+
+Cooperating processes acquire one sibling
+`.model-interface-projection.lock` for each canonical destination in sorted path
+order. The locks cover conflict checks, backup, publication, rollback, and
+cleanup, so overlapping output pairs cannot interleave. Acquisition is
+fail-fast. A process crash can retain a lock; the marker fails closed and may be
+removed only after an operator verifies that no projection publisher still owns
+either destination.
+
+Projection does not edit the TLA+ model, infer a domain, prove that the chosen
+domain is semantically complete, seal observed actions, or promote a scaffold
+proposal into a companion contract. In particular, evidence for the old RBT
+`nodes` variable cannot be projected against the newer flattened source: the
+raw/source mismatch fails before the plan is read.
+
+### 14.7 Exit codes and output
 
 | Exit | Meaning |
 | --- | --- |
@@ -1597,10 +1681,47 @@ Partial exit: both compiling targets and real Counter paths come from one
 semantic lock. The shared recording-log comparison remains before claiming the
 full M5 equivalence exit.
 
-Rust, Lean, scaffolding, compatibility migration helpers, and shared recording
-vectors remain follow-up work. The experimental async TypeScript profile is a
-prerequisite slice; it does not by itself establish sandbox-orchestration
-support.
+### M6: reviewed scaffolds and evidence corpora
+
+Status: **proposed follow-up; not implemented**.
+
+The first non-Counter restricted implementation exposed three remaining manual
+steps. Proposal acceptance required extracting `proposal.contract` outside the
+compiler, a multi-trace corpus required one `project-trace` process per trace,
+and application code had to assemble its own corpus-level provenance. M6 should
+remove those steps without treating sampled actions as a complete universe.
+
+1. Add an explicit `seal-scaffold` command. It consumes an unchanged scaffold
+   proposal plus a strict review record. The review record declares the complete
+   closed initializer and transition universes, may supply explicit reviewed
+   replacements, and gives a disposition for every target-support obligation.
+   The compiler rejects omitted observed actions, phase overlap, or a silently
+   dropped field, then atomically publishes the companion contract and a review
+   receipt. It never infers review approval or action-universe closure.
+2. Carry proposal, review, and projection digests through resolution provenance
+   so the lock identifies the exact reviewed evidence path. Contract semantics
+   and the semantic digest remain independent of sampled coverage.
+3. Accept repeated evidence inputs for scaffold synthesis. Merge structural
+   types and observed phase labels deterministically, reject cross-document
+   conflicts, and retain every input hash in canonical order.
+4. Add a corpus projection command that validates all inputs before publication,
+   emits one trace/receipt pair per input plus a canonical corpus manifest, and
+   rolls back the whole publication on any conflict or failure.
+5. Add a public cross-repository fixture covering integer-function projection,
+   generated async ports, Gate's collection bridge, successful replay, deliberate
+   observation mismatch, and confirmed cleanup. Private application models and
+   traces are not suitable fixtures.
+
+M6 exits only when proposal-to-contract publication needs no ad hoc extraction,
+corpus output is content-addressed as a unit, stale or conflicting evidence
+writes nothing, and the projected-collection fixture passes through the real
+Mirrors, MirrorECMA, and MirrorGate path.
+
+Rust, Lean, compatibility migration helpers, and shared recording vectors
+remain follow-up work. Proposal-only scaffolding is implemented; contract
+review and sealing remain an explicit human step. The experimental async
+TypeScript profile is a prerequisite slice; it does not by itself establish
+sandbox-orchestration support.
 
 ## 21. Rejected version-1 choices
 

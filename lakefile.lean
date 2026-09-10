@@ -114,6 +114,31 @@ lean_exe model_interface_distribution_spec where
 lean_exe model_interface_gen where
   root := `tools.ModelInterfaceGen
 
+/-- Proposal-only model-interface scaffold CLI and publication gate. -/
+@[default_target]
+lean_exe model_interface_scaffold_cli_spec where
+  root := `tools.ModelInterfaceScaffoldCliSpec
+
+/-- Typed evidence grammar and exact TLA+ variable-source gate. -/
+@[default_target]
+lean_exe model_interface_evidence_spec where
+  root := `tools.ModelInterfaceEvidenceSpec
+
+/-- Pure scaffold synthesis and strict proposal-codec gate. -/
+@[default_target]
+lean_exe model_interface_scaffold_spec where
+  root := `tools.ModelInterfaceScaffoldSpec
+
+/-- Compiler-owned raw ITF projection CLI and paired publication gate. -/
+@[default_target]
+lean_exe model_interface_trace_projection_cli_spec where
+  root := `tools.ModelInterfaceTraceProjectionCliSpec
+
+/-- Pure bounded ITF trace projection and strict receipt-codec gate. -/
+@[default_target]
+lean_exe model_interface_trace_projection_spec where
+  root := `tools.ModelInterfaceTraceProjectionSpec
+
 /-- Phase 3: the mirror CLI binary (default stdio mode). -/
 @[default_target]
 lean_exe mirror where
@@ -252,6 +277,46 @@ script test do
   if outMiDistribution.exitCode != 0 then
     IO.println s!"model_interface_distribution_spec FAILED ({outMiDistribution.exitCode})"
     return outMiDistribution.exitCode
+  let outMiScaffoldCli : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/model_interface_scaffold_cli_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outMiScaffoldCli.stdout
+  if outMiScaffoldCli.exitCode != 0 then
+    IO.eprintln outMiScaffoldCli.stderr
+    IO.println s!"model_interface_scaffold_cli_spec FAILED ({outMiScaffoldCli.exitCode})"
+    return outMiScaffoldCli.exitCode
+  let outMiEvidence : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/model_interface_evidence_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outMiEvidence.stdout
+  if outMiEvidence.exitCode != 0 then
+    IO.eprintln outMiEvidence.stderr
+    IO.println s!"model_interface_evidence_spec FAILED ({outMiEvidence.exitCode})"
+    return outMiEvidence.exitCode
+  let outMiScaffold : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/model_interface_scaffold_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outMiScaffold.stdout
+  if outMiScaffold.exitCode != 0 then
+    IO.eprintln outMiScaffold.stderr
+    IO.println s!"model_interface_scaffold_spec FAILED ({outMiScaffold.exitCode})"
+    return outMiScaffold.exitCode
+  let outMiProjectionCli : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/model_interface_trace_projection_cli_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outMiProjectionCli.stdout
+  if outMiProjectionCli.exitCode != 0 then
+    IO.eprintln outMiProjectionCli.stderr
+    IO.println s!"model_interface_trace_projection_cli_spec FAILED ({outMiProjectionCli.exitCode})"
+    return outMiProjectionCli.exitCode
+  let outMiProjection : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/model_interface_trace_projection_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outMiProjection.stdout
+  if outMiProjection.exitCode != 0 then
+    IO.eprintln outMiProjection.stderr
+    IO.println s!"model_interface_trace_projection_spec FAILED ({outMiProjection.exitCode})"
+    return outMiProjection.exitCode
   let outMiGolden : IO.Process.Output ← IO.Process.output
     ({ cmd := ".lake/build/bin/model_interface_gen", args := #[
       "check",

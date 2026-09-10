@@ -25,6 +25,12 @@ def usage : String := String.intercalate "\n" [
   "    [--diagnostics json]",
   "  model_interface_gen preflight --lock FILE --trace PATH",
   "    [--require-all-actions] [--diagnostics json]",
+  "  model_interface_gen scaffold --spec FILE --evidence FILE",
+  "    [--param-var NAME] [--projection PLAN] --proposal FILE",
+  "    [--replace] [--diagnostics json]",
+  "  model_interface_gen project-trace --spec FILE --evidence RAW",
+  "    --projection PLAN --out PROJECTED --receipt RECEIPT",
+  "    [--replace] [--diagnostics json]",
   "  TARGET: mirrorecma-v1 | mirrorecma-async-v1 | mirrorcpp-v1"
 ]
 
@@ -42,6 +48,9 @@ private structure RawOptions where
   target : Option String := none
   out : Option String := none
   trace : Option String := none
+  proposal : Option String := none
+  projection : Option String := none
+  receipt : Option String := none
   diagnostics : Option String := none
 
 private inductive Command where
@@ -49,6 +58,8 @@ private inductive Command where
   | generate (lock target out : String)
   | check (inputs : InputPaths) (lock target out : String)
   | preflight (lock trace : String) (requireAllActions : Bool)
+  | scaffold (inputs : ScaffoldPaths)
+  | projectTrace (inputs : ProjectTracePaths)
 
 private structure ParsedCommand where
   command : Command
@@ -56,7 +67,7 @@ private structure ParsedCommand where
 
 private def allowedFlags : List String :=
   ["--spec", "--contract", "--evidence", "--param-var", "--lock", "--target", "--out",
-   "--trace", "--diagnostics"]
+   "--trace", "--proposal", "--projection", "--receipt", "--diagnostics"]
 
 private def optionPairs : List String → Except String (List (String × String))
   | [] => .ok []
@@ -83,6 +94,9 @@ private def parseOptions (arguments : List String) : Except String RawOptions :=
     target := List.lookup "--target" pairs
     out := List.lookup "--out" pairs
     trace := List.lookup "--trace" pairs
+    proposal := List.lookup "--proposal" pairs
+    projection := List.lookup "--projection" pairs
+    receipt := List.lookup "--receipt" pairs
     diagnostics := List.lookup "--diagnostics" pairs
   }
 
@@ -122,39 +136,91 @@ private def parseCommand (arguments : List String) : Except String ParsedCommand
   let requireAllCount := rest.count "--require-all-actions"
   if requireAllCount > 1 then throw "duplicate option: --require-all-actions"
   let requireAllActions := requireAllCount == 1
-  let optionArguments := rest.filter (· != "--require-all-actions")
+  let replaceCount := rest.count "--replace"
+  if replaceCount > 1 then throw "duplicate option: --replace"
+  let replace := replaceCount == 1
+  let optionArguments := rest.filter fun argument =>
+    argument != "--require-all-actions" && argument != "--replace"
   let options ← parseOptions optionArguments
   let diagnostics ← diagnosticsMode options
   let command : Command ← match name with
   | "resolve" =>
       if requireAllActions then throw "option --require-all-actions is not valid for resolve"
+      if replace then throw "option --replace is not valid for resolve"
       let _ ← rejectPresent "--target" options.target
       let _ ← rejectPresent "--out" options.out
       let _ ← rejectPresent "--trace" options.trace
+      let _ ← rejectPresent "--proposal" options.proposal
+      let _ ← rejectPresent "--projection" options.projection
+      let _ ← rejectPresent "--receipt" options.receipt
       pure <| Command.resolve (← inputsOf options) (← requireOption "--lock" options.lock)
   | "generate" =>
       if requireAllActions then throw "option --require-all-actions is not valid for generate"
+      if replace then throw "option --replace is not valid for generate"
       let _ ← rejectPresent "--spec" options.spec
       let _ ← rejectPresent "--contract" options.contract
       let _ ← rejectPresent "--evidence" options.evidence
       let _ ← rejectPresent "--trace" options.trace
+      let _ ← rejectPresent "--proposal" options.proposal
+      let _ ← rejectPresent "--projection" options.projection
+      let _ ← rejectPresent "--receipt" options.receipt
       if options.paramVarSeen then throw "option --param-var is not valid for generate"
       pure <| Command.generate (← requireOption "--lock" options.lock)
         (← checkedTarget options) (← requireOption "--out" options.out)
   | "check" =>
       if requireAllActions then throw "option --require-all-actions is not valid for check"
+      if replace then throw "option --replace is not valid for check"
       let _ ← rejectPresent "--trace" options.trace
+      let _ ← rejectPresent "--proposal" options.proposal
+      let _ ← rejectPresent "--projection" options.projection
+      let _ ← rejectPresent "--receipt" options.receipt
       pure <| Command.check (← inputsOf options) (← requireOption "--lock" options.lock)
         (← checkedTarget options) (← requireOption "--out" options.out)
   | "preflight" =>
+      if replace then throw "option --replace is not valid for preflight"
       let _ ← rejectPresent "--spec" options.spec
       let _ ← rejectPresent "--contract" options.contract
       let _ ← rejectPresent "--evidence" options.evidence
       let _ ← rejectPresent "--target" options.target
       let _ ← rejectPresent "--out" options.out
+      let _ ← rejectPresent "--proposal" options.proposal
+      let _ ← rejectPresent "--projection" options.projection
+      let _ ← rejectPresent "--receipt" options.receipt
       if options.paramVarSeen then throw "option --param-var is not valid for preflight"
       pure <| Command.preflight (← requireOption "--lock" options.lock)
         (← requireOption "--trace" options.trace) requireAllActions
+  | "scaffold" =>
+      if requireAllActions then throw "option --require-all-actions is not valid for scaffold"
+      let _ ← rejectPresent "--contract" options.contract
+      let _ ← rejectPresent "--lock" options.lock
+      let _ ← rejectPresent "--target" options.target
+      let _ ← rejectPresent "--out" options.out
+      let _ ← rejectPresent "--trace" options.trace
+      let _ ← rejectPresent "--receipt" options.receipt
+      pure <| Command.scaffold {
+        spec := ← requireOption "--spec" options.spec
+        evidence := ← requireOption "--evidence" options.evidence
+        paramVar := options.paramVar
+        projection := options.projection
+        proposal := ← requireOption "--proposal" options.proposal
+        replace := replace
+      }
+  | "project-trace" =>
+      if requireAllActions then throw "option --require-all-actions is not valid for project-trace"
+      let _ ← rejectPresent "--contract" options.contract
+      let _ ← rejectPresent "--lock" options.lock
+      let _ ← rejectPresent "--target" options.target
+      let _ ← rejectPresent "--trace" options.trace
+      let _ ← rejectPresent "--proposal" options.proposal
+      if options.paramVarSeen then throw "option --param-var is not valid for project-trace"
+      pure <| Command.projectTrace {
+        spec := ← requireOption "--spec" options.spec
+        evidence := ← requireOption "--evidence" options.evidence
+        projection := ← requireOption "--projection" options.projection
+        out := ← requireOption "--out" options.out
+        receipt := ← requireOption "--receipt" options.receipt
+        replace := replace
+      }
   | "--help" | "-h" => throw usage
   | other => throw s!"unknown command: {other}"
   return { command, diagnostics }
@@ -287,6 +353,26 @@ private def runPreflightCommand (mode : DiagnosticsMode) (lock trace : String)
           printJsonDiagnostics execution.result.diagnostics
       return if execution.result.hasErrors then 1 else 0
 
+private def runScaffold (mode : DiagnosticsMode) (inputs : ScaffoldPaths) : IO UInt32 := do
+  match ← scaffold inputs with
+  | .error error => reportError mode error
+  | .ok result =>
+      match mode with
+      | .human => printDiagnostics result.diagnostics
+      | .json => printJsonDiagnostics result.diagnostics
+      IO.println s!"scaffolded proposal {inputs.proposal}"
+      return 0
+
+private def runProjectTrace (mode : DiagnosticsMode) (inputs : ProjectTracePaths) : IO UInt32 := do
+  match ← projectTrace inputs with
+  | .error error => reportError mode error
+  | .ok result =>
+      match mode with
+      | .human => pure ()
+      | .json => printJsonDiagnostics []
+      IO.println s!"projected trace {inputs.out} receipt {inputs.receipt} {result.result.receipt.outputSha256}"
+      return 0
+
 def run (arguments : List String) : IO UInt32 := do
   match parseCommand arguments with
   | .error message =>
@@ -300,6 +386,8 @@ def run (arguments : List String) : IO UInt32 := do
       | .check inputs lock target out => runCheck parsed.diagnostics inputs lock target out
       | .preflight lock trace requireAllActions =>
           runPreflightCommand parsed.diagnostics lock trace requireAllActions
+      | .scaffold inputs => runScaffold parsed.diagnostics inputs
+      | .projectTrace inputs => runProjectTrace parsed.diagnostics inputs
 
 end ModelInterfaceGen
 

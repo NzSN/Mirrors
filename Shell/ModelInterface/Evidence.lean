@@ -53,6 +53,57 @@ private def splitField (s : String) : Option (String × String) :=
 private def inner (s : String) (prefixChars suffixChars : Nat) : String :=
   (s.drop prefixChars).take (s.length - prefixChars - suffixChars) |>.toString
 
+private def matchingDelimiter (opening closing : Char) : Bool :=
+  (opening == '(' && closing == ')') ||
+    (opening == '{' && closing == '}') ||
+    (opening == '[' && closing == ']') ||
+    (opening == '<' && closing == '>')
+
+/-- Find the one un-nested arrow in the body of an Apalache function type.
+Nested structural types are skipped, and malformed or ambiguous arrows are
+rejected instead of being assigned an accidental associativity. -/
+private def splitTopLevelArrow (s : String) : Except String (String × String) :=
+  let rec go (chars : List Char) (stack : List Char) (left : List Char)
+      (found : Option (List Char × List Char)) : Except String (String × String) := do
+    match chars with
+    | [] =>
+        if !stack.isEmpty then
+          throw s!"unbalanced delimiters in Apalache function type: {s}"
+        let some (arrowLeft, arrowRight) := found
+          | throw s!"malformed Apalache function type: ({s})"
+        let key := String.ofList arrowLeft.reverse |>.trimAscii |>.toString
+        let value := String.ofList arrowRight.reverse |>.trimAscii |>.toString
+        if key.isEmpty || value.isEmpty then
+          throw s!"malformed Apalache function type: ({s})"
+        return (key, value)
+    | '-' :: '>' :: rest =>
+        if stack.isEmpty then
+          match found with
+          | some _ => throw s!"multiple top-level arrows in Apalache function type: ({s})"
+          | none => go rest stack [] (some (left, []))
+        else
+          match found with
+          | none => go rest stack ('>' :: '-' :: left) found
+          | some (arrowLeft, arrowRight) =>
+              go rest stack left (some (arrowLeft, '>' :: '-' :: arrowRight))
+    | character :: rest =>
+        let stack ←
+          if character == '(' || character == '{' || character == '[' || character == '<' then
+            pure (character :: stack)
+          else if character == ')' || character == '}' || character == ']' || character == '>' then
+            match stack with
+            | opening :: openings =>
+                if matchingDelimiter opening character then pure openings
+                else throw s!"mismatched delimiters in Apalache function type: {s}"
+            | [] => throw s!"unbalanced delimiters in Apalache function type: {s}"
+          else
+            pure stack
+        match found with
+        | none => go rest stack (character :: left) found
+        | some (arrowLeft, arrowRight) =>
+            go rest stack left (some (arrowLeft, character :: arrowRight))
+  go s.toList [] [] none
+
 private partial def parseTypeWithFuel (fuel : Nat) (raw : String) :
     Except String ModelType := do
   if fuel == 0 then
@@ -62,6 +113,11 @@ private partial def parseTypeWithFuel (fuel : Nat) (raw : String) :
   if s == "Bool" then return .bool
   if s == "Str" || s == "String" then return .str
   if s == "Null" then return .null
+  if s.startsWith "(" && s.endsWith ")" then
+    let (key, value) ← splitTopLevelArrow (inner s 1 1)
+    return .map
+      (← parseTypeWithFuel (fuel - 1) key)
+      (← parseTypeWithFuel (fuel - 1) value)
   if s.startsWith "Set(" && s.endsWith ")" then
     return .set (← parseTypeWithFuel (fuel - 1) (inner s 4 1))
   if s.startsWith "Seq(" && s.endsWith ")" then
@@ -99,10 +155,11 @@ private def optionalJsonStrings (j : Lean.Json) (field : String) : Except String
   | .error _ => .ok []
   | .ok value =>
       match value with
+      | .null => .ok []
       | .arr values => values.toList.mapM fun
           | .str s => pure s
           | _ => throw s!"{field}: expected string array"
-      | _ => throw s!"{field}: expected array"
+      | _ => throw s!"{field}: expected array or null"
 
 /-- Normalize one raw typed ITF document into compiler evidence. -/
 def fromJson (j : Lean.Json) (sourceName : String := "<itf>") :

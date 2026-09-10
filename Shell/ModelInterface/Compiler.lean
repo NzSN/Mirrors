@@ -1,10 +1,15 @@
 import Core.ModelInterface
+import Core.ModelInterface.Scaffold
+import Core.ModelInterface.TraceProjection
 import Core.ModelInterface.Sha256
 import Codec.ModelInterfaceJson
+import Codec.ModelInterfaceScaffoldJson
+import Codec.ModelInterfaceTraceProjectionJson
 import Codec.StrictJson
 import Codec.Json
 import Shell.Apalache.SpecSource
 import Shell.ModelInterface.Evidence
+import Shell.ModelInterface.SpecVariables
 import Shell.ModelInterface.Emit.Cpp
 import Shell.ModelInterface.Emit.TypeScript
 import Shell.ModelInterface.Emit.TypeScriptAsync
@@ -90,6 +95,35 @@ structure CheckReport where
 
 def CheckReport.clean (report : CheckReport) : Bool := report.stalePaths.isEmpty
 
+/-- Inputs owned by the proposal-only scaffold command. -/
+structure ScaffoldPaths where
+  spec : String
+  evidence : String
+  paramVar : Option String := none
+  projection : Option String := none
+  proposal : String
+  replace : Bool := false
+  deriving Repr
+
+structure ScaffoldCompilation where
+  proposal : ScaffoldProposal
+  proposalBytes : ByteArray
+  diagnostics : List Diagnostic
+
+structure ProjectTracePaths where
+  spec : String
+  evidence : String
+  projection : String
+  out : String
+  receipt : String
+  replace : Bool := false
+  deriving Repr
+
+structure ProjectTraceCompilation where
+  result : TraceProjectionResult
+  projectedBytes : ByteArray
+  receiptBytes : ByteArray
+
 private def finding (message : String) (diagnostics : List Diagnostic := []) :
     Except CompilerError α :=
   .error { kind := .finding, message, diagnostics }
@@ -127,6 +161,15 @@ private def readText (path : String) : IO (Except CompilerError String) := do
   | some text => return .ok text
   | none => return finding s!"artifact {path} is not valid UTF-8"
 
+private def readTextWithLimit (path : String) (limit : Nat) :
+    IO (Except CompilerError String) := do
+  let bytes ← match ← readBytesWithLimit path limit with
+    | .ok bytes => pure bytes
+    | .error error => return .error error
+  match String.fromUTF8? bytes with
+  | some text => return .ok text
+  | none => return finding s!"artifact {path} is not valid UTF-8"
+
 private def domainDigest (domain : String) (bytes : ByteArray) : String :=
   Core.ModelInterface.Sha256.digestDomainHex domain bytes
 
@@ -141,6 +184,70 @@ private def diagnosticSourceName (source fallback : String) : String :=
     if name.isEmpty || name == "." || name == ".." || windowsDriveLike name then
       fallback
     else name
+
+private def scaffoldLogicalSource (path : String) : Except CompilerError String := do
+  if validLogicalPath path && !windowsDriveLike path then return path
+  let filename := (path : System.FilePath).fileName.getD ""
+  if validLogicalPath filename && !windowsDriveLike filename then return filename
+  return ← finding "model source path has no safe logical filename"
+
+private def jsonObjectFields (context : String) : Lean.Json →
+    Except CompilerError (List (String × Lean.Json))
+  | .obj fields => .ok fields.toList
+  | _ => finding s!"invalid structural evidence: {context} must be an object"
+
+private def requiredScaffoldJson (context name : String)
+    (fields : List (String × Lean.Json)) : Except CompilerError Lean.Json :=
+  match List.lookup name fields with
+  | some value => .ok value
+  | none => finding s!"invalid structural evidence: {context} is missing {name}"
+
+private def appendUnique (values : List String) (value : String) : List String :=
+  if values.contains value then values else values ++ [value]
+
+private def scaffoldInputDiagnostic (code subject source reason : String) : Diagnostic := {
+  code
+  severity := .error
+  stage := "scaffold"
+  subject := { kind := subject }
+  primary := { source }
+  arguments := [("reason", reason)]
+}
+
+/-- Inspect action labels without attempting to decode any other state value.
+This is what permits raw Apalache integer-key `#map` values to remain opaque. -/
+private def scaffoldActionLabels (json : Lean.Json) (variables : List String) :
+    Except CompilerError (List String × List String) := do
+  let fields ← jsonObjectFields "evidence" json
+  let allowedTop := ["#meta", "params", "param_vars", "vars", "states"]
+  if let some (name, _) := fields.find? fun field => !allowedTop.contains field.1 then
+    return ← finding s!"invalid structural evidence: unknown top-level field {name}"
+  let statesJson ← requiredScaffoldJson "evidence" "states" fields
+  let states ← match statesJson with
+    | .arr states => pure states.toList
+    | _ => return ← finding "invalid structural evidence: states must be an array"
+  if states.isEmpty then
+    return ← finding "invalid structural evidence: states must contain an initial state"
+  let mut initializers : List String := []
+  let mut transitions : List String := []
+  for stateIndex in [0:states.length] do
+    let state := states[stateIndex]!
+    let stateFields ← jsonObjectFields s!"states[{stateIndex}]" state
+    let allowedState := "#meta" :: variables
+    if let some (name, _) := stateFields.find? fun field => !allowedState.contains field.1 then
+      return ← finding s!"invalid structural evidence: unknown states[{stateIndex}] field {name}"
+    for variableName in variables do
+      if (List.lookup variableName stateFields).isNone then
+        return ← finding s!"invalid structural evidence: states[{stateIndex}] is missing {variableName}"
+    let actionJson ← requiredScaffoldJson s!"states[{stateIndex}]" actionVariableV1 stateFields
+    let action ← match actionJson with
+      | .str action => pure action
+      | _ => return ← finding s!"invalid structural evidence: states[{stateIndex}].{actionVariableV1} must be a string"
+    if stateIndex == 0 then
+      initializers := appendUnique initializers action
+    else
+      transitions := appendUnique transitions action
+  return (initializers, transitions)
 
 private def resolveLoaded (paths : InputPaths) (sources : List SourceDigest)
     (contract : ContractV1) (evidence : ModelEvidence) :
@@ -218,6 +325,175 @@ def compile (paths : InputPaths) : IO (Except CompilerError Compilation) := do
       { source with logicalPath := contract.model.source }
     else source
   return resolveLoaded paths sourceClosure contract evidence
+
+private structure LoadedProjectionBase where
+  normalizedSourceBytes : ByteArray
+  sourceDigest : SourceDigest
+  sourceVariables : List String
+  rawBytes : ByteArray
+  rawEvidence : ModelEvidence
+  rawInitializerLabels : List String
+  rawTransitionLabels : List String
+  evidenceName : String
+  context : TraceProjectionContext
+
+/-- Load and validate the exact source/raw-evidence relationship before an
+optional projection plan is even read. This preserves stale-source failure as
+an independent boundary. -/
+private def loadProjectionBase (specPath evidencePath : String) :
+    IO (Except CompilerError LoadedProjectionBase) := do
+  let sourceLimits := Shell.ModelInterface.SpecVariables.defaultLimits
+  let source ← match ← readTextWithLimit specPath sourceLimits.maxSourceBytes with
+    | .ok source => pure source
+    | .error error => return .error error
+  let rawBytes ← match ← readBytesWithLimit evidencePath maxModelInterfaceItfArtifactBytes with
+    | .ok evidence => pure evidence
+    | .error error => return .error error
+  let evidenceRaw ← match String.fromUTF8? rawBytes with
+    | some evidence => pure evidence
+    | none => return finding s!"artifact {evidencePath} is not valid UTF-8"
+  let evidenceLimits : Codec.StrictJson.Limits := {
+    Codec.StrictJson.defaultLimits with maxBytes := maxModelInterfaceItfArtifactBytes }
+  let evidenceName := diagnosticSourceName
+    ((evidencePath : System.FilePath).fileName.getD "<evidence>") "<evidence>"
+  let evidenceJson ← match Codec.StrictJson.parseString evidenceRaw evidenceLimits with
+    | .ok json => pure json
+    | .error error =>
+        let reason := s!"invalid structural evidence: {error}"
+        return finding reason [scaffoldInputDiagnostic "MIC-S-EVIDENCE-001"
+          "evidence" evidenceName reason]
+  let evidence ← match Evidence.fromJson evidenceJson evidenceName with
+    | .ok evidence => pure evidence
+    | .error error =>
+        let reason := s!"invalid structural evidence: {error}"
+        return finding reason [scaffoldInputDiagnostic "MIC-S-EVIDENCE-001"
+          "evidence" evidenceName reason]
+  match Shell.ModelInterface.SpecVariables.validateEvidenceVariables
+      source evidence.traceVars sourceLimits with
+  | .error error =>
+      let reason := s!"invalid model source/evidence pair: {error}"
+      let sourceName := diagnosticSourceName specPath "<spec>"
+      return finding reason [scaffoldInputDiagnostic "MIC-S-SOURCE-001"
+        "sourceVariables" sourceName reason]
+  | .ok () => pure ()
+  let sourceVariables ← match Shell.ModelInterface.SpecVariables.extract source sourceLimits with
+    | .ok variables => pure variables
+    | .error error => return finding s!"invalid model source: {error}"
+  let moduleName ← match Shell.Apalache.SpecSource.moduleName source with
+    | .ok name => pure name
+    | .error error => return finding s!"invalid model source: {error}"
+  let logicalSource ← match scaffoldLogicalSource specPath with
+    | .ok path => pure path
+    | .error error => return .error error
+  let (rawInitializerLabels, rawTransitionLabels) ←
+    match scaffoldActionLabels evidenceJson evidence.traceVars with
+    | .ok labels => pure labels
+    | .error error =>
+        return .error { error with diagnostics := error.diagnostics ++ [
+          scaffoldInputDiagnostic "MIC-S-EVIDENCE-001" "actionLabels"
+            evidenceName error.message] }
+  let normalizedSource := (source.replace "\r\n" "\n").replace "\r" "\n"
+  let normalizedSourceBytes := normalizedSource.toUTF8
+  let sourceDigest : SourceDigest := {
+    moduleName
+    logicalPath := logicalSource
+    contentSha256 := Core.ModelInterface.Sha256.digestHex normalizedSourceBytes
+  }
+  let sourceTypes := evidence.typeFacts.filterMap fun fact =>
+    if fact.modelPath.path.isEmpty then some (fact.modelPath.root, fact.type) else none
+  let context : TraceProjectionContext := {
+    rawVariables := evidence.traceVars
+    sourceVariables
+    sourceTypes
+  }
+  return .ok {
+    normalizedSourceBytes
+    sourceDigest
+    sourceVariables
+    rawBytes
+    rawEvidence := evidence
+    rawInitializerLabels
+    rawTransitionLabels
+    evidenceName
+    context
+  }
+
+private def compileProjectionLoaded (base : LoadedProjectionBase) (planPath : String) :
+    IO (Except CompilerError TraceProjectionResult) := do
+  let planBytes ← match ← readBytesWithLimit planPath maxCompilerArtifactBytes with
+    | .ok bytes => pure bytes
+    | .error error => return .error error
+  let limits : Codec.StrictJson.Limits := {
+    Codec.StrictJson.defaultLimits with maxBytes := maxCompilerArtifactBytes }
+  let plan ← match Codec.ModelInterfaceTraceProjectionJson.parsePlanBytes planBytes limits with
+    | .ok plan => pure plan
+    | .error error => return finding s!"invalid trace projection plan: {error}"
+  match Codec.ModelInterfaceTraceProjectionJson.projectTraceBytes
+      base.normalizedSourceBytes base.rawBytes plan base.context limits with
+  | .ok result => return .ok result
+  | .error error => return finding s!"trace projection failed: {error}"
+
+def compileProjectTrace (paths : ProjectTracePaths) :
+    IO (Except CompilerError ProjectTraceCompilation) := do
+  let base ← match ← loadProjectionBase paths.spec paths.evidence with
+    | .ok base => pure base
+    | .error error => return .error error
+  let result ← match ← compileProjectionLoaded base paths.projection with
+    | .ok result => pure result
+    | .error error => return .error error
+  return .ok {
+    result
+    projectedBytes :=
+      Codec.ModelInterfaceTraceProjectionJson.canonicalProjectedTraceFileBytes result
+    receiptBytes :=
+      Codec.ModelInterfaceTraceProjectionJson.canonicalReceiptFileBytes result.receipt
+  }
+
+/-- Strictly load source and raw ITF evidence and synthesize a proposal in
+memory. Optional projection occurs only after the exact raw/source check. -/
+def compileScaffold (paths : ScaffoldPaths) :
+    IO (Except CompilerError ScaffoldCompilation) := do
+  let base ← match ← loadProjectionBase paths.spec paths.evidence with
+    | .ok base => pure base
+    | .error error => return .error error
+  let (evidence, initializerLabels, transitionLabels, sourceVariableNames,
+      projectionProvenance) ← match paths.projection with
+    | none => pure (base.rawEvidence, base.rawInitializerLabels,
+        base.rawTransitionLabels, base.sourceVariables, none)
+    | some planPath =>
+        let projected ← match ← compileProjectionLoaded base planPath with
+          | .ok result => pure result
+          | .error error => return .error error
+        let projectedEvidence ← match Evidence.fromJson projected.projectedTrace
+            base.evidenceName with
+          | .ok evidence => pure evidence
+          | .error error => return finding s!"invalid projected structural evidence: {error}"
+        let (initializers, transitions) ←
+          match scaffoldActionLabels projected.projectedTrace projected.receipt.outputVariables with
+          | .ok labels => pure labels
+          | .error error => return .error error
+        let provenance : ScaffoldProjectionProvenance := {
+          rawSha256 := projected.receipt.rawSha256
+          planSha256 := projected.receipt.planSha256
+          outputSha256 := projected.receipt.outputSha256
+        }
+        pure (projectedEvidence, initializers, transitions,
+          projected.receipt.outputVariables, some provenance)
+  let result := synthesizeScaffold {
+    source := base.sourceDigest
+    sourceVariableNames
+    evidence
+    initializerLabels
+    transitionLabels
+    configuredParamVar := paths.paramVar
+    projection := projectionProvenance
+  }
+  if result.hasErrors then
+    return finding "model-interface scaffold synthesis failed" result.diagnostics
+  let some proposal := result.value
+    | return finding "model-interface scaffold synthesis produced no proposal" result.diagnostics
+  let proposalBytes := Codec.ModelInterfaceScaffoldJson.canonicalFileBytes proposal
+  return .ok { proposal, proposalBytes, diagnostics := result.diagnostics }
 
 /-- Recompute and verify both digests carried by a decoded lock. -/
 def verifyLock (lock : LockedModelInterface) : Except CompilerError Unit := do
@@ -559,6 +835,164 @@ private def atomicWrite (path : String) (bytes : ByteArray)
   catch error =>
     bestEffortRemove temporary
     return infrastructure s!"cannot safely publish {target}: {error}"
+
+private def restorePairTarget (target : String) (backup : Option String) : IO Unit := do
+  removeIfExists target
+  match backup with
+  | some path => IO.FS.rename path target
+  | none => pure ()
+
+private def projectionPublicationLockSuffix : String :=
+  ".model-interface-projection.lock"
+
+private def releaseProjectionLocks (locks : List String) : IO (Except String Unit) := do
+  let mut failures : List String := []
+  for path in locks do
+    try removeIfExists path
+    catch error => failures := failures ++ [s!"{path}: {error}"]
+  if failures.isEmpty then return .ok ()
+  return .error (String.intercalate "; " failures)
+
+/-- Acquire target-specific locks in global lexical order. Any two publication
+pairs sharing a target therefore share a lock, and no process can wait while
+holding a later lock. Locks are fail-fast rather than blocking. -/
+private def acquireProjectionLocks (targets : List String) :
+    IO (Except CompilerError (List String)) := do
+  let lockPaths := (targets.map (· ++ projectionPublicationLockSuffix)).mergeSort (· ≤ ·)
+  if !(duplicateStrings lockPaths).isEmpty ||
+      lockPaths.any (fun lock => targets.contains lock) then
+    return finding "projection output paths collide with publication locks"
+  let acquired ← IO.mkRef ([] : List String)
+  for lockPath in lockPaths do
+    let prepared ← prepareStandaloneTarget lockPath true
+    let (canonicalLock, lockExists) ← match prepared with
+      | .ok value => pure value
+      | .error error =>
+          let held ← acquired.get
+          match ← releaseProjectionLocks held with
+          | .ok () => return .error error
+          | .error releaseError =>
+              return infrastructure s!"projection lock validation failed; cannot release acquired locks: {releaseError}"
+    if lockExists then
+      let held ← acquired.get
+      match ← releaseProjectionLocks held with
+      | .ok () => return finding s!"projection output is locked: {canonicalLock}"
+      | .error releaseError =>
+          return infrastructure s!"projection lock conflict; cannot release acquired locks: {releaseError}"
+    try
+      writeNewBytes canonicalLock "mirrors-model-interface-projection-publication/v1\n".toUTF8
+      acquired.modify (· ++ [canonicalLock])
+    catch error =>
+      let held ← acquired.get
+      let releaseResult ← releaseProjectionLocks held
+      match ← lstat? canonicalLock, releaseResult with
+      | .ok (some _), .ok () =>
+          return finding s!"projection output is locked: {canonicalLock}"
+      | _, .error releaseError =>
+          return infrastructure s!"cannot acquire projection lock ({error}); cannot release acquired locks ({releaseError})"
+      | _, .ok () =>
+          return infrastructure s!"cannot acquire projection publication lock: {error}"
+  return .ok (← acquired.get)
+
+private def atomicWritePairLocked (firstTarget : String) (firstBytes : ByteArray)
+    (secondTarget : String) (secondBytes : ByteArray) (mayReplace : Bool) :
+    IO (Except CompilerError Unit) := do
+  let firstPrepared ← prepareStandaloneTarget firstTarget false
+  let (_, firstExists) ← match firstPrepared with
+    | .ok value => pure value
+    | .error error => return .error error
+  let secondPrepared ← prepareStandaloneTarget secondTarget false
+  let (_, secondExists) ← match secondPrepared with
+    | .ok value => pure value
+    | .error error => return .error error
+  if !mayReplace && (firstExists || secondExists) then
+    let conflicts := ([if firstExists then some firstTarget else none,
+      if secondExists then some secondTarget else none]).filterMap id
+    return finding s!"refusing to replace existing projection targets: {conflicts}"
+  let firstTemporary ← tempSibling firstTarget
+  let secondTemporary ← tempSibling secondTarget 1
+  let firstBackup ← if mayReplace && firstExists then
+      pure (some (← tempSibling firstTarget 1000000)) else pure none
+  let secondBackup ← if mayReplace && secondExists then
+      pure (some (← tempSibling secondTarget 1000001)) else pure none
+  let mut firstPublished := false
+  let mut secondPublished := false
+  try
+    writeNewBytes firstTemporary firstBytes
+    writeNewBytes secondTemporary secondBytes
+    if let some backup := firstBackup then IO.FS.hardLink firstTarget backup
+    if let some backup := secondBackup then IO.FS.hardLink secondTarget backup
+    replaceStaged firstTemporary firstTarget mayReplace
+    firstPublished := true
+    replaceStaged secondTemporary secondTarget mayReplace
+    secondPublished := true
+    if let some backup := firstBackup then bestEffortRemove backup
+    if let some backup := secondBackup then bestEffortRemove backup
+    return .ok ()
+  catch publishError =>
+    let restoreResult : Except String Unit ← try
+      if secondPublished then restorePairTarget secondTarget secondBackup
+      else if let some backup := secondBackup then bestEffortRemove backup
+      if firstPublished then restorePairTarget firstTarget firstBackup
+      else if let some backup := firstBackup then bestEffortRemove backup
+      pure (.ok ())
+    catch restoreError => pure (.error (toString restoreError))
+    bestEffortRemove firstTemporary
+    bestEffortRemove secondTemporary
+    match restoreResult with
+    | .ok () =>
+        return infrastructure s!"cannot safely publish projection artifacts: {publishError}"
+    | .error restoreError =>
+        return infrastructure s!"projection publication failed ({publishError}); rollback failed ({restoreError})"
+
+/-- Publish two validated sibling-independent artifacts as one rollback unit.
+Canonical per-target locks cover conflict checks, backup, publication, rollback,
+and cleanup. -/
+private def atomicWritePair (firstPath : String) (firstBytes : ByteArray)
+    (secondPath : String) (secondBytes : ByteArray) (mayReplace : Bool) :
+    IO (Except CompilerError Unit) := do
+  let firstPrepared ← prepareStandaloneTarget firstPath true
+  let (firstTarget, _) ← match firstPrepared with
+    | .ok value => pure value
+    | .error error => return .error error
+  let secondPrepared ← prepareStandaloneTarget secondPath true
+  let (secondTarget, _) ← match secondPrepared with
+    | .ok value => pure value
+    | .error error => return .error error
+  if firstTarget == secondTarget then
+    return finding "projected trace and receipt must use distinct output paths"
+  let locks ← match ← acquireProjectionLocks [firstTarget, secondTarget] with
+    | .ok locks => pure locks
+    | .error error => return .error error
+  let result : Except CompilerError Unit ← try
+    atomicWritePairLocked firstTarget firstBytes secondTarget secondBytes mayReplace
+  catch error =>
+    pure (infrastructure s!"unexpected projection publication failure: {error}")
+  match ← releaseProjectionLocks locks with
+  | .ok () => return result
+  | .error releaseError =>
+      return infrastructure s!"cannot release projection publication locks: {releaseError}"
+
+/-- Publish only a strict scaffold proposal envelope. Compilation and all
+findings complete before the exclusive-create or atomic-replace write begins. -/
+def scaffold (paths : ScaffoldPaths) :
+    IO (Except CompilerError ScaffoldCompilation) := do
+  let compilation ← match ← compileScaffold paths with
+    | .ok compilation => pure compilation
+    | .error error => return .error error
+  match ← atomicWrite paths.proposal compilation.proposalBytes paths.replace with
+  | .ok () => return .ok compilation
+  | .error error => return .error error
+
+def projectTrace (paths : ProjectTracePaths) :
+    IO (Except CompilerError ProjectTraceCompilation) := do
+  let compilation ← match ← compileProjectTrace paths with
+    | .ok compilation => pure compilation
+    | .error error => return .error error
+  match ← atomicWritePair paths.out compilation.projectedBytes
+      paths.receipt compilation.receiptBytes paths.replace with
+  | .ok () => return .ok compilation
+  | .error error => return .error error
 
 /-- Write a resolved lock. Existing unequal content is replaceable only when
 it is itself a strict, digest-valid model-interface lock. -/

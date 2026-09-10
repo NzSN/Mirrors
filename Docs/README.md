@@ -25,13 +25,18 @@ an installed Windows service, a hosted CI run, or a published package.
   stdio replay is synchronous. TCP `--serve` and mTLS `--server` use connection
   worker pools and process-shared async job stores on Linux and Windows.
   Both accept `--jobs N`; the default is 4 and zero is clamped to 1.
-- `model_interface_gen` implements `resolve`, `generate`, `check`, and
-  `preflight`. Implemented targets are `mirrorecma-v1`, experimental
+- `model_interface_gen` implements `resolve`, `generate`, `check`, `preflight`,
+  proposal-only `scaffold`, and strict `project-trace`. Scaffold accepts one
+  raw evidence document per invocation; projection accepts one trace and emits one
+  paired receipt. Neither command seals a proposal as a contract.
+  Implemented targets are `mirrorecma-v1`, experimental
   `mirrorecma-async-v1`, and `mirrorcpp-v1`.
-- MirrorECMA has compiled and dynamic negotiated replay, async report runners,
-  and an experimental `evaluateSandboxed` facade. MirrorGate owns the shared
-  control process, policy, snapshots, worker transport, and Linux/Bubblewrap
-  isolation. Native Node and C++ control SDKs can drive Node and Rust workers.
+- MirrorECMA has compiled and dynamic negotiated replay plus async report
+  runners. The former Gate-aware `evaluateSandboxed` facade is outside
+  MirrorECMA 2 core and remains available through the Gate-owned
+  `mirrorgate-mirrorecma/legacy` integration. MirrorGate owns the shared control
+  process, policy, snapshots, worker transport, and Linux/Bubblewrap isolation.
+  Native Node and C++ control SDKs can drive Node and Rust workers.
   The C++ model-facing integration is an acceptance integration, not a released
   generic MirrorCPP facade API. See the
   [shared acceptance ledger](https://github.com/NzSN/MirrorECMA/blob/main/docs/shared-orchestration-acceptance.md).
@@ -43,11 +48,12 @@ an installed Windows service, a hosted CI run, or a published package.
 ## Validation entry points
 
 [`lakefile.lean`](../lakefile.lean) defines the current `lake test` inventory:
-12 test executables (`fixtures_replay`, `diff_cross`, `model_interface_spec`,
-`model_interface_distribution_spec`, `stdio_smoke`, `jobstore_spec`,
-`apalache_cli_spec`, `explorer_spec`, `transport_spec`, `registry_spec`,
-`counter_spec`, `async_spec`), three compiler freshness checks (sync TypeScript,
-async TypeScript, and C++), and Counter preflight with exact coverage comparison.
+17 test executables (`fixtures_replay`, `diff_cross`, `model_interface_spec`,
+`model_interface_distribution_spec`, the five evidence/scaffold/projection
+specs, `stdio_smoke`, `jobstore_spec`, `apalache_cli_spec`, `explorer_spec`,
+`transport_spec`, `registry_spec`, `counter_spec`, and `async_spec`), three
+compiler freshness checks (sync TypeScript, async TypeScript, and C++), and
+Counter preflight with exact coverage comparison.
 The script rebuilds first. `stdio_smoke` also checks the version CLI.
 
 Set `APALACHE_MC` to an absolute executable path for explicit live coverage.
