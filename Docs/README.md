@@ -9,6 +9,7 @@ an installed Windows service, a hosted CI run, or a published package.
 
 | Task | Read |
 | --- | --- |
+| Run MBT or LLM-assisted development with the Mirror-Framework | [Mirror-Framework usage guide](usage-of-mirror-framework.md) |
 | Test TypeScript application code | [MirrorECMA MBT user manual](mirrorecma-typescript-mbt-user-manual.md) |
 | Build, install, or identify Mirrors | [Product versions and installation](versioning.md) |
 | Understand component ownership | [Architecture overview](architecture-overview.md), [module details](architecture-details.md) |
