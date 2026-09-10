@@ -745,8 +745,10 @@ a Rust worker can, for example, be driven by either evaluator language.
 Implementation references in the MirrorGate repository:
 
 - [Architecture](https://github.com/NzSN/MirrorGate/blob/main/docs/architecture.md): trust and repository ownership.
-- [Sandbox walkthrough](https://github.com/NzSN/MirrorGate/blob/main/docs/sandbox-design.md) and
-  [backend guide](https://github.com/NzSN/MirrorGate/blob/main/docs/linux-bubblewrap.md): implemented enforcement.
+- [Supervisor design](https://github.com/NzSN/MirrorGate/blob/main/docs/sandbox/supervisor-design.md): trusted
+  admission, snapshots, process lifecycle, and cleanup ownership.
+- [Sandbox walkthrough](https://github.com/NzSN/MirrorGate/blob/main/docs/sandbox/design.md) and
+  [backend guide](https://github.com/NzSN/MirrorGate/blob/main/docs/sandbox/linux-bubblewrap.md): implemented enforcement.
 - [Worker protocol v1](https://github.com/NzSN/MirrorGate/blob/main/docs/protocol-v1.md): frozen public-port RPC.
 - [Control v1](https://github.com/NzSN/MirrorGate/blob/main/docs/orchestration-control-v1.md): shared
   framing, authority, lifecycle, and cleanup contract.
