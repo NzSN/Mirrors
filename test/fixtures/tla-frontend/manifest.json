@@ -1,0 +1,1442 @@
+{
+  "schema": "mirrors.tla-frontend-corpus/1",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "status": "provisional",
+  "designDocument": "../../../Docs/model-interface-compiler/tla-frontend-design.md",
+  "profileDocument": "../../../Docs/model-interface-compiler/tla-language-profile.md",
+  "stages": [
+    "lex",
+    "parse",
+    "moduleGraph",
+    "nameResolution",
+    "substitution",
+    "level",
+    "sourceEvidence"
+  ],
+  "outcomes": {
+    "accepted": "lex, parse, module graph, elaboration, and level checking succeed with no error diagnostics",
+    "rejected": "the named stage produces at least one error diagnostic and no later stage runs"
+  },
+  "reasons": {
+    "malformed": "input is not valid for the profile and no profile revision is expected to accept it",
+    "limit": "input exceeds a documented frontend resource bound",
+    "profile_limit": "input is valid TLA+ but intentionally unsupported by this profile revision"
+  },
+  "differential": {
+    "sany": {
+      "status": "not_run",
+      "version": "pending"
+    },
+    "apalache": {
+      "status": "not_run",
+      "version": "pending"
+    },
+    "localProbe": {
+      "tool": "tla2tools 2.0 (2024-08-08), SANY2 2.1",
+      "role": "exploratory fixture construction only; not a recorded differential gate",
+      "note": "entries carrying referenceExpectation were accepted by the local reference parser (or completed with warnings only, for accepted-with-warning-by-reference-tool) while this profile rejects them by design",
+      "fullCorpusProbe": "2026-09-11: a single exploratory pass over all 57 fixtures reproduced every recorded referenceExpectation outcome; the 27 accepted fixtures were accepted cleanly, the 12 staged fixtures carrying referenceExpectation matched their recorded outcome, and the remaining 18 rejected fixtures were also rejected by the reference parser"
+    }
+  },
+  "branches": [
+    {
+      "id": "elab.extends.ambiguity",
+      "stage": "nameResolution",
+      "title": "elab.extends.ambiguity"
+    },
+    {
+      "id": "elab.instance.staged",
+      "stage": "substitution",
+      "title": "elab.instance.staged"
+    },
+    {
+      "id": "elab.levels.assumption",
+      "stage": "level",
+      "title": "elab.levels.assumption"
+    },
+    {
+      "id": "elab.levels.classification",
+      "stage": "level",
+      "title": "elab.levels.classification"
+    },
+    {
+      "id": "elab.levels.violation",
+      "stage": "level",
+      "title": "elab.levels.violation"
+    },
+    {
+      "id": "elab.names.arity",
+      "stage": "nameResolution",
+      "title": "elab.names.arity"
+    },
+    {
+      "id": "elab.names.duplicate",
+      "stage": "nameResolution",
+      "title": "elab.names.duplicate"
+    },
+    {
+      "id": "elab.names.local",
+      "stage": "nameResolution",
+      "title": "elab.names.local"
+    },
+    {
+      "id": "elab.names.unknown",
+      "stage": "nameResolution",
+      "title": "elab.names.unknown"
+    },
+    {
+      "id": "elab.substitution.implicit",
+      "stage": "substitution",
+      "title": "elab.substitution.implicit"
+    },
+    {
+      "id": "elab.substitution.invalid",
+      "stage": "substitution",
+      "title": "elab.substitution.invalid"
+    },
+    {
+      "id": "elab.substitution.level-shift",
+      "stage": "substitution",
+      "title": "elab.substitution.level-shift"
+    },
+    {
+      "id": "elab.substitution.missing",
+      "stage": "substitution",
+      "title": "elab.substitution.missing"
+    },
+    {
+      "id": "elab.variables.effective-origins",
+      "stage": "nameResolution",
+      "title": "elab.variables.effective-origins"
+    },
+    {
+      "id": "elab.variables.nineteen",
+      "stage": "nameResolution",
+      "title": "elab.variables.nineteen"
+    },
+    {
+      "id": "elab.variables.order",
+      "stage": "nameResolution",
+      "title": "elab.variables.order"
+    },
+    {
+      "id": "graph.extends.cycle",
+      "stage": "moduleGraph",
+      "title": "graph.extends.cycle"
+    },
+    {
+      "id": "graph.extends.diamond",
+      "stage": "moduleGraph",
+      "title": "graph.extends.diamond"
+    },
+    {
+      "id": "graph.extends.direct",
+      "stage": "moduleGraph",
+      "title": "graph.extends.direct"
+    },
+    {
+      "id": "graph.extends.missing",
+      "stage": "moduleGraph",
+      "title": "graph.extends.missing"
+    },
+    {
+      "id": "graph.extends.transitive",
+      "stage": "moduleGraph",
+      "title": "graph.extends.transitive"
+    },
+    {
+      "id": "graph.identity.duplicate-module",
+      "stage": "moduleGraph",
+      "title": "graph.identity.duplicate-module"
+    },
+    {
+      "id": "graph.identity.filename-header",
+      "stage": "moduleGraph",
+      "title": "graph.identity.filename-header"
+    },
+    {
+      "id": "graph.lexical-false-positive",
+      "stage": "moduleGraph",
+      "title": "graph.lexical-false-positive"
+    },
+    {
+      "id": "graph.provider.borrowed-directory",
+      "stage": "moduleGraph",
+      "title": "graph.provider.borrowed-directory"
+    },
+    {
+      "id": "graph.provider.inline-equivalence",
+      "stage": "moduleGraph",
+      "title": "graph.provider.inline-equivalence"
+    },
+    {
+      "id": "graph.standard-modules",
+      "stage": "moduleGraph",
+      "title": "graph.standard-modules"
+    },
+    {
+      "id": "lex.annotations.apalache",
+      "stage": "lex",
+      "title": "lex.annotations.apalache"
+    },
+    {
+      "id": "lex.comments.line",
+      "stage": "lex",
+      "title": "lex.comments.line"
+    },
+    {
+      "id": "lex.comments.malformed",
+      "stage": "lex",
+      "title": "lex.comments.malformed"
+    },
+    {
+      "id": "lex.comments.nested-block",
+      "stage": "lex",
+      "title": "lex.comments.nested-block"
+    },
+    {
+      "id": "lex.identifiers",
+      "stage": "lex",
+      "title": "lex.identifiers"
+    },
+    {
+      "id": "lex.integers.alternate-spelling",
+      "stage": "lex",
+      "title": "lex.integers.alternate-spelling"
+    },
+    {
+      "id": "lex.integers.decimal",
+      "stage": "lex",
+      "title": "lex.integers.decimal"
+    },
+    {
+      "id": "lex.keywords",
+      "stage": "lex",
+      "title": "lex.keywords"
+    },
+    {
+      "id": "lex.limits.comment-depth",
+      "stage": "lex",
+      "title": "lex.limits.comment-depth"
+    },
+    {
+      "id": "lex.limits.identifier-size",
+      "stage": "lex",
+      "title": "lex.limits.identifier-size"
+    },
+    {
+      "id": "lex.malformed.control-character",
+      "stage": "lex",
+      "title": "lex.malformed.control-character"
+    },
+    {
+      "id": "lex.module.delimiters",
+      "stage": "lex",
+      "title": "lex.module.delimiters"
+    },
+    {
+      "id": "lex.numbers.real-literal-staged",
+      "stage": "lex",
+      "title": "lex.numbers.real-literal-staged"
+    },
+    {
+      "id": "lex.operators.alias-equivalence",
+      "stage": "lex",
+      "title": "lex.operators.alias-equivalence"
+    },
+    {
+      "id": "lex.operators.ascii",
+      "stage": "lex",
+      "title": "lex.operators.ascii"
+    },
+    {
+      "id": "lex.operators.ascii-word",
+      "stage": "lex",
+      "title": "lex.operators.ascii-word"
+    },
+    {
+      "id": "lex.operators.unicode-staged",
+      "stage": "lex",
+      "title": "lex.operators.unicode-staged"
+    },
+    {
+      "id": "lex.punctuation",
+      "stage": "lex",
+      "title": "lex.punctuation"
+    },
+    {
+      "id": "lex.strings.escapes",
+      "stage": "lex",
+      "title": "lex.strings.escapes"
+    },
+    {
+      "id": "lex.strings.malformed",
+      "stage": "lex",
+      "title": "lex.strings.malformed"
+    },
+    {
+      "id": "lex.trivia.lossless",
+      "stage": "lex",
+      "title": "lex.trivia.lossless"
+    },
+    {
+      "id": "syntax.decl.assume-axiom",
+      "stage": "parse",
+      "title": "syntax.decl.assume-axiom"
+    },
+    {
+      "id": "syntax.decl.constants",
+      "stage": "parse",
+      "title": "syntax.decl.constants"
+    },
+    {
+      "id": "syntax.decl.instance",
+      "stage": "parse",
+      "title": "syntax.decl.instance"
+    },
+    {
+      "id": "syntax.decl.local",
+      "stage": "parse",
+      "title": "syntax.decl.local"
+    },
+    {
+      "id": "syntax.decl.operator",
+      "stage": "parse",
+      "title": "syntax.decl.operator"
+    },
+    {
+      "id": "syntax.decl.recursive",
+      "stage": "parse",
+      "title": "syntax.decl.recursive"
+    },
+    {
+      "id": "syntax.decl.theorem-proof",
+      "stage": "parse",
+      "title": "syntax.decl.theorem-proof"
+    },
+    {
+      "id": "syntax.decl.variables",
+      "stage": "parse",
+      "title": "syntax.decl.variables"
+    },
+    {
+      "id": "syntax.expr.action-subscript",
+      "stage": "parse",
+      "title": "syntax.expr.action-subscript"
+    },
+    {
+      "id": "syntax.expr.comprehensions",
+      "stage": "parse",
+      "title": "syntax.expr.comprehensions"
+    },
+    {
+      "id": "syntax.expr.control-flow",
+      "stage": "parse",
+      "title": "syntax.expr.control-flow"
+    },
+    {
+      "id": "syntax.expr.enabled-unchanged",
+      "stage": "parse",
+      "title": "syntax.expr.enabled-unchanged"
+    },
+    {
+      "id": "syntax.expr.fairness",
+      "stage": "parse",
+      "title": "syntax.expr.fairness"
+    },
+    {
+      "id": "syntax.expr.functions-records",
+      "stage": "parse",
+      "title": "syntax.expr.functions-records"
+    },
+    {
+      "id": "syntax.expr.literals-collections",
+      "stage": "parse",
+      "title": "syntax.expr.literals-collections"
+    },
+    {
+      "id": "syntax.expr.priming",
+      "stage": "parse",
+      "title": "syntax.expr.priming"
+    },
+    {
+      "id": "syntax.expr.quantifiers",
+      "stage": "parse",
+      "title": "syntax.expr.quantifiers"
+    },
+    {
+      "id": "syntax.expr.selection-except",
+      "stage": "parse",
+      "title": "syntax.expr.selection-except"
+    },
+    {
+      "id": "syntax.expr.temporal",
+      "stage": "parse",
+      "title": "syntax.expr.temporal"
+    },
+    {
+      "id": "syntax.pluscal.staged",
+      "stage": "parse",
+      "title": "syntax.pluscal.staged"
+    },
+    {
+      "id": "syntax.precedence.binding",
+      "stage": "parse",
+      "title": "syntax.precedence.binding"
+    },
+    {
+      "id": "syntax.precedence.conflict",
+      "stage": "parse",
+      "title": "syntax.precedence.conflict"
+    },
+    {
+      "id": "syntax.proof.opaque",
+      "stage": "parse",
+      "title": "syntax.proof.opaque"
+    },
+    {
+      "id": "syntax.recovery.bounded",
+      "stage": "parse",
+      "title": "syntax.recovery.bounded"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "acc-module-minimal",
+      "kind": "accepted",
+      "stage": "sourceEvidence",
+      "provider": "borrowed-directory",
+      "root": "AcceptModuleMinimal",
+      "files": [
+        "accepted/AcceptModuleMinimal.tla"
+      ],
+      "branches": [
+        "lex.module.delimiters",
+        "lex.identifiers",
+        "lex.keywords",
+        "lex.integers.decimal",
+        "lex.operators.ascii",
+        "lex.punctuation",
+        "syntax.decl.variables",
+        "syntax.decl.operator",
+        "syntax.expr.priming",
+        "syntax.expr.action-subscript",
+        "syntax.expr.temporal",
+        "graph.extends.direct",
+        "graph.standard-modules",
+        "elab.variables.order"
+      ],
+      "explanation": "Smallest executable module: header and terminator delimiters, an integer literal, a variable, primed assignment, an action subscript, and a temporal specification.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-module-minimal.json"
+    },
+    {
+      "id": "acc-constants",
+      "kind": "accepted",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "AcceptConstants",
+      "files": [
+        "accepted/AcceptConstants.tla"
+      ],
+      "branches": [
+        "syntax.decl.constants",
+        "lex.keywords",
+        "syntax.expr.functions-records"
+      ],
+      "explanation": "CONSTANTS and CONSTANT declarations, including a record constructor over two constants.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-constants.json"
+    },
+    {
+      "id": "acc-recursive",
+      "kind": "accepted",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "AcceptRecursive",
+      "files": [
+        "accepted/AcceptRecursive.tla"
+      ],
+      "branches": [
+        "syntax.decl.recursive",
+        "elab.names.arity"
+      ],
+      "explanation": "RECURSIVE declarations for unary and binary operators resolved to their definitions.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-recursive.json"
+    },
+    {
+      "id": "acc-operators",
+      "kind": "accepted",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "AcceptOperators",
+      "files": [
+        "accepted/AcceptOperators.tla"
+      ],
+      "branches": [
+        "syntax.decl.operator",
+        "lex.operators.ascii",
+        "elab.names.arity"
+      ],
+      "explanation": "Prefix, user-defined infix, and higher-order operator definitions; \\oplus and \\prec are user-defined operator names, and Apply takes a higher-order operand.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-operators.json"
+    },
+    {
+      "id": "acc-local",
+      "kind": "accepted",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "AcceptLocal",
+      "files": [
+        "accepted/AcceptLocal.tla"
+      ],
+      "branches": [
+        "syntax.decl.local",
+        "elab.names.local"
+      ],
+      "explanation": "LOCAL definition retained as a local declaration that remains usable inside its own module.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-local.json"
+    },
+    {
+      "id": "acc-assumptions",
+      "kind": "accepted",
+      "stage": "level",
+      "provider": "borrowed-directory",
+      "root": "AcceptAssumptions",
+      "files": [
+        "accepted/AcceptAssumptions.tla"
+      ],
+      "branches": [
+        "syntax.decl.assume-axiom",
+        "elab.levels.assumption"
+      ],
+      "explanation": "ASSUME, ASSUMPTION, and AXIOM statements over constants; each must be constant level.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-assumptions.json"
+    },
+    {
+      "id": "acc-theorem-proof",
+      "kind": "accepted",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "AcceptTheoremProof",
+      "files": [
+        "accepted/AcceptTheoremProof.tla"
+      ],
+      "branches": [
+        "syntax.decl.theorem-proof",
+        "syntax.proof.opaque"
+      ],
+      "explanation": "THEOREM and LEMMA statements with a PROOF OMITTED body that is retained and not elaborated.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-theorem-proof.json"
+    },
+    {
+      "id": "acc-values",
+      "kind": "accepted",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "AcceptValues",
+      "files": [
+        "accepted/AcceptValues.tla"
+      ],
+      "branches": [
+        "syntax.expr.literals-collections",
+        "lex.strings.escapes"
+      ],
+      "explanation": "Boolean, integer, string, tuple, record, and set literals plus string escapes.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-values.json"
+    },
+    {
+      "id": "acc-functions",
+      "kind": "accepted",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "AcceptFunctions",
+      "files": [
+        "accepted/AcceptFunctions.tla"
+      ],
+      "branches": [
+        "syntax.expr.functions-records",
+        "syntax.expr.selection-except"
+      ],
+      "explanation": "Function constructor, function set, DOMAIN, selection by index and field, and EXCEPT updates with @.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-functions.json"
+    },
+    {
+      "id": "acc-control",
+      "kind": "accepted",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "AcceptControl",
+      "files": [
+        "accepted/AcceptControl.tla"
+      ],
+      "branches": [
+        "syntax.expr.control-flow"
+      ],
+      "explanation": "IF/THEN/ELSE, CASE with OTHER, LET/IN, and CHOOSE.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-control.json"
+    },
+    {
+      "id": "acc-quantifiers",
+      "kind": "accepted",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "AcceptQuantifiers",
+      "files": [
+        "accepted/AcceptQuantifiers.tla"
+      ],
+      "branches": [
+        "syntax.expr.quantifiers"
+      ],
+      "explanation": "Bounded universal and existential quantifiers including nesting.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-quantifiers.json"
+    },
+    {
+      "id": "acc-comprehensions",
+      "kind": "accepted",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "AcceptComprehensions",
+      "files": [
+        "accepted/AcceptComprehensions.tla"
+      ],
+      "branches": [
+        "syntax.expr.comprehensions"
+      ],
+      "explanation": "Set comprehension, set-of-form comprehension, multi-binder comprehension, and comprehension inside a function.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-comprehensions.json"
+    },
+    {
+      "id": "acc-actions",
+      "kind": "accepted",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "AcceptActions",
+      "files": [
+        "accepted/AcceptActions.tla"
+      ],
+      "branches": [
+        "syntax.expr.enabled-unchanged",
+        "syntax.expr.action-subscript"
+      ],
+      "explanation": "ENABLED, UNCHANGED over a tuple of variables, angle-angle action subscript, and action disjunction.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-actions.json"
+    },
+    {
+      "id": "acc-temporal",
+      "kind": "accepted",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "AcceptTemporal",
+      "files": [
+        "accepted/AcceptTemporal.tla"
+      ],
+      "branches": [
+        "syntax.expr.temporal",
+        "syntax.expr.fairness"
+      ],
+      "explanation": "Always, eventually, leads-to, compound temporal operators, and WF_/SF_ fairness.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-temporal.json"
+    },
+    {
+      "id": "acc-precedence",
+      "kind": "accepted",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "AcceptPrecedence",
+      "files": [
+        "accepted/AcceptPrecedence.tla"
+      ],
+      "branches": [
+        "syntax.precedence.binding"
+      ],
+      "explanation": "Precedence cases the reference grammar accepts without parentheses: arithmetic over relational, relational over conjunction, conjunction and disjunction over implication, and unary negation binding tighter than conjunction.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-precedence.json"
+    },
+    {
+      "id": "acc-ascii-symbolic",
+      "kind": "accepted",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "AcceptAsciiSymbolic",
+      "files": [
+        "accepted/AcceptAsciiSymbolic.tla"
+      ],
+      "branches": [
+        "lex.operators.ascii",
+        "lex.operators.alias-equivalence"
+      ],
+      "explanation": "Symbolic ASCII operator spellings; paired with acc-ascii-word for spelling equivalence.",
+      "equivalenceGroup": "ascii-alias-pair",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-ascii-symbolic.json"
+    },
+    {
+      "id": "acc-ascii-word",
+      "kind": "accepted",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "AcceptAsciiWord",
+      "files": [
+        "accepted/AcceptAsciiWord.tla"
+      ],
+      "branches": [
+        "lex.operators.ascii-word",
+        "lex.operators.alias-equivalence"
+      ],
+      "explanation": "Word ASCII operator spellings (\\land, \\lor, \\lnot, \\equiv, \\cup, \\cap, \\leq) over the same operator shapes as acc-ascii-symbolic.",
+      "equivalenceGroup": "ascii-alias-pair",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-ascii-word.json"
+    },
+    {
+      "id": "acc-numeric-spellings",
+      "kind": "accepted",
+      "stage": "lex",
+      "provider": "borrowed-directory",
+      "root": "AcceptNumericSpellings",
+      "files": [
+        "accepted/AcceptNumericSpellings.tla"
+      ],
+      "branches": [
+        "lex.integers.alternate-spelling"
+      ],
+      "explanation": "Decimal, octal (\\o), hexadecimal (\\h), and binary (\\b) integer spellings accepted by the reference lexer.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-numeric-spellings.json"
+    },
+    {
+      "id": "acc-trivia",
+      "kind": "accepted",
+      "stage": "moduleGraph",
+      "provider": "borrowed-directory",
+      "root": "AcceptTrivia",
+      "files": [
+        "accepted/AcceptTrivia.tla"
+      ],
+      "branches": [
+        "lex.comments.line",
+        "lex.comments.nested-block",
+        "lex.trivia.lossless",
+        "graph.lexical-false-positive"
+      ],
+      "explanation": "Line comments, nested block comments, and dependency keywords inside comments or strings that must not create module edges; token and trivia concatenation must reproduce the source bytes.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-trivia.json"
+    },
+    {
+      "id": "acc-annotations",
+      "kind": "accepted",
+      "stage": "lex",
+      "provider": "borrowed-directory",
+      "root": "AcceptAnnotations",
+      "files": [
+        "accepted/AcceptAnnotations.tla"
+      ],
+      "branches": [
+        "lex.annotations.apalache"
+      ],
+      "explanation": "Apalache @type annotations are captured as structured comment trivia with no semantic facts.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-annotations.json"
+    },
+    {
+      "id": "acc-standard-modules",
+      "kind": "accepted",
+      "stage": "moduleGraph",
+      "provider": "borrowed-directory",
+      "root": "AcceptStandardModules",
+      "files": [
+        "accepted/AcceptStandardModules.tla"
+      ],
+      "branches": [
+        "graph.standard-modules"
+      ],
+      "explanation": "Standard-module catalog identity for Integers, Naturals, Sequences, FiniteSets, and TLC with no local file.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-standard-modules.json"
+    },
+    {
+      "id": "acc-generic-extends",
+      "kind": "accepted",
+      "stage": "sourceEvidence",
+      "provider": "borrowed-directory",
+      "root": "GenericExtendsRoot",
+      "files": [
+        "accepted/generic-extends/GenericExtendsBase.tla",
+        "accepted/generic-extends/GenericExtendsRoot.tla"
+      ],
+      "branches": [
+        "graph.extends.direct",
+        "graph.provider.borrowed-directory",
+        "elab.variables.effective-origins"
+      ],
+      "explanation": "Generic two-module EXTENDS bundle: three inherited variables plus two local variables with declaration origins.",
+      "sourceRoot": "accepted/generic-extends",
+      "summary": "expected/acc-generic-extends.json"
+    },
+    {
+      "id": "acc-generic-transfer",
+      "kind": "accepted",
+      "stage": "sourceEvidence",
+      "provider": "borrowed-directory",
+      "root": "GenericTransfer",
+      "files": [
+        "accepted/generic-transfer/GenericBase.tla",
+        "accepted/generic-transfer/GenericTransfer.tla"
+      ],
+      "branches": [
+        "graph.extends.direct",
+        "elab.variables.nineteen",
+        "elab.variables.order",
+        "elab.variables.effective-origins"
+      ],
+      "explanation": "DumpLedger-shaped generic fixture: twelve variables inherited from a base module plus seven local variables resolve to nineteen effective variables in declaration order.",
+      "sourceRoot": "accepted/generic-transfer",
+      "summary": "expected/acc-generic-transfer.json"
+    },
+    {
+      "id": "acc-generic-transfer-audit",
+      "kind": "accepted",
+      "stage": "sourceEvidence",
+      "provider": "borrowed-directory",
+      "root": "GenericTransferAudit",
+      "files": [
+        "accepted/generic-transfer/GenericBase.tla",
+        "accepted/generic-transfer/GenericTransfer.tla",
+        "accepted/generic-transfer/GenericTransferAudit.tla"
+      ],
+      "branches": [
+        "graph.extends.transitive",
+        "elab.variables.nineteen",
+        "elab.variables.effective-origins"
+      ],
+      "explanation": "Transitive scenario module extending the transfer fixture; the same nineteen variables resolve with longer import paths, preventing fixes special-cased to one dependency depth.",
+      "sourceRoot": "accepted/generic-transfer",
+      "summary": "expected/acc-generic-transfer-audit.json"
+    },
+    {
+      "id": "acc-diamond",
+      "kind": "accepted",
+      "stage": "sourceEvidence",
+      "provider": "borrowed-directory",
+      "root": "DiamondRoot",
+      "files": [
+        "accepted/diamond/DiamondBase.tla",
+        "accepted/diamond/DiamondLeft.tla",
+        "accepted/diamond/DiamondRight.tla",
+        "accepted/diamond/DiamondRoot.tla"
+      ],
+      "branches": [
+        "graph.extends.diamond",
+        "elab.variables.effective-origins"
+      ],
+      "explanation": "Diamond reuse: the shared base variable resolves once, with per-branch origins preserved.",
+      "sourceRoot": "accepted/diamond",
+      "summary": "expected/acc-diamond.json"
+    },
+    {
+      "id": "acc-inline-equivalent",
+      "kind": "accepted",
+      "stage": "sourceEvidence",
+      "provider": "inline-source-map",
+      "root": "GenericExtendsRoot",
+      "files": [
+        "accepted/generic-extends/GenericExtendsBase.tla",
+        "accepted/generic-extends/GenericExtendsRoot.tla"
+      ],
+      "branches": [
+        "graph.provider.inline-equivalence"
+      ],
+      "explanation": "Same logical modules served through a closed inline source map must produce the same graph and summary as acc-generic-extends.",
+      "inlineSourceMap": [
+        {
+          "logicalName": "GenericExtendsBase",
+          "file": "accepted/generic-extends/GenericExtendsBase.tla"
+        },
+        {
+          "logicalName": "GenericExtendsRoot",
+          "file": "accepted/generic-extends/GenericExtendsRoot.tla"
+        }
+      ],
+      "summary": "expected/acc-inline-equivalent.json"
+    },
+    {
+      "id": "acc-levels",
+      "kind": "accepted",
+      "stage": "level",
+      "provider": "borrowed-directory",
+      "root": "AcceptLevels",
+      "files": [
+        "accepted/AcceptLevels.tla"
+      ],
+      "branches": [
+        "elab.levels.classification"
+      ],
+      "explanation": "Constant, state, action, and temporal operator levels classified on one module.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-levels.json"
+    },
+    {
+      "id": "rej-no-terminator",
+      "kind": "rejected",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "RejectNoTerminator",
+      "files": [
+        "rejected/RejectNoTerminator.tla"
+      ],
+      "branches": [
+        "lex.module.delimiters"
+      ],
+      "explanation": "Module body without a terminator; the reference tool reports a missing module end.",
+      "reason": "malformed",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-keyword-identifier",
+      "kind": "rejected",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "RejectKeywordIdentifier",
+      "files": [
+        "rejected/RejectKeywordIdentifier.tla"
+      ],
+      "branches": [
+        "lex.keywords",
+        "syntax.decl.variables"
+      ],
+      "explanation": "A reserved word used as a declared variable name.",
+      "reason": "malformed",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-unterminated-string",
+      "kind": "rejected",
+      "stage": "lex",
+      "provider": "borrowed-directory",
+      "root": "RejectUnterminatedString",
+      "files": [
+        "rejected/RejectUnterminatedString.tla"
+      ],
+      "branches": [
+        "lex.strings.malformed"
+      ],
+      "explanation": "String literal closed by a newline; rejected before parsing.",
+      "reason": "malformed",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-newline-in-string",
+      "kind": "rejected",
+      "stage": "lex",
+      "provider": "borrowed-directory",
+      "root": "RejectNewlineInString",
+      "files": [
+        "rejected/RejectNewlineInString.tla"
+      ],
+      "branches": [
+        "lex.strings.malformed"
+      ],
+      "explanation": "String literal continued on a second line; newlines are not legal inside strings.",
+      "reason": "malformed",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-open-comment",
+      "kind": "rejected",
+      "stage": "lex",
+      "provider": "borrowed-directory",
+      "root": "RejectOpenComment",
+      "files": [
+        "rejected/RejectOpenComment.tla"
+      ],
+      "branches": [
+        "lex.comments.malformed"
+      ],
+      "explanation": "Block comment that is never closed before end of input.",
+      "reason": "malformed",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-comment-depth",
+      "kind": "rejected",
+      "stage": "lex",
+      "provider": "borrowed-directory",
+      "root": "RejectCommentDepth",
+      "files": [
+        "rejected/RejectCommentDepth.tla"
+      ],
+      "branches": [
+        "lex.limits.comment-depth"
+      ],
+      "explanation": "Seventy nested block comments exceed the profile comment-depth limit; the reference parser accepts the file, so this is a documented resource limit.",
+      "reason": "limit",
+      "sourceRoot": "rejected",
+      "referenceExpectation": "accepted-by-reference-tool"
+    },
+    {
+      "id": "rej-identifier-size",
+      "kind": "rejected",
+      "stage": "lex",
+      "provider": "borrowed-directory",
+      "root": "RejectIdentifierSize",
+      "files": [
+        "rejected/RejectIdentifierSize.tla"
+      ],
+      "branches": [
+        "lex.limits.identifier-size"
+      ],
+      "explanation": "Identifier of three hundred bytes exceeds the profile identifier limit; the reference parser accepts the file, so this is a documented resource limit.",
+      "reason": "limit",
+      "sourceRoot": "rejected",
+      "referenceExpectation": "accepted-by-reference-tool"
+    },
+    {
+      "id": "rej-control-character",
+      "kind": "rejected",
+      "stage": "lex",
+      "provider": "borrowed-directory",
+      "root": "RejectControlCharacter",
+      "files": [
+        "rejected/RejectControlCharacter.tla"
+      ],
+      "branches": [
+        "lex.malformed.control-character"
+      ],
+      "explanation": "Raw control byte inside a comment; the profile rejects unknown control characters for safety while the reference parser tolerates them.",
+      "reason": "malformed",
+      "sourceRoot": "rejected",
+      "referenceExpectation": "accepted-by-reference-tool"
+    },
+    {
+      "id": "rej-multiple-errors",
+      "kind": "rejected",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "RejectMultipleErrors",
+      "files": [
+        "rejected/RejectMultipleErrors.tla"
+      ],
+      "branches": [
+        "syntax.recovery.bounded"
+      ],
+      "explanation": "Two independent delimiter errors require bounded recovery to report more than the first failure.",
+      "reason": "malformed",
+      "minDiagnostics": 2,
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-pluscal",
+      "kind": "rejected",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "RejectPlusCal",
+      "files": [
+        "rejected/RejectPlusCal.tla"
+      ],
+      "branches": [
+        "syntax.pluscal.staged"
+      ],
+      "explanation": "PlusCal algorithm block inside a comment; revision 1 rejects PlusCal modules with a profile diagnostic instead of silently reading them as comments, and requires pre-translated TLA+.",
+      "reason": "profile_limit",
+      "revisit": "unscheduled",
+      "sourceRoot": "rejected",
+      "referenceExpectation": "accepted-by-reference-tool"
+    },
+    {
+      "id": "rej-arity-mismatch",
+      "kind": "rejected",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "RejectArityMismatch",
+      "files": [
+        "rejected/RejectArityMismatch.tla"
+      ],
+      "branches": [
+        "elab.names.arity"
+      ],
+      "explanation": "Operator applied with two arguments but declared with one.",
+      "reason": "malformed",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-unknown-name",
+      "kind": "rejected",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "RejectUnknownName",
+      "files": [
+        "rejected/RejectUnknownName.tla"
+      ],
+      "branches": [
+        "elab.names.unknown"
+      ],
+      "explanation": "Reference to a name with no declaration in the elaborated closure.",
+      "reason": "malformed",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-duplicate-declaration",
+      "kind": "rejected",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "RejectDuplicateDeclaration",
+      "files": [
+        "rejected/RejectDuplicateDeclaration.tla"
+      ],
+      "branches": [
+        "elab.names.duplicate"
+      ],
+      "explanation": "Constant declared twice in one module.",
+      "reason": "malformed",
+      "sourceRoot": "rejected",
+      "referenceExpectation": "accepted-with-warning-by-reference-tool"
+    },
+    {
+      "id": "rej-precedence-mix",
+      "kind": "rejected",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "RejectPrecedenceMix",
+      "files": [
+        "rejected/RejectPrecedenceMix.tla"
+      ],
+      "branches": [
+        "syntax.precedence.conflict"
+      ],
+      "explanation": "Mixing /\\ and \\/ without parentheses is a precedence conflict for the reference grammar and must not be silently re-associated.",
+      "reason": "malformed",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-precedence-chain",
+      "kind": "rejected",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "RejectPrecedenceChain",
+      "files": [
+        "rejected/RejectPrecedenceChain.tla"
+      ],
+      "branches": [
+        "syntax.precedence.conflict"
+      ],
+      "explanation": "Chained => and <=> have no associativity in the reference grammar; parentheses are required.",
+      "reason": "malformed",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-unicode-spelling",
+      "kind": "rejected",
+      "stage": "lex",
+      "provider": "borrowed-directory",
+      "root": "RejectUnicodeSpelling",
+      "files": [
+        "rejected/RejectUnicodeSpelling.tla"
+      ],
+      "branches": [
+        "lex.operators.unicode-staged"
+      ],
+      "explanation": "Unicode operator spellings (\u2227, \u2208, \u2264) are outside revision 1; the frontend reports a profile diagnostic naming the spelling, and the reference parser rejects them as well.",
+      "reason": "profile_limit",
+      "revisit": "unscheduled",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-real-literal",
+      "kind": "rejected",
+      "stage": "lex",
+      "provider": "borrowed-directory",
+      "root": "RejectRealLiteral",
+      "files": [
+        "rejected/RejectRealLiteral.tla"
+      ],
+      "branches": [
+        "lex.numbers.real-literal-staged"
+      ],
+      "explanation": "Decimal real literals in two definitions; valid TLA+ accepted by the reference parser, staged out because revision 1 has an integer-only numeric value domain.",
+      "reason": "profile_limit",
+      "revisit": "unscheduled",
+      "sourceRoot": "rejected",
+      "referenceExpectation": "accepted-by-reference-tool"
+    },
+    {
+      "id": "rej-level-assume",
+      "kind": "rejected",
+      "stage": "level",
+      "provider": "borrowed-directory",
+      "root": "RejectLevelAssume",
+      "files": [
+        "rejected/RejectLevelAssume.tla"
+      ],
+      "branches": [
+        "elab.levels.violation"
+      ],
+      "explanation": "ASSUME statement mentioning a state variable violates the constant-level requirement for assumptions.",
+      "reason": "malformed",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-extends-ambiguity",
+      "kind": "rejected",
+      "stage": "nameResolution",
+      "provider": "borrowed-directory",
+      "root": "AmbRoot",
+      "files": [
+        "rejected/extends-ambiguity/AmbLeft.tla",
+        "rejected/extends-ambiguity/AmbRight.tla",
+        "rejected/extends-ambiguity/AmbRoot.tla"
+      ],
+      "branches": [
+        "elab.extends.ambiguity"
+      ],
+      "explanation": "Two extended modules declare the same variable name; the ambiguity must be reported with related declaration locations instead of being deduplicated.",
+      "reason": "malformed",
+      "sourceRoot": "rejected/extends-ambiguity",
+      "referenceExpectation": "accepted-with-warning-by-reference-tool"
+    },
+    {
+      "id": "rej-extends-cycle",
+      "kind": "rejected",
+      "stage": "moduleGraph",
+      "provider": "borrowed-directory",
+      "root": "CycleA",
+      "files": [
+        "rejected/extends-cycle/CycleA.tla",
+        "rejected/extends-cycle/CycleB.tla"
+      ],
+      "branches": [
+        "graph.extends.cycle"
+      ],
+      "explanation": "Direct dependency cycle; the diagnostic must contain the bounded complete cycle path.",
+      "reason": "malformed",
+      "sourceRoot": "rejected/extends-cycle"
+    },
+    {
+      "id": "rej-extends-missing",
+      "kind": "rejected",
+      "stage": "moduleGraph",
+      "provider": "borrowed-directory",
+      "root": "MissingRoot",
+      "files": [
+        "rejected/extends-missing/MissingRoot.tla"
+      ],
+      "branches": [
+        "graph.extends.missing"
+      ],
+      "explanation": "Dependency that is neither a local file nor a catalog standard module.",
+      "reason": "malformed",
+      "sourceRoot": "rejected/extends-missing"
+    },
+    {
+      "id": "rej-header-mismatch",
+      "kind": "rejected",
+      "stage": "moduleGraph",
+      "provider": "borrowed-directory",
+      "root": "MismatchRoot",
+      "files": [
+        "rejected/header-mismatch/MismatchRoot.tla"
+      ],
+      "branches": [
+        "graph.identity.filename-header"
+      ],
+      "explanation": "Borrowed root whose declared module name differs from its logical identity.",
+      "reason": "malformed",
+      "sourceRoot": "rejected/header-mismatch"
+    },
+    {
+      "id": "rej-duplicate-module",
+      "kind": "rejected",
+      "stage": "moduleGraph",
+      "provider": "borrowed-directory",
+      "root": "DupRoot",
+      "files": [
+        "rejected/duplicate-module/DupShared.tla",
+        "rejected/duplicate-module/DupAlias.tla",
+        "rejected/duplicate-module/DupRoot.tla"
+      ],
+      "branches": [
+        "graph.identity.duplicate-module"
+      ],
+      "explanation": "Aliased dependency declaring an already-captured module identity; the resolver must fail rather than capture two sources for one identity.",
+      "reason": "malformed",
+      "sourceRoot": "rejected/duplicate-module"
+    },
+    {
+      "id": "rej-instance-definition-only",
+      "kind": "rejected",
+      "stage": "substitution",
+      "provider": "borrowed-directory",
+      "root": "InstanceDefsRoot",
+      "files": [
+        "rejected/instance-definition-only/InstanceDefsChild.tla",
+        "rejected/instance-definition-only/InstanceDefsRoot.tla"
+      ],
+      "branches": [
+        "syntax.decl.instance",
+        "elab.instance.staged"
+      ],
+      "explanation": "Named INSTANCE with a constant substitution; instance elaboration is staged out in revision 1 even though the reference tool accepts it.",
+      "reason": "profile_limit",
+      "revisit": "TF5",
+      "eventual": {
+        "outcome": "accepted",
+        "note": "definition-only instance visible through a qualified name"
+      },
+      "sourceRoot": "rejected/instance-definition-only",
+      "referenceExpectation": "accepted-by-reference-tool"
+    },
+    {
+      "id": "rej-instance-variable-substituted",
+      "kind": "rejected",
+      "stage": "substitution",
+      "provider": "borrowed-directory",
+      "root": "InstanceStateRoot",
+      "files": [
+        "rejected/instance-variable-substituted/InstanceStateChild.tla",
+        "rejected/instance-variable-substituted/InstanceStateRoot.tla"
+      ],
+      "branches": [
+        "elab.instance.staged"
+      ],
+      "explanation": "Variable-bearing named instance with an explicit WITH substitution of the child variable; staged out in revision 1 and accepted by the reference tool.",
+      "reason": "profile_limit",
+      "revisit": "TF5",
+      "eventual": {
+        "outcome": "accepted",
+        "note": "no new root state variables; child variable replaced by the parent symbol"
+      },
+      "sourceRoot": "rejected/instance-variable-substituted",
+      "referenceExpectation": "accepted-by-reference-tool"
+    },
+    {
+      "id": "rej-instance-unnamed",
+      "kind": "rejected",
+      "stage": "substitution",
+      "provider": "borrowed-directory",
+      "root": "UnnamedRoot",
+      "files": [
+        "rejected/instance-unnamed/UnnamedChild.tla",
+        "rejected/instance-unnamed/UnnamedRoot.tla"
+      ],
+      "branches": [
+        "elab.instance.staged"
+      ],
+      "explanation": "Unnamed INSTANCE exposing substituted declarations unqualified; staged out in revision 1 and accepted by the reference tool.",
+      "reason": "profile_limit",
+      "revisit": "TF5",
+      "eventual": {
+        "outcome": "accepted",
+        "note": "unqualified visibility after substitution"
+      },
+      "sourceRoot": "rejected/instance-unnamed",
+      "referenceExpectation": "accepted-by-reference-tool"
+    },
+    {
+      "id": "rej-instance-implicit-substitution",
+      "kind": "rejected",
+      "stage": "substitution",
+      "provider": "borrowed-directory",
+      "root": "ImplicitRoot",
+      "files": [
+        "rejected/instance-implicit-substitution/ImplicitChild.tla",
+        "rejected/instance-implicit-substitution/ImplicitRoot.tla"
+      ],
+      "branches": [
+        "elab.instance.staged",
+        "elab.substitution.implicit"
+      ],
+      "explanation": "INSTANCE without WITH where a same-named parent variable substitutes the child variable implicitly; staged out in revision 1.",
+      "reason": "profile_limit",
+      "revisit": "TF5",
+      "eventual": {
+        "outcome": "accepted",
+        "note": "implicit same-name substitution"
+      },
+      "sourceRoot": "rejected/instance-implicit-substitution",
+      "referenceExpectation": "accepted-by-reference-tool"
+    },
+    {
+      "id": "rej-instance-unsubstituted",
+      "kind": "rejected",
+      "stage": "substitution",
+      "provider": "borrowed-directory",
+      "root": "UnsubstitutedRoot",
+      "files": [
+        "rejected/instance-unsubstituted/UnsubstitutedChild.tla",
+        "rejected/instance-unsubstituted/UnsubstitutedRoot.tla"
+      ],
+      "branches": [
+        "elab.substitution.missing"
+      ],
+      "explanation": "Child variable with no substitution and no same-named parent declaration; staged out in revision 1, rejected by the reference tool as a missing substitution.",
+      "reason": "profile_limit",
+      "revisit": "TF5",
+      "eventual": {
+        "outcome": "rejected",
+        "reason": "malformed",
+        "note": "substitution missing for child variable"
+      },
+      "sourceRoot": "rejected/instance-unsubstituted"
+    },
+    {
+      "id": "rej-instance-invalid-substitution",
+      "kind": "rejected",
+      "stage": "substitution",
+      "provider": "borrowed-directory",
+      "root": "BadSubRoot",
+      "files": [
+        "rejected/instance-invalid-substitution/BadSubChild.tla",
+        "rejected/instance-invalid-substitution/BadSubRoot.tla"
+      ],
+      "branches": [
+        "elab.substitution.invalid"
+      ],
+      "explanation": "WITH substitution naming a symbol the child does not declare; staged out in revision 1, rejected by the reference tool.",
+      "reason": "profile_limit",
+      "revisit": "TF5",
+      "eventual": {
+        "outcome": "rejected",
+        "reason": "malformed",
+        "note": "unknown substitution target"
+      },
+      "sourceRoot": "rejected/instance-invalid-substitution"
+    },
+    {
+      "id": "rej-substitution-constant-by-state",
+      "kind": "rejected",
+      "stage": "substitution",
+      "provider": "borrowed-directory",
+      "root": "LevelRoot",
+      "files": [
+        "rejected/substitution-constant-by-state/LevelChild.tla",
+        "rejected/substitution-constant-by-state/LevelRoot.tla"
+      ],
+      "branches": [
+        "elab.substitution.level-shift"
+      ],
+      "explanation": "Constant substituted by a state expression; legal TLA+ when the instantiated operator is used at state level, so TF5 must accept it rather than report a level violation.",
+      "reason": "profile_limit",
+      "revisit": "TF5",
+      "eventual": {
+        "outcome": "accepted",
+        "note": "state-level shift through substitution"
+      },
+      "sourceRoot": "rejected/substitution-constant-by-state",
+      "referenceExpectation": "accepted-by-reference-tool"
+    }
+  ]
+}

@@ -417,7 +417,7 @@ observation when they matter to the requirement.
 3. Supply typed evidence for your model. The current compiler reads typed ITF
    metadata, including `vars`, `param_vars`, and `#meta.varTypes`; sample values
    are not a substitute for those declarations. See the
-   [compiler input and evidence rules](model-interface-compiler-design.md).
+   [compiler input and evidence rules](model-interface-compiler/design.md).
 4. Resolve the lock and generate the port for that model. Implement the emitted
    interface in a handwritten adapter outside the generated directory.
 5. Configure `paramVars` consistently in compiler commands and the runner.

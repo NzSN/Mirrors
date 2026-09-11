@@ -1,0 +1,77 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-comprehensions",
+  "root": "AcceptComprehensions",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptComprehensions"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptComprehensions",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptComprehensions",
+      "kind": "operator",
+      "names": [
+        "S"
+      ],
+      "arity": 0,
+      "line": 5
+    },
+    {
+      "module": "AcceptComprehensions",
+      "kind": "operator",
+      "names": [
+        "Positives"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "AcceptComprehensions",
+      "kind": "operator",
+      "names": [
+        "Squares"
+      ],
+      "arity": 0,
+      "line": 8
+    },
+    {
+      "module": "AcceptComprehensions",
+      "kind": "operator",
+      "names": [
+        "Pairs"
+      ],
+      "arity": 0,
+      "line": 9
+    },
+    {
+      "module": "AcceptComprehensions",
+      "kind": "operator",
+      "names": [
+        "Functions"
+      ],
+      "arity": 0,
+      "line": 10
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptComprehensions.tla",
+      "sha256": "ceab436fd77a92d61a31e5191f34fdf637e97ebcc0d98032b274e647fa4c254e"
+    }
+  ]
+}

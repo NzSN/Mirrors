@@ -1,0 +1,280 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-generic-transfer",
+  "root": "GenericTransfer",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "GenericBase",
+    "GenericTransfer"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "GenericBase",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "GenericTransfer",
+      "module": "GenericBase",
+      "kind": "extends",
+      "resolution": "local",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "GenericBase",
+      "kind": "variable",
+      "names": [
+        "sourceRecords",
+        "sourceCursor",
+        "sourceLimit",
+        "targetRecords",
+        "targetCursor",
+        "targetLimit",
+        "transferJournal",
+        "transferCursor",
+        "auditTrail",
+        "auditCursor",
+        "batchBuffer",
+        "batchCount"
+      ],
+      "line": 5
+    },
+    {
+      "module": "GenericBase",
+      "kind": "operator",
+      "names": [
+        "BaseInit"
+      ],
+      "arity": 0,
+      "line": 19
+    },
+    {
+      "module": "GenericBase",
+      "kind": "operator",
+      "names": [
+        "BaseUnchanged"
+      ],
+      "arity": 0,
+      "line": 33
+    },
+    {
+      "module": "GenericTransfer",
+      "kind": "variable",
+      "names": [
+        "activeBatch",
+        "batchStage",
+        "stagedKey",
+        "stagedValue",
+        "retryCount",
+        "commitPending",
+        "verifyPending"
+      ],
+      "line": 5
+    },
+    {
+      "module": "GenericTransfer",
+      "kind": "operator",
+      "names": [
+        "TransferInit"
+      ],
+      "arity": 0,
+      "line": 14
+    },
+    {
+      "module": "GenericTransfer",
+      "kind": "operator",
+      "names": [
+        "TransferNext"
+      ],
+      "arity": 0,
+      "line": 24
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "sourceRecords",
+      "declaredIn": "GenericBase",
+      "declaredName": "sourceRecords",
+      "importPath": [
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "sourceCursor",
+      "declaredIn": "GenericBase",
+      "declaredName": "sourceCursor",
+      "importPath": [
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "sourceLimit",
+      "declaredIn": "GenericBase",
+      "declaredName": "sourceLimit",
+      "importPath": [
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "targetRecords",
+      "declaredIn": "GenericBase",
+      "declaredName": "targetRecords",
+      "importPath": [
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "targetCursor",
+      "declaredIn": "GenericBase",
+      "declaredName": "targetCursor",
+      "importPath": [
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "targetLimit",
+      "declaredIn": "GenericBase",
+      "declaredName": "targetLimit",
+      "importPath": [
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "transferJournal",
+      "declaredIn": "GenericBase",
+      "declaredName": "transferJournal",
+      "importPath": [
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "transferCursor",
+      "declaredIn": "GenericBase",
+      "declaredName": "transferCursor",
+      "importPath": [
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "auditTrail",
+      "declaredIn": "GenericBase",
+      "declaredName": "auditTrail",
+      "importPath": [
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "auditCursor",
+      "declaredIn": "GenericBase",
+      "declaredName": "auditCursor",
+      "importPath": [
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "batchBuffer",
+      "declaredIn": "GenericBase",
+      "declaredName": "batchBuffer",
+      "importPath": [
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "batchCount",
+      "declaredIn": "GenericBase",
+      "declaredName": "batchCount",
+      "importPath": [
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "activeBatch",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "activeBatch",
+      "importPath": [
+        "GenericTransfer"
+      ]
+    },
+    {
+      "name": "batchStage",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "batchStage",
+      "importPath": [
+        "GenericTransfer"
+      ]
+    },
+    {
+      "name": "stagedKey",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "stagedKey",
+      "importPath": [
+        "GenericTransfer"
+      ]
+    },
+    {
+      "name": "stagedValue",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "stagedValue",
+      "importPath": [
+        "GenericTransfer"
+      ]
+    },
+    {
+      "name": "retryCount",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "retryCount",
+      "importPath": [
+        "GenericTransfer"
+      ]
+    },
+    {
+      "name": "commitPending",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "commitPending",
+      "importPath": [
+        "GenericTransfer"
+      ]
+    },
+    {
+      "name": "verifyPending",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "verifyPending",
+      "importPath": [
+        "GenericTransfer"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "GenericBase.tla",
+      "sha256": "598658048e6cc96595a0b112a552ded0f29cfd24734919c201c732e8c8c360bf"
+    },
+    {
+      "logicalPath": "GenericTransfer.tla",
+      "sha256": "5f284dc2223c39c667e060a2340d44007154bb9a5b8c2f2f683bc4314df4cd27"
+    }
+  ]
+}

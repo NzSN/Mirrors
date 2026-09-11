@@ -1,0 +1,109 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-levels",
+  "root": "AcceptLevels",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptLevels"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptLevels",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptLevels",
+      "kind": "constant",
+      "names": [
+        "N"
+      ],
+      "line": 5
+    },
+    {
+      "module": "AcceptLevels",
+      "kind": "variable",
+      "names": [
+        "x"
+      ],
+      "line": 6
+    },
+    {
+      "module": "AcceptLevels",
+      "kind": "operator",
+      "names": [
+        "ConstantOp"
+      ],
+      "arity": 0,
+      "line": 8
+    },
+    {
+      "module": "AcceptLevels",
+      "kind": "operator",
+      "names": [
+        "StateOp"
+      ],
+      "arity": 0,
+      "line": 9
+    },
+    {
+      "module": "AcceptLevels",
+      "kind": "operator",
+      "names": [
+        "ActionOp"
+      ],
+      "arity": 0,
+      "line": 10
+    },
+    {
+      "module": "AcceptLevels",
+      "kind": "operator",
+      "names": [
+        "TemporalOp"
+      ],
+      "arity": 0,
+      "line": 11
+    },
+    {
+      "module": "AcceptLevels",
+      "kind": "operator",
+      "names": [
+        "Spec"
+      ],
+      "arity": 0,
+      "line": 12
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "x",
+      "declaredIn": "AcceptLevels",
+      "declaredName": "x",
+      "importPath": [
+        "AcceptLevels"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "AcceptLevels.tla",
+      "sha256": "4b62c20cf14297c39e270d4457b2b256196e85b06ddaa25ad8fb6d0ded3a7f7a"
+    }
+  ],
+  "levels": {
+    "ConstantOp": "constant",
+    "StateOp": "state",
+    "ActionOp": "action",
+    "TemporalOp": "temporal",
+    "Spec": "temporal"
+  }
+}

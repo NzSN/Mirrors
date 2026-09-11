@@ -1,0 +1,55 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-constants",
+  "root": "AcceptConstants",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptConstants"
+  ],
+  "standardModules": [],
+  "dependencies": [],
+  "declarations": [
+    {
+      "module": "AcceptConstants",
+      "kind": "constant",
+      "names": [
+        "N",
+        "M"
+      ],
+      "line": 3
+    },
+    {
+      "module": "AcceptConstants",
+      "kind": "constant",
+      "names": [
+        "K"
+      ],
+      "line": 4
+    },
+    {
+      "module": "AcceptConstants",
+      "kind": "operator",
+      "names": [
+        "Pair"
+      ],
+      "arity": 0,
+      "line": 6
+    },
+    {
+      "module": "AcceptConstants",
+      "kind": "operator",
+      "names": [
+        "Base"
+      ],
+      "arity": 0,
+      "line": 7
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptConstants.tla",
+      "sha256": "7263900ff0969193eb00eb940d4f67b4680db463f029fa45a3f413edbc307543"
+    }
+  ]
+}

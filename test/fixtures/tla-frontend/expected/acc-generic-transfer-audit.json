@@ -1,0 +1,322 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-generic-transfer-audit",
+  "root": "GenericTransferAudit",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "GenericBase",
+    "GenericTransfer",
+    "GenericTransferAudit"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "GenericBase",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "GenericTransfer",
+      "module": "GenericBase",
+      "kind": "extends",
+      "resolution": "local",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "GenericTransferAudit",
+      "module": "GenericTransfer",
+      "kind": "extends",
+      "resolution": "local",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "GenericBase",
+      "kind": "variable",
+      "names": [
+        "sourceRecords",
+        "sourceCursor",
+        "sourceLimit",
+        "targetRecords",
+        "targetCursor",
+        "targetLimit",
+        "transferJournal",
+        "transferCursor",
+        "auditTrail",
+        "auditCursor",
+        "batchBuffer",
+        "batchCount"
+      ],
+      "line": 5
+    },
+    {
+      "module": "GenericBase",
+      "kind": "operator",
+      "names": [
+        "BaseInit"
+      ],
+      "arity": 0,
+      "line": 19
+    },
+    {
+      "module": "GenericBase",
+      "kind": "operator",
+      "names": [
+        "BaseUnchanged"
+      ],
+      "arity": 0,
+      "line": 33
+    },
+    {
+      "module": "GenericTransfer",
+      "kind": "variable",
+      "names": [
+        "activeBatch",
+        "batchStage",
+        "stagedKey",
+        "stagedValue",
+        "retryCount",
+        "commitPending",
+        "verifyPending"
+      ],
+      "line": 5
+    },
+    {
+      "module": "GenericTransfer",
+      "kind": "operator",
+      "names": [
+        "TransferInit"
+      ],
+      "arity": 0,
+      "line": 14
+    },
+    {
+      "module": "GenericTransfer",
+      "kind": "operator",
+      "names": [
+        "TransferNext"
+      ],
+      "arity": 0,
+      "line": 24
+    },
+    {
+      "module": "GenericTransferAudit",
+      "kind": "operator",
+      "names": [
+        "AuditSummary"
+      ],
+      "arity": 0,
+      "line": 5
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "sourceRecords",
+      "declaredIn": "GenericBase",
+      "declaredName": "sourceRecords",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "sourceCursor",
+      "declaredIn": "GenericBase",
+      "declaredName": "sourceCursor",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "sourceLimit",
+      "declaredIn": "GenericBase",
+      "declaredName": "sourceLimit",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "targetRecords",
+      "declaredIn": "GenericBase",
+      "declaredName": "targetRecords",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "targetCursor",
+      "declaredIn": "GenericBase",
+      "declaredName": "targetCursor",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "targetLimit",
+      "declaredIn": "GenericBase",
+      "declaredName": "targetLimit",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "transferJournal",
+      "declaredIn": "GenericBase",
+      "declaredName": "transferJournal",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "transferCursor",
+      "declaredIn": "GenericBase",
+      "declaredName": "transferCursor",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "auditTrail",
+      "declaredIn": "GenericBase",
+      "declaredName": "auditTrail",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "auditCursor",
+      "declaredIn": "GenericBase",
+      "declaredName": "auditCursor",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "batchBuffer",
+      "declaredIn": "GenericBase",
+      "declaredName": "batchBuffer",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "batchCount",
+      "declaredIn": "GenericBase",
+      "declaredName": "batchCount",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer",
+        "GenericBase"
+      ]
+    },
+    {
+      "name": "activeBatch",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "activeBatch",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer"
+      ]
+    },
+    {
+      "name": "batchStage",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "batchStage",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer"
+      ]
+    },
+    {
+      "name": "stagedKey",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "stagedKey",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer"
+      ]
+    },
+    {
+      "name": "stagedValue",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "stagedValue",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer"
+      ]
+    },
+    {
+      "name": "retryCount",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "retryCount",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer"
+      ]
+    },
+    {
+      "name": "commitPending",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "commitPending",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer"
+      ]
+    },
+    {
+      "name": "verifyPending",
+      "declaredIn": "GenericTransfer",
+      "declaredName": "verifyPending",
+      "importPath": [
+        "GenericTransferAudit",
+        "GenericTransfer"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "GenericBase.tla",
+      "sha256": "598658048e6cc96595a0b112a552ded0f29cfd24734919c201c732e8c8c360bf"
+    },
+    {
+      "logicalPath": "GenericTransfer.tla",
+      "sha256": "5f284dc2223c39c667e060a2340d44007154bb9a5b8c2f2f683bc4314df4cd27"
+    },
+    {
+      "logicalPath": "GenericTransferAudit.tla",
+      "sha256": "4ac8d86ca37faca6169bce7fb312cf9209fb0fcf3b2f13b98f5da5cb05e4ce32"
+    }
+  ]
+}

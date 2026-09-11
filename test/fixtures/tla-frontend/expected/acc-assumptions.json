@@ -1,0 +1,58 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-assumptions",
+  "root": "AcceptAssumptions",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptAssumptions"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptAssumptions",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptAssumptions",
+      "kind": "constant",
+      "names": [
+        "N"
+      ],
+      "line": 5
+    },
+    {
+      "module": "AcceptAssumptions",
+      "kind": "assumption",
+      "names": [],
+      "line": 7
+    },
+    {
+      "module": "AcceptAssumptions",
+      "kind": "assumption",
+      "names": [],
+      "line": 8
+    },
+    {
+      "module": "AcceptAssumptions",
+      "kind": "axiom",
+      "names": [],
+      "line": 9
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptAssumptions.tla",
+      "sha256": "0db8e3d9dd028ab84dd3757adb6a51f185fde88d152a839626df46e475a07e4e"
+    }
+  ]
+}

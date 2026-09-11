@@ -1,0 +1,76 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-control",
+  "root": "AcceptControl",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptControl"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptControl",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptControl",
+      "kind": "constant",
+      "names": [
+        "N"
+      ],
+      "line": 5
+    },
+    {
+      "module": "AcceptControl",
+      "kind": "operator",
+      "names": [
+        "Sign"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "AcceptControl",
+      "kind": "operator",
+      "names": [
+        "Classify"
+      ],
+      "arity": 0,
+      "line": 8
+    },
+    {
+      "module": "AcceptControl",
+      "kind": "operator",
+      "names": [
+        "Local"
+      ],
+      "arity": 0,
+      "line": 9
+    },
+    {
+      "module": "AcceptControl",
+      "kind": "operator",
+      "names": [
+        "Chosen"
+      ],
+      "arity": 0,
+      "line": 10
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptControl.tla",
+      "sha256": "1ee168e0e76ca01bc63674bf984e879bb28666148b2dd692e36ab42f4525f185"
+    }
+  ]
+}

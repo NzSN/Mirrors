@@ -1,0 +1,53 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-local",
+  "root": "AcceptLocal",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptLocal"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptLocal",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptLocal",
+      "kind": "local",
+      "line": 5,
+      "wraps": {
+        "kind": "operator",
+        "names": [
+          "Helper"
+        ],
+        "arity": 0
+      }
+    },
+    {
+      "module": "AcceptLocal",
+      "kind": "operator",
+      "names": [
+        "UseHelper"
+      ],
+      "arity": 0,
+      "line": 7
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptLocal.tla",
+      "sha256": "7fc26430cc7ffd41b680358d3fb737102fd74103c3530a1e73b539a3eb4c9bd9"
+    }
+  ]
+}

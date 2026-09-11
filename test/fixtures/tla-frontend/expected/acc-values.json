@@ -1,0 +1,74 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-values",
+  "root": "AcceptValues",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptValues"
+  ],
+  "standardModules": [],
+  "dependencies": [],
+  "declarations": [
+    {
+      "module": "AcceptValues",
+      "kind": "operator",
+      "names": [
+        "Tuple"
+      ],
+      "arity": 0,
+      "line": 3
+    },
+    {
+      "module": "AcceptValues",
+      "kind": "operator",
+      "names": [
+        "Record"
+      ],
+      "arity": 0,
+      "line": 4
+    },
+    {
+      "module": "AcceptValues",
+      "kind": "operator",
+      "names": [
+        "Set"
+      ],
+      "arity": 0,
+      "line": 5
+    },
+    {
+      "module": "AcceptValues",
+      "kind": "operator",
+      "names": [
+        "Empty"
+      ],
+      "arity": 0,
+      "line": 6
+    },
+    {
+      "module": "AcceptValues",
+      "kind": "operator",
+      "names": [
+        "Nested"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "AcceptValues",
+      "kind": "operator",
+      "names": [
+        "Escapes"
+      ],
+      "arity": 0,
+      "line": 8
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptValues.tla",
+      "sha256": "132ef34c0b694f60abe948b92ee66be9c1bd318f9aad72b4004f318da4db1efb"
+    }
+  ]
+}

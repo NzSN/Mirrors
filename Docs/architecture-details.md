@@ -153,7 +153,7 @@ describes a TLA+ model or that an application adapter reports honest state.
 - **Shell.ModelInterface** — filesystem/compiler operations, typed evidence
   loading, sync/async TypeScript and C++ emitters, runtime resolution,
   authorization, and bounded scoped caching. The CLI is
-  `tools/ModelInterfaceGen.lean`; see the [compiler contract](model-interface-compiler-design.md).
+  `tools/ModelInterfaceGen.lean`; see the [compiler contract](model-interface-compiler/design.md).
 - **Shell.Registry / Cli / Client** — Consul register/heartbeat/
   deregister/discover (fail-closed), full CLI surface
   (`--version`/`--serve`/`--server --tls`/`validate` incl. registry discovery +

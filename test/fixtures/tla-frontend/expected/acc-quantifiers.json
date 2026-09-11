@@ -1,0 +1,68 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-quantifiers",
+  "root": "AcceptQuantifiers",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptQuantifiers"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptQuantifiers",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptQuantifiers",
+      "kind": "operator",
+      "names": [
+        "S"
+      ],
+      "arity": 0,
+      "line": 5
+    },
+    {
+      "module": "AcceptQuantifiers",
+      "kind": "operator",
+      "names": [
+        "AllPositive"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "AcceptQuantifiers",
+      "kind": "operator",
+      "names": [
+        "SomeLarge"
+      ],
+      "arity": 0,
+      "line": 8
+    },
+    {
+      "module": "AcceptQuantifiers",
+      "kind": "operator",
+      "names": [
+        "Nested"
+      ],
+      "arity": 0,
+      "line": 9
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptQuantifiers.tla",
+      "sha256": "1ab71603dd7d071dfe0f853cc3a85c9c41ee6041e1ebfad605d6867c5ff3a1df"
+    }
+  ]
+}

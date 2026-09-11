@@ -1,0 +1,68 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-recursive",
+  "root": "AcceptRecursive",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptRecursive"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptRecursive",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptRecursive",
+      "kind": "recursive",
+      "names": [
+        "Fact"
+      ],
+      "arity": 1,
+      "line": 5
+    },
+    {
+      "module": "AcceptRecursive",
+      "kind": "operator",
+      "names": [
+        "Fact"
+      ],
+      "arity": 1,
+      "line": 6
+    },
+    {
+      "module": "AcceptRecursive",
+      "kind": "recursive",
+      "names": [
+        "SumTo"
+      ],
+      "arity": 2,
+      "line": 8
+    },
+    {
+      "module": "AcceptRecursive",
+      "kind": "operator",
+      "names": [
+        "SumTo"
+      ],
+      "arity": 2,
+      "line": 9
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptRecursive.tla",
+      "sha256": "e7dee8a1d3715c9b908fb32729ef848e836d22a665535ae66020046ea37a8d72"
+    }
+  ]
+}

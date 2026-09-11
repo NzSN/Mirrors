@@ -1,0 +1,108 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-standard-modules",
+  "root": "AcceptStandardModules",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptStandardModules"
+  ],
+  "standardModules": [
+    "Integers",
+    "Naturals",
+    "Sequences",
+    "FiniteSets",
+    "TLC"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptStandardModules",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "AcceptStandardModules",
+      "module": "Naturals",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "AcceptStandardModules",
+      "module": "Sequences",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "AcceptStandardModules",
+      "module": "FiniteSets",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "AcceptStandardModules",
+      "module": "TLC",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptStandardModules",
+      "kind": "operator",
+      "names": [
+        "Positive"
+      ],
+      "arity": 0,
+      "line": 5
+    },
+    {
+      "module": "AcceptStandardModules",
+      "kind": "operator",
+      "names": [
+        "Sequence"
+      ],
+      "arity": 0,
+      "line": 6
+    },
+    {
+      "module": "AcceptStandardModules",
+      "kind": "operator",
+      "names": [
+        "Size"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "AcceptStandardModules",
+      "kind": "operator",
+      "names": [
+        "Sum"
+      ],
+      "arity": 0,
+      "line": 8
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptStandardModules.tla",
+      "sha256": "ab646e4455934e4bec4a8db40ca5163dbaa8d5c4e67d0cb2717d4513f05aa623"
+    }
+  ]
+}

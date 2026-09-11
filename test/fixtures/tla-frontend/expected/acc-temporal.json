@@ -1,0 +1,121 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-temporal",
+  "root": "AcceptTemporal",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptTemporal"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptTemporal",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptTemporal",
+      "kind": "variable",
+      "names": [
+        "x"
+      ],
+      "line": 5
+    },
+    {
+      "module": "AcceptTemporal",
+      "kind": "operator",
+      "names": [
+        "Init"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "AcceptTemporal",
+      "kind": "operator",
+      "names": [
+        "Next"
+      ],
+      "arity": 0,
+      "line": 8
+    },
+    {
+      "module": "AcceptTemporal",
+      "kind": "operator",
+      "names": [
+        "Fair"
+      ],
+      "arity": 0,
+      "line": 9
+    },
+    {
+      "module": "AcceptTemporal",
+      "kind": "operator",
+      "names": [
+        "Always"
+      ],
+      "arity": 0,
+      "line": 10
+    },
+    {
+      "module": "AcceptTemporal",
+      "kind": "operator",
+      "names": [
+        "Eventually"
+      ],
+      "arity": 0,
+      "line": 11
+    },
+    {
+      "module": "AcceptTemporal",
+      "kind": "operator",
+      "names": [
+        "Leadsto"
+      ],
+      "arity": 0,
+      "line": 12
+    },
+    {
+      "module": "AcceptTemporal",
+      "kind": "operator",
+      "names": [
+        "Both"
+      ],
+      "arity": 0,
+      "line": 13
+    },
+    {
+      "module": "AcceptTemporal",
+      "kind": "operator",
+      "names": [
+        "Spec"
+      ],
+      "arity": 0,
+      "line": 14
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "x",
+      "declaredIn": "AcceptTemporal",
+      "declaredName": "x",
+      "importPath": [
+        "AcceptTemporal"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "AcceptTemporal.tla",
+      "sha256": "0c2c5bf0434070312eab92e21f9447a6158920dd91b4ae4f27f6f900e1596baa"
+    }
+  ]
+}

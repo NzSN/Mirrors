@@ -6,7 +6,7 @@
 > and MirrorCPP static compiled verification implemented; Rust/Lean static
 > registries planned**
 > Compiler contract:
-> [`model-interface-compiler-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-compiler-design.md)
+> [`model-interface-compiler/design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-compiler/design.md)
 > Cross-language generated interface:
 > [`generated-model-interface-spec.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/generated-model-interface-spec.md)
 > Parent architecture:

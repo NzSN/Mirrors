@@ -15,7 +15,7 @@ an installed Windows service, a hosted CI run, or a published package.
 | Understand component ownership | [Architecture overview](architecture-overview.md), [module details](architecture-details.md) |
 | Use the CLI or wire protocol | [Interface reference](interface-reference.md) |
 | Implement a client library | [Client implementation guide](client-implementation-guide.md) |
-| Generate a typed application port | [Generation design](model-interface-generation-design.md), [compiler contract](model-interface-compiler-design.md) |
+| Generate a typed application port | [Generation design](model-interface-generation-design.md), [compiler designs](model-interface-compiler/README.md) |
 | Understand interface negotiation | [Runtime distribution](model-interface-runtime-distribution-design.md) |
 | Compare generated language profiles | [Cross-language specification](generated-model-interface-spec.md) |
 | Check coverage and run interop | [Client coverage](client-test-coverage.md), [interop commands](../tools/interop/INTEROP.md) |

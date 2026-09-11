@@ -1,0 +1,77 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-operators",
+  "root": "AcceptOperators",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptOperators"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptOperators",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptOperators",
+      "kind": "operator",
+      "names": [
+        "Double"
+      ],
+      "arity": 1,
+      "line": 5
+    },
+    {
+      "module": "AcceptOperators",
+      "kind": "operator",
+      "names": [
+        "\\oplus"
+      ],
+      "arity": 2,
+      "line": 7
+    },
+    {
+      "module": "AcceptOperators",
+      "kind": "operator",
+      "names": [
+        "\\prec"
+      ],
+      "arity": 2,
+      "line": 9
+    },
+    {
+      "module": "AcceptOperators",
+      "kind": "operator",
+      "names": [
+        "Apply"
+      ],
+      "arity": 2,
+      "line": 11
+    },
+    {
+      "module": "AcceptOperators",
+      "kind": "operator",
+      "names": [
+        "Nullary"
+      ],
+      "arity": 0,
+      "line": 13
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptOperators.tla",
+      "sha256": "1e01fc60cab1f9d818fa72eb8a8bf3cdad62c3d64be972f63246d17070d69f87"
+    }
+  ]
+}

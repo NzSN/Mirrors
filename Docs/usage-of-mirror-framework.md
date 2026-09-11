@@ -758,7 +758,7 @@ live or platform-specific tier instead of treating it as a pass.
 - [MirrorGate coordinating-agent tool](https://github.com/NzSN/MirrorGate/blob/main/integrations/agent-host/README.md)
 - [MirrorGate managed workflow design](https://github.com/NzSN/MirrorGate/blob/main/docs/managed-workflow-design.md)
 - [MirrorGate supervisor and source-view design](https://github.com/NzSN/MirrorGate/blob/main/docs/sandbox/supervisor-design.md)
-- [Model-interface compiler design](model-interface-compiler-design.md)
+- [Model-interface compiler designs](model-interface-compiler/README.md)
 - [Generated model-interface specification](generated-model-interface-spec.md)
 
 Use the local Counter paths first. They exercise the same boundaries described

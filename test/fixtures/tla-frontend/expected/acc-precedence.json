@@ -1,0 +1,122 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-precedence",
+  "root": "AcceptPrecedence",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptPrecedence"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptPrecedence",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptPrecedence",
+      "kind": "constant",
+      "names": [
+        "A",
+        "B",
+        "C"
+      ],
+      "line": 5
+    },
+    {
+      "module": "AcceptPrecedence",
+      "kind": "operator",
+      "names": [
+        "Arithmetic"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "AcceptPrecedence",
+      "kind": "operator",
+      "names": [
+        "Comparison"
+      ],
+      "arity": 0,
+      "line": 8
+    },
+    {
+      "module": "AcceptPrecedence",
+      "kind": "operator",
+      "names": [
+        "Membership"
+      ],
+      "arity": 0,
+      "line": 9
+    },
+    {
+      "module": "AcceptPrecedence",
+      "kind": "operator",
+      "names": [
+        "Implication"
+      ],
+      "arity": 0,
+      "line": 10
+    },
+    {
+      "module": "AcceptPrecedence",
+      "kind": "operator",
+      "names": [
+        "Disjunction"
+      ],
+      "arity": 0,
+      "line": 11
+    },
+    {
+      "module": "AcceptPrecedence",
+      "kind": "operator",
+      "names": [
+        "Negation"
+      ],
+      "arity": 0,
+      "line": 12
+    },
+    {
+      "module": "AcceptPrecedence",
+      "kind": "operator",
+      "names": [
+        "Range"
+      ],
+      "arity": 0,
+      "line": 13
+    },
+    {
+      "module": "AcceptPrecedence",
+      "kind": "operator",
+      "names": [
+        "Grouping"
+      ],
+      "arity": 0,
+      "line": 14
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptPrecedence.tla",
+      "sha256": "70e3fcef1ef56887171d3a7c5edcce921adea9a79a56b5e0924a9bbea0d13312"
+    }
+  ],
+  "renderings": {
+    "Arithmetic": "A + (B * C)",
+    "Comparison": "(A + B) < (C * 2)",
+    "Implication": "(A /\\ B) => C",
+    "Disjunction": "(A \\/ B) => C",
+    "Negation": "(~ A) /\\ B",
+    "Grouping": "(A => B) => C"
+  }
+}

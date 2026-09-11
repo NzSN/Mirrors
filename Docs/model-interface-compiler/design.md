@@ -1,5 +1,9 @@
 # Model Interface Compiler — Detailed Design
 
+> Design index: [`README.md`](README.md)
+> Proposed general TLA+ frontend:
+> [`tla-frontend-design.md`](tla-frontend-design.md)
+
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
 > Status: **synchronous and experimental async TypeScript plus C++ Counter
@@ -13,6 +17,10 @@
 > Scope: freeze the version-1 compiler inputs, canonical intermediate
 > representation, resolver, diagnostics, TypeScript emitter, CLI behavior,
 > proof claims, fixtures, and Counter vertical slice.
+>
+> The current root-only variable scanner and dependency-digest resolver remain
+> implemented behavior. The linked general TLA+ frontend is a proposed
+> replacement design and changes no compiler behavior yet.
 
 ## 0. Implementation status
 
@@ -1221,7 +1229,7 @@ The emitter also supplies `bind<Model>AsyncPublicPort`, which maps generated
 methods to stable public action/observation IDs through the trusted generic
 port proxy. MirrorECMA's experimental sandbox facade uses this compiler-owned
 mapping; handwritten runtime shims and adapters still invoke and observe the
-real implementation. See [client orchestration](client-implementation-guide.md#13-shared-sandbox-orchestration-experimental-profile).
+real implementation. See [client orchestration](../client-implementation-guide.md#13-shared-sandbox-orchestration-experimental-profile).
 
 ### 13.9 `mirrorcpp-v1` profile
 

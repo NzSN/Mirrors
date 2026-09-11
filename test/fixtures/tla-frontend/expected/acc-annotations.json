@@ -1,0 +1,72 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-annotations",
+  "root": "AcceptAnnotations",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptAnnotations"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptAnnotations",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptAnnotations",
+      "kind": "constant",
+      "names": [
+        "N"
+      ],
+      "line": 5
+    },
+    {
+      "module": "AcceptAnnotations",
+      "kind": "operator",
+      "names": [
+        "TypedConstant"
+      ],
+      "arity": 0,
+      "line": 8
+    },
+    {
+      "module": "AcceptAnnotations",
+      "kind": "operator",
+      "names": [
+        "Predicate"
+      ],
+      "arity": 0,
+      "line": 11
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptAnnotations.tla",
+      "sha256": "f7033f2eb7d124f367264c07e96c4ac28b32b3965c695e69b42fd78ca8c64f7c"
+    }
+  ],
+  "annotations": [
+    {
+      "module": "AcceptAnnotations",
+      "kind": "apalache.type",
+      "line": 7,
+      "payload": "Int"
+    },
+    {
+      "module": "AcceptAnnotations",
+      "kind": "apalache.type",
+      "line": 10,
+      "payload": "() => Bool"
+    }
+  ]
+}

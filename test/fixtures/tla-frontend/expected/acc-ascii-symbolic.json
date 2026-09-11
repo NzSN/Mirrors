@@ -1,0 +1,131 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-ascii-symbolic",
+  "root": "AcceptAsciiSymbolic",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptAsciiSymbolic"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptAsciiSymbolic",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptAsciiSymbolic",
+      "kind": "constant",
+      "names": [
+        "S",
+        "T"
+      ],
+      "line": 5
+    },
+    {
+      "module": "AcceptAsciiSymbolic",
+      "kind": "operator",
+      "names": [
+        "And"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "AcceptAsciiSymbolic",
+      "kind": "operator",
+      "names": [
+        "Or"
+      ],
+      "arity": 0,
+      "line": 8
+    },
+    {
+      "module": "AcceptAsciiSymbolic",
+      "kind": "operator",
+      "names": [
+        "Not"
+      ],
+      "arity": 0,
+      "line": 9
+    },
+    {
+      "module": "AcceptAsciiSymbolic",
+      "kind": "operator",
+      "names": [
+        "Iff"
+      ],
+      "arity": 0,
+      "line": 10
+    },
+    {
+      "module": "AcceptAsciiSymbolic",
+      "kind": "operator",
+      "names": [
+        "Member"
+      ],
+      "arity": 0,
+      "line": 11
+    },
+    {
+      "module": "AcceptAsciiSymbolic",
+      "kind": "operator",
+      "names": [
+        "Subset"
+      ],
+      "arity": 0,
+      "line": 12
+    },
+    {
+      "module": "AcceptAsciiSymbolic",
+      "kind": "operator",
+      "names": [
+        "Union"
+      ],
+      "arity": 0,
+      "line": 13
+    },
+    {
+      "module": "AcceptAsciiSymbolic",
+      "kind": "operator",
+      "names": [
+        "Intersect"
+      ],
+      "arity": 0,
+      "line": 14
+    },
+    {
+      "module": "AcceptAsciiSymbolic",
+      "kind": "operator",
+      "names": [
+        "NotEqual"
+      ],
+      "arity": 0,
+      "line": 15
+    },
+    {
+      "module": "AcceptAsciiSymbolic",
+      "kind": "operator",
+      "names": [
+        "Leq"
+      ],
+      "arity": 0,
+      "line": 16
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptAsciiSymbolic.tla",
+      "sha256": "47c4eb5d1e41ad1e5223ec684ff20e2f34125869c47817ea51839b760ee21a7e"
+    }
+  ]
+}

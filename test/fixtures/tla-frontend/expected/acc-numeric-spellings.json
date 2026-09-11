@@ -1,0 +1,77 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-numeric-spellings",
+  "root": "AcceptNumericSpellings",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptNumericSpellings"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptNumericSpellings",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptNumericSpellings",
+      "kind": "operator",
+      "names": [
+        "Decimal"
+      ],
+      "arity": 0,
+      "line": 5
+    },
+    {
+      "module": "AcceptNumericSpellings",
+      "kind": "operator",
+      "names": [
+        "Octal"
+      ],
+      "arity": 0,
+      "line": 6
+    },
+    {
+      "module": "AcceptNumericSpellings",
+      "kind": "operator",
+      "names": [
+        "Hex"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "AcceptNumericSpellings",
+      "kind": "operator",
+      "names": [
+        "Binary"
+      ],
+      "arity": 0,
+      "line": 8
+    },
+    {
+      "module": "AcceptNumericSpellings",
+      "kind": "operator",
+      "names": [
+        "Sum"
+      ],
+      "arity": 0,
+      "line": 10
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptNumericSpellings.tla",
+      "sha256": "ccae069c85932d1dfbad0ff2dd6a5b8b919864a59b77ab926b200a25fe32a9a8"
+    }
+  ]
+}

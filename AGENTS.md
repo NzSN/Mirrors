@@ -16,7 +16,8 @@ Read the relevant contract before changing behavior:
 - Architecture: `Docs/architecture-overview.md`.
 - Protocol or client compatibility: `Docs/interface-reference.md` and
   `Docs/client-implementation-guide.md`.
-- Model-interface compilation or emission: `Docs/model-interface-compiler-design.md`
+- Model-interface compilation or emission: `Docs/model-interface-compiler/design.md`;
+  general TLA+ frontend work: `Docs/model-interface-compiler/tla-frontend-design.md`.
   and `Docs/generated-model-interface-spec.md`.
 - Negotiation, authorization, or caching:
   `Docs/model-interface-runtime-distribution-design.md`.

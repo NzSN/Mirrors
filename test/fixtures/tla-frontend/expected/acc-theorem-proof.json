@@ -1,0 +1,47 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-theorem-proof",
+  "root": "AcceptTheoremProof",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptTheoremProof"
+  ],
+  "standardModules": [],
+  "dependencies": [],
+  "declarations": [
+    {
+      "module": "AcceptTheoremProof",
+      "kind": "theorem",
+      "names": [
+        "Trivial"
+      ],
+      "proof": "none",
+      "line": 3
+    },
+    {
+      "module": "AcceptTheoremProof",
+      "kind": "theorem",
+      "names": [
+        "Opaque"
+      ],
+      "proof": "omitted",
+      "line": 4
+    },
+    {
+      "module": "AcceptTheoremProof",
+      "kind": "theorem",
+      "names": [
+        "Simple"
+      ],
+      "proof": "none",
+      "line": 5
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "AcceptTheoremProof.tla",
+      "sha256": "0d20b71ac613351e4b09ea1c2ba7b7d595a69e760d6caca88ee0eff479d3d533"
+    }
+  ]
+}

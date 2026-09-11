@@ -1,0 +1,5 @@
+---- MODULE RejectUnknownName ----
+
+G == UndefinedName
+
+====

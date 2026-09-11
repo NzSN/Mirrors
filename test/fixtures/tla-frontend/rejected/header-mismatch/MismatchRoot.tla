@@ -1,0 +1,5 @@
+---- MODULE DifferentName ----
+
+MismatchOp == TRUE
+
+====

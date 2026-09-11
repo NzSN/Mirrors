@@ -1,0 +1,67 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-trivia",
+  "root": "AcceptTrivia",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptTrivia"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptTrivia",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 9,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptTrivia",
+      "kind": "variable",
+      "names": [
+        "x"
+      ],
+      "line": 11
+    },
+    {
+      "module": "AcceptTrivia",
+      "kind": "operator",
+      "names": [
+        "Init"
+      ],
+      "arity": 0,
+      "line": 13
+    },
+    {
+      "module": "AcceptTrivia",
+      "kind": "operator",
+      "names": [
+        "Next"
+      ],
+      "arity": 0,
+      "line": 14
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "x",
+      "declaredIn": "AcceptTrivia",
+      "declaredName": "x",
+      "importPath": [
+        "AcceptTrivia"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "AcceptTrivia.tla",
+      "sha256": "f467c988025c726c5006eee2ea0a82d593ab72a2cfc4887577b5a9513287b7e9"
+    }
+  ]
+}

@@ -12,7 +12,7 @@
 > `client-implementation-guide.md`, `interface-reference.md`, and
 > `client-test-coverage.md`.
 > Detailed compiler contract:
-> [`model-interface-compiler-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-compiler-design.md).
+> [`model-interface-compiler/design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-compiler/design.md).
 > Runtime descriptor distribution:
 > [`model-interface-runtime-distribution-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-runtime-distribution-design.md).
 
@@ -468,7 +468,7 @@ The original `StateComputer` interface and `mirrorecma-v1` port remain
 synchronous. The additive experimental `mirrorecma-async-v1` target now emits
 promise-returning ports and `bindCounterAsync`, using MirrorECMA's distinct
 async computer contract and report runners. It does not pass promises through
-the synchronous interface. See the [compiler design](model-interface-compiler-design.md)
+the synchronous interface. See the [compiler design](model-interface-compiler/design.md)
 and [generated profile specification](generated-model-interface-spec.md).
 
 ## 12. Observation completeness

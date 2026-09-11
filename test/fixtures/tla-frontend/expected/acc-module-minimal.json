@@ -1,0 +1,76 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-module-minimal",
+  "root": "AcceptModuleMinimal",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptModuleMinimal"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptModuleMinimal",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptModuleMinimal",
+      "kind": "variable",
+      "names": [
+        "x"
+      ],
+      "line": 5
+    },
+    {
+      "module": "AcceptModuleMinimal",
+      "kind": "operator",
+      "names": [
+        "Init"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "AcceptModuleMinimal",
+      "kind": "operator",
+      "names": [
+        "Next"
+      ],
+      "arity": 0,
+      "line": 8
+    },
+    {
+      "module": "AcceptModuleMinimal",
+      "kind": "operator",
+      "names": [
+        "Spec"
+      ],
+      "arity": 0,
+      "line": 9
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "x",
+      "declaredIn": "AcceptModuleMinimal",
+      "declaredName": "x",
+      "importPath": [
+        "AcceptModuleMinimal"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "AcceptModuleMinimal.tla",
+      "sha256": "43f801f5b8086f2f50269055a3ef30ffcfa9f21f1710b28dd0f81d713282f8ea"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-generic-extends",
+  "root": "GenericExtendsRoot",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "GenericExtendsBase",
+    "GenericExtendsRoot"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "GenericExtendsBase",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "GenericExtendsRoot",
+      "module": "GenericExtendsBase",
+      "kind": "extends",
+      "resolution": "local",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "GenericExtendsBase",
+      "kind": "constant",
+      "names": [
+        "BaseLimit"
+      ],
+      "line": 5
+    },
+    {
+      "module": "GenericExtendsBase",
+      "kind": "variable",
+      "names": [
+        "baseA",
+        "baseB",
+        "baseC"
+      ],
+      "line": 7
+    },
+    {
+      "module": "GenericExtendsBase",
+      "kind": "operator",
+      "names": [
+        "BaseNext"
+      ],
+      "arity": 0,
+      "line": 9
+    },
+    {
+      "module": "GenericExtendsRoot",
+      "kind": "variable",
+      "names": [
+        "rootA",
+        "rootB"
+      ],
+      "line": 5
+    },
+    {
+      "module": "GenericExtendsRoot",
+      "kind": "operator",
+      "names": [
+        "RootNext"
+      ],
+      "arity": 0,
+      "line": 7
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "baseA",
+      "declaredIn": "GenericExtendsBase",
+      "declaredName": "baseA",
+      "importPath": [
+        "GenericExtendsRoot",
+        "GenericExtendsBase"
+      ]
+    },
+    {
+      "name": "baseB",
+      "declaredIn": "GenericExtendsBase",
+      "declaredName": "baseB",
+      "importPath": [
+        "GenericExtendsRoot",
+        "GenericExtendsBase"
+      ]
+    },
+    {
+      "name": "baseC",
+      "declaredIn": "GenericExtendsBase",
+      "declaredName": "baseC",
+      "importPath": [
+        "GenericExtendsRoot",
+        "GenericExtendsBase"
+      ]
+    },
+    {
+      "name": "rootA",
+      "declaredIn": "GenericExtendsRoot",
+      "declaredName": "rootA",
+      "importPath": [
+        "GenericExtendsRoot"
+      ]
+    },
+    {
+      "name": "rootB",
+      "declaredIn": "GenericExtendsRoot",
+      "declaredName": "rootB",
+      "importPath": [
+        "GenericExtendsRoot"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "GenericExtendsBase.tla",
+      "sha256": "289b5dd06be3153e8fda597e7e937ade45af6c31d483d7561cac42fb485ea211"
+    },
+    {
+      "logicalPath": "GenericExtendsRoot.tla",
+      "sha256": "54f0f18e98f4e01309bfbe05a1f5c7c0c60f56dd5e0d0523badbce4ec94df606"
+    }
+  ]
+}

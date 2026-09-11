@@ -124,6 +124,11 @@ lean_exe model_interface_scaffold_cli_spec where
 lean_exe model_interface_evidence_spec where
   root := `tools.ModelInterfaceEvidenceSpec
 
+/-- Lossless TLA+ parser, profile, corpus, recovery, and resource-bound gate. -/
+@[default_target]
+lean_exe tla_parser_spec where
+  root := `tools.TlaParserSpec
+
 /-- Pure scaffold synthesis and strict proposal-codec gate. -/
 @[default_target]
 lean_exe model_interface_scaffold_spec where
@@ -293,6 +298,14 @@ script test do
     IO.eprintln outMiEvidence.stderr
     IO.println s!"model_interface_evidence_spec FAILED ({outMiEvidence.exitCode})"
     return outMiEvidence.exitCode
+  let outTlaParser : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/tla_parser_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outTlaParser.stdout
+  if outTlaParser.exitCode != 0 then
+    IO.eprintln outTlaParser.stderr
+    IO.println s!"tla_parser_spec FAILED ({outTlaParser.exitCode})"
+    return outTlaParser.exitCode
   let outMiScaffold : IO.Process.Output ← IO.Process.output
     ({ cmd := ".lake/build/bin/model_interface_scaffold_spec", args := #[] } :
       IO.Process.SpawnArgs)

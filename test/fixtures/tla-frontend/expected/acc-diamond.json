@@ -1,0 +1,177 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-diamond",
+  "root": "DiamondRoot",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "DiamondBase",
+    "DiamondLeft",
+    "DiamondRight",
+    "DiamondRoot"
+  ],
+  "standardModules": [],
+  "dependencies": [
+    {
+      "owner": "DiamondLeft",
+      "module": "DiamondBase",
+      "kind": "extends",
+      "resolution": "local",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "DiamondRight",
+      "module": "DiamondBase",
+      "kind": "extends",
+      "resolution": "local",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "DiamondRoot",
+      "module": "DiamondLeft",
+      "kind": "extends",
+      "resolution": "local",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "DiamondRoot",
+      "module": "DiamondRight",
+      "kind": "extends",
+      "resolution": "local",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "DiamondBase",
+      "kind": "variable",
+      "names": [
+        "shared"
+      ],
+      "line": 3
+    },
+    {
+      "module": "DiamondBase",
+      "kind": "operator",
+      "names": [
+        "BaseOp"
+      ],
+      "arity": 0,
+      "line": 5
+    },
+    {
+      "module": "DiamondLeft",
+      "kind": "variable",
+      "names": [
+        "leftOnly"
+      ],
+      "line": 5
+    },
+    {
+      "module": "DiamondLeft",
+      "kind": "operator",
+      "names": [
+        "LeftOp"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "DiamondRight",
+      "kind": "variable",
+      "names": [
+        "rightOnly"
+      ],
+      "line": 5
+    },
+    {
+      "module": "DiamondRight",
+      "kind": "operator",
+      "names": [
+        "RightOp"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "DiamondRoot",
+      "kind": "variable",
+      "names": [
+        "rootOnly"
+      ],
+      "line": 5
+    },
+    {
+      "module": "DiamondRoot",
+      "kind": "operator",
+      "names": [
+        "RootOp"
+      ],
+      "arity": 0,
+      "line": 7
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "shared",
+      "declaredIn": "DiamondBase",
+      "declaredName": "shared",
+      "importPath": [
+        "DiamondRoot",
+        "DiamondLeft",
+        "DiamondBase"
+      ]
+    },
+    {
+      "name": "leftOnly",
+      "declaredIn": "DiamondLeft",
+      "declaredName": "leftOnly",
+      "importPath": [
+        "DiamondRoot",
+        "DiamondLeft"
+      ]
+    },
+    {
+      "name": "rightOnly",
+      "declaredIn": "DiamondRight",
+      "declaredName": "rightOnly",
+      "importPath": [
+        "DiamondRoot",
+        "DiamondRight"
+      ]
+    },
+    {
+      "name": "rootOnly",
+      "declaredIn": "DiamondRoot",
+      "declaredName": "rootOnly",
+      "importPath": [
+        "DiamondRoot"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "DiamondBase.tla",
+      "sha256": "520caf8bb6ebc62a7054935a949f31517e72e5328efbab38b46d38e5cccf77b5"
+    },
+    {
+      "logicalPath": "DiamondLeft.tla",
+      "sha256": "e5c42b16fbfd22a8cf7a75e90f63bb0a7e17a0e27e01ce26d925c8eddf90492b"
+    },
+    {
+      "logicalPath": "DiamondRight.tla",
+      "sha256": "0199b7dc01dd32dea204ecadd18171af68bc3fbf9d291e9c1c0d792f2a7e0c53"
+    },
+    {
+      "logicalPath": "DiamondRoot.tla",
+      "sha256": "8004c874e0010e78833ea551b431994191273ac420b9b706dc212266193c2482"
+    }
+  ]
+}

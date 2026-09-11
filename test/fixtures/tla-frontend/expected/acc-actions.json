@@ -1,0 +1,128 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "acc-actions",
+  "root": "AcceptActions",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "AcceptActions"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "AcceptActions",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "AcceptActions",
+      "kind": "variable",
+      "names": [
+        "x"
+      ],
+      "line": 5
+    },
+    {
+      "module": "AcceptActions",
+      "kind": "variable",
+      "names": [
+        "y"
+      ],
+      "line": 6
+    },
+    {
+      "module": "AcceptActions",
+      "kind": "operator",
+      "names": [
+        "Init"
+      ],
+      "arity": 0,
+      "line": 8
+    },
+    {
+      "module": "AcceptActions",
+      "kind": "operator",
+      "names": [
+        "Increment"
+      ],
+      "arity": 0,
+      "line": 9
+    },
+    {
+      "module": "AcceptActions",
+      "kind": "operator",
+      "names": [
+        "Stutter"
+      ],
+      "arity": 0,
+      "line": 10
+    },
+    {
+      "module": "AcceptActions",
+      "kind": "operator",
+      "names": [
+        "Enabled"
+      ],
+      "arity": 0,
+      "line": 11
+    },
+    {
+      "module": "AcceptActions",
+      "kind": "operator",
+      "names": [
+        "Angle"
+      ],
+      "arity": 0,
+      "line": 12
+    },
+    {
+      "module": "AcceptActions",
+      "kind": "operator",
+      "names": [
+        "Step"
+      ],
+      "arity": 0,
+      "line": 13
+    },
+    {
+      "module": "AcceptActions",
+      "kind": "operator",
+      "names": [
+        "Spec"
+      ],
+      "arity": 0,
+      "line": 14
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "x",
+      "declaredIn": "AcceptActions",
+      "declaredName": "x",
+      "importPath": [
+        "AcceptActions"
+      ]
+    },
+    {
+      "name": "y",
+      "declaredIn": "AcceptActions",
+      "declaredName": "y",
+      "importPath": [
+        "AcceptActions"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "AcceptActions.tla",
+      "sha256": "24d6022f508d3a64967b27dc182a815bc7caa03a63637bb0582e2ddae452dfac"
+    }
+  ]
+}

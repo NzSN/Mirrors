@@ -11,7 +11,7 @@
 > message catalog is NOT repeated here),
 > `model-interface-runtime-distribution-design.md` (runtime negotiation),
 > `generated-model-interface-spec.md` (portable generated bindings),
-> `model-interface-compiler-design.md` (build-time compiler), `cutover.md`
+> `model-interface-compiler/design.md` (build-time compiler), `cutover.md`
 > (Haskell divergences), `worker-pool-design.md` (server concurrency model),
 > and `tls-ffi-review.md` (TLS policy details).
 > Wire truth is pinned by `test/fixtures/*.jsonl` (the golden corpus,

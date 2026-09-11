@@ -17,7 +17,7 @@
 > establish that larger profile's support.
 >
 > Compiler design:
-> [`model-interface-compiler-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-compiler-design.md)
+> [`model-interface-compiler/design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-compiler/design.md)
 >
 > Runtime negotiation:
 > [`model-interface-runtime-distribution-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-runtime-distribution-design.md)
