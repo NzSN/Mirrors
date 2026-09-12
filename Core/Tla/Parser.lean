@@ -166,13 +166,14 @@ end OperatorEntry
 below every table operator; no `OperatorEntry` carries it. -/
 def levelEquivalence : Nat := 1
 def levelImplication : Nat := 2
-def levelJunction : Nat := 3
-def levelRelational : Nat := 4
-def levelRange : Nat := 5
-def levelAdditive : Nat := 6
-def levelMultiplicative : Nat := 7
-def levelPower : Nat := 8
-def levelPrefix : Nat := 9
+def levelDisjunction : Nat := 3
+def levelConjunction : Nat := 4
+def levelRelational : Nat := 5
+def levelRange : Nat := 6
+def levelAdditive : Nat := 7
+def levelMultiplicative : Nat := 8
+def levelPower : Nat := 9
+def levelPrefix : Nat := 10
 
 /-- The parser-owned half of the language profile: the operator table that
 fixes fixity, precedence, and associativity for one revision. Lexer spelling
@@ -186,9 +187,9 @@ structure ParserProfile where
 namespace ParserProfile
 
 /-- The revision-1 operator table, in the lexer's canonical spellings.
-Precedence follows the profile's frozen rules: `*` binds tighter than `+`,
-arithmetic tighter than relational operators, relational tighter than `/\` and
-`\/`, which share one level; `~` binds tighter than `/\`; `=>` and `<=>` are
+Precedence follows TLA+: `*` binds tighter than `+`, arithmetic tighter than
+relational operators, relational tighter than `/\`, and `/\` tighter than
+`\/`; `~` binds tighter than `/\`; `=>` and `<=>` are
 non-associative and neither chain nor mix. The word-ASCII spellings the profile
 §4.7 publishes (`\circ`, `\oplus`, `\prec`, `\succ`, `\sim`, `\approx`,
 `\bullet`, `\star`, `\bigcirc`) sit in their reference classes. A symbolic
@@ -202,8 +203,8 @@ def revisionOneOperators : Array OperatorEntry := #[
   ⟨"<=>", .infix, levelEquivalence, .«none»⟩,
   ⟨"=>", .infix, levelImplication, .«none»⟩,
   ⟨"~>", .infix, levelImplication, .«none»⟩,
-  ⟨"/\\", .infix, levelJunction, .same⟩,
-  ⟨"\\/", .infix, levelJunction, .same⟩,
+  ⟨"/\\", .infix, levelConjunction, .same⟩,
+  ⟨"\\/", .infix, levelDisjunction, .same⟩,
   ⟨"=", .infix, levelRelational, .«none»⟩,
   ⟨"#", .infix, levelRelational, .«none»⟩,
   ⟨"<", .infix, levelRelational, .«none»⟩,
@@ -373,6 +374,10 @@ structure ParserState where
   declarationCount : Nat := 0
   moduleName : Option ModuleName := none
   moduleRange : SourceRange := zeroRange
+  /-- Column of an enclosing prefix-junction list. A `/\` or `\/` at this
+  column starts the next list item instead of becoming part of the current
+  item's expression. -/
+  junctionBoundaryColumn : Option Nat := none
   halted : Bool := false
 
 /-- The parser is a pure state-passing computation. -/
@@ -766,6 +771,26 @@ def recordFieldName? (expression : Expression) : Option String :=
   | .name reference _ => if reference.qualifier.isNone then some reference.spelling else none
   | _ => none
 
+/-- Run one junction-list item while retaining every other parser-state
+change. -/
+def withJunctionBoundary (column : Nat) (action : ParserM α) : ParserM α := do
+  let previous := (← get).junctionBoundaryColumn
+  modify fun state => { state with junctionBoundaryColumn := some column }
+  let result ← action
+  modify fun state => { state with junctionBoundaryColumn := previous }
+  return result
+
+/-- `true` when the current token begins the next item of an enclosing prefix
+junction list. -/
+def atJunctionBoundary : ParserM Bool := do
+  let state ← get
+  match state.junctionBoundaryColumn, state.tokens[state.position]? with
+  | some column, some token =>
+      let spelling := symbolSpelling state.profile token
+      return (spelling == "/\\" || spelling == "\\/") &&
+        token.range.start.column == column
+  | _, _ => return false
+
 /-- Message for a repeat that the profile does not define: chaining a
 non-associative operator, or mixing two operators that share one precedence
 level. `none` means the repeat is defined. -/
@@ -812,23 +837,50 @@ def parseExpressionLevel (fuel level : Nat) : ParserM Expression := do
   if level > ParserProfile.tightestLevel parserProfile then
     parsePrefix fuel
   else
-    let mut first : Option OperatorEntry := none
     -- A conjunction or disjunction list may open with its own operator, which
     -- is how the revision-1 corpus writes bullets (`Name ==` followed by
-    -- `/\ ...` lines). Only the junction level accepts a leading operator.
+    -- `/\ ...` lines). Each item is a complete expression; a later junction
+    -- at the opening column starts the next item even when the current item
+    -- contains a looser operator such as `=>` or the other junction kind.
     match ← nextInfixAt? level with
     | some leading =>
-        if leading.level == levelJunction then
+        if leading.level == levelConjunction ||
+            leading.level == levelDisjunction then
+          let opening ← currentRange
           advance
-          first := some leading
+          let mut left ← withJunctionBoundary opening.start.column
+            (parseExpression fuel 0)
+          let mut going := true
+          while going do
+            match ← nextInfixAt? level with
+            | some entry =>
+                let range ← currentRange
+                if range.start.column == opening.start.column then
+                  if entry.canonical == leading.canonical then
+                    advance
+                    let right ← withJunctionBoundary opening.start.column
+                      (parseExpression fuel 0)
+                    left := infixApplication leading left right
+                  else
+                    emitLimit ParseCode.precedenceConflict
+                      s!"a prefix '{leading.canonical}' list cannot continue with '{entry.canonical}' at the same indentation"
+                      range
+                    going := false
+                else
+                  going := false
+            | none => going := false
+          return left
     | none => pure ()
+    let mut first : Option OperatorEntry := none
     let mut left ← parseExpression fuel (level + 1)
     let mut going := true
     while going do
       if (← halted?) then
         going := false
       else
-        match ← nextInfixAt? level with
+        if (← atJunctionBoundary) then
+          going := false
+        else match ← nextInfixAt? level with
         | none => going := false
         | some entry =>
             match associationConflict first entry with
@@ -1153,7 +1205,32 @@ def parseBracket (fuel : Nat) : ParserM Expression := do
 
 def parseBracketBody (fuel : Nat) (startSpan : SourceRange) : ParserM Expression := do
   let first ← parseExpression fuel 0
-  if (← consumeSymbol "|->") then
+  if (← consumeSymbol ":") then
+    match recordFieldName? first with
+    | none =>
+        let range ← currentRange
+        emitError ParseCode.expectedExpression
+          "expected a field name before ':'" range
+        return placeholderExpression startSpan
+    | some name => do
+        let domain ← parseExpression fuel 0
+        let mut fields : Array RecordField :=
+          #[{ name, value := domain
+              range := ⟨first.range.start, domain.range.stop⟩ }]
+        while (← consumeSymbol ",") do
+          let fieldRange ← currentRange
+          match ← expectName with
+          | none => pure ()
+          | some (fieldName, _) => do
+              let _ ← expectSymbol ":"
+              let fieldDomain ← parseExpression fuel 0
+              fields := fields.push
+                { name := fieldName, value := fieldDomain
+                  range := ⟨fieldRange.start, fieldDomain.range.stop⟩ }
+        let _ ← expectSymbol "]"
+        let stop ← currentStop
+        return .recordSet fields ⟨startSpan.start, stop⟩
+  else if (← consumeSymbol "|->") then
     match boundOf? first with
     | some bound => do
         let mut bounds : Array Bound := #[bound]

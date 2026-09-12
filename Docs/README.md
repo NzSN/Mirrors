@@ -12,6 +12,8 @@ an installed Windows service, a hosted CI run, or a published package.
 | Run MBT or LLM-assisted development with the Mirror-Framework | [Mirror-Framework usage guide](usage-of-mirror-framework.md) |
 | Test TypeScript application code | [MirrorECMA MBT user manual](mirrorecma-typescript-mbt-user-manual.md) |
 | Build, install, or identify Mirrors | [Product versions and installation](versioning.md) |
+| Run validation inside WSL2 or through `r_windev` | [WSL2 validation](wsl2-validation.md) |
+| Inspect a TLA+ model with the frontend CLI | [`tla_frontend` guide](model-interface-compiler/tla-frontend-cli.md) |
 | Understand component ownership | [Architecture overview](architecture-overview.md), [module details](architecture-details.md) |
 | Use the CLI or wire protocol | [Interface reference](interface-reference.md) |
 | Implement a client library | [Client implementation guide](client-implementation-guide.md) |
@@ -49,9 +51,10 @@ an installed Windows service, a hosted CI run, or a published package.
 ## Validation entry points
 
 [`lakefile.lean`](../lakefile.lean) defines the current `lake test` inventory:
-17 test executables (`fixtures_replay`, `diff_cross`, `model_interface_spec`,
+23 test executables (`fixtures_replay`, `diff_cross`, `model_interface_spec`,
 `model_interface_distribution_spec`, the five evidence/scaffold/projection
-specs, `stdio_smoke`, `jobstore_spec`, `apalache_cli_spec`, `explorer_spec`,
+specs, the lexer/parser/resolver/elaboration/frontend/inspection-CLI frontend
+gates, `stdio_smoke`, `jobstore_spec`, `apalache_cli_spec`, `explorer_spec`,
 `transport_spec`, `registry_spec`, `counter_spec`, and `async_spec`), three
 compiler freshness checks (sync TypeScript, async TypeScript, and C++), and
 Counter preflight with exact coverage comparison.

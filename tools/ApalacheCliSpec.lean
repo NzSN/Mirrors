@@ -362,6 +362,113 @@ def unitBorrowedTraceSnapshot (fails : Failures) : IO Unit := do
         ((← legacyPath.get) == missingCfg.specPath) (← legacyPath.get)
   removeDirRecursive dir
 
+/-! ## Unit: unified capture equivalence (TF7) -/
+
+/-- Every `.lean` file under `dir`, for the retired-scanner gate. -/
+private partial def leanFilesUnder (dir : System.FilePath)
+    (acc : List System.FilePath) : IO (List System.FilePath) := do
+  if ← dir.isDir then
+    let entries ← dir.readDir
+    let mut acc := acc
+    for entry in entries do
+      acc ← leanFilesUnder entry.path acc
+    return acc
+  else if dir.toString.endsWith ".lean" then
+    return dir :: acc
+  else
+    return acc
+
+/-- The hash the frontend capture assigns to a source: SHA-256 over the
+LF-normalized UTF-8 bytes. -/
+private def normalizedHash (source : String) : String :=
+  Core.ModelInterface.Sha256.digestHex
+    ((source.replace "\r\n" "\n").replace "\r" "\n").toUTF8
+
+def unitUnifiedCaptureEquivalence (fails : Failures) : IO Unit := do
+  -- Borrowed closure: every digest is the hash of the captured normalized bytes.
+  let dir ← freshSessionDir
+  let rootPath := dir ++ "/A.tla"
+  let childPath := dir ++ "/B.tla"
+  IO.FS.writeFile rootPath closureASource
+  IO.FS.writeFile childPath (closureBSource 1)
+  match ← borrowedSourceDigests rootPath with
+  | .error error => check fails "unified capture: borrowed closure resolves" false error
+  | .ok sources =>
+      check fails "unified capture: borrowed manifest is sorted"
+        (sources.map (fun source => (source.moduleName, source.logicalPath)) ==
+          [("A", "A.tla"), ("B", "B.tla")]) (toString (repr sources))
+      check fails "unified capture: root digest hashes the captured bytes"
+        (digestFor "A" sources == some (normalizedHash closureASource))
+        (toString (repr sources))
+      check fails "unified capture: dependency digest hashes the captured bytes"
+        (digestFor "B" sources == some (normalizedHash (closureBSource 1)))
+        (toString (repr sources))
+      match ← Shell.Tla.SourceProvider.readRootFile dir "A.tla" with
+      | .error error =>
+          check fails "unified capture: frontend root read" false error.message
+      | .ok unit =>
+          check fails "unified capture: manifest agrees with the frontend capture"
+            (digestFor "A" sources == some unit.contentSha256)
+            (toString (repr sources))
+  -- Missing sibling dependency stays a fail-closed capture error.
+  let missingDir ← freshSessionDir
+  IO.FS.writeFile (missingDir ++ "/A.tla") "---- MODULE A ----\nEXTENDS B\n====\n"
+  checkClosureError fails "unified capture: missing sibling rejected"
+    "missing sibling module 'B'" (← borrowedSourceDigests (missingDir ++ "/A.tla"))
+  removeDirRecursive missingDir
+  removeDirRecursive dir
+
+  -- Inline closure: the published file bytes are the analyzed bytes.
+  let ext := "---- MODULE Ext ----\nFoo == 1\n====\n"
+  let inlineSpec : Codec.SpecConfig := { sources := [hcSrc, ext] }
+  match inlineSourceDigests inlineSpec with
+  | .error error => check fails "unified capture: inline manifest" false error
+  | .ok sources =>
+      check fails "unified capture: inline manifest order"
+        (sources.map (fun source => (source.moduleName, source.logicalPath)) ==
+          [("HourClock", "HourClock.tla"), ("Ext", "Ext.tla")])
+        (toString (repr sources))
+      check fails "unified capture: inline digest hashes the captured bytes"
+        (digestFor "HourClock" sources == some (normalizedHash hcSrc))
+        (toString (repr sources))
+      match ← materializeSpec inlineSpec with
+      | .error error => check fails "unified capture: inline materialization" false error
+      | .ok (specDir, _) =>
+          for source in sources do
+            let published ← IO.FS.readFile (specDir ++ "/" ++ source.logicalPath)
+            check fails "unified capture: published bytes equal analyzed bytes"
+              (Core.ModelInterface.Sha256.digestHex published.toUTF8 ==
+                source.contentSha256)
+              source.logicalPath
+          removeDirRecursive specDir
+  -- CRLF sources normalize before publication.
+  let crlfSpec : Codec.SpecConfig := { sources := [hcSrc.replace "\n" "\r\n"] }
+  match inlineSourceDigests crlfSpec with
+  | .error error => check fails "unified capture: CRLF inline manifest" false error
+  | .ok sources =>
+      check fails "unified capture: CRLF inline digest is stable"
+        (digestFor "HourClock" sources == some (normalizedHash hcSrc))
+        (toString (repr sources))
+      match ← materializeSpec crlfSpec with
+      | .error error => check fails "unified capture: CRLF inline materialization" false error
+      | .ok (specDir, _) =>
+          let published ← IO.FS.readFile (specDir ++ "/HourClock.tla")
+          check fails "unified capture: CRLF is published as the analyzed bytes"
+            (published == hcSrc) (toString (repr published))
+          removeDirRecursive specDir
+
+  -- The retired scanners have no production caller under `Shell/`.
+  let shellFiles ← leanFilesUnder "Shell" []
+  let mut scannerCallers : List String := []
+  for file in shellFiles do
+    let text ← IO.FS.readFile file
+    if text.contains "SpecVariables" || text.contains "collectDependencies" ||
+        text.contains "sourceTokens" || text.contains "codeOnlySource" then
+      scannerCallers := scannerCallers ++ [file.toString]
+  check fails "unified capture: retired scanners have no production caller"
+    (scannerCallers.mergeSort (· ≤ ·) == ["Shell/ModelInterface/SpecVariables.lean"])
+    (toString (repr scannerCallers))
+
 /-! ## Unit: args and output-dir parsing -/
 
 def unitArgs (fails : Failures) : IO Unit := do
@@ -595,6 +702,7 @@ def main : IO UInt32 := do
   run "borrowed-closure-failures" unitBorrowedClosureFailures
   run "borrowed-closure-symlinks" unitBorrowedClosureSymlinks
   run "borrowed-trace-snapshot" unitBorrowedTraceSnapshot
+  run "unified-capture-equivalence" unitUnifiedCaptureEquivalence
   run "args" unitArgs
   run "disk-trace-limits" unitDiskTraceLimits
   run "generated-trace-parse-failure" unitGeneratedTraceParseFailure

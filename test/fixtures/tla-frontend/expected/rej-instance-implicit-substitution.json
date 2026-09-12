@@ -1,0 +1,86 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "rej-instance-implicit-substitution",
+  "root": "ImplicitRoot",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "ImplicitChild",
+    "ImplicitRoot"
+  ],
+  "standardModules": [],
+  "dependencies": [
+    {
+      "owner": "ImplicitRoot",
+      "module": "ImplicitChild",
+      "kind": "namedInstance",
+      "resolution": "local",
+      "local": false,
+      "line": 5,
+      "substitutions": []
+    }
+  ],
+  "declarations": [
+    {
+      "module": "ImplicitChild",
+      "kind": "variable",
+      "names": [
+        "shared"
+      ],
+      "line": 3
+    },
+    {
+      "module": "ImplicitChild",
+      "kind": "operator",
+      "names": [
+        "ChildOp"
+      ],
+      "arity": 0,
+      "line": 5
+    },
+    {
+      "module": "ImplicitRoot",
+      "kind": "variable",
+      "names": [
+        "shared"
+      ],
+      "line": 3
+    },
+    {
+      "module": "ImplicitRoot",
+      "kind": "instance",
+      "names": [
+        "I"
+      ],
+      "line": 5
+    },
+    {
+      "module": "ImplicitRoot",
+      "kind": "operator",
+      "names": [
+        "RootOp"
+      ],
+      "arity": 0,
+      "line": 7
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "shared",
+      "declaredIn": "ImplicitRoot",
+      "declaredName": "shared",
+      "importPath": [
+        "ImplicitRoot"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "ImplicitChild.tla",
+      "sha256": "c237f6d3153078100f6658f7da28bb1eb04d340079f1b1af76ae4f6934b81802"
+    },
+    {
+      "logicalPath": "ImplicitRoot.tla",
+      "sha256": "6bd411ba316a0dace8f5ba3efdcf520957899b4c03668511cac32ffc1068f772"
+    }
+  ]
+}

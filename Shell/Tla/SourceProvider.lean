@@ -230,18 +230,25 @@ private def readBounded (path : System.FilePath) (limit : Nat) :
   catch _ =>
     return .error ()
 
-/-- Read one borrowed module file: canonical name, regular file only, bounded
+/-- `true` for a bare logical root `.tla` file name: no directory component,
+no drive designator, and not the empty stem. The stem is a file name, not
+necessarily a valid module-name spelling: a root file's module identity always
+comes from its captured `MODULE` header, so `RBT-stale.tla` is a usable root
+name while `../Root.tla` and `dir/Root.tla` are not. -/
+def validRootFileName (logicalPath : String) : Bool :=
+  logicalPath.endsWith ".tla" && logicalPath.length > 4 &&
+    !logicalPath.contains '/' && !logicalPath.contains '\\' &&
+    !logicalPath.contains ':' && logicalPath != "." && logicalPath != ".."
+
+/-- Read one source file beneath a pinned directory: regular file only, bounded
 bytes, identity rechecked after the read (kind, size, and modification time),
-and UTF-8 validated before capture. -/
-private def borrowedSourceUnit (rootDir : System.FilePath)
-    (limits : SourceProviderLimits) (moduleName : Core.Tla.ModuleName)
-    (logicalPath : String) :
+and UTF-8 validated before capture. `missing` is the error a caller wants when
+the file is absent. -/
+private def readSourceFile (path : System.FilePath) (limits : SourceProviderLimits)
+    (logicalPath : String) (missing : SourceReadError) :
     IO (Except SourceReadError Core.Tla.SourceUnit) := do
-  if !ModuleRef.validLogicalPath logicalPath then
-    return .error (.invalidReference logicalPath "expected a canonical bare .tla file name")
-  let path := rootDir / logicalPath
   match ← metadataOrNone path with
-  | none => return .error (.notFound moduleName)
+  | none => return .error missing
   | some before =>
       if before.type == .symlink then
         return .error (.symbolicLink logicalPath)
@@ -263,6 +270,28 @@ private def borrowedSourceUnit (rootDir : System.FilePath)
               | none => return .error (.invalidUtf8 logicalPath)
               | some text =>
                   return .ok (Core.Tla.SourceUnit.create .borrowedDirectory logicalPath text)
+
+/-- Read one borrowed module file whose logical name is a canonical
+`<ModuleName>.tla` reference. -/
+private def borrowedSourceUnit (rootDir : System.FilePath)
+    (limits : SourceProviderLimits) (moduleName : Core.Tla.ModuleName)
+    (logicalPath : String) :
+    IO (Except SourceReadError Core.Tla.SourceUnit) := do
+  if !ModuleRef.validLogicalPath logicalPath then
+    return .error (.invalidReference logicalPath "expected a canonical bare .tla file name")
+  readSourceFile (rootDir / logicalPath) limits logicalPath (.notFound moduleName)
+
+/-- Read one borrowed root file by its bare logical `.tla` file name. The root
+is read under `rootDir` with the borrowed-directory checks (regular file only,
+bounded bytes, identity rechecked after the read, UTF-8 validated) but without
+requiring the stem to be a valid module-name spelling. -/
+def readRootFile (rootDir : System.FilePath) (logicalPath : String)
+    (limits : SourceProviderLimits := {}) :
+    IO (Except SourceReadError Core.Tla.SourceUnit) := do
+  if !validRootFileName logicalPath then
+    return .error (.invalidReference logicalPath "expected a bare .tla file name")
+  readSourceFile (rootDir / logicalPath) limits logicalPath
+    (.unreadable logicalPath "file does not exist")
 
 /-- A provider over one pinned root directory. Dependencies resolve to sibling
 `<Name>.tla` files; a name with no sibling file is reported as `notFound` so the

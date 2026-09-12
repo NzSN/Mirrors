@@ -102,13 +102,22 @@
       ],
       "arity": 0,
       "line": 14
+    },
+    {
+      "module": "AcceptPrecedence",
+      "kind": "operator",
+      "names": [
+        "MixedJunction"
+      ],
+      "arity": 0,
+      "line": 15
     }
   ],
   "effectiveVariables": [],
   "sources": [
     {
       "logicalPath": "AcceptPrecedence.tla",
-      "sha256": "70e3fcef1ef56887171d3a7c5edcce921adea9a79a56b5e0924a9bbea0d13312"
+      "sha256": "490fb2f5f520fbcff46a91159cc94404fc395cc40df6b91e340425afe93b441c"
     }
   ],
   "renderings": {
@@ -117,6 +126,7 @@
     "Implication": "(A /\\ B) => C",
     "Disjunction": "(A \\/ B) => C",
     "Negation": "(~ A) /\\ B",
-    "Grouping": "(A => B) => C"
+    "Grouping": "(A => B) => C",
+    "MixedJunction": "(A /\\ B) \\/ C"
   }
 }

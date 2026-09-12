@@ -107,16 +107,27 @@ def scenarioRejections (fails : Failures) : IO Unit := do
     rbtInput with transitionLabels := ["constructor"] }
   check fails "reject: reserved label"
     (reserved.value.isNone && diagnosticCode reserved "MIC-S-ACTION-001")
-  let badParamEvidence := {
+  let multiParamEvidence := {
     rbtEvidence with typeFacts := rbtEvidence.typeFacts.map fun fact =>
       if fact.modelPath.root == "parameters" then
         { fact with type := .record [
           { wireName := "keyParam", type := .int },
           { wireName := "otherParam", type := .int }] }
       else fact }
-  let badParam := synthesizeScaffold { rbtInput with evidence := badParamEvidence }
-  check fails "reject: parameter record is not one-field"
-    (badParam.value.isNone && diagnosticCode badParam "MIC-S-PARAM-001")
+  let multiParam := synthesizeScaffold { rbtInput with evidence := multiParamEvidence }
+  check fails "parameters: a multi-field record emits every candidate input"
+    (match multiParam.value with
+     | some proposal => proposal.contract.actions.all fun action =>
+         action.inputs.map (·.id) == ["Key", "Other"]
+     | none => false)
+  let emptyParamEvidence := {
+    rbtEvidence with typeFacts := rbtEvidence.typeFacts.map fun fact =>
+      if fact.modelPath.root == "parameters" then
+        { fact with type := .record [] }
+      else fact }
+  let emptyParam := synthesizeScaffold { rbtInput with evidence := emptyParamEvidence }
+  check fails "reject: parameter record is empty"
+    (emptyParam.value.isNone && diagnosticCode emptyParam "MIC-S-PARAM-001")
   let tooMany := (List.range (maxTransitionActionsV1 + 1)).map fun index =>
     "action" ++ toString index
   let limited := synthesizeScaffold { rbtInput with transitionLabels := tooMany }

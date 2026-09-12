@@ -332,6 +332,11 @@ gates, registered `tla_parser_spec` as a default Lake target, and added it to
 wire contract. TF4 may now consume the accepted parser and Core-owned graph.
 
 A repository-wide `timeout 600 lake test` attempt reached its external wall-time
-bound before the aggregate driver emitted buffered child output. The focused
-gates and full `lake build` passed; a complete unbounded `lake test` rerun on the
-user's high-end machine remains pending and is not claimed here.
+bound before the aggregate driver emitted buffered child output. That bounded
+attempt is superseded by an unbounded aggregate run completed on 2026-09-12 in
+Ubuntu on WSL2 at commit
+`a653c9e6172845d4005c25b5e00628cbdc9a5b3a`. With Lean 4.33.0 and
+`APALACHE_MC=/home/jlc/.local/bin/apalache-mc`, `lake test` exited zero and
+emitted `ALL LAKE TESTS GREEN`. No skipped tier was reported, and the WSL
+checkout remained clean. See the [WSL2 validation guide](../wsl2-validation.md)
+for the invocation and environment requirements.

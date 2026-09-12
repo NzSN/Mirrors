@@ -1,7 +1,10 @@
 # General TLA+ frontend implementation tasks
 
-> Status: **implementation plan; TF0–TF3b accepted on 2026-09-11; TF4 is
-> unblocked**
+> Status: **implementation plan; TF0–TF3b accepted on 2026-09-11; TF4–TF8
+> implemented and accepted on 2026-09-12 for the Mirrors-local scope. The
+> cross-language interop matrix and live Apalache tiers are green; the pinned
+> MirrorGate Node gate and corpus-wide differential tiers remain outstanding as
+> recorded in section 17.6.**
 >
 > Design authority: [general TLA+ frontend](tla-frontend-design.md)
 >
@@ -482,7 +485,9 @@ The task group is complete only when:
 
 ### 17.1 Workspace state
 
-Observed directly in the repository on 2026-09-11 after the TF3b handoff.
+Observed directly in the repository on 2026-09-11 after the TF3b handoff; the
+TF4–TF8 rows record the 2026-09-11/12 implementation and acceptance. Section
+17.6 records which acceptance tiers were not executed.
 
 | Package | Artifacts present | State |
 | --- | --- | --- |
@@ -491,11 +496,16 @@ Observed directly in the repository on 2026-09-11 after the TF3b handoff.
 | TF2 | `Core/Tla/{Syntax,Parser}.lean` and `tools/TlaParserSpec.lean` | Accepted after TF2A–TF2E: 57 fixtures, 72 branches, structural summaries, recovery/resource boundaries, proof opacity, operator/profile behavior, and mutation checks pass. The independent review reported no actionable findings. |
 | TF3 | source providers, resolver, and resolver spec | Accepted through its injected `ParseModule` seam: the coordinator reran the module build and both spec invocations; the executable printed `TLA MODULE RESOLVER SPEC GREEN`. Actual parser composition remains a later frontend gate. |
 | TF3b | `Core/Tla/Graph.lean` plus resolver/provider import moves | Accepted: pure graph and standard-module data now live in Core; resolution behavior and all existing assertions remain unchanged, and `Core/` has no `Shell` import. |
+| TF4 | `Core/Tla/{Names,Level,Elaboration}.lean` and `tools/TlaElaborationSpec.lean` | Accepted: both required spec invocations printed `TLA ELABORATION SPEC GREEN`; all 27 accepted fixtures elaborated and matched their frozen effective-variable/source summaries, all 30 rejected fixtures were driven, and the 12 TF4-owned rejections matched stage and reason. An independent review reported no actionable findings. |
+| TF5 | `Core/Tla/{Names,Elaboration}.lean` and `tools/TlaElaborationSpec.lean` | Accepted 2026-09-12: both required spec invocations print `TLA ELABORATION SPEC GREEN`; 32 accepted fixtures elaborate and match their frozen summaries, 25 rejected fixtures are driven, and the instance probes cover named, unnamed, chained, `LOCAL INSTANCE`, nested re-export, implicit substitution, duplicate rejection with a related earlier-site location, arity/level rejection, standard-module instance facts, and qualified-constant rejection. The five staged fixtures were reclassified in the manifest with generated summaries (fixture files untouched), and the `elab.instance.staged` branch was retired. `tla_lexer_spec`, `tla_parser_spec`, and `tla_module_resolver_spec` stayed green. An independent review reran every gate above in a separate session on 2026-09-12 and reported no actionable findings. |
+| TF6 | `Shell/Tla/Frontend.lean`, `tools/TlaFrontendSpec.lean`, and the model-interface compiler/scaffold integration | Accepted 2026-09-12: `lake build` succeeds on the incremental tree; `tla_lexer_spec`, `tla_parser_spec`, `tla_module_resolver_spec`, `tla_elaboration_spec`, `tla_frontend_spec`, `model_interface_spec`, `model_interface_scaffold_spec`, `model_interface_evidence_spec`, `model_interface_trace_projection_spec`, `model_interface_scaffold_cli_spec`, `model_interface_trace_projection_cli_spec`, and `fixtures_replay` all exit zero. One frontend result supplies scaffold, project-trace, resolve, and check; the composed-source suite proves 19 effective variables (12 inherited + 7 local), source-only origins, origin-free evidence-only diagnostics, no proposal or lock on refusal, and that a dependency edit invalidates captured provenance. On the real `DumpLedgerTransfer.tla` corpus the nineteen-variable trace scaffolds to a proposal with 17 observations and four unsealed input candidates per transition, while a fabricated twentieth variable is refused by scaffold, resolve, and check with `MIC-S-SOURCE-001` and no artifact written. The `mirrorecma-v1`, `mirrorecma-async-v1`, and `mirrorcpp-v1` golden `check` invocations and `preflight` stay clean, so existing locks and generated output are unchanged, and the diff carries no target or protocol version change. |
+| TF7 | `Shell/Apalache/SpecSource.lean` and `tools/ApalacheCliSpec.lean` | Accepted 2026-09-12: borrowed and inline capture, module-name discovery, and `EXTENDS`/`INSTANCE` dependency discovery now run through `Shell.Tla.SourceProvider` and one `Core.Tla.parseSource` parse; the local token scanner (`codeOnlySource`, `sourceTokens`, `collectDependencies`, and the duplicated `knownStandardModules` list) is removed, while closure policy (budgets, cycle termination, snapshot materialization, temp-dir lifecycle) stays in this module. Inline materialization publishes the captured normalized bytes, so the file Apalache opens is the text the manifest hashes. `apalache_cli_spec` prints `APALACHE CLI GREEN` with its pre-existing scenarios unchanged and one new `unified-capture-equivalence` scenario: the borrowed manifest is sorted, every digest equals SHA-256 over the captured normalized bytes, the manifest agrees with an independent `SourceProvider.readRootFile` capture, a missing sibling dependency is refused, inline manifests keep source order and logical paths, published inline bytes hash to their manifest entries, CRLF sources normalize before publication, and the retired-scanner gate finds no `Shell/` caller besides the definition file. The suite's frozen snapshot digests were not edited, so closure digests still match the retired scanner's output. `Shell/ModelInterface/SpecVariables.lean` has no production caller; it remains only as the subject of `tools/ModelInterfaceEvidenceSpec.lean`. |
+| TF8 | `Codec/TlaFrontendJson.lean`, `Shell/Tla/Frontend.lean`, `tools/TlaFrontendCli.lean`, `tools/TlaFrontendCliSpec.lean`, `test/fixtures/tla-frontend/cli/`, and `Docs/model-interface-compiler/tla-frontend-cli.md` | Accepted 2026-09-12 for the Mirrors-local scope: `tla_frontend` exposes `parse`, `resolve`, and `inspect` over one captured frontend analysis with the closed `mirrors.tla-frontend-inspection/v1` document, and the operational `mirror` executable gains no development command. `tla_frontend_cli_spec` prints `TLA FRONTEND CLI GREEN`: exact frozen usage and malformed-argument stderr for missing/unknown command, missing value, duplicate option, unsupported format, a section flag on `resolve`, and a non-`.tla` root; closed key sets for successful and failed `parse`/`resolve`/`inspect` documents; human/JSON diagnostic equivalence; no physical path in default output; byte-identical repeated `resolve`; nineteen effective variables (12 inherited + 7 local); and the byte-pinned `inspect --variables --format json` fixture. `lake test` runs the new gate after `tla_frontend_spec`. The MirrorECMA/MirrorCPP generated Counter, MirrorGate, `tools/interop/run.sh`, live-Apalache, and `sany` tiers were not executed here; section 17.6 records the exact status. |
 
-Cross-checks performed while preparing this dispatch: no `sorry` or `admit` in
-the TF1–TF3b sources; no `Core/**` module imports `Shell/**`; `lakefile.lean` and
-`Shell.lean` are unmodified, so no frontend module, spec, or executable is
-registered in the build yet.
+At the TF3b handoff, cross-checks found no `sorry` or `admit` in the TF1–TF3b
+sources and no `Core/**` module import of `Shell/**`. At that time,
+`lakefile.lean` and `Shell.lean` were unmodified and no frontend executable was
+registered; section 17.5 records the later coordinator-owned registrations.
 
 ### 17.2 TF3b — Core-owned module graph (blocks TF4)
 
@@ -603,8 +613,11 @@ accepted, and owns `lakefile.lean` registration for `tla_lexer_spec`,
 
 - **TF2 parser gate.** `tools/TlaParserSpec.lean` is present, accepted, and
   registered in `lakefile.lean`; TF4 may consume the parser interface.
-- **Build wiring.** `lakefile.lean` and `Shell.lean` are untouched, so no
-  frontend target is registered or gated yet.
+- **Build wiring.** `tla_lexer_spec`, `tla_parser_spec`,
+  `tla_module_resolver_spec`, `tla_elaboration_spec`, `tla_frontend_spec`, and
+  `tla_frontend_cli_spec` are default targets and run from `lake test`;
+  `tla_frontend` is a default target but not a test gate. `Shell.lean` carries
+  no frontend executable registration.
 - **Differential gates.** The `sany` and `apalache` corpus entries are
   `not_run`; the compatibility claims of design section 5 stay unverified until
   the coordinator records pinned tool versions.
@@ -612,3 +625,49 @@ accepted, and owns `lakefile.lean` registration for `tla_lexer_spec`,
   (standard-module catalog sourcing), and 9 (scaffold proposal revision scope)
   affect TF4, TF5, and TF6 and are coordinator decisions rather than
   implementer choices.
+
+### 17.6 TF8 validation and remaining tiers (2026-09-12)
+
+The coordinator reran the aggregate gate with
+`APALACHE_MC=/home/nzsn/.local/bin/apalache/bin/apalache-mc`. `lake test`
+exited zero and emitted `ALL LAKE TESTS GREEN`, including the lexer, 57-fixture
+parser corpus (75 branches and 103 links), resolver, elaboration, unified
+frontend, inspection CLI, model-interface, live Apalache/explorer, TCP/mTLS,
+registry, async, and Counter gates. `lake build` also completed with 600 default
+target jobs, and `git diff --check` is clean.
+
+The real application acceptance case also ran from the dump-ledger checkout.
+`DumpLedger.tla` and `DumpLedgerTransfer.tla` both parse; scaffold accepts the
+checked-in 19-variable transfer ITF trace and emits 17 observations plus four
+unsealed parameter-field candidates per transition. Adding
+`fabricatedTwentieth` to the same evidence fails with
+`source-only=[], evidence-only=[fabricatedTwentieth]` and writes no proposal.
+
+The ecosystem validation produced:
+
+- MirrorECMA generated Counter tutorial acceptance passed against this compiler;
+- MirrorCPP generated binding tests 156-161 passed, and the full interop build
+  later passed all 215 CTest cases;
+- `tools/interop/run.sh` emitted `INTEROP MATRIX GREEN` for MirrorECMA,
+  MirrorCPP, MirrorRust, and the Haskell client over stdio, TCP, and mTLS;
+  MirrorECMA's Jest tier reported 417 passed and 7 skipped, and live Apalache
+  exploration and generated Counter checks passed;
+- the Haskell reference client was built locally with GHC 9.14.1 and validated
+  TCP and pinned mTLS, including wrong-pin and rogue-client rejection.
+
+Two external tiers remain unavailable and are not reported as passes:
+
+- MirrorGate's required `bash scripts/test.sh` stops in `scripts/build.sh`
+  before any MirrorGate build or test because it pins Node `v24.15.0`, while
+  this host has `v24.19.0` and the remote Windows host has `v24.21.0`; its WSL
+  Node launcher is not usable. This is an unavailable pinned environment, not
+  a MirrorGate test failure. The gate must be rerun unchanged with Node
+  `v24.15.0` before claiming MirrorGate's required sandbox matrix.
+- The corpus-wide `sany` and `apalache` differential slots remain `not_run`;
+  this repository has no harness that runs every fixture through the Mirrors
+  frontend and pinned versions of both external parsers, then compares the
+  acceptance result, rejection stage, and reviewed profile differences. Live
+  Apalache integration, the green interop matrix, and the two real application
+  parses establish their narrower behaviors but do not substitute for a
+  complete 57-fixture differential run. Until that harness exists and runs,
+  the project cannot claim corpus-wide external-parser conformance.

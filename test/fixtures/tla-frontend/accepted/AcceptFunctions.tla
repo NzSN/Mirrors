@@ -11,5 +11,6 @@ R == [key |-> 1, other |-> 2]
 K == R.key
 Updated == [F EXCEPT ![2] = 9]
 Nested == [R EXCEPT !.key = @ + 1, !.other = 0]
+Types == [case: S \cup {0}, token: S]
 
 ====

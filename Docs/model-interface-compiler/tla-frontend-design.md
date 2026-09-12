@@ -1,6 +1,10 @@
 # General TLA+ frontend for Mirrors
 
-> Status: **proposed design only; no implementation is claimed**
+> Status: **design; delivery slices TF0–TF8 of the implementation plan are
+> implemented and accepted as of 2026-09-12. The inspection tool (§24) ships as
+> the separate `tla_frontend` development executable; see
+> [the CLI guide](tla-frontend-cli.md). Ecosystem and differential tiers are
+> recorded per run in the task ledger.**
 >
 > Parent compiler design: [model-interface compiler](design.md)
 >
@@ -851,6 +855,17 @@ absolute paths by default.
 `model_interface_gen` should not require users to run this tool first. It calls
 the frontend module directly. The executable exists for debugging, editor
 integration, corpus generation, and differential tests.
+
+**Implementation status (2026-09-12).** Delivered by TF8 as `tla_frontend`
+(`tools/TlaFrontendCli.lean`) with the closed schema
+`mirrors.tla-frontend-inspection/v1` in `Codec/TlaFrontendJson.lean`. `parse`
+reuses the frontend's own `captureRootFile` seam, so a path-only caller never
+runs a second scanner; `resolve` and `inspect` consume one
+`Shell.Tla.Frontend` analysis. The gate `tools/TlaFrontendCliSpec.lean`
+(`tla_frontend_cli_spec`) checks exact help and malformed-argument behavior,
+closed key sets, human/JSON diagnostic equivalence, physical-path absence,
+deterministic output, and the byte-pinned public fixture
+`test/fixtures/tla-frontend/cli/inspect-generic-transfer-variables.json`.
 
 ## 25. Testing strategy
 

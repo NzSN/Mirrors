@@ -1,0 +1,92 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "rej-instance-variable-substituted",
+  "root": "InstanceStateRoot",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "InstanceStateChild",
+    "InstanceStateRoot"
+  ],
+  "standardModules": [],
+  "dependencies": [
+    {
+      "owner": "InstanceStateRoot",
+      "module": "InstanceStateChild",
+      "kind": "namedInstance",
+      "resolution": "local",
+      "local": false,
+      "line": 5,
+      "substitutions": [
+        {
+          "formal": "childState",
+          "formalArity": 0,
+          "actual": "parentState"
+        }
+      ]
+    }
+  ],
+  "declarations": [
+    {
+      "module": "InstanceStateChild",
+      "kind": "variable",
+      "names": [
+        "childState"
+      ],
+      "line": 3
+    },
+    {
+      "module": "InstanceStateChild",
+      "kind": "operator",
+      "names": [
+        "ChildOp"
+      ],
+      "arity": 0,
+      "line": 5
+    },
+    {
+      "module": "InstanceStateRoot",
+      "kind": "variable",
+      "names": [
+        "parentState"
+      ],
+      "line": 3
+    },
+    {
+      "module": "InstanceStateRoot",
+      "kind": "instance",
+      "names": [
+        "I"
+      ],
+      "line": 5
+    },
+    {
+      "module": "InstanceStateRoot",
+      "kind": "operator",
+      "names": [
+        "RootOp"
+      ],
+      "arity": 0,
+      "line": 7
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "parentState",
+      "declaredIn": "InstanceStateRoot",
+      "declaredName": "parentState",
+      "importPath": [
+        "InstanceStateRoot"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "InstanceStateChild.tla",
+      "sha256": "8d6464fa72aaafcfe9df3195692a86dfaf8b816ecf32e093de8750b2ac1e6e99"
+    },
+    {
+      "logicalPath": "InstanceStateRoot.tla",
+      "sha256": "38eae15320aec5e708b53d5c7022f8b2f30682a833df5a497ab600954bc620fe"
+    }
+  ]
+}

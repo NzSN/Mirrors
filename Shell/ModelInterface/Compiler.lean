@@ -7,12 +7,11 @@ import Codec.ModelInterfaceScaffoldJson
 import Codec.ModelInterfaceTraceProjectionJson
 import Codec.StrictJson
 import Codec.Json
-import Shell.Apalache.SpecSource
 import Shell.ModelInterface.Evidence
-import Shell.ModelInterface.SpecVariables
 import Shell.ModelInterface.Emit.Cpp
 import Shell.ModelInterface.Emit.TypeScript
 import Shell.ModelInterface.Emit.TypeScriptAsync
+import Shell.Tla.Frontend
 import Lean
 
 /-!
@@ -282,8 +281,97 @@ private def resolveLoaded (paths : InputPaths) (sources : List SourceDigest)
     diagnostics := result.diagnostics
   }
 
-/-- Read normalized inputs, resolve the pure interface, compute both
-domain-separated digests, and build canonical lock bytes entirely in memory. -/
+/-! ## Unified source analysis and evidence admission -/
+
+/-- Compiler rendering of one frontend diagnostic. Locations stay logical: only
+the frontend's module-relative path, module name, and source range travel. -/
+private def frontendDiagnostic (diagnostic : Core.Tla.Diagnostic) : Diagnostic :=
+  let location (source : Core.Tla.SourceLocation) : SourceLocation :=
+    { source := source.logicalPath
+      pointer := source.moduleName.map (fun name => name.name)
+      line := some source.range.start.line
+      column := some source.range.start.column }
+  { code := diagnostic.code
+    severity := match diagnostic.severity with
+      | .error => .error
+      | _ => .warning
+    stage := diagnostic.stage.toString
+    subject := { kind := "modelSource" }
+    primary := location diagnostic.primary
+    related := diagnostic.related.toList.map (fun related =>
+      { location related.location with pointer := some related.message })
+    arguments := diagnostic.arguments.toList }
+
+/-- Analyze one model source with the shared TLA+ frontend. A captured root that
+cannot be read stays an infrastructure failure; parse, graph, and elaboration
+failures are findings. -/
+private def analyzeSource (specPath : String) :
+    IO (Except CompilerError Shell.Tla.FrontendResult) := do
+  match ← Shell.Tla.analyzeFile { specPath := specPath } with
+  | .ok result => pure (.ok result)
+  | .error failure =>
+      let diagnostics := failure.diagnostics.toList.map frontendDiagnostic
+      let message := match failure.diagnostics.toList with
+        | diagnostic :: _ => s!"invalid model source: {diagnostic.message}"
+        | [] => "invalid model source: frontend analysis failed"
+      if failure.rootCaptureFailed then
+        return .error { kind := .infrastructure, message, diagnostics }
+      else
+        return .error { kind := .finding, message, diagnostics }
+
+/-- One source location naming the declaration origin of a source-only
+variable. The logical path comes from the captured graph, never from a
+filesystem path. -/
+private def variableOrigin (result : Shell.Tla.FrontendResult)
+    (entry : Core.Tla.ResolvedVariable) : SourceLocation :=
+  let logicalPath :=
+    (result.logicalPath? entry.declaredIn).getD (entry.declaredIn.name ++ ".tla")
+  { source := logicalPath
+    pointer := some s!"'{entry.visibleName}' declared in module {entry.declaredIn.name}"
+    line := some entry.declarationRange.start.line
+    column := some entry.declarationRange.start.column }
+
+/-- Admit raw evidence variables against one analyzed frontend result. The
+source side is the elaborated effective variable set; source-only variables
+keep their declaration origins and evidence-only names never claim one. -/
+private def admitSourceEvidence (result : Shell.Tla.FrontendResult)
+    (rawVariables : List String) (specPath : String) : Except CompilerError Unit :=
+  let sourceName := diagnosticSourceName specPath "<spec>"
+  match Shell.Tla.admitEvidence result rawVariables with
+  | .ok () => .ok ()
+  | .error (.duplicateEvidence name) =>
+      let reason := s!"duplicate evidence variable '{name}'"
+      finding s!"invalid model source/evidence pair: {reason}"
+        [scaffoldInputDiagnostic "MIC-S-SOURCE-001" "evidenceVariables" sourceName
+          reason]
+  | .error (.evidenceLimit message) =>
+      finding s!"invalid structural evidence: {message}"
+        [scaffoldInputDiagnostic "MIC-S-EVIDENCE-001" "evidenceVariables" sourceName
+          message]
+  | .error (.mismatch sourceOnly evidenceOnly) =>
+      let sourceNames := sourceOnly.toList.map (fun entry => entry.visibleName)
+      let reason := s!"stale variable evidence: source-only={sourceNames}, " ++
+        s!"evidence-only={evidenceOnly.toList}"
+      let diagnostic := scaffoldInputDiagnostic "MIC-S-SOURCE-001" "sourceVariables"
+        sourceName reason
+      finding s!"invalid model source/evidence pair: {reason}"
+        [{ diagnostic with related := sourceOnly.toList.map (fun entry =>
+            variableOrigin result entry) }]
+
+/-- Map one frontend source identity to the compiler's lock digest. -/
+private def sourceDigestOf (identity : Core.Tla.SourceIdentity) : SourceDigest :=
+  { moduleName := identity.moduleName.name
+    logicalPath := identity.logicalPath
+    contentSha256 := identity.contentSha256 }
+
+/-- The complete captured source manifest as lock digests. -/
+private def frontendSourceDigests (result : Shell.Tla.FrontendResult) :
+    List SourceDigest :=
+  result.sourceManifest.toList.map sourceDigestOf
+
+/-- Read normalized inputs, analyze one captured TLA+ source graph, resolve the
+pure interface, compute both domain-separated digests, and build canonical lock
+bytes entirely in memory. -/
 def compile (paths : InputPaths) : IO (Except CompilerError Compilation) := do
   let contractResult ← readBytes paths.contract
   let contractRaw ← match contractResult with
@@ -305,26 +393,19 @@ def compile (paths : InputPaths) : IO (Except CompilerError Compilation) := do
   let evidence ← match Evidence.fromString evidenceRaw evidenceName evidenceLimits with
     | .ok evidence => pure evidence
     | .error error => return finding s!"invalid structural evidence: {error}"
-  let sourceClosure ← match ←
-      Shell.Apalache.SpecSource.borrowedSourceDigests paths.spec with
-    | .ok sources => pure sources
-    | .error error =>
-        if error.startsWith "unable to read borrowed source" then
-          return infrastructure error
-        else
-          return finding s!"invalid model source closure: {error}"
-  let rootLogicalName := (paths.spec : System.FilePath).fileName.getD ""
-  let rootSource ← match sourceClosure.find? (fun source =>
-      source.logicalPath == rootLogicalName) with
-    | some source => pure source
-    | none => return finding "model source closure does not identify its root module"
-  if rootSource.moduleName != contract.model.moduleName then
-    return finding s!"model source declares module {rootSource.moduleName}, but contract names {contract.model.moduleName}"
-  let sourceClosure := sourceClosure.map fun source =>
-    if source.logicalPath == rootLogicalName then
-      { source with logicalPath := contract.model.source }
-    else source
-  return resolveLoaded paths sourceClosure contract evidence
+  let result ← match ← analyzeSource paths.spec with
+    | .ok result => pure result
+    | .error error => return .error error
+  if result.root.name != contract.model.moduleName then
+    return finding s!"model source declares module {result.root.name}, but contract names {contract.model.moduleName}"
+  match admitSourceEvidence result evidence.traceVars paths.spec with
+  | .error error => return .error error
+  | .ok () => pure ()
+  let rootLogicalPath := (paths.spec : System.FilePath).fileName.getD ""
+  let sources := frontendSourceDigests result |>.map fun source =>
+    if source.logicalPath == rootLogicalPath then
+      { source with logicalPath := contract.model.source } else source
+  return resolveLoaded paths sources contract evidence
 
 private structure LoadedProjectionBase where
   normalizedSourceBytes : ByteArray
@@ -342,10 +423,6 @@ optional projection plan is even read. This preserves stale-source failure as
 an independent boundary. -/
 private def loadProjectionBase (specPath evidencePath : String) :
     IO (Except CompilerError LoadedProjectionBase) := do
-  let sourceLimits := Shell.ModelInterface.SpecVariables.defaultLimits
-  let source ← match ← readTextWithLimit specPath sourceLimits.maxSourceBytes with
-    | .ok source => pure source
-    | .error error => return .error error
   let rawBytes ← match ← readBytesWithLimit evidencePath maxModelInterfaceItfArtifactBytes with
     | .ok evidence => pure evidence
     | .error error => return .error error
@@ -368,20 +445,15 @@ private def loadProjectionBase (specPath evidencePath : String) :
         let reason := s!"invalid structural evidence: {error}"
         return finding reason [scaffoldInputDiagnostic "MIC-S-EVIDENCE-001"
           "evidence" evidenceName reason]
-  match Shell.ModelInterface.SpecVariables.validateEvidenceVariables
-      source evidence.traceVars sourceLimits with
-  | .error error =>
-      let reason := s!"invalid model source/evidence pair: {error}"
-      let sourceName := diagnosticSourceName specPath "<spec>"
-      return finding reason [scaffoldInputDiagnostic "MIC-S-SOURCE-001"
-        "sourceVariables" sourceName reason]
+  let result ← match ← analyzeSource specPath with
+    | .ok result => pure result
+    | .error error => return .error error
+  match admitSourceEvidence result evidence.traceVars specPath with
+  | .error error => return .error error
   | .ok () => pure ()
-  let sourceVariables ← match Shell.ModelInterface.SpecVariables.extract source sourceLimits with
-    | .ok variables => pure variables
-    | .error error => return finding s!"invalid model source: {error}"
-  let moduleName ← match Shell.Apalache.SpecSource.moduleName source with
-    | .ok name => pure name
-    | .error error => return finding s!"invalid model source: {error}"
+  let sourceVariables := result.variableNames
+  let some rootNode := result.graph.findNode? result.root
+    | return finding "model source closure does not identify its root module"
   let logicalSource ← match scaffoldLogicalSource specPath with
     | .ok path => pure path
     | .error error => return .error error
@@ -392,12 +464,11 @@ private def loadProjectionBase (specPath evidencePath : String) :
         return .error { error with diagnostics := error.diagnostics ++ [
           scaffoldInputDiagnostic "MIC-S-EVIDENCE-001" "actionLabels"
             evidenceName error.message] }
-  let normalizedSource := (source.replace "\r\n" "\n").replace "\r" "\n"
-  let normalizedSourceBytes := normalizedSource.toUTF8
+  let normalizedSourceBytes := rootNode.unit.normalizedUtf8
   let sourceDigest : SourceDigest := {
-    moduleName
+    moduleName := result.root.name
     logicalPath := logicalSource
-    contentSha256 := Core.ModelInterface.Sha256.digestHex normalizedSourceBytes
+    contentSha256 := rootNode.unit.contentSha256
   }
   let sourceTypes := evidence.typeFacts.filterMap fun fact =>
     if fact.modelPath.path.isEmpty then some (fact.modelPath.root, fact.type) else none

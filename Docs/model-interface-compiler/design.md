@@ -18,9 +18,13 @@
 > representation, resolver, diagnostics, TypeScript emitter, CLI behavior,
 > proof claims, fixtures, and Counter vertical slice.
 >
-> The current root-only variable scanner and dependency-digest resolver remain
-> implemented behavior. The linked general TLA+ frontend is a proposed
-> replacement design and changes no compiler behavior yet.
+> The linked general TLA+ frontend now supplies source analysis: `scaffold`,
+> `project-trace`, `resolve`, and `check` consume one elaborated captured source
+> graph, and `Shell.Apalache.SpecSource` captures borrowed and inline closures
+> through the same provider and parser instead of its retired token scanner
+> (implementation plan: [`tla-frontend-tasks.md`](tla-frontend-tasks.md),
+> TF0–TF7 accepted). `Shell/ModelInterface/SpecVariables.lean` has no production
+> caller and survives only as a development-gate subject.
 
 ## 0. Implementation status
 

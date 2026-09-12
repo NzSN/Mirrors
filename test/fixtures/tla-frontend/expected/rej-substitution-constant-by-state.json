@@ -1,0 +1,112 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "rej-substitution-constant-by-state",
+  "root": "LevelRoot",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "LevelChild",
+    "LevelRoot"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "LevelChild",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "LevelRoot",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "LevelRoot",
+      "module": "LevelChild",
+      "kind": "namedInstance",
+      "resolution": "local",
+      "local": false,
+      "line": 7,
+      "substitutions": [
+        {
+          "formal": "ChildLimit",
+          "formalArity": 0,
+          "actual": "rootState"
+        }
+      ]
+    }
+  ],
+  "declarations": [
+    {
+      "module": "LevelChild",
+      "kind": "constant",
+      "names": [
+        "ChildLimit"
+      ],
+      "line": 5
+    },
+    {
+      "module": "LevelChild",
+      "kind": "operator",
+      "names": [
+        "ChildOp"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "LevelRoot",
+      "kind": "variable",
+      "names": [
+        "rootState"
+      ],
+      "line": 5
+    },
+    {
+      "module": "LevelRoot",
+      "kind": "instance",
+      "names": [
+        "I"
+      ],
+      "line": 7
+    },
+    {
+      "module": "LevelRoot",
+      "kind": "operator",
+      "names": [
+        "RootOp"
+      ],
+      "arity": 0,
+      "line": 9
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "rootState",
+      "declaredIn": "LevelRoot",
+      "declaredName": "rootState",
+      "importPath": [
+        "LevelRoot"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "LevelChild.tla",
+      "sha256": "dbc9a6576f635387c82e3c565a5f581919977f67e590d85fc8a88f74c68cac08"
+    },
+    {
+      "logicalPath": "LevelRoot.tla",
+      "sha256": "ea9712fd8b871789c68389215398759157957ce480c2e68761583c96b5252aa2"
+    }
+  ]
+}

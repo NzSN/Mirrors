@@ -280,6 +280,7 @@ mutual
     | tuple (items : Array Expression) (range : SourceRange)
     | set (items : Array Expression) (range : SourceRange)
     | record (fields : Array RecordField) (range : SourceRange)
+    | recordSet (fields : Array RecordField) (range : SourceRange)
     | function (bounds : Array Bound) (body : Expression) (range : SourceRange)
     | functionSet (domain : Expression) (codomain : Expression)
         (range : SourceRange)
@@ -363,6 +364,7 @@ def range : Expression → SourceRange
   | .tuple _ range => range
   | .set _ range => range
   | .record _ range => range
+  | .recordSet _ range => range
   | .function _ _ range => range
   | .functionSet _ _ range => range
   | .apply _ _ range => range

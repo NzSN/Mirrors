@@ -124,10 +124,40 @@ lean_exe model_interface_scaffold_cli_spec where
 lean_exe model_interface_evidence_spec where
   root := `tools.ModelInterfaceEvidenceSpec
 
+/-- Lossless lexer, token stream, comment, and string-literal gate. -/
+@[default_target]
+lean_exe tla_lexer_spec where
+  root := `tools.TlaLexerSpec
+
 /-- Lossless TLA+ parser, profile, corpus, recovery, and resource-bound gate. -/
 @[default_target]
 lean_exe tla_parser_spec where
   root := `tools.TlaParserSpec
+
+/-- Captured-source provider and deterministic TLA+ module-graph gate. -/
+@[default_target]
+lean_exe tla_module_resolver_spec where
+  root := `tools.TlaModuleResolverSpec
+
+/-- Pure TLA+ name, EXTENDS, arity, level, and elaboration-corpus gate. -/
+@[default_target]
+lean_exe tla_elaboration_spec where
+  root := `tools.TlaElaborationSpec
+
+/-- Unified captured-source frontend and model-interface compiler integration gate. -/
+@[default_target]
+lean_exe tla_frontend_spec where
+  root := `tools.TlaFrontendSpec
+
+/-- Development-only TLA+ frontend inspection CLI (`parse`, `resolve`, `inspect`). -/
+@[default_target]
+lean_exe tla_frontend where
+  root := `tools.TlaFrontendCli
+
+/-- TLA+ frontend inspection CLI help, malformed-argument, and closed-schema gate. -/
+@[default_target]
+lean_exe tla_frontend_cli_spec where
+  root := `tools.TlaFrontendCliSpec
 
 /-- Pure scaffold synthesis and strict proposal-codec gate. -/
 @[default_target]
@@ -298,6 +328,14 @@ script test do
     IO.eprintln outMiEvidence.stderr
     IO.println s!"model_interface_evidence_spec FAILED ({outMiEvidence.exitCode})"
     return outMiEvidence.exitCode
+  let outTlaLexer : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/tla_lexer_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outTlaLexer.stdout
+  if outTlaLexer.exitCode != 0 then
+    IO.eprintln outTlaLexer.stderr
+    IO.println s!"tla_lexer_spec FAILED ({outTlaLexer.exitCode})"
+    return outTlaLexer.exitCode
   let outTlaParser : IO.Process.Output ← IO.Process.output
     ({ cmd := ".lake/build/bin/tla_parser_spec", args := #[] } :
       IO.Process.SpawnArgs)
@@ -306,6 +344,38 @@ script test do
     IO.eprintln outTlaParser.stderr
     IO.println s!"tla_parser_spec FAILED ({outTlaParser.exitCode})"
     return outTlaParser.exitCode
+  let outTlaModuleResolver : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/tla_module_resolver_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outTlaModuleResolver.stdout
+  if outTlaModuleResolver.exitCode != 0 then
+    IO.eprintln outTlaModuleResolver.stderr
+    IO.println s!"tla_module_resolver_spec FAILED ({outTlaModuleResolver.exitCode})"
+    return outTlaModuleResolver.exitCode
+  let outTlaElaboration : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/tla_elaboration_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outTlaElaboration.stdout
+  if outTlaElaboration.exitCode != 0 then
+    IO.eprintln outTlaElaboration.stderr
+    IO.println s!"tla_elaboration_spec FAILED ({outTlaElaboration.exitCode})"
+    return outTlaElaboration.exitCode
+  let outTlaFrontend : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/tla_frontend_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outTlaFrontend.stdout
+  if outTlaFrontend.exitCode != 0 then
+    IO.eprintln outTlaFrontend.stderr
+    IO.println s!"tla_frontend_spec FAILED ({outTlaFrontend.exitCode})"
+    return outTlaFrontend.exitCode
+  let outTlaFrontendCli : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/tla_frontend_cli_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outTlaFrontendCli.stdout
+  if outTlaFrontendCli.exitCode != 0 then
+    IO.eprintln outTlaFrontendCli.stderr
+    IO.println s!"tla_frontend_cli_spec FAILED ({outTlaFrontendCli.exitCode})"
+    return outTlaFrontendCli.exitCode
   let outMiScaffold : IO.Process.Output ← IO.Process.output
     ({ cmd := ".lake/build/bin/model_interface_scaffold_spec", args := #[] } :
       IO.Process.SpawnArgs)

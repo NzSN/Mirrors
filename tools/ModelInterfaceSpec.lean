@@ -1698,7 +1698,7 @@ def scenarioFilesystemHardening (fails : Failures)
       let contractPath := checkDir / "Counter.mirror-interface.json"
       let evidencePath := checkDir / "counter.itf.json"
       let lockPath := checkDir / "Counter.lock.json"
-      IO.FS.writeFile specPath "---- MODULE Counter ----\n====\n"
+      IO.FS.writeFile specPath "---- MODULE Counter ----\nVARIABLES parameters, action_taken, count\n====\n"
       IO.FS.writeBinFile contractPath
         (Codec.ModelInterfaceJson.canonicalFileBytes
           (Codec.ModelInterfaceJson.encodeContract counterContract))

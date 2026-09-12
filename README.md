@@ -78,6 +78,10 @@ The mirror sets `LC_ALL=C.UTF-8` for Apalache child processes. The transport
 and registry suites also self-skip individual external-tool tiers when their
 requirements are unavailable.
 
+For a native Linux build inside WSL2, including invocation through the
+`r_windev` remote-Windows wrapper, follow the
+[WSL2 validation guide](Docs/wsl2-validation.md).
+
 C shim changes, included headers, compiler identity, and OpenSSL settings are
 tracked by Lake. Rebuild normally after a native change. Verify incremental
 behavior with `bash tools/check-native-rebuild.sh`; the

@@ -649,6 +649,7 @@ def scenarioPrecedenceShapes (fails : Failures) : IO Unit := do
     "Comparison == A + B < C * 2\n" ++
     "Implication == (A /\\ B) => C\n" ++
     "Disjunction == (A \\/ B) => C\n" ++
+    "MixedJunction == A /\\ B \\/ C\n" ++
     "Negation == ~ A /\\ B\n" ++
     "Range == 1..C\n" ++
     "Grouping == (A => B) => C"
@@ -668,6 +669,7 @@ def scenarioPrecedenceShapes (fails : Failures) : IO Unit := do
       checkShape "Comparison" "<" ["+", "*"]
       checkShape "Implication" "=>" ["/\\", "C"]
       checkShape "Disjunction" "=>" ["\\/", "C"]
+      checkShape "MixedJunction" "\\/" ["/\\", "C"]
       checkShape "Negation" "/\\" ["~", "B"]
       checkShape "Grouping" "=>" ["=>", "C"]
       check fails "precedence: the range operator keeps both operands"
@@ -686,6 +688,41 @@ def scenarioPrecedenceShapes (fails : Failures) : IO Unit := do
          | none => false)
         (outcomeDetail outcome)
 
+/-- Colon-form record sets remain distinct from record values and retain
+field/domain order and ranges. -/
+def scenarioRecordSets (fails : Failures) : IO Unit := do
+  let body :=
+    "CONSTANT S\n" ++
+    "Types == [case: S \\cup {0}, token: S]\n" ++
+    "Value == [case |-> 0, token |-> 1]"
+  match detailed? {} body with
+  | none => check fails "record set: the capture lexes" false
+  | some (source, stream, outcome) => do
+      check fails "record set: the module parses losslessly"
+        (outcome.succeeded && closed outcome &&
+          outcome.cst.losslessAgainst stream && outcome.cst.rangesNested &&
+          outcome.cst.coversSource source)
+        (outcomeDetail outcome)
+      check fails "record set: colon fields have a distinct AST node"
+        (match definitionOf? outcome "Types" with
+         | some definition =>
+             match definition.body with
+             | .recordSet fields range =>
+                 fields.map (·.name) == #["case", "token"] &&
+                   fields.all (fun field =>
+                     field.range.start.offset < field.range.stop.offset) &&
+                   range.start.offset < range.stop.offset
+             | _ => false
+         | _ => false)
+        (outcomeDetail outcome)
+      check fails "record set: value fields retain the record-value node"
+        (match definitionOf? outcome "Value" with
+         | some definition =>
+             match definition.body with
+             | .record fields _ => fields.map (·.name) == #["case", "token"]
+             | _ => false
+         | _ => false)
+        (outcomeDetail outcome)
 /-- Bounded and unbounded quantifier groups, their order, and their failures. -/
 def scenarioQuantifiers (fails : Failures) : IO Unit := do
   let checkBounds (name : String) (body : String) (expected : List String)
@@ -1596,6 +1633,7 @@ def atomicExpression : Expression → Bool
   | .tuple _ _ => true
   | .set _ _ => true
   | .record _ _ => true
+  | .recordSet _ _ => true
   | .select _ _ _ => true
   | .functionApply _ _ _ => true
   | .currentValue _ => true
@@ -1619,6 +1657,7 @@ mutual
     | .tuple items _ => "<<" ++ renderItemList items.toList ++ ">>"
     | .set items _ => "{" ++ renderItemList items.toList ++ "}"
     | .record fields _ => "[" ++ renderFieldList fields.toList ++ "]"
+    | .recordSet fields _ => "[" ++ renderRecordSetFieldList fields.toList ++ "]"
     | .function bounds body _ =>
         "[" ++ renderBoundList bounds.toList ++ " |-> "
           ++ renderExpression body ++ "]"
@@ -1673,6 +1712,13 @@ mutual
     | field :: rest =>
         field.name ++ " |-> " ++ renderExpression field.value ++ ", "
           ++ renderFieldList rest
+
+  partial def renderRecordSetFieldList : List RecordField → String
+    | [] => ""
+    | [field] => field.name ++ ": " ++ renderExpression field.value
+    | field :: rest =>
+        field.name ++ ": " ++ renderExpression field.value ++ ", "
+          ++ renderRecordSetFieldList rest
 
   partial def renderBoundList : List Bound → String
     | [] => ""
@@ -2449,6 +2495,8 @@ def scenarioCorpusAdversarial (fails : Failures) : IO Unit := do
       ("unclosed tuple", "x == <<1"),
       ("unclosed bracket", "x == f[1"),
       ("unclosed record", "x == [a |-> 1"),
+      ("record set missing domain", "CONSTANT S\nx == [a: S, b:]"),
+      ("record set missing colon", "CONSTANT S\nx == [a: S, b S]"),
       ("unclosed function", "x == [i \\in S |-> 1"),
       ("unclosed comprehension", "x == { y \\in S : TRUE"),
       ("unterminated IF", "x == IF TRUE THEN 1"),
@@ -2517,6 +2565,7 @@ def allScenarios (fails : Failures) : IO Unit := do
   scenarioDeterminism fails
   scenarioProfileOwnership fails
   scenarioPrecedenceShapes fails
+  scenarioRecordSets fails
   scenarioQuantifiers fails
   scenarioUserOperators fails
   scenarioStringValues fails

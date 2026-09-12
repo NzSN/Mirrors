@@ -12,5 +12,6 @@ Disjunction == (A \/ B) => C
 Negation == ~ A /\ B
 Range == 1..C
 Grouping == (A => B) => C
+MixedJunction == A /\ B \/ C
 
 ====

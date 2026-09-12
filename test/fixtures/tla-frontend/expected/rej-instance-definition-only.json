@@ -1,0 +1,103 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "rej-instance-definition-only",
+  "root": "InstanceDefsRoot",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "InstanceDefsChild",
+    "InstanceDefsRoot"
+  ],
+  "standardModules": [
+    "Integers"
+  ],
+  "dependencies": [
+    {
+      "owner": "InstanceDefsChild",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "InstanceDefsRoot",
+      "module": "Integers",
+      "kind": "extends",
+      "resolution": "standard",
+      "local": false,
+      "line": 3,
+      "substitutions": []
+    },
+    {
+      "owner": "InstanceDefsRoot",
+      "module": "InstanceDefsChild",
+      "kind": "namedInstance",
+      "resolution": "local",
+      "local": false,
+      "line": 7,
+      "substitutions": [
+        {
+          "formal": "ChildLimit",
+          "formalArity": 0,
+          "actual": "RootLimit"
+        }
+      ]
+    }
+  ],
+  "declarations": [
+    {
+      "module": "InstanceDefsChild",
+      "kind": "constant",
+      "names": [
+        "ChildLimit"
+      ],
+      "line": 5
+    },
+    {
+      "module": "InstanceDefsChild",
+      "kind": "operator",
+      "names": [
+        "ChildOp"
+      ],
+      "arity": 0,
+      "line": 7
+    },
+    {
+      "module": "InstanceDefsRoot",
+      "kind": "constant",
+      "names": [
+        "RootLimit"
+      ],
+      "line": 5
+    },
+    {
+      "module": "InstanceDefsRoot",
+      "kind": "instance",
+      "names": [
+        "I"
+      ],
+      "line": 7
+    },
+    {
+      "module": "InstanceDefsRoot",
+      "kind": "operator",
+      "names": [
+        "RootOp"
+      ],
+      "arity": 0,
+      "line": 9
+    }
+  ],
+  "effectiveVariables": [],
+  "sources": [
+    {
+      "logicalPath": "InstanceDefsChild.tla",
+      "sha256": "5df74a2d8285b86a42960cf9e3232089ac8bc87447108ede32f8db04609e265d"
+    },
+    {
+      "logicalPath": "InstanceDefsRoot.tla",
+      "sha256": "cb9671e5cf17cd31206be1b478a0c3eb7977904ecf6b768260057f980741380d"
+    }
+  ]
+}

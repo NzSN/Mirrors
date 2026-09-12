@@ -1,12 +1,19 @@
 # Mirrors TLA+ frontend language profile (revision 1)
 
-> Status: **proposed revision-1 profile, frozen with the TF0 corpus on 2026-09-11**.
+> Status: **revision-1 profile; frozen with the TF0 corpus on 2026-09-11 and
+> revised on 2026-09-12 when TF5 lifted the staged `INSTANCE` limit**.
 > Design authority: [general TLA+ frontend design](tla-frontend-design.md).
 > Task package: [TLA+ frontend tasks](tla-frontend-tasks.md), package TF0.
 > Conformance corpus: [`test/fixtures/tla-frontend/manifest.json`](../../test/fixtures/tla-frontend/manifest.json).
 > Differential status: **not run against pinned baselines**. The pinned SANY and
 > Apalache versions are owned by the coordinating agent; the corpus records
 > `not_run` placeholders rather than conformance claims.
+>
+> Revision note (2026-09-12): §7.4's staged `INSTANCE` limit is lifted. The
+> corpus diff reclassifies the five instance fixtures whose reference probe
+> accepted them, and the profile id stays `mirrors-tla-frontend-profile-1`:
+> revision 1 already published that eventual classification, and no consumer
+> can hold cached elaboration facts before the TF6/TF7 integration.
 
 ## 1. Scope and authority
 
@@ -192,7 +199,7 @@ baseline accepts it.
 | `RECURSIVE` | accepted with explicit arity | `acc-recursive` |
 | operator definition (`==`) | accepted for prefix, infix, user-defined symbolic, and higher-order operands | `acc-operators` |
 | `LOCAL` declaration | accepted; the wrapped declaration is retained and visible only inside its own module | `acc-local` |
-| `INSTANCE` (named and unnamed) | syntax recognized; semantics staged out in revision 1 (§7.4) | `rej-instance-*` |
+| `INSTANCE` (named and unnamed) | named and unnamed instances, `WITH` and implicit substitution, qualified and unqualified visibility (§7.4) | `rej-instance-*`, `rej-substitution-constant-by-state` |
 | `ASSUME` / `ASSUMPTION` | accepted; must be constant level | `acc-assumptions` |
 | `AXIOM` | accepted; carried as an assumption-like statement with no proof obligation | `acc-assumptions` |
 | `THEOREM` / `LEMMA` / `PROPOSITION` / `COROLLARY` | accepted with an opaque proof body | `acc-theorem-proof` |
@@ -217,7 +224,8 @@ baseline accepts it.
 ### 5.4 Expressions
 
 Revision 1 covers the executable expression surface used by Mirrors and sibling
-application models: literals, tuples, records, sets, functions, function sets,
+application models: literals, tuples, record values, record sets, sets,
+functions, function sets,
 `DOMAIN`, selection by index and field, `EXCEPT` updates with `!` and `@`,
 `IF/THEN/ELSE`, `CASE` with `OTHER`, `LET/IN`, `CHOOSE`, bounded `\A` and `\E`
 quantifiers, set and set-of comprehensions, priming, `ENABLED`, `UNCHANGED`,
@@ -233,12 +241,11 @@ Verified against the local reference parser and frozen as rules:
 - `*` binds tighter than `+`; arithmetic binds tighter than relational
   operators; relational operators bind tighter than `/\`.
 - `~` binds tighter than `/\`.
-- `/\` and `\/` share one precedence level: mixing them at the same nesting
-  level without parentheses is a precedence conflict and must be rejected
-  (`rej-precedence-mix`).
-- `=>` and `<=>` are non-associative: chaining them without parentheses is a
-  precedence conflict (`rej-precedence-chain`). The same applies to chained
-  `=`.
+- `/\` binds tighter than `\/`, matching standard TLA+; `A /\ B \/ C` has the
+  unique reading `(A /\ B) \/ C` (`acc-precedence`).
+- `=>`, `<=>`, and `=` are non-associative: chaining any one of them without
+  parentheses is a precedence conflict (`rej-precedence-chain`,
+  `rej-precedence-mix`).
 - The frontend must not invent an association for a conflict. Parentheses are
   required whenever the profile does not define a unique reading.
 
@@ -296,7 +303,8 @@ The catalog separates three kinds of entry, exactly as the design requires:
 
 Declaration facts exist only where a reviewed catalog revision provides them.
 Revision 1 must provide facts for at least the operators used by the accepted
-corpus (`Nat`, `Int`, `Append`, `Cardinality`). A name in the list is **not**
+corpus and composed-source acceptance cases (`Nat`, `Int`, `Append`, `Len`,
+`Cardinality`, plus the language-defined `BOOLEAN` and `STRING`). A name in the list is **not**
 enough to invent an arity: using an operator from a module whose declarations
 are still pending is a profile-limit error, and the catalog must grow with
 evidence before callers depending on those modules are migrated.
@@ -335,8 +343,9 @@ effectiveVariables(M) =
   `declarationRange`, and an import path. Corpus summaries express the import
   path as the module-name chain from the root to the declaring module.
 - Variables introduced by `INSTANCE` are never concatenated into the root
-  variable list; revision 1 elaborates none of them and reports the staged limit
-  instead.
+  variable list: each visible child variable is substituted by an explicit
+  `WITH` actual or by an implicit same-named parent declaration, so only the
+  parent symbol reaches the root variable list (§7.4).
 - The motivating fixture is `acc-generic-transfer`: twelve variables inherited
   from `GenericBase` plus seven declared locally resolve to exactly nineteen
   effective variables in declaration order, and the transitive
@@ -354,27 +363,62 @@ Levels are ordered `constant < state < action < temporal`.
 - Level checking runs before a result is handed to the compiler, and it is the
   stage that owns level diagnostics.
 
-### 7.4 `INSTANCE` and substitutions (staged)
+### 7.4 `INSTANCE` and substitutions
 
-Revision 1 recognizes instance syntax but stages instance semantics out. Every
-instance fixture is rejected at the `substitution` stage with a specific
-profile-limit diagnostic; the frontend must never guess, silently union
-variables, or approximate substitution.
+Revision 1 elaborates instances instead of staging them out. The rules below
+mirror the reference tool except for the explicitly recorded level bound.
 
-| Fixture | Reference tool | Eventual classification owned by TF5 |
+- A named `INSTANCE` contributes exactly one qualified visible name: `I!Op`
+  resolves to the operators the instantiated module can see. Its constants and
+  variables are not reachable as `I!c`; like the reference tool, that spelling
+  is an unknown operator.
+- An unnamed `INSTANCE` exposes the instantiated module's operators unqualified
+  in its own module and re-exports them through `EXTENDS`, including the
+  instance names the child re-exports. `LOCAL` on the instance, or on the
+  declaration a copy comes from, stops the re-export; a `LOCAL INSTANCE` still
+  serves its own module.
+- Substitution targets are the instantiated module's visible constants and
+  variables. Each target may be substituted once; a repeated target, a target
+  the instantiated module does not declare, and an arity mismatch are
+  `substitution`-stage errors.
+- Every remaining visible constant or variable of the instantiated module must
+  have a same-named 0-ary declaration in the instantiating module (implicit
+  substitution). The implicit actual may be a definition as well as a
+  `CONSTANT` or `VARIABLE`; a missing or non-zero-arity actual is a
+  `substitution`-stage error.
+- Effective root variables exclude every substituted child variable: the
+  substituted parent symbol takes its place, and the child declaration's
+  provenance (`declaredIn`, declaration range, logical path, source hash) stays
+  in the dependency sources. No fallback concatenates dependency variable
+  lists.
+- Levels compose through substitution: an operator of the instantiated module
+  takes the level of the expressions substituted for the constants and
+  variables it mentions, and a chain of instances composes through per-site
+  frames. Revision 1 bounds **every** substitution actual, constant or variable,
+  at `constant` or `state` level. The reference tool bounds a constant actual by
+  its occurrence (an unused constant may be substituted by an action-level
+  expression); that relaxation is not implemented, so Mirrors is stricter
+  there, and the difference gets an owning fixture in the TF8 differential
+  expansion.
+
+| Fixture | Reference tool | Revision-1 outcome |
 | --- | --- | --- |
 | `rej-instance-definition-only` | accepted | accepted: definition-only instance reachable through a qualified name |
 | `rej-instance-variable-substituted` | accepted | accepted: child variable replaced by a parent symbol |
 | `rej-instance-unnamed` | accepted | accepted: unqualified visibility after substitution |
 | `rej-instance-implicit-substitution` | accepted | accepted: implicit same-name substitution |
-| `rej-instance-unsubstituted` | rejected | rejected: substitution missing for a child variable |
-| `rej-instance-invalid-substitution` | rejected | rejected: substitution target is not declared by the child |
+| `rej-instance-unsubstituted` | rejected | rejected (`malformed`): substitution missing for a child variable |
+| `rej-instance-invalid-substitution` | rejected | rejected (`malformed`): substitution target is not declared by the child |
 | `rej-substitution-constant-by-state` | accepted | accepted: constant substituted by a state expression, shifting the instantiated operator to state level |
 
-Each staged fixture carries `reason: profile_limit`, `revisit: TF5`, and an
-`eventual` object in the manifest. TF5 must implement substitution, reclassify
-these fixtures, and remove the staged limit in a reviewed profile revision; it
-must not edit the fixture files, only the manifest expectations and the profile.
+The fixture ids and files are frozen. The five fixtures the reference tool
+accepted were authored under the staged limit; TF5 reclassified them in
+`manifest.json` and left their `.tla` sources untouched. The two reference
+rejections stay rejected, now with `reason: malformed` instead of
+`profile_limit`. Chained instances, `LOCAL INSTANCE` privacy and re-export,
+nested instance re-export, duplicate/arity/level rejections, and
+standard-module instance facts are pinned by probes in
+`tools/TlaElaborationSpec.lean` rather than by corpus fixtures.
 
 ## 8. Resource limits
 
@@ -414,14 +458,16 @@ table above requires a reviewed profile revision with an owning fixture.
 | Unicode operator glyphs are rejected | both reject | local reference parser has no Unicode tokens; acceptance would need a reviewed allowlist entry | `rej-unicode-spelling` |
 | `≜` is rejected | both reject | not accepted by the local reference parser | profile §4.8 |
 | Decimal real literals are staged out | Mirrors stricter | integer-only numeric value domain in revision 1 while both baselines accept real literals | `rej-real-literal` |
-| Instance semantics are staged out | Mirrors stricter | substitution rules must be implemented before use | `rej-instance-*` |
+| Substitution actuals are bounded at `constant` or `state` level | Mirrors stricter | revision 1 applies one uniform bound instead of the reference tool's occurrence-sensitive constant rule (§7.4) | probes in `tools/TlaElaborationSpec.lean`; corpus fixture owned by TF8 |
 | Duplicate declarations are errors | Mirrors stricter | reference reports a warning and continues; the design requires an error with related declaration locations | `rej-duplicate-declaration` |
 | Ambiguous imported declarations are errors | Mirrors stricter | reference reports a warning and continues; elaboration must not guess which declaration is meant | `rej-extends-ambiguity` |
 
-The corpus records `referenceExpectation` on exactly the fixtures where the
-local reference probe accepted a module that revision 1 rejects by design:
-`accepted-by-reference-tool` for a clean acceptance and
-`accepted-with-warning-by-reference-tool` when the reference completed with
+The corpus records `referenceExpectation` where the local reference probe's
+outcome is worth pinning: for the five reclassified instance fixtures it
+matches revision 1 (`accepted-by-reference-tool`), and the remaining entries
+record a reference acceptance that revision 1 still rejects by design.
+`accepted-by-reference-tool` means a clean acceptance and
+`accepted-with-warning-by-reference-tool` means the reference completed with
 warnings only (duplicate declarations and conflicting imported declarations).
 Differential status remains `not_run`: the entries are construction evidence
 from an exploratory local probe (tla2tools 2.0 of 2024-08-08, SANY2 2.1
@@ -466,9 +512,11 @@ tool versions remain for the coordinating agent.
 - `minDiagnostics` requires bounded recovery to report at least that many
   diagnostics.
 - `revisit` names the task package that must reclassify a staged fixture.
-- `referenceExpectation` records the exploratory local-probe outcome where it
-  differs from revision 1: `accepted-by-reference-tool` or
-  `accepted-with-warning-by-reference-tool`.
+- `referenceExpectation` records the exploratory local-probe outcome for the
+  fixture: `accepted-by-reference-tool` or
+  `accepted-with-warning-by-reference-tool`. Every `profile_limit` fixture
+  carries one, and the five reclassified instance fixtures keep theirs as
+  agreement evidence.
 
 ### 10.3 Structural summaries
 
@@ -554,6 +602,7 @@ branch fails validation.
 | `syntax.expr.enabled-unchanged` | parse | `acc-actions` |
 | `syntax.expr.fairness` | parse | `acc-temporal` |
 | `syntax.expr.functions-records` | parse | `acc-constants`, `acc-functions` |
+| `syntax.expr.record-sets` | parse | `acc-functions` |
 | `syntax.expr.literals-collections` | parse | `acc-values` |
 | `syntax.expr.priming` | parse | `acc-module-minimal` |
 | `syntax.expr.quantifiers` | parse | `acc-quantifiers` |
@@ -583,7 +632,9 @@ branch fails validation.
 | `elab.variables.effective-origins` | nameResolution | `acc-generic-extends`, `acc-generic-transfer`, `acc-generic-transfer-audit`, `acc-diamond` |
 | `elab.variables.nineteen` | nameResolution | `acc-generic-transfer`, `acc-generic-transfer-audit` |
 | `elab.variables.order` | nameResolution | `acc-module-minimal`, `acc-generic-transfer` |
-| `elab.instance.staged` | substitution | `rej-instance-definition-only`, `rej-instance-variable-substituted`, `rej-instance-unnamed`, `rej-instance-implicit-substitution` |
+| `elab.instance.named` | substitution | `rej-instance-definition-only`, `rej-instance-variable-substituted`, `rej-instance-implicit-substitution` |
+| `elab.instance.unnamed` | substitution | `rej-instance-unnamed` |
+| `elab.substitution.explicit` | substitution | `rej-instance-definition-only`, `rej-instance-variable-substituted`, `rej-instance-unnamed`, `rej-substitution-constant-by-state` |
 | `elab.substitution.implicit` | substitution | `rej-instance-implicit-substitution` |
 | `elab.substitution.invalid` | substitution | `rej-instance-invalid-substitution` |
 | `elab.substitution.level-shift` | substitution | `rej-substitution-constant-by-state` |
@@ -603,7 +654,7 @@ branch fails validation.
 | 5. Standard-module catalog sourcing | three-kind policy and name set (§6.3); declaration facts grow with evidence | TF4/TF6 |
 | 6. Parser generation | implementation-neutral; `Parser` technique stays free while tables stay explicit | TF2 |
 | 7. Stable inspection JSON schema | corpus manifest and summary schemas are stable for fixtures; CLI schema is separate | TF8 |
-| 8. `INSTANCE` before scanner removal | no: instance semantics stay staged until TF5 lands | TF5 |
+| 8. `INSTANCE` before scanner removal | yes: TF5 implemented instance substitution behind the frontend seam; the compiler keeps the old scanner until TF6 | TF6 |
 | 9. Scaffold proposal v2 contents | deferred; revision 1 keeps today's evidence admission | TF6 |
 | 10. Publishable corpus scope | these fixtures are generic; no private model material | coordinating agent |
 

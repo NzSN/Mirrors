@@ -119,25 +119,26 @@ private def firstTopType? (evidence : ModelEvidence) (name : String) : Option Mo
     fact.modelPath.root == name && fact.modelPath.path.isEmpty).map
       (fun fact => canonicalizeModelType fact.type)
 
-private def parameterField? (input : ScaffoldInput) : Option (String × ModelType) :=
+private def parameterFields? (input : ScaffoldInput) : Option (List ModelField) :=
   input.configuredParamVar.bind fun parameterVariable =>
     match firstTopType? input.evidence parameterVariable with
-    | some (.record [field]) => some (field.wireName, field.type)
+    | some (.record fields) => some fields
     | _ => none
 
-private def inferredInput (input : ScaffoldInput) : Option ContractInput :=
-  input.configuredParamVar.bind fun parameterVariable =>
-    (parameterField? input).map fun field =>
-      { id := inputStableId field.1
-        fromRoot := .stepParameters
-        path := [.field parameterVariable, .field field.1]
-        expectedType := some field.2 }
+private def inferredInputs (input : ScaffoldInput) : List ContractInput :=
+  (input.configuredParamVar.bind fun parameterVariable =>
+    (parameterFields? input).map fun fields =>
+      fields.map fun field =>
+        { id := inputStableId field.wireName
+          fromRoot := .stepParameters
+          path := [.field parameterVariable, .field field.wireName]
+          expectedType := some field.type }).getD []
 
 private def inferredAction (input : ScaffoldInput) (label : String)
     (transition : Bool) : ContractAction :=
   { id := actionStableId label
     wireAction := label
-    inputs := if transition then (inferredInput input).toList else [] }
+    inputs := if transition then inferredInputs input else [] }
 
 private def inferredObservation (input : ScaffoldInput)
     (wireName : String) : ContractObservation :=
@@ -192,19 +193,20 @@ private def inputDiagnostics (input : ScaffoldInput) : List Diagnostic :=
   | none => []
   | some parameterVariable =>
       match firstTopType? input.evidence parameterVariable with
-      | some (.record [field]) =>
-          let id := inputStableId field.wireName
-          (if validStableId id then [] else
-            [scaffoldDiagnostic "MIC-S-ID-001" "input" (some field.wireName)
-              input.source.logicalPath
-              "parameter field cannot produce a stable input identifier"]) ++
-          (if id.toUTF8.size ≤ maxStableNameBytesV1 then [] else
-            [scaffoldDiagnostic "MIC-S-LIMIT-001" "input" (some id)
-              input.source.logicalPath "input identifier exceeds the version-1 byte limit"])
-      | some (.record _) =>
+      | some (.record []) =>
           [scaffoldDiagnostic "MIC-S-PARAM-001" "parameterVariable"
             (some parameterVariable) input.source.logicalPath
-            "configured parameter variable must be a one-field record"]
+            "configured parameter variable must be a nonempty record"]
+      | some (.record fields) =>
+          fields.flatMap fun field =>
+            let id := inputStableId field.wireName
+            (if validStableId id then [] else
+              [scaffoldDiagnostic "MIC-S-ID-001" "input" (some field.wireName)
+                input.source.logicalPath
+                "parameter field cannot produce a stable input identifier"]) ++
+            (if id.toUTF8.size ≤ maxStableNameBytesV1 then [] else
+              [scaffoldDiagnostic "MIC-S-LIMIT-001" "input" (some id)
+                input.source.logicalPath "input identifier exceeds the version-1 byte limit"])
       | some _ =>
           [scaffoldDiagnostic "MIC-S-PARAM-001" "parameterVariable"
             (some parameterVariable) input.source.logicalPath
@@ -320,9 +322,9 @@ private def inferredActionWellFormed (parameterVariable : Option String)
     else match parameterVariable with
       | none => action.inputs.isEmpty
       | some parameterVariable =>
-          match action.inputs with
-          | [input] => inferredInputWellFormed parameterVariable input
-          | _ => false
+          !action.inputs.isEmpty &&
+            action.inputs.all (inferredInputWellFormed parameterVariable) &&
+            (duplicateStrings (action.inputs.map (·.id))).isEmpty
 
 private def projectionProvenanceWellFormed : Option ScaffoldProjectionProvenance → Bool
   | none => true

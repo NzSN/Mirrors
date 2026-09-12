@@ -1,0 +1,90 @@
+{
+  "schema": "mirrors.tla-frontend-summary/1",
+  "fixture": "rej-instance-unnamed",
+  "root": "UnnamedRoot",
+  "profile": "mirrors-tla-frontend-profile-1",
+  "modules": [
+    "UnnamedChild",
+    "UnnamedRoot"
+  ],
+  "standardModules": [],
+  "dependencies": [
+    {
+      "owner": "UnnamedRoot",
+      "module": "UnnamedChild",
+      "kind": "unnamedInstance",
+      "resolution": "local",
+      "local": false,
+      "line": 5,
+      "substitutions": [
+        {
+          "formal": "childState",
+          "formalArity": 0,
+          "actual": "rootState"
+        }
+      ]
+    }
+  ],
+  "declarations": [
+    {
+      "module": "UnnamedChild",
+      "kind": "variable",
+      "names": [
+        "childState"
+      ],
+      "line": 3
+    },
+    {
+      "module": "UnnamedChild",
+      "kind": "operator",
+      "names": [
+        "ChildOp"
+      ],
+      "arity": 0,
+      "line": 5
+    },
+    {
+      "module": "UnnamedRoot",
+      "kind": "variable",
+      "names": [
+        "rootState"
+      ],
+      "line": 3
+    },
+    {
+      "module": "UnnamedRoot",
+      "kind": "instance",
+      "names": [],
+      "line": 5
+    },
+    {
+      "module": "UnnamedRoot",
+      "kind": "operator",
+      "names": [
+        "RootOp"
+      ],
+      "arity": 0,
+      "line": 7
+    }
+  ],
+  "effectiveVariables": [
+    {
+      "name": "rootState",
+      "declaredIn": "UnnamedRoot",
+      "declaredName": "rootState",
+      "importPath": [
+        "UnnamedRoot"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "logicalPath": "UnnamedChild.tla",
+      "sha256": "867f84ff8d2742fcecb113ce80379c6fce1a0d0925de7ca88eef9a37bf211f2d"
+    },
+    {
+      "logicalPath": "UnnamedRoot.tla",
+      "sha256": "b56e9a3013a4eab3fcf50519b0cb1e1e6bb264c2be23ebd7f6ccdaf7a126b146"
+    }
+  ]
+}

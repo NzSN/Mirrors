@@ -34,8 +34,8 @@
     "localProbe": {
       "tool": "tla2tools 2.0 (2024-08-08), SANY2 2.1",
       "role": "exploratory fixture construction only; not a recorded differential gate",
-      "note": "entries carrying referenceExpectation were accepted by the local reference parser (or completed with warnings only, for accepted-with-warning-by-reference-tool) while this profile rejects them by design",
-      "fullCorpusProbe": "2026-09-11: a single exploratory pass over all 57 fixtures reproduced every recorded referenceExpectation outcome; the 27 accepted fixtures were accepted cleanly, the 12 staged fixtures carrying referenceExpectation matched their recorded outcome, and the remaining 18 rejected fixtures were also rejected by the reference parser"
+      "note": "entries carrying referenceExpectation record the local reference parser's outcome for the fixture; a fixture this profile still rejects under reason profile_limit is an intentional, reviewed profile difference",
+      "fullCorpusProbe": "2026-09-11: a single exploratory pass over all 57 fixtures reproduced every recorded referenceExpectation outcome; the 27 accepted fixtures were accepted cleanly, the 12 fixtures carrying referenceExpectation matched their recorded outcome, and the remaining 18 rejected fixtures were also rejected by the reference parser. 2026-09-12: TF5 removed the staged INSTANCE/substitution limit and reclassified the five fixtures whose recorded referenceExpectation is accepted-by-reference-tool; each now elaborates under this profile, so the recorded reference outcome and the profile outcome agree for them. This remains an exploratory record, not a recorded differential gate."
     }
   },
   "branches": [
@@ -45,9 +45,14 @@
       "title": "elab.extends.ambiguity"
     },
     {
-      "id": "elab.instance.staged",
+      "id": "elab.instance.named",
       "stage": "substitution",
-      "title": "elab.instance.staged"
+      "title": "elab.instance.named"
+    },
+    {
+      "id": "elab.instance.unnamed",
+      "stage": "substitution",
+      "title": "elab.instance.unnamed"
     },
     {
       "id": "elab.levels.assumption",
@@ -83,6 +88,11 @@
       "id": "elab.names.unknown",
       "stage": "nameResolution",
       "title": "elab.names.unknown"
+    },
+    {
+      "id": "elab.substitution.explicit",
+      "stage": "substitution",
+      "title": "elab.substitution.explicit"
     },
     {
       "id": "elab.substitution.implicit",
@@ -365,6 +375,11 @@
       "title": "syntax.expr.quantifiers"
     },
     {
+      "id": "syntax.expr.record-sets",
+      "stage": "parse",
+      "title": "syntax.expr.record-sets"
+    },
+    {
       "id": "syntax.expr.selection-except",
       "stage": "parse",
       "title": "syntax.expr.selection-except"
@@ -562,9 +577,10 @@
       ],
       "branches": [
         "syntax.expr.functions-records",
-        "syntax.expr.selection-except"
+        "syntax.expr.selection-except",
+        "syntax.expr.record-sets"
       ],
-      "explanation": "Function constructor, function set, DOMAIN, selection by index and field, and EXCEPT updates with @.",
+      "explanation": "Function constructor, function set, record value, colon-form record set, DOMAIN, selection by index and field, and EXCEPT updates with @.",
       "sourceRoot": "accepted",
       "summary": "expected/acc-functions.json"
     },
@@ -662,7 +678,7 @@
       "branches": [
         "syntax.precedence.binding"
       ],
-      "explanation": "Precedence cases the reference grammar accepts without parentheses: arithmetic over relational, relational over conjunction, conjunction and disjunction over implication, and unary negation binding tighter than conjunction.",
+      "explanation": "Standard precedence cases: arithmetic over relational, relational over conjunction, conjunction over disjunction, both junctions over implication, and unary negation over conjunction.",
       "sourceRoot": "accepted",
       "summary": "expected/acc-precedence.json"
     },
@@ -1118,7 +1134,7 @@
       "branches": [
         "syntax.precedence.conflict"
       ],
-      "explanation": "Mixing /\\ and \\/ without parentheses is a precedence conflict for the reference grammar and must not be silently re-associated.",
+      "explanation": "Chaining the non-associative equality operator without parentheses is a precedence conflict.",
       "reason": "malformed",
       "sourceRoot": "rejected"
     },
@@ -1150,7 +1166,7 @@
       "branches": [
         "lex.operators.unicode-staged"
       ],
-      "explanation": "Unicode operator spellings (\u2227, \u2208, \u2264) are outside revision 1; the frontend reports a profile diagnostic naming the spelling, and the reference parser rejects them as well.",
+      "explanation": "Unicode operator spellings (∧, ∈, ≤) are outside revision 1; the frontend reports a profile diagnostic naming the spelling, and the reference parser rejects them as well.",
       "reason": "profile_limit",
       "revisit": "unscheduled",
       "sourceRoot": "rejected"
@@ -1277,8 +1293,8 @@
     },
     {
       "id": "rej-instance-definition-only",
-      "kind": "rejected",
-      "stage": "substitution",
+      "kind": "accepted",
+      "stage": "sourceEvidence",
       "provider": "borrowed-directory",
       "root": "InstanceDefsRoot",
       "files": [
@@ -1287,22 +1303,18 @@
       ],
       "branches": [
         "syntax.decl.instance",
-        "elab.instance.staged"
+        "elab.substitution.explicit",
+        "elab.instance.named"
       ],
-      "explanation": "Named INSTANCE with a constant substitution; instance elaboration is staged out in revision 1 even though the reference tool accepts it.",
-      "reason": "profile_limit",
-      "revisit": "TF5",
-      "eventual": {
-        "outcome": "accepted",
-        "note": "definition-only instance visible through a qualified name"
-      },
+      "explanation": "Named, fully substituted instance reachable through a qualified name. Reclassified from the revision-1 staged substitution limit by TF5; the fixture files are unchanged.",
       "sourceRoot": "rejected/instance-definition-only",
+      "summary": "expected/rej-instance-definition-only.json",
       "referenceExpectation": "accepted-by-reference-tool"
     },
     {
       "id": "rej-instance-variable-substituted",
-      "kind": "rejected",
-      "stage": "substitution",
+      "kind": "accepted",
+      "stage": "sourceEvidence",
       "provider": "borrowed-directory",
       "root": "InstanceStateRoot",
       "files": [
@@ -1310,22 +1322,18 @@
         "rejected/instance-variable-substituted/InstanceStateRoot.tla"
       ],
       "branches": [
-        "elab.instance.staged"
+        "elab.substitution.explicit",
+        "elab.instance.named"
       ],
-      "explanation": "Variable-bearing named instance with an explicit WITH substitution of the child variable; staged out in revision 1 and accepted by the reference tool.",
-      "reason": "profile_limit",
-      "revisit": "TF5",
-      "eventual": {
-        "outcome": "accepted",
-        "note": "no new root state variables; child variable replaced by the parent symbol"
-      },
+      "explanation": "The child variable is replaced by the parent symbol, so no child state becomes root state and the instantiated action keeps its level. Reclassified from the revision-1 staged substitution limit by TF5; the fixture files are unchanged.",
       "sourceRoot": "rejected/instance-variable-substituted",
+      "summary": "expected/rej-instance-variable-substituted.json",
       "referenceExpectation": "accepted-by-reference-tool"
     },
     {
       "id": "rej-instance-unnamed",
-      "kind": "rejected",
-      "stage": "substitution",
+      "kind": "accepted",
+      "stage": "sourceEvidence",
       "provider": "borrowed-directory",
       "root": "UnnamedRoot",
       "files": [
@@ -1333,22 +1341,18 @@
         "rejected/instance-unnamed/UnnamedRoot.tla"
       ],
       "branches": [
-        "elab.instance.staged"
+        "elab.substitution.explicit",
+        "elab.instance.unnamed"
       ],
-      "explanation": "Unnamed INSTANCE exposing substituted declarations unqualified; staged out in revision 1 and accepted by the reference tool.",
-      "reason": "profile_limit",
-      "revisit": "TF5",
-      "eventual": {
-        "outcome": "accepted",
-        "note": "unqualified visibility after substitution"
-      },
+      "explanation": "An unnamed instance exposes the substituted child operators unqualified and re-exports them. Reclassified from the revision-1 staged substitution limit by TF5; the fixture files are unchanged.",
       "sourceRoot": "rejected/instance-unnamed",
+      "summary": "expected/rej-instance-unnamed.json",
       "referenceExpectation": "accepted-by-reference-tool"
     },
     {
       "id": "rej-instance-implicit-substitution",
-      "kind": "rejected",
-      "stage": "substitution",
+      "kind": "accepted",
+      "stage": "sourceEvidence",
       "provider": "borrowed-directory",
       "root": "ImplicitRoot",
       "files": [
@@ -1356,17 +1360,12 @@
         "rejected/instance-implicit-substitution/ImplicitRoot.tla"
       ],
       "branches": [
-        "elab.instance.staged",
-        "elab.substitution.implicit"
+        "elab.substitution.implicit",
+        "elab.instance.named"
       ],
-      "explanation": "INSTANCE without WITH where a same-named parent variable substitutes the child variable implicitly; staged out in revision 1.",
-      "reason": "profile_limit",
-      "revisit": "TF5",
-      "eventual": {
-        "outcome": "accepted",
-        "note": "implicit same-name substitution"
-      },
+      "explanation": "An instance without WITH substitutes the same-named parent declaration implicitly. Reclassified from the revision-1 staged substitution limit by TF5; the fixture files are unchanged.",
       "sourceRoot": "rejected/instance-implicit-substitution",
+      "summary": "expected/rej-instance-implicit-substitution.json",
       "referenceExpectation": "accepted-by-reference-tool"
     },
     {
@@ -1382,14 +1381,8 @@
       "branches": [
         "elab.substitution.missing"
       ],
-      "explanation": "Child variable with no substitution and no same-named parent declaration; staged out in revision 1, rejected by the reference tool as a missing substitution.",
-      "reason": "profile_limit",
-      "revisit": "TF5",
-      "eventual": {
-        "outcome": "rejected",
-        "reason": "malformed",
-        "note": "substitution missing for child variable"
-      },
+      "explanation": "Child variable with no substitution and no same-named parent declaration: the substitution stage reports a missing substitution and the input is malformed.",
+      "reason": "malformed",
       "sourceRoot": "rejected/instance-unsubstituted"
     },
     {
@@ -1405,20 +1398,14 @@
       "branches": [
         "elab.substitution.invalid"
       ],
-      "explanation": "WITH substitution naming a symbol the child does not declare; staged out in revision 1, rejected by the reference tool.",
-      "reason": "profile_limit",
-      "revisit": "TF5",
-      "eventual": {
-        "outcome": "rejected",
-        "reason": "malformed",
-        "note": "unknown substitution target"
-      },
+      "explanation": "WITH substitution naming a symbol the child does not declare: the substitution stage reports an invalid target and the input is malformed.",
+      "reason": "malformed",
       "sourceRoot": "rejected/instance-invalid-substitution"
     },
     {
       "id": "rej-substitution-constant-by-state",
-      "kind": "rejected",
-      "stage": "substitution",
+      "kind": "accepted",
+      "stage": "sourceEvidence",
       "provider": "borrowed-directory",
       "root": "LevelRoot",
       "files": [
@@ -1426,16 +1413,12 @@
         "rejected/substitution-constant-by-state/LevelRoot.tla"
       ],
       "branches": [
+        "elab.substitution.explicit",
         "elab.substitution.level-shift"
       ],
-      "explanation": "Constant substituted by a state expression; legal TLA+ when the instantiated operator is used at state level, so TF5 must accept it rather than report a level violation.",
-      "reason": "profile_limit",
-      "revisit": "TF5",
-      "eventual": {
-        "outcome": "accepted",
-        "note": "state-level shift through substitution"
-      },
+      "explanation": "A constant substituted by a state expression is legal and shifts the instantiated operator to state level. Reclassified from the revision-1 staged substitution limit by TF5; the fixture files are unchanged.",
       "sourceRoot": "rejected/substitution-constant-by-state",
+      "summary": "expected/rej-substitution-constant-by-state.json",
       "referenceExpectation": "accepted-by-reference-tool"
     }
   ]
