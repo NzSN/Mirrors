@@ -1,0 +1,483 @@
+{
+  "sources": {
+    "AtomicChild.tla": "---- MODULE AtomicChild ----\nCONSTANT c\nOp == c\n====\n",
+    "AtomicRoot.tla": "---- MODULE AtomicRoot ----\nI == INSTANCE AtomicChild WITH c <- 1\nJ == INSTANCE AtomicChild WITH c <- TRUE\nK == INSTANCE AtomicChild WITH c <- \"hello\"\nCheck == <<I!Op, J!Op, K!Op>>\n====\n"
+  },
+  "expected": {
+    "I": {
+      "kind": "integer",
+      "value": 1
+    },
+    "J": {
+      "kind": "boolean",
+      "value": true
+    },
+    "K": {
+      "kind": "string",
+      "value": "hello"
+    }
+  },
+  "sany": {
+    "schema": "mirrors.sany-bridge/v1",
+    "exitCode": 0,
+    "ok": true,
+    "parseOk": true,
+    "semanticOk": true,
+    "errorLevel": 0,
+    "root": "AtomicRoot",
+    "modules": [
+      {
+        "name": "AtomicChild",
+        "standard": false,
+        "declarations": [
+          {
+            "kind": "constant",
+            "name": "c",
+            "declaredIn": "AtomicChild",
+            "arity": 0
+          },
+          {
+            "kind": "operator",
+            "name": "Op",
+            "declaredIn": "AtomicChild",
+            "arity": 0,
+            "local": false,
+            "level": 0
+          }
+        ],
+        "instances": [],
+        "dependencies": []
+      },
+      {
+        "name": "AtomicRoot",
+        "standard": false,
+        "declarations": [
+          {
+            "kind": "operator",
+            "name": "I!Op",
+            "declaredIn": "AtomicChild",
+            "arity": 0,
+            "local": false,
+            "level": 0
+          },
+          {
+            "kind": "operator",
+            "name": "J!Op",
+            "declaredIn": "AtomicChild",
+            "arity": 0,
+            "local": false,
+            "level": 0
+          },
+          {
+            "kind": "operator",
+            "name": "K!Op",
+            "declaredIn": "AtomicChild",
+            "arity": 0,
+            "local": false,
+            "level": 0
+          },
+          {
+            "kind": "operator",
+            "name": "Check",
+            "declaredIn": "AtomicRoot",
+            "arity": 0,
+            "local": false,
+            "level": 0
+          }
+        ],
+        "instances": [
+          {
+            "owner": "AtomicRoot",
+            "name": "I",
+            "module": "AtomicChild",
+            "local": false,
+            "line": 2,
+            "substitutions": [
+              {
+                "formal": "c",
+                "actual": {
+                  "kind": "integer",
+                  "value": 1
+                },
+                "implicit": false
+              }
+            ]
+          },
+          {
+            "owner": "AtomicRoot",
+            "name": "J",
+            "module": "AtomicChild",
+            "local": false,
+            "line": 3,
+            "substitutions": [
+              {
+                "formal": "c",
+                "actual": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "implicit": false
+              }
+            ]
+          },
+          {
+            "owner": "AtomicRoot",
+            "name": "K",
+            "module": "AtomicChild",
+            "local": false,
+            "line": 4,
+            "substitutions": [
+              {
+                "formal": "c",
+                "actual": {
+                  "kind": "string",
+                  "value": "hello"
+                },
+                "implicit": false
+              }
+            ]
+          }
+        ],
+        "dependencies": [
+          {
+            "owner": "AtomicRoot",
+            "dependency": "AtomicChild",
+            "kind": "namedInstance",
+            "local": false
+          },
+          {
+            "owner": "AtomicRoot",
+            "dependency": "AtomicChild",
+            "kind": "namedInstance",
+            "local": false
+          },
+          {
+            "owner": "AtomicRoot",
+            "dependency": "AtomicChild",
+            "kind": "namedInstance",
+            "local": false
+          }
+        ]
+      }
+    ]
+  },
+  "mirrors": {
+    "inspection": {
+      "command": "resolve",
+      "dependencies": [
+        {
+          "declarationOrder": 0,
+          "dependency": "AtomicChild",
+          "kind": "namedInstance",
+          "local": false,
+          "location": {
+            "module": "AtomicRoot",
+            "path": "AtomicRoot.tla",
+            "range": {
+              "start": {
+                "column": 1,
+                "line": 2,
+                "offset": 28
+              },
+              "stop": {
+                "column": 38,
+                "line": 2,
+                "offset": 65
+              }
+            }
+          },
+          "owner": "AtomicRoot",
+          "resolution": "local",
+          "substitutions": [
+            {
+              "arity": 0,
+              "formal": "c",
+              "range": {
+                "start": {
+                  "column": 32,
+                  "line": 2,
+                  "offset": 59
+                },
+                "stop": {
+                  "column": 38,
+                  "line": 2,
+                  "offset": 65
+                }
+              }
+            }
+          ]
+        },
+        {
+          "declarationOrder": 1,
+          "dependency": "AtomicChild",
+          "kind": "namedInstance",
+          "local": false,
+          "location": {
+            "module": "AtomicRoot",
+            "path": "AtomicRoot.tla",
+            "range": {
+              "start": {
+                "column": 1,
+                "line": 3,
+                "offset": 66
+              },
+              "stop": {
+                "column": 41,
+                "line": 3,
+                "offset": 106
+              }
+            }
+          },
+          "owner": "AtomicRoot",
+          "resolution": "local",
+          "substitutions": [
+            {
+              "arity": 0,
+              "formal": "c",
+              "range": {
+                "start": {
+                  "column": 32,
+                  "line": 3,
+                  "offset": 97
+                },
+                "stop": {
+                  "column": 41,
+                  "line": 3,
+                  "offset": 106
+                }
+              }
+            }
+          ]
+        },
+        {
+          "declarationOrder": 2,
+          "dependency": "AtomicChild",
+          "kind": "namedInstance",
+          "local": false,
+          "location": {
+            "module": "AtomicRoot",
+            "path": "AtomicRoot.tla",
+            "range": {
+              "start": {
+                "column": 1,
+                "line": 4,
+                "offset": 107
+              },
+              "stop": {
+                "column": 44,
+                "line": 4,
+                "offset": 150
+              }
+            }
+          },
+          "owner": "AtomicRoot",
+          "resolution": "local",
+          "substitutions": [
+            {
+              "arity": 0,
+              "formal": "c",
+              "range": {
+                "start": {
+                  "column": 32,
+                  "line": 4,
+                  "offset": 138
+                },
+                "stop": {
+                  "column": 44,
+                  "line": 4,
+                  "offset": 150
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "levels": [
+        {
+          "declaredIn": "AtomicRoot",
+          "kind": "operator",
+          "level": "constant",
+          "local": false,
+          "name": "Check"
+        }
+      ],
+      "module": "AtomicRoot",
+      "ok": true,
+      "operators": [
+        {
+          "arity": 0,
+          "declaredIn": "AtomicRoot",
+          "fixity": "functional",
+          "importPath": [
+            "AtomicRoot"
+          ],
+          "level": "constant",
+          "local": false,
+          "location": {
+            "module": "AtomicRoot",
+            "path": "AtomicRoot.tla",
+            "range": {
+              "start": {
+                "column": 1,
+                "line": 5,
+                "offset": 151
+              },
+              "stop": {
+                "column": 6,
+                "line": 5,
+                "offset": 156
+              }
+            }
+          },
+          "name": "Check"
+        }
+      ],
+      "schema": "mirrors.tla-frontend-inspection/v1",
+      "source": {
+        "path": "AtomicRoot.tla"
+      },
+      "sources": [
+        {
+          "module": "AtomicChild",
+          "path": "AtomicChild.tla",
+          "sha256": "4e08dea7e89488abd88d9c0193180aa3f7291d4b3a745607f967e52d5cac86c9"
+        },
+        {
+          "module": "AtomicRoot",
+          "path": "AtomicRoot.tla",
+          "sha256": "c049d7cef23a94ded3f80544b9eb6da249b4b2f93a30b0d3a8c338aa4d21cbb1"
+        }
+      ],
+      "variables": []
+    },
+    "modules": [
+      {
+        "declarations": [
+          {
+            "arities": [],
+            "kind": "constant",
+            "line": 2,
+            "names": [
+              "c"
+            ]
+          },
+          {
+            "arities": [
+              [
+                "Op",
+                0
+              ]
+            ],
+            "kind": "operator",
+            "line": 3,
+            "names": [
+              "Op"
+            ]
+          }
+        ],
+        "instances": [],
+        "name": "AtomicChild"
+      },
+      {
+        "declarations": [
+          {
+            "arities": [],
+            "kind": "instance",
+            "line": 2,
+            "names": [
+              "I"
+            ]
+          },
+          {
+            "arities": [],
+            "kind": "instance",
+            "line": 3,
+            "names": [
+              "J"
+            ]
+          },
+          {
+            "arities": [],
+            "kind": "instance",
+            "line": 4,
+            "names": [
+              "K"
+            ]
+          },
+          {
+            "arities": [
+              [
+                "Check",
+                0
+              ]
+            ],
+            "kind": "operator",
+            "line": 5,
+            "names": [
+              "Check"
+            ]
+          }
+        ],
+        "instances": [
+          {
+            "line": 2,
+            "local": false,
+            "module": "AtomicChild",
+            "name": "I",
+            "owner": "AtomicRoot",
+            "substitutions": [
+              {
+                "actual": {
+                  "kind": "integer",
+                  "value": 1
+                },
+                "formal": "c",
+                "implicit": false
+              }
+            ]
+          },
+          {
+            "line": 3,
+            "local": false,
+            "module": "AtomicChild",
+            "name": "J",
+            "owner": "AtomicRoot",
+            "substitutions": [
+              {
+                "actual": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "formal": "c",
+                "implicit": false
+              }
+            ]
+          },
+          {
+            "line": 4,
+            "local": false,
+            "module": "AtomicChild",
+            "name": "K",
+            "owner": "AtomicRoot",
+            "substitutions": [
+              {
+                "actual": {
+                  "kind": "string",
+                  "value": "hello"
+                },
+                "formal": "c",
+                "implicit": false
+              }
+            ]
+          }
+        ],
+        "name": "AtomicRoot"
+      }
+    ],
+    "schema": "mirrors.tla-differential-driver/v1"
+  },
+  "sanyJarSha256": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1",
+  "driverSha256": "199dbead54f8ec12643181216e8b0027999860d19686fb82ff95f32626deb07e",
+  "result": "pass"
+}

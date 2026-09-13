@@ -5,9 +5,12 @@
 > Design authority: [general TLA+ frontend design](tla-frontend-design.md).
 > Task package: [TLA+ frontend tasks](tla-frontend-tasks.md), package TF0.
 > Conformance corpus: [`test/fixtures/tla-frontend/manifest.json`](../../test/fixtures/tla-frontend/manifest.json).
-> Differential status: **not run against pinned baselines**. The pinned SANY and
-> Apalache versions are owned by the coordinating agent; the corpus records
-> `not_run` placeholders rather than conformance claims.
+> Differential status: **executed against pinned baselines; acceptance failed**.
+> The 57-fixture run and reviewed discrepancies are recorded in
+> [differential evidence](../../test/fixtures/tla-frontend/differential/evidence/triage.md).
+> Baseline selection changes validation metadata only; language acceptance is
+> unchanged. Historical reference claims that disagree with the pinned tools
+> remain explicit findings rather than silently revised expectations.
 >
 > Revision note (2026-09-12): §7.4's staged `INSTANCE` limit is lifted. The
 > corpus diff reclassifies the five instance fixtures whose reference probe
@@ -45,8 +48,8 @@ Compatibility rules inherited from the design:
 | Corpus manifest schema | `mirrors.tla-frontend-corpus/1` |
 | Structural summary schema | `mirrors.tla-frontend-summary/1` |
 | Source identity | normalized UTF-8 bytes, CRLF and CR normalized to LF, SHA-256 |
-| Pinned SANY baseline | placeholder; owned by the coordinating agent |
-| Pinned Apalache baseline | placeholder; owned by the coordinating agent |
+| Pinned SANY baseline | TLA+ Tools 1.8.0 / SANY 2.2; hashes in the differential toolchain lock |
+| Pinned Apalache baseline | Apalache 0.61.0; hashes in the differential toolchain lock |
 
 A profile revision is required to change any of the following, and each change
 must be reviewed with the corpus diff:

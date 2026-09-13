@@ -159,6 +159,11 @@ lean_exe tla_frontend where
 lean_exe tla_frontend_cli_spec where
   root := `tools.TlaFrontendCliSpec
 
+/-- Test-only provider-correct differential observations; no operational commands. -/
+@[default_target]
+lean_exe tla_differential_driver where
+  root := `tools.TlaDifferentialDriver
+
 /-- Pure scaffold synthesis and strict proposal-codec gate. -/
 @[default_target]
 lean_exe model_interface_scaffold_spec where
@@ -376,6 +381,14 @@ script test do
     IO.eprintln outTlaFrontendCli.stderr
     IO.println s!"tla_frontend_cli_spec FAILED ({outTlaFrontendCli.exitCode})"
     return outTlaFrontendCli.exitCode
+  let outTlaDifferential : IO.Process.Output ← IO.Process.output
+    ({ cmd := "python3", args := #["-m", "unittest", "discover", "-s",
+      "tools/tla-differential/tests"] } : IO.Process.SpawnArgs)
+  IO.println outTlaDifferential.stdout
+  IO.eprintln outTlaDifferential.stderr
+  if outTlaDifferential.exitCode != 0 then
+    IO.println s!"tla differential offline tests FAILED ({outTlaDifferential.exitCode})"
+    return outTlaDifferential.exitCode
   let outMiScaffold : IO.Process.Output ← IO.Process.output
     ({ cmd := ".lake/build/bin/model_interface_scaffold_spec", args := #[] } :
       IO.Process.SpawnArgs)

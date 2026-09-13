@@ -24,12 +24,16 @@
   },
   "differential": {
     "sany": {
-      "status": "not_run",
-      "version": "pending"
+      "status": "failed",
+      "version": "TLA+ Tools 1.8.0 / SANY 2.2",
+      "evidence": "differential/evidence/checkpoint-h/report.json",
+      "scope": "57-fixture outcomes; qualified SANY structural projections; reviewed differences and unresolved findings recorded separately"
     },
     "apalache": {
-      "status": "not_run",
-      "version": "pending"
+      "status": "failed",
+      "version": "0.61.0",
+      "evidence": "differential/evidence/checkpoint-h/report.json",
+      "scope": "57-fixture outcomes; qualified SANY structural projections; reviewed differences and unresolved findings recorded separately"
     },
     "localProbe": {
       "tool": "tla2tools 2.0 (2024-08-08), SANY2 2.1",

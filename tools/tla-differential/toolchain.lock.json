@@ -1,0 +1,36 @@
+{
+  "schema": "mirrors.tla-differential-toolchain-lock/v1",
+  "tools": {
+    "runtime": {
+      "command": "java",
+      "version": "25.0.4",
+      "build": "25.0.4+7",
+      "vendor": "environment supplied; vendor is not part of the pin"
+    },
+    "sany": {
+      "distribution": "TLA+ Tools 1.8.0 (Clarke)",
+      "version": "SANY2 Version 2.2 created 08 July 2020",
+      "url": "https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar",
+      "path": "downloads/tla2tools-1.8.0.jar",
+      "sha256": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1",
+      "sha1_release": "8400956fa42711bcae3cf319cf6aa47341e7c2f6",
+      "entrypoint": ["java", "-cp", "{path}", "tla2sany.SANY"],
+      "standardLibraryPrefix": "tla2sany/StandardModules/",
+      "parserLineage": "standalone tla2tools distribution"
+      ,"standardLibrarySha256": "eb509abc1987245b854582f94e32b6407fd9cce6aa625b2b546c7524b95a71bb"
+    },
+    "apalache": {
+      "distribution": "Apalache 0.61.0",
+      "version": "0.61.0",
+      "build": "831d473",
+      "url": "https://github.com/apalache-mc/apalache/releases/download/v0.61.0/apalache-0.61.0.tgz",
+      "path": "downloads/apalache-0.61.0.tgz",
+      "sha256": "68fb56dd9d053cf21d692fd7ec3fbaaeba1395661ec7434fa2b4c47e6fc432b8",
+      "jarSha256": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346",
+      "frontendCommand": ["apalache-mc", "parse", "--output={output}", "{file}"],
+      "standardLibraryPrefix": "tla2sany/StandardModules/",
+      "parserLineage": "bundles tla2sany classes; shared with its SanyParser pass"
+      ,"standardLibrarySha256": "b8e3930442b5eb78940e44996c1cf577c1c1d152a49fbeec001e1f8aa927e094"
+    }
+  }
+}

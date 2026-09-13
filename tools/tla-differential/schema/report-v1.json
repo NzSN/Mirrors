@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mirrors.tla-differential-report/v1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema", "inputs", "observations", "comparisons", "coverage", "verdict"],
+  "properties": {
+    "schema": {"const": "mirrors.tla-differential-report/v1"},
+    "inputs": {"type": "object", "additionalProperties": true, "required": ["semanticIdentity"], "properties": {"semanticIdentity": {"type": "object"}}},
+    "observations": {"type": "array", "items": {"type": "object"}},
+    "comparisons": {"type": "array", "items": {"type": "object"}},
+    "coverage": {"type": "object"},
+    "verdict": {"enum": ["pass", "fail", "incomplete"]}
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mirrors.tla-differential-differences/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "candidates",
+    "reviewed"
+  ],
+  "properties": {
+    "schema": {
+      "const": "mirrors.tla-differential-differences/v1"
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "reviewed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "fixtureIds",
+          "fields",
+          "expected",
+          "profile",
+          "sourceDigests",
+          "enginePins",
+          "rationale",
+          "evidence",
+          "review",
+          "revisit"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "fixtureIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "fields": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "expected": {
+            "type": "object"
+          },
+          "profile": {
+            "type": "string"
+          },
+          "sourceDigests": {
+            "type": "object"
+          },
+          "enginePins": {
+            "type": "object"
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          "review": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "artifact",
+              "commit",
+              "sha256"
+            ],
+            "properties": {
+              "artifact": {
+                "type": "string"
+              },
+              "commit": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "revisit": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

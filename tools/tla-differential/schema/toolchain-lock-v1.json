@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mirrors.tla-differential-toolchain-lock/v1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema", "tools"],
+  "properties": {
+    "schema": {"const": "mirrors.tla-differential-toolchain-lock/v1"},
+    "tools": {"type": "object", "additionalProperties": false, "properties": {"sany": {"type": "object"}, "apalache": {"type": "object"}}}
+  }
+}

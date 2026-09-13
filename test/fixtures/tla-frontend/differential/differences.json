@@ -1,0 +1,542 @@
+{
+  "schema": "mirrors.tla-differential-differences/v1",
+  "candidates": [],
+  "reviewed": [
+    {
+      "id": "reviewed-comment-depth-limit-sany",
+      "fixtureIds": [
+        "rej-comment-depth"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "sany": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-comment-depth": {
+          "rejected/RejectCommentDepth.tla": "df0c74196e3d8bedb0e5b0a862bda6769bfc5fa6ef9db3a6c8b0f2a410976054"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
+      },
+      "rationale": "The corpus records an intentional bounded comment-depth limit and an exploratory reference acceptance. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-comment-depth-limit-apalache",
+      "fixtureIds": [
+        "rej-comment-depth"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "apalache": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-comment-depth": {
+          "rejected/RejectCommentDepth.tla": "df0c74196e3d8bedb0e5b0a862bda6769bfc5fa6ef9db3a6c8b0f2a410976054"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
+      },
+      "rationale": "The corpus records an intentional bounded comment-depth limit and an exploratory reference acceptance. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-identifier-size-limit-sany",
+      "fixtureIds": [
+        "rej-identifier-size"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "sany": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-identifier-size": {
+          "rejected/RejectIdentifierSize.tla": "39402a07e57399611cef45842f41f99b3db62b37cee3c3780577039ce1f78da9"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
+      },
+      "rationale": "The corpus records the profile identifier-size resource limit and an exploratory reference acceptance. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-identifier-size-limit-apalache",
+      "fixtureIds": [
+        "rej-identifier-size"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "apalache": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-identifier-size": {
+          "rejected/RejectIdentifierSize.tla": "39402a07e57399611cef45842f41f99b3db62b37cee3c3780577039ce1f78da9"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
+      },
+      "rationale": "The corpus records the profile identifier-size resource limit and an exploratory reference acceptance. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-control-character-policy-sany",
+      "fixtureIds": [
+        "rej-control-character"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "sany": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-control-character": {
+          "rejected/RejectControlCharacter.tla": "9909854c5da713b6f700bcac297582a78e68b7d52d8f23848eeb25aad4ed0c7e"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
+      },
+      "rationale": "The profile deliberately rejects control characters that the exploratory parser tolerated. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-control-character-policy-apalache",
+      "fixtureIds": [
+        "rej-control-character"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "apalache": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-control-character": {
+          "rejected/RejectControlCharacter.tla": "9909854c5da713b6f700bcac297582a78e68b7d52d8f23848eeb25aad4ed0c7e"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
+      },
+      "rationale": "The profile deliberately rejects control characters that the exploratory parser tolerated. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-pluscal-profile-limit-sany",
+      "fixtureIds": [
+        "rej-pluscal"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "sany": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-pluscal": {
+          "rejected/RejectPlusCal.tla": "eb6a332c5d5b37e40eb4c962b97ba8bc2197f5613861a64a3d1707ba0d05840f"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
+      },
+      "rationale": "The profile stages PlusCal out rather than silently treating its marker as inert trivia. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-pluscal-profile-limit-apalache",
+      "fixtureIds": [
+        "rej-pluscal"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "apalache": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-pluscal": {
+          "rejected/RejectPlusCal.tla": "eb6a332c5d5b37e40eb4c962b97ba8bc2197f5613861a64a3d1707ba0d05840f"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
+      },
+      "rationale": "The profile stages PlusCal out rather than silently treating its marker as inert trivia. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-duplicate-declaration-policy-sany",
+      "fixtureIds": [
+        "rej-duplicate-declaration"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "sany": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-duplicate-declaration": {
+          "rejected/RejectDuplicateDeclaration.tla": "6f59f6ec64025d8d9bca15b59985b17958e7f9c1bfe7ad3796f41017423ed977"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
+      },
+      "rationale": "The corpus records a stricter duplicate-declaration result than the exploratory warning result. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-duplicate-declaration-policy-apalache",
+      "fixtureIds": [
+        "rej-duplicate-declaration"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "apalache": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-duplicate-declaration": {
+          "rejected/RejectDuplicateDeclaration.tla": "6f59f6ec64025d8d9bca15b59985b17958e7f9c1bfe7ad3796f41017423ed977"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
+      },
+      "rationale": "The corpus records a stricter duplicate-declaration result than the exploratory warning result. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-real-literal-profile-limit-sany",
+      "fixtureIds": [
+        "rej-real-literal"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "sany": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-real-literal": {
+          "rejected/RejectRealLiteral.tla": "54cb23f1a9ea7d961d20ce15304b7c17fcc9291b1009044f5e2da95e46367e6b"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
+      },
+      "rationale": "The profile has an integer-only numeric value domain and stages real literals out. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-real-literal-profile-limit-apalache",
+      "fixtureIds": [
+        "rej-real-literal"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "apalache": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-real-literal": {
+          "rejected/RejectRealLiteral.tla": "54cb23f1a9ea7d961d20ce15304b7c17fcc9291b1009044f5e2da95e46367e6b"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
+      },
+      "rationale": "The profile has an integer-only numeric value domain and stages real literals out. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-extends-ambiguity-policy-sany",
+      "fixtureIds": [
+        "rej-extends-ambiguity"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "sany": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-extends-ambiguity": {
+          "rejected/extends-ambiguity/AmbLeft.tla": "7ba4f10d53c5338f6b2399bb4b65837a1c941fba74bdd71f7552d79394d9a20a",
+          "rejected/extends-ambiguity/AmbRight.tla": "bde77d11adc90fc6317faffb32978c6703292c6e52d96d9f39c429c3e77d3c05",
+          "rejected/extends-ambiguity/AmbRoot.tla": "21ac860813e2ddedf93064fa09e53751eceacd6e9b2bfc016c8c4182704a3c02"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
+      },
+      "rationale": "The profile treats ambiguous inherited declarations as an error rather than a warning. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    },
+    {
+      "id": "reviewed-extends-ambiguity-policy-apalache",
+      "fixtureIds": [
+        "rej-extends-ambiguity"
+      ],
+      "fields": [
+        "outcome"
+      ],
+      "expected": {
+        "outcome": {
+          "mirrors": "rejected",
+          "apalache": "accepted"
+        }
+      },
+      "profile": "mirrors-tla-frontend-profile-1",
+      "sourceDigests": {
+        "rej-extends-ambiguity": {
+          "rejected/extends-ambiguity/AmbLeft.tla": "7ba4f10d53c5338f6b2399bb4b65837a1c941fba74bdd71f7552d79394d9a20a",
+          "rejected/extends-ambiguity/AmbRight.tla": "bde77d11adc90fc6317faffb32978c6703292c6e52d96d9f39c429c3e77d3c05",
+          "rejected/extends-ambiguity/AmbRoot.tla": "21ac860813e2ddedf93064fa09e53751eceacd6e9b2bfc016c8c4182704a3c02"
+        }
+      },
+      "enginePins": {
+        "mirrors": "4434b7b3349619165cd75fad0c8719c3ff7689bf3d6b9de95e8c639408f7303e",
+        "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
+      },
+      "rationale": "The profile treats ambiguous inherited declarations as an error rather than a warning. Reviewed against the pinned baselines; see language profile intentional differences.",
+      "evidence": [
+        {
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-a/report.json",
+          "sha256": "89773aa3ee7be0ca534788d3340d510800da82c54fa3bbf23defeadf5ba6c9c5"
+        }
+      ],
+      "review": {
+        "artifact": "test/fixtures/tla-frontend/differential/evidence/triage.md",
+        "sha256": "f9938ef5e45df4159fff8413587c0b9726bff66030643b1bc1dd8992c2d1cfca",
+        "commit": "5cc45c1511bb117754b7cbb6a05ddcb01f6a0428"
+      },
+      "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
+    }
+  ]
+}

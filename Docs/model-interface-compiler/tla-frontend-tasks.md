@@ -2,9 +2,9 @@
 
 > Status: **implementation plan; TF0–TF3b accepted on 2026-09-11; TF4–TF8
 > implemented and accepted on 2026-09-12 for the Mirrors-local scope. The
-> cross-language interop matrix and live Apalache tiers are green; the pinned
-> MirrorGate Node gate and corpus-wide differential tiers remain outstanding as
-> recorded in section 17.6.**
+> cross-language interop matrix and live Apalache tiers are green; the MirrorGate
+> matrix remains unverified. Corpus-wide differential validation was executed
+> on 2026-09-13 and failed; see section 17.7 for the current evidence.**
 >
 > Design authority: [general TLA+ frontend](tla-frontend-design.md)
 >
@@ -671,3 +671,27 @@ Two external tiers remain unavailable and are not reported as passes:
   parses establish their narrower behaviors but do not substitute for a
   complete 57-fixture differential run. Until that harness exists and runs,
   the project cannot claim corpus-wide external-parser conformance.
+
+
+### 17.7 Differential execution and remaining findings (2026-09-13)
+
+The earlier `not_run` differential entries in §17.5–17.6 are historical. The
+[differential harness](tla-differential-validation-design.md) now executes the
+57-fixture corpus through Mirrors, pinned TLA+ Tools 1.8.0 / SANY 2.2, and
+Apalache 0.61.0. The initial full run retained 171 completed observations.
+Fourteen outcome comparisons are narrowly reviewed differences for seven
+already documented revision-1 policies; remaining mismatches are not waived.
+
+The [evidence index](../../test/fixtures/tla-frontend/differential/evidence/README.md)
+records the final repeated runs, normalized-report checksum, exact gate results,
+and compressed raw artifacts. The [review](../../test/fixtures/tla-frontend/differential/evidence/triage.md)
+identifies precedence/profile incompatibility, stale Unicode baseline rationale,
+ENABLED level classification, and missing qualified named-instance operator
+projections. These are follow-up frontend/profile/observation tasks; this delivery
+does not modify language semantics or frozen source fixtures to make the gate pass.
+
+The aggregate Lake suite passed with live Apalache and permitted loopback. The
+separate required differential gate remains failed. Unsupported Apalache
+structural fields, external stage mappings, lexical/CST equivalence, and richer
+substitution expression identity remain explicitly uncertified. MirrorGate and
+the full real-application correct/faulty harness were not rerun by this task.

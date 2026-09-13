@@ -1,0 +1,739 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mirrors.tla-differential-observation/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "fixture",
+    "engine",
+    "provider",
+    "inputDigest",
+    "adapter",
+    "tool",
+    "invocation",
+    "execution",
+    "outcome",
+    "nativePhase",
+    "stage",
+    "diagnostics",
+    "facts",
+    "rawArtifacts"
+  ],
+  "properties": {
+    "schema": {
+      "const": "mirrors.tla-differential-observation/v1"
+    },
+    "fixture": {
+      "type": "string",
+      "minLength": 1
+    },
+    "engine": {
+      "enum": [
+        "mirrors",
+        "sany",
+        "apalache"
+      ]
+    },
+    "provider": {
+      "enum": [
+        "borrowed-directory",
+        "inline-source-map"
+      ]
+    },
+    "inputDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "fingerprint"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "fingerprint": {
+          "type": "string"
+        }
+      }
+    },
+    "invocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "argv",
+        "exitCode"
+      ],
+      "properties": {
+        "argv": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exitCode": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    },
+    "execution": {
+      "enum": [
+        "completed",
+        "unavailable",
+        "timeout",
+        "crash",
+        "invalid_output",
+        "resource_exhausted"
+      ]
+    },
+    "outcome": {
+      "enum": [
+        "accepted",
+        "rejected",
+        "unknown"
+      ]
+    },
+    "nativePhase": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "facts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [],
+      "properties": {
+        "outcome": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability"
+              ],
+              "properties": {
+                "capability": {
+                  "enum": [
+                    "unsupported",
+                    "unqualified"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability",
+                "value"
+              ],
+              "properties": {
+                "capability": {
+                  "const": "supported"
+                },
+                "value": {
+                  "enum": [
+                    "accepted",
+                    "rejected",
+                    "unknown"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "stage": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability"
+              ],
+              "properties": {
+                "capability": {
+                  "enum": [
+                    "unsupported",
+                    "unqualified"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability",
+                "value"
+              ],
+              "properties": {
+                "capability": {
+                  "const": "supported"
+                },
+                "value": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "stage",
+                    "reason"
+                  ],
+                  "properties": {
+                    "stage": {
+                      "enum": [
+                        "lex",
+                        "parse",
+                        "moduleGraph",
+                        "nameResolution",
+                        "substitution",
+                        "level",
+                        "sourceEvidence"
+                      ]
+                    },
+                    "reason": {
+                      "enum": [
+                        null,
+                        "malformed",
+                        "limit",
+                        "profile_limit"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "variables": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability"
+              ],
+              "properties": {
+                "capability": {
+                  "enum": [
+                    "unsupported",
+                    "unqualified"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability",
+                "value"
+              ],
+              "properties": {
+                "capability": {
+                  "const": "supported"
+                },
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name",
+                      "declaredIn",
+                      "declaredName"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "declaredIn": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "declaredName": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "importPath": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "source_closure": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability"
+              ],
+              "properties": {
+                "capability": {
+                  "enum": [
+                    "unsupported",
+                    "unqualified"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability",
+                "value"
+              ],
+              "properties": {
+                "capability": {
+                  "const": "supported"
+                },
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "module",
+                      "path",
+                      "sha256"
+                    ],
+                    "properties": {
+                      "module": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "path": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "resolution": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability"
+              ],
+              "properties": {
+                "capability": {
+                  "enum": [
+                    "unsupported",
+                    "unqualified"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability",
+                "value"
+              ],
+              "properties": {
+                "capability": {
+                  "const": "supported"
+                },
+                "value": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "dependencies",
+                    "operators"
+                  ],
+                  "properties": {
+                    "dependencies": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "owner",
+                          "dependency",
+                          "kind",
+                          "local"
+                        ],
+                        "properties": {
+                          "owner": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "dependency": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "kind": {
+                            "enum": [
+                              "extends",
+                              "namedInstance",
+                              "unnamedInstance"
+                            ]
+                          },
+                          "local": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "operators": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "name",
+                          "declaredIn",
+                          "arity",
+                          "local"
+                        ],
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "declaredIn": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "arity": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "local": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "levels": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability"
+              ],
+              "properties": {
+                "capability": {
+                  "enum": [
+                    "unsupported",
+                    "unqualified"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability",
+                "value"
+              ],
+              "properties": {
+                "capability": {
+                  "const": "supported"
+                },
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name",
+                      "declaredIn",
+                      "level"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "declaredIn": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "level": {
+                        "enum": [
+                          "constant",
+                          "state",
+                          "action",
+                          "temporal"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "substitution": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability"
+              ],
+              "properties": {
+                "capability": {
+                  "enum": [
+                    "unsupported",
+                    "unqualified"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability",
+                "value"
+              ],
+              "properties": {
+                "capability": {
+                  "const": "supported"
+                },
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "owner",
+                      "name",
+                      "module",
+                      "local",
+                      "line",
+                      "substitutions"
+                    ],
+                    "properties": {
+                      "owner": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "name": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "module": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "local": {
+                        "type": "boolean"
+                      },
+                      "line": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "substitutions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "formal",
+                            "actual",
+                            "implicit"
+                          ],
+                          "properties": {
+                            "formal": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "actual": {
+                              "oneOf": [
+                                {
+                                  "type": "object",
+                                  "additionalProperties": false,
+                                  "required": [
+                                    "kind",
+                                    "value"
+                                  ],
+                                  "properties": {
+                                    "kind": {
+                                      "const": "name"
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "additionalProperties": false,
+                                  "required": [
+                                    "kind",
+                                    "value"
+                                  ],
+                                  "properties": {
+                                    "kind": {
+                                      "const": "string"
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "additionalProperties": false,
+                                  "required": [
+                                    "kind",
+                                    "value"
+                                  ],
+                                  "properties": {
+                                    "kind": {
+                                      "const": "integer"
+                                    },
+                                    "value": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "additionalProperties": false,
+                                  "required": [
+                                    "kind",
+                                    "value"
+                                  ],
+                                  "properties": {
+                                    "kind": {
+                                      "const": "boolean"
+                                    },
+                                    "value": {
+                                      "type": "boolean"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "implicit": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "rawArtifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "execution": {
+            "not": {
+              "const": "completed"
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "outcome": {
+            "const": "unknown"
+          }
+        }
+      }
+    }
+  ]
+}

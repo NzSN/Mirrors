@@ -1,0 +1,46 @@
+{
+  "archive": {
+    "path": "validation-logs.tar.gz",
+    "sha256": "cbee86b396daa0ee7bada13ca947d78ffe62129169fce9814ba7194e1d2d8fa8"
+  },
+  "logs": [
+    {
+      "path": "lake-build.txt",
+      "sha256": "b90b3103d07f5ed8fd5075fcdac4a9388d93ee86f0a6efaf65c56fe4af2d4565"
+    },
+    {
+      "path": "lake-test.txt",
+      "sha256": "5c98aa312c2bdf9df9f51b3d296a5b0c533224050060988dc962ebe577af43fe"
+    },
+    {
+      "path": "offline-tests.txt",
+      "sha256": "c4ff06c2ccbd54a245c2dca0f09ce9df43a66898b2ff57e41dfc0c8425de31af"
+    },
+    {
+      "path": "live-calibration.txt",
+      "sha256": "82df3cb79d7aad9713d8621e8fe8030c0b5d6a20efafd25dde310c8112bed292"
+    },
+    {
+      "path": "missing-runtime.txt",
+      "sha256": "2d0d1312b0f70e67c6afd9288bd9e0b56704fa8d347dcd7706101ec614e90dc9"
+    }
+  ],
+  "results": {
+    "lake_build": 0,
+    "lake_test": 0,
+    "offline_tests": {
+      "exit": 0,
+      "total": 51,
+      "skipped_live": 4
+    },
+    "live_calibration": {
+      "exit": 0,
+      "total": 5,
+      "skipped": 0
+    },
+    "required_missing_runtime": 2,
+    "checkpoint_h": 1,
+    "checkpoint_i": 1
+  },
+  "semanticSha256": "e00451640aba6ca3c93fb836c2574cc7567dedee413151853536ddf41d156815"
+}
