@@ -1,0 +1,6 @@
+{
+  "archive": "raw-evidence.tar.gz",
+  "sha256": "d56dc12c1fb275cd6836ab50fddf024ee3b823863d4253fd301ea11319ba706c",
+  "contains": "junction-precedence-jp0-r5/{fixtures,inputs}/**",
+  "restore": "tar -xzf raw-evidence.tar.gz --strip-components=1"
+}

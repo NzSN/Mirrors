@@ -3,7 +3,41 @@
 **Acceptance: failed.** The harness implementation and corpus execution are
 complete; the remaining frontend/profile/projection findings are not waived.
 
-Final runs:
+## Profile-2 junction closure (2026-09-13)
+
+Checkpoints J and K are independent final profile-2 runs. Each completed all
+180 observations (60 fixtures × 3 engines), recorded 540 exact matches, 14
+approved profile-2 policy differences, 11 unresolved findings, and no
+precedence exception. Their semantic payloads are byte-identical:
+`5dd32f9003de7c09771dac69282be01a853fcf5dfd11c4302011b6bf3da3f354`.
+The original mixed-junction disagreements are closed. Unicode, ENABLED
+classification (Mirrors temporal; SANY state), and named-instance projections
+remain unreviewed findings. Portable raw archives are indexed in each
+checkpoint.
+
+- [Checkpoint J summary](checkpoint-j/summary.md) and [report](checkpoint-j/report.json).
+- [Checkpoint K summary](checkpoint-k/summary.md) and [report](checkpoint-k/report.json).
+- [Renewal baseline](checkpoint-jp4-baseline/summary.md) and
+  [independent approval](../../../../../Drafts/tla-junction-profile2-policy-renewals.md).
+
+Both final reports record stable implementation hashes and no setup errors.
+The coordinator verified all 639 raw-artifact hashes in each checkpoint and
+the archive hashes. The JP0 matrix and supplement also retain indexed raw
+archives. Build and aggregate Lake tests passed; the final offline suite passed
+54 tests (four opt-in live tests skipped).
+
+Commands for the final runs, from the repository root:
+
+```sh
+python3 tools/tla-differential/run.py --required --output .golden-build/tla-differential/jp4-profile2-final-1
+python3 tools/tla-differential/run.py --required --output .golden-build/tla-differential/jp4-profile2-final-2
+```
+
+Each returned exit 1 because of the eleven unrelated findings.
+
+## Historical profile-1 delivery
+
+Final revision-1 runs:
 
 - [Checkpoint H summary](checkpoint-h/summary.md) and [report](checkpoint-h/report.json).
 - [Checkpoint I summary](checkpoint-i/summary.md) and [report](checkpoint-i/report.json).

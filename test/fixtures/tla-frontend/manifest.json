@@ -1,6 +1,6 @@
 {
   "schema": "mirrors.tla-frontend-corpus/1",
-  "profile": "mirrors-tla-frontend-profile-1",
+  "profile": "mirrors-tla-frontend-profile-2",
   "status": "provisional",
   "designDocument": "../../../Docs/model-interface-compiler/tla-frontend-design.md",
   "profileDocument": "../../../Docs/model-interface-compiler/tla-language-profile.md",
@@ -682,9 +682,25 @@
       "branches": [
         "syntax.precedence.binding"
       ],
-      "explanation": "Standard precedence cases: arithmetic over relational, relational over conjunction, conjunction over disjunction, both junctions over implication, and unary negation over conjunction.",
+      "explanation": "Standard precedence cases: arithmetic over relational, relational over conjunction, conjunction over implication, unary negation over conjunction, and an explicitly grouped disjunction of a conjunction. An unparenthesized mixture of the two junctions is a conflict in revision 2.",
       "sourceRoot": "accepted",
       "summary": "expected/acc-precedence.json"
+    },
+    {
+      "id": "acc-precedence-junctions",
+      "kind": "accepted",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "AcceptPrecedenceJunctions",
+      "files": [
+        "accepted/AcceptPrecedenceJunctions.tla"
+      ],
+      "branches": [
+        "syntax.precedence.binding"
+      ],
+      "explanation": "Revision-2 shared junction level: homogeneous conjunction and disjunction chains, all four parenthesized forms, both ASCII aliases, and a prefix list ended by the other junction at the bullet column.",
+      "sourceRoot": "accepted",
+      "summary": "expected/acc-precedence-junctions.json"
     },
     {
       "id": "acc-ascii-symbolic",
@@ -1155,6 +1171,38 @@
         "syntax.precedence.conflict"
       ],
       "explanation": "Chained => and <=> have no associativity in the reference grammar; parentheses are required.",
+      "reason": "malformed",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-precedence-junction-mix",
+      "kind": "rejected",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "RejectPrecedenceJunctionMix",
+      "files": [
+        "rejected/RejectPrecedenceJunctionMix.tla"
+      ],
+      "branches": [
+        "syntax.precedence.conflict"
+      ],
+      "explanation": "Canonical conjunction followed by disjunction without parentheses: both junctions share one precedence level, so the second operator is a conflict.",
+      "reason": "malformed",
+      "sourceRoot": "rejected"
+    },
+    {
+      "id": "rej-precedence-junction-mix-reversed",
+      "kind": "rejected",
+      "stage": "parse",
+      "provider": "borrowed-directory",
+      "root": "RejectPrecedenceJunctionMixReversed",
+      "files": [
+        "rejected/RejectPrecedenceJunctionMixReversed.tla"
+      ],
+      "branches": [
+        "syntax.precedence.conflict"
+      ],
+      "explanation": "Canonical disjunction followed by conjunction without parentheses: the reverse ordering of the same shared-level conflict, isolated on its own first operator.",
       "reason": "malformed",
       "sourceRoot": "rejected"
     },

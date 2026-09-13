@@ -179,7 +179,7 @@ explicitly scoped default-agent threads; later related responsibilities reused
 those threads. No production frontend semantics or frozen source fixtures were
 changed to obtain agreement.
 
-The corpus remains 57 fixtures (32 expected accepted, 25 rejected), with 75
+At the initial delivery, the corpus contained 57 fixtures (32 expected accepted, 25 rejected), with 75
 branches and 103 fixture-branch links. The harness captures each source bundle
 and invokes Mirrors, standalone SANY, and Apalache, retaining all 171 observations.
 It checks implementation/binary stability and preserves the source/harness
@@ -209,3 +209,15 @@ substitution-expression/declaration identity. These remain explicit unsupported
 surfaces. SANY and Apalache share parser lineage, so agreement is correlated.
 This work does not complete the separate MirrorGate or real application harness
 acceptance tiers from the parent ledger.
+
+
+## Profile-2 junction follow-up (2026-09-13)
+
+The [junction packages](tla-junction-precedence-tasks.md) are complete. Current
+checkpoints J/K cover 60 fixtures and 180 observations each, with identical
+semantic payloads. Precedence is closed without an exception; fourteen inherited
+policy comparisons were independently renewed against the new profile and
+rebuilt artifact. Eleven unrelated comparisons still fail (Unicode: 2;
+ENABLED: 1; named-instance projections: 8), and 285 remain unsupported. The
+broader differential acceptance is still failed. The revision-1 counts and
+checkpoints above describe the original delivery and remain historical evidence.

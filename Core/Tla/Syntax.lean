@@ -5,7 +5,7 @@ import Core.Tla.Token
 /-!
 # TLA+ concrete and abstract syntax (Core/Tla/Syntax.lean)
 
-Types for the revision-1 TLA+ frontend
+Types for the revision-2 TLA+ frontend
 (`Docs/model-interface-compiler/tla-frontend-design.md`, §10 "Concrete and
 abstract syntax"; task package TF2 in
 `Docs/model-interface-compiler/tla-frontend-tasks.md`).

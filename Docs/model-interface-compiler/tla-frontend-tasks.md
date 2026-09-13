@@ -684,22 +684,46 @@ Two external tiers remain unavailable and are not reported as passes:
 
 The earlier `not_run` differential entries retained in §17.1 and §17.6 are
 historical; §17.5 summarizes current status. The
-[differential harness](tla-differential-validation-design.md) now executes the
-57-fixture corpus through Mirrors, pinned TLA+ Tools 1.8.0 / SANY 2.2, and
+[differential harness](tla-differential-validation-design.md) initially executed the
+57-fixture revision-1 corpus through Mirrors, pinned TLA+ Tools 1.8.0 / SANY 2.2, and
 Apalache 0.61.0. The initial full run retained 171 completed observations.
 Fourteen outcome comparisons are narrowly reviewed differences for seven
 already documented revision-1 policies; remaining mismatches are not waived.
 
 The [evidence index](../../test/fixtures/tla-frontend/differential/evidence/README.md)
-records the final repeated runs, normalized-report checksum, exact gate results,
+records the historical and current repeated runs, normalized-report checksum, exact gate results,
 and compressed raw artifacts. The [review](../../test/fixtures/tla-frontend/differential/evidence/triage.md)
 identifies precedence/profile incompatibility, stale Unicode baseline rationale,
 ENABLED level classification, and missing qualified named-instance operator
-projections. These are follow-up frontend/profile/observation tasks; this delivery
-does not modify language semantics or frozen source fixtures to make the gate pass.
+projections. These were the follow-up frontend/profile/observation tasks from the initial
+harness delivery; the junction follow-up below closes only precedence.
 
 The aggregate Lake suite passed with live Apalache and permitted loopback. The
 separate required differential gate remains failed. Unsupported Apalache
 structural fields, external stage mappings, lexical/CST equivalence, and richer
 substitution expression identity remain explicitly uncertified. MirrorGate and
 the full real-application correct/faulty harness were not rerun by this task.
+
+
+### 17.8 Junction follow-up: profile 2 (2026-09-13)
+
+[JP0–JP4](../../Drafts/tla-junction-precedence-tasks.md) are complete. The default
+profile now gives conjunction and disjunction one shared precedence level and
+rejects unparenthesized mixed infix chains. Parenthesized expressions and
+reference-qualified prefix-list layouts have focused regression coverage.
+
+The migrated corpus has 60 fixtures (33 accepted, 27 rejected), 75 branches,
+and 106 fixture-branch links. Fourteen exact policy comparisons were renewed
+only after independent review under profile 2. Checkpoints J and K each retain
+180 completed observations and identical semantic payloads: 540 matches,
+14 reviewed differences, 11 failures, and 285 unsupported comparisons.
+There is no precedence exception. The remaining failures concern Unicode
+acceptance (2), ENABLED level classification (1), and named-instance projections
+(8). The required differential verdict remains **fail**.
+
+Build, all frontend gates, and the aggregate Lake suite passed. Model-interface
+lock and synchronous TypeScript, asynchronous TypeScript, and C++ golden bytes
+are unchanged. Historical revision-1 checkpoints remain intact; see the
+[evidence index](../../test/fixtures/tla-frontend/differential/evidence/README.md)
+for the new portable archives and exact checksums. This follow-up does not
+complete the unrelated MirrorGate or real-application acceptance tiers.

@@ -1,7 +1,12 @@
-# Mirrors TLA+ frontend language profile (revision 1)
+# Mirrors TLA+ frontend language profile (revision 2)
 
-> Status: **revision-1 profile; frozen with the TF0 corpus on 2026-09-11 and
-> revised on 2026-09-12 when TF5 lifted the staged `INSTANCE` limit**.
+> Status: **revision-2 profile; frozen with the TF0 corpus on 2026-09-11,
+> revised on 2026-09-12 when TF5 lifted the staged `INSTANCE` limit, and
+> revised on 2026-09-13 for the shared junction level**.
+> Only §5.5's junction rule and the identity in §2 change in revision 2. Every
+> other rule below is the revision-1 rule carried forward unchanged, so its
+> historical "Revision 1" wording names the inherited rule rather than a
+> second, still-selectable profile.
 > Design authority: [general TLA+ frontend design](tla-frontend-design.md).
 > Task package: [TLA+ frontend tasks](tla-frontend-tasks.md), package TF0.
 > Conformance corpus: [`test/fixtures/tla-frontend/manifest.json`](../../test/fixtures/tla-frontend/manifest.json).
@@ -17,6 +22,19 @@
 > accepted them, and the profile id stays `mirrors-tla-frontend-profile-1`:
 > revision 1 already published that eventual classification, and no consumer
 > can hold cached elaboration facts before the TF6/TF7 integration.
+>
+> Revision note (2026-09-13): canonical conjunction `/\` and disjunction `\/`
+> move to one shared precedence level with `OperatorAssociation.same`, so an
+> unparenthesized mixture is a precedence conflict and the profile id becomes
+> `mirrors-tla-frontend-profile-2`. The live corpus carries 60 fixtures
+> (33 accepted, 27 rejected). The identity bump is required because the change
+> alters which source strings the default profile accepts; no consumer may read
+> revision-1 acceptance as revision-2 acceptance. Renewed differential evidence
+> for revision 2 is recorded separately from the 57-fixture revision-1 run.
+> The frontend keeps no persistent profile-keyed cache, so the identity bump
+> invalidates no stored parse or elaboration facts; the only process cache in
+> the repository holds model-interface descriptor bytes under an authorization
+> and resolution fingerprint, which carries no TLA+ profile value.
 
 ## 1. Scope and authority
 
@@ -42,9 +60,9 @@ Compatibility rules inherited from the design:
 
 ## 2. Profile identity and revision rules
 
-| Item | Revision-1 value |
+| Item | Revision-2 value |
 | --- | --- |
-| Profile id | `mirrors-tla-frontend-profile-1` |
+| Profile id | `mirrors-tla-frontend-profile-2` |
 | Corpus manifest schema | `mirrors.tla-frontend-corpus/1` |
 | Structural summary schema | `mirrors.tla-frontend-summary/1` |
 | Source identity | normalized UTF-8 bytes, CRLF and CR normalized to LF, SHA-256 |
@@ -241,17 +259,29 @@ fixture (`acc-values`, `acc-functions`, `acc-control`, `acc-quantifiers`,
 
 ### 5.5 Precedence and associativity
 
-The following are the frozen revision-1 rules. The pinned differential run
-exposed a conflict in the mixed-junction rule below; the earlier local-probe
-claim does not establish compatibility with the pinned baselines:
+The following are the frozen revision-2 rules. Qualifying the pinned SANY and
+Apalache parsers exposed a conflict in the revision-1 mixed-junction rule, which
+revision 2 corrects:
 
 - `*` binds tighter than `+`; arithmetic binds tighter than relational
   operators; relational operators bind tighter than `/\`.
 - `~` binds tighter than `/\`.
-- Revision 1 treats `/\` as binding tighter than `\/` and reads
-  `A /\ B \/ C` as `(A /\ B) \/ C` (`acc-precedence`). Both pinned references
-  reject the unparenthesized mixture. This is an unresolved profile/fixture
-  compatibility defect, not a verified standard-TLA+ rule.
+- `/\` and `\/` share one precedence level with `OperatorAssociation.same`,
+  so a chain may repeat either canonical operator but an unparenthesized
+  mixture is a precedence conflict at the second, conflicting operator
+  (`rej-precedence-junction-mix`, `rej-precedence-junction-mix-reversed`).
+  Both pinned references reject the unparenthesized mixtures, including
+  `A /\ B /\ C \/ D` and the normalized word-ASCII form.
+- Parentheses and properly indented prefix-junction lists establish their own
+  grouping; `acc-precedence` writes `MixedJunction` as `(A /\ B) \/ C`, and
+  `acc-precedence-junctions` covers the homogeneous chains, all four
+  parenthesized forms, and both supported ASCII junction aliases.
+- A junction at or left of an enclosing prefix list's bullet column ends the
+  list: the same junction at that column starts the next item, and the other
+  junction at that column leaves the list as the first operand of the shared
+  junction chain (`/\ A` continued by `\/ B` at the bullet column reads as
+  `A \/ B`), which is what the pinned references do. Deeper junctions stay
+  inside the current item.
 - `=>`, `<=>`, and `=` are non-associative: chaining any one of them without
   parentheses is a precedence conflict (`rej-precedence-chain`,
   `rej-precedence-mix`).
@@ -506,8 +536,10 @@ provider root.
 
 The manifest `status` is `provisional` while the SANY and Apalache pins are
 unset: fixture ids, outcomes, stages, reasons, and structural summaries are
-frozen for revision 1 at handoff, and only the differential slots and pinned
-tool versions remain for the coordinating agent.
+frozen for the active profile revision, and only the differential slots and
+pinned tool versions remain for the coordinating agent. The manifest and every
+live expected summary carry `mirrors-tla-frontend-profile-2`; archived
+revision-1 evidence is unchanged.
 
 ### 10.2 Fixture semantics
 
@@ -546,6 +578,16 @@ Summaries compare outcomes and structural facts, never unstable prose:
 
 Rendering strings use normalized ASCII spellings with explicit parentheses.
 They are only present where the profile defines a unique reading.
+
+The two structurally affected junction summaries are generated completely from
+actual parser declarations/renderings and the resolved frontend graph:
+`python3 tools/tla-differential/junction_summaries.py --write`. The matching
+`--check` command compares decoded JSON to a fresh projection. Write mode does
+not read existing expected files and can populate an empty output directory.
+The remaining summaries undergo only the profile-label migration; the parser
+and elaboration suites revalidate their existing facts against the frontend.
+Source digests and AST renderings are never repaired by hand. Historical
+revision-1 evidence is preserved separately.
 
 ### 10.4 Ownership and change rules
 

@@ -1,0 +1,123 @@
+{
+  "declarations": [
+    {
+      "kind": "constant",
+      "line": 3,
+      "module": "AcceptPrecedenceJunctions",
+      "names": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 5,
+      "module": "AcceptPrecedenceJunctions",
+      "names": [
+        "ConjunctionChain"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 6,
+      "module": "AcceptPrecedenceJunctions",
+      "names": [
+        "DisjunctionChain"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 7,
+      "module": "AcceptPrecedenceJunctions",
+      "names": [
+        "LeftGroupedConjunction"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 8,
+      "module": "AcceptPrecedenceJunctions",
+      "names": [
+        "RightGroupedDisjunction"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 9,
+      "module": "AcceptPrecedenceJunctions",
+      "names": [
+        "LeftGroupedDisjunction"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 10,
+      "module": "AcceptPrecedenceJunctions",
+      "names": [
+        "RightGroupedConjunction"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 11,
+      "module": "AcceptPrecedenceJunctions",
+      "names": [
+        "AsciiConjunctionChain"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 12,
+      "module": "AcceptPrecedenceJunctions",
+      "names": [
+        "AsciiDisjunctionChain"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 14,
+      "module": "AcceptPrecedenceJunctions",
+      "names": [
+        "ListBody"
+      ]
+    }
+  ],
+  "dependencies": [],
+  "effectiveVariables": [],
+  "fixture": "acc-precedence-junctions",
+  "modules": [
+    "AcceptPrecedenceJunctions"
+  ],
+  "profile": "mirrors-tla-frontend-profile-2",
+  "renderings": {
+    "AsciiConjunctionChain": "(A /\\ B) /\\ C",
+    "AsciiDisjunctionChain": "(A \\/ B) \\/ C",
+    "ConjunctionChain": "(A /\\ B) /\\ C",
+    "DisjunctionChain": "(A \\/ B) \\/ C",
+    "LeftGroupedConjunction": "(A /\\ B) \\/ C",
+    "LeftGroupedDisjunction": "(A \\/ B) /\\ C",
+    "ListBody": "(A /\\ B) \\/ C",
+    "RightGroupedConjunction": "A \\/ (B /\\ C)",
+    "RightGroupedDisjunction": "A /\\ (B \\/ C)"
+  },
+  "root": "AcceptPrecedenceJunctions",
+  "schema": "mirrors.tla-frontend-summary/1",
+  "sources": [
+    {
+      "logicalPath": "AcceptPrecedenceJunctions.tla",
+      "sha256": "a39facc3e6f1abb2419e949037e0d0cb34ff0c83d4076bc858855efd00d8cb14"
+    }
+  ],
+  "standardModules": []
+}

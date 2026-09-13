@@ -4,7 +4,7 @@ import Core.Tla.Lexer
 /-!
 # TLA+ lossless parser (Core/Tla/Parser.lean)
 
-Revision-1 parser for the general TLA+ frontend
+Revision-2 parser for the general TLA+ frontend
 (`Docs/model-interface-compiler/tla-frontend-design.md`, §10 "Concrete and
 abstract syntax", §11 "Parsing behavior", §20 "Diagnostics", §21 "Resource and
 security limits"; task package TF2 in
@@ -166,14 +166,29 @@ end OperatorEntry
 below every table operator; no `OperatorEntry` carries it. -/
 def levelEquivalence : Nat := 1
 def levelImplication : Nat := 2
-def levelDisjunction : Nat := 3
-def levelConjunction : Nat := 4
+
+/-- The shared junction level: canonical conjunction and disjunction take the
+same operands, so an unparenthesized chain that switches between them is a
+conflict rather than a silently chosen grouping. Level `4` stays unused. -/
+def levelJunction : Nat := 3
+
+/-- The shared junction level under its historical names. A numeric level fixes
+binding only; whether a junction token opens or extends a prefix list is
+decided by its operator identity (`isJunctionSpelling`). -/
+def levelDisjunction : Nat := levelJunction
+def levelConjunction : Nat := levelJunction
 def levelRelational : Nat := 5
 def levelRange : Nat := 6
 def levelAdditive : Nat := 7
 def levelMultiplicative : Nat := 8
 def levelPower : Nat := 9
 def levelPrefix : Nat := 10
+
+/-- `true` for the canonical junction spellings `/\` and `\/`. Precedence levels
+control binding; this operator identity is what marks a junction token as a
+prefix-list marker or as the end of one. -/
+def isJunctionSpelling (spelling : String) : Bool :=
+  spelling == "/\\" || spelling == "\\/"
 
 /-- The parser-owned half of the language profile: the operator table that
 fixes fixity, precedence, and associativity for one revision. Lexer spelling
@@ -186,16 +201,19 @@ structure ParserProfile where
 
 namespace ParserProfile
 
-/-- The revision-1 operator table, in the lexer's canonical spellings.
+/-- The default operator table, in the lexer's canonical spellings.
 Precedence follows TLA+: `*` binds tighter than `+`, arithmetic tighter than
-relational operators, relational tighter than `/\`, and `/\` tighter than
-`\/`; `~` binds tighter than `/\`; `=>` and `<=>` are
-non-associative and neither chain nor mix. The word-ASCII spellings the profile
+relational operators, relational tighter than the shared `/\`/`\/` junction
+level, and that junction level tighter than `=>`; `~` binds tighter than the
+junction level; `=>` and `<=>` are
+non-associative and neither chain nor mix. Both junctions carry `.same`, so
+`A /\ B /\ C` chains while `A /\ B \/ C` is a precedence conflict. The
+word-ASCII spellings the profile
 §4.7 publishes (`\circ`, `\oplus`, `\prec`, `\succ`, `\sim`, `\approx`,
 `\bullet`, `\star`, `\bigcirc`) sit in their reference classes. A symbolic
 spelling outside this table is never an infix operator; the reference parser
 reads it as a user postfix operator only. -/
-def revisionOneOperators : Array OperatorEntry := #[
+def revisionTwoOperators : Array OperatorEntry := #[
   ⟨"~", .prefix, levelPrefix, .«none»⟩,
   ⟨"-", .prefix, levelPrefix, .«none»⟩,
   ⟨"[]", .prefix, levelPrefix, .«none»⟩,
@@ -203,8 +221,8 @@ def revisionOneOperators : Array OperatorEntry := #[
   ⟨"<=>", .infix, levelEquivalence, .«none»⟩,
   ⟨"=>", .infix, levelImplication, .«none»⟩,
   ⟨"~>", .infix, levelImplication, .«none»⟩,
-  ⟨"/\\", .infix, levelConjunction, .same⟩,
-  ⟨"\\/", .infix, levelDisjunction, .same⟩,
+  ⟨"/\\", .infix, levelJunction, .same⟩,
+  ⟨"\\/", .infix, levelJunction, .same⟩,
   ⟨"=", .infix, levelRelational, .«none»⟩,
   ⟨"#", .infix, levelRelational, .«none»⟩,
   ⟨"<", .infix, levelRelational, .«none»⟩,
@@ -240,11 +258,11 @@ def revisionOneOperators : Array OperatorEntry := #[
   ⟨"\\X", .infix, levelMultiplicative, .left⟩,
   ⟨"^", .infix, levelPower, .left⟩]
 
-/-- The frozen revision-1 combination: operator table and profile name
-`mirrors-tla-frontend-profile-1`. -/
+/-- The frozen revision-2 combination: operator table and profile name
+`mirrors-tla-frontend-profile-2`. -/
 def default : ParserProfile :=
-  { name := "mirrors-tla-frontend-profile-1"
-    operators := revisionOneOperators }
+  { name := "mirrors-tla-frontend-profile-2"
+    operators := revisionTwoOperators }
 
 /-- The tightest precedence level the profile defines. Levels above it parse
 prefix-first, and the prefix level itself stays tighter than every infix the
@@ -375,8 +393,10 @@ structure ParserState where
   moduleName : Option ModuleName := none
   moduleRange : SourceRange := zeroRange
   /-- Column of an enclosing prefix-junction list. A `/\` or `\/` at this
-  column starts the next list item instead of becoming part of the current
-  item's expression. -/
+  column or left of it ends the current item's expression: the same junction at
+  the column starts the next list item, and a junction the list does not
+  continue ends the list so that the enclosing infix chain at the shared
+  junction level continues with the list as its left operand. -/
   junctionBoundaryColumn : Option Nat := none
   halted : Bool := false
 
@@ -780,15 +800,17 @@ def withJunctionBoundary (column : Nat) (action : ParserM α) : ParserM α := do
   modify fun state => { state with junctionBoundaryColumn := previous }
   return result
 
-/-- `true` when the current token begins the next item of an enclosing prefix
-junction list. -/
+/-- `true` when the current token is a junction at or left of the bullet column
+of an enclosing prefix list. The item's chain ends there; the list loop then
+decides whether the token continues the list (same junction, same column) or
+ends it, leaving the token to the enclosing infix chain. -/
 def atJunctionBoundary : ParserM Bool := do
   let state ← get
   match state.junctionBoundaryColumn, state.tokens[state.position]? with
   | some column, some token =>
       let spelling := symbolSpelling state.profile token
-      return (spelling == "/\\" || spelling == "\\/") &&
-        token.range.start.column == column
+      return isJunctionSpelling spelling &&
+        token.range.start.column <= column
   | _, _ => return false
 
 /-- Message for a repeat that the profile does not define: chaining a
@@ -837,42 +859,45 @@ def parseExpressionLevel (fuel level : Nat) : ParserM Expression := do
   if level > ParserProfile.tightestLevel parserProfile then
     parsePrefix fuel
   else
-    -- A conjunction or disjunction list may open with its own operator, which
-    -- is how the revision-1 corpus writes bullets (`Name ==` followed by
-    -- `/\ ...` lines). Each item is a complete expression; a later junction
-    -- at the opening column starts the next item even when the current item
-    -- contains a looser operator such as `=>` or the other junction kind.
-    match ← nextInfixAt? level with
-    | some leading =>
-        if leading.level == levelConjunction ||
-            leading.level == levelDisjunction then
-          let opening ← currentRange
-          advance
-          let mut left ← withJunctionBoundary opening.start.column
-            (parseExpression fuel 0)
-          let mut going := true
-          while going do
-            match ← nextInfixAt? level with
-            | some entry =>
-                let range ← currentRange
-                if range.start.column == opening.start.column then
-                  if entry.canonical == leading.canonical then
+    -- A conjunction or disjunction list may open with its own operator, which is
+    -- how the corpus writes bullets (`Name ==` followed by `/\ ...` lines).
+    -- Each item is a complete expression, so a junction of the same identity at
+    -- the opening column starts the next item even when the current item
+    -- contains a looser operator such as `=>`. A junction of the other identity
+    -- at that column ends the list instead, and the list becomes the first
+    -- operand of this level's infix chain, which is how the reference parser
+    -- reads `/\ A` continued by `\/ B` at the bullet column.
+    let junctionList ←
+      match ← nextInfixAt? level with
+      | some leading =>
+          if isJunctionSpelling leading.canonical then do
+            let opening ← currentRange
+            advance
+            let mut list ← withJunctionBoundary opening.start.column
+              (parseExpression fuel 0)
+            let mut going := true
+            while going do
+              match ← nextInfixAt? level with
+              | some entry =>
+                  let range ← currentRange
+                  if range.start.column == opening.start.column &&
+                      entry.canonical == leading.canonical then
                     advance
                     let right ← withJunctionBoundary opening.start.column
                       (parseExpression fuel 0)
-                    left := infixApplication leading left right
+                    list := infixApplication leading list right
                   else
-                    emitLimit ParseCode.precedenceConflict
-                      s!"a prefix '{leading.canonical}' list cannot continue with '{entry.canonical}' at the same indentation"
-                      range
                     going := false
-                else
-                  going := false
-            | none => going := false
-          return left
-    | none => pure ()
+              | none => going := false
+            pure (some list)
+          else
+            pure none
+      | none => pure none
     let mut first : Option OperatorEntry := none
-    let mut left ← parseExpression fuel (level + 1)
+    let mut left ←
+      match junctionList with
+      | some list => pure list
+      | none => parseExpression fuel (level + 1)
     let mut going := true
     while going do
       if (← halted?) then
@@ -2691,7 +2716,7 @@ def parseSource (profile : LanguageProfile) (parserProfile : ParserProfile)
       { cst := emptyRoot, module? := none, diagnostics := diagnostics.toArray }
 
 /-- The parser seam of the module resolver: one captured unit in, one outcome
-out, with the revision-1 profile and limits. -/
+out, with the default revision-2 profile and limits. -/
 def parseUnit (source : SourceUnit) : ParseOutcome :=
   parseSource LanguageProfile.default ParserProfile.default {} {} source
 

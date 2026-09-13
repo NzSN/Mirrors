@@ -7,7 +7,7 @@ import Core.Tla.Token
 
 Pure, total-under-limits lexer for the general TLA+ frontend
 (`Docs/model-interface-compiler/tla-frontend-design.md`, §9 "Lexer"), pinned to
-the revision-1 language profile
+the revision-2 language profile
 (`Docs/model-interface-compiler/tla-language-profile.md`).
 
 `lex` returns `Except (List Diagnostic) TokenStream`, so a successful result
@@ -171,10 +171,10 @@ structure LanguageProfile where
 namespace LanguageProfile
 
 /-- The executable TLA+ profile of this slice, pinned to
-`mirrors-tla-frontend-profile-1`. Later revisions extend these tables instead of
+`mirrors-tla-frontend-profile-2`. Later revisions extend these tables instead of
 changing lexer code. -/
 def default : LanguageProfile :=
-  { name := "mirrors-tla-frontend-profile-1"
+  { name := "mirrors-tla-frontend-profile-2"
     keywords := defaultKeywords
     prefixKeywords := defaultPrefixKeywords
     symbols := defaultSymbolAliases

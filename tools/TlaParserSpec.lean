@@ -1,6 +1,7 @@
 import Core.Tla.Parser
 import Lean.Data.Json
 import Lean.Data.Json.Parser
+import Shell.Tla.Frontend
 
 /-!
 # TLA+ parser specification (tools/TlaParserSpec.lean)
@@ -10,7 +11,7 @@ Conformance suite for the TF2 lossless parser slice
 abstract syntax", §11 "Parsing behavior", §20 "Diagnostics", §21 "Resource and
 security limits"; packages TF2A and TF2B of
 `Docs/model-interface-compiler/tf2-acceptance-tasks.md`) against the pinned
-revision-1 language profile
+revision-2 language profile
 (`Docs/model-interface-compiler/tla-language-profile.md`). The parser checks
 are pure; the TF2D corpus tier below reads the repository's
 `test/fixtures/tla-frontend` manifest, sources, and summaries.
@@ -513,6 +514,11 @@ def applicationView? : Expression → Option (String × Array Expression)
   | .apply operator arguments _ => some (operator.spelling, arguments)
   | _ => none
 
+/-- The body of a `LET ... IN` expression. -/
+def letBodyView? : Expression → Option Expression
+  | .letIn _ body _ => some body
+  | _ => none
+
 /-- The normalized spelling of a name reference. -/
 def nameView? : Expression → Option String
   | .name reference _ => some reference.spelling
@@ -579,10 +585,10 @@ def applicationSpellings? (expression : Expression) :
 /-! ## TF2B scenarios -/
 
 /-- The operator table is profile data: a modified profile changes parsing, and
-the default profile is the frozen revision-1 combination. -/
+the default profile is the frozen revision-2 combination. -/
 def scenarioProfileOwnership (fails : Failures) : IO Unit := do
-  check fails "profile: the default profile is the frozen revision-1 combination"
-    (ParserProfile.default.name == "mirrors-tla-frontend-profile-1")
+  check fails "profile: the default profile is the frozen revision-2 combination"
+    (ParserProfile.default.name == "mirrors-tla-frontend-profile-2")
     ParserProfile.default.name
   match parseBody? {} "x == A = B = C" with
   | none => check fails "profile: the chained equality capture lexes" false
@@ -641,7 +647,8 @@ def scenarioProfileOwnership (fails : Failures) : IO Unit := do
 
 /-- The frozen table groups the corpus precedence fixture the way its expected
 renderings do: `A + B * C` is `A + (B * C)`, `A + B < C * 2` is
-`(A + B) < (C * 2)`, and so on. -/
+`(A + B) < (C * 2)`, and so on. The junction cases live in
+`scenarioJunctionPrecedence`. -/
 def scenarioPrecedenceShapes (fails : Failures) : IO Unit := do
   let fixture :=
     "CONSTANT A, B, C\n" ++
@@ -649,7 +656,7 @@ def scenarioPrecedenceShapes (fails : Failures) : IO Unit := do
     "Comparison == A + B < C * 2\n" ++
     "Implication == (A /\\ B) => C\n" ++
     "Disjunction == (A \\/ B) => C\n" ++
-    "MixedJunction == A /\\ B \\/ C\n" ++
+    "MixedJunction == (A /\\ B) \\/ C\n" ++
     "Negation == ~ A /\\ B\n" ++
     "Range == 1..C\n" ++
     "Grouping == (A => B) => C"
@@ -687,6 +694,141 @@ def scenarioPrecedenceShapes (fails : Failures) : IO Unit := do
              | none => false
          | none => false)
         (outcomeDetail outcome)
+
+/-- Reject `body` as one closed precedence conflict whose primary range starts
+at `line`:`column`. -/
+def checkJunctionConflict (fails : Failures) (name body : String)
+    (line column : Nat) : IO Unit := do
+  match parseBody? {} body with
+  | none => check fails s!"junction: {name}: the capture lexes" false
+  | some outcome => do
+      check fails s!"junction: {name}: one closed precedence conflict"
+        (outcome.module?.isNone && outcome.hasErrors && closed outcome &&
+          hasCode outcome ParseCode.precedenceConflict)
+        (outcomeDetail outcome)
+      match outcome.diagnostics.toList.find?
+          (fun diagnostic => diagnostic.code == ParseCode.precedenceConflict) with
+      | none =>
+          check fails s!"junction: {name}: carries a conflict range" false
+            "no precedence-conflict diagnostic"
+      | some diagnostic =>
+          let start := diagnostic.primary.range.start
+          check fails s!"junction: {name}: points at the conflicting operator"
+            (start.line == line && start.column == column)
+            s!"primary={start.line}:{start.column}, expected {line}:{column}"
+
+/-- Accepted shape of one definition body: the root application spelling and the
+spelling of each argument. -/
+def checkShapeOf (fails : Failures) (name body : String)
+    (spelling : String) (arguments : List String) : IO Unit := do
+  match parseBody? {} body with
+  | none => check fails s!"junction: {name}: the capture lexes" false
+  | some outcome =>
+      check fails s!"junction: {name}: parses cleanly"
+        (outcome.succeeded && closed outcome) (outcomeDetail outcome)
+      let shape :=
+        (definitionOf? outcome "x").bind fun definition =>
+          applicationSpellings? definition.body
+      check fails s!"junction: {name}: groups as '{spelling}' over {arguments}"
+        (shape == some (spelling, arguments))
+        s!"shape={repr shape}"
+
+/-- The shared junction level. Canonical conjunction and disjunction bind at one
+level with `.same` association, so a homogeneous chain stays accepted while an
+unparenthesized switch between the two is a closed precedence conflict. Prefix
+lists keep their own boundary: the same junction at the bullet column continues
+the list, and the other junction at or left of that column ends it and lets the
+enclosing infix chain continue, which is what the pinned reference parsers do. -/
+def scenarioJunctionPrecedence (fails : Failures) : IO Unit := do
+  check fails "junction: both canonical junctions share one level"
+    ((ParserProfile.findOperator? ParserProfile.default "/\\" .infix).map
+        (fun entry => entry.level) ==
+      (ParserProfile.findOperator? ParserProfile.default "\\/" .infix).map
+        (fun entry => entry.level))
+    "the default table still separates conjunction from disjunction"
+  check fails "junction: both canonical junctions keep '.same' association"
+    ((ParserProfile.findOperator? ParserProfile.default "/\\" .infix).map
+        (fun entry => entry.association) == some .same &&
+      (ParserProfile.findOperator? ParserProfile.default "\\/" .infix).map
+        (fun entry => entry.association) == some .same)
+    "a junction entry no longer carries '.same' association"
+  -- Homogeneous chains, explicit grouping, aliases, and prefix lists.
+  checkShapeOf fails "conjunction chain" "x == A /\\ B /\\ C" "/\\" ["/\\", "C"]
+  checkShapeOf fails "disjunction chain" "x == A \\/ B \\/ C" "\\/" ["\\/", "C"]
+  checkShapeOf fails "left-grouped junction" "x == (A /\\ B) \\/ C" "\\/"
+    ["/\\", "C"]
+  checkShapeOf fails "right-grouped junction" "x == A /\\ (B \\/ C)" "/\\"
+    ["A", "\\/"]
+  checkShapeOf fails "left-grouped disjunction" "x == (A \\/ B) /\\ C" "/\\"
+    ["\\/", "C"]
+  checkShapeOf fails "right-grouped conjunction" "x == A \\/ (B /\\ C)" "\\/"
+    ["A", "/\\"]
+  checkShapeOf fails "ascii conjunction alias chain" "x == A /\\ B \\land C" "/\\"
+    ["/\\", "C"]
+  checkShapeOf fails "negation inside a junction chain" "x == ~ (A /\\ B) \\/ C"
+    "\\/" ["~", "C"]
+  match parseBody? {} "x == LET y == A /\\ B IN y \\/ C" with
+  | none =>
+      check fails "junction: let body inside a junction chain: the capture lexes" false
+  | some outcome => do
+      check fails "junction: let body inside a junction chain: parses cleanly"
+        (outcome.succeeded && closed outcome) (outcomeDetail outcome)
+      let shape :=
+        (definitionOf? outcome "x").bind fun definition =>
+          (letBodyView? definition.body).bind applicationSpellings?
+      check fails
+        "junction: let body inside a junction chain: the body groups as '\\/' over [y, C]"
+        (shape == some ("\\/", ["y", "C"])) s!"shape={repr shape}"
+  checkShapeOf fails "prefix conjunction list" "x == /\\ A\n     /\\ B" "/\\"
+    ["A", "B"]
+  checkShapeOf fails "nested junction list"
+    "x == /\\ A\n     /\\ \\/ B\n        \\/ C" "/\\" ["A", "\\/"]
+  checkShapeOf fails "disjunction list continued by conjunction"
+    "x == \\/ A\n     /\\ B" "/\\" ["A", "B"]
+  checkShapeOf fails "list ended by the other junction at its column"
+    "x == /\\ A\n     \\/ B" "\\/" ["A", "B"]
+  checkShapeOf fails "two-item list ended by the other junction"
+    "x == /\\ A\n     /\\ B\n     \\/ C" "\\/" ["/\\", "C"]
+  checkShapeOf fails "deeper junction inside a list item"
+    "x == /\\ A\n          \\/ B" "\\/" ["A", "B"]
+  checkShapeOf fails "junction left of the bullet column ends the list"
+    "x == /\\ A\n   \\/ B" "\\/" ["A", "B"]
+  -- Unparenthesized mixtures and longer chains are precedence conflicts.
+  checkJunctionConflict fails "conjunction then disjunction"
+    "x == A /\\ B \\/ C" 2 13
+  checkJunctionConflict fails "disjunction then conjunction"
+    "x == A \\/ B /\\ C" 2 13
+  checkJunctionConflict fails "long chain switching junctions"
+    "x == A /\\ B /\\ C \\/ D" 2 18
+  checkJunctionConflict fails "ascii alias mixture after normalization"
+    "x == A \\land B \\lor C" 2 16
+  checkJunctionConflict fails "parenthesized operands do not lift the conflict"
+    "x == (A) /\\ (B) \\/ C" 2 17
+  checkJunctionConflict fails "list item switch at the bullet column"
+    "x == /\\ A\n     \\/ B\n     /\\ C" 4 6
+  -- The unequal-level table is the regression control: restoring it admits the
+  -- mixture the default table rejects, so the negative checks above are
+  -- sensitive to the shared level rather than to a hard-coded ban.
+  let unequal := withLevel (withLevel ParserProfile.default "/\\" 4) "\\/" 3
+  check fails "junction control: unequal levels admit the mixed chain"
+    (acceptedWith unequal {} "x == A /\\ B \\/ C")
+    "the unequal-level control rejected the mixed chain"
+  check fails "junction control: unequal levels group it as disjunction over conjunction"
+    (match parseWith? unequal {} "x == A /\\ B \\/ C" with
+     | some (_, _, outcome) =>
+         ((definitionOf? outcome "x").bind fun definition =>
+           applicationSpellings? definition.body) == some ("\\/", ["/\\", "C"])
+     | none => false)
+    "the unequal-level control did not group the mixture as `(A /\\ B) \\/ C`"
+  check fails "junction: the default table rejects what the control admits"
+    (!acceptedAt {} "x == A /\\ B \\/ C")
+    "the default table admitted the mixed chain"
+  -- List markers follow operator identity, not a numeric level: moving both
+  -- junctions away from their default level keeps prefix lists working.
+  let moved := withLevel (withLevel ParserProfile.default "/\\" 8) "\\/" 8
+  check fails "junction: list markers follow operator identity"
+    (acceptedWith moved {} "x == /\\ A\n     /\\ B")
+    "a profile that moves both junctions off the junction level lost its lists"
 
 /-- Colon-form record sets remain distinct from record values and retain
 field/domain order and ranges. -/
@@ -1993,7 +2135,9 @@ def expectedParseCode? (fixtureId : String) : Option String :=
     ("rej-multiple-errors", ParseCode.expectedToken),
     ("rej-pluscal", ParseCode.pluscal),
     ("rej-precedence-mix", ParseCode.precedenceConflict),
-    ("rej-precedence-chain", ParseCode.precedenceConflict)]).map id
+    ("rej-precedence-chain", ParseCode.precedenceConflict),
+    ("rej-precedence-junction-mix", ParseCode.precedenceConflict),
+    ("rej-precedence-junction-mix-reversed", ParseCode.precedenceConflict)]).map id
 
 /-- Drive one manifest fixture to its declared stage behavior. Unknown stage or
 outcome combinations fail instead of being silently skipped. -/
@@ -2552,6 +2696,82 @@ def scenarioCorpusAdversarial (fails : Failures) : IO Unit := do
         checkStreamFailure fails s!"adversarial stream {index}: non-final eof"
           source displaced ParseCode.streamEof
 
+/-! ### Complete projections for the two junction summaries
+
+Generation reads the manifest and the real frontend only. Expected files are
+read by the Python check wrapper, never by this projection. Unchanged summaries
+retain their separately validated metadata-only profile migration. -/
+
+def summaryDeclarationJson (row : SummaryDeclaration) : Json :=
+  let fields := [("module", toJson row.module), ("kind", toJson row.kind),
+    ("line", toJson row.line)]
+  let fields := match row.names with
+    | some names => fields ++ [("names", toJson names)]
+    | none => fields
+  let fields := match row.arity with
+    | some arity => fields ++ [("arity", toJson arity)]
+    | none => fields
+  let fields := match row.proof with
+    | some proof => fields ++ [("proof", toJson proof)]
+    | none => fields
+  let fields := match row.wraps with
+    | some wrap => fields ++ [("wraps", Json.mkObj
+        ([("kind", toJson wrap.kind), ("names", toJson wrap.names)] ++
+          (wrap.arity.toList.map fun arity => ("arity", toJson arity))))]
+    | none => fields
+  Json.mkObj fields
+
+def completeJunctionSummary (fixture : Fixture)
+    (result : Shell.Tla.FrontendResult) : Json :=
+  let nodes := result.graph.sortedNodes
+  let declarations := nodes.flatMap fun node => declarationRows node.name.name node.module
+  let renderings : Array (String × Json) := match result.graph.findNode? result.root with
+    | none => #[]
+    | some node => node.module.declarations.filterMap fun declaration =>
+        match declaration with
+        | Declaration.operator definition => some (definition.name, Json.str (renderExpression definition.body))
+        | _ => none
+  Json.mkObj [
+    ("schema", toJson summarySchema), ("fixture", toJson fixture.id),
+    ("root", toJson result.root.name), ("profile", toJson ParserProfile.default.name),
+    ("modules", toJson (nodes.map fun node => node.name.name)),
+    ("standardModules", toJson (result.graph.standardNames.map fun name => name.name)),
+    ("declarations", .arr (declarations.map summaryDeclarationJson)),
+    ("dependencies", .arr (result.graph.canonicalEdges.map fun edge => Json.mkObj [
+      ("owner", toJson edge.owner.name), ("module", toJson edge.dependency.name),
+      ("kind", toJson edge.kind.toString), ("resolution", toJson edge.resolution.toString),
+      ("local", toJson edge.«local»), ("line", toJson edge.range.start.line),
+      ("substitutions", .arr (edge.substitutions.map fun sub => Json.mkObj [
+        ("formal", toJson sub.formal), ("formalArity", toJson sub.formalArity),
+        ("actual", toJson (renderExpression sub.actual))]))])),
+    ("effectiveVariables", .arr (result.variables.map fun entry => Json.mkObj [
+      ("name", toJson entry.visibleName), ("declaredIn", toJson entry.declaredIn.name),
+      ("declaredName", toJson entry.declaredName),
+      ("importPath", toJson (entry.importPath.map fun name => name.name))])),
+    ("sources", .arr (result.sourceManifest.map fun source => Json.mkObj [
+      ("logicalPath", toJson source.logicalPath), ("sha256", toJson source.contentSha256)])),
+    ("renderings", Json.mkObj renderings.toList)]
+
+def emitJunctionSummary (id : String) : IO UInt32 := do
+  if id != "acc-precedence" && id != "acc-precedence-junctions" then
+    IO.eprintln "only acc-precedence and acc-precedence-junctions are supported"
+    return 2
+  match ← corpusRoot? "." with
+  | none => IO.eprintln "corpus root not found"; return 2
+  | some root =>
+      let manifest ← IO.ofExcept (decodeManifest (← IO.FS.readFile (root / "manifest.json")))
+      let fixture ← match manifest.fixtures.find? (fun fixture => fixture.id == id) with
+        | some fixture => pure fixture
+        | none => throw (IO.userError "fixture missing from manifest")
+      let spec := root / fixture.sourceRoot / (fixture.root ++ ".tla")
+      match ← Shell.Tla.analyzeFile { specPath := spec.toString } with
+      | .error failure =>
+          for diagnostic in failure.diagnostics do IO.eprintln diagnostic.message
+          return 1
+      | .ok result =>
+          IO.println (completeJunctionSummary fixture result).compress
+          return 0
+
 end Corpus
 
 def allScenarios (fails : Failures) : IO Unit := do
@@ -2565,6 +2785,7 @@ def allScenarios (fails : Failures) : IO Unit := do
   scenarioDeterminism fails
   scenarioProfileOwnership fails
   scenarioPrecedenceShapes fails
+  scenarioJunctionPrecedence fails
   scenarioRecordSets fails
   scenarioQuantifiers fails
   scenarioUserOperators fails
@@ -2596,8 +2817,11 @@ def run : IO UInt32 := do
 
 end TlaParserSpec
 
-def main : IO UInt32 :=
-  TlaParserSpec.run
+def main (arguments : List String) : IO UInt32 :=
+  match arguments with
+  | [] => TlaParserSpec.run
+  | ["--emit-junction-summary", id] => TlaParserSpec.Corpus.emitJunctionSummary id
+  | _ => IO.eprintln "usage: tla_parser_spec [--emit-junction-summary FIXTURE]" *> pure 2
 
 -- The acceptance command `lake env lean tools/TlaParserSpec.lean` only
 -- elaborates this file, so run the suite here as well: a failing check makes

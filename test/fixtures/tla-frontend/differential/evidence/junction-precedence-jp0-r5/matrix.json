@@ -1,0 +1,907 @@
+{
+  "schema": "mirrors.jp0-junction-calibration/v2",
+  "baseline": {
+    "cliSha256": "ad1268298de05d6752b2a9a94def6d03e6c08d757e80ab420fed4046840eddfb",
+    "driverSha256": "199dbead54f8ec12643181216e8b0027999860d19686fb82ff95f32626deb07e",
+    "parserSourceSha256": "2af6344a1b78feed2d918117656d8e267f3b9d07545634bdb3d3b955e0750928",
+    "note": "binaries were not rebuilt after the observed parser-source edit"
+  },
+  "cases": [
+    {
+      "id": "mixed-and-or",
+      "sourceSha256": "f81827826b13b05bb3f0a1838dd87ed74f778c508a163d2ff7d92f4672c76a5b",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-and-or/mirrors/Jp0MixedAndOr.tla",
+              "Jp0MixedAndOr"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "rejected",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-and-or/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0MixedAndOr.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "rejected",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-and-or/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-and-or/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-and-or/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-and-or/apalache/.dv-apalache/parsed.json",
+              "Jp0MixedAndOr.tla"
+            ],
+            "exitCode": 255
+          }
+        }
+      }
+    },
+    {
+      "id": "mixed-or-and",
+      "sourceSha256": "3442eeb9b476197e37e93b624fdea23eedd12bfec83fbf22a59d092fc2ed592e",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-or-and/mirrors/Jp0MixedOrAnd.tla",
+              "Jp0MixedOrAnd"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "rejected",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-or-and/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0MixedOrAnd.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "rejected",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-or-and/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-or-and/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-or-and/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-or-and/apalache/.dv-apalache/parsed.json",
+              "Jp0MixedOrAnd.tla"
+            ],
+            "exitCode": 255
+          }
+        }
+      }
+    },
+    {
+      "id": "mixed-long-chain",
+      "sourceSha256": "751ef1b45924f5ba4a6fac529acd02a9e9eb669bd197535600fbf01e2083dddd",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-long-chain/mirrors/Jp0MixedLongChain.tla",
+              "Jp0MixedLongChain"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "rejected",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-long-chain/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0MixedLongChain.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "rejected",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-long-chain/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-long-chain/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-long-chain/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/mixed-long-chain/apalache/.dv-apalache/parsed.json",
+              "Jp0MixedLongChain.tla"
+            ],
+            "exitCode": 255
+          }
+        }
+      }
+    },
+    {
+      "id": "and-chain",
+      "sourceSha256": "fa5ad5c820d1023fed522120733975e7898802860fea027a8d439c4e2f213e99",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/and-chain/mirrors/Jp0AndChain.tla",
+              "Jp0AndChain"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/and-chain/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0AndChain.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/and-chain/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/and-chain/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/and-chain/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/and-chain/apalache/.dv-apalache/parsed.json",
+              "Jp0AndChain.tla"
+            ],
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "or-chain",
+      "sourceSha256": "c7ef9dc51e291ed3bc974993eb94768f2f8d95a5ab23bf6981633304a4244f35",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/or-chain/mirrors/Jp0OrChain.tla",
+              "Jp0OrChain"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/or-chain/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0OrChain.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/or-chain/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/or-chain/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/or-chain/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/or-chain/apalache/.dv-apalache/parsed.json",
+              "Jp0OrChain.tla"
+            ],
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "paren-left-and-or",
+      "sourceSha256": "23f34dc306b434cc5114e990bab664beb7694212649c8ef34f33c5c1ae060f76",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-left-and-or/mirrors/Jp0ParenLeftAndOr.tla",
+              "Jp0ParenLeftAndOr"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-left-and-or/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0ParenLeftAndOr.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-left-and-or/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-left-and-or/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-left-and-or/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-left-and-or/apalache/.dv-apalache/parsed.json",
+              "Jp0ParenLeftAndOr.tla"
+            ],
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "paren-right-and-or",
+      "sourceSha256": "36423d5e4b2a4ef7381232b26483fe088604e88e8d997c2abdbfa8b3062d8617",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-right-and-or/mirrors/Jp0ParenRightAndOr.tla",
+              "Jp0ParenRightAndOr"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-right-and-or/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0ParenRightAndOr.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-right-and-or/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-right-and-or/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-right-and-or/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-right-and-or/apalache/.dv-apalache/parsed.json",
+              "Jp0ParenRightAndOr.tla"
+            ],
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "paren-left-or-and",
+      "sourceSha256": "c64264c74591df6b63caaca84b04f67562f6317f686a54ea1b796ca659a3e184",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-left-or-and/mirrors/Jp0ParenLeftOrAnd.tla",
+              "Jp0ParenLeftOrAnd"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-left-or-and/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0ParenLeftOrAnd.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-left-or-and/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-left-or-and/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-left-or-and/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-left-or-and/apalache/.dv-apalache/parsed.json",
+              "Jp0ParenLeftOrAnd.tla"
+            ],
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "paren-right-or-and",
+      "sourceSha256": "abc32e5086404f4b2ad83064919dada90e7cf1a2c8e53d2f4e0eac283a66350a",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-right-or-and/mirrors/Jp0ParenRightOrAnd.tla",
+              "Jp0ParenRightOrAnd"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-right-or-and/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0ParenRightOrAnd.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-right-or-and/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-right-or-and/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-right-or-and/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/paren-right-or-and/apalache/.dv-apalache/parsed.json",
+              "Jp0ParenRightOrAnd.tla"
+            ],
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "symbolic-word-alias",
+      "sourceSha256": "efe0c2c0323df9b0f96c69f8db2ba1c9cefc773381c780f2fa2ac38907c2b646",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/symbolic-word-alias/mirrors/Jp0SymbolicWordAlias.tla",
+              "Jp0SymbolicWordAlias"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/symbolic-word-alias/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0SymbolicWordAlias.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/symbolic-word-alias/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/symbolic-word-alias/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/symbolic-word-alias/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/symbolic-word-alias/apalache/.dv-apalache/parsed.json",
+              "Jp0SymbolicWordAlias.tla"
+            ],
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "word-mixed-alias",
+      "sourceSha256": "b0d42629b3a69bcf4cf3cbf6bd9d8458970c76d95079bffdc87df6ef70b1edcb",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/word-mixed-alias/mirrors/Jp0WordMixedAlias.tla",
+              "Jp0WordMixedAlias"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "rejected",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/word-mixed-alias/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0WordMixedAlias.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "rejected",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/word-mixed-alias/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/word-mixed-alias/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/word-mixed-alias/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/word-mixed-alias/apalache/.dv-apalache/parsed.json",
+              "Jp0WordMixedAlias.tla"
+            ],
+            "exitCode": 255
+          }
+        }
+      }
+    },
+    {
+      "id": "prefix-single",
+      "sourceSha256": "d873f87f9326072cbd83573379e9bc364b13a807d568d618e913148d5b5be4bb",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-single/mirrors/Jp0PrefixSingle.tla",
+              "Jp0PrefixSingle"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-single/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0PrefixSingle.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-single/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-single/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-single/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-single/apalache/.dv-apalache/parsed.json",
+              "Jp0PrefixSingle.tla"
+            ],
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "prefix-and",
+      "sourceSha256": "d4616181cdec2a6b04977c6f1278f4424fa71970b65bf9131425e6dbc59f9fe6",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-and/mirrors/Jp0PrefixAnd.tla",
+              "Jp0PrefixAnd"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-and/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0PrefixAnd.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-and/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-and/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-and/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-and/apalache/.dv-apalache/parsed.json",
+              "Jp0PrefixAnd.tla"
+            ],
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "prefix-nested",
+      "sourceSha256": "ac51e7ad836ad095296f0bd29533156a746f24a4f303a9da97879c3fda3b2d17",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-nested/mirrors/Jp0PrefixNested.tla",
+              "Jp0PrefixNested"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-nested/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0PrefixNested.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-nested/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-nested/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-nested/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-nested/apalache/.dv-apalache/parsed.json",
+              "Jp0PrefixNested.tla"
+            ],
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "prefix-mixed-column",
+      "sourceSha256": "7fc389dfe7b152869db5eed712b8eb3a9a2a437cba09a477952946e7c76dde68",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-mixed-column/mirrors/Jp0PrefixMixedColumn.tla",
+              "Jp0PrefixMixedColumn"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-mixed-column/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0PrefixMixedColumn.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-mixed-column/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-mixed-column/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-mixed-column/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-mixed-column/apalache/.dv-apalache/parsed.json",
+              "Jp0PrefixMixedColumn.tla"
+            ],
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "prefix-inline-opposite",
+      "sourceSha256": "c69b188ab48559c31e94baf50622ec4a8a2b68e235f34737fcd18bc625ab1b0d",
+      "outcomes": {
+        "mirrors": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/home/nzsn/Repos/Mirrors/.lake/build/bin/tla_differential_driver",
+              "borrowed",
+              "/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-inline-opposite/mirrors/Jp0PrefixInlineOpposite.tla",
+              "Jp0PrefixInlineOpposite"
+            ],
+            "exitCode": 0
+          }
+        },
+        "sany": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-inline-opposite/sany/.sany-artifacts",
+              "-cp",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/bridge-classes:/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+              "SanyBridge",
+              "Jp0PrefixInlineOpposite.tla"
+            ],
+            "exitCode": 0
+          }
+        },
+        "apalache": {
+          "outcome": "accepted",
+          "execution": "completed",
+          "invocation": {
+            "argv": [
+              "/usr/bin/java",
+              "-XX:-UsePerfData",
+              "-Xmx1g",
+              "-Djava.io.tmpdir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-inline-opposite/apalache/.dv-apalache",
+              "-Duser.home=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-inline-opposite/apalache",
+              "-jar",
+              "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/apalache-0.61.0/lib/apalache.jar",
+              "--out-dir=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-inline-opposite/apalache/.dv-apalache",
+              "parse",
+              "--output=/home/nzsn/Repos/Mirrors/test/fixtures/tla-frontend/differential/evidence/junction-precedence-jp0-r5/inputs/prefix-inline-opposite/apalache/.dv-apalache/parsed.json",
+              "Jp0PrefixInlineOpposite.tla"
+            ],
+            "exitCode": 0
+          }
+        }
+      }
+    }
+  ]
+}

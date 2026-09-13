@@ -862,8 +862,8 @@ def scenarioDeterminism (fails : Failures) : IO Unit := do
       (streamOf? (lexText text)).isNone && failed (lexText text))
 
 def scenarioProfileTables (fails : Failures) : IO Unit := do
-  check fails "profile: the revision-1 name is pinned"
-    (LanguageProfile.default.name == "mirrors-tla-frontend-profile-1")
+  check fails "profile: the revision-2 name is pinned"
+    (LanguageProfile.default.name == "mirrors-tla-frontend-profile-2")
   check fails "profile: keywords and prefix keywords are disjoint"
     (LanguageProfile.default.keywords.toList.all fun keyword =>
       !(LanguageProfile.default.prefixKeywords.contains keyword))

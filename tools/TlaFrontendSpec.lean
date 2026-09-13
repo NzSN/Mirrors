@@ -319,6 +319,72 @@ private def scenarioCompilerIntegration (failures : Failures) : IO Unit := do
     let resolved ← invokeResolve transferPath contractPath evidencePath lockPath
     check failures "resolve: composed-source lock is accepted"
       (resolved.exitCode == 0) resolved.stderr
+    let baselineLockBytes ← IO.FS.readBinFile lockPath
+    let mixedSource := transferSource.replace "\n===="
+      "\nMixed == activeBatch /\\ batchStage \\/ stagedKey\n\n===="
+    let mixedPath := root / "MixedJunction.tla"
+    IO.FS.writeFile mixedPath mixedSource
+    let mixedProposal := root / "mixed.proposal.json"
+    let mixedScaffold ← invokeScaffold mixedPath evidencePath mixedProposal
+    check failures "junction admission: mixed source scaffold fails closed"
+      (mixedScaffold.exitCode == 1 && mixedScaffold.stderr.contains "TLA-PARSE-PRECEDENCE-CONFLICT")
+      mixedScaffold.stderr
+    check failures "junction admission: mixed source writes no proposal"
+      (!(← mixedProposal.pathExists))
+    let mixedLock := root / "mixed.lock.json"
+    let mixedResolve ← invokeResolve mixedPath contractPath evidencePath mixedLock
+    check failures "junction admission: mixed source resolve fails closed"
+      (mixedResolve.exitCode == 1 && mixedResolve.stderr.contains "TLA-PARSE-PRECEDENCE-CONFLICT")
+      mixedResolve.stderr
+    check failures "junction admission: mixed source writes no lock"
+      (!(← mixedLock.pathExists))
+    let overwriteAttempt ← invokeResolve mixedPath contractPath evidencePath lockPath
+    check failures "junction admission: mixed source cannot replace an existing lock"
+      (overwriteAttempt.exitCode == 1 &&
+        overwriteAttempt.stderr.contains "TLA-PARSE-PRECEDENCE-CONFLICT")
+      overwriteAttempt.stderr
+    check failures "junction admission: existing lock survives the refused replacement byte-identically"
+      ((← IO.FS.readBinFile lockPath) == baselineLockBytes)
+    let reversedSource := transferSource.replace "\n===="
+      "\nReversed == activeBatch \\/ batchStage /\\ stagedKey\n\n===="
+    let reversedPath := root / "ReversedMixedJunction.tla"
+    IO.FS.writeFile reversedPath reversedSource
+    let reversedProposal := root / "reversed-mixed.proposal.json"
+    let reversedScaffold ← invokeScaffold reversedPath evidencePath reversedProposal
+    check failures "junction admission: reversed mixed source scaffold fails closed"
+      (reversedScaffold.exitCode == 1 &&
+        reversedScaffold.stderr.contains "TLA-PARSE-PRECEDENCE-CONFLICT")
+      reversedScaffold.stderr
+    check failures "junction admission: reversed mixed source writes no proposal"
+      (!(← reversedProposal.pathExists))
+    let reversedLock := root / "reversed-mixed.lock.json"
+    let reversedResolve ← invokeResolve reversedPath contractPath evidencePath reversedLock
+    check failures "junction admission: reversed mixed source resolve fails closed"
+      (reversedResolve.exitCode == 1 &&
+        reversedResolve.stderr.contains "TLA-PARSE-PRECEDENCE-CONFLICT")
+      reversedResolve.stderr
+    check failures "junction admission: reversed mixed source writes no lock"
+      (!(← reversedLock.pathExists))
+    check failures "junction admission: failed source leaves the established lock byte-identical"
+      ((← IO.FS.readBinFile lockPath) == baselineLockBytes)
+    let groupedSource := transferSource.replace "\n===="
+      "\nGrouped == (activeBatch /\\ batchStage) \\/ stagedKey\n\n===="
+    let groupedPath := root / "GroupedJunction.tla"
+    IO.FS.writeFile groupedPath groupedSource
+    let groupedProposal := root / "grouped.proposal.json"
+    let groupedScaffold ← invokeScaffold groupedPath evidencePath groupedProposal
+    check failures "junction admission: parenthesized source scaffolds"
+      (groupedScaffold.exitCode == 0 && (← groupedProposal.pathExists))
+      groupedScaffold.stderr
+    let groupedLock := root / "grouped.lock.json"
+    let groupedResolve ← invokeResolve groupedPath contractPath evidencePath groupedLock
+    check failures "junction admission: parenthesized source resolves"
+      (groupedResolve.exitCode == 0 && (← groupedLock.pathExists))
+      groupedResolve.stderr
+    let groupedOut := root / "grouped-generated"
+    let groupedGenerated ← invokeGenerate groupedLock groupedOut
+    check failures "junction admission: parenthesized source emits"
+      (groupedGenerated.exitCode == 0) groupedGenerated.stderr
     let rejectedLock := root / "rejected.lock.json"
     let rejected ← invokeResolve extraPath contractPath evidencePath rejectedLock
     check failures "resolve: a source-only mismatch is refused"

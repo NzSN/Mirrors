@@ -34,7 +34,7 @@ Revision-1 decisions recorded here:
   declarations with one visible name are an ambiguity with primary and related
   declaration locations. `LOCAL` declarations stay visible inside their own
   module and are never re-exported.
-* *Language-defined operators.* The revision-1 profile's operator table
+* *Language-defined operators.* The default profile's operator table
   (`Core.Tla.ParserProfile`) owns the operator spellings the language itself
   provides, including the structural operators the parser writes in canonical
   spelling (`'`, `[]`, `<>`, `~>`, `[]_`, `<<>>_`, `ENABLED`, `UNCHANGED`,
@@ -156,7 +156,7 @@ structure LanguageOperator where
 spelling with both a prefix and an infix entry (`-`) keeps both argument
 counts. -/
 private def profileOperatorFacts : Array LanguageOperator :=
-  ParserProfile.revisionOneOperators.foldl
+  ParserProfile.revisionTwoOperators.foldl
     (fun facts entry =>
       let arity :=
         match entry.fixity with
@@ -175,7 +175,7 @@ private def profileOperatorFacts : Array LanguageOperator :=
                        level := .constant })
     #[]
 
-/-- Language-defined operator facts for the revision-1 profile: the profile's
+/-- Language-defined operator facts for the default profile: the profile's
 own operator table plus the structural spellings the parser writes in canonical
 form. -/
 def languageOperatorFacts : Array LanguageOperator :=
