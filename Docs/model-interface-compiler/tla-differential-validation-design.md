@@ -18,10 +18,14 @@ The current manifest contains 57 fixtures: 32 accepted and 25 rejected, covering
 case. Rejections comprise 20 malformed, two resource-limit, and three
 profile-limit cases. These counts describe the present corpus; runners must
 derive counts and coverage from the captured manifest rather than hard-code them.
-The manifest's SANY and Apalache slots are `not_run` with versions `pending`;
-the recorded exploratory reference probe is not a completed differential gate.
+At design time, the manifest's SANY and Apalache slots were `not_run` with
+versions `pending`. Both baselines are now pinned and the gate has executed;
+acceptance failed. The [evidence index](../../test/fixtures/tla-frontend/differential/evidence/README.md)
+records the repeated runs and remaining findings. The earlier exploratory
+reference probe remains historical construction evidence.
 
-The initial delivery closes corpus outcome and required structural comparisons.
+The initial delivery targets corpus outcome and required structural comparisons;
+the implemented harness exposes remaining observation and compatibility gaps.
 It also publishes a capability matrix for all five compatibility levels in the
 parent design. Unsupported lexical/CST/expression comparisons remain explicit
 follow-up coverage, not evidence of complete TLA+ conformance. DumpLedgerTransfer
@@ -203,8 +207,9 @@ delivery. Later caches must include every input/tool/adapter/limit identity.
 Local outputs go to an ignored build/scratch directory. CI archives complete
 bounded evidence. The accepted checkpoint records a durable report and summary
 under a dedicated evidence directory, with retrievable raw artifact references.
-Only after a successful required run may the ledger/profile/manifest replace
-`not_run` with a precise scoped status linked to that evidence.
+After execution, the ledger/profile/manifest replace `not_run` with the observed
+scoped status (`pass`, `fail`, or `incomplete`) linked to evidence. Only a
+successful required run authorizes a passing acceptance claim.
 
 ## 8. Delivery gates and limits of the claim
 

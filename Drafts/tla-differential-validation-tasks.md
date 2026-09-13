@@ -143,8 +143,9 @@ frontend task ledger, language profile, corpus differential metadata, and this p
 - Run required structural comparisons and repeat the run to verify deterministic
   semantic output. Preserve raw artifacts and their retrieval references.
 - Record exact scope/counts/pins/commit and all unsupported comparison surfaces.
-- Update `not_run` only when evidence supports a scoped passed result; otherwise
-  record failed/incomplete status without erasing the findings.
+- Replace `not_run` with the observed scoped pass/fail/incomplete status and
+  evidence link. Claim passing acceptance only after a successful required run;
+  preserve failed/incomplete findings.
 
 **Acceptance:** all manifest fixtures have three valid observations; all required
 comparisons pass or match narrowly reviewed differences; no unknown required

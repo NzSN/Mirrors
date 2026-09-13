@@ -1,7 +1,9 @@
 # General TLA+ frontend for Mirrors
 
 > Status: **design; delivery slices TF0–TF8 of the implementation plan are
-> implemented and accepted as of 2026-09-12. The inspection tool (§24) ships as
+> implemented and accepted for the Mirrors-local scope as of 2026-09-12.
+> The pinned differential gate executed on 2026-09-13 and failed acceptance;
+> see task ledger §17.7. The inspection tool (§24) ships as
 > the separate `tla_frontend` development executable; see
 > [the CLI guide](tla-frontend-cli.md). Ecosystem and differential tiers are
 > recorded per run in the task ledger.**
@@ -1106,7 +1108,14 @@ hidden semantic input. Current normalized-byte hashing remains authoritative.
 
 ## 30. Open decisions
 
-The implementation plan must resolve these before Phase 1:
+The questions below are the original pre-implementation decision inventory.
+Their current revision-1 dispositions are maintained in the language profile's
+[decision table](tla-language-profile.md#12-disposition-of-the-designs-open-decisions).
+They are retained here to preserve the design rationale, not as a list of
+unanswered prerequisites for the implemented frontend. In particular, proof
+opacity is decided, the catalog policy is adopted with continuing coverage work,
+and proposal v2 is deferred. Differential acceptance is a separate validation
+gap recorded in the task ledger.
 
 1. Which exact TLA+ grammar and SANY/Apalache versions define the first language
    profile?

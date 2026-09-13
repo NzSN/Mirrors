@@ -173,10 +173,12 @@ form are malformed at `lex`.
 | Unicode glyphs (`∧`, `∨`, `¬`, `⇒`, `⇔`, `∈`, `⊆`, `∪`, `∩`, `≠`, `≤`, `⟨`, `⟩`, `↦`, `‥`, `□`, `◇`, `≡`) | **staged out**: rejected at `lex` with a profile-limit diagnostic naming the spelling | `rej-unicode-spelling` |
 
 The word-ASCII list above is the token table published by the reference parser
-used for local probing. Unicode remains a staged limit rather than an
-accidental extension: the same reference parser rejects those glyphs, so
-accepting them would create a Mirrors-only dialect before any pinned
-differential allowlist entry exists.
+used for local probing. Unicode remains staged out in revision 1. The pinned
+SANY and Apalache baselines accept the glyphs exercised by
+`rej-unicode-spelling`, contrary to the earlier exploratory rationale. Whether
+to retain that restriction or add supported aliases remains a profile decision;
+see the differential review. This does not establish support for every glyph
+listed above in either reference tool.
 
 Pairs of spellings that must produce the same normalized AST are declared as an
 equivalence group in the corpus manifest; `acc-ascii-symbolic` and
@@ -239,13 +241,17 @@ fixture (`acc-values`, `acc-functions`, `acc-control`, `acc-quantifiers`,
 
 ### 5.5 Precedence and associativity
 
-Verified against the local reference parser and frozen as rules:
+The following are the frozen revision-1 rules. The pinned differential run
+exposed a conflict in the mixed-junction rule below; the earlier local-probe
+claim does not establish compatibility with the pinned baselines:
 
 - `*` binds tighter than `+`; arithmetic binds tighter than relational
   operators; relational operators bind tighter than `/\`.
 - `~` binds tighter than `/\`.
-- `/\` binds tighter than `\/`, matching standard TLA+; `A /\ B \/ C` has the
-  unique reading `(A /\ B) \/ C` (`acc-precedence`).
+- Revision 1 treats `/\` as binding tighter than `\/` and reads
+  `A /\ B \/ C` as `(A /\ B) \/ C` (`acc-precedence`). Both pinned references
+  reject the unparenthesized mixture. This is an unresolved profile/fixture
+  compatibility defect, not a verified standard-TLA+ rule.
 - `=>`, `<=>`, and `=` are non-associative: chaining any one of them without
   parentheses is a precedence conflict (`rej-precedence-chain`,
   `rej-precedence-mix`).
@@ -458,7 +464,7 @@ table above requires a reviewed profile revision with an owning fixture.
 | Control bytes outside tab/LF/CR are rejected | Mirrors stricter | design requires rejecting unknown control characters | `rej-control-character` |
 | Identifier length, comment depth, and byte size are bounded | Mirrors stricter | untrusted compiler input; bounded resources | `rej-identifier-size`, `rej-comment-depth` |
 | PlusCal modules are rejected instead of read as comments | Mirrors stricter | translation is out of frontend scope; failing closed avoids empty model facts | `rej-pluscal` |
-| Unicode operator glyphs are rejected | both reject | local reference parser has no Unicode tokens; acceptance would need a reviewed allowlist entry | `rej-unicode-spelling` |
+| Unicode operator glyphs are rejected | Mirrors stricter on the exercised glyphs | pinned baselines accept the fixture; the historical rationale is superseded and the profile decision remains unresolved | `rej-unicode-spelling` |
 | `≜` is rejected | both reject | not accepted by the local reference parser | profile §4.8 |
 | Decimal real literals are staged out | Mirrors stricter | integer-only numeric value domain in revision 1 while both baselines accept real literals | `rej-real-literal` |
 | Substitution actuals are bounded at `constant` or `state` level | Mirrors stricter | revision 1 applies one uniform bound instead of the reference tool's occurrence-sensitive constant rule (§7.4) | probes in `tools/TlaElaborationSpec.lean`; corpus fixture owned by TF8 |
@@ -472,11 +478,15 @@ record a reference acceptance that revision 1 still rejects by design.
 `accepted-by-reference-tool` means a clean acceptance and
 `accepted-with-warning-by-reference-tool` means the reference completed with
 warnings only (duplicate declarations and conflicting imported declarations).
-Differential status remains `not_run`: the entries are construction evidence
-from an exploratory local probe (tla2tools 2.0 of 2024-08-08, SANY2 2.1
-reporting `SANY2 Version 2.1 created 24 February 2014`), not a pinned
-differential gate, and TF8 owns turning them into a recorded gate with the
-pinned versions.
+These entries are historical construction evidence from an exploratory local
+probe (tla2tools 2.0 of 2024-08-08, SANY2 2.1 reporting
+`SANY2 Version 2.1 created 24 February 2014`). They are not the current pinned
+gate result. The differential gate has now executed and failed acceptance;
+see the [evidence index](../../test/fixtures/tla-frontend/differential/evidence/README.md)
+and [review](../../test/fixtures/tla-frontend/differential/evidence/triage.md).
+The Unicode row now reflects the pinned observations. Its unresolved profile
+decision remains a finding; this status update does not change language
+acceptance or add a reviewed differential exception.
 
 ## 10. Corpus contract
 
@@ -648,17 +658,22 @@ branch fails validation.
 
 ## 12. Disposition of the design's open decisions
 
+This table is the current disposition of the original questions in design §30.
+An adopted policy can still have coverage work, and an explicit deferral is not
+an unanswered implementation prerequisite. Validation findings remain separate
+from those decisions.
+
 | Design open decision | Revision-1 disposition | Owner of the remainder |
 | --- | --- | --- |
-| 1. Grammar and baseline versions | structure frozen here; exact SANY/Apalache pins pending | coordinating agent |
-| 2. Structural proofs or opaque regions | proof bodies retained as opaque regions (§5.2) | TF2 |
+| 1. Grammar and baseline versions | profile recorded here; TLA+ Tools 1.8.0 / SANY 2.2 and Apalache 0.61.0 pinned; differential acceptance failed | coordinating agent: resolve recorded compatibility findings |
+| 2. Structural proofs or opaque regions | resolved: proof bodies retained as opaque regions (§5.2) | no outstanding revision-1 choice |
 | 3. Apalache annotations as facts or trivia | trivia only, no semantic facts (§4.6) | TF6 if facts become necessary |
-| 4. Measured default limits | frozen scanner limits plus provisional seeds (§8) | TF1/TF3 with production models |
-| 5. Standard-module catalog sourcing | three-kind policy and name set (§6.3); declaration facts grow with evidence | TF4/TF6 |
-| 6. Parser generation | implementation-neutral; `Parser` technique stays free while tables stay explicit | TF2 |
-| 7. Stable inspection JSON schema | corpus manifest and summary schemas are stable for fixtures; CLI schema is separate | TF8 |
-| 8. `INSTANCE` before scanner removal | yes: TF5 implemented instance substitution behind the frontend seam; the compiler keeps the old scanner until TF6 | TF6 |
-| 9. Scaffold proposal v2 contents | deferred; revision 1 keeps today's evidence admission | TF6 |
+| 4. Measured default limits | revision-1 limits specified in §8; production-model sizing remains continuing work | frontend maintainers |
+| 5. Standard-module catalog sourcing | policy adopted: three kinds and name set (§6.3); declaration facts grow through reviewed evidence | frontend maintainers: remaining catalog coverage |
+| 6. Parser generation | hand-written parser implemented; precedence and associativity tables remain explicit | no outstanding revision-1 implementation choice |
+| 7. Stable inspection JSON schema | separate inspection schema `mirrors.tla-frontend-inspection/v1` implemented; corpus schemas remain separate | frontend maintainers: future schema evolution |
+| 8. `INSTANCE` before scanner removal | TF5 instance support preceded TF6/TF7 migration; retired scanners have no production callers | qualified-operator observation gap tracked by differential tasks |
+| 9. Scaffold proposal v2 contents | explicitly deferred; revision-1 evidence admission remains in use | future proposal-v2 design |
 | 10. Publishable corpus scope | these fixtures are generic; no private model material | coordinating agent |
 
 ## 13. Non-goals

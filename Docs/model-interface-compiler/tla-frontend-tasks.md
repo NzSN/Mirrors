@@ -609,7 +609,7 @@ accepted, and owns `lakefile.lean` registration for `tla_lexer_spec`,
 `tla_parser_spec`, `tla_module_resolver_spec`, `tla_elaboration_spec`,
 `tla_frontend_spec`, and `tla_frontend_cli_spec`.
 
-### 17.5 Outstanding items owned elsewhere
+### 17.5 Integration status and decision dispositions
 
 - **TF2 parser gate.** `tools/TlaParserSpec.lean` is present, accepted, and
   registered in `lakefile.lean`; TF4 may consume the parser interface.
@@ -618,15 +618,22 @@ accepted, and owns `lakefile.lean` registration for `tla_lexer_spec`,
   `tla_frontend_cli_spec` are default targets and run from `lake test`;
   `tla_frontend` is a default target but not a test gate. `Shell.lean` carries
   no frontend executable registration.
-- **Differential gates.** The `sany` and `apalache` corpus entries are
-  `not_run`; the compatibility claims of design section 5 stay unverified until
-  the coordinator records pinned tool versions.
-- **Design open decisions.** Section 30 items 2 (proof-body treatment), 5
-  (standard-module catalog sourcing), and 9 (scaffold proposal revision scope)
-  affect TF4, TF5, and TF6 and are coordinator decisions rather than
-  implementer choices.
+- **Differential gates.** Both reference tools are pinned and the corpus-wide
+  gate has executed. Acceptance failed; §17.7 and its evidence links record the
+  remaining comparisons. Execution is not a conformance pass.
+- **Decision dispositions.** The language profile's
+  [decision table](tla-language-profile.md#12-disposition-of-the-designs-open-decisions)
+  records the revision-1 choices for design §30. Item 2 is resolved: proof
+  bodies remain opaque. Item 5 has an adopted catalog policy and name set,
+  with declaration-fact coverage continuing to grow through reviewed evidence.
+  Item 9 is explicitly deferred: proposal v2 is future work, while revision-1
+  evidence admission remains in use. These are not three unanswered blockers
+  for the implemented TF4–TF6 slices.
 
 ### 17.6 TF8 validation and remaining tiers (2026-09-12)
+
+This section preserves the 2026-09-12 run record. Its unavailable-tier and
+`not_run` statements describe that run; §17.7 supersedes its differential status.
 
 The coordinator reran the aggregate gate with
 `APALACHE_MC=/home/nzsn/.local/bin/apalache/bin/apalache-mc`. `lake test`
@@ -675,7 +682,8 @@ Two external tiers remain unavailable and are not reported as passes:
 
 ### 17.7 Differential execution and remaining findings (2026-09-13)
 
-The earlier `not_run` differential entries in §17.5–17.6 are historical. The
+The earlier `not_run` differential entries retained in §17.1 and §17.6 are
+historical; §17.5 summarizes current status. The
 [differential harness](tla-differential-validation-design.md) now executes the
 57-fixture corpus through Mirrors, pinned TLA+ Tools 1.8.0 / SANY 2.2, and
 Apalache 0.61.0. The initial full run retained 171 completed observations.
