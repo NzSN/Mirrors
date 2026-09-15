@@ -1,0 +1,64 @@
+{
+  "declarations": [
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 5,
+      "module": "RejectUnicodeSpelling",
+      "names": [
+        "And"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 6,
+      "module": "RejectUnicodeSpelling",
+      "names": [
+        "Member"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 7,
+      "module": "RejectUnicodeSpelling",
+      "names": [
+        "Leq"
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "kind": "extends",
+      "line": 3,
+      "local": false,
+      "module": "Integers",
+      "owner": "RejectUnicodeSpelling",
+      "resolution": "standard",
+      "substitutions": []
+    }
+  ],
+  "effectiveVariables": [],
+  "fixture": "rej-unicode-spelling",
+  "modules": [
+    "RejectUnicodeSpelling"
+  ],
+  "profile": "mirrors-tla-frontend-profile-3",
+  "renderings": {
+    "And": "TRUE /\\ FALSE",
+    "Leq": "1 =< 2",
+    "Member": "1 \\in {1, 2}"
+  },
+  "root": "RejectUnicodeSpelling",
+  "schema": "mirrors.tla-frontend-summary/1",
+  "sources": [
+    {
+      "logicalPath": "RejectUnicodeSpelling.tla",
+      "sha256": "08caf89f0c7675df5f22e8a9ff8dcafd680123a6854155e3bf5c075b73ba2f7b"
+    }
+  ],
+  "standardModules": [
+    "Integers"
+  ]
+}

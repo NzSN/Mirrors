@@ -111,6 +111,7 @@ def ambiguousImport : String := "TLA-ELAB-AMBIGUOUS-IMPORT"
 def unknownName : String := "TLA-ELAB-UNKNOWN-NAME"
 def arityMismatch : String := "TLA-ELAB-ARITY-MISMATCH"
 def assumptionLevel : String := "TLA-ELAB-ASSUMPTION-LEVEL"
+def enabledLevel : String := "TLA-ELAB-ENABLED-LEVEL"
 def substitutionMissing : String := "TLA-ELAB-SUBSTITUTION-MISSING"
 def substitutionInvalid : String := "TLA-ELAB-SUBSTITUTION-INVALID"
 def substitutionDuplicate : String := "TLA-ELAB-SUBSTITUTION-DUPLICATE"
@@ -188,7 +189,7 @@ def languageOperatorFacts : Array LanguageOperator :=
     { name := "[]_", arities := #[2], level := .action },
     { name := "<<>>_", arities := #[2], level := .action },
     { name := "UNCHANGED", arities := #[1], level := .action },
-    { name := "ENABLED", arities := #[1], level := .temporal },
+    { name := "ENABLED", arities := #[1], level := .state },
     { name := "WF_", arities := #[2], level := .temporal },
     { name := "SF_", arities := #[2], level := .temporal },
     { name := "DOMAIN", arities := #[1], level := .constant },
@@ -261,6 +262,10 @@ private structure SymbolInfo where
   definition? : Option OperatorDefinition := none
   assumption? : Option Assumption := none
   theorem? : Option Theorem := none
+  /-- Intrinsic level of a declaration synthesized from the reviewed standard
+  module catalog. Source declarations leave this empty and are classified from
+  their bodies. -/
+  catalogLevel? : Option Level := none
   /-- The `INSTANCE` site of a `.instance` symbol. -/
   instanceSite? : Option InstanceSite := none
 
@@ -607,6 +612,47 @@ private def mergeInstanceEntry (table : ModuleTable) (entries : Array ClosureEnt
             { info := { info with instanceSite? := some site }
               importPath := #[table.name] }
 
+/-- Names a named `INSTANCE` qualifies: the child declaration names that are
+plain TLA+ operator names. A name the child itself inherited from one of its
+own named instances is already qualified, and `I!J!Op` is not a spelling the
+module language can write, so those stay out of the projection. -/
+private def qualifyName? (instanceName name : String) : Option String :=
+  if name.isEmpty || name.contains '!' then none
+  else some (instanceName ++ "!" ++ name)
+
+/-- Allocate the symbol one named `INSTANCE` contributes for one child
+operator. The origin, declaration range, arity, fixity, and body stay the
+child's; only the visible name changes. The fresh identity is what lets the
+copy carry the level its substitution frames produce, and the copy is `LOCAL`
+exactly when the instance is, so a local instance stays inside its module. -/
+private def allocateQualifiedCopy (table : ModuleTable) (source : SymbolInfo)
+    (qualifiedName : String) (site : InstanceSite) : ElabM (Option SymbolInfo) := do
+  match ← allocateSymbol table source.kind qualifiedName source.arity
+      source.fixity site.declaration.«local» source.declarationRange with
+  | none => pure none
+  | some info =>
+      pure (some { info with
+        declaredIn := source.declaredIn
+        logicalPath := source.logicalPath
+        definition? := source.definition?
+        instanceSite? := source.instanceSite? })
+
+/-- Materialize one reviewed standard-catalog operator under a named instance.
+Unlike a captured child declaration the catalog has no source unit or
+declaration range, so the instance declaration is its stable source anchor;
+`declaredIn` and the import path still identify the catalog module. -/
+private def allocateQualifiedStandard (table : ModuleTable)
+    (fact : StandardOperatorFact) (qualifiedName : String) (site : InstanceSite) :
+    ElabM (Option SymbolInfo) := do
+  match ← allocateSymbol table .definition qualifiedName fact.arity .functional
+      site.declaration.«local» site.declaration.range with
+  | none => pure none
+  | some info =>
+      pure (some { info with
+        declaredIn := fact.module
+        logicalPath := fact.module.name ++ ".tla"
+        catalogLevel? := some fact.level })
+
 /-- Effective declarations of one captured module, memoized. The traversal is
 recursive over an explicit fuel count, so a hand-built cyclic graph fails
 closed with a limit diagnostic instead of diverging. -/
@@ -681,9 +727,22 @@ private def closureOf (fuel : Nat) (name : ModuleName) :
                 let siteFrame : InstanceFrame := { site, viewer := name }
                 match site.resolution with
                 | .standardCatalog =>
-                    if site.declaration.name.isSome then do
+                    if let some instanceName := site.declaration.name then do
                       let entries ← mergeInstanceEntry table result.entries site
                       result := { result with entries }
+                      -- Standard modules have no captured table, but their
+                      -- reviewed operator facts are still visible through a
+                      -- named instance and must appear in inspection output.
+                      for fact in standardOperatorFacts do
+                        if fact.module == site.declaration.moduleName then
+                          match ← allocateQualifiedStandard table fact
+                              (instanceName ++ "!" ++ fact.name) site with
+                          | none => pure ()
+                          | some info => do
+                              let entries ← mergeEntry result.entries
+                                { info
+                                  importPath := #[name, fact.module] }
+                              result := { result with entries }
                     else do
                       result :=
                         { result with
@@ -703,9 +762,31 @@ private def closureOf (fuel : Nat) (name : ModuleName) :
                     | some _ => do
                         let nested ← closureOf fuel' site.declaration.moduleName
                         match site.declaration.name with
-                        | some _ => do
+                        | some instanceName => do
                             let entries ← mergeInstanceEntry table result.entries site
                             result := { result with entries }
+                            -- A named instance contributes its child's operators
+                            -- under qualified names as well. The copies reuse the
+                            -- child declaration and the substitution frames, so
+                            -- `I!Op` carries the level those frames produce.
+                            for nestedEntry in nested.entries do
+                              if !nestedEntry.info.localDeclaration &&
+                                  (nestedEntry.info.kind == .definition ||
+                                   nestedEntry.info.kind == .recursive) then
+                                match qualifyName? instanceName nestedEntry.info.name with
+                                | none => pure ()
+                                | some qualifiedName =>
+                                    match ← allocateQualifiedCopy table
+                                        nestedEntry.info qualifiedName site with
+                                    | none => pure ()
+                                    | some info => do
+                                        let entries ← mergeEntry result.entries
+                                          { info
+                                            importPath :=
+                                              #[name] ++ nestedEntry.importPath
+                                            frames :=
+                                              nestedEntry.frames ++ [siteFrame] }
+                                        result := { result with entries }
                         | none => do
                             result :=
                               { result with
@@ -1288,16 +1369,39 @@ private def raiseLevel (levels : Array (SymbolId × Level)) (symbol : SymbolId)
           if other.1 == symbol then (symbol, joined) else other), true)
 
 /-- One level-fixpoint pass: classify every operator definition and
-assumption-like body against the current symbol levels. -/
+assumption-like body against the current symbol levels. `enabledProblems`
+carries the `ENABLED` applications whose operand is temporal; each declaration
+body is validated once, in the module table that declares it, so an instance
+copy of the same body never reports a second problem. -/
 private structure LevelPass where
   levels : Array (SymbolId × Level)
   changed : Bool
   failed : Bool
+  enabledProblems : List SourceLocation
+
+/-- Locations of the `ENABLED`-operand problems one module table's level pass
+found, in declaration and traversal order. -/
+private def enabledProblemLocations (table : ModuleTable)
+    (problems : List SourceRange) : List SourceLocation :=
+  problems.map (fun range =>
+    { moduleName := some table.name, logicalPath := table.logicalPath, range })
+
+/-- Report every `ENABLED` application whose operand is temporal. The
+calibrated reference rule rejects such an application, so a module that
+contains one never takes the success path. -/
+private def reportEnabledProblems (problems : List SourceLocation) : ElabM Unit := do
+  for location in problems do
+    report ((Diagnostic.error ElabCode.enabledLevel .level
+      "the operand of 'ENABLED' is classified temporal, but 'ENABLED' requires a constant, state, or action operand"
+      location)
+      |>.withArgument "module"
+        ((location.moduleName.map (fun name => name.name)).getD ""))
 
 private def levelPass (state : ElabState) : LevelPass := Id.run do
   let mut levels := state.levels
   let mut changed := false
   let mut failed := false
+  let mut enabledProblems : List SourceLocation := []
   for table in state.tables do
     match state.closures.find? (fun memo => memo.1 == table.name) with
     | none => pure ()
@@ -1316,28 +1420,40 @@ private def levelPass (state : ElabState) : LevelPass := Id.run do
                   entry.declaredIn [] key
           match entry.definition? with
           | some definition =>
-              match definitionLevel (expressionFuel table) scope
+              match classifyDefinitionLevel (expressionFuel table) scope
                   (#[] : Array (String × Level)) definition with
-              | some candidate =>
+              | (some candidate, problems) =>
+                  enabledProblems :=
+                    enabledProblems ++ enabledProblemLocations table problems
                   let (next, changedHere) :=
                     raiseLevel levels entry.symbol candidate
                   levels := if changedHere then next else levels
                   changed := changed || changedHere
-              | none => failed := true
+              | (none, problems) =>
+                  enabledProblems :=
+                    enabledProblems ++ enabledProblemLocations table problems
+                  failed := true
           | none => pure ()
           match entry.assumption? with
           | some declaration =>
-              match expressionLevel (expressionFuel table) scope
+              match classifyExpressionLevel (expressionFuel table) scope
                   (#[] : Array (String × Level)) declaration.body with
-              | some candidate =>
+              | (some candidate, problems) =>
+                  enabledProblems :=
+                    enabledProblems ++ enabledProblemLocations table problems
                   let (next, changedHere) :=
                     raiseLevel levels entry.symbol candidate
                   levels := if changedHere then next else levels
                   changed := changed || changedHere
-              | none => failed := true
+              | (none, problems) =>
+                  enabledProblems :=
+                    enabledProblems ++ enabledProblemLocations table problems
+                  failed := true
           | none => pure ()
         -- Declarations an `INSTANCE` exposed: their bodies are classified
         -- under the substitution frames instead of the module's own scope.
+        -- `ENABLED`-operand problems stay unreported here: every captured body
+        -- was already validated in the module table that declares it.
         for entry in memo.2.entries do
           if !entry.frames.isEmpty then
             match entry.info.definition? with
@@ -1354,7 +1470,7 @@ private def levelPass (state : ElabState) : LevelPass := Id.run do
                     levels := if changedHere then next else levels
                     changed := changed || changedHere
                 | none => failed := true
-  return { levels, changed, failed }
+  return { levels, changed, failed, enabledProblems }
 
 /-- Classify levels over the whole graph as the least fixpoint of the
 syntax-directed rules. The lattice has height four, so `3 * symbols + 2`
@@ -1377,20 +1493,23 @@ private def computeLevels : ElabM Unit := do
     | none => pure ()
     | some memo =>
         for entry in memo.2.entries do
-          if !entry.frames.isEmpty &&
+          if (!entry.frames.isEmpty || entry.info.catalogLevel?.isSome) &&
               (entry.info.kind == .definition || entry.info.kind == .recursive) then
-            levels := levels.push (entry.info.symbol, .constant)
+            levels := levels.push (entry.info.symbol,
+              entry.info.catalogLevel?.getD .constant)
   set { state with levels }
   let symbolCount := state.nextSymbol
   let budget := 3 * symbolCount + 2
   let mut iteration := 0
   let mut running := true
   let mut failed := false
+  let mut enabledProblems : List SourceLocation := []
   while running && iteration < budget do
     let current ← get
     let pass := levelPass current
     set { current with levels := pass.levels }
     running := pass.changed
+    enabledProblems := pass.enabledProblems
     if pass.failed then
       running := false
       failed := true
@@ -1401,7 +1520,10 @@ private def computeLevels : ElabM Unit := do
       "level classification did not reach a fixpoint within its bound"
       final.anchor)
       |>.withArgument "iterations" (toString budget))
+    reportEnabledProblems enabledProblems
     halt
+  else
+    reportEnabledProblems enabledProblems
 
 /-- Substituted actuals must classify at constant or state level: a variable may
 not be replaced by a primed or temporal expression, and revision 1 applies the
@@ -1426,16 +1548,20 @@ private def checkSubstitutionLevels : ElabM Unit := do
           for site in table.instanceSites do
             if site.resolution == .localSource then do
               for substitution in site.declaration.substitutions do
-                match expressionLevel (expressionFuel table) scope
+                match classifyExpressionLevel (expressionFuel table) scope
                     (#[] : Array (String × Level)) substitution.actual with
-                | some level =>
+                | (some level, problems) =>
+                    reportEnabledProblems
+                      (enabledProblemLocations table problems)
                     if level.rank > Level.state.rank then
                       report ((Diagnostic.error ElabCode.substitutionLevel .substitution
                         s!"the expression substituted for '{substitution.formal}' is classified {level} but substitution actuals must be constant or state level"
                         (locationOfRange table substitution.range))
                         |>.withArgument "name" substitution.formal
                         |>.withArgument "level" level.toString)
-                | none =>
+                | (none, problems) =>
+                    reportEnabledProblems
+                      (enabledProblemLocations table problems)
                     report ((Diagnostic.error ElabCode.fuelExhausted .substitution
                       "substitution level classification exhausted its bound"
                       (locationOfRange table substitution.range))

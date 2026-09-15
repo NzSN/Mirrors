@@ -32,6 +32,9 @@ What is checked:
   spelled declarations exist elsewhere in the graph.
 * **Levels.** `acc-levels` classifies constant, state, action, and temporal
   operators exactly as its summary pins them.
+* **`ENABLED` levels.** The DC0-calibrated rule makes a constant, state, or
+  action operand state level, rejects an operand above `action`, and keeps
+  `Increment` action, `Enabled` state, and `Spec` temporal in `acc-actions`.
 * **`LOCAL` visibility.** `acc-local` retains its local definition, an
   importer cannot see it, and `LOCAL EXTENDS` declarations stay visible in the
   importing module without being re-exported.
@@ -768,6 +771,46 @@ def checkLevel (fails : Failures) (run : Run) (name : String)
     (levelOfOperator? run name == some expected)
     (s!"actual={levelOfOperator? run name} levels={levelTable run} {detailOf run}")
 
+/-- One operator fact of one attempt: its declaring module, arity, and whether
+it is `LOCAL` to that module. `none` when the module did not elaborate or
+declares no such operator. -/
+def operatorFact? (run : Run) (name : String) :
+    Option (String × Nat × Bool) := do
+  let module ← run.module?
+  let operator ← module.operators.find? fun operator => operator.name == name
+  return (operator.declaredIn.name, operator.arity, operator.localDeclaration)
+
+/-- The complete production operator row for provenance-sensitive checks. -/
+def resolvedOperator? (run : Run) (name : String) : Option ResolvedOperator := do
+  let module ← run.module?
+  module.operators.find? fun operator => operator.name == name
+
+/-- Operator names in their production inspection order. -/
+def operatorNames (run : Run) : Array String :=
+  match run.module? with
+  | none => #[]
+  | some module => module.operators.map (·.name)
+
+/-- Every operator fact of one attempt, for diagnostic messages. -/
+def operatorTable (run : Run) : String :=
+  match run.module? with
+  | none => "no module"
+  | some module =>
+      toString (module.operators.map fun operator =>
+        (operator.name, operator.declaredIn.name, operator.arity,
+          operator.localDeclaration)).toList
+
+/-- One qualified projection the reference exposes: the visible name, the child
+module that declares it, its `LOCAL` visibility, and the level its substitution
+frames produce. A copy of a `LOCAL` instance keeps that locality, so it serves
+its own module and never reaches an importer. -/
+def checkQualifiedOperator (fails : Failures) (run : Run) (qualified declaredIn : String)
+    (arity : Nat) (localDeclaration : Bool) (level : String) : IO Unit := do
+  check fails s!"qualified: {qualified} is declared in {declaredIn} with arity {arity}"
+    (operatorFact? run qualified == some (declaredIn, arity, localDeclaration))
+    (s!"actual={operatorFact? run qualified} operators={operatorTable run}")
+  checkLevel fails run qualified level
+
 def scenarioScopes (fails : Failures) : IO Unit := do
   -- A LET definition shadows a variable of the same name and stays constant.
   let letProbe ← runInline
@@ -1076,6 +1119,33 @@ def scenarioInstances (fails : Failures) (root : String)
       "EXTENDS Integers\nI == INSTANCE Integers\nR == I!Int")] "StandardRoot"
   check fails "instance: a standard-module instance resolves its pinned facts"
     standardRun.module?.isSome (detailOf standardRun)
+  checkQualifiedOperator fails standardRun "I!Int" "Integers" 0 false "constant"
+  match resolvedOperator? standardRun "I!Int" with
+  | none => mark fails "instance: named standard fact is materialized"
+  | some projected => do
+      check fails "instance: named standard fact has functional fixity"
+        (projected.fixity == .functional) (toString (repr projected.fixity))
+      check fails "instance: named standard fact retains catalog provenance"
+        (projected.importPath.map (·.name) == #["StandardRoot", "Integers"])
+        (toString (repr (projected.importPath.map (·.name))))
+  let localStandard ← runInline #[
+    (⟨"LocalStandardRoot"⟩, moduleText "LocalStandardRoot"
+      "LOCAL I == INSTANCE Integers\nR == I!Int")] "LocalStandardRoot"
+  checkQualifiedOperator fails localStandard "I!Int" "Integers" 0 true "constant"
+  let standardBudgetSources := #[
+    (⟨"StandardBudgetRoot"⟩, moduleText "StandardBudgetRoot"
+      "I == INSTANCE Integers\nR == I!Int")]
+  let standardBudgetExact ← runInline standardBudgetSources "StandardBudgetRoot"
+    { maxDeclarations := 64, maxSymbols := 3 }
+  check fails "instance: standard projection fits the exact symbol limit"
+    (standardBudgetExact.module?.isSome && standardBudgetExact.diagnostics.isEmpty)
+    (detailOf standardBudgetExact)
+  let standardBudgetOver ← runInline standardBudgetSources "StandardBudgetRoot"
+    { maxDeclarations := 64, maxSymbols := 2 }
+  check fails "instance: standard projection is charged at limit plus one"
+    (standardBudgetOver.module?.isNone &&
+      hasDiagnostic standardBudgetOver ElabCode.symbolLimit .nameResolution)
+    (detailOf standardBudgetOver)
   let standardSub ← runInline #[
     (⟨"StandardSub"⟩, moduleText "StandardSub"
       "EXTENDS Integers\nI == INSTANCE Integers WITH Int <- 1\nR == TRUE")] "StandardSub"
@@ -1091,6 +1161,303 @@ def scenarioInstances (fails : Failures) (root : String)
     (qualifiedConstant.module?.isNone &&
       hasDiagnostic qualifiedConstant ElabCode.unknownName .nameResolution)
     (detailOf qualifiedConstant)
+
+/-! ## `ENABLED` levels -/
+
+/-- The frozen DC0 matrix calibrates `ENABLED`: a constant, state, or action
+operand classifies the application at `state` level, while an operand above
+`action` is rejected at the level stage instead of being accepted as a temporal
+application. `AcceptActions` is the corpus fixture that exercises the action
+operand through `ENABLED Increment`. -/
+def scenarioEnabledLevels (fails : Failures) (root : String)
+    (views : Array FixtureView) : IO Unit := do
+  let constantProbe ← runInline
+    #[(⟨"EnabledConstantProbe"⟩, moduleText "EnabledConstantProbe"
+        "C == TRUE\nE == ENABLED C")] "EnabledConstantProbe"
+  check fails "enabled: a constant operand elaborates"
+    constantProbe.module?.isSome (detailOf constantProbe)
+  checkLevel fails constantProbe "C" "constant"
+  checkLevel fails constantProbe "E" "state"
+  let stateProbe ← runInline
+    #[(⟨"EnabledStateProbe"⟩, moduleText "EnabledStateProbe"
+        "VARIABLE x\nS == x = x\nE == ENABLED S")] "EnabledStateProbe"
+  check fails "enabled: a state operand elaborates"
+    stateProbe.module?.isSome (detailOf stateProbe)
+  checkLevel fails stateProbe "S" "state"
+  checkLevel fails stateProbe "E" "state"
+  let actionProbe ← runInline
+    #[(⟨"EnabledActionProbe"⟩, moduleText "EnabledActionProbe"
+        "VARIABLE x\nA == x' = x\nE == ENABLED A")] "EnabledActionProbe"
+  check fails "enabled: an action operand elaborates"
+    actionProbe.module?.isSome (detailOf actionProbe)
+  checkLevel fails actionProbe "A" "action"
+  checkLevel fails actionProbe "E" "state"
+  -- A temporal operand is the rejected boundary. The operand still classifies
+  -- temporal on its own, so the rejection has to come from the `ENABLED` rule.
+  let temporalOperand ← runInline
+    #[(⟨"EnabledTemporalOperand"⟩, moduleText "EnabledTemporalOperand"
+        "T == []TRUE")] "EnabledTemporalOperand"
+  check fails "enabled: a temporal operand alone elaborates"
+    temporalOperand.module?.isSome (detailOf temporalOperand)
+  checkLevel fails temporalOperand "T" "temporal"
+  let temporalProbe ← runInline
+    #[(⟨"EnabledTemporalProbe"⟩, moduleText "EnabledTemporalProbe"
+        "T == []TRUE\nE == ENABLED T")] "EnabledTemporalProbe"
+  check fails "enabled: a temporal operand is rejected at the level stage"
+    (temporalProbe.module?.isNone &&
+      hasDiagnostic temporalProbe ElabCode.enabledLevel .level)
+    (detailOf temporalProbe)
+  check fails "enabled: a temporal operand produces exactly one diagnostic"
+    (temporalProbe.diagnostics.length == 1)
+    (detailOf temporalProbe)
+  check fails "enabled: the problem points at the declaring module"
+    (temporalProbe.diagnostics.any fun diagnostic =>
+      diagnostic.code == ElabCode.enabledLevel &&
+        diagnostic.primary.moduleName == some (⟨"EnabledTemporalProbe"⟩))
+    (toString (temporalProbe.diagnostics.map fun diagnostic => diagnostic.code))
+  -- A temporal ENABLED in an imported child is diagnosed exactly once at the
+  -- child declaration, rather than being duplicated or attributed to the root.
+  let importedTemporal ← runInline #[
+    (⟨"EnabledTemporalChild"⟩, moduleText "EnabledTemporalChild"
+      "T == []TRUE\nE == ENABLED T"),
+    (⟨"EnabledTemporalRoot"⟩, moduleText "EnabledTemporalRoot"
+      "EXTENDS EnabledTemporalChild\nRoot == TRUE")] "EnabledTemporalRoot"
+  check fails "enabled: an imported temporal operand is rejected"
+    (importedTemporal.module?.isNone &&
+      hasDiagnostic importedTemporal ElabCode.enabledLevel .level)
+    (detailOf importedTemporal)
+  check fails "enabled: an imported temporal operand produces exactly one diagnostic"
+    (importedTemporal.diagnostics.length == 1)
+    (detailOf importedTemporal)
+  check fails "enabled: imported temporal problem points at the child"
+    (importedTemporal.diagnostics.any fun diagnostic =>
+      diagnostic.code == ElabCode.enabledLevel &&
+        diagnostic.primary.moduleName == some (⟨"EnabledTemporalChild"⟩))
+    (detailOf importedTemporal)
+  -- ENABLED TRUE is state level. In an ASSUME it therefore reaches the
+  -- independent assumption-level rule, with no spurious ENABLED-level error.
+  let assumeEnabled ← runInline
+    #[(⟨"EnabledAssumeProbe"⟩, moduleText "EnabledAssumeProbe"
+        "ASSUME ENABLED TRUE")] "EnabledAssumeProbe"
+  check fails "enabled: ASSUME ENABLED TRUE is rejected as nonconstant"
+    (assumeEnabled.module?.isNone &&
+      hasDiagnostic assumeEnabled ElabCode.assumptionLevel .level)
+    (detailOf assumeEnabled)
+  check fails "enabled: ASSUME ENABLED TRUE produces exactly one diagnostic"
+    (assumeEnabled.diagnostics.length == 1)
+    (detailOf assumeEnabled)
+  check fails "enabled: ASSUME ENABLED TRUE has no enabled-level diagnostic"
+    (!hasDiagnostic assumeEnabled ElabCode.enabledLevel .level)
+    (detailOf assumeEnabled)
+  check fails "enabled: ASSUME ENABLED TRUE points at its declaring module"
+    (assumeEnabled.diagnostics.any fun diagnostic =>
+      diagnostic.code == ElabCode.assumptionLevel &&
+        diagnostic.primary.moduleName == some (⟨"EnabledAssumeProbe"⟩))
+    (detailOf assumeEnabled)
+  -- The corpus fixture keeps `Increment` action, `Enabled` state, and `Spec`
+  -- temporal.
+  withFixture fails root views "acc-actions" fun run => do
+    check fails "enabled: AcceptActions elaborates" run.module?.isSome (detailOf run)
+    checkLevel fails run "Increment" "action"
+    checkLevel fails run "Enabled" "state"
+    checkLevel fails run "Spec" "temporal"
+  -- Substitution boundaries: a state-level `ENABLED` actual stays legal, and an
+  -- `ENABLED` application of a temporal operand is still reported even though
+  -- the application itself classifies state.
+  let substitutionSources : Array (ModuleName × String) := #[
+    (⟨"EnabledSubChild"⟩, moduleText "EnabledSubChild"
+      "CONSTANT ChildLimit\nChildOp == ChildLimit"),
+    (⟨"EnabledSubGood"⟩, moduleText "EnabledSubGood"
+      "VARIABLE x\nI == INSTANCE EnabledSubChild WITH ChildLimit <- ENABLED (x' = x)\nRootOp == I!ChildOp"),
+    (⟨"EnabledSubBad"⟩, moduleText "EnabledSubBad"
+      "I == INSTANCE EnabledSubChild WITH ChildLimit <- ENABLED ([]TRUE)\nRootOp == I!ChildOp")]
+  let substitutionGood ← runInline substitutionSources "EnabledSubGood"
+  check fails "enabled: a state-level substitution actual elaborates"
+    substitutionGood.module?.isSome (detailOf substitutionGood)
+  checkLevel fails substitutionGood "RootOp" "state"
+  let substitutionBad ← runInline substitutionSources "EnabledSubBad"
+  check fails "enabled: a temporal substitution actual is rejected"
+    (substitutionBad.module?.isNone &&
+      hasDiagnostic substitutionBad ElabCode.enabledLevel .level)
+    (detailOf substitutionBad)
+
+/-! ## Qualified named-instance projections -/
+
+/-- The four corpus fixtures whose named instance exposes the child operator
+under its qualified name, with the declaring module and the level the frozen
+SANY rows record. -/
+def qualifiedInstanceFixtures : List (String × String × String) :=
+  [("rej-instance-definition-only", "InstanceDefsChild", "constant"),
+   ("rej-instance-variable-substituted", "InstanceStateChild", "action"),
+   ("rej-instance-implicit-substitution", "ImplicitChild", "action"),
+   ("rej-substitution-constant-by-state", "LevelChild", "state")]
+
+/-- A named `INSTANCE` projects every visible child operator it contributes as
+`I!Op`, keeping the child declaration's origin and arity while the substitution
+frames decide the level. Constants and child `LOCAL` declarations stay out of
+the projection, a `LOCAL` instance stays inside its owner, and the projection
+still charges the symbol budget. -/
+def scenarioQualifiedInstances (fails : Failures) (root : String)
+    (views : Array FixtureView) : IO Unit := do
+  for (id, declaredIn, level) in qualifiedInstanceFixtures do
+    withFixture fails root views id fun run => do
+      checkQualifiedOperator fails run "I!ChildOp" declaredIn 0 false level
+      check fails s!"qualified: {id} keeps the substituted root operator"
+        ((operatorFact? run "RootOp").isSome) (operatorTable run)
+      match views.find? (fun view => view.id == id) with
+      | none => mark fails s!"corpus: the manifest has no fixture {id}"
+      | some view =>
+          match ← runFixture root view with
+          | .error message => mark fails message
+          | .ok again =>
+              check fails s!"qualified: {id} repeats identically"
+                (sameRun again run) (detailOf again)
+  -- A twin instance of one child projects both qualified names, and neither
+  -- copy collides with the other.
+  let twinSources : Array (ModuleName × String) := #[
+    (⟨"TwinChild"⟩, moduleText "TwinChild" "CONSTANT ChildLimit\nChildOp == ChildLimit"),
+    (⟨"TwinRoot"⟩, moduleText "TwinRoot"
+      "CONSTANT RootLimit\nI == INSTANCE TwinChild WITH ChildLimit <- RootLimit\nJ == INSTANCE TwinChild WITH ChildLimit <- RootLimit\nRootOp == I!ChildOp\nOther == J!ChildOp")]
+  let twins ← runInline twinSources "TwinRoot"
+  check fails "qualified: two instances of one child elaborate"
+    twins.module?.isSome (detailOf twins)
+  checkQualifiedOperator fails twins "I!ChildOp" "TwinChild" 0 false "constant"
+  checkQualifiedOperator fails twins "J!ChildOp" "TwinChild" 0 false "constant"
+  -- Projection rows follow the captured child's declaration order and retain
+  -- exact declaration provenance. This includes nonzero functional arity and
+  -- symbolic fixity even when the root never references those rows.
+  let orderedSources : Array (ModuleName × String) := #[
+    (⟨"OrderedChild"⟩, moduleText "OrderedChild"
+      "First == TRUE\nApply(x, y) == x\na \\oplus b == a"),
+    (⟨"OrderedRoot"⟩, moduleText "OrderedRoot"
+      "I == INSTANCE OrderedChild\nRootOp == I!First")]
+  let orderedChild ← runInline orderedSources "OrderedChild"
+  let orderedRoot ← runInline orderedSources "OrderedRoot"
+  check fails "qualified: ordered projection elaborates"
+    orderedRoot.module?.isSome (detailOf orderedRoot)
+  let orderedProjected := (operatorNames orderedRoot).filter (·.startsWith "I!")
+  check fails "qualified: projections retain child source order"
+    (orderedProjected == #["I!First", "I!Apply", "I!\\oplus"])
+    (toString (repr orderedProjected))
+  for (sourceName, projectedName) in
+      [("First", "I!First"), ("Apply", "I!Apply"), ("\\oplus", "I!\\oplus")] do
+    match resolvedOperator? orderedChild sourceName,
+        resolvedOperator? orderedRoot projectedName with
+    | some source, some projected =>
+        check fails s!"qualified: {projectedName} retains declaration module"
+          (projected.declaredIn == source.declaredIn)
+          (toString (repr projected.declaredIn))
+        check fails s!"qualified: {projectedName} retains declaration range"
+          (projected.declarationRange == source.declarationRange)
+          (toString (repr projected.declarationRange))
+        check fails s!"qualified: {projectedName} retains arity"
+          (projected.arity == source.arity) (toString projected.arity)
+        check fails s!"qualified: {projectedName} retains fixity"
+          (projected.fixity == source.fixity) (toString (repr projected.fixity))
+        check fails s!"qualified: {projectedName} records its instance path"
+          (projected.importPath.map (·.name) == #["OrderedRoot", "OrderedChild"])
+          (toString (repr (projected.importPath.map (·.name))))
+    | _, _ => mark fails s!"qualified: missing provenance pair for {projectedName}"
+  check fails "qualified: functional nonzero arity is projected"
+    ((resolvedOperator? orderedRoot "I!Apply").map (·.arity) == some 2)
+    (operatorTable orderedRoot)
+  check fails "qualified: symbolic infix fixity is projected"
+    ((resolvedOperator? orderedRoot "I!\\oplus").map (·.fixity) == some .infix)
+    (operatorTable orderedRoot)
+  -- A named instance may expose a declaration inherited by its child. The
+  -- qualified visible name stays single-component while provenance records the
+  -- full root/instance/import chain deterministically.
+  let chainedSources : Array (ModuleName × String) := #[
+    (⟨"ChainGrand"⟩, moduleText "ChainGrand" "GrandOp == TRUE"),
+    (⟨"ChainChild"⟩, moduleText "ChainChild"
+      "EXTENDS ChainGrand\nChildOp == GrandOp"),
+    (⟨"ChainRoot"⟩, moduleText "ChainRoot"
+      "I == INSTANCE ChainChild\nRootOp == I!GrandOp")]
+  let chained ← runInline chainedSources "ChainRoot"
+  check fails "qualified: inherited child declaration elaborates through an instance"
+    chained.module?.isSome (detailOf chained)
+  checkQualifiedOperator fails chained "I!GrandOp" "ChainGrand" 0 false "constant"
+  check fails "qualified: inherited declaration retains its chained path"
+    ((resolvedOperator? chained "I!GrandOp").map
+      (fun operator => operator.importPath.map (·.name)) ==
+        some #["ChainRoot", "ChainChild", "ChainGrand"])
+    (operatorTable chained)
+  -- The same instance name twice is a duplicate visible name, so no second
+  -- qualified copy can shadow the first.
+  let duplicateSources : Array (ModuleName × String) := #[
+    (⟨"DupQualChild"⟩, moduleText "DupQualChild" "CONSTANT ChildLimit\nChildOp == ChildLimit"),
+    (⟨"DupQualRoot"⟩, moduleText "DupQualRoot"
+      "CONSTANT RootLimit\nI == INSTANCE DupQualChild WITH ChildLimit <- RootLimit\nI == INSTANCE DupQualChild WITH ChildLimit <- RootLimit\nRootOp == I!ChildOp")]
+  let duplicateInstance ← runInline duplicateSources "DupQualRoot"
+  check fails "qualified: a duplicate instance name is rejected"
+    (duplicateInstance.module?.isNone &&
+      (hasDiagnostic duplicateInstance ElabCode.ambiguousImport .nameResolution ||
+       hasDiagnostic duplicateInstance ElabCode.duplicateDeclaration .nameResolution))
+    (detailOf duplicateInstance)
+  -- A child `LOCAL` operator is neither projected nor resolvable, and the
+  -- child's exported operator is still projected next to it.
+  let localChildSources : Array (ModuleName × String) := #[
+    (⟨"QualLocalChild"⟩, moduleText "QualLocalChild"
+      "CONSTANT ChildLimit\nChildOp == ChildLimit\nLOCAL HiddenOp == ChildLimit"),
+    (⟨"QualLocalRoot"⟩, moduleText "QualLocalRoot"
+      "CONSTANT RootLimit\nI == INSTANCE QualLocalChild WITH ChildLimit <- RootLimit\nRootOp == I!ChildOp"),
+    (⟨"QualLocalPeek"⟩, moduleText "QualLocalPeek"
+      "CONSTANT RootLimit\nI == INSTANCE QualLocalChild WITH ChildLimit <- RootLimit\nPeek == I!HiddenOp")]
+  let localChild ← runInline localChildSources "QualLocalRoot"
+  checkQualifiedOperator fails localChild "I!ChildOp" "QualLocalChild" 0 false
+    "constant"
+  check fails "qualified: a child LOCAL operator is not projected"
+    ((operatorFact? localChild "I!HiddenOp").isNone) (operatorTable localChild)
+  let localChildPeek ← runInline localChildSources "QualLocalPeek"
+  check fails "qualified: a child LOCAL operator is not resolvable"
+    (localChildPeek.module?.isNone &&
+      hasDiagnostic localChildPeek ElabCode.unknownName .nameResolution)
+    (detailOf localChildPeek)
+  let hiddenDataSources : Array (ModuleName × String) := #[
+    (⟨"QualDataChild"⟩, moduleText "QualDataChild"
+      "CONSTANT c\nVARIABLE v\nChildOp == c"),
+    (⟨"QualDataRoot"⟩, moduleText "QualDataRoot"
+      "I == INSTANCE QualDataChild WITH c <- 1\nRootOp == I!ChildOp")]
+  let hiddenData ← runInline hiddenDataSources "QualDataRoot"
+  check fails "qualified: constants and variables are not projected as operators"
+    ((resolvedOperator? hiddenData "I!c").isNone &&
+      (resolvedOperator? hiddenData "I!v").isNone)
+    (operatorTable hiddenData)
+  -- A `LOCAL` instance serves its own module and stops there: its qualified
+  -- copy is marked local and never reaches an importer.
+  let localInstanceSources : Array (ModuleName × String) := #[
+    (⟨"LocalQualChild"⟩, moduleText "LocalQualChild"
+      "CONSTANT ChildLimit\nChildOp == ChildLimit"),
+    (⟨"LocalQualRoot"⟩, moduleText "LocalQualRoot"
+      "CONSTANT RootLimit\nLOCAL I == INSTANCE LocalQualChild WITH ChildLimit <- RootLimit\nRootOp == I!ChildOp"),
+    (⟨"LocalQualUser"⟩, moduleText "LocalQualUser"
+      "EXTENDS LocalQualRoot\nUserOp == I!ChildOp")]
+  let localInstance ← runInline localInstanceSources "LocalQualRoot"
+  checkQualifiedOperator fails localInstance "I!ChildOp" "LocalQualChild" 0 true
+    "constant"
+  let localInstanceUser ← runInline localInstanceSources "LocalQualUser"
+  check fails "qualified: a LOCAL instance is not re-exported"
+    (localInstanceUser.module?.isNone &&
+      hasDiagnostic localInstanceUser ElabCode.unknownName .nameResolution)
+    (detailOf localInstanceUser)
+  -- The projection charges the accumulated symbol budget: the graph holds four
+  -- tabulated declarations, the instance name, and the qualified copy.
+  let budgetSources : Array (ModuleName × String) := #[
+    (⟨"QualBudgetChild"⟩, moduleText "QualBudgetChild"
+      "CONSTANT ChildLimit\nChildOp == ChildLimit"),
+    (⟨"QualBudgetRoot"⟩, moduleText "QualBudgetRoot"
+      "CONSTANT RootLimit\nI == INSTANCE QualBudgetChild WITH ChildLimit <- RootLimit\nRootOp == I!ChildOp")]
+  let budgetExact ← runInline budgetSources "QualBudgetRoot"
+    { maxDeclarations := 64, maxSymbols := 6 }
+  check fails "qualified: the symbol budget admits the projection at the limit"
+    (budgetExact.module?.isSome && budgetExact.diagnostics.isEmpty)
+    (detailOf budgetExact)
+  let budgetOver ← runInline budgetSources "QualBudgetRoot"
+    { maxDeclarations := 64, maxSymbols := 5 }
+  check fails "qualified: the symbol budget rejects projection at limit plus one"
+    (budgetOver.module?.isNone &&
+      hasDiagnostic budgetOver ElabCode.symbolLimit .nameResolution)
+    (detailOf budgetOver)
 
 /-! ## Resource limits -/
 
@@ -1244,6 +1611,8 @@ def allScenarios (fails : Failures) : IO Unit := do
           | .ok views => do
               scenarioEffectiveVariables fails rootText views
               scenarioLevels fails rootText views
+              scenarioEnabledLevels fails rootText views
+              scenarioQualifiedInstances fails rootText views
               scenarioLocal fails rootText views
               scenarioInstances fails rootText views
               scenarioStructuredDiagnostics fails rootText views

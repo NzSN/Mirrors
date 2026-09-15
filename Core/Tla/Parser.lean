@@ -4,7 +4,7 @@ import Core.Tla.Lexer
 /-!
 # TLA+ lossless parser (Core/Tla/Parser.lean)
 
-Revision-2 parser for the general TLA+ frontend
+Revision-3 parser for the general TLA+ frontend
 (`Docs/model-interface-compiler/tla-frontend-design.md`, §10 "Concrete and
 abstract syntax", §11 "Parsing behavior", §20 "Diagnostics", §21 "Resource and
 security limits"; task package TF2 in
@@ -258,10 +258,12 @@ def revisionTwoOperators : Array OperatorEntry := #[
   ⟨"\\X", .infix, levelMultiplicative, .left⟩,
   ⟨"^", .infix, levelPower, .left⟩]
 
-/-- The frozen revision-2 combination: operator table and profile name
-`mirrors-tla-frontend-profile-2`. -/
+/-- The frozen revision-3 combination: the revision-2 operator table, which is
+unchanged by revision 3, and the profile name
+`mirrors-tla-frontend-profile-3`. Revision 3 admits three Unicode operator
+aliases at `lex`, so the parser sees their canonical ASCII spellings. -/
 def default : ParserProfile :=
-  { name := "mirrors-tla-frontend-profile-2"
+  { name := "mirrors-tla-frontend-profile-3"
     operators := revisionTwoOperators }
 
 /-- The tightest precedence level the profile defines. Levels above it parse
@@ -2716,7 +2718,7 @@ def parseSource (profile : LanguageProfile) (parserProfile : ParserProfile)
       { cst := emptyRoot, module? := none, diagnostics := diagnostics.toArray }
 
 /-- The parser seam of the module resolver: one captured unit in, one outcome
-out, with the default revision-2 profile and limits. -/
+out, with the default revision-3 profile and limits. -/
 def parseUnit (source : SourceUnit) : ParseOutcome :=
   parseSource LanguageProfile.default ParserProfile.default {} {} source
 

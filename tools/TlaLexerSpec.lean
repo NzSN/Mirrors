@@ -429,6 +429,13 @@ def scenarioSymbols (fails : Failures) : IO Unit := do
     ("\\X", "\\times")]
   check fails "symbols: ASCII and word spellings share one canonical spelling"
     (aliasPairs.all (fun pair => canonicalList pair.1 == canonicalList pair.2))
+  let unicodePairs : List (String × String) := [
+    ("/\\", "\u2227"), ("\\in", "\u2208"), ("=<", "\u2264")]
+  check fails "symbols: admitted Unicode aliases share the ASCII canonical spelling"
+    (unicodePairs.all (fun pair => canonicalList pair.1 == canonicalList pair.2))
+  check fails "symbols: an admitted Unicode alias keeps its original spelling"
+    (spellingList "x \u2227 y" == ["x", "\u2227", "y"] &&
+      canonicalList "x \u2227 y" == ["/\\"])
   check fails "symbols: the original spelling survives canonicalization"
     (spellingList "x \\land y" == ["x", "\\land", "y"] &&
       canonicalList "x \\land y" == ["/\\"])
@@ -448,6 +455,60 @@ def scenarioSymbols (fails : Failures) : IO Unit := do
       canonicalList "\\hG" == ["\\hG"])
   check fails "symbols: a backslash word stops at the first non-identifier scalar"
     (spellingList "\\oplus+" == ["\\oplus", "+"])
+
+/-- DC3 admits exactly three reference-confirmed Unicode aliases as lexical
+aliases: `∧`, `∈`, and `≤` normalize to `/\`, `\in`, and `=<`. The checks below
+fix the properties the migration must not lose: byte-exact source recovery over
+multibyte scalars, scalar columns beside byte offsets, fail-closed neighboring
+scalars, and byte-counted resource limits. -/
+def scenarioUnicodeAliases (fails : Failures) : IO Unit := do
+  let aliasPairs : List (String × String × String) := [
+    ("\u2227", "/\\", "x \u2227 y"),
+    ("\u2208", "\\in", "x \u2208 y"),
+    ("\u2264", "=<", "x \u2264 y")]
+  check fails "unicode: an admitted alias lexes and canonicalizes"
+    (aliasPairs.all fun pair =>
+      canonicalList pair.2.2 == [pair.2.1] &&
+        spellingList pair.2.2 == ["x", pair.1, "y"])
+  check fails "unicode: every admitted alias range covers its whole scalar"
+    (aliasPairs.all fun pair =>
+      match lexText pair.2.2 with
+      | .ok stream =>
+          (contentAt? stream 1).map (fun token =>
+            (token.spelling, token.range.stop.offset - token.range.start.offset,
+              token.range.stop.column - token.range.start.column)) ==
+            some (pair.1, 3, 1)
+      | .error _ => false)
+  check fails "unicode: an admitted alias keeps the capture lossless"
+    (match lexText "x \u2227 y\n" with
+      | .ok stream =>
+          lossless (capture "x \u2227 y\n") stream &&
+            rangesAgree (capture "x \u2227 y\n") stream &&
+            coversSource (capture "x \u2227 y\n") stream &&
+            positionsAgree (capture "x \u2227 y\n") stream
+      | .error _ => false)
+  check fails "unicode: an admitted alias needs no surrounding whitespace"
+    (spellingList "x\u2227y" == ["x", "\u2227", "y"] &&
+      canonicalList "x\u2227y" == ["/\\"] &&
+      (match lexText "x\u2227y" with
+        | .ok stream => coversSource (capture "x\u2227y") stream
+        | .error _ => false))
+  check fails "unicode: an admitted alias beside a staged scalar fails closed"
+    (failsWith (lexText "x \u2227\u2192 y\n") LexCode.unicodeStaged &&
+      firstArgument? (lexText "x \u2227\u2192 y\n") "spelling" == some "\u2192")
+  check fails "unicode: an admitted alias beside an unknown scalar fails closed"
+    (failsWith (lexText "x \u2227\u00b6 y\n") LexCode.unknownCharacter &&
+      firstArgument? (lexText "x \u2227\u00b6 y\n") "spelling" == some "\u00b6")
+  check fails "unicode: maxTokenBytes counts an alias in bytes"
+    ((streamOf? (lexWith { maxTokenBytes := 3 } "\u2227")).isSome &&
+      failsOn (lexWith { maxTokenBytes := 2 } "\u2227") LexCode.tokenTooLarge &&
+      firstArgument? (lexWith { maxTokenBytes := 2 } "\u2227") "limit" == some "2")
+  check fails "unicode: maxSourceBytes counts an alias in bytes"
+    ((streamOf? (lexWith { maxSourceBytes := 7 } "x \u2227 y")).isSome &&
+      failsOn (lexWith { maxSourceBytes := 6 } "x \u2227 y") LexCode.sourceTooLarge)
+  check fails "unicode: repeated alias lexing is deterministic"
+    (aliasPairs.all fun pair =>
+      resultKey (lexText pair.2.2) == resultKey (lexText pair.2.2))
 
 def scenarioNumerics (fails : Failures) : IO Unit := do
   check fails "numerics: decimal integers normalize to values"
@@ -531,7 +592,8 @@ def losslessCorpus : List String := [
   "WF_vars(Next) /\\ SF_x(Other)\n",
   "\\o377 + \\hFF + \\b1010 - 007\n",
   "[]<>[][Next]_vars\n",
-  "(*\r\n  @type: Set(Int);\r\n*)\r\nS == {1, 2, 3}\n"
+  "(*\r\n  @type: Set(Int);\r\n*)\r\nS == {1, 2, 3}\n",
+  "And == TRUE \u2227 FALSE\nMember == 1 \u2208 {1, 2}\nLeq == 1 \u2264 2\n"
 ]
 
 def scenarioLosslessness (fails : Failures) : IO Unit := do
@@ -640,9 +702,9 @@ def scenarioFailures (fails : Failures) : IO Unit := do
       firstArgument? (lexText "\u00a4") "spelling" == some "\u00a4" &&
       firstArgument? (lexText "\u00a4") "code" == some "164")
   check fails "failures: staged Unicode operators name the spelling"
-    (failsWith (lexText "x \u2227 y\n") LexCode.unicodeStaged &&
-      firstArgument? (lexText "x \u2227 y\n") "spelling" == some "\u2227" &&
-      firstArgument? (lexText "x \u2227 y\n") "code" == some "8743")
+    (failsWith (lexText "x \u2192 y\n") LexCode.unicodeStaged &&
+      firstArgument? (lexText "x \u2192 y\n") "spelling" == some "\u2192" &&
+      firstArgument? (lexText "x \u2192 y\n") "code" == some "8594")
   check fails "failures: control characters are rejected with their code"
     (failsWith (lexText (controlChar 0)) LexCode.controlCharacter &&
       firstArgument? (lexText (controlChar 0)) "code" == some "0" &&
@@ -672,7 +734,7 @@ def scenarioFailures (fails : Failures) : IO Unit := do
       failsWith (lexText (nestedComment 65)) LexCode.commentNesting &&
       firstArgument? (lexText (nestedComment 65)) "limit" == some "64")
   check fails "failures: every rejected sample carries at least one diagnostic"
-    (["\u00a4", controlChar 1, "\"ab", "(* ab", "1.5", "\u2227",
+    (["\u00a4", controlChar 1, "\"ab", "(* ab", "1.5", "\u2192",
         nestedComment 65].all fun text => failed (lexText text))
 
 def scenarioInvalidUtf8 (fails : Failures) : IO Unit := do
@@ -833,7 +895,7 @@ def scenarioTermination (fails : Failures) : IO Unit := do
 
 def scenarioDeterminism (fails : Failures) : IO Unit := do
   let samples : List String := losslessCorpus ++ [
-    "\u00b6", "\u2227", controlChar 1, "\"ab", "(* ab", "1.5", nestedComment 65,
+    "\u00b6", "\u2192", controlChar 1, "\"ab", "(* ab", "1.5", nestedComment 65,
     "\\o19", "A!B!C", "WF_x(Next) /\\ ~y"]
   check fails "determinism: repeated runs produce equal results"
     (samples.all (fun text => resultKey (lexText text) == resultKey (lexText text)))
@@ -857,13 +919,13 @@ def scenarioDeterminism (fails : Failures) : IO Unit := do
   check fails "determinism: every failure carries error-severity diagnostics"
     (samples.all fun text => (diagnostics (lexText text)).all Diagnostic.hasErrorSeverity)
   check fails "determinism: rejected input never yields a token stream"
-    (["\u00b6", "\u2227", controlChar 1, "\"ab", "(* ab", "1.5",
+    (["\u00b6", "\u2192", controlChar 1, "\"ab", "(* ab", "1.5",
         nestedComment 65, "\\o19"].all fun text =>
       (streamOf? (lexText text)).isNone && failed (lexText text))
 
 def scenarioProfileTables (fails : Failures) : IO Unit := do
-  check fails "profile: the revision-2 name is pinned"
-    (LanguageProfile.default.name == "mirrors-tla-frontend-profile-2")
+  check fails "profile: the revision-3 name is pinned"
+    (LanguageProfile.default.name == "mirrors-tla-frontend-profile-3")
   check fails "profile: keywords and prefix keywords are disjoint"
     (LanguageProfile.default.keywords.toList.all fun keyword =>
       !(LanguageProfile.default.prefixKeywords.contains keyword))
@@ -876,6 +938,9 @@ def scenarioProfileTables (fails : Failures) : IO Unit := do
   check fails "profile: canonical lookup normalizes aliases and keeps unknowns"
     ((LanguageProfile.default.canonicalFor? "\\land" == some "/\\") &&
       LanguageProfile.default.canonicalFor? "\\leq" == some "=<" &&
+      LanguageProfile.default.canonicalFor? "\u2227" == some "/\\" &&
+      LanguageProfile.default.canonicalFor? "\u2208" == some "\\in" &&
+      LanguageProfile.default.canonicalFor? "\u2264" == some "=<" &&
       LanguageProfile.default.canonicalFor? "\\oplus" == some "\\oplus" &&
       LanguageProfile.default.canonicalFor? "\\notanalias" == none)
   check fails "profile: keyword lookup is exact and case sensitive"
@@ -885,8 +950,11 @@ def scenarioProfileTables (fails : Failures) : IO Unit := do
       LanguageProfile.default.prefixKeywordAt? "WF" == none)
   check fails "profile: staged Unicode spellings are listed, ASCII is not"
     (LanguageProfile.default.isStagedUnicode "\u225c" &&
-      LanguageProfile.default.isStagedUnicode "\u2227" &&
-      !LanguageProfile.default.isStagedUnicode "/\\")
+      LanguageProfile.default.isStagedUnicode "\u2192" &&
+      !LanguageProfile.default.isStagedUnicode "/\\" &&
+      !LanguageProfile.default.isStagedUnicode "\u2227" &&
+      !LanguageProfile.default.isStagedUnicode "\u2208" &&
+      !LanguageProfile.default.isStagedUnicode "\u2264")
   check fails "diagnostics: severity and stage rendering is stable"
     (Severity.toString .error == "error" && Severity.isError .error &&
       !Severity.isError .warning &&
@@ -910,6 +978,7 @@ def allScenarios (fails : Failures) : IO Unit := do
   scenarioModuleDelimiters fails
   scenarioVocabulary fails
   scenarioSymbols fails
+  scenarioUnicodeAliases fails
   scenarioNumerics fails
   scenarioTrivia fails
   scenarioLosslessness fails

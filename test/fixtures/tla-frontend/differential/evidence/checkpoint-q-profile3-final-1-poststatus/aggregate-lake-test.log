@@ -1,0 +1,182 @@
+....................................................ssss....
+----------------------------------------------------------------------
+Ran 60 tests in 6.278s
+
+OK (skipped=4)
+
+Async emitter: deterministic targets, shared semantic identity, stable sync golden, and ownership rejection passed.
+
+ALL FIXTURES ROUND-TRIP BYTE-IDENTICAL
+
+DIFF ENGINE DIFFERENTIAL (test/fixtures/diff_cases.jsonl): 500/500 cases agree with Haskell
+
+MODEL INTERFACE SPEC GREEN
+
+MODEL INTERFACE DISTRIBUTION SPEC GREEN
+
+MODEL INTERFACE SCAFFOLD CLI SPEC GREEN
+
+MODEL INTERFACE EVIDENCE SPEC GREEN
+
+TLA LEXER SPEC GREEN
+
+TLA PARSER CORPUS: 61 fixtures (34 accepted, 27 rejected), 76 branches, 107 fixture-branch links
+TLA PARSER SPEC GREEN
+
+TLA MODULE RESOLVER SPEC GREEN
+
+TLA ELABORATION CORPUS (accepted): 34 fixtures, 34 elaborated and matched to their summaries
+TLA ELABORATION CORPUS (rejected): 27 fixtures, 7 rejected by this slice's stages
+TLA ELABORATION SPEC GREEN
+
+TLA FRONTEND SPEC GREEN
+
+TLA FRONTEND CLI GREEN
+
+verified Apalache archive: /tmp/tmpbaxii1fq/new-toolchain/downloads/apalache-0.61.0.tgz
+verified standalone SANY jar: /tmp/tmpbaxii1fq/new-toolchain/downloads/tla2tools-1.8.0.jar
+
+verified Apalache archive: /tmp/tmpbaxii1fq/new-toolchain/downloads/apalache-0.61.0.tgz
+verified standalone SANY jar: /tmp/tmpbaxii1fq/new-toolchain/downloads/tla2tools-1.8.0.jar
+
+JUNCTION SUMMARY CHECK GREEN
+JUNCTION SUMMARY GENERATION GREEN
+JUNCTION SUMMARY CHECK GREEN
+JUNCTION SUMMARY GENERATION GREEN
+acc-precedence: summary differs from the real frontend projection
+
+MODEL INTERFACE SCAFFOLD SPEC GREEN
+
+MODEL INTERFACE TRACE PROJECTION CLI SPEC GREEN
+
+MODEL INTERFACE TRACE PROJECTION SPEC GREEN
+
+model-interface check clean
+
+model-interface check clean
+
+model-interface check clean
+
+{"actions":[{"count":1,"id":"Initialize"},{"count":2,"id":"Tick"}],"schema":"mirrors.model-interface-coverage/v1","semanticDigest":"193d6cc187d05c18f02ad483a44f8ad0c1634b02083df241df08b9281b045d1c","states":3,"traces":1,"unseenActions":[]}
+
+version CLI: output and argument validation passed
+clean session: #[spec_validated, initial_state, step_ok, next_step, step_ok, initial_state, step_ok, next_step, step_ok, next_step, step_ok, all_steps_done]
+mismatch session: #[spec_validated, initial_state, step_ok, next_step, step_mismatch]
+STDIO SMOKE GREEN
+
+JOBSTORE PARITY GREEN
+
+APALACHE CLI GREEN
+
+EXPLORER SPEC: all green
+
+ok: framing accepts exactly 65535 UTF-8 bytes
+ok: framing rejects 65536 UTF-8 bytes
+ok: framing rejects embedded newline
+ok: framing rejects invalid UTF-8
+ok: pki: server cert signed
+ok: pki: client cert signed
+ok: pki: nosan cert signed
+ok: pki: rogue cert signed
+ok: pki: soon-expiry cert signed
+ok: pki: other-san cert signed
+ok: pki: stray (unchainable) cert signed
+ok: pki: expired cert signed
+ok: server ctx (good PKI)
+ok: server ctx rejected: no SAN
+ok: server ctx rejected: group-readable key (non-vacuous)
+ok: server ctx rejected: unchainable cert
+ok: server ctx rejected: cert/key mismatch
+ok: server ctx rejected: garbage cert file
+ok: server ctx rejected: empty cert file
+ok: fingerprint of garbage cert is none
+ok: expired cert: ctx still created (warn-only)
+ok: expired cert days <= 0 (M2)
+ok: client ctx (good PKI)
+ok: fingerprint matches openssl CLI
+ok: sequential certificate fingerprints keep distinct output
+ok: mTLS leaf fingerprint grants exact allowlisted verify scope
+ok: mTLS leaf fingerprint denies a non-allowlisted principal
+ok: soon cert days in [1,2]
+ok: long cert days > 300
+ok: listenTcp binds 127.0.0.1
+ok: listenTcp rejects unresolvable bind name
+ok: listenTcp rejects invalid bind literal
+ok: tcp echo round trip
+ok: tcp server survived peer drop
+ok: bind 127.0.0.1 reachable via loopback
+ok: bind 127.0.0.1 NOT reachable via non-loopback addr
+ok: mtls echo round trip (TLS 1.3, pinned fp)
+ok: ip-literal connect (M3)
+ok: mixed-case pin connect (t29)
+ok: oversized line rejected (m6)
+ok: server alive after oversized line
+ok: mtls wrong fingerprint rejected
+ok: client with wrong CA rejected by handshake
+ok: other-san ctx (locally valid)
+ok: client hostname SAN mismatch rejected
+ok: rogue client ctx (locally valid)
+ok: mtls untrusted client cert rejected by server
+ok: tls1.2-only peer rejected (no echo)
+ok: certificate-less client rejected (no echo)
+dbg before ip: pid 609648
+TRANSPORT SPEC: all green
+
+ok: serve cli: ok
+ok: serve cli: bind
+ok: serve cli: bad port
+ok: serve cli: jobs
+ok: serve cli: jobs + bind any order
+ok: serve cli: dup jobs
+ok: serve cli: bad jobs
+ok: serve cli: unknown opt
+ok: server opts: happy
+ok: server opts: defaults jobs=4
+ok: server opts: model-interface access defaults disabled
+ok: mTLS auth: CA trust alone grants no model-interface access
+ok: server opts: allowlisted fingerprint is normalized
+ok: mTLS auth: allowlisted client receives verify-only access
+ok: mTLS auth: unlisted client remains model-interface disabled
+ok: server opts: descriptor-read policy is explicit
+ok: mTLS auth: descriptor-read policy grants descriptor access
+ok: mTLS auth: authorization scope carries peer principal
+ok: mTLS auth: distinct peers have distinct cache scopes
+ok: server opts: descriptor-read requires an allowlist
+ok: server opts: malformed client fingerprint rejected
+ok: server opts: duplicate normalized client fingerprint rejected
+ok: server opts: no tls
+ok: server opts: dup port
+ok: server opts: unknown
+ok: validate: direct happy
+ok: validate: registry needs tls
+ok: validate: registry+host rejected
+ok: validate: pin requires tls
+ok: url: bare host
+ok: url: scheme + path
+ok: url: default port
+ok: url: https rejected
+ok: url: bad port
+ok: candidateFingerprint: pin wins
+ok: candidateFingerprint: registry fp
+ok: candidateFingerprint: none
+ok: tryCandidates: empty
+ok: tryCandidates: order + diagnostics
+ok: mock consul started
+ok: registerService ok
+ok: register request recorded
+ok: heartbeat request recorded
+ok: deregister request recorded
+ok: discover parses + drops empty + fails closed
+ok: dead registry -> []
+ok: server child registered with consul
+ok: SIGTERM -> deregistered + exit 0
+REGISTRY SPEC: all green
+
+conform session: #[spec_validated, initial_state, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, initial_state, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, all_steps_done]
+corrupt-count session: #[spec_validated, initial_state, step_mismatch]
+extra-key session: #[spec_validated, initial_state, step_mismatch]
+dc session: 26 messages: [spec_validated, initial_state, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, initial_state, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, next_step, step_ok, all_steps_done]
+COUNTER SPEC GREEN
+
+
+ALL LAKE TESTS GREEN

@@ -18,7 +18,7 @@ REPO = HERE.parents[1]
 class CorpusTests(unittest.TestCase):
     def test_current_corpus_is_captured_with_frozen_input_bytes(self) -> None:
         captured = corpus.validate_corpus(REPO)
-        self.assertEqual((len(captured.fixtures), sum(x.kind == "accepted" for x in captured.fixtures), sum(x.kind == "rejected" for x in captured.fixtures), len(captured.branch_ids)), (60, 33, 27, 75))
+        self.assertEqual((len(captured.fixtures), sum(x.kind == "accepted" for x in captured.fixtures), sum(x.kind == "rejected" for x in captured.fixtures), len(captured.branch_ids)), (61, 34, 27, 76))
         inline = next(x for x in captured.fixtures if x.id == "acc-inline-equivalent")
         self.assertEqual(inline.provider, "inline-source-map")
         self.assertEqual(len(inline.supplied_sources), 2)

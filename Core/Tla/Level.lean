@@ -25,8 +25,13 @@ with a limit diagnostic instead of guessing a level.
 Revision-1 decisions recorded here:
 
 * the profile operator table owns the composite operators; `[]`, `<>`, `~>`,
-  `ENABLED`, `WF_`, and `SF_` are temporal and `'`, `[]_`, `<<>>_`, and
-  `UNCHANGED` are action level;
+  `WF_`, and `SF_` are temporal and `'`, `[]_`, `<<>>_`, and `UNCHANGED` are
+  action level;
+* `ENABLED e` is state level whenever `e` classifies at or below `action` — a
+  constant, state, or action operand all yield `state` — and an operand above
+  `action` is recorded as a level problem instead of being accepted. The live
+  reference matrix that calibrates this rule is recorded in
+  `Docs/model-interface-compiler/tla-frontend-dc0-compatibility.md`;
 * an application is the least upper bound of the operator's own level and its
   arguments, so a higher-order parameter takes the level of the argument it is
   applied to;
@@ -119,11 +124,13 @@ def levelJoin (levels : Array (Option Level)) : Option Level :=
     (some Level.constant)
 
 /-- Application level: the profile's temporal and action operators dominate,
-every other application is the least upper bound of the operator symbol and the
-arguments. -/
+`ENABLED` is state level for every operand the rule admits, and every other
+application is the least upper bound of the operator symbol and the arguments.
+An `ENABLED` operand above `action` is reported by `classifyExpressionLevel`. -/
 def applicationLevel (operator arguments : Level) (spelling : String) : Level :=
   match spelling with
-  | "[]" | "<>" | "~>" | "ENABLED" | "WF_" | "SF_" => Level.temporal
+  | "[]" | "<>" | "~>" | "WF_" | "SF_" => Level.temporal
+  | "ENABLED" => Level.state
   | "'" | "[]_" | "<<>>_" | "UNCHANGED" => Level.max Level.action arguments
   | _ => Level.max operator arguments
 
@@ -132,141 +139,188 @@ def bindings (bounds : Array (String × Level))
     (boundList : Array Bound) : Array (String × Level) :=
   bounds ++ boundList.map (fun bound => (bound.name, Level.constant))
 
-/-- Level of one expression under a module-symbol lookup and a bound-name list.
-`fuel` bounds the number of visited syntax nodes; exhaustion returns `none`.
+/-- Level classification of one expression together with the source ranges of
+the `ENABLED` applications whose operand is classified above `action`.
 
-Compound forms that carry no dedicated constructor (`[]`, `'`, `WF_`, …) are
-applications whose canonical spelling selects the profile's level rule. -/
-def expressionLevel (fuel : Nat) (symbols : SymbolLevels)
-    (bounds : Array (String × Level)) (expression : Expression) : Option Level :=
+The calibrated reference rule makes `ENABLED e` state level whenever `e`
+classifies at or below `action` and rejects an operand above `action`. The
+traversal stays total — an invalid application still classifies as `state`
+rather than `none` — and records each invalid application's range, so the
+elaborator can reject the module with a bounded level diagnostic. A caller that
+only needs the level reads `expressionLevel`, the first projection, and every
+caller that accepts a result checks the recorded problems.
+
+`fuel` bounds the number of visited syntax nodes; exhaustion returns `none`
+with the problems found so far. Compound forms that carry no dedicated
+constructor (`[]`, `'`, `WF_`, …) are applications whose canonical spelling
+selects the profile's level rule. -/
+def classifyExpressionLevel (fuel : Nat) (symbols : SymbolLevels)
+    (bounds : Array (String × Level)) (expression : Expression) :
+    Option Level × List SourceRange :=
   match fuel with
-  | 0 => none
+  | 0 => (none, [])
   | fuel + 1 =>
-      let recur := expressionLevel fuel symbols bounds
+      let recur := classifyExpressionLevel fuel symbols bounds
+      let joined (results : Array (Option Level × List SourceRange)) :
+          Option Level × List SourceRange :=
+        (levelJoin (results.map Prod.fst), results.toList.flatMap Prod.snd)
+      let boundResults (boundList : Array Bound) :
+          Array (Option Level × List SourceRange) :=
+        boundList.map (fun bound =>
+          match bound.domain with
+          | some domain => recur domain
+          | none => (some Level.constant, []))
       match expression with
-      | .name reference _ => some (referenceLevel symbols bounds reference)
-      | .boolean _ _ => some Level.constant
-      | .integer _ _ => some Level.constant
-      | .string _ _ => some Level.constant
-      | .tuple items _ => levelJoin (items.map recur)
-      | .set items _ => levelJoin (items.map recur)
-      | .record fields _ => levelJoin (fields.map (fun field => recur field.value))
-      | .recordSet fields _ => levelJoin (fields.map (fun field => recur field.value))
+      | .name reference _ => (some (referenceLevel symbols bounds reference), [])
+      | .boolean _ _ => (some Level.constant, [])
+      | .integer _ _ => (some Level.constant, [])
+      | .string _ _ => (some Level.constant, [])
+      | .tuple items _ => joined (items.map recur)
+      | .set items _ => joined (items.map recur)
+      | .record fields _ => joined (fields.map (fun field => recur field.value))
+      | .recordSet fields _ => joined (fields.map (fun field => recur field.value))
       | .function boundList body _ =>
           let extended := bindings bounds boundList
-          match
-            levelJoin (boundList.map (fun bound =>
-              match bound.domain with
-              | some domain => recur domain
-              | none => some Level.constant)),
-            expressionLevel fuel symbols extended body with
-          | some domains, some result => some (Level.max domains result)
-          | _, _ => none
+          match joined (boundResults boundList),
+              classifyExpressionLevel fuel symbols extended body with
+          | (some domains, domainProblems), (some result, bodyProblems) =>
+              (some (Level.max domains result), domainProblems ++ bodyProblems)
+          | (_, domainProblems), (_, bodyProblems) =>
+              (none, domainProblems ++ bodyProblems)
       | .functionSet domain codomain _ =>
           match recur domain, recur codomain with
-          | some left, some right => some (Level.max left right)
-          | _, _ => none
-      | .apply reference arguments _ =>
-          match levelJoin (arguments.map recur) with
-          | some argumentsLevel =>
-              some (applicationLevel
+          | (some left, leftProblems), (some right, rightProblems) =>
+              (some (Level.max left right), leftProblems ++ rightProblems)
+          | (_, leftProblems), (_, rightProblems) =>
+              (none, leftProblems ++ rightProblems)
+      | .apply reference arguments range =>
+          match joined (arguments.map recur) with
+          | (some argumentsLevel, problems) =>
+              let level := applicationLevel
                 (referenceLevel symbols bounds reference) argumentsLevel
-                reference.spelling)
-          | none => none
+                reference.spelling
+              if reference.spelling == "ENABLED" &&
+                  argumentsLevel.rank > Level.action.rank then
+                (level, problems ++ [range])
+              else
+                (level, problems)
+          | (none, problems) => (none, problems)
       | .functionApply func index _ =>
           match recur func, recur index with
-          | some left, some right => some (Level.max left right)
-          | _, _ => none
+          | (some left, leftProblems), (some right, rightProblems) =>
+              (some (Level.max left right), leftProblems ++ rightProblems)
+          | (_, leftProblems), (_, rightProblems) =>
+              (none, leftProblems ++ rightProblems)
       | .select base _ _ => recur base
       | .ifThenElse condition thenBranch elseBranch _ =>
           match recur condition, recur thenBranch, recur elseBranch with
-          | some first, some second, some third =>
-              some (Level.max first (Level.max second third))
-          | _, _, _ => none
+          | (some first, firstProblems), (some second, secondProblems),
+              (some third, thirdProblems) =>
+              (some (Level.max first (Level.max second third)),
+                firstProblems ++ secondProblems ++ thirdProblems)
+          | (_, firstProblems), (_, secondProblems), (_, thirdProblems) =>
+              (none, firstProblems ++ secondProblems ++ thirdProblems)
       | .case arms _ =>
-          levelJoin (arms.map (fun arm =>
+          joined (arms.map (fun arm =>
             match arm.guard with
             | some guard =>
                 match recur guard, recur arm.value with
-                | some guardLevel, some valueLevel =>
-                    some (Level.max guardLevel valueLevel)
-                | _, _ => none
+                | (some guardLevel, guardProblems), (some valueLevel, valueProblems) =>
+                    (some (Level.max guardLevel valueLevel),
+                      guardProblems ++ valueProblems)
+                | (_, guardProblems), (_, valueProblems) =>
+                    (none, guardProblems ++ valueProblems)
             | none => recur arm.value))
       | .letIn definitions body _ =>
-          let extended := definitions.foldl
-            (fun accumulated definition =>
-              match expressionLevel fuel symbols
+          let (extended, problems) := definitions.foldl
+            (fun (accumulated, problems) definition =>
+              match classifyExpressionLevel fuel symbols
                   (accumulated ++ definition.parameters.map
                     (fun parameter => (parameter.name, Level.constant)))
                   definition.body with
-              | some level => accumulated ++ [(definition.name, level)]
-              | none => accumulated)
-            bounds
-          expressionLevel fuel symbols extended body
+              | (some level, bodyProblems) =>
+                  (accumulated ++ [(definition.name, level)],
+                    problems ++ bodyProblems)
+              | (none, bodyProblems) => (accumulated, problems ++ bodyProblems))
+            (bounds, [])
+          match classifyExpressionLevel fuel symbols extended body with
+          | (some level, bodyProblems) => (some level, problems ++ bodyProblems)
+          | (none, bodyProblems) => (none, problems ++ bodyProblems)
       | .choose boundList body _ =>
           let extended := bindings bounds boundList
-          match
-            levelJoin (boundList.map (fun bound =>
-              match bound.domain with
-              | some domain => recur domain
-              | none => some Level.constant)),
-            expressionLevel fuel symbols extended body with
-          | some domains, some result => some (Level.max domains result)
-          | _, _ => none
+          match joined (boundResults boundList),
+              classifyExpressionLevel fuel symbols extended body with
+          | (some domains, domainProblems), (some result, bodyProblems) =>
+              (some (Level.max domains result), domainProblems ++ bodyProblems)
+          | (_, domainProblems), (_, bodyProblems) =>
+              (none, domainProblems ++ bodyProblems)
       | .quantifier _ boundList body _ =>
           let extended := bindings bounds boundList
-          match
-            levelJoin (boundList.map (fun bound =>
-              match bound.domain with
-              | some domain => recur domain
-              | none => some Level.constant)),
-            expressionLevel fuel symbols extended body with
-          | some domains, some result => some (Level.max domains result)
-          | _, _ => none
+          match joined (boundResults boundList),
+              classifyExpressionLevel fuel symbols extended body with
+          | (some domains, domainProblems), (some result, bodyProblems) =>
+              (some (Level.max domains result), domainProblems ++ bodyProblems)
+          | (_, domainProblems), (_, bodyProblems) =>
+              (none, domainProblems ++ bodyProblems)
       | .setBuilder element boundList _ =>
           let extended := bindings bounds boundList
-          match
-            levelJoin (boundList.map (fun bound =>
-              match bound.domain with
-              | some domain => recur domain
-              | none => some Level.constant)),
-            expressionLevel fuel symbols extended element with
-          | some domains, some elementLevel => some (Level.max domains elementLevel)
-          | _, _ => none
+          match joined (boundResults boundList),
+              classifyExpressionLevel fuel symbols extended element with
+          | (some domains, domainProblems), (some elementLevel, elementProblems) =>
+              (some (Level.max domains elementLevel),
+                domainProblems ++ elementProblems)
+          | (_, domainProblems), (_, elementProblems) =>
+              (none, domainProblems ++ elementProblems)
       | .setFilter boundList predicate _ =>
           let extended := bindings bounds boundList
-          match
-            levelJoin (boundList.map (fun bound =>
-              match bound.domain with
-              | some domain => recur domain
-              | none => some Level.constant)),
-            expressionLevel fuel symbols extended predicate with
-          | some domains, some predicateLevel => some (Level.max domains predicateLevel)
-          | _, _ => none
+          match joined (boundResults boundList),
+              classifyExpressionLevel fuel symbols extended predicate with
+          | (some domains, domainProblems), (some predicateLevel, predicateProblems) =>
+              (some (Level.max domains predicateLevel),
+                domainProblems ++ predicateProblems)
+          | (_, domainProblems), (_, predicateProblems) =>
+              (none, domainProblems ++ predicateProblems)
       | .except base specifications _ =>
           match recur base,
-              levelJoin (specifications.map (fun specification =>
-                match
-                  levelJoin (specification.path.map (fun element =>
-                    match element with
-                    | .field _ _ => some Level.constant
-                    | .index index _ => recur index)),
-                  recur specification.value with
-                | some indices, some value => some (Level.max indices value)
-                | _, _ => none)) with
-          | some baseLevel, some specificationLevel =>
-              some (Level.max baseLevel specificationLevel)
-          | _, _ => none
-      | .currentValue _ => some Level.constant
+              joined (specifications.map (fun specification =>
+                let pathResults := specification.path.map (fun element =>
+                  match element with
+                  | .field _ _ => (some Level.constant, [])
+                  | .index index _ => recur index)
+                match joined pathResults, recur specification.value with
+                | (some indices, indexProblems), (some value, valueProblems) =>
+                    (some (Level.max indices value), indexProblems ++ valueProblems)
+                | (_, indexProblems), (_, valueProblems) =>
+                    (none, indexProblems ++ valueProblems))) with
+          | (some baseLevel, baseProblems), (some specificationsLevel, specificationProblems) =>
+              (some (Level.max baseLevel specificationsLevel),
+                baseProblems ++ specificationProblems)
+          | (_, baseProblems), (_, specificationProblems) =>
+              (none, baseProblems ++ specificationProblems)
+      | .currentValue _ => (some Level.constant, [])
+
+/-- Level of one expression under a module-symbol lookup and a bound-name list.
+This is the level projection of `classifyExpressionLevel`. -/
+def expressionLevel (fuel : Nat) (symbols : SymbolLevels)
+    (bounds : Array (String × Level)) (expression : Expression) : Option Level :=
+  (classifyExpressionLevel fuel symbols bounds expression).1
+
+/-- Level classification of one operator definition body: formal parameters are
+constant level until an application supplies a higher-level argument. The
+second projection carries the `classifyExpressionLevel` problems. -/
+def classifyDefinitionLevel (fuel : Nat) (symbols : SymbolLevels)
+    (bounds : Array (String × Level)) (definition : OperatorDefinition) :
+    Option Level × List SourceRange :=
+  classifyExpressionLevel fuel symbols
+    (bounds ++ definition.parameters.map
+      (fun parameter => (parameter.name, Level.constant)))
+    definition.body
 
 /-- Level of one operator definition body: formal parameters are constant level
 until an application supplies a higher-level argument. -/
 def definitionLevel (fuel : Nat) (symbols : SymbolLevels)
     (bounds : Array (String × Level)) (definition : OperatorDefinition) :
     Option Level :=
-  expressionLevel fuel symbols
-    (bounds ++ definition.parameters.map
-      (fun parameter => (parameter.name, Level.constant)))
-    definition.body
+  (classifyDefinitionLevel fuel symbols bounds definition).1
 
 end Core.Tla

@@ -7,7 +7,7 @@ import Core.Tla.Token
 
 Pure, total-under-limits lexer for the general TLA+ frontend
 (`Docs/model-interface-compiler/tla-frontend-design.md`, §9 "Lexer"), pinned to
-the revision-2 language profile
+the revision-3 language profile
 (`Docs/model-interface-compiler/tla-language-profile.md`).
 
 `lex` returns `Except (List Diagnostic) TokenStream`, so a successful result
@@ -27,8 +27,8 @@ reproduces that capture.
   stays `1`, `..`, `2`;
 * strings with the escapes `\`, `"`, `t`, `n`, `r`, and `f`, reporting other
   escapes;
-* punctuation, operator runs, and the profile's ASCII and word aliases (`/\`
-  and `\land` share one canonical spelling);
+* punctuation, operator runs, and the profile's ASCII, word, and admitted
+  Unicode aliases (`/\`, `\land`, and `∧` share one canonical spelling);
 * operator spellings outside the alias table, such as `\oplus`, as symbolic
   tokens whose canonical spelling is the literal spelling;
 * line comments, nested block comments, and `@`-prefixed annotations as trivia
@@ -40,11 +40,12 @@ reproduces that capture.
 `maxIntegerDigits`, `maxCommentDepth`, and the diagnostic count and byte budgets
 are explicit: every accumulating scan is bounded before it allocates. Invalid
 UTF-8 and control characters are reported before token scanning starts, because
-a token stream only carries textual spellings. Unicode operator glyphs and every
-other non-ASCII scalar outside strings and comments are rejected; the profile
-stages the Unicode spellings out and the diagnostic names the spelling. The scan
-stops as soon as diagnostics can no longer be recorded, so hostile input stays
-bounded.
+a token stream only carries textual spellings. Unicode operator glyphs the
+profile admits lex through the same alias table as their ASCII spellings and keep
+their source range; a glyph the profile still stages, and every other non-ASCII
+scalar outside strings and comments, is rejected, with the diagnostic naming the
+spelling. The scan stops as soon as diagnostics can no longer be recorded, so
+hostile input stays bounded.
 
 ## Diagnostic codes
 
@@ -85,19 +86,21 @@ def defaultPrefixKeywords : Array String := #["WF_", "SF_"]
 (`Docs/model-interface-compiler/tla-language-profile.md`, §4.7). Spellings with
 several entries normalize the symbolic ASCII and word ASCII forms of one
 operator; single-character entries keep adjacent operators from merging into one
-run. Unicode glyphs are deliberately absent: `stagedUnicodeOperatorSpellings`
-lists them so the lexer can name them in a profile-limit diagnostic. -/
+run. Revision 3 admits the reference-confirmed Unicode spellings of `/\`, `\in`,
+and `=<` here; the spellings still staged out live in
+`stagedUnicodeOperatorSpellings`, so the lexer can name them in a profile-limit
+diagnostic. -/
 def defaultSymbolAliases : Array SymbolAlias := #[
   ⟨"==", #["=="]⟩,
-  ⟨"/\\", #["/\\", "\\land"]⟩,
+  ⟨"/\\", #["/\\", "\\land", "∧"]⟩,
   ⟨"\\/", #["\\/", "\\lor"]⟩,
   ⟨"~", #["~", "\\lnot", "\\neg"]⟩,
   ⟨"=>", #["=>"]⟩,
   ⟨"<=>", #["<=>", "\\equiv"]⟩,
   ⟨"#", #["#", "/="]⟩,
-  ⟨"=<", #["=<", "<=", "\\leq"]⟩,
+  ⟨"=<", #["=<", "<=", "\\leq", "≤"]⟩,
   ⟨">=", #[">=", "\\geq"]⟩,
-  ⟨"\\in", #["\\in"]⟩,
+  ⟨"\\in", #["\\in", "∈"]⟩,
   ⟨"\\notin", #["\\notin"]⟩,
   ⟨"\\subseteq", #["\\subseteq"]⟩,
   ⟨"\\subset", #["\\subset"]⟩,
@@ -151,10 +154,14 @@ def defaultSymbolAliases : Array SymbolAlias := #[
 
 /-- Unicode operator spellings that revision 1 stages out. Each one is a valid
 TLA+ spelling of an ASCII operator, so the lexer names the spelling in a
-profile-limit diagnostic instead of reporting malformed input. -/
+profile-limit diagnostic instead of reporting malformed input. Revision 3
+removed the three spellings `∧`, `∈`, and `≤` that both pinned references accept
+from this list
+(`Docs/model-interface-compiler/tla-frontend-dc0-compatibility.md`); every
+spelling left here is still staged. -/
 def stagedUnicodeOperatorSpellings : Array String := #[
-  "∧", "∨", "¬", "⇒", "⇔", "≡", "∈", "∉", "⊆", "⊂", "⊇", "⊃", "∪", "∩",
-  "≠", "≤", "≥", "⟨", "⟩", "↦", "‥", "□", "◇", "≜", "→", "←", "∘", "×",
+  "∨", "¬", "⇒", "⇔", "≡", "∉", "⊆", "⊂", "⊇", "⊃", "∪", "∩",
+  "≠", "≥", "⟨", "⟩", "↦", "‥", "□", "◇", "≜", "→", "←", "∘", "×",
   "÷", "≺", "≻", "∼", "≈", "∙", "⋆", "○"]
 
 /-- The language profile the lexer consumes. Precedence and associativity tables
@@ -171,10 +178,11 @@ structure LanguageProfile where
 namespace LanguageProfile
 
 /-- The executable TLA+ profile of this slice, pinned to
-`mirrors-tla-frontend-profile-2`. Later revisions extend these tables instead of
-changing lexer code. -/
+`mirrors-tla-frontend-profile-3`: the revision-2 tables plus the three
+reference-confirmed Unicode aliases. Later revisions extend these tables instead
+of changing lexer code. -/
 def default : LanguageProfile :=
-  { name := "mirrors-tla-frontend-profile-2"
+  { name := "mirrors-tla-frontend-profile-3"
     keywords := defaultKeywords
     prefixKeywords := defaultPrefixKeywords
     symbols := defaultSymbolAliases
@@ -1032,23 +1040,31 @@ private def scanToken (profile : LanguageProfile) (limits : LexerLimits)
   let lineStart := startIndex == 0 || chars[startIndex - 1]!.character == '\n'
   let next? := charAt? chars (startIndex + 1)
   if current.toNat > 0x7F then
-    let startOffset := byteOffsetAt chars bytes startIndex
-    let stopOffset := byteOffsetAt chars bytes (startIndex + 1)
-    let spelling := slice bytes startOffset stopOffset
-    let staged := profile.isStagedUnicode spelling
-    let code := if staged then LexCode.unicodeStaged else LexCode.unknownCharacter
-    let message :=
-      if staged then
-        "Unicode operator spelling is staged out of the revision-1 profile"
-      else
-        "character is outside the ASCII revision-1 profile"
-    let diagnostic :=
-      ((lexDiagnostic source code message
-        ⟨⟨startOffset, line, column⟩, ⟨stopOffset, line, column + 1⟩⟩).withArgument
-        "spelling" spelling).withArgument "code" (toString current.toNat)
-    { pieces := #[⟨.symbol ⟨spelling⟩, startIndex, startIndex + 1⟩]
-      stopIndex := startIndex + 1
-      diagnostics := #[diagnostic] }
+    -- An admitted Unicode alias lexes exactly like its ASCII spelling: the
+    -- token carries the canonical spelling and the original scalar's range, so
+    -- the source stays recoverable byte for byte. Every other multibyte scalar
+    -- keeps the bounded profile diagnostic that names it.
+    match longestAliasMatch? buckets chars startIndex with
+    | some (canonical, length) =>
+        singlePiece (.symbol ⟨canonical⟩) startIndex (startIndex + length)
+    | none =>
+        let startOffset := byteOffsetAt chars bytes startIndex
+        let stopOffset := byteOffsetAt chars bytes (startIndex + 1)
+        let spelling := slice bytes startOffset stopOffset
+        let staged := profile.isStagedUnicode spelling
+        let code := if staged then LexCode.unicodeStaged else LexCode.unknownCharacter
+        let message :=
+          if staged then
+            "Unicode operator spelling is staged out of the revision-3 profile"
+          else
+            "character is outside the Unicode aliases admitted by the revision-3 profile"
+        let diagnostic :=
+          ((lexDiagnostic source code message
+            ⟨⟨startOffset, line, column⟩, ⟨stopOffset, line, column + 1⟩⟩).withArgument
+            "spelling" spelling).withArgument "code" (toString current.toNat)
+        { pieces := #[⟨.symbol ⟨spelling⟩, startIndex, startIndex + 1⟩]
+          stopIndex := startIndex + 1
+          diagnostics := #[diagnostic] }
   else if current == '"' then
     scanString source bytes chars startIndex line column
   else if current == '-' && lineStart then

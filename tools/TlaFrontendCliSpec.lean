@@ -70,6 +70,12 @@ private def transferPath : String :=
 private def rejectedPath : String :=
   "test/fixtures/tla-frontend/rejected/RejectPrecedenceMix.tla"
 
+private def actionsPath : String :=
+  "test/fixtures/tla-frontend/accepted/AcceptActions.tla"
+
+private def namedInstancePath : String :=
+  "test/fixtures/tla-frontend/rejected/instance-definition-only/InstanceDefsRoot.tla"
+
 private def goldenPath : System.FilePath :=
   "test/fixtures/tla-frontend/cli/inspect-generic-transfer-variables.json"
 
@@ -100,6 +106,10 @@ private def boolField? (json : Json) (key : String) : Option Bool :=
 
 private def arrayField? (json : Json) (key : String) : Option (Array Json) :=
   field? json key >>= fun value => (Json.getArr? value).toOption
+
+private def stringArrayField? (json : Json) (key : String) : Option (Array String) := do
+  let values ← arrayField? json key
+  values.mapM fun value => (Json.getStr? value).toOption
 
 private def moduleSource (name parent : String) (variables : List String) : String :=
   let declarationLines := variables.mapIdx fun index entry =>
@@ -330,6 +340,72 @@ private def scenarioInspect (failures : Failures) : IO Unit := do
   check failures "inspect: default output carries no physical path"
     (!human.stdout.contains "/home")
 
+/-- DC1 exercises the public inspection projection, rather than only the
+elaboration result, for the ENABLED Increment regression. -/
+private def scenarioInspectEnabledLevels (failures : Failures) : IO Unit := do
+  let run ← invoke #["inspect", "--spec", actionsPath, "--levels", "--format", "json"]
+  check failures "inspect enabled: --levels exits zero" (run.exitCode == 0) run.stderr
+  match decode run.stdout with
+  | none => check failures "inspect enabled: --levels json decodes" false run.stdout
+  | some doc =>
+      check failures "inspect enabled: successful document" (boolField? doc "ok" == some true)
+      check failures "inspect enabled: root module"
+        (stringField? doc "module" == some "AcceptActions")
+      match arrayField? doc "levels" with
+      | none => check failures "inspect enabled: levels present" false
+      | some levels =>
+          let hasLevel (name level : String) := levels.any fun entry =>
+            stringField? entry "kind" == some "operator" &&
+            stringField? entry "name" == some name &&
+            stringField? entry "level" == some level
+          check failures "inspect enabled: Increment remains action"
+            (hasLevel "Increment" "action")
+          check failures "inspect enabled: Enabled is state"
+            (hasLevel "Enabled" "state")
+          check failures "inspect enabled: Spec remains temporal"
+            (hasLevel "Spec" "temporal")
+
+/-- DC2 proves the public JSON is a direct, deterministic projection of the
+qualified operator materialized by elaboration. -/
+private def scenarioInspectQualifiedInstance (failures : Failures) : IO Unit := do
+  let first ← invoke
+    #["inspect", "--spec", namedInstancePath, "--operators", "--levels",
+      "--format", "json"]
+  let second ← invoke
+    #["inspect", "--spec", namedInstancePath, "--operators", "--levels",
+      "--format", "json"]
+  check failures "inspect qualified: exits zero" (first.exitCode == 0) first.stderr
+  check failures "inspect qualified: repeated JSON is byte-identical"
+    (second.exitCode == 0 && second.stdout == first.stdout) second.stderr
+  match decode first.stdout with
+  | none => check failures "inspect qualified: JSON decodes" false first.stdout
+  | some doc =>
+      let operators := (arrayField? doc "operators").getD (#[] : Array Json)
+      match operators.find? (fun entry => stringField? entry "name" == some "I!ChildOp") with
+      | none => check failures "inspect qualified: operator row exists" false first.stdout
+      | some operator => do
+          check failures "inspect qualified: child provenance"
+            (stringField? operator "declaredIn" == some "InstanceDefsChild")
+          check failures "inspect qualified: nullary functional shape"
+            (natField? operator "arity" == some 0 &&
+              stringField? operator "fixity" == some "functional")
+          check failures "inspect qualified: instance/import path"
+            (stringArrayField? operator "importPath" ==
+              some #["InstanceDefsRoot", "InstanceDefsChild"])
+          check failures "inspect qualified: declaration location is the child source"
+            ((field? operator "location" >>= fun location =>
+                stringField? location "module") == some "InstanceDefsChild" &&
+              (field? operator "location" >>= fun location =>
+                stringField? location "path") == some "InstanceDefsChild.tla")
+          check failures "inspect qualified: substituted level"
+            (stringField? operator "level" == some "constant")
+      let levels := (arrayField? doc "levels").getD (#[] : Array Json)
+      check failures "inspect qualified: matching level row exists"
+        (levels.any fun entry =>
+          stringField? entry "kind" == some "operator" &&
+          stringField? entry "name" == some "I!ChildOp" &&
+          stringField? entry "level" == some "constant")
+
 private def scenarioPublicFixture (failures : Failures) : IO Unit := do
   let goldenExists ← goldenPath.pathExists
   if !goldenExists then
@@ -380,6 +456,8 @@ def run : IO UInt32 := do
     scenarioResolve failures
     scenarioMissingDependency failures root
     scenarioInspect failures
+    scenarioInspectEnabledLevels failures
+    scenarioInspectQualifiedInstance failures
     scenarioPublicFixture failures
     scenarioMirrorIsolation failures
     let collected ← failures.get

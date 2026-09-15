@@ -1,0 +1,6 @@
+{
+  "archive": "raw-evidence.tar.gz",
+  "sha256": "cf6aa189e6b0b23c29794c08b4e5c6ed064166a19d2e1f44cd6896911e2551b0",
+  "contains": "fixtures/** (including all rawArtifacts referenced by report.json)",
+  "restore": "tar -xzf raw-evidence.tar.gz"
+}

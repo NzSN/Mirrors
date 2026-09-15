@@ -1,18 +1,21 @@
-# Mirrors TLA+ frontend language profile (revision 2)
+# Mirrors TLA+ frontend language profile (revision 3)
 
-> Status: **revision-2 profile; frozen with the TF0 corpus on 2026-09-11,
+> Status: **revision-3 profile; frozen with the TF0 corpus on 2026-09-11,
 > revised on 2026-09-12 when TF5 lifted the staged `INSTANCE` limit, and
-> revised on 2026-09-13 for the shared junction level**.
-> Only §5.5's junction rule and the identity in §2 change in revision 2. Every
+> revised on 2026-09-13 for the shared junction level, then revised on
+> 2026-09-14 for three reference-confirmed Unicode aliases**.
+> Revision 3 changes §4.7, the identity in §2, and the corpus identity. Only
+> §5.5's junction rule and the identity in §2 changed in revision 2. Every
 > other rule below is the revision-1 rule carried forward unchanged, so its
 > historical "Revision 1" wording names the inherited rule rather than a
 > second, still-selectable profile.
 > Design authority: [general TLA+ frontend design](tla-frontend-design.md).
 > Task package: [TLA+ frontend tasks](tla-frontend-tasks.md), package TF0.
 > Conformance corpus: [`test/fixtures/tla-frontend/manifest.json`](../../test/fixtures/tla-frontend/manifest.json).
-> Differential status: **executed against pinned baselines; acceptance failed**.
-> The 57-fixture run and reviewed discrepancies are recorded in
-> [differential evidence](../../test/fixtures/tla-frontend/differential/evidence/triage.md).
+> Differential status: **profile-3 aggregate validation passed DC4**. The
+> profile-2 failure remains historical evidence; profile-3 final captures and
+> the fourteen exact reviewed policy bindings are indexed in
+> [differential evidence](../../test/fixtures/tla-frontend/differential/evidence/README.md).
 > Baseline selection changes validation metadata only; language acceptance is
 > unchanged. Historical reference claims that disagree with the pinned tools
 > remain explicit findings rather than silently revised expectations.
@@ -35,6 +38,16 @@
 > invalidates no stored parse or elaboration facts; the only process cache in
 > the repository holds model-interface descriptor bytes under an authorization
 > and resolution fingerprint, which carries no TLA+ profile value.
+>
+> Revision note (2026-09-14): the independently repeated DC0 live matrix found
+> that both pinned baselines accept the exercised `∧`, `∈`, and `≤` spellings.
+> Revision 3 admits exactly those three spellings as aliases of `/\`, `\in`,
+> and `=<` (with ASCII `<=` already an alias of `=<`). Other Unicode operator
+> spellings remain staged unless separately approved. The live corpus now
+> carries 61 fixtures (34 accepted, 27 rejected): the unchanged historical
+> `rej-unicode-spelling` source is reclassified as accepted and a focused
+> `rej-staged-unicode` fixture preserves the fail-closed boundary. DC4 owns the
+> profile-3 differential rerun and review, now completed in checkpoints O/P.
 
 ## 1. Scope and authority
 
@@ -60,9 +73,9 @@ Compatibility rules inherited from the design:
 
 ## 2. Profile identity and revision rules
 
-| Item | Revision-2 value |
+| Item | Revision-3 value |
 | --- | --- |
-| Profile id | `mirrors-tla-frontend-profile-2` |
+| Profile id | `mirrors-tla-frontend-profile-3` |
 | Corpus manifest schema | `mirrors.tla-frontend-corpus/1` |
 | Structural summary schema | `mirrors.tla-frontend-summary/1` |
 | Source identity | normalized UTF-8 bytes, CRLF and CR normalized to LF, SHA-256 |
@@ -188,15 +201,16 @@ form are malformed at `lex`.
 | --- | --- | --- |
 | Symbolic ASCII (`/\`, `\/`, `~`, `=>`, `<=>`, `#`, `<=`, `>=`, `\in`, `\notin`, `\union`, `\intersect`, `\subseteq`, `..`, `<<`, `>>`, `[`, `]`, `\|->`, `!`, `@`, `'`) | accepted | `acc-ascii-symbolic`, `acc-module-minimal` |
 | Word ASCII (`\land`, `\lor`, `\lnot`, `\neg`, `\equiv`, `\cup`, `\cap`, `\leq`, `\geq`, `\X`, `\times`, `\div`, `\circ`, `\o`, `\oplus`, `\prec`, `\succ`, `\subset`, `\supset`, `\subseteq`, `\supseteq`, `\notin`, `\sim`, `\approx`, `\bullet`, `\star`, …) | accepted; each spelling normalizes to one operator identity | `acc-ascii-word`, `acc-operators` |
-| Unicode glyphs (`∧`, `∨`, `¬`, `⇒`, `⇔`, `∈`, `⊆`, `∪`, `∩`, `≠`, `≤`, `⟨`, `⟩`, `↦`, `‥`, `□`, `◇`, `≡`) | **staged out**: rejected at `lex` with a profile-limit diagnostic naming the spelling | `rej-unicode-spelling` |
+| Unicode aliases `∧`, `∈`, and `≤` | accepted; normalize to `/\`, `\in`, and `=<` respectively, while tokens retain the original UTF-8 spelling and range | `rej-unicode-spelling` (stable historical id) |
+| Other Unicode operator glyphs | **staged out**: rejected at `lex` with a profile-limit diagnostic naming the spelling unless a later reviewed profile admits them | `rej-staged-unicode` |
 
 The word-ASCII list above is the token table published by the reference parser
-used for local probing. Unicode remains staged out in revision 1. The pinned
-SANY and Apalache baselines accept the glyphs exercised by
-`rej-unicode-spelling`, contrary to the earlier exploratory rationale. Whether
-to retain that restriction or add supported aliases remains a profile decision;
-see the differential review. This does not establish support for every glyph
-listed above in either reference tool.
+used for local probing. Revision 3 resolves the stale Unicode rationale for the
+three glyphs exercised by `rej-unicode-spelling`: two independent DC0 live
+matrix captures show that pinned SANY and Apalache accept each isolated spelling.
+The migration is deliberately limited to those three aliases. The same matrix
+shows both pins reject `→`, which owns the explicit staged negative fixture;
+acceptance of any other glyph does not follow from this profile decision.
 
 Pairs of spellings that must produce the same normalized AST are declared as an
 equivalence group in the corpus manifest; `acc-ascii-symbolic` and
@@ -494,7 +508,7 @@ table above requires a reviewed profile revision with an owning fixture.
 | Control bytes outside tab/LF/CR are rejected | Mirrors stricter | design requires rejecting unknown control characters | `rej-control-character` |
 | Identifier length, comment depth, and byte size are bounded | Mirrors stricter | untrusted compiler input; bounded resources | `rej-identifier-size`, `rej-comment-depth` |
 | PlusCal modules are rejected instead of read as comments | Mirrors stricter | translation is out of frontend scope; failing closed avoids empty model facts | `rej-pluscal` |
-| Unicode operator glyphs are rejected | Mirrors stricter on the exercised glyphs | pinned baselines accept the fixture; the historical rationale is superseded and the profile decision remains unresolved | `rej-unicode-spelling` |
+| Unicode operator glyphs outside the three profile-3 aliases are rejected | profile-specific; the focused `→` boundary agrees with both pins | only `∧`, `∈`, and `≤` are approved aliases; all other glyphs remain fail-closed pending a later profile decision | `rej-staged-unicode` |
 | `≜` is rejected | both reject | not accepted by the local reference parser | profile §4.8 |
 | Decimal real literals are staged out | Mirrors stricter | integer-only numeric value domain in revision 1 while both baselines accept real literals | `rej-real-literal` |
 | Substitution actuals are bounded at `constant` or `state` level | Mirrors stricter | revision 1 applies one uniform bound instead of the reference tool's occurrence-sensitive constant rule (§7.4) | probes in `tools/TlaElaborationSpec.lean`; corpus fixture owned by TF8 |
@@ -511,12 +525,12 @@ warnings only (duplicate declarations and conflicting imported declarations).
 These entries are historical construction evidence from an exploratory local
 probe (tla2tools 2.0 of 2024-08-08, SANY2 2.1 reporting
 `SANY2 Version 2.1 created 24 February 2014`). They are not the current pinned
-gate result. The differential gate has now executed and failed acceptance;
-see the [evidence index](../../test/fixtures/tla-frontend/differential/evidence/README.md)
-and [review](../../test/fixtures/tla-frontend/differential/evidence/triage.md).
-The Unicode row now reflects the pinned observations. Its unresolved profile
-decision remains a finding; this status update does not change language
-acceptance or add a reviewed differential exception.
+gate result. The profile-2 differential gate failed acceptance historically;
+the profile-3 gate now passes with the reviewed policy bindings recorded in the
+[evidence index](../../test/fixtures/tla-frontend/differential/evidence/README.md).
+The Unicode row reflects the repeated DC0 observations and the reviewed
+profile-3 scope. It is a language-acceptance change, not a differential
+exception; DC4 must re-observe it under the new profile identity.
 
 ## 10. Corpus contract
 
@@ -538,8 +552,8 @@ The manifest `status` is `provisional` while the SANY and Apalache pins are
 unset: fixture ids, outcomes, stages, reasons, and structural summaries are
 frozen for the active profile revision, and only the differential slots and
 pinned tool versions remain for the coordinating agent. The manifest and every
-live expected summary carry `mirrors-tla-frontend-profile-2`; archived
-revision-1 evidence is unchanged.
+live expected summary carry `mirrors-tla-frontend-profile-3`; archived
+revision-1 and revision-2 evidence is unchanged.
 
 ### 10.2 Fixture semantics
 
@@ -638,7 +652,8 @@ branch fails validation.
 | `lex.operators.alias-equivalence` | lex | `acc-ascii-symbolic`, `acc-ascii-word` |
 | `lex.operators.ascii` | lex | `acc-module-minimal`, `acc-operators`, `acc-ascii-symbolic` |
 | `lex.operators.ascii-word` | lex | `acc-ascii-word` |
-| `lex.operators.unicode-staged` | lex | `rej-unicode-spelling` |
+| `lex.operators.unicode-alias` | lex | `rej-unicode-spelling` |
+| `lex.operators.unicode-staged` | lex | `rej-staged-unicode` |
 | `lex.punctuation` | lex | `acc-module-minimal` |
 | `lex.strings.escapes` | lex | `acc-values` |
 | `lex.strings.malformed` | lex | `rej-unterminated-string`, `rej-newline-in-string` |
@@ -707,7 +722,7 @@ from those decisions.
 
 | Design open decision | Revision-1 disposition | Owner of the remainder |
 | --- | --- | --- |
-| 1. Grammar and baseline versions | profile recorded here; TLA+ Tools 1.8.0 / SANY 2.2 and Apalache 0.61.0 pinned; differential acceptance failed | coordinating agent: resolve recorded compatibility findings |
+| 1. Grammar and baseline versions | profile recorded here; TLA+ Tools 1.8.0 / SANY 2.2 and Apalache 0.61.0 pinned; profile-3 differential acceptance passed | frontend maintainers: preserve reviewed bindings on future identity changes |
 | 2. Structural proofs or opaque regions | resolved: proof bodies retained as opaque regions (§5.2) | no outstanding revision-1 choice |
 | 3. Apalache annotations as facts or trivia | trivia only, no semantic facts (§4.6) | TF6 if facts become necessary |
 | 4. Measured default limits | revision-1 limits specified in §8; production-model sizing remains continuing work | frontend maintainers |

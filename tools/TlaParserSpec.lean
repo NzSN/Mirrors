@@ -11,7 +11,7 @@ Conformance suite for the TF2 lossless parser slice
 abstract syntax", §11 "Parsing behavior", §20 "Diagnostics", §21 "Resource and
 security limits"; packages TF2A and TF2B of
 `Docs/model-interface-compiler/tf2-acceptance-tasks.md`) against the pinned
-revision-2 language profile
+revision-3 language profile
 (`Docs/model-interface-compiler/tla-language-profile.md`). The parser checks
 are pure; the TF2D corpus tier below reads the repository's
 `test/fixtures/tla-frontend` manifest, sources, and summaries.
@@ -21,7 +21,7 @@ budgets, one nesting budget for every recursive syntax family, repeated prefix
 and conditional/quantifier forms, token-stream admission, and deterministic
 repeated failures. TF2B adds: the operator table as parser-profile data (a
 modified profile changes precedence and associativity while `parseUnit` stays
-on the frozen revision-1 combination), bounded and unbounded quantifier
+on the frozen revision-3 combination), bounded and unbounded quantifier
 groups, functional/infix/prefix/postfix operator definitions with their
 applications, and decoded string values whose spelling stays in the CST. TF2C
 adds the opaque proof treatment: `PROOF OMITTED` and `PROOF OBVIOUS` terminals,
@@ -585,10 +585,10 @@ def applicationSpellings? (expression : Expression) :
 /-! ## TF2B scenarios -/
 
 /-- The operator table is profile data: a modified profile changes parsing, and
-the default profile is the frozen revision-2 combination. -/
+the default profile is the frozen revision-3 combination. -/
 def scenarioProfileOwnership (fails : Failures) : IO Unit := do
-  check fails "profile: the default profile is the frozen revision-2 combination"
-    (ParserProfile.default.name == "mirrors-tla-frontend-profile-2")
+  check fails "profile: the default profile is the frozen revision-3 combination"
+    (ParserProfile.default.name == "mirrors-tla-frontend-profile-3")
     ParserProfile.default.name
   match parseBody? {} "x == A = B = C" with
   | none => check fails "profile: the chained equality capture lexes" false
@@ -2125,7 +2125,7 @@ def expectedLexCode? (fixtureId : String) : Option String :=
     ("rej-comment-depth", LexCode.commentNesting),
     ("rej-identifier-size", LexCode.identifierTooLarge),
     ("rej-control-character", LexCode.controlCharacter),
-    ("rej-unicode-spelling", LexCode.unicodeStaged),
+    ("rej-staged-unicode", LexCode.unicodeStaged),
     ("rej-real-literal", LexCode.invalidNumber)]).map id
 
 def expectedParseCode? (fixtureId : String) : Option String :=
@@ -2361,6 +2361,37 @@ def aliasPairProblems (group : String) (first second : Fixture × ParsedBundle) 
         s!"alias group {group}: {entry.1} differs between {first.1.id} and {second.1.id}"
 
 /-! ### Corpus driver -/
+
+/-- Canonical rendering of one root operator definition, parsed from a module
+body. `none` when the body does not lex, parse, or declare the operator. -/
+def renderingOf? (body name : String) : Option String :=
+  match parseBody? {} body with
+  | none => none
+  | some outcome =>
+      (definitionOf? outcome name).map fun definition =>
+        renderExpression definition.body
+
+/-- DC3 admits the reference-confirmed Unicode aliases at `lex`, so the parser
+must see exactly the tree it sees for the ASCII spelling. Renderings are
+compared because they erase spelling and layout while preserving operator
+identity and arity. -/
+def scenarioUnicodeAliases (fails : Failures) : IO Unit := do
+  let pairs : List (String × String × String) := [
+    ("And", "TRUE /\\ FALSE", "TRUE \u2227 FALSE"),
+    ("Member", "1 \\in {1, 2}", "1 \u2208 {1, 2}"),
+    ("Leq", "1 <= 2", "1 \u2264 2")]
+  for (name, ascii, unicode) in pairs do
+    let asciiRendering := renderingOf? s!"{name} == {ascii}" name
+    let unicodeRendering := renderingOf? s!"{name} == {unicode}" name
+    check fails s!"unicode aliases: {name} renders the same for both spellings"
+      (asciiRendering.isSome && asciiRendering == unicodeRendering)
+      s!"ascii={asciiRendering} unicode={unicodeRendering}"
+  -- A staged glyph next to an admitted alias still fails closed: the parse
+  -- surface rejects the capture before any grammar step, and the lexer spec
+  -- pins the naming diagnostic that causes it.
+  check fails "unicode aliases: a staged glyph beside an admitted alias fails closed"
+    (parseBody? {} "And == TRUE \u2227\u2192 FALSE" == none &&
+      parseBody? {} "And == TRUE \u2227 FALSE" != none)
 
 def readCorpusText (root relative : String) : IO (Except String String) := do
   let path := System.FilePath.mk (root ++ "/" ++ relative)
@@ -2696,11 +2727,14 @@ def scenarioCorpusAdversarial (fails : Failures) : IO Unit := do
         checkStreamFailure fails s!"adversarial stream {index}: non-final eof"
           source displaced ParseCode.streamEof
 
-/-! ### Complete projections for the two junction summaries
+/-! ### Complete expected-summary projections
 
-Generation reads the manifest and the real frontend only. Expected files are
-read by the Python check wrapper, never by this projection. Unchanged summaries
-retain their separately validated metadata-only profile migration. -/
+`--emit-summary FIXTURE` regenerates either junction summary or the profile-3
+Unicode summary from the manifest and the real frontend only;
+`--emit-junction-summary FIXTURE` is the historical spelling the junction
+wrapper still uses. Generation never reads a destination file, and the Python
+wrappers compare decoded JSON rather than bytes. Summaries whose only change is
+the profile identity keep their separately validated metadata-only migration. -/
 
 def summaryDeclarationJson (row : SummaryDeclaration) : Json :=
   let fields := [("module", toJson row.module), ("kind", toJson row.kind),
@@ -2721,7 +2755,7 @@ def summaryDeclarationJson (row : SummaryDeclaration) : Json :=
     | none => fields
   Json.mkObj fields
 
-def completeJunctionSummary (fixture : Fixture)
+def completeSummary (fixture : Fixture)
     (result : Shell.Tla.FrontendResult) : Json :=
   let nodes := result.graph.sortedNodes
   let declarations := nodes.flatMap fun node => declarationRows node.name.name node.module
@@ -2752,9 +2786,10 @@ def completeJunctionSummary (fixture : Fixture)
       ("logicalPath", toJson source.logicalPath), ("sha256", toJson source.contentSha256)])),
     ("renderings", Json.mkObj renderings.toList)]
 
-def emitJunctionSummary (id : String) : IO UInt32 := do
-  if id != "acc-precedence" && id != "acc-precedence-junctions" then
-    IO.eprintln "only acc-precedence and acc-precedence-junctions are supported"
+def emitSummary (id : String) : IO UInt32 := do
+  if id != "acc-precedence" && id != "acc-precedence-junctions" &&
+      id != "rej-unicode-spelling" then
+    IO.eprintln "only junction and profile-3 Unicode summaries are supported"
     return 2
   match ← corpusRoot? "." with
   | none => IO.eprintln "corpus root not found"; return 2
@@ -2769,7 +2804,7 @@ def emitJunctionSummary (id : String) : IO UInt32 := do
           for diagnostic in failure.diagnostics do IO.eprintln diagnostic.message
           return 1
       | .ok result =>
-          IO.println (completeJunctionSummary fixture result).compress
+          IO.println (completeSummary fixture result).compress
           return 0
 
 end Corpus
@@ -2789,6 +2824,7 @@ def allScenarios (fails : Failures) : IO Unit := do
   scenarioRecordSets fails
   scenarioQuantifiers fails
   scenarioUserOperators fails
+  Corpus.scenarioUnicodeAliases fails
   scenarioStringValues fails
   scenarioProofTerminals fails
   scenarioProofOpacity fails
@@ -2820,8 +2856,10 @@ end TlaParserSpec
 def main (arguments : List String) : IO UInt32 :=
   match arguments with
   | [] => TlaParserSpec.run
-  | ["--emit-junction-summary", id] => TlaParserSpec.Corpus.emitJunctionSummary id
-  | _ => IO.eprintln "usage: tla_parser_spec [--emit-junction-summary FIXTURE]" *> pure 2
+  | ["--emit-summary", id] => TlaParserSpec.Corpus.emitSummary id
+  | ["--emit-junction-summary", id] => TlaParserSpec.Corpus.emitSummary id
+  | _ =>
+      IO.eprintln "usage: tla_parser_spec [--emit-summary FIXTURE]" *> pure 2
 
 -- The acceptance command `lake env lean tools/TlaParserSpec.lean` only
 -- elaborates this file, so run the suite here as well: a failing check makes

@@ -1,6 +1,6 @@
 {
   "schema": "mirrors.tla-frontend-corpus/1",
-  "profile": "mirrors-tla-frontend-profile-2",
+  "profile": "mirrors-tla-frontend-profile-3",
   "status": "provisional",
   "designDocument": "../../../Docs/model-interface-compiler/tla-frontend-design.md",
   "profileDocument": "../../../Docs/model-interface-compiler/tla-language-profile.md",
@@ -272,6 +272,11 @@
       "id": "lex.operators.unicode-staged",
       "stage": "lex",
       "title": "lex.operators.unicode-staged"
+    },
+    {
+      "id": "lex.operators.unicode-alias",
+      "stage": "lex",
+      "title": "lex.operators.unicode-alias"
     },
     {
       "id": "lex.punctuation",
@@ -1208,17 +1213,34 @@
     },
     {
       "id": "rej-unicode-spelling",
-      "kind": "rejected",
-      "stage": "lex",
+      "kind": "accepted",
+      "stage": "sourceEvidence",
       "provider": "borrowed-directory",
       "root": "RejectUnicodeSpelling",
       "files": [
         "rejected/RejectUnicodeSpelling.tla"
       ],
       "branches": [
+        "lex.operators.unicode-alias"
+      ],
+      "explanation": "The Unicode aliases ∧, ∈, and ≤ normalize to /\\, \\in, and =<. Reclassified from the revision-1 staged Unicode limit by DC3 under the independently indexed DC0 live matrix; the fixture file is unchanged.",
+      "sourceRoot": "rejected",
+      "summary": "expected/rej-unicode-spelling.json",
+      "referenceExpectation": "accepted-by-reference-tool"
+    },
+    {
+      "id": "rej-staged-unicode",
+      "kind": "rejected",
+      "stage": "lex",
+      "provider": "borrowed-directory",
+      "root": "RejectStagedUnicode",
+      "files": [
+        "rejected/RejectStagedUnicode.tla"
+      ],
+      "branches": [
         "lex.operators.unicode-staged"
       ],
-      "explanation": "Unicode operator spellings (∧, ∈, ≤) are outside revision 1; the frontend reports a profile diagnostic naming the spelling, and the reference parser rejects them as well.",
+      "explanation": "The Unicode implication arrow → stays staged out: the DC0 live matrix shows both pinned references reject this spelling, so the frontend keeps its bounded profile diagnostic instead of accepting it.",
       "reason": "profile_limit",
       "revisit": "unscheduled",
       "sourceRoot": "rejected"

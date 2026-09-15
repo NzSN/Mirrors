@@ -3,8 +3,10 @@
 > Status: **implementation plan; TF0–TF3b accepted on 2026-09-11; TF4–TF8
 > implemented and accepted on 2026-09-12 for the Mirrors-local scope. The
 > cross-language interop matrix and live Apalache tiers are green; the MirrorGate
-> matrix remains unverified. Corpus-wide differential validation was executed
-> on 2026-09-13 and failed; see section 17.7 for the current evidence.**
+> matrix remains unverified. The profile-2 corpus-wide differential run failed
+> on 2026-09-13; DC0–DC4 closed its eleven findings under profile 3 on
+> 2026-09-14. See sections 17.7–17.8 and 18.8 for the historical and current
+> evidence.**
 >
 > Design authority: [general TLA+ frontend](tla-frontend-design.md)
 >
@@ -727,3 +729,341 @@ are unchanged. Historical revision-1 checkpoints remain intact; see the
 [evidence index](../../test/fixtures/tla-frontend/differential/evidence/README.md)
 for the new portable archives and exact checksums. This follow-up does not
 complete the unrelated MirrorGate or real-application acceptance tiers.
+
+## 18. Differential closure plan: Unicode, `ENABLED`, and named instances
+
+> Status: **implementation plan; not dispatched or accepted.** This plan closes
+> the eleven unresolved comparisons retained by profile-2 checkpoints J and K.
+> It does not certify currently unsupported comparison surfaces or the separate
+> MirrorGate and real-application tiers.
+
+### 18.1 Objective and fixed evidence
+
+Close the three demonstrated causes without weakening the differential gate:
+
+- two outcome comparisons for `rej-unicode-spelling`, where Mirrors rejects the
+  exercised `∧`, `∈`, and `≤` aliases but both pinned references accept them;
+- one level comparison for `Enabled == ENABLED Increment`, where Mirrors emits
+  `temporal` and SANY emits `state`; and
+- eight structural comparisons across four named-instance fixtures, where
+  Mirrors resolves and uses `I!ChildOp` but omits the qualified operator and its
+  substituted level from the elaborated result.
+
+Checkpoints J and K are the immutable starting evidence. New work writes new
+checkpoints and leaves every historical report, archive, and checksum intact.
+An adapter-side reconstruction, an automatic expectation update, or a broad
+review exception is not closure: the production frontend or reviewed language
+profile must supply the result compared by the gate.
+
+### 18.2 Delivery graph and ownership
+
+```mermaid
+flowchart TD
+    DC0["DC0 compatibility contract"]
+    DC1["DC1 ENABLED levels"]
+    DC2["DC2 named-instance projections"]
+    DC3["DC3 Unicode profile migration"]
+    DC4["DC4 aggregate and differential closure"]
+
+    DC0 --> DC1
+    DC1 --> DC2
+    DC0 --> DC3
+    DC2 --> DC4
+    DC3 --> DC4
+```
+
+| Package | Assigned owner | Files owned during package | Dependency |
+| --- | --- | --- | --- |
+| DC0 | `test-automator` | focused differential calibration inputs/tests and a compatibility note only | checkpoints J/K |
+| DC1 | `specification_implementer` | `Core/Tla/Level.lean`, the `ENABLED` fact in `Core/Tla/Elaboration.lean`, and focused level/elaboration specs | DC0 |
+| DC2 | `specification_implementer` after DC1 handoff | named-instance result construction in `Core/Tla/{Names,Elaboration}.lean`, inspection codec only if its existing projection cannot carry the facts, and focused specs | DC1 |
+| DC3 | `specification_implementer` | lexer/profile/parser alias tables, language profile, manifest, affected fixtures/generated summaries, and focused specs | DC0; may be prepared independently but must not overlap an active owner |
+| DC4 | `test-automator` | differential execution/evidence and focused compatibility tests; coordinator owns aggregate ledger/status edits | DC1–DC3 |
+
+One owner edits a file at a time. DC1 precedes DC2 because both may touch
+`Core/Tla/Elaboration.lean`. The coordinator accepts each handoff and owns any
+shared `lakefile.lean`, aggregate documentation, generated-fixture command, or
+cross-package interface reconciliation. Owners preserve unrelated work and
+report out-of-scope findings instead of repairing them opportunistically.
+
+Each handoff records the exact changed files, commands and exit results, corpus
+fixtures exercised, and remaining findings. A green focused suite without the
+destination-tree diff and rerun evidence is not acceptance.
+
+### 18.3 DC0 — freeze the compatibility contract
+
+**Owner:** `test-automator`.
+
+Create a tight reference matrix before production edits:
+
+- run each currently staged Unicode operator spelling as an isolated minimal
+  module through pinned TLA+ Tools 1.8.0 / SANY 2.2 and Apalache 0.61.0;
+- distinguish aliases accepted by both pins, aliases accepted by only one pin,
+  and spellings rejected by both; retain native diagnostics and source hashes;
+- calibrate `ENABLED` over the smallest accepted constant-, state-, action-, and
+  temporal-shaped operands needed to recover the reference level rule, including
+  the existing `ENABLED Increment` case;
+- capture SANY operator name, arity, level, origin, and locality for direct,
+  explicitly substituted, implicitly substituted, `LOCAL`, and chained named
+  instances; and
+- prove the existing Mirrors probes reproduce all eleven checkpoint-J/K
+  discrepancies before changing an expectation.
+
+The Unicode implementation contract admits only spellings supported by the
+recorded matrix. At minimum, the exercised `∧`, `∈`, and `≤` spellings must
+become aliases of their existing canonical operators. A spelling rejected by a
+pinned reference remains staged with its focused negative case; the matrix does
+not imply blanket acceptance of arbitrary non-ASCII characters.
+
+**Acceptance:** the matrix is deterministic across two runs, all raw artifacts
+are indexed, and DC1–DC3 receive exact expected facts rather than inferred
+rules. No production or active corpus expectation changes in DC0.
+
+### 18.4 DC1 — correct `ENABLED` level semantics
+
+**Owner:** `specification_implementer` after DC0 acceptance.
+
+Replace the unconditional temporal classification with the calibrated
+syntax-directed rule. Update both sources of the current invariant:
+
+- the built-in `ENABLED` entry in `languageOperatorFacts`; and
+- the `applicationLevel` special case that currently forces every `ENABLED`
+  application to `temporal` regardless of its operand.
+
+Keep parsing, name resolution, and the four-level lattice unchanged. Add focused
+tests at the rule's calibrated operand boundaries and a regression asserting
+that `Enabled == ENABLED Increment` is state-level while `Increment` remains
+action-level and `Spec` remains temporal. Exercise the same source through the
+elaborator, inspection JSON, and differential driver so a shallow unit-only fix
+cannot pass.
+
+**Acceptance:**
+
+- `lake env lean tools/TlaElaborationSpec.lean` and its `--run` form pass;
+- the frontend CLI emits `Enabled` at `state` for `AcceptActions.tla`;
+- the focused SANY comparison is exact and the former single level finding is
+  absent without a registry exception;
+- assumption checking and substitution-level checking retain their existing
+  boundary outcomes; and
+- no parser, protocol, target, or model-interface schema changes.
+
+### 18.5 DC2 — materialize qualified named-instance operator facts
+
+**Owner:** `specification_implementer` after DC1 acceptance.
+
+Make the production elaborated result expose every visible operator contributed
+by a named instance. Reuse the existing instance frames, qualified resolver,
+and level evaluator that already validate `I!Op`; do not derive a second view in
+`TlaDifferentialDriver.lean`.
+
+For each projected operator, retain:
+
+- its qualified visible name, such as `I!ChildOp`;
+- child declaration origin and source range;
+- arity, fixity, `LOCAL` visibility, and a deterministic import/instance path;
+- a distinct resolved identity when substitution gives the instance copy a
+  distinct level; and
+- the level computed under explicit, implicit, and chained substitution frames.
+
+Keep constants and variables of named instances inaccessible through `I!c`, as
+required by the current profile. Preserve unnamed-instance and `EXTENDS`
+behavior, diamond deduplication, declaration ordering, symbol/resource bounds,
+and effective-variable computation. If `ResolvedOperator.name` cannot express
+visible versus declared identity without ambiguity, make that distinction in
+`Core/Tla/Names.lean` and project the existing inspection-v1 keys from it; do
+not silently overload provenance fields.
+
+The focused regression set must include the four current findings:
+
+| Fixture | Required qualified fact |
+| --- | --- |
+| `rej-instance-definition-only` | `I!ChildOp`, arity 0, constant level |
+| `rej-instance-variable-substituted` | `I!ChildOp`, arity 0, action level |
+| `rej-instance-implicit-substitution` | `I!ChildOp`, arity 0, action level |
+| `rej-substitution-constant-by-state` | `I!ChildOp`, arity 0, state level |
+
+Despite their stable historical IDs and paths, these four fixtures are accepted
+profile-2 cases. Add negative controls for `I!constant`, a child `LOCAL`
+operator, a `LOCAL INSTANCE` viewed outside its owner, duplicate qualified
+names, and the qualified-operator limit at limit plus one.
+
+**Acceptance:**
+
+- the elaboration and frontend focused suites pass in direct and `--run` forms;
+- inspection `operators` and `levels` contain the same qualified facts SANY
+  exposes, while `RootOp` retains its existing substituted level;
+- all eight former resolution/level findings disappear without adapter synthesis
+  or registry exceptions;
+- existing model-interface variable facts, locks, and generated target bytes are
+  unchanged; and
+- repeated elaboration produces byte-identical inspection JSON.
+
+### 18.6 DC3 — adopt verified Unicode aliases as profile 3
+
+**Owner:** `specification_implementer` after DC0 acceptance and with exclusive
+ownership of shared profile/corpus files.
+
+Introduce a reviewed default profile 3. Move every alias admitted by the DC0
+matrix from the staged list into the canonical operator table. Preserve the
+original UTF-8 spelling in lossless tokens while normalizing its AST identity
+to the existing ASCII operator. Keep invalid or unapproved Unicode fail-closed
+with the existing bounded diagnostic behavior.
+
+Reclassify `rej-unicode-spelling` as accepted without rewriting its source.
+Retain its stable fixture ID/path for evidence continuity, generate its expected
+summary through the frontend tooling, and add ASCII/Unicode equivalence checks
+for `∧` versus `/\`, `∈` versus `\in`, and `≤` versus `<=`. Update the
+language-profile decision and compatibility rationale from the DC0 evidence.
+Audit every active profile identity and profile-keyed cache/fixture field so no
+profile-2 fallback survives in the default pipeline.
+
+Profile migration changes the identity under which existing reviewed policy
+differences were approved. It does not automatically renew them: DC4 must
+re-observe and independently review each exact difference under profile 3.
+
+**Acceptance:**
+
+- lexer and parser focused suites prove lossless bytes, canonical alias
+  equivalence, multibyte ranges, malformed-neighbor handling, and deterministic
+  resource limits;
+- the complete corpus parses/elaborates against regenerated summaries with all
+  branch links and counts reconciled;
+- Mirrors, pinned SANY, and pinned Apalache accept the Unicode fixture, removing
+  both outcome findings without a Unicode review exception;
+- still-staged spellings retain explicit negative fixtures justified by DC0;
+  and
+- model-interface locks and generated target bytes remain unchanged.
+
+### 18.7 DC4 — aggregate and differential closure
+
+**Owner:** `test-automator` for execution and evidence. An independent
+`reviewer` checks raw evidence, registry scope, and repeatability before the
+coordinator updates acceptance status.
+
+Run, from the repository root, the focused frontend suites followed by:
+
+```bash
+lake build
+PATH="$PWD/.golden-build/tla-differential/jdk/jdk-25.0.4+7/bin:$PATH" \
+APALACHE_MC="$PWD/.golden-build/tla-differential/toolchain/apalache-0.61.0/bin/apalache-mc" \
+lake test
+python3 -m unittest discover -s tools/tla-differential/tests -q
+DV_LIVE_REFERENCES=1 python3 tools/tla-differential/tests/test_references.py -v
+python3 tools/tla-differential/run.py --required --output .golden-build/tla-differential/profile3-final-1
+python3 tools/tla-differential/run.py --required --output .golden-build/tla-differential/profile3-final-2
+```
+
+The two output directories are new and distinct. Capture source, harness,
+binary, toolchain, raw-artifact, and semantic hashes using the established
+evidence format. Renew an existing reviewed difference only after independent
+review binds its exact profile, source, tool, and fact; remove stale or unused
+entries. No entry may cover Unicode, `ENABLED`, or qualified named-instance
+facts.
+
+**Acceptance:**
+
+1. Both required runs exit zero with every required observation complete.
+2. Their normalized semantic payloads are byte-identical.
+3. The unresolved-finding count is zero; all eleven checkpoint-J/K findings are
+   exact matches, not reviewed differences.
+4. Unsupported surfaces remain labeled unsupported rather than counted as
+   matches or silently dropped.
+5. The seven pre-existing intentional policies are re-observed and narrowly
+   reviewed for profile 3, with no stale registry entry.
+6. `lake build`, `lake test`, all six frontend gates, live calibration, and
+   differential negative controls pass.
+7. Model-interface locks and synchronous TypeScript, asynchronous TypeScript,
+   and C++ generated bytes remain unchanged.
+8. The evidence index and this ledger record exact commands, results, checksums,
+   skipped external tiers, and the independent review.
+
+Passing DC4 closes the corpus-wide differential requirement only. Overall TF8
+completion still requires separately recorded MirrorGate and real-application
+acceptance evidence described in §§16–17.
+
+### 18.8 DC0–DC4 acceptance record (2026-09-14)
+
+The coordinating agent accepts DC0–DC4. DC0 calibrated the complete staged
+Unicode set, four `ENABLED` boundaries, and the four named-instance cases in two
+independently indexed 44-row live matrices under Temurin 25.0.4+7, pinned TLA+
+Tools 1.8.0, and Apalache 0.61.0. Their semantic payloads are byte-identical,
+SHA-256
+`5d4eaf5a6aa896bf9eb0ffc8bf2b56e5aba7bd3a2c5791a68ea8a5f1bc370848`.
+
+DC1 classifies an accepted `ENABLED` application as state-level and rejects a
+temporal operand at the level stage. DC2 materializes qualified named-instance
+operators from captured and standard-catalog modules with source ordering,
+origin, range, arity, fixity, locality, instance/import path, substituted level,
+and resource bounds preserved. DC3 adopts `∧`, `∈`, and `≤` as aliases in
+`mirrors-tla-frontend-profile-3`, retains lossless source spellings, and keeps
+unapproved Unicode fail-closed. The active corpus has 61 fixtures: 34 accepted,
+27 rejected, 76 profile branches, and 107 fixture-branch links. The lexer,
+parser, elaboration, frontend, and inspection CLI suites pass in direct and
+`--run` forms; generated model-interface locks and synchronous TypeScript,
+asynchronous TypeScript, and C++ bytes remain unchanged.
+
+The seven existing intentional policy differences were independently reviewed
+and renewed as fourteen outcome-only entries. No entry covers Unicode,
+`ENABLED`, named-instance facts, structural facts, or an unsupported comparison.
+The current registry SHA-256 is
+`54fc9662b7dd6961ff59db9b0e07b94e45363ad86633d9e2e15c772b24a49430`;
+the independent renewal record SHA-256 is
+`b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3`.
+
+The accepted required runs are [checkpoint Q](../../test/fixtures/tla-frontend/differential/evidence/checkpoint-q-profile3-final-1-poststatus/README.md)
+and [checkpoint R](../../test/fixtures/tla-frontend/differential/evidence/checkpoint-r-profile3-final-2-poststatus/README.md).
+Each completed 183/183 observations with 564 exact matches, fourteen reviewed
+differences, 292 explicitly unsupported comparisons, and zero unresolved or
+incomplete findings. Their semantic payloads are byte-identical, SHA-256
+`b239480873912e7cabc79bde8266613b6aece19fb1acdede15afe9aca2459c11`.
+The packaged evidence hashes are:
+
+| Checkpoint | Report SHA-256 | Raw archive SHA-256 | Artifact index SHA-256 |
+| --- | --- | --- | --- |
+| Q | `452801df6d4e390c34dca865107cf4e1090a53f8d7a453e0a9bbfaebe20239f9` | `ed9d9e9ee588c17b9585feedc6000dec3c68f24398b4cc26765ffc84672e7b1d` | `b4033ecb38b1d4a950640389ebf74ca8242a7f1125b557b22c32f542cc916666` |
+| R | `462140c5da18a915b914e64e8309fa986fcba4c17be83a1b5146947efe708650` | `cf6aa189e6b0b23c29794c08b4e5c6ed064166a19d2e1f44cd6896911e2551b0` | `90bab5501234c26da982a5226806a1579ed23e47fad69f6fde1d11714ea7ce4c` |
+
+The final commands and observed results were:
+
+```bash
+lake build
+# exit 0; 603 default target jobs
+
+PATH="$PWD/.golden-build/tla-differential/jdk/jdk-25.0.4+7/bin:$PATH" \
+APALACHE_MC="$PWD/.golden-build/tla-differential/toolchain/apalache-0.61.0/bin/apalache-mc" \
+lake test
+# exit 0; ALL LAKE TESTS GREEN
+
+PATH="$PWD/.golden-build/tla-differential/jdk/jdk-25.0.4+7/bin:$PATH" \
+python3 -m unittest discover -s tools/tla-differential/tests -q
+# exit 0; 60 tests passed, four opt-in live tests skipped
+
+PATH="$PWD/.golden-build/tla-differential/jdk/jdk-25.0.4+7/bin:$PATH" \
+DV_LIVE_REFERENCES=1 python3 tools/tla-differential/tests/test_references.py -v
+# exit 0; 5/5 passed
+
+PATH="$PWD/.golden-build/tla-differential/jdk/jdk-25.0.4+7/bin:$PATH" \
+python3 tools/tla-differential/run.py --required \
+  --output .golden-build/tla-differential/profile3-final-1-dc4-poststatus
+# exit 0; published as checkpoint Q
+
+PATH="$PWD/.golden-build/tla-differential/jdk/jdk-25.0.4+7/bin:$PATH" \
+python3 tools/tla-differential/run.py --required \
+  --output .golden-build/tla-differential/profile3-final-2-dc4-poststatus
+# exit 0; published as checkpoint R
+```
+
+The aggregate output is retained in checkpoint Q as
+`aggregate-lake-test.log`, SHA-256
+`0fd912476cf07cb50773303817c78a5eb7d31084949e4a53916dc0c022e9fbff`.
+The aggregate required loopback access because Apalache's explorer starts a
+JSON-RPC server; the sandboxed attempt failed with `Operation not permitted`,
+while the permitted-loopback rerun above passed. The independent reviewer
+verified the registry scope, all 183 observations, both semantic payloads, both
+artifact indexes and archives, all 649 raw references per checkpoint, current
+source/tool/executable identities, and the aggregate/offline/live results.
+
+DC4 closes the corpus-wide differential requirement. The 292 unsupported
+comparison surfaces remain explicitly uncertified. MirrorGate's required matrix
+and the full real-application correct/faulty harness were not rerun by DC0–DC4,
+so their status remains as recorded in §§17.6–17.8.

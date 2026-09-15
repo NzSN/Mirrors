@@ -1,7 +1,33 @@
 # Differential validation evidence — 2026-09-13
 
-**Acceptance: failed.** The harness implementation and corpus execution are
-complete; the remaining frontend/profile/projection findings are not waived.
+**Profile-3 differential acceptance: passed.** Historical profile-2 captures
+below remain failed evidence; they are not rewritten or reinterpreted.
+
+## Profile-3 differential closure (2026-09-14)
+
+Checkpoints Q and R are independent required profile-3 runs after the approved
+renewal of the seven narrow policy differences on both pinned references. Each
+completed all 183 observations and reports 564 exact matches, 14 reviewed
+differences, 292 explicitly unsupported surfaces, and zero unresolved findings.
+Their normalized semantic payloads are byte-identical:
+`b239480873912e7cabc79bde8266613b6aece19fb1acdede15afe9aca2459c11`.
+
+- [Checkpoint Q summary](checkpoint-q-profile3-final-1-poststatus/summary.md),
+  [report](checkpoint-q-profile3-final-1-poststatus/report.json), and
+  [raw-artifact index](checkpoint-q-profile3-final-1-poststatus/artifact-index.json).
+- [Checkpoint R summary](checkpoint-r-profile3-final-2-poststatus/summary.md),
+  [report](checkpoint-r-profile3-final-2-poststatus/report.json), and
+  [raw-artifact index](checkpoint-r-profile3-final-2-poststatus/artifact-index.json).
+- The independently reviewed source/profile/tool/fact bindings are recorded in
+  [the profile-3 renewal record](../../../../../Drafts/tla-junction-profile3-policy-renewals-phase1.md).
+
+`lake build`, the 60-test offline suite, the five-test live reference suite,
+and the full `lake test` aggregate passed using the pinned JDK 25.0.4+7 and an
+absolute `APALACHE_MC` path. The aggregate's exact output is retained as
+[`aggregate-lake-test.log`](checkpoint-q-profile3-final-1-poststatus/aggregate-lake-test.log);
+it required loopback socket access
+for the Apalache explorer server. Checkpoint N remains the reviewed baseline.
+Checkpoint L is retained only as [quarantined historical evidence](checkpoint-l-profile3-baseline/QUARANTINED.md).
 
 ## Profile-2 junction closure (2026-09-13)
 
