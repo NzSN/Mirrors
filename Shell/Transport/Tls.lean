@@ -155,7 +155,8 @@ private def validatePartialLine (b : ByteArray) : IO Unit := do
 Haskell recv-line-over-decrypted-stream loop). -/
 def tlsTransport (t : TlsSession) : Transport :=
   let recvBuf := ByteArray.mk ((List.replicate 65536 0).toArray)
-  { recv := do
+  { scope := .remote
+    recv := do
       let mut acc ← t.buf.get
       validatePartialLine acc
       let mut found := true

@@ -49,6 +49,15 @@ What run.sh does:
    register_explore, register_explore_session, inline specs, and repeats
    every scenario over TCP against \`mirror --serve\`, followed by its mTLS,
    TLS-negative, and registry scenarios.
+   In-limit trace-generation replies retain their inline bytes. The focused
+   `tools/TraceGenerationTransportReproSpec.lean` and MirrorECMA
+   `owned-registration-lifecycle.test.ts` suites separately pin the 65,535/
+   65,536-byte delivery boundary, durable stdio path-only fallback, bounded
+   remote/ephemeral failures, idempotent async terminal projection, and
+   pre-spawn registration rejection. MirrorECMA's env-gated
+   `trace-generation-transport.integration.test.ts` additionally drives a
+   generic oversized ITF result through the real stdio, TCP, and mTLS server
+   paths and verifies post-error server reuse.
 3. Typechecks and runs MirrorECMA's standalone D3+D4 model-interface Counter
    slice. It checks the generated lock/source bytes, exact digest negotiation,
    fail-closed ordering, dynamic `resolved -> not_modified` cache reuse,

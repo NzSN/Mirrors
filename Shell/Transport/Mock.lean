@@ -40,7 +40,7 @@ and vice versa (Haskell @newMockTransport@). -/
 def mockPair : IO (Transport × Transport) := do
   let a ← Chan.new
   let b ← Chan.new
-  return ({ recv := a.take, send := b.put },
-          { recv := b.take, send := a.put })
+  return ({ scope := .remote, recv := a.take, send := b.put },
+          { scope := .remote, recv := b.take, send := a.put })
 
 end Shell.Transport

@@ -56,7 +56,13 @@ step parameters. Specs with `CONSTANTS` need `constInit`.
 ### `SpecConfig` (inline spec)
 `{"sources": ["---- MODULE M ----\n…", …]}` — full TLA+ sources;
 `EXTENDS`/`INSTANCE` closure is the client's responsibility.
-Materialized server-side into a per-session owned temp dir.
+Materialized server-side into a per-session owned temp dir. This form is
+portable across stdio, TCP, and mTLS only when the complete, compact
+registration remains within the version-1 limit of 65,535 UTF-8 bytes. Clients
+must validate the final encoded line before sending it. A larger closure must
+use a pre-provisioned server-side `specPath`, direct Apalache generation as an
+explicit application workflow, or a future versioned artifact-transfer
+protocol; version 1 has no source chunking or upload fallback.
 
 ### `TraceConfig`
 `{"numTraces": 1, "view": null}` — `numTraces` ≥ 1; `view` is an
@@ -166,6 +172,18 @@ Replies `gen_traces_done`:
  "itfTracePaths": ["…/violation.itf.json"], "itfTraces": [ …inline ITF… ]}
 ```
 `destPath` copies the traces to a client-chosen directory.
+The path is interpreted by the server, not by the client. For local stdio the
+peer shares the server filesystem: if the full compact reply would exceed
+65,535 UTF-8 bytes and `destPath` produced durable copies outside the owned
+session directory, Mirrors returns the existing `gen_traces_done` shape with
+those paths and `"itfTraces": []`. Without such durable copies it returns a
+bounded `register_error` beginning with `TRACE_RESULT_TOO_LARGE`.
+
+TCP and mTLS peers are remote even when a pathname happens to look meaningful
+on both hosts. They never receive path-only success in place of an oversized
+inline result; version 1 fails explicitly with `TRACE_RESULT_TOO_LARGE`.
+Replies whose full encoding fits retain their existing bytes and include both
+paths and inline traces.
 
 ### 3.4 `register_validate` — validate only, then done
 ```json
@@ -229,13 +247,18 @@ Semantics (machine-proven, §6.4): terminal phases are absorbing;
 `unknown` is answered exactly for never-submitted or evicted ids;
 cancellation is cooperative and kills the apalache child; a completed
 validate job's outcome payload **equals** the synchronous
-`register_validate` reply for the same config.
+`register_validate` reply for the same config. Trace-generation job results
+are network results and therefore require inline delivery. If their compact
+`job_result` would exceed 65,535 UTF-8 bytes, the same job ID instead has the
+terminal `{"error":"TRACE_RESULT_TOO_LARGE: …"}` outcome. Repeated
+`query_job` or `await_job` operations return that same deterministic terminal
+outcome and do not rerun Apalache.
 
 ## 5. Error replies
 
 | Message | When |
 | ------- | ---- |
-| `{"proto_step": "register_error", "error": "…"}` | registration/submit failures: bad spec source, apalache infra failure, queue full, out-of-range bound, async message in stdio mode |
+| `{"proto_step": "register_error", "error": "…"}` | registration/submit failures: bad spec source, categorized and bounded Apalache failure, `TRACE_RESULT_TOO_LARGE`, queue full, out-of-range bound, async message in stdio mode |
 | `{"proto_step": "protocol_error", "error": "…"}` | decode failures and out-of-phase messages |
 
 Documented divergences from the Haskell implementation (details in

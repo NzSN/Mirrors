@@ -38,6 +38,75 @@ structure ApalacheResult where
   err : String
 deriving Repr
 
+/-- Total UTF-8 byte budget for one bounded trace-generation failure message
+(the TG0 diagnostic contract requires the rendered error to stay well below
+the 65,535-byte protocol cap). -/
+def traceGenerationFailureBudget : Nat := 4096
+
+/-- Stable category prefix for a failed trace-generation run. -/
+def traceGenerationFailureCode : String := "APALACHE_TRACE_GENERATION_FAILED"
+
+/-- Keep the beginning and end of a string within `maxBytes` UTF-8 bytes,
+stopping on Unicode scalar boundaries. The boolean reports whether text was
+dropped. Keeping both ends preserves an invocation summary as well as the
+diagnostic tail where Apalache normally prints the actionable failure. -/
+def truncateUtf8 (s : String) (maxBytes : Nat) : String × Bool := Id.run do
+  if s.toUTF8.size ≤ maxBytes then
+    return (s, false)
+  let separator := "\n...\n"
+  if maxBytes ≤ separator.toUTF8.size then
+    let mut out := ""
+    let mut used := 0
+    for c in s.toList do
+      let size := (String.ofList [c]).toUTF8.size
+      if used + size > maxBytes then break
+      out := out.push c
+      used := used + size
+    return (out, true)
+  let contentBudget := maxBytes - separator.toUTF8.size
+  let headBudget := contentBudget / 2
+  let tailBudget := contentBudget - headBudget
+  let mut head := ""
+  let mut used := 0
+  for c in s.toList do
+    let size := (String.ofList [c]).toUTF8.size
+    if used + size > headBudget then break
+    head := head.push c
+    used := used + size
+  let mut tailRev := ""
+  used := 0
+  for c in s.toList.reverse do
+    let size := (String.ofList [c]).toUTF8.size
+    if used + size > tailBudget then break
+    tailRev := tailRev.push c
+    used := used + size
+  return (head ++ separator ++ String.ofList tailRev.toList.reverse, true)
+
+/-- Bound and sanitize one apalache trace-generation failure: the stable
+category and exit code survive, the owned run-directory prefix is replaced by
+`<run>`, and the retained output tail announces truncation. -/
+def formatTraceGenerationFailure (exit : UInt32) (out err : String)
+    (runDir : Option String) : String :=
+  let header := s!"{traceGenerationFailureCode}: apalache exit {exit}\n"
+  let sanitized :=
+    match runDir with
+    | some dir =>
+        if dir.isEmpty then (out, err)
+        else (out.replace dir "<run>", err.replace dir "<run>")
+    | none => (out, err)
+  let body :=
+    if sanitized.1.isEmpty && sanitized.2.isEmpty then
+      "apalache produced no output"
+    else
+      "stdout:\n" ++ sanitized.1 ++ "\nstderr:\n" ++ sanitized.2
+  let marker := "\n[truncated]"
+  let reserved := header.toUTF8.size + marker.toUTF8.size
+  let bodyBudget :=
+    if reserved ≥ traceGenerationFailureBudget then 0
+    else traceGenerationFailureBudget - reserved
+  let (detail, cut) := truncateUtf8 body bodyBudget
+  header ++ detail ++ (if cut then marker else "")
+
 /-- Resolve the apalache binary (Haskell @apalacheBin@). -/
 def apalacheBin : IO String := do
   match ← IO.getEnv "APALACHE_MC" with
@@ -275,13 +344,17 @@ def generateTraceFilesVia (run : Option String → List String → IO ApalacheRe
     | some _ => pure ({ cfg with specPath := ← makeAbsolute cfg.specPath } : Codec.ApalacheConfig)
     | none => pure cfg
   let r ← run runDir (traceArgs runDir cfg' tc)
-  if let some e := noOutputError r then
-    return .error e
+  if (noOutputError r).isSome then
+    return .error (formatTraceGenerationFailure r.exit r.out r.err runDir)
   else if isInfraExit r.exit then
-    return .error (r.out ++ r.err)
+    return .error (formatTraceGenerationFailure r.exit r.out r.err runDir)
+  else if r.exit != 0 && !isSpecVerdictExit r.exit then
+    return .error (formatTraceGenerationFailure r.exit r.out r.err runDir)
   else
     match parseOutputDir (r.out ++ r.err) with
-    | none => return .error "Could not determine output directory from Apalache output"
+    | none =>
+        return .error (formatTraceGenerationFailure r.exit r.out
+          (r.err ++ "\ncould not determine output directory") runDir)
     | some outDir =>
         let paths ← findTraceFiles outDir
         return .ok (outDir, paths)

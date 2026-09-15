@@ -69,7 +69,8 @@ private def validatePartialLine (b : ByteArray) : IO Unit := do
 
 /-- Build the line-framed @Transport@ over a connected socket. -/
 def tcpTransport (t : TcpTransport) : Transport :=
-  { recv := do
+  { scope := .remote
+    recv := do
       let mut acc ← t.buf.get
       validatePartialLine acc
       let mut found := true

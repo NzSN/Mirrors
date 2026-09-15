@@ -1,4 +1,5 @@
 import Shell.Apalache.Cli
+import Shell.Apalache.TraceGeneration
 import Shell.Apalache.SpecSource
 import Shell.Mirror.Session
 import Shell.Jobs.Store
@@ -344,36 +345,13 @@ def syncOracles : Shell.Mirror.Oracles where
         -- optionally copy into the client's destPath (creating it), then
         -- read the *final* paths for inlining — all before the session
         -- dir is removed (reading after cleanup would hit ENOENT).
-        let finalPaths? ←
-          try
-            let r ← generateTraceFilesIn (some dir) cfg' tc
-            match r with
-            | .error _ => pure (none : Option (List String))
-            | .ok (outDir, paths) =>
-                match dest with
-                | some d =>
-                    if d != "" && d != outDir then
-                      IO.FS.createDirAll d
-                      let finals ← paths.mapM (fun (p : String) => do
-                        let fname := (p : System.FilePath).fileName.getD p
-                        let target := ((d : System.FilePath) / fname).toString
-                        let txt ← IO.FS.readFile p
-                        IO.FS.writeFile target txt
-                        pure target)
-                      pure (some finals)
-                    else pure (some paths)
-                | none => pure (some paths)
-          finally (do releaseSpec res; removeSessionDir dir)
-        match finalPaths? with
-        | none => return .error "trace generation failed"
-        | some paths =>
-            let contents ← paths.mapM (fun (p : String) => do
-              let txt ← IO.FS.readFile p
-              match Lean.Json.parse txt with
-              | .error _ => pure none
-              | .ok j => pure ((Codec.decodeValue j).toOption))
-            return .ok ({ itfTracePaths := paths,
-                           itfTraces := contents.filterMap id } : Codec.TraceGenResult)
+        let delivery ← withTraceGenerationCleanup (do
+          match ← generateTraceFilesIn (some dir) cfg' tc with
+          | .error error => return .error error
+          | .ok (outDir, paths) =>
+              prepareGeneratedTraceDelivery dir outDir paths dest)
+          (releaseSpec res) (removeSessionDir dir)
+        return delivery
   runExplore := fun t spec invs exports maxSteps =>
     exploreFlow t spec.sources invs exports maxSteps
   runExploreSession := fun t spec invs exports =>

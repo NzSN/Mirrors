@@ -52,9 +52,9 @@ and shared job store exist precisely to make that cheap — see §7).
 - **C2.** Clients **MUST** enforce the uniform **65,535-byte payload** limit
   (not counting the terminating newline) on raw UTF-8 bytes before JSON
   parsing and after final encoding. They **MUST NOT** emit a larger line or
-  use an unbounded receive accumulator. Keep individual messages small; ship
-  TLA+ sources via the `spec.sources` array (§5) rather than inventing side
-  channels.
+  use an unbounded receive accumulator. Keep individual messages small.
+  `spec.sources` is the portable source form only when the complete final
+  registration fits this limit; version 1 does not chunk sources or results.
 - **C3.** All protocol messages are discriminated by the string field
   `"proto_step"`. Clients **MUST** dispatch on `proto_step` and
   **MUST** tolerate (ignore) unknown additional fields in mirror
@@ -141,7 +141,10 @@ mirror → all_steps_done
   client **MUST** include the full `EXTENDS`/`INSTANCE` closure in
   `sources`; the server materializes them into a per-session owned
   temp dir (never the server's cwd — run-dir isolation is gated by
-  `counter_spec`).
+  `counter_spec`). The complete compact registration **MUST** still fit C2.
+  For a larger closure, use a pre-provisioned server-side `specPath`, an
+  explicit external generation/artifact workflow, or a future versioned
+  transfer protocol.
 - **C14.** `ApalacheConfig` optional fields follow Haskell `.:?`
   semantics: absent ≡ explicit `null`. Defaults on decode:
   `invariant` and `paramVars` `""`, `lengthBound` 10, the rest
@@ -155,6 +158,27 @@ mirror → all_steps_done
 - **C16.** `register_validate`/`register_validate_async` take
   `bound` ∈ [1, 100]; out-of-range bounds are rejected synchronously
   at registration before any state change.
+
+### 5.1 Trace-generation result delivery
+
+`destPath` is always interpreted on the server. It does not name a client-side
+directory merely because the request arrived over TCP or mTLS. A client may
+rely on a successful path-only `gen_traces_done` result (`itfTraces: []`) only
+for local stdio, where the peer shares the filesystem, and only when the server
+copied the files to a durable `destPath` outside its owned session directory.
+
+Mirrors selects the result from the exact compact JSON bytes:
+
+- an in-limit full result is unchanged and includes inline traces;
+- an oversized local stdio result may use durable paths and empty inline
+  traces when that reduced message fits; and
+- an oversized result with ephemeral paths, a remote peer, or an oversized
+  path-only form terminates with `TRACE_RESULT_TOO_LARGE`.
+
+Async trace jobs are server-mode network operations, so their oversized
+`job_result` is projected to a terminal error for the same job ID. Repeated
+queries remain idempotent and do not rerun generation. Clients **MUST NOT**
+turn these explicit failures into a hidden direct-Apalache fallback.
 
 ## 6. Asynchronous job interface (server modes only)
 

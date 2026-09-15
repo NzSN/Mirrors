@@ -1,6 +1,7 @@
 import Shell.Transport.Tcp
 import Shell.Transport.Tls
 import Shell.Transport.Stdio
+import Shell.Transport.TraceDelivery
 import Shell.ModelInterface.Auth
 
 /-!
@@ -58,6 +59,149 @@ def throws (action : IO α) : IO Bool := do
     let _ ← action
     return false
   catch _ => return true
+
+/-! ### Trace-result delivery planning (TG3)
+
+The planner is pure, so its whole boundary matrix is exercised before any
+socket or OpenSSL tier runs (and even when the openssl CLI is missing).
+-/
+
+/-- A `gen_traces_done` payload padded to an exact compact size: `padding`
+inline `x` characters add exactly that many bytes to the control encoding. -/
+def traceResultOf (padding : Nat) : Codec.TraceGenResult :=
+  { itfTracePaths := ["/tmp/tg3/trace.itf.json"]
+    itfTraces := [.vstr (String.ofList (List.replicate padding 'x'))] }
+
+/-- The exact-result builder for a synchronous `gen_traces_done` line. -/
+def exactTraceResult (target : Nat) : Except String Codec.TraceGenResult := do
+  let base := Shell.Transport.TraceDelivery.encodedBytes
+    (.genTracesDone (traceResultOf 0))
+  if base > target then throw s!"control message {base} exceeds {target}"
+  return traceResultOf (target - base)
+
+/-- The exact-result builder for an asynchronous `job_result` line. -/
+def exactTraceJobResult (jobId : String) (target : Nat) :
+    Except String Codec.TraceGenResult := do
+  let base := Shell.Transport.TraceDelivery.encodedBytes
+    (.jobResult jobId (.genTraces (traceResultOf 0)))
+  if base > target then throw s!"control job message {base} exceeds {target}"
+  return traceResultOf (target - base)
+
+/-- Report a failed exact-byte control as a named failure. -/
+def checkControl (f : Failures) (name : String) (e : Except String α) : IO Unit := do
+  match e with
+  | .error error => check f s!"{name} ({error})" false
+  | .ok _ => pure ()
+
+/-- The complete TG3 delivery boundary matrix plus its own scope facts. -/
+def deliveryPlanning (f : Failures) : IO Unit := do
+  let selected (plan : Shell.Transport.TraceDelivery.Plan) : String :=
+    Shell.Transport.TraceDelivery.encodedLine plan.message
+  let fitsPlanned (plan : Shell.Transport.TraceDelivery.Plan) : Bool :=
+    Shell.Transport.TraceDelivery.fits plan.message
+  let tooLarge (plan : Shell.Transport.TraceDelivery.Plan) : Bool :=
+    (selected plan).contains Shell.Transport.TraceDelivery.traceResultTooLarge
+  let expectsFull (plan : Shell.Transport.TraceDelivery.Plan)
+      (expected : Codec.MirrorMessage) : Bool :=
+    match plan with
+    | .full message => selected (.full message) ==
+        Shell.Transport.TraceDelivery.encodedLine expected
+    | _ => false
+  -- Rule 1: an in-limit result is emitted byte-for-byte, in every scope.
+  checkControl f "delivery: 65535 control" (exactTraceResult maxProtocolLineBytes)
+  match exactTraceResult maxProtocolLineBytes with
+  | .error _ => pure ()
+  | .ok result =>
+      check f "delivery: sync boundary is exactly 65535 bytes"
+        (Shell.Transport.TraceDelivery.encodedBytes (.genTracesDone result) ==
+          maxProtocolLineBytes)
+      check f "delivery: 65535 shared stays full"
+        (expectsFull (Shell.Transport.TraceDelivery.planSyncResult
+            .sharedFilesystem true result)
+          (.genTracesDone result))
+      check f "delivery: 65535 remote stays full"
+        (expectsFull (Shell.Transport.TraceDelivery.planSyncResult
+            .remote true result) (.genTracesDone result))
+  -- Rules 2-3: one byte over, only a durable shared-filesystem copy may fall
+  -- back to paths.
+  checkControl f "delivery: 65536 control"
+    (exactTraceResult (maxProtocolLineBytes + 1))
+  match exactTraceResult (maxProtocolLineBytes + 1) with
+  | .error _ => pure ()
+  | .ok result =>
+      check f "delivery: sync overflow is exactly 65536 bytes"
+        (Shell.Transport.TraceDelivery.encodedBytes (.genTracesDone result) ==
+          maxProtocolLineBytes + 1)
+      let pathOnly := Codec.MirrorMessage.genTracesDone
+        { itfTracePaths := result.itfTracePaths, itfTraces := [] }
+      check f "delivery: 65536 durable shared uses paths only"
+        (match Shell.Transport.TraceDelivery.planSyncResult
+            .sharedFilesystem true result with
+         | .pathsOnly message =>
+             selected (.pathsOnly message) ==
+                 Shell.Transport.TraceDelivery.encodedLine pathOnly &&
+               fitsPlanned (.pathsOnly message)
+         | _ => false)
+      check f "delivery: 65536 ephemeral shared is a bounded failure"
+        (match Shell.Transport.TraceDelivery.planSyncResult
+            .sharedFilesystem false result with
+         | .failure message =>
+             tooLarge (.failure message) && fitsPlanned (.failure message)
+         | _ => false)
+      -- Negative control: calling a network peer shared-filesystem is the one
+      -- change that would make this row red.
+      check f "delivery: 65536 remote is a bounded failure"
+        (match Shell.Transport.TraceDelivery.planSyncResult .remote true result with
+         | .failure message =>
+             tooLarge (.failure message) && fitsPlanned (.failure message)
+         | _ => false)
+  -- Rule 4: paths that do not themselves fit still fail bounded.
+  let hugePath := "/tmp/" ++ String.ofList (List.replicate 70000 'p')
+  let overflow : Codec.TraceGenResult := { itfTracePaths := [hugePath], itfTraces := [] }
+  check f "delivery: path-only overflow is a bounded failure"
+    (match Shell.Transport.TraceDelivery.planSyncResult
+        .sharedFilesystem true overflow with
+     | .failure message =>
+         tooLarge (.failure message) && fitsPlanned (.failure message)
+     | _ => false)
+  -- Async job results never take the paths-only arm.
+  checkControl f "delivery: async 65535 control"
+    (exactTraceJobResult "job-tg3" maxProtocolLineBytes)
+  match exactTraceJobResult "job-tg3" maxProtocolLineBytes with
+  | .error _ => pure ()
+  | .ok result =>
+      check f "delivery: async boundary is exactly 65535 bytes"
+        (Shell.Transport.TraceDelivery.encodedBytes
+          (.jobResult "job-tg3" (.genTraces result)) == maxProtocolLineBytes)
+      check f "delivery: async 65535 stays full"
+        (expectsFull (Shell.Transport.TraceDelivery.planTraceJobResult
+            "job-tg3" result)
+          (.jobResult "job-tg3" (.genTraces result)))
+  checkControl f "delivery: async 65536 control"
+    (exactTraceJobResult "job-tg3" (maxProtocolLineBytes + 1))
+  match exactTraceJobResult "job-tg3" (maxProtocolLineBytes + 1) with
+  | .error _ => pure ()
+  | .ok result =>
+      check f "delivery: async overflow is exactly 65536 bytes"
+        (Shell.Transport.TraceDelivery.encodedBytes
+          (.jobResult "job-tg3" (.genTraces result)) == maxProtocolLineBytes + 1)
+      check f "delivery: async 65536 is a terminal error for the same job"
+        (match Shell.Transport.TraceDelivery.planTraceJobResult "job-tg3" result with
+         | .failure message =>
+             tooLarge (.failure message) && fitsPlanned (.failure message) &&
+               (match message with
+                | .jobResult jobId (.infraError _) => jobId == "job-tg3"
+                | _ => false)
+         | _ => false)
+  -- The adapters' own scopes: stdio shares the server filesystem, network
+  -- peers never do.
+  let stdioTransport ← Shell.Transport.stdio
+  check f "delivery: stdio transport is shared-filesystem"
+    (stdioTransport.scope == .sharedFilesystem)
+  let tcpProbe : Shell.Transport.Tcp.TcpTransport :=
+    { fd := 0, buf := ← IO.mkRef ByteArray.empty, rbuf := ByteArray.empty }
+  check f "delivery: TCP transport is remote"
+    ((Shell.Transport.Tcp.tcpTransport tcpProbe).scope == .remote)
 
 /-- One exchange per connection: read a line, echo it, end the session
 (the accept loop then closes the socket and takes the next client). -/
@@ -194,6 +338,8 @@ def mainTests : IO UInt32 := do
     (← throws (validateProtocolLine "{}\n{}"))
   check f "framing rejects invalid UTF-8"
     (← throws (decodeProtocolUtf8 (ByteArray.mk #[0xff])))
+
+  deliveryPlanning f
 
   let ov ← IO.Process.output { cmd := "openssl", args := #["version"] }
   if ov.exitCode != 0 then
@@ -426,6 +572,7 @@ def mainTests : IO UInt32 := do
   match ← tryConnectTls clientCtx "localhost" tp fp 25 with
   | .error e => check f ("mtls echo (" ++ e ++ ")") false
   | .ok t =>
+      check f "delivery: TLS transport is remote" (t.scope == .remote)
       t.send "secure-hello"
       let r ← t.recv
       check f "mtls echo round trip (TLS 1.3, pinned fp)" (r == some "echo:secure-hello")

@@ -9,9 +9,11 @@ import Codec.Bridge
 import Codec.StrictJson
 import Codec.ModelInterfaceDistributionJson
 import Shell.Transport.Stdio
+import Shell.Transport.TraceDelivery
 import Shell.ModelInterface.Evidence
 import Shell.ModelInterface.Runtime
 import Shell.Apalache.SpecSource
+import Shell.Apalache.TraceGeneration
 import Lean.Data.Json
 
 /-!
@@ -90,7 +92,7 @@ structure Oracles where
   MkRunMirrorGenTraces). -/
   generateTraceFiles : Codec.ApalacheConfig → Option Codec.SpecConfig →
     Option String → Codec.TraceConfig →
-    IO (Except String Codec.TraceGenResult)
+    IO (Except String Shell.Apalache.GeneratedTraceDelivery)
   /- The full explorer mirror flow (register_explore): owns the wire
   exchange after the register is accepted. -/
   runExplore : Shell.Transport.Transport → Codec.SpecConfig → List String →
@@ -103,6 +105,28 @@ structure Oracles where
 def sendMirror (t : Shell.Transport.Transport) (m : Codec.MirrorMessage) :
     IO Unit :=
   t.send (toString (Lean.Json.compress (Codec.encodeMirror m)))
+
+/-- Send one planned trace-delivery message. The plan is asserted to fit
+before it reaches the transport: a planner bug or an unforeseen size must
+surface as a bounded local error, never as a framing failure mid-session. -/
+private def sendTracePlan (t : Shell.Transport.Transport)
+    (plan : Shell.Transport.TraceDelivery.Plan) : IO Unit := do
+  let message := plan.message
+  if !Shell.Transport.TraceDelivery.fits message then
+    throw (IO.userError
+      s!"{Shell.Transport.TraceDelivery.traceResultTooLarge}: selected delivery exceeds one v1 protocol line")
+  sendMirror t message
+
+/-- Route one terminal job outcome to the wire. Trace-generation results pass
+through the exact-byte delivery planner (a job result has no durable-path form:
+network peers deliver inline only); every other outcome keeps the historical
+encoding. -/
+private def sendJobResult (t : Shell.Transport.Transport) (jobId : String)
+    (outcome : Codec.JobOutcome) : IO Unit :=
+  match outcome with
+  | .genTraces result =>
+      sendTracePlan t (Shell.Transport.TraceDelivery.planTraceJobResult jobId result)
+  | _ => sendMirror t (Codec.MirrorMessage.jobResult jobId outcome)
 
 private def sendSpecValidatedWithInterface (t : Shell.Transport.Transport)
     (reply : Option Codec.ModelInterfaceDistributionJson.ReplyV1) : IO Unit := do
@@ -796,7 +820,9 @@ private def dispatch (t : Shell.Transport.Transport) (sess : SessionRef)
       let r ← orc.generateTraceFiles cfg spec _dest tcfg
       match r with
       | .error e => sendMirror t (Codec.MirrorMessage.registerError e)
-      | .ok res => sendMirror t (Codec.MirrorMessage.genTracesDone res)
+      | .ok delivery =>
+          sendTracePlan t (Shell.Transport.TraceDelivery.planSyncResult
+            t.scope delivery.pathsDurable delivery.result)
   | .registerValidate cfg bound spec =>
       if bound < 1 || bound > maxValidateBound then
         sendMirror t (Codec.MirrorMessage.registerError
@@ -887,17 +913,17 @@ private def dispatchAsync (t : Shell.Transport.Transport) (sess : SessionRef)
   | .queryJob jid =>
       let (ph, out?) ← Shell.Jobs.queryJob store { text := jid }
       match out? with
-      | some o => sendMirror t (Codec.MirrorMessage.jobResult jid o)
+      | some o => sendJobResult t jid o
       | none => sendMirror t (Codec.MirrorMessage.jobStatus jid (Shell.Jobs.toWirePhase ph))
       return true
   | .awaitJob jid timeout =>
       let r ← Shell.Jobs.awaitJob store { text := jid } timeout
       match r with
-      | .ok o => sendMirror t (Codec.MirrorMessage.jobResult jid o)
+      | .ok o => sendJobResult t jid o
       | .error _ =>
           let (ph, out?) ← Shell.Jobs.queryJob store { text := jid }
           match out? with
-          | some o => sendMirror t (Codec.MirrorMessage.jobResult jid o)
+          | some o => sendJobResult t jid o
           | none => sendMirror t (Codec.MirrorMessage.jobStatus jid (Shell.Jobs.toWirePhase ph))
       return true
   | .cancelJob jid =>

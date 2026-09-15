@@ -12,10 +12,22 @@ string, which then fails message decoding; the driver turns that into a
 @protocol_error@ / session end exactly like @recvMsg@ does).
 -/
 
+/-- Whether a path this process writes is readable by the peer: stdio shares
+the server's filesystem, TCP/TLS peers are @remote@ and receive inline values
+only. The default is the fail-closed @remote@ value, so an adapter that forgets
+to declare its scope can never mistake a session-local path for a deliverable
+one. -/
+inductive Shell.Transport.DeliveryScope where
+  | sharedFilesystem
+  | remote
+  deriving Repr, DecidableEq
+
 /-- A line-framed byte transport (Haskell @Transport t@ class as a
 record: the Lean shell only needs @recv@/@send@, so the class becomes a
 plain structure). -/
 structure Shell.Transport.Transport where
+  /- Whether the peer can read paths written by this process. -/
+  scope : DeliveryScope := .remote
   /- Receive one framed line; @none@ is EOF (peer closed). -/
   recv : IO (Option String)
   /- Send one framed line (implementation flushes). -/
@@ -91,7 +103,8 @@ def stdio : IO Transport := do
   let stdout ← IO.getStdout
   let buffered ← IO.mkRef ByteArray.empty
   pure
-    { recv := do
+    { scope := .sharedFilesystem
+      recv := do
         let mut acc ← buffered.get
         validateRawPrefix acc
         let mut eof := false

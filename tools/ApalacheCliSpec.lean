@@ -614,6 +614,105 @@ def unitGeneratedTraceResourceFallback (fails : Failures) : IO Unit := do
   expectFallback "generated limits trace-count" { exact with maxTraces := 1 }
   expectFallback "generated limits state-count" { exact with maxStates := 5 }
 
+/-! ## Unit: trace-file delivery ownership and bounded failures -/
+
+def unitTraceGenerationFailureFormatting (fails : Failures) : IO Unit := do
+  let runDir := "/tmp/modelmirrors-session-format-test"
+  let longTail := String.ofList (List.replicate 6000 '界')
+  let rendered := formatTraceGenerationFailure 42
+    s!"synthetic stdout at {runDir}; 测试\n"
+    s!"synthetic stderr prefix\n{longTail}\nuseful tail at {runDir}"
+    (some runDir)
+  check fails "trace failure: stable category"
+    (rendered.startsWith "APALACHE_TRACE_GENERATION_FAILED") rendered
+  check fails "trace failure: exit retained" (rendered.contains "exit 42") rendered
+  check fails "trace failure: stdout retained"
+    (rendered.contains "synthetic stdout" && rendered.contains "测试") rendered
+  check fails "trace failure: stderr retained"
+    (rendered.contains "synthetic stderr" && rendered.contains "useful tail") rendered
+  check fails "trace failure: path sanitized"
+    (rendered.contains "<run>" && !rendered.contains runDir) rendered
+  check fails "trace failure: scalar-safe bound"
+    (rendered.toUTF8.size ≤ traceGenerationFailureBudget &&
+      rendered.contains "[truncated]" && (String.fromUTF8? rendered.toUTF8).isSome)
+    s!"bytes={rendered.toUTF8.size}"
+
+def unitGeneratedTraceDelivery (fails : Failures) : IO Unit := do
+  let runDir ← freshSessionDir
+  let outDir := ((runDir : System.FilePath) / "out").toString
+  IO.FS.createDirAll outDir
+  let source := ((outDir : System.FilePath) / "trace.itf.json").toString
+  IO.FS.writeFile source "1"
+  match ← Shell.Apalache.prepareGeneratedTraceDelivery runDir outDir [source] none with
+  | .error error => check fails "trace delivery: ephemeral preparation" false error
+  | .ok delivery =>
+      check fails "trace delivery: absent destination is ephemeral"
+        (!delivery.pathsDurable)
+      removeSessionDir runDir
+      check fails "trace delivery: inline survives cleanup"
+        (delivery.result.itfTraces.length == 1 &&
+          delivery.result.itfTracePaths == [source])
+
+  let runDir2 ← freshSessionDir
+  let outDir2 := ((runDir2 : System.FilePath) / "out").toString
+  IO.FS.createDirAll outDir2
+  let source2 := ((outDir2 : System.FilePath) / "trace.itf.json").toString
+  IO.FS.writeFile source2 "2"
+  let destination ← freshSessionDir
+  match ← Shell.Apalache.prepareGeneratedTraceDelivery runDir2 outDir2 [source2]
+      (some destination) with
+  | .error error => check fails "trace delivery: durable preparation" false error
+  | .ok delivery =>
+      removeSessionDir runDir2
+      let copiedExists ← match delivery.result.itfTracePaths.head? with
+        | some path => (path : System.FilePath).pathExists
+        | none => pure false
+      check fails "trace delivery: external copy is durable"
+        (delivery.pathsDurable && copiedExists &&
+          delivery.result.itfTraces.length == 1)
+  removeSessionDir destination
+
+  let runDir3 ← freshSessionDir
+  let outDir3 := ((runDir3 : System.FilePath) / "out").toString
+  IO.FS.createDirAll outDir3
+  let valid := ((outDir3 : System.FilePath) / "valid.itf.json").toString
+  let invalid := ((outDir3 : System.FilePath) / "invalid.itf.json").toString
+  IO.FS.writeFile valid "3"
+  IO.FS.writeFile invalid "not-json"
+  match ← Shell.Apalache.prepareGeneratedTraceDelivery runDir3 outDir3
+      [valid, invalid] none with
+  | .ok _ => check fails "trace delivery: decode failure is not partial success" false
+  | .error error => do
+      check fails "trace delivery: decode failure is retained"
+        (error.contains "not valid JSON") error
+  removeSessionDir runDir3
+
+def unitTraceGenerationCleanupPrecedence (fails : Failures) : IO Unit := do
+  let removals ← IO.mkRef 0
+  let releaseFailure : IO Unit := throw (IO.userError "release detail")
+  let removeSuccess : IO Unit := removals.modify (· + 1)
+  let failedOperation : IO (Except String Nat) := pure (.error "primary generation")
+  match ← Shell.Apalache.withTraceGenerationCleanup failedOperation releaseFailure
+      removeSuccess with
+  | .ok _ => check fails "trace cleanup: generation remains primary" false
+  | .error error => do
+      check fails "trace cleanup: generation remains primary"
+        (error.startsWith "primary generation") error
+      check fails "trace cleanup: secondary evidence retained"
+        (error.contains "secondary cleanup failures: spec release" &&
+          !error.contains "release detail") error
+  check fails "trace cleanup: first failure does not skip second"
+    ((← removals.get) == 1)
+
+  let successfulOperation : IO (Except String Nat) := pure (.ok 7)
+  match ← Shell.Apalache.withTraceGenerationCleanup successfulOperation releaseFailure
+      (throw (IO.userError "removal detail")) with
+  | .ok _ => check fails "trace cleanup: failure after success is reported" false
+  | .error error => do
+      check fails "trace cleanup: failure after success is reported"
+        (error == "TRACE_GENERATION_CLEANUP_FAILED: spec release; " ++
+          "session directory removal") error
+
 /-! ## Integration against real apalache -/
 
 def integration (fails : Failures) : IO Unit := do
@@ -707,6 +806,9 @@ def main : IO UInt32 := do
   run "disk-trace-limits" unitDiskTraceLimits
   run "generated-trace-parse-failure" unitGeneratedTraceParseFailure
   run "generated-trace-resource-fallback" unitGeneratedTraceResourceFallback
+  run "trace-generation-failure-formatting" unitTraceGenerationFailureFormatting
+  run "generated-trace-delivery" unitGeneratedTraceDelivery
+  run "trace-generation-cleanup-precedence" unitTraceGenerationCleanupPrecedence
   run "integration" integration
   let fs ← fails.get
   if fs.isEmpty then

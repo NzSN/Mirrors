@@ -1,4 +1,5 @@
 import Shell.Transport.Stdio
+import Shell.Transport.TraceDelivery
 import Shell.Transport.Mock
 import Shell.Jobs.Store
 import Shell.Apalache.SpecSource
