@@ -17,3 +17,17 @@ tmp/
 .*.py
 .*.lean
 .*.txt
+
+# local editor workspace
+/Docs/NzSN-Formalism.code-workspace
+
+# superseded differential review draft
+/Drafts/tla-junction-profile3-policy-renewals.md
+
+# differential runner working trees; portable checkpoint artifacts remain visible
+/test/fixtures/tla-frontend/differential/evidence/checkpoint-*/fixtures/
+/test/fixtures/tla-frontend/differential/evidence/checkpoint-l-profile3-baseline/*
+!/test/fixtures/tla-frontend/differential/evidence/checkpoint-l-profile3-baseline/QUARANTINED.md
+/test/fixtures/tla-frontend/differential/evidence/checkpoint-m-profile3-phase1-proposal/
+/test/fixtures/tla-frontend/differential/evidence/checkpoint-o-profile3-final-1/
+/test/fixtures/tla-frontend/differential/evidence/checkpoint-p-profile3-final-2/
