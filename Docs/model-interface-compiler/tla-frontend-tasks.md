@@ -2,11 +2,11 @@
 
 > Status: **implementation plan; TF0–TF3b accepted on 2026-09-11; TF4–TF8
 > implemented and accepted on 2026-09-12 for the Mirrors-local scope. The
-> cross-language interop matrix and live Apalache tiers are green; the MirrorGate
-> matrix remains unverified. The profile-2 corpus-wide differential run failed
-> on 2026-09-13; DC0–DC4 closed its eleven findings under profile 3 on
-> 2026-09-14. See sections 17.7–17.8 and 18.8 for the historical and current
-> evidence.**
+> cross-language interop matrix, live Apalache tiers, and MirrorGate required
+> backend/sandbox matrix are green. The profile-2 corpus-wide differential run
+> failed on 2026-09-13; DC0–DC4 closed its eleven findings under profile 3 on
+> 2026-09-14. See sections 17.7–17.8 and 18.8–18.10 for the historical and
+> current evidence.**
 >
 > Design authority: [general TLA+ frontend](tla-frontend-design.md)
 >
@@ -732,10 +732,10 @@ complete the unrelated MirrorGate or real-application acceptance tiers.
 
 ## 18. Differential closure plan: Unicode, `ENABLED`, and named instances
 
-> Status: **implementation plan; not dispatched or accepted.** This plan closes
-> the eleven unresolved comparisons retained by profile-2 checkpoints J and K.
-> It does not certify currently unsupported comparison surfaces or the separate
-> MirrorGate and real-application tiers.
+> Status: **DC0–DC4 completed and accepted on 2026-09-14.** This work closed the
+> eleven unresolved comparisons retained by profile-2 checkpoints J and K. It
+> does not certify currently unsupported comparison surfaces or the separate
+> real-application tier; MirrorGate was verified later in §18.10.
 
 ### 18.1 Objective and fixed evidence
 
@@ -1067,3 +1067,64 @@ DC4 closes the corpus-wide differential requirement. The 292 unsupported
 comparison surfaces remain explicitly uncertified. MirrorGate's required matrix
 and the full real-application correct/faulty harness were not rerun by DC0–DC4,
 so their status remains as recorded in §§17.6–17.8.
+
+### 18.9 Publication record (2026-09-15)
+
+The accepted DC0–DC4 implementation, compact evidence packages, registry
+renewals, and ledger updates were committed on `main` as
+`44182d7f1d7be2710353c57ef9bbabbc0c885c90`
+(`tla-frontend: close profile 3 differential findings`) and pushed to
+`origin/main`. A post-push fetch verified
+`HEAD == origin/main == 44182d7f1d7be2710353c57ef9bbabbc0c885c90`.
+
+Immediately before the commit, `lake build` completed 603 jobs and the offline
+differential suite passed all 60 tests with four opt-in live tests skipped. The
+commit also contains the earlier accepted full `lake test`, live-reference, and
+Q/R differential evidence recorded in §18.8.
+
+Relevant-only staging excluded the pre-existing
+`Docs/NzSN-Formalism.code-workspace`, expanded raw checkpoint trees already
+represented by their indexed compressed archives, the unreferenced M/O/P
+intermediate checkpoints, and the superseded unreviewed profile-3 renewal
+draft. Those local untracked artifacts were preserved and are not part of the
+published acceptance record.
+
+### 18.10 MirrorGate required-backend validation (2026-09-15)
+
+The MirrorGate required backend/sandbox matrix is verified at sibling checkout
+commit `40f3f5e69753b356f2d0e112350af7c287850b6f`. The checkout was on `main`,
+matched `origin/main`, and had no tracked changes before or after validation.
+
+The host's ambient Node `v24.19.0` reproduced the historical prerequisite
+failure: `bash scripts/test.sh` stopped in `scripts/build.sh` with
+`Node24.15.0 required`. The official Linux x64 Node `v24.15.0` archive was then
+installed under MirrorGate's ignored `.build/` directory and verified against
+Node's published `SHASUMS256.txt`; its SHA-256 is
+`472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6`.
+No repository source or global toolchain was changed.
+
+The required gate ran unchanged with only its pinned tool selections supplied
+through the environment:
+
+```bash
+PATH="$PWD/.build/toolchains/node-v24.15.0-linux-x64/bin:$PATH" \
+MIRRORGATE_NODE_RUNTIME_ROOT="$PWD/.build/toolchains/node-v24.15.0-linux-x64" \
+RUSTUP_TOOLCHAIN=1.96.0 \
+bash scripts/test.sh
+```
+
+The command exited zero using Node `v24.15.0`, Rust/Cargo `1.96.0`, Python
+`3.12.3`, Bubblewrap `0.9.0`, and a non-root controller. It passed:
+
+- 244 Python tests, including the required actual isolation, source-view,
+  authoring, control, cleanup, and resource-boundary cases;
+- 221 Node worker/SDK/control/hosting tests and three Node integration tests;
+- all three CTest targets plus the real C++ stdio/Unix controller scenarios;
+- four Rust unit tests, ten Rust lifecycle tests, and the shared-vector test;
+- correct/faulty Node and Rust Counter conformance; and
+- all six shared lifecycle cases for each runtime inside real Bubblewrap.
+
+This closes the MirrorGate item retained as unavailable in the historical
+2026-09-12 record (§17.6). The separately scoped full real-application
+DumpLedgerTransfer correct/faulty scaffold/generate/preflight/harness rerun
+remains outstanding under completion criterion 4.
