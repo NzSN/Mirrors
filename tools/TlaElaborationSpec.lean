@@ -888,13 +888,15 @@ def scenarioScopes (fails : Failures) : IO Unit := do
     (detailOf hidden)
   let composedFacts ← runInline #[(⟨"ComposedFacts"⟩,
     moduleText "ComposedFacts"
-      "EXTENDS Sequences\nFlagDomain == BOOLEAN\nTextDomain == STRING\nSize == Len(<<1>>)")]
+      "EXTENDS Sequences\nFlagDomain == BOOLEAN\nTextDomain == STRING\nSize == Len(<<1>>)\nFirst == Head(<<1, 2>>)\nRest == Tail(<<1, 2>>)")]
     "ComposedFacts"
   check fails "scope: composed-source standard and language facts resolve"
     (composedFacts.module?.isSome &&
       levelOfOperator? composedFacts "FlagDomain" == some "constant" &&
       levelOfOperator? composedFacts "TextDomain" == some "constant" &&
-      levelOfOperator? composedFacts "Size" == some "constant")
+      levelOfOperator? composedFacts "Size" == some "constant" &&
+      levelOfOperator? composedFacts "First" == some "constant" &&
+      levelOfOperator? composedFacts "Rest" == some "constant")
     (detailOf composedFacts)
   -- Elaboration is deterministic for equal captures.
   let first ← runInline

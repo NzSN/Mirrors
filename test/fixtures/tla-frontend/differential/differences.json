@@ -3,7 +3,7 @@
   "candidates": [],
   "reviewed": [
     {
-      "id": "reviewed-profile3-comment-depth-limit-sany",
+      "id": "reviewed-profile4-comment-depth-limit-sany",
       "fixtureIds": [
         "rej-comment-depth"
       ],
@@ -16,32 +16,32 @@
           "sany": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-comment-depth": {
           "rejected/RejectCommentDepth.tla": "df0c74196e3d8bedb0e5b0a862bda6769bfc5fa6ef9db3a6c8b0f2a410976054"
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
       },
-      "rationale": "The corpus records an intentional bounded comment-depth limit and an exploratory reference acceptance. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The corpus records an intentional bounded comment-depth limit and an exploratory reference acceptance. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-comment-depth-limit-apalache",
+      "id": "reviewed-profile4-comment-depth-limit-apalache",
       "fixtureIds": [
         "rej-comment-depth"
       ],
@@ -54,32 +54,32 @@
           "apalache": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-comment-depth": {
           "rejected/RejectCommentDepth.tla": "df0c74196e3d8bedb0e5b0a862bda6769bfc5fa6ef9db3a6c8b0f2a410976054"
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
       },
-      "rationale": "The corpus records an intentional bounded comment-depth limit and an exploratory reference acceptance. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The corpus records an intentional bounded comment-depth limit and an exploratory reference acceptance. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-identifier-size-limit-sany",
+      "id": "reviewed-profile4-identifier-size-limit-sany",
       "fixtureIds": [
         "rej-identifier-size"
       ],
@@ -92,32 +92,32 @@
           "sany": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-identifier-size": {
           "rejected/RejectIdentifierSize.tla": "39402a07e57399611cef45842f41f99b3db62b37cee3c3780577039ce1f78da9"
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
       },
-      "rationale": "The corpus records the profile identifier-size resource limit and an exploratory reference acceptance. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The corpus records the profile identifier-size resource limit and an exploratory reference acceptance. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-identifier-size-limit-apalache",
+      "id": "reviewed-profile4-identifier-size-limit-apalache",
       "fixtureIds": [
         "rej-identifier-size"
       ],
@@ -130,32 +130,32 @@
           "apalache": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-identifier-size": {
           "rejected/RejectIdentifierSize.tla": "39402a07e57399611cef45842f41f99b3db62b37cee3c3780577039ce1f78da9"
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
       },
-      "rationale": "The corpus records the profile identifier-size resource limit and an exploratory reference acceptance. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The corpus records the profile identifier-size resource limit and an exploratory reference acceptance. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-control-character-policy-sany",
+      "id": "reviewed-profile4-control-character-policy-sany",
       "fixtureIds": [
         "rej-control-character"
       ],
@@ -168,32 +168,32 @@
           "sany": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-control-character": {
           "rejected/RejectControlCharacter.tla": "9909854c5da713b6f700bcac297582a78e68b7d52d8f23848eeb25aad4ed0c7e"
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
       },
-      "rationale": "The profile deliberately rejects control characters that the exploratory parser tolerated. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The profile deliberately rejects control characters that the exploratory parser tolerated. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-control-character-policy-apalache",
+      "id": "reviewed-profile4-control-character-policy-apalache",
       "fixtureIds": [
         "rej-control-character"
       ],
@@ -206,32 +206,32 @@
           "apalache": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-control-character": {
           "rejected/RejectControlCharacter.tla": "9909854c5da713b6f700bcac297582a78e68b7d52d8f23848eeb25aad4ed0c7e"
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
       },
-      "rationale": "The profile deliberately rejects control characters that the exploratory parser tolerated. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The profile deliberately rejects control characters that the exploratory parser tolerated. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-pluscal-profile-limit-sany",
+      "id": "reviewed-profile4-pluscal-profile-limit-sany",
       "fixtureIds": [
         "rej-pluscal"
       ],
@@ -244,32 +244,32 @@
           "sany": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-pluscal": {
           "rejected/RejectPlusCal.tla": "eb6a332c5d5b37e40eb4c962b97ba8bc2197f5613861a64a3d1707ba0d05840f"
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
       },
-      "rationale": "The profile stages PlusCal out rather than silently treating its marker as inert trivia. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The profile stages PlusCal out rather than silently treating its marker as inert trivia. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-pluscal-profile-limit-apalache",
+      "id": "reviewed-profile4-pluscal-profile-limit-apalache",
       "fixtureIds": [
         "rej-pluscal"
       ],
@@ -282,32 +282,32 @@
           "apalache": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-pluscal": {
           "rejected/RejectPlusCal.tla": "eb6a332c5d5b37e40eb4c962b97ba8bc2197f5613861a64a3d1707ba0d05840f"
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
       },
-      "rationale": "The profile stages PlusCal out rather than silently treating its marker as inert trivia. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The profile stages PlusCal out rather than silently treating its marker as inert trivia. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-duplicate-declaration-policy-sany",
+      "id": "reviewed-profile4-duplicate-declaration-policy-sany",
       "fixtureIds": [
         "rej-duplicate-declaration"
       ],
@@ -320,32 +320,32 @@
           "sany": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-duplicate-declaration": {
           "rejected/RejectDuplicateDeclaration.tla": "6f59f6ec64025d8d9bca15b59985b17958e7f9c1bfe7ad3796f41017423ed977"
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
       },
-      "rationale": "The corpus records a stricter duplicate-declaration result than the exploratory warning result. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The corpus records a stricter duplicate-declaration result than the exploratory warning result. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-duplicate-declaration-policy-apalache",
+      "id": "reviewed-profile4-duplicate-declaration-policy-apalache",
       "fixtureIds": [
         "rej-duplicate-declaration"
       ],
@@ -358,32 +358,32 @@
           "apalache": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-duplicate-declaration": {
           "rejected/RejectDuplicateDeclaration.tla": "6f59f6ec64025d8d9bca15b59985b17958e7f9c1bfe7ad3796f41017423ed977"
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
       },
-      "rationale": "The corpus records a stricter duplicate-declaration result than the exploratory warning result. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The corpus records a stricter duplicate-declaration result than the exploratory warning result. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-real-literal-profile-limit-sany",
+      "id": "reviewed-profile4-real-literal-profile-limit-sany",
       "fixtureIds": [
         "rej-real-literal"
       ],
@@ -396,32 +396,32 @@
           "sany": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-real-literal": {
           "rejected/RejectRealLiteral.tla": "54cb23f1a9ea7d961d20ce15304b7c17fcc9291b1009044f5e2da95e46367e6b"
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
       },
-      "rationale": "The profile has an integer-only numeric value domain and stages real literals out. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The profile has an integer-only numeric value domain and stages real literals out. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-real-literal-profile-limit-apalache",
+      "id": "reviewed-profile4-real-literal-profile-limit-apalache",
       "fixtureIds": [
         "rej-real-literal"
       ],
@@ -434,32 +434,32 @@
           "apalache": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-real-literal": {
           "rejected/RejectRealLiteral.tla": "54cb23f1a9ea7d961d20ce15304b7c17fcc9291b1009044f5e2da95e46367e6b"
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
       },
-      "rationale": "The profile has an integer-only numeric value domain and stages real literals out. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The profile has an integer-only numeric value domain and stages real literals out. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-extends-ambiguity-policy-sany",
+      "id": "reviewed-profile4-extends-ambiguity-policy-sany",
       "fixtureIds": [
         "rej-extends-ambiguity"
       ],
@@ -472,7 +472,7 @@
           "sany": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-extends-ambiguity": {
           "rejected/extends-ambiguity/AmbLeft.tla": "7ba4f10d53c5338f6b2399bb4b65837a1c941fba74bdd71f7552d79394d9a20a",
@@ -481,25 +481,25 @@
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "sany": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1"
       },
-      "rationale": "The profile treats ambiguous inherited declarations as an error rather than a warning. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The profile treats ambiguous inherited declarations as an error rather than a warning. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     },
     {
-      "id": "reviewed-profile3-extends-ambiguity-policy-apalache",
+      "id": "reviewed-profile4-extends-ambiguity-policy-apalache",
       "fixtureIds": [
         "rej-extends-ambiguity"
       ],
@@ -512,7 +512,7 @@
           "apalache": "accepted"
         }
       },
-      "profile": "mirrors-tla-frontend-profile-3",
+      "profile": "mirrors-tla-frontend-profile-4",
       "sourceDigests": {
         "rej-extends-ambiguity": {
           "rejected/extends-ambiguity/AmbLeft.tla": "7ba4f10d53c5338f6b2399bb4b65837a1c941fba74bdd71f7552d79394d9a20a",
@@ -521,20 +521,20 @@
         }
       },
       "enginePins": {
-        "mirrors": "ca58e57aeeaf586e7e8d3d21447c28bf77a9da9da5d5bdd322c8f0c9a634c89b",
+        "mirrors": "39f72594f27e0ab07806973431326c1b97a24ccb5d33d3bdadbf1cb8b3538f46",
         "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
       },
-      "rationale": "The profile treats ambiguous inherited declarations as an error rather than a warning. Independently renewed for profile 3 against checkpoint N; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
+      "rationale": "The profile treats ambiguous inherited declarations as an error rather than a warning. Renewed for profile 4 against checkpoint S; this entry is bound only to its captured outcome fact, source digest(s), and engine fingerprints.",
       "evidence": [
         {
-          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/report.json",
-          "sha256": "391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c"
+          "path": "test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/report.json",
+          "sha256": "0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a"
         }
       ],
       "review": {
-        "artifact": "Drafts/tla-junction-profile3-policy-renewals-phase1.md",
-        "commit": "64ecefd589e5bcb4ea03195f592a9a73f7b7012a",
-        "sha256": "b9887fdf5775a1e2ad7a158fe483e25e3dc2c446d1bd75027f53a89ebd8104c3"
+        "artifact": "Drafts/tla-profile4-catalog-policy-renewals.md",
+        "commit": "74674e7e4db12159548aff7d5c8595a2854749ed",
+        "sha256": "00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677"
       },
       "revisit": "Any source, profile, tool fingerprint or compared-field change requires renewed review."
     }

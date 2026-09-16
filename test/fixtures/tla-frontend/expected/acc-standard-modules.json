@@ -2,7 +2,7 @@
   "schema": "mirrors.tla-frontend-summary/1",
   "fixture": "acc-standard-modules",
   "root": "AcceptStandardModules",
-  "profile": "mirrors-tla-frontend-profile-3",
+  "profile": "mirrors-tla-frontend-profile-4",
   "modules": [
     "AcceptStandardModules"
   ],
@@ -83,7 +83,7 @@
       "module": "AcceptStandardModules",
       "kind": "operator",
       "names": [
-        "Size"
+        "First"
       ],
       "arity": 0,
       "line": 7
@@ -92,17 +92,43 @@
       "module": "AcceptStandardModules",
       "kind": "operator",
       "names": [
-        "Sum"
+        "Rest"
       ],
       "arity": 0,
       "line": 8
+    },
+    {
+      "module": "AcceptStandardModules",
+      "kind": "operator",
+      "names": [
+        "Size"
+      ],
+      "arity": 0,
+      "line": 9
+    },
+    {
+      "module": "AcceptStandardModules",
+      "kind": "operator",
+      "names": [
+        "Sum"
+      ],
+      "arity": 0,
+      "line": 10
     }
   ],
   "effectiveVariables": [],
+  "renderings": {
+    "First": "Head(<<1, 2>>)",
+    "Positive": "{n \\in Nat : n > 0}",
+    "Rest": "Tail(<<1, 2>>)",
+    "Sequence": "Append(<<1>>, 2)",
+    "Size": "Cardinality({1, 2})",
+    "Sum": "1 + 2"
+  },
   "sources": [
     {
       "logicalPath": "AcceptStandardModules.tla",
-      "sha256": "ab646e4455934e4bec4a8db40ca5163dbaa8d5c4e67d0cb2717d4513f05aa623"
+      "sha256": "74f18797b5cb8dd27f6ca65e5d1a50a88d225dfdf21b2511fe77af04c3b56e38"
     }
   ]
 }

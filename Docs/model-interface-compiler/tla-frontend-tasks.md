@@ -5,7 +5,9 @@
 > cross-language interop matrix, live Apalache tiers, and MirrorGate required
 > backend/sandbox matrix are green. The profile-2 corpus-wide differential run
 > failed on 2026-09-13; DC0–DC4 closed its eleven findings under profile 3 on
-> 2026-09-14. See sections 17.7–17.8 and 18.8–18.10 for the historical and
+> 2026-09-14. Profile 4 adds the reviewed `Sequences.Head` and
+> `Sequences.Tail` catalog facts and closes the MirrorECMA WorkQueue blocker on
+> 2026-09-15. See sections 17.7–17.8 and 18.8–18.11 for the historical and
 > current evidence.**
 >
 > Design authority: [general TLA+ frontend](tla-frontend-design.md)
@@ -1128,3 +1130,51 @@ This closes the MirrorGate item retained as unavailable in the historical
 2026-09-12 record (§17.6). The separately scoped full real-application
 DumpLedgerTransfer correct/faulty scaffold/generate/preflight/harness rerun
 remains outstanding under completion criterion 4.
+
+### 18.11 Profile-4 standard-catalog closure (2026-09-15)
+
+The separately authorized Mirrors catalog repair adds reviewed unary,
+constant-level declaration facts for `Sequences.Head` and `Sequences.Tail`.
+The profile identity is `mirrors-tla-frontend-profile-4`, as required when
+standard-module declaration facts change. `acc-standard-modules` now exercises
+both operators, and its structural summary was regenerated through
+`tla_parser_spec --emit-summary`. The active corpus remains 61 fixtures: 34
+accepted, 27 rejected, 76 profile branches, and 107 fixture-branch links.
+
+The MirrorECMA WorkQueue application now passes both its focused smoke gate and
+the complete pinned-Node CI gate against the rebuilt Mirrors compiler and
+runtime. This closes the WorkQueue blocker recorded by the trace-generation
+transport-hardening task. MirrorRust revision and registry failures were not
+modified or reclassified; they remain outside this repair's authorized scope.
+
+The profile-4 differential baseline is retained as
+[checkpoint S](../../test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/README.md).
+After renewing the same fourteen outcome-only intentional policy bindings for
+the new profile and executable identity, both required runs passed in
+[checkpoint T](../../test/fixtures/tla-frontend/differential/evidence/checkpoint-t-profile4-catalog-final-1/README.md)
+and
+[checkpoint U](../../test/fixtures/tla-frontend/differential/evidence/checkpoint-u-profile4-catalog-final-2/README.md).
+Each completed 183/183 observations with 564 exact matches, fourteen reviewed
+differences, 292 explicitly unsupported comparisons, and zero unresolved or
+incomplete findings. Their normalized semantic payloads are byte-identical,
+SHA-256
+`75b35ec9d2b5fff9721311dc08ce9acb00bb212f4bdfe5560cf672f0aaa26e1d`.
+The renewed registry SHA-256 is
+`332ea8ca98a403e3f041c051157c953f4e31a9372ecd66f7dc13a92e6996cf9a`;
+the renewal record SHA-256 is
+`00472c070c1daa3de02b73d4eacc50a24ecf9e751dd84a0505ba5f54c3b8c677`.
+
+The packaged evidence hashes are:
+
+| Checkpoint | Report SHA-256 | Raw archive SHA-256 | Artifact index SHA-256 |
+| --- | --- | --- | --- |
+| S | `0e466d93869ec948b7b6c1d8253d4245e86a1a13c14d59648d1b0acbba4e480a` | `1ccf7d99868936ec9b68bfec63634f706818069d6cc9129e168fb72e2c6f7c6f` | `f2ee53d6896e472d574ba2f6a3c11bfcee3619113a612ac1dd697f34e5726970` |
+| T | `25e030ae03dad77c74592597967a1aa7728b44348720f083bb922b41ac5ea590` | `365db6cb5641d4941018ffa68e7fe877cf60f71555e33ec985a22130f37e45c2` | `679d73885672e3b2db0a144307c535257735d5763eb3292a4c4107a1cd6acfe8` |
+| U | `a6b88a3cc5770774d81cf55af835b0d48919afd3086abd9a7e4196a464ad17a5` | `af7c7c818611d783ad5e7a146490c44892e94a63b385b8e7ef5a30f2f7dba163` | `b9e903cc32c59e47eedf9e99feab60cb546ec7aeb6f2770edc6fc7016372f65e` |
+
+Focused validation passed for the lexer, parser, elaboration, and unified
+frontend executables; the offline differential suite passed all 60 tests with
+four opt-in live tests skipped. The exact pinned JDK 25.0.4+7 and Apalache
+0.61.0 aggregate `lake test` passed with `ALL LAKE TESTS GREEN`, including the
+three generated model-interface checks and the complete transport, registry,
+and Counter gates.

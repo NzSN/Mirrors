@@ -11,7 +11,7 @@ Conformance suite for the TF2 lossless parser slice
 abstract syntax", §11 "Parsing behavior", §20 "Diagnostics", §21 "Resource and
 security limits"; packages TF2A and TF2B of
 `Docs/model-interface-compiler/tf2-acceptance-tasks.md`) against the pinned
-revision-3 language profile
+revision-4 language profile
 (`Docs/model-interface-compiler/tla-language-profile.md`). The parser checks
 are pure; the TF2D corpus tier below reads the repository's
 `test/fixtures/tla-frontend` manifest, sources, and summaries.
@@ -21,7 +21,7 @@ budgets, one nesting budget for every recursive syntax family, repeated prefix
 and conditional/quantifier forms, token-stream admission, and deterministic
 repeated failures. TF2B adds: the operator table as parser-profile data (a
 modified profile changes precedence and associativity while `parseUnit` stays
-on the frozen revision-3 combination), bounded and unbounded quantifier
+on the frozen revision-4 combination), bounded and unbounded quantifier
 groups, functional/infix/prefix/postfix operator definitions with their
 applications, and decoded string values whose spelling stays in the CST. TF2C
 adds the opaque proof treatment: `PROOF OMITTED` and `PROOF OBVIOUS` terminals,
@@ -585,10 +585,10 @@ def applicationSpellings? (expression : Expression) :
 /-! ## TF2B scenarios -/
 
 /-- The operator table is profile data: a modified profile changes parsing, and
-the default profile is the frozen revision-3 combination. -/
+the default profile is the frozen revision-4 combination. -/
 def scenarioProfileOwnership (fails : Failures) : IO Unit := do
-  check fails "profile: the default profile is the frozen revision-3 combination"
-    (ParserProfile.default.name == "mirrors-tla-frontend-profile-3")
+  check fails "profile: the default profile is the frozen revision-4 combination"
+    (ParserProfile.default.name == "mirrors-tla-frontend-profile-4")
     ParserProfile.default.name
   match parseBody? {} "x == A = B = C" with
   | none => check fails "profile: the chained equality capture lexes" false
@@ -2729,8 +2729,9 @@ def scenarioCorpusAdversarial (fails : Failures) : IO Unit := do
 
 /-! ### Complete expected-summary projections
 
-`--emit-summary FIXTURE` regenerates either junction summary or the profile-3
-Unicode summary from the manifest and the real frontend only;
+`--emit-summary FIXTURE` regenerates a junction summary, the profile-3 Unicode
+summary, or the reviewed standard-module summary from the manifest and the
+real frontend only;
 `--emit-junction-summary FIXTURE` is the historical spelling the junction
 wrapper still uses. Generation never reads a destination file, and the Python
 wrappers compare decoded JSON rather than bytes. Summaries whose only change is
@@ -2788,8 +2789,8 @@ def completeSummary (fixture : Fixture)
 
 def emitSummary (id : String) : IO UInt32 := do
   if id != "acc-precedence" && id != "acc-precedence-junctions" &&
-      id != "rej-unicode-spelling" then
-    IO.eprintln "only junction and profile-3 Unicode summaries are supported"
+      id != "rej-unicode-spelling" && id != "acc-standard-modules" then
+    IO.eprintln "only junction, profile-3 Unicode, and standard-module summaries are supported"
     return 2
   match ← corpusRoot? "." with
   | none => IO.eprintln "corpus root not found"; return 2

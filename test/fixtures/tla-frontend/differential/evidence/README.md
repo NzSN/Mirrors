@@ -1,7 +1,28 @@
 # Differential validation evidence — 2026-09-13
 
-**Profile-3 differential acceptance: passed.** Historical profile-2 captures
-below remain failed evidence; they are not rewritten or reinterpreted.
+**Profile-4 differential acceptance: passed.** Historical profile-3 and
+profile-2 captures below remain immutable evidence; they are not rewritten or
+reinterpreted.
+
+## Profile-4 standard-catalog closure (2026-09-15)
+
+Profile 4 adds unary constant-level facts for `Sequences.Head` and
+`Sequences.Tail` and advances the profile identity without changing lexical or
+parser behavior. Checkpoints T and U are independent required runs after the
+fourteen existing outcome-only policy bindings were renewed against checkpoint
+S. Each completed 183/183 observations with 564 exact matches, fourteen
+reviewed differences, 292 explicitly unsupported comparisons, and zero
+unresolved findings. Their semantic payloads are byte-identical, SHA-256
+`75b35ec9d2b5fff9721311dc08ce9acb00bb212f4bdfe5560cf672f0aaa26e1d`.
+
+- [Checkpoint S review baseline](checkpoint-s-profile4-catalog-baseline/README.md).
+- [Checkpoint T final capture](checkpoint-t-profile4-catalog-final-1/README.md).
+- [Checkpoint U final capture](checkpoint-u-profile4-catalog-final-2/README.md).
+- [Profile-4 renewal record](../../../../../Drafts/tla-profile4-catalog-policy-renewals.md).
+
+The accepted `acc-standard-modules` fixture now drives `Head` and `Tail`; the
+regenerated structural summary and WorkQueue compiler/smoke gates pass. Profile
+3 remains the historical Unicode/differential closure below.
 
 ## Profile-3 differential closure (2026-09-14)
 

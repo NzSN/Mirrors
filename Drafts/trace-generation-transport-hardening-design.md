@@ -1,8 +1,9 @@
 # Trace-generation transport hardening design
 
 > Status: **implemented and independently accepted for the TG0–TG3 transport
-> hardening scope; aggregate TG4/TG5 publication is blocked by unrelated
-> WorkQueue standard-catalog and MirrorRust validation failures**.
+> hardening scope; the WorkQueue standard-catalog blocker is resolved under
+> profile 4, while aggregate TG4/TG5 publication remains blocked by the
+> separately excluded MirrorRust validation failures**.
 >
 > Scope: MirrorECMA-owned registration cleanup, Mirrors-owned bounded trace
 > result delivery, and preservation of Apalache trace-generation failures.

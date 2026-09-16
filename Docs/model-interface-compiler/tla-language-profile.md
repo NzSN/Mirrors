@@ -1,10 +1,13 @@
-# Mirrors TLA+ frontend language profile (revision 3)
+# Mirrors TLA+ frontend language profile (revision 4)
 
-> Status: **revision-3 profile; frozen with the TF0 corpus on 2026-09-11,
+> Status: **revision-4 profile; frozen with the TF0 corpus on 2026-09-11,
 > revised on 2026-09-12 when TF5 lifted the staged `INSTANCE` limit, and
 > revised on 2026-09-13 for the shared junction level, then revised on
-> 2026-09-14 for three reference-confirmed Unicode aliases**.
-> Revision 3 changes §4.7, the identity in §2, and the corpus identity. Only
+> 2026-09-14 for three reference-confirmed Unicode aliases, then revised on
+> 2026-09-15 for the `Sequences.Head` and `Sequences.Tail` declaration
+> facts**.
+> Revision 4 changes §6.3, the identity in §2, and the corpus identity.
+> Revision 3 changed §4.7, the identity in §2, and the corpus identity. Only
 > §5.5's junction rule and the identity in §2 changed in revision 2. Every
 > other rule below is the revision-1 rule carried forward unchanged, so its
 > historical "Revision 1" wording names the inherited rule rather than a
@@ -12,8 +15,9 @@
 > Design authority: [general TLA+ frontend design](tla-frontend-design.md).
 > Task package: [TLA+ frontend tasks](tla-frontend-tasks.md), package TF0.
 > Conformance corpus: [`test/fixtures/tla-frontend/manifest.json`](../../test/fixtures/tla-frontend/manifest.json).
-> Differential status: **profile-3 aggregate validation passed DC4**. The
-> profile-2 failure remains historical evidence; profile-3 final captures and
+> Differential status: **profile-4 aggregate validation passed; profile-3
+> remains the historical DC4 closure**. The profile-2 failure remains historical evidence;
+> profile-3 and profile-4 final captures and
 > the fourteen exact reviewed policy bindings are indexed in
 > [differential evidence](../../test/fixtures/tla-frontend/differential/evidence/README.md).
 > Baseline selection changes validation metadata only; language acceptance is
@@ -47,7 +51,17 @@
 > carries 61 fixtures (34 accepted, 27 rejected): the unchanged historical
 > `rej-unicode-spelling` source is reclassified as accepted and a focused
 > `rej-staged-unicode` fixture preserves the fail-closed boundary. DC4 owns the
-> profile-3 differential rerun and review, now completed in checkpoints O/P.
+> profile-3 differential rerun and review, now completed in checkpoints Q/R.
+>
+> Revision note (2026-09-15): revision 4 adds unary constant-level declaration
+> facts for `Sequences.Head` and `Sequences.Tail`, matching the pinned TLA+
+> Tools 1.8.0 standard module and the accepted WorkQueue consumer. The lexical
+> and parser tables are unchanged. The profile id changes because §2 requires a
+> revision whenever standard-module declaration facts change. The active corpus
+> remains 61 fixtures (34 accepted, 27 rejected); `acc-standard-modules` adds
+> focused uses of both declarations and receives a regenerated summary. Two
+> required profile-4 runs pass in checkpoints T/U with byte-identical semantic
+> payloads and zero unresolved findings.
 
 ## 1. Scope and authority
 
@@ -73,9 +87,9 @@ Compatibility rules inherited from the design:
 
 ## 2. Profile identity and revision rules
 
-| Item | Revision-3 value |
+| Item | Revision-4 value |
 | --- | --- |
-| Profile id | `mirrors-tla-frontend-profile-3` |
+| Profile id | `mirrors-tla-frontend-profile-4` |
 | Corpus manifest schema | `mirrors.tla-frontend-corpus/1` |
 | Structural summary schema | `mirrors.tla-frontend-summary/1` |
 | Source identity | normalized UTF-8 bytes, CRLF and CR normalized to LF, SHA-256 |
@@ -357,7 +371,9 @@ The catalog separates three kinds of entry, exactly as the design requires:
 Declaration facts exist only where a reviewed catalog revision provides them.
 Revision 1 must provide facts for at least the operators used by the accepted
 corpus and composed-source acceptance cases (`Nat`, `Int`, `Append`, `Len`,
-`Cardinality`, plus the language-defined `BOOLEAN` and `STRING`). A name in the list is **not**
+`Head`, `Tail`, `Cardinality`, plus the language-defined `BOOLEAN` and
+`STRING`). `Head` and `Tail` are unary constant-level declarations, matching
+the pinned TLA+ Tools 1.8.0 `Sequences` module. A name in the list is **not**
 enough to invent an arity: using an operator from a module whose declarations
 are still pending is a profile-limit error, and the catalog must grow with
 evidence before callers depending on those modules are migrated.
@@ -552,8 +568,8 @@ The manifest `status` is `provisional` while the SANY and Apalache pins are
 unset: fixture ids, outcomes, stages, reasons, and structural summaries are
 frozen for the active profile revision, and only the differential slots and
 pinned tool versions remain for the coordinating agent. The manifest and every
-live expected summary carry `mirrors-tla-frontend-profile-3`; archived
-revision-1 and revision-2 evidence is unchanged.
+live expected summary carry `mirrors-tla-frontend-profile-4`; archived
+revision-1, revision-2, and revision-3 evidence is unchanged.
 
 ### 10.2 Fixture semantics
 
@@ -722,7 +738,7 @@ from those decisions.
 
 | Design open decision | Revision-1 disposition | Owner of the remainder |
 | --- | --- | --- |
-| 1. Grammar and baseline versions | profile recorded here; TLA+ Tools 1.8.0 / SANY 2.2 and Apalache 0.61.0 pinned; profile-3 differential acceptance passed | frontend maintainers: preserve reviewed bindings on future identity changes |
+| 1. Grammar and baseline versions | profile recorded here; TLA+ Tools 1.8.0 / SANY 2.2 and Apalache 0.61.0 pinned; profile-4 catalog validation passed | frontend maintainers: preserve reviewed bindings on future identity changes |
 | 2. Structural proofs or opaque regions | resolved: proof bodies retained as opaque regions (§5.2) | no outstanding revision-1 choice |
 | 3. Apalache annotations as facts or trivia | trivia only, no semantic facts (§4.6) | TF6 if facts become necessary |
 | 4. Measured default limits | revision-1 limits specified in §8; production-model sizing remains continuing work | frontend maintainers |

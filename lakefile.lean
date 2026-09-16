@@ -244,6 +244,8 @@ regressions. The suite uses generic injected fixtures and no live network. -/
 @[default_target]
 lean_exe trace_generation_transport_repro_spec where
   root := `tools.TraceGenerationTransportReproSpec
+  moreLinkObjs := #[`@/socket_shim_o]
+  moreLinkArgs := sockLinkArgs
 
 /-- t16: registry/discovery + signal-handling gate (mock Consul via
 python3; the SIGTERM tier needs the openssl CLI for a throwaway PKI
@@ -526,10 +528,12 @@ script test do
   if out7.exitCode != 0 then
     IO.println s!"transport_spec FAILED ({out7.exitCode})"
     return out7.exitCode
+  let repoRoot ← IO.currentDir
+  let apalacheFailureFixture :=
+    repoRoot.toString ++ "/test/fixtures/trace-generation/apalache-failure.sh"
   let outTraceDelivery : IO.Process.Output ← IO.Process.output
     ({ cmd := ".lake/build/bin/trace_generation_transport_repro_spec", args := #[],
-       env := #[("APALACHE_MC",
-         some "test/fixtures/trace-generation/apalache-failure.sh")] } :
+       env := #[("APALACHE_MC", some apalacheFailureFixture)] } :
       IO.Process.SpawnArgs)
   IO.println outTraceDelivery.stdout
   if outTraceDelivery.exitCode != 0 then

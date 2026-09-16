@@ -2,7 +2,8 @@
 
 > Status: **TG0–TG3 implemented and independently accepted; TG4 integration
 > behavior is green but its aggregate package and TG5 publication remain
-> blocked by external frontend/catalog and MirrorRust validation failures**.
+> blocked by the separately excluded MirrorRust validation failures. The
+> WorkQueue `Sequences.Head`/`Tail` catalog blocker is resolved by profile 4**.
 >
 > Design authority:
 > [trace-generation transport hardening](trace-generation-transport-hardening-design.md).
@@ -366,23 +367,24 @@ Observed package evidence:
   faulty replay use checked-in traces. No DumpLedger file was edited by this
   task.
 
-TG4 and TG5 are not accepted because the complete exact-toolchain aggregate is
-not green:
+The WorkQueue catalog blocker is resolved by profile 4: Mirrors now carries
+reviewed unary constant-level facts for `Sequences.Head` and `Sequences.Tail`,
+the accepted standard-module fixture and generated summary cover both, two
+required differential runs pass with zero findings, and MirrorECMA's WorkQueue
+smoke and full CI gate pass.
 
-1. MirrorECMA WorkQueue uses `Sequences.Head` and `Sequences.Tail`, while the
-   current Mirrors standard-module catalog exposes neither. `pnpm run ci`
-   fails with `TLA-ELAB-UNKNOWN-NAME`. Correcting this requires a separately
-   reviewed catalog/profile fixture update, not a transport patch.
-2. Strict interop revision checking rejects the current MirrorRust checkout
+TG4 and TG5 are not accepted because the complete exact-toolchain aggregate is
+still blocked by the separately excluded MirrorRust scope:
+
+1. Strict interop revision checking rejects the current MirrorRust checkout
    `65b6c834d53d63357e4155962fd4cb607315c33e`; the published baseline is
    `1c8af5bb8c4e3a07927560304b83dc2d38addf2a`.
-3. With the current MirrorRust checkout and pinned Rust 1.96.0, the standalone
+2. With the current MirrorRust checkout and pinned Rust 1.96.0, the standalone
    `registry_discovery_parses_valid_entries_and_skips_invalid_ones` test exits
    101 at `tests/registry.rs:41` (`left: 0`, `right: 2`), including a dedicated
    permitted-loopback rerun outside the command sandbox. Other affected Rust
    stdio, server, and transport tests pass under 1.96.0.
 
-The WorkQueue catalog completion and MirrorRust pin/registry repair require
-separate authorization and ownership. After both are accepted, rerun TG4's
-complete exact-pin matrix and TG5 review before marking this task group fully
-published.
+MirrorRust pin/registry repair is intentionally outside the currently authorized
+scope. After it is accepted separately, rerun TG4's complete exact-pin matrix
+and TG5 review before marking this task group fully published.

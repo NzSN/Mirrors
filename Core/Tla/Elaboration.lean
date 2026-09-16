@@ -41,7 +41,8 @@ Revision-1 decisions recorded here:
   `WF_`, `SF_`, `DOMAIN`, `SUBSET`, `UNION`). A local declaration always
   shadows a language-defined spelling.
 * *Standard-module facts.* Revision 1 seeds the four declaration facts the
-  frozen corpus exercises (`Nat`, `Int`, `Append`, `Cardinality`) with the
+  frozen corpus exercises (`Nat`, `Int`, `Append`, `Len`, `Head`, `Tail`,
+  `Cardinality`) with the
   standard module each one comes from. Transitive standard-module visibility
   and the remaining catalog facts belong to the catalog-sourcing decision
   (design §30 item 5); a name whose facts are still pending is not invented
@@ -224,6 +225,8 @@ def standardOperatorFacts : Array StandardOperatorFact := #[
   { name := "Int", arity := 0, level := .constant, module := ⟨"Integers"⟩ },
   { name := "Append", arity := 2, level := .constant, module := ⟨"Sequences"⟩ },
   { name := "Len", arity := 1, level := .constant, module := ⟨"Sequences"⟩ },
+  { name := "Head", arity := 1, level := .constant, module := ⟨"Sequences"⟩ },
+  { name := "Tail", arity := 1, level := .constant, module := ⟨"Sequences"⟩ },
   { name := "Cardinality", arity := 1, level := .constant,
     module := ⟨"FiniteSets"⟩ }]
 
