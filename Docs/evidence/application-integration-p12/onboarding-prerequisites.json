@@ -1,0 +1,20 @@
+{
+  "startedAtUnix": 1789575821.9242203,
+  "startedAtUtc": "2026-09-16T16:23:41Z",
+  "scope": "artifact installation and packet assembly, excludes prior reading/planning",
+  "finishedAtUnix": 1789576115.5376513,
+  "finishedAtUtc": "2026-09-16T16:28:35Z",
+  "elapsedSeconds": 293.6134309768677,
+  "setupAndFirstReplay": "not measured; evaluator has not started",
+  "seededDiagnosis": "not measured; no defect active",
+  "publicWorkspace": "/tmp/mirrors-p12-onboarding-jzu1pu9i/evaluator",
+  "privateCoordinatorDirectory": "/tmp/mirrors-p12-onboarding-jzu1pu9i/coordinator",
+  "preparedCorrectSut": true,
+  "adapterSkeletonOnly": true,
+  "projectConfigurationAbsent": true,
+  "toolchainLockAbsent": true,
+  "generatedModelAbsent": true,
+  "isolation": "Prompt-scoped fresh-agent reading boundary; no claim of OS isolation for the agent tools. Workspace contains installed public package distribution, no framework source checkout.",
+  "publicSymlinksEscapeWorkspace": false,
+  "coordinatorControlSyntaxChecked": true
+}

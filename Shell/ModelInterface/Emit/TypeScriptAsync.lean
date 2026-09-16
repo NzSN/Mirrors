@@ -64,7 +64,7 @@ private def renderPublicOperation (action : ResolvedAction) : Lean.Json :=
     ("inputs", .arr inputs.toArray)
   ]
 
-private def renderPublicManifest (lock : LockedModelInterface) : String :=
+def renderPublicManifest (lock : LockedModelInterface) : String :=
   let initializers := Shared.sortByKey (fun action => action.id) lock.initializers
   let actions := Shared.sortByKey (fun action => action.id) lock.actions
   let observations := Shared.sortByKey (fun observation => observation.id)

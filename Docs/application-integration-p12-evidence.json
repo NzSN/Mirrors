@@ -1,0 +1,319 @@
+{
+  "schema": "mirrors.application-integration-p12/v1",
+  "completedAtUtc": "2026-09-16T16:39:58.825110+00:00",
+  "status": "passed",
+  "restrictedAuthoring": {
+    "kind": "actual Gate-hosted restricted coding agents",
+    "runtime": "codex-cli 0.153.4",
+    "model": "gpt-5.6-sol",
+    "runtimeSha256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da",
+    "audit": {
+      "schema": "mirrorgate.agent-audit/v1",
+      "probeRevision": "mirrorgate.codex-dispatch/v1",
+      "passed": true,
+      "auditedAtUnix": 1789576025.6022077,
+      "privateReceiptSha256": "440c4d3c455ab108d99f81c9ae2e31cb066ada96a103c1c20372a99460e431b6",
+      "context": "fresh-private-cwd/no-inherited-home/no-project-docs/no-rules/no-skills/no-memory",
+      "supportSha256": {
+        "agent_runtime.py": "6b1f89db5803a4199091a8d11c5999bc128cf487bb5279c94071fad3f43a28c6",
+        "agent_policy.py": "0ca9116adf745f29e532496718174a9422146142dd3b0a27c1b0e535487a4ac2",
+        "agent_audit.py": "f191afcb52503827fe5d4858f9a61d16ddef930232f33e2392bd611a5d81b3f5",
+        "agent_trampoline.py": "7a4bd7a591817db120dd94418f4f1c0700200398abfd1347609b975202913a34",
+        "authoring_broker.py": "83ed5179ed5dd7d60973a2aec41bc053cba06f799b61621f973fb0bb1e7f9a8b",
+        "authoring_mcp.py": "ed8451aeb04a6be8e8e5fa5e32946587c95deda9b7f0712940d721e9f7e01628"
+      },
+      "templateSha256": "01e923562b14817e383adbf444484b5d258eef5948139c7957a88a9f80a3354f",
+      "toolsSha256": "39a3e211e7b46ac9d2f18d25bcaac956907e9aa7e71a977198f46d4522a09c24"
+    },
+    "profileRecovery": "verified exact supported native package from existing npm cache; no support-rule relaxation or global runtime replacement",
+    "publicEnvironmentCapability": "hosting.public-environment-v1",
+    "privateOracleDisclosure": "public contract, sanitized manifest and adapter declarations only; no private failure feedback or evaluator changes",
+    "applications": [
+      {
+        "application": "work-queue",
+        "attempts": 1,
+        "outcome": "passed",
+        "hostingOutcome": "submitted",
+        "durationMs": 55347.460041,
+        "interfaceDigest": "3c646311c18341793bf7f09f0352b30c117fba8c424a0031e12bba4c77ebc2e2",
+        "modelSha256": "3262ae5cac7205a8f9ceee2f4fe1d59bf1b2b14d1e3533f700ed9ce68a5ae12d",
+        "traceSha256": "24df406764c8357cdba5f3062d5ac0092d0a1dfb974b2fb3eeb3887603d4918b",
+        "publicContractSha256": "8651be837fb649e7b73a96e9840f9194f5e62274c5b9bb73be81d6a919bb6df8",
+        "runnerSha256": "26557a4b9ad7b33a6a7ceee800b3429125e6dfc49462420dab780343bae3bd7c",
+        "submission": {
+          "submissionId": "873cf26a728e19df833f4292a249998b",
+          "sourceHash": "54a17905ff404fd83bff0f2194192a51b91675baf2e27bd69fabf92cb781cfea",
+          "sourceRevision": 1
+        },
+        "implementation": {
+          "preparedRevision": 1,
+          "artifactId": "bfb9bee77e99249aa1c0f2028011a59d",
+          "artifactHash": "54a17905ff404fd83bff0f2194192a51b91675baf2e27bd69fabf92cb781cfea",
+          "manifestHash": "fb326f4abb38f1d9c3cbc67d4c31dd2cdad65dd17774d1494dbdae9e806c488b",
+          "runtime": "node-v1",
+          "policyId": "work-queue",
+          "sourceHash": "54a17905ff404fd83bff0f2194192a51b91675baf2e27bd69fabf92cb781cfea"
+        },
+        "suiteId": "work-queue.acceptance/v2",
+        "conformance": "matched",
+        "acceptance": {
+          "status": "met",
+          "missingActions": [],
+          "missingPairs": []
+        },
+        "evidence": {
+          "schema": "mirrorecma.suite-evidence/v1",
+          "enteredReplay": true,
+          "complete": true,
+          "exact": true,
+          "tracesExpected": 2,
+          "tracesCompleted": 2,
+          "initializationsMatched": "2",
+          "transitionsMatched": "30",
+          "actionCounts": {
+            "Complete": "6",
+            "Enqueue": "12",
+            "Fail": "2",
+            "Reset": "2",
+            "Retry": "2",
+            "Start": "6"
+          },
+          "pairCounts": {
+            "[\"Enqueue\",\"Enqueue\"]": "4",
+            "[\"Fail\",\"Retry\"]": "2",
+            "[\"Retry\",\"Complete\"]": "2",
+            "[\"Reset\",\"Enqueue\"]": "2"
+          }
+        },
+        "physicalCleanup": {
+          "status": "confirmed",
+          "remainingResources": [],
+          "failures": []
+        },
+        "submittedSourceMatchesPreparedSource": true,
+        "privateReceiptSha256": "4d47314e4c93feecdc9a686eab0c874941e716168c518736275692ae2dd52185"
+      },
+      {
+        "application": "persistent-transfer",
+        "attempts": 1,
+        "outcome": "passed",
+        "hostingOutcome": "submitted",
+        "durationMs": 107000.49051799999,
+        "interfaceDigest": "a7e8d817de406553962d544a928dacdc92645761fd1bfd9c1a7db147340ca006",
+        "modelSha256": "8afef873443447c74ab77fd639b9e8ac496a0649899ab73a41d73a3b065d3add",
+        "traceSha256": "5142bd661c6887c1e1e3547cb14f349914e06d2d6fd0e5ea9bfab84c5149c326",
+        "publicContractSha256": "54289d081fd3dadc7cc4354907fa2b46d8fae15b3c2932a6027a153c7843b821",
+        "runnerSha256": "26557a4b9ad7b33a6a7ceee800b3429125e6dfc49462420dab780343bae3bd7c",
+        "submission": {
+          "submissionId": "2e3ca669de42a3f01e0944866b1be78c",
+          "sourceHash": "c04335a081177523872edeb5981b409c54dcaa587a0b4b77c5637542ce2456e7",
+          "sourceRevision": 1
+        },
+        "implementation": {
+          "preparedRevision": 1,
+          "artifactId": "51cf582b6d6b860d8f34fa565d09beab",
+          "artifactHash": "c04335a081177523872edeb5981b409c54dcaa587a0b4b77c5637542ce2456e7",
+          "manifestHash": "a49d00d2b5db1225d67fe6a919e45c36cd5f6d2cf255769f6fea02560b1b80a0",
+          "runtime": "node-v1",
+          "policyId": "persistent-transfer",
+          "sourceHash": "c04335a081177523872edeb5981b409c54dcaa587a0b4b77c5637542ce2456e7"
+        },
+        "suiteId": "persistent-transfer.acceptance/v2",
+        "conformance": "matched",
+        "acceptance": {
+          "status": "met",
+          "missingActions": [],
+          "missingPairs": []
+        },
+        "evidence": {
+          "schema": "mirrorecma.suite-evidence/v1",
+          "enteredReplay": true,
+          "complete": true,
+          "exact": true,
+          "tracesExpected": 2,
+          "tracesCompleted": 2,
+          "initializationsMatched": "2",
+          "transitionsMatched": "30",
+          "actionCounts": {
+            "Begin": "4",
+            "Cancel": "4",
+            "Chunk": "10",
+            "Commit": "4",
+            "Pause": "2",
+            "Restart": "4",
+            "Resume": "2"
+          },
+          "pairCounts": {
+            "[\"Chunk\",\"Chunk\"]": "4",
+            "[\"Pause\",\"Restart\"]": "2",
+            "[\"Cancel\",\"Begin\"]": "2"
+          }
+        },
+        "physicalCleanup": {
+          "status": "confirmed",
+          "remainingResources": [],
+          "failures": []
+        },
+        "submittedSourceMatchesPreparedSource": true,
+        "privateReceiptSha256": "89b2d77461f384af57dfc99da52d5e2b9a61e8a864af108c1a36aeb434fa2b01"
+      },
+      {
+        "application": "lease-service",
+        "attempts": 1,
+        "outcome": "passed",
+        "hostingOutcome": "submitted",
+        "durationMs": 118351.678503,
+        "interfaceDigest": "a0d5d0fa70f0d62dd55965407a9503b4d220ebcfdc62c0f36d46be0a837b3643",
+        "modelSha256": "3769f84af6ba919a58e6eea773bcfee25eaf8eb7a93b3ee534bf6b2d211d6796",
+        "traceSha256": "aefc9b03f8a1ace167f327126e7dac92f67fe0538e1560f100bc88eb0e0b5433",
+        "publicContractSha256": "2c4b8d60bc356bd53430ec2712401b020416c7daaaab4a1c4577944e5620b29c",
+        "runnerSha256": "26557a4b9ad7b33a6a7ceee800b3429125e6dfc49462420dab780343bae3bd7c",
+        "submission": {
+          "submissionId": "5d033d5d00de8cc47ef04e90c5063bde",
+          "sourceHash": "29df6841777bf8a7e9cf4915b4e6df0b1af3112ac1dd1dda4876c52cf9a68871",
+          "sourceRevision": 1
+        },
+        "implementation": {
+          "preparedRevision": 1,
+          "artifactId": "3145b7d20c1f8786d7a47a753ae9981e",
+          "artifactHash": "29df6841777bf8a7e9cf4915b4e6df0b1af3112ac1dd1dda4876c52cf9a68871",
+          "manifestHash": "1a547b009e3454c39112e84f6a2c357c2c0a82b795ea7599f6355f12271396db",
+          "runtime": "node-v1",
+          "policyId": "lease-service",
+          "sourceHash": "29df6841777bf8a7e9cf4915b4e6df0b1af3112ac1dd1dda4876c52cf9a68871"
+        },
+        "suiteId": "lease-service.acceptance/v2",
+        "conformance": "matched",
+        "acceptance": {
+          "status": "met",
+          "missingActions": [],
+          "missingPairs": []
+        },
+        "evidence": {
+          "schema": "mirrorecma.suite-evidence/v1",
+          "enteredReplay": true,
+          "complete": true,
+          "exact": true,
+          "tracesExpected": 2,
+          "tracesCompleted": 2,
+          "initializationsMatched": "2",
+          "transitionsMatched": "20",
+          "actionCounts": {
+            "Acquire": "6",
+            "Advance": "2",
+            "Release": "4",
+            "Renew": "4",
+            "Write": "4"
+          },
+          "pairCounts": {
+            "[\"Acquire\",\"Acquire\"]": "2",
+            "[\"Advance\",\"Write\"]": "2",
+            "[\"Release\",\"Renew\"]": "2"
+          }
+        },
+        "physicalCleanup": {
+          "status": "confirmed",
+          "remainingResources": [],
+          "failures": []
+        },
+        "submittedSourceMatchesPreparedSource": true,
+        "privateReceiptSha256": "ba6ddb790234745d09c6082cc70f426f11f18a3741b4ad9fc387c9cdabdfc953"
+      }
+    ]
+  },
+  "onboarding": {
+    "kind": "automated fresh-agent proxy study",
+    "context": "fork_turns=none; no inherited implementation turns; only packet-local public guides, application files, declarations and generated artifacts permitted",
+    "isolation": "reading restrictions were instruction-scoped, not OS-enforced; this is not the restricted-author isolation claim",
+    "prerequisitePreparationSeconds": 293.6134309768677,
+    "dispatchToFirstPassWallSeconds": 177.436,
+    "dispatchToFirstPassMonotonicSeconds": 161.065105654,
+    "packetReadToFirstPassWallSeconds": 134.395,
+    "packetReadToFirstPassMonotonicSeconds": 124.377077842,
+    "diagnosisWallSeconds": 67.468,
+    "diagnosisMonotonicSeconds": 61.633483281000004,
+    "diagnosisStartToVerifiedRepairWallSeconds": 83.212,
+    "configurationSteps": 4,
+    "addedOrReplacementIntegrationAndConfigurationLines": 54,
+    "lineCountMethod": "added/replacement physical lines versus generated init templates and provided adapter skeleton; copied prerequisite pin/config data counted, generated bundles and preexisting skeleton excluded",
+    "environmentCaptureFailures": 1,
+    "unexpectedProductFailures": 0,
+    "seededDefect": "real Counter.increment added stride minus one; observer/evaluator remained unchanged",
+    "diagnosedBeforeRepair": true,
+    "repairLines": 1,
+    "originalApplicationHashRestored": true,
+    "coordinatorProbes": {
+      "firstPass": "accepted",
+      "mismatch": "accepted at trace 0 state 1 with successful cleanup",
+      "repair": "accepted; protected evaluator/observer/inputs unchanged"
+    },
+    "limitations": [
+      "Fresh automated agent proxy with installed prerequisites, not human usability evidence or network installation measurement.",
+      "Read milestone recorded immediately after README tool read rather than at first byte; dispatch milestone provides enclosing elapsed interval.",
+      "Initial sandbox command created files and reported exit 0 but capture returned spawnSync EPERM; reran init non-destructively under permitted escalation.",
+      "Environment recovery interval includes diagnosis and approval latency; other escalation review overhead is included in end-to-end timing and not isolated by command journal.",
+      "Automated fresh-agent proxy, not human study or physical information-flow isolation.",
+      "Required sandbox escalation review overhead remains included in end-to-end elapsed time; no additional failed command or isolated review latency occurred in this phase."
+    ],
+    "guideAmbiguities": [
+      "Guides require explicit generated TypeScript compilation but give no concrete compiler command/configuration; evaluator selected ES2022, NodeNext, strict, noEmitOnError and compilation passed."
+    ]
+  },
+  "fixedFrameworkVerification": [
+    {
+      "repository": "Mirrors",
+      "recordedSourceAndArtifactHashesVerified": 13
+    },
+    {
+      "repository": "MirrorECMA",
+      "recordedSourceAndArtifactHashesVerified": 86
+    },
+    {
+      "repository": "MirrorGate",
+      "recordedSourceAndArtifactHashesVerified": 37
+    }
+  ],
+  "artifacts": {
+    "onboarding-first-replay.json": {
+      "path": "evidence/application-integration-p12/onboarding-first-replay.json",
+      "sha256": "f2d293ed54aca74405b448c8c1e3f1a6bf607b4dda3d83c2d92ac5a263e4b3d3"
+    },
+    "onboarding-mismatch.json": {
+      "path": "evidence/application-integration-p12/onboarding-mismatch.json",
+      "sha256": "fbf3733742fd5330ad147b775fc656f7befde293386f8c5258b9fc8a968a43e3"
+    },
+    "onboarding-repaired.json": {
+      "path": "evidence/application-integration-p12/onboarding-repaired.json",
+      "sha256": "f2d293ed54aca74405b448c8c1e3f1a6bf607b4dda3d83c2d92ac5a263e4b3d3"
+    },
+    "onboarding-first-replay-measurements.json": {
+      "path": "evidence/application-integration-p12/onboarding-first-replay-measurements.json",
+      "sha256": "4035a59bccfabb38f1d2c62ff7356fb6419ce7e8de7b3c691937cbeac1b249ee"
+    },
+    "onboarding-diagnosis-measurements.json": {
+      "path": "evidence/application-integration-p12/onboarding-diagnosis-measurements.json",
+      "sha256": "c7f73072599ef1128ac61e8974651ea54423352a1e79e9aa4cef7ca9fa04a96c"
+    },
+    "onboarding-journal.jsonl": {
+      "path": "evidence/application-integration-p12/onboarding-journal.jsonl",
+      "sha256": "cbcbfd2c5ead8bba54f41a482788e3622c191757e05d96eaea2624a6e7d54d40"
+    },
+    "onboarding-prerequisites.json": {
+      "path": "evidence/application-integration-p12/onboarding-prerequisites.json",
+      "sha256": "7e9b46c82e8e753f148ee5609a5bacad0e0c6a665ffeb936bc98a2d036274ac4"
+    },
+    "onboarding-documentation-copies.json": {
+      "path": "evidence/application-integration-p12/onboarding-documentation-copies.json",
+      "sha256": "de94fb1355fef989791c6b85e5d515c463d92997d4d278a042bdf813709eeb55"
+    },
+    "onboarding-adapter.mjs": {
+      "path": "evidence/application-integration-p12/onboarding-adapter.mjs",
+      "sha256": "d53137af7e2b72926464a8c4819d6870aa4587506b13fac7faab204ab3497793"
+    },
+    "onboarding-repaired-counter.mjs": {
+      "path": "evidence/application-integration-p12/onboarding-repaired-counter.mjs",
+      "sha256": "7cc389dbf35408736876712f1193a128429b778be307687665cd26591787bd97"
+    }
+  },
+  "pending": []
+}

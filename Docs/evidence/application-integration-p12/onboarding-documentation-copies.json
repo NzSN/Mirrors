@@ -1,0 +1,154 @@
+{
+  "sources": [
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-guide.md",
+      "sourceSha256": "a554d66a2d693b2e151266a331d1e8392206d5aa3e949745ba1927ea1fc8432f",
+      "copy": "docs/application-integration-guide.md",
+      "copySha256": "55c1774e6f1237e2b31e7de31f4e413ee54731bdf213ea645a7aca4037042980"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorECMA/docs/project-tools.md",
+      "sourceSha256": "8eadaa97a413f3f8587f0678fa022324a0b4d50ea651e268dcc8aee431414340",
+      "copy": "docs/project-tools.md",
+      "copySha256": "8eadaa97a413f3f8587f0678fa022324a0b4d50ea651e268dcc8aee431414340"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorECMA/docs/application-suites.md",
+      "sourceSha256": "6365e257e6ef7bf1817894ca3218559a1b81a5f0c6cd413149534730909d7799",
+      "copy": "docs/application-suites.md",
+      "copySha256": "6365e257e6ef7bf1817894ca3218559a1b81a5f0c6cd413149534730909d7799"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorGate/docs/application-integration-runtime.md",
+      "sourceSha256": "29bb0d60ff568727318457bf9acb1d017b7d83378a636792781f7fa591a11773",
+      "copy": "docs/gate-application-integration-runtime.md",
+      "copySha256": "093fd987f735fc10ed45fc82a2c0df5bf5651d7f6a8fdbac54b3da61d3b0a9dc"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorGate/integrations/mirrorecma/WORKFLOW.md",
+      "sourceSha256": "bacca34cdd7da3b23cb9bb6b35ffef615dafbe1b1e68b65ed20beca96f135a64",
+      "copy": "docs/gate-workflow.md",
+      "copySha256": "bacca34cdd7da3b23cb9bb6b35ffef615dafbe1b1e68b65ed20beca96f135a64"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorECMA/examples/application-validation/README.md",
+      "sourceSha256": "e8a9685109a45d1e3ea266439b7d52943d6d6949a413824f7b4870227fbc7660",
+      "copy": "docs/application-validation-examples.md",
+      "copySha256": "63d8c6a2691f65fce8862f519afa6f637d7980380d8a5597802db48c20da30ce"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorECMA/examples/application-validation/results/2026-09-16-suite-migration.json",
+      "sourceSha256": "dd7e5efa194fb7e9693e3e4aa219ddb02f8e90ed78f4349af453ddf81949620c",
+      "copy": "docs/suite-migration-evidence.json",
+      "copySha256": "dd7e5efa194fb7e9693e3e4aa219ddb02f8e90ed78f4349af453ddf81949620c"
+    },
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-progress.md",
+      "sourceSha256": "150f88e7734b92a2c9c7311a2c989ecfd6348cfd888debfb7502b8ba49d36052",
+      "copy": "docs/application-integration-progress.md",
+      "copySha256": "602d9c552c11a3b87cbd95955b6c4e930d11fdb2c8771a5e6240730c6719c645"
+    }
+  ],
+  "linkEdits": [
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-guide.md",
+      "target": "../../MirrorECMA/docs/project-tools.md",
+      "replacement": "[project-tools guide](project-tools.md)"
+    },
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-guide.md",
+      "target": "../../MirrorECMA/docs/application-suites.md",
+      "replacement": "[suite API example](application-suites.md)"
+    },
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-guide.md",
+      "target": "../../MirrorGate/docs/application-integration-runtime.md",
+      "replacement": "[kit/profile guide](gate-application-integration-runtime.md)"
+    },
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-guide.md",
+      "target": "../../MirrorGate/integrations/mirrorecma/WORKFLOW.md",
+      "replacement": "[workflow guide](gate-workflow.md)"
+    },
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-guide.md",
+      "target": "../../MirrorECMA/examples/application-validation/README.md",
+      "replacement": "[three application suites](application-validation-examples.md)"
+    },
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-guide.md",
+      "target": "../../MirrorECMA/examples/application-validation/results/2026-09-16-suite-migration.json",
+      "replacement": "[migration evidence](suite-migration-evidence.json)"
+    },
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-guide.md",
+      "target": "application-integration-progress.md",
+      "replacement": "[execution record](application-integration-progress.md)"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorGate/docs/application-integration-runtime.md",
+      "target": "../protocol/control-v2/public-contract.schema.json",
+      "replacement": "`public-contract.schema.json` (outside this study packet)"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorECMA/examples/application-validation/README.md",
+      "target": "../work-queue/README.md",
+      "replacement": "WorkQueue (outside this study packet)"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorECMA/examples/application-validation/README.md",
+      "target": "../persistent-transfer/README.md",
+      "replacement": "Persistent transfer (outside this study packet)"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorECMA/examples/application-validation/README.md",
+      "target": "../lease-service/README.md",
+      "replacement": "Lease service (outside this study packet)"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorECMA/examples/application-validation/README.md",
+      "target": "../work-queue/suite.ts",
+      "replacement": "`suite.ts` (outside this study packet)"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorECMA/examples/application-validation/README.md",
+      "target": "../../../MirrorGate/integrations/mirrorecma/scripts/application-program-gate.md",
+      "replacement": "application runner (outside this study packet)"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorECMA/examples/application-validation/README.md",
+      "target": "results/2026-09-16-suite-migration.json",
+      "replacement": "[suite migration summary](suite-migration-evidence.json)"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorECMA/examples/application-validation/README.md",
+      "target": "results/2026-09-16.json",
+      "replacement": "recorded summary (outside this study packet)"
+    },
+    {
+      "source": "/home/nzsn/Repos/MirrorECMA/examples/application-validation/README.md",
+      "target": "../../../Mirrors/Docs/application-validation-program.md",
+      "replacement": "execution record (outside this study packet)"
+    },
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-progress.md",
+      "target": "application-integration-implementation-plan.md",
+      "replacement": "implementation plan (outside this study packet)"
+    },
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-progress.md",
+      "target": "application-integration-guide.md",
+      "replacement": "[role-oriented guide](application-integration-guide.md)"
+    },
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-progress.md",
+      "target": "application-integration-evidence.json",
+      "replacement": "Machine-readable evidence (outside this study packet)"
+    },
+    {
+      "source": "/home/nzsn/Repos/Mirrors/Docs/application-integration-progress.md",
+      "target": "../../MirrorECMA/examples/application-validation/results/2026-09-16-suite-migration.json",
+      "replacement": "[suite migration evidence](suite-migration-evidence.json)"
+    }
+  ]
+}

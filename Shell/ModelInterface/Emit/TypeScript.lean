@@ -692,11 +692,12 @@ structure LoweredModule where
   contractJson : String
   configuredParamVar : Option String
 
-/-- Validate and lower the common TypeScript representation once. -/
+/-- Validate and lower the common TypeScript representation once. Record keys
+are represented as string data and constructed through null-prototype records;
+the async profile therefore supports ordinary `__proto__` fields. The original
+synchronous entry point retains its established target rejection below. -/
 def lowerModule (target : String) (lock : LockedModelInterface) :
     EmitResult LoweredModule := do
-  if lockContainsPrototypeKey lock then
-    fail "MIC-E-NAME-001" s!"{target} rejects the reserved wire key __proto__"
   let _ ← validateNativeNamespaces lock
   let modelName ← modelBaseName lock.modelModule
   let initializers := sortedBy (fun a => a.id) lock.initializers

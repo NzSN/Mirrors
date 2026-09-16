@@ -1226,6 +1226,53 @@ def scenarioEmitter (fails : Failures)
     (emitterErrorIs "MIC-E-PATH-001"
       (Shell.ModelInterface.Emit.TypeScript.emitTypeScript overflowLock))
 
+def scenarioSuiteBundle (fails : Failures)
+    (resolved : ResolvedModelInterface) : IO Unit := do
+  let lock := resolved.withDigests (String.ofList (List.replicate 64 'a'))
+    (String.ofList (List.replicate 64 'b'))
+  let lock := { lock with provenance := { lock.provenance with sources := [{
+    moduleName := lock.modelModule, logicalPath := "specs/Counter.tla",
+    contentSha256 := String.ofList (List.replicate 64 'c') }] } }
+  let first := Shell.ModelInterface.Emit.SuiteBundle.emit lock
+  check fails "suite bundle: missing root provenance rejected"
+    (match Shell.ModelInterface.Emit.SuiteBundle.emit
+        { lock with provenance := { lock.provenance with sources := [] } } with
+      | .ok _ => false
+      | .error _ => true)
+  let second := Shell.ModelInterface.Emit.SuiteBundle.emit lock
+  check fails "suite bundle: deterministic output" (match first, second with
+    | .ok a, .ok b => a == b
+    | _, _ => false)
+  match first, Shell.ModelInterface.Emit.TypeScriptAsync.emitTypeScriptAsync lock with
+  | .ok bundle, .ok legacy =>
+      check fails "suite bundle: preserves every async target byte"
+        (legacy.files.all fun file => bundle.files.contains file)
+      check fails "suite bundle: owns seven independent artifacts" (bundle.files.length == 7)
+      let companion := bundle.files.find? (·.relativePath == "Counter.suite.ts")
+        |>.bind (fun file => String.fromUTF8? file.bytes)
+      check fails "suite bundle: inert local and generic constructors"
+        (companion.any fun source => source.contains "CounterModel: SuiteModel<CounterNativeAdapter>" &&
+          source.contains "bindLocal" && source.contains "bindPublicPort" &&
+          !source.contains "from \"mirrorgate")
+  | _, _ => check fails "suite bundle: Counter emission" false
+  let some observation := lock.observations.head?
+    | check fails "suite bundle: missing observation" false
+      return
+  let specialLock := { lock with observations := [{ observation with
+    wireName := "__proto__"
+    type := .record [{ wireName := "__proto__", type := .set (.tuple [.int, .str]) }]
+  }] }
+  check fails "suite bundle: ordinary __proto__ record keys are supported"
+    (match Shell.ModelInterface.Emit.SuiteBundle.emit specialLock with
+      | .ok _ => true
+      | .error _ => false)
+  for unsupported in [.map .int .str, .opaqueItf "private"] do
+    let unsupportedLock := { lock with observations := [{ observation with type := unsupported }] }
+    check fails "suite bundle: unsupported shape fails emission"
+      (match Shell.ModelInterface.Emit.SuiteBundle.emit unsupportedLock with
+        | .ok _ => false
+        | .error _ => true)
+
 def scenarioAsyncEmitter (fails : Failures)
     (resolved : ResolvedModelInterface) : IO Unit := do
   let semantic := Core.ModelInterface.Sha256.digestDomainHex
@@ -2004,6 +2051,10 @@ def run : IO UInt32 := do
     match ← resolvedRef.get with
     | some resolved => scenarioAsyncEmitter fails resolved
     | none => check fails "async emitter: prerequisite resolution" false
+  scenario "suite-bundle" do
+    match ← resolvedRef.get with
+    | some resolved => scenarioSuiteBundle fails resolved
+    | none => check fails "suite bundle: prerequisite resolution" false
   scenario "cpp-emitter" do
     match ← resolvedRef.get with
     | some resolved => scenarioCppEmitter fails resolved

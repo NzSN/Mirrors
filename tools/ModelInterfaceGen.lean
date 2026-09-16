@@ -20,6 +20,11 @@ def usage : String := String.intercalate "\n" [
   "    [--param-var NAME] --lock FILE [--diagnostics json]",
   "  model_interface_gen generate --lock FILE --target TARGET --out DIR",
   "    [--diagnostics json]",
+  "  model_interface_gen bundle --lock FILE --target mirrorecma-async-v1 --out DIR",
+  "    [--diagnostics json]",
+  "  model_interface_gen check-bundle --spec FILE --contract FILE --evidence FILE",
+  "    [--param-var NAME] --lock FILE --target mirrorecma-async-v1 --out DIR",
+  "    [--diagnostics json]",
   "  model_interface_gen check --spec FILE --contract FILE --evidence FILE",
   "    [--param-var NAME] --lock FILE --target TARGET --out DIR",
   "    [--diagnostics json]",
@@ -55,8 +60,8 @@ private structure RawOptions where
 
 private inductive Command where
   | resolve (inputs : InputPaths) (lock : String)
-  | generate (lock target out : String)
-  | check (inputs : InputPaths) (lock target out : String)
+  | generate (lock target out : String) (bundle : Bool)
+  | check (inputs : InputPaths) (lock target out : String) (bundle : Bool)
   | preflight (lock trace : String) (requireAllActions : Bool)
   | scaffold (inputs : ScaffoldPaths)
   | projectTrace (inputs : ProjectTracePaths)
@@ -154,7 +159,7 @@ private def parseCommand (arguments : List String) : Except String ParsedCommand
       let _ ← rejectPresent "--projection" options.projection
       let _ ← rejectPresent "--receipt" options.receipt
       pure <| Command.resolve (← inputsOf options) (← requireOption "--lock" options.lock)
-  | "generate" =>
+  | "generate" | "bundle" =>
       if requireAllActions then throw "option --require-all-actions is not valid for generate"
       if replace then throw "option --replace is not valid for generate"
       let _ ← rejectPresent "--spec" options.spec
@@ -166,8 +171,8 @@ private def parseCommand (arguments : List String) : Except String ParsedCommand
       let _ ← rejectPresent "--receipt" options.receipt
       if options.paramVarSeen then throw "option --param-var is not valid for generate"
       pure <| Command.generate (← requireOption "--lock" options.lock)
-        (← checkedTarget options) (← requireOption "--out" options.out)
-  | "check" =>
+        (← checkedTarget options) (← requireOption "--out" options.out) (name == "bundle")
+  | "check" | "check-bundle" =>
       if requireAllActions then throw "option --require-all-actions is not valid for check"
       if replace then throw "option --replace is not valid for check"
       let _ ← rejectPresent "--trace" options.trace
@@ -175,7 +180,7 @@ private def parseCommand (arguments : List String) : Except String ParsedCommand
       let _ ← rejectPresent "--projection" options.projection
       let _ ← rejectPresent "--receipt" options.receipt
       pure <| Command.check (← inputsOf options) (← requireOption "--lock" options.lock)
-        (← checkedTarget options) (← requireOption "--out" options.out)
+        (← checkedTarget options) (← requireOption "--out" options.out) (name == "check-bundle")
   | "preflight" =>
       if replace then throw "option --replace is not valid for preflight"
       let _ ← rejectPresent "--spec" options.spec
@@ -303,8 +308,8 @@ private def runResolve (mode : DiagnosticsMode)
           return 0
 
 private def runGenerate (mode : DiagnosticsMode)
-    (lock target out : String) : IO UInt32 := do
-  match ← generate lock target out with
+    (lock target out : String) (bundle : Bool) : IO UInt32 := do
+  match ← generate lock target out bundle with
   | .error error => reportError mode error
   | .ok paths =>
       match mode with
@@ -314,8 +319,8 @@ private def runGenerate (mode : DiagnosticsMode)
       return 0
 
 private def runCheck (mode : DiagnosticsMode)
-    (inputs : InputPaths) (lock target out : String) : IO UInt32 := do
-  match ← check inputs lock target out with
+    (inputs : InputPaths) (lock target out : String) (bundle : Bool) : IO UInt32 := do
+  match ← check inputs lock target out bundle with
   | .error error => reportError mode error
   | .ok report =>
       match mode with
@@ -374,6 +379,9 @@ private def runProjectTrace (mode : DiagnosticsMode) (inputs : ProjectTracePaths
       return 0
 
 def run (arguments : List String) : IO UInt32 := do
+  if arguments == ["--version"] then
+    IO.println "model-interface-gen/1 mirrors.suite-bundle/v1"
+    return 0
   match parseCommand arguments with
   | .error message =>
       IO.eprintln message
@@ -382,8 +390,8 @@ def run (arguments : List String) : IO UInt32 := do
   | .ok parsed =>
       match parsed.command with
       | .resolve inputs lock => runResolve parsed.diagnostics inputs lock
-      | .generate lock target out => runGenerate parsed.diagnostics lock target out
-      | .check inputs lock target out => runCheck parsed.diagnostics inputs lock target out
+      | .generate lock target out bundle => runGenerate parsed.diagnostics lock target out bundle
+      | .check inputs lock target out bundle => runCheck parsed.diagnostics inputs lock target out bundle
       | .preflight lock trace requireAllActions =>
           runPreflightCommand parsed.diagnostics lock trace requireAllActions
       | .scaffold inputs => runScaffold parsed.diagnostics inputs

@@ -6,6 +6,7 @@ compiler and its implemented TLA+ source frontend.
 | Document | Status | Scope |
 | --- | --- | --- |
 | [Compiler detailed design](design.md) | Implemented version-1 compiler with identified follow-up milestones | Contracts, evidence, resolution, targets, deterministic emission, CLI, diagnostics, and publication |
+| [Trusted suite bundles](suite-bundles.md) | Implemented with focused compiler and executable native bridge gates | Async bundle publication, ownership hashes, immutable model handles and local native conversion |
 | [General TLA+ frontend design](tla-frontend-design.md) | Design; delivery slices TF0–TF8 implemented and accepted 2026-09-12 | Lossless parsing, module resolution, semantic elaboration, effective declarations, conformance, and compiler integration |
 | [TLA+ frontend inspection CLI](tla-frontend-cli.md) | Implemented; TF8 accepted 2026-09-12 | Development-only `tla_frontend` parse/resolve/inspect commands, closed JSON schema, and validation |
 | [TLA+ differential validation](tla-differential-validation-design.md) | Profile-4 acceptance passed 2026-09-15; unsupported comparisons remain uncertified | Pinned reference tools, corpus comparison, reviewed differences, and reproducible evidence |

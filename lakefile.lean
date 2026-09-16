@@ -302,6 +302,12 @@ script test do
   if asyncEmitter.exitCode != 0 then
     IO.eprintln asyncEmitter.stderr
     return asyncEmitter.exitCode
+  let suiteBundle : IO.Process.Output ← IO.Process.output
+    ({ cmd := "python3", args := #["tools/check-suite-bundle.py"] } : IO.Process.SpawnArgs)
+  IO.println suiteBundle.stdout
+  if suiteBundle.exitCode != 0 then
+    IO.eprintln suiteBundle.stderr
+    return suiteBundle.exitCode
   let out1 : IO.Process.Output ← IO.Process.output ({ cmd := ".lake/build/bin/fixtures_replay", args := #[] } : IO.Process.SpawnArgs)
   IO.println out1.stdout
   if out1.exitCode != 0 then

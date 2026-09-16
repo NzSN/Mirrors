@@ -12,8 +12,10 @@ an installed Windows service, a hosted CI run, or a published package.
 | Run MBT or LLM-assisted development with the Mirror-Framework | [Mirror-Framework usage guide](usage-of-mirror-framework.md) |
 | Test TypeScript application code | [MirrorECMA MBT user manual](mirrorecma-typescript-mbt-user-manual.md) |
 | Evaluate framework usability on real applications | [Three-application validation program](application-validation-program.md) |
-| Review proposed integration simplification | [Application integration design](application-integration-design.md) (proposed; not implemented) |
-| Track integration implementation | [Application integration tasks](application-integration-tasks.md) (contracts accepted; matched evidence partially implemented) |
+| Integrate an application with suites and generated adapters | [Role-oriented integration guide](application-integration-guide.md) |
+| Review integration contracts | [Application integration design](application-integration-design.md) |
+| Plan integration implementation | [Application integration implementation plan](application-integration-implementation-plan.md) (current baseline, dependencies and acceptance gates) |
+| Inspect integration acceptance | [Execution record](application-integration-progress.md) (automated gates, actual restricted authors and fresh-agent onboarding) |
 | Build, install, or identify Mirrors | [Product versions and installation](versioning.md) |
 | Run validation inside WSL2 or through `r_windev` | [WSL2 validation](wsl2-validation.md) |
 | Inspect a TLA+ model with the frontend CLI | [`tla_frontend` guide](model-interface-compiler/tla-frontend-cli.md) |
@@ -32,13 +34,16 @@ an installed Windows service, a hosted CI run, or a published package.
   worker pools and process-shared async job stores on Linux and Windows.
   Both accept `--jobs N`; the default is 4 and zero is clamped to 1.
 - `model_interface_gen` implements `resolve`, `generate`, `check`, `preflight`,
+  additive async `bundle` / `check-bundle` publication,
   proposal-only `scaffold`, and strict `project-trace`. Scaffold accepts one
   raw evidence document per invocation; projection accepts one trace and emits one
   paired receipt. Neither command seals a proposal as a contract.
   Implemented targets are `mirrorecma-v1`, experimental
   `mirrorecma-async-v1`, and `mirrorcpp-v1`.
 - MirrorECMA has compiled and dynamic negotiated replay plus async report
-  runners. The former Gate-aware `evaluateSandboxed` facade is outside
+  runners, immutable suites, strict matched acceptance, project tools and
+  normalized suite results. Gate supplies the optional suite workflow and public
+  adapter kit. The former Gate-aware `evaluateSandboxed` facade is outside
   MirrorECMA 2 core and remains available through the Gate-owned
   `mirrorgate-mirrorecma/legacy` integration. MirrorGate owns the shared control
   process, policy, snapshots, worker transport, and Linux/Bubblewrap isolation.

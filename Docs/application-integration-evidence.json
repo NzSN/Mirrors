@@ -1,0 +1,512 @@
+{
+  "schema": "mirrors.application-integration-evidence/v1",
+  "implementationDates": [
+    "2026-09-16",
+    "2026-09-17"
+  ],
+  "scope": "local automated acceptance; no publication",
+  "baseline": {
+    "Mirrors": "60ed1a62b654ab63c56a117492908c281aca2540",
+    "MirrorECMA": "76ccec0fa1d349fc175f425b993766558cf0bae3",
+    "MirrorGate": "67e70b92077df8751968bc242a48139f211010b4"
+  },
+  "validation": {
+    "mirrorECMA": {
+      "passed": 497,
+      "skipped": 4,
+      "skippedTier": "legacy TG4 trace-generation-transport inputs not selected",
+      "log": "/tmp/mirrors-application-integration-client-final.log",
+      "logSha256": "42c2c03a0976830bfaf7b2e05105bdedd24046c0cd468bd138ae62052b607036"
+    },
+    "mirrors": {
+      "aggregate": "ALL LAKE TESTS GREEN",
+      "differentialTestsPassed": 56,
+      "differentialTestsSkipped": 4,
+      "skippedTier": "DV_LIVE_REFERENCES not selected",
+      "log": "/tmp/mirrors-application-integration-lake-test.log",
+      "logSha256": "235cd7fcdfbdc7cd9e0a86acc44f30bff517bf4c764ace2848abb070722b006e"
+    },
+    "mirrorGate": {
+      "python": 252,
+      "node": 226,
+      "integration": 4,
+      "cpp": "passed",
+      "rust": "passed",
+      "realSandbox": "both workers conformance and six lifecycle cases",
+      "skipped": 0,
+      "log": "/tmp/mirrorgate-application-integration-gate.log",
+      "logSha256": "45193dec6ae9d5aee476a4d9b8707da6eeecba2da1c85279d68aa94402ca58c3"
+    },
+    "gateIntegration": {
+      "testsPassed": 163,
+      "latestFocusedPassed": 55,
+      "installedEvaluations": 18,
+      "installedIterations": 2,
+      "log": "/tmp/mirrorgate-installed-suite-final.log",
+      "logSha256": "bf9f075b48fce9edcd9e6af340c2e6d610a90f2584b7dd95609543ef92014285"
+    },
+    "projectTests": {
+      "passed": 14
+    },
+    "localInstalled": [
+      {
+        "schema": "mirrorecma.installed-suite-evidence/v1",
+        "iteration": 0,
+        "preparation": {
+          "packageBuilds": 1,
+          "packs": 1,
+          "installs": 1,
+          "bundleGenerations": 1,
+          "applicationCompiles": 1
+        },
+        "identities": {
+          "packageSha256": "b46f9f366b835988b5648c7d80a3c252ba85de53542b5a44becfb2d53f5737dd",
+          "compilerSha256": "4f7363479de8407ed9f562a2ea04d09f44f3504e1c14798fb156c5a1c9764d32",
+          "compilerLauncherSha256": "c6a9bb47bf78ea7f3dd8b5a198f0ce6f6fbba78a0bd797cca5004aafa73d3a24",
+          "serverSha256": "90fc0370d955d61c16e3fbde779b25c226a5f6921a63792bb9c022e92e893808",
+          "interfaceDigest": "193d6cc187d05c18f02ad483a44f8ad0c1634b02083df241df08b9281b045d1c",
+          "modelDigest": "405b4ffb80464cdf919d986e142b180e044c41caf8e6aabe978db0e8e7aa0340",
+          "corpusDigest": "97cf64ef0b760e781417f9a0f260f261dfaf73a385cd7e9b6c5267a2fb600e06",
+          "modelModuleSha256": "07d891806c59a801f500948b75dd3190888ae1d78e9fc6fd7fe055a38a9221fd"
+        },
+        "isolation": {
+          "network": "unshared",
+          "frameworkCheckouts": "hidden",
+          "relocated": true,
+          "packages": [
+            "mirrorecma"
+          ],
+          "implicitBuilds": false
+        },
+        "correct": {
+          "outcome": "passed",
+          "matchedTransitions": "2",
+          "cleanup": {
+            "scope": "local",
+            "status": "succeeded",
+            "quiescence": "confirmed",
+            "bindingStatus": "succeeded"
+          }
+        },
+        "cases": [
+          {
+            "name": "faulty",
+            "outcome": "mismatch",
+            "exit": 1,
+            "cleanup": "succeeded"
+          },
+          {
+            "name": "coverage",
+            "outcome": "failed",
+            "exit": 2,
+            "cleanup": "succeeded"
+          },
+          {
+            "name": "malformed",
+            "outcome": "failed",
+            "exit": 2,
+            "cleanup": "succeeded"
+          },
+          {
+            "name": "dispose-failure",
+            "outcome": "failed",
+            "exit": 2,
+            "cleanup": "failed"
+          },
+          {
+            "name": "hang",
+            "outcome": "timedOut",
+            "exit": 2,
+            "cleanup": "unconfirmed"
+          }
+        ],
+        "denied": {
+          "outcome": "failed",
+          "factoryCalls": 0
+        },
+        "checks": [
+          "one-factory-and-disposer-for-repeated-traces",
+          "init",
+          "loadProject",
+          "doctor",
+          "check",
+          "read-only-freshness",
+          "missing-corpus",
+          "prepared-module-hash"
+        ]
+      },
+      {
+        "schema": "mirrorecma.installed-suite-evidence/v1",
+        "iteration": 1,
+        "preparation": {
+          "packageBuilds": 1,
+          "packs": 1,
+          "installs": 1,
+          "bundleGenerations": 1,
+          "applicationCompiles": 1
+        },
+        "identities": {
+          "packageSha256": "b46f9f366b835988b5648c7d80a3c252ba85de53542b5a44becfb2d53f5737dd",
+          "compilerSha256": "4f7363479de8407ed9f562a2ea04d09f44f3504e1c14798fb156c5a1c9764d32",
+          "compilerLauncherSha256": "c6a9bb47bf78ea7f3dd8b5a198f0ce6f6fbba78a0bd797cca5004aafa73d3a24",
+          "serverSha256": "90fc0370d955d61c16e3fbde779b25c226a5f6921a63792bb9c022e92e893808",
+          "interfaceDigest": "193d6cc187d05c18f02ad483a44f8ad0c1634b02083df241df08b9281b045d1c",
+          "modelDigest": "405b4ffb80464cdf919d986e142b180e044c41caf8e6aabe978db0e8e7aa0340",
+          "corpusDigest": "97cf64ef0b760e781417f9a0f260f261dfaf73a385cd7e9b6c5267a2fb600e06",
+          "modelModuleSha256": "07d891806c59a801f500948b75dd3190888ae1d78e9fc6fd7fe055a38a9221fd"
+        },
+        "isolation": {
+          "network": "unshared",
+          "frameworkCheckouts": "hidden",
+          "relocated": true,
+          "packages": [
+            "mirrorecma"
+          ],
+          "implicitBuilds": false
+        },
+        "correct": {
+          "outcome": "passed",
+          "matchedTransitions": "2",
+          "cleanup": {
+            "scope": "local",
+            "status": "succeeded",
+            "quiescence": "confirmed",
+            "bindingStatus": "succeeded"
+          }
+        },
+        "cases": [
+          {
+            "name": "faulty",
+            "outcome": "mismatch",
+            "exit": 1,
+            "cleanup": "succeeded"
+          },
+          {
+            "name": "coverage",
+            "outcome": "failed",
+            "exit": 2,
+            "cleanup": "succeeded"
+          },
+          {
+            "name": "malformed",
+            "outcome": "failed",
+            "exit": 2,
+            "cleanup": "succeeded"
+          },
+          {
+            "name": "dispose-failure",
+            "outcome": "failed",
+            "exit": 2,
+            "cleanup": "failed"
+          },
+          {
+            "name": "hang",
+            "outcome": "timedOut",
+            "exit": 2,
+            "cleanup": "unconfirmed"
+          }
+        ],
+        "denied": {
+          "outcome": "failed",
+          "factoryCalls": 0
+        },
+        "checks": [
+          "one-factory-and-disposer-for-repeated-traces",
+          "init",
+          "loadProject",
+          "doctor",
+          "check",
+          "read-only-freshness",
+          "missing-corpus",
+          "prepared-module-hash"
+        ]
+      }
+    ],
+    "applications": {
+      "localCases": 29,
+      "gateCases": 23,
+      "freshWitnessCases": 29,
+      "retainedBehavioralMutants": 17,
+      "firstMismatchCoordinatesPreserved": true,
+      "evidence": "../../MirrorECMA/examples/application-validation/results/2026-09-16-suite-migration.json",
+      "finalLocalReceipts": [
+        {
+          "application": "work-queue",
+          "cases": 13,
+          "sha256": "67934cd45ec40d42c37d9632bf3c8f8e8b2ed91edf3ccee18087460991589e2d",
+          "path": "/tmp/integration-final-local-queue.json"
+        },
+        {
+          "application": "persistent-transfer",
+          "cases": 8,
+          "sha256": "93d6cbfe282049c03079c7ae18b0a3518d44c2c0a5e99e99478aa36ed7a29fbf",
+          "path": "/tmp/integration-final-local-transfer.json"
+        },
+        {
+          "application": "lease-service",
+          "cases": 8,
+          "sha256": "76ea41763cfcb65a33260f42eab54111dac0d202efdcbaaa9eccf9b45af56d43",
+          "path": "/tmp/integration-final-local-lease.json"
+        }
+      ]
+    },
+    "crossClient": {
+      "status": "passed as original runner plus resumed command tiers",
+      "cpp": {
+        "testsPassed": 215,
+        "testsFailed": 0,
+        "revision": "43ccf38d2f3ecd8867f1d0411d2cc90b12d0e0b9"
+      },
+      "ecma": "stdio, TCP, mTLS, registry, D3/D4 negotiation, generated Counter offline/live and fresh native bridge passed",
+      "rust": {
+        "protocolTestsPassed": 24,
+        "realStdioSmokePassed": 1,
+        "serverModeTests": "not present in pinned checkout; TCP/mTLS/registry not exercised"
+      },
+      "haskell": "TCP, mTLS, wrong-pin and rogue-client negatives passed",
+      "log": "/tmp/mirrors-application-integration-interop-final.log",
+      "cppDependencies": {
+        "BOOST_MULTIPRECISION": {
+          "path": "/home/nzsn/Repos/Mirrors/.golden-build/mirrorcpp/_deps/boost_multiprecision-src",
+          "commit": "51e01210078bae160ebc9fc4ede9281928d5b3c1"
+        },
+        "BOOST_CONFIG": {
+          "path": "/home/nzsn/Repos/Mirrors/.golden-build/mirrorcpp/_deps/boost_config-src",
+          "commit": "11385ec21012926e15a612e3bf9f9a71403c1e5b"
+        },
+        "BOOST_CORE": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_core",
+          "commit": "083b41c17e34f1fc9b43ab796b40d0d8bece685c"
+        },
+        "BOOST_ASSERT": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_assert",
+          "commit": "447e0b3a331930f8708ade0e42683d12de9dfbc3"
+        },
+        "BOOST_STATIC_ASSERT": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_static_assert",
+          "commit": "ba72d3340f3dc6e773868107f35902292f84b07e"
+        },
+        "BOOST_THROW_EXCEPTION": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_throw_exception",
+          "commit": "7c8ec2114bc1f9ab2a8afbd629b96fbdd5901294"
+        },
+        "BOOST_EXCEPTION": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_exception",
+          "commit": "b9170a02f102250b308c9f94ed6593c5f30eab39"
+        },
+        "BOOST_TYPE_TRAITS": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_type_traits",
+          "commit": "cc6fc3daa8e20c4a70b563d67ceb4c34d8c1c4d7"
+        },
+        "BOOST_UTILITY": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_utility",
+          "commit": "e0ecf927643b13c63dfd9a38741315ea8b845135"
+        },
+        "BOOST_INTEGER": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_integer",
+          "commit": "dea8e3445dc3ca29201498260307138b9460a70c"
+        },
+        "BOOST_MPL": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_mpl",
+          "commit": "b440c45c2810acbddc917db057f2e5194da1a199"
+        },
+        "BOOST_PREPROCESSOR": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_preprocessor",
+          "commit": "c4ea7e40d365ba28faecef8917d5c3f1e0121bf9"
+        },
+        "BOOST_PREDEF": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_predef",
+          "commit": "0fdfb49c3a6789e50169a44e88a07cc889001106"
+        },
+        "BOOST_RATIONAL": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_rational",
+          "commit": "564623136417068916495e2b24737054d607347c"
+        },
+        "BOOST_SMART_PTR": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_smart_ptr",
+          "commit": "3ef8cfd02f9cb3e0486c26f35ed4c27c6f26bd5f"
+        },
+        "BOOST_TUPLE": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_tuple",
+          "commit": "b67941dd7d03536a854b96f001954792311ab515"
+        },
+        "BOOST_IO": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_io",
+          "commit": "342e4c6d10d586058818daa84201a2d301357a53"
+        },
+        "BOOST_WINAPI": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/boost_winapi",
+          "commit": "39396bd78254053f3137510478e8f956bd2b83d4"
+        },
+        "CATCH2": {
+          "path": "/tmp/mirrors-cpp-exact-deps-li4tqki0/catch2",
+          "commit": "53d0d913a422d356b23dd927547febdf69ee9081"
+        },
+        "NLOHMANN_JSON": {
+          "path": "/home/nzsn/Repos/Mirrors/.golden-build/mirrorcpp/_deps/nlohmann_json-src",
+          "commit": "9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03"
+        }
+      },
+      "logSha256": "6605ca77fe89e089ab521d2464f70fe75ff15bfd6960f97e825a97cb0b4409e8"
+    },
+    "nativeBridge": {
+      "status": "passed",
+      "log": "/tmp/mirrors-application-integration-native-bridge-final.log",
+      "logSha256": "439e588b910ebb70955be3e435551ee920f99c2f31744bcc28e3ff4c37a43e1b"
+    },
+    "p12": {
+      "status": "passed",
+      "actualRestrictedAuthors": 3,
+      "authorAttempts": 3,
+      "freshAgentOnboarding": "passed; automated proxy, not human study",
+      "evidence": "application-integration-p12-evidence.json",
+      "evidenceSha256": "c86782c13b42da0bcc35d54abec639cb097492ee02f26fc124b94986303446d3"
+    }
+  },
+  "pending": [],
+  "sourceSha256": {
+    "Mirrors": {
+      "Shell/ModelInterface/Compiler.lean": "635ffcd4e4d3c0f69f4ddbd099c521dd4c0e3d3c4d51baab7d4040e0a0103ce4",
+      "Shell/ModelInterface/Emit/SuiteBundle.lean": "ab6e62d926b755acbcb4d97d63a70e6947d2926339f064ac3b2cab204d5d929d",
+      "Shell/ModelInterface/Emit/SuiteNativeRuntime.lean": "aeddb1df07500f4217c0db48185bef8598e373ff307f57bde9cfdb705e4d732f",
+      "Shell/ModelInterface/Emit/TypeScript.lean": "218b48f5b2d35d6dc571aca9eb7f01a503b775bbdc08ff0497f5ea260b691d25",
+      "Shell/ModelInterface/Emit/TypeScriptAsync.lean": "6de95d7711707923184bc9c1ceff6753d02e3a0197a8f9124bfec48c743817a7",
+      "lakefile.lean": "559fff877cae0e7aef208b10ad7608a6fe9a6d3d33020e759c27b3c23bd6da01",
+      "tools/ModelInterfaceGen.lean": "25707933805c3a1d1c597b219cb3957bb8e7b7c68a5846bee72ab2d98aa60f13",
+      "tools/ModelInterfaceSpec.lean": "9aedd60f2d2ce7aaff9994a2c94cdcd3d3fc1d8fe376ea770478bee5511617fc",
+      "tools/check-suite-bundle.py": "b301691842f64b0e32df632e6a6abd8863a65345b642c0b1d46e6b575b295e57",
+      "tools/check-suite-native.mjs": "cbb1aa7128c0f44366300fa8ed0a2d82c5d08bc741f12fd9cf5bda1b1c62060c",
+      "tools/check-suite-runtime.py": "b8387acdfb3b6c1dde8eececc6988596e181706759e32cc21112b2cc2d60dd9c",
+      "tools/interop/run.sh": "80d537daf8d220273d9e461d2db90b93be74f2bd5191cbe420027b47db3e14e3",
+      "tools/suite-native-vectors.mjs": "e9eb9b38cef28c362b8e2601bfe9d1a58a235367dd8ba0f6c3f940d4f2e3d27d"
+    },
+    "MirrorECMA": {
+      "examples/application-validation/generate-bundles.mjs": "1195d62882a33cbabe0a58f9fd894e8c64ce16292008834444ad45c7fce98436",
+      "examples/application-validation/regenerate.mjs": "89bfd2bf2fe1bbbd02a6def0548baa17293d462ec76de4d40a79c460349f88e0",
+      "examples/application-validation/results/2026-09-16-suite-migration.json": "dd7e5efa194fb7e9693e3e4aa219ddb02f8e90ed78f4349af453ddf81949620c",
+      "examples/application-validation/results/2026-09-16.json": "4efa99160f106979e4bfc559f70ef71d6e94d1f0b0e51b507476afb1b1e884c6",
+      "examples/application-validation/run.mjs": "4f1a590a652b43c65a188097140f4a316e47ac99d73775d2c4317dd23e8347d7",
+      "examples/application-validation/suite.mjs": "127aee980b99a7c3c26f7770a01f3c8b10a8814c2d9cd7606a477ee6dfd46f51",
+      "examples/lease-service/application.json": "d7a5d530e607d0c7a2aed7a3a7e0dcfa8bbf228d77ba54516cc1121b34901647",
+      "examples/lease-service/artifacts/LeaseService.mirror-interface.json": "dffb33621dfb62ad41d440676fd66055bdd1cc6649aad1d81afb23782c5748d2",
+      "examples/lease-service/artifacts/LeaseService.mirror-interface.lock.json": "25e6c9fa1ec607106c2998c97387e19ef4fae9907a6b751d7f5e865c663c1a35",
+      "examples/lease-service/artifacts/bundle/.model-interface-generated.json": "8c3a5446bba061737aa5317a203075982e865114e9324bdd6c6c6ed74d355b1d",
+      "examples/lease-service/artifacts/bundle/.suite-bundle-generated.json": "3cd6e9d10aa1fed644ea453dd2aab9115c95ddbd75eae93a930464fd14d30a4d",
+      "examples/lease-service/artifacts/bundle/LeaseService.suite.ts": "db0d5f6b648b38be916745e499736364e386b4edce4b6a7e8176e4db9e4b9688",
+      "examples/lease-service/artifacts/bundle/LeaseServiceMirror.generated.ts": "890ffa137bbbe0223493fc03886208838572dac7faed12686e71135fe2cbcc06",
+      "examples/lease-service/artifacts/bundle/bundle-metadata.json": "cb790f947fdaed5cf8146cc1d06337731b573d3fe9c5bdb820a34b96ebf15251",
+      "examples/lease-service/artifacts/bundle/descriptor.json": "b54b57c112c535dd522f2d7b6ba477502bbfc41d91a6ca69487ef374b44f4fea",
+      "examples/lease-service/artifacts/bundle/public-manifest.json": "44d8af2896079d7554de169f7a31da73182f1945044fde48be5d4631b3c8b3b7",
+      "examples/lease-service/artifacts/generated/.model-interface-generated.json": "8c3a5446bba061737aa5317a203075982e865114e9324bdd6c6c6ed74d355b1d",
+      "examples/lease-service/artifacts/generated/LeaseServiceMirror.generated.ts": "890ffa137bbbe0223493fc03886208838572dac7faed12686e71135fe2cbcc06",
+      "examples/lease-service/artifacts/provenance.json": "f73ece3fe6a319c1a2521ba2158ae8d51055d2c29548a3c161fbdc149460fd22",
+      "examples/lease-service/artifacts/witness.itf.json": "aefc9b03f8a1ace167f327126e7dac92f67fe0538e1560f100bc88eb0e0b5433",
+      "examples/lease-service/service.mjs": "9174cc458c21d310f913d547c9339cc3e6b933651f098144005e1c44e869e158",
+      "examples/lease-service/suite.ts": "565bb58c647d9ebe5e0c3fd824de1c3aae5f051d0503e4f9c4c87235c1d0528e",
+      "examples/persistent-transfer/application.json": "e51d3bc247fe81690c60214e0c33d6703dd652972c5c45a875ad07382ccd38db",
+      "examples/persistent-transfer/artifacts/PersistentTransfer.mirror-interface.json": "40d99dd49dfb0db9e76be2083cad183e00ed29f3af26ce0b2c7d1436907a2795",
+      "examples/persistent-transfer/artifacts/PersistentTransfer.mirror-interface.lock.json": "d11ebd0c6455548db394603670356a7db549ded2e18dd8baf5d9a893c84ebd7e",
+      "examples/persistent-transfer/artifacts/bundle/.model-interface-generated.json": "8c62836eda37f10cfb4aa6bcde01fc38d60b405567c9cb99e0db452d6c007242",
+      "examples/persistent-transfer/artifacts/bundle/.suite-bundle-generated.json": "ff5d009905b73fa1d5acf2fd649397cdbb7dab0784a5a231661f3d9e910ec29a",
+      "examples/persistent-transfer/artifacts/bundle/PersistentTransfer.suite.ts": "66b651d89db204ca7309408a18f9f212b81ed21c8cd204294571bb5a581688f7",
+      "examples/persistent-transfer/artifacts/bundle/PersistentTransferMirror.generated.ts": "8573731e1b5c22b4b9164c02c65a677b4167abb91214d8e80eac3c264c0d0552",
+      "examples/persistent-transfer/artifacts/bundle/bundle-metadata.json": "259677fb9522e69b90813aa905687e6a5000839dcb5a4fa94f8da590d40dd040",
+      "examples/persistent-transfer/artifacts/bundle/descriptor.json": "b143d018161abab070ff4d7ad7b7287ab4a2dd8590264dcb5e9add3db17b705e",
+      "examples/persistent-transfer/artifacts/bundle/public-manifest.json": "23d1f8b90d7644246971c10527f85ec2020e73e97599c3874f41c85c364d5ca7",
+      "examples/persistent-transfer/artifacts/generated/.model-interface-generated.json": "8c62836eda37f10cfb4aa6bcde01fc38d60b405567c9cb99e0db452d6c007242",
+      "examples/persistent-transfer/artifacts/generated/PersistentTransferMirror.generated.ts": "8573731e1b5c22b4b9164c02c65a677b4167abb91214d8e80eac3c264c0d0552",
+      "examples/persistent-transfer/artifacts/provenance.json": "fe15b94a9aef7de8f14b4721847a1e0f7e7efd6730e77cdd0ee87d74c56f835f",
+      "examples/persistent-transfer/artifacts/witness.itf.json": "5142bd661c6887c1e1e3547cb14f349914e06d2d6fd0e5ea9bfab84c5149c326",
+      "examples/persistent-transfer/service.mjs": "db9f39f1c1644ad3c981fb955378a2fb2cb643120ab40af5dce07f7e650cdd16",
+      "examples/persistent-transfer/suite.ts": "6d84302afb6a4d7552eb3431fc1d884dd08b548112834c366f777915792115bc",
+      "examples/work-queue/acceptance-cli.ts": "f71428216ef2ed84ba4914ea1fee65a0efa42edd86c18e67399767ea41783fd6",
+      "examples/work-queue/acceptance.ts": "6777b5b5b79dd64ebece7e3f44f43d6fc45e6ce10f163ef0cb2ae167e20da539",
+      "examples/work-queue/application.json": "68c41cc764f5c6226fc0e2d5d797eb9378964fcc58d11be74623be3e49dd6e7a",
+      "examples/work-queue/artifacts/bundle/.model-interface-generated.json": "11fa43a756f3ccf1f0745a496bc2298f021cf1da73e26aaa9ff400f8e4e91353",
+      "examples/work-queue/artifacts/bundle/.suite-bundle-generated.json": "ea124228507934995a5524e88ce51fb44680b700193bed1a9db298a6b7e83ca8",
+      "examples/work-queue/artifacts/bundle/WorkQueue.suite.ts": "e706269dc8458a7aec1d62138cb61de7574808ce66cc543103832bf40764cef3",
+      "examples/work-queue/artifacts/bundle/WorkQueueMirror.generated.ts": "6adb041982bc12e4fc1e3b9a24313ca3a116b7657bc8d711fdd5969eb0f8b096",
+      "examples/work-queue/artifacts/bundle/bundle-metadata.json": "21ba3ca1db96b18540fc326ed71eaee5ff6181ae6260a208131fa495a33db711",
+      "examples/work-queue/artifacts/bundle/descriptor.json": "17d57275e81b4c563295b061f2a64b257c7dc6e743cd9c1b4ad128214581f2a0",
+      "examples/work-queue/artifacts/bundle/public-manifest.json": "f0f2fe46e169119b60f3aec1a223efb3091e1f4dfcdcac029cdfbd064ac284af",
+      "examples/work-queue/artifacts/generated-async/.model-interface-generated.json": "11fa43a756f3ccf1f0745a496bc2298f021cf1da73e26aaa9ff400f8e4e91353",
+      "examples/work-queue/artifacts/generated-async/WorkQueueMirror.generated.ts": "6adb041982bc12e4fc1e3b9a24313ca3a116b7657bc8d711fdd5969eb0f8b096",
+      "examples/work-queue/gate-service.mjs": "b1f4e11c68c761fbf2639bb1c4916f663925fce9d8f03c97709e28812126265f",
+      "examples/work-queue/native-adapter.ts": "60bfb2d3629a5f3a9a73881368f6bda74820bd9b142a86ad0f4ed6c963f4ca0c",
+      "examples/work-queue/native-service.mjs": "2ae23b226d25b74a53d5fa6ab53d6928ec46ae98449a4bd5b11cd546dbeb7bb4",
+      "examples/work-queue/queue.ts": "81d37262b5cbebc4e40d4a442449269db1036b0417f4572cc5e1345456fa0cbf",
+      "examples/work-queue/suite.ts": "3c24caf8852b4b8238b20eeb40452c41266189bde010b0ef6a72e28660ea505b",
+      "package.bazel.json": "47fb834706308134a0891c4087e5e4aa6c1ebde6560b1f8ac2f2663b2db0b450",
+      "package.json": "dc9dcb5845dd9ba9d567082244b4308bf9713edfd8d9bb461a420210203d9744",
+      "scripts/check-installed-suite.mjs": "29cb8e671d0780349672dc3d473aa798ab7c2c4155a2748c3fa45215d8cda016",
+      "src/acceptance.ts": "9468941407cbaaa83c452dfab25152b29ec596dc63567ead9ace481ecac42846",
+      "src/cli.ts": "0427642bfedfa94f0d165166e06cc06210ec797afc3040683d62d05e924d22db",
+      "src/client.ts": "bf51e6758df3bfb9492c796a0ecb9de73f08384807b2ef674f559e7a513ca6f6",
+      "src/dynamic-binding.ts": "fb62ff7dedca8a0e3c0de957f2d2f3b48b4bf89d22760e7e488b43383b708f5e",
+      "src/index.ts": "271085ee5c64407e6c4dcf112476a413b5bd87d6eeb13d4bd511fd57c8a1836d",
+      "src/matched-evidence.ts": "1d5da08a671f1767ddfd795c14bbefc21ac42365c77e23fffc7c26afe6982119",
+      "src/negotiated.ts": "42040ae64ec6703947efbeddcdf955f825136a0c7bf03c5abd830ef8166d32f3",
+      "src/project-config.ts": "af48915e2c8d7c3af88f36372ebae2758c13175432885814b75503956a5cf25b",
+      "src/project.ts": "4868314cf0324e6f7115ac66e368aa3b6affc1368de1bcef789edaa51d92128f",
+      "src/replay-core.ts": "e271bd037237fa7a54379c667a4fa842cb3261527f139e3c0d19c854d7b5222e",
+      "src/replay.ts": "1a1156abd85f2d5c898320fee0765e9f16addd2b36585eb0354c93c6efdafb1f",
+      "src/suite-definition.ts": "8f432f0d23cfeac90ffdd964974673f123e60951c7af58ecf3d538fee33985c9",
+      "src/suite-lifetime.ts": "2d9a8906fb3baaba621576f6c0a8f4008c5d5dd4fb2edbe5a9904de5c2acde71",
+      "src/suite-preflight.ts": "0e7da60c0e221d966bb6e5e28c6b1b8d71bf329a893655fe2ed2d2c391727113",
+      "src/suite-result.ts": "aeb5d55a035e6c9eb49f7c7c8d11e8b9142d96f1ea6fadc18c1e8f5cb7609d94",
+      "src/suite-runner.ts": "7d0429619f1a9a02a1c9a7e956af21c6b8428059cf97e8873867549e8b47c3ec",
+      "test/client-spawn-allocation.test.ts": "f6ee8158aa5780470d9cb14e8210b30d5650431a47405cd04dc5f0fb49e965e7",
+      "test/fixtures/blocking-mirror.mjs": "7f95ea9af0aa248304e1cf0b4acba4c035517637b91da9543610a971313cac3e",
+      "test/fixtures/project/installed-runner.mjs": "527f6d6fe573501b5935d272a06444920933afd15deac79b371c83cf00f43967",
+      "test/fixtures/trace-generation-mirror.sh": "c5ffa87c937d130efed53df33878da2508195d713c04c20f22155a3641941dff",
+      "test/matched-evidence.test.ts": "33a4ae13b17b5eb3f9ef678d302cc552b2517ef9040246c13c798a198f16c4db",
+      "test/owned-registration-lifecycle.test.ts": "ec9e847fba95d3a263f3d210322b8e8cd7cc440d9d658aa16e4b42a2d2614e36",
+      "test/project.test.ts": "387f34d09f60ddff9e570ba3a89131dc3e3515ab0b9ce3b4d039f028bf189587",
+      "test/suite.test.ts": "97c8abb5d46ddc3d1f515d8086cee845fe673f70d6d3b929fc966307b086863a",
+      "test/trace-generation-transport.integration.test.ts": "33790952396e7cbc3b6deaa446a2cf91258e61ab6ecc8cea85a99cf00b3ce93f",
+      "test/work-queue.acceptance.test.ts": "aa105c689b0741e830e4773beed68822e7bf0ac02a8defb76fc24515142d5f29",
+      "tsconfig.application-validation.json": "606d2c9ebd71d8762a2604d1161b592ac2efb7b697b3037cadcac34532cd1f89",
+      "tsconfig.examples.json": "898d398616e23de430bb0ee6f570c54788b607b5e5d69b3d2555fc2b9194bbaf"
+    },
+    "MirrorGate": {
+      "conformance/public-contract-v2.json": "d3bb817c6e30553b30e4d1b9dea15b27088d87d5832740af4674ca7da403b7f3",
+      "integrations/mirrorecma/package.json": "900447c3e3b163b6e31f163a843545ff27aca2bb1ab2014a6eb35a2e68870708",
+      "integrations/mirrorecma/scripts/application-program-gate.mjs": "26557a4b9ad7b33a6a7ceee800b3429125e6dfc49462420dab780343bae3bd7c",
+      "integrations/mirrorecma/scripts/installed-suite.mjs": "a96fe22ae222ea71305b482e22765dbf119f057d078741f02b97ddee6aed17e5",
+      "integrations/mirrorecma/scripts/packed-consumer.mjs": "d6bce967b4bcede26584b04ec8bc30bb8a069786ac990956dfa73d9a51bd3dea",
+      "integrations/mirrorecma/src/index.ts": "e42ee5b50b495c8b7060dc625b40f5cb184489a98646fe3c287fee3b9188a18e",
+      "integrations/mirrorecma/src/provider.ts": "697863fda1f7409e444635f8558964d5e57524cedb0d48da9bab8ea14788597d",
+      "integrations/mirrorecma/src/receipt-writer.ts": "8080f9a3fb4b17800d7dcd9b837a9834f5c65351b01ea4c27be7072c8db1fd51",
+      "integrations/mirrorecma/src/sandbox.ts": "c242d9cd8d04f8f71e4f55263e11e7c5cfafff370992f969f7888d06f411a2ed",
+      "integrations/mirrorecma/src/suite.ts": "8aeae29cfda978a3040bd43f6635d0eebdbf47b7d3b56819e5aaf1ee97f2539a",
+      "integrations/mirrorecma/src/workflow.ts": "3e7b08d6ae3e4ad9582ec85494351728f22aaeb537c48cabde6e0590c6fc3f93",
+      "integrations/mirrorecma/test/installed-suite-driver.mjs": "50e2b559cd0ef6aebad3e43e5948c4dc504d3a65b06a3d47965800334093275b",
+      "integrations/mirrorecma/test/receipt-writer.test.ts": "63990081247b6099f79a2cdfae7eec10dd46e98edb41f25ca47971450d30d9df",
+      "integrations/mirrorecma/test/workflow.test.ts": "65e33742d6af290cd29c40492d5526dfcca12be65482f0c4a596592ff32059a3",
+      "integrations/mirrorecma/tsconfig.json": "a76c7d3ae688a4f5d3458d9a5355b0737e385067c5f8e1e0ac078f4fd5ae1fcc",
+      "package.json": "e588b60c9f221dfd1871ae5f57b6fdc8832fc4d7ae53de998933572f7b9902b7",
+      "protocol/control-v2/contract.json": "d4218dcbb35bb40df690e9789a846474da453a4d7947b57cebdeb5aa4d571ae6",
+      "protocol/control-v2/policy-schema.json": "2361077dd48ebb6b5ca23a1a823f32b2af2de571f0e15d112bac5928505a98ad",
+      "protocol/control-v2/public-contract.schema.json": "e35932cd13381c4b3f2265ea76eacf2e163516efc32f9c0c28714957916f7b8e",
+      "protocol/control-v2/public-environment.schema.json": "f3ec66d49a7f6f160385b2b323bba80027c233551f1a6d059143e0ffb696f367",
+      "sdk/node/adapter-check.mjs": "0cbb2fb1ede44b762d5f2fd5e45b68a9f33967d3ade1099edace9ff513114227",
+      "sdk/node/adapter-kit.mjs": "5760effa0858af2c08242162ad8f076ae769ffab41af6aaefefb9dfecf272996",
+      "sdk/node/control-v2.mjs": "c1db13c495e4f2b7a6eef8154d5cbc621e94600e86ec848d7d73eed3f9f17781",
+      "supervisor/mirrorgate/agent_runtime.py": "6b1f89db5803a4199091a8d11c5999bc128cf487bb5279c94071fad3f43a28c6",
+      "supervisor/mirrorgate/authoring_broker.py": "83ed5179ed5dd7d60973a2aec41bc053cba06f799b61621f973fb0bb1e7f9a8b",
+      "supervisor/mirrorgate/control_policy.py": "46446ec076c7086cee330e42d0ac6b71ef24cacc3d7a8adef965381da721345c",
+      "supervisor/mirrorgate/control_protocol_v2.py": "da87295b2e86e319897caa1d2c9c90dcd90a695b2c9625ac4a5a626d4e365e81",
+      "supervisor/mirrorgate/node_profile.py": "686426c0eedf487a80dbeb31390be576b3592113a5d46ec4f2cf12701121069a",
+      "supervisor/mirrorgate/orchestration.py": "62cc40218c3562c6905cabda3667870bc413a742c183cc4ec835d8526578ac2b",
+      "supervisor/mirrorgate/preparation.py": "5f37cebf4a4e44adeeb6953ce80e97e912be9a8755c59c0f28f3d865d45acaa5",
+      "supervisor/mirrorgate/sandbox.py": "f931db0d17cdf480ef62eff35b92eaf1c080bb13b8076e00c54e163ed6fea0ad",
+      "tests/fixtures/suite-native-vectors.mjs": "e9eb9b38cef28c362b8e2601bfe9d1a58a235367dd8ba0f6c3f940d4f2e3d27d",
+      "tests/integration/native-values.test.mjs": "b34310db65a1b261bec2b21c4ce7f3597db9fb7a023f27afc00851d17608642a",
+      "tests/node/adapter-kit.test.mjs": "1dabd01df8223bf1361bb5441a58b924e2a1f68589f7f6a3252fc9350c23e1d6",
+      "tests/node/package.test.mjs": "5646e2e0239cae9b663fed423fc111d7830302e0630df872de62f3b20341177d",
+      "tests/node/public-environment.test.mjs": "587d3f434a218b6588bd802d4b149610f8b1c53d08d6b330d368ddee7985cc54",
+      "tests/test_node_profile.py": "3b6a009a1d9e8c70bc2c25ed4c796d154a15843729f68245d319739bccd33062"
+    }
+  },
+  "recoveredMirrorECMA": "ff3a214c7620368d94b3f2f892002b6890168588"
+}

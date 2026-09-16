@@ -78,7 +78,14 @@ What run.sh does:
    cover both actions through the same adapter. The full matrix requires live
    Apalache up front and always enables this tier; the focused client command
    below makes it optional.
-5. Starts \`mirror --serve\` and runs the Haskell ModelMirrors \`validate\`
+5. Generates a fresh Counter suite bundle in a temporary directory, transforms
+   its two TypeScript modules using the pinned Node runtime, and executes the
+   native bridge vectors plus invalid-input/observation/return and poisoning
+   checks. This execution gate installs no packages and requires no MirrorECMA
+   module at runtime. Installed consumer gates separately typecheck the public
+   compiler/runtime contract. Run it alone with
+   `python3 tools/check-suite-runtime.py` after building `model_interface_gen`.
+6. Starts \`mirror --serve\` and runs the Haskell ModelMirrors \`validate\`
    client against it over TCP.
 
 The mTLS legs run the same unmodified clients with pinned leaf

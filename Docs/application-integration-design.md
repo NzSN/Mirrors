@@ -1,9 +1,9 @@
 # Application integration with less framework knowledge
 
-Status: **implementation authorized by the user, 2026-09-16; AIT-00 contracts
-accepted; AIT-05 partially implemented; runtime acceptance gates remain pending.**
-See the [task ledger](application-integration-tasks.md) for current implementation
-and acceptance evidence; proposed interfaces are not delivered until their gates pass.
+Status: **implementation and local acceptance delivered, 2026-09-16–17, including
+fresh actual authors and an automated unfamiliar-evaluator onboarding study.**
+See the [execution record](application-integration-progress.md) for current
+implementation and acceptance evidence; interfaces are not delivered until their gates pass.
 This work does not authorize package publication or imply a support claim.
 
 Baseline inspected: Mirrors `616f5a1`, MirrorECMA `008234d`, MirrorGate
@@ -11,10 +11,10 @@ Baseline inspected: Mirrors `616f5a1`, MirrorECMA `008234d`, MirrorGate
 provides the evidence motivating this design. Its passing examples do not imply
 the proposed product interfaces already exist.
 
-The [implementation task breakdown](application-integration-tasks.md) assigns
-dependency-ordered work packages to `general-purpose-flash` and records their
-dispatch/acceptance state. Task preparation is not runtime implementation; the
-design's proposed features remain unimplemented until their gates pass.
+The [implementation plan](application-integration-implementation-plan.md) assigns
+dependency-ordered work packages and acceptance gates. The earlier AIT labels
+are historical; the execution record tracks the recovered baseline and current
+delivery. Task preparation alone is not runtime acceptance.
 
 ## 1. Problem and intended outcome
 

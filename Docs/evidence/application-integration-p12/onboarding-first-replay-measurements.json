@@ -1,0 +1,52 @@
+{
+  "schema": "mirrors.fresh-evaluator-first-replay/v1",
+  "readPacketUtc": "2026-09-16T16:29:59.998Z",
+  "firstValidReplayUtc": "2026-09-16T16:32:14.394Z",
+  "rawStdoutPath": "/tmp/mirrors-p12-onboarding-jzu1pu9i/evaluator/study-evidence/1789576333333-first_replay.stdout",
+  "rawStderrPath": "/tmp/mirrors-p12-onboarding-jzu1pu9i/evaluator/study-evidence/1789576333333-first_replay.stderr",
+  "elapsedFromPacketReadMonotonicMs": 124377.077842,
+  "elapsedFromDispatchMonotonicMs": 161065.105654,
+  "elapsedFromPacketReadWallMs": 134395,
+  "elapsedFromDispatchWallMs": 177436,
+  "configurationSteps": 4,
+  "productCommandAttempts": 6,
+  "productFailures": 0,
+  "environmentCaptureFailures": 1,
+  "environmentRecoveryIntervalMonotonicMs": 31710.415375,
+  "lineCounts": {
+    "adapter.mjs": {
+      "finalPhysicalLines": 12,
+      "finalNonblankLines": 11,
+      "addedOrReplacementLines": 3,
+      "removedOrReplacedLines": 4
+    },
+    "mirror.project.json": {
+      "finalPhysicalLines": 57,
+      "finalNonblankLines": 57,
+      "addedOrReplacementLines": 23,
+      "removedOrReplacedLines": 14
+    },
+    "mirror.toolchain.json": {
+      "finalPhysicalLines": 31,
+      "finalNonblankLines": 31,
+      "addedOrReplacementLines": 28,
+      "removedOrReplacedLines": 2
+    }
+  },
+  "lineCountMethod": "added/replacement physical lines versus generated init templates and provided adapter skeleton; copied prerequisite pin/config data counted, generated bundles and preexisting skeleton excluded",
+  "protectedAssetsUnchanged": {
+    "model/Counter.tla": true,
+    "model/Counter.mirror-interface.json": true,
+    "traces/counter.itf.json": true,
+    "src/counter.mjs": true
+  },
+  "ambiguities": [
+    "Guides require explicit generated TypeScript compilation but give no concrete compiler command/configuration; evaluator selected ES2022, NodeNext, strict, noEmitOnError and compilation passed."
+  ],
+  "limitations": [
+    "Fresh automated agent proxy with installed prerequisites, not human usability evidence or network installation measurement.",
+    "Read milestone recorded immediately after README tool read rather than at first byte; dispatch milestone provides enclosing elapsed interval.",
+    "Initial sandbox command created files and reported exit 0 but capture returned spawnSync EPERM; reran init non-destructively under permitted escalation.",
+    "Environment recovery interval includes diagnosis and approval latency; other escalation review overhead is included in end-to-end timing and not isolated by command journal."
+  ]
+}

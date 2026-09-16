@@ -1,0 +1,54 @@
+{
+  "schema": "mirrors.fresh-evaluator-diagnosis/v1",
+  "diagnosisStartUtc": "2026-09-16T16:34:37.023Z",
+  "diagnosisCompleteUtc": "2026-09-16T16:35:44.491Z",
+  "repairCompleteUtc": "2026-09-16T16:35:44.890Z",
+  "verifiedReplayUtc": "2026-09-16T16:36:00.235Z",
+  "diagnosisElapsed": {
+    "monotonicMs": 61633.483281,
+    "wallMs": 67468
+  },
+  "repairAfterDiagnosisElapsed": {
+    "monotonicMs": 398.431106,
+    "wallMs": 399
+  },
+  "startToVerifiedElapsed": {
+    "monotonicMs": 74922.293933,
+    "wallMs": 83212
+  },
+  "mismatchStdoutPath": "/tmp/mirrors-p12-onboarding-jzu1pu9i/evaluator/study-evidence/1789576513696-defect_replay.stdout",
+  "repairedStdoutPath": "/tmp/mirrors-p12-onboarding-jzu1pu9i/evaluator/study-evidence/1789576559191-repaired_replay.stdout",
+  "finding": "Mismatch at zero-based trace 0 state 1, after initialization and before any accepted Tick. Counter.increment currently adds stride - 1n, violating PUBLIC-CONTRACT.md requirement to add supplied Stride exactly once. Adapter forwards Stride unchanged and observes Counter.read directly. Concrete cause: off-by-one subtraction in src/counter.mjs increment.",
+  "applicationRepairLines": 1,
+  "productCommands": 2,
+  "expectedMismatchExitCodes": [
+    1
+  ],
+  "unexpectedProductFailures": 0,
+  "environmentCaptureFailures": 0,
+  "protectedFilesUnchanged": {
+    "adapter.mjs": true,
+    "mirror.project.json": true,
+    "mirror.toolchain.json": true,
+    "model/Counter.tla": true,
+    "model/Counter.mirror-interface.json": true,
+    "traces/counter.itf.json": true,
+    ".mirrors/Counter.mirror-interface.lock.json": true,
+    ".mirrors/evaluator/CounterMirror.generated.js": true,
+    ".mirrors/evaluator/.suite-bundle-generated.json": true,
+    ".mirrors/evaluator/Counter.suite.ts": true,
+    ".mirrors/evaluator/Counter.suite.js": true,
+    ".mirrors/evaluator/public-manifest.json": true,
+    ".mirrors/evaluator/bundle-metadata.json": true,
+    ".mirrors/evaluator/CounterMirror.generated.ts": true,
+    ".mirrors/evaluator/.model-interface-generated.json": true,
+    ".mirrors/evaluator/descriptor.json": true
+  },
+  "repairedApplicationMatchesOriginalApprovedHash": true,
+  "guideAmbiguities": [],
+  "diagnosticObservation": "Mismatch output locates trace 0 state 1 but gives no expected/actual values; tiny application and unchanged direct adapter made the concrete arithmetic defect clear without additional tools.",
+  "limitations": [
+    "Automated fresh-agent proxy, not human study or physical information-flow isolation.",
+    "Required sandbox escalation review overhead remains included in end-to-end elapsed time; no additional failed command or isolated review latency occurred in this phase."
+  ]
+}

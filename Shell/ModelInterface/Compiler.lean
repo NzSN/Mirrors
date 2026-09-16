@@ -11,6 +11,7 @@ import Shell.ModelInterface.Evidence
 import Shell.ModelInterface.Emit.Cpp
 import Shell.ModelInterface.Emit.TypeScript
 import Shell.ModelInterface.Emit.TypeScriptAsync
+import Shell.ModelInterface.Emit.SuiteBundle
 import Shell.Tla.Frontend
 import Lean
 
@@ -616,6 +617,17 @@ def emitTarget (target : String) (lock : LockedModelInterface) :
         (diagnostics.map fun diagnostic => s!"{diagnostic.code}: {diagnostic.message}")
       return ← finding s!"target emission failed: {message}"
 
+/-- Bundle is a publication mode over the async target, never a new target identity. -/
+private def emitPublication (target : String) (lock : LockedModelInterface) (bundle : Bool) :
+    Except CompilerError Emit.TypeScript.GeneratedTree := do
+  if !bundle then return ← emitTarget target lock
+  let _ ← verifyLock lock
+  if target != mirrorecmaAsyncTarget then return ← finding "suite bundle requires mirrorecma-async-v1"
+  match Emit.SuiteBundle.emit lock with
+  | .ok tree => return tree
+  | .error diagnostics => return ← finding (String.intercalate "; "
+      (diagnostics.map fun diagnostic => s!"{diagnostic.code}: {diagnostic.message}"))
+
 /-! ## Conservative filesystem ownership -/
 
 private def joinPath (root relative : String) : String :=
@@ -1151,9 +1163,57 @@ private def parseOwnershipManifest (raw : ByteArray) : Except String OwnershipMa
     throw "generated ownership manifest does not own itself"
   return { files, semanticDigest := digest, targetProfile := target }
 
-private def readOwnershipManifest (out : String) :
+private def parseBundleOwnershipManifest (raw : ByteArray) : Except String OwnershipManifest := do
+  let json ← (Codec.StrictJson.parseBytes raw compilerArtifactJsonLimits).mapError toString
+  let fields ← jsonFields json
+  let allowed := ["files", "profileVersion", "schema", "semanticDigest", "targetProfile",
+    "nativeRepresentation", "metadataSha256", "payloadSha256"]
+  if fields.length != allowed.length || fields.any (fun field => !allowed.contains field.1) then
+    throw "bundle ownership manifest must contain exactly the version-1 fields"
+  if (← jsonString "schema" (← requiredJson fields "schema")) != Emit.SuiteBundle.schema then
+    throw "unsupported suite bundle schema"
+  if (← jsonString "nativeRepresentation" (← requiredJson fields "nativeRepresentation")) !=
+      Emit.SuiteBundle.nativeRepresentation then throw "unsupported native representation"
+  let target ← jsonString "targetProfile" (← requiredJson fields "targetProfile")
+  if target != mirrorecmaAsyncTarget then throw "suite bundle requires async target"
+  if (← jsonNat "profileVersion" (← requiredJson fields "profileVersion")) != 1 then
+    throw "unsupported suite bundle profile version"
+  let digest ← jsonString "semanticDigest" (← requiredJson fields "semanticDigest")
+  let metadataHash ← jsonString "metadataSha256" (← requiredJson fields "metadataSha256")
+  if [digest, metadataHash].any (fun hash => hash.length != 64 || !hash.toList.all lowerHex) then
+    throw "malformed suite bundle digest"
+  let files ← jsonStrings "files" (← requiredJson fields "files")
+  if !(duplicateStrings (files.map portablePathAliasKey)).isEmpty || !files.all safeRelativePath ||
+      files.any publicationLockAlias || !files.contains Emit.SuiteBundle.manifestPath then
+    throw "unsafe or duplicate suite bundle owned paths"
+  let hashes ← match ← requiredJson fields "payloadSha256" with
+    | .arr entries => entries.toList.mapM fun entry => do
+        let fields ← jsonFields entry
+        if fields.length != 2 || fields.any (fun field => !["path", "sha256"].contains field.1) then
+          throw "invalid suite payload hash fields"
+        let path ← jsonString "path" (← requiredJson fields "path")
+        let hash ← jsonString "sha256" (← requiredJson fields "sha256")
+        if hash.length != 64 || !hash.toList.all lowerHex then throw "invalid payload hash"
+        pure (path, hash)
+    | _ => throw "payloadSha256 must be an array"
+  let payloadPaths := files.filter (· != Emit.SuiteBundle.manifestPath)
+  if !(duplicateStrings (hashes.map Prod.fst)).isEmpty ||
+      Emit.TypeScript.Shared.sortStrings (hashes.map Prod.fst) !=
+        Emit.TypeScript.Shared.sortStrings payloadPaths then
+    throw "payload hashes must cover exactly the owned files except the ownership manifest"
+  if List.lookup "bundle-metadata.json" hashes != some metadataHash then
+    throw "bundle metadata hash does not match its payload hash"
+  return { files, semanticDigest := digest, targetProfile := target }
+
+private def ownershipPath (bundle : Bool) : String :=
+  if bundle then Emit.SuiteBundle.manifestPath else generatedManifestPath
+
+private def parsePublicationManifest (bundle : Bool) (raw : ByteArray) :=
+  if bundle then parseBundleOwnershipManifest raw else parseOwnershipManifest raw
+
+private def readOwnershipManifest (out : String) (bundle : Bool := false) :
     IO (Except CompilerError (Option OwnershipManifest)) := do
-  let prepared ← prepareContainedTarget out generatedManifestPath false
+  let prepared ← prepareContainedTarget out (ownershipPath bundle) false
   let (path, targetExists) ← match prepared with
     | .ok value => pure value
     | .error error => return .error error
@@ -1162,7 +1222,7 @@ private def readOwnershipManifest (out : String) :
   let raw ← match rawResult with
     | .ok value => pure value
     | .error error => return .error error
-  match parseOwnershipManifest raw with
+  match parsePublicationManifest bundle raw with
   | .ok manifest => return .ok (some manifest)
   | .error error =>
       return finding s!"refusing generated output with invalid ownership manifest: {error}"
@@ -1178,7 +1238,7 @@ private structure BackupFile where
   targetPath : String
   backupPath : String
 
-private def validateTree (tree : Emit.TypeScript.GeneratedTree) : Except CompilerError Unit := do
+private def validateTree (tree : Emit.TypeScript.GeneratedTree) (bundle : Bool := false) : Except CompilerError Unit := do
   let paths := tree.files.map (·.relativePath)
   if !(duplicateStrings (paths.map portablePathAliasKey)).isEmpty then
     return ← finding "emitter returned duplicate or aliased generated paths"
@@ -1187,7 +1247,7 @@ private def validateTree (tree : Emit.TypeScript.GeneratedTree) : Except Compile
     return ← finding "version 1 refuses executable generated files"
   if paths.any publicationLockAlias then
     return ← finding "emitter may not own the generated publication lock"
-  if !paths.contains generatedManifestPath then
+  if !paths.contains (ownershipPath bundle) then
     return ← finding "emitter output does not include its ownership manifest"
   return ()
 
@@ -1195,22 +1255,27 @@ private def validateTree (tree : Emit.TypeScript.GeneratedTree) : Except Compile
 new paths only when absent, remove only stale manifest-owned files, and publish
 the new manifest last. -/
 private def writeGeneratedTreeUnlocked (out : String)
-    (tree : Emit.TypeScript.GeneratedTree) :
+    (tree : Emit.TypeScript.GeneratedTree) (bundle : Bool := false) :
     IO (Except CompilerError (List String)) := do
-  match validateTree tree with
+  match validateTree tree bundle with
   | .error error => return .error error
   | .ok () => pure ()
   let rootResult ← canonicalOutputRoot out true
   let root ← match rootResult with
     | .ok value => pure value
     | .error error => return .error error
-  let previousResult ← readOwnershipManifest root
+  if !bundle then
+    match ← prepareContainedTarget root Emit.SuiteBundle.manifestPath false with
+    | .error error => return .error error
+    | .ok (_, true) => return finding "refusing ordinary generation into a suite bundle"
+    | .ok (_, false) => pure ()
+  let previousResult ← readOwnershipManifest root bundle
   let previous ← match previousResult with
     | .ok value => pure value
     | .error error => return .error error
-  let some manifestFile := tree.files.find? (·.relativePath == generatedManifestPath)
+  let some manifestFile := tree.files.find? (·.relativePath == ownershipPath bundle)
     | return finding "emitter output does not include its ownership manifest"
-  let nextManifest ← match parseOwnershipManifest manifestFile.bytes with
+  let nextManifest ← match parsePublicationManifest bundle manifestFile.bytes with
     | .ok value => pure value
     | .error error => return finding s!"emitter returned an invalid ownership manifest: {error}"
   if let some previous := previous then
@@ -1267,8 +1332,8 @@ private def writeGeneratedTreeUnlocked (out : String)
           ({ relativePath := relative, targetPath := target,
              backupPath := backup } : BackupFile) :: files)
         backupOrdinal := backupOrdinal + 1
-    let nonManifest := staged.filter (fun file => file.relativePath != generatedManifestPath)
-    let manifest := staged.find? (fun file => file.relativePath == generatedManifestPath)
+    let nonManifest := staged.filter (fun file => file.relativePath != ownershipPath bundle)
+    let manifest := staged.find? (fun file => file.relativePath == ownershipPath bundle)
     for file in nonManifest do
       let prepared ← prepareContainedTarget root file.relativePath true
       let (_, targetExists) ← match prepared with
@@ -1278,7 +1343,7 @@ private def writeGeneratedTreeUnlocked (out : String)
         throw (IO.userError s!"concurrently-created unowned target: {file.targetPath}")
       replaceStaged file.temporaryPath file.targetPath file.mayReplace
     let stale := previouslyOwned.filter (fun path => !newPaths.contains path &&
-      path != generatedManifestPath && !publicationLockAlias path)
+      path != ownershipPath bundle && !publicationLockAlias path)
     for relative in stale do
       let prepared ← prepareContainedTarget root relative false
       let (target, targetExists) ← match prepared with
@@ -1327,7 +1392,7 @@ rollback protection. The lock is created with `writeNew`, so a concurrent
 process fails before reading ownership or changing any generated path. A
 process crash may leave the lock behind; that fail-closed marker must be
 removed only after an operator verifies that no generator is active. -/
-def writeGeneratedTree (out : String) (tree : Emit.TypeScript.GeneratedTree) :
+def writeGeneratedTree (out : String) (tree : Emit.TypeScript.GeneratedTree) (bundle : Bool := false) :
     IO (Except CompilerError (List String)) := do
   let rootResult ← canonicalOutputRoot out true
   let root ← match rootResult with
@@ -1343,7 +1408,7 @@ def writeGeneratedTree (out : String) (tree : Emit.TypeScript.GeneratedTree) :
   try
     writeNewBytes lockPath "mirrors-model-interface-generation/v1\n".toUTF8
     acquired.set true
-    let result ← writeGeneratedTreeUnlocked root tree
+    let result ← writeGeneratedTreeUnlocked root tree bundle
     bestEffortRemove lockPath
     return result
   catch error =>
@@ -1352,16 +1417,16 @@ def writeGeneratedTree (out : String) (tree : Emit.TypeScript.GeneratedTree) :
 
 /-- Load and verify a lock, emit the selected target, and safely publish the
 owned generated tree. -/
-def generate (lockPath target out : String) :
+def generate (lockPath target out : String) (bundle : Bool := false) :
     IO (Except CompilerError (List String)) := do
   let lockResult ← loadVerifiedLock lockPath
   let lock ← match lockResult with
     | .ok value => pure value
     | .error error => return .error error
-  let tree ← match emitTarget target lock with
+  let tree ← match emitPublication target lock bundle with
     | .ok tree => pure tree
     | .error error => return .error error
-  writeGeneratedTree out tree
+  writeGeneratedTree out tree bundle
 
 private def compareFile (path : String) (expected : ByteArray) : IO (Except CompilerError Bool) := do
   let prepared ← prepareStandaloneTarget path false
@@ -1390,13 +1455,13 @@ private def compareContainedFile (root relative : String) (expected : ByteArray)
 
 /-- Resolve and emit entirely in memory, then byte-compare the lock and every
 owned target file. This function performs no filesystem writes or repairs. -/
-def check (paths : InputPaths) (lockPath target out : String) :
+def check (paths : InputPaths) (lockPath target out : String) (bundle : Bool := false) :
     IO (Except CompilerError CheckReport) := do
   let compilationResult ← compile paths
   let compilation ← match compilationResult with
     | .ok value => pure value
     | .error error => return .error error
-  let tree ← match emitTarget target compilation.lock with
+  let tree ← match emitPublication target compilation.lock bundle with
     | .ok tree => pure tree
     | .error error => return .error error
   let mut stale : List String := []

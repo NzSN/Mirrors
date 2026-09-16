@@ -120,6 +120,10 @@ COUNTER_SMOKE_ARGS=(--live)
   MODEL_INTERFACE_GEN="${MODEL_INTERFACE_GEN:-$MIRRORS/.lake/build/bin/model_interface_gen}" \
   node "$COUNTER_BUILD/test/generated-counter.smoke.js" "${COUNTER_SMOKE_ARGS[@]}")
 
+echo "== Suite native bridge: freshly generated runtime + shared vectors =="
+python3 "$MIRRORS/tools/check-suite-runtime.py" \
+  --compiler "${MODEL_INTERFACE_GEN:-$MIRRORS/.lake/build/bin/model_interface_gen}"
+
 echo "== MirrorCPP conformance: unit/golden + real stdio/TCP/mTLS =="
 CPP_BUILD="$MIRRORS/.golden-build/mirrorcpp"
 cmake -S "$CPP" -B "$CPP_BUILD" -DMIRRORCPP_BUILD_TESTS=ON
