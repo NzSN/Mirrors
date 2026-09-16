@@ -1,7 +1,9 @@
 # TLA+ frontend differential validation
 
-> Status: **initial harness implemented and exercised, 2026-09-13; external
-> differential acceptance failed. See the task plan and evidence index.**
+> Status: **profile-4 differential acceptance passed on 2026-09-15. The initial
+> 2026-09-13 failure was superseded by the compatibility/catalog repairs.
+> Unsupported comparisons remain uncertified. See the
+> [current acceptance record](tla-frontend-tasks.md#1811-profile-4-standard-catalog-closure-2026-09-15).**
 > Authority: [frontend compatibility contract](tla-frontend-design.md#5-compatibility-authority)
 > and [language profile](tla-language-profile.md).
 > Delivery: [differential validation tasks](../../Drafts/tla-differential-validation-tasks.md).
@@ -13,16 +15,14 @@ Apalache. Preserve observations, compare supported facts, and make every
 disagreement or unavailable comparison explicit. External tools are compatibility
 oracles, not production dependencies and not infallible authorities.
 
-The current manifest contains 57 fixtures: 32 accepted and 25 rejected, covering
-75 branches. There are 56 borrowed-directory cases and one inline-source-map
-case. Rejections comprise 20 malformed, two resource-limit, and three
-profile-limit cases. These counts describe the present corpus; runners must
-derive counts and coverage from the captured manifest rather than hard-code them.
-At design time, the manifest's SANY and Apalache slots were `not_run` with
-versions `pending`. Both baselines are now pinned and the gate has executed;
-acceptance failed. The [evidence index](../../test/fixtures/tla-frontend/differential/evidence/README.md)
-records the repeated runs and remaining findings. The earlier exploratory
-reference probe remains historical construction evidence.
+The profile-4 acceptance manifest contains 61 fixtures: 34 accepted and 27
+rejected, covering 76 branches and 107 fixture-branch links. Required runs T/U
+each completed 183 observations, with 564 exact matches, 14 reviewed differences,
+292 explicitly unsupported comparisons, and no unresolved/incomplete findings.
+Runners derive counts from their captured manifest rather than hard-code them.
+The [evidence index](../../test/fixtures/tla-frontend/differential/evidence/README.md)
+retains the historical failed runs and subsequent repairs. The earlier
+exploratory reference probe remains historical construction evidence.
 
 The initial delivery targets corpus outcome and required structural comparisons;
 the implemented harness exposes remaining observation and compatibility gaps.
@@ -235,6 +235,9 @@ execution equivalence, or completion of the other TF8 ecosystem gates.
 
 
 ## 9. Implementation status (2026-09-13)
+
+This section preserves the initial delivery snapshot; the current acceptance
+status is above and in frontend tasks sections 18.8–18.11.
 
 The runner, isolated capture, bounded process layer, provider-correct development
 observations, standalone SANY bridge, Apalache parse adapter, closed schemas,

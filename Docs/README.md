@@ -11,6 +11,7 @@ an installed Windows service, a hosted CI run, or a published package.
 | --- | --- |
 | Run MBT or LLM-assisted development with the Mirror-Framework | [Mirror-Framework usage guide](usage-of-mirror-framework.md) |
 | Test TypeScript application code | [MirrorECMA MBT user manual](mirrorecma-typescript-mbt-user-manual.md) |
+| Evaluate framework usability on real applications | [Three-application validation program](application-validation-program.md) |
 | Build, install, or identify Mirrors | [Product versions and installation](versioning.md) |
 | Run validation inside WSL2 or through `r_windev` | [WSL2 validation](wsl2-validation.md) |
 | Inspect a TLA+ model with the frontend CLI | [`tla_frontend` guide](model-interface-compiler/tla-frontend-cli.md) |

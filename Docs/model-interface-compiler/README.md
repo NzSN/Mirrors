@@ -8,7 +8,7 @@ compiler and its implemented TLA+ source frontend.
 | [Compiler detailed design](design.md) | Implemented version-1 compiler with identified follow-up milestones | Contracts, evidence, resolution, targets, deterministic emission, CLI, diagnostics, and publication |
 | [General TLA+ frontend design](tla-frontend-design.md) | Design; delivery slices TF0–TF8 implemented and accepted 2026-09-12 | Lossless parsing, module resolution, semantic elaboration, effective declarations, conformance, and compiler integration |
 | [TLA+ frontend inspection CLI](tla-frontend-cli.md) | Implemented; TF8 accepted 2026-09-12 | Development-only `tla_frontend` parse/resolve/inspect commands, closed JSON schema, and validation |
-| [TLA+ differential validation](tla-differential-validation-design.md) | Harness implemented, 2026-09-13; differential acceptance failed | Pinned reference tools, corpus comparison, reviewed differences, and reproducible evidence |
+| [TLA+ differential validation](tla-differential-validation-design.md) | Profile-4 acceptance passed 2026-09-15; unsupported comparisons remain uncertified | Pinned reference tools, corpus comparison, reviewed differences, and reproducible evidence |
 | [Mixed-junction precedence correction](tla-junction-precedence-design.md) | JP0–JP4 completed 2026-09-13; precedence finding closed | Shared junction precedence, profile revision, corpus migration, and differential acceptance |
 
 The compiler consumes the frontend directly. The operational model protocol,
