@@ -136,7 +136,7 @@ def main : IO UInt32 := do
   let bin := ".lake/build/bin/mirror" ++ (if System.Platform.isWindows then ".exe" else "")
   -- Version inspection must exit successfully without entering a protocol session.
   let version ← IO.Process.output { cmd := bin, args := #["--version"] }
-  if version.exitCode != 0 || version.stdout != "Mirrors 0.0.1\n" || !version.stderr.isEmpty then
+  if version.exitCode != 0 || version.stdout != "Mirrors 0.0.2\n" || !version.stderr.isEmpty then
     IO.eprintln s!"smoke: --version failed (exit={version.exitCode}, stdout={version.stdout}, stderr={version.stderr})"
     return 1
   -- The standalone mode rejects extra arguments instead of ignoring them.

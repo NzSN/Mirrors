@@ -14,7 +14,7 @@
 
 | Mode | Command | Transport | Session kind |
 | ---- | ------- | --------- | ------------ |
-| version | `mirror --version` | stdout | prints `Mirrors 0.0.1` followed by a newline and exits successfully |
+| version | `mirror --version` | stdout | prints `Mirrors 0.0.2` followed by a newline and exits successfully |
 | stdio (default) | `mirror` | stdin/stdout, newline-delimited | **sync only** — one register flow per process |
 | TCP daemon | `mirror --serve <port> [--bind <addr>] [--jobs N]` | plain TCP, JSONL | **async** — one session per connection, concurrent |
 | mTLS daemon | `mirror --server <port> --tls --cert C --key K --ca A [--registry URL] [--jobs N] [--bind B] [--model-interface-allow-client FP[,FP...]] [--model-interface-descriptor-read]` | TLS 1.3, mutual auth, JSONL | **async** — one session per connection, concurrent |
