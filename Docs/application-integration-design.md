@@ -1,14 +1,20 @@
 # Application integration with less framework knowledge
 
-Status: **proposed design, 2026-09-16; not implemented or approved for
-implementation.** Interface names, commands and schema identifiers introduced
-here are proposals. This document authorizes no runtime change, new package
-publication or support claim.
+Status: **implementation authorized by the user, 2026-09-16; AIT-00 contracts
+accepted; AIT-05 partially implemented; runtime acceptance gates remain pending.**
+See the [task ledger](application-integration-tasks.md) for current implementation
+and acceptance evidence; proposed interfaces are not delivered until their gates pass.
+This work does not authorize package publication or imply a support claim.
 
 Baseline inspected: Mirrors `616f5a1`, MirrorECMA `008234d`, MirrorGate
 `67e70b9`. The [three-application validation program](application-validation-program.md)
 provides the evidence motivating this design. Its passing examples do not imply
 the proposed product interfaces already exist.
+
+The [implementation task breakdown](application-integration-tasks.md) assigns
+dependency-ordered work packages to `general-purpose-flash` and records their
+dispatch/acceptance state. Task preparation is not runtime implementation; the
+design's proposed features remain unimplemented until their gates pass.
 
 ## 1. Problem and intended outcome
 
