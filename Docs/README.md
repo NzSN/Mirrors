@@ -1,7 +1,7 @@
 # Mirrors documentation
 
-Current source inventory reviewed on 2026-09-08 at Mirrors `fe93fe4`,
-MirrorECMA `1d02dc0`, and MirrorGate `15608a0`. This index describes the
+Current application-integration inventory reviewed on 2026-09-17 at Mirrors
+`bc6eb7c`, MirrorECMA `9942248`, and MirrorGate `1388526`. This index describes the
 implemented interfaces and where to find their evidence; it does not certify
 an installed Windows service, a hosted CI run, or a published package.
 
@@ -9,10 +9,10 @@ an installed Windows service, a hosted CI run, or a published package.
 
 | Task | Read |
 | --- | --- |
-| Run MBT or LLM-assisted development with the Mirror-Framework | [Mirror-Framework usage guide](usage-of-mirror-framework.md) |
-| Test TypeScript application code | [MirrorECMA MBT user manual](mirrorecma-typescript-mbt-user-manual.md) |
-| Evaluate framework usability on real applications | [Three-application validation program](application-validation-program.md) |
 | Integrate an application with suites and generated adapters | [Role-oriented integration guide](application-integration-guide.md) |
+| Run MBT or LLM-assisted development with the Mirror Framework | [Mirror Framework usage guide](usage-of-mirror-framework.md) |
+| Test TypeScript application code | [Current MirrorECMA MBT tutorial](mirrorecma-typescript-mbt-user-manual.md) |
+| Evaluate framework usability on real applications | [Three-application validation program](application-validation-program.md) |
 | Review integration contracts | [Application integration design](application-integration-design.md) |
 | Plan integration implementation | [Application integration implementation plan](application-integration-implementation-plan.md) (current baseline, dependencies and acceptance gates) |
 | Inspect integration acceptance | [Execution record](application-integration-progress.md) (automated gates, actual restricted authors and fresh-agent onboarding) |

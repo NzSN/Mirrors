@@ -1231,9 +1231,11 @@ authenticate an arbitrary caller or artifact.
 
 The emitter also supplies `bind<Model>AsyncPublicPort`, which maps generated
 methods to stable public action/observation IDs through the trusted generic
-port proxy. MirrorECMA's experimental sandbox facade uses this compiler-owned
-mapping; handwritten runtime shims and adapters still invoke and observe the
-real implementation. See [client orchestration](../client-implementation-guide.md#13-shared-sandbox-orchestration-experimental-profile).
+port proxy. Compiler-owned suite bundles use the same mapping for Gate-owned
+`evaluateSuite`; handwritten runtime shims and adapters still invoke and observe
+the real implementation. See
+[application integration](../application-integration-guide.md) and
+[client orchestration](../client-implementation-guide.md#13-shared-sandbox-orchestration-design-profile).
 
 ### 13.9 `mirrorcpp-v1` profile
 

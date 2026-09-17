@@ -3,13 +3,14 @@
 Status: **implementation and local acceptance delivered, 2026-09-16–17, including
 fresh actual authors and an automated unfamiliar-evaluator onboarding study.**
 See the [execution record](application-integration-progress.md) for current
-implementation and acceptance evidence; interfaces are not delivered until their gates pass.
+implementation and acceptance evidence; delivery claims are limited to the gates
+recorded there.
 This work does not authorize package publication or imply a support claim.
 
 Baseline inspected: Mirrors `616f5a1`, MirrorECMA `008234d`, MirrorGate
 `67e70b9`. The [three-application validation program](application-validation-program.md)
-provides the evidence motivating this design. Its passing examples do not imply
-the proposed product interfaces already exist.
+provided the evidence motivating this design. The subsequently delivered
+interfaces and their gates are recorded separately in the execution record.
 
 The [implementation plan](application-integration-implementation-plan.md) assigns
 dependency-ordered work packages and acceptance gates. The earlier AIT labels
@@ -18,8 +19,9 @@ delivery. Task preparation alone is not runtime acceptance.
 
 ## 1. Problem and intended outcome
 
-An application integration currently repeats knowledge that belongs inside the
-framework: exact registry keys, generated export names, descriptor construction,
+Before this delivery, an application integration repeated knowledge that belongs
+inside the framework: exact registry keys, generated export names, descriptor
+construction,
 tool locations, binding lifetime, build mount conventions, report variants and
 receipt serialization. Shared example helpers reduce repetition inside that
 example directory, but are not supported installed-library interfaces.
@@ -36,14 +38,14 @@ trace replay, and the existing Linux/Bubblewrap Gate profile. A local suite must
 remain usable without Gate packages. Fresh model generation is a separate
 explicit operation. The implementation must preserve existing low-level callers.
 
-Suite definitions, replay plans and acceptance requirements are proposed
-first-class MirrorECMA concepts. Applications declare the experiment; MirrorECMA
+Suite definitions, replay plans and acceptance requirements are first-class
+MirrorECMA concepts. Applications declare the experiment; MirrorECMA
 supplies its execution and acceptance semantics through the existing replay
 implementation. Section 7 defines these concepts and their ordinary data shapes.
 
-### 1.1 Current facts versus missing interfaces
+### 1.1 Baseline gaps and delivered owners
 
-| Observed current implementation | Remaining application work | Proposed owner |
+| Observed baseline | Former application work | Delivered owner |
 | --- | --- | --- |
 | Mirrors emits typed bindings, semantic locks and public manifests | Assemble generated exports and descriptor into a runnable model handle | Mirrors compiler bundle emitter |
 | MirrorECMA has exact registries and compiled async replay | Repeat registration keys, factory adaptation and report handling | MirrorECMA suite module |
@@ -82,7 +84,7 @@ Out of scope: a new model language, automatic sealing of scaffold proposals,
 complete TLA+ support, new OS isolation backends, aggregate cgroup guarantees,
 distributed session adoption, durable supervisor recovery, automatic repair
 feedback, unrestricted dependency installation and package publication itself.
-The proposed interfaces do not broaden the Lean proof claim.
+These interfaces do not broaden the Lean proof claim.
 
 ## 3. Ownership and module interfaces
 
@@ -143,7 +145,7 @@ introducing every protocol before the first replay.
 
 ### 5.1 Generation and contents
 
-Add a proposed `model_interface_gen bundle` publication operation. Its first
+The delivered `model_interface_gen bundle` publication operation's first
 profile composes the existing `mirrorecma-async-v1` output with companion files;
 it is not a replacement target or a new registry target-profile identity.
 
@@ -268,8 +270,9 @@ MirrorECMA provides the reusable evaluation mechanics.
 
 ### 7.1 Default application interface and file origins
 
-All interfaces in this example are proposed. Project tools load the evaluator's
-configuration; the application does not write a `trusted-project.js` helper.
+These interfaces are delivered for the supported Node path. Project tools load
+the evaluator's configuration; the application does not write a
+`trusted-project.js` helper.
 
 ```ts
 import { defineSuite, runSuite } from "mirrorecma";
@@ -305,11 +308,11 @@ import submitted code into this process.
 
 | File or export | Who produces it | Who completes or selects its contents |
 | --- | --- | --- |
-| `mirror.project.json` | Proposed `mirrorecma init` creates a declarative template | Evaluator selects model/run configuration, corpus, acceptance and approved toolchain |
-| `loadProject` | Proposed installed MirrorECMA project-tools export | Framework reads/validates config and resolves approved tools; callers do not implement a loader |
-| `Transfer.suite.ts` | Proposed Mirrors compiler bundle operation | Compiler derives the model handle and bridge from reviewed inputs |
+| `mirror.project.json` | `mirrorecma init` creates a declarative template | Evaluator selects model/run configuration, corpus, acceptance and approved toolchain |
+| `loadProject` | Installed MirrorECMA project-tools export | Framework reads/validates config and resolves approved tools; callers do not implement a loader |
+| `Transfer.suite.ts` | Mirrors compiler bundle operation | Compiler derives the model handle and bridge from reviewed inputs |
 | `Transfer.suite.js` | Application build compiles the generated TypeScript companion | No handwritten changes to generated output |
-| `transfer-adapter.ts` or `.mjs` | Proposed Gate adapter kit seeds a typed skeleton | Application author implements actual operations, observations and domain cleanup |
+| `transfer-adapter.ts` or `.mjs` | Gate adapter kit seeds a typed skeleton | Application author implements actual operations, observations and domain cleanup |
 | `transfer-adapter.js` | Application TypeScript build, when using `.ts` | Emitted application code; a JavaScript kit instead uses its `.mjs` entry directly |
 
 The example uses a local TypeScript application build. Gate's first standard
@@ -537,7 +540,7 @@ to the runner; it must not also invoke `port.dispose` and release the same
 resource twice. Gate's existing worker shim separately retains its at-most-once
 adapter-disposal rule.
 
-A proposed `runSuiteWithFactory(suite, context, factory)` supports existing generic
+`runSuiteWithFactory(suite, context, factory)` supports existing generic
 compiled `AsyncAdapterFactory` providers. Local adapters and Gate's prepared
 provider already vary at this seam. It derives the same exact selection and
 returns the same normalized suite result, retaining the compiled report for
@@ -609,7 +612,7 @@ not a transferable session token. The suite does not call arbitrary provider
 
 ### 9.1 Standard Node ESM profile
 
-Introduce a proposed operator-selected `node-esm/v1` preparation profile. It
+The operator-selected `node-esm/v1` preparation profile
 copies an explicit approved source selection into an immutable artifact and
 uses an explicit entry point such as `adapter.mjs`. It requires no user build
 script and performs no dependency installation, package lifecycle hook, adapter
@@ -650,7 +653,7 @@ the new descriptor capability.
 
 ### 9.3 Suite evaluation convenience
 
-Add a proposed Gate-owned `evaluateSuite` convenience interface over the existing
+The Gate-owned `evaluateSuite` convenience interface is built over the existing
 `evaluateImplementation` workflow. It accepts a generic suite, operator-approved
 environment reference, submission reference, optional approved author request,
 and receipt options. It derives the descriptor/binding adapter from the suite
@@ -675,13 +678,13 @@ evaluator modules, compiler paths, build commands or disclosure settings.
 Add declarative trusted `mirror.project.json` input for the default workflow.
 It records project schema, model source/contract/evidence references, target,
 generated directories, replay configuration/corpora, acceptance requirements,
-suite ID, execution timeouts and a toolchain lock reference. The proposed
+suite ID, execution timeouts and a toolchain lock reference. The installed
 `loadProject` interface in section 7.1 reads this declaration; no application-owned
 `trusted-project.js` is required. Gate environment references are consumed by Gate tooling, not
 MirrorECMA core. The file is evaluator configuration and is not exported to a
 restricted author.
 
-Proposed installed commands, owned by MirrorECMA development tooling:
+Installed commands, owned by MirrorECMA development tooling:
 
 | Command | Effect |
 | --- | --- |
@@ -819,8 +822,9 @@ mechanics through the same interfaces as callers.
 
 ## 13. Delivery slices and acceptance
 
-These are proposed dependency-ordered slices for a later implementation plan,
-not instructions to execute changes now.
+These dependency-ordered slices are the implemented delivery decomposition.
+Their evidence and remaining publication boundary are recorded in the
+[execution record](application-integration-progress.md).
 
 | Slice | Owner | Dependencies | Required evidence |
 | --- | --- | --- | --- |
@@ -882,9 +886,9 @@ checks, relevant interop and actual Bubblewrap tests for the supported toolchain
 Skipped or unavailable gates remain distinct from passes. Documentation-only
 creation of this design requires link/format validation, not those runtime gates.
 
-## 14. Decisions proposed for review and follow-ups
+## 14. Adopted decisions and follow-ups
 
-The proposed decisions are: compiled async as the first ergonomic path; a
+The adopted decisions are: compiled async as the first ergonomic path; a
 compiler-owned companion bundle with an opt-in native adapter bridge; a
 Gate-owned public kit and Node ESM profile; first-class Gate-free MirrorECMA
 suite definitions, replay plans, acceptance requirements and their runner;
@@ -897,10 +901,11 @@ and includes G7-style recursive collection conformance. Generic repair lineage
 (G3), terminal cleanup retrieval (G4) and additional public mismatch disclosure
 (G6) retain their own designs and are not implied by this delivery.
 
-Before implementation, resolve the exact hosting capability/schema extension,
-compiler bundle command grammar and exported symbol spelling with the owning
-repositories, then derive concrete tasks from these slices. Those naming/schema
-reviews must preserve the lifetime, compatibility and disclosure decisions above.
+Implementation resolved the hosting capability as
+`hosting.public-environment-v1`, the build profile as `node-esm/v1`, the compiler
+operations as `bundle` / `check-bundle`, and the application entry points as
+`defineSuite`, `runSuite`, and Gate-owned `evaluateSuite`. Future naming or schema
+changes must preserve the lifetime, compatibility, and disclosure decisions above.
 
 Related authorities:
 

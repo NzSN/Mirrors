@@ -1,565 +1,341 @@
 # Model-based testing of TypeScript with MirrorECMA
 
-This manual shows how to test real TypeScript code against a TLA+ model using
-MirrorECMA and Mirrors. Start with a working Counter example, then put the same
-test structure into an application. Commands use Bash on Linux or WSL.
+This tutorial uses the current application-integration model: a compiler-owned
+asynchronous suite bundle, an immutable MirrorECMA suite, a checked trace corpus,
+and a small native adapter that calls the real TypeScript application.
 
-You need a behavioral model and an adapter that calls your implementation.
-MirrorECMA does not infer a specification from TypeScript source code.
-The main walkthrough uses the synchronous generated `mirrorecma-v1` profile.
-See [asynchronous code and isolation](#6-asynchronous-code-and-isolation) for
-promise-returning operations and MirrorGate.
+The default local path needs MirrorECMA and a compatible Mirrors compiler/server.
+MirrorGate is optional and adds restricted authoring, execution, and physical
+cleanup. New integrations should not assemble registry keys, decode descriptors,
+or call the former Gate-aware MirrorECMA facade.
 
-- [Understand the test](#1-what-the-test-does)
-- [Run the existing example](#2-run-a-known-working-test)
-- [Integrate an application](#3-put-the-test-in-an-application)
-- [Adapt your model and port](#4-adapt-the-model-and-port-to-your-own-application)
-- [Generate fresh traces](#5-generate-fresh-traces-with-apalache)
-- [Use async operations or isolation](#6-asynchronous-code-and-isolation)
-- [Add CI checks](#7-keep-the-test-useful-in-ci)
-- [Troubleshoot failures](#8-troubleshooting)
+For responsibilities and trust boundaries, read the
+[role-oriented integration guide](application-integration-guide.md). This page is
+the runnable TypeScript walkthrough.
 
-## 1. What the test does
+## 1. What the test establishes
 
-**Model-based testing (MBT)** uses a model to choose operation sequences and
-expected results. The **system under test (SUT)** is your actual application
-code. A **trace** records a sequence of model actions, their inputs, and the
-expected state after each action.
+A checked trace supplies model operations and expected states. The generated
+suite model translates stable public operations into the Mirrors model protocol.
+Your adapter applies those operations to the actual system under test (SUT) and
+observes its actual state. Mirrors decides whether the observation matches.
 
 ```mermaid
 flowchart LR
-    Model[TLA+ model] --> Apalache[Apalache]
-    Apalache --> Trace[ITF trace]
-    Trace --> Mirrors[Mirrors: replay and compare]
-    Mirrors --> Client[MirrorECMA and generated binding]
-    Client --> Adapter[Your port adapter]
-    Adapter --> SUT[Your TypeScript code]
-    SUT --> Observations[Actual observations]
-    Observations --> Mirrors
+  Trace["Checked ITF corpus"] --> Suite["MirrorECMA suite"]
+  Model["Generated suite model"] --> Suite
+  Suite --> Adapter["Native adapter"]
+  Adapter --> SUT["Actual TypeScript application"]
+  SUT --> Observation["Actual observation"]
+  Observation --> Suite
+  Suite <-->|"model protocol"| Mirrors
 ```
 
-The generated binding translates model inputs into typed calls. Your adapter
-maps those calls to application operations and reads actual application state.
-Mirrors compares that observation with the expected trace state. Replay stops
-on a mismatch.
+A passing run establishes agreement for the selected traces and observations,
+required matched coverage, and applicable cleanup. It is not an exhaustive proof.
+Keep a deliberate production-code mutation as a control: the same suite and
+observer must reject it at the expected model state.
 
-| You maintain | Purpose |
-| --- | --- |
-| TypeScript implementation | The production behavior being tested |
-| TLA+ model | Allowed actions and expected state transitions |
-| Model-interface contract | Action IDs, input projections, and observations |
-| Typed evidence and regression traces | Structural type declarations and selected test sequences |
-| Port adapter and test runner | Calls into your code, observations, configuration, and cleanup |
+## 2. Prepare installed tools
 
-The compiler maintains the interface lock, typed port, generated binding, and
-generated-file ownership manifest. Do not edit the generated TypeScript.
+Prepare these before the application run:
 
-A passing replay establishes agreement on the exercised traces. It does not
-prove that the TypeScript implementation is correct for every possible input.
-In particular, an adapter must not copy expected model state into its result:
-that would test the adapter's ability to repeat the expected answer.
+- Node.js and an ESM TypeScript application;
+- compatible installed `mirrorecma` package and CLI;
+- `model_interface_gen` with `bundle-v1`, `check-bundle-v1`, and `preflight-v1`;
+- compatible `mirror` with model-interface and checked-replay support; and
+- TypeScript for the application's explicit build step.
 
-## 2. Run a known working test
+An operator may prepare these from coordinated source checkouts, but normal
+generation and replay consume pinned installed artifacts. They do not search
+sibling repositories, rebuild framework packages, or install dependencies.
+Checked corpus replay needs no Apalache or JDK.
 
-### Prepare the tools
+Record actual SHA-256 values and package manifests in a toolchain lock. Do not
+copy placeholder hashes into a real project.
 
-Use matching Mirrors and MirrorECMA checkouts. Install Node.js, pnpm, and the
-[Mirrors build prerequisites](../README.md#requirements). Apalache is needed
-for generating fresh traces; the supplied Counter replay runs without it.
-MirrorGate is not required for this local synchronous walkthrough.
+## 3. Initialize the integration
 
-Set these paths for your machine, then keep the variables for later sections:
+From the application root:
 
-```bash
-export MIRRORS_ROOT=/absolute/path/to/Mirrors
-export MIRRORECMA_ROOT=/absolute/path/to/MirrorECMA
-export MIRROR_BIN="$MIRRORS_ROOT/.lake/build/bin/mirror"
-export MODEL_INTERFACE_GEN="$MIRRORS_ROOT/.lake/build/bin/model_interface_gen"
-
-(cd "$MIRRORS_ROOT" && lake build mirror model_interface_gen)
-cd "$MIRRORECMA_ROOT"
-pnpm install --frozen-lockfile
-pnpm run build
-pnpm run check:examples
+```sh
+mirrorecma init ./mbt
 ```
 
-`MIRROR_BIN` must identify the current **Lean Mirrors** executable with
-model-interface negotiation support. A separately installed `ModelMirrors`
-may be an older implementation. For a current build, `--version` prints the
-declared product version; also record the checkout commits. See
-[versioning](versioning.md) for the `v0.0.1` tags, the later addition of
-`--version`, and the distinction between Git tags and package manifest values.
-This manual uses a local MirrorECMA checkout and does not assume an npm release
-named `0.0.1` exists.
+The command creates `mirror.project.json`, `mirror.toolchain.json`, and
+`MIRROR-SETUP.md` without overwriting existing files. It does not create an
+adapter and cannot invent or approve a behavioral model.
 
-### Understand Counter's behavior
-
-The [tutorial model](https://github.com/NzSN/MirrorECMA/blob/main/examples/generated-counter/specs/Counter.tla)
-starts `count` at zero and permits increments by 2 or 3. Its implementation
-contains ordinary TypeScript, with no MirrorECMA dependency:
-
-```ts
-export class Counter {
-  count = 0n;
-  reset(): void { this.count = 0n; }
-  increment(stride: bigint): void { this.count += stride; }
-}
-```
-
-The generated port and handwritten adapter connect the two descriptions:
-
-| Model / contract | Generated method | Implementation |
-| --- | --- | --- |
-| `init` / `Initialize` | `initialize()` | `counter.reset()` |
-| `tick` / `Tick`, input `parameters.stride` | `tick({ stride })` | `counter.increment(stride)` |
-| `count` / `Count` | `observe()` | `{ count: counter.count }` |
-
-`action_taken` selects the operation. `parameters` contains the stimulus, so
-the runner sets `paramVars: "parameters"`; the implementation reports `count`,
-not the input record. TLA+ `Int` values become native TypeScript `bigint`.
-The generated binding handles ITF's `{"#bigint":"2"}` wire representation.
-
-### Replay and inspect a failure
-
-Run from the **MirrorECMA root**:
-
-```bash
-pnpm run example:counter
-```
-
-After compilation, the output is:
+Arrange reviewed inputs, for example:
 
 ```text
-Counter replay passed.
-Action coverage: {"Initialize":1,"Tick":2}
+model/
+  Counter.tla
+  Counter.mirror-interface.json
+traces/
+  counter.itf.json
+src/
+  counter.ts
+mbt/
+  mirror.project.json
+  mirror.toolchain.json
+  counter-adapter.mjs
+.mirrors/
+  Counter.mirror-interface.lock.json
+  evaluator/                       # compiler-owned bundle
 ```
 
-The supplied trace performs reset, increment by 2, then increment by 3. The
-observed values must be 0, 2, and 5. Initializers reset the implementation at
-the start of each trace; do not let state from a previous trace leak into it.
+The evidence and corpus must carry the structural information required by the
+compiler. A scaffold output is only a proposal; review and seal operation IDs,
+input projections, observations, and model identity before generation.
 
-Now run the deliberately faulty implementation:
+## 4. Declare the Counter experiment
 
-```bash
-pnpm run example:counter:broken
-```
-
-This demonstration is expected to exit **1**:
-
-```text
-step mismatch on action "tick" with param "[object Object]": at count: expected 2, got 1
-```
-
-The faulty operation adds `stride - 1n`. The adapter still observes the actual
-Counter, so the first increment exposes the defect. A missing binary or model
-also causes an error, but is not evidence of detecting an implementation bug.
-
-Run the tutorial's automated positive and negative checks with:
-
-```bash
-pnpm run smoke:generated-counter
-```
-
-The [existing Counter tutorial](https://github.com/NzSN/MirrorECMA/blob/main/examples/generated-counter/README.md)
-explains its checked-in files and compiler freshness checks in more detail.
-
-## 3. Put the test in an application
-
-This section builds a standalone ESM TypeScript example outside either
-repository. For an existing application, retain its package settings and
-production source; add the `mbt/` files and adapt the imports/configuration.
-Use this sample Counter first to verify the integration, then replace the
-adapter's calls with your application's operations.
-
-### Create the project and copy model inputs
-
-Create a **new directory** and set `MBT_APP` to its absolute path. The following
-commands write a starter `package.json`; do not run them over an existing one.
-
-```bash
-export MBT_APP=/absolute/path/to/new-counter-mbt
-mkdir "$MBT_APP"
-cd "$MBT_APP"
-mkdir -p src specs mbt
-cat > package.json <<'JSON'
-{
-  "name": "counter-mbt-example",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build:mbt": "tsc -p tsconfig.mbt.json",
-    "test:mbt": "pnpm run build:mbt && node dist-mbt/mbt/run.js"
-  }
-}
-JSON
-
-pnpm add --config.auto-install-peers=false "$MIRRORECMA_ROOT"
-pnpm add -D typescript@5.9.3 @types/node@22.19.19
-cp "$MIRRORECMA_ROOT/examples/generated-counter/specs/Counter.tla" specs/Counter.tla
-cp "$MIRRORECMA_ROOT/test/fixtures/model-interface/counter/Counter.mirror-interface.json" mbt/
-cp "$MIRRORECMA_ROOT/test/fixtures/model-interface/counter/counter.itf.json" mbt/
-```
-
-The TypeScript/type-declaration versions above match the tutorial dependency
-installation used to verify this guide. Commit your own lockfile. The local
-MirrorECMA dependency uses its built `dist/` entrypoint, so complete its build
-in section 2 first. A checkout dependency is convenient locally; CI must
-prepare that checkout at an explicit compatible commit and build it too.
-
-The copied ITF file provides explicit `#meta.varTypes` declarations as well as
-the three regression states. For a different model, supply its own structural
-evidence; example values alone do not establish types.
-
-### Resolve and generate the interface
-
-Run from the **application root**:
-
-```bash
-"$MODEL_INTERFACE_GEN" resolve \
-  --spec "$PWD/specs/Counter.tla" \
-  --contract "$PWD/mbt/Counter.mirror-interface.json" \
-  --evidence "$PWD/mbt/counter.itf.json" \
-  --param-var parameters \
-  --lock "$PWD/mbt/Counter.mirror-interface.lock.json"
-
-"$MODEL_INTERFACE_GEN" generate \
-  --lock "$PWD/mbt/Counter.mirror-interface.lock.json" \
-  --target mirrorecma-v1 \
-  --out "$PWD/mbt/generated"
-```
-
-The resulting directory is compiler-owned. Its generated Counter interface is:
-
-```ts
-export interface CounterPort {
-  initialize(): void;
-  tick(input: TickInput): void;
-  observe(): CounterObservation;
-}
-```
-
-The complete generated file defines `TickInput`, `CounterObservation`,
-`bindCounter`, and the metadata used for negotiation.
-
-### Add the implementation and adapter
-
-Save the Counter class from section 2 as **`src/counter.ts`**. Save the following
-as **`mbt/adapter.ts`**. This imports the application implementation; it does
-not implement a second state machine inside the test.
-
-```ts
-import {
-  CompiledAdapterRegistry,
-  MIRRORECMA_TARGET_PROFILE,
-  STATE_COMPUTER_CONTRACT_VERSION,
-  semanticDigestFromHex,
-  type CompiledAdapterSelection,
-  type LocalBinding,
-} from "mirrorecma";
-import {
-  bindCounter,
-  CounterModelInterface,
-  CounterSemanticDigest,
-  type CounterBinding,
-  type CounterPort,
-} from "./generated/CounterMirror.generated.js";
-import { Counter } from "../src/counter.js";
-
-export function createRun() {
-  let binding: CounterBinding | undefined;
-  const semanticDigest = semanticDigestFromHex(CounterSemanticDigest);
-  const adapterId = "my-counter/v1";
-  const key = {
-    semanticDigest,
-    adapterId,
-    targetProfile: MIRRORECMA_TARGET_PROFILE,
-    stateComputerContractVersion: STATE_COMPUTER_CONTRACT_VERSION,
-  };
-  const registry = new CompiledAdapterRegistry([{
-    key,
-    factory: (config): LocalBinding => {
-      const counter = new Counter();
-      const port: CounterPort = {
-        initialize: () => counter.reset(),
-        tick: ({ stride }) => counter.increment(stride),
-        observe: () => ({ count: counter.count }),
-      };
-      const generated = bindCounter(port, config);
-      binding = generated;
-      return {
-        semanticDigest,
-        computer: generated.computer,
-        assertCompatibleConfig: (candidate) => {
-          if (candidate.paramVars !== "parameters") {
-            throw new Error("Counter requires paramVars=parameters");
-          }
-        },
-        coverage: generated.coverage,
-        dispose: () => {}, // Counter owns no external resources.
-      };
-    },
-  }]);
-  const selection: CompiledAdapterSelection = {
-    mode: "compiled",
-    metadata: CounterModelInterface,
-    ...key,
-    registry,
-    policy: "require",
-  };
-  return {
-    selection,
-    finish() {
-      if (!binding) throw new Error("No negotiated binding was created");
-      binding.assertAllActionsCovered();
-      return binding.coverage();
-    },
-  };
-}
-```
-
-The factory creates the Counter only after Mirrors validates the generated
-interface and returns a matching negotiation result. Keep SUT construction
-inside that factory, and avoid side effects at module-import time. With
-`policy: "require"`, failed negotiation does not continue with an unverified
-adapter. `adapterId` identifies your local mapping; the generated digest
-identifies the model interface. They serve different purposes.
-
-For resources such as temporary databases or child processes, implement
-`dispose()` to release them. The runner owns disposal after creating a binding.
-If factory construction fails partway through, the factory must clean up any
-resources it acquired before returning a binding.
-
-### Add the runner and compiler configuration
-
-Save as **`mbt/run.ts`**:
-
-```ts
-import { resolve } from "node:path";
-import { runClientWithTracesNegotiated, type ApalacheConfig } from "mirrorecma";
-import { createRun } from "./adapter.js";
-
-async function main(): Promise<void> {
-  const binary = process.env.MIRROR_BIN;
-  if (!binary) throw new Error("Set MIRROR_BIN to the Mirrors executable");
-  const config: ApalacheConfig = {
-    specPath: resolve("specs/Counter.tla"),
-    invariant: "TraceComplete",
-    lengthBound: 6,
-    constInit: "CInit",
-    paramVars: "parameters",
-  };
-  const run = createRun();
-  await runClientWithTracesNegotiated(
-    resolve(binary), config, [resolve("mbt/counter.itf.json")], run.selection,
-  );
-  const coverage = run.finish();
-  console.log("Counter replay passed.");
-  console.log(`Action coverage: ${JSON.stringify(coverage)}`);
-}
-
-main().catch((error: unknown) => {
-  console.error(error instanceof Error ? error.message : String(error));
-  process.exitCode = 1;
-});
-```
-
-Use this **`tsconfig.mbt.json`** for the standalone project:
+Edit `mbt/mirror.project.json`:
 
 ```json
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "rootDir": ".",
-    "outDir": "dist-mbt",
-    "strict": true,
-    "skipLibCheck": true,
-    "types": ["node"]
+  "schema": "mirrorecma.project/v1",
+  "suiteId": "counter/v1",
+  "model": {
+    "source": "../model/Counter.tla",
+    "contract": "../model/Counter.mirror-interface.json",
+    "evidence": "../traces/counter.itf.json",
+    "lock": "../.mirrors/Counter.mirror-interface.lock.json",
+    "target": "mirrorecma-async-v1",
+    "generatedDirectory": "../.mirrors/evaluator",
+    "module": "../.mirrors/evaluator/Counter.suite.js",
+    "export": "CounterModel"
   },
-  "include": ["src/**/*.ts", "mbt/**/*.ts"]
+  "implementation": {
+    "module": "./counter-adapter.mjs",
+    "export": "createAdapter"
+  },
+  "replay": {
+    "kind": "corpus",
+    "config": {
+      "specPath": "../model/Counter.tla",
+      "initPredicate": "Init",
+      "nextPredicate": "Next",
+      "invariant": "TraceComplete",
+      "lengthBound": 6,
+      "paramVars": "parameters"
+    },
+    "traces": ["../traces/counter.itf.json"]
+  },
+  "acceptance": {
+    "requiredActions": ["Tick"],
+    "requiredPairs": [["Tick", "Tick"]]
+  },
+  "execution": {
+    "mirror": { "kind": "local" },
+    "timeouts": {
+      "registrationMs": 60000,
+      "actionMs": 10000,
+      "receiveMs": 60000,
+      "cleanupMs": 10000
+    }
+  },
+  "toolchainLock": "./mirror.toolchain.json"
 }
 ```
 
-Relative TypeScript imports use `.js` because the emitted ESM executes in
-Node. Add `node_modules/` and `dist-mbt/` to your application's `.gitignore`.
-Keep the generated source, ownership manifest, lock, model, contract, and
-regression traces in version control.
+Paths resolve against the project file. Adjust predicates and bounds to the
+actual model; they are not inferred. Trace order and repetition are significant.
+Repetition can verify reset behavior but does not establish distinct behavior.
 
-Run from the **application root**:
+In `mirror.toolchain.json`, pin compiler/server bytes and the installed
+MirrorECMA manifest. The complete schema and remote-server form are in
+[MirrorECMA project tools](../../MirrorECMA/docs/project-tools.md). Explicit
+`--compiler` or `--server` overrides must still match the selected pin.
 
-```bash
-pnpm run test:mbt
+## 5. Generate and compile the suite bundle
+
+```sh
+mirrorecma generate --project ./mbt/mirror.project.json
 ```
 
-Expect the same passing output and action counts as section 2. To confirm the
-test reaches your source, temporarily change `Counter.increment` to add
-`stride - 1n`, rerun, and check for the expected count mismatch. Restore the
-correct implementation afterward.
+Generation resolves the sealed contract and publishes the compiler-owned bundle.
+It does not generate a trace or implement Counter. The bundle includes the
+asynchronous binding, `Counter.suite.ts`, private descriptor, sanitized public
+manifest, provenance, and owned-file hashes.
 
-## 4. Adapt the model and port to your own application
+Compile the generated TypeScript during application preparation:
 
-Choose a small stateful feature first: a queue, document editor, cache, or
-transactional store. List its operations, legal inputs, and observable state.
-For example, a queue model might declare `Enqueue(item)`, `Dequeue()`, and a
-`contents` observation. The adapter must call the real queue and read its
-contents, including relevant order, errors, or return values in the model's
-observation when they matter to the requirement.
-
-1. Write the model's `Init` and `Next` behavior. Give each executable action a
-   wire label in `action_taken`, and place operation inputs in the declared
-   parameter variable. The model declares the expected behavior independently
-   of the implementation.
-2. Write a companion contract listing every initializer, action, input, and
-   observation. The Counter contract projects `Stride` from
-   `stepParameters.parameters.stride` and observes the whole `count` variable.
-   Use your model's logical source identity and stable contract IDs.
-3. Supply typed evidence for your model. The current compiler reads typed ITF
-   metadata, including `vars`, `param_vars`, and `#meta.varTypes`; sample values
-   are not a substitute for those declarations. See the
-   [compiler input and evidence rules](model-interface-compiler/design.md).
-4. Resolve the lock and generate the port for that model. Implement the emitted
-   interface in a handwritten adapter outside the generated directory.
-5. Configure `paramVars` consistently in compiler commands and the runner.
-   Observations must cover the complete state Mirrors compares. Do not omit a
-   model variable merely because it is hard to read from your implementation;
-   decide whether to expose a test observation or change the abstraction.
-6. Add regression traces for boundary values, operation order, and expected
-   rejection paths. Check that initializers reset all relevant SUT state.
-   A rejection that is valid application behavior should be modeled and
-   observed; an unexpected thrown exception should fail the test.
-
-If production code uses `number`, convert to or from `bigint` deliberately and
-check that values fit its supported range. Do not silently round a model
-integer. Observers should report actual state without changing it. When
-abstracting an implementation state, document the mapping and apply it
-consistently; do not use the expected trace to decide the reported result.
-
-## 5. Generate fresh traces with Apalache
-
-The checked-in Counter trace is a deterministic regression test. To explore
-fresh Counter traces, run from the **MirrorECMA root**:
-
-```bash
-cd "$MIRRORECMA_ROOT"
-APALACHE_MC=/absolute/path/to/apalache-mc pnpm run example:counter:live
-APALACHE_MC=/absolute/path/to/apalache-mc pnpm run smoke:generated-counter --live
+```sh
+./node_modules/.bin/tsc .mirrors/evaluator/Counter.suite.ts \
+  --target ES2022 --module NodeNext --moduleResolution NodeNext \
+  --strict --skipLibCheck --noEmitOnError
 ```
 
-The live runner uses `runClientNegotiated`, sends the source closure with
-`specFromFiles(model)`, and requests `{ numTraces: 1, view: "View" }`.
-The [complete runner](https://github.com/NzSN/MirrorECMA/blob/main/examples/generated-counter/run.ts)
-shows both live and replay paths with input/tool checks. Use its live branch
-when extending the application runner from section 3.
+An existing `tsconfig` may own this step instead. Keep the model, contract,
+evidence, corpus, lock, bundle, ownership manifests, project file, and toolchain
+lock under version control. Never hand-edit generated files.
 
-Counter's `TraceComplete == count < 12` is intentionally a trace-producing
-invariant: Apalache finds a violation and returns the path reaching it. This
-does not mean the implementation failed. Mirrors subsequently checks the
-implementation along that path. Do not copy this invariant into a different
-application without choosing what behavior its traces should exercise.
+## 6. Implement the real Counter adapter
 
-Choose bounds and inputs to cover the behavior of interest. More requested
-traces do not guarantee every action or state is reached. Preserve useful
-typed ITF traces as regression inputs, and rerun them after implementation
-changes. Files passed to replay must be accessible on the Mirrors host; local
-stdio keeps the client and mirror on the same filesystem.
+Assume the application contains:
 
-## 6. Asynchronous code and isolation
-
-The synchronous `CounterPort` cannot safely drive asynchronous operations.
-Do not start an unawaited promise from a synchronous handler and immediately
-observe state. Use the distinct `mirrorecma-async-v1` generated profile for
-promise-returning ports, with `AsyncCompiledAdapterRegistry` and the report
-runners `runClientWithTracesNegotiatedWithReport` or
-`runClientNegotiatedWithReport`. Read the
-[async generated-interface contract](generated-model-interface-spec.md)
-and [public MirrorECMA exports](https://github.com/NzSN/MirrorECMA/blob/main/src/index.ts)
-before adapting the synchronous sample. On success, these runners return a
-`ReplayReport` with `status: "completed"`, accepted trace/step counts, and
-action coverage. Mismatches reject with `ReplayMismatchError`; propagate
-failures to the test framework or a nonzero process exit. Use the report to
-enforce your coverage requirements.
-
-Mirrors' asynchronous **server jobs** are a separate concern: they schedule
-model-checking work and do not turn a synchronous application port into an
-asynchronous one.
-
-For code that needs restricted filesystem/process access or evaluation without
-access to expected states, use MirrorECMA's experimental `evaluateSandboxed`
-integration with MirrorGate. It requires an approved Gate policy, prepared
-submission, and supported runtime. The client manages the shared controller
-through the public control SDK. Follow the
-[sandboxed Counter example](https://github.com/NzSN/MirrorECMA/blob/main/examples/sandbox-counter/README.md)
-and [Gate compatibility guide](https://github.com/NzSN/MirrorGate/blob/main/docs/compatibility.md).
-The ordinary in-process adapter in this manual provides no sandbox isolation.
-
-## 7. Keep the test useful in CI
-
-For the application from section 3, run these commands from its root with the
-same compiler and mirror paths used during generation:
-
-```bash
-"$MODEL_INTERFACE_GEN" check \
-  --spec "$PWD/specs/Counter.tla" \
-  --contract "$PWD/mbt/Counter.mirror-interface.json" \
-  --evidence "$PWD/mbt/counter.itf.json" \
-  --param-var parameters \
-  --lock "$PWD/mbt/Counter.mirror-interface.lock.json" \
-  --target mirrorecma-v1 \
-  --out "$PWD/mbt/generated"
-
-"$MODEL_INTERFACE_GEN" preflight \
-  --lock "$PWD/mbt/Counter.mirror-interface.lock.json" \
-  --trace "$PWD/mbt/counter.itf.json" \
-  --require-all-actions
-
-pnpm run test:mbt
+```ts
+export class Counter {
+  #count = 0n;
+  reset(): void { this.#count = 0n; }
+  increment(stride: bigint): void { this.#count += stride; }
+  get count(): bigint { return this.#count; }
+}
 ```
 
-`check` is read-only and rejects stale locks/generated output. Regenerate
-intentionally during development, review the changes, and commit them; do not
-silently repair stale artifacts inside CI. `preflight` checks trace structure
-and declared-action coverage before execution. Runtime binding coverage counts
-handlers actually invoked. Requiring all actions in one trace is suitable for
-this Counter; applications with mutually exclusive actions need a deliberately
-designed multi-trace coverage check. Action coverage is not state-space coverage.
+Compile application TypeScript through its normal build. Then implement
+`mbt/counter-adapter.mjs` against the emitted module:
 
-Prepare dependencies with the committed lockfile and pin the companion
-checkout commits. Keep deterministic replay as a regular gate and make live
-Apalache checks an explicit additional tier. Preserve the failing trace,
-configuration, mismatch diagnostic, model/contract lock, and tool revisions
-when a test fails. For release validation of Mirrors itself, run `lake test`
-and the [cross-language matrix](../tools/interop/INTEROP.md).
+```js
+import { Counter } from "../dist/counter.js";
 
-## 8. Troubleshooting
+export async function createAdapter() {
+  const counter = new Counter();
+  return {
+    actions: {
+      Initialize: async () => counter.reset(),
+      Tick: async ({ Stride }) => counter.increment(Stride),
+    },
+    observe: async () => ({ Count: counter.count }),
+  };
+}
+```
+
+`Initialize`, `Tick`, `Stride`, and `Count` are stable IDs from this example.
+Use the names emitted for your model. Integers are `bigint`; use native `Set`
+and string-key `Map` for declared collections. Generated conversion validates
+complete inputs before an action and complete observations before reporting.
+
+Actions must await real effects and complete with `undefined`. The observer must
+read the real application. Do not duplicate the model or retain expected state
+inside the adapter.
+
+For staged resources, accept `context`, call `context.deferCleanup` immediately
+after each acquisition, and return one final `dispose` for transferred ownership.
+
+## 7. Check and replay
+
+```sh
+mirrorecma doctor --project ./mbt/mirror.project.json
+mirrorecma check --project ./mbt/mirror.project.json
+mirrorecma replay --project ./mbt/mirror.project.json
+```
+
+`check` verifies inputs, lock, bundle, provenance, and corpus without repair.
+`replay` loads the trusted suite model, negotiates with Mirrors, and only then
+imports and invokes the adapter factory.
+
+Success requires matched conformance, met acceptance, and successful cleanup. A
+matching corpus without `Tick -> Tick` fails with `coverage_unmet`; it is not a
+model mismatch.
+
+Confirm the test reaches production code: temporarily change `increment` to add
+`stride - 1n`, rebuild only the application, and replay the unchanged project.
+Expect a genuine mismatch at the first affected state. Restore the implementation
+and verify the pass. Do not change the observer or model to fit the defect.
+
+CLI exits are 0 for full success, 1 for genuine mismatch with successful cleanup,
+and 2 for configuration, execution, coverage, timeout, cancellation, cleanup,
+or persistence failures.
+
+## 8. Use the suite API directly
+
+```ts
+import { defineSuite, runSuite } from "mirrorecma";
+import { CounterModel } from "./.mirrors/evaluator/Counter.suite.js";
+
+const suite = defineSuite({
+  id: "counter/v1",
+  model: CounterModel,
+  replay: {
+    kind: "corpus",
+    config: {
+      specPath: "./model/Counter.tla",
+      invariant: "TraceComplete",
+      lengthBound: 6,
+      constInit: "CInit",
+      paramVars: "parameters",
+    },
+    traces: ["./traces/counter.itf.json"],
+  },
+  acceptance: {
+    requiredActions: ["Tick"],
+    requiredPairs: [["Tick", "Tick"]],
+  },
+});
+
+const result = await runSuite(suite, {
+  mirror: "/approved/bin/mirror",
+  implementation: async (context) => {
+    const { createAdapter } = await import("./mbt/counter-adapter.mjs");
+    const port = await createAdapter(context);
+    return { port, dispose: () => port.dispose?.() };
+  },
+});
+```
+
+The suite is immutable and owns no live resource. Each run creates at most one
+implementation after required match and reinitializes it for every trace. See
+[checked application suites](../../MirrorECMA/docs/application-suites.md) for
+remote references, cancellation, deadlines, cleanup, and result semantics.
+
+## 9. Add MirrorGate isolation or managed authoring
+
+Local replay executes trusted code in the evaluator. For restricted work,
+generate a public adapter kit from `CounterModel.publicManifest` with
+`mirrorgate/adapter-kit`. Give the author only approved behavior prose,
+generated declarations, public structural checks, and admitted source. Keep the
+model, traces, expected states, evaluator binding, credentials, and receipts private.
+
+Configure an operator-approved `node-esm/v1` profile with explicit JavaScript
+sources, entry point, Node hash, dependencies, and limits. TypeScript compilation
+needs separate approved preparation; the profile installs nothing and runs no
+submitted build hook. Require `hosting.public-environment-v1` for managed authoring.
+
+Run the same suite through the Gate-owned integration:
+
+```ts
+import { evaluateSuite } from "mirrorgate-mirrorecma";
+
+const outcome = await evaluateSuite(suite, {
+  mirror: "/approved/bin/mirror",
+  environment: approvedEnvironment,
+  submission: approvedSubmission,
+  receipt: { path: "/private/new-counter-receipt.json" },
+});
+```
+
+Gate retains its owner through worker acquisition and physical cleanup. The
+trusted receipt separates suite results, local disposal, Gate cleanup, and
+persistence; the public projection excludes private model evidence. Follow
+[MirrorGate's runtime guide](../../MirrorGate/docs/application-integration-runtime.md)
+and [suite workflow](../../MirrorGate/integrations/mirrorecma/WORKFLOW.md).
+
+## 10. CI and troubleshooting
+
+In CI, verify pinned identities, build the real application and generated suite,
+run `mirrorecma check`, replay the deterministic corpus, and verify a known faulty
+implementation's expected mismatch. Run fresh Apalache generation separately.
+When Gate is part of the claim, require its real Bubblewrap backend and verify
+physical cleanup and disclosure negatives. An unavailable tier is not a pass.
 
 | Symptom | Check |
 | --- | --- |
-| Mirror executable missing, or negotiation unsupported | Use the built Lean executable at `MIRROR_BIN`; confirm checkout/build identity, not only its filename. |
-| Model or trace not found | Run from the documented root; use absolute paths; replay paths belong to the Mirrors host. |
-| `mirrorecma` cannot be imported | Build the local package's `dist/`, install/link it into the application, and preserve ESM `.js` imports. |
-| Unresolved type or invalid evidence | Supply structural type metadata for all relevant variables; do not infer it from one sample value. |
-| Compiler `check` fails | Reconcile model, contract, evidence, run profile, lock, and generated output; regenerate intentionally. |
-| Negotiation or digest mismatch | Confirm matching generated metadata, model inputs, `paramVars`, and profile; do not bypass it with a fallback. |
-| `step_mismatch` | Read the action and observation path; inspect the actual SUT operation and adapter, then compare with the preserved trace. |
-| Correct implementation fails after a previous trace | Verify initialization resets all modeled state and resources are not accidentally shared across runs. |
-| Required action never covered | Add traces that reach it; distinguish preflight coverage from handlers actually executed. |
-| Live generation fails | Check Apalache executable, source dependencies, model predicates, and bounds; ordinary replay success does not validate this tier. |
-| Tests pass despite a deliberately injected defect | Confirm the adapter invokes the production code and reads actual observations; check whether the trace exercises the defect. |
+| Adapter factory was never called | Inspect preflight, corpus hashes, and required negotiation; zero calls are correct on denial. |
+| Generated module cannot be imported | Compile `<Model>.suite.ts`, use ESM `.js` imports, and point `model.module` at the emitted file. |
+| `coverage_unmet` after matching replay | Select traces containing the required stable action/pair. |
+| Observation codec failure | Return the generated native shape with `bigint`, native sets/maps, exact tuples, closed records, and declared variants. |
+| First trace passes and the second fails | Ensure every initializer resets all modeled resources. |
+| Timeout after disposal | A pending operation may leave local quiescence unconfirmed; JavaScript cannot preempt a CPU loop. |
+| Remote cannot find a file | Configure explicit server-visible paths; nothing is uploaded implicitly. |
+| Gate structural checks pass but MBT fails | Structural checks do not establish business semantics or observer fidelity. |
 
-For protocol details, use the [interface reference](interface-reference.md).
-The [client implementation guide](client-implementation-guide.md) is for
-authors of client libraries and protocol integrations; this manual is for
-application developers using MirrorECMA.
+## Legacy integrations
 
-## Walkthrough verification
-
-The synchronous walkthrough was verified on 2026-09-08 using Mirrors
-`fe93fe47f554a58ed501fc70f44b64eb150b35ec` and MirrorECMA
-`1d02dc02e223c52674a479e73d35d9e80e16be61`, with Node.js 24.19.0 and
-TypeScript 5.9.3. Code blocks were compiled in a fresh external application:
-resolve/generate, read-only check, required-action preflight, replay, and
-rejection of an injected production Counter bug passed. The existing tutorial
-gate also passed its offline and live Apalache tiers. Section 6 points to the
-separate async/sandbox documentation; it is not an additional sandbox
-certification from this walkthrough.
+Synchronous `mirrorecma-v1`, registry, dynamic-descriptor, and low-level replay
+APIs remain supported for specialized callers. The former `evaluateSandboxed`
+and model-reconstruction helpers live in Gate's documented legacy integration.
+Do not use them to start a new application. Use an async suite bundle, project
+commands or `defineSuite` / `runSuite`, and optional Gate-owned `evaluateSuite`.

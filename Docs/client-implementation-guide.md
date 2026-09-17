@@ -1,7 +1,9 @@
 # Mirrors — Client Implementation Guide & Conformance Specification
 
-> Testing an application with the existing TypeScript client? Start with the
-> [MirrorECMA MBT user manual](mirrorecma-typescript-mbt-user-manual.md).
+> Integrating an application with the TypeScript client? Start with the
+> [role-oriented integration guide](application-integration-guide.md) and
+> [MirrorECMA MBT tutorial](mirrorecma-typescript-mbt-user-manual.md). This
+> document covers lower-level client and protocol implementation.
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
@@ -26,8 +28,8 @@
 > runtime model-interface support. The Haskell compatibility statement applies
 > to registrations without that optional extension.
 > Rules prefixed **SO** in §13 define the shared sandbox-orchestration profile.
-> Its experimental implementation and local acceptance scope are recorded in
-> §13.1; these requirements do not imply released support for every client or
+> Its implementation and local acceptance scope are recorded in §13.1; these
+> requirements do not imply released support for every client or
 > change the existing Mirrors wire protocol.
 
 ## 1. Where a client can attach
@@ -742,7 +744,7 @@ section's Mirrors wire tests alone does not establish sandbox support.
 
 <a id="13-shared-sandbox-orchestration-design-profile"></a>
 
-## 13. Shared sandbox orchestration (experimental profile)
+## 13. Shared sandbox orchestration profile
 
 ### 13.1 Status and architectural decision
 
@@ -751,11 +753,13 @@ MirrorCPP. Shared orchestration belongs to a language-neutral MirrorGate process
 each client supplies a native facade over that process. MirrorECMA must not
 become the mandatory orchestration runtime for clients in other languages.
 
-This section defines the orchestration profile and its acceptance obligations.
-The experimental implementation includes MirrorGate control v1 over owned
-stdio and attached Unix connections, managed Node and C++ SDKs, Node and Rust
-workers, and MirrorECMA's native `evaluateSandboxed` facade. Mirrors emits the
-additive `mirrorecma-async-v1` generated binding used by that facade. A native
+This section defines the lower-level orchestration profile and its acceptance
+obligations. The implementation includes MirrorGate control over owned stdio and
+attached Unix connections, managed Node and C++ SDKs, Node and Rust workers, and
+the Gate-owned `mirrorgate-mirrorecma` integration. New Node applications use
+generated suite bundles plus `evaluateSuite`; the former `evaluateSandboxed`
+facade is retained only through the integration's `/legacy` export. Mirrors emits
+the additive `mirrorecma-async-v1` generated binding used by these paths. A native
 MirrorCPP acceptance integration drives the same Gate controller through the
 existing compiled C++ binding and real Mirrors comparison.
 

@@ -5,14 +5,15 @@
 > Status: **version-1 contract with three implemented target slices;
 > remaining profiles and common conformance work are specified below**
 >
-> The synchronous `mirrorecma-v1` reference target, the additive experimental
+> The synchronous `mirrorecma-v1` reference target, the additive
 > `mirrorecma-async-v1` target, and the `mirrorcpp-v1` static target are
-> implemented. The async profile is a prerequisite for shared sandbox
-> orchestration, not a support claim for that larger workflow. The
+> implemented. The async target underlies the locally accepted suite-bundle and
+> Gate `evaluateSuite` application path; that acceptance is not a package
+> publication or every-client support claim. The
 > `mirrorrust-v1` and `mirrorlean-v1` profiles are specified here for
 > subsequent implementation.
-> The experimental shared orchestration implementation is tracked separately
-> in the [client guide](client-implementation-guide.md#13-shared-sandbox-orchestration-experimental-profile)
+> The shared orchestration implementation is tracked separately
+> in the [client guide](client-implementation-guide.md#13-shared-sandbox-orchestration-design-profile)
 > and the companion acceptance ledger; implementing an emitter alone does not
 > establish that larger profile's support.
 >

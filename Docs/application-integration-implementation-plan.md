@@ -4,13 +4,14 @@ Status: **P00–P12 implemented and accepted locally, 2026-09-16–17.**
 P12 includes three actual restricted authors and an explicitly automated
 fresh-evaluator onboarding study; it does not claim a human usability study.
 See the [execution record](application-integration-progress.md) for current
-acceptance evidence and outstanding gates.
-Prepared on 2026-09-16 against the current working checkouts. This plan implements
-the [application integration design](application-integration-design.md), preserving
-its ownership, lifetime, compatibility and disclosure requirements. It does not
-authorize publication or claim that the proposed interfaces are available.
+acceptance evidence and the remaining package-publication boundary.
+Prepared on 2026-09-16 against the then-current working checkouts. This plan
+implemented the [application integration design](application-integration-design.md), preserving
+its ownership, lifetime, compatibility and disclosure requirements. The listed
+interfaces are available in the locally accepted source revisions; this plan does
+not authorize package publication or claim compatibility for other revisions.
 
-## 1. Establish the actual starting point
+## 1. Historical starting point
 
 | Repository | Inspected HEAD | Reusable implementation | Missing delivery |
 | --- | --- | --- | --- |
@@ -18,8 +19,9 @@ authorize publication or claim that the proposed interfaces are available.
 | MirrorECMA | `76ccec0fa1d349fc175f425b993766558cf0bae3` | Compiled negotiated async replay, deferred factories, reports, generic provider seam | Suite definition/runner, authoritative acceptance evidence, pure acceptance evaluation, normalized results, project tools |
 | MirrorGate | `67e70b92077df8751968bc242a48139f211010b4` | Recursive native codecs, restricted preparation/workers, managed workflow, public projections | Public kit, standard Node preparation/environment interface, suite convenience, reusable safe receipt persistence |
 
-These are source-inspection findings, not fresh test results. Four discrepancies
-must be resolved before accepting the implementation baseline:
+These are historical source-inspection findings, not claims about the delivered
+trees. Four discrepancies had to be resolved before accepting the implementation
+baseline:
 
 - The design cites MirrorECMA `008234d`; that object is unavailable in this local
   repository. The current checkout lacks `examples/application-validation/`.
@@ -44,14 +46,15 @@ reconstruction and establish new baseline evidence before migration acceptance.
 Framework work can proceed once its contracts are settled; missing historical
 applications block preservation claims and final migration acceptance.
 
-## 2. Contract decisions to settle first
+## 2. Contract decisions settled first
 
-Keep the design's decisions. Resolve the following concrete interface details in
-the owning repositories, backed by typechecked consumer fixtures and schema
-vectors. The proposed filenames below are implementation locations, not existing
-public APIs.
+The following table records the concrete interface decisions that were resolved
+in the owning repositories and backed by typechecked consumer fixtures and schema
+vectors. Current callers should follow the
+[application integration guide](application-integration-guide.md), not infer an
+API from this historical work plan.
 
-| Decision | Proposed implementation direction | Required contract evidence |
+| Decision | Resolved implementation direction | Required contract evidence |
 | --- | --- | --- |
 | Compiler/runtime seam | MirrorECMA exports `SuiteModel`, `defineSuite`, `runSuite`, `runSuiteWithFactory`, and `evaluateAcceptance`; compiler companion imports only the required public runtime surface | Minimal generated Counter consumer compiles; imports are inert; exact registry identity is derived |
 | Bundle CLI and ownership | Add `bundle` as publication mode over `mirrorecma-async-v1`, with explicit generation and read-only freshness grammar; use a separate `mirrors.suite-bundle/v1` owned-file manifest | Specify required lock/source/contract/evidence inputs, hash coverage, stale-file deletion and collision handling; preserve existing manifest parsing |

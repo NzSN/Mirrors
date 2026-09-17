@@ -115,12 +115,15 @@ replay; add `--live` with an explicit Apalache executable for fresh generation.
 The [application manual](mirrorecma-typescript-mbt-user-manual.md) gives the
 runnable workflow.
 
-## Experimental shared sandbox acceptance
+## Legacy facade and shared sandbox acceptance
 
 `sandbox-model.test.ts`, `sandbox-facade.test.ts`,
 `sandbox-failure-paths.test.ts`, and `sandbox-authoring-output.test.ts` cover
-the trusted MirrorECMA facade's manifest, lifecycle, disclosure, cancellation,
-and cleanup behavior. These client tests do not establish real isolation.
+the former facade's manifest, lifecycle, disclosure, cancellation, and cleanup
+behavior as compatibility regressions. New applications use suite bundles and
+Gate-owned `evaluateSuite`; see the
+[application integration guide](application-integration-guide.md). These client
+tests do not establish real isolation.
 
 Actual backend evidence belongs to MirrorGate's required `scripts/test.sh`,
 the prepared MirrorECMA `smoke:sandbox` gate, and the shared

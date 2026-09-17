@@ -12,6 +12,7 @@
 > Parent architecture:
 > [`model-interface-generation-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-generation-design.md)
 > Current protocol reference: [`interface-reference.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/interface-reference.md)
+> Default Node application integration: [`application-integration-guide.md`](application-integration-guide.md)
 
 ## 0. Implementation status
 
@@ -84,8 +85,11 @@ MirrorECMA also implements additive async compiled replay through
 supplies the corresponding promise-returning port and public-port binding.
 Negotiation still precedes binding/SUT construction; deadlines, cancellation,
 structured mismatch errors, and cleanup belong to the client replay driver.
-The experimental `evaluateSandboxed` facade uses that path with MirrorGate's
-shared controller. Its [acceptance ledger](https://github.com/NzSN/MirrorECMA/blob/main/docs/shared-orchestration-acceptance.md)
+These are the low-level mechanisms below the current application path. New Node
+applications consume compiler-owned suite bundles through `defineSuite` /
+`runSuite`; the optional Gate-owned integration supplies `evaluateSuite`. The
+former `evaluateSandboxed` facade is available only through
+`mirrorgate-mirrorecma/legacy`. The [acceptance ledger](https://github.com/NzSN/MirrorECMA/blob/main/docs/shared-orchestration-acceptance.md)
 records the tested local facade/runtime/backend combinations separately from
 package publication and hosted CI. None of these additions change the frozen
 Mirrors negotiation envelopes or turn legacy synchronous ports into async ones.

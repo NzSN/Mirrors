@@ -283,9 +283,14 @@ Notable implementation changes are recorded in [`CHANGELOG.md`](https://github.c
 
 ## Documentation
 
+- [Application integration guide](Docs/application-integration-guide.md)
+  — start here for the supported suite-bundle, project-tools, local replay, and
+  optional MirrorGate workflow.
+- [Mirror Framework usage guide](Docs/usage-of-mirror-framework.md)
+  — understand responsibilities across Mirrors, MirrorECMA, and MirrorGate.
 - [TypeScript MBT user manual](Docs/mirrorecma-typescript-mbt-user-manual.md)
-  — use MirrorECMA to test application source through generated adapters,
-  replay traces, diagnose mismatches, and add CI checks.
+  — build a new application integration with an async suite bundle,
+  `mirrorecma` project commands, and a native adapter.
 
 - [Semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md)
   — PFPL-style judgments, abstract interface types, effectful commands, and

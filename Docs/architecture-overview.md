@@ -170,16 +170,21 @@ oracle for fixtures and differential tests.
 ## Model interfaces and sandboxed application replay
 
 `model_interface_gen` produces a lock and typed bindings for synchronous
-TypeScript, experimental asynchronous TypeScript, and C++. The runtime verifies
-or distributes an inert model descriptor before selecting a local adapter;
+TypeScript, asynchronous TypeScript, and C++. For the supported Node application
+path it also publishes a trusted suite bundle and native adapter bridge. The
+runtime verifies or distributes an inert model descriptor before selecting an
+adapter;
 `Shell.ModelInterface` owns filesystem, authorization, cache, and emitter
 effects while `Core.ModelInterface` owns pure resolution and policy.
 
-MirrorECMA can run a local application adapter directly, or use the experimental
-MirrorGate facade with a trusted generated public-port proxy. MirrorGate owns
-restricted authoring/build/execution and resource cleanup; Mirrors retains
-model execution and comparison. See the [TypeScript user manual](mirrorecma-typescript-mbt-user-manual.md)
-and the [orchestration diagram and ownership table](client-implementation-guide.md#132-ownership-and-the-three-channels).
+MirrorECMA's default application path uses an immutable suite and checked corpus
+through `runSuite`. The optional Gate-owned integration runs the same suite via
+`evaluateSuite` with a trusted generated public-port proxy. MirrorGate owns
+restricted authoring/build/execution and physical cleanup; Mirrors retains model
+execution and comparison. See the
+[application integration guide](application-integration-guide.md), [TypeScript
+tutorial](mirrorecma-typescript-mbt-user-manual.md), and the
+[orchestration ownership table](client-implementation-guide.md#132-ownership-and-the-three-channels).
 The interactive overview above focuses on the session/runtime path; it does
 not depict every compiler or sandbox component.
 
