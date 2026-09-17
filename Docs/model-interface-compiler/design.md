@@ -1,7 +1,7 @@
 # Model Interface Compiler — Detailed Design
 
 > Design index: [`README.md`](README.md)
-> Proposed general TLA+ frontend:
+> Implemented general TLA+ frontend:
 > [`tla-frontend-design.md`](tla-frontend-design.md)
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
@@ -23,7 +23,7 @@
 > graph, and `Shell.Apalache.SpecSource` captures borrowed and inline closures
 > through the same provider and parser instead of its retired token scanner
 > (implementation plan: [`tla-frontend-tasks.md`](tla-frontend-tasks.md),
-> TF0–TF7 accepted). `Shell/ModelInterface/SpecVariables.lean` has no production
+> TF0–TF8 accepted). `Shell/ModelInterface/SpecVariables.lean` has no production
 > caller and survives only as a development-gate subject.
 
 ## 0. Implementation status
@@ -36,6 +36,12 @@ emitter, safe owned-file publication, and the standalone
 `model_interface_gen` executable. Counter resolve/generate/check,
 generated TypeScript/C++ compilation, typed bindings, and real session replay
 are covered by the implementation gates and validation harnesses.
+
+The async target also supports `bundle` / `check-bundle`, a generated trusted
+`SuiteModel`, and recursive local native conversion. See
+[trusted suite bundles](suite-bundles.md) for owned files, hash coverage,
+publication rules, disposal transfer and validation. These commands preserve the
+existing target identity and generated binding bytes.
 
 The synchronous and async TypeScript plus C++ version-1 slices are implemented.
 Shared portable judgment/recording vectors and the later Rust/Lean targets

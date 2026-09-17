@@ -14,7 +14,7 @@ an installed Windows service, a hosted CI run, or a published package.
 | Test TypeScript application code | [Current MirrorECMA MBT tutorial](mirrorecma-typescript-mbt-user-manual.md) |
 | Evaluate framework usability on real applications | [Three-application validation program](application-validation-program.md) |
 | Review integration contracts | [Application integration design](application-integration-design.md) |
-| Plan integration implementation | [Application integration implementation plan](application-integration-implementation-plan.md) (current baseline, dependencies and acceptance gates) |
+| Plan integration implementation | [Application integration implementation plan](application-integration-implementation-plan.md) (historical baseline, completed work packages and acceptance criteria) |
 | Inspect integration acceptance | [Execution record](application-integration-progress.md) (automated gates, actual restricted authors and fresh-agent onboarding) |
 | Build, install, or identify Mirrors | [Product versions and installation](versioning.md) |
 | Run validation inside WSL2 or through `r_windev` | [WSL2 validation](wsl2-validation.md) |
@@ -65,7 +65,9 @@ specs, the lexer/parser/resolver/elaboration/frontend/inspection-CLI frontend
 gates, `stdio_smoke`, `jobstore_spec`, `apalache_cli_spec`, `explorer_spec`,
 `transport_spec`, `registry_spec`, `counter_spec`, and `async_spec`), three
 compiler freshness checks (sync TypeScript, async TypeScript, and C++), and
-Counter preflight with exact coverage comparison.
+Counter preflight with exact coverage comparison. The driver also runs
+`tools/check-async-emitter.py` and `tools/check-suite-bundle.py` for emitter
+structure and suite-bundle publication/freshness regressions.
 The script rebuilds first. `stdio_smoke` also checks the version CLI.
 
 Set `APALACHE_MC` to an absolute executable path for explicit live coverage.

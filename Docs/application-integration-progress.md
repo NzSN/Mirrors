@@ -75,9 +75,13 @@ independent cleanup budgets after early readiness/iterator failure, pre-cancelle
 connector deferral, observer exception versus codec classification, and matching
 local/Gate rejection of non-undefined native action returns.
 
-Full logs remain under `/tmp/mirrors-application-integration-*` and
-`/tmp/mirrorgate-*`; their hashes and selected installed-consumer records are
-retained in the evidence JSON. The application-specific durable summary is
+Full logs were written under `/tmp/mirrors-application-integration-*` and
+`/tmp/mirrorgate-*`. The six aggregate logs referenced by hash in the evidence
+JSON were absent during the 2026-09-17 documentation audit; those temporary
+paths are historical provenance, not retained downloadable evidence. Their
+hashes, selected installed-consumer records, and archived P12 onboarding
+artifacts remain in the repository. No runtime gates were rerun for that audit.
+The application-specific durable summary is
 [suite migration evidence](../../MirrorECMA/examples/application-validation/results/2026-09-16-suite-migration.json).
 
 ## Completed P12 acceptance, 2026-09-17
