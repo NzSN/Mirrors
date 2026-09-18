@@ -51,14 +51,17 @@ an installed Windows service, a hosted CI run, or a published package.
   MirrorECMA 2 core and remains available through the Gate-owned
   `mirrorgate-mirrorecma/legacy` integration. MirrorGate owns the shared control
   process, policy, snapshots, worker transport, and Linux/Bubblewrap isolation.
-  Native Node and C++ control SDKs can drive Node and Rust workers.
+  Native Node, C++ and Rust control SDKs can drive Node and Rust workers;
+  the Rust SDK currently selects control-v1 only.
   The C++ model-facing integration is an acceptance integration, not a released
   generic MirrorCPP facade API. See the
   [shared acceptance ledger](https://github.com/NzSN/MirrorECMA/blob/main/docs/shared-orchestration-acceptance.md).
-- Rust/Lean generated model-interface targets and negotiated static registries,
-  the proposed common generated-binding recording vectors, and broader sandbox
-  backend support remain separate follow-up work. Existing MirrorRust base-wire
-  tests and Gate Rust-worker tests do not imply those features are implemented.
+- MirrorRust now has an exact adapter registry and compiled-verify runtime for
+  reviewed bindings. Gate owns the new native Rust SDK and evaluator integration;
+  see its [implementation/acceptance record](../../MirrorGate/docs/rust-evaluator-sdk-status.md).
+  Rust/Lean generated targets, the MirrorLean registry, common generated-binding
+  recording vectors and broader sandbox backends remain separate follow-up work.
+  The handwritten Rust Counter fixture does not establish a Rust compiler target.
 
 ## Validation entry points
 

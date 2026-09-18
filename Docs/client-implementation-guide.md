@@ -265,8 +265,12 @@ implementation adapter or executable code.
 
 The Mirrors server, MirrorECMA's compiled-verification and dynamic-descriptor
 paths, and MirrorCPP's static compiled-verification path are implemented.
-MirrorRust and MirrorLean static registries are planned. Implement only the
-profile your client can honestly advertise:
+MirrorRust now has a source-level compiled-verify runner and exact registry for
+reviewed bindings; its Gate Counter uses a handwritten fixture identity, not a
+generated Rust target. Rust/Lean generation and the MirrorLean registry remain
+planned. See the [Rust implementation record](../../MirrorGate/docs/rust-evaluator-sdk-status.md)
+for validation status and limits. Implement only the profile your client can
+honestly advertise:
 
 | Client profile | Request | Local executable behavior | Version-1 use |
 | --- | --- | --- | --- |
@@ -755,7 +759,8 @@ become the mandatory orchestration runtime for clients in other languages.
 
 This section defines the lower-level orchestration profile and its acceptance
 obligations. The implementation includes MirrorGate control over owned stdio and
-attached Unix connections, managed Node and C++ SDKs, Node and Rust workers, and
+attached Unix connections, managed Node/C++ SDKs and a control-v1 Rust SDK,
+Node and Rust workers, and
 the Gate-owned `mirrorgate-mirrorecma` integration. New Node applications use
 generated suite bundles plus `evaluateSuite`; the former `evaluateSandboxed`
 facade is retained only through the integration's `/legacy` export. Mirrors emits
@@ -767,6 +772,10 @@ The [MirrorECMA acceptance ledger](https://github.com/NzSN/MirrorECMA/blob/main/
 records local implementation evidence separately from hosted CI and released
 package compatibility. The C++ integration is an acceptance fixture and
 reusable integration seam, not a released generic MirrorCPP package API.
+The [native Rust integration](../../MirrorGate/docs/rust-evaluator-sdk-status.md)
+now has a reviewed Counter fixture and locally accepted owned/attached ×
+Node/Rust worker matrix. Its generic composition seam uses caller-supplied
+bindings; a compiler-generated Rust target remains planned.
 Existing worker support alone does not establish this orchestration profile;
 a Rust worker can, for example, be driven by either evaluator language.
 

@@ -73,8 +73,12 @@ mirror integration suite:
 - real generated Counter replay over stdio and allowlisted mTLS, denial without
   the allowlist, and a wrong observer reaching ordinary `step_mismatch`.
 
-D5 exact-digest registries for MirrorRust and MirrorLean, and the proposed
-common portable cross-language fixture suite, remain planned.
+MirrorRust now includes an exact registry and compiled-verify runtime for
+reviewed bindings, with strict negotiation, deferred factories and disposal
+regressions in `tests/model_interface.rs`. The Rust generated target, MirrorLean
+registry/generation, and common generated-binding fixture suite remain planned.
+See the [Rust implementation record](../../MirrorGate/docs/rust-evaluator-sdk-status.md)
+for acceptance evidence and the fixture-only Gate profile.
 
 ## One-command gate
 
@@ -153,8 +157,10 @@ execution; the optional real-Consul daemon tier is not part of that gate.
 `test/client-conformance/async-replies.json` is additive regression data, not a
 replacement for the frozen Haskell corpus. These checks exercise effectful
 clients; they do not extend the server's Lean proof boundary to client heaps.
-MirrorCPP retains its compiled MI profile. MirrorLean/Rust do not yet implement
-negotiated generated bindings or native Gate evaluator facades. The C++/Lean/Rust
+MirrorCPP retains its compiled MI profile. MirrorLean does not yet implement
+negotiated generated bindings or a native Gate evaluator facade. MirrorRust now
+has a verify runtime and the Gate-owned fixture integration; a generated Rust
+binding target remains separate from that work. The C++/Lean/Rust
 published pins select the coordinated conformance commits; explicit full client
 SHA overrides remain available for coordinated CI runs.
 
