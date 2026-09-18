@@ -1,6 +1,8 @@
 # Using the Mirror Framework
 
-The Mirror Framework combines three repositories:
+The default Node application workflow composes three core repositories. Other
+clients and supporting repositories are listed in the [framework map](framework-map.md);
+its capability table distinguishes generated suites, native bindings and workers.
 
 - **Mirrors** resolves TLA+ models, generates trusted suite bundles, executes
   model traces, and compares expected model states with implementation observations.

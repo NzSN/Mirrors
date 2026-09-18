@@ -1,5 +1,8 @@
 # Integrating an application
 
+For a non-Node application, start with the [language/repository map](framework-map.md)
+and [Gate SDK/facade selection](../../MirrorGate/docs/client-language-support.md).
+
 Deploying or using a server on another machine? Read the [remote server runbook](remote-server-guide.md)
 for setup, mTLS, async validation, suite path rules, and troubleshooting.
 
@@ -70,6 +73,9 @@ and a restricted application worker are independent choices.
 | Use direct bindings, custom providers, dynamic descriptors or low-level replay | [Client README](../../MirrorECMA/README.md) → [replay and lifetime reference](../../MirrorECMA/docs/replay-and-async.md) → [negotiation contract](model-interface-runtime-distribution-design.md) | Existing advanced client APIs; the caller accepts the additional binding and lifecycle responsibilities |
 | Expose evaluation to another process through a service | [Gate evaluation service](../../MirrorGate/integrations/mirrorecma/service/README.md) → [service contract](../../MirrorGate/docs/evaluation-service-contract-v1.md) | Optional authenticated loopback service using approved evaluation callbacks; current examples use lower-level `evaluateImplementation` |
 | Integrate another language or implement a new client | [Client coverage](client-test-coverage.md) → [client implementation guide](client-implementation-guide.md) → [wire reference](interface-reference.md) → [generated target specification](generated-model-interface-spec.md) | A verified supported client path, or a separately implemented and tested client/profile |
+| Use a C++ evaluator | [MirrorCPP](../../MirrorCPP/README.md) → [Gate C++ integration](../../MirrorGate/integrations/mirrorcpp/README.md) when isolation is needed | Generated C++ bindings and exact verification; optional shared Gate controller |
+| Use a Rust evaluator | [MirrorRust](../../MirrorRust/README.md) → [Gate Rust integration](../../MirrorGate/integrations/mirrorrust/README.md) → [accepted scope](../../MirrorGate/docs/rust-evaluator-sdk-status.md) | Reviewed binding registry and fallible replay; control-v1 Gate integration with a handwritten Counter fixture; no generated Rust target |
+| Use Lean as the model client | [MirrorLean](../../MirrorLean/README.md) → [client contract](client-implementation-guide.md) | Synchronous replay and network async jobs; negotiated binding and Gate facade remain planned |
 
 **Using a client is different from implementing one.** Most application authors
 should read the client suite and project guides, not implement the wire protocol.

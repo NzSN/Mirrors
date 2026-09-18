@@ -1568,7 +1568,7 @@ local handlers over stdio and authorized mTLS without evaluating remote code;
 descriptor-read denial and pre-binding failures make zero callbacks, while a
 behaviorally wrong observer reaches ordinary `step_mismatch`.
 
-### D5: static clients — MirrorCPP implemented; Rust/Lean planned
+### D5: static clients — C++ generated bindings; Rust runtime; Lean planned
 
 - MirrorCPP implements exact digest verification, an immutable exact-key
   adapter registry, and generated `mirrorcpp-v1` bindings using the Counter
@@ -1577,11 +1577,14 @@ behaviorally wrong observer reaches ordinary `step_mismatch`.
   selects only precompiled local bindings.
 - The top-level interop matrix covers its negotiated Counter path over stdio
   and allowlisted mTLS, including zero-SUT authorization and digest failures.
-- MirrorRust and MirrorLean still need equivalent exact-digest registries and
-  generated target profiles.
+- MirrorRust now has strict compiled verification, an exact registry and deferred
+  fallible bindings. Its Gate Counter is a reviewed handwritten fixture; see the
+  [implementation record](../../MirrorGate/docs/rust-evaluator-sdk-status.md).
+- Rust/Lean generated targets and the MirrorLean registry remain follow-up work.
 
-Partial exit: MirrorECMA and MirrorCPP select precompiled adapters by one
-language-neutral digest. Full exit waits for MirrorRust and MirrorLean.
+Partial exit: the Rust runtime admission seam is delivered alongside the existing
+TypeScript/C++ paths. Full generated-target exit still requires Rust/Lean emitters
+and generated-binding acceptance; runtime support alone is not that milestone.
 
 ## 22. Rejected alternatives
 

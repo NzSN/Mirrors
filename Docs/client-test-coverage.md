@@ -88,13 +88,25 @@ sandbox coverage are listed separately below.
 From the Mirrors repository:
 
 ```sh
-tools/interop/run.sh
+APALACHE_MC=/absolute/path/to/apalache-mc \
+HS_BIN=/absolute/path/to/Haskell/ModelMirrors \
+bash tools/interop/run.sh
 ```
 
-The runner builds the Lean mirror, runs all three non-Lean unit/golden suites,
-executes their live Counter and transport-negative gates, and then retains the
-Haskell validate client as an independent compatibility oracle. Its checkout
-locations can be overridden with `ECMA_REPO`, `CPP_REPO`, and `RUST_REPO`.
+The runner builds the Lean mirror, runs the TypeScript/C++/Rust suites and the
+MirrorLean root/native-server packages, and retains the Haskell validate client
+as an independent compatibility oracle. Checkout overrides are `ECMA_REPO`,
+`CPP_REPO`, `RUST_REPO`, `LEAN_CLIENT_REPO` and `HS_REPO`. Prepare the external
+dependencies and matching revisions described in the [interop runbook](../tools/interop/INTEROP.md).
+The focused `tools/interop/clients.sh` gate needs C++/Rust/Lean and a built mirror
+plus live Apalache; it does not require Node or the Haskell client.
+
+MirrorLean's added async coverage is in `test/AsyncSupport.lean`: bounded strict
+frames, shared reply vectors, no-write bound/stdio preflight, reply correlation,
+once-only close, and real cross-connection awaits/cancellation/eviction. Its
+native server-mode package reuses that lifecycle test over mTLS. See
+[MirrorLean](../../MirrorLean/README.md) for build commands; this is base client
+coverage, not a negotiated-binding or sandbox-facade claim.
 
 MirrorRust does not currently expose the optional explorer APIs. Its canonical
 wire test therefore covers every message family in its advertised public API;

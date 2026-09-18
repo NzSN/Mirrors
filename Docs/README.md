@@ -1,5 +1,10 @@
 # Mirrors documentation
 
+The [framework map](framework-map.md) covers the related repositories and
+distinguishes model clients, generated bindings, Gate evaluators and workers.
+The [2026-09-18 documentation audit](related-documentation-audit-20260918.md)
+records the inspected revisions, updates and link-check scope.
+
 Remote deployment and client operation: [remote server guide](remote-server-guide.md).
 Latest recorded Windows rollout: [2026-09-18 deployment](windows-deployment-20260918.md).
 
@@ -83,7 +88,7 @@ is absent; therefore an unset variable alone does not guarantee an offline
 run. Individual external tiers may skip when prerequisites are missing; inspect
 their output separately from the aggregate exit status.
 
-`bash tools/interop/run.sh` covers MirrorECMA, MirrorCPP, MirrorRust, and the
+`bash tools/interop/run.sh` covers MirrorECMA, MirrorCPP, MirrorLean, MirrorRust, and the
 Haskell reference client. MirrorGate's required-backend gate and the shared
 sandbox matrix are separate; the base interop script is not a sandbox
 certification. Follow the linked companion ledgers for exact prerequisites

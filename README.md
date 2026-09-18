@@ -1,5 +1,8 @@
 # Mirrors
 
+For repository ownership and language/profile selection, see the
+[framework map](Docs/framework-map.md).
+
 For application onboarding, start with the [application integration guide](Docs/application-integration-guide.md).
 For deployment and client connections across machines, use the [remote server guide](Docs/remote-server-guide.md).
 

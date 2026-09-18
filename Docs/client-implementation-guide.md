@@ -742,6 +742,8 @@ section's Mirrors wire tests alone does not establish sandbox support.
 | `mirror validate` (this repo) | Lean 4 | sync/async validate over TCP/mTLS, recursive source delivery, registry discovery, pinning |
 | MirrorECMA (`test/smoke.test.ts`, `test/model-interface-*.ts`) | TypeScript | stdio/TCP/mTLS, registry, TLS negatives, D3 compiled verification, D4 dynamic descriptor/cache replay |
 | MirrorCPP (`test/unit/model_interface_test.cpp`, `test/unit/generated_model_interface_test.cpp`, `test/integration/real_mirror_test.cpp`) | C++23 | stdio/TCP/mTLS, registry/TLS negatives, D5 static exact-digest verification and generated Counter replay |
+| MirrorRust (`tests/model_interface.rs`, `tests/server_mode_smoke.rs`) | Rust | stdio/TCP/mTLS, registry and async jobs; strict verify runtime and reviewed bindings; separate Gate-owned Counter fixture; no generated Rust target |
+| MirrorLean (`test/Main.lean`, `test/Async.lean`, `server-mode/Test/ServerModeSmoke.lean`) | Lean 4 | base replay/exploration, bounded framing, recursive sources and concurrent async jobs over TCP/mTLS; no negotiated binding or Gate facade |
 | Haskell `ModelMirrors validate` | Haskell | the reference wire consumer |
 | `tools/CounterSpec.lean` | Lean 4 | full MBT replay incl. mismatch negatives |
 | `stress300v2.py` | Python | async jobs, connection pooling, cancel |
