@@ -33,7 +33,7 @@ wrong-digest and unauthorized zero-SUT negatives.
 | MirrorRust        | `tests/smoke.rs` | `tests/server_mode_smoke.rs` over `--serve` | same suite over `--server --tls`, pinned + negatives |
 
 Runner: `tools/interop/run.sh` (also wired as the CI job
-`.github/workflows/interop.yml`). It runs the MirrorECMA, MirrorCPP, and
+`.github/workflows/interop.yml`). It runs the MirrorECMA, MirrorCPP, MirrorLean, and
 MirrorRust unit/golden suites plus their live Counter replay and transport
 negatives before the Haskell reference-client legs.
 
@@ -124,7 +124,7 @@ GitHub action implementations are pinned by commit SHA.
 
 Full local interop consumes sibling `MirrorECMA`, `MirrorCPP`, `MirrorRust`, and
 `ModelMirrors` checkouts by default. Override their paths using `ECMA_REPO`,
-`CPP_REPO`, `RUST_REPO`, and `HS_REPO`. First build the Haskell reference with
+`CPP_REPO`, `LEAN_CLIENT_REPO`, `RUST_REPO`, and `HS_REPO`. First build the Haskell reference with
 `cabal build ModelMirrors:exe:ModelMirrors` in its checkout, then supply the
 absolute path returned by `cabal list-bin ModelMirrors:exe:ModelMirrors` as
 `HS_BIN`. The matrix requires that already built executable and a live
@@ -222,3 +222,21 @@ per-constructor parity with Protocol/Format/Json.hs.
 4. \`Shell\`: the explorer dispatch passed \`exports\` and \`invariants\`
    swapped to the explorer oracles, so apalache was told about zero state
    invariants.
+
+## Focused C++ / Lean / Rust conformance
+
+`APALACHE_MC=/path/to/apalache-mc bash tools/interop/clients.sh` runs the three
+native client gates against the current built Mirrors executable without
+requiring Node or the Haskell reference client. `MIRROR_BIN` can select another
+explicit server binary. All server/Apalache prerequisites are mandatory; missing
+inputs fail before a live suite can report a skip. Optional registry-daemon
+checks remain separate from the stub-registry coverage.
+
+The full runner now includes MirrorLean's root tests and its separate native
+server-mode package. `LEAN_CLIENT_REPO` selects its checkout, while `LEAN_BIN`
+continues to name the Mirrors server executable. Workflow dispatch accepts full
+`cpp_ref`, `rust_ref`, and `lean_client_ref` SHAs alongside `ecma_ref`; local
+pin verification uses `CPP_REF`, `RUST_REF`, and `LEAN_CLIENT_REF`. The C++/Lean/Rust
+baselines pin the coordinated conformance commits published on 2026-09-18.
+The additive [async reply vectors](../../test/client-conformance/README.md) do
+not modify the frozen Haskell golden corpus.

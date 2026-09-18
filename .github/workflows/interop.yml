@@ -7,6 +7,18 @@ on:
         description: 'Matching MirrorECMA commit SHA (empty uses checked baseline)'
         required: false
         type: string
+      cpp_ref:
+        description: 'Matching MirrorCPP commit SHA (empty uses checked baseline)'
+        required: false
+        type: string
+      rust_ref:
+        description: 'Matching MirrorRust commit SHA (empty uses checked baseline)'
+        required: false
+        type: string
+      lean_client_ref:
+        description: 'Matching MirrorLean commit SHA (empty uses checked baseline)'
+        required: false
+        type: string
   pull_request:
     paths:
       - 'Core/**'
@@ -15,6 +27,7 @@ on:
       - 'Ffi/**'
       - 'specs/**'
       - 'test/fixtures/**'
+      - 'test/client-conformance/**'
       - 'tools/interop/**'
       - 'tools/ci/**'
       - 'tools/ModelInterface*.lean'
@@ -53,6 +66,7 @@ jobs:
       ECMA_REPO: ${{ github.workspace }}/MirrorECMA
       CPP_REPO: ${{ github.workspace }}/MirrorCPP
       RUST_REPO: ${{ github.workspace }}/MirrorRust
+      LEAN_CLIENT_REPO: ${{ github.workspace }}/MirrorLean
       HS_REPO: ${{ github.workspace }}/ModelMirrors
       INTEROP_VERIFY_PINS: '1'
     steps:
@@ -64,12 +78,23 @@ jobs:
         working-directory: Mirrors
         env:
           REQUESTED_ECMA_REF: ${{ inputs.ecma_ref }}
+          REQUESTED_CPP_REF: ${{ inputs.cpp_ref }}
+          REQUESTED_RUST_REF: ${{ inputs.rust_ref }}
+          REQUESTED_LEAN_CLIENT_REF: ${{ inputs.lean_client_ref }}
         run: |
           source tools/ci/versions.env
           ECMA_REF="${REQUESTED_ECMA_REF:-$ECMA_BASELINE}"
+          CPP_REF="${REQUESTED_CPP_REF:-$CPP_BASELINE}"
+          RUST_REF="${REQUESTED_RUST_REF:-$RUST_BASELINE}"
+          LEAN_CLIENT_REF="${REQUESTED_LEAN_CLIENT_REF:-$LEAN_CLIENT_BASELINE}"
+          for ref in "$CPP_REF" "$RUST_REF" "$LEAN_CLIENT_REF"; do
+            [[ "$ref" =~ ^[0-9a-f]{40}$ ]] || { echo "Expected a full client commit SHA"; exit 1; }
+          done
           [[ "$ECMA_REF" =~ ^[0-9a-f]{40}$ ]] || { echo 'Expected a full MirrorECMA commit SHA'; exit 1; }
           printf 'node=%s\npnpm=%s\njava=%s\nrust=%s\nghc=%s\ncabal=%s\n' "$NODE_VERSION" "$PNPM_VERSION" "$JAVA_VERSION" "$RUST_VERSION" "$GHC_VERSION" "$CABAL_VERSION" >> "$GITHUB_OUTPUT"
-          printf 'ecma=%s\ncpp=%s\nrust_client=%s\nhaskell=%s\n' "$ECMA_REF" "$CPP_BASELINE" "$RUST_BASELINE" "$HS_BASELINE" >> "$GITHUB_OUTPUT"
+          printf 'ecma=%s\ncpp=%s\nrust_client=%s\nhaskell=%s\n' "$ECMA_REF" "$CPP_REF" "$RUST_REF" "$HS_BASELINE" >> "$GITHUB_OUTPUT"
+          printf 'lean_client=%s\n' "$LEAN_CLIENT_REF" >> "$GITHUB_OUTPUT"
+          printf 'CPP_REF=%s\nRUST_REF=%s\nLEAN_CLIENT_REF=%s\n' "$CPP_REF" "$RUST_REF" "$LEAN_CLIENT_REF" >> "$GITHUB_ENV"
           printf 'ECMA_REF=%s\n' "$ECMA_REF" >> "$GITHUB_ENV"
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -101,6 +126,11 @@ jobs:
           run_install: false
           cache: true
           cache_dependency_path: MirrorECMA/pnpm-lock.yaml
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: NzSN/MirrorLean
+          ref: ${{ steps.versions.outputs.lean_client }}
+          path: MirrorLean
       - name: Install locked MirrorECMA dependencies
         working-directory: MirrorECMA
         run: pnpm install --frozen-lockfile

@@ -1,4 +1,4 @@
-# Non-Lean client conformance-test coverage
+# Client conformance-test coverage
 
 Status: MirrorECMA, MirrorCPP, and MirrorRust have executable coverage for the
 normative C1–C27 client rules in `Docs/client-implementation-guide.md`.
@@ -134,3 +134,31 @@ owned-stdio/attached-Unix, Linux/Bubblewrap matrix and the later fresh-authoring
 experiment. Those are dated local results; hosted CI, released generic C++
 facade support, and additional platforms are separate claims. The base interop
 runner does not invoke that sandbox matrix.
+
+
+## C++ / Lean / Rust async conformance update
+
+The focused runner `tools/interop/clients.sh` checks the shared async regression
+fixture copies and runs C++, Rust and Lean tests with real Mirrors and Apalache.
+MirrorLean is also included in the full interop runner through its root and
+separate native server-mode packages. Live prerequisites are checked before
+execution; the optional real-Consul daemon tier is not part of that gate.
+
+| Client | Added implementation and regression coverage |
+| --- | --- |
+| MirrorCPP | Full terminal query API plus compatible status projection; request-ID and submission-kind correlation; registration-send cleanup; malformed/uncorrelated exchanges close the transport |
+| MirrorRust | Submission-kind and control-reply ID correlation; send/read/decode failure poisoning; shared vectors plus existing concurrent server lifecycle and TLS tests |
+| MirrorLean | Bounded strict inbound stdio/TCP/TLS framing; typed async request/reply codecs; serialized owner connection with idempotent close; no-write bound/stdio checks; cross-connection reverse awaits, terminal query, cancellation and eviction over TCP and mTLS |
+
+`test/client-conformance/async-replies.json` is additive regression data, not a
+replacement for the frozen Haskell corpus. These checks exercise effectful
+clients; they do not extend the server's Lean proof boundary to client heaps.
+MirrorCPP retains its compiled MI profile. MirrorLean/Rust do not yet implement
+negotiated generated bindings or native Gate evaluator facades. The C++/Lean/Rust
+published pins select the coordinated conformance commits; explicit full client
+SHA overrides remain available for coordinated CI runs.
+
+The [2026-09-18 implementation evidence](client-conformance-update-evidence.json)
+records client base revisions, changed-file hashes, local gate results, corrected
+regressions and validation limits. It is source-tree evidence, not a publication
+or deployment claim.

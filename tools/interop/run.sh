@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # t17 interop validation matrix (design doc section 2 Goal 2, section 8 Phase 6).
-# Clients: MirrorECMA, MirrorCPP, MirrorRust, and the Haskell ModelMirrors
+# Clients: MirrorECMA, MirrorCPP, MirrorLean, MirrorRust, and the Haskell ModelMirrors
 # `validate` client (the pinned reference wire consumer).
 #
 # Transports: stdio + TCP + mTLS (t26 fixes landed; released by the
@@ -13,13 +13,14 @@ LEAN_BIN="${LEAN_BIN:-$MIRRORS/.lake/build/bin/mirror}"
 ECMA="${ECMA_REPO:-$MIRRORS/../MirrorECMA}"
 CPP="${CPP_REPO:-$MIRRORS/../MirrorCPP}"
 RUST="${RUST_REPO:-$MIRRORS/../MirrorRust}"
+LEAN_CLIENT="${LEAN_CLIENT_REPO:-$MIRRORS/../MirrorLean}"
 HS="${HS_REPO:-$MIRRORS/../ModelMirrors}"
 APALACHE_MC_BIN="${APALACHE_MC:-$(command -v apalache-mc || true)}"
 RF="$MIRRORS/.golden-build/rf"
 
 cd "$MIRRORS"
 source tools/ci/versions.env
-for checkout in "$ECMA" "$CPP" "$RUST" "$HS"; do
+for checkout in "$ECMA" "$CPP" "$RUST" "$LEAN_CLIENT" "$HS"; do
   if [[ ! -d "$checkout" ]]; then
     echo "missing client checkout: $checkout" >&2
     exit 1
@@ -34,7 +35,7 @@ fi
 export HS_BIN LEAN_BIN HS_REPO="$HS" APALACHE_MC="$APALACHE_MC_BIN"
 
 echo "== revisions and tool versions =="
-for checkout in "$MIRRORS" "$ECMA" "$CPP" "$RUST" "$HS"; do
+for checkout in "$MIRRORS" "$ECMA" "$CPP" "$RUST" "$LEAN_CLIENT" "$HS"; do
   printf '%s: %s\n' "$checkout" "$(git -C "$checkout" rev-parse HEAD)"
   git -C "$checkout" status --short
 done
@@ -50,8 +51,8 @@ cmake --version
 cc --version
 openssl version
 if [[ "${INTEROP_VERIFY_PINS:-0}" == 1 ]]; then
-  for entry in "$ECMA:${ECMA_REF:-$ECMA_BASELINE}" "$CPP:$CPP_BASELINE" \
-    "$RUST:$RUST_BASELINE" "$HS:$HS_BASELINE"; do
+  for entry in "$ECMA:${ECMA_REF:-$ECMA_BASELINE}" "$CPP:${CPP_REF:-$CPP_BASELINE}" \
+    "$RUST:${RUST_REF:-$RUST_BASELINE}" "$LEAN_CLIENT:${LEAN_CLIENT_REF:-$LEAN_CLIENT_BASELINE}" "$HS:$HS_BASELINE"; do
     checkout="${entry%:*}"
     expected="${entry##*:}"
     [[ "$(git -C "$checkout" rev-parse HEAD)" == "$expected" ]] || {
@@ -137,6 +138,9 @@ echo "== MirrorRust conformance: unit/golden + real stdio/TCP/mTLS/registry =="
   MIRRORS_FIXTURES="$MIRRORS/test/fixtures" \
   MIRROR_BIN="$LEAN_BIN" SPEC="$MIRRORS/specs/Counter.tla" \
   cargo test --locked -- --nocapture)
+
+echo "== MirrorLean conformance: root + native TCP/mTLS =="
+bash "$MIRRORS/tools/interop/lean-client.sh"
 
 echo "== Haskell validate client over TCP =="
 # The mirror shells out to apalache, which writes _apalache-out/ under its

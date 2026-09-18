@@ -1,0 +1,86 @@
+{
+  "date": "2026-09-18T07:33:23.974231+00:00",
+  "scope": "Base client conformance and preservation of existing C++ compiled MI profile",
+  "serverRevision": "bdc5fd912b48fbf42ac4927903852a2658be7a49",
+  "serverBinarySha256": "ad1f0219ddc40583ac9ed0b6c6d7832bae3a0de8be850794e6fbff776fcc9714",
+  "clients": {
+    "MirrorCPP": {
+      "base": "43ccf38d2f3ecd8867f1d0411d2cc90b12d0e0b9",
+      "files": {
+        "README.md": "888afbe530b8f69e5b900669a6c4290ef9daf530c82ddd5d900a90c744518453",
+        "include/mirrorcpp/client.hpp": "cf77f0c95e3afebd4d1fef6ac8fc433d7841f416d56a40aa343d345e16507685",
+        "src/client.cpp": "dbb165ca4c122882e9cf7949a709424f09540483ee38350146a58e5846d1f4b5",
+        "test/fixtures/client-conformance/async-replies.json": "5a8f2d2de67947458ffcf4a901efc045c71e156874e85f05eda4b8d3a0a6a445",
+        "test/integration/async_jobs_test.cpp": "455f2a08952f81d250387489c5a0c541e900fc202db4dbf4ea7e6b01f3c2b1b2",
+        "test/integration/fake_mirror_async.py": "5bc77dedb808620707472c6afd731548129fae442915e5f34c909e78ea7f309f"
+      }
+    },
+    "MirrorLean": {
+      "base": "dab072385332cf1afd747b749e4f1b03cb5b80c9",
+      "files": {
+        "MirrorLean.lean": "7cc74cc54bf2d90df1b6070c69e8354a10661679b3877cc9a32ad3b246e17cd9",
+        "MirrorLean/Async.lean": "c3a7738cb14fb2d0a4f9066cdfbaeacd826ceff5044860938c275c958b349d93",
+        "MirrorLean/Client.lean": "7f04247f2cec5290df372841722e5717986e854fcf877bf99db252b14a178530",
+        "MirrorLean/ServerMode.lean": "e2aa0b2ad1358361baa5ab861466e87911be5ff81cde4536e7f1cdf8762cc6a2",
+        "MirrorLean/Transport.lean": "f3ad1c36ad0d52837ae0d3443f654ebcff75eb360a7102aef17868548d1dfa26",
+        "README.md": "206dc6a2bc91d6ab44d305b39bd3cdbde51d9f983d9225d02888cd0144f3966b",
+        "lakefile.toml": "674d803ee66072797d5d0192ef0e4fbc4ffa7e47ab51d029ff78064646792490",
+        "server-mode/Test/ServerModeSmoke.lean": "3e9200500fb835384cc7093448c8be4b8e6753dec952b0c960ae580a2247af9f",
+        "server-mode/lakefile.lean": "651df1d4a6a3951add65eaab11733517eefc45a7a9b9439a8469e33121bd4f0b",
+        "test/Async.lean": "ebe19169b2aea10bd682c32a2a983af326237d2488a9fc5e00f606b018a042d0",
+        "test/AsyncSupport.lean": "637f40100cca1de221cd512fe95a1b546334d6d3f88e363f2b0a3491c45bc5de",
+        "test/Main.lean": "6bb4072d4d896d024fdd5bb64cf1910cf41b7e39c3b52ff7cab0cf37d6e5104b",
+        "test/fixtures/client-conformance/async-replies.json": "5a8f2d2de67947458ffcf4a901efc045c71e156874e85f05eda4b8d3a0a6a445"
+      }
+    },
+    "MirrorRust": {
+      "base": "65b6c834d53d63357e4155962fd4cb607315c33e",
+      "files": {
+        "README.md": "3ac74ad00587080beb5d2f23e3b4eeefd6ad52e7c173c102110d6ed52736c6ce",
+        "src/client.rs": "c8ed4a43c945bbe25a4695276edf34d892d399768fae422eb0832d1853f1d19e",
+        "tests/async.rs": "e2ea17017ee82b3eec701479fd0cf1140dccd4d5302309b1d8004b8045116d25",
+        "tests/fixtures/client-conformance/async-replies.json": "5a8f2d2de67947458ffcf4a901efc045c71e156874e85f05eda4b8d3a0a6a445"
+      }
+    }
+  },
+  "validation": {
+    "cpp": {
+      "initialFullCtest": "216/218 passed; misplaced exploration guard corrected",
+      "affectedRerun": "18/19 passed including real_mirror_hourclock; remaining failure was fake-server startup race",
+      "finalAsyncRerun": "17/17 passed after bounded readiness retry",
+      "packaging": "passed in initial full CTest",
+      "logs": [
+        "/tmp/three-client-conformance.log",
+        "/tmp/mirrorcpp-final-tests.log",
+        "/tmp/mirrorcpp-async-final.log"
+      ]
+    },
+    "rust": {
+      "result": "53 tests passed; includes live stdio, TCP/mTLS, async lifecycle, TLS negatives and canonical fixtures",
+      "log": "/tmp/mirrorrust-all.log"
+    },
+    "lean": {
+      "result": "118 root tests passed; stdio smoke, async TCP/shared vectors, native TLS tests, 13 discovery tests, and mTLS flows including concurrent jobs passed",
+      "log": "/tmp/mirrorlean-all.log"
+    },
+    "shared": [
+      "fixture copies byte-identical",
+      "shell syntax passed",
+      "workflow YAML parses",
+      "changed documentation paths resolve",
+      "all git diff --check passed"
+    ]
+  },
+  "limitations": [
+    "Apalache 0.57.0 installed locally; pinned CI version not exercised",
+    "Full multi-language Node/Haskell interop not run",
+    "No hosted CI, Windows client validation or heap-leak proof claimed",
+    "Optional new MI bindings and native Gate facades remain separate"
+  ],
+  "delegation": "Three general-purpose-flash agents spawned; delegation failed to produce task-directed edits; root implemented and validated changes.",
+  "publishedClientCommits": {
+    "MirrorCPP": "c2549d6af3cc4a1a39a120214977bf44b0c61429",
+    "MirrorLean": "198a0631f28e4a1bccac390287dfac5c999c5c52",
+    "MirrorRust": "68e36e4f33e5c4c3b6a44e43f1420d5c219691d4"
+  }
+}
