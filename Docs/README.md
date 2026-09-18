@@ -100,3 +100,6 @@ counts, remote paths, and deployed binary identities must be reverified before
 being used as evidence about a current deployment. The
 [semantic notation guide](semantic-notation.md) defines the notation used in
 the design documents; it is not an additional runtime protocol.
+
+- [Concurrent async server resource E2E](async-server-resource-e2e.md): live mTLS
+  concurrency, cleanup assertions, and bounded RSS growth regression.

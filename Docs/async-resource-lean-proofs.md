@@ -140,3 +140,7 @@ also now records unexpected scenario exceptions as failures. The final live runs
 passed after both corrections. The full `lake test` aggregate and Windows
 deployment were not performed; raw logs remain temporary, while this summary is
 retained in the repository.
+
+The [concurrent server E2E](async-server-resource-e2e.md) checks the effectful mTLS
+validation path through repeated completion, cancellation, and disconnect batches,
+including process, temporary directory, descriptor, job eviction, and RSS checks.

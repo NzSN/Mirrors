@@ -599,6 +599,17 @@ script test do
   if out10.exitCode != 0 then
     IO.println s!"async_spec FAILED ({out10.exitCode})"
     return out10.exitCode
+  -- Opt-in live Linux soak: real mTLS/Apalache processes and /proc accounting.
+  if (← IO.getEnv "MIRRORS_ASYNC_RESOURCE_E2E") == some "1" then
+    let soak ← IO.Process.output
+      ({ cmd := "python3", args := #["tools/check-async-server-resources.py",
+          "--evidence", "/tmp/mirrors-async-server-resources.json"],
+         env := match apalacheMc? with
+                | some p => #[("APALACHE_MC", some p)]
+                | none => #[] } : IO.Process.SpawnArgs)
+    IO.println soak.stdout
+    IO.eprintln soak.stderr
+    if soak.exitCode != 0 then return soak.exitCode
   IO.println "ALL LAKE TESTS GREEN"
   return 0
 
