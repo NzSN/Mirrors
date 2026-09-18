@@ -689,13 +689,13 @@ stricter wildcard SAN scope; case-insensitive `--pin`.
    client (MirrorECMA, TypeScript) exercising stdio + TCP + mTLS +
    registry + negatives end-to-end; `tools/interop/INTEROP.md` lists
    the matrix.
-4. **Load shape**: `stress300v2.py` (on r-windev,
-   `D:\ModelMirrors\tmp\`) is the reference concurrent driver: a
-   4-connection pool, mixed submit/await/cancel, 300 cycles — the
-   exact workload the server is stress-gated against.
+4. **Load and cleanup**: the repository-owned
+   [concurrent server E2E](async-server-resource-e2e.md) exercises real mTLS
+   completion, cancellation, disconnect, and resource recovery. The older
+   remote `stress300v2.py` run is historical evidence, not a portable gate.
 5. **Self-check against the mirror's own client**: `mirror validate
-   --host … --spec …` is a minimal conforming client of the sync
-   validate flow; diff your client's exchange against it.
+   --host … --spec …` is a minimal conforming validation client; add `--async` for
+   submission and polling. Diff your client's exchange against it.
 6. **Negotiation codec and gate**: `tools/ModelInterfaceSpec.lean` and
    `tools/ModelInterfaceDistributionSpec.lean` cover strict objects, all policy
    statuses, legacy byte identity, authorization, caching, resource limits,
@@ -735,7 +735,7 @@ section's Mirrors wire tests alone does not establish sandbox support.
 
 | Client | Language | Exercises |
 | ------ | -------- | --------- |
-| `mirror validate` (this repo) | Lean 4 | sync validate over TCP/mTLS, registry discovery, pinning |
+| `mirror validate` (this repo) | Lean 4 | sync/async validate over TCP/mTLS, recursive source delivery, registry discovery, pinning |
 | MirrorECMA (`test/smoke.test.ts`, `test/model-interface-*.ts`) | TypeScript | stdio/TCP/mTLS, registry, TLS negatives, D3 compiled verification, D4 dynamic descriptor/cache replay |
 | MirrorCPP (`test/unit/model_interface_test.cpp`, `test/unit/generated_model_interface_test.cpp`, `test/integration/real_mirror_test.cpp`) | C++23 | stdio/TCP/mTLS, registry/TLS negatives, D5 static exact-digest verification and generated Counter replay |
 | Haskell `ModelMirrors validate` | Haskell | the reference wire consumer |

@@ -1,5 +1,8 @@
 # Integrating an application
 
+Deploying or using a server on another machine? Read the [remote server runbook](remote-server-guide.md)
+for setup, mTLS, async validation, suite path rules, and troubleshooting.
+
 The supported first path is Node ESM, generated asynchronous bindings and a
 checked trace corpus. Local execution uses MirrorECMA with a compatible Mirrors
 server and requires no Gate package. Restricted execution adds MirrorGate's Linux/Bubblewrap environment and its optional MirrorECMA

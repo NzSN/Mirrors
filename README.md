@@ -1,5 +1,8 @@
 # Mirrors
 
+For application onboarding, start with the [application integration guide](Docs/application-integration-guide.md).
+For deployment and client connections across machines, use the [remote server guide](Docs/remote-server-guide.md).
+
 Mirrors is the Lean 4 port of the
 [ModelMirrors](https://github.com/NzSN/ModelMirros) mirror: a conformance
 checker that connects client state machines to the

@@ -1,5 +1,7 @@
 # Mirrors — Supported Interface Reference
 
+For an end-to-end deployment and client walkthrough, see the [remote server guide](remote-server-guide.md).
+
 > The complete client-facing interface of the Lean 4 mirror, with exact
 > wire shapes (pinned by `test/fixtures/*.jsonl`, the golden corpus every
 > message is byte-verified against). Covers both the **synchronous** flows
@@ -18,7 +20,7 @@
 | stdio (default) | `mirror` | stdin/stdout, newline-delimited | **sync only** — one register flow per process |
 | TCP daemon | `mirror --serve <port> [--bind <addr>] [--jobs N]` | plain TCP, JSONL | **async** — one session per connection, concurrent |
 | mTLS daemon | `mirror --server <port> --tls --cert C --key K --ca A [--registry URL] [--jobs N] [--bind B] [--model-interface-allow-client FP[,FP...]] [--model-interface-descriptor-read]` | TLS 1.3, mutual auth, JSONL | **async** — one session per connection, concurrent |
-| validate client | `mirror validate --host H --port P [--tls …] [--pin FP] --spec S.tla` | outgoing TCP/mTLS | client of the sync validate flow |
+| validate client | `mirror validate --host H --port P [--tls …] [--pin FP] --spec S.tla` | outgoing TCP/mTLS | sync validation by default; `--async` submits and awaits a server job |
 
 `--version` is a standalone mode: it needs no model, Apalache process, or
 server configuration. It writes nothing to stderr and exits with status `0`.

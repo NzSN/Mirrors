@@ -1,5 +1,8 @@
 # Mirrors documentation
 
+Remote deployment and client operation: [remote server guide](remote-server-guide.md).
+Latest recorded Windows rollout: [2026-09-18 deployment](windows-deployment-20260918.md).
+
 Current application-integration inventory reviewed on 2026-09-17 at Mirrors
 `bc6eb7c`, MirrorECMA `9942248`, and MirrorGate `1388526`. This index describes the
 implemented interfaces and where to find their evidence; it does not certify

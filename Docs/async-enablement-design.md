@@ -1,9 +1,11 @@
 # Async Operations Enablement — Design
 
+For current operator guidance and deployment evidence, see [remote server guide](remote-server-guide.md).
+
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
 > Status: **implemented** (t31 server wiring, superseded by the t33 connection
-> pool on both Linux and Windows). Current source checked 2026-09-08; the
+> pool on both Linux and Windows). Current resource lifecycle updated 2026-09-18; the
 > Windows incident and rollout sections retain their historical evidence.
 > Scope: expose the already-built, already-proven async job machinery —
 > validate-only (`register_validate_async`) and trace-gen-only
@@ -88,8 +90,16 @@ execution slots.
 | Session teardown cancels its jobs, then ids evict to `JobUnknown` | `runAsync`'s `endSession`: `cancelJob` followed by `evictJob` for each owned id |
 | apalache child dies on cancel | `CancelToken` + `runApalacheCancellable` (t13) |
 
-**No changes to `Core.Jobs`, the proofs, or the codec.** This is
-wiring + configuration only — the theorems keep compiling unmodified.
+The original t31 enablement changed wiring and configuration without changing
+`Core.Jobs` or wire codecs. The later resource-safety work adds
+`Core.AsyncResources` and `Core.AsyncOwnership`, proof-backed runtime guards,
+finally-based owner cleanup, and nested acquisition/release scopes. See the
+[Lean proof boundary](async-resource-lean-proofs.md) and
+[server E2E](async-server-resource-e2e.md). Logical cancellation and eviction do
+not release a worker permit early: the body retains it until it physically ends.
+The cancellation token survives metadata eviction, and late child-hook
+registration observes cancellation. These resource changes preserve the wire
+protocol; they are not a proof of the entire effectful shell.
 
 ## 4. Deliberate non-goals / parity decisions
 

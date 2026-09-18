@@ -1,5 +1,8 @@
 # Product versions and local installation
 
+For operating an installed executable as a remote service, see the [remote server guide](remote-server-guide.md)
+and [dated Windows deployment record](windows-deployment-20260918.md).
+
 Mirrors, MirrorECMA, and MirrorGate use [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 Each repository has its own release sequence, starting from the `0.0.1`
 baseline. Version numbers use `MAJOR.MINOR.PATCH`; annotated Git tags use

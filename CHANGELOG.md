@@ -4,6 +4,28 @@ All notable changes to the Lean 4 port of ModelMirrors. The port target is
 byte-for-byte JSON-lines wire compatibility with ModelMirros@3496251
 (Haskell); divergences are listed as ACCEPTED with rationale.
 
+## Remote validation and async resource safety (2026-09-18)
+
+- Validation CLI recursively sends the entry module's TLA+ dependency closure;
+  `--dep FILE` supports modules outside sibling directories. Requests retain the
+  65,535-byte JSONL limit.
+- `validate --async` submits and awaits on the owner connection, preserving
+  valid/invalid/error exit codes. Disconnect cancels and evicts owned jobs.
+- Async resource ownership is modeled in TLA+ and proved in Lean, with checked
+  per-job and cancellation transitions used by the runtime. Cleanup fixes cover
+  session exits, partial acquisition, late cancellation, hook retirement and
+  worker permits retained through physical completion. Whole-shell refinement
+  and unconditional runtime leak-freedom are not claimed.
+- A real concurrent mTLS server regression checks completion, cancellation,
+  disconnect, job eviction, child/temp cleanup, descriptor recovery and bounded
+  RSS growth. It is an optional Linux gate, not a Windows heap-leak test.
+- Commit `f5f1985` was deployed and accepted on the Windows ModelMirrors service;
+  the [dated deployment record](Docs/windows-deployment-20260918.md) identifies
+  the executable and rollback copy. Product version remains `0.0.2`.
+- [Remote server setup](Docs/remote-server-guide.md) and the
+  [application guide](Docs/application-integration-guide.md) connect Mirrors,
+  MirrorECMA and Gate usage without conflating server jobs with SUT operations.
+
 ## t33 — worker-pool server concurrency on both platforms; Defect D fixed + deployed (2026-08-31)
 
 - --serve/--server accept loops are bounded worker pools on BOTH

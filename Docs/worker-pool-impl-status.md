@@ -1,5 +1,7 @@
 # t33 Worker-Pool — Implementation Status & Validation Blockers
 
+For current operator guidance and deployment evidence, see [2026-09-18 Windows deployment](windows-deployment-20260918.md).
+
 > **Dated implementation and deployment ledger (August 2026).** Commit IDs,
 > test counts, binaries, and remote paths below belong to those recorded runs.
 > No current Windows deployment or upstream issue status is asserted by this

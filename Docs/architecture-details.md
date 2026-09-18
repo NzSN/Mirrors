@@ -92,6 +92,20 @@ hold **by construction**. §6.4: terminal phases absorbing, outcome
 congruence with the sync `RegisterValidate` flow, bound enforcement
 [1,100] on both paths.
 
+### Core.AsyncResources / Core.AsyncOwnership — async resource safety
+The per-job resource and cancellation machines carry erased reachability proofs.
+The store executes their checked transitions and proved admission/lookup/eviction
+primitives. The global model proves slot ownership, closed-owner eviction and
+balanced accounting at quiescence for arbitrary finite populations and histories.
+Worker permits remain held until the body ends, including after logical
+cancellation or metadata eviction. Child generations support sequential Apalache
+processes without treating reacquisition as a duplicate release.
+
+The shell must still acknowledge real OS cleanup correctly; the global model is
+not a production shadow table and no complete shell-refinement or Lean liveness
+proof is claimed. See [proof scope](async-resource-lean-proofs.md) and the
+[effectful server regression](async-server-resource-e2e.md).
+
 ### Core.Resource — lifecycle model
 The abstract resource carries a value, a label, a lifecycle state in
 `{Live, Delivered, Released, ReleaseFailed}`, and `Owned` or `Borrowed`
