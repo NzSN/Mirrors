@@ -35,27 +35,42 @@ namespace Shell.Apalache
 
 open Shell.Apalache.Cli Shell.Apalache.SpecSource Shell.Apalache.Explorer
 
-/-- Run one job body with the standard per-job scaffolding: acquire the
-spec (release on cancel), create the session dir (removal on cancel),
-absolutize nothing here (the Cli layer does), then clean up on the way
-out. -/
+/-- Consume an acquired spec, then bracket the run-directory acquisition and
+body independently. The injected directory action is the acquisition boundary
+used by regression tests; production passes `freshSessionDir`. Cancellation
+kills the child through its token hook; directories unwind after collection. -/
+def withAcquiredJobScope {α : Type} (token : Shell.Jobs.CancelToken)
+    (res : SpecRes) (cfg : Codec.ApalacheConfig) (createDirectory : IO String)
+    (body : Codec.ApalacheConfig → String → IO (Except String α)) :
+    IO (Except String α) := do
+  let specTracked ← IO.mkRef false
+  try
+    if res.provenance == .Owned then
+      token.resourceEvent (.acquire .spec)
+      specTracked.set true
+    if ← token.isCancelled then return .error "job cancelled during resource acquisition"
+    let dir ← createDirectory
+    let directoryTracked ← IO.mkRef false
+    try
+      token.resourceEvent (.acquire .directory)
+      directoryTracked.set true
+      if ← token.isCancelled then return .error "job cancelled during resource acquisition"
+      body cfg dir
+    finally
+      removeSessionDir dir
+      if ← directoryTracked.get then token.resourceEvent (.release .directory)
+  finally
+    releaseSpec res
+    if ← specTracked.get then token.resourceEvent (.release .spec)
+
 private def withJobResources (token : Shell.Jobs.CancelToken)
     (cfg : Codec.ApalacheConfig) (spec : Option Codec.SpecConfig)
-    (body : Codec.ApalacheConfig → String →
-      IO (Except String Codec.ValidateResult)) :
+    (body : Codec.ApalacheConfig → String → IO (Except String Codec.ValidateResult)) :
     IO (Except String Codec.ValidateResult) := do
+  if ← token.isCancelled then return .error "job cancelled before resource acquisition"
   match ← acquireSpec spec cfg with
   | .error e => return .error e
-  | .ok (res, cfg') =>
-      let dir ← freshSessionDir
-      token.onCancel do
-        releaseSpec res
-        removeSessionDir dir
-      let r ← try body cfg' dir
-        finally
-          releaseSpec res
-          removeSessionDir dir
-      return r
+  | .ok (res, cfg') => withAcquiredJobScope token res cfg' freshSessionDir body
 
 /-- The async-job runner backed by real apalache (validate) and by file
 trace generation (gen-traces; returns the trace contents read back from
@@ -65,37 +80,20 @@ def jobRunner : Shell.Jobs.Runner where
     withJobResources token cfg spec (fun cfg' dir =>
       validateSpecVia (runApalacheCancellable token) (some dir) cfg' bound)
   genTraces := fun cfg spec tc token => do
+    if ← token.isCancelled then return .error "job cancelled before resource acquisition"
     match ← acquireSpec spec cfg with
     | .error e => return .error e
     | .ok (res, cfg') =>
-        let dir ← freshSessionDir
-        token.onCancel do
-          releaseSpec res
-          removeSessionDir dir
-        -- t31: the file read-back must happen INSIDE the try, before the
-        -- finally removes the session dir (reading after the finally
-        -- raced the directory deletion and crashed the job body)
-        -- t4: cancellable spawn (generateTraceFilesVia + the cancellable
-        -- runner) so a cancelled trace-gen terminates the apalache child
-        -- (Kill wiring identical to the validate path).
-        let r ← try
+        withAcquiredJobScope token res cfg' freshSessionDir fun cfg' dir => do
           match ← generateTraceFilesVia (runApalacheCancellable token) (some dir) cfg' tc with
           | .error e => pure (.error e)
-          | .ok (_, paths) =>
-              -- read the generated files back as raw ITF values (parity:
-              -- the client receives the file contents)
-              do
-                let contents ← paths.mapM (fun (p : String) => do
-                  let txt ← IO.FS.readFile p
-                  match Lean.Json.parse txt with
-                  | .error _ => pure none
-                  | .ok j => pure ((Codec.decodeValue j).toOption))
-                pure (.ok (⟨paths, contents.filterMap id⟩ :
-                  Codec.TraceGenResult))
-        finally
-          releaseSpec res
-          removeSessionDir dir
-        return r
+          | .ok (_, paths) => do
+              let contents ← paths.mapM (fun (p : String) => do
+                let txt ← IO.FS.readFile p
+                match Lean.Json.parse txt with
+                | .error _ => pure none
+                | .ok j => pure ((Codec.decodeValue j).toOption))
+              pure (.ok (⟨paths, contents.filterMap id⟩ : Codec.TraceGenResult))
 
 /-! ## The explorer flows (Haskell MkExploreMirror / MkExploreSession) -/
 

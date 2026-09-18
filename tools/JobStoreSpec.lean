@@ -328,6 +328,154 @@ def scenarioEviction (fails : Failures) : IO Unit := do
     check fails "evict: unknown after" (ph1 == .jobUnknown) (toString (repr ph1))
     check fails "evict: outcome dropped" out?.isNone (toString (repr out?))
 
+/-- Every async-session exit must drain only its own submitted jobs. -/
+def scenarioSessionExitCleanup (fails : Failures) : IO Unit := do
+  for mode in ["sync_done", "send_error", "recv_error"] do
+    let store ← Shell.Jobs.newJobStoreWith 4 fakeOkRunner
+    let other ← Shell.Jobs.submitValidateJob store hcCfg 1 none
+    let received ← IO.mkRef (0 : Nat)
+    let transport : Shell.Transport.Transport := {
+      recv := do
+        let n ← received.get
+        received.set (n + 1)
+        if n == 0 then
+          return some (Lean.Json.compress (Codec.encodeClient (.registerValidateAsync hcCfg 1 none)))
+        if mode == "recv_error" then throw (IO.userError "injected receive failure")
+        if n == 1 then
+          return some (Lean.Json.compress (Codec.encodeClient (.register hcCfg none hcTc)))
+        if n == 2 && mode == "sync_done" then
+          return some (Lean.Json.compress (Codec.encodeClient
+            (.reportState [("action_taken", .vstr "Init")])))
+        return none
+      send := fun _ =>
+        if mode == "send_error" then throw (IO.userError "injected send failure") else pure () }
+    let oracles : Shell.Mirror.Oracles := { Shell.Mirror.stubOracles with
+      generateTraces := fun _ _ _ _ _ => pure (.ok { traces := [
+        { traceVars := [], paramVars := [], traceParams := [],
+          traceStates := [{ actionTaken := "Init", parameters := [], stateVars := [] }] }] }) }
+    try Shell.Mirror.runAsync transport oracles store catch _ => pure ()
+    let (ownPhase, _) ← Shell.Jobs.queryJob store { text := "job-1" }
+    check fails s!"session cleanup: {mode} evicts own job" (ownPhase == .jobUnknown)
+    match other with
+    | .error e => check fails "session cleanup: other submission" false e
+    | .ok jid =>
+      let (phase, _) ← Shell.Jobs.queryJob store jid
+      check fails s!"session cleanup: {mode} preserves other owner" (phase != .jobUnknown)
+    Shell.Jobs.closeJobStore store
+
+/-- Cancellation cannot lose a late hook or replace an earlier registration. -/
+def scenarioCancellationOwnership (fails : Failures) : IO Unit := do
+  let tokenRef ← IO.mkRef (none : Option Shell.Jobs.CancelToken)
+  let release ← IO.mkRef false
+  let called ← IO.mkRef (0 : Nat)
+  let runner : Runner := { fakeOkRunner with validate := fun _ _ _ token => do
+    token.onCancel (called.modify (· + 1))
+    token.onCancel (called.modify (· + 1))
+    tokenRef.set (some token)
+    while !(← release.get) do IO.sleep 2
+    return .ok .valid }
+  let store ← Shell.Jobs.newJobStoreWith 1 runner
+  let .ok jid ← Shell.Jobs.submitValidateJob store hcCfg 1 none
+    | check fails "cancellation ownership: submit" false; return
+  let mut attempts := 0
+  while (← tokenRef.get).isNone && attempts < 1000 do
+    IO.sleep 2
+    attempts := attempts + 1
+  match ← tokenRef.get with
+  | none => check fails "cancellation ownership: runner started" false
+  | some token =>
+    Shell.Jobs.cancelJob store jid
+    check fails "cancellation ownership: all registered callbacks ran" ((← called.get) == 2)
+    token.onCancel (called.modify (· + 1))
+    check fails "cancellation ownership: late registration ran immediately" ((← called.get) == 3)
+    Shell.Jobs.cancelJob store jid
+    check fails "cancellation ownership: repeated cancel is once-only" ((← called.get) == 3)
+  release.set true
+  Shell.Jobs.closeJobStore store
+
+/-- A cancelled but still executing worker retains its physical slot. -/
+def scenarioCancelledWorkerSlot (fails : Failures) : IO Unit := do
+  let entered ← IO.mkRef (0 : Nat)
+  let release ← IO.mkRef false
+  let runner : Runner := { fakeOkRunner with validate := fun _ _ _ _ => do
+    let n ← entered.get
+    entered.set (n + 1)
+    if n == 0 then
+      while !(← release.get) do IO.sleep 2
+    return .ok .valid }
+  let store ← Shell.Jobs.newJobStoreWith 1 runner
+  let .ok first ← Shell.Jobs.submitValidateJob store hcCfg 1 none
+    | check fails "worker slot: submit first" false; return
+  let mut tries := 0
+  while (← entered.get) == 0 && tries < 1000 do
+    IO.sleep 2
+    tries := tries + 1
+  Shell.Jobs.cancelJob store first
+  let second ← Shell.Jobs.submitValidateJob store hcCfg 1 none
+  IO.sleep 50
+  check fails "worker slot: cancelled worker still owns slot" ((← entered.get) == 1)
+  release.set true
+  match second with
+  | .error e => check fails "worker slot: submit second" false e
+  | .ok jid =>
+    check fails "worker slot: next worker eventually proceeds"
+      (isOkOutcome (.validate .valid) (← Shell.Jobs.awaitJob store jid (some 5)))
+  Shell.Jobs.closeJobStore store
+
+def scenarioCancellationFailureAndRetirement (fails : Failures) : IO Unit := do
+  let token ← Shell.Jobs.CancelToken.new
+  let calls ← IO.mkRef (0 : Nat)
+  let retire ← token.registerCleanup (calls.modify (· + 100))
+  retire
+  token.onCancel (calls.modify (· + 1))
+  token.onCancel (throw (IO.userError "injected cleanup failure"))
+  token.onCancel (calls.modify (· + 1))
+  let failed ← try token.cancel; pure false catch _ => pure true
+  check fails "cleanup callbacks: error reported after all attempts" failed
+  check fails "cleanup callbacks: retired hook excluded, other hooks attempted" ((← calls.get) == 2)
+  token.cancel
+  check fails "cleanup callbacks: throwing hooks are not repeated" ((← calls.get) == 2)
+
+/-- Integration guard: the live token must reject the same invalid sequences
+that the proved machine rejects, rather than merely carrying an unused model. -/
+def scenarioProvedResourceGuard (fails : Failures) : IO Unit := do
+  let token ← Shell.Jobs.CancelToken.newTracked true
+  let rejects (event : Core.AsyncResources.Event) : IO Bool := do
+    try token.resourceEvent event; return false catch _ => return true
+  check fails "proved guard: resource before worker rejected" (← rejects (.acquire .directory))
+  token.resourceEvent .start
+  token.resourceEvent (.acquire .spec)
+  token.resourceEvent (.acquire .directory)
+  token.resourceEvent (.acquire .child)
+  token.cancel
+  let stops ← IO.mkRef (0 : Nat)
+  let retire ← token.registerChildCleanup (stops.modify (· + 1))
+  check fails "proved guard: late child registration requests stop" ((← stops.get) == 1)
+  check fails "proved guard: no successful verdict with live resources" (← rejects (.publish .valid))
+  check fails "proved guard: no false quiescence with live resources" (← rejects .settle)
+  retire
+  token.resourceEvent (.release .child)
+  check fails "proved guard: duplicate release rejected" (← rejects (.release .child))
+  -- Validation invokes typecheck and check as separate sequential processes.
+  token.resourceEvent (.acquire .child)
+  let retireSecond ← token.registerChildCleanup (stops.modify (· + 1))
+  check fails "proved guard: second child receives late cancellation" ((← stops.get) == 2)
+  retireSecond
+  token.resourceEvent (.release .child)
+  token.resourceEvent (.release .directory)
+  token.resourceEvent (.release .spec)
+  token.resourceEvent (.publish .cancelled)
+  token.resourceEvent .settle
+  match ← token.resourceSnapshot with
+  | none => check fails "proved guard: accounting enabled" false
+  | some job =>
+    check fails "proved guard: settled ledger has no live resources"
+      (job.slot == .released && job.stage == .settled &&
+       job.resources .spec == .released && job.resources .directory == .released &&
+       job.resources .child == .released && job.childGeneration == 1 &&
+       job.acquisitions .child == 2 && job.releases .child == 2)
+  check fails "proved guard: settled worker cannot reacquire" (← rejects (.acquire .directory))
+
 def main : IO UInt32 := do
   let fails ← IO.mkRef ([] : List String)
   let run (name : String) (s : Failures → IO Unit) := do
@@ -343,6 +491,11 @@ def main : IO UInt32 := do
   run "close" scenarioClose
   run "awaitTimeout" scenarioAwaitTimeout
   run "eviction" scenarioEviction
+  run "session-exit-cleanup" scenarioSessionExitCleanup
+  run "cancellation-ownership" scenarioCancellationOwnership
+  run "cancelled-worker-slot" scenarioCancelledWorkerSlot
+  run "cancellation-failure-retirement" scenarioCancellationFailureAndRetirement
+  run "proved-resource-guard" scenarioProvedResourceGuard
   let fs ← fails.get
   if fs.isEmpty then
     IO.println "JOBSTORE PARITY GREEN"

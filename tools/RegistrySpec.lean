@@ -144,6 +144,12 @@ def main : IO UInt32 := do
   check f "server opts: unknown" (so4 |> isErr)
   let vo1 := parseValidateOpts ["--host", "h", "--port", "1", "--spec", "s"]
   check f "validate: direct happy" (vo1.map (fun o => (o.host, o.bound)) == .ok ("h", 10))
+  check f "validate: async defaults off" (vo1.map (·.asyncMode) == .ok false)
+  check f "validate: async enabled"
+    ((parseValidateOpts ["--host", "h", "--port", "1", "--spec", "s", "--async"]).map
+      (·.asyncMode) == .ok true)
+  check f "validate: duplicate async rejected"
+    (parseValidateOpts ["--host", "h", "--port", "1", "--spec", "s", "--async", "--async"] |> isErr)
   let vo2 := parseValidateOpts ["--registry", "http://r", "--spec", "s"]
   check f "validate: registry needs tls" (vo2 |> isErr)
   let vo3 := parseValidateOpts

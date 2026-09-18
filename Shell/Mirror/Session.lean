@@ -967,38 +967,41 @@ def runAsync (t : Shell.Transport.Transport) (orc : Oracles)
   let mine ← IO.mkRef ([] : List JobId)
   let endSession : IO Unit := do
     let ids ← mine.get
+    let mut firstError : Option IO.Error := none
     for jid in ids do
-      Shell.Jobs.cancelJob store jid
+      try Shell.Jobs.cancelJob store jid
+      catch error => if firstError.isNone then firstError := some error
       Shell.Jobs.evictJob store jid
-  let mut loop := true
-  while loop do
-    let line ← t.recv
-    match line with
-    | none =>
-        -- EOF: kill the session's jobs and end
-        endSession
-        loop := false
-    | some l =>
-      match Codec.StrictJson.parseString l with
-      | .error _ =>
-          sendError t invalidClientMessageError
-          endSession
+    if let some error := firstError then throw error
+  try
+    let mut loop := true
+    while loop do
+      let line ← t.recv
+      match line with
+      | none =>
+          -- EOF: kill the session's jobs and end
           loop := false
-      | .ok j =>
-        match Codec.ModelInterfaceDistributionJson.extractRegistrationRequest? j with
+      | some l =>
+        match Codec.StrictJson.parseString l with
         | .error _ =>
             sendError t invalidClientMessageError
-            endSession
             loop := false
-        | .ok interfaceRequest =>
-          match Codec.decodeClient j with
+        | .ok j =>
+          match Codec.ModelInterfaceDistributionJson.extractRegistrationRequest? j with
           | .error _ =>
               sendError t invalidClientMessageError
-              endSession
               loop := false
-          | .ok m =>
-              let keep ← dispatchAsync t sess orc store mine m interfaceRequest
-                interfaceAccess interfaceScope interfaceService
-              loop := keep
+          | .ok interfaceRequest =>
+            match Codec.decodeClient j with
+            | .error _ =>
+                sendError t invalidClientMessageError
+                loop := false
+            | .ok m =>
+                let keep ← dispatchAsync t sess orc store mine m interfaceRequest
+                  interfaceAccess interfaceScope interfaceService
+                loop := keep
+
+  finally
+    endSession
 
 end Shell.Mirror

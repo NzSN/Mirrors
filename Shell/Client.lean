@@ -48,4 +48,46 @@ def runClientValidate (t : Shell.Transport.Transport)
       | .protocolError e => return .error e
       | _ => return .error "unexpected message: expected spec_validated"
 
+/-- Keep the submitting connection alive and long-poll the exact accepted job.
+Only pending/running statuses are retryable; terminal failures and malformed
+correlations must not become an endless polling loop. -/
+private partial def awaitValidationJob (t : Shell.Transport.Transport)
+    (jobId : String) : IO (Except String Codec.ValidateResult) := do
+  sendMsg t (.awaitJob jobId (some 30))
+  match ← recvMsg t with
+  | .error error => return .error error
+  | .ok message =>
+    match message with
+    | .jobResult id outcome =>
+      if id != jobId then return .error "async validation job id mismatch"
+      match outcome with
+      | .validate result => return .ok result
+      | .infraError error => return .error error
+      | .genTraces _ => return .error "unexpected trace-generation result for validation job"
+    | .jobStatus id phase =>
+      if id != jobId then return .error "async validation job id mismatch"
+      match phase with
+      | .pending | .running => awaitValidationJob t jobId
+      | .cancelled => return .error "async validation job cancelled"
+      | .unknown => return .error "async validation job unknown or evicted"
+      | .done | .failed => return .error "async validation job ended without a result"
+    | .registerError error | .protocolError error => return .error error
+    | _ => return .error "unexpected message: expected async validation job result"
+
+/-- Submit async validation, then await its terminal verdict on the same
+connection. This is a waiting CLI workflow, not detached job submission. -/
+def runClientValidateAsync (t : Shell.Transport.Transport)
+    (cfg : Codec.ApalacheConfig) (bound : Nat) (spec : Option Codec.SpecConfig) :
+    IO (Except String Codec.ValidateResult) := do
+  sendMsg t (.registerValidateAsync cfg bound spec)
+  match ← recvMsg t with
+  | .error error => return .error error
+  | .ok message =>
+    match message with
+    | .jobAccepted jobId .validate =>
+      if jobId.isEmpty then return .error "empty async validation job id"
+      awaitValidationJob t jobId
+    | .registerError error | .protocolError error => return .error error
+    | _ => return .error "unexpected message: expected validation job_accepted"
+
 end Shell.Client

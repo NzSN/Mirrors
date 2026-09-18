@@ -250,6 +250,35 @@ def unitBorrowedClosureFailures (fails : Failures) : IO Unit := do
         (toString (repr sources))
   removeDirRecursive dir
 
+def unitClientSourceClosure (fails : Failures) : IO Unit := do
+  let dir ← freshSessionDir
+  let lib := dir ++ "/lib"
+  IO.FS.createDirAll lib
+  let root := dir ++ "/Main.tla"
+  IO.FS.writeFile root "---- MODULE Main ----\nEXTENDS Helper, Naturals\nI == INSTANCE Shared\n====\n"
+  IO.FS.writeFile (dir ++ "/Helper.tla") "---- MODULE Helper ----\nEXTENDS Shared\n====\n"
+  IO.FS.writeFile (dir ++ "/Shared.tla") "---- MODULE Shared ----\nEXTENDS Main\n====\n"
+  match ← resolveClientSources root with
+  | .error e => check fails "client closure: recursive graph" false e
+  | .ok spec =>
+    check fails "client closure: root first, diamond/cycle emitted once"
+      (spec.sources.map moduleName == [.ok "Main", .ok "Helper", .ok "Shared"])
+  IO.FS.removeFile (dir ++ "/Shared.tla")
+  checkClosureError fails "client closure: missing dependency" "missing sibling"
+    (← resolveClientSources root)
+  IO.FS.writeFile (lib ++ "/Shared.tla") "---- MODULE Shared ----\nEXTENDS Leaf\n====\n"
+  IO.FS.writeFile (lib ++ "/Leaf.tla") "---- MODULE Leaf ----\n====\n"
+  match ← resolveClientSources root [lib ++ "/Shared.tla"] with
+  | .error e => check fails "client closure: explicit dependency graph" false e
+  | .ok spec =>
+    check fails "client closure: explicit dependency siblings included"
+      (spec.sources.map moduleName == [.ok "Main", .ok "Helper", .ok "Shared", .ok "Leaf"])
+  checkClosureError fails "client closure: duplicate explicit module" "duplicate explicit"
+    (← resolveClientSources root [root])
+  checkClosureError fails "client closure: aggregate limit" "total byte limit"
+    (← resolveClientSources root [lib ++ "/Shared.tla"] { maxTotalBytes := 1 })
+  removeDirRecursive dir
+
 private def makeSourceSymlink (target link : System.FilePath) :
     IO (Except String Unit) := do
   let output ← IO.Process.output {
@@ -466,7 +495,8 @@ def unitUnifiedCaptureEquivalence (fails : Failures) : IO Unit := do
         text.contains "sourceTokens" || text.contains "codeOnlySource" then
       scannerCallers := scannerCallers ++ [file.toString]
   check fails "unified capture: retired scanners have no production caller"
-    (scannerCallers.mergeSort (· ≤ ·) == ["Shell/ModelInterface/SpecVariables.lean"])
+    ((scannerCallers.map (·.replace "\\" "/")).mergeSort (· ≤ ·) ==
+      ["Shell/ModelInterface/SpecVariables.lean"])
     (toString (repr scannerCallers))
 
 /-! ## Unit: args and output-dir parsing -/
@@ -773,8 +803,7 @@ def integration (fails : Failures) : IO Unit := do
         (runApalacheCancellable token (some runDir)
           (traceArgs (some runDir) hcCfg { numTraces := 10, view := none }))
       IO.sleep 3000
-      token.flag.set true
-      (← token.cleanup.get)
+      token.cancel
       let rRes : Except IO.Error ApalacheResult := task.get
       let r := rRes
       let elapsed ← IO.monoMsNow
@@ -787,17 +816,49 @@ def integration (fails : Failures) : IO Unit := do
       IO.Process.setCurrentDir repo
       removeDirRecursive scratch
 
+def unitAsyncAcquisitionCleanup (fails : Failures) : IO Unit := do
+  let hcCfg : Codec.ApalacheConfig := {
+    constInit := none, initPredicate := none, invariant := "Inv", lengthBound := 1,
+    nextPredicate := none, paramVars := "", specPath := "HourClock.tla" }
+  for mode in ["directory_failure", "body_failure", "cancelled"] do
+    let token ← Shell.Jobs.CancelToken.newTracked true
+    token.resourceEvent .start
+    let .ok (resource, cfg) ← acquireSpec (some { sources := [hcSrc] }) hcCfg
+      | check fails "async acquisition: acquire spec" false; return
+    let directory ← IO.mkRef (none : Option String)
+    if mode == "cancelled" then token.cancel
+    let result : Except IO.Error (Except String Codec.ValidateResult) ← try
+      pure (.ok (← Shell.Apalache.withAcquiredJobScope token resource cfg
+        (do
+          if mode == "directory_failure" then throw (IO.userError "injected directory failure")
+          let path ← freshSessionDir
+          directory.set (some path)
+          return path)
+        (fun _ _ => throw (IO.userError "injected body failure"))))
+      catch error => pure (.error error)
+    check fails s!"async acquisition: {mode} is not success"
+      (match result with | .ok (.ok _) => false | _ => true)
+    token.resourceEvent .settle
+    match resource.dir with
+    | none => check fails "async acquisition: spec is owned" false
+    | some path => check fails s!"async acquisition: {mode} releases spec" (!(← (System.FilePath.mk path).pathExists))
+    match ← directory.get with
+    | none => pure ()
+    | some path => check fails s!"async acquisition: {mode} releases run directory" (!(← (System.FilePath.mk path).pathExists))
+
 def main : IO UInt32 := do
   let fails ← IO.mkRef ([] : List String)
   let run (name : String) (s : Failures → IO Unit) := do
     IO.eprintln s!"[scenario {name}]"
     try s fails
-    catch e => IO.eprintln s!"EXCEPTION in {name}: {e}"
+    catch e => check fails s!"EXCEPTION in {name}" false (toString e)
   run "moduleName" unitModuleName
   run "materialize" unitMaterialize
   run "acquire" unitAcquire
   run "borrowed-counter-closure" unitBorrowedCounterClosure
   run "borrowed-recursive-closure" unitBorrowedRecursiveClosure
+  run "client-recursive-closure" unitClientSourceClosure
+  run "async-acquisition-cleanup" unitAsyncAcquisitionCleanup
   run "borrowed-closure-failures" unitBorrowedClosureFailures
   run "borrowed-closure-symlinks" unitBorrowedClosureSymlinks
   run "borrowed-trace-snapshot" unitBorrowedTraceSnapshot

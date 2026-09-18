@@ -1,0 +1,109 @@
+{
+  "schema": "mirrors.async-resource-lean-evidence/v1",
+  "date": "2026-09-18",
+  "sourceBase": "09379aeb7760da0d80487b28a6dd6a7fcf8b3609",
+  "sourceScope": "working tree; not committed or deployed",
+  "leanToolchain": "leanprover/lean4:v4.33.0",
+  "sourceSha256": {
+    "Core/AsyncResources.lean": "7eb1f11873964b3e9681ca9c59d4081a1905bbd4869f46ada8e504d5245c2199",
+    "Core/AsyncOwnership.lean": "a2ff0216c7f3a2a21eba76f4133fad3f934c7284e6e46c4b98a72cd8b362c580",
+    "Shell/Jobs/Store.lean": "3b5e530b947d18f5d65f6d1d3187fc55c2f31b58900c43286f22e1b96a238366",
+    "Shell/Apalache/Runner.lean": "9afe4fdd30bb1fb936ad893ad840563571e448ed13473acafb779eb7de37f84a",
+    "Shell/Apalache/Cli.lean": "432e122e259199d61abbcc406d0957315ee46b31dd3ce8c2f6a98a554822d36b",
+    "tools/AsyncResourceProofSpec.lean": "7812fe4034637d9044f59b746ee9ce798fdd5e3dd3265edbfe09861016293357",
+    "tools/JobStoreSpec.lean": "1bcbb552cdf8bc5e16745cda68fc2e30d7605232f57a44753e6ddee176aab328",
+    "tools/ApalacheCliSpec.lean": "04db225e2bbce79bce28f4a2a768eaf3f53d69f15d0fb512e2bf5ae178d3563a",
+    "lakefile.lean": "483d0ffa949751baa6e507f14fa4849471cc05309c178ef1681e61c6bac9b0cd"
+  },
+  "axiomsByTheorem": {
+    "Core.AsyncResources.admission_bounded": [
+      "propext",
+      "Quot.sound"
+    ],
+    "Core.AsyncResources.eviction_preserves_other": [
+      "propext",
+      "Quot.sound"
+    ],
+    "Core.AsyncResources.lookup_dropped_absent": [
+      "propext",
+      "Quot.sound"
+    ],
+    "Core.AsyncResources.step_preserves": [
+      "propext"
+    ],
+    "Core.AsyncResources.reachable_valid": [
+      "propext",
+      "Quot.sound"
+    ],
+    "Core.AsyncResources.released_has_no_further_release": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Core.AsyncResources.Cancellation.reachable_ticket_unique": [
+      "propext",
+      "Quot.sound"
+    ],
+    "Core.AsyncResources.world_step_preserves": [
+      "propext",
+      "Quot.sound"
+    ],
+    "Core.AsyncResources.world_reachable_invariant": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Core.AsyncResources.active_jobs_bounded": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Core.AsyncResources.world_terminal_stable": [
+      "propext"
+    ],
+    "Core.AsyncResources.reachable_world_quiescence_leak_free": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Core.AsyncResources.quiescent_accounting_balanced": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "newAxioms": [],
+  "proofScope": {
+    "arbitraryFinitePopulations": true,
+    "arbitraryFiniteAcceptedHistories": true,
+    "childGenerations": "unbounded Nat",
+    "runtimeUsesProvedJobAndCancellationTransitions": true,
+    "runtimeUsesProvedAdmissionAndEvictionPrimitives": true,
+    "wholeShellIORefinement": false,
+    "verifiedTlaTranslation": false,
+    "leanLivenessProof": false
+  },
+  "validation": {
+    "kernelBuild": "passed",
+    "nonVacuityExamples": "passed",
+    "axiomWhitelistAudit": "passed",
+    "jobStoreAndRuntimeGuard": "passed",
+    "realApalacheAndTrackedAcquisitionCleanup": "passed",
+    "realTcpMtlsAsync": "passed",
+    "stdioSmoke": "passed",
+    "asyncCliCases": 13,
+    "recursiveCli": "passed"
+  },
+  "notRun": [
+    "full lake test",
+    "Windows deployment"
+  ],
+  "temporaryLogs": [
+    "/tmp/mirrors-proof-guard-final-build.log",
+    "/tmp/mirrors-proof-guard-final-jobstore.log",
+    "/tmp/mirrors-proof-guard-final-apalache.log",
+    "/tmp/mirrors-proof-guard-final-async.log",
+    "/tmp/mirrors-proof-guard-final-stdio.log",
+    "/tmp/async-resource-axioms.log"
+  ]
+}

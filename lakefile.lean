@@ -198,6 +198,11 @@ fake-runner workloads (tools/JobStoreSpec.lean). -/
 lean_exe jobstore_spec where
   root := `tools.JobStoreSpec
 
+/-- Kernel proof audit and non-vacuity checks for async resource accounting. -/
+@[default_target]
+lean_exe async_resource_spec where
+  root := `tools.AsyncResourceProofSpec
+
 /-- Content-tracked native objects; requested executables link these jobs. -/
 target socket_shim_o pkg : System.FilePath := buildShim pkg "socket_shim" false
 
@@ -308,6 +313,24 @@ script test do
   if suiteBundle.exitCode != 0 then
     IO.eprintln suiteBundle.stderr
     return suiteBundle.exitCode
+  let validateClosure ← IO.Process.output
+    ({ cmd := "python3", args := #["tools/check-validate-closure.py"] } : IO.Process.SpawnArgs)
+  IO.println validateClosure.stdout
+  if validateClosure.exitCode != 0 then
+    IO.eprintln validateClosure.stderr
+    return validateClosure.exitCode
+  let validateAsync ← IO.Process.output
+    ({ cmd := "python3", args := #["tools/check-validate-async.py"] } : IO.Process.SpawnArgs)
+  IO.println validateAsync.stdout
+  if validateAsync.exitCode != 0 then
+    IO.eprintln validateAsync.stderr
+    return validateAsync.exitCode
+  let asyncProtocol ← IO.Process.output
+    ({ cmd := "python3", args := #["tools/check-async-protocol.py", "--quick"] } : IO.Process.SpawnArgs)
+  IO.println asyncProtocol.stdout
+  if asyncProtocol.exitCode != 0 then
+    IO.eprintln asyncProtocol.stderr
+    return asyncProtocol.exitCode
   let out1 : IO.Process.Output ← IO.Process.output ({ cmd := ".lake/build/bin/fixtures_replay", args := #[] } : IO.Process.SpawnArgs)
   IO.println out1.stdout
   if out1.exitCode != 0 then
@@ -498,6 +521,12 @@ script test do
   if out3.exitCode != 0 then
     IO.println s!"stdio_smoke FAILED ({out3.exitCode})"
     return out3.exitCode
+  let resourceProofs ← IO.Process.output
+    ({ cmd := ".lake/build/bin/async_resource_spec", args := #[] } : IO.Process.SpawnArgs)
+  IO.println resourceProofs.stdout
+  if resourceProofs.exitCode != 0 then
+    IO.eprintln resourceProofs.stderr
+    return resourceProofs.exitCode
   let out4 : IO.Process.Output ← IO.Process.output ({ cmd := ".lake/build/bin/jobstore_spec", args := #[] } : IO.Process.SpawnArgs)
   let apalacheMc? ← IO.getEnv "APALACHE_MC"
   let apalacheMc? ← match apalacheMc? with

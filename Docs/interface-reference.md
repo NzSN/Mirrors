@@ -40,6 +40,54 @@ and worker slots) in both server modes. It defaults to 4; the CLI clamps zero
 to 1. Pending and running jobs both consume capacity; an additional submission
 is rejected synchronously when that capacity is full.
 
+### Validate CLI source delivery
+
+`mirror validate --host H --port P --spec ./Main.tla [--dep FILE]...`
+reads local files and sends an inline `SpecConfig`, with the root first. It
+recursively discovers sibling `EXTENDS` and `INSTANCE` modules through the shared
+TLA+ frontend. `--dep` selects additional files by declared module name, taking
+precedence over sibling lookup; their own sibling dependencies are also captured.
+Duplicate explicit names fail. Standard catalog modules without a selected local
+file remain server-provided. This CLI does not search `TLA_LIBRARY` or directories
+recursively. Server role and TCP/mTLS selection do not change source resolution.
+
+Capture uses the existing frontend limits (128 modules, 4 MiB per file, 16 MiB
+total, depth 64), regular-file/UTF-8 checks and LF normalization. Cycles terminate
+and shared modules are sent once. Resolution failure or an encoded registration
+larger than 65,535 bytes exits 2 before connection. There is no chunking or upload
+endpoint. This behavior is specific to the validation CLI; suite project remote
+paths retain their separately documented deployment semantics.
+
+The executable regression `python3 tools/check-validate-closure.py` tests the
+wire request against a local protocol fixture and runs in `lake test`. The
+optional `tools/check-validate-remote.py` tests both a valid three-module model
+and an invariant-violating leaf change against a real server:
+
+```sh
+python3 tools/check-validate-remote.py \
+  --relay-argv '["/path/to/operator-configured-jsonl-relay"]'
+```
+
+The operator-supplied relay consumes a JSONL request on stdin and returns the
+server reply on stdout; it owns remote access and credentials. The test checks
+that all local modules travel inline and asserts CLI exit 0 for valid and 1 for
+invalid. Add `--async` to this test with an interactive relay that forwards
+multiple request/reply pairs on one connection. It then checks async submission,
+job correlation and the same final CLI verdicts. These are explicit live tests,
+separate from the ordinary local gate.
+
+Live evidence (2026-09-18): the locally built CLI sent `Main -> Helper -> Leaf`
+to the existing Windows `ModelMirrors` service on port 8999 through an SSH relay
+and a certificate-verified TLS 1.3 connection. The server returned valid for
+`Leaf.Step = 1` (CLI exit 0) and invalid for `Leaf.Step = -1` (CLI exit 1), with
+all three sources supplied inline in both cases. The service used its existing
+Apalache 0.58.2 installation. This verifies recursive delivery and real remote
+validation; it does not claim a direct local-CLI mTLS transport test. Earlier
+probe failures were relay/fixture setup failures, not passing acceptance results.
+The `validate --async` CLI subsequently passed both verdict cases against the
+upgraded Windows service, using an interactive SSH/TLS relay and retaining its
+submitting connection through the matching `job_result`.
+
 ## 2. Shared structures
 
 ### `ApalacheConfig`
@@ -217,6 +265,10 @@ on a process-wide store shared by all connections; any connection may
 operate on any job id. A connection ending cancels and evicts exactly
 its own jobs.
 
+The [async protocol/resource model](async-protocol-resource-model.md) specifies
+job ownership, cancellation, retention and eventual cleanup. Its resource
+guarantees are conditional on the documented progress and cleanup assumptions.
+
 ### 4.1 Submit: `register_validate_async` / `register_trace_gen_async`
 ```json
 {"proto_step": "register_validate_async", "apalacheConfig": {…}, "bound": 5, "spec": null}
@@ -226,6 +278,17 @@ its own jobs.
 Immediate reply: `{"proto_step": "job_accepted", "jobId": "job-0",
 "kind": "validate" | "gen_traces"}`. Validation bounds outside [1,100] or a full
 queue → `register_error` synchronously at submit.
+
+The validation CLI selects this path with `validate --async`. It resolves and
+sends the same inline source closure, requires `job_accepted` of kind `validate`,
+then sends `await_job` with `timeoutSecs: 30` on the submitting connection until
+a matching terminal result arrives. Pending/running statuses cause another
+long poll; wrong job IDs, wrong result kinds, cancelled/unknown jobs, disconnects
+and protocol failures exit 2. Valid and invalid verdicts retain exits 0 and 1.
+The flag does not detach or print a job handle for later use, and it does not
+fall back to synchronous validation on an older server. The 30 seconds is a
+per-poll server wait, not a total execution deadline. Ending the CLI closes its
+owner connection, so the server cancels/evicts that connection's jobs.
 
 ### 4.2 Operate: `query_job` / `await_job` / `cancel_job`
 ```json

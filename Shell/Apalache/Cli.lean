@@ -184,19 +184,25 @@ private def killIgnoring {cfg : IO.Process.StdioConfig} (child : IO.Process.Chil
 
 def runApalacheCancellable (token : Shell.Jobs.CancelToken)
     (runDir : Option String) (args : List String) : IO ApalacheResult := do
+  if ← token.isCancelled then throw (IO.userError "job cancelled before process spawn")
   let child ← spawnApalacheEof args.toArray runDir
-  token.onCancel (killIgnoring child)
-  let r ← collectApalache child
-  -- FFI-hardening/t4 (secondary retention, analyzer t2): the token's
-  -- kill-closure pins the Child (hProcess + 2 pipe externals) in the
-  -- job table until session close, ~3 handles/job. The child has
-  -- EXITED here (wait happened inside collectApalache), so the
-  -- kill-closure is dead weight — drop it so the Child becomes
-  -- collectable and the handles are closed immediately (FLAT handle
-  -- trend under the 300-cycle stress). Cancellation racing this point
-  -- runs the old closure harmlessly (kill of an exited child).
-  token.onCancel (pure ())
-  return r
+  let tracked ← IO.mkRef false
+  let reaped ← IO.mkRef false
+  let retire ← IO.mkRef (pure () : IO Unit)
+  try
+    token.resourceEvent (.acquire .child)
+    tracked.set true
+    retire.set (← token.registerChildCleanup (killIgnoring child))
+    let result ← collectApalache child
+    reaped.set true
+    return result
+  finally
+    if !(← reaped.get) then
+      killIgnoring child
+      try let _ ← child.wait; pure () catch _ => pure ()
+    let finish ← retire.get
+    finish
+    if ← tracked.get then token.resourceEvent (.release .child)
 
 /-- Absolutize a (possibly relative) path against the current dir
 (Haskell @makeAbsolute@): the child's cwd moves to the run dir, so a

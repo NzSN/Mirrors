@@ -20,7 +20,9 @@ proved functions are the executed functions, with no extraction gap.
 
 A **thin, trusted effectful shell** drives a **pure, machine-checked
 core**: every line from a client flows
-`transport → decode → Core.step → encode → transport`. The pure session
+`transport → decode → dispatch → encode → transport`. Synchronous replay uses
+`Core.step`; async job dispatch uses the pure `Core.Jobs` transition through the
+effectful shared store. The pure session
 transitions and domain laws are machine-checked; transport, orchestration,
 and external model-checker behavior remain outside that proof boundary.
 
@@ -45,7 +47,7 @@ and external model-checker behavior remain outside that proof boundary.
    CLI modes: --version | stdio | --serve (TCP) | --server --tls (mTLS) | validate
    --registry --> Shell.Registry --HTTP--> Consul (discovery)
 
-   Core.Protocol --refines (6.3 theorem)--> MirrorProtocol.tla
+   Core.Protocol --refines (6.3 theorem)--> encoded tag-level TlaStep
 ```
 
 ## Components
@@ -65,7 +67,7 @@ and external model-checker behavior remain outside that proof boundary.
 | 11 | Registry client | `Shell.Registry` | trusted | register/heartbeat/deregister/discover + fingerprint pin lookup |
 | 12 | Consul | external | oracle | service discovery over plain HTTP |
 | 13 | CLI | `Main.lean`, `Shell.Cli`, `Shell.Version` | trusted | modes: `--version`, stdio (default), `--serve`, `--server --tls`, `validate`; compiled product version |
-| 14 | TLA+ reference | `specs/MirrorProtocol.tla` | spec | the model-level contract the session machine refines by proof |
+| 14 | TLA+ reference | `specs/MirrorProtocol.tla` | spec | synchronous protocol projection plus the [bounded async resource model](async-protocol-resource-model.md); Lean safety proofs cover the resource model; whole-shell refinement is not proved |
 
 ## Relations
 
@@ -84,7 +86,7 @@ and external model-checker behavior remain outside that proof boundary.
 | pool workers → session driver | one async session per connection, over ONE shared job store | trusted |
 | CLI → `Shell.Registry` | `--registry` register/heartbeat/deregister | trusted |
 | `Shell.Registry` → Consul | plain HTTP register/discover | external |
-| `Core.Protocol` → `MirrorProtocol.tla` | refinement theorem (proof, not test) | proof |
+| `Core.Protocol` → original protocol projection | refinement to the Lean-encoded tag relation plus extension steps; not to the new effectful resource model | proof |
 | everything → Haskell mirror | parity oracle: 70 golden fixtures, 500/500 diff cases, MirrorECMA interop | differential test |
 
 Phase-indexed `Session p` states constrain successful transitions. Invalid
@@ -139,7 +141,7 @@ empty-queue workers suspend; the accept loop retains its 200 ms signal poll.
 | `Core.Value` | ITF values, assoc-list `ValueMap`, `setEq` | set-extensionality law, `valEq` refl/symm/trans |
 | `Core.Trace` | ITF traces, `applyParamVars`, `traceSteps` | §6.2 lossless repartition, length/order |
 | `Core.Diff` | `diffState`, hints, 50-hint cap | §6.1 soundness, completeness, cap + path validity |
-| `Core.Protocol` | phase-indexed session machine | §6.3 refinement vs `MirrorProtocol.tla`, no unsolicited output |
+| `Core.Protocol` | phase-indexed session machine | §6.3 refinement to its Lean tag relation, no unsolicited output; [async resource scope](async-protocol-resource-model.md) is checked separately |
 | `Core.Jobs` | async job machine | §6.4 terminal-once, outcome congruence, bounds |
 | `Core.Resource` | lifecycle model | §6.5 cleanup-at-most-once; dead finalizer |
 | `Core.ModelInterface` | compiler IR, deterministic resolution, trace preflight, negotiation, SHA-256 | resolver/policy/protocol-gating laws plus executable canonical vectors |

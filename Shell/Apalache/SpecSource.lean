@@ -171,7 +171,8 @@ location. -/
 private partial def captureBorrowedSource
     (rootDir : System.FilePath) (provider : Shell.Tla.SourceProvider)
     (logicalPath : String) (expectedName : Option String) (depth : Nat)
-    (limits : BorrowedSourceLimits) (state : BorrowedClosureState) :
+    (limits : BorrowedSourceLimits) (state : BorrowedClosureState)
+    (explicit : List (String × (System.FilePath × Core.Tla.SourceUnit)) := []) :
     IO (Except String BorrowedClosureState) := do
   if expectedName.any state.visited.contains then return .ok state
   if depth > limits.maxDepth then
@@ -182,7 +183,9 @@ private partial def captureBorrowedSource
         Shell.Tla.SourceProvider.readRootFile rootDir logicalPath
           { maxFileBytes := limits.maxFileBytes }
     | some name =>
-        provider.readDependency { name := name }
+        match explicit.find? (fun entry => entry.1 == name) with
+        | some entry => pure (.ok entry.2.2)
+        | none => provider.readDependency { name := name }
   match ← read with
   | .error error => return .error (borrowedReadError error)
   | .ok unit =>
@@ -219,11 +222,16 @@ private partial def captureBorrowedSource
       for declaration in Core.Tla.ParsedModule.dependencies parsed do
         let dependency := declaration.moduleName.name
         if !current.visited.contains dependency then
-          let dependencyPath := rootDir / (dependency ++ ".tla")
-          if ← dependencyPath.pathExists then
-            match ← captureBorrowedSource rootDir provider
-                (dependency ++ ".tla") (some dependency) (depth + 1) limits
-                current with
+          let dependencyPath := (explicit.find? (fun entry => entry.1 == dependency)).map (fun entry => entry.2.1)
+            |>.getD (rootDir / (dependency ++ ".tla"))
+          if explicit.any (fun entry => entry.1 == dependency) || (← dependencyPath.pathExists) then
+            let dependencyDir := dependencyPath.parent.getD ("." : System.FilePath)
+            let dependencyProvider := Shell.Tla.SourceProvider.borrowedDirectory dependencyDir
+              { maxFileBytes := limits.maxFileBytes } Shell.Tla.StandardModuleCatalog.default
+            match ← captureBorrowedSource dependencyDir dependencyProvider
+                (dependencyPath.fileName.getD (dependency ++ ".tla"))
+                (some dependency)
+                (depth + 1) limits current explicit with
             | .error error => return .error error
             | .ok updated => current := updated
           else if !isPinnedStandardModule dependency then
@@ -253,6 +261,45 @@ private def resolveBorrowedSourceClosure (path : String)
   match ← captureBorrowedSource rootDir provider logicalPath none 0 limits {} with
   | .error error => return .error error
   | .ok state => return .ok (logicalPath, state)
+
+/-- Capture local CLI inputs for inline remote validation. Explicit dependency
+files are indexed by declared module name; their own sibling closures are followed.
+The root remains first, shared dependencies are emitted once, and no file paths
+are sent to the remote server. This does not materialize temporary files. -/
+def resolveClientSources (path : String) (deps : List String := [])
+    (limits : BorrowedSourceLimits := defaultBorrowedSourceLimits) :
+    IO (Except String Codec.SpecConfig) := do
+  if deps.length + 1 > limits.maxModules then
+    return .error s!"borrowed source closure exceeds module limit {limits.maxModules}"
+  let mut explicit : List (String × (System.FilePath × Core.Tla.SourceUnit)) := []
+  let mut explicitBytes := 0
+  for file in path :: deps do
+    let filePath : System.FilePath := file
+    let dir := filePath.parent.getD ("." : System.FilePath)
+    let logicalPath := filePath.fileName.getD ""
+    match ← Shell.Tla.SourceProvider.readRootFile dir logicalPath
+        { maxFileBytes := limits.maxFileBytes } with
+    | .error error => return .error (borrowedReadError error)
+    | .ok unit =>
+      explicitBytes := explicitBytes + unit.normalizedUtf8.size
+      if explicitBytes > limits.maxTotalBytes then
+        return .error s!"borrowed source closure exceeds total byte limit {limits.maxTotalBytes}"
+      match parseCaptured unit with
+      | .error error => return .error error
+      | .ok parsed =>
+        if explicit.any (fun entry => entry.1 == parsed.name.name) then
+          return .error s!"duplicate explicit module '{parsed.name.name}'"
+        explicit := explicit ++ [(parsed.name.name, (filePath, unit))]
+  let mut state : BorrowedClosureState := {}
+  for (name, filePath, _) in explicit do
+    if !state.visited.contains name then
+      let dir := filePath.parent.getD ("." : System.FilePath)
+      let provider := Shell.Tla.SourceProvider.borrowedDirectory dir
+        { maxFileBytes := limits.maxFileBytes } Shell.Tla.StandardModuleCatalog.default
+      match ← captureBorrowedSource dir provider (filePath.fileName.getD "") (some name) 0 limits state explicit with
+      | .error error => return .error error
+      | .ok updated => state := updated
+  return .ok { sources := state.files.reverse.map (·.normalizedSource) }
 
 /-- Resolve and hash a borrowed root's sibling `EXTENDS`/`INSTANCE` closure.
 The manifest is sorted and contains logical filenames only; filesystem paths

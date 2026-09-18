@@ -25,6 +25,7 @@ an installed Windows service, a hosted CI run, or a published package.
 | Generate a typed application port | [Generation design](model-interface-generation-design.md), [compiler designs](model-interface-compiler/README.md) |
 | Understand interface negotiation | [Runtime distribution](model-interface-runtime-distribution-design.md) |
 | Compare generated language profiles | [Cross-language specification](generated-model-interface-spec.md) |
+| Verify async job ownership and resource cleanup | [Async resource model](async-protocol-resource-model.md), [Lean safety proofs](async-resource-lean-proofs.md) |
 | Check coverage and run interop | [Client coverage](client-test-coverage.md), [interop commands](../tools/interop/INTEROP.md) |
 
 ## Current implementation

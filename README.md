@@ -166,9 +166,27 @@ Validate a local specification through a plain TCP server:
   --bound 10
 ```
 
-Dependencies imported by the specification can be included with repeated
-`--dep` options. Predicate overrides are available through `--inv`, `--init`,
+The CLI reads the local entry module and recursively follows `EXTENDS` and
+`INSTANCE`, sending the captured module contents inline to the server. Sibling
+modules are discovered automatically; use repeated `--dep /path/Module.tla` for
+explicit modules in other directories. Each explicit module's sibling dependencies
+are followed too. Explicit selections take precedence by declared module name;
+duplicate explicit names are rejected. Standard modules from the pinned catalog
+are supplied by the server unless a local file is selected. No recursive directory
+scan or `TLA_LIBRARY` search is performed. Missing modules fail before connecting.
+
+The entry module is sent first and shared/cyclic dependencies are emitted once.
+The source loader enforces its bounded frontend profile and rejects symlink files;
+the final encoded request must fit the 65,535-byte wire limit. Large source trees
+need a separate server-side deployment/API path; the CLI does not split requests. Predicate overrides are available through `--inv`, `--init`,
 `--next`, and `--cinit`.
+
+Add `--async` to submit a validation job and wait for its result on the same
+connection. The CLI uses 30-second long polls, continuing while the job is
+pending/running, and prints the same `VALID` / `INVALID` output and exit codes
+(0 / 1; infrastructure or protocol failure is 2). This is not detached submission:
+keep the command running, because disconnecting cancels and evicts its jobs.
+Without `--async`, validation remains synchronous.
 
 For mutual TLS, add the client credentials and optionally pin the server
 certificate:

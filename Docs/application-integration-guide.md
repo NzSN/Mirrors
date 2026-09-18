@@ -109,6 +109,19 @@ check and replay → verify an intentional behavioral fault. The following role
 sections explain each step. Establish this local baseline before adding Gate
 when the application's environment permits local execution.
 
+### Validate a local model on a remote server
+
+The separate `ModelMirrors validate --host HOST --port PORT --spec ./Main.tla`
+command sends local source contents inline, recursively resolving sibling
+`EXTENDS`/`INSTANCE` dependencies. Use `--dep FILE` for modules in other
+locations and add the TLS credentials required by the server. Add `--async`
+to submit a server job and await it on the same open connection; output and exit
+codes remain the same, and this does not detach the job. See
+[validation source delivery](interface-reference.md#validate-cli-source-delivery)
+for standard-module handling and the request-size limit. This checks a model;
+application conformance still requires a suite and real SUT adapter. It does not
+change the server-visible model/corpus rules of project suite replay.
+
 ## Model author: prepare the oracle and interface
 
 Start with the behavior to test: observable state, operations and inputs,

@@ -77,8 +77,7 @@ ClientDetectClose ==
   /\ action_taken' = "ClientDetectClose"
   /\ UNCHANGED <<mirror_phase, mirror_flow, client_to_mirror, mirror_to_client, report_matches, client_closed, mirror_closed>>
 
-FaultNext ==
-  \/ Next
+FaultOnlyNext ==
   \/ DropClMsg
   \/ DropMirMsg
   \/ DupClMsg
@@ -88,7 +87,9 @@ FaultNext ==
   \/ MirrorDetectClose
   \/ ClientDetectClose
 
-vars == <<mirror_phase, client_phase, action_taken, mirror_flow, client_to_mirror, mirror_to_client, report_matches, faulted, client_closed, mirror_closed>>
+FaultNext == Next \/ (FaultOnlyNext /\ UNCHANGED async_state)
+
+vars == <<async_state, mirror_phase, client_phase, action_taken, mirror_flow, client_to_mirror, mirror_to_client, report_matches, faulted, client_closed, mirror_closed>>
 
 FaultSpec == Init /\ [][FaultNext]_vars
 

@@ -1,0 +1,175 @@
+{
+  "date": "2026-09-18",
+  "scope": "bounded model checks and focused local runtime regressions; no whole-program refinement or deployment claim",
+  "fullModelChecks": [
+    {
+      "case": "safety",
+      "result": "passed",
+      "states": [
+        "17730899",
+        "1581785"
+      ]
+    },
+    {
+      "case": "liveness",
+      "result": "passed",
+      "states": [
+        "52473",
+        "5305"
+      ]
+    },
+    {
+      "case": "two-job-liveness",
+      "result": "passed",
+      "states": [
+        "401808",
+        "78627"
+      ]
+    },
+    {
+      "case": "exit",
+      "result": "expected counterexample",
+      "states": [
+        "45",
+        "17"
+      ]
+    },
+    {
+      "case": "slot",
+      "result": "expected counterexample",
+      "states": [
+        "282",
+        "66"
+      ]
+    },
+    {
+      "case": "late-hook",
+      "result": "expected counterexample",
+      "states": [
+        "1432",
+        "299"
+      ]
+    },
+    {
+      "case": "partial-acquisition",
+      "result": "expected counterexample",
+      "states": [
+        "703",
+        "139"
+      ]
+    },
+    {
+      "case": "no-fairness",
+      "result": "expected counterexample",
+      "states": [
+        "7518",
+        "867"
+      ]
+    }
+  ],
+  "finalQuickChecks": [
+    {
+      "case": "sync-compatibility",
+      "result": "passed",
+      "states": [
+        "80",
+        "57"
+      ]
+    },
+    {
+      "case": "safety",
+      "result": "passed",
+      "states": [
+        "52473",
+        "5305"
+      ]
+    },
+    {
+      "case": "liveness",
+      "result": "passed",
+      "states": [
+        "52473",
+        "5305"
+      ]
+    },
+    {
+      "case": "exit",
+      "result": "expected counterexample",
+      "states": [
+        "45",
+        "17"
+      ]
+    },
+    {
+      "case": "slot",
+      "result": "expected counterexample",
+      "states": [
+        "282",
+        "66"
+      ]
+    },
+    {
+      "case": "late-hook",
+      "result": "expected counterexample",
+      "states": [
+        "1396",
+        "285"
+      ]
+    },
+    {
+      "case": "partial-acquisition",
+      "result": "expected counterexample",
+      "states": [
+        "698",
+        "137"
+      ]
+    },
+    {
+      "case": "no-fairness",
+      "result": "expected counterexample",
+      "states": [
+        "9755",
+        "1089"
+      ]
+    }
+  ],
+  "fullCheckNote": "Final edits after the full check added Apalache type annotations and composed the top-level Inv with AsyncInv; async transitions and resource properties were unchanged. The final quick profile checks the exact final model and original synchronous projection.",
+  "sourceSha256": {
+    "specs/MirrorProtocol.tla": "709d7d66ef6cfdd42ac1a8fdb5ba19be48ae67dd1ad1653439675c897195d3ba",
+    "specs/MirrorProtocolFaults.tla": "f23af03d0356f5950ffd5a996c06ac8441dff721ecf8f089cb10db358c61d1f5",
+    "specs/MirrorProtocolAsync.cfg": "b4cee720c61b19f266bf77d50d1fe1b5d41f9981dbb94ce322e3ee7d27f4edbf",
+    "specs/MirrorProtocolAsyncLiveness.cfg": "a075a67ecd58db23a11c5a964492bda3655078d52520156399cf1c87f5717c96",
+    "Shell/Mirror/Session.lean": "7edf6d11cd801d3509650b79a19df95bcb8380958b57153613246466e3f9c59b",
+    "Shell/Jobs/Store.lean": "4a9f7f5fff4429927288ef19fd86c3a6217887d2577c3cf5c4d5461b0fd7c382",
+    "Shell/Apalache/Runner.lean": "ddd9f8f721601c71342398971cb5f50184791582582cd569a1af56878def5296",
+    "Shell/Apalache/Cli.lean": "34071e1d28a0281757a0ca0855b7003806959ca20428edab254e481b8db2fff0",
+    "tools/JobStoreSpec.lean": "0433330f9f2ee0f624f675de0d0ae02a6705479f1a49d2a9a78f161ef621b3d7",
+    "tools/ApalacheCliSpec.lean": "07450031230206dd19ef6730a81b151ca77ada941c0b32c47c833fcf12e3d106",
+    "tools/check-async-protocol.py": "6126f222ce887098b182c6bd7322eb43227af0d1f4750227fbaa79210448ef9f"
+  },
+  "runtimeChecks": {
+    "build": "lake build apalache_cli_spec jobstore_spec async_spec stdio_smoke mirror passed",
+    "jobStore": "JOBSTORE PARITY GREEN; session exits, late/composed/throwing/retired hooks, retained physical slot",
+    "resourceAcquisition": "APALACHE CLI GREEN with live Apalache; injected directory/body failure and pre-cancelled ownership release passed",
+    "liveAsync": "ASYNC SPEC: all green; real TCP/mTLS validate, generation, cancellation, cross-connection and capacity cases",
+    "stdio": "STDIO SMOKE GREEN",
+    "asyncCli": "13 cases passed",
+    "recursiveCli": "passed",
+    "modelTypecheck": "Apalache type checker OK",
+    "legacyWrappers": "MirrorProtocolFaults and MirrorProtocolWitness SANY semantic checks passed"
+  },
+  "assumptions": [
+    "successful modeled OS resource release",
+    "eventual worker/process and cleanup progress as specified by fairness",
+    "model covers job-owned resources, not all server/global/native resources"
+  ],
+  "notRun": [
+    "full lake test",
+    "Windows deployment of these runtime fixes"
+  ],
+  "temporaryLogs": [
+    "/tmp/mirrors-async-protocol-final",
+    "/tmp/mirrors-async-protocol-final-quick",
+    "/tmp/mirrors-resource-*.log"
+  ]
+}

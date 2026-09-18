@@ -60,8 +60,9 @@ def cliUsage : String :=
   "                     allowlisted clients get verify scope, and the descriptor\n" ++
   "                     flag additionally grants descriptor-read scope\n" ++
   "  validate (--host <h> --port <p> | --registry <url> --tls --cert <c>\n" ++
-  "            --key <k> --ca <a>) [--pin <fp>] [--bound <n>] --spec <file>\n" ++
-  "                     validate a TLA+ spec against a mirror (mTLS)\n"
+  "            --key <k> --ca <a>) [--pin <fp>] [--bound <n>] [--async] --spec <file>\n" ++
+  "       [--dep <file>]... (recursively includes local EXTENDS/INSTANCE modules)\n" ++
+  "                     validate a local TLA+ spec against a remote mirror\n"
 
 /-! ## argv -/
 
@@ -255,6 +256,7 @@ structure ValidateOpts where
   portSet : Bool := false
   spec : String := ""
   deps : List String := []
+  asyncMode : Bool := false
   bound : Nat := 10
   inv : Option String := none
   init : Option String := none
@@ -304,6 +306,9 @@ private partial def validateGo (o : ValidateOpts) : List String → Except Strin
           | some p => validateGo { o with port := p, portSet := true } r
           | none => .error s!"invalid --port: {v}")
       | "--spec" => arg a as (fun v r => validateGo { o with spec := v } r)
+      | "--async" =>
+          if o.asyncMode then .error "duplicate --async"
+          else validateGo { o with asyncMode := true } as
       | "--dep" => arg a as (fun v r => validateGo { o with deps := o.deps ++ [v] } r)
       | "--bound" => arg a as (fun v r =>
           match v.toNat? with
@@ -555,29 +560,20 @@ def validateCli (argv : List String) : IO UInt32 := do
   match parseValidateOpts argv with
   | .error e => IO.eprintln e; return 2
   | .ok opts =>
-      -- read the spec and its inline dependencies locally; the server
-      -- never sees the client's filesystem
-      let readOne (p : String) : IO (Option String) := do
-        try pure (some (← IO.FS.readFile p)) catch _ => pure none
-      let rec readAll : List String → IO (Option (List String))
-        | [] => pure (some [])
-        | p :: ps => do
-            match ← readOne p with
-            | none => pure none
-            | some c =>
-                match ← readAll ps with
-                | none => pure none
-                | some cs => pure (some (c :: cs))
-      let some contents ← readAll (opts.spec :: opts.deps)
-        | IO.eprintln "cannot read spec/deps"
-          return 2
-      let sources := contents
+      let spec ← match ← Shell.Apalache.SpecSource.resolveClientSources opts.spec opts.deps with
+        | .error error => IO.eprintln s!"cannot resolve spec/deps: {error}"; return 2
+        | .ok spec => pure spec
       let cfg : Codec.ApalacheConfig :=
         { constInit := opts.cinit, initPredicate := opts.init,
           invariant := opts.inv.getD "", lengthBound := opts.bound,
           nextPredicate := opts.next, paramVars := "",
           specPath := (opts.spec.splitOn "/").getLastD "" }
-      let spec : Codec.SpecConfig := { sources := sources }
+      let request := if opts.asyncMode then
+          Codec.ClientMessage.registerValidateAsync cfg opts.bound (some spec)
+        else Codec.ClientMessage.registerValidate cfg opts.bound (some spec)
+      if (Lean.Json.compress (Codec.encodeClient request)).toUTF8.size > 65535 then
+        IO.eprintln "inline validation request exceeds the 65535-byte protocol limit"
+        return 2
       let mT ← match opts.registry with
         | none =>
             match ← validateDirectTransport opts with
@@ -590,4 +586,6 @@ def validateCli (argv : List String) : IO UInt32 := do
       match mT with
       | none => return 2
       | some t =>
-          reportValidate (Shell.Client.runClientValidate t cfg opts.bound (some spec))
+          reportValidate (if opts.asyncMode then
+            Shell.Client.runClientValidateAsync t cfg opts.bound (some spec)
+          else Shell.Client.runClientValidate t cfg opts.bound (some spec))

@@ -1,5 +1,5 @@
 ---------------- MODULE MirrorProtocol ---------------------
-EXTENDS Integers, Sequences, Apalache
+EXTENDS Integers, Sequences, FiniteSets, Apalache
 
 \* -----------------------------------------------------------------------------
 \* Protocol phases (mirror side)
@@ -456,7 +456,7 @@ MirrorSendNextStep ==
 \* Init
 \* -----------------------------------------------------------------------------
 
-Init ==
+SyncInit ==
   /\ mirror_phase = "idle"
   /\ client_phase = "idle"
   /\ action_taken = "init"
@@ -479,7 +479,7 @@ Halt ==
   /\ action_taken' = "Halt"
   /\ UNCHANGED <<mirror_phase, client_phase, mirror_flow, client_to_mirror, mirror_to_client, report_matches, faulted, client_closed, mirror_closed>>
 
-Next ==
+SyncNext ==
   \/ Halt
   \/ ClientRegister
   \/ ClientRegisterTraces
@@ -526,7 +526,7 @@ Next ==
 \* Specification
 \* -----------------------------------------------------------------------------
 
-Spec == Init /\ [][Next]_<<mirror_phase, client_phase, action_taken, mirror_flow, client_to_mirror, mirror_to_client, report_matches, faulted, client_closed, mirror_closed>>
+
 
 \* -----------------------------------------------------------------------------
 \* Invariants
@@ -547,8 +547,7 @@ ClientNeverStuck ==
     /\ client_phase = "waiting_ack"  => mirror_phase \in {"stepping", "done"}
     /\ client_phase = "waiting_done" => mirror_phase \in {"exploring", "done"}
 
-Inv == PhaseOk /\
-       ClientNeverStuck
+SyncInv == PhaseOk /\ ClientNeverStuck
 
 \* Force trace generation: Apalache finds counterexamples
 \* showing paths from idle to done.
@@ -588,5 +587,382 @@ ProjectAction(a) ==
 ProjectTrace(actions) ==
   LET AppendStep(acc, a) == acc \o ProjectAction(a)
   IN ApaFoldSeqLeft(AppendStep, <<>>, actions)
+
+
+\* -----------------------------------------------------------------------------
+\* Server-mode asynchronous jobs and resource ownership.
+\*
+\* This is a bounded, interleaving model of Session.runAsync + Jobs.Store +
+\* Apalache.Runner. A wire operation is atomic except await, connection cleanup,
+\* and body acquisition/unwinding, whose relevant race boundaries are explicit.
+\* The old single-session projection above is retained as SyncInit/SyncNext.
+\* Jobs are shared across connections; a query/cancel caller is NOT their owner.
+\*
+\* Domains bound one verification run, not the implementation's lifetime IDs.
+\* No ID is reused. The server standard library, borrowed source files, immutable
+\* result payloads, and process-wide connection workers are outside job ownership.
+\* Resource tokens abstract owned spec dirs, run dirs (including trace files),
+\* and a child plus its streams/handles. A released child means killed/waited and
+\* handles no longer retained, not merely that a cancellation flag was set.
+\* Cleanup success and eventual process/worker progress are explicit assumptions:
+\* arbitrary OS cleanup failure or a never-returning injected runner is not proved.
+\* -----------------------------------------------------------------------------
+REGISTER_VALIDATE_ASYNC  == 19
+REGISTER_TRACE_GEN_ASYNC == 20
+JOB_ACCEPTED            == 21
+QUERY_JOB               == 22
+AWAIT_JOB               == 23
+CANCEL_JOB              == 24
+JOB_STATUS              == 25
+JOB_RESULT              == 26
+
+AsyncSingleton == {1}
+AsyncConnections == 1..2
+AsyncJobIds == 1..2
+AsyncCapacity == 1
+AsyncWorkerSlots == 1
+AsyncResourceKinds == {"spec", "directory", "child"}
+AsyncTerminalPhases == {"done", "failed", "cancelled"}
+AsyncStages == {"unused", "queued", "acquired", "body", "spec", "directory",
+                "child", "running", "unwinding", "settled"}
+
+VARIABLE
+  \* @type: {connections: Int -> Str, jobs: Int -> {owner: Int, kind: Str, phase: Str, outcome: Str, firstOutcome: Str, stored: Bool, stage: Str, cancelled: Bool, stopRequested: Bool, hook: Bool, slot: Bool, ownedSpec: Bool, resources: Set(Str), acquired: Set(Str), released: Set(Str), slotAcquires: Int, slotReleases: Int, bodyResult: Str}, waiting: Int -> Int, last: {operation: Str, connection: Int, job: Int, tag: Int, value: Str}};
+  async_state
+
+\* @type: () => {owner: Int, kind: Str, phase: Str, outcome: Str, firstOutcome: Str, stored: Bool, stage: Str, cancelled: Bool, stopRequested: Bool, hook: Bool, slot: Bool, ownedSpec: Bool, resources: Set(Str), acquired: Set(Str), released: Set(Str), slotAcquires: Int, slotReleases: Int, bodyResult: Str};
+AsyncEmptyJob ==
+  [owner |-> 0, kind |-> "none", phase |-> "unused", outcome |-> "none",
+   firstOutcome |-> "none", stored |-> FALSE, stage |-> "unused",
+   cancelled |-> FALSE, stopRequested |-> FALSE, hook |-> FALSE, slot |-> FALSE, ownedSpec |-> FALSE,
+   resources |-> {}, acquired |-> {}, released |-> {},
+   slotAcquires |-> 0, slotReleases |-> 0, bodyResult |-> "none"]
+
+AsyncReply(op, c, j, tag, value) ==
+  [operation |-> op, connection |-> c, job |-> j, tag |-> tag, value |-> value]
+
+AsyncInit ==
+  async_state =
+    [connections |-> [c \in AsyncConnections |-> "open"],
+     jobs |-> [j \in AsyncJobIds |-> AsyncEmptyJob],
+     waiting |-> [c \in AsyncConnections |-> 0],
+     last |-> AsyncReply("init", 0, 0, -1, "none")]
+
+AsyncFree(c) == async_state.connections[c] = "open" /\ async_state.waiting[c] = 0
+AsyncLiveJobs == {j \in AsyncJobIds : async_state.jobs[j].stored /\
+                  async_state.jobs[j].phase \in {"pending", "running"}}
+AsyncSlotHolders == {j \in AsyncJobIds : async_state.jobs[j].slot}
+\* @type: ({owner: Int, kind: Str, phase: Str, outcome: Str, firstOutcome: Str, stored: Bool, stage: Str, cancelled: Bool, stopRequested: Bool, hook: Bool, slot: Bool, ownedSpec: Bool, resources: Set(Str), acquired: Set(Str), released: Set(Str), slotAcquires: Int, slotReleases: Int, bodyResult: Str}, Set(Str)) => {owner: Int, kind: Str, phase: Str, outcome: Str, firstOutcome: Str, stored: Bool, stage: Str, cancelled: Bool, stopRequested: Bool, hook: Bool, slot: Bool, ownedSpec: Bool, resources: Set(Str), acquired: Set(Str), released: Set(Str), slotAcquires: Int, slotReleases: Int, bodyResult: Str};
+AsyncAcquire(job, rs) ==
+  [job EXCEPT !.resources = @ \cup rs, !.acquired = @ \cup rs]
+\* @type: ({owner: Int, kind: Str, phase: Str, outcome: Str, firstOutcome: Str, stored: Bool, stage: Str, cancelled: Bool, stopRequested: Bool, hook: Bool, slot: Bool, ownedSpec: Bool, resources: Set(Str), acquired: Set(Str), released: Set(Str), slotAcquires: Int, slotReleases: Int, bodyResult: Str}, Set(Str)) => {owner: Int, kind: Str, phase: Str, outcome: Str, firstOutcome: Str, stored: Bool, stage: Str, cancelled: Bool, stopRequested: Bool, hook: Bool, slot: Bool, ownedSpec: Bool, resources: Set(Str), acquired: Set(Str), released: Set(Str), slotAcquires: Int, slotReleases: Int, bodyResult: Str};
+AsyncRelease(job, rs) ==
+  [job EXCEPT !.resources = @ \ rs,
+              !.released = @ \cup (job.resources \cap rs)]
+\* @type: ({owner: Int, kind: Str, phase: Str, outcome: Str, firstOutcome: Str, stored: Bool, stage: Str, cancelled: Bool, stopRequested: Bool, hook: Bool, slot: Bool, ownedSpec: Bool, resources: Set(Str), acquired: Set(Str), released: Set(Str), slotAcquires: Int, slotReleases: Int, bodyResult: Str}, Str, Str) => {owner: Int, kind: Str, phase: Str, outcome: Str, firstOutcome: Str, stored: Bool, stage: Str, cancelled: Bool, stopRequested: Bool, hook: Bool, slot: Bool, ownedSpec: Bool, resources: Set(Str), acquired: Set(Str), released: Set(Str), slotAcquires: Int, slotReleases: Int, bodyResult: Str};
+AsyncTerminal(job, phase, outcome) ==
+  IF job.phase \in AsyncTerminalPhases THEN job
+  ELSE [job EXCEPT !.phase = phase, !.outcome = outcome, !.firstOutcome = outcome]
+AsyncAnswer(j) ==
+  IF j = 0 THEN "unknown"
+  ELSE IF ~async_state.jobs[j].stored THEN "unknown"
+  ELSE IF async_state.jobs[j].phase \in AsyncTerminalPhases
+       THEN async_state.jobs[j].outcome ELSE async_state.jobs[j].phase
+AsyncAnswerTag(j) ==
+  IF j = 0 THEN JOB_STATUS
+  ELSE IF async_state.jobs[j].stored /\
+          async_state.jobs[j].phase \in AsyncTerminalPhases
+       THEN JOB_RESULT ELSE JOB_STATUS
+
+AsyncSubmit(c, j, kind, owned) ==
+  /\ AsyncFree(c)
+  /\ async_state.jobs[j].phase = "unused"
+  /\ Cardinality(AsyncLiveJobs) < AsyncCapacity
+  /\ async_state' = [async_state EXCEPT
+       !.jobs[j] = [AsyncEmptyJob EXCEPT !.owner = c, !.kind = kind,
+         !.phase = "pending", !.stored = TRUE, !.stage = "queued", !.ownedSpec = owned],
+       !.last = AsyncReply("submit", c, j, JOB_ACCEPTED, kind)]
+
+\* Invalid validation bounds and full live-job capacity allocate NOTHING.
+AsyncReject(c, reason) ==
+  /\ AsyncFree(c)
+  /\ reason = "bad_bound" \/ (reason = "queue_full" /\
+       Cardinality(AsyncLiveJobs) >= AsyncCapacity)
+  /\ async_state' = [async_state EXCEPT
+       !.last = AsyncReply("submit_rejected", c, 0, REGISTER_ERROR, reason)]
+
+AsyncQuery(c, j) ==
+  /\ AsyncFree(c)
+  /\ async_state' = [async_state EXCEPT
+       !.last = AsyncReply("query", c, j, AsyncAnswerTag(j), AsyncAnswer(j))]
+
+AsyncAwait(c, j) ==
+  /\ AsyncFree(c)
+  /\ async_state.jobs[j].stored
+  /\ async_state.jobs[j].phase \in {"pending", "running"}
+  /\ async_state' = [async_state EXCEPT !.waiting[c] = j,
+       !.last = AsyncReply("await_begin", c, j, -1, "waiting")]
+
+AsyncAwaitReply(c, timeout) ==
+  LET j == async_state.waiting[c] IN
+  /\ async_state.connections[c] = "open"
+  /\ j /= 0
+  /\ timeout \/ AsyncAnswerTag(j) = JOB_RESULT \/ AsyncAnswer(j) = "unknown"
+  /\ async_state' = [async_state EXCEPT !.waiting[c] = 0,
+       !.last = AsyncReply("await_reply", c, j, AsyncAnswerTag(j), AsyncAnswer(j))]
+
+AsyncAwaitReady(c, j) ==
+  /\ AsyncFree(c)
+  /\ AsyncAnswerTag(j) = JOB_RESULT \/ AsyncAnswer(j) = "unknown"
+  /\ async_state' = [async_state EXCEPT
+       !.last = AsyncReply("await_reply", c, j, AsyncAnswerTag(j), AsyncAnswer(j))]
+
+\* A queued cancelled job may acquire a permit only to return it immediately.
+\* Slot ownership belongs to the task, independently of job-table eviction.
+AsyncAcquireSlot(j) ==
+  LET job == async_state.jobs[j] IN
+  /\ job.stage = "queued"
+  /\ Cardinality(AsyncSlotHolders) < AsyncWorkerSlots
+  /\ async_state' = [async_state EXCEPT !.jobs[j] =
+       [job EXCEPT !.slot = TRUE, !.slotAcquires = @ + 1, !.stage = "acquired",
+        !.phase = IF job.phase = "pending" THEN "running" ELSE @]]
+
+AsyncBeginBody(j) ==
+  LET job == async_state.jobs[j] IN
+  /\ job.stage = "acquired" /\ ~job.cancelled
+  /\ async_state' = [async_state EXCEPT !.jobs[j].stage = "body"]
+
+AsyncAcquireSpec(j) ==
+  LET job == async_state.jobs[j] IN
+  /\ job.stage = "body" /\ ~job.cancelled
+  /\ async_state' = [async_state EXCEPT !.jobs[j] =
+       [AsyncAcquire(job, IF job.ownedSpec THEN {"spec"} ELSE {}) EXCEPT !.stage = "spec"]]
+
+AsyncAcquireDirectory(j) ==
+  LET job == async_state.jobs[j] IN
+  /\ job.stage = "spec" /\ ~job.cancelled
+  /\ async_state' = [async_state EXCEPT !.jobs[j] =
+       [AsyncAcquire(job, {"directory"}) EXCEPT !.stage = "directory"]]
+
+\* Cancellation may race a spawn whose precheck already passed. The following
+\* hook installation MUST observe prior cancellation and kill that late child.
+AsyncSpawnChild(j) ==
+  LET job == async_state.jobs[j] IN
+  /\ job.stage = "directory"
+  /\ async_state' = [async_state EXCEPT !.jobs[j] =
+       [AsyncAcquire(job, {"child"}) EXCEPT !.stage = "child"]]
+
+AsyncInstallHook(j) ==
+  LET job == async_state.jobs[j]
+      updated == IF job.cancelled THEN [job EXCEPT !.stopRequested = TRUE] ELSE job IN
+  /\ job.stage = "child"
+  /\ async_state' = [async_state EXCEPT !.jobs[j] =
+       [updated EXCEPT !.hook = TRUE, !.stage = "running"]]
+
+AsyncBodyReturns(j, result) ==
+  LET job == async_state.jobs[j] IN
+  /\ job.stage = "running"
+  /\ result = "error" \/ (job.kind = "validate" /\ result \in {"valid", "invalid"})
+       \/ (job.kind = "gen_traces" /\ result = "traces")
+  /\ async_state' = [async_state EXCEPT !.jobs[j] =
+       [AsyncRelease(job, {"child"}) EXCEPT
+        !.hook = FALSE, !.stage = "unwinding", !.bodyResult = result]]
+
+\* Acquisition failure or cancellation before body execution still unwinds
+\* every resource already acquired, including a spec if directory creation fails.
+AsyncBodyAborts(j) ==
+  LET job == async_state.jobs[j] IN
+  /\ job.stage \in {"acquired", "body", "spec", "directory", "child"}
+  /\ async_state' = [async_state EXCEPT !.jobs[j] =
+       [AsyncRelease(job, {"child"}) EXCEPT
+        !.hook = FALSE, !.stage = "unwinding", !.bodyResult = "error"]]
+
+AsyncUnwind(j) ==
+  LET job == async_state.jobs[j]
+      clean == AsyncRelease(job, AsyncResourceKinds)
+      done == AsyncTerminal(clean, IF job.bodyResult = "error" THEN "failed" ELSE "done",
+                            job.bodyResult) IN
+  /\ job.stage = "unwinding"
+  /\ async_state' = [async_state EXCEPT !.jobs[j] =
+       [done EXCEPT !.stage = "settled", !.slot = FALSE, !.slotReleases = @ + 1]]
+
+AsyncCancel(c, j) ==
+  LET job == async_state.jobs[j]
+      stopped == IF job.hook THEN [job EXCEPT !.stopRequested = TRUE] ELSE job IN
+  /\ (AsyncFree(c) \/ (async_state.connections[c] = "closing" /\ job.owner = c))
+  /\ job.stored /\ job.phase \in {"pending", "running"}
+  /\ async_state' = [async_state EXCEPT !.jobs[j] =
+       [AsyncTerminal(stopped, "cancelled", "cancelled") EXCEPT !.cancelled = TRUE],
+       !.last = AsyncReply("cancel", c, j, JOB_STATUS, "cancelled")]
+
+AsyncCancelTerminal(c, j) ==
+  /\ AsyncFree(c)
+  /\ IF j = 0 THEN TRUE ELSE
+       ~async_state.jobs[j].stored \/ async_state.jobs[j].phase \in AsyncTerminalPhases
+  /\ async_state' = [async_state EXCEPT
+       !.last = AsyncReply("cancel_noop", c, j, JOB_STATUS,
+         IF j = 0 THEN "unknown" ELSE IF ~async_state.jobs[j].stored THEN "unknown"
+         ELSE async_state.jobs[j].phase)]
+
+\* EOF, decoding/transport failure, and a terminal synchronous flow all enter
+\* the same finally-owned drain. They do not abandon the submitted job list.
+AsyncClose(c, reason) ==
+  /\ async_state.connections[c] = "open"
+  /\ async_state' = [async_state EXCEPT !.connections[c] = "closing", !.waiting[c] = 0,
+       !.last = AsyncReply(reason, c, 0, -1, "closing")]
+
+AsyncEvict(c, j) ==
+  LET job == async_state.jobs[j] IN
+  /\ async_state.connections[c] = "closing"
+  /\ job.owner = c /\ job.stored /\ job.phase \in AsyncTerminalPhases
+  /\ async_state' = [async_state EXCEPT !.jobs[j].stored = FALSE,
+       !.last = AsyncReply("evict", c, j, -1, "unknown")]
+
+AsyncFinishClose(c) ==
+  /\ async_state.connections[c] = "closing"
+  /\ \A j \in AsyncJobIds : async_state.jobs[j].owner = c => ~async_state.jobs[j].stored
+  /\ async_state' = [async_state EXCEPT !.connections[c] = "closed"]
+
+AsyncNextCore ==
+  \/ \E c \in AsyncConnections, j \in AsyncJobIds, kind \in {"validate", "gen_traces"}, owned \in BOOLEAN : AsyncSubmit(c, j, kind, owned)
+  \/ \E c \in AsyncConnections, reason \in {"bad_bound", "queue_full"} : AsyncReject(c, reason)
+  \/ \E c \in AsyncConnections, j \in AsyncJobIds \cup {0} : AsyncQuery(c, j) \/ AsyncAwaitReady(c, j) \/ AsyncCancelTerminal(c, j)
+  \/ \E c \in AsyncConnections, j \in AsyncJobIds : AsyncAwait(c, j) \/ AsyncCancel(c, j) \/ AsyncEvict(c, j)
+  \/ \E c \in AsyncConnections, timeout \in BOOLEAN : AsyncAwaitReply(c, timeout)
+  \/ \E c \in AsyncConnections, reason \in {"eof", "decode_error", "transport_error", "sync_done"} : AsyncClose(c, reason)
+  \/ \E c \in AsyncConnections : AsyncFinishClose(c)
+  \/ \E j \in AsyncJobIds : AsyncAcquireSlot(j) \/ AsyncBeginBody(j) \/ AsyncAcquireSpec(j) \/ AsyncAcquireDirectory(j) \/ AsyncSpawnChild(j) \/ AsyncInstallHook(j) \/ AsyncBodyAborts(j) \/ AsyncUnwind(j)
+  \/ \E j \in AsyncJobIds, result \in {"valid", "invalid", "traces", "error"} : AsyncBodyReturns(j, result)
+
+SyncVars == <<mirror_phase, client_phase, action_taken, mirror_flow,
+              client_to_mirror, mirror_to_client, report_matches,
+              faulted, client_closed, mirror_closed>>
+ProtocolVars == <<SyncVars, async_state>>
+Init == SyncInit /\ AsyncInit
+AsyncNext == AsyncNextCore /\ UNCHANGED SyncVars
+Next == (SyncNext /\ UNCHANGED async_state) \/ AsyncNext
+Spec == Init /\ [][Next]_ProtocolVars
+SyncSpec == Init /\ [][SyncNext /\ UNCHANGED async_state]_ProtocolVars
+AsyncSpec == Init /\ [][AsyncNext]_ProtocolVars
+
+AsyncTypeOK ==
+  /\ DOMAIN async_state.connections = AsyncConnections
+  /\ DOMAIN async_state.jobs = AsyncJobIds
+  /\ DOMAIN async_state.waiting = AsyncConnections
+  /\ \A c \in AsyncConnections :
+       /\ async_state.connections[c] \in {"open", "closing", "closed"}
+       /\ async_state.waiting[c] \in AsyncJobIds \cup {0}
+  /\ \A j \in AsyncJobIds : LET job == async_state.jobs[j] IN
+       /\ job.owner \in AsyncConnections \cup {0}
+       /\ job.kind \in {"none", "validate", "gen_traces"}
+       /\ job.phase \in {"unused", "pending", "running"} \cup AsyncTerminalPhases
+       /\ job.stage \in AsyncStages
+       /\ job.resources \subseteq AsyncResourceKinds
+       /\ job.acquired \subseteq AsyncResourceKinds
+       /\ job.released \subseteq AsyncResourceKinds
+       /\ job.stored \in BOOLEAN /\ job.cancelled \in BOOLEAN /\ job.slot \in BOOLEAN
+       /\ job.hook \in BOOLEAN /\ job.ownedSpec \in BOOLEAN /\ job.stopRequested \in BOOLEAN
+       /\ job.slotAcquires \in 0..1 /\ job.slotReleases \in 0..1
+
+AsyncResourceAccounting ==
+  \A j \in AsyncJobIds : LET job == async_state.jobs[j] IN
+    /\ job.resources = job.acquired \ job.released
+    /\ job.released \subseteq job.acquired
+    /\ job.slotReleases <= job.slotAcquires
+    /\ job.slot = (job.slotAcquires - job.slotReleases = 1)
+    /\ ~job.ownedSpec => "spec" \notin job.acquired
+
+AsyncNoOrphanedResources ==
+  \A j \in AsyncJobIds : LET job == async_state.jobs[j] IN
+    /\ job.stored => job.owner \in AsyncConnections
+    /\ job.resources /= {} => job.stage \notin {"unused", "queued", "settled"}
+    /\ job.stage \in {"unused", "settled"} => ~job.slot /\ job.resources = {}
+    /\ job.stage \notin {"unused", "queued", "settled"} => job.slot
+
+AsyncClosedOwnersHaveNoEntries ==
+  \A c \in AsyncConnections : async_state.connections[c] = "closed" =>
+    \A j \in AsyncJobIds : async_state.jobs[j].owner = c => ~async_state.jobs[j].stored
+
+AsyncTerminalResultsStable ==
+  \A j \in AsyncJobIds : LET job == async_state.jobs[j] IN
+    job.firstOutcome /= "none" =>
+      job.phase \in AsyncTerminalPhases /\ job.outcome = job.firstOutcome
+
+AsyncLateCancellationSafe ==
+  \A j \in AsyncJobIds : LET job == async_state.jobs[j] IN
+    job.cancelled /\ job.hook /\ "child" \in job.resources => job.stopRequested
+
+\* An outstanding await borrows the result promise even after table eviction.
+AsyncLivePromises == {j \in AsyncJobIds : async_state.jobs[j].stored \/
+                      (\E c \in AsyncConnections : async_state.waiting[c] = j)}
+AsyncWaitersOwned == \A c \in AsyncConnections :
+  async_state.waiting[c] /= 0 => async_state.connections[c] = "open"
+AsyncQuiescent ==
+  /\ \A c \in AsyncConnections : async_state.connections[c] = "closed"
+  /\ \A j \in AsyncJobIds : async_state.jobs[j].stage \in {"unused", "settled"}
+AsyncNoLeaksAtQuiescence == AsyncQuiescent =>
+  /\ AsyncSlotHolders = {} /\ AsyncLivePromises = {}
+  /\ \A j \in AsyncJobIds : async_state.jobs[j].resources = {} /\ ~async_state.jobs[j].stored
+
+AsyncCapacityOK ==
+  /\ Cardinality(AsyncLiveJobs) <= AsyncCapacity
+  /\ Cardinality(AsyncSlotHolders) <= AsyncWorkerSlots
+
+\* The reply snapshot is diagnostic only: no guard or invariant reads it.
+\* TLC may quotient it out without merging different resource/ownership states.
+AsyncView == <<async_state.connections, async_state.jobs, async_state.waiting>>
+
+AsyncInv == AsyncTypeOK /\ AsyncResourceAccounting /\ AsyncNoOrphanedResources
+            /\ AsyncClosedOwnersHaveNoEntries /\ AsyncTerminalResultsStable
+            /\ AsyncLateCancellationSafe /\ AsyncCapacityOK
+            /\ AsyncWaitersOwned /\ AsyncNoLeaksAtQuiescence
+
+Inv == SyncInv /\ AsyncInv
+
+\* Liveness is separate from safety. Fairness requires worker scheduling,
+\* body completion (including a killed child being collected), lexical cleanup,
+\* and per-owner draining to make progress. It does not require clients to close.
+AsyncWorkerProgress(j) == AsyncBeginBody(j) \/ AsyncAcquireSpec(j) \/ AsyncAcquireDirectory(j)
+                         \/ AsyncSpawnChild(j) \/ AsyncInstallHook(j) \/ AsyncBodyAborts(j)
+                         \/ (\E r \in {"valid", "invalid", "traces", "error"} : AsyncBodyReturns(j, r))
+                         \/ AsyncUnwind(j)
+AsyncDrain(c) == AsyncFinishClose(c) \/
+                (\E j \in AsyncJobIds : AsyncCancel(c, j) \/ AsyncEvict(c, j))
+AsyncFairness ==
+  /\ \A j \in AsyncJobIds : SF_async_state(AsyncAcquireSlot(j)) /\ WF_async_state(AsyncWorkerProgress(j))
+  /\ \A c \in AsyncConnections : WF_async_state(AsyncDrain(c)) /\ WF_async_state(AsyncAwaitReply(c, FALSE))
+AsyncFairSpec == AsyncSpec /\ AsyncFairness
+AsyncResourcesReleased ==
+  \A j \in AsyncJobIds :
+    (async_state.jobs[j].phase \in AsyncTerminalPhases) ~>
+    (async_state.jobs[j].stage = "settled" /\ async_state.jobs[j].resources = {} /\ ~async_state.jobs[j].slot)
+AsyncClosingEventuallyClean ==
+  \A c \in AsyncConnections : (async_state.connections[c] = "closing") ~>
+    (async_state.connections[c] = "closed" /\
+      \A j \in AsyncJobIds : async_state.jobs[j].owner = c =>
+        ~async_state.jobs[j].stored /\ async_state.jobs[j].resources = {} /\ ~async_state.jobs[j].slot /\ j \notin AsyncLivePromises)
+
+\* Negative controls for the pre-fix implementation, NOT enabled by Next.
+AsyncLeakOnExit(c) ==
+  /\ async_state.connections[c] = "open"
+  /\ async_state' = [async_state EXCEPT !.connections[c] = "closed", !.waiting[c] = 0,
+       !.last = AsyncReply("unsafe_exit", c, 0, -1, "closed")]
+AsyncEarlySlotRelease(j) ==
+  LET job == async_state.jobs[j] IN
+  /\ job.phase = "cancelled" /\ job.slot /\ job.stage /= "settled"
+  /\ async_state' = [async_state EXCEPT !.jobs[j].slot = FALSE,
+       !.jobs[j].slotReleases = @ + 1]
+AsyncMissLateHook(j) ==
+  /\ async_state.jobs[j].stage = "child" /\ async_state.jobs[j].cancelled
+  /\ async_state' = [async_state EXCEPT !.jobs[j].hook = TRUE, !.jobs[j].stage = "running"]
+AsyncLeakPartialAcquisition(j) ==
+  /\ async_state.jobs[j].stage = "spec" /\ async_state.jobs[j].ownedSpec
+  /\ async_state' = [async_state EXCEPT !.jobs[j].stage = "settled", !.jobs[j].phase = "failed",
+       !.jobs[j].outcome = "error", !.jobs[j].firstOutcome = "error",
+       !.jobs[j].slot = FALSE, !.jobs[j].slotReleases = @ + 1]
+AsyncExitFaultNext == AsyncNext \/ ((\E c \in AsyncConnections : AsyncLeakOnExit(c)) /\ UNCHANGED SyncVars)
+AsyncSlotFaultNext == AsyncNext \/ ((\E j \in AsyncJobIds : AsyncEarlySlotRelease(j)) /\ UNCHANGED SyncVars)
+AsyncHookFaultNext == AsyncNext \/ ((\E j \in AsyncJobIds : AsyncMissLateHook(j)) /\ UNCHANGED SyncVars)
+AsyncAcquisitionFaultNext == AsyncNext \/ ((\E j \in AsyncJobIds : AsyncLeakPartialAcquisition(j)) /\ UNCHANGED SyncVars)
 
 ==============================================================================
