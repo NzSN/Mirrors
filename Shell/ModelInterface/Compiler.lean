@@ -8,6 +8,7 @@ import Codec.ModelInterfaceTraceProjectionJson
 import Codec.StrictJson
 import Codec.Json
 import Shell.ModelInterface.Evidence
+import Shell.ModelInterface.Emit.Rust
 import Shell.ModelInterface.Emit.Cpp
 import Shell.ModelInterface.Emit.TypeScript
 import Shell.ModelInterface.Emit.TypeScriptAsync
@@ -52,10 +53,11 @@ def generatedManifestPath : String := ".model-interface-generated.json"
 def generatedPublicationLockPath : String := ".model-interface-generation.lock"
 def mirrorecmaTarget : String := "mirrorecma-v1"
 def mirrorecmaAsyncTarget : String := "mirrorecma-async-v1"
+def mirrorrustTarget : String := "mirrorrust-v1"
 def mirrorcppTarget : String := "mirrorcpp-v1"
 
 def supportedTarget (target : String) : Bool :=
-  target == mirrorecmaTarget || target == mirrorecmaAsyncTarget || target == mirrorcppTarget
+  target == mirrorecmaTarget || target == mirrorecmaAsyncTarget || target == mirrorcppTarget || target == mirrorrustTarget
 def maxModelInterfaceItfArtifactBytes : Nat := 16 * 1024 * 1024
 def maxCompilerArtifactBytes : Nat := 16 * 1024 * 1024
 
@@ -606,6 +608,8 @@ def emitTarget (target : String) (lock : LockedModelInterface) :
       Emit.TypeScript.emitTypeScript lock
     else if target == mirrorecmaAsyncTarget then
       Emit.TypeScriptAsync.emitTypeScriptAsync lock
+    else if target == mirrorrustTarget then
+      Emit.Rust.emitRust lock
     else if target == mirrorcppTarget then
       Emit.Cpp.emitCpp lock
     else

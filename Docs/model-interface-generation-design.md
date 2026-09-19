@@ -2,9 +2,9 @@
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
-> Status: **sync/async TypeScript and C++ generation, MirrorECMA compiled/dynamic
-> negotiation, and MirrorCPP compiled negotiation implemented; Rust/Lean
-> generated targets and static registries remain planned**
+> Status: **sync/async TypeScript, C++, and Rust generation implemented;
+> MirrorECMA, MirrorCPP, and MirrorRust support compiled negotiation.
+> The Lean generated target and registry remain planned**
 > Scope: generate a model-specific implementation interface and a binding to
 > the existing client-side `StateComputer` interface for MirrorECMA,
 > MirrorCPP, MirrorRust, and MirrorLean.

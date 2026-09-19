@@ -6,6 +6,7 @@ compiler and its implemented TLA+ source frontend.
 | Document | Status | Scope |
 | --- | --- | --- |
 | [Compiler detailed design](design.md) | Implemented version-1 compiler with identified follow-up milestones | Contracts, evidence, resolution, targets, deterministic emission, CLI, diagnostics, and publication |
+| [Rust target](rust-target.md) | Implemented with native execution and negotiated stdio gates | Rust types, ports, codecs, ownership, dependencies, generation and validation |
 | [Trusted suite bundles](suite-bundles.md) | Implemented with focused compiler and executable native bridge gates | Async bundle publication, ownership hashes, immutable model handles and local native conversion |
 | [General TLA+ frontend design](tla-frontend-design.md) | Design; delivery slices TF0–TF8 implemented and accepted 2026-09-12 | Lossless parsing, module resolution, semantic elaboration, effective declarations, conformance, and compiler integration |
 | [TLA+ frontend inspection CLI](tla-frontend-cli.md) | Implemented; TF8 accepted 2026-09-12 | Development-only `tla_frontend` parse/resolve/inspect commands, closed JSON schema, and validation |

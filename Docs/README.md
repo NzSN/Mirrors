@@ -48,7 +48,7 @@ an installed Windows service, a hosted CI run, or a published package.
   raw evidence document per invocation; projection accepts one trace and emits one
   paired receipt. Neither command seals a proposal as a contract.
   Implemented targets are `mirrorecma-v1`, experimental
-  `mirrorecma-async-v1`, and `mirrorcpp-v1`.
+  `mirrorecma-async-v1`, `mirrorcpp-v1`, and `mirrorrust-v1`.
 - MirrorECMA has compiled and dynamic negotiated replay plus async report
   runners, immutable suites, strict matched acceptance, project tools and
   normalized suite results. Gate supplies the optional suite workflow and public
@@ -64,9 +64,10 @@ an installed Windows service, a hosted CI run, or a published package.
 - MirrorRust now has an exact adapter registry and compiled-verify runtime for
   reviewed bindings. Gate owns the new native Rust SDK and evaluator integration;
   see its [implementation/acceptance record](../../MirrorGate/docs/rust-evaluator-sdk-status.md).
-  Rust/Lean generated targets, the MirrorLean registry, common generated-binding
+  The Lean generated target, the MirrorLean registry, common generated-binding
   recording vectors and broader sandbox backends remain separate follow-up work.
-  The handwritten Rust Counter fixture does not establish a Rust compiler target.
+  Rust generation and negotiated stdio replay are covered by the
+  [Rust compiler target gate](model-interface-compiler/rust-target.md).
 
 ## Validation entry points
 

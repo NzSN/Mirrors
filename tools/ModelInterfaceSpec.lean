@@ -1429,6 +1429,64 @@ def scenarioCppEmitter (fails : Failures)
     (emitterErrorIs "MIC-E-NAME-001"
       (Shell.ModelInterface.Emit.Cpp.emitCpp keyword))
 
+def scenarioRustEmitter (fails : Failures)
+    (resolved : ResolvedModelInterface) : IO Unit := do
+  let lock := resolved.withDigests
+    (Core.ModelInterface.Sha256.digestDomainHex "mirrors-model-interface-lock/v1" (resolvedSemanticBytes resolved))
+    (Core.ModelInterface.Sha256.digestDomainHex "mirrors-model-interface-provenance/v1" "rust-tests".toUTF8)
+  let emit := Shell.ModelInterface.Emit.Rust.emitRust
+  match emit lock, emit lock with
+  | .ok a, .ok b =>
+      check fails "rust: deterministic and sorted owned files"
+        (a == b && a.files.map (·.relativePath) ==
+          [".model-interface-generated.json", "CounterMirror.generated.rs"])
+  | _, _ => check fails "rust: Counter emission" false
+  let some observation := lock.observations.head? | return
+  let some action := lock.actions.head? | return
+  for name in ["Observe", "Self", "Async", "Gen"] do
+    check fails s!"rust: reserved name {name}"
+      (emitterErrorIs "MIC-E-NAME-001" (emit { lock with actions := [{ action with id := name }] }))
+  check fails "rust: name collision"
+    (emitterErrorIs "MIC-E-NAME-001" (emit { lock with actions := [action, { action with id := "tick" }] }))
+  for ty in [.opaqueItf "handle", .map .int .str] do
+    check fails "rust: unsupported type"
+      (emitterErrorIs "MIC-E-TYPE-001" (emit { lock with observations := [{ observation with type := ty }] }))
+  let some input := action.inputs.head? | return
+  check fails "rust: unsupported path"
+    (emitterErrorIs "MIC-E-PATH-001" (emit { lock with actions := [{ action with inputs := [
+      { input with projection := { input.projection with path := [.mapKey (.str "key")] } }] }] }))
+  -- Materialize a synthetic portable-type corpus for the Rust execution gate.
+  -- These are test-only emitter inputs, not a sealed production contract.
+  let types : List ModelType := [
+    .int, .bool, .str, .null, .set (.set .int), .seq .str,
+    .tuple [.int, .bool], .tuple [],
+    .record [⟨"type", .str⟩, ⟨"quoted\"\\\nλ", .int⟩], .record [],
+    .map .str (.seq .int), .variant [⟨"some", .int⟩, ⟨"none", .null⟩]]
+  let corpus := { lock with modelModule := "Corpus", observations := types.zipIdx.map fun (ty, i) =>
+    { observation with id := s!"Value{i}", wireName := s!"value{i}", type := ty } }
+  match emit corpus with
+  | .error errors => check fails "rust: portable type corpus" false (reprStr errors)
+  | .ok tree =>
+      IO.FS.createDirAll ".golden-build/model-interface-rust"
+      for file in tree.files do
+        if file.relativePath.endsWith ".rs" then
+          IO.FS.writeBinFile (System.FilePath.mk ".golden-build/model-interface-rust" / file.relativePath) file.bytes
+  let some initializer := lock.initializers.head? | return
+  let multi := { lock with
+    modelModule := "Multi"
+    initializers := [{ initializer with wireAliases := ["reset"], inputs := [
+      { input with id := "Seed", projection := { input.projection with
+        root := .initialState, path := [.field "count"] } }] }]
+    actions := [{ action with wireAliases := ["increment"], inputs := [input,
+      { input with id := "Validate", projection := { input.projection with
+        type := .bool, path := [.field "parameters", .field "meta", .index 0, .variantValue "flag"] } }] }] }
+  match emit multi with
+  | .error errors => check fails "rust: multi-input corpus" false (reprStr errors)
+  | .ok tree =>
+      for file in tree.files do
+        if file.relativePath.endsWith ".rs" then
+          IO.FS.writeBinFile (System.FilePath.mk ".golden-build/model-interface-rust" / file.relativePath) file.bytes
+
 private def compilerRejected {α : Type}
     (result : Except Shell.ModelInterface.Compiler.CompilerError α) : Bool :=
   match result with
@@ -2059,6 +2117,10 @@ def run : IO UInt32 := do
     match ← resolvedRef.get with
     | some resolved => scenarioCppEmitter fails resolved
     | none => check fails "cpp emitter: prerequisite resolution" false
+  scenario "rust-emitter" do
+    match ← resolvedRef.get with
+    | some resolved => scenarioRustEmitter fails resolved
+    | none => check fails "rust emitter: prerequisite resolution" false
   scenario "semantic-identity-and-large-lock" do
     match ← resolvedRef.get with
     | some resolved => scenarioSemanticIdentityAndLargeLock fails resolved

@@ -2,16 +2,15 @@
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
-> Status: **version-1 contract with three implemented target slices;
+> Status: **version-1 contract with four implemented target slices;
 > remaining profiles and common conformance work are specified below**
 >
 > The synchronous `mirrorecma-v1` reference target, the additive
-> `mirrorecma-async-v1` target, and the `mirrorcpp-v1` static target are
-> implemented. The async target underlies the locally accepted suite-bundle and
+> `mirrorecma-async-v1` target, and the `mirrorcpp-v1` and `mirrorrust-v1`
+> static targets are implemented. The async target underlies the locally accepted suite-bundle and
 > Gate `evaluateSuite` application path; that acceptance is not a package
 > publication or every-client support claim. The
-> `mirrorrust-v1` and `mirrorlean-v1` profiles are specified here for
-> subsequent implementation.
+> `mirrorlean-v1` profile remains specified for subsequent implementation.
 > The shared orchestration implementation is tracked separately
 > in the [client guide](client-implementation-guide.md#13-shared-sandbox-orchestration-design-profile)
 > and the companion acceptance ledger; implementing an emitter alone does not
@@ -27,14 +26,15 @@
 
 Mirrors currently implements the canonical lock, semantic digest, normalized
 contract handoff, ownership manifests, and the `mirrorecma-v1`,
-`mirrorecma-async-v1`, and `mirrorcpp-v1` emitters. MirrorECMA and MirrorCPP
-implement exact-digest adapter selection and exercise their generated Counter
+`mirrorecma-async-v1`, `mirrorcpp-v1`, and `mirrorrust-v1` emitters. MirrorECMA
+and MirrorCPP implement exact-digest adapter selection and exercise their generated Counter
 bindings over local stdio and allowlisted mTLS server mode.
 
 The common portable-profile check, cross-language recording vectors,
-`mirrorrust-v1`, `mirrorlean-v1`, and their negotiated client registries remain
-implementation work. The C++ emitter has direct executable coverage for the
-portable type baseline, but that is not yet the proposed shared vector suite.
+`mirrorlean-v1`, and its negotiated client registry remain implementation work.
+The Rust emitter has native codec/lifecycle and negotiated stdio Counter gates;
+Rust mTLS acceptance is not established by those gates. The C++ emitter has
+direct executable coverage for the portable type baseline, but that is not yet the proposed shared vector suite.
 The compiler also implements proposal-only `scaffold` generation from a bounded
 TLA+ root and strict raw ITF evidence. Its unsealed actions are finite-trace
 observations, not a closed action universe, and the proposal is not a sealed
@@ -47,7 +47,7 @@ invocation. Reviewed proposal sealing, multi-evidence synthesis, corpus-level
 projection manifests, and an implementation-side Gate adapter kit remain
 follow-up work; none is implied by the current scaffold or emitter status.
 Consequently, this document remains the normative target for the remaining
-work; three implemented outputs are not evidence that every specified profile
+work; four implemented outputs are not evidence that every specified profile
 conforms.
 
 ## 1. Purpose
@@ -1011,7 +1011,7 @@ Version-1 profile identifiers are:
 | MirrorECMA | `mirrorecma-v1` | Implemented reference profile. |
 | MirrorECMA | `mirrorecma-async-v1` | Implemented experimental async emission profile. |
 | MirrorCPP | `mirrorcpp-v1` | Implemented static C++23 profile. |
-| MirrorRust | `mirrorrust-v1` | Planned static profile. |
+| MirrorRust | `mirrorrust-v1` | Implemented static Rust profile; [native contract](model-interface-compiler/rust-target.md). |
 | MirrorLean | `mirrorlean-v1` | Planned static profile. |
 
 The synchronous profiles target `mirrors.state-computer/v1`. The additive
@@ -1392,8 +1392,11 @@ the shared interface; target source models remain private implementation.
    Counter acceptance tests. **Real Counter acceptance is implemented; common
    judgment/recording vectors remain.**
 8. Implement `mirrorrust-v1` and `mirrorlean-v1` from the same lock and vectors.
+   **Rust emission and native execution gates implemented; Lean and shared
+   recording vectors remain.**
 9. Add all generated targets to `model_interface_gen check` and the top-level
-   interop matrix. **Done for TypeScript and C++; pending for Rust and Lean.**
+   interop matrix. **Compiler checks include TypeScript, C++, and Rust; full Rust interop
+   matrix acceptance and Lean remain.**
 
 ## 24. Acceptance criteria
 

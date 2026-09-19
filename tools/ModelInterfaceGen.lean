@@ -36,7 +36,7 @@ def usage : String := String.intercalate "\n" [
   "  model_interface_gen project-trace --spec FILE --evidence RAW",
   "    --projection PLAN --out PROJECTED --receipt RECEIPT",
   "    [--replace] [--diagnostics json]",
-  "  TARGET: mirrorecma-v1 | mirrorecma-async-v1 | mirrorcpp-v1"
+  "  TARGET: mirrorecma-v1 | mirrorecma-async-v1 | mirrorcpp-v1 | mirrorrust-v1"
 ]
 
 private inductive DiagnosticsMode where
@@ -123,8 +123,8 @@ private def inputsOf (options : RawOptions) : Except String InputPaths := do
 private def checkedTarget (options : RawOptions) : Except String String := do
   let target ← requireOption "--target" options.target
   if target != mirrorecmaTarget && target != mirrorecmaAsyncTarget &&
-      target != mirrorcppTarget then
-    throw s!"unsupported --target {target}; expected {mirrorecmaTarget}, {mirrorecmaAsyncTarget}, or {mirrorcppTarget}"
+      target != mirrorcppTarget && target != mirrorrustTarget then
+    throw s!"unsupported --target {target}; expected {mirrorecmaTarget}, {mirrorecmaAsyncTarget}, {mirrorcppTarget}, or {mirrorrustTarget}"
   return target
 
 private def diagnosticsMode (options : RawOptions) : Except String DiagnosticsMode :=

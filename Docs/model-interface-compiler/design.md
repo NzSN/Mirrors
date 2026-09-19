@@ -6,8 +6,8 @@
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
-> Status: **synchronous and experimental async TypeScript plus C++ Counter
-> target slices implemented in Mirrors; Rust/Lean profiles and common
+> Status: **synchronous and experimental async TypeScript plus C++ and Rust
+> target slices implemented in Mirrors; the Lean profile and common
 > recording vectors remain planned**
 > Parent design: [`model-interface-generation-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-generation-design.md)
 > Runtime distribution:
@@ -32,9 +32,9 @@ Mirrors now contains the pure model-interface types, deterministic resolver,
 canonical contract/descriptor/lock codecs, pure SHA-256, strict ITF evidence
 normalization, trace preflight/coverage, the `mirrorecma-v1` TypeScript emitter,
 the additive `mirrorecma-async-v1` TypeScript emitter, the `mirrorcpp-v1` C++23
-emitter, safe owned-file publication, and the standalone
+emitter, the `mirrorrust-v1` Rust emitter, safe owned-file publication, and the standalone
 `model_interface_gen` executable. Counter resolve/generate/check,
-generated TypeScript/C++ compilation, typed bindings, and real session replay
+generated TypeScript/C++/Rust compilation, typed bindings, and real session replay
 are covered by the implementation gates and validation harnesses.
 
 The async target also supports `bundle` / `check-bundle`, a generated trusted
@@ -43,8 +43,8 @@ The async target also supports `bundle` / `check-bundle`, a generated trusted
 publication rules, disposal transfer and validation. These commands preserve the
 existing target identity and generated binding bytes.
 
-The synchronous and async TypeScript plus C++ version-1 slices are implemented.
-Shared portable judgment/recording vectors and the later Rust/Lean targets
+The synchronous and async TypeScript plus C++ and Rust version-1 slices are implemented.
+Shared portable judgment/recording vectors and the later Lean target
 remain follow-up work as specified by M5 and the cross-language specification.
 Scaffolding and projection are deliberately narrower than the remaining
 review workflow: each invocation consumes one evidence document or projects
@@ -1267,6 +1267,23 @@ underscores, and lower-first collisions with `MIC-E-NAME-001`.
 Generated mechanical errors derive from MirrorCPP's classified binding-error
 carrier. The negotiated runtime converts them to a fallible public result,
 while direct `StateComputer` callers retain the existing callable shape.
+
+### 13.10 `mirrorrust-v1` profile
+
+The Rust target emits `<Model>Mirror.generated.rs` and the standard ownership
+manifest. Its version-1 native mapping, naming, dependencies, and integration
+example are specified in [the Rust profile](rust-target.md). It uses MirrorRust's
+public `Value`, `State`, `BindingError`, and `FallibleStateComputer`; generated
+bindings can be converted to `LocalBinding` for deferred negotiated factories.
+No client checkout is needed to generate or check Rust source.
+
+The compiler gate checks deterministic emission, target rejection, and Counter
+freshness. When Cargo and `RUST_REPO` (default `../MirrorRust`) are available,
+`tools/model-interface-rust/check.sh` compiles the actual generated Counter and
+structural-type corpus, executes codec/lifecycle tests, and runs negotiated
+stdio replay, deliberate observer mismatch, and negotiation-failure isolation.
+Rust mTLS and a full cross-language shared recording suite remain separate
+acceptance work.
 
 ## 14. CLI design
 

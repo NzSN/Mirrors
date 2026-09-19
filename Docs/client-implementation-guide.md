@@ -319,8 +319,8 @@ is:
   --out generated/mirrorcpp
 ```
 
-The implemented targets are `mirrorecma-v1`, `mirrorecma-async-v1`, and
-`mirrorcpp-v1`. The async TypeScript target uses the separate local
+The implemented targets are `mirrorecma-v1`, `mirrorecma-async-v1`,
+`mirrorcpp-v1`, and `mirrorrust-v1` (see the [Rust target profile](model-interface-compiler/rust-target.md)). The async TypeScript target uses the separate local
 `mirrors.async-state-computer/v1` contract; section 9.7 defines the replay
 obligations and section 15.2 of `generated-model-interface-spec.md` defines
 the generated API. All targets obey that specification. Check the generated
