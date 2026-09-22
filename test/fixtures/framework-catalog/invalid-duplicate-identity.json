@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "mirrors.framework-catalog/v1",
+  "catalogId": "duplicate-component",
+  "visibility": "public",
+  "components": [
+    {"componentRef": {"componentId": "mirrors", "repository": "https://github.com/NzSN/Mirrors.git", "revision": "1111111111111111111111111111111111111111", "dirty": false}, "product": {"name": "Mirrors", "version": "0.0.2"}, "records": []},
+    {"componentRef": {"componentId": "mirrors", "repository": "https://github.com/NzSN/Mirrors.git", "revision": "4444444444444444444444444444444444444444", "dirty": false}, "product": {"name": "Mirrors", "version": "0.0.3"}, "records": []}
+  ],
+  "evidenceRefs": [],
+  "capabilities": [],
+  "distributionProfiles": [],
+  "combinations": []
+}

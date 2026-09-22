@@ -1,0 +1,257 @@
+{
+  "schemaVersion": "mirrors.evidence-command-registry/v1",
+  "commands": [
+    {
+      "commandId": "mirrors.local-no-model",
+      "tierId": "mirrors.required",
+      "requirement": "required",
+      "argvPrefix": [
+        "bash",
+        "tools/run-local-no-model-check.sh"
+      ],
+      "argvLength": 2,
+      "requiredCwdComponentId": "mirrors",
+      "defaultTimeoutSeconds": 1800,
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors"
+    },
+    {
+      "commandId": "mirrors.remote-model-check",
+      "tierId": "mirrors.remote-model-check",
+      "requirement": "required",
+      "argvPrefix": [
+        "python3",
+        "tools/evidence/run_remote_model_check.py"
+      ],
+      "argvLength": 2,
+      "requiredCwdComponentId": "mirrors",
+      "requiredEnvironment": {
+        "MIRRORS_REMOTE_APALACHE_ARCHIVE_SHA256": "68fb56dd9d053cf21d692fd7ec3fbaaeba1395661ec7434fa2b4c47e6fc432b8",
+        "MIRRORS_REMOTE_APALACHE_JAR_SHA256": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346",
+        "MIRRORS_REMOTE_APALACHE_VERSION": "0.61.0",
+        "MIRRORS_REMOTE_JAVA_ARCHIVE_SHA256": "54ba13f3ef80887fa74708b2a32daaae6262517ba68433d850bb4b426343172b",
+        "MIRRORS_REMOTE_JAVA_EXECUTABLE_SHA256": "58df5c13e5d6e68f242ad9b724479122828523008ef0907d3f2a02f54afaff23",
+        "MIRRORS_REMOTE_JAVA_OBSERVED_VERSION": "25.0.4+7-LTS",
+        "MIRRORS_REMOTE_JAVA_SELECTED_VERSION": "25.0.4+7"
+      },
+      "requiredEnvironmentNames": [
+        "MIRRORS_REMOTE_CA",
+        "MIRRORS_REMOTE_CLIENT_CERT",
+        "MIRRORS_REMOTE_CLIENT_KEY",
+        "MIRRORS_REMOTE_SERVER_PIN",
+        "MIRRORS_REMOTE_SERVICE_BINARY_SHA256",
+        "MIRRORS_REMOTE_SERVICE_SOURCE_REF"
+      ],
+      "defaultTimeoutSeconds": 600,
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors"
+    },
+    {
+      "commandId": "mirrors.interop",
+      "tierId": "mirrors.interop",
+      "requirement": "required",
+      "argvPrefix": [
+        "bash",
+        "tools/interop/run.sh"
+      ],
+      "argvLength": 2,
+      "requiredCwdComponentId": "mirrors",
+      "requiredEnvironment": {
+        "INTEROP_VERIFY_PINS": "1",
+        "ECMA_REF": "87ff8ca1555e2e35dd9a4664fc94aaa46d8f3dc2",
+        "CPP_REF": "5199c0134d23b791aee1274df2ec9e69cb6cb330",
+        "RUST_REF": "cf0e6297f0973696d0900f5ffb598c9d4dd10ff7",
+        "LEAN_CLIENT_REF": "e5f50133968361ee00d6872162d9c874f93ff849",
+        "HS_REF": "5ee414ee16b8aba50ceb480ac8013a56165272bb"
+      },
+      "requiredEnvironmentNames": [
+        "ECMA_REPO",
+        "CPP_REPO",
+        "RUST_REPO",
+        "LEAN_CLIENT_REPO",
+        "HS_REPO",
+        "HS_BIN",
+        "APALACHE_MC"
+      ],
+      "requiredEnvironmentFileSha256": {
+        "HS_BIN": "6b8b46ce98b59c4bbb6a922ead08b1d576a77b8889454d106c10d1227584a087"
+      },
+      "defaultTimeoutSeconds": 7200,
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors"
+    },
+    {
+      "commandId": "mirrorecma.project-check",
+      "tierId": "mirrorecma.project",
+      "requirement": "required",
+      "argvPrefix": [
+        "pnpm",
+        "run",
+        "check"
+      ],
+      "argvLength": 3,
+      "requiredCwdComponentId": "mirrorecma",
+      "defaultTimeoutSeconds": 1800,
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors"
+    },
+    {
+      "commandId": "mirrorecma.test",
+      "tierId": "mirrorecma.required",
+      "requirement": "required",
+      "argvPrefix": [
+        "pnpm",
+        "run",
+        "test"
+      ],
+      "argvLength": 3,
+      "requiredCwdComponentId": "mirrorecma",
+      "defaultTimeoutSeconds": 3600,
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors"
+    },
+    {
+      "commandId": "mirrorgate.required",
+      "tierId": "mirrorgate.required",
+      "requirement": "required",
+      "argvPrefix": [
+        "bash",
+        "scripts/test.sh"
+      ],
+      "argvLength": 2,
+      "requiredCwdComponentId": "mirrorgate",
+      "defaultTimeoutSeconds": 7200,
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors"
+    },
+    {
+      "commandId": "mirrorgate.application-campaign.work-queue",
+      "tierId": "mirrorgate.application-campaign",
+      "requirement": "required",
+      "argvPrefix": [
+        ".work/toolchains/node-v24.15.0-linux-x64/bin/node",
+        "integrations/mirrorecma/scripts/application-program-gate.mjs",
+        "work-queue",
+        "--receipt"
+      ],
+      "argvLength": 5,
+      "requiredCwdComponentId": "mirrorgate",
+      "requiredEnvironmentNames": ["MIRRORECMA_ROOT", "MIRROR_BIN"],
+      "attachmentsAllowed": true,
+      "attachmentPathArgIndex": 4,
+      "attachmentAdapter": {
+        "kind": "mirrorgate.application-validation/v2",
+        "application": "work-queue",
+        "artifactId": "work-queue-gate-receipt"
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "work-queue-gate-receipt",
+          "relativePath": "work-queue-gate-receipt.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrorgate",
+            "schemaVersion": "mirrorgate.application-validation/v2"
+          }
+        }
+      ],
+      "defaultTimeoutSeconds": 1800,
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors"
+    },
+    {
+      "commandId": "mirrorgate.application-campaign.persistent-transfer",
+      "tierId": "mirrorgate.application-campaign",
+      "requirement": "required",
+      "argvPrefix": [
+        ".work/toolchains/node-v24.15.0-linux-x64/bin/node",
+        "integrations/mirrorecma/scripts/application-program-gate.mjs",
+        "persistent-transfer",
+        "--receipt"
+      ],
+      "argvLength": 5,
+      "requiredCwdComponentId": "mirrorgate",
+      "requiredEnvironmentNames": ["MIRRORECMA_ROOT", "MIRROR_BIN"],
+      "attachmentsAllowed": true,
+      "attachmentPathArgIndex": 4,
+      "attachmentAdapter": {
+        "kind": "mirrorgate.application-validation/v2",
+        "application": "persistent-transfer",
+        "artifactId": "persistent-transfer-gate-receipt"
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "persistent-transfer-gate-receipt",
+          "relativePath": "persistent-transfer-gate-receipt.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrorgate",
+            "schemaVersion": "mirrorgate.application-validation/v2"
+          }
+        }
+      ],
+      "defaultTimeoutSeconds": 1800,
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors"
+    },
+    {
+      "commandId": "mirrorgate.application-campaign.lease-service",
+      "tierId": "mirrorgate.application-campaign",
+      "requirement": "required",
+      "argvPrefix": [
+        ".work/toolchains/node-v24.15.0-linux-x64/bin/node",
+        "integrations/mirrorecma/scripts/application-program-gate.mjs",
+        "lease-service",
+        "--receipt"
+      ],
+      "argvLength": 5,
+      "requiredCwdComponentId": "mirrorgate",
+      "requiredEnvironmentNames": ["MIRRORECMA_ROOT", "MIRROR_BIN"],
+      "attachmentsAllowed": true,
+      "attachmentPathArgIndex": 4,
+      "attachmentAdapter": {
+        "kind": "mirrorgate.application-validation/v2",
+        "application": "lease-service",
+        "artifactId": "lease-service-gate-receipt"
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "lease-service-gate-receipt",
+          "relativePath": "lease-service-gate-receipt.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrorgate",
+            "schemaVersion": "mirrorgate.application-validation/v2"
+          }
+        }
+      ],
+      "defaultTimeoutSeconds": 1800,
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors"
+    }
+  ]
+}

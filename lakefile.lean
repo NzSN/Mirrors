@@ -114,6 +114,21 @@ lean_exe model_interface_distribution_spec where
 lean_exe model_interface_gen where
   root := `tools.ModelInterfaceGen
 
+/-- Strict evaluator-owned domain-reduction request validator. -/
+@[default_target]
+lean_exe model_interface_reduction where
+  root := `tools.ModelInterfaceReduction
+
+/-- Strict framework capability catalog validator and deterministic renderer. -/
+@[default_target]
+lean_exe framework_catalog where
+  root := `tools.FrameworkCatalog
+
+/-- Framework catalog contract, rejected-fixture, and canonicalization gate. -/
+@[default_target]
+lean_exe framework_catalog_spec where
+  root := `tools.FrameworkCatalogSpec
+
 /-- Proposal-only model-interface scaffold CLI and publication gate. -/
 @[default_target]
 lean_exe model_interface_scaffold_cli_spec where
@@ -354,6 +369,38 @@ script test do
   if outMiDistribution.exitCode != 0 then
     IO.println s!"model_interface_distribution_spec FAILED ({outMiDistribution.exitCode})"
     return outMiDistribution.exitCode
+  let outFrameworkCatalog : IO.Process.Output ← IO.Process.output
+    ({ cmd := ".lake/build/bin/framework_catalog_spec", args := #[] } :
+      IO.Process.SpawnArgs)
+  IO.println outFrameworkCatalog.stdout
+  if outFrameworkCatalog.exitCode != 0 then
+    IO.eprintln outFrameworkCatalog.stderr
+    IO.println s!"framework_catalog_spec FAILED ({outFrameworkCatalog.exitCode})"
+    return outFrameworkCatalog.exitCode
+  let distributionContract : IO.Process.Output ← IO.Process.output
+    ({ cmd := "python3", args := #["-m", "unittest", "discover", "-s",
+      "tools/distribution", "-p", "test_*.py"] } : IO.Process.SpawnArgs)
+  IO.println distributionContract.stdout
+  IO.eprintln distributionContract.stderr
+  if distributionContract.exitCode != 0 then
+    IO.println s!"distribution contract tests FAILED ({distributionContract.exitCode})"
+    return distributionContract.exitCode
+  let distributionValidate : IO.Process.Output ← IO.Process.output
+    ({ cmd := "tools/distribution/manifest-check", args := #["validate",
+      "distribution/reference-node"] } : IO.Process.SpawnArgs)
+  IO.println distributionValidate.stdout
+  IO.eprintln distributionValidate.stderr
+  if distributionValidate.exitCode != 0 then
+    IO.println s!"distribution manifest validation FAILED ({distributionValidate.exitCode})"
+    return distributionValidate.exitCode
+  let durableEvidence : IO.Process.Output ← IO.Process.output
+    ({ cmd := "python3", args := #["-m", "unittest", "discover", "-s",
+      "tools/evidence/tests", "-p", "test_*.py"] } : IO.Process.SpawnArgs)
+  IO.println durableEvidence.stdout
+  IO.eprintln durableEvidence.stderr
+  if durableEvidence.exitCode != 0 then
+    IO.println s!"durable evidence tests FAILED ({durableEvidence.exitCode})"
+    return durableEvidence.exitCode
   let outMiScaffoldCli : IO.Process.Output ← IO.Process.output
     ({ cmd := ".lake/build/bin/model_interface_scaffold_cli_spec", args := #[] } :
       IO.Process.SpawnArgs)

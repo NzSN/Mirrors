@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "mirrors.framework-catalog/v1",
+  "catalogId": "platform-mismatch",
+  "visibility": "public",
+  "components": [{"componentRef": {"componentId": "mirrors", "repository": "https://github.com/NzSN/Mirrors.git", "revision": "1111111111111111111111111111111111111111", "dirty": false}, "product": {"name": "Mirrors", "version": "0.0.2"}, "records": []}],
+  "evidenceRefs": [],
+  "capabilities": [],
+  "distributionProfiles": [{"profileId": "ubuntu-x64", "platform": {"os": "linux", "osRelease": "ubuntu-24.04", "architecture": "x86_64", "backend": "local-process"}, "requiredCapabilityIds": [], "optionalCapabilityIds": [], "requiredObservationDimensions": ["installedConsumerAccepted"], "dependencies": []}],
+  "combinations": [{"combinationId": "wrong-platform", "componentIds": ["mirrors"], "platform": {"os": "linux", "osRelease": "ubuntu-24.04", "architecture": "aarch64", "backend": "local-process"}, "capabilityIds": [], "distributionProfileIds": ["ubuntu-x64"], "declaredState": "supported", "evidenceIds": []}]
+}

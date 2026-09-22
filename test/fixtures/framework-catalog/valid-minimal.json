@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "mirrors.framework-catalog/v1",
+  "catalogId": "fixture-minimal",
+  "visibility": "public",
+  "components": [
+    {
+      "componentRef": {
+        "componentId": "mirrors",
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "1111111111111111111111111111111111111111",
+        "dirty": false
+      },
+      "product": {"name": "Mirrors", "version": "0.0.2"},
+      "records": [
+        {"recordId": "compiler", "path": "Shell/ModelInterface/Compiler.lean", "recordKind": "source"}
+      ]
+    }
+  ],
+  "evidenceRefs": [],
+  "capabilities": [
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorecma-async-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate an asynchronous TypeScript suite",
+      "declaration": {"state": "available", "constraints": []},
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [{"path": "Shell/ModelInterface/Emit/TypeScriptAsync.lean", "symbol": "emit"}]
+      },
+      "observations": {
+        "sourceTested": {"state": "unknown"},
+        "locallyAccepted": {"state": "unknown"},
+        "installedConsumerAccepted": {"state": "unknown"},
+        "hostedCiAccepted": {"state": "unknown"},
+        "published": {"state": "unknown"}
+      }
+    }
+  ],
+  "distributionProfiles": [],
+  "combinations": []
+}

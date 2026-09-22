@@ -26,13 +26,47 @@ Record its implementation, source revision and binary hash rather than inferring
 features from the executable name or product version alone. The local Haskell
 checkout is named `ModelMirros`; its Cabal package/executable is `ModelMirrors`.
 
+## Generated capability status
+
+<!-- BEGIN GENERATED FRAMEWORK SUPPORT -->
+Catalog `mirrors.framework.candidate-2026-09-22` visibility: **private**. Dirty source identities are explicit; this table does not publish packages or assert runtime acceptance.
+
+| Component | Revision | Dirty |
+| --- | --- | --- |
+| `mirrorecma` | `87ff8ca1555e2e35dd9a4664fc94aaa46d8f3dc2` | true |
+| `mirrorgate` | `173075d318e4be926570a1378fc0aa36a1294f89` | true |
+| `mirrors` | `e7c8681d7db62000555675188d0125931136e002` | true |
+
+| Capability | Owner | Declared | Source | Tested | Local | Installed | Hosted CI | Published |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `mirrorecma.project.doctor-read-only` | `mirrorecma` | available | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrorecma.suite.checked-corpus` | `mirrorecma` | available | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.backend.linux-bubblewrap-v1` | `mirrorgate` | experimental | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.control.v1` | `mirrorgate` | experimental | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.control.v2` | `mirrorgate` | experimental | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.generated-application.mirrorrust-v1` | `mirrorgate` | unavailable | absent | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.pair.node-evaluator.node-worker-v1` | `mirrorgate` | experimental | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.pair.rust-evaluator.rust-worker-v1` | `mirrorgate` | experimental | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.quota.aggregate-v1` | `mirrorgate` | experimental | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.recovery.offline-reclaim-v1` | `mirrorgate` | experimental | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.recovery.session-adoption` | `mirrorgate` | unavailable | absent | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.runtime.node-v1` | `mirrorgate` | experimental | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.runtime.rust-v1` | `mirrorgate` | experimental | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.rust-evaluator.counter-fixture-v1` | `mirrorgate` | experimental | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrorgate.worker.v1` | `mirrorgate` | experimental | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrors.compiler.target.mirrorcpp-v1` | `mirrors` | available | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrors.compiler.target.mirrorecma-async-v1` | `mirrors` | available | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrors.compiler.target.mirrorecma-v1` | `mirrors` | available | present | unknown | unknown | unknown | unknown | unknown |
+| `mirrors.compiler.target.mirrorrust-v1` | `mirrors` | experimental | present | unknown | unknown | unknown | unknown | unknown |
+<!-- END GENERATED FRAMEWORK SUPPORT -->
+
 ## Client capabilities
 
 | Client | Base transport / server jobs | Model-interface path | Gate evaluator path |
 | --- | --- | --- | --- |
 | TypeScript | stdio, TCP, mTLS; network async jobs through `Connection` | Generated synchronous/async bindings; compiled verification and dynamic descriptors; default `defineSuite` / `runSuite` and project CLI | Gate-owned `evaluateSuite`; native Node control-v1/v2 SDK |
 | C++ | stdio, TCP, mTLS; submit/query/await/cancel | Generated `mirrorcpp-v1` bindings and exact compiled verification | Native C++ control-v1/v2 SDK and reusable source integration; acceptance fixture, not a published generic suite API |
-| Rust | stdio, TCP, mTLS; correlated async jobs | Exact registry, reviewed metadata, required/preferred compiled verification and fallible replay; no generated `mirrorrust-v1` emitter | Native Rust control-v1/worker-v1 SDK and optional evaluator; Counter is a handwritten fixture; current facade starts the model peer over local stdio |
+| Rust | stdio, TCP, mTLS; correlated async jobs | Exact registry, reviewed metadata, required/preferred compiled verification and fallible replay; Mirrors now has a source-level `mirrorrust-v1` emitter, while generic installed-client acceptance remains unestablished | Native Rust control-v1/worker-v1 SDK and optional evaluator; Counter is a handwritten fixture, distinct from generic generated-application acceptance; current facade starts the model peer over local stdio |
 | Lean | stdio, TCP, separate native mTLS package; typed `Connection` async jobs | Base protocol; negotiated registry and generated Lean target remain planned | No native Lean Gate facade |
 
 Stdio does not accept server-job messages. Server async jobs, async application

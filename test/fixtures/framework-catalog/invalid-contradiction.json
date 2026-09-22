@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "mirrors.framework-catalog/v1",
+  "catalogId": "contradiction",
+  "visibility": "public",
+  "components": [{"componentRef": {"componentId": "mirrorgate", "repository": "https://github.com/NzSN/MirrorGate.git", "revision": "3333333333333333333333333333333333333333", "dirty": false}, "product": {"name": "MirrorGate", "version": "0.1.0"}, "records": []}],
+  "evidenceRefs": [{"evidenceId": "gate-run", "runRef": {"schemaVersion": "mirrors.evidence-public-summary/v1.0", "runId": "01J00000000000000000000001", "envelopeSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "projectionKind": "public"}}],
+  "capabilities": [{"capabilityId": "mirrorgate.backend.cgroup-v2", "ownerComponentId": "mirrorgate", "description": "Aggregate cgroup limits", "declaration": {"state": "unavailable", "constraints": []}, "sourceImplementation": {"state": "absent", "locations": []}, "observations": {"sourceTested": {"state": "unknown"}, "locallyAccepted": {"state": "accepted", "evidenceId": "gate-run"}, "installedConsumerAccepted": {"state": "accepted", "evidenceId": "gate-run"}, "hostedCiAccepted": {"state": "unknown"}, "published": {"state": "unknown"}}}],
+  "distributionProfiles": [{"profileId": "requires-cgroup", "platform": {"os": "linux", "osRelease": "ubuntu-24.04", "architecture": "x86_64", "backend": "linux-bubblewrap-v1"}, "requiredCapabilityIds": ["mirrorgate.backend.cgroup-v2"], "optionalCapabilityIds": [], "requiredObservationDimensions": ["installedConsumerAccepted", "locallyAccepted"], "dependencies": []}],
+  "combinations": [{"combinationId": "claims-cgroup", "componentIds": ["mirrorgate"], "platform": {"os": "linux", "osRelease": "ubuntu-24.04", "architecture": "x86_64", "backend": "linux-bubblewrap-v1"}, "capabilityIds": ["mirrorgate.backend.cgroup-v2"], "distributionProfileIds": ["requires-cgroup"], "declaredState": "supported", "evidenceIds": []}]
+}

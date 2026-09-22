@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "mirrors.evidence-envelope/v1.0",
+  "projectionKind": "private",
+  "runId": "fixture-run-dirty-001",
+  "releaseProfile": "mirrors.local-release-evidence/v1",
+  "catalogSelectionRef": {"schemaVersion": "mirrors.framework-catalog/v1", "selectionKind": "git-revision", "selectionValue": "e7c8681d7db62000555675188d0125931136e002"},
+  "components": [{"componentId": "mirrorecma", "repository": "https://github.com/NzSN/MirrorECMA", "revision": "87ff8ca1555e2e35dd9a4664fc94aaa46d8f3dc2", "dirty": true, "dirtyContent": {"algorithm": "sha256", "digest": "6666666666666666666666666666666666666666666666666666666666666666", "method": "git-diff-and-untracked-manifest-v1", "includedPaths": [], "excludedPaths": [{"path": ".work", "reasonCode": "pre-existing-unrelated"}]}}],
+  "timestamps": {"startedAtUtc": "2026-09-22T02:00:00Z", "finishedAtUtc": "2026-09-22T02:00:00Z", "monotonicDurationNs": 1},
+  "environment": {"platformProfile": "ubuntu-24.04-x86_64-local", "os": "Ubuntu 24.04", "architecture": "x86_64", "workingDirectory": "/private/fixture", "tools": []},
+  "commands": [{"commandId": "fixture.inspect", "tierId": "fixture.optional", "requirement": "optional", "argv": ["git", "status", "--short"], "cwd": "/private/fixture", "exit": {"kind": "code", "code": 0}}],
+  "tiers": [{"tierId": "fixture.optional", "requirement": "optional", "status": "passed", "artifactIds": ["dirty-status"]}],
+  "artifacts": [{"artifactId": "dirty-status", "mediaType": "text/plain", "role": "diagnostic", "bytes": 9, "sha256": "7777777777777777777777777777777777777777777777777777777777777777", "visibility": "private", "requirement": "required", "location": {"kind": "bundle", "path": "artifacts/private/dirty-status.txt"}}],
+  "producerResults": [],
+  "releaseRequirements": {"requiredArtifactIds": ["dirty-status"], "requiredStructuralRoles": ["private-index", "public-summary"], "requiredCleanupScopes": []},
+  "outcomes": {"behavior": {"status": "not_run", "classification": {"namespace": "evidence", "code": "inventory-only"}}, "cleanup": [{"scope": "local-cooperative", "requirement": "not-applicable", "status": "not_applicable", "artifactIds": []}], "persistence": {"requirement": "required", "status": "complete", "requiredArtifactIds": ["dirty-status"], "missingArtifactIds": []}},
+  "qualification": {"status": "incomplete", "reasonCodes": ["behavior-not-run"]},
+  "retention": {"profile": "local-owner-only-v1", "automaticUpload": false, "automaticPruning": false}
+}

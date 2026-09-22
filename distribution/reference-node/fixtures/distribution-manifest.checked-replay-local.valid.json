@@ -1,0 +1,674 @@
+{
+  "schemaVersion": "mirrors.reference-distribution-manifest/v1",
+  "distributionId": "mirrors-reference-node-ubuntu-24.04-x86_64-v1",
+  "catalogSelectionRef": {
+    "schemaVersion": "mirrors.framework-catalog/v1",
+    "selectionKind": "sha256",
+    "selectionValue": "e3b691a60a87708b50c24085303fd313359cef33c50b11f7cc89fbd2358c3b7d"
+  },
+  "profileId": "checked-replay-local",
+  "componentRefs": [
+    {
+      "componentId": "mirrorecma",
+      "repository": "https://github.com/NzSN/MirrorECMA.git",
+      "revision": "87ff8ca1555e2e35dd9a4664fc94aaa46d8f3dc2",
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "8fde8e5c6607129c9e0af98bb9b380271c5c8a8faaefd813d941ae50190302ed",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "docs/mutation-campaigns.md",
+          "docs/mutation-fidelity-guide.md",
+          "docs/project-tools.md",
+          "docs/reproduction-bundles.md",
+          "examples/application-validation/README.md",
+          "examples/application-validation/fidelity.mjs",
+          "examples/application-validation/installed-project-replay.mjs",
+          "examples/application-validation/run.mjs",
+          "examples/application-validation/suite.mjs",
+          "examples/lease-service/application.json",
+          "examples/lease-service/service.mjs",
+          "examples/persistent-transfer/application.json",
+          "examples/persistent-transfer/service.mjs",
+          "examples/work-queue/application.json",
+          "examples/work-queue/gate-service.mjs",
+          "examples/work-queue/native-service.mjs",
+          "examples/work-queue/queue-fixture.mjs",
+          "examples/work-queue/validation-faults.mjs",
+          "schemas/mutation-campaign-v1.schema.json",
+          "schemas/reproduction-bundle-v1.schema.json",
+          "scripts/materialize-lease-reduction.mjs",
+          "src/cli.ts",
+          "src/framework-catalog.ts",
+          "src/index.ts",
+          "src/lease-reduction.ts",
+          "src/mutation-campaign.ts",
+          "src/project-config.ts",
+          "src/project.ts",
+          "src/reproduction-bundle.ts",
+          "src/reproduction-prefix-reducer.ts",
+          "src/reproduction-stability.ts",
+          "test/fixtures/framework-catalog/canonicalization-vectors.json",
+          "test/fixtures/mutation-campaign/accepted/current-17-local-17-gate.json",
+          "test/fixtures/mutation-campaign/rejected/contradictory-expected-result.json",
+          "test/fixtures/mutation-campaign/rejected/duplicate-mutant.json",
+          "test/fixtures/mutation-campaign/rejected/missing-denominator.json",
+          "test/fixtures/mutation-campaign/rejected/missing-path-scope.json",
+          "test/fixtures/mutation-campaign/rejected/mutable-protected-input.json",
+          "test/fixtures/mutation-campaign/rejected/unknown-action.json",
+          "test/fixtures/reproduction/accepted/behavioral-mismatch.json",
+          "test/fixtures/reproduction/accepted/cancellation.json",
+          "test/fixtures/reproduction/accepted/cleanup-failure.json",
+          "test/fixtures/reproduction/accepted/codec-error.json",
+          "test/fixtures/reproduction/accepted/coverage-unmet.json",
+          "test/fixtures/reproduction/accepted/implementation-error.json",
+          "test/fixtures/reproduction/accepted/observer-error.json",
+          "test/fixtures/reproduction/accepted/timeout.json",
+          "test/fixtures/reproduction/rejected/contradictory-outcome.json",
+          "test/fixtures/reproduction/rejected/credentials.json",
+          "test/fixtures/reproduction/rejected/cyclic-encoding.json",
+          "test/fixtures/reproduction/rejected/deep-data.json",
+          "test/fixtures/reproduction/rejected/digest-mismatch.json",
+          "test/fixtures/reproduction/rejected/duplicate-reference.json",
+          "test/fixtures/reproduction/rejected/embedded-executable.json",
+          "test/fixtures/reproduction/rejected/malformed-coordinates.json",
+          "test/fixtures/reproduction/rejected/missing-identity.json",
+          "test/fixtures/reproduction/rejected/over-limit-inline.json",
+          "test/fixtures/reproduction/rejected/unknown-reference-type.json",
+          "test/framework-catalog.test.ts",
+          "test/installed-qualification-wrappers.test.ts",
+          "test/mutation-campaign-definition.test.ts",
+          "test/mutation-campaign.test.ts",
+          "test/mutation-observer-fidelity.test.ts",
+          "test/project.test.ts",
+          "test/reproduction-bundle.test.ts",
+          "test/reproduction-domain-reducer.test.ts",
+          "test/reproduction-prefix-reducer.test.ts",
+          "test/reproduction-replay.test.ts",
+          "test/reproduction-stability.test.ts",
+          "test/support/framework-selection.ts",
+          "test/support/reproduction-counter.ts"
+        ],
+        "excludedPaths": [
+          {
+            "path": ".work/rust-evaluator/reference-consumer-final/mirrorecma-2.0.0.tgz",
+            "reasonCode": "pre-existing-unrelated"
+          },
+          {
+            "path": ".work/rust-evaluator/reference-consumer-final/npm-cache/_cacache/content-v2/sha512/34/d3/a9c0827fdc110192fddf11545a2022ebc362e14157e6e9b0dc553940eef4de10197a7240a29426455a3294dc3dca714798516f26768c69a89173aa90da0a",
+            "reasonCode": "pre-existing-unrelated"
+          },
+          {
+            "path": ".work/rust-evaluator/reference-consumer-final/npm-cache/_cacache/index-v5/3b/d8/f93bc43d35c127407ebe3af08c459f4f0e0dc59390c30ee12ca59a3ed850",
+            "reasonCode": "pre-existing-unrelated"
+          },
+          {
+            "path": ".work/rust-evaluator/reference-consumer-final/npm-cache/_logs/2026-09-18T10_16_03_961Z-debug-0.log",
+            "reasonCode": "pre-existing-unrelated"
+          },
+          {
+            "path": ".work/rust-evaluator/reference-consumer-final/npm-cache/_update-notifier-last-checked",
+            "reasonCode": "pre-existing-unrelated"
+          },
+          {
+            "path": "catalog/framework-capabilities.json",
+            "reasonCode": "evidence-output"
+          }
+        ]
+      }
+    },
+    {
+      "componentId": "mirrors",
+      "repository": "https://github.com/NzSN/Mirrors.git",
+      "revision": "e7c8681d7db62000555675188d0125931136e002",
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "711233a69c2f1df3a6a3c28befe56bcf1fced5574b8df4d244107858ac586399",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "Codec/FrameworkCatalog.lean",
+          "Codec/ModelInterfaceReductionJson.lean",
+          "Core/FrameworkCatalog.lean",
+          "Core/ModelInterface.lean",
+          "Core/ModelInterface/Reduction.lean",
+          "Docs/README.md",
+          "Docs/application-integration-guide.md",
+          "Docs/application-integration-progress.md",
+          "Docs/durable-evidence-design.md",
+          "Docs/evidence/historical-artifact-availability.json",
+          "Docs/framework-catalog-contract.md",
+          "Docs/framework-catalog-inventory.md",
+          "Docs/model-interface-reduction.md",
+          "Docs/qualification-harness-design.md",
+          "Docs/reference-distribution-profile.md",
+          "Plans/execution-decisions.md",
+          "Plans/implementation-baseline.md",
+          "Plans/mirror-framework-tasks.md",
+          "Shell/FrameworkCatalog.lean",
+          "distribution/reference-node/README.md",
+          "distribution/reference-node/activation-transaction.md",
+          "distribution/reference-node/cache-index.schema.json",
+          "distribution/reference-node/distribution-manifest.schema.json",
+          "lakefile.lean",
+          "test/fixtures/framework-catalog/canonicalization-vectors.json",
+          "test/fixtures/framework-catalog/expected-errors.json",
+          "test/fixtures/framework-catalog/gate-compatibility-v1.json",
+          "test/fixtures/framework-catalog/invalid-constraint-contradiction.json",
+          "test/fixtures/framework-catalog/invalid-contradiction.json",
+          "test/fixtures/framework-catalog/invalid-dirty-path.json",
+          "test/fixtures/framework-catalog/invalid-duplicate-identity.json",
+          "test/fixtures/framework-catalog/invalid-evidence-reference.json",
+          "test/fixtures/framework-catalog/invalid-extension-name.json",
+          "test/fixtures/framework-catalog/invalid-missing-revision.json",
+          "test/fixtures/framework-catalog/invalid-platform.json",
+          "test/fixtures/framework-catalog/invalid-schema-version.json",
+          "test/fixtures/framework-catalog/invalid-source-only-as-released.json",
+          "test/fixtures/framework-catalog/valid-full.json",
+          "test/fixtures/framework-catalog/valid-minimal.json",
+          "test/fixtures/framework-catalog/version-pins.env",
+          "tools/FrameworkCatalog.lean",
+          "tools/FrameworkCatalogSpec.lean",
+          "tools/ModelInterfaceReduction.lean",
+          "tools/ModelInterfaceSpec.lean",
+          "tools/distribution/audit-launcher.mjs",
+          "tools/distribution/build.py",
+          "tools/distribution/build.sh",
+          "tools/distribution/counter-driver.mjs",
+          "tools/distribution/distribution_lib.py",
+          "tools/distribution/install.py",
+          "tools/distribution/install.sh",
+          "tools/distribution/manifest-check",
+          "tools/distribution/manifest_check.py",
+          "tools/distribution/qualification.py",
+          "tools/distribution/refresh_identity.py",
+          "tools/distribution/snapshot_sources.py",
+          "tools/distribution/test-installed.sh",
+          "tools/distribution/test-upgrade.sh",
+          "tools/distribution/test_archive_bounds.py",
+          "tools/distribution/test_install.py",
+          "tools/distribution/test_manifest_check.py",
+          "tools/distribution/test_qualification.py",
+          "tools/distribution/upgrade_matrix.py",
+          "tools/distribution/verify.py",
+          "tools/distribution/verify.sh",
+          "tools/evidence/README.md",
+          "tools/evidence/catalog_links.py",
+          "tools/evidence/collect.py",
+          "tools/evidence/command_registry.py",
+          "tools/evidence/commands.json",
+          "tools/evidence/finalize.py",
+          "tools/evidence/fixtures/envelope-private.cleanup-failure.valid.json",
+          "tools/evidence/fixtures/envelope-private.dirty.valid.json",
+          "tools/evidence/fixtures/envelope-private.persistence-failure.valid.json",
+          "tools/evidence/fixtures/envelope-private.required-skip.valid.json",
+          "tools/evidence/fixtures/envelope-private.valid.json",
+          "tools/evidence/fixtures/public-summary.valid.json",
+          "tools/evidence/fixtures/rejected-cases.json",
+          "tools/evidence/historical.py",
+          "tools/evidence/qualification-profiles.json",
+          "tools/evidence/qualification_scope.py",
+          "tools/evidence/requirements.txt",
+          "tools/evidence/retain_source_package.py",
+          "tools/evidence/run_remote_model_check.py",
+          "tools/evidence/schema/attachment-plan-v1.schema.json",
+          "tools/evidence/schema/bundle-index-v1.schema.json",
+          "tools/evidence/schema/command-context-v1.schema.json",
+          "tools/evidence/schema/evidence-envelope-v1.schema.json",
+          "tools/evidence/schema/public-summary-v1.schema.json",
+          "tools/evidence/schema/qualification-scope-v1.schema.json",
+          "tools/evidence/store.py",
+          "tools/evidence/tests/test_catalog_links.py",
+          "tools/evidence/tests/test_collect.py",
+          "tools/evidence/tests/test_contract.py",
+          "tools/evidence/tests/test_historical.py",
+          "tools/evidence/tests/test_store.py",
+          "tools/evidence/validate.py",
+          "tools/evidence/verify.py",
+          "tools/interop/INTEROP.md",
+          "tools/interop/run.sh",
+          "tools/run-local-no-model-check.sh"
+        ],
+        "excludedPaths": [
+          {
+            "path": "Docs/framework-map.md",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "catalog/components/mirrors.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "catalog/framework-catalog.compact.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "catalog/framework-catalog.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/component-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/dependency-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/profiles.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "tools/distribution/__pycache__/distribution_lib.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/distribution/__pycache__/install.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/distribution/__pycache__/manifest_check.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/distribution/__pycache__/verify.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/__pycache__/catalog_links.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/__pycache__/collect.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/__pycache__/command_registry.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/__pycache__/finalize.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/__pycache__/historical.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/__pycache__/qualification_scope.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/__pycache__/retain_source_package.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/__pycache__/run_remote_model_check.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/__pycache__/store.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/__pycache__/validate.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/__pycache__/verify.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/tests/__pycache__/test_catalog_links.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/tests/__pycache__/test_collect.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/tests/__pycache__/test_contract.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/tests/__pycache__/test_historical.cpython-312.pyc",
+            "reasonCode": "build-output"
+          },
+          {
+            "path": "tools/evidence/tests/__pycache__/test_store.cpython-312.pyc",
+            "reasonCode": "build-output"
+          }
+        ]
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "artifactId": "counter-corpus",
+      "path": "artifacts/examples/counter.itf.json",
+      "bytes": 1,
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "mode": "0644",
+      "kind": "file",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "counter-corpus"
+      }
+    },
+    {
+      "artifactId": "counter-suite-bundle",
+      "path": "artifacts/examples/counter-suite.tar",
+      "bytes": 1,
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "mode": "0644",
+      "kind": "archive",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "counter-suite-bundle"
+      }
+    },
+    {
+      "artifactId": "evidence-verifier",
+      "path": "artifacts/evidence/tools.tar",
+      "bytes": 1,
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "mode": "0644",
+      "kind": "archive",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "evidence-verifier"
+      }
+    },
+    {
+      "artifactId": "evidence-verifier-dependencies",
+      "path": "artifacts/evidence/wheels.tar",
+      "bytes": 1,
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "mode": "0644",
+      "kind": "archive",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "evidence-verifier-dependencies"
+      }
+    },
+    {
+      "artifactId": "framework-catalog-verifier",
+      "path": "artifacts/bin/framework_catalog",
+      "bytes": 1,
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "mode": "0755",
+      "kind": "file",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "framework-catalog-verifier"
+      },
+      "dynamicLibraries": [
+        {
+          "soname": "libc.so.6",
+          "path": "/lib/x86_64-linux-gnu/libc.so.6",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ]
+    },
+    {
+      "artifactId": "mirror-server",
+      "path": "artifacts/bin/ModelMirrors",
+      "bytes": 1,
+      "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+      "mode": "0755",
+      "kind": "file",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "mirror-server"
+      },
+      "dynamicLibraries": [
+        {
+          "soname": "libc.so.6",
+          "path": "/lib/x86_64-linux-gnu/libc.so.6",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ]
+    },
+    {
+      "artifactId": "mirrorecma-package",
+      "path": "artifacts/packages/mirrorecma.tgz",
+      "bytes": 1,
+      "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+      "mode": "0644",
+      "kind": "archive",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "mirrorecma-package"
+      }
+    },
+    {
+      "artifactId": "model-interface-gen",
+      "path": "artifacts/bin/model_interface_gen",
+      "bytes": 1,
+      "sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+      "mode": "0755",
+      "kind": "file",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "model-interface-gen"
+      },
+      "dynamicLibraries": [
+        {
+          "soname": "libc.so.6",
+          "path": "/lib/x86_64-linux-gnu/libc.so.6",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ]
+    },
+    {
+      "artifactId": "node-runtime",
+      "path": "artifacts/runtimes/node.tar.xz",
+      "bytes": 31164460,
+      "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+      "mode": "0644",
+      "kind": "archive",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "dependency-lock",
+        "id": "node-runtime"
+      }
+    },
+    {
+      "artifactId": "distribution-locks",
+      "path": "artifacts/inputs/distribution-locks.tar.gz",
+      "kind": "archive",
+      "mediaType": "application/gzip",
+      "bytes": 1,
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "mode": "0644",
+      "source": {
+        "kind": "component-build",
+        "id": "distribution-locks"
+      }
+    },
+    {
+      "artifactId": "selected-catalog",
+      "path": "artifacts/inputs/framework-catalog.A.json",
+      "kind": "file",
+      "mediaType": "application/json",
+      "bytes": 1,
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "mode": "0644",
+      "source": {
+        "kind": "component-build",
+        "id": "selected-catalog"
+      }
+    },
+    {
+      "artifactId": "application-validation-fixtures",
+      "path": "artifacts/examples/application-validation-fixtures.tar.gz",
+      "kind": "archive",
+      "mediaType": "application/gzip",
+      "bytes": 1,
+      "sha256": "1818181818181818181818181818181818181818181818181818181818181818",
+      "mode": "0644",
+      "source": {
+        "kind": "component-build",
+        "id": "application-validation-fixtures"
+      }
+    },
+    {
+      "artifactId": "counter-model",
+      "path": "artifacts/examples/Counter.tla",
+      "kind": "file",
+      "mediaType": "text/plain",
+      "bytes": 1,
+      "sha256": "1919191919191919191919191919191919191919191919191919191919191919",
+      "mode": "0644",
+      "source": {
+        "kind": "component-build",
+        "id": "counter-model"
+      }
+    }
+  ],
+  "runtimeTrees": [
+    {
+      "treeId": "node-runtime",
+      "sourceArtifactId": "node-runtime",
+      "selectionId": "node-v24.15.0-minimal-v1",
+      "path": "artifacts/runtimes/node",
+      "algorithm": "mirrors-runtime-tree-v1",
+      "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "entryCount": 2,
+      "bytes": 1
+    }
+  ],
+  "hostRequirements": [
+    {
+      "id": "glibc",
+      "observedVersion": "2.39",
+      "requirement": "consumer libc, libdl, libm, libpthread and librt ABI compatibility must be verified"
+    },
+    {
+      "id": "libgcc",
+      "observedVersion": "host-selected",
+      "requirement": "Node libgcc_s.so.1 resolution and file identity are recorded at install verification"
+    },
+    {
+      "id": "libstdcxx",
+      "observedVersion": "host-selected",
+      "requirement": "Node libstdc++.so.6 resolution and file identity are recorded at install verification"
+    },
+    {
+      "id": "linux-x86_64-loader",
+      "observedVersion": "/lib64/ld-linux-x86-64.so.2",
+      "requirement": "Every ELF interpreter and resolved dynamic library path/hash are recorded before activation"
+    }
+  ],
+  "publication": "unclaimed",
+  "buildInputs": [
+    {
+      "inputId": "profiles-lock",
+      "path": "distribution/reference-node/profiles.json",
+      "bytes": 4307,
+      "sha256": "fd0cfa9aa596e0862973ccb7e2a5a7371c12f3e0d142a693e11ace8b4305dd01"
+    },
+    {
+      "inputId": "component-lock",
+      "path": "distribution/reference-node/component-lock.json",
+      "bytes": 28216,
+      "sha256": "4bf23c23490745cf5d01fafd6c35ca68086cf3a6d1acf68310cca02f8e842e7b"
+    },
+    {
+      "inputId": "dependency-lock",
+      "path": "distribution/reference-node/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "650ed90e645d54087543a33fe50ffd34cd00273bf1365e1b8e9862890ba93221"
+    }
+  ],
+  "buildProvenance": {
+    "snapshotIndexSha256": "1212121212121212121212121212121212121212121212121212121212121212",
+    "tools": [
+      {
+        "toolId": "python",
+        "version": "Python fixture",
+        "bytes": 1,
+        "sha256": "1818181818181818181818181818181818181818181818181818181818181818"
+      },
+      {
+        "toolId": "git",
+        "version": "git version fixture",
+        "bytes": 1,
+        "sha256": "1313131313131313131313131313131313131313131313131313131313131313"
+      },
+      {
+        "toolId": "ldd",
+        "version": "ldd fixture",
+        "bytes": 1,
+        "sha256": "1919191919191919191919191919191919191919191919191919191919191919"
+      },
+      {
+        "toolId": "lake",
+        "version": "Lake fixture",
+        "bytes": 1,
+        "sha256": "1414141414141414141414141414141414141414141414141414141414141414"
+      },
+      {
+        "toolId": "framework-catalog-bootstrap",
+        "version": "framework catalog fixture",
+        "bytes": 1,
+        "sha256": "1717171717171717171717171717171717171717171717171717171717171717"
+      }
+    ],
+    "trees": [
+      {
+        "inputId": "evidence-wheels",
+        "algorithm": "mirrors-runtime-tree-v1",
+        "digest": "1515151515151515151515151515151515151515151515151515151515151515",
+        "entryCount": 1,
+        "bytes": 1
+      },
+      {
+        "inputId": "typescript-node-modules",
+        "algorithm": "mirrors-runtime-tree-v1",
+        "digest": "1616161616161616161616161616161616161616161616161616161616161616",
+        "entryCount": 1,
+        "bytes": 1
+      },
+      {
+        "inputId": "package:mirrorecma",
+        "algorithm": "mirrors-runtime-tree-v1",
+        "digest": "1717171717171717171717171717171717171717171717171717171717171717",
+        "entryCount": 1,
+        "bytes": 1
+      },
+      {
+        "inputId": "application:validation",
+        "algorithm": "mirrors-runtime-tree-v1",
+        "digest": "1818181818181818181818181818181818181818181818181818181818181818",
+        "entryCount": 1,
+        "bytes": 1
+      }
+    ]
+  }
+}

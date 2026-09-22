@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "mirrors.evidence-contract-rejected-fixtures/v1",
+  "cases": [
+    {
+      "name": "head-only-dirty-identity",
+      "base": "envelope-private.dirty.valid.json",
+      "operation": "delete",
+      "path": ["components", 0, "dirtyContent"]
+    },
+    {
+      "name": "unknown-major-version",
+      "base": "envelope-private.valid.json",
+      "operation": "set",
+      "path": ["schemaVersion"],
+      "value": "mirrors.evidence-envelope/v2.0"
+    },
+    {
+      "name": "complete-with-missing-required-artifact",
+      "base": "envelope-private.valid.json",
+      "operation": "delete",
+      "path": ["artifacts", 2]
+    },
+    {
+      "name": "public-private-canary-repository",
+      "base": "public-summary.valid.json",
+      "operation": "set",
+      "path": ["components", 0, "repository"],
+      "value": "https://example.invalid/MIRRORS_PRIVATE_CANARY_REPOSITORY"
+    },
+    {
+      "name": "public-private-canary-os",
+      "base": "public-summary.valid.json",
+      "operation": "set",
+      "path": ["environment", "os"],
+      "value": "MIRRORS_PRIVATE_CANARY_OS"
+    },
+    {
+      "name": "public-private-canary-tool-version",
+      "base": "public-summary.valid.json",
+      "operation": "set",
+      "path": ["environment", "tools", 0, "version"],
+      "value": "MIRRORS_PRIVATE_CANARY_TOOL"
+    },
+    {
+      "name": "public-private-canary-approved-argument",
+      "base": "public-summary.valid.json",
+      "operation": "set",
+      "path": ["commands", 0, "approvedArgs"],
+      "value": ["MIRRORS_PRIVATE_CANARY_ARGUMENT"]
+    },
+    {
+      "name": "merged-cleanup-into-behavior",
+      "base": "envelope-private.valid.json",
+      "operation": "set",
+      "path": ["outcomes", "behavior", "cleanupStatus"],
+      "value": "confirmed"
+    },
+    {
+      "name": "merged-persistence-into-behavior",
+      "base": "envelope-private.valid.json",
+      "operation": "set",
+      "path": ["outcomes", "behavior", "persistenceStatus"],
+      "value": "complete"
+    },
+    {
+      "name": "non-utc-wall-clock",
+      "base": "envelope-private.valid.json",
+      "operation": "set",
+      "path": ["timestamps", "startedAtUtc"],
+      "value": "2026-09-22T09:00:00+08:00"
+    },
+    {
+      "name": "ambiguous-bundle-path",
+      "base": "envelope-private.valid.json",
+      "operation": "set",
+      "path": ["artifacts", 0, "location", "path"],
+      "value": "artifacts/private/../secret.log"
+    },
+    {
+      "name": "exit-code-with-signal",
+      "base": "envelope-private.valid.json",
+      "operation": "set",
+      "path": ["commands", 0, "exit", "signal"],
+      "value": "SIGTERM"
+    }
+  ]
+}

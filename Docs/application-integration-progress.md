@@ -81,6 +81,14 @@ JSON were absent during the 2026-09-17 documentation audit; those temporary
 paths are historical provenance, not retained downloadable evidence. Their
 hashes, selected installed-consumer records, and archived P12 onboarding
 artifacts remain in the repository. No runtime gates were rerun for that audit.
+The additive
+[historical artifact availability sidecar](evidence/historical-artifact-availability.json)
+now inventories every absolute scratch/external locator in this record and the
+three related evidence records without changing their bytes or claims. An
+unavailable row and its recorded hash do not constitute retained or fresh
+evidence. Remediation is a new run with a new E1 run ID and finalized bundle;
+it never recreates an old log, substitutes unrelated bytes under its hash, or
+changes an old date or source identity to `fresh`.
 The application-specific durable summary is
 [suite migration evidence](../../MirrorECMA/examples/application-validation/results/2026-09-16-suite-migration.json).
 

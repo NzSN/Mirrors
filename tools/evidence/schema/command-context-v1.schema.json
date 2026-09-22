@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mirrors.invalid/schema/command-context-v1.schema.json",
+  "title": "Mirrors private command context v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "registry", "command", "executable"],
+  "properties": {
+    "schemaVersion": {"const": "mirrors.evidence-command-context/v1"},
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "sha256", "rawUtf8", "ownerComponentRef", "selectedEntry"],
+      "properties": {
+        "schemaVersion": {"const": "mirrors.evidence-command-registry/v1"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "rawUtf8": {"type": "string", "minLength": 1, "maxLength": 262144},
+        "ownerComponentRef": {"$ref": "#/$defs/componentRef"},
+        "selectedEntry": {"type": "object", "minProperties": 6, "maxProperties": 32}
+      }
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commandId", "argv", "cwd", "effectiveEnvironment", "environmentFiles"],
+      "properties": {
+        "commandId": {"$ref": "#/$defs/id"},
+        "argv": {"type": "array", "minItems": 1, "maxItems": 256, "items": {"type": "string", "maxLength": 4096}},
+        "cwd": {"type": "string", "minLength": 1, "maxLength": 4096},
+        "effectiveEnvironment": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "value"],
+            "properties": {
+              "name": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{0,127}$"},
+              "value": {"type": "string", "maxLength": 4096}
+            }
+          }
+        },
+        "environmentFiles": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "requested", "resolution", "resolvedPath", "bytes", "sha256"],
+            "properties": {
+              "name": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{0,127}$"},
+              "requested": {"type": "string", "minLength": 1, "maxLength": 4096},
+              "resolution": {"const": "available"},
+              "resolvedPath": {"type": "string", "minLength": 1, "maxLength": 4096},
+              "bytes": {"type": "integer", "minimum": 1, "maximum": 536870912},
+              "sha256": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        }
+      }
+    },
+    "executable": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["requested", "resolution"],
+          "properties": {
+            "requested": {"type": "string", "minLength": 1, "maxLength": 4096},
+            "resolution": {"const": "unavailable"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["requested", "resolution", "resolvedPath", "bytes", "sha256"],
+          "properties": {
+            "requested": {"type": "string", "minLength": 1, "maxLength": 4096},
+            "resolution": {"const": "available"},
+            "resolvedPath": {"type": "string", "minLength": 1, "maxLength": 4096},
+            "bytes": {"type": "integer", "minimum": 1, "maximum": 536870912},
+            "sha256": {"$ref": "#/$defs/sha256"}
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "id": {"type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "componentRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["componentId", "repository", "revision", "dirty"],
+      "properties": {
+        "componentId": {"$ref": "#/$defs/id"},
+        "repository": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "dirty": {"type": "boolean"},
+        "dirtyContent": {"type": "object"}
+      },
+      "allOf": [
+        {"if": {"properties": {"dirty": {"const": true}}}, "then": {"required": ["dirtyContent"]}},
+        {"if": {"properties": {"dirty": {"const": false}}}, "then": {"not": {"required": ["dirtyContent"]}}}
+      ]
+    }
+  }
+}

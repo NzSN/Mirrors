@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "mirrors.reference-cache-index/v1",
+  "profileId": "checked-replay-local",
+  "catalogSelectionRef": {
+    "schemaVersion": "mirrors.framework-catalog/v1",
+    "selectionKind": "sha256",
+    "selectionValue": "e3b691a60a87708b50c24085303fd313359cef33c50b11f7cc89fbd2358c3b7d"
+  },
+  "distributionManifestSha256": "218de24924867defce7da1ce139dadfafa98a851644a89f15e628f57fb49b573",
+  "entries": [
+    {
+      "artifactId": "counter-corpus",
+      "path": "artifacts/examples/counter.itf.json",
+      "bytes": 1,
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "mode": "0644"
+    },
+    {
+      "artifactId": "counter-suite-bundle",
+      "path": "artifacts/examples/counter-suite.tar",
+      "bytes": 1,
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "mode": "0644"
+    },
+    {
+      "artifactId": "evidence-verifier",
+      "path": "artifacts/evidence/tools.tar",
+      "bytes": 1,
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "mode": "0644"
+    },
+    {
+      "artifactId": "evidence-verifier-dependencies",
+      "path": "artifacts/evidence/wheels.tar",
+      "bytes": 1,
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "mode": "0644"
+    },
+    {
+      "artifactId": "framework-catalog-verifier",
+      "path": "artifacts/bin/framework_catalog",
+      "bytes": 1,
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "mode": "0755"
+    },
+    {
+      "artifactId": "mirror-server",
+      "path": "artifacts/bin/ModelMirrors",
+      "bytes": 1,
+      "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+      "mode": "0755"
+    },
+    {
+      "artifactId": "mirrorecma-package",
+      "path": "artifacts/packages/mirrorecma.tgz",
+      "bytes": 1,
+      "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+      "mode": "0644"
+    },
+    {
+      "artifactId": "model-interface-gen",
+      "path": "artifacts/bin/model_interface_gen",
+      "bytes": 1,
+      "sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+      "mode": "0755"
+    },
+    {
+      "artifactId": "node-runtime",
+      "path": "artifacts/runtimes/node.tar.xz",
+      "bytes": 31164460,
+      "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+      "mode": "0644"
+    },
+    {
+      "artifactId": "distribution-locks",
+      "path": "artifacts/inputs/distribution-locks.tar.gz",
+      "bytes": 1,
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "mode": "0644"
+    },
+    {
+      "artifactId": "selected-catalog",
+      "path": "artifacts/inputs/framework-catalog.A.json",
+      "bytes": 1,
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "mode": "0644"
+    },
+    {
+      "artifactId": "application-validation-fixtures",
+      "path": "artifacts/examples/application-validation-fixtures.tar.gz",
+      "bytes": 1,
+      "sha256": "1818181818181818181818181818181818181818181818181818181818181818",
+      "mode": "0644"
+    },
+    {
+      "artifactId": "counter-model",
+      "path": "artifacts/examples/Counter.tla",
+      "bytes": 1,
+      "sha256": "1919191919191919191919191919191919191919191919191919191919191919",
+      "mode": "0644"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mirrors.invalid/schema/qualification-scope-v1.schema.json",
+  "title": "Mirrors private qualification scope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "scopeId", "qualificationClass", "selectedCatalogRef", "distributionBindingRunId", "nodes"],
+  "properties": {
+    "schemaVersion": {"const": "mirrors.qualification-scope/v1"},
+    "scopeId": {"$ref": "#/$defs/opaqueId"},
+    "qualificationClass": {"enum": ["local-candidate", "release-candidate"]},
+    "selectedCatalogRef": {"$ref": "#/$defs/catalogSelectionRef"},
+    "distributionBindingRunId": {"$ref": "#/$defs/opaqueId"},
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {"$ref": "#/$defs/node"}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "opaqueId": {"type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "catalogSelectionRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "selectionKind", "selectionValue"],
+      "properties": {
+        "schemaVersion": {"const": "mirrors.framework-catalog/v1"},
+        "selectionKind": {"const": "sha256"},
+        "selectionValue": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "privateRunRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "runId", "envelopeSha256", "projectionKind"],
+      "properties": {
+        "schemaVersion": {"const": "mirrors.evidence-envelope/v1.0"},
+        "runId": {"$ref": "#/$defs/opaqueId"},
+        "envelopeSha256": {"$ref": "#/$defs/sha256"},
+        "projectionKind": {"const": "private"}
+      }
+    },
+    "publicRunRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "runId", "envelopeSha256", "projectionKind"],
+      "properties": {
+        "schemaVersion": {"const": "mirrors.evidence-public-summary/v1.0"},
+        "runId": {"$ref": "#/$defs/opaqueId"},
+        "envelopeSha256": {"$ref": "#/$defs/sha256"},
+        "projectionKind": {"const": "public"}
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["phase", "evidenceUse", "privateRunRef", "publicRunRef", "distributionRunId", "dependsOnRunIds"],
+      "properties": {
+        "phase": {
+          "enum": ["distribution", "source-gate", "installed-diagnostic", "replay", "origin", "reproduction", "reduction", "mutation", "recovery"]
+        },
+        "evidenceUse": {"enum": ["qualification-credit", "supporting-diagnostic", "retained-attempt"]},
+        "privateRunRef": {"$ref": "#/$defs/privateRunRef"},
+        "publicRunRef": {"$ref": "#/$defs/publicRunRef"},
+        "distributionRunId": {
+          "oneOf": [{"type": "null"}, {"$ref": "#/$defs/opaqueId"}]
+        },
+        "dependsOnRunIds": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/opaqueId"}
+        }
+      }
+    }
+  }
+}

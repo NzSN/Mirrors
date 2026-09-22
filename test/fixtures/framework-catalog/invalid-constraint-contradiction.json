@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "mirrors.framework-catalog/v1",
+  "catalogId": "constraint-contradiction",
+  "visibility": "public",
+  "components": [{"componentRef": {"componentId": "mirrors", "repository": "https://github.com/NzSN/Mirrors.git", "revision": "1111111111111111111111111111111111111111", "dirty": false}, "product": {"name": "Mirrors", "version": "0.0.2"}, "records": []}],
+  "evidenceRefs": [],
+  "capabilities": [{"capabilityId": "mirrors.test", "ownerComponentId": "mirrors", "description": "Contradictory candidate constraints", "declaration": {"state": "experimental", "constraints": [{"constraintId": "arch-a", "fact": {"kind": "platformField", "id": "architecture"}, "operator": "equals", "values": ["x86_64"]}, {"constraintId": "arch-b", "fact": {"kind": "platformField", "id": "architecture"}, "operator": "oneOf", "values": ["aarch64"]}]}, "sourceImplementation": {"state": "unknown", "locations": []}, "observations": {"sourceTested": {"state": "unknown"}, "locallyAccepted": {"state": "unknown"}, "installedConsumerAccepted": {"state": "unknown"}, "hostedCiAccepted": {"state": "unknown"}, "published": {"state": "unknown"}}}],
+  "distributionProfiles": [],
+  "combinations": []
+}

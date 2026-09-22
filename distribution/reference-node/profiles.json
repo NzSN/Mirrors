@@ -1,0 +1,142 @@
+{
+  "schemaVersion": "mirrors.reference-distribution-profiles/v1",
+  "distributionId": "mirrors-reference-node-ubuntu-24.04-x86_64-v1",
+  "catalogSelectionRef": {
+    "schemaVersion": "mirrors.framework-catalog/v1",
+    "selectionKind": "sha256",
+    "selectionValue": "e3b691a60a87708b50c24085303fd313359cef33c50b11f7cc89fbd2358c3b7d"
+  },
+  "publication": "unclaimed",
+  "profiles": [
+    {
+      "profileId": "checked-replay-local",
+      "catalogProfileId": "mirrors.reference-node-checked/ubuntu-24.04-x86_64/v1",
+      "status": "build-required",
+      "extends": [],
+      "requiredArtifacts": [
+        "counter-corpus",
+        "counter-suite-bundle",
+        "mirror-server",
+        "model-interface-gen",
+        "mirrorecma-package",
+        "node-runtime",
+        "evidence-verifier",
+        "evidence-verifier-dependencies",
+        "framework-catalog-verifier",
+        "distribution-locks",
+        "selected-catalog",
+        "application-validation-fixtures",
+        "counter-model"
+      ],
+      "operatorPrerequisites": [
+        {
+          "id": "glibc",
+          "observedVersion": "2.39",
+          "requirement": "consumer libc, libdl, libm, libpthread and librt ABI compatibility must be verified"
+        },
+        {
+          "id": "libgcc",
+          "observedVersion": "host-selected",
+          "requirement": "Node libgcc_s.so.1 resolution and file identity are recorded at install verification"
+        },
+        {
+          "id": "libstdcxx",
+          "observedVersion": "host-selected",
+          "requirement": "Node libstdc++.so.6 resolution and file identity are recorded at install verification"
+        },
+        {
+          "id": "linux-x86_64-loader",
+          "observedVersion": "/lib64/ld-linux-x86-64.so.2",
+          "requirement": "Every ELF interpreter and resolved dynamic library path/hash are recorded before activation"
+        }
+      ],
+      "forbiddenArtifacts": [
+        "apalache",
+        "java-runtime",
+        "mirrorgate-integration",
+        "mirrorgate-runtime"
+      ],
+      "requiredRuntimeTrees": [
+        {
+          "treeId": "node-runtime",
+          "sourceArtifactId": "node-runtime",
+          "selectionId": "node-v24.15.0-minimal-v1"
+        }
+      ],
+      "combinationId": "candidate.local-node-checked"
+    },
+    {
+      "profileId": "checked-replay-gate",
+      "catalogProfileId": "mirrors.reference-node-gate/ubuntu-24.04-x86_64/v1",
+      "status": "build-required",
+      "extends": [
+        "checked-replay-local"
+      ],
+      "requiredArtifacts": [
+        "mirrorgate-integration",
+        "mirrorgate-protocol",
+        "mirrorgate-runtime",
+        "mirrorgate-supervisor"
+      ],
+      "operatorPrerequisites": [
+        {
+          "id": "bubblewrap",
+          "minimumVersion": "0.9.0",
+          "observedVersion": "0.9.0"
+        },
+        {
+          "id": "coreutils-cp",
+          "minimumVersion": "9.4",
+          "observedVersion": "9.4"
+        },
+        {
+          "id": "python",
+          "minimumVersion": "3.12.0",
+          "observedVersion": "3.12.3"
+        }
+      ],
+      "forbiddenArtifacts": [
+        "apalache",
+        "java-runtime"
+      ],
+      "requiredRuntimeTrees": [
+        {
+          "treeId": "mirrorgate-runtime",
+          "sourceArtifactId": "mirrorgate-runtime",
+          "selectionId": "mirrorgate-node-runtime-v1"
+        }
+      ],
+      "combinationId": "candidate.node-gate"
+    },
+    {
+      "profileId": "fresh-trace",
+      "catalogProfileId": "mirrors.reference-fresh-trace/ubuntu-24.04-x86_64/v1",
+      "status": "blocked-missing-java-artifact",
+      "extends": [
+        "checked-replay-local"
+      ],
+      "requiredArtifacts": [
+        "apalache",
+        "java-runtime"
+      ],
+      "operatorPrerequisites": [],
+      "forbiddenArtifacts": [
+        "mirrorgate-integration",
+        "mirrorgate-runtime"
+      ],
+      "requiredRuntimeTrees": [
+        {
+          "treeId": "java-runtime",
+          "sourceArtifactId": "java-runtime",
+          "selectionId": "microsoft-jdk-25.0.4+7-full-v1"
+        },
+        {
+          "treeId": "apalache-runtime",
+          "sourceArtifactId": "apalache",
+          "selectionId": "apalache-0.61.0-full-v1"
+        }
+      ],
+      "combinationId": "candidate.fresh-trace"
+    }
+  ]
+}

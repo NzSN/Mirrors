@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "mirrors.framework-catalog/v1",
+  "catalogId": "fixture-full",
+  "visibility": "public",
+  "components": [
+    {
+      "componentRef": {
+        "componentId": "mirrors",
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "1111111111111111111111111111111111111111",
+        "dirty": false
+      },
+      "product": {"name": "Mirrors", "version": "0.0.2"},
+      "records": [{"recordId": "compiler", "path": "Shell/ModelInterface/Compiler.lean", "recordKind": "source"}]
+    },
+    {
+      "componentRef": {
+        "componentId": "mirrorecma",
+        "repository": "https://github.com/NzSN/MirrorECMA.git",
+        "revision": "2222222222222222222222222222222222222222",
+        "dirty": false
+      },
+      "product": {"name": "mirrorecma", "version": "2.0.0"},
+      "records": [{"recordId": "package", "path": "package.json", "recordKind": "manifest"}]
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "evidenceId": "installed-node-run",
+      "runRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "01J00000000000000000000000",
+        "envelopeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "projectionKind": "public"
+      }
+    }
+  ],
+  "capabilities": [
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorecma-async-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate an asynchronous TypeScript suite",
+      "declaration": {"state": "available", "constraints": []},
+      "sourceImplementation": {"state": "present", "locations": [{"path": "Shell/ModelInterface/Emit/TypeScriptAsync.lean", "symbol": "emit"}]},
+      "observations": {
+        "sourceTested": {"state": "accepted", "evidenceId": "installed-node-run"},
+        "locallyAccepted": {"state": "accepted", "evidenceId": "installed-node-run"},
+        "installedConsumerAccepted": {"state": "accepted", "evidenceId": "installed-node-run"},
+        "hostedCiAccepted": {"state": "notRun"},
+        "published": {"state": "unknown"}
+      }
+    },
+    {
+      "capabilityId": "mirrorecma.suite.checked-corpus",
+      "ownerComponentId": "mirrorecma",
+      "description": "Replay a generated suite from a checked corpus",
+      "declaration": {
+        "state": "available",
+        "constraints": [
+          {"constraintId": "node-24.15.0", "fact": {"kind": "dependencyVersion", "id": "node"}, "operator": "equals", "values": ["24.15.0"]}
+        ]
+      },
+      "sourceImplementation": {"state": "present", "locations": [{"path": "src/suite-runner.ts", "symbol": "runSuite"}]},
+      "observations": {
+        "sourceTested": {"state": "accepted", "evidenceId": "installed-node-run"},
+        "locallyAccepted": {"state": "accepted", "evidenceId": "installed-node-run"},
+        "installedConsumerAccepted": {"state": "accepted", "evidenceId": "installed-node-run"},
+        "hostedCiAccepted": {"state": "notRun"},
+        "published": {"state": "unknown"}
+      }
+    }
+  ],
+  "distributionProfiles": [
+    {
+      "profileId": "mirrors.reference-node-checked/ubuntu-24.04-x86_64/v1",
+      "platform": {"os": "linux", "osRelease": "ubuntu-24.04", "architecture": "x86_64", "backend": "local-process"},
+      "requiredCapabilityIds": ["mirrors.compiler.target.mirrorecma-async-v1", "mirrorecma.suite.checked-corpus"],
+      "optionalCapabilityIds": [],
+      "requiredObservationDimensions": ["installedConsumerAccepted"],
+      "dependencies": [
+        {"dependencyId": "modelmirrors", "class": "bundled-artifact"},
+        {"dependencyId": "node", "version": "24.15.0", "class": "content-addressed-runtime-tree"},
+        {"dependencyId": "glibc-loader", "class": "operator-host-prerequisite"}
+      ]
+    }
+  ],
+  "combinations": [
+    {
+      "combinationId": "fixture-node-checked",
+      "componentIds": ["mirrors", "mirrorecma"],
+      "platform": {"os": "linux", "osRelease": "ubuntu-24.04", "architecture": "x86_64", "backend": "local-process"},
+      "capabilityIds": ["mirrors.compiler.target.mirrorecma-async-v1", "mirrorecma.suite.checked-corpus"],
+      "distributionProfileIds": ["mirrors.reference-node-checked/ubuntu-24.04-x86_64/v1"],
+      "declaredState": "candidate",
+      "evidenceIds": ["installed-node-run"]
+    }
+  ]
+}

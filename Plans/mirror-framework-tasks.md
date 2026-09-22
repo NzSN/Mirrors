@@ -6,6 +6,12 @@ Source: [improvement roadmap](mirror-framework-improvements.md)
 
 Scope: develop and assign implementation tasks; implementation is queued.
 
+Execution started on 2026-09-22 at the user's request. See
+[execution decisions and active ownership](execution-decisions.md). B1/C1/I1,
+C2/E1 contract drafting, R1/F1, and G1 are assigned to `general-purpose-gpt`
+agents. The historical planning checklists below describe the earlier planning
+pass; they do not mark these new implementation assignments complete.
+
 Planning-time source identities (recheck before implementation):
 
 | Repository | Full HEAD | Observed worktree |
@@ -16,6 +22,23 @@ Planning-time source identities (recheck before implementation):
 
 These read-only observations identify the planning inputs, not a newly tested
 cross-repository combination.
+
+## Current execution checkpoint
+
+The planning assignments below remain historical. Active implementation now uses
+four fresh-context `general-purpose-gpt` finish owners with non-overlapping
+scopes: `distribution_finish`, `evidence_finish`, `reproduction_finish`, and
+`recovery_finish`. The parent coordinates and reviews their work; dispatch and
+passing helper tests do not complete a task card.
+
+The evidence scope currently passes 94 focused tests for collection,
+finalization, linked qualification, registry context, historical availability,
+and offline verification. Installed Q wrappers and actual Q1/Q2 evidence remain
+pending the final immutable development cache. The MirrorGate recovery patch is
+staged outside its repository and awaits explicit destination-write approval.
+Real delegated-cgroup enforcement is a required unavailable tier on this host
+because no writable delegated cgroup-v2 parent was supplied. Q3 must preserve
+that result as incomplete unless actual retained evidence later changes it.
 
 ## Assignment and status rules
 
@@ -148,6 +171,26 @@ Acceptance: execute all seven end-to-end demonstrations in the roadmap. Run
 applicable Mirrors, MirrorECMA, Gate, and interop gates with full companion SHAs.
 Record commands, exit results, required/optional skips, and environmental failures.
 A required unavailable backend leaves qualification incomplete.
+
+All model-check execution for this qualification must run through the deployed
+Mirrors service at `192.168.150.219:8999`; this coordinator has insufficient
+memory and must not run Apalache, TLC, or another model checker. `lake test` is
+not safe here because it runs TLC and probes a developer-local Apalache fallback.
+Run the local aggregate as `bash tools/run-local-no-model-check.sh`; its explicit
+model-check exclusions remain remote obligations covered separately by the
+private `mirrors.remote-model-check` evidence. Retain the endpoint/server pin and
+a same-time `ModelMirrors` service,
+installed-binary, source-revision, Apalache and Java identity observation as
+defined by the qualification harness. The current interop runner has no remote
+service mode, so its required tier remains unavailable here rather than being
+silently run locally or credited from the standalone remote probe.
+
+The 2026-09-22 remote boot/smoke check found `ModelMirrors` running with automatic
+startup and returned `VALID` for bound-3 HourClock over verified TLS 1.3 mTLS.
+It remains supporting evidence because the active backend was Apalache 0.58.2 /
+Java 21.0.11. The selected Apalache 0.61.0 and Java 25.0.4+7-LTS artifacts were
+staged but not activated; Q1 needs a fresh identity observation and validation
+after activation.
 
 ## Q2 — Independently verify retained evidence
 

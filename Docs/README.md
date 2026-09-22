@@ -49,6 +49,9 @@ an installed Windows service, a hosted CI run, or a published package.
   paired receipt. Neither command seals a proposal as a contract.
   Implemented targets are `mirrorecma-v1`, experimental
   `mirrorecma-async-v1`, `mirrorcpp-v1`, and `mirrorrust-v1`.
+- The first bounded [model-validated reduction profile](model-interface-reduction.md)
+  accepts only LeaseService input shrink requests; the evaluator still owns live
+  model materialization before any SUT construction.
 - MirrorECMA has compiled and dynamic negotiated replay plus async report
   runners, immutable suites, strict matched acceptance, project tools and
   normalized suite results. Gate supplies the optional suite workflow and public

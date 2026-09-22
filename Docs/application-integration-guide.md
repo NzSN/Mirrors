@@ -3,6 +3,10 @@
 For a non-Node application, start with the [language/repository map](framework-map.md)
 and [Gate SDK/facade selection](../../MirrorGate/docs/client-language-support.md).
 
+For fixed mutation baselines, reproduction bundles, independent observer probes,
+bounded reduction, and the exact limits of those claims, use MirrorECMA's
+[mutation fidelity and reproduction guidance](../../MirrorECMA/docs/mutation-fidelity-guide.md).
+
 Deploying or using a server on another machine? Read the [remote server runbook](remote-server-guide.md)
 for setup, mTLS, async validation, suite path rules, and troubleshooting.
 

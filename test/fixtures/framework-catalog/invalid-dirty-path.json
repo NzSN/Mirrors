@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "mirrors.framework-catalog/v1",
+  "catalogId": "dirty-path",
+  "visibility": "private",
+  "components": [
+    {
+      "componentRef": {
+        "componentId": "mirrors",
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "1111111111111111111111111111111111111111",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "method": "filesystem-tree-v1",
+          "includedPaths": ["../outside"],
+          "excludedPaths": []
+        }
+      },
+      "product": {"name": "Mirrors", "version": "0.0.2"},
+      "records": []
+    }
+  ],
+  "evidenceRefs": [],
+  "capabilities": [],
+  "distributionProfiles": [],
+  "combinations": []
+}

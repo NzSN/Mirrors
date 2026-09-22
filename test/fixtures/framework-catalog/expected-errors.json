@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "mirrors.framework-catalog-fixture-expectations/v1",
+  "fixtures": [
+    {"file": "invalid-missing-revision.json", "errors": [{"code": "E-FCAT-IDENTITY-001", "path": "$.components[0].componentRef.revision", "message": "component revision is required"}]},
+    {"file": "invalid-evidence-reference.json", "errors": [{"code": "E-FCAT-REFERENCE-001", "path": "$.capabilities[0].observations.sourceTested.evidenceId", "message": "evidenceId does not resolve: missing-run"}]},
+    {"file": "invalid-contradiction.json", "errors": [{"code": "E-FCAT-CONTRADICTION-001", "path": "$.combinations[0].declaredState", "message": "supported combination requires unavailable capability: mirrorgate.backend.cgroup-v2"}]},
+    {"file": "invalid-schema-version.json", "errors": [{"code": "E-FCAT-SCHEMA-001", "path": "$.schemaVersion", "message": "unsupported catalog schema: mirrors.framework-catalog/v2"}]},
+    {"file": "invalid-duplicate-identity.json", "errors": [{"code": "E-FCAT-DUPLICATE-001", "path": "$.components[1].componentRef.componentId", "message": "duplicate componentId: mirrors"}]},
+    {"file": "invalid-source-only-as-released.json", "errors": [{"code": "E-FCAT-STATE-003", "path": "$.capabilities[0].observations.published", "message": "accepted publication requires evidenceId"}]},
+    {"file": "invalid-platform.json", "errors": [{"code": "E-FCAT-PLATFORM-001", "path": "$.combinations[0].platform.architecture", "message": "combination platform differs from distribution profile ubuntu-x64"}]},
+    {"file": "invalid-dirty-path.json", "errors": [{"code": "E-FCAT-IDENTITY-001", "path": "$.components[0].componentRef.dirtyContent.includedPaths[0]", "message": "logical path must be relative, normalized, and traversal-free"}]},
+    {"file": "invalid-constraint-contradiction.json", "errors": [{"code": "E-FCAT-CONTRADICTION-001", "path": "$.capabilities[0].declaration.constraints", "message": "constraints disagree for platformField:architecture"}]},
+    {"file": "invalid-extension-name.json", "errors": [{"code": "E-FCAT-SCHEMA-001", "path": "$.extensions.Private Path", "message": "extension key must be a reverse-DNS name"}]}
+  ]
+}

@@ -1,0 +1,416 @@
+{
+  "schemaVersion": "mirrors.framework-catalog/v1",
+  "catalogId": "component.mirrors",
+  "visibility": "private",
+  "components": [
+    {
+      "componentRef": {
+        "componentId": "mirrors",
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "e7c8681d7db62000555675188d0125931136e002",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "711233a69c2f1df3a6a3c28befe56bcf1fced5574b8df4d244107858ac586399",
+          "method": "git-diff-and-untracked-manifest-v1",
+          "includedPaths": [
+            "Codec/FrameworkCatalog.lean",
+            "Codec/ModelInterfaceReductionJson.lean",
+            "Core/FrameworkCatalog.lean",
+            "Core/ModelInterface.lean",
+            "Core/ModelInterface/Reduction.lean",
+            "Docs/README.md",
+            "Docs/application-integration-guide.md",
+            "Docs/application-integration-progress.md",
+            "Docs/durable-evidence-design.md",
+            "Docs/evidence/historical-artifact-availability.json",
+            "Docs/framework-catalog-contract.md",
+            "Docs/framework-catalog-inventory.md",
+            "Docs/model-interface-reduction.md",
+            "Docs/qualification-harness-design.md",
+            "Docs/reference-distribution-profile.md",
+            "Plans/execution-decisions.md",
+            "Plans/implementation-baseline.md",
+            "Plans/mirror-framework-tasks.md",
+            "Shell/FrameworkCatalog.lean",
+            "distribution/reference-node/README.md",
+            "distribution/reference-node/activation-transaction.md",
+            "distribution/reference-node/cache-index.schema.json",
+            "distribution/reference-node/distribution-manifest.schema.json",
+            "lakefile.lean",
+            "test/fixtures/framework-catalog/canonicalization-vectors.json",
+            "test/fixtures/framework-catalog/expected-errors.json",
+            "test/fixtures/framework-catalog/gate-compatibility-v1.json",
+            "test/fixtures/framework-catalog/invalid-constraint-contradiction.json",
+            "test/fixtures/framework-catalog/invalid-contradiction.json",
+            "test/fixtures/framework-catalog/invalid-dirty-path.json",
+            "test/fixtures/framework-catalog/invalid-duplicate-identity.json",
+            "test/fixtures/framework-catalog/invalid-evidence-reference.json",
+            "test/fixtures/framework-catalog/invalid-extension-name.json",
+            "test/fixtures/framework-catalog/invalid-missing-revision.json",
+            "test/fixtures/framework-catalog/invalid-platform.json",
+            "test/fixtures/framework-catalog/invalid-schema-version.json",
+            "test/fixtures/framework-catalog/invalid-source-only-as-released.json",
+            "test/fixtures/framework-catalog/valid-full.json",
+            "test/fixtures/framework-catalog/valid-minimal.json",
+            "test/fixtures/framework-catalog/version-pins.env",
+            "tools/FrameworkCatalog.lean",
+            "tools/FrameworkCatalogSpec.lean",
+            "tools/ModelInterfaceReduction.lean",
+            "tools/ModelInterfaceSpec.lean",
+            "tools/distribution/audit-launcher.mjs",
+            "tools/distribution/build.py",
+            "tools/distribution/build.sh",
+            "tools/distribution/counter-driver.mjs",
+            "tools/distribution/distribution_lib.py",
+            "tools/distribution/install.py",
+            "tools/distribution/install.sh",
+            "tools/distribution/manifest-check",
+            "tools/distribution/manifest_check.py",
+            "tools/distribution/qualification.py",
+            "tools/distribution/refresh_identity.py",
+            "tools/distribution/snapshot_sources.py",
+            "tools/distribution/test-installed.sh",
+            "tools/distribution/test-upgrade.sh",
+            "tools/distribution/test_archive_bounds.py",
+            "tools/distribution/test_install.py",
+            "tools/distribution/test_manifest_check.py",
+            "tools/distribution/test_qualification.py",
+            "tools/distribution/upgrade_matrix.py",
+            "tools/distribution/verify.py",
+            "tools/distribution/verify.sh",
+            "tools/evidence/README.md",
+            "tools/evidence/catalog_links.py",
+            "tools/evidence/collect.py",
+            "tools/evidence/command_registry.py",
+            "tools/evidence/commands.json",
+            "tools/evidence/finalize.py",
+            "tools/evidence/fixtures/envelope-private.cleanup-failure.valid.json",
+            "tools/evidence/fixtures/envelope-private.dirty.valid.json",
+            "tools/evidence/fixtures/envelope-private.persistence-failure.valid.json",
+            "tools/evidence/fixtures/envelope-private.required-skip.valid.json",
+            "tools/evidence/fixtures/envelope-private.valid.json",
+            "tools/evidence/fixtures/public-summary.valid.json",
+            "tools/evidence/fixtures/rejected-cases.json",
+            "tools/evidence/historical.py",
+            "tools/evidence/qualification-profiles.json",
+            "tools/evidence/qualification_scope.py",
+            "tools/evidence/requirements.txt",
+            "tools/evidence/retain_source_package.py",
+            "tools/evidence/run_remote_model_check.py",
+            "tools/evidence/schema/attachment-plan-v1.schema.json",
+            "tools/evidence/schema/bundle-index-v1.schema.json",
+            "tools/evidence/schema/command-context-v1.schema.json",
+            "tools/evidence/schema/evidence-envelope-v1.schema.json",
+            "tools/evidence/schema/public-summary-v1.schema.json",
+            "tools/evidence/schema/qualification-scope-v1.schema.json",
+            "tools/evidence/store.py",
+            "tools/evidence/tests/test_catalog_links.py",
+            "tools/evidence/tests/test_collect.py",
+            "tools/evidence/tests/test_contract.py",
+            "tools/evidence/tests/test_historical.py",
+            "tools/evidence/tests/test_store.py",
+            "tools/evidence/validate.py",
+            "tools/evidence/verify.py",
+            "tools/interop/INTEROP.md",
+            "tools/interop/run.sh",
+            "tools/run-local-no-model-check.sh"
+          ],
+          "excludedPaths": [
+            {
+              "path": "Docs/framework-map.md",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "catalog/components/mirrors.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "catalog/framework-catalog.compact.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "catalog/framework-catalog.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/component-lock.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/dependency-lock.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/profiles.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "tools/distribution/__pycache__/distribution_lib.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/distribution/__pycache__/install.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/distribution/__pycache__/manifest_check.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/distribution/__pycache__/verify.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/__pycache__/catalog_links.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/__pycache__/collect.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/__pycache__/command_registry.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/__pycache__/finalize.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/__pycache__/historical.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/__pycache__/qualification_scope.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/__pycache__/retain_source_package.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/__pycache__/run_remote_model_check.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/__pycache__/store.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/__pycache__/validate.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/__pycache__/verify.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/tests/__pycache__/test_catalog_links.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/tests/__pycache__/test_collect.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/tests/__pycache__/test_contract.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/tests/__pycache__/test_historical.cpython-312.pyc",
+              "reasonCode": "build-output"
+            },
+            {
+              "path": "tools/evidence/tests/__pycache__/test_store.cpython-312.pyc",
+              "reasonCode": "build-output"
+            }
+          ]
+        }
+      },
+      "product": {
+        "name": "Mirrors",
+        "version": "0.0.2"
+      },
+      "records": [
+        {
+          "recordId": "compiler",
+          "path": "Shell/ModelInterface/Compiler.lean",
+          "recordKind": "source"
+        },
+        {
+          "recordId": "pins",
+          "path": "tools/ci/versions.env",
+          "recordKind": "pins"
+        }
+      ]
+    }
+  ],
+  "evidenceRefs": [],
+  "capabilities": [
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorcpp-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate a C++ model-interface port",
+      "declaration": {
+        "state": "available",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "Shell/ModelInterface/Emit/Cpp.lean",
+            "symbol": "emit"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorecma-async-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate an asynchronous TypeScript suite",
+      "declaration": {
+        "state": "available",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "Shell/ModelInterface/Emit/TypeScriptAsync.lean",
+            "symbol": "emit"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorecma-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate a synchronous TypeScript binding",
+      "declaration": {
+        "state": "available",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "Shell/ModelInterface/Emit/TypeScript.lean",
+            "symbol": "emit"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorrust-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate a Rust model-interface port; source availability does not establish a generic installed or Gate suite",
+      "declaration": {
+        "state": "experimental",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "Shell/ModelInterface/Emit/Rust.lean",
+            "symbol": "emit"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    }
+  ],
+  "distributionProfiles": [],
+  "combinations": [],
+  "extensions": {
+    "org.nzsn.snapshot": {
+      "capturedAt": "2026-09-22T10:40:42Z",
+      "provisional": true
+    }
+  }
+}

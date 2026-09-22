@@ -1,0 +1,23 @@
+{
+  "schema": "mirrorgate.sdk-compatibility/v1",
+  "status": "experimental-development",
+  "sdkVersion": "0.1.0",
+  "controlVersions": [1, 2],
+  "workerVersions": [1],
+  "backend": "linux-bubblewrap-v1",
+  "controller": {"platform": "linux"},
+  "nativeClients": ["node", "cpp", "rust"],
+  "nativeClientControlVersions": {"node": [1, 2], "cpp": [1, 2], "rust": [1]},
+  "workerRuntimes": ["node-v1", "rust-v1"],
+  "buildTools": {"node": "24.15.0"},
+  "capabilityNegotiationRequired": true,
+  "ownedProcessCloseReceipt": "checked-reap-v1",
+  "recovery": {"journalSchema": "mirrorgate.recovery-journal/v1", "receiptSchema": "mirrorgate.recovery-receipt/v1", "mode": "offline-explicit-reclaim", "sessionAdoption": false},
+  "aggregateQuota": {"capability": "quota.aggregate-v1", "policySchema": "mirrorgate.control-policy/v3", "requiresOperatorDelegation": true, "localRealAcceptance": false},
+  "productionPublication": false,
+  "modelFacadeAcceptance": "experimental-local-shared-matrix-verified",
+  "modelFacadeEvidenceLedger": "https://example.invalid/model",
+  "rustEvaluatorEvidenceLedger": "https://example.invalid/rust",
+  "rustEvaluatorTargetProfile": "mirrorrust-counter-fixture-v1",
+  "rustGeneratedApplicationTarget": false
+}

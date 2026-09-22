@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "mirrors.framework-catalog/v1",
+  "catalogId": "source-only-released",
+  "visibility": "public",
+  "components": [{"componentRef": {"componentId": "mirrors", "repository": "https://github.com/NzSN/Mirrors.git", "revision": "1111111111111111111111111111111111111111", "dirty": false}, "product": {"name": "Mirrors", "version": "0.0.2"}, "records": []}],
+  "evidenceRefs": [],
+  "capabilities": [{"capabilityId": "mirrors.compiler.target.mirrorrust-v1", "ownerComponentId": "mirrors", "description": "Rust emitter", "declaration": {"state": "experimental", "constraints": []}, "sourceImplementation": {"state": "present", "locations": [{"path": "Shell/ModelInterface/Emit/Rust.lean", "symbol": "emit"}]}, "observations": {"sourceTested": {"state": "unknown"}, "locallyAccepted": {"state": "unknown"}, "installedConsumerAccepted": {"state": "unknown"}, "hostedCiAccepted": {"state": "unknown"}, "published": {"state": "accepted"}}}],
+  "distributionProfiles": [],
+  "combinations": []
+}

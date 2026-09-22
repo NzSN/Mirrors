@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "mirrors.evidence-qualification-profiles/v1",
+  "profiles": [
+    {
+      "profileId": "source-validation",
+      "qualificationClass": "source-validation",
+      "catalogVisibility": "public",
+      "requiredCommandIds": ["mirrors.local-no-model"],
+      "requiredTierIds": ["mirrors.required"],
+      "requiredArtifactRoles": ["command-log"],
+      "requiredCleanupScopes": [],
+      "requiredObservationDimensions": ["sourceTested"],
+      "allowedObservationDimensions": ["sourceTested"],
+      "requireQualified": true,
+      "requirePublicProjection": true,
+      "requireCatalogLineage": true
+    },
+    {
+      "profileId": "local-candidate",
+      "qualificationClass": "local-candidate",
+      "catalogVisibility": "private",
+      "requiredCommandIds": ["evidence.offline-verify", "framework.install-diagnostics", "framework.mutation-gate", "framework.mutation-local", "framework.reduction", "framework.replay-correct", "framework.replay-faulty", "framework.reproduction", "mirrorgate.recovery", "mirrorgate.required", "mirrorecma.project-check", "mirrorecma.test", "mirrors.interop", "mirrors.local-no-model", "mirrors.remote-model-check"],
+      "requiredTierIds": ["mirrorgate.required", "mirrorecma.project", "mirrorecma.required", "mirrors.interop", "mirrors.remote-model-check", "mirrors.required", "qualification.evidence", "qualification.install", "qualification.mutation-gate", "qualification.mutation-local", "qualification.recovery", "qualification.reduction", "qualification.replay", "qualification.reproduction"],
+      "requiredArtifactRoles": ["cache-index", "cleanup-receipt", "command-log", "distribution-manifest", "producer-result", "recovery-receipt", "reproduction-input"],
+      "requiredCleanupScopes": ["gate-physical", "gate-recovery", "local-cooperative"],
+      "requiredObservationDimensions": ["installedConsumerAccepted", "locallyAccepted", "sourceTested"],
+      "allowedObservationDimensions": ["installedConsumerAccepted", "locallyAccepted", "sourceTested"],
+      "requireQualified": true,
+      "requirePublicProjection": true,
+      "requireCatalogLineage": true
+    },
+    {
+      "profileId": "release-candidate",
+      "qualificationClass": "release-candidate",
+      "catalogVisibility": "public",
+      "requiredCommandIds": ["evidence.offline-verify", "framework.install-diagnostics", "framework.mutation-gate", "framework.mutation-local", "framework.reduction", "framework.replay-correct", "framework.replay-faulty", "framework.reproduction", "mirrorgate.recovery", "mirrorgate.required", "mirrorecma.project-check", "mirrorecma.test", "mirrors.interop", "mirrors.local-no-model", "mirrors.remote-model-check"],
+      "requiredTierIds": ["mirrorgate.required", "mirrorecma.project", "mirrorecma.required", "mirrors.interop", "mirrors.remote-model-check", "mirrors.required", "qualification.evidence", "qualification.install", "qualification.mutation-gate", "qualification.mutation-local", "qualification.recovery", "qualification.reduction", "qualification.replay", "qualification.reproduction"],
+      "requiredArtifactRoles": ["cache-index", "cleanup-receipt", "command-log", "distribution-manifest", "producer-result", "recovery-receipt", "reproduction-input"],
+      "requiredCleanupScopes": ["gate-physical", "gate-recovery", "local-cooperative"],
+      "requiredObservationDimensions": ["installedConsumerAccepted", "locallyAccepted", "sourceTested"],
+      "allowedObservationDimensions": ["installedConsumerAccepted", "locallyAccepted", "sourceTested"],
+      "requireQualified": true,
+      "requirePublicProjection": true,
+      "requireCatalogLineage": true
+    }
+  ]
+}

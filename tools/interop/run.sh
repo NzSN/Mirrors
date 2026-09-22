@@ -52,7 +52,7 @@ cc --version
 openssl version
 if [[ "${INTEROP_VERIFY_PINS:-0}" == 1 ]]; then
   for entry in "$ECMA:${ECMA_REF:-$ECMA_BASELINE}" "$CPP:${CPP_REF:-$CPP_BASELINE}" \
-    "$RUST:${RUST_REF:-$RUST_BASELINE}" "$LEAN_CLIENT:${LEAN_CLIENT_REF:-$LEAN_CLIENT_BASELINE}" "$HS:$HS_BASELINE"; do
+    "$RUST:${RUST_REF:-$RUST_BASELINE}" "$LEAN_CLIENT:${LEAN_CLIENT_REF:-$LEAN_CLIENT_BASELINE}" "$HS:${HS_REF:-$HS_BASELINE}"; do
     checkout="${entry%:*}"
     expected="${entry##*:}"
     [[ "$(git -C "$checkout" rev-parse HEAD)" == "$expected" ]] || {

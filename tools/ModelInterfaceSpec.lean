@@ -8,6 +8,7 @@ import Shell.ModelInterface.Emit.TypeScript
 import Shell.ModelInterface.Emit.TypeScriptAsync
 import Shell.ModelInterface.Runtime
 import Shell.ModelInterface.Compiler
+import Codec.ModelInterfaceReductionJson
 
 /-!
 # Always-on model-interface specification
@@ -168,6 +169,70 @@ def scenarioShaAndStrictJson (fails : Failures) : IO Unit := do
   check fails "strict-json: valid nested value"
     (Codec.StrictJson.parseString
       "{\"left\":{\"x\":1},\"right\":{\"x\":2}}").isOk
+
+def repeatedChar (count : Nat) (value : Char) : String :=
+  String.ofList (List.replicate count value)
+
+def leaseReductionJson : String :=
+  "{\"schema\":\"mirrors.reduction-candidate/lease-service-input-shrink/v1\"," ++
+  "\"modelSha256\":\"" ++ repeatedChar 64 'a' ++ "\"," ++
+  "\"interfaceDigest\":\"" ++ repeatedChar 64 'b' ++ "\"," ++
+  "\"orderedCorpusSha256\":\"" ++ repeatedChar 64 'c' ++ "\"," ++
+  "\"originalBundleSha256\":\"" ++ repeatedChar 64 'd' ++ "\"," ++
+  "\"selectedTraceSha256\":\"" ++ repeatedChar 64 'e' ++ "\"," ++
+  "\"traceIndex\":0,\"traceOccurrences\":[0,1],\"edits\":[{" ++
+  "\"stateIndex\":2,\"actionId\":\"Acquire\",\"inputId\":\"Client\"," ++
+  "\"before\":2,\"after\":1}]}"
+
+def scenarioLeaseReduction (fails : Failures) : IO Unit := do
+  let accepted := Codec.ModelInterfaceReductionJson.decodeAndValidate leaseReductionJson.toUTF8
+  check fails "reduction: accepted LeaseService Client 2 to 1" accepted.isOk
+  match accepted with
+  | .ok validated =>
+      check fails "reduction: fixed profile identity"
+        (validated.profile == leaseServiceInputShrinkProfile &&
+          validated.domainVersion == leaseServiceInputShrinkDomainVersion)
+  | .error _ => pure ()
+  check fails "reduction: unknown field rejected"
+    (!(Codec.ModelInterfaceReductionJson.decodeAndValidate
+      (leaseReductionJson.replace "{\"schema\"" "{\"unknown\":0,\"schema\"").toUTF8).isOk)
+  check fails "reduction: duplicate field rejected before Lean JSON"
+    (!(Codec.ModelInterfaceReductionJson.decodeAndValidate
+      (leaseReductionJson.replace "{\"schema\":"
+        "{\"schema\":\"duplicate\",\"schema\":").toUTF8).isOk)
+  check fails "reduction: malformed identity rejected"
+    (!(Codec.ModelInterfaceReductionJson.decodeAndValidate
+      (leaseReductionJson.replace (repeatedChar 64 'a') "ABC").toUTF8).isOk)
+  check fails "reduction: unsupported action rejected"
+    (!(Codec.ModelInterfaceReductionJson.decodeAndValidate
+      (leaseReductionJson.replace "\"Acquire\"" "\"Advance\"").toUTF8).isOk)
+  check fails "reduction: selected repeated occurrences are explicit"
+    (!(Codec.ModelInterfaceReductionJson.decodeAndValidate
+      (leaseReductionJson.replace "\"traceOccurrences\":[0,1]"
+        "\"traceOccurrences\":[0]").toUTF8).isOk)
+  check fails "reduction: non-shrinking transform rejected"
+    (!(Codec.ModelInterfaceReductionJson.decodeAndValidate
+      (leaseReductionJson.replace "\"before\":2" "\"before\":1").toUTF8).isOk)
+  let edit : LeaseInputEdit := {
+    stateIndex := 2
+    actionId := "Acquire"
+    inputId := "Client"
+    before := 2
+    after := 1
+  }
+  let duplicate : LeaseReductionCandidate := {
+    schema := leaseServiceInputShrinkSchema
+    modelSha256 := repeatedChar 64 'a'
+    interfaceDigest := repeatedChar 64 'b'
+    orderedCorpusSha256 := repeatedChar 64 'c'
+    originalBundleSha256 := repeatedChar 64 'd'
+    selectedTraceSha256 := repeatedChar 64 'e'
+    traceIndex := 0
+    traceOccurrences := [0, 1]
+    edits := [edit, edit]
+  }
+  check fails "reduction: duplicate edit rejected"
+    (!(validateLeaseReduction duplicate).isOk)
 
 def scenarioCanonicalDiagnostics (fails : Failures) : IO Unit := do
   let primary : SourceLocation := {
@@ -2084,6 +2149,7 @@ def run : IO UInt32 := do
       fails.modify (fun fs => fs ++ [s!"{name}: exception: {error}"])
 
   scenario "sha-strict-json" (scenarioShaAndStrictJson fails)
+  scenario "lease-reduction" (scenarioLeaseReduction fails)
   scenario "canonical-diagnostics" (scenarioCanonicalDiagnostics fails)
   let resolvedRef ← IO.mkRef (none : Option ResolvedModelInterface)
   scenario "counter-resolution" do

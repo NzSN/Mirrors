@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mirrors.invalid/schema/attachment-plan-v1.schema.json",
+  "title": "Mirrors predeclared private attachment plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "sourceRoot", "application", "adapter", "attachments"],
+  "properties": {
+    "schemaVersion": {"const": "mirrors.evidence-attachment-plan/v1"},
+    "sourceRoot": {"type": "string", "minLength": 1, "maxLength": 4096, "pattern": "^/"},
+    "application": {"type": ["string", "null"], "maxLength": 128},
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "artifactId"],
+      "properties": {
+        "kind": {"enum": ["none", "mirrorecma.application-campaign-aggregate/v1", "mirrorecma.lease-reduction-oracle/v1", "mirrorgate.application-validation/v2", "mirrorgate.application-validation-aggregate/v1", "mirrorgate.recovery-receipt/v1"]},
+        "artifactId": {"type": ["string", "null"], "maxLength": 128}
+      }
+    },
+    "attachments": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["artifactId", "relativePath", "role", "mediaType", "requirement", "captureMode", "maxBytes", "expectedSha256", "producerResult"],
+        "properties": {
+          "artifactId": {"type": "string", "minLength": 1, "maxLength": 128},
+          "relativePath": {"type": "string", "minLength": 1, "maxLength": 255, "pattern": "^[^/\\\\]+$"},
+          "role": {"enum": ["cleanup-receipt", "producer-result", "distribution-manifest", "cache-index", "diagnostic", "reproduction-input", "recovery-receipt"]},
+          "mediaType": {"type": "string", "minLength": 1, "maxLength": 256},
+          "requirement": {"enum": ["required", "optional"]},
+          "captureMode": {"enum": ["new-output", "existing-input"]},
+          "maxBytes": {"type": "integer", "minimum": 0, "maximum": 67108864},
+          "expectedSha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "producerResult": {
+            "oneOf": [
+              {"type": "null"},
+              {"type": "object", "additionalProperties": false, "required": ["producer", "schemaVersion"], "properties": {"producer": {"type": "string", "minLength": 1, "maxLength": 128}, "schemaVersion": {"type": "string", "minLength": 1, "maxLength": 256}}}
+            ]
+          }
+        }
+      }
+    }
+  }
+}

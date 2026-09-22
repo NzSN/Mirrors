@@ -1,0 +1,5 @@
+# Initial local/offline verifier dependency closure for Python 3.12.
+# I2 must bundle these exact wheels or declare them as explicit host prerequisites.
+attrs==23.2.0
+jsonschema==4.10.3
+pyrsistent==0.20.0

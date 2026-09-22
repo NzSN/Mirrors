@@ -236,7 +236,9 @@ The full runner now includes MirrorLean's root tests and its separate native
 server-mode package. `LEAN_CLIENT_REPO` selects its checkout, while `LEAN_BIN`
 continues to name the Mirrors server executable. Workflow dispatch accepts full
 `cpp_ref`, `rust_ref`, and `lean_client_ref` SHAs alongside `ecma_ref`; local
-pin verification uses `CPP_REF`, `RUST_REF`, and `LEAN_CLIENT_REF`. The C++/Lean/Rust
+pin verification uses `CPP_REF`, `RUST_REF`, `LEAN_CLIENT_REF`, and `HS_REF`.
+Each override is an explicit full 40-character SHA; omitting `HS_REF` preserves
+the published `HS_BASELINE`. The C++/Lean/Rust
 baselines pin the coordinated conformance commits published on 2026-09-18.
 The additive [async reply vectors](../../test/client-conformance/README.md) do
 not modify the frozen Haskell golden corpus.

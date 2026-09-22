@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "mirrors.evidence-envelope/v1.0", "projectionKind": "private", "runId": "fixture-persistence-failure", "releaseProfile": "mirrors.local-release-evidence/v1",
+  "catalogSelectionRef": {"schemaVersion": "mirrors.framework-catalog/v1", "selectionKind": "sha256", "selectionValue": "1111111111111111111111111111111111111111111111111111111111111111"},
+  "components": [{"componentId": "mirrors", "repository": "https://github.com/NzSN/Mirrors", "revision": "e7c8681d7db62000555675188d0125931136e002", "dirty": false}],
+  "timestamps": {"startedAtUtc": "2026-09-22T05:00:00Z", "finishedAtUtc": "2026-09-22T05:00:01Z", "monotonicDurationNs": 1000000000},
+  "environment": {"platformProfile": "ubuntu-24.04-x86_64-local", "os": "Ubuntu 24.04", "architecture": "x86_64", "workingDirectory": "/private/fixture", "tools": []},
+  "commands": [{"commandId": "fixture.pass", "tierId": "fixture.required", "requirement": "required", "argv": ["fixture-pass"], "cwd": "/private/fixture", "exit": {"kind": "code", "code": 0}, "logArtifactId": "missing-command-log"}],
+  "tiers": [{"tierId": "fixture.required", "requirement": "required", "status": "passed", "artifactIds": ["producer-result"]}],
+  "artifacts": [{"artifactId": "producer-result", "mediaType": "application/json", "role": "producer-result", "bytes": 20, "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "visibility": "private", "requirement": "required", "location": {"kind": "bundle", "path": "artifacts/private/result.json"}}, {"artifactId": "cleanup-receipt", "mediaType": "application/json", "role": "cleanup-receipt", "bytes": 10, "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "visibility": "private", "requirement": "required", "location": {"kind": "bundle", "path": "artifacts/private/cleanup.json"}}],
+  "producerResults": [{"producer": "fixture", "schemaVersion": "fixture.result/v1", "artifactId": "producer-result"}],
+  "releaseRequirements": {"requiredArtifactIds": ["producer-result", "cleanup-receipt", "missing-command-log"], "requiredStructuralRoles": ["public-summary", "private-index"], "requiredCleanupScopes": ["local-cooperative"]},
+  "outcomes": {"behavior": {"status": "passed", "classification": {"namespace": "fixture", "code": "passed"}, "producerResult": {"producer": "fixture", "schemaVersion": "fixture.result/v1", "artifactId": "producer-result"}}, "cleanup": [{"scope": "local-cooperative", "requirement": "required", "status": "confirmed", "artifactIds": ["cleanup-receipt"]}], "persistence": {"requirement": "required", "status": "failed", "reasonCode": "artifact-write-failed", "requiredArtifactIds": ["producer-result", "cleanup-receipt", "missing-command-log"], "missingArtifactIds": ["missing-command-log"]}},
+  "qualification": {"status": "not_qualified", "reasonCodes": ["required-persistence-failed"]},
+  "retention": {"profile": "local-owner-only-v1", "automaticUpload": false, "automaticPruning": false}
+}
