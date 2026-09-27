@@ -23,6 +23,32 @@ Planning-time source identities (recheck before implementation):
 These read-only observations identify the planning inputs, not a newly tested
 cross-repository combination.
 
+## 2026-09-25 candidate status
+
+This section records the uncommitted candidate. It does not qualify M5. The
+exact catalog selection, install digests, retained run identifiers, and the
+Q2 acceptance matrix are in
+[q3-readiness-2026-09-25.md](q3-readiness-2026-09-25.md), which is excluded
+evidence output. `.projectile-cache.eld` remains on disk and is classified
+`pre-existing-unrelated` for every component. The pinned Node 24.15.0 runtime
+used by the source R0 commands is the gitignored
+`.work/toolchains/node-v24.15.0-linux-x64` tree; it is not catalog content.
+
+The Gate worker reply for a callback failure stays `{code: APPLICATION, message}`
+with the callback's own message. Typed rejections stay `VALUE`. The suite
+classifies an `observation_shape_mismatch` caused by `APPLICATION` as
+implementation and one caused by `VALUE` as codec. No application-code prefix
+is part of the worker frame. Source R0 records
+`frameworkCatalogDigest` of the parsed catalog document. Digesting the raw
+`Buffer` is not the catalog selection. Q1 and Q2 are not complete. `framework.reduction`
+is unavailable on this host because
+`scripts/materialize-lease-reduction.mjs` assigns `APALACHE_MC` and runs that
+local launcher before `startExploreSession`. A remote-only reduction would have
+to submit that same explore session to the deployed service at
+`192.168.150.219:8999` after the service reports Apalache 0.61.0 and Java
+`25.0.4+7-LTS`. Aggregate cgroup enforcement, native Ubuntu acceptance, that
+remote tier, interop, publication, and deployment were not established.
+
 ## Current execution checkpoint
 
 The planning assignments below remain historical. Active implementation now uses
@@ -31,14 +57,16 @@ scopes: `distribution_finish`, `evidence_finish`, `reproduction_finish`, and
 `recovery_finish`. The parent coordinates and reviews their work; dispatch and
 passing helper tests do not complete a task card.
 
-The evidence scope currently passes 94 focused tests for collection,
-finalization, linked qualification, registry context, historical availability,
-and offline verification. Installed Q wrappers and actual Q1/Q2 evidence remain
-pending the final immutable development cache. The MirrorGate recovery patch is
-staged outside its repository and awaits explicit destination-write approval.
-Real delegated-cgroup enforcement is a required unavailable tier on this host
+Installed producer commands are frozen in `tools/evidence/commands.json`.
+Their retained results, manifest digests, and the catalog selection are
+recorded only in the excluded Q3 report. Q1 and Q2 remain incomplete while
+origin reproduction, LeaseService reduction, the remote activated service,
+interop, delegated cgroup, and native Ubuntu evidence are absent. Real
+delegated-cgroup enforcement is a required unavailable tier on this host
 because no writable delegated cgroup-v2 parent was supplied. Q3 must preserve
 that result as incomplete unless actual retained evidence later changes it.
+The rerun follows the execution-environment routes and host preflight defined
+in the Q1 card below.
 
 ## Assignment and status rules
 
@@ -184,6 +212,23 @@ installed-binary, source-revision, Apalache and Java identity observation as
 defined by the qualification harness. The current interop runner has no remote
 service mode, so its required tier remains unavailable here rather than being
 silently run locally or credited from the standalone remote probe.
+
+Execute the installed gates only where their primitives are permitted; two
+routes are sanctioned. (a) Escalate from the current host through a working
+approval reviewer: attended `approvals_reviewer = "user"`, or a repaired
+`auto_review` guardian via a catalog `auto_review_model_override` naming a
+provider-served model (the 2026-09-25 pass failed closed here: the provider
+rejected `codex-auto-review`, so every escalation was refused before
+execution). (b) Run on a native Ubuntu 24.04 x86_64 fixture with a declared
+bypass profile (`sandbox_mode = "danger-full-access"`, `approval_policy =
+"never"`); the fixture itself is the boundary. Do not nest the qualification
+inside an agent sandbox that denies `ptrace`, sockets, or required writes:
+the framework's bubbles are the intended isolation, and such nesting turns
+environment limits into false product-tier incompletes. Preflight the host
+(`strace` probe, `ptrace_scope` <= 1, bubblewrap >= 0.9.0 non-setuid,
+Ubuntu 24.04 AppArmor user-namespace policy, loopback) and record the tested
+profile identity with the evidence. WSL2 results remain diagnostic and leave
+native acceptance incomplete.
 
 The 2026-09-22 remote boot/smoke check found `ModelMirrors` running with automatic
 startup and returned `VALID` for bound-3 HourClock over verified TLS 1.3 mTLS.

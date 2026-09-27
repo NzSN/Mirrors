@@ -7,16 +7,68 @@
       "componentRef": {
         "componentId": "mirrors",
         "repository": "https://github.com/NzSN/Mirrors.git",
-        "revision": "153f387a39ab2d0f099936b7de39b756d2d4abaa",
+        "revision": "ce75058b3f1c912eb5bee58b81f3bac1dab2714d",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "1a57e8b55c08e6dd73dc80d2a72946c0b2ead3726fec1ff3eb6b7012d2608906",
+          "digest": "e23ff68ea1f44e6bead224d31357d16e4e10e8a52807924fa65865e8e3e2c3f1",
           "method": "git-diff-and-untracked-manifest-v1",
-          "includedPaths": [],
+          "includedPaths": [
+            "AGENTS.md",
+            "Codec/FrameworkCatalog.lean",
+            "Docs/durable-evidence-design.md",
+            "Docs/framework-catalog-contract.md",
+            "distribution/reference-node/distribution-manifest.schema.json",
+            "tools/distribution/build.py",
+            "tools/distribution/counter-driver.mjs",
+            "tools/distribution/distribution_lib.py",
+            "tools/distribution/install.py",
+            "tools/distribution/installed-counter.mjs",
+            "tools/distribution/installed-counter.test.mjs",
+            "tools/distribution/qualification.py",
+            "tools/distribution/refresh_identity.py",
+            "tools/distribution/snapshot_sources.py",
+            "tools/distribution/test_archive_bounds.py",
+            "tools/distribution/test_editor_cache.py",
+            "tools/distribution/test_install.py",
+            "tools/distribution/test_installed_counter.py",
+            "tools/distribution/test_manifest_check.py",
+            "tools/distribution/test_planning_docs_exclusion.py",
+            "tools/distribution/test_qualification.py",
+            "tools/evidence/collect.py",
+            "tools/evidence/commands.json",
+            "tools/evidence/qualification_scope.py",
+            "tools/evidence/reproduction-capture.mjs",
+            "tools/evidence/schema/attachment-plan-v1.schema.json",
+            "tools/evidence/schema/evidence-envelope-v1.schema.json",
+            "tools/evidence/schema/qualification-scope-v2.schema.json",
+            "tools/evidence/tests/test_catalog_links.py",
+            "tools/evidence/tests/test_collect.py",
+            "tools/evidence/tests/test_qualification_scope.py"
+          ],
           "excludedPaths": [
             {
+              "path": ".projectile-cache.eld",
+              "reasonCode": "pre-existing-unrelated"
+            },
+            {
+              "path": "CHECKPOINTS.md",
+              "reasonCode": "planning-documentation"
+            },
+            {
               "path": "Docs/framework-map.md",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "Plans/mirror-framework-improvements.md",
+              "reasonCode": "planning-documentation"
+            },
+            {
+              "path": "Plans/mirror-framework-tasks.md",
+              "reasonCode": "planning-documentation"
+            },
+            {
+              "path": "Plans/q3-readiness-2026-09-25.md",
               "reasonCode": "evidence-output"
             },
             {
@@ -33,10 +85,6 @@
             },
             {
               "path": "distribution/reference-node/component-lock.json",
-              "reasonCode": "evidence-output"
-            },
-            {
-              "path": "distribution/reference-node/dependency-lock.json",
               "reasonCode": "evidence-output"
             },
             {
@@ -227,7 +275,7 @@
   "combinations": [],
   "extensions": {
     "org.nzsn.snapshot": {
-      "capturedAt": "2026-09-22T16:02:53Z",
+      "capturedAt": "2026-09-27T03:30:53Z",
       "provisional": true
     }
   }

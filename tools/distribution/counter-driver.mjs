@@ -1,7 +1,8 @@
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { defineSuite, runSuiteWithFactory } from "/tmp/runtime/packages/mirrorecma/dist/index.js";
+import { defineSuite, runSuite } from "/tmp/runtime/packages/mirrorecma/dist/index.js";
 import { CounterModel } from "/tmp/runtime/examples/counter-suite/Counter.suite.js";
+import { installedCounterPort } from "./installed-counter.mjs";
 
 const variant = process.argv[2];
 if (!['correct', 'faulty'].includes(variant)) throw new Error('variant');
@@ -18,11 +19,9 @@ const suite = defineSuite({
   },
   acceptance: {requiredActions:['Tick'],requiredPairs:[['Tick','Tick']]},
 });
-const result = await runSuiteWithFactory(suite, {
+const result = await runSuite(suite, {
   mirror: '/tmp/runtime/bin/ModelMirrors',
   timeouts: {registrationMs:10000,actionMs:1000,receiveMs:10000,cleanupMs:5000},
-}, async () => {
-  let count = 0n;
-  return {actions:{Initialize:()=>{count=0n;},Tick:({Stride})=>{count += Stride + (variant==='faulty'?-1n:0n);}},observe:()=>({Count:count}),dispose:()=>{}};
+  implementation: async () => ({port: installedCounterPort(variant), dispose() {}}),
 });
 console.log(JSON.stringify({variant,result}, (_key,value)=>typeof value==='bigint'?value.toString():value));

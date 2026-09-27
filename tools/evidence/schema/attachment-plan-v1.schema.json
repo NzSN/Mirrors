@@ -14,7 +14,7 @@
       "additionalProperties": false,
       "required": ["kind", "artifactId"],
       "properties": {
-        "kind": {"enum": ["none", "mirrorecma.application-campaign-aggregate/v1", "mirrorecma.lease-reduction-oracle/v1", "mirrorgate.application-validation/v2", "mirrorgate.application-validation-aggregate/v1", "mirrorgate.recovery-receipt/v1"]},
+        "kind": {"enum": ["none", "mirrorecma.application-campaign-aggregate/v1", "mirrorecma.lease-reduction-oracle/v1", "mirrorecma.suite-result/v1", "mirrorecma.reproduction-capture/v1", "mirrors.installed-consumer-audit/v1", "mirrorgate.application-validation/v2", "mirrorgate.application-validation-aggregate/v1", "mirrorgate.recovery-receipt/v1"]},
         "artifactId": {"type": ["string", "null"], "maxLength": 128}
       }
     },

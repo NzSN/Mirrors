@@ -28,6 +28,28 @@ class QualificationAuditTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "replacement probe count"):
                 qualification.trace_audit(prefix, hidden)
 
+    def test_component_checks_follow_the_installed_combination(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            runtime = Path(temporary) / "runtime"
+            runtime.mkdir()
+            catalog = {"combinations": [
+                {"combinationId": "candidate.local-node-checked",
+                 "componentIds": ["mirrorecma", "mirrors"]},
+                {"combinationId": "candidate.node-gate",
+                 "componentIds": ["mirrorecma", "mirrorgate", "mirrors"]},
+            ]}
+            (runtime / "framework-input.json").write_text(
+                json.dumps({"catalogRaw": json.dumps(catalog)}))
+            self.assertEqual(
+                qualification.required_component_checks(runtime, "candidate.node-gate"),
+                {"catalog.component.mirrorecma", "catalog.component.mirrorgate",
+                 "catalog.component.mirrors"})
+            self.assertEqual(
+                qualification.required_component_checks(runtime, "candidate.local-node-checked"),
+                {"catalog.component.mirrorecma", "catalog.component.mirrors"})
+            with self.assertRaisesRegex(ValueError, "lacks the selected combination"):
+                qualification.required_component_checks(runtime, "candidate.missing")
+
     def test_admission_failure_retains_bounded_audit(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

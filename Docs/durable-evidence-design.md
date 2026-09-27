@@ -62,7 +62,9 @@ The dirty digest covers the capture method's selected source content, including
 selected untracked files. `includedPaths` may be empty when every observed dirty
 path is deliberately excluded, as with MirrorECMA's pre-existing unrelated
 `.work/`. Each exclusion records a logical path and one of
-`pre-existing-unrelated`, `evidence-output`, or `build-output`. Evidence output
+`pre-existing-unrelated`, `evidence-output`, `build-output`, or
+`planning-documentation` (Mirrors planning/scratch documents: `Plans/**` other
+than the excluded Q3 report, `tmp/**`, and the root `CHECKPOINTS.md`). Evidence output
 uses a store outside the checkout by default, but a collector still records any
 checkout-local output exclusion. It must not silently exclude a changed source
 file merely because collection created or noticed it. E2 will capture before and

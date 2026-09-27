@@ -22,13 +22,18 @@ from verify import verify
 MAX_SCOPE_BYTES = 1024 * 1024
 MAX_NODES = 64
 MAX_EDGES = 256
-SCOPE_SCHEMA = ROOT / "schema" / "qualification-scope-v1.schema.json"
+SCOPE_SCHEMA_VERSIONS = {
+    "mirrors.qualification-scope/v1": ROOT / "schema" / "qualification-scope-v1.schema.json",
+    "mirrors.qualification-scope/v2": ROOT / "schema" / "qualification-scope-v2.schema.json",
+}
 COMMAND_CONTEXT_SCHEMA = ROOT / "schema" / "command-context-v1.schema.json"
-SCOPE_VALIDATOR = Draft202012Validator(load_json(SCOPE_SCHEMA))
+SCOPE_VALIDATORS = {version: Draft202012Validator(load_json(path))
+                   for version, path in SCOPE_SCHEMA_VERSIONS.items()}
 COMMAND_CONTEXT_VALIDATOR = Draft202012Validator(load_json(COMMAND_CONTEXT_SCHEMA))
 _DISTRIBUTION_VALIDATORS: dict[Path, Draft202012Validator] = {}
 SCOPE_PRODUCER = "mirrors.qualifier"
-SCOPE_PRODUCER_SCHEMA = "mirrors.qualification-scope/v1"
+SCOPE_PRODUCER_SCHEMAS = tuple(SCOPE_SCHEMA_VERSIONS)
+SCOPE_PRODUCER_SCHEMA = "mirrors.qualification-scope/v2"
 SOURCE_COMMAND_COMPONENTS = {
     "mirrors.local-no-model": frozenset(("mirrors",)),
     "mirrors.remote-model-check": frozenset(("mirrors",)),
@@ -39,6 +44,7 @@ SOURCE_COMMAND_COMPONENTS = {
 }
 COMMAND_PHASES = {
     "framework.install-diagnostics": "distribution",
+    "framework.install-diagnostics-gate": "distribution",
     **{command: "source-gate" for command in SOURCE_COMMAND_COMPONENTS},
     "mirrorgate.application-campaign.work-queue": "origin",
     "mirrorgate.application-campaign.persistent-transfer": "origin",
@@ -95,9 +101,28 @@ def _canonical_framework_json(value: Any) -> bytes:
     raise ValueError("qualification distribution contains an unsupported JSON value")
 
 
+def scope_schema_version(document: dict[str, Any]) -> str:
+    version = document.get("schemaVersion")
+    if version not in SCOPE_VALIDATORS:
+        raise ValueError(f"unsupported qualification scope version: {version!r}")
+    return version
+
+
+def scope_binding_ids(document: dict[str, Any]) -> list[str]:
+    """Return the scope's credited distribution-binding run ids.
+
+    v1 carries a single `distributionBindingRunId`; v2 carries
+    `distributionBindingRunIds` so that local and Gate distributions can bind
+    their own installed nodes inside one scope.
+    """
+    if scope_schema_version(document) == "mirrors.qualification-scope/v1":
+        return [document["distributionBindingRunId"]]
+    return list(document["distributionBindingRunIds"])
+
+
 def _scope_document(raw: bytes) -> dict[str, Any]:
     document = loads_json_bytes(raw)
-    errors = sorted(SCOPE_VALIDATOR.iter_errors(document),
+    errors = sorted(SCOPE_VALIDATORS[scope_schema_version(document)].iter_errors(document),
                     key=lambda error: list(error.absolute_path))
     if errors:
         raise ValueError("invalid qualification scope: " + "; ".join(error.message for error in errors))
@@ -202,9 +227,9 @@ def validate_command_context(bundle: Path, envelope: dict[str, Any]) -> dict[str
     if set(effective) != expected_names:
         raise ValueError("command-context contains a non-allowlisted environment value")
     cwd_environment = selected.get("requiredCwdEnvironmentName")
-    if (cwd_environment is not None
-            and (cwd_environment not in named
-                 or effective.get(cwd_environment) != recorded["cwd"])):
+    if cwd_environment is not None and cwd_environment not in named:
+        raise ValueError("command-context cwd differs from its registered environment owner")
+    if not command_cwd_matches(selected, effective, recorded["cwd"]):
         raise ValueError("command-context cwd differs from its registered environment owner")
     environment_files = recorded["environmentFiles"]
     file_names = [item["name"] for item in environment_files]
@@ -225,6 +250,26 @@ def validate_command_context(bundle: Path, envelope: dict[str, Any]) -> dict[str
     if selected.get("registryOwnerComponentId", owner["componentId"]) != owner["componentId"]:
         raise ValueError("command registry owner differs from selected entry")
     return context
+
+
+def command_cwd_matches(selected: dict[str, Any], effective: dict[str, str], cwd: str) -> bool:
+    """True when a run's cwd matches its registered environment owner.
+
+    Commands registered with `requiredCwdSubdirectory` run below the directory
+    named by `requiredCwdEnvironmentName` (for example the Gate supervisor root
+    under the installed Gate runtime); every other command runs exactly in it.
+    """
+    owner_name = selected.get("requiredCwdEnvironmentName")
+    if owner_name is None:
+        return True
+    owner = effective.get(owner_name)
+    if not isinstance(owner, str) or not owner:
+        return False
+    subdirectory = selected.get("requiredCwdSubdirectory")
+    expected = owner
+    if isinstance(subdirectory, str) and subdirectory:
+        expected = os.path.join(owner, subdirectory)
+    return os.path.normpath(cwd) == os.path.normpath(expected)
 
 
 def _validate_json_schema(document: Any, bundled_name: str, source_name: str) -> None:
@@ -271,10 +316,13 @@ def _distribution_binding(bundle: Path, envelope: dict[str, Any], selected: dict
             raise ValueError(f"qualification distribution has duplicate {field} identity")
     tools = [item["toolId"] for item in manifest["buildProvenance"]["tools"]]
     trees = [item["inputId"] for item in manifest["buildProvenance"]["trees"]]
-    if (set(tools) != {"git", "lake", "framework-catalog-bootstrap"}
-            or len(tools) != 3
+    allowed_tools = {"framework-catalog-bootstrap", "git", "lake", "ldd", "python"}
+    allowed_trees = {"typescript-node-modules", "evidence-wheels", "lean-build-cache",
+                     "application:validation", "package:mirrorecma",
+                     "package:mirrorgate-mirrorecma"}
+    if (set(tools) != allowed_tools or len(tools) != len(allowed_tools)
             or not {"typescript-node-modules", "evidence-wheels"} <= set(trees)
-            or set(trees) - {"typescript-node-modules", "evidence-wheels", "lean-build-cache"}
+            or set(trees) - allowed_trees
             or len(trees) != len(set(trees))):
         raise ValueError("qualification distribution build provenance closure is invalid")
     artifacts = {item["artifactId"]: item for item in manifest["artifacts"]}
@@ -350,16 +398,20 @@ def verify_scope(scope: dict[str, Any], store_root: Path,
     by_id = _validate_graph(nodes)
     if excluded_run_id is not None and excluded_run_id in by_id:
         raise ValueError("Q qualification scope cannot include its enclosing run")
-    binding_id = scope["distributionBindingRunId"]
-    binding_node = by_id.get(binding_id)
-    if (binding_node is None or binding_node["phase"] != "distribution"
-            or binding_node["evidenceUse"] != "qualification-credit"):
-        raise ValueError("distribution-binding run must be a credited distribution node")
-    if any(node["phase"] == "distribution"
-           and node["evidenceUse"] == "qualification-credit"
-           and run_id != binding_id
-           for run_id, node in by_id.items()):
-        raise ValueError("only the selected D run may receive distribution credit")
+    binding_ids = scope_binding_ids(scope)
+    if len(set(binding_ids)) != len(binding_ids):
+        raise ValueError("qualification distribution bindings are duplicate")
+    for binding_id in binding_ids:
+        binding_node = by_id.get(binding_id)
+        if (binding_node is None or binding_node["phase"] != "distribution"
+                or binding_node["evidenceUse"] != "qualification-credit"):
+            raise ValueError(
+                f"distribution-binding run must be a credited distribution node: {binding_id}")
+    credited_bindings = {run_id for run_id, node in by_id.items()
+                         if node["phase"] == "distribution"
+                         and node["evidenceUse"] == "qualification-credit"}
+    if credited_bindings != set(binding_ids):
+        raise ValueError("only declared distribution bindings may receive distribution credit")
     ensure_owner_directory(store_root)
     runs_root = store_root / "runs"
     ensure_owner_directory(runs_root)
@@ -390,6 +442,7 @@ def verify_scope(scope: dict[str, Any], store_root: Path,
     credited_run_refs: list[dict[str, Any]] = []
     selected_distribution_components = {
         json.dumps(component, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+        for binding_id in binding_ids
         for component in distributions[binding_id]["componentRefs"]
     }
     for run_id, node in by_id.items():
@@ -411,8 +464,8 @@ def verify_scope(scope: dict[str, Any], store_root: Path,
             if distribution_id not in node["dependsOnRunIds"]:
                 raise ValueError(f"installed qualification phase must depend directly on its D run: {run_id}")
             if (node["evidenceUse"] == "qualification-credit"
-                    and distribution_id != binding_id):
-                raise ValueError(f"credited installed run uses a different D binding: {run_id}")
+                    and distribution_id not in binding_ids):
+                raise ValueError(f"credited installed run uses a non-credited D binding: {run_id}")
         elif phase == "source-gate":
             if distribution_id is not None:
                 raise ValueError("source-gate nodes use declared component-subset binding only")
@@ -433,13 +486,14 @@ def verify_scope(scope: dict[str, Any], store_root: Path,
             raise ValueError(f"qualification phase has no identity-binding rule: {phase}")
         if phase == "origin" and not any(by_id[item]["phase"] == "distribution" for item in node["dependsOnRunIds"]):
             raise ValueError("origin run must depend on its distribution run")
-        if phase == "reproduction" and not any(by_id[item]["phase"] == "origin" for item in node["dependsOnRunIds"]):
-            raise ValueError("reproduction run must depend on its origin run")
+        if phase == "reproduction" and not any(
+                by_id[item]["phase"] in ("origin", "replay") for item in node["dependsOnRunIds"]):
+            raise ValueError("reproduction run must depend on its credited R0 run")
         if phase == "reproduction":
             origin_refs = {json.dumps(by_id[item]["privateRunRef"], sort_keys=True,
                                       separators=(",", ":"))
                            for item in node["dependsOnRunIds"]
-                           if by_id[item]["phase"] == "origin"}
+                           if by_id[item]["phase"] in ("origin", "replay")}
             reproduction_artifacts = [artifact for artifact in envelope["artifacts"]
                 if artifact["role"] == "reproduction-input" and artifact["requirement"] == "required"]
             if not reproduction_artifacts:
@@ -513,17 +567,30 @@ def verify_scope(scope: dict[str, Any], store_root: Path,
             if artifact["requirement"] == "required"
         )
         cleanup.extend(envelope["outcomes"]["cleanup"])
-    binding = distributions[binding_id]
-    return {
+    bindings = []
+    component_refs: list[dict[str, Any]] = []
+    seen_components: set[str] = set()
+    for binding_id in binding_ids:
+        binding = distributions[binding_id]
+        bindings.append({
+            "runId": binding_id,
+            "distributionManifestSha256": binding["distributionManifestSha256"],
+            "cacheIndexSha256": binding["cacheIndexSha256"],
+            "componentIds": [component["componentId"] for component in binding["componentRefs"]],
+        })
+        for component in binding["componentRefs"]:
+            encoded = json.dumps(component, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+            if encoded not in seen_components:
+                seen_components.add(encoded)
+                component_refs.append(component)
+    result = {
         "schemaVersion": "mirrors.qualification-scope-verification/v1",
         "status": "verified",
         "scopeId": scope["scopeId"],
         "qualificationClass": scope["qualificationClass"],
         "selectedCatalogRef": scope["selectedCatalogRef"],
-        "distributionBindingRunId": binding_id,
-        "distributionManifestSha256": binding["distributionManifestSha256"],
-        "cacheIndexSha256": binding["cacheIndexSha256"],
-        "componentRefs": binding["componentRefs"],
+        "bindings": bindings,
+        "componentRefs": component_refs,
         "commands": commands,
         "tiers": tiers,
         "requiredArtifactRoles": sorted(artifact_roles),
@@ -531,6 +598,11 @@ def verify_scope(scope: dict[str, Any], store_root: Path,
         "creditedRunRefs": credited_run_refs,
         "verifiedRunCount": len(nodes),
     }
+    if len(binding_ids) == 1:
+        result["distributionBindingRunId"] = binding_ids[0]
+        result["distributionManifestSha256"] = bindings[0]["distributionManifestSha256"]
+        result["cacheIndexSha256"] = bindings[0]["cacheIndexSha256"]
+    return result
 
 
 def verify_scope_path(scope_path: Path, store_root: Path) -> dict[str, Any]:
@@ -541,7 +613,7 @@ def verify_scope_path(scope_path: Path, store_root: Path) -> dict[str, Any]:
 def attached_scope(bundle: Path, envelope: dict[str, Any], store_root: Path) -> dict[str, Any]:
     producer = [result for result in envelope["producerResults"]
                 if result["producer"] == SCOPE_PRODUCER
-                and result["schemaVersion"] == SCOPE_PRODUCER_SCHEMA]
+                and result["schemaVersion"] in SCOPE_PRODUCER_SCHEMAS]
     if len(producer) != 1:
         raise ValueError("Q bundle requires exactly one qualification-scope producer result")
     artifacts = [artifact for artifact in envelope["artifacts"]
@@ -569,15 +641,18 @@ def main(argv: list[str] | None = None) -> int:
     except (OSError, UnicodeError, ValueError, json.JSONDecodeError) as error:
         print(f"qualification scope verification failed: {error}", file=sys.stderr)
         return 1
-    print(json.dumps({
+    summary = {
         "schemaVersion": result["schemaVersion"],
         "status": result["status"],
         "scopeId": result["scopeId"],
         "qualificationClass": result["qualificationClass"],
-        "distributionManifestSha256": result["distributionManifestSha256"],
-        "cacheIndexSha256": result["cacheIndexSha256"],
+        "bindings": result["bindings"],
         "verifiedRunCount": result["verifiedRunCount"],
-    }, sort_keys=True))
+    }
+    if len(result["bindings"]) == 1:
+        summary["distributionManifestSha256"] = result["distributionManifestSha256"]
+        summary["cacheIndexSha256"] = result["cacheIndexSha256"]
+    print(json.dumps(summary, sort_keys=True))
     return 0
 
 

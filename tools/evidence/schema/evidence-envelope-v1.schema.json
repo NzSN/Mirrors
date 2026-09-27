@@ -113,7 +113,8 @@
       "required": ["path", "reasonCode"],
       "properties": {
         "path": {"$ref": "#/$defs/logicalPath"},
-        "reasonCode": {"enum": ["pre-existing-unrelated", "evidence-output", "build-output"]}
+        "reasonCode": {"enum": ["pre-existing-unrelated", "evidence-output", "build-output",
+              "planning-documentation"]}
       }
     },
     "dirtyContent": {

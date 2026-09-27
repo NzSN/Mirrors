@@ -89,7 +89,11 @@ These types are byte-for-byte compatible with E1.
 ```
 
 The other permitted method is `filesystem-tree-v1`; exclusion reasons are
-`pre-existing-unrelated`, `evidence-output`, or `build-output`. Paths are logical
+`pre-existing-unrelated`, `evidence-output`, `build-output`, or
+`planning-documentation`. `planning-documentation` is used only for the Mirrors
+planning/scratch documents (`Plans/**` other than the excluded Q3 report,
+`tmp/**`, and the root `CHECKPOINTS.md`): they are recorded and hashed for
+audit, but they are not build inputs and do not move the selected identity. Paths are logical
 repository paths, never host absolute paths. Lists are sorted and duplicate-free.
 `includedPaths` may be empty when every observed dirty path is explicitly listed
 as excluded; the digest/method still bind the selected content.

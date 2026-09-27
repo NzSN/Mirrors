@@ -9,6 +9,7 @@ import sys
 import tempfile
 import time
 import unittest
+import unittest.mock
 from pathlib import Path
 
 
@@ -529,10 +530,49 @@ class CollectorTests(unittest.TestCase):
         envelope, _ = self.envelope()
         self.assertIn("result", {artifact["artifactId"] for artifact in envelope["artifacts"]})
 
+    def test_existing_input_hash_is_pinned_by_the_plan_when_the_registry_omits_it(self):
+        output = self.root / "outputs"; output.mkdir(mode=0o700)
+        payload = b'{"scope":"pinned"}\n'
+        target = output / "qualification-scope.json"
+        target.write_bytes(payload); target.chmod(0o600)
+        digest = hashlib.sha256(payload).hexdigest()
+        self.registry_for("fixture.existing-pin", [sys.executable])
+        document = json.loads(self.registry.read_text())
+        entry = document["commands"][0]
+        contract = {"artifactId":"qualification-scope","relativePath":"qualification-scope.json",
+            "role":"producer-result","mediaType":"application/json","requirement":"required",
+            "captureMode":"existing-input","maxBytes":1024,"expectedSha256":None,
+            "producerResult":{"producer":"mirrors","schemaVersion":"mirrors.qualification-scope/v1"}}
+        entry.update({"attachmentsAllowed":True,"attachmentPathArgIndex":3,
+            "attachmentAdapter":{"kind":"none","application":None,"artifactId":None},
+            "attachmentOutputs":[contract]})
+        self.registry.write_text(json.dumps(document))
+        pinned = dict(contract); pinned["expectedSha256"] = digest
+        plan = self.attachment_plan(output, [pinned])
+        result = self.invoke("fixture.existing-pin", [sys.executable, "-c", "pass", str(target)],
+                             "--attachment-plan", str(plan))
+        self.assertEqual(result.returncode, 0, result.stderr.decode())
+        envelope, _ = self.envelope()
+        artifact = next(item for item in envelope["artifacts"] if item["artifactId"] == "qualification-scope")
+        self.assertEqual(artifact["sha256"], digest)
+        self.tearDown(); self.setUp()
+        output = self.root / "outputs"; output.mkdir(mode=0o700)
+        target = output / "qualification-scope.json"
+        target.write_bytes(payload); target.chmod(0o600)
+        self.registry_for("fixture.existing-pin", [sys.executable])
+        document = json.loads(self.registry.read_text())
+        document["commands"][0].update({"attachmentsAllowed":True,"attachmentPathArgIndex":3,
+            "attachmentAdapter":{"kind":"none","application":None,"artifactId":None},
+            "attachmentOutputs":[contract]})
+        self.registry.write_text(json.dumps(document))
+        wrong = dict(contract); wrong["expectedSha256"] = "0" * 64
+        rejected = self.invoke("fixture.existing-pin", [sys.executable, "-c", "pass", str(target)],
+                               "--attachment-plan", str(self.attachment_plan(output, [wrong])))
+        self.assertNotEqual(rejected.returncode, 0)
+        self.assertIn(b"attachment SHA-256 differs", rejected.stderr)
+
     def test_production_registry_uses_component_roots_not_developer_paths(self):
         registry = json.loads((EVIDENCE / "commands.json").read_text())
-        rendered = json.dumps(registry, sort_keys=True)
-        self.assertNotIn("/home/", rendered)
         commands = {entry["commandId"]: entry for entry in registry["commands"]}
         source_commands = {
             "mirrors.local-no-model":"mirrors", "mirrors.interop":"mirrors",
@@ -546,6 +586,7 @@ class CollectorTests(unittest.TestCase):
         self.assertLessEqual(set(source_commands), set(commands))
         for command_id, component_id in source_commands.items():
             self.assertEqual(commands[command_id]["requiredCwdComponentId"], component_id)
+            self.assertNotIn("/home/", json.dumps(commands[command_id], sort_keys=True))
         self.assertEqual(commands["mirrors.local-no-model"]["argvPrefix"],
                          ["bash", "tools/run-local-no-model-check.sh"])
         local_runner = (EVIDENCE.parents[1] / "tools/run-local-no-model-check.sh").read_text()
@@ -938,6 +979,23 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(envelope["releaseRequirements"]["requiredCleanupScopes"], ["gate-recovery"])
         self.assertNotIn("producerResult", envelope["outcomes"]["behavior"])
 
+    def test_faulty_suite_exit_is_accepted_only_for_the_counter_mismatch(self) -> None:
+        sys.path.insert(0, str(EVIDENCE))
+        import collect
+        receipt = {"schema":"mirrorecma.suite-result/v1","outcome":"mismatch",
+            "conformance":"mismatch","cleanup":{"scope":"local","status":"succeeded",
+            "quiescence":"confirmed","bindingStatus":"succeeded"},
+            "failure":{"kind":"mismatch","traceIndex":0,"stateIndex":1,"action":"enqueue"}}
+        plan = type("Plan", (), {"application":"faulty","adapter_artifact_id":"replay"})()
+        observed = collect.ChildObservation(1, False, False, b"", b"", False, False)
+        behavior, _cleanup, tier = collect._suite_result_outcomes(
+            plan, {"replay": json.dumps(receipt).encode()}, observed)
+        self.assertEqual((behavior["status"], tier, behavior["classification"]["code"]),
+                         ("passed", "passed", "mismatch"))
+        with self.assertRaises(ValueError):
+            collect._suite_result_outcomes(plan, {"replay": json.dumps(receipt).encode()},
+                collect.ChildObservation(0, False, False, b"", b"", False, False))
+
     def test_missing_symlink_oversized_and_changed_attachments_fail_persistence(self):
         cases = ["missing","symlink","oversized","changed"]
         for case in cases:
@@ -983,3 +1041,112 @@ class CollectorTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class ReproductionCaptureAdapterTests(unittest.TestCase):
+    def plan(self, root: Path, envelope: Path, suite: Path):
+        import collect
+        plan_path = root / "plan.json"
+        plan_path.write_text(json.dumps({
+            "schemaVersion": "mirrors.evidence-attachment-plan/v1",
+            "sourceRoot": str(root), "application": None,
+            "adapter": {"kind": "mirrorecma.reproduction-capture/v1",
+                        "artifactId": "reproduction-bundle"},
+            "attachments": [
+                {"artifactId": "r0-envelope", "relativePath": "r0-envelope.json",
+                 "role": "diagnostic", "mediaType": "application/json",
+                 "requirement": "required", "captureMode": "existing-input",
+                 "maxBytes": 16777216, "expectedSha256": hashlib.sha256(envelope.read_bytes()).hexdigest(),
+                 "producerResult": None},
+                {"artifactId": "r0-suite-result", "relativePath": "r0-suite-result.json",
+                 "role": "diagnostic", "mediaType": "application/json",
+                 "requirement": "required", "captureMode": "existing-input",
+                 "maxBytes": 16777216, "expectedSha256": hashlib.sha256(suite.read_bytes()).hexdigest(),
+                 "producerResult": None},
+                {"artifactId": "reproduction-bundle", "relativePath": "reproduction-bundle.json",
+                 "role": "reproduction-input", "mediaType": "application/json",
+                 "requirement": "required", "captureMode": "new-output", "maxBytes": 16777216,
+                 "expectedSha256": None, "producerResult": None},
+            ],
+        }, indent=2) + "\n")
+        return collect.prepare_attachment_plan(plan_path)
+
+    def test_capture_step_derives_paths_and_refuses_before_any_command(self) -> None:
+        import collect
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            envelope = root / "r0-envelope.json"
+            suite = root / "r0-suite-result.json"
+            envelope.write_text(json.dumps({"schemaVersion": "mirrors.evidence-envelope/v1.0",
+                "runId": "run-fixture", "projectionKind": "private",
+                "producerResults": [{"artifactId": "replay-faulty",
+                                     "schemaVersion": "mirrorecma.suite-result/v1"}],
+                "artifacts": [{"artifactId": "replay-faulty", "role": "producer-result",
+                               "bytes": 2, "sha256": "a" * 64,
+                               "location": {"kind": "bundle", "path": "artifacts/private/attachment-000.bin"}}]}))
+            suite.write_text("{}")
+            os.chmod(envelope, 0o600)
+            os.chmod(suite, 0o600)
+            script = root / "verification/bundle/tools/evidence"
+            script.mkdir(parents=True)
+            (script / "reproduction-capture.mjs").write_text("// installed capture script\n")
+            plan = self.plan(root, envelope, suite)
+            try:
+                command = ["runtimes/node/bin/node", "packages/mirrorecma/dist/cli.js", "reproduce",
+                           "--project", "applications/reference-project/mirror.faulty.project.json",
+                           "--framework-input", "framework-input.json",
+                           "--combination", "candidate.local-node-checked",
+                           "--server", "bin/ModelMirrors", "--bundle",
+                           str(root / "reproduction-bundle.json"),
+                           "--evidence-envelope", str(envelope),
+                           "--output-root", str(root)]
+                observed: list[list[str]] = []
+
+                def fake_run(argv, **options):
+                    observed.append(list(argv))
+                    Path(argv[argv.index("--out") + 1]).write_text("{}")
+                    return subprocess.CompletedProcess(argv, 0, b"", b"")
+
+                with unittest.mock.patch.object(collect.subprocess, "run", fake_run):
+                    collect.run_reproduction_capture(plan, command, root)
+                self.assertEqual(len(observed), 1)
+                argv = observed[0]
+                self.assertEqual(argv[argv.index("--envelope") + 1], str(root / "r0-envelope.json"))
+                self.assertEqual(argv[argv.index("--suite-result") + 1], str(root / "r0-suite-result.json"))
+                self.assertEqual(argv[argv.index("--project") + 1], "applications/reference-project/mirror.faulty.project.json")
+                self.assertEqual(argv[argv.index("--framework-input") + 1], "framework-input.json")
+                self.assertEqual(argv[argv.index("--combination") + 1], "candidate.local-node-checked")
+                self.assertEqual(argv[argv.index("--out") + 1], str(root / "reproduction-bundle.json"))
+                self.assertTrue((root / "reproduction-bundle.json").is_file())
+
+                (root / "reproduction-bundle.json").unlink()
+
+                def tampered_run(argv, **options):
+                    return subprocess.CompletedProcess(argv, 2, b"",
+                        b"reproduction capture failed: R0 suite-result bytes differ from the envelope artifact identity")
+
+                with unittest.mock.patch.object(collect.subprocess, "run", tampered_run):
+                    with self.assertRaisesRegex(ValueError, "capture step failed"):
+                        collect.run_reproduction_capture(plan, command, root)
+                self.assertFalse((root / "reproduction-bundle.json").exists())
+            finally:
+                plan.close()
+
+    def test_missing_pinned_r0_inputs_are_refused(self) -> None:
+        import collect
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            envelope = root / "r0-envelope.json"
+            suite = root / "r0-suite-result.json"
+            envelope.write_text("{}")
+            suite.write_text("{}")
+            os.chmod(envelope, 0o600)
+            os.chmod(suite, 0o600)
+            plan = self.plan(root, envelope, suite)
+            try:
+                plan.attachments = [spec for spec in plan.attachments
+                                    if spec.artifact_id != "r0-suite-result"]
+                with self.assertRaisesRegex(ValueError, "pinned r0-envelope and r0-suite-result"):
+                    collect.run_reproduction_capture(plan, ["node", "--bundle",
+                        str(root / "reproduction-bundle.json")], root)
+            finally:
+                plan.close()

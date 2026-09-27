@@ -142,7 +142,10 @@
       ],
       "argvLength": 5,
       "requiredCwdComponentId": "mirrorgate",
-      "requiredEnvironmentNames": ["MIRRORECMA_ROOT", "MIRROR_BIN"],
+      "requiredEnvironmentNames": [
+        "MIRRORECMA_ROOT",
+        "MIRROR_BIN"
+      ],
       "attachmentsAllowed": true,
       "attachmentPathArgIndex": 4,
       "attachmentAdapter": {
@@ -183,7 +186,10 @@
       ],
       "argvLength": 5,
       "requiredCwdComponentId": "mirrorgate",
-      "requiredEnvironmentNames": ["MIRRORECMA_ROOT", "MIRROR_BIN"],
+      "requiredEnvironmentNames": [
+        "MIRRORECMA_ROOT",
+        "MIRROR_BIN"
+      ],
       "attachmentsAllowed": true,
       "attachmentPathArgIndex": 4,
       "attachmentAdapter": {
@@ -224,7 +230,10 @@
       ],
       "argvLength": 5,
       "requiredCwdComponentId": "mirrorgate",
-      "requiredEnvironmentNames": ["MIRRORECMA_ROOT", "MIRROR_BIN"],
+      "requiredEnvironmentNames": [
+        "MIRRORECMA_ROOT",
+        "MIRROR_BIN"
+      ],
       "attachmentsAllowed": true,
       "attachmentPathArgIndex": 4,
       "attachmentAdapter": {
@@ -252,6 +261,591 @@
       "catalogComponentId": "mirrors",
       "catalogPath": "catalog/framework-catalog.json",
       "registryOwnerComponentId": "mirrors"
+    },
+    {
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors",
+      "commandId": "framework.install-diagnostics",
+      "tierId": "qualification.install",
+      "requirement": "required",
+      "argvPrefix": [
+        "/usr/bin/python3",
+        "verification/bundle/tools/distribution/qualification.py",
+        "--prefix",
+        "/tmp/mirrors-candidate-install-local-final",
+        "--framework-catalog-bin",
+        "/home/nzsn/Repos/Mirrors/.lake/build/bin/framework_catalog",
+        "--framework-catalog-sha256",
+        "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126",
+        "--bwrap",
+        "/usr/bin/bwrap",
+        "--strace",
+        "/usr/bin/strace",
+        "--strace-sha256",
+        "28f957c227012de0b18d1bd7fff2d396cb693ea60ed8013be68de071e84b5001",
+        "--hide-root",
+        "/home/nzsn/Repos/Mirrors",
+        "--hide-root",
+        "/home/nzsn/Repos/MirrorECMA",
+        "--hide-root",
+        "/home/nzsn/Repos/MirrorGate",
+        "--audit-out"
+      ],
+      "argvLength": 22,
+      "requiredCwdEnvironmentName": "MIRRORS_INSTALLED_RUNTIME",
+      "requiredEnvironmentNames": [
+        "MIRRORS_INSTALLED_RUNTIME"
+      ],
+      "attachmentsAllowed": true,
+      "attachmentPathArgIndex": 21,
+      "attachmentAdapter": {
+        "kind": "mirrors.installed-consumer-audit/v1",
+        "application": null,
+        "artifactId": "install-diagnostics"
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "install-diagnostics",
+          "relativePath": "install-diagnostics.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrors",
+            "schemaVersion": "mirrors.installed-consumer-audit/v1"
+          }
+        },
+        {
+          "artifactId": "distribution-manifest",
+          "relativePath": "distribution-manifest.json",
+          "role": "distribution-manifest",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "cache-index",
+          "relativePath": "cache-index.json",
+          "role": "cache-index",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": null
+        }
+      ],
+      "defaultTimeoutSeconds": 1800
+    },
+    {
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors",
+      "commandId": "framework.install-diagnostics-gate",
+      "tierId": "qualification.install",
+      "requirement": "required",
+      "argvPrefix": [
+        "/usr/bin/python3",
+        "verification/bundle/tools/distribution/qualification.py",
+        "--prefix",
+        "/tmp/mirrors-candidate-install-gate-final",
+        "--framework-catalog-bin",
+        "/home/nzsn/Repos/Mirrors/.lake/build/bin/framework_catalog",
+        "--framework-catalog-sha256",
+        "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126",
+        "--bwrap",
+        "/usr/bin/bwrap",
+        "--strace",
+        "/usr/bin/strace",
+        "--strace-sha256",
+        "28f957c227012de0b18d1bd7fff2d396cb693ea60ed8013be68de071e84b5001",
+        "--hide-root",
+        "/home/nzsn/Repos/Mirrors",
+        "--hide-root",
+        "/home/nzsn/Repos/MirrorECMA",
+        "--hide-root",
+        "/home/nzsn/Repos/MirrorGate",
+        "--combination",
+        "candidate.node-gate",
+        "--audit-out"
+      ],
+      "argvLength": 24,
+      "requiredCwdEnvironmentName": "MIRRORS_INSTALLED_GATE_RUNTIME",
+      "requiredEnvironmentNames": [
+        "MIRRORS_INSTALLED_GATE_RUNTIME"
+      ],
+      "attachmentsAllowed": true,
+      "attachmentPathArgIndex": 23,
+      "attachmentAdapter": {
+        "kind": "mirrors.installed-consumer-audit/v1",
+        "application": null,
+        "artifactId": "install-diagnostics-gate"
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "install-diagnostics-gate",
+          "relativePath": "install-diagnostics-gate.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrors",
+            "schemaVersion": "mirrors.installed-consumer-audit/v1"
+          }
+        },
+        {
+          "artifactId": "distribution-manifest",
+          "relativePath": "distribution-manifest.json",
+          "role": "distribution-manifest",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "cache-index",
+          "relativePath": "cache-index.json",
+          "role": "cache-index",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": null
+        }
+      ],
+      "defaultTimeoutSeconds": 1800
+    },
+    {
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors",
+      "commandId": "framework.replay-correct",
+      "tierId": "qualification.replay",
+      "requirement": "required",
+      "argvPrefix": [
+        "runtimes/node/bin/node",
+        "applications/examples/application-validation/installed-project-replay.mjs",
+        "correct"
+      ],
+      "argvLength": 4,
+      "requiredCwdEnvironmentName": "MIRRORS_INSTALLED_RUNTIME",
+      "requiredEnvironmentNames": [
+        "MIRRORS_INSTALLED_RUNTIME"
+      ],
+      "attachmentsAllowed": true,
+      "attachmentRootArgIndex": 3,
+      "attachmentAdapter": {
+        "kind": "mirrorecma.suite-result/v1",
+        "application": "correct",
+        "artifactId": "replay-correct"
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "replay-correct",
+          "relativePath": "replay-correct.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrorecma",
+            "schemaVersion": "mirrorecma.suite-result/v1"
+          }
+        }
+      ],
+      "defaultTimeoutSeconds": 600
+    },
+    {
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors",
+      "commandId": "framework.replay-faulty",
+      "tierId": "qualification.replay",
+      "requirement": "required",
+      "argvPrefix": [
+        "runtimes/node/bin/node",
+        "applications/examples/application-validation/installed-project-replay.mjs",
+        "faulty"
+      ],
+      "argvLength": 4,
+      "requiredCwdEnvironmentName": "MIRRORS_INSTALLED_RUNTIME",
+      "requiredEnvironmentNames": [
+        "MIRRORS_INSTALLED_RUNTIME"
+      ],
+      "attachmentsAllowed": true,
+      "attachmentRootArgIndex": 3,
+      "attachmentAdapter": {
+        "kind": "mirrorecma.suite-result/v1",
+        "application": "faulty",
+        "artifactId": "replay-faulty"
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "replay-faulty",
+          "relativePath": "replay-faulty.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrorecma",
+            "schemaVersion": "mirrorecma.suite-result/v1"
+          }
+        }
+      ],
+      "defaultTimeoutSeconds": 600
+    },
+    {
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors",
+      "commandId": "framework.reproduction",
+      "tierId": "qualification.reproduction",
+      "requirement": "required",
+      "argvPrefix": [
+        "runtimes/node/bin/node",
+        "packages/mirrorecma/dist/cli.js",
+        "reproduce",
+        "--project",
+        "applications/reference-project/mirror.faulty.project.json",
+        "--framework-input",
+        "framework-input.json",
+        "--combination",
+        "candidate.local-node-checked",
+        "--server",
+        "bin/ModelMirrors",
+        "--bundle"
+      ],
+      "argvLength": 17,
+      "requiredCwdEnvironmentName": "MIRRORS_INSTALLED_RUNTIME",
+      "requiredEnvironmentNames": [
+        "MIRRORS_INSTALLED_RUNTIME"
+      ],
+      "attachmentsAllowed": true,
+      "attachmentRootArgIndex": 16,
+      "attachmentAdapter": {
+        "kind": "mirrorecma.reproduction-capture/v1",
+        "application": null,
+        "artifactId": "reproduction-bundle"
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "r0-envelope",
+          "relativePath": "r0-envelope.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "r0-suite-result",
+          "relativePath": "r0-suite-result.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "reproduction-bundle",
+          "relativePath": "reproduction-bundle.json",
+          "role": "reproduction-input",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "reproduction-result",
+          "relativePath": "reproduction-result.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrorecma",
+            "schemaVersion": "mirrorecma.reproduction-replay/v1"
+          }
+        },
+        {
+          "artifactId": "reproduction-cleanup",
+          "relativePath": "reproduction-cleanup.json",
+          "role": "cleanup-receipt",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": null
+        }
+      ],
+      "defaultTimeoutSeconds": 600
+    },
+    {
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors",
+      "commandId": "framework.reduction",
+      "tierId": "qualification.reduction",
+      "requirement": "required",
+      "argvPrefix": [
+        "runtimes/node/bin/node",
+        "packages/mirrorecma/scripts/materialize-lease-reduction.mjs"
+      ],
+      "argvLength": 18,
+      "requiredCwdEnvironmentName": "MIRRORS_INSTALLED_RUNTIME",
+      "requiredEnvironmentNames": [
+        "MIRRORS_INSTALLED_RUNTIME"
+      ],
+      "attachmentsAllowed": true,
+      "attachmentPathArgIndex": 17,
+      "attachmentAdapter": {
+        "kind": "mirrorecma.lease-reduction-oracle/v1",
+        "application": null,
+        "artifactId": "lease-reduction-receipt"
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "lease-reduction-receipt",
+          "relativePath": "lease-reduction-receipt.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrorecma",
+            "schemaVersion": "mirrorecma.lease-reduction-oracle/v1"
+          }
+        }
+      ],
+      "defaultTimeoutSeconds": 1800
+    },
+    {
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors",
+      "commandId": "framework.mutation-local",
+      "tierId": "qualification.mutation-local",
+      "requirement": "required",
+      "argvPrefix": [
+        "runtimes/node/bin/node",
+        "applications/examples/application-validation/run.mjs",
+        "all",
+        "--prevalidated-registry",
+        "installed-registry.json",
+        "--receipt"
+      ],
+      "argvLength": 7,
+      "requiredCwdEnvironmentName": "MIRRORS_INSTALLED_RUNTIME",
+      "requiredEnvironmentNames": [
+        "MIRRORS_INSTALLED_RUNTIME"
+      ],
+      "attachmentsAllowed": true,
+      "attachmentPathArgIndex": 6,
+      "attachmentAdapter": {
+        "kind": "mirrorecma.application-campaign-aggregate/v1",
+        "application": null,
+        "artifactId": "local-application-campaigns"
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "local-application-campaigns",
+          "relativePath": "local-application-campaigns.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrorecma",
+            "schemaVersion": "mirrorecma.application-campaign-aggregate/v1"
+          }
+        }
+      ],
+      "defaultTimeoutSeconds": 1800
+    },
+    {
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors",
+      "commandId": "framework.mutation-gate",
+      "tierId": "qualification.mutation-gate",
+      "requirement": "required",
+      "argvPrefix": [
+        "runtimes/node/bin/node",
+        "packages/mirrorgate-mirrorecma/scripts/application-program-gate-all.mjs"
+      ],
+      "argvLength": 3,
+      "requiredCwdEnvironmentName": "MIRRORS_INSTALLED_GATE_RUNTIME",
+      "requiredEnvironmentNames": [
+        "MIRRORS_INSTALLED_GATE_RUNTIME"
+      ],
+      "attachmentsAllowed": true,
+      "attachmentRootArgIndex": 2,
+      "attachmentAdapter": {
+        "kind": "mirrorgate.application-validation-aggregate/v1",
+        "application": null,
+        "artifactId": null
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "work-queue-gate-receipt",
+          "relativePath": "work-queue-gate-receipt.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrorgate",
+            "schemaVersion": "mirrorgate.application-validation/v2"
+          }
+        },
+        {
+          "artifactId": "persistent-transfer-gate-receipt",
+          "relativePath": "persistent-transfer-gate-receipt.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrorgate",
+            "schemaVersion": "mirrorgate.application-validation/v2"
+          }
+        },
+        {
+          "artifactId": "lease-service-gate-receipt",
+          "relativePath": "lease-service-gate-receipt.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrorgate",
+            "schemaVersion": "mirrorgate.application-validation/v2"
+          }
+        }
+      ],
+      "defaultTimeoutSeconds": 3600
+    },
+    {
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors",
+      "commandId": "mirrorgate.recovery",
+      "tierId": "qualification.recovery",
+      "requirement": "required",
+      "argvPrefix": [
+        "/usr/bin/python3",
+        "-m",
+        "mirrorgate.cli",
+        "recovery",
+        "reclaim",
+        "--state-root"
+      ],
+      "argvLength": 17,
+      "requiredCwdEnvironmentName": "MIRRORS_INSTALLED_GATE_RUNTIME",
+      "requiredCwdSubdirectory": "gate/mirrorgate-supervisor",
+      "requiredEnvironmentNames": [
+        "MIRRORS_INSTALLED_GATE_RUNTIME"
+      ],
+      "attachmentsAllowed": true,
+      "attachmentPathArgIndex": 16,
+      "attachmentAdapter": {
+        "kind": "mirrorgate.recovery-receipt/v1",
+        "application": null,
+        "artifactId": "recovery-receipt"
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "recovery-receipt",
+          "relativePath": "recovery-receipt.json",
+          "role": "recovery-receipt",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": null
+        }
+      ],
+      "defaultTimeoutSeconds": 600
+    },
+    {
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors",
+      "commandId": "evidence.offline-verify",
+      "tierId": "qualification.evidence",
+      "requirement": "required",
+      "argvPrefix": [
+        "/usr/bin/python3",
+        "verification/bundle/tools/evidence/qualification_scope.py",
+        "--scope"
+      ],
+      "argvLength": 6,
+      "requiredCwdEnvironmentName": "MIRRORS_INSTALLED_RUNTIME",
+      "requiredEnvironmentNames": [
+        "MIRRORS_INSTALLED_RUNTIME"
+      ],
+      "attachmentsAllowed": true,
+      "attachmentPathArgIndex": 3,
+      "attachmentAdapter": {
+        "kind": "none",
+        "application": null,
+        "artifactId": null
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "qualification-scope",
+          "relativePath": "qualification-scope.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrors",
+            "schemaVersion": "mirrors.qualification-scope/v2"
+          }
+        }
+      ],
+      "defaultTimeoutSeconds": 600
     }
   ]
 }

@@ -175,6 +175,11 @@ def _selected_content_digest(
         digest.update(size.to_bytes(8, "big"))
         digest.update(content_digest.digest())
     for entry in excluded:
+        # Planning/scratch documents are audit input, not build input: the
+        # manifest records them, but they must not move the selected identity
+        # when a plan is edited, added, or removed.
+        if entry["reasonCode"] == "planning-documentation":
+            continue
         digest.update(b"excluded\0")
         digest.update(entry["path"].encode("utf-8"))
         digest.update(b"\0")
@@ -284,6 +289,22 @@ def _attachment_stat(root_fd: int, name: str) -> os.stat_result | None:
         return None
 
 
+def _attachment_output_matches(actual: dict[str, Any], contract: dict[str, Any]) -> bool:
+    if set(actual) != set(contract):
+        return False
+    for key, expected in contract.items():
+        if (key == "expectedSha256" and expected is None
+                and contract.get("captureMode") == "existing-input"):
+            pin = actual["expectedSha256"]
+            if (type(pin) is not str or len(pin) != 64
+                    or any(character not in "0123456789abcdef" for character in pin)):
+                return False
+            continue
+        if actual[key] != expected:
+            return False
+    return True
+
+
 def prepare_attachment_plan(path: Path) -> AttachmentPlan:
     raw, _digest = read_regular(path, max_bytes=MAX_ATTACHMENT_PLAN_BYTES)
     document = loads_json_bytes(raw)
@@ -308,6 +329,9 @@ def prepare_attachment_plan(path: Path) -> AttachmentPlan:
         adapter_kind = adapter["kind"]
         if adapter_kind not in ("none", "mirrorecma.application-campaign-aggregate/v1",
                                 "mirrorecma.lease-reduction-oracle/v1",
+                                "mirrorecma.suite-result/v1",
+                                "mirrorecma.reproduction-capture/v1",
+                                "mirrors.installed-consumer-audit/v1",
                                 "mirrorgate.application-validation/v2",
                                 "mirrorgate.application-validation-aggregate/v1",
                                 "mirrorgate.recovery-receipt/v1"):
@@ -483,6 +507,85 @@ def capture_attachments(plan: AttachmentPlan | None, private: Path, run_id: str)
     if (after.st_dev, after.st_ino) != plan.root_identity:
         raise ValueError("attachment source root identity changed")
     return artifacts, producer_results, captured, missing, failures
+
+
+REPRODUCTION_CAPTURE_SCRIPT = "verification/bundle/tools/evidence/reproduction-capture.mjs"
+REPRODUCTION_R0_INPUTS = ("r0-envelope", "r0-suite-result")
+
+
+def _command_flag_value(command: list[str], flag: str) -> str:
+    if flag not in command:
+        raise ValueError(f"registered command lacks {flag}")
+    index = command.index(flag)
+    if index + 1 >= len(command) or not command[index + 1]:
+        raise ValueError(f"registered command has a dangling {flag}")
+    return command[index + 1]
+
+
+def run_reproduction_capture(plan: AttachmentPlan, command: list[str], cwd: Path) -> None:
+    """Materialize the R0-derived reproduction bundle before the replay runs.
+
+    The capture step is Mirrors-owned and reads only the pinned R0 inputs inside
+    the private output root, so a tampered or inconsistent R0 refuses before the
+    registered command is executed at all.
+    """
+    specs = {spec.artifact_id: spec for spec in plan.attachments}
+    pinned = []
+    for artifact_id in REPRODUCTION_R0_INPUTS:
+        spec = specs.get(artifact_id)
+        if spec is None or spec.capture_mode != "existing-input":
+            raise ValueError("reproduction capture requires pinned r0-envelope and r0-suite-result inputs")
+        pinned.append(plan.source_root / spec.relative_path)
+    bundle_argument = _command_flag_value(command, "--bundle")
+    bundle_path = Path(bundle_argument)
+    if not bundle_path.is_absolute():
+        bundle_path = (plan.source_root / bundle_path).resolve()
+    if bundle_path.parent != plan.source_root or bundle_path.name not in {spec.relative_path for spec in plan.attachments}:
+        raise ValueError("registered reproduction bundle path differs from the attachment plan")
+    if bundle_path.exists():
+        raise ValueError("reproduction bundle output must be absent before capture")
+    script = (cwd / REPRODUCTION_CAPTURE_SCRIPT).resolve()
+    if not script.is_file():
+        raise ValueError("installed reproduction capture script is missing")
+    argv = [command[0], str(script),
+            "--envelope", str(pinned[0]),
+            "--suite-result", str(pinned[1]),
+            "--project", _command_flag_value(command, "--project"),
+            "--framework-input", _command_flag_value(command, "--framework-input"),
+            "--combination", _command_flag_value(command, "--combination"),
+            "--out", str(bundle_path)]
+    result = subprocess.run(argv, cwd=str(cwd), stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, timeout=300, check=False)
+    if result.returncode != 0:
+        tail = result.stderr.decode("utf-8", "replace").strip()[-500:]
+        raise ValueError(f"reproduction capture step failed (exit {result.returncode}): {tail}")
+    if not bundle_path.is_file():
+        raise ValueError("reproduction capture step did not write its bundle")
+
+
+def _reproduction_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
+        producer_results: list[dict[str, str]]) -> tuple[dict[str, Any], list[dict[str, Any]], str]:
+    result_raw = captured.get("reproduction-result")
+    if result_raw is None:
+        raise ValueError("reproduction run lacks its producer result")
+    value = loads_json_bytes(result_raw)
+    if value.get("schema") != "mirrorecma.reproduction-replay/v1":
+        raise ValueError("reproduction producer result schema differs")
+    status = value.get("status")
+    if status not in ("reproduced", "not_reproduced", "refused"):
+        raise ValueError("reproduction producer result status is unknown")
+    reproduced = status == "reproduced"
+    observed = value.get("observed") if isinstance(value.get("observed"), dict) else {}
+    observed_cleanup = observed.get("cleanup") if isinstance(observed.get("cleanup"), dict) else {}
+    cleanup_status = "confirmed" if reproduced and observed_cleanup.get("status") == "succeeded" else "failed"
+    behavior = {"status": "passed" if reproduced else "failed",
+                "classification": {"namespace": "mirrorecma.reproduction",
+                                   "code": "reproduced" if reproduced else str(status)}}
+    cleanup = [{"scope": "local-cooperative", "requirement": "required",
+                "status": cleanup_status,
+                **({} if cleanup_status == "confirmed" else {"reasonCode": str(status)}),
+                "artifactIds": ["reproduction-cleanup"]}]
+    return behavior, cleanup, "passed" if reproduced else "failed"
 
 
 def run_child(argv: list[str], cwd: Path, timeout: float, output_limit: int) -> ChildObservation:
@@ -680,7 +783,8 @@ def _component_argument(value: str) -> tuple[str, Path]:
 def _exclusion_argument(value: str) -> tuple[str, str, str]:
     owner_path, separator, reason = value.partition("=")
     owner, colon, path = owner_path.partition(":")
-    if not separator or not colon or reason not in {"pre-existing-unrelated", "evidence-output", "build-output"}:
+    if not separator or not colon or reason not in {"pre-existing-unrelated", "evidence-output", "build-output",
+                     "planning-documentation"}:
         raise argparse.ArgumentTypeError("exclusion must be COMPONENT_ID:PATH=REASON")
     return owner, _logical_path(path), reason
 
@@ -1492,6 +1596,59 @@ def _artifact(artifact_id: str, role: str, relative: str, data: bytes, requireme
     }
 
 
+def _suite_result_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
+        observation: ChildObservation) -> tuple[dict[str, Any], list[dict[str, Any]], str]:
+    mode = plan.application
+    artifact_id = plan.adapter_artifact_id
+    if mode not in ("correct", "faulty") or artifact_id is None or artifact_id not in captured:
+        raise ValueError("suite result mode or receipt is missing")
+    expected_exit = 0 if mode == "correct" else 1
+    if observation.timed_out or observation.returncode != expected_exit:
+        raise ValueError("suite result process exit differs from its mode")
+    receipt = loads_json_bytes(captured[artifact_id])
+    if (type(receipt) is not dict or receipt.get("schema") != "mirrorecma.suite-result/v1"
+            or receipt.get("cleanup") != {"scope": "local", "status": "succeeded",
+                                           "quiescence": "confirmed",
+                                           "bindingStatus": "succeeded"}):
+        raise ValueError("suite result cleanup is not confirmed")
+    if mode == "correct":
+        if receipt.get("outcome") != "passed" or receipt.get("conformance") != "matched":
+            raise ValueError("correct suite result did not pass")
+        code = "passed"
+    else:
+        failure = receipt.get("failure")
+        if (receipt.get("outcome") != "mismatch" or receipt.get("conformance") != "mismatch"
+                or type(failure) is not dict or failure.get("kind") != "mismatch"
+                or failure.get("traceIndex") != 0 or failure.get("stateIndex") != 1
+                or failure.get("action") != "enqueue"):
+            raise ValueError("faulty suite result is not the installed Counter mismatch")
+        code = "mismatch"
+    behavior = {"status": "passed", "classification": {
+        "namespace": "mirrorecma.suite-result", "code": code}}
+    cleanup = [{"scope": "local-cooperative", "requirement": "required",
+                "status": "confirmed", "artifactIds": [artifact_id]}]
+    return behavior, cleanup, "passed"
+
+
+def _installed_audit_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
+        observation: ChildObservation) -> tuple[dict[str, Any], list[dict[str, Any]], str]:
+    artifact_id = plan.adapter_artifact_id
+    if artifact_id is None or artifact_id not in captured:
+        raise ValueError("installed audit was not captured")
+    if observation.timed_out or observation.returncode != 0:
+        raise ValueError("installed audit process did not exit 0")
+    receipt = loads_json_bytes(captured[artifact_id])
+    if (type(receipt) is not dict
+            or receipt.get("schemaVersion") != "mirrors.installed-consumer-audit/v1"
+            or receipt.get("status") != "passed"):
+        raise ValueError("installed audit did not pass")
+    behavior = {"status": "passed", "classification": {
+        "namespace": "mirrors.installed-consumer-audit", "code": "passed"}}
+    return behavior, [{
+        "scope": "local-cooperative", "requirement": "required", "status": "confirmed",
+        "artifactIds": [artifact_id]}], "passed"
+
+
 def _stage(
     store: Path,
     run_id: str,
@@ -1609,6 +1766,57 @@ def _stage(
             behavior = native_behavior
             tier_status = native_tier_status
             behavior_reason = behavior["classification"]["code"]
+    elif (attachment_plan is not None
+            and attachment_plan.adapter_kind == "mirrorecma.suite-result/v1"):
+        try:
+            native_behavior, cleanup_outcomes, native_tier_status = _suite_result_outcomes(
+                attachment_plan, captured, observation)
+        except (ValueError, UnicodeError, json.JSONDecodeError):
+            native_behavior = {"status": "failed", "classification": {
+                "namespace": "mirrorecma.suite-result", "code": "producer-result-invalid"}}
+            cleanup_outcomes = [{"scope": "local-cooperative", "requirement": "required",
+                                 "status": "failed", "reasonCode": "producer-result-invalid",
+                                 "artifactIds": []}]
+            native_tier_status = "failed"
+        behavior = native_behavior
+        tier_status = native_tier_status
+        behavior_reason = behavior["classification"]["code"]
+        required_cleanup_scopes = ["local-cooperative"]
+    elif (attachment_plan is not None
+            and attachment_plan.adapter_kind == "mirrorecma.reproduction-capture/v1"):
+        try:
+            native_behavior, cleanup_outcomes, native_tier_status = _reproduction_outcomes(
+                attachment_plan, captured, producer_results)
+        except (ValueError, UnicodeError, json.JSONDecodeError):
+            native_behavior = {"status": "failed", "classification": {
+                "namespace": "mirrorecma.reproduction", "code": "producer-result-invalid"}}
+            cleanup_outcomes = [{"scope": "local-cooperative", "requirement": "required",
+                                 "status": "failed", "reasonCode": "producer-result-invalid",
+                                 "artifactIds": []}]
+            native_tier_status = "failed"
+        required_cleanup_scopes = ["local-cooperative"]
+        if behavior["status"] == "passed" and not observation.timed_out:
+            behavior = native_behavior
+            tier_status = native_tier_status
+            behavior_reason = behavior["classification"]["code"]
+    elif (attachment_plan is not None
+            and attachment_plan.adapter_kind == "mirrors.installed-consumer-audit/v1"):
+        try:
+            native_behavior, cleanup_outcomes, native_tier_status = _installed_audit_outcomes(
+                attachment_plan, captured, observation)
+        except (ValueError, UnicodeError, json.JSONDecodeError):
+            native_behavior = {"status": "failed", "classification": {
+                "namespace": "mirrors.installed-consumer-audit",
+                "code": "producer-result-invalid"}}
+            cleanup_outcomes = [{"scope": "local-cooperative", "requirement": "required",
+                                 "status": "failed", "reasonCode": "producer-result-invalid",
+                                 "artifactIds": []}]
+            native_tier_status = "failed"
+        if behavior["status"] == "passed" and not observation.timed_out:
+            behavior = native_behavior
+            tier_status = native_tier_status
+            behavior_reason = behavior["classification"]["code"]
+        required_cleanup_scopes = ["local-cooperative"]
     reasons = ["awaiting-final-index"]
     persistence_reason = "awaiting-final-index"
     if missing:
@@ -1781,7 +1989,9 @@ def main(argv: list[str] | None = None) -> int:
                     "captureMode": spec.capture_mode, "maxBytes": spec.max_bytes,
                     "expectedSha256": spec.expected_sha256,
                     "producerResult": spec.producer_result} for spec in attachment_plan.attachments]
-                if actual_outputs != output_contracts:
+                if (len(actual_outputs) != len(output_contracts)
+                        or any(not _attachment_output_matches(actual, contract)
+                               for actual, contract in zip(actual_outputs, output_contracts, strict=True))):
                     raise ValueError("attachment plan outputs differ from registered contract")
             root_index = entry.get("attachmentRootArgIndex")
             path_index = entry.get("attachmentPathArgIndex")
@@ -1795,8 +2005,7 @@ def main(argv: list[str] | None = None) -> int:
                 if type(path_index) is not int or not 0 <= path_index < len(args.command):
                     raise ValueError("registered command output path index is invalid")
                 output_path = Path(args.command[path_index])
-                declared_names = {spec.relative_path for spec in attachment_plan.attachments
-                                  if spec.capture_mode == "new-output"}
+                declared_names = {spec.relative_path for spec in attachment_plan.attachments}
                 if (not output_path.is_absolute()
                         or output_path.parent != attachment_plan.source_root
                         or output_path.name not in declared_names):
@@ -1851,6 +2060,14 @@ def main(argv: list[str] | None = None) -> int:
             attachment_plan.close()
         print(f"evidence collector preflight failed: {error}", file=sys.stderr)
         return 2
+
+    if attachment_plan is not None and attachment_plan.adapter_kind == "mirrorecma.reproduction-capture/v1":
+        try:
+            run_reproduction_capture(attachment_plan, args.command, args.cwd)
+        except (OSError, ValueError, subprocess.SubprocessError) as error:
+            attachment_plan.close()
+            print(f"evidence reproduction capture failed: {error}", file=sys.stderr)
+            return 2
 
     run_id = f"run-{uuid.uuid4()}"
     started_utc = _utc_now()

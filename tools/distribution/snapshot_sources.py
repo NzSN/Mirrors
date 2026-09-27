@@ -82,6 +82,10 @@ def snapshot(repository: Path, ref: dict, destination: Path) -> dict:
         target = destination / logical_path(path)
         if target.is_file():
             target.unlink()
+    for path in destination.rglob(".projectile-cache.eld"):
+        if path.is_symlink() or path.is_file():
+            raise ValueError("unrelated editor cache remains in the selected snapshot: "
+                + path.relative_to(destination).as_posix())
     after = component_ref(ref["componentId"], repository, exclusions)
     if after != before:
         raise ValueError(f"live component changed during snapshot: {ref['componentId']}")

@@ -64,6 +64,15 @@ def check_case_sensitive(prefix: Path) -> None:
         upper.unlink(missing_ok=True); lower.unlink(missing_ok=True)
 
 
+def remove_real_directory(path: Path) -> None:
+    """Remove a directory opened through /proc/self/fd without rmtree on the symlink."""
+    target = Path(os.path.realpath(path))
+    info = target.lstat()
+    if stat.S_ISLNK(info.st_mode) or not stat.S_ISDIR(info.st_mode):
+        raise ValueError("refusing to remove a path that is not a real directory")
+    shutil.rmtree(target)
+
+
 def fsync_directory(path: Path) -> None:
     descriptor = os.open(path, os.O_RDONLY)
     try: os.fsync(descriptor)
@@ -572,7 +581,7 @@ def _populate_and_activate(cache: Path, prefix: Path, versions: Path, stage: Pat
     destination = versions / digest
     if destination.exists():
         verify_installation(destination, framework_catalog_bin, framework_catalog_sha256)
-        shutil.rmtree(stage)
+        remove_real_directory(stage)
     else:
         if os.fstat(stage_fd).st_dev != os.fstat(versions_fd).st_dev:
             raise ValueError("stage and versions are not on the same filesystem")

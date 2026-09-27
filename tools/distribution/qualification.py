@@ -24,6 +24,53 @@ def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def counter_variant_accepted(result: object, variant: str) -> bool:
+    """Accept only a passed correct run or the intended faulty Tick mismatch.
+
+    Cleanup is confirmed when status is succeeded and quiescence is confirmed.
+    The suite result does not use status "confirmed".
+    """
+    if not isinstance(result, dict):
+        return False
+    cleanup = result.get("cleanup")
+    if not isinstance(cleanup, dict):
+        return False
+    confirmed = (cleanup.get("status") == "succeeded"
+        and cleanup.get("quiescence") == "confirmed"
+        and cleanup.get("bindingStatus") == "succeeded")
+    if variant == "correct":
+        return result.get("outcome") == "passed" and confirmed
+    if variant != "faulty":
+        return False
+    failure = result.get("failure")
+    if not isinstance(failure, dict):
+        return False
+    return (result.get("outcome") == "mismatch" and confirmed
+        and failure.get("code") == "model_mismatch"
+        and failure.get("traceIndex") == 0
+        and failure.get("stateIndex") == 1
+        and failure.get("action") in {"Tick", "tick"})
+
+
+def required_component_checks(runtime: Path, combination: str) -> set[str]:
+    """Resolve the installed catalog's component checks for one combination.
+
+    The local checked-replay profile admits two components and the Gate profile
+    admits three; the audit asserts the checks the installed catalog declares for
+    the selected combination instead of a hardcoded pair.
+    """
+    framework_input = json.loads((runtime / "framework-input.json").read_text())
+    catalog = json.loads(framework_input["catalogRaw"])
+    match = next((entry for entry in catalog.get("combinations", [])
+                  if entry.get("combinationId") == combination), None)
+    if match is None:
+        raise ValueError(f"installed catalog lacks the selected combination: {combination}")
+    components = match.get("componentIds")
+    if not isinstance(components, list) or not components:
+        raise ValueError(f"installed combination lacks component ids: {combination}")
+    return {f"catalog.component.{component_id}" for component_id in components}
+
+
 def descendants(pid: int) -> set[int]:
     found = {pid}; pending = [pid]
     while pending and len(found) < 4096:
@@ -133,6 +180,7 @@ def main() -> int:
     parser.add_argument("--bwrap", type=Path, required=True)
     parser.add_argument("--strace", type=Path, required=True)
     parser.add_argument("--strace-sha256", required=True)
+    parser.add_argument("--combination", default="candidate.local-node-checked")
     parser.add_argument("--audit-out", type=Path, required=True)
     parser.add_argument("--hide-root", action="append", type=Path, required=True)
     args = parser.parse_args()
@@ -158,12 +206,14 @@ def main() -> int:
                 hidden = [str(path.resolve()) for path in args.hide_root]
                 launcher = HERE / "audit-launcher.mjs"
                 counter_driver = HERE / "counter-driver.mjs"
+                counter_binding = HERE / "installed-counter.mjs"
                 command = [str(args.bwrap), "--die-with-parent", "--unshare-net",
                     "--ro-bind", "/", "/", "--dev-bind", "/dev", "/dev",
                     "--proc", "/proc", "--tmpfs", "/tmp", "--dir", "/tmp/home",
                     "--ro-bind", str(runtime), "/tmp/runtime",
                     "--ro-bind", str(launcher), "/tmp/audit-launcher.mjs",
                     "--ro-bind", str(counter_driver), "/tmp/counter-driver.mjs",
+                    "--ro-bind", str(counter_binding), "/tmp/installed-counter.mjs",
                     "--chdir", "/tmp/runtime/applications", "--setenv", "PATH",
                     "/tmp/runtime/runtimes/node/bin:/tmp/runtime/bin", "--setenv", "HOME", "/tmp/home",
                     "--setenv", "MIRROR_BIN", "/tmp/runtime/bin/ModelMirrors"]
@@ -246,7 +296,7 @@ def main() -> int:
 
                 project = "/tmp/runtime/applications/reference-project/mirror.project.json"
                 framework_input = "/tmp/runtime/framework-input.json"
-                combination = "candidate.local-node-checked"
+                combination = args.combination
                 doctor, doctor_syscalls = run_cli_case("doctor", ["doctor", "--project", project,
                     "--framework-input", framework_input, "--combination", combination], 0)
                 required_checks = {"catalog.selection", "catalog.combination", "catalog.components",
@@ -254,8 +304,11 @@ def main() -> int:
                     "catalog.runtime-tree.node-runtime", "catalog.platform", "configuration",
                     "executable.server", "package.mirrorecma", "catalog.filesystem-binding"}
                 required_checks.remove("catalog.components")
-                required_checks.update({"catalog.component.mirrorecma", "catalog.component.mirrors"})
-                checks = {entry.get("check"): entry.get("status") for entry in doctor}
+                required_checks.update(required_component_checks(version / "runtime", combination))
+                doctor_entries = doctor.get("checks") if isinstance(doctor, dict) else doctor
+                if not isinstance(doctor_entries, list):
+                    raise ValueError("installed doctor result is not a check list")
+                checks = {entry.get("check"): entry.get("status") for entry in doctor_entries}
                 if any(checks.get(name) != "passed" for name in required_checks):
                     raise ValueError("installed doctor lacks required passing identity checks")
                 replay, replay_syscalls = run_cli_case("replay", ["replay", "--project", project,
@@ -276,12 +329,20 @@ def main() -> int:
                 wrong_project_host.write_text(json.dumps(wrong_project_value) + "\n")
                 package_manifest = runtime / "packages/mirrorecma/package.json"
                 package_value = json.loads(package_manifest.read_text())
+                installed_lock = json.loads((runtime /
+                    "applications/reference-project/mirror.toolchain.json").read_text())
+                compiler = installed_lock["tools"]["compiler"]
                 wrong_lock_host.write_text(json.dumps({
                     "schema": "mirrorecma.toolchain/v1",
-                    "tools": {"server": {"path": "/tmp/runtime/runtimes/node/bin/node",
-                        "sha256": digest((runtime / "runtimes/node/bin/node").read_bytes()),
-                        "version": "v24.15.0",
-                        "capabilities": ["model-interface-v1", "checked-replay-v1"]}},
+                    "tools": {
+                        "compiler": {"path": "/tmp/runtime/bin/model_interface_gen",
+                            "sha256": digest((runtime / "bin/model_interface_gen").read_bytes()),
+                            "version": compiler["version"],
+                            "capabilities": compiler["capabilities"]},
+                        "server": {"path": "/tmp/runtime/runtimes/node/bin/node",
+                            "sha256": digest((runtime / "runtimes/node/bin/node").read_bytes()),
+                            "version": "v24.15.0",
+                            "capabilities": ["model-interface-v1", "checked-replay-v1"]}},
                     "packages": {"mirrorecma": {
                         "packageJson": "/tmp/runtime/packages/mirrorecma/package.json",
                         "packageJsonSha256": digest(package_manifest.read_bytes()),
@@ -294,7 +355,7 @@ def main() -> int:
                     "--project", "/tmp/home/wrong.project.json", "--framework-input", framework_input,
                     "--combination", combination], 2, wrong_sandbox)
                 if (wrong_identity.get("failure", {}).get("code") != "executable_identity_mismatch" or
-                        "actual installed executable differs" not in
+                        "project-selected server differs from admitted mirror-server" not in
                         wrong_identity.get("failure", {}).get("message", "")):
                     raise ValueError("individually valid wrong server did not fail catalog filesystem binding")
                 counter_results = []
@@ -314,18 +375,12 @@ def main() -> int:
                     if counter_exit:
                         raise ValueError(f"Counter {variant} failed: {counter_stderr.decode('utf-8','replace')[-2000:]}")
                     counter = json.loads(counter_stdout)
-                    outcome = counter["result"].get("outcome")
-                    cleanup = counter["result"].get("cleanup", {}).get("status")
-                    if variant == "correct" and (outcome != "passed" or cleanup != "confirmed"):
-                        raise ValueError("Counter correct outcome/cleanup differs")
-                    if variant == "faulty":
-                        failure = counter["result"].get("failure", {})
-                        if (outcome != "mismatch" or cleanup != "confirmed" or
-                                failure.get("traceIndex") != 0 or failure.get("stateIndex") != 1 or
-                                failure.get("action") not in {"Tick", "tick"}):
-                            raise ValueError("Counter faulty observed mismatch signature differs")
-                    counter_results.append({"variant": variant, "outcome": outcome,
-                        "cleanup": cleanup, "syscalls": trace_audit(counter_trace, hidden)})
+                    result = counter.get("result")
+                    if not counter_variant_accepted(result, variant):
+                        raise ValueError(f"Counter {variant} outcome/cleanup differs")
+                    counter_results.append({"variant": variant, "outcome": result.get("outcome"),
+                        "cleanup": result.get("cleanup", {}).get("status"),
+                        "syscalls": trace_audit(counter_trace, hidden)})
                 observations.append({"iteration": iteration, "argv": command,
                     "exitCode": exit_code, "stdoutBytes": len(stdout),
                     "stdoutSha256": digest(stdout), "stderrBytes": len(stderr),

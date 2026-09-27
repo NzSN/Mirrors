@@ -60,14 +60,21 @@ Preserve these boundaries throughout:
 
 ## Delivery order and ownership
 
-| Milestone | Work | Primary owner | Depends on | Exit condition |
-| --- | --- | --- | --- | --- |
-| M0 | Baseline inventory and contracts | Mirrors, with each component owner | None | Scope, schemas, failure rules, and supported initial path reviewed |
-| M1 | Compatibility catalog and evidence format | Mirrors catalog; evidence producers in each repo | M0 | Generated support tables and durable evidence exercised together |
-| M2 | Installable reference distribution | Component packaging owners; framework integration in Mirrors | M1 | Fresh isolated consumer completes local and Gate flows |
-| M3 | Failure reproduction and fidelity acceptance | MirrorECMA, Mirrors compiler, Gate integration | M1; use M2 distribution for final acceptance | Reproduction, safe reduction, and mutation controls pass |
-| M4 | Gate interruption recovery | MirrorGate | M1 evidence format | Ownership-safe recovery and aggregate-limit gates pass |
-| M5 | Release-candidate qualification | All affected owners | M2–M4 | Exact candidate combination passes required installed and runtime gates |
+| Milestone | Work | Primary owner | Depends on | Exit condition | Status |
+| --- | --- | --- | --- | --- | --- |
+| M0 | Baseline inventory and contracts | Mirrors, with each component owner | None | Scope, schemas, failure rules, and supported initial path reviewed | Done: scope, contracts, and baseline reviewed and accepted 2026-09-22 |
+| M1 | Compatibility catalog and evidence format | Mirrors catalog; evidence producers in each repo | M0 | Generated support tables and durable evidence exercised together | Done: catalog selection and durable evidence exercised together in the 2026-09-25 pass |
+| M2 | Installable reference distribution | Component packaging owners; framework integration in Mirrors | M1 | Fresh isolated consumer completes local and Gate flows | Done (diagnostic WSL2 profile): both prefixes committed; local and Gate D audits qualified (`run-ae0b01c9…`, `run-2b6e15c6…`); native acceptance descoped 2026-09-27 |
+| M3 | Failure reproduction and fidelity acceptance | MirrorECMA, Mirrors compiler, Gate integration | M1; use M2 distribution for final acceptance | Reproduction, safe reduction, and mutation controls pass | Partial: mutation controls qualified locally and through Gate (17/17); reproduction qualified and credited (`run-6accf0f9…`, `status: reproduced`); safe reduction not established (remote explore-session mode pending) |
+| M4 | Gate interruption recovery | MirrorGate | M1 evidence format | Ownership-safe recovery and aggregate-limit gates pass | Partial: ownership-safe recovery qualified (`run-efeb64cc…`, bound to a fresh origin run); aggregate-limit gate unavailable (no delegated cgroup-v2 parent; descope decision open) |
+| M5 | Release-candidate qualification | All affected owners | M2–M4 | Exact candidate combination passes required installed and runtime gates | Not qualified: diagnostic-scope Q1/Q2 verified on WSL2 (selection `68a3ad58…`, 15 credited runs incl. reproduction, both D bindings); reduction, interop, remote model check, and cgroup tiers remain open |
+
+Status values reflect the 2026-09-27 route-2 rerun on selection
+`68a3ad583d2889695e37bbde4af3b81d12b184a8d72e1bb9a360d6266a709c68`; per-tier
+evidence and blockers are in [q3-readiness-2026-09-25.md](q3-readiness-2026-09-25.md),
+`../CHECKPOINTS.md` (date-flow record), and `/tmp/q1-route2-result.md`. Partial means at least one exit-condition
+capability lacks qualified evidence; it is not a pass, and no partial status
+qualifies a dependent milestone.
 
 Within M1, catalog and evidence work can progress independently after agreeing
 on identity fields. M3 and M4 can progress independently. Native-client expansion
@@ -397,6 +404,34 @@ M5 requires these end-to-end demonstrations:
 5. Run the fixed-observer mutation campaign locally and through Gate.
 6. Interrupt Gate, recover only owned resources, and retain accurate cleanup evidence.
 7. Verify the archived evidence after temporary working directories are removed.
+
+## Qualification execution environment
+
+Required tiers must run where their primitives are permitted: `ptrace` (the
+installation audit traces its relocated replay), AF_INET/AF_UNIX loopback (Gate
+supervisor control, transport, registry), writable component checkouts and
+evidence store, and a delegated cgroup-v2 parent for aggregate-limit tiers.
+The 2026-09-25 pass inside an agent sandbox that denies these primitives
+produced environment-limited incompletes, not product failures; such tiers
+remain incomplete and are never downgraded to optional or passed.
+
+The reference topology places only the framework's own bubbles (Gate
+`linux-bubblewrap-v1`, the audit's bubblewrap isolation) between the host and
+the evaluated work; no outer agent sandbox wraps the qualification run. When
+an agent drives the run, use a dedicated fixture and declare the posture
+explicitly: a qualification profile with `sandbox_mode =
+"danger-full-access"` and `approval_policy = "never"` (the fixture is the
+boundary), or a working approval reviewer (attended `user`, or a repaired
+`auto_review` whose catalog `auto_review_model_override` names a model the
+provider serves). The default attended posture stays `workspace-write` with
+a reviewer; bypass profiles are per-run selections and do not weaken it.
+
+Preflight the host before burning a pass: `strace` probe, `ptrace_scope` <= 1,
+bubblewrap >= 0.9.0 non-setuid, AppArmor user-namespace policy on Ubuntu
+24.04, loopback and UNIX sockets. Record the tested profile identity
+(kernel, ptrace/AppArmor state, bubblewrap version) with the evidence.
+WSL2-kernel observations are diagnostic and do not establish native Ubuntu
+acceptance.
 
 ## Decisions to settle during M0
 

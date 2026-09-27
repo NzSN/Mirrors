@@ -47,6 +47,57 @@ class ArchiveBoundsTests(unittest.TestCase):
             self.assertEqual(faulty["implementation"]["module"], "reference-faulty-adapter.mjs")
             self.assertIn("enqueue-drops", (project / "reference-faulty-adapter.mjs").read_text())
 
+    def reference_project_fixture(self, root: Path) -> tuple[Path, Path, Path, Path]:
+        application = root / "application"
+        for relative in ("examples/work-queue/artifacts/witness.itf.json",
+                "dist-validation/examples/work-queue/artifacts/bundle/WorkQueue.suite.js"):
+            path = application / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(relative)
+        server = root / "ModelMirrors"; server.write_bytes(b"server")
+        compiler = root / "model_interface_gen"; compiler.write_bytes(b"compiler")
+        package = root / "package"; package.mkdir()
+        (package / "package.json").write_text('{"name":"mirrorecma","version":"2.0.0"}')
+        return application, server, compiler, package
+
+    def test_local_profile_lock_selects_only_the_mirrorecma_package(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            application, server, compiler, package = self.reference_project_fixture(Path(temporary))
+            write_reference_project(application, server, compiler, package)
+            project = application / "reference-project"
+            raw = (project / "mirror.toolchain.json").read_bytes()
+            lock = json.loads(raw)
+            self.assertEqual(list(lock["packages"]), ["mirrorecma"])
+            self.assertEqual(lock["packages"]["mirrorecma"]["version"], "2.0.0")
+            self.assertNotIn(b"mirrorgate-mirrorecma", raw)
+            # the default call is byte-identical whether or not the Gate
+            # parameter is spelled out
+            explicit = Path(temporary) / "explicit"
+            explicit.mkdir()
+            application_two, server_two, compiler_two, package_two = self.reference_project_fixture(explicit)
+            write_reference_project(application_two, server_two, compiler_two, package_two,
+                                    gate_package=None)
+            self.assertEqual(
+                (application_two / "reference-project/mirror.toolchain.json").read_bytes(), raw)
+
+    def test_gate_profile_lock_selects_every_installed_package(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            application, server, compiler, package = self.reference_project_fixture(root)
+            gate_manifest = root / "mirrorgate-mirrorecma.package.json"
+            gate_manifest.write_text('{"name":"mirrorgate-mirrorecma","version":"0.1.0"}')
+            write_reference_project(application, server, compiler, package,
+                                    gate_package=gate_manifest)
+            lock = json.loads((application / "reference-project/mirror.toolchain.json").read_text())
+            self.assertEqual(list(lock["packages"]),
+                             ["mirrorecma", "mirrorgate-mirrorecma"])
+            entry = lock["packages"]["mirrorgate-mirrorecma"]
+            self.assertEqual(entry["version"], "0.1.0")
+            self.assertEqual(entry["packageJson"],
+                             "../../packages/mirrorgate-mirrorecma/package.json")
+            self.assertEqual(entry["packageJsonSha256"],
+                             hashlib.sha256(gate_manifest.read_bytes()).hexdigest())
+
     def test_gate_operator_closure_preserves_relocated_root_layout(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

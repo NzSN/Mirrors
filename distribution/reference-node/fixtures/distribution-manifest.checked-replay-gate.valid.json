@@ -4,21 +4,35 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "0fe562ef64b34d72be9c9a0de6db1034afbff44a854390d1d42a260cc7e92a57"
+    "selectionValue": "68a3ad583d2889695e37bbde4af3b81d12b184a8d72e1bb9a360d6266a709c68"
   },
   "profileId": "checked-replay-gate",
   "componentRefs": [
     {
       "componentId": "mirrorecma",
       "repository": "https://github.com/NzSN/MirrorECMA.git",
-      "revision": "b166806bb25443fec7b08e8a29bcda77a2226a80",
+      "revision": "59b722ac1c36d7c7be87ea7d962a89c6ab6d7145",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "530d6b26730fa0f3f7e5d1deab0a5ced27fdbcaf2587d0e6b360783d022da77a",
+        "digest": "80e63904cf4756e353265b2ac6424dfbe5533648117ea0725933de9b6d8456b5",
         "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [],
+        "includedPaths": [
+          "examples/application-validation/installed-project-replay.mjs",
+          "examples/application-validation/run.mjs",
+          "src/framework-catalog.ts",
+          "src/index.ts",
+          "src/suite-runner.ts",
+          "test/framework-catalog.test.ts",
+          "test/installed-qualification-wrappers.test.ts",
+          "test/mutation-observer-fidelity.test.ts",
+          "test/reproduction-authority-exports.test.ts"
+        ],
         "excludedPaths": [
+          {
+            "path": ".projectile-cache.eld",
+            "reasonCode": "pre-existing-unrelated"
+          },
           {
             "path": "catalog/framework-capabilities.json",
             "reasonCode": "evidence-output"
@@ -30,21 +44,89 @@
       "componentId": "mirrorgate",
       "repository": "https://github.com/NzSN/MirrorGate.git",
       "revision": "72880aad92a1ae930239eea354c1fdb1485f655a",
-      "dirty": false
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "b0ba43500170a85ae53898070d79e824599fa473e3056a03809997aba40dd63c",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "integrations/mirrorecma/scripts/application-program-gate.mjs",
+          "integrations/mirrorecma/src/receipt-writer.ts",
+          "tests/node/worker.test.mjs"
+        ],
+        "excludedPaths": [
+          {
+            "path": ".projectile-cache.eld",
+            "reasonCode": "pre-existing-unrelated"
+          }
+        ]
+      }
     },
     {
       "componentId": "mirrors",
       "repository": "https://github.com/NzSN/Mirrors.git",
-      "revision": "153f387a39ab2d0f099936b7de39b756d2d4abaa",
+      "revision": "ce75058b3f1c912eb5bee58b81f3bac1dab2714d",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "1a57e8b55c08e6dd73dc80d2a72946c0b2ead3726fec1ff3eb6b7012d2608906",
+        "digest": "e23ff68ea1f44e6bead224d31357d16e4e10e8a52807924fa65865e8e3e2c3f1",
         "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [],
+        "includedPaths": [
+          "AGENTS.md",
+          "Codec/FrameworkCatalog.lean",
+          "Docs/durable-evidence-design.md",
+          "Docs/framework-catalog-contract.md",
+          "distribution/reference-node/distribution-manifest.schema.json",
+          "tools/distribution/build.py",
+          "tools/distribution/counter-driver.mjs",
+          "tools/distribution/distribution_lib.py",
+          "tools/distribution/install.py",
+          "tools/distribution/installed-counter.mjs",
+          "tools/distribution/installed-counter.test.mjs",
+          "tools/distribution/qualification.py",
+          "tools/distribution/refresh_identity.py",
+          "tools/distribution/snapshot_sources.py",
+          "tools/distribution/test_archive_bounds.py",
+          "tools/distribution/test_editor_cache.py",
+          "tools/distribution/test_install.py",
+          "tools/distribution/test_installed_counter.py",
+          "tools/distribution/test_manifest_check.py",
+          "tools/distribution/test_planning_docs_exclusion.py",
+          "tools/distribution/test_qualification.py",
+          "tools/evidence/collect.py",
+          "tools/evidence/commands.json",
+          "tools/evidence/qualification_scope.py",
+          "tools/evidence/reproduction-capture.mjs",
+          "tools/evidence/schema/attachment-plan-v1.schema.json",
+          "tools/evidence/schema/evidence-envelope-v1.schema.json",
+          "tools/evidence/schema/qualification-scope-v2.schema.json",
+          "tools/evidence/tests/test_catalog_links.py",
+          "tools/evidence/tests/test_collect.py",
+          "tools/evidence/tests/test_qualification_scope.py"
+        ],
         "excludedPaths": [
           {
+            "path": ".projectile-cache.eld",
+            "reasonCode": "pre-existing-unrelated"
+          },
+          {
+            "path": "CHECKPOINTS.md",
+            "reasonCode": "planning-documentation"
+          },
+          {
             "path": "Docs/framework-map.md",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "Plans/mirror-framework-improvements.md",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/mirror-framework-tasks.md",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/q3-readiness-2026-09-25.md",
             "reasonCode": "evidence-output"
           },
           {
@@ -61,10 +143,6 @@
           },
           {
             "path": "distribution/reference-node/component-lock.json",
-            "reasonCode": "evidence-output"
-          },
-          {
-            "path": "distribution/reference-node/dependency-lock.json",
             "reasonCode": "evidence-output"
           },
           {
@@ -395,13 +473,13 @@
       "inputId": "profiles-lock",
       "path": "distribution/reference-node/profiles.json",
       "bytes": 4307,
-      "sha256": "b65f377e894853d06292ceb6d51178879a896f0a4f3fbdb0a59cf398253b0e5b"
+      "sha256": "a7388f0a412434840739134a10c67e9729db0ab76e74777ad7f6f69378196999"
     },
     {
       "inputId": "component-lock",
       "path": "distribution/reference-node/component-lock.json",
-      "bytes": 11675,
-      "sha256": "9a367f6fcd98c9065d848037df9dbd8059fc672e0a158373912d2a4d3b450177"
+      "bytes": 15094,
+      "sha256": "30c5e65f4ffecff938563ffb062fd8c1c69e8a2e05b6ebea8010cb6ba67d1593"
     },
     {
       "inputId": "dependency-lock",

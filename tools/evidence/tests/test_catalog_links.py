@@ -157,9 +157,11 @@ class CatalogLinkTests(unittest.TestCase):
                 {"inputId":"component-lock","path":"distribution/reference-node/component-lock.json","bytes":1,"sha256":"e"*64},
                 {"inputId":"dependency-lock","path":"distribution/reference-node/dependency-lock.json","bytes":1,"sha256":"f"*64}],
             "buildProvenance":{"snapshotIndexSha256":"2"*64,"tools":[
+                {"toolId":"framework-catalog-bootstrap","version":"fixture","bytes":1,"sha256":"5"*64},
                 {"toolId":"git","version":"fixture","bytes":1,"sha256":"3"*64},
                 {"toolId":"lake","version":"fixture","bytes":1,"sha256":"4"*64},
-                {"toolId":"framework-catalog-bootstrap","version":"fixture","bytes":1,"sha256":"5"*64}],
+                {"toolId":"ldd","version":"fixture","bytes":1,"sha256":"8"*64},
+                {"toolId":"python","version":"fixture","bytes":1,"sha256":"9"*64}],
                 "trees":[
                     {"inputId":"typescript-node-modules","algorithm":"mirrors-runtime-tree-v1","digest":"6"*64,"entryCount":1,"bytes":1},
                     {"inputId":"evidence-wheels","algorithm":"mirrors-runtime-tree-v1","digest":"7"*64,"entryCount":1,"bytes":1}]},
@@ -568,7 +570,7 @@ class CatalogLinkTests(unittest.TestCase):
             replay["dependsOnRunIds"].append(other["privateRunRef"]["runId"])
         bundle, verification = self.bundle(mutate_scope=mixed_distribution)
         catalog_path, _ = self.catalog(bundle, verification)
-        with self.assertRaisesRegex(ValueError, "different D binding"):
+        with self.assertRaisesRegex(ValueError, "non-credited D binding"):
             self.evaluate(catalog_path, bundle, verification)
 
         self.tearDown(); self.setUp()
@@ -625,7 +627,7 @@ class CatalogLinkTests(unittest.TestCase):
             other["evidenceUse"] = "qualification-credit"
         bundle, verification = self.bundle(mutate_scope=second_distribution_credit)
         catalog_path, _ = self.catalog(bundle, verification)
-        with self.assertRaisesRegex(ValueError, "only the selected D run"):
+        with self.assertRaisesRegex(ValueError, "only declared distribution bindings"):
             self.evaluate(catalog_path, bundle, verification)
 
         self.tearDown(); self.setUp()

@@ -45,6 +45,18 @@ class InstallTransactionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "link or unsupported"):
                 installer.copy_cache_tree(linked, root / "linked-copy")
 
+    def test_proc_fd_stage_is_removed_without_rmtree_on_the_symlink(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            stage = Path(temporary) / "stage"
+            stage.mkdir()
+            (stage / "marker").write_text("present\n")
+            descriptor = os.open(stage, os.O_RDONLY | os.O_DIRECTORY)
+            try:
+                installer.remove_real_directory(Path(f"/proc/self/fd/{descriptor}"))
+            finally:
+                os.close(descriptor)
+            self.assertFalse(stage.exists())
+
     def test_staged_cache_is_verified_before_materialization(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

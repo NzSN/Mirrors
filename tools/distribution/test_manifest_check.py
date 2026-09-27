@@ -140,12 +140,15 @@ class ManifestCheckTests(unittest.TestCase):
             "Docs/framework-map.md",
             "distribution/reference-node/profiles.json",
             "distribution/reference-node/component-lock.json",
-            "distribution/reference-node/dependency-lock.json",
             "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
             "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
             "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
             "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
         }
+        # dependency-lock.json is selected revision content. Refresh does not
+        # rewrite it, and it does not embed the catalog selection.
+        self.assertNotIn("distribution/reference-node/dependency-lock.json",
+            mirrors["dirtyContent"]["includedPaths"])
         self.assertLessEqual(carriers, set(excluded))
         self.assertTrue(all(excluded[path] == "evidence-output" for path in carriers))
         manifest = json.loads(VALID_MANIFEST.read_text())

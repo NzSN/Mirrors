@@ -42,7 +42,7 @@ def tool_record(tool_id: str, path: Path, version_args: list[str]) -> dict:
 
 
 def write_reference_project(application_root: Path, server: Path,
-    compiler: Path, package_root: Path) -> None:
+    compiler: Path, package_root: Path, gate_package: Path | None = None) -> None:
     project_root = application_root / "reference-project"
     project_root.mkdir()
     trace = application_root / "examples/work-queue/artifacts/witness.itf.json"
@@ -94,6 +94,20 @@ def write_reference_project(application_root: Path, server: Path,
     faulty_project = {**project,
         "implementation": {"module": "reference-faulty-adapter.mjs", "export": "createAdapter"}}
     write_json(project_root / "mirror.faulty.project.json", faulty_project)
+    packages = {"mirrorecma": {
+        "packageJson": "../../packages/mirrorecma/package.json",
+        "packageJsonSha256": package_sha, "version": package["version"]}}
+    if gate_package is not None:
+        # The Gate installation materializes the Gate integration package beside
+        # the MirrorECMA package, and a project must select every installed
+        # package; the local profile therefore keeps its single-package lock
+        # byte-for-byte while the Gate profile pins both.
+        gate_manifest = load_json(gate_package)
+        gate_package_id = str(gate_manifest["name"])
+        packages[gate_package_id] = {
+            "packageJson": f"../../packages/{gate_package_id}/package.json",
+            "packageJsonSha256": sha256_file(gate_package)[1],
+            "version": str(gate_manifest["version"])}
     write_json(project_root / "mirror.toolchain.json", {
         "schema": "mirrorecma.toolchain/v1",
         "tools": {
@@ -103,9 +117,7 @@ def write_reference_project(application_root: Path, server: Path,
             "server": {"path": "../../bin/ModelMirrors", "sha256": server_sha,
                 "version": "Mirrors 0.0.2",
                 "capabilities": ["model-interface-v1", "checked-replay-v1"]}},
-        "packages": {"mirrorecma": {
-            "packageJson": "../../packages/mirrorecma/package.json",
-            "packageJsonSha256": package_sha, "version": package["version"]}},
+        "packages": packages,
     })
     for name, variant in (("reference-correct-adapter.mjs", "correct"),
             ("reference-faulty-adapter.mjs", "enqueue-drops")):
@@ -313,6 +325,11 @@ def main() -> int:
         package_dir = work / "mirrorecma-package"; package_dir.mkdir()
         shutil.copytree(ecma_work / "dist", package_dir / "dist")
         shutil.copyfile(ecma_work / "package.json", package_dir / "package.json")
+        reduction_script = ecma_work / "scripts/materialize-lease-reduction.mjs"
+        if not reduction_script.is_file():
+            raise ValueError("installed LeaseService reduction script is missing")
+        (package_dir / "scripts").mkdir()
+        shutil.copyfile(reduction_script, package_dir / "scripts/materialize-lease-reduction.mjs")
         package_out = artifacts_root / "packages/mirrorecma.tgz"
         deterministic_tar(package_dir, package_out, "package")
         artifact_paths["mirrorecma-package"] = (package_out, "0644", "component-build", "application/gzip")
@@ -324,7 +341,9 @@ def main() -> int:
         shutil.copytree(ecma_work / "dist-test", application_fixture_dir / "dist-test")
         shutil.copytree(ecma_work / "dist-validation", application_fixture_dir / "dist-validation")
         write_reference_project(application_fixture_dir, bin_dir / "ModelMirrors",
-            bin_dir / "model_interface_gen", package_dir)
+            bin_dir / "model_interface_gen", package_dir,
+            gate_package=(sources / "mirrorgate/integrations/mirrorecma/package.json"
+                if args.profile == "checked-replay-gate" else None))
         application_fixture_out = artifacts_root / "examples/application-validation-fixtures.tar.gz"
         deterministic_tar(application_fixture_dir, application_fixture_out,
             "application-validation")
@@ -365,7 +384,7 @@ def main() -> int:
         shutil.copytree(mirrors_work / "tools/evidence", verification_bundle / "tools/evidence")
         distribution_verifier = verification_bundle / "tools/distribution"
         distribution_verifier.mkdir(parents=True)
-        for name in ("audit-launcher.mjs", "counter-driver.mjs", "distribution_lib.py",
+        for name in ("audit-launcher.mjs", "counter-driver.mjs", "installed-counter.mjs", "distribution_lib.py",
                 "install.py", "manifest_check.py", "qualification.py", "upgrade_matrix.py",
                 "verify.py", "install.sh", "verify.sh", "test-installed.sh", "test-upgrade.sh"):
             shutil.copyfile(mirrors_work / "tools/distribution" / name,

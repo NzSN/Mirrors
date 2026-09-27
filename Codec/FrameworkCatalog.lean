@@ -177,7 +177,7 @@ private def decodeDirty (path : String) (json : Json) : DecodeResult String := d
     excludedPaths := excludedPaths ++ [excludedPath]
     let reason ← string (itemPath ++ ".reasonCode") (← required itemPath itemFields "reasonCode")
     let _ ← enum (itemPath ++ ".reasonCode") reason
-      ["pre-existing-unrelated", "evidence-output", "build-output"]
+      ["pre-existing-unrelated", "evidence-output", "build-output", "planning-documentation"]
   let _ ← requireSortedUnique (path ++ ".excludedPaths") "excludedPaths" excludedPaths
   match included.find? excludedPaths.contains with
   | some overlap => fail "E-FCAT-CONTRADICTION-001" path s!"dirty path cannot be both included and excluded: {overlap}"

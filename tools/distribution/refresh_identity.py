@@ -39,9 +39,27 @@ def write(path: Path, value: dict[str, Any]) -> None:
     temporary.replace(path)
 
 
+EDITOR_CACHE = ".projectile-cache.eld"
+
+# Planning and scratch documents are audit input, not build input: they are
+# recorded with their own reason code so that editing a plan does not move the
+# selected component identity. Product, tooling, build and evidence-output paths
+# stay in `includedPaths` (or their existing exclusion classes) unchanged.
+PLANNING_DOCUMENTATION_ROOTS = ("Plans/", "tmp/")
+PLANNING_DOCUMENTATION_FILES = ("CHECKPOINTS.md",)
+
+
+def is_planning_documentation(path: str) -> bool:
+    return (path.startswith(PLANNING_DOCUMENTATION_ROOTS)
+            or path in PLANNING_DOCUMENTATION_FILES)
+
+
 def exclusions(component_id: str, repository: Path) -> dict[str, str]:
     result: dict[str, str] = {}
     for path in _changed_paths(repository):
+        if path == EDITOR_CACHE:
+            result[path] = "pre-existing-unrelated"
+            continue
         if component_id == "mirrors":
             if path in {
                 "Docs/framework-map.md",
@@ -55,8 +73,11 @@ def exclusions(component_id: str, repository: Path) -> dict[str, str]:
                 "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
                 "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
                 "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+                "Plans/q3-readiness-2026-09-25.md",
             }:
                 result[path] = "evidence-output"
+            elif is_planning_documentation(path):
+                result[path] = "planning-documentation"
             elif "/__pycache__/" in f"/{path}" or path.endswith(".pyc"):
                 result[path] = "build-output"
         elif component_id == "mirrorecma":

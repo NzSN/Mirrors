@@ -64,7 +64,17 @@ def runtime_tree(root: Path) -> dict:
         "entryCount": len(files), "bytes": total}
 
 
+def reject_editor_cache(root: Path) -> None:
+    """Unrelated editor caches are excluded from selection and must not be packed."""
+    for path in root.rglob(".projectile-cache.eld"):
+        if path.is_symlink() or path.is_file():
+            raise ValueError(
+                "unrelated editor cache cannot enter a distribution artifact: "
+                + path.relative_to(root).as_posix())
+
+
 def deterministic_tar(source: Path, output: Path, prefix: str) -> None:
+    reject_editor_cache(source)
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="mirrors-tar-") as temporary:
         tar_path = Path(temporary) / "payload.tar"

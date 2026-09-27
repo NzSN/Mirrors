@@ -30,6 +30,14 @@ Read the relevant contract before changing behavior:
 Distinguish proposed target profiles from implemented behavior; consult each
 design document's implementation-status section and current code.
 
+## 2026-09-25 candidate
+
+Untracked `.projectile-cache.eld` files stay on disk and are excluded from the
+selected component refs as pre-existing-unrelated editor caches. The exact
+catalog selection, install digests, and remaining Q1–Q3 gaps are in
+`Plans/q3-readiness-2026-09-25.md`. That report is evidence output and is not
+part of the selection digest. The v5 hashes below remain historical.
+
 ## Stopped framework-completion checkpoint (2026-09-22)
 
 Work is intentionally stopped at the user's request. Resume from
