@@ -165,6 +165,24 @@ def copy_gate_operator_closure(source: Path, destination: Path) -> None:
     shutil.copytree(source / "protocol", destination / "protocol", symlinks=False)
 
 
+PACKAGE_SCRIPTS = ("materialize-lease-reduction.mjs", "reduce-reproduction-prefix.mjs")
+
+
+def copy_package_scripts(ecma_work: Path, package_dir: Path) -> None:
+    """Materialize every installed reduction driver from the source snapshot.
+
+    The evidence registry executes these drivers from the installed package
+    (`packages/mirrorecma/scripts/...`), so every registry-referenced script
+    must be listed in PACKAGE_SCRIPTS and copied here.
+    """
+    (package_dir / "scripts").mkdir()
+    for name in PACKAGE_SCRIPTS:
+        script = ecma_work / "scripts" / name
+        if not script.is_file():
+            raise ValueError(f"installed reduction script is missing: {name}")
+        shutil.copyfile(script, package_dir / "scripts" / name)
+
+
 def verify_source_snapshots(snapshot_root: Path, contract: dict) -> None:
     index_path = snapshot_root / "snapshot-index.json"
     index = load_json(index_path)
@@ -325,11 +343,7 @@ def main() -> int:
         package_dir = work / "mirrorecma-package"; package_dir.mkdir()
         shutil.copytree(ecma_work / "dist", package_dir / "dist")
         shutil.copyfile(ecma_work / "package.json", package_dir / "package.json")
-        reduction_script = ecma_work / "scripts/materialize-lease-reduction.mjs"
-        if not reduction_script.is_file():
-            raise ValueError("installed LeaseService reduction script is missing")
-        (package_dir / "scripts").mkdir()
-        shutil.copyfile(reduction_script, package_dir / "scripts/materialize-lease-reduction.mjs")
+        copy_package_scripts(ecma_work, package_dir)
         package_out = artifacts_root / "packages/mirrorecma.tgz"
         deterministic_tar(package_dir, package_out, "package")
         artifact_paths["mirrorecma-package"] = (package_out, "0644", "component-build", "application/gzip")
