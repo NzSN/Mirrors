@@ -32,6 +32,11 @@ Position record: [CHECKPOINTS.md](../CHECKPOINTS.md) (2026-09-27 standing).
 6. Ownership: MirrorECMA owns reducer modules, drivers, and their tests;
    Mirrors owns the validator contract, evidence registry, and freeze chain;
    the operator owns service activation and the identity observation.
+7. Deferred tiers (operator decision 2026-09-29, no native Ubuntu machine):
+   M4 aggregate cgroup-v2 enforcement and the native Ubuntu acceptance
+   profile. SR-5a runs on WSL2 in the escalated posture (ptrace/sockets).
+   SR-5b depends only on the operator service activation (SR-0.3), not on
+   native Ubuntu; no SR item below is blocked by the deferral.
 
 ## 1. Phase SR-0 — decisions and operator requests (no code)
 

@@ -3,7 +3,13 @@
 Date: 2026-09-28
 
 Status: proposed; no implementation, qualification, or release is authorized by
-this document. This document re-stages, in tracked form, the work-package spec
+this document.
+
+Deferrals (operator decision 2026-09-29): every tier that requires a native
+Ubuntu host is deferred — no native Ubuntu machine is available. For this
+design that means the local oracle mode never qualifies here; the remote
+explore-session oracle (section 5) is the only reduction qualification path.
+The local mode remains implemented for hosts that permit it. This document re-stages, in tracked form, the work-package spec
 previously held at `/tmp/m3-reduction-plan.md` (lost with the 2026-09-27 `/tmp`
 cleanup) and records the design against current source.
 
@@ -220,6 +226,10 @@ the re-freeze rules. The items below are the design-level summary.
    settled as part of the service identity record, not by the reducer.
 4. `handling` governance for reproduction policy IDs remains a separate open
    decision; reduction receipts reference but do not define them.
+5. Deferred with the native-Ubuntu decision: M4 aggregate cgroup-v2 enforcement
+   and the native Ubuntu acceptance profile. Reduction qualification is
+   unaffected — the remote oracle needs only the activated service plus
+   outbound mTLS, which this WSL2 host provides outside the agent sandbox.
 
 ## 10. Non-goals and risks
 

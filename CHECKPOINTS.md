@@ -5,6 +5,50 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-09-29 — Safe reduction implemented and published; native-Ubuntu tiers deferred
+
+Status: **publication checkpoint, no qualification run.** Records the landing
+of the M3 safe-reduction implementation and one operator decision. Parent-written
+after round close.
+
+### Published change sets (source-test tier validated)
+
+- MirrorECMA `da18f1a` (`reproduction: add remote explore-session oracle mode
+  and prefix-reduction driver`): remote oracle mode with operator-observed
+  service identity and mTLS peer-leaf pinning; receipts mint
+  `mirrorecma.lease-reduction-oracle/v2`; new R4 driver
+  `scripts/reduce-reproduction-prefix.mjs`. Validation: jest 38/38 new +
+  23/23 regression, `tsc --noEmit` clean.
+- Mirrors `abbf70b` (design + impl plan: `Plans/m3-safe-reduction-design.md`,
+  `Plans/m3-safe-reduction-implementation-plan.md`) and `b19e090`
+  (`framework: split reduction tier with remote oracle wiring`): tiers
+  `qualification.reduction-prefix` + `qualification.reduction-domain`,
+  collector v2 receipt reader and prefix adapter, profiles/scope registration.
+  Validation: unittest discovery 118/118.
+
+### Decision recorded (owner: user, 2026-09-29)
+
+Every tier requiring a native Ubuntu host is **deferred** — no such machine is
+available: M4 aggregate cgroup-v2 enforcement and the native Ubuntu acceptance
+profile. This settles open decision 1 from the 2026-09-27 standing checkpoint
+(cgroup: deferred, not merely incomplete). Reduction qualification is
+unaffected: it proceeds via the remote oracle mode against the deployed
+service once the operator activates Apalache 0.61.0 / Java 25.0.4+7-LTS on
+`192.168.150.219:8999` with a same-time identity observation.
+
+### Position
+
+- Frozen selection `68a3ad58…` is invalidated by the published change sets;
+  all prior credited runs are diagnostic history.
+- M3 remains Partial; M5 remains not qualified.
+- Next: SR-4 re-freeze from the pushed SHAs (identity refresh with
+  `.projectile-cache.eld` moved out, snapshot, dual cache builds, dual
+  installs), then SR-5a (prefix tier, local WSL2, escalated posture) and
+  SR-5b (domain tier, gated on the operator service activation). Open decision
+  2 from 2026-09-27 (dispatch timing) was settled by building the remote mode
+  first; decisions 3 (`handling` governance) and 4 (JDK pin reconciliation)
+  remain open.
+
 ## 2026-09-27 — Standing after the reproduction round: M5 position and open decisions
 
 Status: **standing checkpoint, no execution.** Records the milestone positions
