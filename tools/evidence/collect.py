@@ -329,6 +329,8 @@ def prepare_attachment_plan(path: Path) -> AttachmentPlan:
         adapter_kind = adapter["kind"]
         if adapter_kind not in ("none", "mirrorecma.application-campaign-aggregate/v1",
                                 "mirrorecma.lease-reduction-oracle/v1",
+                                "mirrorecma.lease-reduction-oracle/v2",
+                                "mirrorecma.reproduction-prefix-reduction/v1",
                                 "mirrorecma.suite-result/v1",
                                 "mirrorecma.reproduction-capture/v1",
                                 "mirrors.installed-consumer-audit/v1",
@@ -1301,18 +1303,9 @@ def _captured_sha256(captured: dict[str, bytes], artifact_id: str) -> str:
     return _sha256(data)
 
 
-def _validate_reduction_receipt(receipt: Any, captured: dict[str, bytes]) -> None:
-    receipt = _closed_record(receipt, {"schema", "status", "profile", "domainVersion",
-        "modelSha256", "interfaceDigest", "originalCorpusSha256", "candidateCorpusSha256",
-        "selectedTraceSha256", "traceOccurrences", "validator", "apalache", "java",
-        "cleanup", "materialization"}, set(), "LeaseService reduction receipt")
-    if (receipt["schema"] != "mirrorecma.lease-reduction-oracle/v1"
-            or receipt["status"] != "model_valid"
-            or receipt["profile"] != "lease-service-input-shrink/v1"
-            or receipt["domainVersion"] != "LeaseService.Next/v1"
-            or receipt["traceOccurrences"] != [0, 1]
-            or receipt["cleanup"] != {"status":"confirmed", "method":"explore_done"}):
-        raise ValueError("LeaseService reduction result is not model-valid and cleaned")
+def _validate_reduction_local_tool_identities(receipt: Any) -> tuple[
+        dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Shared v1/v2-local receipt identity and local byte-pin checks."""
     for field in ("modelSha256", "interfaceDigest", "originalCorpusSha256",
                   "candidateCorpusSha256", "selectedTraceSha256"):
         _sha_identity({"id":field, "sha256":receipt[field]}, field)
@@ -1337,6 +1330,11 @@ def _validate_reduction_receipt(receipt: Any, captured: dict[str, bytes]) -> Non
     if java["qualificationRef"] != (
             "microsoft-jdk-25.0.4+7-linux-x64/sha256:" + java["archiveSha256"]):
         raise ValueError("reduction Java qualification reference differs")
+    return validator, apalache, java
+
+
+def _validate_reduction_materialization(receipt: Any, captured: dict[str, bytes]) -> None:
+    """Shared materialization/sources/captured-artifact cross-check tail."""
     materialization = _closed_record(receipt["materialization"], {
         "originalTraceSha256", "candidateTraceSha256", "originalBundleSha256",
         "actionSequence", "inputMeasure", "changes", "toolManifestSha256", "sources"},
@@ -1368,7 +1366,10 @@ def _validate_reduction_receipt(receipt: Any, captured: dict[str, bytes]) -> Non
     if (receipt["modelSha256"] != sources["model"]["sha256"]
             or receipt["selectedTraceSha256"] != sources["originalTrace"]["sha256"]):
         raise ValueError("reduction receipt source identity differs")
-    tool_manifest = loads_json_bytes(captured["lease-reduction-tool-manifest"])
+
+
+def _validate_reduction_local_tool_manifest(tool_manifest: Any, validator: dict[str, Any],
+        apalache: dict[str, Any], java: dict[str, Any]) -> None:
     if type(tool_manifest) is not dict or tool_manifest.get("schema") != \
             "mirrorecma.lease-reduction-tools/v1":
         raise ValueError("reduction tool manifest schema is invalid")
@@ -1384,6 +1385,151 @@ def _validate_reduction_receipt(receipt: Any, captured: dict[str, bytes]) -> Non
                        java["executableSha256"], java["archiveSha256"],
                        java["qualificationRef"]):
         raise ValueError("reduction receipt differs from tool manifest")
+
+
+def _validate_reduction_service_identity(value: Any) -> dict[str, Any]:
+    identity = _closed_record(value, {"endpoint", "peerLeafSha256", "apalacheVersion",
+        "javaVersion", "observedAt", "qualificationRef"}, set(),
+        "reduction service identity")
+    endpoint = _closed_record(identity["endpoint"], {"host", "port"}, set(),
+                              "reduction service endpoint")
+    host = endpoint["host"]
+    port = endpoint["port"]
+    if (type(host) is not str or not host or len(host) > 253
+            or host[0] not in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+            or any(character not in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.:_-"
+                   for character in host)):
+        raise ValueError("reduction service endpoint host is invalid")
+    if type(port) is not int or isinstance(port, bool) or not 1 <= port <= 65535:
+        raise ValueError("reduction service endpoint port is invalid")
+    _sha_identity({"id":"peer-leaf", "sha256":identity["peerLeafSha256"]},
+                  "reduction service peer leaf")
+    if identity["apalacheVersion"] != "0.61.0" or identity["javaVersion"] != "25.0.4+7-LTS":
+        raise ValueError("reduction service versions are unsupported")
+    if type(identity["observedAt"]) is not str or not identity["observedAt"]:
+        raise ValueError("reduction service observation timestamp is invalid")
+    if type(identity["qualificationRef"]) is not str or not identity["qualificationRef"]:
+        raise ValueError("reduction service qualification reference is invalid")
+    return identity
+
+
+def _validate_reduction_remote_tool_manifest(tool_manifest: Any,
+        validator: dict[str, Any]) -> None:
+    if type(tool_manifest) is not dict:
+        raise ValueError("reduction remote tool manifest is invalid")
+    if (tool_manifest.get("schema") != "mirrorecma.lease-reduction-tools/v2"
+            or tool_manifest.get("mode") != "remote"):
+        raise ValueError("reduction remote tool manifest schema is invalid")
+    if "apalache" in tool_manifest or "java" in tool_manifest:
+        raise ValueError("reduction remote tool manifest pins local tool bytes")
+    for key in ("totalBudgetMs", "cleanupBudgetMs"):
+        value = tool_manifest.get(key)
+        if type(value) is not int or isinstance(value, bool) or not 1 <= value <= 0x7fffffff:
+            raise ValueError("reduction remote tool manifest budgets are invalid")
+    mirror = _closed_record(tool_manifest.get("mirror"), {"path", "sha256"}, set(),
+                            "reduction remote mirror identity")
+    if type(mirror["path"]) is not str or not mirror["path"]:
+        raise ValueError("reduction remote mirror path is invalid")
+    _sha_identity({"id":"mirror", "sha256":mirror["sha256"]},
+                  "reduction remote mirror")
+    remote_validator = _closed_record(tool_manifest.get("validator"),
+        {"id", "path", "sha256"}, set(), "reduction remote validator identity")
+    if (remote_validator["id"] != "mirrors.model-interface-reduction/v1"
+            or type(remote_validator["path"]) is not str or not remote_validator["path"]):
+        raise ValueError("reduction remote validator identity is unsupported")
+    _sha_identity({"id":"validator", "sha256":remote_validator["sha256"]},
+                  "reduction remote validator")
+    if remote_validator["sha256"] != validator["sha256"]:
+        raise ValueError("reduction receipt differs from remote tool manifest")
+
+
+def _validate_reduction_receipt_v1(receipt: Any, captured: dict[str, bytes]) -> None:
+    receipt = _closed_record(receipt, {"schema", "status", "profile", "domainVersion",
+        "modelSha256", "interfaceDigest", "originalCorpusSha256", "candidateCorpusSha256",
+        "selectedTraceSha256", "traceOccurrences", "validator", "apalache", "java",
+        "cleanup", "materialization"}, set(), "LeaseService reduction receipt")
+    if (receipt["schema"] != "mirrorecma.lease-reduction-oracle/v1"
+            or receipt["status"] != "model_valid"
+            or receipt["profile"] != "lease-service-input-shrink/v1"
+            or receipt["domainVersion"] != "LeaseService.Next/v1"
+            or receipt["traceOccurrences"] != [0, 1]
+            or receipt["cleanup"] != {"status":"confirmed", "method":"explore_done"}):
+        raise ValueError("LeaseService reduction result is not model-valid and cleaned")
+    validator, apalache, java = _validate_reduction_local_tool_identities(receipt)
+    _validate_reduction_materialization(receipt, captured)
+    tool_manifest = loads_json_bytes(captured["lease-reduction-tool-manifest"])
+    _validate_reduction_local_tool_manifest(tool_manifest, validator, apalache, java)
+
+
+def _validate_reduction_receipt_v2(receipt: Any, captured: dict[str, bytes]) -> None:
+    base = {"schema", "status", "oracleMode", "profile", "domainVersion", "modelSha256",
+        "interfaceDigest", "originalCorpusSha256", "candidateCorpusSha256",
+        "selectedTraceSha256", "traceOccurrences", "validator", "cleanup",
+        "materialization"}
+    mode = receipt.get("oracleMode") if type(receipt) is dict else None
+    if mode == "local":
+        receipt = _closed_record(receipt, base | {"apalache", "java"}, set(),
+                                 "LeaseService v2 local reduction receipt")
+    elif mode == "remote":
+        receipt = _closed_record(receipt, base | {"serviceIdentity"}, set(),
+                                 "LeaseService v2 remote reduction receipt")
+    else:
+        raise ValueError("LeaseService v2 reduction oracle mode is unsupported")
+    if (receipt["schema"] != "mirrorecma.lease-reduction-oracle/v2"
+            or receipt["status"] != "model_valid"
+            or receipt["profile"] != "lease-service-input-shrink/v1"
+            or receipt["domainVersion"] != "LeaseService.Next/v1"
+            or receipt["traceOccurrences"] != [0, 1]
+            or receipt["cleanup"] != {"status":"confirmed", "method":"explore_done"}):
+        raise ValueError("LeaseService v2 reduction result is not model-valid and cleaned")
+    for field in ("modelSha256", "interfaceDigest", "originalCorpusSha256",
+                  "candidateCorpusSha256", "selectedTraceSha256"):
+        _sha_identity({"id":field, "sha256":receipt[field]}, field)
+    validator = _closed_record(receipt["validator"], {"id", "sha256"}, set(),
+                               "reduction validator")
+    if validator["id"] != "mirrors.model-interface-reduction/v1":
+        raise ValueError("reduction tool identities are unsupported")
+    _sha_identity({"id":"validator", "sha256":validator["sha256"]}, "validator")
+    tool_manifest = loads_json_bytes(captured["lease-reduction-tool-manifest"])
+    if mode == "local":
+        apalache = _closed_record(receipt["apalache"], {"version", "sha256"}, set(),
+                                  "reduction Apalache")
+        java = _closed_record(receipt["java"], {"observedVersion", "selectedVersion",
+            "executableSha256", "archiveSha256", "distributionQualified", "qualificationRef"},
+            set(), "reduction Java")
+        if (apalache["version"] != "0.61.0"
+                or java["selectedVersion"] != "25.0.4+7"
+                or java["observedVersion"] != "25.0.4+7-LTS"
+                or java["distributionQualified"] is not True):
+            raise ValueError("reduction tool identities are unsupported")
+        for label, value in (("apalache", apalache["sha256"]),
+                             ("java executable", java["executableSha256"]),
+                             ("java archive", java["archiveSha256"])):
+            _sha_identity({"id":label.replace(" ", "-"), "sha256":value}, label)
+        if java["qualificationRef"] != (
+                "microsoft-jdk-25.0.4+7-linux-x64/sha256:" + java["archiveSha256"]):
+            raise ValueError("reduction Java qualification reference differs")
+        _validate_reduction_local_tool_manifest(tool_manifest, validator, apalache, java)
+    else:
+        identity = _validate_reduction_service_identity(receipt["serviceIdentity"])
+        captured_identity = captured.get("lease-reduction-service-identity")
+        if captured_identity is None:
+            raise ValueError("reduction service identity observation was not captured")
+        if loads_json_bytes(captured_identity) != identity:
+            raise ValueError("reduction service identity differs from its captured observation")
+        _validate_reduction_remote_tool_manifest(tool_manifest, validator)
+    _validate_reduction_materialization(receipt, captured)
+
+
+def _validate_reduction_receipt(receipt: Any, captured: dict[str, bytes]) -> None:
+    schema = receipt.get("schema") if type(receipt) is dict else None
+    if schema == "mirrorecma.lease-reduction-oracle/v1":
+        _validate_reduction_receipt_v1(receipt, captured)
+        return
+    if schema == "mirrorecma.lease-reduction-oracle/v2":
+        _validate_reduction_receipt_v2(receipt, captured)
+        return
+    raise ValueError("LeaseService reduction receipt schema is unsupported")
 
 
 def _reduction_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
@@ -1413,6 +1559,149 @@ def _reduction_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
                 [{"scope":"local-cooperative", "requirement":"required",
                   "status":cleanup_status, "reasonCode":"producer-result-invalid",
                   "artifactIds":[] if artifact_id is None else [artifact_id]}], "failed")
+
+
+_PREFIX_REDUCTION_CLAIMS = {"shortest_reproducing_prefix",
+    "smallest_observed_reproducing_prefix", "not_reduced"}
+_PREFIX_REDUCTION_STOP_REASONS = {"complete", "candidate_limit", "total_budget",
+    "cancelled", "cleanup_independence_lost", "candidate_failure", "not_eligible"}
+_PREFIX_CANDIDATE_OUTCOMES = {"reproduced", "not_reproduced", "timed_out", "cancelled",
+    "failed", "cleanup_unconfirmed", "not_run"}
+
+
+def _prefix_bounded_count(value: Any, label: str, minimum: int, maximum: int) -> int:
+    if type(value) is not int or isinstance(value, bool) or not minimum <= value <= maximum:
+        raise ValueError(f"prefix reduction {label} is invalid")
+    return value
+
+
+def _validate_prefix_reduction_receipt(receipt: Any, captured: dict[str, bytes]) -> None:
+    receipt = _closed_record(receipt, {"schema", "originalRunId", "originalBundleSha256",
+        "traceIndex", "originalLength", "bestPrefixLength", "claim", "minimalityComplete",
+        "stopReason", "candidates"}, set(), "prefix reduction receipt")
+    if receipt["schema"] != "mirrorecma.reproduction-prefix-reduction/v1":
+        raise ValueError("prefix reduction receipt schema is unsupported")
+    original_run_id = receipt["originalRunId"]
+    if type(original_run_id) is not str or not original_run_id or len(original_run_id) > 128:
+        raise ValueError("prefix reduction original run id is invalid")
+    _sha_identity({"id":"original-bundle", "sha256":receipt["originalBundleSha256"]},
+                  "prefix original bundle")
+    _prefix_bounded_count(receipt["traceIndex"], "trace index", 0, 4096)
+    original_length = _prefix_bounded_count(receipt["originalLength"], "original length", 1, 4096)
+    claim = receipt["claim"]
+    stop = receipt["stopReason"]
+    if claim not in _PREFIX_REDUCTION_CLAIMS:
+        raise ValueError("prefix reduction claim is unsupported")
+    if stop not in _PREFIX_REDUCTION_STOP_REASONS:
+        raise ValueError("prefix reduction stop reason is unsupported")
+    if type(receipt["minimalityComplete"]) is not bool:
+        raise ValueError("prefix reduction minimality flag is invalid")
+    best = receipt["bestPrefixLength"]
+    if claim == "not_reduced":
+        if best is not None or receipt["minimalityComplete"] is not False:
+            raise ValueError("prefix reduction not_reduced result is inconsistent")
+    else:
+        best = _prefix_bounded_count(best, "best prefix length", 1, original_length)
+        if claim == "shortest_reproducing_prefix":
+            if receipt["minimalityComplete"] is not True or stop != "complete":
+                raise ValueError("prefix reduction shortest claim is not complete")
+        elif receipt["minimalityComplete"] is not False:
+            raise ValueError("prefix reduction bounded claim marks minimality complete")
+    candidates = receipt["candidates"]
+    if type(candidates) is not list or len(candidates) > 4096:
+        raise ValueError("prefix reduction candidates are invalid")
+    expected_order = 1
+    previous_length = original_length + 1
+    reproduced: list[int] = []
+    for candidate in candidates:
+        candidate = _closed_record(candidate, {"order", "prefixLength", "validity",
+            "outcome", "durationMs"}, {"code"}, "prefix reduction candidate")
+        if candidate["order"] != expected_order:
+            raise ValueError("prefix reduction candidate order is invalid")
+        expected_order += 1
+        length = _prefix_bounded_count(candidate["prefixLength"],
+                                       "candidate prefix length", 1, original_length)
+        if length >= previous_length:
+            raise ValueError("prefix reduction candidates are not strictly shorter")
+        previous_length = length
+        if candidate["validity"] not in {"valid", "invalid"}:
+            raise ValueError("prefix reduction candidate validity is invalid")
+        if candidate["outcome"] not in _PREFIX_CANDIDATE_OUTCOMES:
+            raise ValueError("prefix reduction candidate outcome is invalid")
+        if (candidate["validity"] == "invalid") != (candidate["outcome"] == "not_run"):
+            raise ValueError("prefix reduction candidate validity and outcome disagree")
+        if "code" in candidate and (type(candidate["code"]) is not str or not candidate["code"]):
+            raise ValueError("prefix reduction candidate code is invalid")
+        duration = candidate["durationMs"]
+        if type(duration) not in (int, float) or isinstance(duration, bool) \
+                or not 0 <= duration <= 10**9:
+            raise ValueError("prefix reduction candidate duration is invalid")
+        if candidate["outcome"] == "reproduced":
+            reproduced.append(length)
+    if claim != "not_reduced" and best not in reproduced:
+        raise ValueError("prefix reduction claim lacks a reproduced candidate")
+    if claim == "shortest_reproducing_prefix":
+        tested = {candidate["prefixLength"] for candidate in candidates}
+        if any(length not in tested for length in range(1, best)):
+            raise ValueError("prefix reduction shortest claim skipped a shorter prefix")
+    bundle_bytes = captured.get("prefix-reduction-original-bundle")
+    if bundle_bytes is None:
+        raise ValueError("prefix reduction original bundle was not captured")
+    if _sha256(bundle_bytes) != receipt["originalBundleSha256"]:
+        raise ValueError("prefix reduction original bundle identity differs")
+    bundle = loads_json_bytes(bundle_bytes)
+    links = bundle.get("evidenceLinks") if type(bundle) is dict else None
+    run_ref = links.get("runRef") if type(links) is dict else None
+    if (type(bundle) is not dict or bundle.get("schema") != "mirrorecma.reproduction-bundle/v1"
+            or type(run_ref) is not dict or run_ref.get("runId") != original_run_id):
+        raise ValueError("prefix reduction original run differs from its bundle")
+
+
+def _prefix_reports_cleanup_uncertainty(receipt: Any) -> bool:
+    if type(receipt) is not dict:
+        return False
+    if receipt.get("stopReason") == "cleanup_independence_lost":
+        return True
+    candidates = receipt.get("candidates")
+    if type(candidates) is not list:
+        return False
+    return any(type(candidate) is dict and candidate.get("outcome") == "cleanup_unconfirmed"
+               for candidate in candidates)
+
+
+def _prefix_reduction_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
+        producer_results: list[dict[str, str]]) -> tuple[
+            dict[str, Any], list[dict[str, Any]], str]:
+    artifact_id = plan.adapter_artifact_id
+    namespace = "mirrorecma.reproduction-prefix-reduction"
+    cleanup_status = "unconfirmed"
+    def refused(code: str) -> tuple[dict[str, Any], list[dict[str, Any]], str]:
+        return ({"status":"inconclusive", "classification":{
+                    "namespace":namespace, "code":code}},
+                [{"scope":"local-cooperative", "requirement":"required",
+                  "status":cleanup_status, "reasonCode":code,
+                  "artifactIds":[] if artifact_id is None else [artifact_id]}], "failed")
+    try:
+        if artifact_id is None or artifact_id not in captured:
+            raise ValueError("prefix reduction receipt was not captured")
+        receipt = loads_json_bytes(captured[artifact_id])
+        if _prefix_reports_cleanup_uncertainty(receipt):
+            cleanup_status = "failed"
+        _validate_prefix_reduction_receipt(receipt, captured)
+        if cleanup_status == "failed":
+            return refused("cleanup-unconfirmed")
+        if receipt["claim"] == "not_reduced":
+            return refused("not-reduced")
+        behavior: dict[str, Any] = {"status":"passed", "classification":{
+            "namespace":namespace, "code":receipt["claim"]}}
+        producer = next((item for item in producer_results
+                         if item["artifactId"] == artifact_id), None)
+        if producer is not None:
+            behavior["producerResult"] = producer
+        return (behavior, [{"scope":"local-cooperative", "requirement":"required",
+                            "status":"confirmed", "artifactIds":[artifact_id]}], "passed")
+    except (KeyError, ValueError, UnicodeError, json.JSONDecodeError):
+        return refused("producer-result-invalid")
 
 
 def _gate_recovery_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
@@ -1740,8 +2029,18 @@ def _stage(
             tier_status = native_tier_status
             behavior_reason = behavior["classification"]["code"]
     elif (attachment_plan is not None
-            and attachment_plan.adapter_kind == "mirrorecma.lease-reduction-oracle/v1"):
+            and attachment_plan.adapter_kind in ("mirrorecma.lease-reduction-oracle/v1",
+                                                 "mirrorecma.lease-reduction-oracle/v2")):
         native_behavior, cleanup_outcomes, native_tier_status = _reduction_outcomes(
+            attachment_plan, captured, producer_results)
+        required_cleanup_scopes = ["local-cooperative"]
+        if behavior["status"] == "passed" and not observation.timed_out:
+            behavior = native_behavior
+            tier_status = native_tier_status
+            behavior_reason = behavior["classification"]["code"]
+    elif (attachment_plan is not None
+            and attachment_plan.adapter_kind == "mirrorecma.reproduction-prefix-reduction/v1"):
+        native_behavior, cleanup_outcomes, native_tier_status = _prefix_reduction_outcomes(
             attachment_plan, captured, producer_results)
         required_cleanup_scopes = ["local-cooperative"]
         if behavior["status"] == "passed" and not observation.timed_out:

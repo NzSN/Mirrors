@@ -612,13 +612,13 @@
       "catalogPath": "catalog/framework-catalog.json",
       "registryOwnerComponentId": "mirrors",
       "commandId": "framework.reduction",
-      "tierId": "qualification.reduction",
+      "tierId": "qualification.reduction-domain",
       "requirement": "required",
       "argvPrefix": [
         "runtimes/node/bin/node",
         "packages/mirrorecma/scripts/materialize-lease-reduction.mjs"
       ],
-      "argvLength": 18,
+      "argvLength": 28,
       "requiredCwdEnvironmentName": "MIRRORS_INSTALLED_RUNTIME",
       "requiredEnvironmentNames": [
         "MIRRORS_INSTALLED_RUNTIME"
@@ -626,7 +626,7 @@
       "attachmentsAllowed": true,
       "attachmentPathArgIndex": 17,
       "attachmentAdapter": {
-        "kind": "mirrorecma.lease-reduction-oracle/v1",
+        "kind": "mirrorecma.lease-reduction-oracle/v2",
         "application": null,
         "artifactId": "lease-reduction-receipt"
       },
@@ -642,8 +642,192 @@
           "expectedSha256": null,
           "producerResult": {
             "producer": "mirrorecma",
-            "schemaVersion": "mirrorecma.lease-reduction-oracle/v1"
+            "schemaVersion": "mirrorecma.lease-reduction-oracle/v2"
           }
+        },
+        {
+          "artifactId": "lease-reduction-candidate-trace",
+          "relativePath": "lease-reduction-candidate-trace.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 67108864,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "lease-reduction-tool-manifest",
+          "relativePath": "lease-reduction-tool-manifest.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "lease-reduction-model",
+          "relativePath": "lease-reduction-model.tla",
+          "role": "diagnostic",
+          "mediaType": "text/plain",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 1048576,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "lease-reduction-lock",
+          "relativePath": "lease-reduction-lock.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 4194304,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "lease-reduction-original-trace",
+          "relativePath": "lease-reduction-original-trace.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "lease-reduction-candidate",
+          "relativePath": "lease-reduction-candidate.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 262144,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "lease-reduction-service-identity",
+          "relativePath": "lease-reduction-service-identity.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 262144,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "lease-reduction-original-bundle",
+          "relativePath": "lease-reduction-original-bundle.json",
+          "role": "reproduction-input",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 8388608,
+          "expectedSha256": null,
+          "producerResult": null
+        }
+      ],
+      "defaultTimeoutSeconds": 1800
+    },
+    {
+      "catalogComponentId": "mirrors",
+      "catalogPath": "catalog/framework-catalog.json",
+      "registryOwnerComponentId": "mirrors",
+      "commandId": "framework.reduction-prefix",
+      "tierId": "qualification.reduction-prefix",
+      "requirement": "required",
+      "argvPrefix": [
+        "runtimes/node/bin/node",
+        "packages/mirrorecma/scripts/reduce-reproduction-prefix.mjs"
+      ],
+      "argvLength": 26,
+      "requiredCwdEnvironmentName": "MIRRORS_INSTALLED_RUNTIME",
+      "requiredEnvironmentNames": [
+        "MIRRORS_INSTALLED_RUNTIME"
+      ],
+      "attachmentsAllowed": true,
+      "attachmentRootArgIndex": 17,
+      "attachmentAdapter": {
+        "kind": "mirrorecma.reproduction-prefix-reduction/v1",
+        "application": null,
+        "artifactId": "prefix-reduction-receipt"
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "prefix-reduction-receipt",
+          "relativePath": "prefix-reduction-result.json",
+          "role": "producer-result",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 16777216,
+          "expectedSha256": null,
+          "producerResult": {
+            "producer": "mirrorecma",
+            "schemaVersion": "mirrorecma.reproduction-prefix-reduction/v1"
+          }
+        },
+        {
+          "artifactId": "prefix-reduction-original-bundle",
+          "relativePath": "prefix-reduction-original-bundle.json",
+          "role": "reproduction-input",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 8388608,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "prefix-reduction-stability",
+          "relativePath": "prefix-reduction-stability.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 8388608,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "prefix-reduction-original-trace",
+          "relativePath": "prefix-reduction-original-trace.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 33554432,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "prefix-reduction-framework-input",
+          "relativePath": "prefix-reduction-framework-input.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 33554432,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "prefix-reduction-r0-envelope",
+          "relativePath": "prefix-reduction-r0-envelope.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "existing-input",
+          "maxBytes": 8388608,
+          "expectedSha256": null,
+          "producerResult": null
         }
       ],
       "defaultTimeoutSeconds": 1800

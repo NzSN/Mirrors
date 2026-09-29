@@ -231,9 +231,14 @@ class CatalogLinkTests(unittest.TestCase):
             "reproduction", [("framework.reproduction","qualification.reproduction")], self.components,
             extras=[("reproduction","reproduction-input",reproduction_data,None)],
             dependencies=[origin_checked["runId"]])
-        add("reduction", [("framework.reduction","qualification.reduction")], self.components,
+        add("reduction", [("framework.reduction","qualification.reduction-domain")], self.components,
             extras=[("reproduction","reproduction-input",
                      reproduction_data + (b" " if mismatch_reduction_input else b""),None)],
+            dependencies=[reproduction_checked["runId"]])
+        add("reduction", [("framework.reduction-prefix","qualification.reduction-prefix")],
+            self.components,
+            extras=[("prefix-reproduction","reproduction-input",
+                     reproduction_data,None)],
             dependencies=[reproduction_checked["runId"]])
         add("mutation", [("framework.mutation-local","qualification.mutation-local")], self.components)
         add("mutation", [("framework.mutation-gate","qualification.mutation-gate")], self.components,

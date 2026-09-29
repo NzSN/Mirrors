@@ -53,6 +53,7 @@ COMMAND_PHASES = {
     "framework.replay-faulty": "replay",
     "framework.reproduction": "reproduction",
     "framework.reduction": "reduction",
+    "framework.reduction-prefix": "reduction",
     "framework.mutation-local": "mutation",
     "framework.mutation-gate": "mutation",
     "mirrorgate.recovery": "recovery",

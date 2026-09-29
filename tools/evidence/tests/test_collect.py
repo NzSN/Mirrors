@@ -1150,3 +1150,330 @@ class ReproductionCaptureAdapterTests(unittest.TestCase):
                         str(root / "reproduction-bundle.json")], root)
             finally:
                 plan.close()
+
+
+class ReductionAdapterV2Tests(unittest.TestCase):
+    """v2 oracle receipts (local and remote) and the R4 prefix-reduction
+    adapter. These call the adapter functions directly with in-memory captured
+    artifacts; no command runs and no model checker is involved."""
+
+    VALIDATOR_SHA = "a" * 64
+    APALACHE_SHA = "b" * 64
+    JAVA_SHA = "c" * 64
+    ARCHIVE_SHA = "d" * 64
+    IDENTITY = {
+        "endpoint": {"host": "192.168.150.219", "port": 8999},
+        "peerLeafSha256": "f" * 64,
+        "apalacheVersion": "0.61.0",
+        "javaVersion": "25.0.4+7-LTS",
+        "observedAt": "2026-09-29T00:00:00Z",
+        "qualificationRef": "operator-observation/2026-09-29",
+    }
+
+    @property
+    def qualification_ref(self) -> str:
+        return ("microsoft-jdk-25.0.4+7-linux-x64/sha256:" + self.ARCHIVE_SHA)
+
+    def captured_inputs(self) -> dict[str, bytes]:
+        return {
+            "lease-reduction-candidate-trace": b"candidate-trace",
+            "lease-reduction-original-bundle": b"original-bundle",
+            "lease-reduction-model": b"model",
+            "lease-reduction-lock": b"lock",
+            "lease-reduction-original-trace": b"original-trace",
+            "lease-reduction-candidate": b"candidate-request",
+        }
+
+    def digest(self, captured: dict[str, bytes], artifact_id: str) -> str:
+        return hashlib.sha256(captured[artifact_id]).hexdigest()
+
+    def local_manifest(self, captured: dict[str, bytes]) -> None:
+        captured["lease-reduction-tool-manifest"] = json.dumps({
+            "schema": "mirrorecma.lease-reduction-tools/v1",
+            "validator": {"sha256": self.VALIDATOR_SHA},
+            "apalache": {"jarSha256": self.APALACHE_SHA},
+            "java": {"executableSha256": self.JAVA_SHA,
+                     "archiveSha256": self.ARCHIVE_SHA,
+                     "qualificationRef": self.qualification_ref},
+        }).encode()
+
+    def remote_manifest(self, captured: dict[str, bytes],
+                        validator_sha: str | None = None) -> None:
+        captured["lease-reduction-tool-manifest"] = json.dumps({
+            "schema": "mirrorecma.lease-reduction-tools/v2",
+            "mode": "remote",
+            "totalBudgetMs": 600_000,
+            "cleanupBudgetMs": 5_000,
+            "mirror": {"path": "bin/ModelMirrors", "sha256": "e" * 64},
+            "validator": {"id": "mirrors.model-interface-reduction/v1",
+                          "path": "bin/model-interface-reduction",
+                          "sha256": validator_sha or self.VALIDATOR_SHA},
+        }).encode()
+
+    def receipt(self, captured: dict[str, bytes]) -> dict:
+        return {
+            "schema": "mirrorecma.lease-reduction-oracle/v1",
+            "status": "model_valid",
+            "profile": "lease-service-input-shrink/v1",
+            "domainVersion": "LeaseService.Next/v1",
+            "modelSha256": self.digest(captured, "lease-reduction-model"),
+            "interfaceDigest": "e" * 64,
+            "originalCorpusSha256": "f" * 64,
+            "candidateCorpusSha256": "1" * 64,
+            "selectedTraceSha256": self.digest(captured, "lease-reduction-original-trace"),
+            "traceOccurrences": [0, 1],
+            "validator": {"id": "mirrors.model-interface-reduction/v1",
+                          "sha256": self.VALIDATOR_SHA},
+            "apalache": {"version": "0.61.0", "sha256": self.APALACHE_SHA},
+            "java": {"observedVersion": "25.0.4+7-LTS", "selectedVersion": "25.0.4+7",
+                     "executableSha256": self.JAVA_SHA, "archiveSha256": self.ARCHIVE_SHA,
+                     "distributionQualified": True,
+                     "qualificationRef": self.qualification_ref},
+            "cleanup": {"status": "confirmed", "method": "explore_done"},
+            "materialization": {
+                "originalTraceSha256": self.digest(captured, "lease-reduction-original-trace"),
+                "candidateTraceSha256": self.digest(captured, "lease-reduction-candidate-trace"),
+                "originalBundleSha256": self.digest(captured, "lease-reduction-original-bundle"),
+                "actionSequence": ["init", "acquire", "acquire", "renew", "advance", "write",
+                                   "acquire", "release", "renew", "write", "release"],
+                "inputMeasure": {"before": 2, "after": 1},
+                "changes": ["/states/2/parameters/client/#bigint"],
+                "toolManifestSha256": self.digest(captured, "lease-reduction-tool-manifest"),
+                "sources": {
+                    "model": {"path": "model",
+                              "sha256": self.digest(captured, "lease-reduction-model")},
+                    "lock": {"path": "lock",
+                             "sha256": self.digest(captured, "lease-reduction-lock")},
+                    "originalTrace": {"path": "trace",
+                                      "sha256": self.digest(captured, "lease-reduction-original-trace")},
+                    "candidateRequest": {"path": "candidate",
+                                         "sha256": self.digest(captured, "lease-reduction-candidate")},
+                },
+            },
+        }
+
+    def plan_stub(self, artifact_id: str):
+        return type("Plan", (), {"adapter_artifact_id": artifact_id})()
+
+    def test_v2_local_receipt_keeps_local_pins_and_passes(self) -> None:
+        sys.path.insert(0, str(EVIDENCE))
+        import collect
+        captured = self.captured_inputs()
+        self.local_manifest(captured)
+        receipt = self.receipt(captured)
+        receipt["schema"] = "mirrorecma.lease-reduction-oracle/v2"
+        receipt["oracleMode"] = "local"
+        captured["lease-reduction-receipt"] = json.dumps(receipt).encode()
+        collect._validate_reduction_receipt(receipt, captured)
+        behavior, cleanup, tier = collect._reduction_outcomes(
+            self.plan_stub("lease-reduction-receipt"), captured,
+            [{"artifactId": "lease-reduction-receipt", "producer": "mirrorecma",
+              "schemaVersion": "mirrorecma.lease-reduction-oracle/v2"}])
+        self.assertEqual((behavior["status"], tier), ("passed", "passed"))
+        self.assertEqual(behavior["classification"]["code"], "model-valid")
+        self.assertEqual(cleanup, [{"scope": "local-cooperative", "requirement": "required",
+                                    "status": "confirmed",
+                                    "artifactIds": ["lease-reduction-receipt"]}])
+
+    def test_v2_remote_receipt_binds_service_identity_and_passes(self) -> None:
+        sys.path.insert(0, str(EVIDENCE))
+        import collect
+        captured = self.captured_inputs()
+        self.remote_manifest(captured)
+        captured["lease-reduction-service-identity"] = json.dumps(self.IDENTITY).encode()
+        receipt = self.receipt(captured)
+        receipt["schema"] = "mirrorecma.lease-reduction-oracle/v2"
+        receipt["oracleMode"] = "remote"
+        del receipt["apalache"]
+        del receipt["java"]
+        receipt["serviceIdentity"] = dict(self.IDENTITY)
+        captured["lease-reduction-receipt"] = json.dumps(receipt).encode()
+        collect._validate_reduction_receipt(receipt, captured)
+        behavior, cleanup, tier = collect._reduction_outcomes(
+            self.plan_stub("lease-reduction-receipt"), captured, [])
+        self.assertEqual((behavior["status"], tier), ("passed", "passed"))
+        self.assertEqual(cleanup[0]["status"], "confirmed")
+
+    def test_v2_remote_receipt_negatives(self) -> None:
+        sys.path.insert(0, str(EVIDENCE))
+        import collect
+        plan = self.plan_stub("lease-reduction-receipt")
+
+        # Missing captured identity observation.
+        captured = self.captured_inputs()
+        self.remote_manifest(captured)
+        receipt = self.receipt(captured)
+        receipt["schema"] = "mirrorecma.lease-reduction-oracle/v2"
+        receipt["oracleMode"] = "remote"
+        del receipt["apalache"]
+        del receipt["java"]
+        receipt["serviceIdentity"] = dict(self.IDENTITY)
+        captured["lease-reduction-receipt"] = json.dumps(receipt).encode()
+        with self.assertRaisesRegex(ValueError, "service identity"):
+            collect._validate_reduction_receipt(receipt, captured)
+        behavior, cleanup, tier = collect._reduction_outcomes(plan, captured, [])
+        self.assertEqual((behavior["status"], tier), ("inconclusive", "failed"))
+        self.assertEqual(cleanup[0]["status"], "unconfirmed")
+
+        # Closed-record violation: local byte pins present in a remote receipt.
+        captured = self.captured_inputs()
+        self.remote_manifest(captured)
+        captured["lease-reduction-service-identity"] = json.dumps(self.IDENTITY).encode()
+        receipt = self.receipt(captured)
+        receipt["schema"] = "mirrorecma.lease-reduction-oracle/v2"
+        receipt["oracleMode"] = "remote"
+        receipt["serviceIdentity"] = dict(self.IDENTITY)
+        captured["lease-reduction-receipt"] = json.dumps(receipt).encode()
+        with self.assertRaisesRegex(ValueError, "closed record"):
+            collect._validate_reduction_receipt(receipt, captured)
+
+        # Receipt/manifest identity mismatch.
+        captured = self.captured_inputs()
+        self.remote_manifest(captured, validator_sha="9" * 64)
+        captured["lease-reduction-service-identity"] = json.dumps(self.IDENTITY).encode()
+        receipt = self.receipt(captured)
+        receipt["schema"] = "mirrorecma.lease-reduction-oracle/v2"
+        receipt["oracleMode"] = "remote"
+        del receipt["apalache"]
+        del receipt["java"]
+        receipt["serviceIdentity"] = dict(self.IDENTITY)
+        captured["lease-reduction-receipt"] = json.dumps(receipt).encode()
+        with self.assertRaisesRegex(ValueError, "remote tool manifest"):
+            collect._validate_reduction_receipt(receipt, captured)
+
+        # Captured identity bytes differ from the receipt record.
+        captured = self.captured_inputs()
+        self.remote_manifest(captured)
+        altered = json.loads(json.dumps(self.IDENTITY))
+        altered["observedAt"] = "2026-09-30T00:00:00Z"
+        captured["lease-reduction-service-identity"] = json.dumps(altered).encode()
+        receipt = self.receipt(captured)
+        receipt["schema"] = "mirrorecma.lease-reduction-oracle/v2"
+        receipt["oracleMode"] = "remote"
+        del receipt["apalache"]
+        del receipt["java"]
+        receipt["serviceIdentity"] = dict(self.IDENTITY)
+        captured["lease-reduction-receipt"] = json.dumps(receipt).encode()
+        with self.assertRaisesRegex(ValueError, "captured observation"):
+            collect._validate_reduction_receipt(receipt, captured)
+
+    def prefix_captured(self, run_id: str = "run-prefix") -> dict[str, bytes]:
+        bundle = {"schema": "mirrorecma.reproduction-bundle/v1",
+                  "evidenceLinks": {"runRef": {"runId": run_id}}}
+        data = json.dumps(bundle, separators=(",", ":")).encode()
+        return {"prefix-reduction-original-bundle": data}
+
+    def prefix_receipt(self, captured: dict[str, bytes], *,
+                       claim: str = "shortest_reproducing_prefix",
+                       best: int | None = 3, minimality: bool = True,
+                       stop: str = "complete",
+                       candidates: list[dict] | None = None) -> dict:
+        bundle_sha = hashlib.sha256(captured["prefix-reduction-original-bundle"]).hexdigest()
+        if candidates is None:
+            candidates = []
+            for length in (6, 5, 4, 3, 2, 1):
+                candidates.append({
+                    "order": 7 - length,
+                    "prefixLength": length,
+                    "validity": "valid",
+                    "outcome": "reproduced" if length >= 3 else "not_reproduced",
+                    "durationMs": 1,
+                })
+        return {
+            "schema": "mirrorecma.reproduction-prefix-reduction/v1",
+            "originalRunId": "run-prefix",
+            "originalBundleSha256": bundle_sha,
+            "traceIndex": 0,
+            "originalLength": 6,
+            "bestPrefixLength": best,
+            "claim": claim,
+            "minimalityComplete": minimality,
+            "stopReason": stop,
+            "candidates": candidates,
+        }
+
+    def test_prefix_adapter_accepts_a_complete_shortest_claim(self) -> None:
+        sys.path.insert(0, str(EVIDENCE))
+        import collect
+        captured = self.prefix_captured()
+        receipt = self.prefix_receipt(captured)
+        captured["prefix-reduction-receipt"] = json.dumps(receipt).encode()
+        collect._validate_prefix_reduction_receipt(receipt, captured)
+        behavior, cleanup, tier = collect._prefix_reduction_outcomes(
+            self.plan_stub("prefix-reduction-receipt"), captured,
+            [{"artifactId": "prefix-reduction-receipt", "producer": "mirrorecma",
+              "schemaVersion": "mirrorecma.reproduction-prefix-reduction/v1"}])
+        self.assertEqual((behavior["status"], tier), ("passed", "passed"))
+        self.assertEqual(behavior["classification"],
+                         {"namespace": "mirrorecma.reproduction-prefix-reduction",
+                          "code": "shortest_reproducing_prefix"})
+        self.assertEqual(cleanup[0]["artifactIds"], ["prefix-reduction-receipt"])
+
+    def test_prefix_adapter_refuses_not_reduced_and_cleanup_uncertainty(self) -> None:
+        sys.path.insert(0, str(EVIDENCE))
+        import collect
+        plan = self.plan_stub("prefix-reduction-receipt")
+
+        captured = self.prefix_captured()
+        receipt = self.prefix_receipt(captured, claim="not_reduced", best=None,
+                                      minimality=False, stop="not_eligible",
+                                      candidates=[])
+        captured["prefix-reduction-receipt"] = json.dumps(receipt).encode()
+        behavior, cleanup, tier = collect._prefix_reduction_outcomes(plan, captured, [])
+        self.assertEqual((behavior["status"], tier, behavior["classification"]["code"]),
+                         ("inconclusive", "failed", "not-reduced"))
+        self.assertEqual(cleanup[0]["reasonCode"], "not-reduced")
+        self.assertEqual(cleanup[0]["status"], "unconfirmed")
+
+        captured = self.prefix_captured()
+        candidates = [
+            {"order": 1, "prefixLength": 6, "validity": "valid",
+             "outcome": "reproduced", "durationMs": 1},
+            {"order": 2, "prefixLength": 5, "validity": "valid",
+             "outcome": "cleanup_unconfirmed", "durationMs": 2},
+        ]
+        receipt = self.prefix_receipt(captured,
+                                      claim="smallest_observed_reproducing_prefix",
+                                      best=6, minimality=False,
+                                      stop="cleanup_independence_lost",
+                                      candidates=candidates)
+        captured["prefix-reduction-receipt"] = json.dumps(receipt).encode()
+        behavior, cleanup, tier = collect._prefix_reduction_outcomes(plan, captured, [])
+        self.assertEqual((behavior["status"], tier, behavior["classification"]["code"]),
+                         ("inconclusive", "failed", "cleanup-unconfirmed"))
+        self.assertEqual(cleanup[0]["status"], "failed")
+
+    def test_prefix_adapter_rejects_tampered_bundle_and_inconsistent_claims(self) -> None:
+        sys.path.insert(0, str(EVIDENCE))
+        import collect
+        captured = self.prefix_captured()
+        receipt = self.prefix_receipt(captured)
+        tampered = dict(captured)
+        tampered["prefix-reduction-original-bundle"] = b"other-bundle"
+        with self.assertRaisesRegex(ValueError, "identity differs"):
+            collect._validate_prefix_reduction_receipt(receipt, tampered)
+        with self.assertRaisesRegex(ValueError, "was not captured"):
+            collect._validate_prefix_reduction_receipt(receipt, {})
+
+        skipped = self.prefix_receipt(
+            captured, best=3,
+            candidates=[
+                {"order": 1, "prefixLength": 6, "validity": "valid",
+                 "outcome": "reproduced", "durationMs": 1},
+                {"order": 2, "prefixLength": 5, "validity": "valid",
+                 "outcome": "not_reproduced", "durationMs": 1},
+                {"order": 3, "prefixLength": 3, "validity": "valid",
+                 "outcome": "reproduced", "durationMs": 1},
+            ])
+        with self.assertRaisesRegex(ValueError, "skipped a shorter prefix"):
+            collect._validate_prefix_reduction_receipt(skipped, captured)
+
+        inconsistent = self.prefix_receipt(captured, claim="not_reduced", best=3,
+                                           minimality=False, stop="candidate_limit")
+        with self.assertRaisesRegex(ValueError, "not_reduced"):
+            collect._validate_prefix_reduction_receipt(inconsistent, captured)
+
+        altered = self.prefix_captured(run_id="other-run")
+        wrong_run = self.prefix_receipt(altered)
+        with self.assertRaisesRegex(ValueError, "original run differs"):
+            collect._validate_prefix_reduction_receipt(wrong_run, altered)
