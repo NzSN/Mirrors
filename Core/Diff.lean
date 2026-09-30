@@ -88,6 +88,7 @@ def sameShape : Value → Value → Bool
   | .vtuple _, .vtuple _ => true
   | .vrecord _, .vrecord _ => true
   | .vmap _, .vmap _ => true
+  | .vintmap _, .vintmap _ => true
   | .vvariant _ _, .vvariant _ _ => true
   | .vunserializable _, .vunserializable _ => true
   | .vnull, .vnull => true
@@ -106,6 +107,8 @@ inductive WfValue : Value → Prop
       (h : ∀ p ∈ m, WfValue p.2) : WfValue (.vrecord m)
   | vmap {m : ValueMap} (hnd : NodupKeys m)
       (h : ∀ p ∈ m, WfValue p.2) : WfValue (.vmap m)
+  | vintmap {m : List (Int × Value)} (hnd : (m.map Prod.fst).Nodup)
+      (h : ∀ p ∈ m, WfValue p.2) : WfValue (.vintmap m)
   | vset {xs : List Value} (h : ∀ x ∈ xs, WfValue x) :
       WfValue (.vset xs)
   | vseq {xs : List Value} (h : ∀ x ∈ xs, WfValue x) :

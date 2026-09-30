@@ -19,6 +19,10 @@ open Core.ModelInterface
 structure EmitDiagnostic where
   code : String
   message : String
+  subject : String := "target"
+  stableId : Option String := none
+  pointer : Option String := none
+  arguments : List (String × String) := []
   deriving Repr, BEq
 
 /-- One file owned by a generated tree. -/

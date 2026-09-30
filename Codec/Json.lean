@@ -357,6 +357,7 @@ mutual
     | .vint _ | .vbool _ | .vstr _ | .vunserializable _ | .vnull => 1
     | .vset xs | .vseq xs | .vtuple xs => 1 + sizeL xs
     | .vrecord m | .vmap m => 1 + sizeM m
+    | .vintmap m => 1 + sizeIM m
     | .vvariant _ v => 1 + sizeV v
 
   def sizeL : List Value → Nat
@@ -366,6 +367,9 @@ mutual
   def sizeM : ValueMap → Nat
     | [] => 0
     | (_, v) :: ms => sizeV v + 1 + sizeM ms
+  def sizeIM : List (Int × Value) → Nat
+    | [] => 0
+    | (_, v) :: ms => sizeV v + 1 + sizeIM ms
 end
 
 theorem sizeL_cons (v : Value) (vs : List Value) :
@@ -373,8 +377,11 @@ theorem sizeL_cons (v : Value) (vs : List Value) :
 theorem sizeM_cons (k : String) (v : Value) (m : ValueMap) :
     sizeM ((k, v) :: m) = sizeV v + 1 + sizeM m := rfl
 
+theorem sizeIM_cons (k : Int) (v : Value) (m : List (Int × Value)) :
+    sizeIM ((k, v) :: m) = sizeV v + 1 + sizeIM m := rfl
+
 theorem sizeV_pos (v : Value) : 0 < sizeV v := by
-  cases v <;> simp only [sizeV, sizeL, sizeM] <;> omega
+  cases v <;> simp only [sizeV, sizeL, sizeM, sizeIM] <;> omega
 
 theorem sizeV_mem {v : Value} {xs : List Value} (h : v ∈ xs) : sizeV v < sizeL xs := by
   induction xs with
@@ -395,6 +402,16 @@ theorem sizeV_mem_map {k : String} {v : Value} {m : ValueMap} (h : (k, v) ∈ m)
       · rw [Prod.mk.injEq] at h; obtain ⟨rfl, rfl⟩ := h
         rw [sizeM_cons]; have := sizeV_pos v; omega
       · rw [sizeM_cons]; have := ih h; omega
+theorem sizeV_mem_intmap {k : Int} {v : Value} {m : List (Int × Value)} (h : (k, v) ∈ m) :
+    sizeV v < sizeIM m := by
+  induction m with
+  | nil => cases h
+  | cons p ps ih =>
+      obtain ⟨k', v'⟩ := p
+      rcases List.mem_cons.mp h with h | h
+      · rw [Prod.mk.injEq] at h; obtain ⟨rfl, rfl⟩ := h
+        rw [sizeIM_cons]; have := sizeV_pos v; omega
+      · rw [sizeIM_cons]; have := ih h; omega
 /-! ## TreeMap bridges for `ofList` -/
 
 theorem ofList_wf (l : List (String × Json)) :
@@ -504,6 +521,7 @@ mutual
     | .vset xs | .vseq xs | .vtuple xs => wireOkList xs
     | .vvariant _ v => wireOk v
     | .vrecord m | .vmap m => wireOkMap m
+    | .vintmap m => !m.isEmpty && wireOkIntMap m
 
   def wireOkList : List Value → Bool
     | [] => true
@@ -513,6 +531,11 @@ mutual
     | [] => true
     | (k, v) :: ms =>
         (!reservedKey k && !(k ∈ ms.map Prod.fst)) && (wireOk v && wireOkMap ms)
+  def wireOkIntMap : List (Int × Value) → Bool
+    | [] => true
+    | (k, v) :: ms =>
+        !(k ∈ ms.map Prod.fst) && (wireOk v && wireOkIntMap ms)
+
 end
 
 theorem wireOkList_of_forall {xs : List Value}
@@ -535,6 +558,7 @@ mutual
     | .vtuple xs => Json.mkObj [("#tup", Json.arr (encList xs).toArray)]
     | .vrecord m => Json.mkObj (encMap m)
     | .vmap m => Json.mkObj [("#map", Json.arr (encPairs m).toArray)]
+    | .vintmap m => Json.mkObj [("#map", Json.arr (encIntPairs m).toArray)]
     | .vvariant t v => Json.mkObj [("tag", Json.str t), ("value", encValue v)]
     | .vunserializable s => Json.mkObj [("#unserializable", Json.str s)]
     | .vnull => Json.null
@@ -543,7 +567,7 @@ mutual
     all_goals
       first
       | rfl
-      | (simp only [sizeV, sizeL_cons, sizeM_cons]; omega)
+      | (simp only [sizeV, sizeL_cons, sizeM_cons, sizeIM_cons]; omega)
 
   def encList : List Value → List Json
     | [] => []
@@ -553,7 +577,7 @@ mutual
     all_goals
       first
       | rfl
-      | (simp only [sizeV, sizeL_cons, sizeM_cons]; omega)
+      | (simp only [sizeV, sizeL_cons, sizeM_cons, sizeIM_cons]; omega)
 
   def encMap : ValueMap → List (String × Json)
     | [] => []
@@ -563,7 +587,7 @@ mutual
     all_goals
       first
       | rfl
-      | (simp only [sizeV, sizeL_cons, sizeM_cons]; omega)
+      | (simp only [sizeV, sizeL_cons, sizeM_cons, sizeIM_cons]; omega)
 
   def encPairs : ValueMap → List Json
     | [] => []
@@ -573,7 +597,17 @@ mutual
     all_goals
       first
       | rfl
-      | (simp only [sizeV, sizeL_cons, sizeM_cons]; omega)
+      | (simp only [sizeV, sizeL_cons, sizeM_cons, sizeIM_cons]; omega)
+  def encIntPairs : List (Int × Value) → List Json
+    | [] => []
+    | (k, v) :: ms =>
+        Json.arr #[Json.mkObj [("#bigint", Json.str (intRepr k))], encValue v] :: encIntPairs ms
+  termination_by m => sizeIM m
+  decreasing_by
+    all_goals
+      first
+      | rfl
+      | (simp only [sizeV, sizeL_cons, sizeIM_cons]; omega)
 end
 
 /-! ## Decoding of values (§5.2)
@@ -597,6 +631,12 @@ private def optPair (k : String) (dw : Dec Value)
   | .ok w, .ok es => .ok ((k, w) :: es)
   | .error e, _ => .error e
   | .ok _, .error e => .error e
+
+private def parseIntMapKey : Json → Option Int
+  | .obj fields => match fields.toList with
+      | [("#bigint", .str text)] => parseDec text.toList
+      | _ => none
+  | _ => none
 
 mutual
 /-- Fuel-bounded decoding of an ITF value from a JSON tree. -/
@@ -644,7 +684,15 @@ def decValueF : Nat → Json → Dec Value
                   | _ => derr "value: malformed #map entry"
               | _ => derr "value: malformed #map entry") : Dec (List (String × Value))) with
           | .ok es => .ok (.vmap es)
-          | .error e => .error e
+          | .error e =>
+              -- Preserve existing string-map errors; integer maps are a
+              -- homogeneous extension, never a tagged-string conversion.
+              match as.toList with
+              | .arr first :: _ =>
+                  match first.toList with
+                  | .str _ :: _ => .error e
+                  | _ => (decIntPairsF fu as.toList).map Value.vintmap
+              | _ => .error e
       | [e1, e2] =>
           if e1.1 == "tag" && e2.1 == "value" then
             match e1.2, e2.2 with
@@ -682,6 +730,30 @@ decreasing_by
     | (simp only [List.length_cons]; omega)
     | apply Prod.Lex.left; omega
     | apply Prod.Lex.right; omega
+
+/-- Decode homogeneous integer-key maps and reject duplicate keys. -/
+def decIntPairsF : Nat → List Json → Dec (List (Int × Value))
+  | _, [] => .ok []
+  | 0, _ :: _ => derr "value: nesting too deep"
+  | fu + 1, entry :: rest => do
+      let (key, value) ← match entry with
+        | .arr pair => match pair.toList with
+            | [key, value] => match parseIntMapKey key with
+                | some integer => .ok (integer, value)
+                | none => derr "value: integer #map key expected"
+            | _ => derr "value: malformed #map entry"
+        | _ => derr "value: malformed #map entry"
+      let decoded ← decValueF fu value
+      let entries ← decIntPairsF (fu + 1) rest
+      if key ∈ entries.map Prod.fst then derr "value: duplicate integer #map key"
+      else .ok ((key, decoded) :: entries)
+termination_by fu entries => (fu, entries.length + 1)
+decreasing_by
+  all_goals first
+    | (simp only [List.length_cons]; omega)
+    | apply Prod.Lex.left; omega
+    | apply Prod.Lex.right; omega
+
 end
 
 /-- Public decoder for embedded values. -/
@@ -950,6 +1022,50 @@ theorem decRecordF_ok {n : Nat} {m : ValueMap} :
             exact ⟨w', List.mem_cons_of_mem _ hw'', hv', hej', hval'⟩
 /-! ### encMap bridges -/
 
+private theorem parseIntMapKey_encoded (k : Int) :
+    parseIntMapKey (Json.mkObj [("#bigint", Json.str (intRepr k))]) = some k := by
+  simp only [parseIntMapKey, Json.mkObj, toList_ofList_singleton, parseDec_intRepr]
+
+/-- Integer map decoding retains the exact key sequence and compares values
+extensionally, using the same smaller-value induction as ordinary maps. -/
+theorem decIntPairsF_encIntPairs {n : Nat} :
+    ∀ (m : List (Int × Value)) (F : Nat), 2 * n + 4 ≤ F →
+    wireOkIntMap m = true → (∀ k v, (k, v) ∈ m → sizeV v ≤ n) →
+    (∀ v, wireOk v = true → sizeV v ≤ n → encOkAt n v) →
+    ∃ ws, decIntPairsF (F + 1) (encIntPairs m) = .ok ws ∧
+      ws.map Prod.fst = m.map Prod.fst ∧
+      (∀ k v, (k, v) ∈ m → ∃ w, (k, w) ∈ ws ∧ valEq v w = true) ∧
+      (∀ k w, (k, w) ∈ ws → ∃ v, (k, v) ∈ m ∧ valEq v w = true) := by
+  intro m
+  induction m with
+  | nil =>
+      intro F _ _ _ _
+      exact ⟨[], by simp [encIntPairs, decIntPairsF], rfl, by simp, by simp⟩
+  | cons entry rest tail =>
+      intro F hF hwok hsz ih
+      obtain ⟨k, v⟩ := entry
+      simp only [wireOkIntMap, Bool.and_eq_true, Bool.not_eq_true',
+        decide_eq_false_iff_not] at hwok
+      obtain ⟨w, hw, hval⟩ := ih v hwok.2.1 (hsz k v (by simp)) F hF
+      obtain ⟨ws, hmap, hkeys, hd1, hd2⟩ := tail F hF hwok.2.2
+        (fun k' v' hv' => hsz k' v' (List.mem_cons_of_mem _ hv')) ih
+      refine ⟨(k, w) :: ws, ?_, by simp [hkeys], ?_, ?_⟩
+      · simp only [encIntPairs, decIntPairsF, parseIntMapKey_encoded,
+          List.toList_toArray]
+        dsimp only [Bind.bind, Except.bind, Pure.pure, Except.pure]
+        rw [hw, hmap]
+        simp [Bind.bind, Except.bind, hkeys, hwok.1]
+      · intro k' v' hv'
+        rcases List.mem_cons.mp hv' with hv' | hv'
+        · cases hv'; exact ⟨w, List.mem_cons_self, hval⟩
+        · obtain ⟨w', hw', hval'⟩ := hd1 k' v' hv'
+          exact ⟨w', List.mem_cons_of_mem _ hw', hval'⟩
+      · intro k' w' hw'
+        rcases List.mem_cons.mp hw' with hw' | hw'
+        · cases hw'; exact ⟨v, List.mem_cons_self, hval⟩
+        · obtain ⟨v', hv', hval'⟩ := hd2 k' w' hw'
+          exact ⟨v', List.mem_cons_of_mem _ hv', hval'⟩
+
 theorem encMap_keys (m : ValueMap) : (encMap m).map Prod.fst = m.map Prod.fst := by
   induction m with
   | nil => simp [encMap]
@@ -1135,6 +1251,43 @@ theorem decValueF_encValue :
             refine ⟨mapCont_iff m ws |>.mpr hd1m, mapCont_iff ws m |>.mpr (fun k w hwmem => by
               obtain ⟨v, hv, hval⟩ := hd2m k w hwmem
               exact ⟨v, hv, valEq_symm _ _ hval⟩)⟩
+      | vintmap m =>
+          have hwokm : wireOkIntMap m = true := by
+            have both := hw
+            rw [wireOk, Bool.and_eq_true] at both
+            exact both.2
+          have hnonempty : m ≠ [] := by
+            intro he; subst he; simp [wireOk] at hw
+          have hchild : 2 * n + 4 ≤ F' - 1 := by omega
+          obtain ⟨ws, hmap, hkeys, hd1, hd2⟩ :=
+            decIntPairsF_encIntPairs m (F' - 1) hchild hwokm
+              (fun k v hmem => by
+                have := sizeV_mem_intmap hmem
+                simp only [sizeV] at hv
+                omega)
+              (fun x hx hsz => ih x hx (by
+                have := sizeV_pos x
+                simp only [sizeV] at hv
+                omega))
+          have hF' : F' - 1 + 1 = F' := by omega
+          rw [hF'] at hmap
+          refine ⟨.vintmap ws, ?_, ?_⟩
+          · cases m with
+            | nil => exact (hnonempty rfl).elim
+            | cons entry rest =>
+                obtain ⟨k, v⟩ := entry
+                have hmap' := hmap
+                simp only [encIntPairs, Json.mkObj] at hmap'
+                simp only [encValue, Json.mkObj, decValueF, toList_ofList_singleton,
+                  encIntPairs, List.toList_toArray, List.mapM_cons]
+                simp only [Bind.bind, Except.bind, Pure.pure, Except.pure, derr]
+                rw [hmap']
+                rfl
+          · simp only [valEq, Bool.and_eq_true]
+            exact ⟨(intMapCont_iff m ws).mpr hd1,
+              (intMapCont_iff ws m).mpr (fun k w hwmem =>
+                let ⟨v, hv, hval⟩ := hd2 k w hwmem
+                ⟨v, hv, valEq_symm _ _ hval⟩)⟩
       | vrecord m =>
           have hwokm : wireOkMap m = true := by
             simp only [wireOk] at hw

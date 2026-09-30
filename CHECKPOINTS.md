@@ -5,6 +5,162 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-09-30 — WriteSentry compiler improvements paused by user
+
+Recorded at **21:42 +08:00** after the user requested: “Break, record current
+state as checkpoint to CHECKPOINTS.md.” Implementation is intentionally stopped.
+Do not continue until the user resumes it. The five-workstream plan is **not
+complete**, and the working tree currently does **not** pass a full build.
+
+Plan: [WriteSentry integration improvements](Plans/model-interface-compiler/writesentry-integration-improvements.md).
+
+### Source and delivery state
+
+- Mirrors `HEAD == origin/main` locally at
+  `b009cafebc8f057901ce98c66cc9772898c04d57` (the plan commit). These are local
+  tracking observations; no new remote query was made for this stop.
+- The earlier published `v0.0.3` tag still targets
+  `adcf1290e52380367d6632187631b0591cfea4c2`. The new implementation remains
+  uncommitted and unpushed; the tag does not include it.
+- Before this checkpoint edit: 16 tracked implementation files changed, plus
+  new `Core/Tla/StandardCatalog.lean` and
+  `Shell/ModelInterface/Emit/CMake.lean`. Preserve the unrelated
+  `.projectile-cache.eld` and `Proposals/README.md`; do not stage or remove them
+  as part of this work. `Proposals/` was not created by this implementation pass.
+- MirrorCPP remains clean at
+  `d8ed4455e8f73a9144215f62f1dc6963d6d792e7`; no sibling source was edited by
+  this pass. MirrorRegistry is excluded from scope at the user's request.
+- **WriteSentry advanced independently** from the plan's `e26fe92` baseline to
+  `9dd4b57844603878d93fdecc2ee43f7f1abe0ee2`
+  (`Tests: use generated WriteSentry model-interface binding`). Its current
+  untracked entries are `.projectile-cache.eld`, `CHECKPOINTS.md`, and `Plans/`.
+  Reinspect that committed integration before resuming: the plan's statement
+  that it is an uncommitted working tree is now historical. This pass neither
+  created that commit nor verified its remote publication.
+- No agents were spawned. The last Lake build finished with an error; its
+  unified-exec session is no longer active. A host process check found no
+  `lake`, `lean`, or `leanc` process running. No qualification command remains
+  live from this pass.
+
+### Implementation and acceptance boundary
+
+| Workstream | Current changes | Remaining acceptance |
+| --- | --- | --- |
+| MIC-2 replay partition | `Core/Trace.lean` now uses stable, deduplicated recorded names followed by configured additions for both metadata and `resplit`. Resolver normalization shares that policy. Membership, losslessness, disjointness, and pointwise repeated-split proofs remain checked. A WriteSentry-shaped regression covers recorded names, empty configuration, additions, duplicates, and repeated application. | Full replay/negotiation and affected regression closure; update compatibility and Haskell-divergence documentation. The working decision retains comparison policy `/v1` because the descriptor already specified the combined partition; record and review that rationale before acceptance. |
+| MIC-1 integer maps | New `Value.vintmap` stores integer keys separately from root/record string keys. Concrete integer walkers preserve equality equivalence proofs. ITF decoding accepts homogeneous `#bigint` keys and rejects duplicate integer, malformed, mixed, and unsupported keys. Canonical empty maps remain `vmap []`, interpreted using the resolved key type. Codec round-trip proof, typed preflight, and integer-key input projection compile. Integer-map diffs currently produce an atomic map-level mismatch, preserving the existing diff theorems. | Native C++ compilation/execution, executable projection/zero-callback failures, original-table WriteSentry adoption and replay, compatibility documentation, and full gates. No final WriteSentry or cross-client qualification was performed. |
+| MIC-1 C++ profile | Additive `mirrorcpp-v2` accepts integer/string maps and corresponding literal `mapKey` paths; `mirrorcpp-v1` keeps its previous capability boundary and passes its existing exact golden check. CLI target allowlist and ownership profile version handling were extended. The v2 runtime specializes checked v1 template sections and rejects missing/ambiguous map or variant boundaries. | Review runtime-template assembly, native ownership/copy safety, supported key matrix, packaging, and supported client/server combinations. Pure emitter success is not native execution evidence. |
+| MIC-3 standard imports | New pure catalog records public and local dependency edges. `Integers -> Naturals` and `Reals -> Integers` become visible unqualified and through named instances; local imports stay hidden. Shell catalog identity is now `mirrors-standard-modules/v2`, with a TLA+ Tools 1.8.0 baseline label. Focused elaboration and resolver scenarios were updated. | Frontend language-profile bump and frozen corpus/summary migration are still pending: lexer/parser and corpus still identify profile 4. Catalog content identities, source-override coverage, and pinned differential/reference qualification remain open. Do not credit historical profile-4 evidence to these changed semantics. |
+| MIC-5 diagnostics | C++ target validation accumulates independent unsupported-type/path findings with model/action/input/observation IDs, typed-lock pointers, nested type paths, and target context. Shared emitter diagnostic fields feed existing structured compiler diagnostics. Focused C++ rejection/context/order checks pass. | Executable CLI JSON/human agreement, escaping/location cases, projection diagnostics, and expanded-profile guidance. |
+| MIC-4 CMake consumers | Draft pure emitter creates `MirrorInterface.cmake`, `MirrorVerify.cmake`, and `MirrorInterface.inputs.json` alongside binding/ownership files. Draft `generate-cmake`/`check-cmake` commands compile inputs, hash source/input/output artifacts and compiler bytes, and reuse owned publication. The helper proposes offline checks, build dependencies, and explicit regeneration. | **Currently fails to compile.** No CMake configure/build/replay, freshness/mutation, path-safety, failure/rollback, or consumer acceptance gate has run. Draft helper safety and schema behavior still need review. |
+
+The polymorphic mutually recursive map attempt triggered a Lean 4.33 compiler
+IR/explicit-boxing failure. It was replaced with concrete string/integer
+walkers; `Core.Value` subsequently built successfully. Do not reintroduce that
+failed polymorphic version or use `noncomputable`, `sorry`, or axioms as a
+workaround. The changed proof files contain no `sorry` or added axioms.
+
+### Validation retained before the last CMake edit
+
+- Initial replay-partition regression was red with **11 failures** in
+  `/tmp/mic-partition-red-test.log`; the repaired focused suite passed in
+  `/tmp/mic-partition-green-test.log`.
+- `lake build Core.Value` passed:
+  `/tmp/mic-intmap-value-build.log`.
+- `lake build Codec.Json` passed, including the extended round-trip theorem:
+  `/tmp/mic-intmap-codec-build.log`. `Core.Diff` and typed preflight also built
+  during this work.
+- Latest successful pre-CMake build:
+  `lake build model_interface_spec model_interface_gen mirror`, recorded in
+  `/tmp/mic-intmap-compiler-build.log` (537 jobs).
+- `.lake/build/bin/model_interface_spec` returned
+  `MODEL INTERFACE SPEC GREEN` in `/tmp/mic-intmap-compiler-test.log`, including
+  replay partition, integer-map codecs/projection, emitter capability, and
+  diagnostic regressions. Log SHA-256:
+  `115609a409cb81cbe2bb938de26e52004835c819dff7697c0ab3b7d6f26ea266`.
+- Counter `model_interface_gen check --target mirrorcpp-v1` returned
+  `model-interface check clean` in `/tmp/mic-cpp-v1-golden.log`. Log SHA-256:
+  `5b793c730e6597d40440b7464ed2be6748b25079c359b7dfa4d75908cd93596b`.
+- `/tmp/mic-diagnostics-import-build.log` contains
+  `TLA ELABORATION SPEC GREEN` after import changes, but that aggregate later
+  failed on an emitter-test syntax error subsequently fixed. Treat the
+  individual elaboration result separately from that failed aggregate;
+  re-run the affected frontend/resolver executables on resume.
+- `git diff --check` passed at stop. No full local non-model aggregate, native
+  C++ gate, CTest consumer campaign, interop, or model checking ran during this
+  implementation pass. The remote service was not contacted or changed.
+
+The latest command was `lake build model_interface_gen model_interface_spec`,
+logged in `/tmp/mic-cmake-build.log`. It **failed** in
+`Shell/ModelInterface/Emit/CMake.lean:158–159`:
+
+```text
+invalid {...} notation, expected type is not known
+Invalid dotted identifier notation: The expected type of .lt could not be determined
+```
+
+The failure is in the final generated-file list/qsort expression; explicit
+`GeneratedFile`/list/comparator type annotations are the next diagnostic step,
+not a proven fix. No downstream test ran after this failure. Log SHA-256:
+`055fe6f2e7bb163971f6159358a29c7a28f7bcc79ce0d6ea2d8146c7d2ad8f75`.
+
+### Binaries and reference provenance
+
+These files were inspected at stop; their hashes do not establish a successful
+build of the current tree containing the unfinished CMake changes:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `.lake/build/bin/mirror` | `9bd54dddff7996c4639176162e9b3ba93839c2687d0c2be64adf1f7ad7ebb306` |
+| `.lake/build/bin/model_interface_gen` | `84650c730a00627e540ebd5340b764dfa00184d07b102b6930ffc13a17d551e3` |
+| Installed `/home/nzsn/.local/bin/ModelMirrors` | `fbada2a422a5ace6378eeca8b6866c6581a3a9f3f93202ec4db00e955bc4a459` |
+
+The installed ModelMirrors remains the earlier released version-fix binary;
+this implementation was not installed, published, tagged, or deployed.
+
+The local cached `tla2tools.jar` at
+`/home/nzsn/.cache/coursier/v1/https/github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar`
+has SHA-256
+`cc4803dce2a8ffaf0f5920a9dc39df4b5ee34ab4cb53fb58ac557277a7e516b3`,
+which **does not match** the differential lock's expected
+`db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1`.
+Its directory name is not pinned-tool identity proof. The public/private import
+distinction was also inspected in published TLA+ Tools v1.8.0 sources, but no
+pinned reference qualification was run; re-acquire and verify the selected tool
+before crediting differential evidence.
+
+### Resume order
+
+1. Respect the stop until resumed. Reinspect dirty trees and WriteSentry's new
+   `9dd4b57` integration; preserve the unrelated entries above.
+2. Diagnose the CMake emitter type errors, build the compiler/spec targets,
+   then run the focused suites. Prior binaries and green logs predate this
+   unfinished slice and cannot qualify it.
+3. Add a generated/native C++ v2 integer-table fixture with positive replay,
+   arbitrary-precision/empty/nested maps, both key sorts, duplicate/missing/
+   mistyped key rejection, and zero application callbacks on input failures.
+   Complete CMake offline/configure/build/replay/regeneration checks, including
+   unsafe/duplicate paths, source edits after configure, rollback, and unrelated
+   output preservation. Wire new meaningful gates into the owning runners.
+4. Record compatibility decisions in the compiler/interface/client contracts.
+   Bump the frontend profile and regenerate its affected corpus/summary outputs
+   through the documented tooling; verify pinned reference identities.
+5. Adopt original `reg`, `dr`, and `tls` observations in WriteSentry using
+   `mirrorcpp-v2`; regenerate contract/lock/evidence/binding/helpers, then remove
+   projections only after original-table compile and replay acceptance.
+6. Requalify all 14 scenarios and 18 actions, both overlap directions, eight
+   reached flag classes, and `drop-reservation`, `skip-clear`, and
+   `allow-foreign-writer` as real server `step_mismatch` controls. Record fresh
+   totals, not an assumed 212 snapshots.
+7. Run `bash tools/run-local-no-model-check.sh` and affected client/native
+   gates. Required model checks must go through the Mirrors CLI to
+   `192.168.150.219:8999`; do not start local Apalache or TLC. WriteSentry's
+   existing local-backend corpus generator needs a reviewed remote-oracle path;
+   ordinary local trace paths cannot establish remote replay. Retain actual
+   deployed backend identity and all unavailable/skipped gates.
+
+Completion, commit/push, installation, and service deployment have not been
+claimed for these implementation changes.
+
 ## 2026-09-30 — Closing sweep complete: shortest-prefix claim credited
 
 Status: **round closed by parent after delegated execution.** Selection

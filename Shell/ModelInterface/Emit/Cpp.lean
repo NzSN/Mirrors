@@ -119,58 +119,122 @@ private def validateNativeNamespaces (lock : LockedModelInterface) : EmitResult 
   let _ ← validateNativeNamespace "observation fields" (lock.observations.map (·.id))
   pure ()
 
-private partial def nativeType : ModelType → EmitResult String
+private partial def nativeType (profile : String) : ModelType → EmitResult String
   | .int => pure "mirrorcpp::Value::Int"
   | .bool => pure "bool"
   | .str => pure "std::string"
   | .null => pure "MirrorNull"
-  | .set element => return s!"MirrorSet<{← nativeType element}>"
-  | .seq element => return s!"MirrorSeq<{← nativeType element}>"
+  | .set element => return s!"MirrorSet<{← nativeType profile element}>"
+  | .seq element => return s!"MirrorSeq<{← nativeType profile element}>"
   | .tuple elements => do
-      let types ← elements.mapM nativeType
+      let types ← elements.mapM (nativeType profile)
       return s!"MirrorTuple<{String.intercalate ", " types}>"
   | .record fields => do
       let fields := sortedBy (·.wireName) fields
       let types ← fields.mapM fun field => do
-        let type ← nativeType field.type
+        let type ← nativeType profile field.type
         return s!"RecordField<{cppString field.wireName}, {type}>"
       return s!"MirrorRecord<{String.intercalate ", " types}>"
-  | .map .str value => return s!"MirrorMap<{← nativeType value}>"
+  | .map .str value => return s!"MirrorMap<{← nativeType profile value}>"
+  | .map .int value =>
+      if profile == "mirrorcpp-v2" then
+        return s!"MirrorMap<{← nativeType profile value}, mirrorcpp::Value::Int>"
+      else fail "MIC-E-TYPE-001" "mirrorcpp-v1 supports only string-keyed maps"
   | .map _ _ => fail "MIC-E-TYPE-001"
       "mirrorcpp-v1 supports only string-keyed maps"
   | .variant cases => do
       let cases := sortedBy (·.tag) cases
       let types ← cases.mapM fun item => do
-        let type ← nativeType item.payload
+        let type ← nativeType profile item.payload
         return s!"VariantCase<{cppString item.tag}, {type}>"
       return s!"MirrorVariant<{String.intercalate ", " types}>"
   | .opaqueItf description => fail "MIC-E-TYPE-001"
       s!"mirrorcpp-v1 cannot emit opaque ITF type: {description}"
 
-private def renderPathSegment : PathSegment → EmitResult String
+private def renderPathSegment (profile : String) : PathSegment → EmitResult String
   | .field name => pure s!"PathSegment::field({cppString name})"
   | .index index => pure s!"PathSegment::index({index})"
   | .variantValue tag => pure s!"PathSegment::variant({cppString tag})"
-  | .mapKey _ => fail "MIC-E-PATH-001"
+  | .mapKey key =>
+      if profile == "mirrorcpp-v2" then
+        match key with
+        | .str text => pure s!"PathSegment::map_key(mirrorcpp::Value({cppString text}))"
+        | .int integer => pure s!"PathSegment::map_key(mirrorcpp::Value(mirrorcpp::Value::Int(std::string({cppString (toString integer)}))))"
+        | _ => fail "MIC-E-PATH-001" "mirrorcpp-v2 supports only string and integer mapKey literals"
+      else fail "MIC-E-PATH-001"
       "mirrorcpp-v1 does not support mapKey paths"
 
-private def renderPath (path : List PathSegment) : EmitResult String := do
-  let segments ← path.mapM renderPathSegment
+private def renderPath (profile : String) (path : List PathSegment) : EmitResult String := do
+  let segments ← path.mapM (renderPathSegment profile)
   pure ("std::vector<PathSegment>{" ++ String.intercalate ", " segments ++ "}")
 
-private def renderInputStruct (action : ResolvedAction) : EmitResult String := do
+private partial def unsupportedTypes (profile : String) (context : EmitDiagnostic) (path : String) :
+    ModelType → List EmitDiagnostic
+  | .map key value =>
+      (if key == .str || (profile == "mirrorcpp-v2" && key == .int) then [] else [{ context with
+        code := "MIC-E-TYPE-001"
+        message := context.message ++ s!": {path}.key: {profile} does not support this map key type"
+        arguments := context.arguments ++ [("typePath", path ++ ".key")] }]) ++
+      unsupportedTypes profile context (path ++ ".value") value
+  | .opaqueItf description => [{ context with
+        code := "MIC-E-TYPE-001"
+        message := context.message ++ s!": {path}: opaque ITF type {description} has no native representation"
+        arguments := context.arguments ++ [("typePath", path)] }]
+  | .set element | .seq element => unsupportedTypes profile context (path ++ ".element") element
+  | .tuple elements => elements.zipIdx.flatMap fun (element, index) =>
+      unsupportedTypes profile context (path ++ s!"[{index}]") element
+  | .record fields => (sortedBy (·.wireName) fields).flatMap fun field =>
+      unsupportedTypes profile context (path ++ ".field[" ++ cppString field.wireName ++ "]") field.type
+  | .variant cases => (sortedBy (·.tag) cases).flatMap fun item =>
+      unsupportedTypes profile context (path ++ ".case[" ++ cppString item.tag ++ "]") item.payload
+  | _ => []
+
+/-- Accumulate independent lowering findings before constructing any output.
+Pointers refer to the typed lock, not invented TLA+ source positions. -/
+def targetDiagnostics (lock : LockedModelInterface) (profile : String := "mirrorcpp-v1") : List EmitDiagnostic :=
+  let actionFindings (group : String) (actions : List ResolvedAction) :=
+    actions.zipIdx.flatMap fun (action, actionIndex) =>
+      action.inputs.zipIdx.flatMap fun (input, inputIndex) =>
+        let pointer := s!"/{group}/{actionIndex}/inputs/{inputIndex}/projection"
+        let context : EmitDiagnostic := {
+          code := "MIC-E-TYPE-001"
+          message := s!"model {lock.modelModule}, action {action.id}, input {input.id} at {pointer}"
+          subject := "input", stableId := some input.id, pointer := some pointer
+          arguments := [("model", lock.modelModule), ("action", action.id),
+            ("input", input.id), ("target", profile)] }
+        unsupportedTypes profile context "type" input.projection.type ++
+          input.projection.path.zipIdx.filterMap fun (segment, index) =>
+            match segment with
+            | .mapKey key =>
+                if profile == "mirrorcpp-v2" && (match key with | .int _ | .str _ => true | _ => false) then none
+                else some { context with
+                code := "MIC-E-PATH-001"
+                message := context.message ++ s!": path[{index}]: {profile} does not support this mapKey literal"
+                arguments := context.arguments ++ [("projectionSegment", toString index)] }
+            | _ => none
+  actionFindings "initializers" lock.initializers ++ actionFindings "actions" lock.actions ++
+    lock.observations.zipIdx.flatMap fun (observation, index) =>
+      let pointer := s!"/observations/{index}/type"
+      unsupportedTypes profile {
+        code := "MIC-E-TYPE-001"
+        message := s!"model {lock.modelModule}, observation {observation.id} at {pointer}"
+        subject := "observation", stableId := some observation.id, pointer := some pointer
+        arguments := [("model", lock.modelModule), ("observation", observation.id),
+          ("wireName", observation.wireName), ("target", profile)] } "type" observation.type
+
+private def renderInputStruct (profile : String) (action : ResolvedAction) : EmitResult String := do
   if action.inputs.isEmpty then return ""
   let fields ← (sortedBy (·.id) action.inputs).mapM fun input => do
     let _ ← validateName "input" input.id
-    let type ← nativeType input.projection.type
+    let type ← nativeType profile input.projection.type
     pure s!"  {type} {lowerFirst input.id};"
   pure <| lines ([s!"struct {action.id}Input " ++ "{"] ++ fields ++ ["};"])
 
-private def renderObservation (modelName : String)
+private def renderObservation (profile : String) (modelName : String)
     (observations : List ResolvedObservation) : EmitResult String := do
   let fields ← (sortedBy (·.id) observations).mapM fun observation => do
     let _ ← validateName "observation" observation.id
-    let type ← nativeType observation.type
+    let type ← nativeType profile observation.type
     pure s!"  {type} {lowerFirst observation.id};"
   pure <| lines ([s!"struct {modelName}Observation " ++ "{"] ++ fields ++ ["};"])
 
@@ -181,14 +245,14 @@ private def renderPortMethod (action : ResolvedAction) : EmitResult String := do
   else
     pure s!"  virtual void {lowerFirst action.id}(const {action.id}Input& input) = 0;"
 
-private def renderInputDecoder (action : ResolvedAction) : EmitResult String := do
+private def renderInputDecoder (profile : String) (action : ResolvedAction) : EmitResult String := do
   if action.inputs.isEmpty then return ""
   let fields ← (sortedBy (·.id) action.inputs).mapM fun input => do
     let root := match input.projection.root with
       | .initialState => "comparable_initial_state(payload)"
       | .stepParameters => "payload"
-    let path ← renderPath input.projection.path
-    let type ← nativeType input.projection.type
+    let path ← renderPath profile input.projection.path
+    let type ← nativeType profile input.projection.type
     pure s!"      .{lowerFirst input.id} = decode_native<{type}>(read_path({root}, {path}, {cppString (action.id ++ "." ++ input.id)}), {cppString (action.id ++ "." ++ input.id)}),"
   pure <| lines ([s!"inline {action.id}Input decode_{lowerFirst action.id}_input(const mirrorcpp::State& payload) " ++ "{",
     s!"  return {action.id}Input" ++ "{"] ++ fields ++ ["  };", "}"])
@@ -216,10 +280,10 @@ private def renderActionBranch (isFirst : Bool) (action : ResolvedAction) : Emit
      s!"      stable_action = {cppString action.id};",
      "    }"]
 
-private def renderObservationEncoder (modelName : String)
+private def renderObservationEncoder (profile : String) (modelName : String)
     (observations : List ResolvedObservation) : EmitResult String := do
   let assignments ← (sortedBy (·.id) observations).mapM fun observation => do
-    let type ← nativeType observation.type
+    let type ← nativeType profile observation.type
     pure s!"  state.emplace({cppString observation.wireName}, encode_native<{type}>(observation.{lowerFirst observation.id}, {cppString (modelName ++ "Observation." ++ observation.id)}));"
   pure <| lines ([s!"inline mirrorcpp::State encode_{lowerFirst modelName}_observation(const {modelName}Observation& observation) " ++ "{",
     "  mirrorcpp::State state;"] ++ assignments ++ ["  return state;", "}"])
@@ -430,15 +494,73 @@ private def runtimeSupport : String := lines [
   "};"
 ]
 
-private def renderModule (lock : LockedModelInterface) : EmitResult (String × String) := do
+
+private def runtimeSupportV2 : EmitResult String := do
+  let support := runtimeSupport
+    |>.replace "enum class Kind { field, index, variant_value };"
+      "enum class Kind { field, index, variant_value, map_key };"
+    |>.replace "  std::size_t position = 0;"
+      "  std::size_t position = 0;\n  mirrorcpp::Value key{};"
+    |>.replace "  static PathSegment field(std::string value)"
+      "  static PathSegment map_key(mirrorcpp::Value value) { return {Kind::map_key, {}, 0, std::move(value)}; }\n  static PathSegment field(std::string value)"
+    |>.replace "    } else {\n      if (!value.is<mirrorcpp::Value::Variant>()"
+      (lines [
+        "    } else if (segment.kind == PathSegment::Kind::map_key) {",
+        "      if (!value.is<mirrorcpp::Value::Map>()) throw binding_error(\"input_shape_mismatch\", std::string(label) + \": map expected\");",
+        "      const auto& entries = value.get<mirrorcpp::Value::Map>().entries;",
+        "      std::set<std::string> strings; std::set<mirrorcpp::Value::Int> integers;",
+        "      const mirrorcpp::Value* found = nullptr;",
+        "      for (const auto& [key, item] : entries) {",
+        "        if (key.kind() != segment.key.kind()) throw binding_error(\"input_shape_mismatch\", std::string(label) + \": mistyped map key\");",
+        "        const bool unique = key.is_str() ? strings.insert(key.get<std::string>()).second : integers.insert(key.get<mirrorcpp::Value::Int>()).second;",
+        "        if (!unique) throw binding_error(\"input_shape_mismatch\", std::string(label) + \": duplicate map key\");",
+        "        if (key == segment.key) found = &item;",
+        "      }",
+        "      if (found == nullptr) throw binding_error(\"input_shape_mismatch\", std::string(label) + \": map key is absent\");",
+        "      value = mirrorcpp::Value(*found);",
+        "    } else {"] ++ "      if (!value.is<mirrorcpp::Value::Variant>()")
+    |>.replace "template <typename T> struct MirrorMap { std::vector<std::pair<std::string, T>> entries; };"
+      "template <typename T, typename K = std::string> struct MirrorMap { std::vector<std::pair<K, T>> entries; };"
+  let start := "template <typename T> struct NativeCodec<MirrorMap<T>> {"
+  let finish := "template <typename... Cases> struct NativeCodec<MirrorVariant<Cases...>> {"
+  let parts := support.splitOn start
+  match parts with
+  | [before, after] =>
+      let remaining := after.splitOn finish
+      match remaining with
+      | [_, rest] => pure <| before ++ lines [
+          "template <typename T, typename K> struct NativeCodec<MirrorMap<T, K>> {",
+          "  static MirrorMap<T, K> decode(const mirrorcpp::Value& value, std::string_view path) {",
+          "    if (!value.is<mirrorcpp::Value::Map>()) throw binding_error(\"input_shape_mismatch\", std::string(path) + \": map expected\");",
+          "    MirrorMap<T, K> result; std::set<K> keys;",
+          "    const auto& source = value.get<mirrorcpp::Value::Map>().entries;",
+          "    for (std::size_t i = 0; i < source.size(); ++i) {",
+          "      const auto key = decode_native<K>(source[i].first, std::string(path) + \": map key\");",
+          "      if (!keys.insert(key).second) throw binding_error(\"input_shape_mismatch\", std::string(path) + \": duplicate map key\");",
+          "      result.entries.emplace_back(key, decode_native<T>(source[i].second, std::string(path) + \"[\" + std::to_string(i) + \"]\"));",
+          "    } return result;",
+          "  }",
+          "  static mirrorcpp::Value encode(const MirrorMap<T, K>& value, std::string_view path) {",
+          "    mirrorcpp::Value::Map result; std::set<K> keys;",
+          "    for (const auto& [key, item] : value.entries) {",
+          "      if (!keys.insert(key).second) throw binding_error(\"observation_shape_mismatch\", std::string(path) + \": duplicate map key\");",
+          "      result.entries.emplace_back(encode_native<K>(key, std::string(path) + \": map key\"), encode_native<T>(item, path));",
+          "    } return mirrorcpp::Value(std::move(result));",
+          "  }",
+          "};"] ++ finish ++ rest
+      | _ => fail "MIC-E-INTERNAL-001" "C++ v2 runtime variant boundary is ambiguous"
+  | _ => fail "MIC-E-INTERNAL-001" "C++ v2 runtime map boundary is ambiguous"
+
+private def renderModule (profile : String) (lock : LockedModelInterface) : EmitResult (String × String) := do
+  let support ← if profile == "mirrorcpp-v2" then runtimeSupportV2 else pure runtimeSupport
   let modelName := lock.modelModule
   let _ ← validateNativeNamespaces lock
   let actions := sortedBy (·.id) (lock.initializers ++ lock.actions)
-  let inputStructs ← actions.mapM renderInputStruct
-  let observation ← renderObservation modelName lock.observations
+  let inputStructs ← actions.mapM (renderInputStruct profile)
+  let observation ← renderObservation profile modelName lock.observations
   let portMethods ← actions.mapM renderPortMethod
-  let decoders ← actions.mapM renderInputDecoder
-  let observationEncoder ← renderObservationEncoder modelName lock.observations
+  let decoders ← actions.mapM (renderInputDecoder profile)
+  let observationEncoder ← renderObservationEncoder profile modelName lock.observations
   let branches ← actions.zipIdx.mapM fun indexed =>
     renderActionBranch (indexed.2 == 0) indexed.1
   let contractJson := Codec.ModelInterfaceJson.canonicalString
@@ -447,8 +569,8 @@ private def renderModule (lock : LockedModelInterface) : EmitResult (String × S
     "        {" ++ cppString action.id ++ ", 0},"
   let source := lines <|
     ["// @generated by Mirrors model_interface_gen",
-     s!"// target-profile: {targetProfile}",
-     s!"// profile-version: {profileVersion}",
+     s!"// target-profile: {profile}",
+     s!"// profile-version: {if profile == "mirrorcpp-v2" then 2 else 1}",
      s!"// semantic-sha256: {lock.semanticDigest}",
      "// DO NOT EDIT",
      "#pragma once",
@@ -478,7 +600,7 @@ private def renderModule (lock : LockedModelInterface) : EmitResult (String × S
      s!"    {cppString contractJson},",
      "};",
      "",
-     runtimeSupport] ++ inputStructs ++
+     support] ++ inputStructs ++
     [observation,
      s!"struct {modelName}Port " ++ "{",
      s!"  virtual ~{modelName}Port() = default;"] ++ portMethods ++
@@ -548,20 +670,24 @@ private def renderModule (lock : LockedModelInterface) : EmitResult (String × S
      s!"}  // namespace mirrors_generated::{lowerFirst modelName}"]
   pure (s!"{modelName}Mirror.generated.hpp", source)
 
-private def renderOwnershipManifest (digest : String) (paths : List String) : String :=
+private def renderOwnershipManifest (profile : String) (digest : String) (paths : List String) : String :=
   let json := Lean.Json.mkObj [
     ("files", .arr (paths.map Lean.Json.str).toArray),
-    ("profileVersion", .num profileVersion),
+    ("profileVersion", .num (if profile == "mirrorcpp-v2" then 2 else profileVersion)),
     ("schema", .str "mirrors.model-interface-generated/v1"),
     ("semanticDigest", .str digest),
-    ("targetProfile", .str targetProfile)]
+    ("targetProfile", .str profile)]
   Codec.ModelInterfaceJson.canonicalString json ++ "\n"
 
 /-- Emit the deterministic `mirrorcpp-v1` header and ownership manifest. -/
-def emitCpp (lock : LockedModelInterface) : EmitResult GeneratedTree := do
-  let (sourcePath, source) ← renderModule lock
+def emitCpp (lock : LockedModelInterface) (profile : String := "mirrorcpp-v1") : EmitResult GeneratedTree := do
+  if profile != "mirrorcpp-v1" && profile != "mirrorcpp-v2" then
+    fail "MIC-E-TARGET-001" s!"unsupported C++ target profile {profile}"
+  let diagnostics := targetDiagnostics lock profile
+  if !diagnostics.isEmpty then throw diagnostics
+  let (sourcePath, source) ← renderModule profile lock
   let ownedPaths := sortedStrings [manifestPath, sourcePath]
-  let manifest := renderOwnershipManifest lock.semanticDigest ownedPaths
+  let manifest := renderOwnershipManifest profile lock.semanticDigest ownedPaths
   let files := sortedBy (·.relativePath) [
     { relativePath := sourcePath, bytes := source.toUTF8 },
     { relativePath := manifestPath, bytes := manifest.toUTF8 }]

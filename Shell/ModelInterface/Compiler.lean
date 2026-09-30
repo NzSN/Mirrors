@@ -10,6 +10,7 @@ import Codec.Json
 import Shell.ModelInterface.Evidence
 import Shell.ModelInterface.Emit.Rust
 import Shell.ModelInterface.Emit.Cpp
+import Shell.ModelInterface.Emit.CMake
 import Shell.ModelInterface.Emit.TypeScript
 import Shell.ModelInterface.Emit.TypeScriptAsync
 import Shell.ModelInterface.Emit.SuiteBundle
@@ -55,9 +56,11 @@ def mirrorecmaTarget : String := "mirrorecma-v1"
 def mirrorecmaAsyncTarget : String := "mirrorecma-async-v1"
 def mirrorrustTarget : String := "mirrorrust-v1"
 def mirrorcppTarget : String := "mirrorcpp-v1"
+def mirrorcppTypedMapsTarget : String := "mirrorcpp-v2"
 
 def supportedTarget (target : String) : Bool :=
-  target == mirrorecmaTarget || target == mirrorecmaAsyncTarget || target == mirrorcppTarget || target == mirrorrustTarget
+  target == mirrorecmaTarget || target == mirrorecmaAsyncTarget || target == mirrorcppTarget ||
+    target == mirrorcppTypedMapsTarget || target == mirrorrustTarget
 def maxModelInterfaceItfArtifactBytes : Nat := 16 * 1024 * 1024
 def maxCompilerArtifactBytes : Nat := 16 * 1024 * 1024
 
@@ -610,8 +613,8 @@ def emitTarget (target : String) (lock : LockedModelInterface) :
       Emit.TypeScriptAsync.emitTypeScriptAsync lock
     else if target == mirrorrustTarget then
       Emit.Rust.emitRust lock
-    else if target == mirrorcppTarget then
-      Emit.Cpp.emitCpp lock
+    else if target == mirrorcppTarget || target == mirrorcppTypedMapsTarget then
+      Emit.Cpp.emitCpp lock target
     else
       .error [{ code := "MIC-E-TARGET-001", message := s!"unsupported target: {target}" }]
   match emitted with
@@ -620,6 +623,11 @@ def emitTarget (target : String) (lock : LockedModelInterface) :
       let message := String.intercalate "; "
         (diagnostics.map fun diagnostic => s!"{diagnostic.code}: {diagnostic.message}")
       return ← finding s!"target emission failed: {message}"
+        (diagnostics.map fun diagnostic => {
+          code := diagnostic.code, severity := .error, stage := "emit"
+          subject := { kind := diagnostic.subject, stableId := diagnostic.stableId }
+          primary := { source := "<model-interface-lock>", pointer := diagnostic.pointer }
+          arguments := diagnostic.arguments ++ [("message", diagnostic.message)] })
 
 /-- Bundle is a publication mode over the async target, never a new target identity. -/
 private def emitPublication (target : String) (lock : LockedModelInterface) (bundle : Bool) :
@@ -1153,7 +1161,8 @@ private def parseOwnershipManifest (raw : ByteArray) : Except String OwnershipMa
   let target ← jsonString "manifest.targetProfile" (← requiredJson fields "targetProfile")
   if !supportedTarget target then throw "ownership manifest target is unsupported"
   let version ← jsonNat "manifest.profileVersion" (← requiredJson fields "profileVersion")
-  if version != 1 then throw "unsupported generated ownership profile version"
+  if version != (if target == mirrorcppTypedMapsTarget then 2 else 1) then
+    throw "unsupported generated ownership profile version"
   let digest ← jsonString "manifest.semanticDigest" (← requiredJson fields "semanticDigest")
   if digest.length != 64 || !digest.toList.all lowerHex then
     throw "generated ownership manifest has a malformed semantic digest"
@@ -1488,6 +1497,70 @@ def check (paths : InputPaths) (lockPath target out : String) (bundle : Bool := 
   return .ok { stalePaths := stale, diagnostics := compilation.diagnostics }
 
 /-! ## Read-only trace preflight -/
+
+private def cmakeTree (paths : InputPaths) (lockPath target out : String) :
+    IO (Except CompilerError (Compilation × Emit.TypeScript.GeneratedTree)) := do
+  if target != mirrorcppTarget && target != mirrorcppTypedMapsTarget then
+    return finding "CMake integration requires a C++ target"
+  let compilation ← match ← compile paths with
+    | .ok value => pure value
+    | .error error => return .error error
+  let binding ← match emitTarget target compilation.lock with
+    | .ok value => pure value
+    | .error error => return .error error
+  let inputPaths := sortStrings (stableUniqueStrings
+    ([paths.spec, paths.contract, paths.evidence, lockPath] ++
+      compilation.lock.provenance.sources.map (·.path)))
+  if !(out :: inputPaths).all (fun path => safeRelativePath path && !path.contains ';') then
+    return finding "CMake integration paths must be portable paths relative to the consumer root"
+  let mut inputs : List (String × String) := []
+  for path in inputPaths do
+    let bytes ← match ← readBytes path with
+      | .ok value => pure value
+      | .error error => return .error error
+    inputs := inputs ++ [(path, Core.ModelInterface.Sha256.digestHex bytes)]
+  let executable ← IO.appPath
+  let compilerBytes ← IO.FS.readBinFile executable
+  let common := ["--spec", paths.spec, "--contract", paths.contract, "--evidence", paths.evidence] ++
+    (paths.paramVar.toList.flatMap (fun parameter => ["--param-var", parameter])) ++
+    ["--lock", lockPath]
+  let tree := Emit.CMake.emit compilation.lock target binding inputs lockPath
+    ("resolve" :: common)
+    ("generate-cmake" :: common ++ ["--target", target, "--out", out])
+    (Core.ModelInterface.Sha256.digestHex compilerBytes)
+  return .ok (compilation, tree)
+
+/-- Publish optional consumer helpers together with the checked native binding. -/
+def generateCmake (paths : InputPaths) (lockPath target out : String) :
+    IO (Except CompilerError (List String)) := do
+  let (compilation, tree) ← match ← cmakeTree paths lockPath target out with
+    | .ok value => pure value
+    | .error error => return .error error
+  match ← compareFile lockPath compilation.lockBytes with
+  | .error error => return .error error
+  | .ok false => return finding "CMake generation requires a current lock; run resolve first"
+  | .ok true => writeGeneratedTree out tree
+
+/-- Full compiler check, including optional CMake artifacts; performs no writes. -/
+def checkCmake (paths : InputPaths) (lockPath target out : String) :
+    IO (Except CompilerError CheckReport) := do
+  let (compilation, tree) ← match ← cmakeTree paths lockPath target out with
+    | .ok value => pure value
+    | .error error => return .error error
+  let mut stale : List String := []
+  match ← compareFile lockPath compilation.lockBytes with
+  | .error error => return .error error
+  | .ok false => stale := [lockPath]
+  | .ok true => pure ()
+  let root ← match ← canonicalOutputRoot out false with
+    | .ok value => pure value
+    | .error error => return .error error
+  for file in tree.files do
+    match ← compareContainedFile root file.relativePath file.bytes with
+    | .error error => return .error error
+    | .ok false => stale := stale ++ [joinPath root file.relativePath]
+    | .ok true => pure ()
+  return .ok { stalePaths := stale, diagnostics := compilation.diagnostics }
 
 /-- Maximum accepted size of one preflight ITF artifact. The file handle reader
 requests one additional byte so oversize input is rejected before an unbounded

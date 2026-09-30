@@ -159,7 +159,7 @@ namespace StandardModuleCatalog
 /-- The first frontend profile. The module list mirrors the production loader's
 known-standard list; the profile id changes when the list or a baseline changes. -/
 def defaultProfile : StandardModuleProfile :=
-  { profileId := "mirrors-standard-modules/v1", baseline := none }
+  { profileId := standardCatalogIdentity, baseline := some standardCatalogBaseline }
 
 /-- The default catalog used until the coordinator pins a SANY/Apalache baseline. -/
 def default : StandardModuleCatalog :=

@@ -137,12 +137,24 @@ def resplit (pvs vars : List String) (s : TraceState) : TraceState where
   stateVars := (ValueMap.union s.parameters s.stateVars).filterKeys
     (stateKeyPred pvs vars)
 
-/-- Port of `Apalache.Types.applyParamVars`. -/
-def applyParamVars (pvs : List String) (t : ItfTrace) : ItfTrace where
-  traceVars := t.traceVars
-  paramVars := pvs ++ t.paramVars
-  traceParams := t.traceParams
-  traceStates := t.traceStates.map (resplit pvs t.traceVars)
+/-- Recorded parameter names followed by configured additions, with first
+occurrences retained. Both replay and compiler resolution use this policy. -/
+def effectiveTraceParamVars (recorded configured : List String) : List String :=
+  (recorded ++ configured).eraseDups
+
+theorem mem_effectiveTraceParamVars (k : String) (recorded configured : List String) :
+    k ∈ effectiveTraceParamVars recorded configured ↔
+      k ∈ recorded ∨ k ∈ configured := by
+  simp [effectiveTraceParamVars]
+
+/-- Augment the recorded partition with configured parameters. Metadata and
+the actual state split use exactly the same effective names. -/
+def applyParamVars (pvs : List String) (t : ItfTrace) : ItfTrace :=
+  let effective := effectiveTraceParamVars t.paramVars pvs
+  { traceVars := t.traceVars
+    paramVars := effective
+    traceParams := t.traceParams
+    traceStates := t.traceStates.map (resplit effective t.traceVars) }
 
 /-- Parse-time key invariant under which the repartition is lossless:
 every key of the union is either a parameter variable or a proper state
@@ -247,13 +259,28 @@ theorem resplit_exactly_one (pvs vars : List String) (s : TraceState)
 /-- **§6.2 (ItfTrace level).** `applyParamVars` repartitions every
 state losslessly. -/
 theorem applyParamVars_lookup_union (pvs : List String) (t : ItfTrace)
-    (h : ∀ s ∈ t.traceStates, ResplitKeyInv s pvs t.traceVars)
+    (h : ∀ s ∈ t.traceStates,
+      ResplitKeyInv s (effectiveTraceParamVars t.paramVars pvs) t.traceVars)
     (s : TraceState) (hs : s ∈ t.traceStates) (k : String) :
     ValueMap.lookup k
-        (ValueMap.union (resplit pvs t.traceVars s).parameters
-          (resplit pvs t.traceVars s).stateVars)
+        (ValueMap.union (resplit (effectiveTraceParamVars t.paramVars pvs) t.traceVars s).parameters
+          (resplit (effectiveTraceParamVars t.paramVars pvs) t.traceVars s).stateVars)
       = ValueMap.lookup k (ValueMap.union s.parameters s.stateVars) :=
-  resplit_lookup_union pvs t.traceVars s (h s hs) k
+  resplit_lookup_union (effectiveTraceParamVars t.paramVars pvs) t.traceVars s (h s hs) k
+
+/-- Repartitioning twice with the same policy preserves every lookup. This
+holds even when the original state contains keys outside the parse invariant. -/
+theorem resplit_lookup_idempotent (pvs vars : List String) (s : TraceState) (k : String) :
+    (ValueMap.lookup k (resplit pvs vars (resplit pvs vars s)).parameters,
+      ValueMap.lookup k (resplit pvs vars (resplit pvs vars s)).stateVars) =
+    (ValueMap.lookup k (resplit pvs vars s).parameters,
+      ValueMap.lookup k (resplit pvs vars s).stateVars) := by
+  simp only [resplit, ValueMap.union, ValueMap.lookup, List.lookup_append,
+    lookup_filterKeys']
+  by_cases hp : paramKeyPred pvs k = true
+  · have hs : stateKeyPred pvs vars k = false := stateKeyPred_false_of_param hp
+    simp [hp, hs]
+  · cases hs : stateKeyPred pvs vars k <;> simp [hp, hs]
 
 /-! ## `traceSteps` (§6.2, port of `Engine.Core.traceSteps`) -/
 

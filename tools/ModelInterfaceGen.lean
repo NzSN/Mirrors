@@ -36,7 +36,10 @@ def usage : String := String.intercalate "\n" [
   "  model_interface_gen project-trace --spec FILE --evidence RAW",
   "    --projection PLAN --out PROJECTED --receipt RECEIPT",
   "    [--replace] [--diagnostics json]",
-  "  TARGET: mirrorecma-v1 | mirrorecma-async-v1 | mirrorcpp-v1 | mirrorrust-v1"
+  "  model_interface_gen generate-cmake|check-cmake --spec FILE --contract FILE",
+  "    --evidence FILE [--param-var NAME] --lock FILE --target CPP_TARGET --out DIR",
+  "    (paths relative to the consumer root; optional CMake helpers)",
+  "  TARGET: mirrorecma-v1 | mirrorecma-async-v1 | mirrorcpp-v1 | mirrorcpp-v2 | mirrorrust-v1"
 ]
 
 private inductive DiagnosticsMode where
@@ -62,6 +65,8 @@ private inductive Command where
   | resolve (inputs : InputPaths) (lock : String)
   | generate (lock target out : String) (bundle : Bool)
   | check (inputs : InputPaths) (lock target out : String) (bundle : Bool)
+  | generateCmake (inputs : InputPaths) (lock target out : String)
+  | checkCmake (inputs : InputPaths) (lock target out : String)
   | preflight (lock trace : String) (requireAllActions : Bool)
   | scaffold (inputs : ScaffoldPaths)
   | projectTrace (inputs : ProjectTracePaths)
@@ -123,8 +128,8 @@ private def inputsOf (options : RawOptions) : Except String InputPaths := do
 private def checkedTarget (options : RawOptions) : Except String String := do
   let target ← requireOption "--target" options.target
   if target != mirrorecmaTarget && target != mirrorecmaAsyncTarget &&
-      target != mirrorcppTarget && target != mirrorrustTarget then
-    throw s!"unsupported --target {target}; expected {mirrorecmaTarget}, {mirrorecmaAsyncTarget}, {mirrorcppTarget}, or {mirrorrustTarget}"
+      target != mirrorcppTarget && target != mirrorcppTypedMapsTarget && target != mirrorrustTarget then
+    throw s!"unsupported --target {target}; expected {mirrorecmaTarget}, {mirrorecmaAsyncTarget}, {mirrorcppTarget}, {mirrorcppTypedMapsTarget}, or {mirrorrustTarget}"
   return target
 
 private def diagnosticsMode (options : RawOptions) : Except String DiagnosticsMode :=
@@ -181,6 +186,17 @@ private def parseCommand (arguments : List String) : Except String ParsedCommand
       let _ ← rejectPresent "--receipt" options.receipt
       pure <| Command.check (← inputsOf options) (← requireOption "--lock" options.lock)
         (← checkedTarget options) (← requireOption "--out" options.out) (name == "check-bundle")
+  | "generate-cmake" | "check-cmake" =>
+      if requireAllActions || replace then throw "unsupported flag for CMake integration"
+      for (flag, value) in [("--trace", options.trace), ("--proposal", options.proposal),
+          ("--projection", options.projection), ("--receipt", options.receipt)] do
+        let _ ← rejectPresent flag value
+      let inputs ← inputsOf options
+      let lock ← requireOption "--lock" options.lock
+      let target ← checkedTarget options
+      let out ← requireOption "--out" options.out
+      if name == "generate-cmake" then pure (Command.generateCmake inputs lock target out)
+      else pure (Command.checkCmake inputs lock target out)
   | "preflight" =>
       if replace then throw "option --replace is not valid for preflight"
       let _ ← rejectPresent "--spec" options.spec
@@ -391,6 +407,24 @@ def run (arguments : List String) : IO UInt32 := do
       match parsed.command with
       | .resolve inputs lock => runResolve parsed.diagnostics inputs lock
       | .generate lock target out bundle => runGenerate parsed.diagnostics lock target out bundle
+      | .generateCmake inputs lock target out =>
+          match ← generateCmake inputs lock target out with
+          | .error error => reportError parsed.diagnostics error
+          | .ok paths =>
+              IO.println s!"generated {paths.length} files in {out}"
+              return 0
+      | .checkCmake inputs lock target out =>
+          match ← checkCmake inputs lock target out with
+          | .error error => reportError parsed.diagnostics error
+          | .ok report =>
+              match parsed.diagnostics with
+              | .json => printJsonDiagnostics report.diagnostics
+              | .human => printDiagnostics report.diagnostics
+              if report.clean then
+                IO.println "model-interface CMake check clean"
+                return 0
+              for path in report.stalePaths do IO.eprintln s!"stale: {path}"
+              return 1
       | .check inputs lock target out bundle => runCheck parsed.diagnostics inputs lock target out bundle
       | .preflight lock trace requireAllActions =>
           runPreflightCommand parsed.diagnostics lock trace requireAllActions

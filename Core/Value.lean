@@ -43,6 +43,8 @@ inductive Value where
   doc. -/
   | vrecord (m : List (String × Value))
   | vmap (m : List (String × Value))
+  /-- Nonempty integer-key function maps; canonical empty maps use `vmap []`. -/
+  | vintmap (m : List (Int × Value))
   | vvariant (tag : String) (v : Value)
   /- Text of an ITF value apalache could not serialize. -/
   | vunserializable (s : String)
@@ -91,6 +93,7 @@ mutual
     | .vint _ | .vbool _ | .vstr _ | .vunserializable _ | .vnull => 1
     | .vset xs | .vseq xs | .vtuple xs => 1 + listSize xs
     | .vrecord m | .vmap m => 1 + mapSize m
+    | .vintmap m => 1 + intMapSize m
     | .vvariant _ v => 1 + valueSize v
 
   /- The `+ 1` per element gives every recursive call a strictly
@@ -103,6 +106,10 @@ mutual
     | [] => 0
     | (_, v) :: ps => valueSize v + 1 + mapSize ps
 
+  def intMapSize : List (Int × Value) → Nat
+    | [] => 0
+    | (_, v) :: ps => valueSize v + 1 + intMapSize ps
+
 end
 
 private theorem listSize_cons (a : Value) (as : List Value) :
@@ -111,8 +118,14 @@ private theorem listSize_cons (a : Value) (as : List Value) :
 private theorem mapSize_cons (k : String) (v : Value) (m : ValueMap) :
     mapSize ((k, v) :: m) = valueSize v + 1 + mapSize m := rfl
 
+private theorem intMapSize_cons (k : Int) (v : Value) (m : List (Int × Value)) :
+    intMapSize ((k, v) :: m) = valueSize v + 1 + intMapSize m := rfl
+
 private theorem mapSize_pair_cons : ∀ (p : String × Value) (ps : ValueMap),
     mapSize (p :: ps) = valueSize p.2 + 1 + mapSize ps := fun _ _ => rfl
+
+private theorem intMapSize_pair_cons : ∀ (p : Int × Value) (ps : List (Int × Value)),
+    intMapSize (p :: ps) = valueSize p.2 + 1 + intMapSize ps := fun _ _ => rfl
 
 private theorem valueSize_pos (v : Value) : 0 < valueSize v := by
   cases v <;> simp only [valueSize, listSize, mapSize] <;> omega
@@ -141,6 +154,20 @@ private theorem valueSize_mem_map {k : String} {v : Value} {m : ValueMap}
       have := ih h
       omega
 
+private theorem valueSize_mem_intmap {k : Int} {v : Value} {m : List (Int × Value)}
+    (h : (k, v) ∈ m) : valueSize v < intMapSize m := by
+  induction m with
+  | nil => cases h
+  | cons p ps ih =>
+    rcases List.mem_cons.mp h with h | h
+    · rw [Prod.mk.injEq] at h
+      obtain ⟨rfl, rfl⟩ := h
+      rw [intMapSize_cons]
+      omega
+    · rw [intMapSize_pair_cons]
+      have := ih h
+      omega
+
 private theorem valueSize_vset (xs : List Value) :
     valueSize (Value.vset xs) = 1 + listSize xs := rfl
 private theorem valueSize_vseq (xs : List Value) :
@@ -151,6 +178,8 @@ private theorem valueSize_vrecord (m : ValueMap) :
     valueSize (Value.vrecord m) = 1 + mapSize m := rfl
 private theorem valueSize_vmap (m : ValueMap) :
     valueSize (Value.vmap m) = 1 + mapSize m := rfl
+private theorem valueSize_vintmap (m : List (Int × Value)) :
+    valueSize (Value.vintmap m) = 1 + intMapSize m := rfl
 private theorem valueSize_vvariant (t : String) (v : Value) :
     valueSize (Value.vvariant t v) = 1 + valueSize v := rfl
 
@@ -179,14 +208,15 @@ mutual
     | .vtuple a, .vtuple b => listEq a b
     | .vrecord a, .vrecord b => mapCont a b && mapCont b a
     | .vmap a, .vmap b => mapCont a b && mapCont b a
+    | .vintmap a, .vintmap b => intMapCont a b && intMapCont b a
     | .vvariant t₁ v₁, .vvariant t₂ v₂ => t₁ == t₂ && valEq v₁ v₂
     | .vunserializable a, .vunserializable b => a == b
     | .vnull, .vnull => true
     | _, _ => false
   termination_by valueSize v + valueSize w
   decreasing_by all_goals simp only [valueSize_vset, valueSize_vseq,
-      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vvariant,
-      listSize_cons, mapSize_cons]; omega
+      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap, valueSize_vvariant,
+      listSize_cons, mapSize_cons, intMapSize_cons]; omega
 
   /- Pairwise equality for sequences/tuples. -/
   def listEq (as bs : List Value) : Bool :=
@@ -196,8 +226,8 @@ mutual
     | _, _ => false
   termination_by listSize as + listSize bs
   decreasing_by all_goals simp only [valueSize_vset, valueSize_vseq,
-      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vvariant,
-      listSize_cons, mapSize_cons]; omega
+      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap, valueSize_vvariant,
+      listSize_cons, mapSize_cons, intMapSize_cons]; omega
 
   /- Every element of `xs` has an equal element of `ys`. -/
   def setCont (xs ys : List Value) : Bool :=
@@ -206,8 +236,8 @@ mutual
     | x :: xr => setAny x ys && setCont xr ys
   termination_by listSize xs + listSize ys
   decreasing_by all_goals simp only [valueSize_vset, valueSize_vseq,
-      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vvariant,
-      listSize_cons, mapSize_cons]; omega
+      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap, valueSize_vvariant,
+      listSize_cons, mapSize_cons, intMapSize_cons]; omega
 
   /- `x` has an equal element of `ys`. -/
   def setAny (x : Value) (ys : List Value) : Bool :=
@@ -216,8 +246,8 @@ mutual
     | y :: yr => valEq x y || setAny x yr
   termination_by valueSize x + listSize ys
   decreasing_by all_goals simp only [valueSize_vset, valueSize_vseq,
-      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vvariant,
-      listSize_cons, mapSize_cons]; omega
+      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap, valueSize_vvariant,
+      listSize_cons, mapSize_cons, intMapSize_cons]; omega
 
   /- Every binding of `m` has an equal-valued binding under the same
   key in `n`. -/
@@ -226,8 +256,8 @@ mutual
     | (k, v) :: mr, n => mapAny k v n && mapCont mr n
   termination_by m n => mapSize m + mapSize n
   decreasing_by all_goals simp only [valueSize_vset, valueSize_vseq,
-      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vvariant,
-      listSize_cons, mapSize_cons]; omega
+      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap, valueSize_vvariant,
+      listSize_cons, mapSize_cons, intMapSize_cons]; omega
 
   /- The key `k` has a binding in `n` whose value equals `v`. -/
   def mapAny : String → Value → ValueMap → Bool
@@ -235,8 +265,25 @@ mutual
     | k, v, (k', w) :: nr => (k' == k && valEq v w) || mapAny k v nr
   termination_by _ v n => valueSize v + mapSize n
   decreasing_by all_goals simp only [valueSize_vset, valueSize_vseq,
-      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vvariant,
-      listSize_cons, mapSize_cons]; omega
+      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap, valueSize_vvariant,
+      listSize_cons, mapSize_cons, intMapSize_cons]; omega
+
+  def intMapCont : List (Int × Value) → List (Int × Value) → Bool
+    | [], _ => true
+    | (k, v) :: mr, n => intMapAny k v n && intMapCont mr n
+  termination_by m n => intMapSize m + intMapSize n
+  decreasing_by all_goals simp only [valueSize_vset, valueSize_vseq,
+      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap, valueSize_vvariant,
+      listSize_cons, intMapSize_cons, intMapSize_cons]; omega
+
+  /- The key `k` has a binding in `n` whose value equals `v`. -/
+  def intMapAny : Int → Value → List (Int × Value) → Bool
+    | _, _, [] => false
+    | k, v, (k', w) :: nr => (k' == k && valEq v w) || intMapAny k v nr
+  termination_by _ v n => valueSize v + intMapSize n
+  decreasing_by all_goals simp only [valueSize_vset, valueSize_vseq,
+      valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap, valueSize_vvariant,
+      listSize_cons, intMapSize_cons, intMapSize_cons]; omega
 
 end
 
@@ -354,6 +401,33 @@ theorem mapAny_iff (k : String) (v : Value) (n : ValueMap) :
         exact ⟨trivial, hxy⟩
       · exact Or.inr (ih.mpr ⟨w', hw', hxy⟩)
 
+theorem intMapAny_iff (k : Int) (v : Value) (n : List (Int × Value)) :
+    intMapAny k v n = true ↔ ∃ w, (k, w) ∈ n ∧ valEq v w = true := by
+  induction n with
+  | nil => simp [intMapAny]
+  | cons p ps ih =>
+    obtain ⟨k', w⟩ := p
+    constructor
+    · intro h
+      simp only [intMapAny, Bool.or_eq_true] at h
+      rcases h with h | h
+      · rw [Bool.and_eq_true] at h
+        obtain ⟨h1, h2⟩ := h
+        rw [beq_iff_eq] at h1
+        subst h1
+        exact ⟨w, List.mem_cons_self, h2⟩
+      · obtain ⟨w', hw', hxy⟩ := ih.mp h
+        exact ⟨w', List.mem_cons_of_mem _ hw', hxy⟩
+    · rintro ⟨w', hw', hxy⟩
+      simp only [intMapAny, Bool.or_eq_true]
+      rcases List.mem_cons.mp hw' with hw' | hw'
+      · rw [Prod.mk.injEq] at hw'
+        obtain ⟨rfl, rfl⟩ := hw'
+        refine Or.inl ?_
+        simp only [Bool.and_eq_true, beq_self_eq_true]
+        exact ⟨trivial, hxy⟩
+      · exact Or.inr (ih.mpr ⟨w', hw', hxy⟩)
+
 /-- `mapCont m n` holds iff every binding of `m` has an equal-valued
 binding under the *same key* in `n`. -/
 theorem mapCont_iff (m n : ValueMap) :
@@ -379,9 +453,36 @@ theorem mapCont_iff (m n : ValueMap) :
       exact ⟨(mapAny_iff _ _ _).mpr (h k' v' List.mem_cons_self),
         ih.mpr (fun k v hv => h k v (List.mem_cons_of_mem _ hv))⟩
 
+theorem intMapCont_iff (m n : List (Int × Value)) :
+    intMapCont m n = true ↔
+      ∀ (k : Int) (v : Value), (k, v) ∈ m →
+        ∃ w, (k, w) ∈ n ∧ valEq v w = true := by
+  induction m with
+  | nil => simp [intMapCont]
+  | cons p ps ih =>
+    obtain ⟨k', v'⟩ := p
+    constructor
+    · intro h k v hv
+      simp only [intMapCont, Bool.and_eq_true] at h
+      rcases List.mem_cons.mp hv with hv | hv
+      · rw [Prod.mk.injEq] at hv
+        obtain ⟨rfl, rfl⟩ := hv
+        obtain ⟨h1, _⟩ := h
+        exact (intMapAny_iff _ _ _).mp h1
+      · obtain ⟨_, h2⟩ := h
+        exact ih.mp h2 k v hv
+    · intro h
+      simp only [intMapCont, Bool.and_eq_true]
+      exact ⟨(intMapAny_iff _ _ _).mpr (h k' v' List.mem_cons_self),
+        ih.mpr (fun k v hv => h k v (List.mem_cons_of_mem _ hv))⟩
+
 private theorem mapCont_refl_of (m : ValueMap)
     (H : ∀ k v, (k, v) ∈ m → valEq v v = true) : mapCont m m = true :=
   (mapCont_iff m m).mpr (fun k v hv => ⟨v, hv, H k v hv⟩)
+
+private theorem intMapCont_refl_of (m : List (Int × Value))
+    (H : ∀ k v, (k, v) ∈ m → valEq v v = true) : intMapCont m m = true :=
+  (intMapCont_iff m m).mpr (fun k v hv => ⟨v, hv, H k v hv⟩)
 
 private theorem setCont_refl_of (xs : List Value)
     (H : ∀ x ∈ xs, valEq x x = true) : setCont xs xs = true :=
@@ -404,6 +505,17 @@ private theorem mapCont_trans_of (m n p : ValueMap)
     (h₁ : mapCont m n = true) (h₂ : mapCont n p = true) :
     mapCont m p = true := by
   rw [mapCont_iff] at h₁ h₂ ⊢
+  intro k a ha
+  obtain ⟨b, hb, hab⟩ := h₁ k a ha
+  obtain ⟨c, hc, hbc⟩ := h₂ k b hb
+  exact ⟨c, hc, H k a b c ha hb hc hab hbc⟩
+
+private theorem intMapCont_trans_of (m n p : List (Int × Value))
+    (H : ∀ (k : Int) (a b c : Value), (k, a) ∈ m → (k, b) ∈ n →
+      (k, c) ∈ p → valEq a b = true → valEq b c = true → valEq a c = true)
+    (h₁ : intMapCont m n = true) (h₂ : intMapCont n p = true) :
+    intMapCont m p = true := by
+  rw [intMapCont_iff] at h₁ h₂ ⊢
   intro k a ha
   obtain ⟨b, hb, hab⟩ := h₁ k a ha
   obtain ⟨c, hc, hbc⟩ := h₂ k b hb
@@ -534,6 +646,16 @@ theorem valEq_refl (v : Value) : valEq v v = true := by
         omega
       exact ⟨mapCont_refl_of m (fun k v hv => ih v (hb k v hv)),
         mapCont_refl_of m (fun k v hv => ih v (hb k v hv))⟩
+
+    | vintmap m =>
+      simp only [valEq, Bool.and_eq_true]
+      have hb : ∀ k v, (k, v) ∈ m → valueSize v ≤ n := by
+        intro k v hp
+        have h1 := valueSize_mem_intmap hp
+        have h2 : valueSize (Value.vintmap m) = 1 + intMapSize m := rfl
+        omega
+      exact ⟨intMapCont_refl_of m (fun k v hv => ih v (hb k v hv)),
+        intMapCont_refl_of m (fun k v hv => ih v (hb k v hv))⟩
 /-- Symmetry of the value-equality decision procedure. -/
 theorem valEq_symm : ∀ v w : Value, valEq v w = true → valEq w v = true := by
   suffices H : ∀ n v, valueSize v ≤ n → ∀ w, valueSize w ≤ n →
@@ -604,6 +726,12 @@ theorem valEq_symm : ∀ v w : Value, valEq v w = true → valEq w v = true := b
     | vmap m =>
       cases w with
       | vmap n' =>
+        simp only [valEq, Bool.and_eq_true] at hvw ⊢
+        exact ⟨hvw.2, hvw.1⟩
+      | _ => exact absurd hvw (by simp [valEq])
+    | vintmap m =>
+      cases w with
+      | vintmap n' =>
         simp only [valEq, Bool.and_eq_true] at hvw ⊢
         exact ⟨hvw.2, hvw.1⟩
       | _ => exact absurd hvw (by simp [valEq])
@@ -779,6 +907,31 @@ theorem valEq_trans : ∀ v w u : Value, valEq v w = true →
               (fun k a b c ha hb hc hab hbc =>
                 ih a (bm k a ha) b c (bn k b hb) (bp k c hc) hab hbc) h₁ h₃,
             mapCont_trans_of p n' m
+              (fun k c b a hc hb ha hcb hba =>
+                ih c (bp k c hc) b a (bn k b hb) (bm k a ha) hcb hba) h₄ h₂⟩
+        | _ => exact absurd hvu (by simp [valEq])
+      | _ => exact absurd hvw (by simp [valEq])
+    | vintmap m =>
+      cases w with
+      | vintmap n' =>
+        cases u with
+        | vintmap p =>
+          have e1 : valueSize (Value.vintmap m) = 1 + intMapSize m := rfl
+          have e2 : valueSize (Value.vintmap n') = 1 + intMapSize n' := rfl
+          have e3 : valueSize (Value.vintmap p) = 1 + intMapSize p := rfl
+          have bm : ∀ k v, (k, v) ∈ m → valueSize v ≤ n := by
+            intro k v hq; have := valueSize_mem_intmap hq; omega
+          have bn : ∀ k v, (k, v) ∈ n' → valueSize v ≤ n := by
+            intro k v hq; have := valueSize_mem_intmap hq; omega
+          have bp : ∀ k v, (k, v) ∈ p → valueSize v ≤ n := by
+            intro k v hq; have := valueSize_mem_intmap hq; omega
+          simp only [valEq, Bool.and_eq_true] at hvw hvu ⊢
+          obtain ⟨h₁, h₂⟩ := hvw
+          obtain ⟨h₃, h₄⟩ := hvu
+          exact ⟨intMapCont_trans_of m n' p
+              (fun k a b c ha hb hc hab hbc =>
+                ih a (bm k a ha) b c (bn k b hb) (bp k c hc) hab hbc) h₁ h₃,
+            intMapCont_trans_of p n' m
               (fun k c b a hc hb ha hcb hba =>
                 ih c (bp k c hc) b a (bn k b hb) (bm k a ha) hcb hba) h₄ h₂⟩
         | _ => exact absurd hvu (by simp [valEq])

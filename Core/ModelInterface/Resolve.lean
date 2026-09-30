@@ -1,4 +1,5 @@
 import Core.ModelInterface.Types
+import Core.Trace
 
 /-!
 # Pure model-interface resolution
@@ -17,7 +18,7 @@ def sortStrings (xs : List String) : List String :=
   xs.toArray.qsort (fun a b => compare a b == .lt) |>.toList
 
 def stableUniqueStrings (xs : List String) : List String :=
-  xs.foldl (fun out x => if out.contains x then out else out ++ [x]) []
+  xs.eraseDups
 
 def duplicateStrings (xs : List String) : List String :=
   sortStrings <| stableUniqueStrings <|
@@ -468,7 +469,7 @@ def validLogicalPath (path : String) : Bool :=
 /-! ## Exact comparison variables -/
 
 def effectiveParamVars (evidence : ModelEvidence) (run : RunProfile) : List String :=
-  stableUniqueStrings (evidence.itfParamVars ++ run.configuredParamVar.toList)
+  effectiveTraceParamVars evidence.itfParamVars run.configuredParamVar.toList
 
 /-- Exact root variables compared by the current Mirrors pipeline. -/
 def requiredObservationVars (evidence : ModelEvidence) (run : RunProfile) : List String :=

@@ -1,4 +1,5 @@
 import Core.Tla.Source
+import Core.Tla.StandardCatalog
 import Core.Tla.Syntax
 
 /-!

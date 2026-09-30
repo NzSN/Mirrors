@@ -869,7 +869,7 @@ def scenarioScopes (fails : Failures) : IO Unit := do
     applyProbe.module?.isSome (detailOf applyProbe)
   checkLevel fails applyProbe "Apply" "constant"
   -- Standard-module facts are visible only through the module that provides
-  -- them: `Int` through `Integers`, but `Nat` only through `Naturals`.
+  -- them: `Integers` exports `Nat` through its public Naturals dependency.
   let standardProbe : Array (ModuleName × String) := #[
     (⟨"StandardVisible"⟩,
       moduleText "StandardVisible" "EXTENDS Integers\nVisible == Int"),
@@ -879,13 +879,21 @@ def scenarioScopes (fails : Failures) : IO Unit := do
   check fails "scope: a provided standard-module fact resolves"
     (levelOfOperator? visible "Visible" == some "constant") (detailOf visible)
   let hidden ← runInline standardProbe "StandardHidden"
-  check fails "scope: an unprovided standard-module fact is an unknown name"
-    (hidden.module?.isNone &&
-      hidden.diagnostics.any fun diagnostic =>
-        diagnostic.code == ElabCode.unknownName &&
-          diagnostic.arguments.any fun argument =>
-            argument.1 == "name" && argument.2 == "Nat")
+  check fails "scope: transitive standard-module fact resolves"
+    (hidden.module?.isSome && levelOfOperator? hidden "Hidden" == some "constant")
     (detailOf hidden)
+  let transitive ← runInline #[(⟨"Transitive"⟩,
+    moduleText "Transitive" "EXTENDS Reals\nNatural == Nat\nInteger == Int")]
+    "Transitive"
+  check fails "scope: transitive standard-module chain resolves"
+    (transitive.module?.isSome) (detailOf transitive)
+  let privateImport ← runInline #[(⟨"PrivateStandard"⟩,
+    moduleText "PrivateStandard" "EXTENDS Sequences, FiniteSets\nHidden == Nat")]
+    "PrivateStandard"
+  check fails "scope: LOCAL standard dependencies stay private"
+    (privateImport.module?.isNone && privateImport.diagnostics.any
+      (fun diagnostic => diagnostic.code == ElabCode.unknownName))
+    (detailOf privateImport)
   let composedFacts ← runInline #[(⟨"ComposedFacts"⟩,
     moduleText "ComposedFacts"
       "EXTENDS Sequences\nFlagDomain == BOOLEAN\nTextDomain == STRING\nSize == Len(<<1>>)\nFirst == Head(<<1, 2>>)\nRest == Tail(<<1, 2>>)")]
@@ -1122,6 +1130,12 @@ def scenarioInstances (fails : Failures) (root : String)
   check fails "instance: a standard-module instance resolves its pinned facts"
     standardRun.module?.isSome (detailOf standardRun)
   checkQualifiedOperator fails standardRun "I!Int" "Integers" 0 false "constant"
+  let transitiveInstance ← runInline #[(⟨"TransitiveInstance"⟩,
+    moduleText "TransitiveInstance" "I == INSTANCE Integers\nR == I!Nat")]
+    "TransitiveInstance"
+  check fails "instance: inherited standard fact resolves under qualifier"
+    transitiveInstance.module?.isSome (detailOf transitiveInstance)
+  checkQualifiedOperator fails transitiveInstance "I!Nat" "Naturals" 0 false "constant"
   match resolvedOperator? standardRun "I!Int" with
   | none => mark fails "instance: named standard fact is materialized"
   | some projected => do
@@ -1138,12 +1152,12 @@ def scenarioInstances (fails : Failures) (root : String)
     (⟨"StandardBudgetRoot"⟩, moduleText "StandardBudgetRoot"
       "I == INSTANCE Integers\nR == I!Int")]
   let standardBudgetExact ← runInline standardBudgetSources "StandardBudgetRoot"
-    { maxDeclarations := 64, maxSymbols := 3 }
+    { maxDeclarations := 64, maxSymbols := 4 }
   check fails "instance: standard projection fits the exact symbol limit"
     (standardBudgetExact.module?.isSome && standardBudgetExact.diagnostics.isEmpty)
     (detailOf standardBudgetExact)
   let standardBudgetOver ← runInline standardBudgetSources "StandardBudgetRoot"
-    { maxDeclarations := 64, maxSymbols := 2 }
+    { maxDeclarations := 64, maxSymbols := 3 }
   check fails "instance: standard projection is charged at limit plus one"
     (standardBudgetOver.module?.isNone &&
       hasDiagnostic standardBudgetOver ElabCode.symbolLimit .nameResolution)

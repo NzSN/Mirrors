@@ -51,6 +51,9 @@ private def wellFormedValueFuel : Nat → Value → Bool
       | .vrecord fields | .vmap fields =>
           nodupStrings (fields.map Prod.fst) &&
             fields.all (fun field => wellFormedValueFuel fuel field.2)
+      | .vintmap fields =>
+          !fields.isEmpty && fields.map Prod.fst == (fields.map Prod.fst).eraseDups &&
+            fields.all (fun field => wellFormedValueFuel fuel field.2)
       | .vvariant _ payload => wellFormedValueFuel fuel payload
 
 private def wellFormedValue (value : Value) : Bool :=
@@ -82,11 +85,13 @@ private def valueHasTypeFuel : Nat → Value → ModelType → Bool
               | some item => valueHasTypeFuel fuel field.2 item.type
               | none => false)
       | .vmap entries, .map keyType valueType =>
-          -- Core.Value's ITF-map representation has string keys.
-          keyType == .str && nodupStrings (entries.map Prod.fst) &&
+          (keyType == .str || (keyType == .int && entries.isEmpty)) &&
+            nodupStrings (entries.map Prod.fst) &&
             entries.all (fun entry =>
               valueHasTypeFuel fuel (.vstr entry.1) keyType &&
                 valueHasTypeFuel fuel entry.2 valueType)
+      | .vintmap entries, .map .int valueType =>
+          entries.all (fun entry => valueHasTypeFuel fuel entry.2 valueType)
       | .vvariant tag payload, .variant cases =>
           match cases.find? (fun item => item.tag == tag) with
           | some item => valueHasTypeFuel fuel payload item.payload
@@ -123,6 +128,12 @@ private def projectValueAux : Value → List PathSegment → Nat → Except Stri
                 match entries.lookup key with
                 | some value => .ok value
                 | none => .error s!"segment {index}: map key is absent"
+        | .mapKey (.int key), .vintmap entries =>
+            match entries.find? (fun entry => entry.1 == key) with
+            | some entry => .ok entry.2
+            | none => .error s!"segment {index}: map key is absent"
+        | .mapKey _, .vintmap _ =>
+            .error s!"segment {index}: integer map key expected"
         | .variantValue expected, .vvariant actual payload =>
             if actual == expected then .ok payload
             else .error s!"segment {index}: expected variant {expected}, got {actual}"

@@ -688,12 +688,14 @@ private def closureOf (fuel : Nat) (name : ModuleName) :
                       result :=
                         { result with
                           availableStandards :=
-                            pushUnique result.availableStandards edge.dependency }
+                            pushUniqueMany result.availableStandards
+                              (standardExportClosure edge.dependency) }
                       if !edge.«local» then
                         result :=
                           { result with
                             exportedStandards :=
-                              pushUnique result.exportedStandards edge.dependency }
+                              pushUniqueMany result.exportedStandards
+                                (standardExportClosure edge.dependency) }
                 | some _ => do
                     let nested ← closureOf fuel' edge.dependency
                     for nestedEntry in nested.entries do
@@ -737,7 +739,7 @@ private def closureOf (fuel : Nat) (name : ModuleName) :
                       -- reviewed operator facts are still visible through a
                       -- named instance and must appear in inspection output.
                       for fact in standardOperatorFacts do
-                        if fact.module == site.declaration.moduleName then
+                        if standardExports site.declaration.moduleName fact.module then
                           match ← allocateQualifiedStandard table fact
                               (instanceName ++ "!" ++ fact.name) site with
                           | none => pure ()
@@ -750,14 +752,14 @@ private def closureOf (fuel : Nat) (name : ModuleName) :
                       result :=
                         { result with
                           availableStandards :=
-                            pushUnique result.availableStandards
-                              site.declaration.moduleName }
+                            pushUniqueMany result.availableStandards
+                              (standardExportClosure site.declaration.moduleName) }
                       if !site.declaration.«local» then
                         result :=
                           { result with
                             exportedStandards :=
-                              pushUnique result.exportedStandards
-                                site.declaration.moduleName }
+                              pushUniqueMany result.exportedStandards
+                                (standardExportClosure site.declaration.moduleName) }
                 | .localSource =>
                     match current.tables.find? (fun other =>
                         other.name == site.declaration.moduleName) with
@@ -1006,7 +1008,7 @@ private def resolveReference (profile : LanguageProfile) (table : ModuleTable)
               | .standardCatalog =>
                   match standardOperatorFacts.find? (fun fact =>
                       fact.name == spelling &&
-                        fact.module == site.declaration.moduleName) with
+                        standardExports site.declaration.moduleName fact.module) with
                   | some fact =>
                       if fact.arity == argumentCount then
                         pure ()
@@ -1294,7 +1296,7 @@ private def instancedKeyLevel (state : ElabState) (fuel : Nat) (origin : ModuleN
                   | .standardCatalog =>
                       match standardOperatorFacts.find? (fun fact =>
                           fact.name == name &&
-                            fact.module == site.declaration.moduleName) with
+                            standardExports site.declaration.moduleName fact.module) with
                       | some fact => some fact.level
                       | none => none
                   | .localSource =>

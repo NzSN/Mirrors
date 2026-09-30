@@ -226,7 +226,8 @@ def scenarioBorrowedProvider (fails : Failures) : IO Unit := do
 def scenarioStandardCatalog (fails : Failures) : IO Unit := do
   let catalog := Shell.Tla.StandardModuleCatalog.default
   check fails "catalog: profile identity pinned"
-    (catalog.profile.profileId == "mirrors-standard-modules/v1")
+    (catalog.profile.profileId == "mirrors-standard-modules/v2" &&
+      catalog.profile.baseline == some "TLA+ Tools 1.8.0")
   check fails "catalog: production names preserved"
     ((catalog.modules.map (fun entry => entry.name.name)).toList ==
       ["Naturals", "Integers", "Reals", "Sequences", "FiniteSets", "Bags",

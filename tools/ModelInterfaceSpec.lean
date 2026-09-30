@@ -915,6 +915,76 @@ def counterTrace : ItfTrace where
       stateVars := [("count", .vint 2)] }
   ]
 
+def scenarioReplayPartition (fails : Failures) : IO Unit := do
+  let names := ["parameters", "reg", "dr", "tls"]
+  let original : ItfTrace := {
+    traceVars := names ++ ["count", "extra", "action_taken"]
+    paramVars := names
+    traceParams := [("THREADS", .vset [.vint 1, .vint 2])]
+    traceStates := [{
+      actionTaken := "ArmStart"
+      parameters := names.map (fun name => (name, .vint 7))
+      stateVars := [("count", .vint 2), ("extra", .vint 3)] }] }
+  for configured in [[], ["parameters"], ["parameters", "parameters"], ["extra"]] do
+    let actual := applyParamVars configured original
+    let expected := (names ++ configured).eraseDups
+    check fails s!"partition: effective metadata {configured}" (actual.paramVars == expected)
+    for state in actual.traceStates do
+      check fails s!"partition: retained recorded parameters {configured}"
+        (names.all (fun name => (state.parameters.lookup name).isSome &&
+          !(state.stateVars.lookup name).isSome))
+      check fails "partition: compared state preserved"
+        (match state.stateVars.lookup "count" with
+          | some value => valEq value (.vint 2)
+          | none => false)
+      check fails "partition: configured addition moved"
+        ((state.parameters.lookup "extra").isSome == configured.contains "extra")
+      let again := applyParamVars configured actual
+      check fails "partition: metadata idempotent" (again.paramVars == actual.paramVars)
+      check fails "partition: state idempotent"
+        (reprStr again.traceStates == reprStr actual.traceStates)
+    check fails "partition: constants preserved"
+      (reprStr actual.traceParams == reprStr original.traceParams)
+  let duplicates := applyParamVars ["parameters"] { original with paramVars := names ++ names }
+  check fails "partition: recorded duplicates normalized" (duplicates.paramVars == names)
+  let missing := applyParamVars ["parameters"] { original with paramVars := [] }
+  check fails "partition: missing metadata uses configuration"
+    (missing.paramVars == ["parameters"])
+
+def scenarioIntegerMapValues (fails : Failures) : IO Unit := do
+  let large : Int := 340282366920938463463374607431768211457
+  let original := Value.vintmap [
+    (-large, .vmap [("active", .vbool true)]),
+    (1, .vintmap [(2, .vint large), (3, .vmap [])])]
+  check fails "integer maps: wire invariant" (Codec.wireOk original)
+  match Codec.decodeValue (Codec.encValue original) with
+  | .error error => check fails "integer maps: nested codec round-trip" false error.msg
+  | .ok decoded => check fails "integer maps: nested codec round-trip" (valEq original decoded)
+  check fails "integer maps: order-independent comparison"
+    (valEq (.vintmap [(1, .vint 2), (3, .vint 4)])
+      (.vintmap [(3, .vint 4), (1, .vint 2)]))
+  check fails "integer maps: integer and string key identity distinct"
+    (!valEq (.vintmap [(1, .vint 2)]) (.vmap [("1", .vint 2)]))
+  check fails "integer maps: empty function map accepts integer schema"
+    (valueHasType (.vmap []) (.map .int .int))
+  for raw in [
+    "{\"#map\":[[{\"#bigint\":\"1\"},true],[{\"#bigint\":\"1\"},false]]}",
+    "{\"#map\":[[true,1]]}",
+    "{\"#map\":[[{\"#bigint\":\"1\"},1],[\"1\",2]]}",
+    "{\"#map\":[[{\"#bigint\":\"broken\"},1]]}" ] do
+    match Lean.Json.parse raw with
+    | .error error => check fails "integer maps: rejection fixture parses" false error
+    | .ok json => check fails "integer maps: malformed keys rejected" (!(Codec.decodeValue json).isOk)
+  let state : ValueMap := [("reg", .vintmap [(1, .vint large), (2, .vint 8)])]
+  check fails "integer maps: typed key projection"
+    (match projectState state [.field "reg", .mapKey (.int 1)] with
+      | .ok value => valEq value (.vint large)
+      | .error _ => false)
+  check fails "integer maps: absent key projection rejected"
+    (!(projectState state [.field "reg", .mapKey (.int 3)]).isOk)
+  check fails "integer maps: mistyped key projection rejected"
+    (!(projectState state [.field "reg", .mapKey (.str "1")]).isOk)
+
 def transitionAtZeroTrace : ItfTrace :=
   { counterTrace with traceStates :=
       { actionTaken := "tick"
@@ -1477,6 +1547,26 @@ def scenarioCppEmitter (fails : Failures)
   check fails "cpp emitter: unsupported types fail at emission"
     (emitterErrorIs "MIC-E-TYPE-001"
       (Shell.ModelInterface.Emit.Cpp.emitCpp unsupported))
+  let nestedUnsupported := { lock with observations := [
+    { observation with
+      id := "DebugSlots", wireName := "dr"
+      type := .map .str (.map .int (.opaqueItf "native handle")) },
+    { observation with id := "Registry", wireName := "reg", type := .map .int .int }] }
+  let findings := Shell.ModelInterface.Emit.Cpp.targetDiagnostics nestedUnsupported
+  check fails "cpp emitter: independent target findings accumulated" (findings.length == 3)
+  check fails "cpp emitter: nested type carries observation and path"
+    (findings.any (fun diagnostic => diagnostic.stableId == some "DebugSlots" &&
+      diagnostic.pointer == some "/observations/0/type" &&
+      diagnostic.arguments.contains ("typePath", "type.value.key") &&
+      diagnostic.message.contains "DebugSlots"))
+  check fails "cpp emitter: finding order deterministic"
+    (findings == Shell.ModelInterface.Emit.Cpp.targetDiagnostics nestedUnsupported)
+  let supported := { nestedUnsupported with observations := [
+    { observation with type := .map .str (.map .int .int) }] }
+  check fails "cpp emitter: v2 integer maps accepted"
+    (Shell.ModelInterface.Emit.Cpp.emitCpp supported "mirrorcpp-v2").isOk
+  check fails "cpp emitter: v1 integer maps remain rejected"
+    (emitterErrorIs "MIC-E-TYPE-001" (Shell.ModelInterface.Emit.Cpp.emitCpp supported))
   let some transition := lock.actions.head?
     | check fails "cpp emitter: transition prerequisite" false
       return
@@ -2151,6 +2241,8 @@ def run : IO UInt32 := do
   scenario "sha-strict-json" (scenarioShaAndStrictJson fails)
   scenario "lease-reduction" (scenarioLeaseReduction fails)
   scenario "canonical-diagnostics" (scenarioCanonicalDiagnostics fails)
+  scenario "replay-partition" (scenarioReplayPartition fails)
+  scenario "integer-map-values" (scenarioIntegerMapValues fails)
   let resolvedRef ← IO.mkRef (none : Option ResolvedModelInterface)
   scenario "counter-resolution" do
     match ← scenarioCounterResolution fails with
