@@ -57,9 +57,9 @@ and is compiled into the executable:
 
 ```console
 $ .lake/build/bin/mirror --version
-Mirrors 0.0.2
+Mirrors 0.0.3
 $ ModelMirrors --version
-Mirrors 0.0.2
+Mirrors 0.0.3
 ```
 
 The second command requires installation under that name on `PATH`.
