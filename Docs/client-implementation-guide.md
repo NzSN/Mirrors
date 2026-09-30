@@ -269,17 +269,17 @@ implementation adapter or executable code.
 
 The Mirrors server, MirrorECMA's compiled-verification and dynamic-descriptor
 paths, and MirrorCPP's static compiled-verification path are implemented.
-MirrorRust now has a source-level compiled-verify runner and exact registry for
-reviewed bindings; its Gate Counter uses a handwritten fixture identity, not a
-generated Rust target. Rust/Lean generation and the MirrorLean registry remain
-planned. See the [Rust implementation record](../../MirrorGate/docs/rust-evaluator-sdk-status.md)
+MirrorRust implements compiled verification with an exact registry and the
+compiler-emitted `mirrorrust-v1` binding. Its separate Gate Counter acceptance
+integration uses a handwritten fixture identity. Lean generation and the
+MirrorLean registry remain planned. See the [Rust implementation record](../../MirrorGate/docs/rust-evaluator-sdk-status.md)
 for validation status and limits. Implement only the profile your client can
 honestly advertise:
 
 | Client profile | Request | Local executable behavior | Version-1 use |
 | --- | --- | --- | --- |
 | Legacy stepping | no `modelInterface` field | caller supplies `StateComputer` | Existing, unchanged entry points |
-| Compiled verification | `verify` | precompiled generated binding plus application adapter | Default production profile; implemented in MirrorECMA and MirrorCPP |
+| Compiled verification | `verify` | precompiled generated binding plus application adapter | Default production profile; implemented in MirrorECMA, MirrorCPP, and MirrorRust |
 | Dynamic descriptor | `descriptor` | local handler/observer registry interpreted by MirrorECMA | Development-only; implemented in MirrorECMA with deferred factory scopes |
 
 MirrorECMA additionally supports a local asynchronous replay profile for compiled
@@ -299,6 +299,13 @@ application      -> local ImplementationAdapter for the real SUT
   replay behavior. The extension is allowed only on `register` and
   `register_traces`; version 1 does not extend validate, trace-generation,
   async-job, or explorer registrations.
+
+Rust legacy runners retain the exhaustive pre-negotiation `Error` enum. Compiled
+negotiation helpers and runners return the separate non-exhaustive
+`NegotiatedError`: `Legacy(Error)` preserves transport/protocol/replay failures,
+`Registration` preserves structured server failures, and `ModelInterface` carries
+local admission failures. Consumers of the former negotiated `Result<_, Error>`
+API must migrate; legacy callers keep their signatures and wire behavior.
 - **MI2.** A client **MUST** treat a descriptor and generated metadata as inert
   interface data. It **MUST NOT** evaluate or compile received content, load a
   module/plugin/symbol named by it, retrieve an executable adapter, or expose
@@ -746,7 +753,7 @@ section's Mirrors wire tests alone does not establish sandbox support.
 | `mirror validate` (this repo) | Lean 4 | sync/async validate over TCP/mTLS, recursive source delivery, registry discovery, pinning |
 | MirrorECMA (`test/smoke.test.ts`, `test/model-interface-*.ts`) | TypeScript | stdio/TCP/mTLS, registry, TLS negatives, D3 compiled verification, D4 dynamic descriptor/cache replay |
 | MirrorCPP (`test/unit/model_interface_test.cpp`, `test/unit/generated_model_interface_test.cpp`, `test/integration/real_mirror_test.cpp`) | C++23 | stdio/TCP/mTLS, registry/TLS negatives, D5 static exact-digest verification and generated Counter replay |
-| MirrorRust (`tests/model_interface.rs`, `tests/server_mode_smoke.rs`) | Rust | stdio/TCP/mTLS, registry and async jobs; strict verify runtime and reviewed bindings; separate Gate-owned Counter fixture; no generated Rust target |
+| MirrorRust (`tests/model_interface.rs`, `tests/server_mode_smoke.rs`) | Rust | stdio/TCP/mTLS, registry and async jobs; strict verify runtime and compiler-generated Rust bindings; separate Gate-owned Counter fixture |
 | MirrorLean (`test/Main.lean`, `test/Async.lean`, `server-mode/Test/ServerModeSmoke.lean`) | Lean 4 | base replay/exploration, bounded framing, recursive sources and concurrent async jobs over TCP/mTLS; no negotiated binding or Gate facade |
 | Haskell `ModelMirrors validate` | Haskell | the reference wire consumer |
 | `tools/CounterSpec.lean` | Lean 4 | full MBT replay incl. mismatch negatives |
@@ -781,7 +788,8 @@ reusable integration seam, not a released generic MirrorCPP package API.
 The [native Rust integration](../../MirrorGate/docs/rust-evaluator-sdk-status.md)
 now has a reviewed Counter fixture and locally accepted owned/attached ×
 Node/Rust worker matrix. Its generic composition seam uses caller-supplied
-bindings; a compiler-generated Rust target remains planned.
+bindings; Mirrors' implemented Rust target is separate from this handwritten
+Gate acceptance fixture.
 Existing worker support alone does not establish this orchestration profile;
 a Rust worker can, for example, be driven by either evaluator language.
 

@@ -240,7 +240,12 @@ mod tests {
                     assert_eq!(sut.borrow().count, 5.into());
                 }
                 1 => assert!(
-                    matches!(result, Err(mirrorrust::Error::StepMismatch { .. })),
+                    matches!(
+                        result,
+                        Err(mirrorrust::NegotiatedError::Legacy(
+                            mirrorrust::Error::StepMismatch { .. }
+                        ))
+                    ),
                     "{result:?}"
                 ),
                 _ => {
