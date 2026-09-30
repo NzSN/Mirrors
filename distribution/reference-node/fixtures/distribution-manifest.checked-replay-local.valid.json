@@ -4,35 +4,21 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "68a3ad583d2889695e37bbde4af3b81d12b184a8d72e1bb9a360d6266a709c68"
+    "selectionValue": "5dd41ae95910381e680cdfb2964e27802e6c1a2905b66cb79cb209e5d76f3d40"
   },
   "profileId": "checked-replay-local",
   "componentRefs": [
     {
       "componentId": "mirrorecma",
       "repository": "https://github.com/NzSN/MirrorECMA.git",
-      "revision": "59b722ac1c36d7c7be87ea7d962a89c6ab6d7145",
+      "revision": "b753695e9b218c818cb7d5d7aee6c0a4fc0043d7",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "80e63904cf4756e353265b2ac6424dfbe5533648117ea0725933de9b6d8456b5",
+        "digest": "9a5b47cc206d7076f1bc1d3a606133f1890680b021f7e05018498e29487bb163",
         "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [
-          "examples/application-validation/installed-project-replay.mjs",
-          "examples/application-validation/run.mjs",
-          "src/framework-catalog.ts",
-          "src/index.ts",
-          "src/suite-runner.ts",
-          "test/framework-catalog.test.ts",
-          "test/installed-qualification-wrappers.test.ts",
-          "test/mutation-observer-fidelity.test.ts",
-          "test/reproduction-authority-exports.test.ts"
-        ],
+        "includedPaths": [],
         "excludedPaths": [
-          {
-            "path": ".projectile-cache.eld",
-            "reasonCode": "pre-existing-unrelated"
-          },
           {
             "path": "catalog/framework-capabilities.json",
             "reasonCode": "evidence-output"
@@ -43,68 +29,16 @@
     {
       "componentId": "mirrors",
       "repository": "https://github.com/NzSN/Mirrors.git",
-      "revision": "ce75058b3f1c912eb5bee58b81f3bac1dab2714d",
+      "revision": "e8ba489ba9ecc55e6350ff6bd795c48330fd1017",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "e23ff68ea1f44e6bead224d31357d16e4e10e8a52807924fa65865e8e3e2c3f1",
+        "digest": "2d181fdb0a9fe4f17c82fee7c950c9f4de79634ddb39c297d1977ef7982dd4e2",
         "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [
-          "AGENTS.md",
-          "Codec/FrameworkCatalog.lean",
-          "Docs/durable-evidence-design.md",
-          "Docs/framework-catalog-contract.md",
-          "distribution/reference-node/distribution-manifest.schema.json",
-          "tools/distribution/build.py",
-          "tools/distribution/counter-driver.mjs",
-          "tools/distribution/distribution_lib.py",
-          "tools/distribution/install.py",
-          "tools/distribution/installed-counter.mjs",
-          "tools/distribution/installed-counter.test.mjs",
-          "tools/distribution/qualification.py",
-          "tools/distribution/refresh_identity.py",
-          "tools/distribution/snapshot_sources.py",
-          "tools/distribution/test_archive_bounds.py",
-          "tools/distribution/test_editor_cache.py",
-          "tools/distribution/test_install.py",
-          "tools/distribution/test_installed_counter.py",
-          "tools/distribution/test_manifest_check.py",
-          "tools/distribution/test_planning_docs_exclusion.py",
-          "tools/distribution/test_qualification.py",
-          "tools/evidence/collect.py",
-          "tools/evidence/commands.json",
-          "tools/evidence/qualification_scope.py",
-          "tools/evidence/reproduction-capture.mjs",
-          "tools/evidence/schema/attachment-plan-v1.schema.json",
-          "tools/evidence/schema/evidence-envelope-v1.schema.json",
-          "tools/evidence/schema/qualification-scope-v2.schema.json",
-          "tools/evidence/tests/test_catalog_links.py",
-          "tools/evidence/tests/test_collect.py",
-          "tools/evidence/tests/test_qualification_scope.py"
-        ],
+        "includedPaths": [],
         "excludedPaths": [
           {
-            "path": ".projectile-cache.eld",
-            "reasonCode": "pre-existing-unrelated"
-          },
-          {
-            "path": "CHECKPOINTS.md",
-            "reasonCode": "planning-documentation"
-          },
-          {
             "path": "Docs/framework-map.md",
-            "reasonCode": "evidence-output"
-          },
-          {
-            "path": "Plans/mirror-framework-improvements.md",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/mirror-framework-tasks.md",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/q3-readiness-2026-09-25.md",
             "reasonCode": "evidence-output"
           },
           {
@@ -379,13 +313,13 @@
       "inputId": "profiles-lock",
       "path": "distribution/reference-node/profiles.json",
       "bytes": 4307,
-      "sha256": "a7388f0a412434840739134a10c67e9729db0ab76e74777ad7f6f69378196999"
+      "sha256": "17fc341d71a090f3c85a384abdfd6f12c56d54432069f565c4a480f9e0608d78"
     },
     {
       "inputId": "component-lock",
       "path": "distribution/reference-node/component-lock.json",
-      "bytes": 15094,
-      "sha256": "30c5e65f4ffecff938563ffb062fd8c1c69e8a2e05b6ebea8010cb6ba67d1593"
+      "bytes": 11526,
+      "sha256": "12424e37ade43fa1710b0aac5a286867c9b133e5d781219b32959fb9e4c832fd"
     },
     {
       "inputId": "dependency-lock",
