@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/tools/check-cpp-integer-maps.py", line 105, in <module>
+    main()
+  File "/home/nzsn/Repos/Mirrors/tools/check-cpp-integer-maps.py", line 82, in main
+    run([str(compiler), "resolve", *quoted_inputs])
+  File "/home/nzsn/Repos/Mirrors/tools/check-cpp-integer-maps.py", line 50, in run
+    raise AssertionError(f"{command}: exit {result.returncode}\n{output}")
+AssertionError: ['/home/nzsn/Repos/Mirrors/.lake/build/bin/model_interface_gen', 'resolve', '--spec', 'IntegerTables.tla', '--contract', 'quoted-contract.json', '--evidence', 'trace.json', '--param-var', 'parameters', '--lock', 'quoted-lock.json']: exit 1
+model-interface resolution failed
+error MIC-R-ID-001 IntegerTables.tla observation Quoted"Reg\Line
+End reason=stable id must match [A-Z][A-Za-z0-9]*
+

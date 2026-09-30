@@ -236,6 +236,9 @@ def scenarioStandardCatalog (fails : Failures) : IO Unit := do
   check fails "catalog: language module kind"
     ((catalog.find? (moduleName "Naturals")).map (fun entry => entry.kind) ==
       some .languageDefined)
+  check fails "catalog: language module bytes pinned"
+    ((catalog.find? (moduleName "Naturals")).bind (·.contentIdentity) ==
+      some "73f2a68412039aa86f37ad08f0d0fef50fa8327d0ad8806f515548c75e9d9d84")
   check fails "catalog: extension module kind"
     ((catalog.find? (moduleName "Apalache")).map (fun entry => entry.kind) ==
       some .apalacheExtension)

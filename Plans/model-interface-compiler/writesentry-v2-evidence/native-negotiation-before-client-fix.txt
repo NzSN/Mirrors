@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/tools/check-cpp-integer-maps.py", line 88, in <module>
+    main()
+  File "/home/nzsn/Repos/Mirrors/tools/check-cpp-integer-maps.py", line 83, in main
+    print(run([str(scratch / "build/integer_maps"), str(ROOT / ".lake/build/bin/mirror"),
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/tools/check-cpp-integer-maps.py", line 50, in run
+    raise AssertionError(f"{command}: exit {result.returncode}\n{output}")
+AssertionError: ['/tmp/mirrors integer maps 4ifsvtkz/build/integer_maps', '/home/nzsn/Repos/Mirrors/.lake/build/bin/mirror', '/tmp/mirrors integer maps 4ifsvtkz/trace.json']: exit 1
+negotiated runner requires target profile mirrorcpp-v1
+

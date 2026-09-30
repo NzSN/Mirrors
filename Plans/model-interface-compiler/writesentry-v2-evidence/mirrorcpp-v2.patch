@@ -1,0 +1,89 @@
+diff --git a/README.md b/README.md
+index 2829eb4..46cb89f 100644
+--- a/README.md
++++ b/README.md
+@@ -1,5 +1,14 @@
+ # MirrorCPP
+ 
++The additive generated `mirrorcpp-v2` typed-map profile uses the same public
++`Value`/`StateComputer` API. Negotiated runners accept exactly `mirrorcpp-v1`
++and `mirrorcpp-v2`; v1 remains the default. Select v2 explicitly in both the
++compiled registry key and `CompiledAdapterSelection.target_profile` using
++`mirrorcpp_typed_maps_target_profile`. The semantic digest, adapter ID, target
++profile, and StateComputer contract version must still match exactly. This
++client change permits selection; supported key shapes and callback validation
++are enforced by the corresponding generated binding and server codecs.
++
+ See the [framework map](../Mirrors/Docs/framework-map.md) for client capabilities.
+ Restricted execution uses the [Gate C++ SDK](../MirrorGate/sdk/cpp/README.md)
+ and [source integration](../MirrorGate/integrations/mirrorcpp/README.md), without
+diff --git a/include/mirrorcpp/model_interface.hpp b/include/mirrorcpp/model_interface.hpp
+index e5f026b..932aa3e 100644
+--- a/include/mirrorcpp/model_interface.hpp
++++ b/include/mirrorcpp/model_interface.hpp
+@@ -23,6 +23,7 @@ inline constexpr std::string_view model_interface_negotiation_schema =
+ inline constexpr std::string_view model_interface_descriptor_schema =
+     "mirrors.model-interface-descriptor/v1";
+ inline constexpr std::string_view mirrorcpp_target_profile = "mirrorcpp-v1";
++inline constexpr std::string_view mirrorcpp_typed_maps_target_profile = "mirrorcpp-v2";
+ inline constexpr std::string_view state_computer_contract_version =
+     "mirrors.state-computer/v1";
+ 
+diff --git a/src/client.cpp b/src/client.cpp
+index ddba334..ac1af0e 100644
+--- a/src/client.cpp
++++ b/src/client.cpp
+@@ -197,11 +197,11 @@ struct PreparedCompiledAdapter {
+ 
+ Result<PreparedCompiledAdapter> prepare_compiled_adapter(
+     const CompiledAdapterSelection& selection) {
+-  if (selection.target_profile != mirrorcpp_target_profile) {
++  if (selection.target_profile != mirrorcpp_target_profile &&
++      selection.target_profile != mirrorcpp_typed_maps_target_profile) {
+     return unexpected(local_model_interface_error(
+         "target_profile_mismatch",
+-        "negotiated runner requires target profile " +
+-            std::string(mirrorcpp_target_profile)));
++        "negotiated runner requires target profile mirrorcpp-v1 or mirrorcpp-v2"));
+   }
+   if (selection.state_computer_contract_version != state_computer_contract_version) {
+     return unexpected(local_model_interface_error(
+diff --git a/test/unit/model_interface_test.cpp b/test/unit/model_interface_test.cpp
+index c2b2585..d1e47aa 100644
+--- a/test/unit/model_interface_test.cpp
++++ b/test/unit/model_interface_test.cpp
+@@ -390,6 +390,34 @@ TEST_CASE("negotiated runner creates and disposes one binding only after matched
+   REQUIRE(transport.sent.back().find("\"report_state\"") != std::string::npos);
+ }
+ 
++TEST_CASE("typed-map profile selects its exact registry entry", "[model-interface]") {
++  Calls calls;
++  SelectionFixture fixture(calls);
++  const CompiledAdapterKey old_key{fixture.digest, "counter.mutable/v1",
++      std::string(mirrorcpp_target_profile), std::string(state_computer_contract_version)};
++  const auto factory = **fixture.registry.resolve(old_key);
++  fixture.registry = CompiledAdapterRegistry({{
++      {fixture.digest, "counter.mutable/v1", std::string(mirrorcpp_typed_maps_target_profile),
++       std::string(state_computer_contract_version)}, factory}});
++  fixture.selection.target_profile = std::string(mirrorcpp_typed_maps_target_profile);
++  ScriptedTransport transport(successful_replay(validated()));
++  const auto result = run_client_with_traces_negotiated(
++      transport, config(), {"counter.itf.json"}, fixture.selection);
++  REQUIRE(result.has_value());
++  REQUIRE(calls.factory == 1);
++  REQUIRE(calls.computer == 1);
++  REQUIRE(calls.dispose == 1);
++  fixture.selection.target_profile = "mirrorcpp-v99";
++  ScriptedTransport unsupported({});
++  const auto refused = run_client_with_traces_negotiated(
++      unsupported, config(), {"counter.itf.json"}, fixture.selection);
++  REQUIRE_FALSE(refused.has_value());
++  REQUIRE(refused.error().code == "target_profile_mismatch");
++  REQUIRE(unsupported.sent.empty());
++  REQUIRE(calls.factory == 1);
++  REQUIRE(calls.computer == 1);
++}
++
+ TEST_CASE("required missing or wrong negotiation runs no adapter code",
+           "[model-interface]") {
+   for (const std::string& first : {

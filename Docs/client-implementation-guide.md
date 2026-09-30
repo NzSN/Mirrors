@@ -1,5 +1,9 @@
 # Mirrors — Client Implementation Guide & Conformance Specification
 
+> For the additive `mirrorcpp-v2` map profile, supported compiler/server/client
+> carrier, and generated CMake checks, see
+> [WriteSentry compiler extensions](model-interface-compiler/writesentry-extensions.md).
+
 > Integrating an application with the TypeScript client? Start with the
 > [role-oriented integration guide](application-integration-guide.md) and
 > [MirrorECMA MBT tutorial](mirrorecma-typescript-mbt-user-manual.md). This

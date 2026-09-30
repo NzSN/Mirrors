@@ -1,122 +1,104 @@
 {
-  "schema": "mirrors.tla-frontend-summary/1",
-  "fixture": "acc-standard-modules",
-  "root": "AcceptStandardModules",
-  "profile": "mirrors-tla-frontend-profile-4",
-  "modules": [
-    "AcceptStandardModules"
-  ],
-  "standardModules": [
-    "Integers",
-    "Naturals",
-    "Sequences",
-    "FiniteSets",
-    "TLC"
+  "declarations": [
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 5,
+      "module": "AcceptStandardModules",
+      "names": [
+        "Positive"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 6,
+      "module": "AcceptStandardModules",
+      "names": [
+        "Sequence"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 7,
+      "module": "AcceptStandardModules",
+      "names": [
+        "First"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 8,
+      "module": "AcceptStandardModules",
+      "names": [
+        "Rest"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 9,
+      "module": "AcceptStandardModules",
+      "names": [
+        "Size"
+      ]
+    },
+    {
+      "arity": 0,
+      "kind": "operator",
+      "line": 10,
+      "module": "AcceptStandardModules",
+      "names": [
+        "Sum"
+      ]
+    }
   ],
   "dependencies": [
     {
-      "owner": "AcceptStandardModules",
+      "kind": "extends",
+      "line": 3,
+      "local": false,
       "module": "Integers",
-      "kind": "extends",
+      "owner": "AcceptStandardModules",
       "resolution": "standard",
-      "local": false,
-      "line": 3,
       "substitutions": []
     },
     {
-      "owner": "AcceptStandardModules",
-      "module": "Naturals",
       "kind": "extends",
-      "resolution": "standard",
-      "local": false,
       "line": 3,
-      "substitutions": []
-    },
-    {
-      "owner": "AcceptStandardModules",
+      "local": false,
       "module": "Sequences",
-      "kind": "extends",
+      "owner": "AcceptStandardModules",
       "resolution": "standard",
-      "local": false,
-      "line": 3,
       "substitutions": []
     },
     {
-      "owner": "AcceptStandardModules",
+      "kind": "extends",
+      "line": 3,
+      "local": false,
       "module": "FiniteSets",
-      "kind": "extends",
-      "resolution": "standard",
-      "local": false,
-      "line": 3,
-      "substitutions": []
-    },
-    {
       "owner": "AcceptStandardModules",
-      "module": "TLC",
-      "kind": "extends",
       "resolution": "standard",
-      "local": false,
-      "line": 3,
       "substitutions": []
-    }
-  ],
-  "declarations": [
-    {
-      "module": "AcceptStandardModules",
-      "kind": "operator",
-      "names": [
-        "Positive"
-      ],
-      "arity": 0,
-      "line": 5
     },
     {
-      "module": "AcceptStandardModules",
-      "kind": "operator",
-      "names": [
-        "Sequence"
-      ],
-      "arity": 0,
-      "line": 6
-    },
-    {
-      "module": "AcceptStandardModules",
-      "kind": "operator",
-      "names": [
-        "First"
-      ],
-      "arity": 0,
-      "line": 7
-    },
-    {
-      "module": "AcceptStandardModules",
-      "kind": "operator",
-      "names": [
-        "Rest"
-      ],
-      "arity": 0,
-      "line": 8
-    },
-    {
-      "module": "AcceptStandardModules",
-      "kind": "operator",
-      "names": [
-        "Size"
-      ],
-      "arity": 0,
-      "line": 9
-    },
-    {
-      "module": "AcceptStandardModules",
-      "kind": "operator",
-      "names": [
-        "Sum"
-      ],
-      "arity": 0,
-      "line": 10
+      "kind": "extends",
+      "line": 3,
+      "local": false,
+      "module": "TLC",
+      "owner": "AcceptStandardModules",
+      "resolution": "standard",
+      "substitutions": []
     }
   ],
   "effectiveVariables": [],
+  "fixture": "acc-standard-modules",
+  "modules": [
+    "AcceptStandardModules"
+  ],
+  "profile": "mirrors-tla-frontend-profile-5",
   "renderings": {
     "First": "Head(<<1, 2>>)",
     "Positive": "{n \\in Nat : n > 0}",
@@ -125,10 +107,18 @@
     "Size": "Cardinality({1, 2})",
     "Sum": "1 + 2"
   },
+  "root": "AcceptStandardModules",
+  "schema": "mirrors.tla-frontend-summary/1",
   "sources": [
     {
       "logicalPath": "AcceptStandardModules.tla",
-      "sha256": "74f18797b5cb8dd27f6ca65e5d1a50a88d225dfdf21b2511fe77af04c3b56e38"
+      "sha256": "f970ac06cbe4189fc6d89ad3ed143d3e31f197fe0c899be0c52c760a53337ac7"
     }
+  ],
+  "standardModules": [
+    "Integers",
+    "Sequences",
+    "FiniteSets",
+    "TLC"
   ]
 }

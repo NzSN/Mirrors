@@ -125,7 +125,7 @@ external. The frontend makes that choice explicit here instead of inferring it
 from a failed sibling-file lookup. -/
 def defaultStandardModules : Array StandardModule :=
   let entry (name : String) (kind : StandardModuleKind) : StandardModule :=
-    { name := ⟨name⟩, kind, contentIdentity := none }
+    { name := ⟨name⟩, kind, contentIdentity := standardModuleContentSha256? name }
   #[
     entry "Naturals" .languageDefined,
     entry "Integers" .languageDefined,

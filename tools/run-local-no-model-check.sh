@@ -17,6 +17,12 @@ run() {
 
 run "build" lake build
 run "async emitter" python3 tools/check-async-emitter.py
+run "CMake consumers" python3 tools/check-cmake-consumer.py
+if [[ -n "${MIRRORCPP_PREFIX:-}" ]]; then
+  run "native integer maps" python3 tools/check-cpp-integer-maps.py --prefix "$MIRRORCPP_PREFIX"
+else
+  echo "SKIP native integer maps: set MIRRORCPP_PREFIX to the prepared MirrorCPP package"
+fi
 run "suite bundle" python3 tools/check-suite-bundle.py
 run "validate source closure" python3 tools/check-validate-closure.py
 run "validate async protocol codec" python3 tools/check-validate-async.py

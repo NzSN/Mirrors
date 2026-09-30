@@ -1,0 +1,23 @@
+Internal ctest changing into directory: /tmp/mic-writesentry-root-build
+Test project /tmp/mic-writesentry-root-build
+    Start 1: writesentry_mirrorcpp_smoke
+1/7 Test #1: writesentry_mirrorcpp_smoke ............   Passed    0.00 sec
+    Start 2: writesentry_model_interface_example
+2/7 Test #2: writesentry_model_interface_example ....   Passed    0.00 sec
+    Start 3: writesentry_mbt_generated_binding
+3/7 Test #3: writesentry_mbt_generated_binding ......   Passed    0.02 sec
+    Start 4: writesentry_mbt
+4/7 Test #4: writesentry_mbt ........................   Passed    0.78 sec
+    Start 5: writesentry_mbt_drop-reservation
+5/7 Test #5: writesentry_mbt_drop-reservation .......   Passed    0.04 sec
+    Start 6: writesentry_mbt_skip-clear
+6/7 Test #6: writesentry_mbt_skip-clear .............   Passed    0.08 sec
+    Start 7: writesentry_mbt_allow-foreign-writer
+7/7 Test #7: writesentry_mbt_allow-foreign-writer ...   Passed    0.07 sec
+
+100% tests passed, 0 tests failed out of 7
+
+Label Time Summary:
+mbt    =   0.97 sec*proc (4 tests)
+
+Total Test time (real) =   1.00 sec

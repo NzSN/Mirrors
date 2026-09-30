@@ -64,6 +64,15 @@ private def cppString (value : String) : String :=
         else [character]
   "\"" ++ String.ofList escaped ++ "\""
 
+/-- Length-delimited UTF-8 data, including embedded NUL. Adjacent byte literals
+prevent a following hexadecimal character from extending a hex escape. -/
+private def cppByteString (value : String) : String :=
+  let bytes := value.toUTF8
+  let literals := bytes.data.toList.map fun byte =>
+    "\"\\x" ++ String.ofList [hexDigit (byte.toNat / 16), hexDigit (byte.toNat % 16)] ++ "\""
+  let literal := if literals.isEmpty then "\"\"" else String.intercalate "" literals
+  s!"std::string({literal}, {bytes.size})"
+
 private def cppKeywords : List String := [
   "alignas", "alignof", "and", "and_eq", "asm", "atomic_cancel",
   "atomic_commit", "atomic_noexcept", "auto", "bitand", "bitor", "bool",
@@ -81,7 +90,7 @@ private def cppKeywords : List String := [
   "try", "typedef", "typeid", "typename", "union", "unsigned", "using",
   "virtual", "void", "volatile", "wchar_t", "while", "xor", "xor_eq"]
 
-private def validateName (context value : String) : EmitResult Unit := do
+private def validateName (context value : String) (profile : String := targetProfile) : EmitResult Unit := do
   let validFirst (character : Char) : Bool :=
     ('a' ≤ character && character ≤ 'z') ||
     ('A' ≤ character && character ≤ 'Z')
@@ -89,34 +98,34 @@ private def validateName (context value : String) : EmitResult Unit := do
     validFirst character || ('0' ≤ character && character ≤ '9') ||
       character == '_'
   match value.toList with
-  | [] => fail "MIC-E-NAME-001" s!"mirrorcpp-v1 {context} name is empty"
+  | [] => fail "MIC-E-NAME-001" s!"{profile} {context} name is empty"
   | first :: rest =>
       if !validFirst first || !rest.all validRest then
         fail "MIC-E-NAME-001"
-          s!"mirrorcpp-v1 {context} name is not a portable C++ identifier: {value}"
+          s!"{profile} {context} name is not a portable C++ identifier: {value}"
   if cppKeywords.contains (lowerFirst value) then
-    fail "MIC-E-NAME-001" s!"mirrorcpp-v1 {context} name is a C++ keyword: {value}"
+    fail "MIC-E-NAME-001" s!"{profile} {context} name is a C++ keyword: {value}"
   if value.startsWith "_" then
-    fail "MIC-E-NAME-001" s!"mirrorcpp-v1 {context} name uses a reserved prefix: {value}"
+    fail "MIC-E-NAME-001" s!"{profile} {context} name uses a reserved prefix: {value}"
 
 private def validateNativeNamespace (context : String) (stableIds : List String)
-    (mandatory : List String := []) : EmitResult Unit := do
+    (mandatory : List String := []) (profile : String := targetProfile) : EmitResult Unit := do
   for stableId in stableIds do
-    let _ ← validateName context stableId
+    let _ ← validateName context stableId profile
   match duplicateStrings (mandatory ++ stableIds.map lowerFirst) with
   | collision :: _ =>
       fail "MIC-E-NAME-001"
-        s!"mirrorcpp-v1 {context} contains colliding native identifier {collision}"
+        s!"{profile} {context} contains colliding native identifier {collision}"
   | [] => pure ()
 
-private def validateNativeNamespaces (lock : LockedModelInterface) : EmitResult Unit := do
-  let _ ← validateName "model" lock.modelModule
+private def validateNativeNamespaces (lock : LockedModelInterface) (profile : String) : EmitResult Unit := do
+  let _ ← validateName "model" lock.modelModule profile
   let actions := lock.initializers ++ lock.actions
-  let _ ← validateNativeNamespace "implementation port" (actions.map (·.id)) ["observe"]
+  let _ ← validateNativeNamespace "implementation port" (actions.map (·.id)) ["observe"] profile
   for action in actions do
     let _ ← validateNativeNamespace s!"input fields for action {action.id}"
-      (action.inputs.map (·.id))
-  let _ ← validateNativeNamespace "observation fields" (lock.observations.map (·.id))
+      (action.inputs.map (·.id)) [] profile
+  let _ ← validateNativeNamespace "observation fields" (lock.observations.map (·.id)) [] profile
   pure ()
 
 private partial def nativeType (profile : String) : ModelType → EmitResult String
@@ -158,7 +167,7 @@ private def renderPathSegment (profile : String) : PathSegment → EmitResult St
   | .mapKey key =>
       if profile == "mirrorcpp-v2" then
         match key with
-        | .str text => pure s!"PathSegment::map_key(mirrorcpp::Value({cppString text}))"
+        | .str text => pure s!"PathSegment::map_key(mirrorcpp::Value({cppByteString text}))"
         | .int integer => pure s!"PathSegment::map_key(mirrorcpp::Value(mirrorcpp::Value::Int(std::string({cppString (toString integer)}))))"
         | _ => fail "MIC-E-PATH-001" "mirrorcpp-v2 supports only string and integer mapKey literals"
       else fail "MIC-E-PATH-001"
@@ -225,7 +234,7 @@ def targetDiagnostics (lock : LockedModelInterface) (profile : String := "mirror
 private def renderInputStruct (profile : String) (action : ResolvedAction) : EmitResult String := do
   if action.inputs.isEmpty then return ""
   let fields ← (sortedBy (·.id) action.inputs).mapM fun input => do
-    let _ ← validateName "input" input.id
+    let _ ← validateName "input" input.id profile
     let type ← nativeType profile input.projection.type
     pure s!"  {type} {lowerFirst input.id};"
   pure <| lines ([s!"struct {action.id}Input " ++ "{"] ++ fields ++ ["};"])
@@ -495,15 +504,21 @@ private def runtimeSupport : String := lines [
 ]
 
 
+/-- Runtime specialization refuses template drift instead of silently emitting
+an incomplete capability profile. Every replaced section must occur once. -/
+private def replaceRuntimeSection (source needle replacement : String) : EmitResult String :=
+  match source.splitOn needle with
+  | [before, after] => pure (before ++ replacement ++ after)
+  | _ => fail "MIC-E-INTERNAL-001" "C++ v2 runtime section is missing or ambiguous"
+
 private def runtimeSupportV2 : EmitResult String := do
-  let support := runtimeSupport
-    |>.replace "enum class Kind { field, index, variant_value };"
+  let support ← replaceRuntimeSection runtimeSupport "enum class Kind { field, index, variant_value };"
       "enum class Kind { field, index, variant_value, map_key };"
-    |>.replace "  std::size_t position = 0;"
+  let support ← replaceRuntimeSection support "  std::size_t position = 0;"
       "  std::size_t position = 0;\n  mirrorcpp::Value key{};"
-    |>.replace "  static PathSegment field(std::string value)"
+  let support ← replaceRuntimeSection support "  static PathSegment field(std::string value)"
       "  static PathSegment map_key(mirrorcpp::Value value) { return {Kind::map_key, {}, 0, std::move(value)}; }\n  static PathSegment field(std::string value)"
-    |>.replace "    } else {\n      if (!value.is<mirrorcpp::Value::Variant>()"
+  let support ← replaceRuntimeSection support "    } else {\n      if (!value.is<mirrorcpp::Value::Variant>()"
       (lines [
         "    } else if (segment.kind == PathSegment::Kind::map_key) {",
         "      if (!value.is<mirrorcpp::Value::Map>()) throw binding_error(\"input_shape_mismatch\", std::string(label) + \": map expected\");",
@@ -519,8 +534,15 @@ private def runtimeSupportV2 : EmitResult String := do
         "      if (found == nullptr) throw binding_error(\"input_shape_mismatch\", std::string(label) + \": map key is absent\");",
         "      value = mirrorcpp::Value(*found);",
         "    } else {"] ++ "      if (!value.is<mirrorcpp::Value::Variant>()")
-    |>.replace "template <typename T> struct MirrorMap { std::vector<std::pair<std::string, T>> entries; };"
+  let support ← replaceRuntimeSection support "template <typename T> struct MirrorMap { std::vector<std::pair<std::string, T>> entries; };"
       "template <typename T, typename K = std::string> struct MirrorMap { std::vector<std::pair<K, T>> entries; };"
+  -- Copy selected children before replacing their owning boxed parent.
+  let support ← replaceRuntimeSection support "value = found->second;"
+    "value = mirrorcpp::Value(found->second);"
+  let support ← replaceRuntimeSection support "value = (*values)[segment.position];"
+    "value = mirrorcpp::Value((*values)[segment.position]);"
+  let support ← replaceRuntimeSection support "value = *value.get<mirrorcpp::Value::Variant>().value;"
+    "value = mirrorcpp::Value(*value.get<mirrorcpp::Value::Variant>().value);"
   let start := "template <typename T> struct NativeCodec<MirrorMap<T>> {"
   let finish := "template <typename... Cases> struct NativeCodec<MirrorVariant<Cases...>> {"
   let parts := support.splitOn start
@@ -554,7 +576,7 @@ private def runtimeSupportV2 : EmitResult String := do
 private def renderModule (profile : String) (lock : LockedModelInterface) : EmitResult (String × String) := do
   let support ← if profile == "mirrorcpp-v2" then runtimeSupportV2 else pure runtimeSupport
   let modelName := lock.modelModule
-  let _ ← validateNativeNamespaces lock
+  let _ ← validateNativeNamespaces lock profile
   let actions := sortedBy (·.id) (lock.initializers ++ lock.actions)
   let inputStructs ← actions.mapM (renderInputStruct profile)
   let observation ← renderObservation profile modelName lock.observations

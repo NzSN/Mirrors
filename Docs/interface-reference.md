@@ -1,5 +1,9 @@
 # Mirrors — Supported Interface Reference
 
+> Additive integer function-map encoding and recorded-parameter augmentation
+> are specified in [WriteSentry compiler extensions](model-interface-compiler/writesentry-extensions.md).
+> Root/record keys and existing string-map bytes retain their contracts.
+
 For an end-to-end deployment and client walkthrough, see the [remote server guide](remote-server-guide.md).
 
 > The complete client-facing interface of the Lean 4 mirror, with exact

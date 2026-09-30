@@ -251,14 +251,22 @@ private def severityText : Severity → String
   | .warning => "warning"
   | .obligation => "obligation"
 
+/-- Quote diagnostic data when literal rendering would change line structure
+or make quotes/backslashes ambiguous. Ordinary identifier rendering is stable. -/
+private def diagnosticText (value : String) : String :=
+  if value.toList.any (fun character =>
+      character.toNat < 32 || character == '"' || character == '\\') then
+    Codec.ModelInterfaceJson.canonicalString (.str value)
+  else value
+
 private def renderDiagnostic (diagnostic : Diagnostic) : String :=
-  let pointer := diagnostic.primary.pointer.map (" " ++ ·) |>.getD ""
-  let subject := diagnostic.subject.stableId.map (" " ++ ·) |>.getD ""
+  let pointer := diagnostic.primary.pointer.map (fun value => " " ++ diagnosticText value) |>.getD ""
+  let subject := diagnostic.subject.stableId.map (fun value => " " ++ diagnosticText value) |>.getD ""
   let arguments := normalizeDiagnosticArguments diagnostic.arguments |>.map (fun argument =>
-    argument.1 ++ "=" ++ argument.2)
+    diagnosticText argument.1 ++ "=" ++ diagnosticText argument.2)
   let suffix := if arguments.isEmpty then "" else " " ++ String.intercalate " " arguments
   s!"{severityText diagnostic.severity} {diagnostic.code} " ++
-    s!"{diagnostic.primary.source}{pointer} {diagnostic.subject.kind}{subject}{suffix}"
+    s!"{diagnosticText diagnostic.primary.source}{pointer} {diagnostic.subject.kind}{subject}{suffix}"
 
 private def printDiagnostics (diagnostics : List Diagnostic) : IO Unit := do
   for diagnostic in diagnostics do
@@ -299,7 +307,7 @@ private def reportError (mode : DiagnosticsMode) (error : CompilerError)
   match mode with
   | .human =>
       printDiagnostics priorDiagnostics
-      IO.eprintln error.message
+      IO.eprintln (diagnosticText error.message)
       printDiagnostics error.diagnostics
   | .json =>
       let diagnostics := priorDiagnostics ++ error.diagnostics

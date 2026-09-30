@@ -11,7 +11,7 @@ Conformance suite for the TF2 lossless parser slice
 abstract syntax", §11 "Parsing behavior", §20 "Diagnostics", §21 "Resource and
 security limits"; packages TF2A and TF2B of
 `Docs/model-interface-compiler/tf2-acceptance-tasks.md`) against the pinned
-revision-4 language profile
+revision-5 language profile
 (`Docs/model-interface-compiler/tla-language-profile.md`). The parser checks
 are pure; the TF2D corpus tier below reads the repository's
 `test/fixtures/tla-frontend` manifest, sources, and summaries.
@@ -21,7 +21,7 @@ budgets, one nesting budget for every recursive syntax family, repeated prefix
 and conditional/quantifier forms, token-stream admission, and deterministic
 repeated failures. TF2B adds: the operator table as parser-profile data (a
 modified profile changes precedence and associativity while `parseUnit` stays
-on the frozen revision-4 combination), bounded and unbounded quantifier
+on the frozen revision-5 combination), bounded and unbounded quantifier
 groups, functional/infix/prefix/postfix operator definitions with their
 applications, and decoded string values whose spelling stays in the CST. TF2C
 adds the opaque proof treatment: `PROOF OMITTED` and `PROOF OBVIOUS` terminals,
@@ -585,10 +585,10 @@ def applicationSpellings? (expression : Expression) :
 /-! ## TF2B scenarios -/
 
 /-- The operator table is profile data: a modified profile changes parsing, and
-the default profile is the frozen revision-4 combination. -/
+the default profile is the frozen revision-5 combination. -/
 def scenarioProfileOwnership (fails : Failures) : IO Unit := do
-  check fails "profile: the default profile is the frozen revision-4 combination"
-    (ParserProfile.default.name == "mirrors-tla-frontend-profile-4")
+  check fails "profile: the default profile is the frozen revision-5 combination"
+    (ParserProfile.default.name == "mirrors-tla-frontend-profile-5")
     ParserProfile.default.name
   match parseBody? {} "x == A = B = C" with
   | none => check fails "profile: the chained equality capture lexes" false

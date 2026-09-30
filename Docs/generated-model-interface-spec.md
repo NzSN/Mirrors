@@ -1,5 +1,10 @@
 # Generated Model Interface — Cross-Language Specification
 
+> Additive source extensions (2026-10-01): `mirrorcpp-v2`, repaired replay
+> partitioning, frontend profile 5, and optional generated CMake consumers are
+> specified in [WriteSentry compiler extensions](model-interface-compiler/writesentry-extensions.md).
+> Fresh remote and full cross-client qualification remain separate.
+
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
 > Status: **version-1 contract with four implemented target slices;
@@ -1011,6 +1016,7 @@ Version-1 profile identifiers are:
 | MirrorECMA | `mirrorecma-v1` | Implemented reference profile. |
 | MirrorECMA | `mirrorecma-async-v1` | Implemented experimental async emission profile. |
 | MirrorCPP | `mirrorcpp-v1` | Implemented static C++23 profile. |
+| MirrorCPP | `mirrorcpp-v2` | Additive typed integer/string map source profile; local native recorded-replay acceptance, fresh qualification open. |
 | MirrorRust | `mirrorrust-v1` | Implemented static Rust profile; [native contract](model-interface-compiler/rust-target.md). |
 | MirrorLean | `mirrorlean-v1` | Planned static profile. |
 

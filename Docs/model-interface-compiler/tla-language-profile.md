@@ -1,4 +1,9 @@
-# Mirrors TLA+ frontend language profile (revision 4)
+# Mirrors TLA+ frontend language profile (revision 5)
+
+> Active revision 5 (2026-10-01): transitive public standard imports and exact
+> standalone-module content identities; syntax tables remain unchanged.
+> See [the extension contract](writesentry-extensions.md). Profile-5 differential
+> qualification remains incomplete. The profile-4 record below is historical.
 
 > Status: **revision-4 profile; frozen with the TF0 corpus on 2026-09-11,
 > revised on 2026-09-12 when TF5 lifted the staged `INSTANCE` limit, and
@@ -89,7 +94,7 @@ Compatibility rules inherited from the design:
 
 | Item | Revision-4 value |
 | --- | --- |
-| Profile id | `mirrors-tla-frontend-profile-4` |
+| Profile id | `mirrors-tla-frontend-profile-5` |
 | Corpus manifest schema | `mirrors.tla-frontend-corpus/1` |
 | Structural summary schema | `mirrors.tla-frontend-summary/1` |
 | Source identity | normalized UTF-8 bytes, CRLF and CR normalized to LF, SHA-256 |
@@ -568,7 +573,7 @@ The manifest `status` is `provisional` while the SANY and Apalache pins are
 unset: fixture ids, outcomes, stages, reasons, and structural summaries are
 frozen for the active profile revision, and only the differential slots and
 pinned tool versions remain for the coordinating agent. The manifest and every
-live expected summary carry `mirrors-tla-frontend-profile-4`; archived
+live expected summary carry `mirrors-tla-frontend-profile-5`; archived
 revision-1, revision-2, and revision-3 evidence is unchanged.
 
 ### 10.2 Fixture semantics

@@ -258,12 +258,12 @@ def revisionTwoOperators : Array OperatorEntry := #[
   ⟨"\\X", .infix, levelMultiplicative, .left⟩,
   ⟨"^", .infix, levelPower, .left⟩]
 
-/-- The frozen revision-4 combination: the revision-3 lexical/parser tables,
+/-- The frozen revision-5 combination: the revision-3 lexical/parser tables,
 which are unchanged by the standard-catalog revision, and the profile name
-`mirrors-tla-frontend-profile-4`. The three Unicode aliases admitted in
+`mirrors-tla-frontend-profile-5`. The three Unicode aliases admitted in
 revision 3 still reach the parser under their canonical ASCII spellings. -/
 def default : ParserProfile :=
-  { name := "mirrors-tla-frontend-profile-4"
+  { name := "mirrors-tla-frontend-profile-5"
     operators := revisionTwoOperators }
 
 /-- The tightest precedence level the profile defines. Levels above it parse
@@ -2718,7 +2718,7 @@ def parseSource (profile : LanguageProfile) (parserProfile : ParserProfile)
       { cst := emptyRoot, module? := none, diagnostics := diagnostics.toArray }
 
 /-- The parser seam of the module resolver: one captured unit in, one outcome
-out, with the default revision-4 profile and limits. -/
+out, with the default revision-5 profile and limits. -/
 def parseUnit (source : SourceUnit) : ParseOutcome :=
   parseSource LanguageProfile.default ParserProfile.default {} {} source
 

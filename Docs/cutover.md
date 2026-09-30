@@ -63,6 +63,14 @@ Docs/worker-pool-design.md / Docs/worker-pool-impl-status.md.
 
 ## 3. Accepted divergences
 
+- Replay parameter augmentation: recorded names followed by configured additions
+  are deduplicated and used for both metadata and comparison/input splitting.
+  This repairs the descriptor's existing `/v1` policy and intentionally differs
+  from the pinned Haskell configured-only split. Integer `#map` keys are an
+  additive typed-map extension. Existing frozen string-key fixtures remain the
+  Haskell parity corpus; regenerate them only through their oracle generator.
+  See [the extension contract](model-interface-compiler/writesentry-extensions.md).
+
 - TLS wildcard scope: the OpenSSL shim accepts only leftmost-label
   certificate wildcards; the Haskell tls package (x509-validation)
   accepts wildcards anywhere in the label. The Lean behavior is

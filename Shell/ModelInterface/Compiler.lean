@@ -1508,9 +1508,16 @@ private def cmakeTree (paths : InputPaths) (lockPath target out : String) :
   let binding ← match emitTarget target compilation.lock with
     | .ok value => pure value
     | .error error => return .error error
+  -- Provenance names are logical: the root uses the contract's source label,
+  -- while captured sibling modules are relative to the root source directory.
+  let sourceDirectory := (paths.spec : System.FilePath).parent.getD "."
+  let sourcePaths := compilation.lock.provenance.sources.map fun source =>
+    if source.moduleName == compilation.lock.modelModule then paths.spec
+    else if sourceDirectory.toString == "." then source.logicalPath
+    else (sourceDirectory / source.logicalPath).toString
   let inputPaths := sortStrings (stableUniqueStrings
     ([paths.spec, paths.contract, paths.evidence, lockPath] ++
-      compilation.lock.provenance.sources.map (·.path)))
+      sourcePaths))
   if !(out :: inputPaths).all (fun path => safeRelativePath path && !path.contains ';') then
     return finding "CMake integration paths must be portable paths relative to the consumer root"
   let mut inputs : List (String × String) := []

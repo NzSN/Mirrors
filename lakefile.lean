@@ -322,6 +322,21 @@ script test do
   if asyncEmitter.exitCode != 0 then
     IO.eprintln asyncEmitter.stderr
     return asyncEmitter.exitCode
+  let cmakeConsumer : IO.Process.Output ← IO.Process.output
+    ({ cmd := "python3", args := #["tools/check-cmake-consumer.py"] } : IO.Process.SpawnArgs)
+  IO.println cmakeConsumer.stdout
+  if cmakeConsumer.exitCode != 0 then
+    IO.eprintln cmakeConsumer.stderr
+    return cmakeConsumer.exitCode
+  if let some cppPrefix ← IO.getEnv "MIRRORCPP_PREFIX" then
+    let nativeMaps : IO.Process.Output ← IO.Process.output
+      ({ cmd := "python3", args := #["tools/check-cpp-integer-maps.py", "--prefix", cppPrefix] } : IO.Process.SpawnArgs)
+    IO.println nativeMaps.stdout
+    if nativeMaps.exitCode != 0 then
+      IO.eprintln nativeMaps.stderr
+      return nativeMaps.exitCode
+  else
+    IO.println "SKIP native integer maps: set MIRRORCPP_PREFIX to the prepared MirrorCPP package"
   let suiteBundle : IO.Process.Output ← IO.Process.output
     ({ cmd := "python3", args := #["tools/check-suite-bundle.py"] } : IO.Process.SpawnArgs)
   IO.println suiteBundle.stdout

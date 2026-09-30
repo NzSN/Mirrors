@@ -1,5 +1,10 @@
 # General TLA+ frontend for Mirrors
 
+> Additive source extensions (2026-10-01): `mirrorcpp-v2`, repaired replay
+> partitioning, frontend profile 5, and optional generated CMake consumers are
+> specified in [WriteSentry compiler extensions](writesentry-extensions.md).
+> Fresh remote and full cross-client qualification remain separate.
+
 > Status: **design; delivery slices TF0–TF8 of the implementation plan are
 > implemented and accepted for the Mirrors-local scope as of 2026-09-12.
 > The pinned differential gate executed on 2026-09-13 and failed acceptance;

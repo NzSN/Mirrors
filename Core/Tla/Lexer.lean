@@ -7,7 +7,7 @@ import Core.Tla.Token
 
 Pure, total-under-limits lexer for the general TLA+ frontend
 (`Docs/model-interface-compiler/tla-frontend-design.md`, §9 "Lexer"), pinned to
-the revision-4 language profile
+the revision-5 language profile
 (`Docs/model-interface-compiler/tla-language-profile.md`).
 
 `lex` returns `Except (List Diagnostic) TokenStream`, so a successful result
@@ -178,11 +178,11 @@ structure LanguageProfile where
 namespace LanguageProfile
 
 /-- The executable TLA+ profile of this slice, pinned to
-`mirrors-tla-frontend-profile-4`: the revision-3 lexical tables carried into
+`mirrors-tla-frontend-profile-5`: the revision-3 lexical tables carried into
 the reviewed standard-catalog revision. Later revisions extend these tables
 instead of changing lexer code. -/
 def default : LanguageProfile :=
-  { name := "mirrors-tla-frontend-profile-4"
+  { name := "mirrors-tla-frontend-profile-5"
     keywords := defaultKeywords
     prefixKeywords := defaultPrefixKeywords
     symbols := defaultSymbolAliases
@@ -1055,9 +1055,9 @@ private def scanToken (profile : LanguageProfile) (limits : LexerLimits)
         let code := if staged then LexCode.unicodeStaged else LexCode.unknownCharacter
         let message :=
           if staged then
-            "Unicode operator spelling is staged out of the revision-4 profile"
+            "Unicode operator spelling is staged out of the revision-5 profile"
           else
-            "character is outside the Unicode aliases admitted by the revision-4 profile"
+            "character is outside the Unicode aliases admitted by the revision-5 profile"
         let diagnostic :=
           ((lexDiagnostic source code message
             ⟨⟨startOffset, line, column⟩, ⟨stopOffset, line, column + 1⟩⟩).withArgument

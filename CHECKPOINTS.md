@@ -5,6 +5,88 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-01 — WriteSentry work resumed; local acceptance green, fresh qualification open
+
+The user resumed the five-workstream plan. The historical paused implementation
+was already committed in `52768f8`; Mirrors started this pass at
+`da0ae6d4f50176cdc4d7795006fc9e71471279a8`. Current changes remain uncommitted.
+The CMake build blocker and a following `SourceDigest.path` error are fixed;
+`lake build` now passes (646 jobs). No agents were spawned.
+
+Contracts and complete acceptance position:
+[extension contract](Docs/model-interface-compiler/writesentry-extensions.md),
+[updated plan](Plans/model-interface-compiler/writesentry-integration-improvements.md),
+[retained evidence](Plans/model-interface-compiler/writesentry-v2-evidence/acceptance.json).
+
+| Workstream | Exercised position | Open acceptance |
+| --- | --- | --- |
+| MIC-2 | Shared recorded-first parameter partition and existing `/v1` rationale documented; focused proofs/regressions and ordinary recorded server replay pass. | Full new-profile cross-client/transport qualification. |
+| MIC-1 | Integer-map codecs/proofs and native v2 fixture pass. Native coverage includes large signed keys, both key sorts, nested/empty maps, ownership, literal lookup, and input failures before callbacks. Runtime specialization checks every template replacement. | Fresh original-table remote oracle; intended application checkout delivery and full supported-combination qualification. |
+| MIC-3 | Frontend profile 5 and live corpus migrated; standard summary regenerated through the producer. All eleven module hashes and eighteen public/local edges match the locked standalone jar. | Required differential run remains incomplete: selected JDK `25.0.4+7` unavailable; installed `25.0.4.1+1` is rejected. Profile-4 approvals are archived, never credited to profile 5. |
+| MIC-4 | Generated helpers pass offline/configure/build checks, captured dependency/input/output mutations, unsafe/duplicate paths, omitted-owned-artifact rejection, regeneration failures, and unrelated-file preservation. Gates wired into owning runners. | Broader platform/consumer qualification. |
+| MIC-5 | Five independent native lowering findings agree between executable JSON/human diagnostics and identify nested types/projection segments and lock pointers. Focused diagnostic regressions pass. | Escaping and executable JSON/human agreement pass; broader cross-client qualification remains open. |
+
+The final local non-model aggregate passed **42/42 runner steps**, using prepared
+MirrorCPP at `/tmp/mic-mirrorcpp-install`; its live tiers remain excluded or
+self-skipped. Differential offline tests: **63 tests, four live-reference
+skips**. The offline acquisition test now simulates runtime admission separately
+from its real artifact-hash/extraction checks, and an explicit regression proves
+that the different JDK cannot satisfy live qualification. The live pin was not
+weakened. The required profile-5 differential attempt exited 2, incomplete.
+
+WriteSentry's exact recorded upstream integration `9dd4b57` was retrieved to
+`/tmp/mic-writesentry`. The sibling checkout has unrelated Bazel history at
+`ed35481` and was preserved. The adoption removes all six slot observations and
+projection-only replay, restores the base imports, observes original `reg`,
+`dr`, and `tls`, and uses `mirrorcpp-v2` generated CMake helpers. Normal consumer
+CTest passes **7/7**. Recorded native replay recounts **14 scenarios, 212 states,
+18 actions, eight flag classes**, with both overlap directions. Real stdio
+server replay passes; `drop-reservation`, `skip-clear`, and
+`allow-foreign-writer` each produce actual server `step_mismatch`.
+
+The derived corpus records **`freshOracle: false`** and its original manifest
+identity. This is original-table acceptance over recorded data, not a fresh
+remote qualification. The [adoption patch](Plans/model-interface-compiler/writesentry-v2-evidence/writesentry-v2.patch)
+applies cleanly to exact commit `9dd4b57`; no change was forced into the unrelated
+sibling checkout. Prepared native sources remain at `/tmp/mic-mirrorcpp`, exact
+MirrorCPP baseline `d8ed4455e8f73a9144215f62f1dc6963d6d792e7`, built with GCC 13.3.0.
+A later negotiated check exposed its v1-only runner allowlist. The
+[retained client patch](Plans/model-interface-compiler/writesentry-v2-evidence/mirrorcpp-v2.patch)
+adds exactly v2, preserves the default v1 profile and exact four-part registry
+key, and passes real negotiated v2 stdio replay plus wrong-profile rejection
+with zero application factories/callbacks. Client unit suites pass 21 negotiation
+cases (393 assertions) and six v1 binding cases (50 assertions). Invalid
+identifier quotes/backslashes/newlines are now escaped consistently in human
+CLI diagnostics, with an executable regression. Native string `mapKey` data
+containing embedded NUL/quotes/backslashes/newline exposed C-string truncation;
+the v2 renderer now uses length-delimited UTF-8 byte literals, and its real
+ordinary/negotiated replay passes. Keyword rejections also name the selected
+profile. This carrier is the baseline plus
+uncommitted patch, not the unmodified baseline.
+
+Current binaries:
+
+- Compiler SHA-256 `55bf151eae973a0c83f2827f38ee4dafa5558fb12770b15b3d3837bdafcc2257`.
+- Built mirror SHA-256 `185a49d6278d0d2fdc424180db34d0dcaf44b6eabadbc1e4ce23013b44ba9ecc`.
+- WriteSentry semantic digest `517189720fc2a3eee8015ba55ad771aed3c2a74212a1f70f0c22e6c4bfb6c8a5`.
+
+Fresh remote work is still open. Admission fails before contact because
+`MIRRORS_REMOTE_CLIENT_CERT` and the associated private credential/service
+identity context are absent. The selected JDK download timed out. A reviewed
+Mirrors CLI remote trace-generation/retrieval path is also outstanding; the
+current CLI supports remote validation, and local file paths cannot transfer
+this corpus. No local model checker ran, and the deployed service was not
+contacted or changed.
+
+The five-workstream definition of done remains incomplete. Next: obtain the
+selected local JDK and renew profile-5 differential review, choose the intended
+WriteSentry checkout for the tested adoption, then implement/review the remote
+corpus path and execute fresh qualification with operator credentials and
+same-time backend identity. Commit/push, installation, publication, and
+deployment were not performed. Framework M3/M5 qualification was not advanced;
+these source edits require a new candidate freeze before any new framework
+credit. Preserve `.projectile-cache.eld` and the existing `Proposals/` work.
+
 ## 2026-09-30 — WriteSentry compiler improvements paused by user
 
 Recorded at **21:42 +08:00** after the user requested: “Break, record current
