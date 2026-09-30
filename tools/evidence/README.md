@@ -56,6 +56,18 @@ python3 tools/evidence/collect.py \
   -- python3 tools/evidence/run_remote_model_check.py
 ```
 
+Java pin reconciliation: the two `MIRRORS_REMOTE_JAVA_*` pins above name the
+toolchain **staged on the service host** (the operator-observed Windows
+archive / `java.exe` pair) and remain **pending-operator-observation** — they
+are verified only by the same-time service identity observation at activation,
+not by any local run. Local tiers pin the locally verified Linux carrier
+instead: archive
+`75894d107e474ffb6c947ab050e3893e0a1d3d40d36f107d42936ac6088769c1`, `bin/java`
+`e7bc0bc01b516a2ade3d9fceabc12d16c3a3b737adbf186a353602872ba31aad`, which
+`mirrors.local-no-model` and the local oracle mode recheck. The two sets name
+different carriers and must never be interchanged or silently relaxed into each
+other.
+
 The private command context retains the credential paths and declared service
 identity, while the command log retains the endpoint, TLS mode, server pin,
 remote binary/source declarations, local client binary hash, exact HourClock

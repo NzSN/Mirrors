@@ -127,6 +127,14 @@ and Microsoft OpenJDK 25.0.4+7-LTS (Windows archive SHA-256
 were staged and verified but had not been activated. Q1 requires a new retained
 service observation and remote validation after activation.
 
+Pin reconciliation: the Windows `54ba13f3…`/`58df5c13…` pins name that staged
+host toolchain and remain **pending-operator-observation** (verified by the
+same-time identity observation at activation, which is out of scope here).
+Local tiers pin the locally verified Linux carrier instead — archive
+`75894d107e474ffb6c947ab050e3893e0a1d3d40d36f107d42936ac6088769c1`, `bin/java`
+`e7bc0bc01b516a2ade3d9fceabc12d16c3a3b737adbf186a353602872ba31aad`. The two
+pin sets name different carriers and are not interchangeable.
+
 The existing `mirrors.interop` registry entry still describes a source matrix
 that starts local model-check-backed servers. It must not be executed on this
 coordinator under the remote-only constraint. Until that matrix has a reviewed
