@@ -5,6 +5,32 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-09-30 — SR-5a credited: prefix reduction qualified (diagnostic WSL2 profile)
+
+Status: **round closed by parent after delegated execution.** Selection
+`5dd41ae95910381e680cdfb2964e27802e6c1a2905b66cb79cb209e5d76f3d40`
+(BYTE_STABLE; Mirrors `e8ba489`, MirrorECMA `b753695`, MirrorGate `0fa8a31`).
+Snapshot `/tmp/mirrors-candidate-snapshot-m3r4` (index `9bb62d04…`); caches
+verify green (local manifest `f160029f…`, gate `e837fd27…`); both installs
+`state=committed`. Store `/tmp/m3r4/store`, 17 finalized bundles.
+
+- **SR-5a qualified**: `framework.reduction-prefix` `run-4f97221c-29a0-4be4-8f9d-dd75d5846fe4`,
+  exit 0, collector credited. Claim `smallest_observed_reproducing_prefix`,
+  best 2/16, `minimalityComplete: false` (length-1 candidate hits the known
+  `normalization_context_missing` classification gap — honest bounded claim,
+  no over-claim; fix is a future separately-sequenced decision).
+- **Q2 scope verified 16/16** (`local-candidate.sr4r4-20260930`), reduction
+  tier included for the first time; offline verifier 17/17.
+- Defects found and fixed this cycle (each with focused tests):
+  `tools/distribution/build.py` shipped only the materializer (Mirrors
+  `e8ba489`); the prefix driver omitted `corpusTraceFile` (MirrorECMA
+  `ad3c0cb`); fractional `durationMs` violated the evidence layer's
+  integer-only JSON policy (MirrorECMA `b753695`).
+- M3 remains Partial: SR-5b (domain reduction) is operator-gated on Apalache
+  0.61.0 / Java 25.0.4+7-LTS activation at `192.168.150.219:8999` with a
+  same-time identity observation. Interop and remote model check remain
+  unavailable; native-Ubuntu tiers stay deferred; Q3 incomplete.
+
 ## 2026-09-29 — Safe reduction implemented and published; native-Ubuntu tiers deferred
 
 Status: **publication checkpoint, no qualification run.** Records the landing
