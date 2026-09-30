@@ -5,6 +5,31 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-09-30 — Closing sweep complete: shortest-prefix claim credited
+
+Status: **round closed by parent after delegated execution.** Selection
+`fed55175b792feaec86cf71bf7fae1bae680a0313797a5c982f3a6ecc746f025`
+(BYTE_STABLE; Mirrors `e6772d5`, MirrorECMA `4992b07`, MirrorGate `0fa8a31`).
+Snapshot `/tmp/mirrors-candidate-snapshot-m3r5`; caches verify green (local
+`2bf94a0e…`, gate per Q3 report); installs `state=committed`. Full evidence:
+`Plans/q3-readiness-2026-09-30.md`.
+
+- **SR-5a re-qualified with the strong claim**: `framework.reduction-prefix`
+  `run-dcc51362-9084-4c2d-9eeb-9329bacb8d01`, exit 0,
+  `shortest_reproducing_prefix`, `minimalityComplete: true`,
+  `stopReason: complete`, best 2/16, cleanup confirmed; collector credited.
+  The length-1 classification gap is closed on the probe path only
+  (`prefixProbeSignatureFromSuiteResult`, MirrorECMA `4992b07`).
+- Q2 scope verified **16/16** with the reduction tier credited; offline
+  verifier 17/17; `mirrors.local-no-model` all 40 gates green on the pinned
+  JDK 25.0.4+7.
+- Also closed: finding-1 hardening (`settleOracleCleanup` extracted and
+  covered); JDK pin reconciliation recorded (decision 4 closed as a rule);
+  `Plans/handling-governance.md` drafted (decision 3 pending ratification).
+- M3 remains Partial — only SR-5b (remote domain reduction) remains,
+  operator-gated on service activation. M5 remains not qualified; remote
+  model check and interop unavailable; deferred tiers unchanged.
+
 ## 2026-09-30 — SR-5a credited: prefix reduction qualified (diagnostic WSL2 profile)
 
 Status: **round closed by parent after delegated execution.** Selection
