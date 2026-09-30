@@ -1,3 +1,10 @@
+Currency (2026-09-30): the remote explore-session oracle mode design lives in
+[Plans/m3-safe-reduction-design.md](../Plans/m3-safe-reduction-design.md) §5;
+the prefix tier is qualified 2026-09-30 (diagnostic WSL2 profile,
+`run-dcc51362…`, `shortest_reproducing_prefix`) and domain-tier qualification
+remains pending the remote service activation. The contract content below is
+unchanged.
+
 # Model-validated reduction profiles
 
 The first domain profile is

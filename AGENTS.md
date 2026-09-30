@@ -40,6 +40,11 @@ part of the selection digest. The v5 hashes below remain historical.
 
 ## Stopped framework-completion checkpoint (2026-09-22)
 
+Superseded (2026-09-30): framework work resumed 2026-09-25; the current
+position lives in `CHECKPOINTS.md` (latest entries 2026-09-30). The v5 hashes
+and counts below remain historical, and the resume instructions in this section
+no longer apply.
+
 Work is intentionally stopped at the user's request. Resume from
 `Plans/execution-decisions.md` and `Docs/qualification-harness-design.md`; do
 not restart the framework work from its historical queued task-card labels.

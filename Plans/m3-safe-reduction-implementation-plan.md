@@ -2,9 +2,11 @@
 
 Date: 2026-09-28
 
-Status: proposed; execution is not authorized by this document. No task below
-claims qualification by passing source tests; a tier is credited only by
-retained installed-run evidence against a frozen selection.
+Status: executed through SR-5a (2026-09-30). No task below claims qualification
+by passing source tests; a tier is credited only by retained installed-run
+evidence against a frozen selection. SR-5b remains operator-gated; the execution
+record at the end of this document lists rounds, defects, and the closing
+selection.
 
 Design: [m3-safe-reduction-design.md](m3-safe-reduction-design.md) (architecture,
 safety contract S1–S6, remote oracle mode). Roadmap:
@@ -141,3 +143,44 @@ SR-0.3 (operator) ────────────────────�
   `minimalityComplete: false` absorb partial search honestly.
 - If the tier split is declined, SR-2 is dropped and SR-5a merges into SR-5b;
   the M3 exit condition is unchanged either way.
+
+## 10. Execution record (2026-09-30)
+
+Rounds m3r1–m3r5 executed the SR-4/SR-5 chain (identity refresh → snapshot →
+dual caches → dual installs → affected-tier reruns + Q2) under the standing
+constraints (no commits by the executor, no local model checker, blocked steps
+recorded, never skipped). Closing qualified selection:
+`fed55175b792feaec86cf71bf7fae1bae680a0313797a5c982f3a6ecc746f025`
+(Mirrors `e6772d5`, MirrorECMA `4992b07`, MirrorGate `0fa8a31`).
+
+Defects found by execution and fixed in sequence:
+
+- Mirrors `e8ba489` — the installed `mirrorecma` package shipped only the
+  materializer; `PACKAGE_SCRIPTS` / `copy_package_scripts` now materialize both
+  reduction drivers (fixed the `framework.reduction-prefix` `MODULE_NOT_FOUND`).
+- MirrorECMA `ad3c0cb` — the prefix driver wrote `corpusTraceFile` but never
+  passed it to the reproduce seam (`traces: [undefined]` →
+  `suite_configuration_invalid`).
+- MirrorECMA `b753695` — the evidence reader rejects fractional JSON numbers;
+  every `durationMs` emission is now integer milliseconds.
+- MirrorECMA `4992b07` — probe-path `coverage_unmet` normalization (a prefix too
+  short to reach the failure normalizes to "no signature" instead of
+  `normalization_context_missing`) and the extracted, unit-tested
+  `settleOracleCleanup` transport-close helper.
+
+SR-5a result: `framework.reduction-prefix`
+`run-dcc51362-9084-4c2d-9eeb-9329bacb8d01` — `shortest_reproducing_prefix`,
+`minimalityComplete: true`, `stopReason: complete`, best 2/16, cleanup
+confirmed. Q2 scope `verified` 16/16 (reduction tier credited); the offline
+verifier is green over every finalized bundle. SR-5c reruns covered D-local and
+D-gate, both replays, reproduction, both mutations, all three origin campaigns,
+recovery, the source gates, and the local non-model gate.
+
+SR-6: executed — the parent wrote the `CHECKPOINTS.md` records ("SR-5a credited"
+and "Closing sweep complete") and the M3/M5 status rows, and
+[q3-readiness-2026-09-30.md](q3-readiness-2026-09-30.md) is the Q3 readiness
+report for this selection.
+
+Remaining gate: SR-5b (`qualification.reduction-domain`) — operator activation
+of Apalache 0.61.0 / Java 25.0.4+7-LTS at `192.168.150.219:8999` plus the
+same-time identity observation.

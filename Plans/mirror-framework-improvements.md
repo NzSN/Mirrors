@@ -67,7 +67,7 @@ Preserve these boundaries throughout:
 | M2 | Installable reference distribution | Component packaging owners; framework integration in Mirrors | M1 | Fresh isolated consumer completes local and Gate flows | Done (diagnostic WSL2 profile): both prefixes committed; local and Gate D audits qualified (`run-ae0b01c9…`, `run-2b6e15c6…`); native Ubuntu acceptance deferred 2026-09-29 (no native host) |
 | M3 | Failure reproduction and fidelity acceptance | MirrorECMA, Mirrors compiler, Gate integration | M1; use M2 distribution for final acceptance | Reproduction, safe reduction, and mutation controls pass | Partial: mutation controls qualified locally and through Gate (17/17); reproduction qualified and credited (`run-6accf0f9…`, `status: reproduced`); safe reduction: prefix tier qualified 2026-09-30 (`run-dcc51362…`, `shortest_reproducing_prefix`); domain tier pending the remote service |
 | M4 | Gate interruption recovery | MirrorGate | M1 evidence format | Ownership-safe recovery and aggregate-limit gates pass | Partial: ownership-safe recovery qualified (`run-efeb64cc…`, bound to a fresh origin run); aggregate-limit gate deferred 2026-09-29 (no delegated cgroup-v2 parent; no native Ubuntu host) |
-| M5 | Release-candidate qualification | All affected owners | M2–M4 | Exact candidate combination passes required installed and runtime gates | Not qualified: diagnostic-scope Q1/Q2 verified on WSL2 (selection `68a3ad58…`, 15 credited runs incl. reproduction, both D bindings); reduction source-implemented 2026-09-29 (MirrorECMA `da18f1a`, Mirrors `b19e090`), qualification pending re-freeze and the remote service; interop and remote model check remain open; cgroup tier deferred 2026-09-29 |
+| M5 | Release-candidate qualification | All affected owners | M2–M4 | Exact candidate combination passes required installed and runtime gates | Not qualified: diagnostic-scope Q1/Q2 verified on WSL2 (selection `68a3ad58…`, 15 credited runs incl. reproduction, both D bindings); prefix reduction qualified 2026-09-30 (`run-dcc51362…`, `shortest_reproducing_prefix`); domain reduction pending the remote service; interop and remote model check remain open; cgroup tier deferred 2026-09-29 |
 
 Updated 2026-09-29: safe-reduction implementation landed on both mains
 (MirrorECMA `da18f1a`; Mirrors `abbf70b`, `b19e090`) and every tier requiring a
@@ -78,6 +78,18 @@ evidence and blockers are in [q3-readiness-2026-09-25.md](q3-readiness-2026-09-2
 `../CHECKPOINTS.md` (date-flow record), and `/tmp/q1-route2-result.md`. Partial means at least one exit-condition
 capability lacks qualified evidence; it is not a pass, and no partial status
 qualifies a dependent milestone.
+
+Updated 2026-09-30: the closing sweep finished the locally executable work.
+The SR-5a prefix tier is qualified with the strong claim
+(`framework.reduction-prefix` `run-dcc51362-9084-4c2d-9eeb-9329bacb8d01`,
+`shortest_reproducing_prefix`, `minimalityComplete: true`) under selection
+`fed55175b792feaec86cf71bf7fae1bae680a0313797a5c982f3a6ecc746f025`, and Q2
+verifies a 16-run scope including the reduction tier. Only SR-5b (domain
+reduction) remains on M3, operator-gated on the remote service activation;
+remote model check and interop remain unavailable and the native-Ubuntu/cgroup
+tiers stay deferred. Per-tier evidence is in
+[q3-readiness-2026-09-30.md](q3-readiness-2026-09-30.md) and the
+`CHECKPOINTS.md` 2026-09-30 records.
 
 Within M1, catalog and evidence work can progress independently after agreeing
 on identity fields. M3 and M4 can progress independently. Native-client expansion
