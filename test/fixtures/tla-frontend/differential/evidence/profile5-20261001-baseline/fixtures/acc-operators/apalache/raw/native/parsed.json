@@ -1,0 +1,364 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptOperators",
+            "from": {
+              "line": 5,
+              "column": 1
+            },
+            "to": {
+              "line": 5,
+              "column": 18
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Double",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "v",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptOperators",
+              "from": {
+                "line": 5,
+                "column": 14
+              },
+              "to": {
+                "line": 5,
+                "column": 18
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "MULT",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptOperators",
+                  "from": {
+                    "line": 5,
+                    "column": 14
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 14
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 2
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptOperators",
+                  "from": {
+                    "line": 5,
+                    "column": 18
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 18
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "v"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptOperators",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 19
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "\\oplus",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "a",
+              "arity": 0
+            },
+            {
+              "kind": "OperParam",
+              "name": "b",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptOperators",
+              "from": {
+                "line": 7,
+                "column": 15
+              },
+              "to": {
+                "line": 7,
+                "column": 19
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "PLUS",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptOperators",
+                  "from": {
+                    "line": 7,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 15
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "a"
+              },
+              {
+                "source": {
+                  "filename": "AcceptOperators",
+                  "from": {
+                    "line": 7,
+                    "column": 19
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 19
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "b"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptOperators",
+            "from": {
+              "line": 9,
+              "column": 1
+            },
+            "to": {
+              "line": 9,
+              "column": 18
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "\\prec",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "a",
+              "arity": 0
+            },
+            {
+              "kind": "OperParam",
+              "name": "b",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptOperators",
+              "from": {
+                "line": 9,
+                "column": 14
+              },
+              "to": {
+                "line": 9,
+                "column": 18
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "LT",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptOperators",
+                  "from": {
+                    "line": 9,
+                    "column": 14
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 14
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "a"
+              },
+              {
+                "source": {
+                  "filename": "AcceptOperators",
+                  "from": {
+                    "line": 9,
+                    "column": 18
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 18
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "b"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptOperators",
+            "from": {
+              "line": 11,
+              "column": 1
+            },
+            "to": {
+              "line": 11,
+              "column": 22
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Apply",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "F",
+              "arity": 1
+            },
+            {
+              "kind": "OperParam",
+              "name": "v",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptOperators",
+              "from": {
+                "line": 11,
+                "column": 19
+              },
+              "to": {
+                "line": 11,
+                "column": 22
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "OPER_APP",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptOperators",
+                  "from": {
+                    "line": 11,
+                    "column": 19
+                  },
+                  "to": {
+                    "line": 11,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "F"
+              },
+              {
+                "source": {
+                  "filename": "AcceptOperators",
+                  "from": {
+                    "line": 11,
+                    "column": 21
+                  },
+                  "to": {
+                    "line": 11,
+                    "column": 21
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "v"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptOperators",
+            "from": {
+              "line": 13,
+              "column": 1
+            },
+            "to": {
+              "line": 13,
+              "column": 13
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Nullary",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptOperators",
+              "from": {
+                "line": 13,
+                "column": 12
+              },
+              "to": {
+                "line": 13,
+                "column": 13
+              }
+            },
+            "type": "Untyped",
+            "kind": "ValEx",
+            "value": {
+              "kind": "TlaInt",
+              "value": 42
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -3,7 +3,9 @@
 > Active revision 5 (2026-10-01): transitive public standard imports and exact
 > standalone-module content identities; syntax tables remain unchanged.
 > See [the extension contract](writesentry-extensions.md). Profile-5 differential
-> qualification remains incomplete. The profile-4 record below is historical.
+> qualification passed on the selected JDK/SANY/Apalache pins; the fourteen
+> outcome-only renewals and retained final evidence are documented in
+> `Drafts/tla-profile5-policy-renewals.md`. The profile-4 record below is historical.
 
 > Status: **revision-4 profile; frozen with the TF0 corpus on 2026-09-11,
 > revised on 2026-09-12 when TF5 lifted the staged `INSTANCE` limit, and

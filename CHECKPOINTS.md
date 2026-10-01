@@ -5,6 +5,130 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-01 — Fresh WriteSentry qualification on the current Windows host
+
+The user authorized a current-machine Windows oracle with Apalache 0.62.2 and
+required all Windows work under `C:\Users\ayden\Desktop\Workspace`.
+The isolated deployment is in `Workspace\MirrorsRemote`; existing global tool
+installations and firewall settings were preserved. Verified official portable
+Apalache 0.62.2 and Microsoft Java 25.0.4+7-LTS were staged there. Native Lean
+4.33.0 builds the reviewed dirty source snapshot; the final server build passes
+520 jobs. The owned native console server listens with pinned mTLS at
+`172.20.208.1:8999`, PID 25156, binary SHA-256
+`5949af30735cd1bf515e64fb9d2299023e13b2c36245ce9be696d65944b32dec`.
+Matching before/after observations retain its source tree, tool hashes, DLLs
+and certificate identities. This is a console deployment, not an AUTO_START
+Windows service-manager qualification.
+
+The first inline campaign failed honestly: its lifecycle reply required
+229,159 bytes against the frozen 65,535-byte line limit. Implemented an explicit,
+allowlisted shared-artifact grant with a confined Workspace root and paired
+client mapping. Generation still occurs through the pinned mTLS endpoint.
+New direct-child destinations are reserved atomically; escaping, existing and
+async destinations fail before generation. Source artifacts retain strict
+JSON/ITF checks, 16 MiB/file, 64 MiB aggregate and 64-artifact limits, original
+hashes and metadata. Ordinary remote and async behavior remains inline-only.
+Contract: [confined transfer](Plans/model-interface-compiler/windows-shared-trace-transfer.md).
+
+**Fresh portable WriteSentry oracle qualification passes:** fourteen scenarios,
+424 actually replayed snapshots, 212 snapshots across fourteen distinct
+per-scenario state sequences, all eighteen actions, eight reached flags, both
+overlap directions and all three real-server `step_mismatch` controls.
+Apalache's 28 numbered/unnumbered artifacts have equal paired state sequences
+and distinct description timestamps; all are preserved. The separate fresh
+corpus is `freshOracle: true`; the historical recorded corpus stays false.
+The binding was regenerated/checked from fresh evidence, with unchanged
+semantic digest `517189720fc2a3eee8015ba55ad771aed3c2a74212a1f70f0c22e6c4bfb6c8a5`.
+The normal rebuilt WriteSentry consumer passes 8/8 CTests, fresh native and
+stdio replay, and all three real-server mutation controls again.
+
+Native fixes: correct three Winsock pointer arguments; link the capture spec's
+native dependencies; isolate OpenSSL import libraries from an incompatible
+newer MSYS2 CRT. The native rebuild gate now excludes unrelated ignored
+`.golden-build` caches from its disposable copy. Original caches stay on disk.
+Final validation: native Windows capture/shared specs, fifteen CLI cases, five
+remote admission/integrity cases, full local non-model aggregate and native
+rebuild graph pass. All 175 fresh campaign entries and 28 original Windows
+artifacts have verified hashes. Automatic approval review timed out once before
+the post-campaign observation; its single permitted retry succeeded.
+
+Evidence and exact identities:
+[Windows acceptance](Plans/model-interface-compiler/writesentry-windows-evidence-20261001/acceptance.json).
+A complete Windows copy is in `Workspace\MirrorsRemote\qualification\20261001`.
+The server is left running; Workspace contains the owned start/observe/stop
+scripts and seven-day credentials. Private client material is outside Git.
+
+Remaining publication: the separate MirrorCPP v2 commit/push and WriteSentry
+gitlink advancement still await their requested publication authorization.
+These new source/evidence changes are uncommitted. Windows DR/VEH runtime,
+remote application replay and Q1 service-manager acceptance are separate tiers.
+The retained profile-5 frontend reference remains pinned to Apalache 0.61.0;
+this backend campaign does not relabel it as 0.62.2 reference conformance.
+
+## 2026-10-01 — Actual WriteSentry adoption and profile-5 reference qualification
+
+The user identified `~/Repos/WriteSentry` and requested all remaining work.
+That checkout now has the intended `9dd4b57` history, replacing the unrelated
+history observed in the earlier entry. The tested original-table adoption is
+applied in that actual checkout. Its pinned MirrorCPP submodule is initialized
+at `d8ed445` and contains the reviewed v2 client change; these source changes
+remain uncommitted. No publication was inferred for this separate repository.
+
+- Actual WriteSentry CMake build and **8/8 CTests pass**, including its new
+  remote-wrapper admission/integrity test. The independent recorded replay
+  recounts **14 scenarios, 212 states, 18 actions, eight flags**. Original
+  `reg`/`dr`/`tls` values are compared with no slot projections.
+- The actual MirrorCPP submodule builds and passes **27 unit cases** (393
+  negotiation assertions, 50 v1 binding assertions). The selected v2 profile
+  replays over stdio, loopback TCP, and ephemeral mTLS; negotiated stdio and
+  allowlisted mTLS pass; plain-TCP negotiation denial and incompatible profile
+  selection run zero application code. Unsupported TypeScript/Rust profiles
+  fail before generated output publication.
+- The selected Microsoft JDK archive and executable match respectively
+  `75894d107e474ffb6c947ab050e3893e0a1d3d40d36f107d42936ac6088769c1`
+  and `e7bc0bc01b516a2ade3d9fceabc12d16c3a3b737adbf186a353602872ba31aad`.
+  The runtime reports `25.0.4+7-LTS`. It is extracted in `/tmp/mic-selected-jdk`;
+  the system runtime was not replaced.
+- **Profile-5 required differential qualification passes** with 183 completed
+  observations, 564 matches, fourteen reviewed outcome-only differences, and
+  292 explicitly unsupported reference projections. Renewals cover exactly
+  the seven existing stricter/resource policies in language-profile section 9,
+  with unchanged fixture sources and selected tool fingerprints. Raw baseline
+  and final evidence is retained under the frontend differential corpus;
+  review: `Drafts/tla-profile5-policy-renewals.md`. These runs parse reference
+  sources only; no local model exploration occurred.
+- Implemented `mirror trace-gen`: captured source closure and inline ITF
+  retrieval through the existing synchronous/async protocol, strict raw reply
+  parsing, exact ITF metadata, bounded job correlation/cancellation, and new
+  local output/hash receipt publication. Its owning Lean spec and **fourteen
+  actual loopback CLI cases pass**. Design:
+  `Plans/model-interface-compiler/writesentry-remote-oracle-path.md`.
+- Actual WriteSentry now owns `tools/mbt/generate_corpus_remote.py` and its four
+  offline tests. The campaign checks selected service context, a same-time
+  six-field operator observation, capture artifact membership/hashes, source
+  and executable stability, recounted coverage, and genuine local-server
+  mutation controls. It never invokes a local Apalache launcher.
+- The full current local non-model aggregate passes **44/44 runner steps**.
+  Automatic approval review initially timed out before that aggregate started;
+  the single permitted retry was approved and completed. Source/doc whitespace
+  checks pass. The pre-existing Rust edits were preserved.
+
+Retained local results and exact binaries/component identities:
+[remaining-work acceptance](Plans/model-interface-compiler/writesentry-remaining-evidence/acceptance.json).
+
+**Fresh deployed-service qualification is still incomplete.** Its admission
+fails before network contact because `MIRRORS_REMOTE_CLIENT_CERT` and the
+associated private context are absent; no same-time operator observation was
+provided. The remote code and protocol fixtures do not qualify a fresh oracle.
+The old recorded corpus remains explicitly `freshOracle: false`.
+
+Dependency publication also remains pending: upstream MirrorCPP still points
+to `d8ed445`, so a clean v2 dependency SHA requires a separate MirrorCPP commit
+and push, then updating WriteSentry's gitlink. Explicit publication approval
+was requested asynchronously after the tested result was concrete. The earlier
+commit/push published Mirrors `772a82c`; it did not publish these separate
+repository changes. Nothing was deployed or installed globally.
+
 ## 2026-10-01 — WriteSentry work resumed; local acceptance green, fresh qualification open
 
 The user resumed the five-workstream plan. The historical paused implementation

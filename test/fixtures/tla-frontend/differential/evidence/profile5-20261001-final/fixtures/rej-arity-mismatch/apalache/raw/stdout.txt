@@ -1,0 +1,18 @@
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /tmp/mic-profile5-reference-final/rej-arity-mismatch-apalache-nmtemzes/input/.dv-apalache/RejectArityMismatch.tla/2026-10-01T00-06-10_2809863885205628039
+# APALACHE version: 0.61.0 | build: 831d473                       I@00:06:10.683
+Parse RejectArityMismatch.tla                                     I@00:06:10.686
+PASS #0: SanyParser                                               I@00:06:10.869
+Parsing error: Semantic errors:
+
+*** Errors: 1
+
+line 5, col 7 to line 5, col 12 of module RejectArityMismatch
+
+The operator F requires 1 arguments. E@00:06:10.938
+Parser has failed                                                 I@00:06:10.960
+It took me 0 days  0 hours  0 min  0 sec                          I@00:06:10.961
+Total time: 0.274 sec                                             I@00:06:10.961
+EXITCODE: ERROR (255)

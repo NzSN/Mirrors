@@ -1,0 +1,18 @@
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /tmp/mic-profile5-reference-final/rej-extends-missing-apalache-qzkfeclm/input/.dv-apalache/MissingRoot.tla/2026-10-01T00-06-30_9930309822284281915
+# APALACHE version: 0.61.0 | build: 831d473                       I@00:06:30.969
+Parse MissingRoot.tla                                             I@00:06:30.972
+PASS #0: SanyParser                                               I@00:06:31.154
+Parsing error: Syntax errors:
+
+*** Errors: 1
+
+In module MissingRoot
+
+Cannot find source file for module NoSuchModule imported in module MissingRoot. E@00:06:31.220
+Parser has failed                                                 I@00:06:31.246
+It took me 0 days  0 hours  0 min  0 sec                          I@00:06:31.247
+Total time: 0.274 sec                                             I@00:06:31.247
+EXITCODE: ERROR (255)

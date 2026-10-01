@@ -1,0 +1,587 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptValues",
+            "from": {
+              "line": 3,
+              "column": 1
+            },
+            "to": {
+              "line": 3,
+              "column": 20
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Tuple",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptValues",
+              "from": {
+                "line": 3,
+                "column": 10
+              },
+              "to": {
+                "line": 3,
+                "column": 20
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "TUPLE",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 3,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 3,
+                    "column": 12
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 3,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 3,
+                    "column": 15
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 2
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 3,
+                    "column": 18
+                  },
+                  "to": {
+                    "line": 3,
+                    "column": 18
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 3
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptValues",
+            "from": {
+              "line": 4,
+              "column": 1
+            },
+            "to": {
+              "line": 4,
+              "column": 42
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Record",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptValues",
+              "from": {
+                "line": 4,
+                "column": 11
+              },
+              "to": {
+                "line": 4,
+                "column": 42
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "RECORD",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 4,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 4,
+                    "column": 16
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "first"
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 4,
+                    "column": 22
+                  },
+                  "to": {
+                    "line": 4,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 4,
+                    "column": 25
+                  },
+                  "to": {
+                    "line": 4,
+                    "column": 30
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "second"
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 4,
+                    "column": 36
+                  },
+                  "to": {
+                    "line": 4,
+                    "column": 41
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "text"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptValues",
+            "from": {
+              "line": 5,
+              "column": 1
+            },
+            "to": {
+              "line": 5,
+              "column": 16
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Set",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptValues",
+              "from": {
+                "line": 5,
+                "column": 8
+              },
+              "to": {
+                "line": 5,
+                "column": 16
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "SET_ENUM",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 5,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 9
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 5,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 12
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 2
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 5,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 15
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 3
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptValues",
+            "from": {
+              "line": 6,
+              "column": 1
+            },
+            "to": {
+              "line": 6,
+              "column": 11
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Empty",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptValues",
+              "from": {
+                "line": 6,
+                "column": 10
+              },
+              "to": {
+                "line": 6,
+                "column": 11
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "SET_ENUM",
+            "args": []
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptValues",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 50
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Nested",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptValues",
+              "from": {
+                "line": 7,
+                "column": 11
+              },
+              "to": {
+                "line": 7,
+                "column": 50
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "TUPLE",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 7,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 26
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "RECORD",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptValues",
+                      "from": {
+                        "line": 7,
+                        "column": 14
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 14
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaStr",
+                      "value": "a"
+                    }
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptValues",
+                      "from": {
+                        "line": 7,
+                        "column": 20
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 25
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "SET_ENUM",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptValues",
+                          "from": {
+                            "line": 7,
+                            "column": 21
+                          },
+                          "to": {
+                            "line": 7,
+                            "column": 21
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "ValEx",
+                        "value": {
+                          "kind": "TlaInt",
+                          "value": 1
+                        }
+                      },
+                      {
+                        "source": {
+                          "filename": "AcceptValues",
+                          "from": {
+                            "line": 7,
+                            "column": 24
+                          },
+                          "to": {
+                            "line": 7,
+                            "column": 24
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "ValEx",
+                        "value": {
+                          "kind": "TlaInt",
+                          "value": 2
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 7,
+                    "column": 29
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 35
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "TUPLE",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptValues",
+                      "from": {
+                        "line": 7,
+                        "column": 31
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 33
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaStr",
+                      "value": "x"
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 7,
+                    "column": 38
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 41
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaBool",
+                  "value": true
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptValues",
+                  "from": {
+                    "line": 7,
+                    "column": 44
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 48
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaBool",
+                  "value": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptValues",
+            "from": {
+              "line": 8,
+              "column": 1
+            },
+            "to": {
+              "line": 8,
+              "column": 48
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Escapes",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptValues",
+              "from": {
+                "line": 8,
+                "column": 12
+              },
+              "to": {
+                "line": 8,
+                "column": 48
+              }
+            },
+            "type": "Untyped",
+            "kind": "ValEx",
+            "value": {
+              "kind": "TlaStr",
+              "value": "quote\" backslash\\ tab\t newline\n"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

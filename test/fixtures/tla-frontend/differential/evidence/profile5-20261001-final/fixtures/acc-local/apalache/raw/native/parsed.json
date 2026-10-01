@@ -1,0 +1,193 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptLocal",
+            "from": {
+              "line": 5,
+              "column": 1
+            },
+            "to": {
+              "line": 5,
+              "column": 17
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Helper",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptLocal",
+              "from": {
+                "line": 5,
+                "column": 17
+              },
+              "to": {
+                "line": 5,
+                "column": 17
+              }
+            },
+            "type": "Untyped",
+            "kind": "ValEx",
+            "value": {
+              "kind": "TlaInt",
+              "value": 7
+            }
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptLocal",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 23
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "UseHelper",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptLocal",
+              "from": {
+                "line": 7,
+                "column": 14
+              },
+              "to": {
+                "line": 7,
+                "column": 23
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "PLUS",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptLocal",
+                  "from": {
+                    "line": 7,
+                    "column": 14
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 19
+                  }
+                },
+                "type": "Untyped",
+                "kind": "LetInEx",
+                "body": {
+                  "source": {
+                    "filename": "AcceptLocal",
+                    "from": {
+                      "line": 7,
+                      "column": 14
+                    },
+                    "to": {
+                      "line": 7,
+                      "column": 19
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "OperEx",
+                  "oper": "OPER_APP",
+                  "args": [
+                    {
+                      "source": {
+                        "filename": "AcceptLocal",
+                        "from": {
+                          "line": 7,
+                          "column": 14
+                        },
+                        "to": {
+                          "line": 7,
+                          "column": 19
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "NameEx",
+                      "name": "LOCAL6!Helper"
+                    }
+                  ]
+                },
+                "decls": [
+                  {
+                    "source": {
+                      "filename": "AcceptLocal",
+                      "from": {
+                        "line": 5,
+                        "column": 1
+                      },
+                      "to": {
+                        "line": 5,
+                        "column": 17
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "TlaOperDecl",
+                    "name": "LOCAL6!Helper",
+                    "formalParams": [],
+                    "isRecursive": false,
+                    "body": {
+                      "source": {
+                        "filename": "AcceptLocal",
+                        "from": {
+                          "line": 5,
+                          "column": 17
+                        },
+                        "to": {
+                          "line": 5,
+                          "column": 17
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "ValEx",
+                      "value": {
+                        "kind": "TlaInt",
+                        "value": 7
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptLocal",
+                  "from": {
+                    "line": 7,
+                    "column": 23
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 23
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

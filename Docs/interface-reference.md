@@ -233,11 +233,47 @@ session directory, Mirrors returns the existing `gen_traces_done` shape with
 those paths and `"itfTraces": []`. Without such durable copies it returns a
 bounded `register_error` beginning with `TRACE_RESULT_TOO_LARGE`.
 
-TCP and mTLS peers are remote even when a pathname happens to look meaningful
-on both hosts. They never receive path-only success in place of an oversized
-inline result; version 1 fails explicitly with `TRACE_RESULT_TOO_LARGE`.
+By default TCP and mTLS peers are remote even when a pathname happens to look
+meaningful on both hosts. An oversized inline result fails explicitly with
+`TRACE_RESULT_TOO_LARGE`. A separately configured shared-filesystem grant is
+described below; path resemblance alone grants nothing.
 Replies whose full encoding fits retain their existing bytes and include both
 paths and inline traces.
+
+The additive `mirror trace-gen` client captures this existing remote protocol:
+
+```sh
+mirror trace-gen --host HOST --port PORT --tls --cert CERT --key KEY --ca CA \
+  --pin SHA256 --spec ROOT.tla --out NEW_DIRECTORY --init Init --next Next \
+  --inv TraceIncomplete --bound 20 --num-traces 1 --param-var parameters
+```
+
+Connection/model options follow remote validation, including captured local
+dependency closure and registry discovery. Optional `--async --max-polls N`
+uses the existing owned-job protocol with bounded correlation and cancellation.
+The output directory must be absent with an ordinary existing parent. The CLI
+retains inline ITF JSON, request/reply/source artifacts and hash receipts; raw
+ITF metadata is preserved. In the default mode server-side paths are never opened locally. Empty,
+path-only, malformed, oversized, or failed results exit 2 without claiming a
+capture. Successful capture exits 0. These are client behavior additions, not
+wire-schema changes or evidence of the selected deployed backend. See the
+[capture design](../Plans/model-interface-compiler/writesentry-remote-oracle-path.md).
+
+For an explicitly shared filesystem, an mTLS server may enable
+`--shared-trace-root DIR` with `--model-interface-allow-client FP`. Only an exact
+allowlisted peer can export synchronously to one atomically reserved, new
+`capture-...` child of that root. Existing, escaping, and async destinations
+fail before generation. The client must opt in with paired
+`--shared-server-root ABSOLUTE_SERVER_DIR` and `--shared-local-root LOCAL_DIR`;
+this requires direct pinned mTLS and synchronous mode. A path-only reply is
+mapped only inside the exact destination requested by that invocation.
+Symlink prefixes, nonregular files, traversal and duplicates are rejected.
+Artifacts retain strict JSON/ITF validation, 16 MiB each, 64 MiB aggregate,
+and at most 64 artifacts. `--num-traces` controls backend counterexamples;
+one counterexample may emit multiple metadata-distinct artifacts.
+Receipts retain the explicit mapping and hashes of original server artifacts.
+The 65,535-byte wire bound and async inline-only contract are unchanged.
+See [the confined transfer contract](../Plans/model-interface-compiler/windows-shared-trace-transfer.md).
 
 ### 3.4 `register_validate` — validate only, then done
 ```json

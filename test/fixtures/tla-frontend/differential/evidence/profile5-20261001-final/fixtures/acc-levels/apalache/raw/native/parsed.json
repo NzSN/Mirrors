@@ -1,0 +1,586 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptLevels",
+            "from": {
+              "line": 5,
+              "column": 10
+            },
+            "to": {
+              "line": 5,
+              "column": 10
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaConstDecl",
+          "name": "N"
+        },
+        {
+          "source": {
+            "filename": "AcceptLevels",
+            "from": {
+              "line": 6,
+              "column": 10
+            },
+            "to": {
+              "line": 6,
+              "column": 10
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "x"
+        },
+        {
+          "source": {
+            "filename": "AcceptLevels",
+            "from": {
+              "line": 8,
+              "column": 1
+            },
+            "to": {
+              "line": 8,
+              "column": 19
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "ConstantOp",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptLevels",
+              "from": {
+                "line": 8,
+                "column": 15
+              },
+              "to": {
+                "line": 8,
+                "column": 19
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "PLUS",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptLevels",
+                  "from": {
+                    "line": 8,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 15
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "N"
+              },
+              {
+                "source": {
+                  "filename": "AcceptLevels",
+                  "from": {
+                    "line": 8,
+                    "column": 19
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 19
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptLevels",
+            "from": {
+              "line": 9,
+              "column": 1
+            },
+            "to": {
+              "line": 9,
+              "column": 16
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "StateOp",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptLevels",
+              "from": {
+                "line": 9,
+                "column": 12
+              },
+              "to": {
+                "line": 9,
+                "column": 16
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "PLUS",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptLevels",
+                  "from": {
+                    "line": 9,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 12
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "x"
+              },
+              {
+                "source": {
+                  "filename": "AcceptLevels",
+                  "from": {
+                    "line": 9,
+                    "column": 16
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 16
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "N"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptLevels",
+            "from": {
+              "line": 10,
+              "column": 1
+            },
+            "to": {
+              "line": 10,
+              "column": 22
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "ActionOp",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptLevels",
+              "from": {
+                "line": 10,
+                "column": 13
+              },
+              "to": {
+                "line": 10,
+                "column": 22
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EQ",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptLevels",
+                  "from": {
+                    "line": 10,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 14
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "PRIME",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptLevels",
+                      "from": {
+                        "line": 10,
+                        "column": 13
+                      },
+                      "to": {
+                        "line": 10,
+                        "column": 13
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "x"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptLevels",
+                  "from": {
+                    "line": 10,
+                    "column": 18
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "PLUS",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptLevels",
+                      "from": {
+                        "line": 10,
+                        "column": 18
+                      },
+                      "to": {
+                        "line": 10,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "x"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptLevels",
+                      "from": {
+                        "line": 10,
+                        "column": 22
+                      },
+                      "to": {
+                        "line": 10,
+                        "column": 22
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 1
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptLevels",
+            "from": {
+              "line": 11,
+              "column": 1
+            },
+            "to": {
+              "line": 11,
+              "column": 28
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "TemporalOp",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptLevels",
+              "from": {
+                "line": 11,
+                "column": 15
+              },
+              "to": {
+                "line": 11,
+                "column": 28
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "GLOBALLY",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptLevels",
+                  "from": {
+                    "line": 11,
+                    "column": 17
+                  },
+                  "to": {
+                    "line": 11,
+                    "column": 28
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "STUTTER",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptLevels",
+                      "from": {
+                        "line": 11,
+                        "column": 18
+                      },
+                      "to": {
+                        "line": 11,
+                        "column": 25
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "OPER_APP",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptLevels",
+                          "from": {
+                            "line": 11,
+                            "column": 18
+                          },
+                          "to": {
+                            "line": 11,
+                            "column": 25
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "ActionOp"
+                      }
+                    ]
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptLevels",
+                      "from": {
+                        "line": 11,
+                        "column": 28
+                      },
+                      "to": {
+                        "line": 11,
+                        "column": 28
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "x"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptLevels",
+            "from": {
+              "line": 12,
+              "column": 1
+            },
+            "to": {
+              "line": 12,
+              "column": 31
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Spec",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptLevels",
+              "from": {
+                "line": 12,
+                "column": 9
+              },
+              "to": {
+                "line": 12,
+                "column": 31
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "AND",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptLevels",
+                  "from": {
+                    "line": 12,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 12,
+                    "column": 13
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptLevels",
+                      "from": {
+                        "line": 12,
+                        "column": 9
+                      },
+                      "to": {
+                        "line": 12,
+                        "column": 9
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "x"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptLevels",
+                      "from": {
+                        "line": 12,
+                        "column": 13
+                      },
+                      "to": {
+                        "line": 12,
+                        "column": 13
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptLevels",
+                  "from": {
+                    "line": 12,
+                    "column": 18
+                  },
+                  "to": {
+                    "line": 12,
+                    "column": 31
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "GLOBALLY",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptLevels",
+                      "from": {
+                        "line": 12,
+                        "column": 20
+                      },
+                      "to": {
+                        "line": 12,
+                        "column": 31
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "STUTTER",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptLevels",
+                          "from": {
+                            "line": 12,
+                            "column": 21
+                          },
+                          "to": {
+                            "line": 12,
+                            "column": 28
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "OPER_APP",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "AcceptLevels",
+                              "from": {
+                                "line": 12,
+                                "column": 21
+                              },
+                              "to": {
+                                "line": 12,
+                                "column": 28
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "ActionOp"
+                          }
+                        ]
+                      },
+                      {
+                        "source": {
+                          "filename": "AcceptLevels",
+                          "from": {
+                            "line": 12,
+                            "column": 31
+                          },
+                          "to": {
+                            "line": 12,
+                            "column": 31
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "x"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

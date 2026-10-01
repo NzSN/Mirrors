@@ -23,6 +23,7 @@ def main : IO UInt32 := do
       | .error e => IO.eprintln e; return 2
       | .ok opts => serveOne opts
   | "validate" :: rest => validateCli rest
+  | "trace-gen" :: rest => traceGenCli rest
   | [] =>
       -- default mode: stdio mirror session (Haskell: run StdioTransport)
       let t ← Shell.Transport.stdio

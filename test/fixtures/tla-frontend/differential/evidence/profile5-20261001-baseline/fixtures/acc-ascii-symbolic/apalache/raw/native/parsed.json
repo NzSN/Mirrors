@@ -1,0 +1,873 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptAsciiSymbolic",
+            "from": {
+              "line": 5,
+              "column": 10
+            },
+            "to": {
+              "line": 5,
+              "column": 10
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaConstDecl",
+          "name": "S"
+        },
+        {
+          "source": {
+            "filename": "AcceptAsciiSymbolic",
+            "from": {
+              "line": 5,
+              "column": 13
+            },
+            "to": {
+              "line": 5,
+              "column": 13
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaConstDecl",
+          "name": "T"
+        },
+        {
+          "source": {
+            "filename": "AcceptAsciiSymbolic",
+            "from": {
+              "line": 16,
+              "column": 1
+            },
+            "to": {
+              "line": 16,
+              "column": 13
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Leq",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptAsciiSymbolic",
+              "from": {
+                "line": 16,
+                "column": 8
+              },
+              "to": {
+                "line": 16,
+                "column": 13
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "LE",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 16,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 16,
+                    "column": 8
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 16,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 16,
+                    "column": 13
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 2
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptAsciiSymbolic",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 13
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "And",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptAsciiSymbolic",
+              "from": {
+                "line": 7,
+                "column": 8
+              },
+              "to": {
+                "line": 7,
+                "column": 13
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "AND",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 7,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 8
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "S"
+              },
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 7,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 13
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "T"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptAsciiSymbolic",
+            "from": {
+              "line": 8,
+              "column": 1
+            },
+            "to": {
+              "line": 8,
+              "column": 12
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Or",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptAsciiSymbolic",
+              "from": {
+                "line": 8,
+                "column": 7
+              },
+              "to": {
+                "line": 8,
+                "column": 12
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "OR",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 8,
+                    "column": 7
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 7
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "S"
+              },
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 8,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 12
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "T"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptAsciiSymbolic",
+            "from": {
+              "line": 9,
+              "column": 1
+            },
+            "to": {
+              "line": 9,
+              "column": 10
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Not",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptAsciiSymbolic",
+              "from": {
+                "line": 9,
+                "column": 8
+              },
+              "to": {
+                "line": 9,
+                "column": 10
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "NOT",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 9,
+                    "column": 10
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 10
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "S"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptAsciiSymbolic",
+            "from": {
+              "line": 10,
+              "column": 1
+            },
+            "to": {
+              "line": 10,
+              "column": 14
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Iff",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptAsciiSymbolic",
+              "from": {
+                "line": 10,
+                "column": 8
+              },
+              "to": {
+                "line": 10,
+                "column": 14
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EQUIV",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 10,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 8
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "S"
+              },
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 10,
+                    "column": 14
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 14
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "T"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptAsciiSymbolic",
+            "from": {
+              "line": 11,
+              "column": 1
+            },
+            "to": {
+              "line": 11,
+              "column": 22
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Member",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptAsciiSymbolic",
+              "from": {
+                "line": 11,
+                "column": 11
+              },
+              "to": {
+                "line": 11,
+                "column": 22
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "SET_IN",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 11,
+                    "column": 11
+                  },
+                  "to": {
+                    "line": 11,
+                    "column": 11
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "S"
+              },
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 11,
+                    "column": 17
+                  },
+                  "to": {
+                    "line": 11,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "SET_ENUM",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptAsciiSymbolic",
+                      "from": {
+                        "line": 11,
+                        "column": 18
+                      },
+                      "to": {
+                        "line": 11,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "S"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptAsciiSymbolic",
+                      "from": {
+                        "line": 11,
+                        "column": 21
+                      },
+                      "to": {
+                        "line": 11,
+                        "column": 21
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "T"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptAsciiSymbolic",
+            "from": {
+              "line": 12,
+              "column": 1
+            },
+            "to": {
+              "line": 12,
+              "column": 30
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Subset",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptAsciiSymbolic",
+              "from": {
+                "line": 12,
+                "column": 11
+              },
+              "to": {
+                "line": 12,
+                "column": 30
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "SET_SUBSET_EQ",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 12,
+                    "column": 11
+                  },
+                  "to": {
+                    "line": 12,
+                    "column": 13
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "SET_ENUM",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptAsciiSymbolic",
+                      "from": {
+                        "line": 12,
+                        "column": 12
+                      },
+                      "to": {
+                        "line": 12,
+                        "column": 12
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "S"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 12,
+                    "column": 25
+                  },
+                  "to": {
+                    "line": 12,
+                    "column": 30
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "SET_ENUM",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptAsciiSymbolic",
+                      "from": {
+                        "line": 12,
+                        "column": 26
+                      },
+                      "to": {
+                        "line": 12,
+                        "column": 26
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "S"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptAsciiSymbolic",
+                      "from": {
+                        "line": 12,
+                        "column": 29
+                      },
+                      "to": {
+                        "line": 12,
+                        "column": 29
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "T"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptAsciiSymbolic",
+            "from": {
+              "line": 13,
+              "column": 1
+            },
+            "to": {
+              "line": 13,
+              "column": 23
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Union",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptAsciiSymbolic",
+              "from": {
+                "line": 13,
+                "column": 10
+              },
+              "to": {
+                "line": 13,
+                "column": 23
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "SET_UNION2",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 13,
+                    "column": 10
+                  },
+                  "to": {
+                    "line": 13,
+                    "column": 12
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "SET_ENUM",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptAsciiSymbolic",
+                      "from": {
+                        "line": 13,
+                        "column": 11
+                      },
+                      "to": {
+                        "line": 13,
+                        "column": 11
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "S"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 13,
+                    "column": 21
+                  },
+                  "to": {
+                    "line": 13,
+                    "column": 23
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "SET_ENUM",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptAsciiSymbolic",
+                      "from": {
+                        "line": 13,
+                        "column": 22
+                      },
+                      "to": {
+                        "line": 13,
+                        "column": 22
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "T"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptAsciiSymbolic",
+            "from": {
+              "line": 14,
+              "column": 1
+            },
+            "to": {
+              "line": 14,
+              "column": 31
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Intersect",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptAsciiSymbolic",
+              "from": {
+                "line": 14,
+                "column": 14
+              },
+              "to": {
+                "line": 14,
+                "column": 31
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "SET_INTERSECT",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 14,
+                    "column": 14
+                  },
+                  "to": {
+                    "line": 14,
+                    "column": 16
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "SET_ENUM",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptAsciiSymbolic",
+                      "from": {
+                        "line": 14,
+                        "column": 15
+                      },
+                      "to": {
+                        "line": 14,
+                        "column": 15
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "S"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 14,
+                    "column": 29
+                  },
+                  "to": {
+                    "line": 14,
+                    "column": 31
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "SET_ENUM",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptAsciiSymbolic",
+                      "from": {
+                        "line": 14,
+                        "column": 30
+                      },
+                      "to": {
+                        "line": 14,
+                        "column": 30
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "T"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptAsciiSymbolic",
+            "from": {
+              "line": 15,
+              "column": 1
+            },
+            "to": {
+              "line": 15,
+              "column": 17
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "NotEqual",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptAsciiSymbolic",
+              "from": {
+                "line": 15,
+                "column": 13
+              },
+              "to": {
+                "line": 15,
+                "column": 17
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "NE",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 15,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 15,
+                    "column": 13
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "S"
+              },
+              {
+                "source": {
+                  "filename": "AcceptAsciiSymbolic",
+                  "from": {
+                    "line": 15,
+                    "column": 17
+                  },
+                  "to": {
+                    "line": 15,
+                    "column": 17
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "T"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+PASS lifecycle
+PASS owner-allowed
+PASS owner-bad
+PASS owner-unlisted
+PASS foreign-writer
+PASS silent-and-baseline
+PASS slot-exhaustion
+PASS foreign-repair
+PASS foreign-disarm
+PASS torn-changing-sequence
+PASS torn-odd-sequence
+PASS inactive-snapshot
+PASS t1-arm-t2-write
+PASS t2-arm-t1-write

@@ -1,0 +1,501 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptRecursive",
+            "from": {
+              "line": 6,
+              "column": 1
+            },
+            "to": {
+              "line": 6,
+              "column": 47
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Fact",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "n",
+              "arity": 0
+            }
+          ],
+          "isRecursive": true,
+          "body": {
+            "source": {
+              "filename": "AcceptRecursive",
+              "from": {
+                "line": 6,
+                "column": 12
+              },
+              "to": {
+                "line": 6,
+                "column": 47
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "IF_THEN_ELSE",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptRecursive",
+                  "from": {
+                    "line": 6,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 19
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptRecursive",
+                      "from": {
+                        "line": 6,
+                        "column": 15
+                      },
+                      "to": {
+                        "line": 6,
+                        "column": 15
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "n"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptRecursive",
+                      "from": {
+                        "line": 6,
+                        "column": 19
+                      },
+                      "to": {
+                        "line": 6,
+                        "column": 19
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptRecursive",
+                  "from": {
+                    "line": 6,
+                    "column": 26
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 26
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptRecursive",
+                  "from": {
+                    "line": 6,
+                    "column": 33
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 47
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "MULT",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptRecursive",
+                      "from": {
+                        "line": 6,
+                        "column": 33
+                      },
+                      "to": {
+                        "line": 6,
+                        "column": 33
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "n"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptRecursive",
+                      "from": {
+                        "line": 6,
+                        "column": 37
+                      },
+                      "to": {
+                        "line": 6,
+                        "column": 47
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "OPER_APP",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptRecursive",
+                          "from": {
+                            "line": 6,
+                            "column": 37
+                          },
+                          "to": {
+                            "line": 6,
+                            "column": 47
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "Fact"
+                      },
+                      {
+                        "source": {
+                          "filename": "AcceptRecursive",
+                          "from": {
+                            "line": 6,
+                            "column": 42
+                          },
+                          "to": {
+                            "line": 6,
+                            "column": 46
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "MINUS",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "AcceptRecursive",
+                              "from": {
+                                "line": 6,
+                                "column": 42
+                              },
+                              "to": {
+                                "line": 6,
+                                "column": 42
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "n"
+                          },
+                          {
+                            "source": {
+                              "filename": "AcceptRecursive",
+                              "from": {
+                                "line": 6,
+                                "column": 46
+                              },
+                              "to": {
+                                "line": 6,
+                                "column": 46
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "ValEx",
+                            "value": {
+                              "kind": "TlaInt",
+                              "value": 1
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptRecursive",
+            "from": {
+              "line": 9,
+              "column": 1
+            },
+            "to": {
+              "line": 9,
+              "column": 61
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "SumTo",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "n",
+              "arity": 0
+            },
+            {
+              "kind": "OperParam",
+              "name": "acc",
+              "arity": 0
+            }
+          ],
+          "isRecursive": true,
+          "body": {
+            "source": {
+              "filename": "AcceptRecursive",
+              "from": {
+                "line": 9,
+                "column": 18
+              },
+              "to": {
+                "line": 9,
+                "column": 61
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "IF_THEN_ELSE",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptRecursive",
+                  "from": {
+                    "line": 9,
+                    "column": 21
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 25
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptRecursive",
+                      "from": {
+                        "line": 9,
+                        "column": 21
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 21
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "n"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptRecursive",
+                      "from": {
+                        "line": 9,
+                        "column": 25
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 25
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptRecursive",
+                  "from": {
+                    "line": 9,
+                    "column": 32
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 34
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "acc"
+              },
+              {
+                "source": {
+                  "filename": "AcceptRecursive",
+                  "from": {
+                    "line": 9,
+                    "column": 41
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 61
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptRecursive",
+                      "from": {
+                        "line": 9,
+                        "column": 41
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 61
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "SumTo"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptRecursive",
+                      "from": {
+                        "line": 9,
+                        "column": 47
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 51
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "MINUS",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptRecursive",
+                          "from": {
+                            "line": 9,
+                            "column": 47
+                          },
+                          "to": {
+                            "line": 9,
+                            "column": 47
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "n"
+                      },
+                      {
+                        "source": {
+                          "filename": "AcceptRecursive",
+                          "from": {
+                            "line": 9,
+                            "column": 51
+                          },
+                          "to": {
+                            "line": 9,
+                            "column": 51
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "ValEx",
+                        "value": {
+                          "kind": "TlaInt",
+                          "value": 1
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptRecursive",
+                      "from": {
+                        "line": 9,
+                        "column": 54
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 60
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "PLUS",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptRecursive",
+                          "from": {
+                            "line": 9,
+                            "column": 54
+                          },
+                          "to": {
+                            "line": 9,
+                            "column": 56
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "acc"
+                      },
+                      {
+                        "source": {
+                          "filename": "AcceptRecursive",
+                          "from": {
+                            "line": 9,
+                            "column": 60
+                          },
+                          "to": {
+                            "line": 9,
+                            "column": 60
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "n"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -4,6 +4,29 @@ Date: 2026-09-30
 
 Status: resumed implementation, 2026-10-01. Local source and native recorded-replay acceptance have advanced; the full definition of done remains incomplete. See [the extension contract](../../Docs/model-interface-compiler/writesentry-extensions.md) and [retained local acceptance](writesentry-v2-evidence/acceptance.json). The original plan/baseline below remains historical.
 
+## 2026-10-01 remaining-work execution
+
+Latest, Windows campaign: **fresh remote oracle qualification passes** against
+the explicitly selected current Windows host at `172.20.208.1:8999`, Apalache
+0.62.2 / Microsoft Java 25.0.4+7-LTS. Fourteen scenarios cover all eighteen
+actions, eight flags and both overlap directions; all three genuine-server
+mutation controls pass. The 424 replayed snapshots represent 212 snapshots in
+fourteen distinct state sequences; timestamp-distinct backend artifacts are
+preserved. The binding is regenerated/checked against fresh evidence, and the
+normal rebuilt application passes 8/8 CTests plus fresh native/stdio/mutation
+replays. [Acceptance and complete corpus](writesentry-windows-evidence-20261001/acceptance.json).
+The explicit confined Workspace transfer preserves the wire bound. Publication
+of the clean MirrorCPP v2 carrier and advancing WriteSentry's gitlink remain
+pending. Frontend reference evidence retains its selected 0.61.0 identity.
+The earlier entries below describe their respective execution checkpoints.
+
+- Applied the adoption to the user-identified `~/Repos/WriteSentry`, now at the intended `9dd4b57` history; initialized its pinned MirrorCPP submodule and applied the reviewed v2 client patch. Actual application build/CTest passes 8/8, and the actual SDK's 27 unit cases pass. Recorded native coverage is recounted as 14 scenarios, 212 states, 18 actions, and eight flags; the three actual stdio-server controls produce `step_mismatch`.
+- Obtained the selected Microsoft JDK 25.0.4+7-LTS archive/runtime with exact local hashes. Renewed only the fourteen existing outcome-policy differences against fresh observed source/tool identities. Profile-5 required differential qualification passes all 183 observations; 292 unsupported reference projections remain explicit. Raw evidence and policy review are retained in the frontend corpus and `Drafts/tla-profile5-policy-renewals.md`.
+- Implemented the remote Mirrors CLI trace-capture path and WriteSentry's remote-only campaign wrapper. The owning Lean spec, fourteen actual CLI loopback cases, and four campaign admission/integrity tests pass. Original ITF metadata and bounded protocol semantics are preserved; server paths are never treated as local files.
+- Added ordinary v2 recorded replay over stdio/TCP/mTLS, negotiated stdio/allowlisted mTLS, plain-TCP authorization-denial zero-callback checks, and TypeScript/Rust incompatible-profile rejection. The current local non-model aggregate passes 44/44 steps.
+- Fresh deployed-service campaign admission is still blocked by absent private credentials and same-time service observation. Publication of a clean MirrorCPP v2 dependency revision and advancing WriteSentry's gitlink require the separately requested publication approval; current client source remains the reviewed dirty baseline plus patch. Neither absence is silently credited as completed qualification.
+- Evidence: [remaining-work acceptance](writesentry-remaining-evidence/acceptance.json). The acceptance position below is the earlier committed checkpoint and remains historical.
+
 ## 2026-10-01 acceptance position
 
 - Mirrors builds successfully. All 42 local non-model runner steps passed with `MIRRORCPP_PREFIX=/tmp/mic-mirrorcpp-install`. Live model-checking portions remain excluded/self-skipped. The offline differential suite reports 63 tests, four live-reference skips; its acquisition test now isolates runtime admission and separately proves that the different installed JDK is rejected.

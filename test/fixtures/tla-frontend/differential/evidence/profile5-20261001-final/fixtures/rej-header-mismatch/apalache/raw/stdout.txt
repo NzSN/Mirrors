@@ -1,0 +1,18 @@
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /tmp/mic-profile5-reference-final/rej-header-mismatch-apalache-1sykpl2q/input/.dv-apalache/MismatchRoot.tla/2026-10-01T00-06-32_1543804685679605034
+# APALACHE version: 0.61.0 | build: 831d473                       I@00:06:32.239
+Parse MismatchRoot.tla                                            I@00:06:32.242
+PASS #0: SanyParser                                               I@00:06:32.448
+Parsing error: Syntax errors:
+
+*** Errors: 1
+
+Unknown location
+
+File name 'MismatchRoot' does not match the name 'DifferentName' of the top level module it contains. E@00:06:32.513
+Parser has failed                                                 I@00:06:32.538
+It took me 0 days  0 hours  0 min  0 sec                          I@00:06:32.539
+Total time: 0.297 sec                                             I@00:06:32.539
+EXITCODE: ERROR (255)

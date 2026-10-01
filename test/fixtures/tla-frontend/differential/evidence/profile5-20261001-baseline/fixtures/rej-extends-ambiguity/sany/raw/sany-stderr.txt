@@ -1,0 +1,18 @@
+Parsing file /tmp/mic-profile5-reference-first/rej-extends-ambiguity-sany-r3bkips7/input/AmbRoot.tla
+Parsing file /tmp/mic-profile5-reference-first/rej-extends-ambiguity-sany-r3bkips7/input/AmbLeft.tla
+Parsing file /tmp/mic-profile5-reference-first/rej-extends-ambiguity-sany-r3bkips7/input/AmbRight.tla
+Semantic processing of module AmbLeft
+Semantic processing of module AmbRight
+Semantic processing of module AmbRoot
+*** Warnings: 1
+
+line 3, col 10 to line 3, col 14 of module AmbRight
+
+Warning: the declaration of 'state' conflicts with 
+its declaration at line 3, col 10 to line 3, col 14 of module AmbLeft.
+
+
+
+Linting of module AmbLeft
+Linting of module AmbRight
+Linting of module AmbRoot

@@ -1,0 +1,26 @@
+Parsing file /tmp/mic-profile5-reference-final/rej-precedence-junction-mix-sany-wgy8quet/input/RejectPrecedenceJunctionMix.tla
+***Parse Error***
+
+  Precedence conflict between ops \land in block line 5, col 12 to line 5, col 13 of module RejectPrecedenceJunctionMix and \lor.
+
+Residual stack trace follows:
+ExtendableExpr starting at line 5, column 15.
+ExtendableExpr starting at line 5, column 10.
+Expression starting at line 5, column 10.
+Definition starting at line 5, column 1.
+Module body starting at line 3, column 1.
+
+
+Fatal errors while parsing TLA+ spec in file RejectPrecedenceJunctionMix.tla
+
+In module RejectPrecedenceJunctionMix
+
+Could not parse module RejectPrecedenceJunctionMix from file RejectPrecedenceJunctionMix.tla
+*** Errors: 1
+
+In module RejectPrecedenceJunctionMix
+
+Could not parse module RejectPrecedenceJunctionMix from file RejectPrecedenceJunctionMix.tla
+
+
+

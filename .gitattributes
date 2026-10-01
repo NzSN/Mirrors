@@ -1,0 +1,6 @@
+# Retained tool output is hash-bound evidence, including native CRLF and
+# diagnostic trailing blanks. Preserve those bytes on every checkout.
+Plans/model-interface-compiler/writesentry-remaining-evidence/** -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+Plans/model-interface-compiler/writesentry-windows-evidence-20261001/** -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+test/fixtures/tla-frontend/differential/evidence/profile5-20261001-baseline/** -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+test/fixtures/tla-frontend/differential/evidence/profile5-20261001-final/** -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol

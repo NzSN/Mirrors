@@ -167,7 +167,7 @@ LEAN_EXPORT uint64_t dsh_bind_any(uint64_t fd, uint64_t port) {
     int one = 1;
     /* FFI-hardening r2 (#2, HIGH): bare (int)fd truncates the winsock
      * SOCKET (64-bit) — always go through DSH_SOCK. */
-    setsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+    setsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_REUSEADDR, (const char *)&one, sizeof(one));
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
@@ -228,7 +228,7 @@ LEAN_EXPORT uint64_t dsh_peer_desc(uint64_t fd, uint8_t *out, uint64_t cap, uint
 LEAN_EXPORT uint64_t dsh_bind_addr(uint64_t fd, lean_object const *ip, uint64_t port) {
     int one = 1;
     /* FFI-hardening r2 (#2): DSH_SOCK, never (int)fd (winsock SOCKET truncation). */
-    setsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+    setsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_REUSEADDR, (const char *)&one, sizeof(one));
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
@@ -241,7 +241,7 @@ LEAN_EXPORT uint64_t dsh_bind_addr(uint64_t fd, lean_object const *ip, uint64_t 
 LEAN_EXPORT uint64_t dsh_bind_loopback(uint64_t fd, uint64_t port) {
     int one = 1;
     /* FFI-hardening r2 (#2): DSH_SOCK, never (int)fd (winsock SOCKET truncation). */
-    setsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+    setsockopt(DSH_SOCK(fd), SOL_SOCKET, SO_REUSEADDR, (const char *)&one, sizeof(one));
     struct sockaddr_in addr = loopback_addr((uint16_t)port);
     return (uint64_t)(int64_t)bind(DSH_SOCK(fd), (struct sockaddr*)&addr, sizeof(addr));
 }

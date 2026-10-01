@@ -1,0 +1,189 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptAnnotations",
+            "from": {
+              "line": 5,
+              "column": 10
+            },
+            "to": {
+              "line": 5,
+              "column": 10
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaConstDecl",
+          "name": "N"
+        },
+        {
+          "source": {
+            "filename": "AcceptAnnotations",
+            "from": {
+              "line": 8,
+              "column": 1
+            },
+            "to": {
+              "line": 8,
+              "column": 22
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "TypedConstant",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptAnnotations",
+              "from": {
+                "line": 8,
+                "column": 18
+              },
+              "to": {
+                "line": 8,
+                "column": 22
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "PLUS",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAnnotations",
+                  "from": {
+                    "line": 8,
+                    "column": 18
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 18
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "N"
+              },
+              {
+                "source": {
+                  "filename": "AcceptAnnotations",
+                  "from": {
+                    "line": 8,
+                    "column": 22
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptAnnotations",
+            "from": {
+              "line": 11,
+              "column": 1
+            },
+            "to": {
+              "line": 11,
+              "column": 30
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Predicate",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptAnnotations",
+              "from": {
+                "line": 11,
+                "column": 14
+              },
+              "to": {
+                "line": 11,
+                "column": 30
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "GT",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAnnotations",
+                  "from": {
+                    "line": 11,
+                    "column": 14
+                  },
+                  "to": {
+                    "line": 11,
+                    "column": 26
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptAnnotations",
+                      "from": {
+                        "line": 11,
+                        "column": 14
+                      },
+                      "to": {
+                        "line": 11,
+                        "column": 26
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "TypedConstant"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptAnnotations",
+                  "from": {
+                    "line": 11,
+                    "column": 30
+                  },
+                  "to": {
+                    "line": 11,
+                    "column": 30
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 0
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

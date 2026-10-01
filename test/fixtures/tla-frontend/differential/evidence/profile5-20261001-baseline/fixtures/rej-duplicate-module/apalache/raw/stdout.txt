@@ -1,0 +1,18 @@
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /tmp/mic-profile5-reference-first/rej-duplicate-module-apalache-pz3zx0q1/input/.dv-apalache/DupRoot.tla/2026-09-30T23-57-36_8234220084248919753
+# APALACHE version: 0.61.0 | build: 831d473                       I@23:57:36.403
+Parse DupRoot.tla                                                 I@23:57:36.406
+PASS #0: SanyParser                                               I@23:57:36.588
+Parsing error: Syntax errors:
+
+*** Errors: 1
+
+Unknown location
+
+File name 'DupAlias' does not match the name 'DupShared' of the top level module it contains. E@23:57:36.651
+Parser has failed                                                 I@23:57:36.674
+It took me 0 days  0 hours  0 min  0 sec                          I@23:57:36.675
+Total time: 0.268 sec                                             I@23:57:36.675
+EXITCODE: ERROR (255)

@@ -1,0 +1,19 @@
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /tmp/mic-profile5-reference-final/rej-instance-unsubstituted-apalache-6f0say9n/input/.dv-apalache/UnsubstitutedRoot.tla/2026-10-01T00-06-40_12983615037841801864
+# APALACHE version: 0.61.0 | build: 831d473                       I@00:06:40.374
+Parse UnsubstitutedRoot.tla                                       I@00:06:40.378
+PASS #0: SanyParser                                               I@00:06:40.562
+Parsing error: Semantic errors:
+
+*** Errors: 1
+
+line 3, col 1 to line 3, col 32 of module UnsubstitutedRoot
+
+Substitution missing for symbol childState declared at line 3, col 10 to line 3, col 19 of module UnsubstitutedChild 
+and instantiated in module UnsubstitutedRoot. E@00:06:40.641
+Parser has failed                                                 I@00:06:40.664
+It took me 0 days  0 hours  0 min  0 sec                          I@00:06:40.664
+Total time: 0.287 sec                                             I@00:06:40.664
+EXITCODE: ERROR (255)

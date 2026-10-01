@@ -1,0 +1,20 @@
+Parsing file /tmp/mic-profile5-reference-final/rej-extends-cycle-sany-5hiqqb51/input/CycleA.tla
+Parsing file /tmp/mic-profile5-reference-final/rej-extends-cycle-sany-5hiqqb51/input/CycleB.tla
+
+Fatal errors while parsing TLA+ spec in file CycleA.tla
+
+Unknown location
+
+Circular dependency among .tla files; dependency cycle is:
+
+  CycleA.tla --> CycleB.tla --> CycleA.tla
+*** Errors: 1
+
+Unknown location
+
+Circular dependency among .tla files; dependency cycle is:
+
+  CycleA.tla --> CycleB.tla --> CycleA.tla
+
+
+

@@ -1,0 +1,300 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptAssumptions",
+            "from": {
+              "line": 5,
+              "column": 10
+            },
+            "to": {
+              "line": 5,
+              "column": 10
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaConstDecl",
+          "name": "N"
+        },
+        {
+          "source": {
+            "filename": "AcceptAssumptions",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 16
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaAssumeDecl",
+          "body": {
+            "source": {
+              "filename": "AcceptAssumptions",
+              "from": {
+                "line": 7,
+                "column": 8
+              },
+              "to": {
+                "line": 7,
+                "column": 16
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "SET_IN",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAssumptions",
+                  "from": {
+                    "line": 7,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 8
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "N"
+              },
+              {
+                "source": {
+                  "filename": "AcceptAssumptions",
+                  "from": {
+                    "line": 7,
+                    "column": 14
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 16
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaIntSet"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptAssumptions",
+            "from": {
+              "line": 8,
+              "column": 1
+            },
+            "to": {
+              "line": 8,
+              "column": 20
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaAssumeDecl",
+          "body": {
+            "source": {
+              "filename": "AcceptAssumptions",
+              "from": {
+                "line": 8,
+                "column": 12
+              },
+              "to": {
+                "line": 8,
+                "column": 20
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EQ",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAssumptions",
+                  "from": {
+                    "line": 8,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 16
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "PLUS",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptAssumptions",
+                      "from": {
+                        "line": 8,
+                        "column": 12
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 12
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "N"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptAssumptions",
+                      "from": {
+                        "line": 8,
+                        "column": 16
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 16
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptAssumptions",
+                  "from": {
+                    "line": 8,
+                    "column": 20
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 20
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "N"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptAssumptions",
+            "from": {
+              "line": 9,
+              "column": 1
+            },
+            "to": {
+              "line": 9,
+              "column": 15
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaAssumeDecl",
+          "body": {
+            "source": {
+              "filename": "AcceptAssumptions",
+              "from": {
+                "line": 9,
+                "column": 7
+              },
+              "to": {
+                "line": 9,
+                "column": 15
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EQ",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptAssumptions",
+                  "from": {
+                    "line": 9,
+                    "column": 7
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 11
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "MULT",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptAssumptions",
+                      "from": {
+                        "line": 9,
+                        "column": 7
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 7
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "N"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptAssumptions",
+                      "from": {
+                        "line": 9,
+                        "column": 11
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 11
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptAssumptions",
+                  "from": {
+                    "line": 9,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 15
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "N"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

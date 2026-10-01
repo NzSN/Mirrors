@@ -1,0 +1,625 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptQuantifiers",
+            "from": {
+              "line": 5,
+              "column": 1
+            },
+            "to": {
+              "line": 5,
+              "column": 14
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "S",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptQuantifiers",
+              "from": {
+                "line": 5,
+                "column": 6
+              },
+              "to": {
+                "line": 5,
+                "column": 14
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "SET_ENUM",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptQuantifiers",
+                  "from": {
+                    "line": 5,
+                    "column": 7
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 7
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptQuantifiers",
+                  "from": {
+                    "line": 5,
+                    "column": 10
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 10
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 2
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptQuantifiers",
+                  "from": {
+                    "line": 5,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 13
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 3
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptQuantifiers",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 33
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "AllPositive",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptQuantifiers",
+              "from": {
+                "line": 7,
+                "column": 16
+              },
+              "to": {
+                "line": 7,
+                "column": 33
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "FORALL3",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptQuantifiers",
+                  "from": {
+                    "line": 7,
+                    "column": 16
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 33
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "u"
+              },
+              {
+                "source": {
+                  "filename": "AcceptQuantifiers",
+                  "from": {
+                    "line": 7,
+                    "column": 25
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 25
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptQuantifiers",
+                      "from": {
+                        "line": 7,
+                        "column": 25
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 25
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "S"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptQuantifiers",
+                  "from": {
+                    "line": 7,
+                    "column": 29
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 33
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "GT",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptQuantifiers",
+                      "from": {
+                        "line": 7,
+                        "column": 29
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 29
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "u"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptQuantifiers",
+                      "from": {
+                        "line": 7,
+                        "column": 33
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 33
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptQuantifiers",
+            "from": {
+              "line": 8,
+              "column": 1
+            },
+            "to": {
+              "line": 8,
+              "column": 31
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "SomeLarge",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptQuantifiers",
+              "from": {
+                "line": 8,
+                "column": 14
+              },
+              "to": {
+                "line": 8,
+                "column": 31
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EXISTS3",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptQuantifiers",
+                  "from": {
+                    "line": 8,
+                    "column": 14
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 31
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "u"
+              },
+              {
+                "source": {
+                  "filename": "AcceptQuantifiers",
+                  "from": {
+                    "line": 8,
+                    "column": 23
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 23
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptQuantifiers",
+                      "from": {
+                        "line": 8,
+                        "column": 23
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 23
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "S"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptQuantifiers",
+                  "from": {
+                    "line": 8,
+                    "column": 27
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 31
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "GT",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptQuantifiers",
+                      "from": {
+                        "line": 8,
+                        "column": 27
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 27
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "u"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptQuantifiers",
+                      "from": {
+                        "line": 8,
+                        "column": 31
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 31
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 2
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptQuantifiers",
+            "from": {
+              "line": 9,
+              "column": 1
+            },
+            "to": {
+              "line": 9,
+              "column": 45
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Nested",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptQuantifiers",
+              "from": {
+                "line": 9,
+                "column": 11
+              },
+              "to": {
+                "line": 9,
+                "column": 45
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "FORALL3",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptQuantifiers",
+                  "from": {
+                    "line": 9,
+                    "column": 11
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 45
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "u"
+              },
+              {
+                "source": {
+                  "filename": "AcceptQuantifiers",
+                  "from": {
+                    "line": 9,
+                    "column": 20
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 20
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptQuantifiers",
+                      "from": {
+                        "line": 9,
+                        "column": 20
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 20
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "S"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptQuantifiers",
+                  "from": {
+                    "line": 9,
+                    "column": 24
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 45
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EXISTS3",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptQuantifiers",
+                      "from": {
+                        "line": 9,
+                        "column": 24
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 45
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "v"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptQuantifiers",
+                      "from": {
+                        "line": 9,
+                        "column": 33
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 33
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "OPER_APP",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptQuantifiers",
+                          "from": {
+                            "line": 9,
+                            "column": 33
+                          },
+                          "to": {
+                            "line": 9,
+                            "column": 33
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "S"
+                      }
+                    ]
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptQuantifiers",
+                      "from": {
+                        "line": 9,
+                        "column": 37
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 45
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "GT",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptQuantifiers",
+                          "from": {
+                            "line": 9,
+                            "column": 37
+                          },
+                          "to": {
+                            "line": 9,
+                            "column": 41
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "PLUS",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "AcceptQuantifiers",
+                              "from": {
+                                "line": 9,
+                                "column": 37
+                              },
+                              "to": {
+                                "line": 9,
+                                "column": 37
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "u"
+                          },
+                          {
+                            "source": {
+                              "filename": "AcceptQuantifiers",
+                              "from": {
+                                "line": 9,
+                                "column": 41
+                              },
+                              "to": {
+                                "line": 9,
+                                "column": 41
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "v"
+                          }
+                        ]
+                      },
+                      {
+                        "source": {
+                          "filename": "AcceptQuantifiers",
+                          "from": {
+                            "line": 9,
+                            "column": 45
+                          },
+                          "to": {
+                            "line": 9,
+                            "column": 45
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "ValEx",
+                        "value": {
+                          "kind": "TlaInt",
+                          "value": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -6,6 +6,7 @@ import Shell.Registry
 import Shell.Client
 import Shell.Apalache.Runner
 import Shell.ModelInterface.Auth
+import Shell.TraceCapture
 import Codec.Json
 import Codec.Consul
 
@@ -62,7 +63,11 @@ def cliUsage : String :=
   "  validate (--host <h> --port <p> | --registry <url> --tls --cert <c>\n" ++
   "            --key <k> --ca <a>) [--pin <fp>] [--bound <n>] [--async] --spec <file>\n" ++
   "       [--dep <file>]... (recursively includes local EXTENDS/INSTANCE modules)\n" ++
-  "                     validate a local TLA+ spec against a remote mirror\n"
+  "                     validate a local TLA+ spec against a remote mirror\n" ++
+  "  trace-gen <validation connection/model options> --out <new-directory>\n" ++
+  "       [--num-traces <n>] [--view <name>] [--param-var <name>]\n" ++
+  "       [--async --max-polls <n>]\n" ++
+  "                     capture remote inline ITF traces and provenance locally\n"
 
 /-! ## argv -/
 
@@ -113,6 +118,7 @@ structure ServerOpts where
   jobs : Nat
   bind : Option String
   modelInterfacePolicy : Shell.ModelInterface.Auth.TlsApplicationPolicy := {}
+  sharedTraceRoot : Option String := none
   deriving Repr
 
 private structure ServerOptsC where
@@ -126,6 +132,7 @@ private structure ServerOptsC where
   bind : Option String := none
   modelInterfaceAllowClient : Option String := none
   modelInterfaceDescriptorRead : Bool := false
+  sharedTraceRoot : Option String := none
 
 private def reqString (name : String) (cur : Option String)
     (set : String → List String → Except String ServerOptsC)
@@ -215,6 +222,9 @@ private partial def serverOptsGo (s : ServerOptsC) : List String → Except Stri
       | "--model-interface-allow-client" =>
           reqString "model-interface-allow-client" s.modelInterfaceAllowClient
             (fun v r => serverOptsGo { s with modelInterfaceAllowClient := some v } r) as
+      | "--shared-trace-root" =>
+          reqString "shared-trace-root" s.sharedTraceRoot
+            (fun v r => serverOptsGo { s with sharedTraceRoot := some v } r) as
       | "--model-interface-descriptor-read" =>
           if s.modelInterfaceDescriptorRead then
             throw "duplicate --model-interface-descriptor-read"
@@ -241,8 +251,11 @@ def parseServerOpts (argv : List String) : Except String ServerOpts := do
     | some raw => Shell.ModelInterface.Auth.parseFingerprintAllowlist raw
   if s.modelInterfaceDescriptorRead && allowedPeerFingerprints.isEmpty then
     throw "--model-interface-descriptor-read requires --model-interface-allow-client"
+  if s.sharedTraceRoot.isSome && allowedPeerFingerprints.isEmpty then
+    throw "--shared-trace-root requires --model-interface-allow-client"
   return { port, cert, key, ca, registry := s.registry,
            jobs := s.jobs.getD 4, bind := s.bind,
+           sharedTraceRoot := s.sharedTraceRoot,
            modelInterfacePolicy := {
              allowedPeerFingerprints
              descriptorRead := s.modelInterfaceDescriptorRead } }
@@ -329,6 +342,74 @@ private partial def validateGo (o : ValidateOpts) : List String → Except Strin
 def parseValidateOpts (argv : List String) : Except String ValidateOpts :=
   validateGo {} argv
 
+structure TraceGenOpts where
+  connection : ValidateOpts
+  out : String
+  numTraces : Nat := 1
+  view : Option String := none
+  paramVar : String := ""
+  maxPolls : Nat := 120
+  sharedServerRoot : Option String := none
+  sharedLocalRoot : Option String := none
+  deriving Repr
+
+private structure TraceGenRaw where
+  connectionArgs : List String := []
+  fields : List (String × String) := []
+
+private def traceGenFinalize (raw : TraceGenRaw) : Except String TraceGenOpts := do
+  let connection ← parseValidateOpts raw.connectionArgs
+  let some out := raw.fields.lookup "--out" | throw "missing required --out"
+  if out.isEmpty then throw "missing required --out"
+  let number (name : String) (fallback maximum : Nat) : Except String Nat := do
+    let value ← match raw.fields.lookup name with
+      | none => pure fallback
+      | some text => match text.toNat? with
+        | some value => pure value
+        | none => throw s!"invalid {name}: {text}"
+    if value == 0 || value > maximum then throw s!"{name} must be between 1 and {maximum}"
+    pure value
+  let numTraces ← number "--num-traces" 1 64
+  let maxPolls ← number "--max-polls" 120 1200
+  if !connection.asyncMode && (raw.fields.lookup "--max-polls").isSome then
+    throw "--max-polls requires --async"
+  if connection.bound == 0 then throw "--bound must be positive"
+  let sharedServerRoot := raw.fields.lookup "--shared-server-root"
+  let sharedLocalRoot := raw.fields.lookup "--shared-local-root"
+  if sharedServerRoot.isSome != sharedLocalRoot.isSome then
+    throw "shared trace transfer requires both --shared-server-root and --shared-local-root"
+  if sharedServerRoot.isSome then
+    if connection.asyncMode || !connection.tls || connection.pin.isNone || connection.registry.isSome then
+      throw "shared trace transfer requires synchronous direct pinned mTLS"
+    let _ ← Shell.SharedTrace.serverRoot (sharedServerRoot.getD "")
+    if (sharedLocalRoot.getD "").isEmpty then throw "shared local root must not be empty"
+  return {
+    connection := connection
+    out := out
+    numTraces := numTraces
+    maxPolls := maxPolls
+    sharedServerRoot, sharedLocalRoot
+    view := raw.fields.lookup "--view"
+    paramVar := (raw.fields.lookup "--param-var").getD "" }
+
+private def traceGenGo (raw : TraceGenRaw) : List String → Except String TraceGenOpts
+  | [] => traceGenFinalize raw
+  | flag :: rest => do
+    if ["--out", "--num-traces", "--view", "--param-var", "--max-polls",
+        "--shared-server-root", "--shared-local-root"].contains flag then
+      if (raw.fields.lookup flag).isSome then throw s!"duplicate {flag}"
+      let value :: rest := rest | throw s!"option {flag} requires an argument"
+      traceGenGo { raw with fields := raw.fields ++ [(flag, value)] } rest
+    else if ["--tls", "--async"].contains flag then
+      traceGenGo { raw with connectionArgs := raw.connectionArgs ++ [flag] } rest
+    else if ["--host", "--port", "--spec", "--dep", "--bound", "--inv", "--init",
+        "--next", "--cinit", "--cert", "--key", "--ca", "--pin", "--registry"].contains flag then
+      let value :: rest := rest | throw s!"option {flag} requires an argument"
+      traceGenGo { raw with connectionArgs := raw.connectionArgs ++ [flag, value] } rest
+    else throw s!"unknown option: {flag}"
+
+def parseTraceGenOpts (argv : List String) : Except String TraceGenOpts := traceGenGo {} argv
+
 /-! ## server modes -/
 
 /-- Run the local stdio session under its explicit trusted principal/realm. -/
@@ -342,8 +423,30 @@ over the process-shared job store. -/
 private def asyncMirrorSession (store : Shell.Jobs.JobStore)
     (interfaceService : Shell.ModelInterface.Runtime.Service)
     (auth : Shell.ModelInterface.Auth.SessionAuthContext)
-    (t : Shell.Transport.Transport) : IO Unit :=
-  Shell.Mirror.runAsync t Shell.Apalache.syncOracles store
+    (t : Shell.Transport.Transport)
+    (sharedRoot : Option System.FilePath := none) : IO Unit := do
+  let allowed := Shell.ModelInterface.Auth.hasScope auth Shell.ModelInterface.Auth.verifyScope
+  let oracles := match sharedRoot with
+    | none => Shell.Apalache.syncOracles
+    | some root => { Shell.Apalache.syncOracles with
+        generateTraceFiles := fun cfg spec destination config => do
+          if destination.isNone then
+            return ← Shell.Apalache.syncOracles.generateTraceFiles cfg spec destination config
+          if !allowed then return .error "shared trace delivery requires an allowlisted client"
+          try
+            Shell.SharedTrace.reserveDestination root destination
+            Shell.Apalache.syncOracles.generateTraceFiles cfg spec destination config
+          catch _ => return .error "shared trace destination is unavailable or outside the configured root" }
+  let scopedTransport := if sharedRoot.isSome && allowed then { t with scope := .sharedFilesystem } else t
+  let transport := if sharedRoot.isSome then { scopedTransport with recv := do
+      let line ← t.recv
+      if let some packet := line then
+        if Shell.SharedTrace.asyncDestinationRequested packet then
+          Shell.Mirror.sendMirror t (.registerError "shared artifact destinations require synchronous trace generation")
+          return none
+      return line }
+    else scopedTransport
+  Shell.Mirror.runAsync transport oracles store
     (Shell.ModelInterface.Auth.runtimeAccess auth)
     (Shell.ModelInterface.Auth.authorizationScope auth)
     (some interfaceService)
@@ -400,6 +503,9 @@ apalache bodies), default 4. A session's jobs are cancelled and
 evicted when its connection ends (Haskell @endSession@); other
 sessions' jobs are unaffected. -/
 def serveOne (opts : ServerOpts) : IO UInt32 := do
+  let sharedRoot ← match opts.sharedTraceRoot with
+    | none => pure none
+    | some root => pure (some (← Shell.SharedTrace.ordinaryRoot root))
   -- t33 DID: bind + discard the UInt64 result (decl is now BaseIO UInt64)
   let _ ← Ffi.installExitSignals
   let files : Shell.Transport.Tls.TlsFiles :=
@@ -454,7 +560,7 @@ def serveOne (opts : ServerOpts) : IO UInt32 := do
             clientCaFingerprint peerFingerprint opts.modelInterfacePolicy with
           | .ok auth => pure auth
           | .error error => throw (IO.userError s!"mTLS authorization: {error}")
-        asyncMirrorSession store interfaceService auth transport)
+        asyncMirrorSession store interfaceService auth transport sharedRoot)
       (workers := max 1 opts.jobs)
   let rc ←
     try
@@ -589,3 +695,60 @@ def validateCli (argv : List String) : IO UInt32 := do
           reportValidate (if opts.asyncMode then
             Shell.Client.runClientValidateAsync t cfg opts.bound (some spec)
           else Shell.Client.runClientValidate t cfg opts.bound (some spec))
+
+/-- Remote trace capture uses the existing transport and wire protocol. -/
+def traceGenCli (argv : List String) : IO UInt32 := do
+  let options ← match parseTraceGenOpts argv with
+    | .error error => IO.eprintln error; return 2
+    | .ok options => pure options
+  let opts := options.connection
+  let out ← match ← Shell.TraceCapture.checkOutput options.out with
+    | .error error => IO.eprintln error; return 2
+    | .ok out => pure out
+  let spec ← match ← Shell.Apalache.SpecSource.resolveClientSources opts.spec opts.deps with
+    | .error error => IO.eprintln s!"cannot resolve spec/deps: {error}"; return 2
+    | .ok spec => pure spec
+  let cfg : Codec.ApalacheConfig := {
+    constInit := opts.cinit, initPredicate := opts.init, invariant := opts.inv.getD "",
+    lengthBound := opts.bound, nextPredicate := opts.next, paramVars := options.paramVar,
+    specPath := (opts.spec : System.FilePath).fileName.getD "" }
+  let traceConfig : Codec.TraceConfig := { numTraces := options.numTraces, view := options.view }
+  let shared ← match options.sharedServerRoot, options.sharedLocalRoot with
+    | some server, some localRoot => do
+        let server ← match Shell.SharedTrace.serverRoot server with
+          | .error e => IO.eprintln e; return 2
+          | .ok root => pure root
+        let leaf := s!"capture-{← IO.rand 0 18446744073709551615}-{← IO.rand 0 18446744073709551615}"
+        let mapping : Shell.SharedTrace.Mapping := { serverRoot := server, localRoot, leaf }
+        match ← Shell.TraceCapture.checkOutput ((localRoot : System.FilePath) / leaf).toString with
+        | .error error => IO.eprintln error; return 2
+        | .ok _ => pure (some mapping)
+    | _, _ => pure none
+  let request := if opts.asyncMode then Codec.ClientMessage.registerGenTracesAsync cfg none (some spec) traceConfig
+    else Codec.ClientMessage.registerGenTraces cfg (shared.map (·.destination)) (some spec) traceConfig
+  if (Codec.encodeClient request).compress.toUTF8.size > Shell.Transport.maxProtocolLineBytes then
+    IO.eprintln "inline trace-generation request exceeds the 65535-byte protocol limit"
+    return 2
+  try
+    let transport ← match opts.registry with
+      | none =>
+        match ← validateDirectTransport opts with
+        | .error error => IO.eprintln error; return 2
+        | .ok transport => pure transport
+      | some raw =>
+        let url ← match Shell.Registry.parseRegistryUrl raw with
+          | .error error => IO.eprintln error; return 2
+          | .ok url => pure url
+        match ← registryTransport opts url with
+        | none => return 2
+        | some transport => pure transport
+    let capture ← match ← Shell.TraceCapture.run transport cfg spec traceConfig opts.asyncMode options.maxPolls shared with
+      | .error error => IO.eprintln error; return 2
+      | .ok capture => pure capture
+    let endpoint := Lean.Json.mkObj [
+      ("host", .str opts.host), ("port", .num opts.port), ("tls", .bool opts.tls),
+      ("registry", .bool opts.registry.isSome), ("pin", opts.pin.map Lean.Json.str |>.getD .null)]
+    match ← Shell.TraceCapture.publish out endpoint spec capture with
+    | .error error => IO.eprintln error; return 2
+    | .ok () => IO.println s!"TRACE CAPTURED {capture.traces.length}"; return 0
+  catch error => IO.eprintln (toString error); return 2

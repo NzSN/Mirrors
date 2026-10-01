@@ -1,0 +1,421 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "DiamondLeft",
+            "from": {
+              "line": 5,
+              "column": 10
+            },
+            "to": {
+              "line": 5,
+              "column": 17
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "leftOnly"
+        },
+        {
+          "source": {
+            "filename": "DiamondRight",
+            "from": {
+              "line": 5,
+              "column": 10
+            },
+            "to": {
+              "line": 5,
+              "column": 18
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "rightOnly"
+        },
+        {
+          "source": {
+            "filename": "DiamondBase",
+            "from": {
+              "line": 3,
+              "column": 10
+            },
+            "to": {
+              "line": 3,
+              "column": 15
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "shared"
+        },
+        {
+          "source": {
+            "filename": "DiamondRoot",
+            "from": {
+              "line": 5,
+              "column": 10
+            },
+            "to": {
+              "line": 5,
+              "column": 17
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "rootOnly"
+        },
+        {
+          "source": {
+            "filename": "DiamondBase",
+            "from": {
+              "line": 5,
+              "column": 1
+            },
+            "to": {
+              "line": 5,
+              "column": 26
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "BaseOp",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "DiamondBase",
+              "from": {
+                "line": 5,
+                "column": 11
+              },
+              "to": {
+                "line": 5,
+                "column": 26
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EQ",
+            "args": [
+              {
+                "source": {
+                  "filename": "DiamondBase",
+                  "from": {
+                    "line": 5,
+                    "column": 11
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 17
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "PRIME",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "DiamondBase",
+                      "from": {
+                        "line": 5,
+                        "column": 11
+                      },
+                      "to": {
+                        "line": 5,
+                        "column": 16
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "shared"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "DiamondBase",
+                  "from": {
+                    "line": 5,
+                    "column": 21
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 26
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "shared"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "DiamondLeft",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 28
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "LeftOp",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "DiamondLeft",
+              "from": {
+                "line": 7,
+                "column": 11
+              },
+              "to": {
+                "line": 7,
+                "column": 28
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EQ",
+            "args": [
+              {
+                "source": {
+                  "filename": "DiamondLeft",
+                  "from": {
+                    "line": 7,
+                    "column": 11
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 19
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "PRIME",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "DiamondLeft",
+                      "from": {
+                        "line": 7,
+                        "column": 11
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "leftOnly"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "DiamondLeft",
+                  "from": {
+                    "line": 7,
+                    "column": 23
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 28
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "shared"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "DiamondRight",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 30
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "RightOp",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "DiamondRight",
+              "from": {
+                "line": 7,
+                "column": 12
+              },
+              "to": {
+                "line": 7,
+                "column": 30
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EQ",
+            "args": [
+              {
+                "source": {
+                  "filename": "DiamondRight",
+                  "from": {
+                    "line": 7,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 21
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "PRIME",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "DiamondRight",
+                      "from": {
+                        "line": 7,
+                        "column": 12
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 20
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "rightOnly"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "DiamondRight",
+                  "from": {
+                    "line": 7,
+                    "column": 25
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 30
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "shared"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "DiamondRoot",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 31
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "RootOp",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "DiamondRoot",
+              "from": {
+                "line": 7,
+                "column": 11
+              },
+              "to": {
+                "line": 7,
+                "column": 31
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EQ",
+            "args": [
+              {
+                "source": {
+                  "filename": "DiamondRoot",
+                  "from": {
+                    "line": 7,
+                    "column": 11
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 19
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "PRIME",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "DiamondRoot",
+                      "from": {
+                        "line": 7,
+                        "column": 11
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "rootOnly"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "DiamondRoot",
+                  "from": {
+                    "line": 7,
+                    "column": 23
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 31
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "rightOnly"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

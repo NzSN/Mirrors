@@ -1,0 +1,18 @@
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /tmp/mic-profile5-reference-first/rej-unknown-name-apalache-nnn3b8nz/input/.dv-apalache/RejectUnknownName.tla/2026-09-30T23-57-15_835191512990061009
+# APALACHE version: 0.61.0 | build: 831d473                       I@23:57:15.223
+Parse RejectUnknownName.tla                                       I@23:57:15.227
+PASS #0: SanyParser                                               I@23:57:15.414
+Parsing error: Semantic errors:
+
+*** Errors: 1
+
+line 3, col 6 to line 3, col 18 of module RejectUnknownName
+
+Unknown operator: `UndefinedName'. E@23:57:15.482
+Parser has failed                                                 I@23:57:15.507
+It took me 0 days  0 hours  0 min  0 sec                          I@23:57:15.508
+Total time: 0.281 sec                                             I@23:57:15.508
+EXITCODE: ERROR (255)

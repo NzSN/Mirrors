@@ -1,0 +1,1137 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptTemporal",
+            "from": {
+              "line": 5,
+              "column": 10
+            },
+            "to": {
+              "line": 5,
+              "column": 10
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "x"
+        },
+        {
+          "source": {
+            "filename": "AcceptTemporal",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 13
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Init",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptTemporal",
+              "from": {
+                "line": 7,
+                "column": 9
+              },
+              "to": {
+                "line": 7,
+                "column": 13
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EQ",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 7,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 9
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "x"
+              },
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 7,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 13
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptTemporal",
+            "from": {
+              "line": 8,
+              "column": 1
+            },
+            "to": {
+              "line": 8,
+              "column": 18
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Next",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptTemporal",
+              "from": {
+                "line": 8,
+                "column": 9
+              },
+              "to": {
+                "line": 8,
+                "column": 18
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EQ",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 8,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 10
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "PRIME",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 8,
+                        "column": 9
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 9
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "x"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 8,
+                    "column": 14
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 18
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "PLUS",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 8,
+                        "column": 14
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 14
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "x"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 8,
+                        "column": 18
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 1
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptTemporal",
+            "from": {
+              "line": 10,
+              "column": 1
+            },
+            "to": {
+              "line": 10,
+              "column": 20
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Always",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptTemporal",
+              "from": {
+                "line": 10,
+                "column": 11
+              },
+              "to": {
+                "line": 10,
+                "column": 20
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "GLOBALLY",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 10,
+                    "column": 14
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 19
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "GE",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 10,
+                        "column": 14
+                      },
+                      "to": {
+                        "line": 10,
+                        "column": 14
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "x"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 10,
+                        "column": 19
+                      },
+                      "to": {
+                        "line": 10,
+                        "column": 19
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptTemporal",
+            "from": {
+              "line": 11,
+              "column": 1
+            },
+            "to": {
+              "line": 11,
+              "column": 23
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Eventually",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptTemporal",
+              "from": {
+                "line": 11,
+                "column": 15
+              },
+              "to": {
+                "line": 11,
+                "column": 23
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EVENTUALLY",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 11,
+                    "column": 18
+                  },
+                  "to": {
+                    "line": 11,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 11,
+                        "column": 18
+                      },
+                      "to": {
+                        "line": 11,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "x"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 11,
+                        "column": 22
+                      },
+                      "to": {
+                        "line": 11,
+                        "column": 22
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 3
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptTemporal",
+            "from": {
+              "line": 12,
+              "column": 1
+            },
+            "to": {
+              "line": 12,
+              "column": 29
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Leadsto",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptTemporal",
+              "from": {
+                "line": 12,
+                "column": 12
+              },
+              "to": {
+                "line": 12,
+                "column": 29
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "LEADS_TO",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 12,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 12,
+                    "column": 17
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 12,
+                        "column": 13
+                      },
+                      "to": {
+                        "line": 12,
+                        "column": 13
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "x"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 12,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 12,
+                        "column": 17
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 12,
+                    "column": 24
+                  },
+                  "to": {
+                    "line": 12,
+                    "column": 28
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 12,
+                        "column": 24
+                      },
+                      "to": {
+                        "line": 12,
+                        "column": 24
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "x"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 12,
+                        "column": 28
+                      },
+                      "to": {
+                        "line": 12,
+                        "column": 28
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 3
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptTemporal",
+            "from": {
+              "line": 13,
+              "column": 1
+            },
+            "to": {
+              "line": 13,
+              "column": 35
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Both",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptTemporal",
+              "from": {
+                "line": 13,
+                "column": 9
+              },
+              "to": {
+                "line": 13,
+                "column": 35
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "AND",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 13,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 13,
+                    "column": 19
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "GLOBALLY",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 13,
+                        "column": 11
+                      },
+                      "to": {
+                        "line": 13,
+                        "column": 19
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "EVENTUALLY",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptTemporal",
+                          "from": {
+                            "line": 13,
+                            "column": 14
+                          },
+                          "to": {
+                            "line": 13,
+                            "column": 18
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "EQ",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "AcceptTemporal",
+                              "from": {
+                                "line": 13,
+                                "column": 14
+                              },
+                              "to": {
+                                "line": 13,
+                                "column": 14
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "x"
+                          },
+                          {
+                            "source": {
+                              "filename": "AcceptTemporal",
+                              "from": {
+                                "line": 13,
+                                "column": 18
+                              },
+                              "to": {
+                                "line": 13,
+                                "column": 18
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "ValEx",
+                            "value": {
+                              "kind": "TlaInt",
+                              "value": 0
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 13,
+                    "column": 24
+                  },
+                  "to": {
+                    "line": 13,
+                    "column": 35
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EVENTUALLY",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 13,
+                        "column": 26
+                      },
+                      "to": {
+                        "line": 13,
+                        "column": 35
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "GLOBALLY",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptTemporal",
+                          "from": {
+                            "line": 13,
+                            "column": 29
+                          },
+                          "to": {
+                            "line": 13,
+                            "column": 34
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "GE",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "AcceptTemporal",
+                              "from": {
+                                "line": 13,
+                                "column": 29
+                              },
+                              "to": {
+                                "line": 13,
+                                "column": 29
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "x"
+                          },
+                          {
+                            "source": {
+                              "filename": "AcceptTemporal",
+                              "from": {
+                                "line": 13,
+                                "column": 34
+                              },
+                              "to": {
+                                "line": 13,
+                                "column": 34
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "ValEx",
+                            "value": {
+                              "kind": "TlaInt",
+                              "value": 0
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptTemporal",
+            "from": {
+              "line": 9,
+              "column": 1
+            },
+            "to": {
+              "line": 9,
+              "column": 32
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Fair",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptTemporal",
+              "from": {
+                "line": 9,
+                "column": 9
+              },
+              "to": {
+                "line": 9,
+                "column": 32
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "AND",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 9,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 18
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "WEAK_FAIRNESS",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 9,
+                        "column": 12
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 12
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "x"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 9,
+                        "column": 14
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 17
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "OPER_APP",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptTemporal",
+                          "from": {
+                            "line": 9,
+                            "column": 14
+                          },
+                          "to": {
+                            "line": 9,
+                            "column": 17
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "Next"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 9,
+                    "column": 23
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 32
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "STRONG_FAIRNESS",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 9,
+                        "column": 26
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 26
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "x"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 9,
+                        "column": 28
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 31
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "OPER_APP",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptTemporal",
+                          "from": {
+                            "line": 9,
+                            "column": 28
+                          },
+                          "to": {
+                            "line": 9,
+                            "column": 31
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "Next"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptTemporal",
+            "from": {
+              "line": 14,
+              "column": 1
+            },
+            "to": {
+              "line": 14,
+              "column": 34
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Spec",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptTemporal",
+              "from": {
+                "line": 14,
+                "column": 9
+              },
+              "to": {
+                "line": 14,
+                "column": 34
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "AND",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 14,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 14,
+                    "column": 26
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "AND",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 14,
+                        "column": 9
+                      },
+                      "to": {
+                        "line": 14,
+                        "column": 12
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "OPER_APP",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptTemporal",
+                          "from": {
+                            "line": 14,
+                            "column": 9
+                          },
+                          "to": {
+                            "line": 14,
+                            "column": 12
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "Init"
+                      }
+                    ]
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 14,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 14,
+                        "column": 26
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "GLOBALLY",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptTemporal",
+                          "from": {
+                            "line": 14,
+                            "column": 19
+                          },
+                          "to": {
+                            "line": 14,
+                            "column": 26
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "STUTTER",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "AcceptTemporal",
+                              "from": {
+                                "line": 14,
+                                "column": 20
+                              },
+                              "to": {
+                                "line": 14,
+                                "column": 23
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "OperEx",
+                            "oper": "OPER_APP",
+                            "args": [
+                              {
+                                "source": {
+                                  "filename": "AcceptTemporal",
+                                  "from": {
+                                    "line": 14,
+                                    "column": 20
+                                  },
+                                  "to": {
+                                    "line": 14,
+                                    "column": 23
+                                  }
+                                },
+                                "type": "Untyped",
+                                "kind": "NameEx",
+                                "name": "Next"
+                              }
+                            ]
+                          },
+                          {
+                            "source": {
+                              "filename": "AcceptTemporal",
+                              "from": {
+                                "line": 14,
+                                "column": 26
+                              },
+                              "to": {
+                                "line": 14,
+                                "column": 26
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "x"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptTemporal",
+                  "from": {
+                    "line": 14,
+                    "column": 31
+                  },
+                  "to": {
+                    "line": 14,
+                    "column": 34
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptTemporal",
+                      "from": {
+                        "line": 14,
+                        "column": 31
+                      },
+                      "to": {
+                        "line": 14,
+                        "column": 34
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "Fair"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

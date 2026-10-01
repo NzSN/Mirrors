@@ -1,0 +1,693 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptControl",
+            "from": {
+              "line": 5,
+              "column": 10
+            },
+            "to": {
+              "line": 5,
+              "column": 10
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaConstDecl",
+          "name": "N"
+        },
+        {
+          "source": {
+            "filename": "AcceptControl",
+            "from": {
+              "line": 10,
+              "column": 1
+            },
+            "to": {
+              "line": 10,
+              "column": 37
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Chosen",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptControl",
+              "from": {
+                "line": 10,
+                "column": 11
+              },
+              "to": {
+                "line": 10,
+                "column": 37
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "CHOOSE3",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptControl",
+                  "from": {
+                    "line": 10,
+                    "column": 11
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 37
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "k"
+              },
+              {
+                "source": {
+                  "filename": "AcceptControl",
+                  "from": {
+                    "line": 10,
+                    "column": 24
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 29
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "SET_ENUM",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptControl",
+                      "from": {
+                        "line": 10,
+                        "column": 25
+                      },
+                      "to": {
+                        "line": 10,
+                        "column": 25
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptControl",
+                      "from": {
+                        "line": 10,
+                        "column": 28
+                      },
+                      "to": {
+                        "line": 10,
+                        "column": 28
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptControl",
+                  "from": {
+                    "line": 10,
+                    "column": 33
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 37
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptControl",
+                      "from": {
+                        "line": 10,
+                        "column": 33
+                      },
+                      "to": {
+                        "line": 10,
+                        "column": 33
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "k"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptControl",
+                      "from": {
+                        "line": 10,
+                        "column": 37
+                      },
+                      "to": {
+                        "line": 10,
+                        "column": 37
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptControl",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 30
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Sign",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptControl",
+              "from": {
+                "line": 7,
+                "column": 9
+              },
+              "to": {
+                "line": 7,
+                "column": 30
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "IF_THEN_ELSE",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptControl",
+                  "from": {
+                    "line": 7,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 16
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "GT",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptControl",
+                      "from": {
+                        "line": 7,
+                        "column": 12
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 12
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "N"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptControl",
+                      "from": {
+                        "line": 7,
+                        "column": 16
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 16
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptControl",
+                  "from": {
+                    "line": 7,
+                    "column": 23
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 23
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptControl",
+                  "from": {
+                    "line": 7,
+                    "column": 30
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 30
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptControl",
+            "from": {
+              "line": 8,
+              "column": 1
+            },
+            "to": {
+              "line": 8,
+              "column": 73
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Classify",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptControl",
+              "from": {
+                "line": 8,
+                "column": 13
+              },
+              "to": {
+                "line": 8,
+                "column": 73
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "CASE_OTHER",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptControl",
+                  "from": {
+                    "line": 8,
+                    "column": 68
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 73
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "zero"
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptControl",
+                  "from": {
+                    "line": 8,
+                    "column": 18
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 23
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "GT",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptControl",
+                      "from": {
+                        "line": 8,
+                        "column": 18
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "N"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptControl",
+                      "from": {
+                        "line": 8,
+                        "column": 22
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 23
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 10
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptControl",
+                  "from": {
+                    "line": 8,
+                    "column": 28
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 34
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "large"
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptControl",
+                  "from": {
+                    "line": 8,
+                    "column": 39
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 43
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "GT",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptControl",
+                      "from": {
+                        "line": 8,
+                        "column": 39
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 39
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "N"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptControl",
+                      "from": {
+                        "line": 8,
+                        "column": 43
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 43
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptControl",
+                  "from": {
+                    "line": 8,
+                    "column": 48
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 54
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "small"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptControl",
+            "from": {
+              "line": 9,
+              "column": 1
+            },
+            "to": {
+              "line": 9,
+              "column": 44
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Local",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptControl",
+              "from": {
+                "line": 9,
+                "column": 10
+              },
+              "to": {
+                "line": 9,
+                "column": 44
+              }
+            },
+            "type": "Untyped",
+            "kind": "LetInEx",
+            "body": {
+              "source": {
+                "filename": "AcceptControl",
+                "from": {
+                  "line": 9,
+                  "column": 34
+                },
+                "to": {
+                  "line": 9,
+                  "column": 44
+                }
+              },
+              "type": "Untyped",
+              "kind": "OperEx",
+              "oper": "PLUS",
+              "args": [
+                {
+                  "source": {
+                    "filename": "AcceptControl",
+                    "from": {
+                      "line": 9,
+                      "column": 34
+                    },
+                    "to": {
+                      "line": 9,
+                      "column": 40
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "OperEx",
+                  "oper": "OPER_APP",
+                  "args": [
+                    {
+                      "source": {
+                        "filename": "AcceptControl",
+                        "from": {
+                          "line": 9,
+                          "column": 34
+                        },
+                        "to": {
+                          "line": 9,
+                          "column": 40
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "NameEx",
+                      "name": "doubled"
+                    }
+                  ]
+                },
+                {
+                  "source": {
+                    "filename": "AcceptControl",
+                    "from": {
+                      "line": 9,
+                      "column": 44
+                    },
+                    "to": {
+                      "line": 9,
+                      "column": 44
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "ValEx",
+                  "value": {
+                    "kind": "TlaInt",
+                    "value": 1
+                  }
+                }
+              ]
+            },
+            "decls": [
+              {
+                "source": {
+                  "filename": "AcceptControl",
+                  "from": {
+                    "line": 9,
+                    "column": 14
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 29
+                  }
+                },
+                "type": "Untyped",
+                "kind": "TlaOperDecl",
+                "name": "doubled",
+                "formalParams": [],
+                "isRecursive": false,
+                "body": {
+                  "source": {
+                    "filename": "AcceptControl",
+                    "from": {
+                      "line": 9,
+                      "column": 25
+                    },
+                    "to": {
+                      "line": 9,
+                      "column": 29
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "OperEx",
+                  "oper": "MULT",
+                  "args": [
+                    {
+                      "source": {
+                        "filename": "AcceptControl",
+                        "from": {
+                          "line": 9,
+                          "column": 25
+                        },
+                        "to": {
+                          "line": 9,
+                          "column": 25
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "ValEx",
+                      "value": {
+                        "kind": "TlaInt",
+                        "value": 2
+                      }
+                    },
+                    {
+                      "source": {
+                        "filename": "AcceptControl",
+                        "from": {
+                          "line": 9,
+                          "column": 29
+                        },
+                        "to": {
+                          "line": 9,
+                          "column": 29
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "NameEx",
+                      "name": "N"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1300 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptFunctions",
+            "from": {
+              "line": 5,
+              "column": 1
+            },
+            "to": {
+              "line": 5,
+              "column": 14
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "S",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptFunctions",
+              "from": {
+                "line": 5,
+                "column": 6
+              },
+              "to": {
+                "line": 5,
+                "column": 14
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "SET_ENUM",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 5,
+                    "column": 7
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 7
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 5,
+                    "column": 10
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 10
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 2
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 5,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 13
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 3
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptFunctions",
+            "from": {
+              "line": 10,
+              "column": 1
+            },
+            "to": {
+              "line": 10,
+              "column": 29
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "R",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptFunctions",
+              "from": {
+                "line": 10,
+                "column": 6
+              },
+              "to": {
+                "line": 10,
+                "column": 29
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "RECORD",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 10,
+                    "column": 7
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 9
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "key"
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 10,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 15
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 10,
+                    "column": 18
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "other"
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 10,
+                    "column": 28
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 28
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 2
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptFunctions",
+            "from": {
+              "line": 6,
+              "column": 1
+            },
+            "to": {
+              "line": 6,
+              "column": 24
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "F",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptFunctions",
+              "from": {
+                "line": 6,
+                "column": 6
+              },
+              "to": {
+                "line": 6,
+                "column": 24
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "FUN_CTOR",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 6,
+                    "column": 19
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 23
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "MULT",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 6,
+                        "column": 19
+                      },
+                      "to": {
+                        "line": 6,
+                        "column": 19
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "u"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 6,
+                        "column": 23
+                      },
+                      "to": {
+                        "line": 6,
+                        "column": 23
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "u"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 6,
+                    "column": 6
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 24
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "u"
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 6,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 13
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 6,
+                        "column": 13
+                      },
+                      "to": {
+                        "line": 6,
+                        "column": 13
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "S"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptFunctions",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 13
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "G",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptFunctions",
+              "from": {
+                "line": 7,
+                "column": 6
+              },
+              "to": {
+                "line": 7,
+                "column": 13
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "FUN_SET",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 7,
+                    "column": 7
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 7
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 7,
+                        "column": 7
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 7
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "S"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 7,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 12
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 7,
+                        "column": 12
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 12
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "S"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptFunctions",
+            "from": {
+              "line": 11,
+              "column": 1
+            },
+            "to": {
+              "line": 11,
+              "column": 10
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "K",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptFunctions",
+              "from": {
+                "line": 11,
+                "column": 6
+              },
+              "to": {
+                "line": 11,
+                "column": 10
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "FUN_APP",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 11,
+                    "column": 6
+                  },
+                  "to": {
+                    "line": 11,
+                    "column": 6
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 11,
+                        "column": 6
+                      },
+                      "to": {
+                        "line": 11,
+                        "column": 6
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "R"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 11,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 11,
+                    "column": 10
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "key"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptFunctions",
+            "from": {
+              "line": 13,
+              "column": 1
+            },
+            "to": {
+              "line": 13,
+              "column": 47
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Nested",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptFunctions",
+              "from": {
+                "line": 13,
+                "column": 11
+              },
+              "to": {
+                "line": 13,
+                "column": 47
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EXCEPT",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 13,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 13,
+                    "column": 12
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 13,
+                        "column": 12
+                      },
+                      "to": {
+                        "line": 13,
+                        "column": 12
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "R"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 13,
+                    "column": 21
+                  },
+                  "to": {
+                    "line": 13,
+                    "column": 33
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "TUPLE",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 13,
+                        "column": 23
+                      },
+                      "to": {
+                        "line": 13,
+                        "column": 25
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaStr",
+                      "value": "key"
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 13,
+                    "column": 29
+                  },
+                  "to": {
+                    "line": 13,
+                    "column": 33
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "PLUS",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 13,
+                        "column": 21
+                      },
+                      "to": {
+                        "line": 13,
+                        "column": 33
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "FUN_APP",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptFunctions",
+                          "from": {
+                            "line": 13,
+                            "column": 12
+                          },
+                          "to": {
+                            "line": 13,
+                            "column": 12
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "OPER_APP",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "AcceptFunctions",
+                              "from": {
+                                "line": 13,
+                                "column": 12
+                              },
+                              "to": {
+                                "line": 13,
+                                "column": 12
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "R"
+                          }
+                        ]
+                      },
+                      {
+                        "source": {
+                          "filename": "AcceptFunctions",
+                          "from": {
+                            "line": 13,
+                            "column": 23
+                          },
+                          "to": {
+                            "line": 13,
+                            "column": 25
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "ValEx",
+                        "value": {
+                          "kind": "TlaStr",
+                          "value": "key"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 13,
+                        "column": 33
+                      },
+                      "to": {
+                        "line": 13,
+                        "column": 33
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 13,
+                    "column": 36
+                  },
+                  "to": {
+                    "line": 13,
+                    "column": 46
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "TUPLE",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 13,
+                        "column": 38
+                      },
+                      "to": {
+                        "line": 13,
+                        "column": 42
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaStr",
+                      "value": "other"
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 13,
+                    "column": 46
+                  },
+                  "to": {
+                    "line": 13,
+                    "column": 46
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptFunctions",
+            "from": {
+              "line": 14,
+              "column": 1
+            },
+            "to": {
+              "line": 14,
+              "column": 37
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Types",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptFunctions",
+              "from": {
+                "line": 14,
+                "column": 10
+              },
+              "to": {
+                "line": 14,
+                "column": 37
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "RECORD_SET",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 14,
+                    "column": 11
+                  },
+                  "to": {
+                    "line": 14,
+                    "column": 14
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "case"
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 14,
+                    "column": 17
+                  },
+                  "to": {
+                    "line": 14,
+                    "column": 26
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "SET_UNION2",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 14,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 14,
+                        "column": 17
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "OPER_APP",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptFunctions",
+                          "from": {
+                            "line": 14,
+                            "column": 17
+                          },
+                          "to": {
+                            "line": 14,
+                            "column": 17
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "S"
+                      }
+                    ]
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 14,
+                        "column": 24
+                      },
+                      "to": {
+                        "line": 14,
+                        "column": 26
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "SET_ENUM",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "AcceptFunctions",
+                          "from": {
+                            "line": 14,
+                            "column": 25
+                          },
+                          "to": {
+                            "line": 14,
+                            "column": 25
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "ValEx",
+                        "value": {
+                          "kind": "TlaInt",
+                          "value": 0
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 14,
+                    "column": 29
+                  },
+                  "to": {
+                    "line": 14,
+                    "column": 33
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "token"
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 14,
+                    "column": 36
+                  },
+                  "to": {
+                    "line": 14,
+                    "column": 36
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 14,
+                        "column": 36
+                      },
+                      "to": {
+                        "line": 14,
+                        "column": 36
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "S"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptFunctions",
+            "from": {
+              "line": 8,
+              "column": 1
+            },
+            "to": {
+              "line": 8,
+              "column": 13
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "D",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptFunctions",
+              "from": {
+                "line": 8,
+                "column": 6
+              },
+              "to": {
+                "line": 8,
+                "column": 13
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "DOMAIN",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 8,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 13
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 8,
+                        "column": 13
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 13
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "F"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptFunctions",
+            "from": {
+              "line": 9,
+              "column": 1
+            },
+            "to": {
+              "line": 9,
+              "column": 9
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "V",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptFunctions",
+              "from": {
+                "line": 9,
+                "column": 6
+              },
+              "to": {
+                "line": 9,
+                "column": 9
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "FUN_APP",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 9,
+                    "column": 6
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 6
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 9,
+                        "column": 6
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 6
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "F"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 9,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 8
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptFunctions",
+            "from": {
+              "line": 12,
+              "column": 1
+            },
+            "to": {
+              "line": 12,
+              "column": 30
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Updated",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptFunctions",
+              "from": {
+                "line": 12,
+                "column": 12
+              },
+              "to": {
+                "line": 12,
+                "column": 30
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "EXCEPT",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 12,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 12,
+                    "column": 13
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 12,
+                        "column": 13
+                      },
+                      "to": {
+                        "line": 12,
+                        "column": 13
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "F"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 12,
+                    "column": 22
+                  },
+                  "to": {
+                    "line": 12,
+                    "column": 29
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "TUPLE",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptFunctions",
+                      "from": {
+                        "line": 12,
+                        "column": 24
+                      },
+                      "to": {
+                        "line": 12,
+                        "column": 24
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 2
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptFunctions",
+                  "from": {
+                    "line": 12,
+                    "column": 29
+                  },
+                  "to": {
+                    "line": 12,
+                    "column": 29
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 9
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

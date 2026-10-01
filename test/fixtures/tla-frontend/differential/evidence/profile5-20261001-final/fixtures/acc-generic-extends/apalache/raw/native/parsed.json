@@ -1,0 +1,642 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "GenericExtendsBase",
+            "from": {
+              "line": 5,
+              "column": 10
+            },
+            "to": {
+              "line": 5,
+              "column": 18
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaConstDecl",
+          "name": "BaseLimit"
+        },
+        {
+          "source": {
+            "filename": "GenericExtendsRoot",
+            "from": {
+              "line": 5,
+              "column": 11
+            },
+            "to": {
+              "line": 5,
+              "column": 15
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "rootA"
+        },
+        {
+          "source": {
+            "filename": "GenericExtendsRoot",
+            "from": {
+              "line": 5,
+              "column": 18
+            },
+            "to": {
+              "line": 5,
+              "column": 22
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "rootB"
+        },
+        {
+          "source": {
+            "filename": "GenericExtendsBase",
+            "from": {
+              "line": 7,
+              "column": 11
+            },
+            "to": {
+              "line": 7,
+              "column": 15
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "baseA"
+        },
+        {
+          "source": {
+            "filename": "GenericExtendsBase",
+            "from": {
+              "line": 7,
+              "column": 18
+            },
+            "to": {
+              "line": 7,
+              "column": 22
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "baseB"
+        },
+        {
+          "source": {
+            "filename": "GenericExtendsBase",
+            "from": {
+              "line": 7,
+              "column": 25
+            },
+            "to": {
+              "line": 7,
+              "column": 29
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "baseC"
+        },
+        {
+          "source": {
+            "filename": "GenericExtendsBase",
+            "from": {
+              "line": 9,
+              "column": 1
+            },
+            "to": {
+              "line": 11,
+              "column": 33
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "BaseNext",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "GenericExtendsBase",
+              "from": {
+                "line": 10,
+                "column": 5
+              },
+              "to": {
+                "line": 11,
+                "column": 33
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "AND",
+            "args": [
+              {
+                "source": {
+                  "filename": "GenericExtendsBase",
+                  "from": {
+                    "line": 10,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 25
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericExtendsBase",
+                      "from": {
+                        "line": 10,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 10,
+                        "column": 13
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "PRIME",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "GenericExtendsBase",
+                          "from": {
+                            "line": 10,
+                            "column": 8
+                          },
+                          "to": {
+                            "line": 10,
+                            "column": 12
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "baseA"
+                      }
+                    ]
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericExtendsBase",
+                      "from": {
+                        "line": 10,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 10,
+                        "column": 25
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "PLUS",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "GenericExtendsBase",
+                          "from": {
+                            "line": 10,
+                            "column": 17
+                          },
+                          "to": {
+                            "line": 10,
+                            "column": 21
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "baseA"
+                      },
+                      {
+                        "source": {
+                          "filename": "GenericExtendsBase",
+                          "from": {
+                            "line": 10,
+                            "column": 25
+                          },
+                          "to": {
+                            "line": 10,
+                            "column": 25
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "ValEx",
+                        "value": {
+                          "kind": "TlaInt",
+                          "value": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericExtendsBase",
+                  "from": {
+                    "line": 11,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 11,
+                    "column": 33
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "UNCHANGED",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericExtendsBase",
+                      "from": {
+                        "line": 11,
+                        "column": 18
+                      },
+                      "to": {
+                        "line": 11,
+                        "column": 33
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "TUPLE",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "GenericExtendsBase",
+                          "from": {
+                            "line": 11,
+                            "column": 20
+                          },
+                          "to": {
+                            "line": 11,
+                            "column": 24
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "baseB"
+                      },
+                      {
+                        "source": {
+                          "filename": "GenericExtendsBase",
+                          "from": {
+                            "line": 11,
+                            "column": 27
+                          },
+                          "to": {
+                            "line": 11,
+                            "column": 31
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "baseC"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "GenericExtendsRoot",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 10,
+              "column": 40
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "RootNext",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "GenericExtendsRoot",
+              "from": {
+                "line": 8,
+                "column": 5
+              },
+              "to": {
+                "line": 10,
+                "column": 40
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "AND",
+            "args": [
+              {
+                "source": {
+                  "filename": "GenericExtendsRoot",
+                  "from": {
+                    "line": 8,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 33
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericExtendsRoot",
+                      "from": {
+                        "line": 8,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 13
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "PRIME",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "GenericExtendsRoot",
+                          "from": {
+                            "line": 8,
+                            "column": 8
+                          },
+                          "to": {
+                            "line": 8,
+                            "column": 12
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "baseA"
+                      }
+                    ]
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericExtendsRoot",
+                      "from": {
+                        "line": 8,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 33
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "PLUS",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "GenericExtendsRoot",
+                          "from": {
+                            "line": 8,
+                            "column": 17
+                          },
+                          "to": {
+                            "line": 8,
+                            "column": 21
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "baseA"
+                      },
+                      {
+                        "source": {
+                          "filename": "GenericExtendsRoot",
+                          "from": {
+                            "line": 8,
+                            "column": 25
+                          },
+                          "to": {
+                            "line": 8,
+                            "column": 33
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "BaseLimit"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericExtendsRoot",
+                  "from": {
+                    "line": 9,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 29
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericExtendsRoot",
+                      "from": {
+                        "line": 9,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 13
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "PRIME",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "GenericExtendsRoot",
+                          "from": {
+                            "line": 9,
+                            "column": 8
+                          },
+                          "to": {
+                            "line": 9,
+                            "column": 12
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "rootA"
+                      }
+                    ]
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericExtendsRoot",
+                      "from": {
+                        "line": 9,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 29
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "PLUS",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "GenericExtendsRoot",
+                          "from": {
+                            "line": 9,
+                            "column": 17
+                          },
+                          "to": {
+                            "line": 9,
+                            "column": 21
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "rootA"
+                      },
+                      {
+                        "source": {
+                          "filename": "GenericExtendsRoot",
+                          "from": {
+                            "line": 9,
+                            "column": 25
+                          },
+                          "to": {
+                            "line": 9,
+                            "column": 29
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "baseB"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericExtendsRoot",
+                  "from": {
+                    "line": 10,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 40
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "UNCHANGED",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericExtendsRoot",
+                      "from": {
+                        "line": 10,
+                        "column": 18
+                      },
+                      "to": {
+                        "line": 10,
+                        "column": 40
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "TUPLE",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "GenericExtendsRoot",
+                          "from": {
+                            "line": 10,
+                            "column": 20
+                          },
+                          "to": {
+                            "line": 10,
+                            "column": 24
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "baseB"
+                      },
+                      {
+                        "source": {
+                          "filename": "GenericExtendsRoot",
+                          "from": {
+                            "line": 10,
+                            "column": 27
+                          },
+                          "to": {
+                            "line": 10,
+                            "column": 31
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "baseC"
+                      },
+                      {
+                        "source": {
+                          "filename": "GenericExtendsRoot",
+                          "from": {
+                            "line": 10,
+                            "column": 34
+                          },
+                          "to": {
+                            "line": 10,
+                            "column": 38
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "rootB"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -74,7 +74,7 @@ try:
         def ignore(directory, names):
             skipped = {".agent-teams", ".agent-teams-results", "_apalache-out", "tmp"}
             if Path(directory) == source:
-                skipped.add(".git")
+                skipped.update({".git", ".golden-build"})
             # Dependency .git metadata must stay: Lake checks its origin/revision
             # and otherwise attempts to re-clone an already available package.
             return skipped.intersection(names)

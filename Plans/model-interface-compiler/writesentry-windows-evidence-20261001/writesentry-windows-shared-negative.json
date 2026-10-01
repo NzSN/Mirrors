@@ -1,0 +1,23 @@
+[
+  {
+    "case": "outside",
+    "reply": {
+      "error": "shared trace destination is unavailable or outside the configured root",
+      "proto_step": "register_error"
+    }
+  },
+  {
+    "case": "existing",
+    "reply": {
+      "error": "shared trace destination is unavailable or outside the configured root",
+      "proto_step": "register_error"
+    }
+  },
+  {
+    "case": "async-destination",
+    "reply": {
+      "error": "shared artifact destinations require synchronous trace generation",
+      "proto_step": "register_error"
+    }
+  }
+]

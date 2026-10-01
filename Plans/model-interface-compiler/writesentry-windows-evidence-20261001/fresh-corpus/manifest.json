@@ -1,0 +1,506 @@
+{
+  "cases": [
+    {
+      "name": "lifecycle",
+      "required_flags": [],
+      "steps": 22,
+      "traces": [
+        "lifecycle/trace-0.itf.json",
+        "lifecycle/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "owner-allowed",
+      "required_flags": [
+        "filtered"
+      ],
+      "steps": 10,
+      "traces": [
+        "owner-allowed/trace-0.itf.json",
+        "owner-allowed/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "owner-bad",
+      "required_flags": [
+        "hit"
+      ],
+      "steps": 10,
+      "traces": [
+        "owner-bad/trace-0.itf.json",
+        "owner-bad/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "owner-unlisted",
+      "required_flags": [
+        "hit"
+      ],
+      "steps": 10,
+      "traces": [
+        "owner-unlisted/trace-0.itf.json",
+        "owner-unlisted/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "foreign-writer",
+      "required_flags": [
+        "hit"
+      ],
+      "steps": 10,
+      "traces": [
+        "foreign-writer/trace-0.itf.json",
+        "foreign-writer/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "silent-and-baseline",
+      "required_flags": [
+        "silent",
+        "filtered",
+        "hit"
+      ],
+      "steps": 16,
+      "traces": [
+        "silent-and-baseline/trace-0.itf.json",
+        "silent-and-baseline/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "slot-exhaustion",
+      "required_flags": [
+        "rejected"
+      ],
+      "steps": 11,
+      "traces": [
+        "slot-exhaustion/trace-0.itf.json",
+        "slot-exhaustion/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "foreign-repair",
+      "required_flags": [
+        "stomped",
+        "foreignRepair"
+      ],
+      "steps": 11,
+      "traces": [
+        "foreign-repair/trace-0.itf.json",
+        "foreign-repair/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "foreign-disarm",
+      "required_flags": [
+        "stomped"
+      ],
+      "steps": 12,
+      "traces": [
+        "foreign-disarm/trace-0.itf.json",
+        "foreign-disarm/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "torn-changing-sequence",
+      "required_flags": [
+        "torn"
+      ],
+      "steps": 15,
+      "traces": [
+        "torn-changing-sequence/trace-0.itf.json",
+        "torn-changing-sequence/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "torn-odd-sequence",
+      "required_flags": [
+        "torn"
+      ],
+      "steps": 15,
+      "traces": [
+        "torn-odd-sequence/trace-0.itf.json",
+        "torn-odd-sequence/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "inactive-snapshot",
+      "required_flags": [
+        "searchInactive"
+      ],
+      "steps": 16,
+      "traces": [
+        "inactive-snapshot/trace-0.itf.json",
+        "inactive-snapshot/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "t1-arm-t2-write",
+      "required_flags": [
+        "hit"
+      ],
+      "steps": 20,
+      "traces": [
+        "t1-arm-t2-write/trace-0.itf.json",
+        "t1-arm-t2-write/trace-1.itf.json"
+      ]
+    },
+    {
+      "name": "t2-arm-t1-write",
+      "required_flags": [
+        "hit"
+      ],
+      "steps": 20,
+      "traces": [
+        "t2-arm-t1-write/trace-0.itf.json",
+        "t2-arm-t1-write/trace-1.itf.json"
+      ]
+    }
+  ],
+  "schema": "writesentry-mbt/v1",
+  "freshOracle": true,
+  "sources": {
+    "Specs/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "Specs/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b"
+  },
+  "artifacts": {
+    "allow-foreign-writer.log": "b3f937147611342467f884c7e8ff651d347f07e6281079082ae9b2cc346adbdf",
+    "drop-reservation.log": "7279448d9a97a47b16cd62f05a47e757da2912e4504e6d4e0593fb88f4d20554",
+    "foreign-disarm/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "foreign-disarm/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "foreign-disarm/WriteSentryMBTRun.tla": "b124c3b5ba8f099d58c604989e6cf632944361b1e2a098b34d1e6b56a234afcb",
+    "foreign-disarm/remote-capture/capture.json": "e50ec0e3a66a2a2fa10d3f3ef65be533bbe5e446c069d94001ede800c2c65df8",
+    "foreign-disarm/remote-capture/replies.jsonl": "668ea5959ec75389bd71d4da0e29244ea5607ea6c71f053e583d926cec2e22b5",
+    "foreign-disarm/remote-capture/request.json": "ef017cbef83b0f1ce05a29a31accc70c8270707b1ab5fa86f78f653e1b2490ce",
+    "foreign-disarm/remote-capture/sources.json": "8a634f196f4b59d0de03cfcd70e2c1484c6df6028b039ec5f1093d33d1fb5625",
+    "foreign-disarm/remote-capture/trace-0.itf.json": "c29d62d6ff049500911cb973336bcbb39adc92091d968aeced4bba0e0a1d4cb2",
+    "foreign-disarm/remote-capture/trace-1.itf.json": "c29d62d6ff049500911cb973336bcbb39adc92091d968aeced4bba0e0a1d4cb2",
+    "foreign-disarm/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "foreign-disarm/trace-0.itf.json": "60834a53abca662e696fd363158fd0c8580bfecd07e84351028a11127329c077",
+    "foreign-disarm/trace-1.itf.json": "60834a53abca662e696fd363158fd0c8580bfecd07e84351028a11127329c077",
+    "foreign-repair/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "foreign-repair/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "foreign-repair/WriteSentryMBTRun.tla": "c16774687f103162e849d29cb085a03aec36fd60959d182fd21d728a310c956c",
+    "foreign-repair/remote-capture/capture.json": "f505685603b0ec0b33503527d31bfe3989f7895f49ed61e1bdedd9db0f13b1bb",
+    "foreign-repair/remote-capture/replies.jsonl": "5532012bf968c33889801738635db32d75cb7cc9f2bef76303ef21eab6306779",
+    "foreign-repair/remote-capture/request.json": "087c87726ff722d47d6136201debdaeb3ef39d1f7656318c4ef7e1b85e9aed70",
+    "foreign-repair/remote-capture/sources.json": "7a0749851bf47eaa97a6b85f55fdd7a55c40ac3357a27a9fa6df1955a941cbe9",
+    "foreign-repair/remote-capture/trace-0.itf.json": "4e90afe13ad15712a1ba89c56d058dbed4bfce41eec1b2da60ed868bd774c09f",
+    "foreign-repair/remote-capture/trace-1.itf.json": "4e90afe13ad15712a1ba89c56d058dbed4bfce41eec1b2da60ed868bd774c09f",
+    "foreign-repair/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "foreign-repair/trace-0.itf.json": "3fdfd10a004ab961ee9c69cc1240002f4a8c5c4ccd43f45dd79deaa6486d8093",
+    "foreign-repair/trace-1.itf.json": "3fdfd10a004ab961ee9c69cc1240002f4a8c5c4ccd43f45dd79deaa6486d8093",
+    "foreign-writer/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "foreign-writer/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "foreign-writer/WriteSentryMBTRun.tla": "8d0aaa1c2371bd0fc1affdb0d3a35b37679683c88f726754d2aed4c3d1034544",
+    "foreign-writer/remote-capture/capture.json": "91dd142572c93b45cbb50ebc4bb3e2fb8d55c8fa33d514453f8c58e4455be580",
+    "foreign-writer/remote-capture/replies.jsonl": "ad638c8736e88e746d4e570453929a2e738a330c6055a5074249de7588adc9a4",
+    "foreign-writer/remote-capture/request.json": "35360a1b73a0f31ea7e9ecbbe9ad26c8b504f0073db9e2aa6b5e01d49cbd8b17",
+    "foreign-writer/remote-capture/sources.json": "b2d7e79d963fd548635bc8e0c726c0356f75f9d844020fe9260709e4bd0a5e27",
+    "foreign-writer/remote-capture/trace-0.itf.json": "72529faf10ae18e3d85ac922ad3cc272084d56b6190a36cb88311876c8256ade",
+    "foreign-writer/remote-capture/trace-1.itf.json": "72529faf10ae18e3d85ac922ad3cc272084d56b6190a36cb88311876c8256ade",
+    "foreign-writer/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "foreign-writer/trace-0.itf.json": "85b72d488d6f8e92b32d82d0eceb506cc102e71c1354218277d8ab4f158c5917",
+    "foreign-writer/trace-1.itf.json": "85b72d488d6f8e92b32d82d0eceb506cc102e71c1354218277d8ab4f158c5917",
+    "inactive-snapshot/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "inactive-snapshot/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "inactive-snapshot/WriteSentryMBTRun.tla": "3ebcac3e58d961ef825764f801225df857539ef87ec22d1b4d4c4045e7a7f5cc",
+    "inactive-snapshot/remote-capture/capture.json": "889e183c225f6982ece9514514967fe0a35c7f68496122e5c70278335486c81d",
+    "inactive-snapshot/remote-capture/replies.jsonl": "f609dbbf09479bc3e59f4afc02b8aaa59dc7d5731ce690fd9eb5948286311a77",
+    "inactive-snapshot/remote-capture/request.json": "b6c5755142c12782ce64e74487175bb7468cc1d85a4302c342a9557705799199",
+    "inactive-snapshot/remote-capture/sources.json": "9e960663f99f46f42f0e9b9ab57d30258009f022c7fa9070271efe989dd541ef",
+    "inactive-snapshot/remote-capture/trace-0.itf.json": "49fc9022eda85dee799285f750aaec47fdf9ea267fe8cc07e79b3f22a82b1dff",
+    "inactive-snapshot/remote-capture/trace-1.itf.json": "49fc9022eda85dee799285f750aaec47fdf9ea267fe8cc07e79b3f22a82b1dff",
+    "inactive-snapshot/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "inactive-snapshot/trace-0.itf.json": "4759447d0ab09d489df623c1ce54df6448f1e6276329d89e06300d14269ea226",
+    "inactive-snapshot/trace-1.itf.json": "4759447d0ab09d489df623c1ce54df6448f1e6276329d89e06300d14269ea226",
+    "lifecycle/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "lifecycle/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "lifecycle/WriteSentryMBTRun.tla": "fb055bc3b68af080cb9d781230f4ffc08e64cff65c3cb75a2c38c1d0ae9d44a5",
+    "lifecycle/remote-capture/capture.json": "bc5df65a4b758a253e0669f677436205c348bb787d5a60947822d60ede323309",
+    "lifecycle/remote-capture/replies.jsonl": "662b7724c3a25ea71d5e0db937821c60c468bdc96e3994f6df5dee3bca3335ec",
+    "lifecycle/remote-capture/request.json": "67d08d82d56ddaa0f56400b0fdfc18e09eca25cccd206d464240fe6dff2d8ade",
+    "lifecycle/remote-capture/sources.json": "197fdb4728cf797b2f0ff20359ed89cc59c66e741d15fde6e0af5a92922d96a2",
+    "lifecycle/remote-capture/trace-0.itf.json": "359ae914c0c259244c64fd7d1f965361f248283cbf718e13690843935a485a8b",
+    "lifecycle/remote-capture/trace-1.itf.json": "62dfe9d3e5b8884d4ba772a54f9ceab9c9a520565ecb867c8b8a1a7edc8b9784",
+    "lifecycle/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "lifecycle/trace-0.itf.json": "47fffab52edff6b184ed95f47c92c2c68f67ea997c7dbea55e8d8a95ed19ac9c",
+    "lifecycle/trace-1.itf.json": "912729fcb585fc57cc78a045088e6239c1cf8c772c5906128c7c3c9c5e6a5a3a",
+    "native-replay.log": "b434a97758af637ffdb04af89a85fb63d706f3884178680d46d2b7f26d15678a",
+    "owner-allowed/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "owner-allowed/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "owner-allowed/WriteSentryMBTRun.tla": "bc80673e1f3c1f04a9501a9953ae21535398f1b7c0125be0ce4665b47da85f26",
+    "owner-allowed/remote-capture/capture.json": "b165dee8e17f9ef272fe980b2ee0d831e18acb1f5cf884a085dc12ae78407aa0",
+    "owner-allowed/remote-capture/replies.jsonl": "cb42aa76b47f697354d208477603578f3bbbf89f38f87deb17f016e3638d8990",
+    "owner-allowed/remote-capture/request.json": "e7566371888631346acf001f74e277fd417587f5838c1af0075c57f4f2c21a3e",
+    "owner-allowed/remote-capture/sources.json": "82c153ae28cacd142d92e00e46f7fd8c693f6748ca8a9dcf4f4c41ef364769e3",
+    "owner-allowed/remote-capture/trace-0.itf.json": "ed30db5c0453dfa5d61f35a94104e19ecb6c51c4a424a2c879d99682969d68a7",
+    "owner-allowed/remote-capture/trace-1.itf.json": "ed30db5c0453dfa5d61f35a94104e19ecb6c51c4a424a2c879d99682969d68a7",
+    "owner-allowed/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "owner-allowed/trace-0.itf.json": "260afc5f26379a8dc3a9926e294d32f79351916ef00f68b6291bc65fd2784943",
+    "owner-allowed/trace-1.itf.json": "260afc5f26379a8dc3a9926e294d32f79351916ef00f68b6291bc65fd2784943",
+    "owner-bad/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "owner-bad/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "owner-bad/WriteSentryMBTRun.tla": "3760a173c39e6cdba1617793002d271da84154a84292443162f802cc22d45e1c",
+    "owner-bad/remote-capture/capture.json": "d654db320fc301feed26747d686da8c17490aba33fb179905976b7208dbfedee",
+    "owner-bad/remote-capture/replies.jsonl": "955bce4f10a6a3529c1efde3c8f166f26af794c954226567cac6bf3721bf0c3b",
+    "owner-bad/remote-capture/request.json": "d640c0a7c261314212081c8c68941bd8a78c182e1d5905011281de65cd837654",
+    "owner-bad/remote-capture/sources.json": "5721c86984f585466d09fd9052454815211aab0a503ad45f0aa65ce2bda7686d",
+    "owner-bad/remote-capture/trace-0.itf.json": "595de64e67d7db3d29e38a20ee70ac15c1ba93a1fb6fce171437f5bc16516733",
+    "owner-bad/remote-capture/trace-1.itf.json": "595de64e67d7db3d29e38a20ee70ac15c1ba93a1fb6fce171437f5bc16516733",
+    "owner-bad/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "owner-bad/trace-0.itf.json": "d577c054014c807e18b8b32955d9d870b0804a3b16abd18f7529674fba972a6b",
+    "owner-bad/trace-1.itf.json": "d577c054014c807e18b8b32955d9d870b0804a3b16abd18f7529674fba972a6b",
+    "owner-unlisted/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "owner-unlisted/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "owner-unlisted/WriteSentryMBTRun.tla": "37466a429689fefc74813d039e90b0f974a0fc03847e25c8a08555e45ac4eea8",
+    "owner-unlisted/remote-capture/capture.json": "cb686df1ea0f7b19feaa5dce63e068f245ce6ad93fcb6818c5cc08115b16e364",
+    "owner-unlisted/remote-capture/replies.jsonl": "fdb9c157b4c5c01b16470df8092b4fef19487c3ec432b530c62cb0934a60e487",
+    "owner-unlisted/remote-capture/request.json": "d3a7c7f874bcf7f3970ab983ef4ec52cb7d989bb5860fa62ddde4e264144e7a7",
+    "owner-unlisted/remote-capture/sources.json": "406e725e1be8f1d54ff6ccdfb90b2abb3554b33aea316081461baf895c685e5c",
+    "owner-unlisted/remote-capture/trace-0.itf.json": "e6ab2815ebe42ecd01b416088ca925a701205c9302454b965c0ca0da54866a47",
+    "owner-unlisted/remote-capture/trace-1.itf.json": "e6ab2815ebe42ecd01b416088ca925a701205c9302454b965c0ca0da54866a47",
+    "owner-unlisted/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "owner-unlisted/trace-0.itf.json": "4b5fd47f34e03538b7ff28891a6143ddcdce6a0284907f48758ae89adeb83927",
+    "owner-unlisted/trace-1.itf.json": "4b5fd47f34e03538b7ff28891a6143ddcdce6a0284907f48758ae89adeb83927",
+    "plans.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "server-replay.log": "b400eb80ade3ed2dea92af6164aa5aec160abcea4c14d54158a8609337976864",
+    "silent-and-baseline/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "silent-and-baseline/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "silent-and-baseline/WriteSentryMBTRun.tla": "2793df0625783cff499ff4b2a92fe3cb950d775d7d4298ff447fb5aa1f9ccf5b",
+    "silent-and-baseline/remote-capture/capture.json": "fc9012a6644ea59c433f411d00942c8890dfed58f67edda978c5d2a5c0916b9b",
+    "silent-and-baseline/remote-capture/replies.jsonl": "fc96d0f32a53bdfb4971cd9c67fc89e4986bb81543b35d55537b9819853e6696",
+    "silent-and-baseline/remote-capture/request.json": "ec866e35b5c1fffeb46c9c9961b267df06cfc43d6ce83f736343ab0a13f72f68",
+    "silent-and-baseline/remote-capture/sources.json": "e7cabd93a452bde13d67e1942ec8f8f9ec7e2c5d91a8fd763ee844c99d331445",
+    "silent-and-baseline/remote-capture/trace-0.itf.json": "76fd93a0fdffbf562a74b1d928055ab1783faac7270365b6986b69fffd17fc69",
+    "silent-and-baseline/remote-capture/trace-1.itf.json": "76fd93a0fdffbf562a74b1d928055ab1783faac7270365b6986b69fffd17fc69",
+    "silent-and-baseline/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "silent-and-baseline/trace-0.itf.json": "ff577e81f5d78cd6c330b21766dcd7f1c4faa083b192bb8a97f50a6fcf2bbd73",
+    "silent-and-baseline/trace-1.itf.json": "ff577e81f5d78cd6c330b21766dcd7f1c4faa083b192bb8a97f50a6fcf2bbd73",
+    "skip-clear.log": "98d37a3109af266e3546d019d1bf8a183730c7f602423f41840a65c1960ebb62",
+    "slot-exhaustion/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "slot-exhaustion/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "slot-exhaustion/WriteSentryMBTRun.tla": "18ed692e29fbbe8c44ca7318e62e5a902f909f9c880eea9905df33e987495e8a",
+    "slot-exhaustion/remote-capture/capture.json": "0ab6fdb2de8febf113e21655b9e9c5a7bf1fe5cb182d07b61fd9969002d193db",
+    "slot-exhaustion/remote-capture/replies.jsonl": "17877c3b9840727b27e1c978e94c8ea69a66ac118007816ecef38e4fdccc9bc9",
+    "slot-exhaustion/remote-capture/request.json": "f05e39a206a5d7c7a615ed93a94176eafaca00e4ea8efa2b81a976f349b6c2ba",
+    "slot-exhaustion/remote-capture/sources.json": "5a46e129cc45f0a5a6cf7eb045c61e351127764f485f05c9a2612f8e81dc9b69",
+    "slot-exhaustion/remote-capture/trace-0.itf.json": "4eb8196f86147b33940fe8cefd27c0864aaadedd644d20666d7138c576355377",
+    "slot-exhaustion/remote-capture/trace-1.itf.json": "fb27e8515735ff63bf856a47ddbd664cff686e7ee3e123e2fddf9c8bb1a61c07",
+    "slot-exhaustion/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "slot-exhaustion/trace-0.itf.json": "fd56938d6797db0a974b4f2f981c5924f5807a1c671815fcb322d9af9b0b423b",
+    "slot-exhaustion/trace-1.itf.json": "957203dc6187914694a20bc809c509e8c57552323973c1a920ed0fb4d680450a",
+    "t1-arm-t2-write/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "t1-arm-t2-write/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "t1-arm-t2-write/WriteSentryMBTRun.tla": "d422869217240d92dd035ffebea68c22389ace0c65a8800468176f003a763803",
+    "t1-arm-t2-write/remote-capture/capture.json": "4e066a117411e8eefe671ee8be1c803412e4e983f4014ef37af30c1b7fa1f3c2",
+    "t1-arm-t2-write/remote-capture/replies.jsonl": "bad08f06364a505a5dca7abf5fcd7cf123b51ae6758b76284accdad258451a50",
+    "t1-arm-t2-write/remote-capture/request.json": "5ab402016edf49992870e9f309de78e49d74ced6239731224f536b2ba8714756",
+    "t1-arm-t2-write/remote-capture/sources.json": "fdf502b10dcc0e84f440e0b87a8ac02abb21d4cc2f75fe02a3bb583ff94c3265",
+    "t1-arm-t2-write/remote-capture/trace-0.itf.json": "769dda4d7c4884e1e0287efd8247933715fd56f2e6e557292c4e8a60291e9054",
+    "t1-arm-t2-write/remote-capture/trace-1.itf.json": "769dda4d7c4884e1e0287efd8247933715fd56f2e6e557292c4e8a60291e9054",
+    "t1-arm-t2-write/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "t1-arm-t2-write/trace-0.itf.json": "ff242c62ca7ce77a771d40b100aa4aadc53db0ddbe4c0b6f00df46cf496e2e15",
+    "t1-arm-t2-write/trace-1.itf.json": "ff242c62ca7ce77a771d40b100aa4aadc53db0ddbe4c0b6f00df46cf496e2e15",
+    "t2-arm-t1-write/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "t2-arm-t1-write/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "t2-arm-t1-write/WriteSentryMBTRun.tla": "701abc150d351f822ae4a1c92a2ac1833c0a1c8953fbc3aadc857f42414f9615",
+    "t2-arm-t1-write/remote-capture/capture.json": "06b634dd202a49f85dbc2f02d251d248606ce8bff127a261f7667ac217e04cef",
+    "t2-arm-t1-write/remote-capture/replies.jsonl": "1a766f19b4cdcaeaa1d67c1f5a860428dff47cb52a83d7cc34fb69dc6027ede2",
+    "t2-arm-t1-write/remote-capture/request.json": "71835ee3409a8e7c417ec4ca5d320f22f001ebf4a61cc4d5aa0bfaa85f39891c",
+    "t2-arm-t1-write/remote-capture/sources.json": "572a61ed15fd73eac015768a2c307a3bed2b1e3606c8610d3d48915aed70ae41",
+    "t2-arm-t1-write/remote-capture/trace-0.itf.json": "bce503422a570520bbc859f19ca65723968c97f4c1f1a63ae5d18abbe7ee1e49",
+    "t2-arm-t1-write/remote-capture/trace-1.itf.json": "bce503422a570520bbc859f19ca65723968c97f4c1f1a63ae5d18abbe7ee1e49",
+    "t2-arm-t1-write/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "t2-arm-t1-write/trace-0.itf.json": "85db711b24ece147d72f6739813ed7fd7a4e9598a1d802044b3b5cb1e12fb56b",
+    "t2-arm-t1-write/trace-1.itf.json": "85db711b24ece147d72f6739813ed7fd7a4e9598a1d802044b3b5cb1e12fb56b",
+    "torn-changing-sequence/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "torn-changing-sequence/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "torn-changing-sequence/WriteSentryMBTRun.tla": "9ecc7296bc210441c5d10dc11dd595c48b951f7a7ef63776e03bc6c40648ec3c",
+    "torn-changing-sequence/remote-capture/capture.json": "3cd1e76bb7775b8ade975a5a7c7accad4193ef5174990bab4b7fb9dc31660f65",
+    "torn-changing-sequence/remote-capture/replies.jsonl": "a7ea68abc8b81ded73d4d56fc87cd5e0d88e771944f710e4e9776aaa9fde0bba",
+    "torn-changing-sequence/remote-capture/request.json": "752dc3f024919465a5366f4b852b94690b25e19ca967b8a7d242ae540a67ba41",
+    "torn-changing-sequence/remote-capture/sources.json": "61f290f6b52b7886659e290621f7754d1bbedb55e46fc4e22badcab105127c59",
+    "torn-changing-sequence/remote-capture/trace-0.itf.json": "96b5416ea363b08d2269178766370641230d91c7e99e0f2dd07a93a0e7829bb1",
+    "torn-changing-sequence/remote-capture/trace-1.itf.json": "96b5416ea363b08d2269178766370641230d91c7e99e0f2dd07a93a0e7829bb1",
+    "torn-changing-sequence/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "torn-changing-sequence/trace-0.itf.json": "5eca68bcf6ad02a2f33310ca227c5ff247f60ed0d20eaf5d068b24ea19bf6fb7",
+    "torn-changing-sequence/trace-1.itf.json": "5eca68bcf6ad02a2f33310ca227c5ff247f60ed0d20eaf5d068b24ea19bf6fb7",
+    "torn-odd-sequence/WriteSentry.tla": "eae7a21849479f5f248ea774176620a10bbab026d60cf2946d38f2b71544c357",
+    "torn-odd-sequence/WriteSentryMBT.tla": "183844bde2aee2960cc909aa118d61b809cb973f84c3ef7c98420f5923e85d3b",
+    "torn-odd-sequence/WriteSentryMBTRun.tla": "241a5368114b6c2568850ee10638a6e3c14bbba8d6a02d23a76e48244fc88172",
+    "torn-odd-sequence/remote-capture/capture.json": "8354be65a014aa5d1e5fbbaade77a94cfaba6808916115fcf4102121a789427b",
+    "torn-odd-sequence/remote-capture/replies.jsonl": "3207644e11d657bbdc5a7857bb9026afe5406a920467fc83cd5dff115de09a5f",
+    "torn-odd-sequence/remote-capture/request.json": "5450c5a5bc96bbbd545bb85f83551f636d57abbe22311a6ab7d89f78ebc624aa",
+    "torn-odd-sequence/remote-capture/sources.json": "35609b58d86fc159f8d5d889b620811a81c998c9905bf8001cf8256b220416b0",
+    "torn-odd-sequence/remote-capture/trace-0.itf.json": "abefab01a08dc26a131a335de7d428301d9c6f9290834e2b3df4fde8f49522f3",
+    "torn-odd-sequence/remote-capture/trace-1.itf.json": "abefab01a08dc26a131a335de7d428301d9c6f9290834e2b3df4fde8f49522f3",
+    "torn-odd-sequence/remote-cli.log": "39afe72e436fc9e5e9ee1ff69805c81bd07d8c878d8488d550a4ac413f123ca7",
+    "torn-odd-sequence/trace-0.itf.json": "5dd5fb89e6cf76ca0c8f1db886b5efacea8fbe0de2a52ecaf81af5632d60d226",
+    "torn-odd-sequence/trace-1.itf.json": "5dd5fb89e6cf76ca0c8f1db886b5efacea8fbe0de2a52ecaf81af5632d60d226",
+    "compiler.log": "80d3f836fe8dac35d8607678b2d9765e418e219f1406625d5d39c85bc7da1430"
+  },
+  "remoteOracle": {
+    "serviceIdentity": {
+      "endpoint": {
+        "host": "172.20.208.1",
+        "port": 8999
+      },
+      "peerLeafSha256": "94ccf49b04e24960ec79926e304c29f1f0441f6895cae5705d9a28cf87427a10",
+      "apalacheVersion": "0.62.2",
+      "javaVersion": "25.0.4+7-LTS",
+      "observedAt": "2026-10-01T04:29:49.5844288Z",
+      "qualificationRef": "workspace-native-console:c40a420587ba9ccf50b19128a7c1a7235c5a38177b1a0baa4d7c564a5a4fe9a0"
+    },
+    "serviceBinarySha256": "5949af30735cd1bf515e64fb9d2299023e13b2c36245ce9be696d65944b32dec",
+    "serviceSourceRef": "1a069cd3e34d7bfea272e3ee7e10f51acedcc7cb",
+    "selectedBackend": {
+      "MIRRORS_REMOTE_APALACHE_VERSION": "0.62.2",
+      "MIRRORS_REMOTE_APALACHE_ARCHIVE_SHA256": "7cfadf6e8c04c63f05ac907ec9541c66297005c8cb5efb1731f6a838dfc3fad2",
+      "MIRRORS_REMOTE_APALACHE_JAR_SHA256": "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8",
+      "MIRRORS_REMOTE_JAVA_SELECTED_VERSION": "25.0.4+7",
+      "MIRRORS_REMOTE_JAVA_OBSERVED_VERSION": "25.0.4+7-LTS",
+      "MIRRORS_REMOTE_JAVA_ARCHIVE_SHA256": "54ba13f3ef80887fa74708b2a32daaae6262517ba68433d850bb4b426343172b",
+      "MIRRORS_REMOTE_JAVA_EXECUTABLE_SHA256": "58df5c13e5d6e68f242ad9b724479122828523008ef0907d3f2a02f54afaff23"
+    },
+    "observationSha256": "ac80d216c9ec736fea8124da072f5177eb497ea9d656942d58c8efb99628bb93"
+  },
+  "captures": {
+    "lifecycle": {
+      "receipt": "lifecycle/remote-capture/capture.json",
+      "sha256": "bc5df65a4b758a253e0669f677436205c348bb787d5a60947822d60ede323309"
+    },
+    "owner-allowed": {
+      "receipt": "owner-allowed/remote-capture/capture.json",
+      "sha256": "b165dee8e17f9ef272fe980b2ee0d831e18acb1f5cf884a085dc12ae78407aa0"
+    },
+    "owner-bad": {
+      "receipt": "owner-bad/remote-capture/capture.json",
+      "sha256": "d654db320fc301feed26747d686da8c17490aba33fb179905976b7208dbfedee"
+    },
+    "owner-unlisted": {
+      "receipt": "owner-unlisted/remote-capture/capture.json",
+      "sha256": "cb686df1ea0f7b19feaa5dce63e068f245ce6ad93fcb6818c5cc08115b16e364"
+    },
+    "foreign-writer": {
+      "receipt": "foreign-writer/remote-capture/capture.json",
+      "sha256": "91dd142572c93b45cbb50ebc4bb3e2fb8d55c8fa33d514453f8c58e4455be580"
+    },
+    "silent-and-baseline": {
+      "receipt": "silent-and-baseline/remote-capture/capture.json",
+      "sha256": "fc9012a6644ea59c433f411d00942c8890dfed58f67edda978c5d2a5c0916b9b"
+    },
+    "slot-exhaustion": {
+      "receipt": "slot-exhaustion/remote-capture/capture.json",
+      "sha256": "0ab6fdb2de8febf113e21655b9e9c5a7bf1fe5cb182d07b61fd9969002d193db"
+    },
+    "foreign-repair": {
+      "receipt": "foreign-repair/remote-capture/capture.json",
+      "sha256": "f505685603b0ec0b33503527d31bfe3989f7895f49ed61e1bdedd9db0f13b1bb"
+    },
+    "foreign-disarm": {
+      "receipt": "foreign-disarm/remote-capture/capture.json",
+      "sha256": "e50ec0e3a66a2a2fa10d3f3ef65be533bbe5e446c069d94001ede800c2c65df8"
+    },
+    "torn-changing-sequence": {
+      "receipt": "torn-changing-sequence/remote-capture/capture.json",
+      "sha256": "3cd1e76bb7775b8ade975a5a7c7accad4193ef5174990bab4b7fb9dc31660f65"
+    },
+    "torn-odd-sequence": {
+      "receipt": "torn-odd-sequence/remote-capture/capture.json",
+      "sha256": "8354be65a014aa5d1e5fbbaade77a94cfaba6808916115fcf4102121a789427b"
+    },
+    "inactive-snapshot": {
+      "receipt": "inactive-snapshot/remote-capture/capture.json",
+      "sha256": "889e183c225f6982ece9514514967fe0a35c7f68496122e5c70278335486c81d"
+    },
+    "t1-arm-t2-write": {
+      "receipt": "t1-arm-t2-write/remote-capture/capture.json",
+      "sha256": "4e066a117411e8eefe671ee8be1c803412e4e983f4014ef37af30c1b7fa1f3c2"
+    },
+    "t2-arm-t1-write": {
+      "receipt": "t2-arm-t1-write/remote-capture/capture.json",
+      "sha256": "06b634dd202a49f85dbc2f02d251d248606ce8bff127a261f7667ac217e04cef"
+    }
+  },
+  "binaries": {
+    "runner": "061edd197a69c581fb9d675ead59d5d987a95c8d6a400a8abc53d9ebb8371be8",
+    "mirror": "e6e98919ed51a4119c7529c0a098e4402bda45d787b137b427b933fb75c7ca8f",
+    "compiler": "55bf151eae973a0c83f2827f38ee4dafa5558fb12770b15b3d3837bdafcc2257"
+  },
+  "components": {
+    "writesentry": {
+      "revision": "9dd4b57844603878d93fdecc2ee43f7f1abe0ee2",
+      "trackedDiffSha256": "e7097fa2c716498c3cc7629e6df66b7677930f4912c916273297196400ec3b89"
+    },
+    "mirrorcpp": {
+      "revision": "d8ed4455e8f73a9144215f62f1dc6963d6d792e7",
+      "trackedDiffSha256": "097a5232ac40d444c634f7fdd34de39243d2c50216d5344b122ab02d9bcb5b91"
+    }
+  },
+  "producerSha256": {
+    "tests/mbt/generated_port.cpp": "5f90d2be2f62bdca0f5287a59801146143af75dbd68891af165c87d4c5ce537d",
+    "tests/mbt/generated_port.h": "2ff3246930e24b7f2944e28aa05d0eba311aea9bf8e59c59941e9707d65ad402",
+    "tests/mbt/protocol_model.cpp": "10ec1f0f0ac26bc8d0e4ed17769b7ca07734dac9d3892f8455fb885666b6767c",
+    "tests/mbt/runner.cpp": "553ae67228c4c5e8c61cbe7bc43fa6b9bdda050861e2d4828cc4ebc4ab86ac8b",
+    "model-interface/WriteSentry.mirror-interface.json": "d94870941cba780fe9121c4e68ebe05af9a1c887858c6d505fbe5ed55dbb65de",
+    "tools/mbt/generate_corpus_remote.py": "36af1108b00bfb77e73868716ee98eaddd2ed2001b80d8f59e7770e1517306ba",
+    "tools/mbt/generate_interface.py": "bc08327b5efd9255ea746fed5daeaaacab5dcf62a1011a34d150a65b0e14b7b2"
+  },
+  "negative_controls": [
+    {
+      "mutation": "drop-reservation",
+      "case": "owner-allowed",
+      "oracle_result": "step_mismatch"
+    },
+    {
+      "mutation": "skip-clear",
+      "case": "lifecycle",
+      "oracle_result": "step_mismatch"
+    },
+    {
+      "mutation": "allow-foreign-writer",
+      "case": "foreign-writer",
+      "oracle_result": "step_mismatch"
+    }
+  ],
+  "binding": "model-interface compiler mirrorcpp-v2",
+  "server_replay_projection": "none; original reg/dr/tls compared",
+  "generated_observation_variables": 11,
+  "coverage": {
+    "scenarios": 14,
+    "compared_states": 424,
+    "oracle_artifacts": 28,
+    "distinct_state_sequences": 14,
+    "distinct_sequence_states": 212,
+    "actions": [
+      "ArmApplyAll",
+      "ArmPayload",
+      "ArmSeqEvenRelease",
+      "ArmSeqOdd",
+      "ArmStart",
+      "ArmStartRejected",
+      "DisApplyAll",
+      "DisDeactivate",
+      "DisReleaseRegistry",
+      "DisSeqEvenRelease",
+      "DisSeqOdd",
+      "DisStart",
+      "ForeignStomp",
+      "WrDecide",
+      "WrReadPayload",
+      "WrReadSeq1",
+      "WrReadSeq2",
+      "WrStart"
+    ],
+    "flags": [
+      "filtered",
+      "foreignRepair",
+      "hit",
+      "rejected",
+      "searchInactive",
+      "silent",
+      "stomped",
+      "torn"
+    ]
+  }
+}

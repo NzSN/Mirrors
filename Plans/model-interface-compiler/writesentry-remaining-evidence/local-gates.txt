@@ -1,0 +1,2378 @@
+== build ==
+⚠ [1/225] Replayed Core.Value
+warning: Core/Value.lean:84:33: This simp argument is unused:
+  List.lookup_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [insert, erase, lookup, beq_self_eq_true]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:84:51: This simp argument is unused:
+  beq_self_eq_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [insert, erase, lookup, List.lookup_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:131:36: This simp argument is unused:
+  listSize
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize, mapSize]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:131:46: This simp argument is unused:
+  mapSize
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize, listSize]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:219:6: This simp argument is unused:
+  listSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:219:21: This simp argument is unused:
+  mapSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, listSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:219:35: This simp argument is unused:
+  intMapSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, listSize_cons, mapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:228:37: This simp argument is unused:
+  valueSize_vset
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:228:53: This simp argument is unused:
+  valueSize_vseq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:229:6: This simp argument is unused:
+  valueSize_vtuple
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:229:24: This simp argument is unused:
+  valueSize_vrecord
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:229:43: This simp argument is unused:
+  valueSize_vmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:229:59: This simp argument is unused:
+  valueSize_vintmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:229:78: This simp argument is unused:
+  valueSize_vvariant
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:230:21: This simp argument is unused:
+  mapSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, listSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:230:35: This simp argument is unused:
+  intMapSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, listSize_cons, mapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:238:37: This simp argument is unused:
+  valueSize_vset
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:238:53: This simp argument is unused:
+  valueSize_vseq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:239:6: This simp argument is unused:
+  valueSize_vtuple
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:239:24: This simp argument is unused:
+  valueSize_vrecord
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:239:43: This simp argument is unused:
+  valueSize_vmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:239:59: This simp argument is unused:
+  valueSize_vintmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:239:78: This simp argument is unused:
+  valueSize_vvariant
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:240:21: This simp argument is unused:
+  mapSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, listSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:240:35: This simp argument is unused:
+  intMapSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, listSize_cons, mapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:248:37: This simp argument is unused:
+  valueSize_vset
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:248:53: This simp argument is unused:
+  valueSize_vseq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:249:6: This simp argument is unused:
+  valueSize_vtuple
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:249:24: This simp argument is unused:
+  valueSize_vrecord
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:249:43: This simp argument is unused:
+  valueSize_vmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:249:59: This simp argument is unused:
+  valueSize_vintmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:249:78: This simp argument is unused:
+  valueSize_vvariant
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:250:21: This simp argument is unused:
+  mapSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, listSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:250:35: This simp argument is unused:
+  intMapSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, listSize_cons, mapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:258:37: This simp argument is unused:
+  valueSize_vset
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:258:53: This simp argument is unused:
+  valueSize_vseq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:259:6: This simp argument is unused:
+  valueSize_vtuple
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:259:24: This simp argument is unused:
+  valueSize_vrecord
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:259:43: This simp argument is unused:
+  valueSize_vmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:259:59: This simp argument is unused:
+  valueSize_vintmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:259:78: This simp argument is unused:
+  valueSize_vvariant
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:260:6: This simp argument is unused:
+  listSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:260:35: This simp argument is unused:
+  intMapSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, listSize_cons, mapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:267:37: This simp argument is unused:
+  valueSize_vset
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:267:53: This simp argument is unused:
+  valueSize_vseq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:268:6: This simp argument is unused:
+  valueSize_vtuple
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:268:24: This simp argument is unused:
+  valueSize_vrecord
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:268:43: This simp argument is unused:
+  valueSize_vmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:268:59: This simp argument is unused:
+  valueSize_vintmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vvariant, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:268:78: This simp argument is unused:
+  valueSize_vvariant
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, listSize_cons, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:269:6: This simp argument is unused:
+  listSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, mapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:269:35: This simp argument is unused:
+  intMapSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, listSize_cons, mapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:275:37: This simp argument is unused:
+  valueSize_vset
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:275:53: This simp argument is unused:
+  valueSize_vseq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:276:6: This simp argument is unused:
+  valueSize_vtuple
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:276:24: This simp argument is unused:
+  valueSize_vrecord
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:276:43: This simp argument is unused:
+  valueSize_vmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:276:59: This simp argument is unused:
+  valueSize_vintmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vvariant, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:276:78: This simp argument is unused:
+  valueSize_vvariant
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:277:6: This simp argument is unused:
+  listSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:284:37: This simp argument is unused:
+  valueSize_vset
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:284:53: This simp argument is unused:
+  valueSize_vseq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vtuple, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:285:6: This simp argument is unused:
+  valueSize_vtuple
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vrecord, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:285:24: This simp argument is unused:
+  valueSize_vrecord
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vmap, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:285:43: This simp argument is unused:
+  valueSize_vmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vintmap,
+    valueSize_vvariant, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:285:59: This simp argument is unused:
+  valueSize_vintmap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vvariant, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:285:78: This simp argument is unused:
+  valueSize_vvariant
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, listSize_cons, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:286:6: This simp argument is unused:
+  listSize_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vset, valueSize_vseq, valueSize_vtuple, valueSize_vrecord, valueSize_vmap,
+    valueSize_vintmap, valueSize_vvariant, intMapSize_cons, intMapSize_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:323:19: This simp argument is unused:
+  Prod.fst
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only at hp2
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:338:12: This simp argument is unused:
+  List.lookup_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [beq_self_eq_true]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:338:30: This simp argument is unused:
+  beq_self_eq_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [List.lookup_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Value.lean:628:24: This simp argument is unused:
+  Bool.and_eq_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valEq, beq_self_eq_true, Bool.true_and]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [2/225] Replayed Core.Diff
+warning: Core/Diff.lean:269:22: Variable name `path` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _path
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Core/Diff.lean:289:22: Variable name `path` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _path
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Core/Diff.lean:289:27: Variable name `am` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _am
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Core/Diff.lean:311:22: Variable name `path` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _path
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Core/Diff.lean:311:27: Variable name `i` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _i
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Core/Diff.lean:276:30: This simp argument is unused:
+  valueSize_vvariant
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vrecord, valueSize_vmap, valueSize_vseq, valueSize_vtuple, mapSize_cons', listSize_cons']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Diff.lean:276:50: This simp argument is unused:
+  mapSize_cons'
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vrecord, valueSize_vmap, valueSize_vseq, valueSize_vtuple, valueSize_vvariant,
+    listSize_cons']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Diff.lean:277:12: This simp argument is unused:
+  listSize_cons'
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [valueSize_vrecord, valueSize_vmap, valueSize_vseq, valueSize_vtuple, valueSize_vvariant,
+    mapSize_cons']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Diff.lean:470:29: This simp argument is unused:
+  List.lookup_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [ValueMap.lookup, beq_self_eq_true]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Diff.lean:470:47: This simp argument is unused:
+  beq_self_eq_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [ValueMap.lookup, List.lookup_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Diff.lean:486:29: This simp argument is unused:
+  List.lookup_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [ValueMap.lookup, beq_self_eq_true]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Diff.lean:486:47: This simp argument is unused:
+  beq_self_eq_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [ValueMap.lookup, List.lookup_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Diff.lean:749:5: Variable name `hndem` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hndem
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [4/225] Replayed Core.Protocol
+warning: Core/Protocol.lean:488:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:495:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:504:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:511:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:520:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:526:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:531:54: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:540:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:546:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:555:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:561:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:567:54: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:572:54: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:577:54: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:582:54: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:588:54: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:593:54: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:598:54: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:604:54: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:609:54: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:614:54: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:626:52: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:632:52: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:639:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:785:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:795:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:806:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:816:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:827:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:837:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:846:48: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:857:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:865:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:876:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:884:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:893:48: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:902:48: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:911:48: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:920:48: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:931:48: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:940:48: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:949:48: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:960:48: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:969:48: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:978:48: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:993:52: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1002:52: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1013:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1380:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1384:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1391:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1395:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1402:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1406:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1409:76: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1414:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1418:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1425:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1429:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1432:80: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1433:81: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1455:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1459:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1466:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1470:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1477:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1481:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1488:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1492:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1495:76: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1500:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1504:50: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1507:80: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Protocol.lean:1508:81: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [step, Except.ok.injEq, Sigma.mk.injEq] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [5/225] Replayed Core.Jobs
+warning: Core/Jobs.lean:145:18: This simp argument is unused:
+  h
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Jobs.lean:149:24: This simp argument is unused:
+  h
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [StoredPhase.toJobPhase]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Jobs.lean:162:12: This simp argument is unused:
+  List.filter_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hj, lookupJob, ih]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Jobs.lean:162:34: This simp argument is unused:
+  lookupJob
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [List.filter_cons, hj, ih]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Jobs.lean:163:12: This simp argument is unused:
+  List.filter_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hj, lookupJob, ih]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [8/225] Replayed Core.Resource
+warning: Core/Resource.lean:119:34: This simp argument is unused:
+  if_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [releaseStep, h1, h2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Resource.lean:180:24: This simp argument is unused:
+  if_false
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [run, h1]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Resource.lean:200:36: This simp argument is unused:
+  if_false
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [run, stepOp, hr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Resource.lean:211:36: This simp argument is unused:
+  if_false
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [run, stepOp, hr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Resource.lean:265:39: Variable name `h` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _h
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Core/Resource.lean:271:5: Variable name `hx` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hx
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Core/Resource.lean:277:6: Variable name `h` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _h
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Core/Resource.lean:315:6: Variable name `h` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _h
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [203/225] Replayed Core.Trace
+warning: Core/Trace.lean:76:19: This simp argument is unused:
+  List.lookup_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [beq_eq_false_iff_ne.mpr hne]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Trace.lean:77:32: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp_all
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Trace.lean:283:53: This simp argument is unused:
+  hs
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hp]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Core/Trace.lean:337:37: This simp argument is unused:
+  Nat.zero_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [traceStepsAux]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [225/616] Replayed Codec.Json
+warning: Codec/Json.lean:318:28: Variable name `h` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _h
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Codec/Json.lean:324:28: Variable name `h` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _h
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Codec/Json.lean:384:32: This simp argument is unused:
+  sizeL
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeM, sizeIM]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:384:39: This simp argument is unused:
+  sizeM
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeL, sizeIM]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:384:46: This simp argument is unused:
+  sizeIM
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeL, sizeM]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:455:33: This simp argument is unused:
+  Prod.mk.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.mem_singleton] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:546:55: This simp argument is unused:
+  Bool.and_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [wireOkList, h x (List.mem_cons_self)]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:570:27: This simp argument is unused:
+  sizeL_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeM_cons, sizeIM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:570:39: This simp argument is unused:
+  sizeM_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeL_cons, sizeIM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:570:51: This simp argument is unused:
+  sizeIM_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeL_cons, sizeM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:580:20: This simp argument is unused:
+  sizeV
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeL_cons, sizeM_cons, sizeIM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:580:39: This simp argument is unused:
+  sizeM_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeL_cons, sizeIM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:580:51: This simp argument is unused:
+  sizeIM_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeL_cons, sizeM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:590:20: This simp argument is unused:
+  sizeV
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeL_cons, sizeM_cons, sizeIM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:590:27: This simp argument is unused:
+  sizeL_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeM_cons, sizeIM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:590:51: This simp argument is unused:
+  sizeIM_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeL_cons, sizeM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:600:20: This simp argument is unused:
+  sizeV
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeL_cons, sizeM_cons, sizeIM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:600:27: This simp argument is unused:
+  sizeL_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeM_cons, sizeIM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:600:51: This simp argument is unused:
+  sizeIM_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeL_cons, sizeM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:610:20: This simp argument is unused:
+  sizeV
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeL_cons, sizeIM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:610:27: This simp argument is unused:
+  sizeL_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sizeV, sizeIM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:645:4: Variable name `fu` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _fu
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Codec/Json.lean:646:4: Variable name `fu` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _fu
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Codec/Json.lean:647:4: Variable name `fu` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _fu
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Codec/Json.lean:648:4: Variable name `fu` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _fu
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Codec/Json.lean:930:28: This simp argument is unused:
+  List.map_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encList]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:964:19: This simp argument is unused:
+  entryDec_ok
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [hw, hmap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:1054:10: This simp argument is unused:
+  List.toList_toArray
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encIntPairs, decIntPairsF, parseIntMapKey_encoded]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:1057:14: This simp argument is unused:
+  Bind.bind
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Except.bind, hkeys, hwok.1]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:1057:25: This simp argument is unused:
+  Except.bind
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Bind.bind, hkeys, hwok.1]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:1207:42: This simp argument is unused:
+  List.toList_toArray
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encValue, decValueF, hmap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:1218:14: This simp argument is unused:
+  List.toList_toArray
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encValue, Json.mkObj, decValueF, toList_ofList_singleton, hmap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:1231:14: This simp argument is unused:
+  List.toList_toArray
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encValue, Json.mkObj, decValueF, toList_ofList_singleton, hmap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:1249:14: This simp argument is unused:
+  List.toList_toArray
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encValue, Json.mkObj, decValueF, toList_ofList_singleton, hmap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:1282:31: This simp argument is unused:
+  List.toList_toArray
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encValue, Json.mkObj, decValueF, toList_ofList_singleton, encIntPairs, List.mapM_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:1283:51: This simp argument is unused:
+  Pure.pure
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Bind.bind, Except.bind, Except.pure, derr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:1283:62: This simp argument is unused:
+  Except.pure
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Bind.bind, Except.bind, Pure.pure, derr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:1787:32: Variable name `h` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _h
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Codec/Json.lean:1799:10: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Codec/Json.lean:1800:4: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Codec/Json.lean:1905:13: Variable name `h` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _h
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Codec/Json.lean:2130:36: This simp argument is unused:
+  jOptStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [optFieldStr, getObjVal?_mkObj hkeys hm, optStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:2131:38: This simp argument is unused:
+  jOptStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [optFieldStr, getObjVal?_mkObj hkeys hm, optStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:2153:10: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Codec/Json.lean:2160:44: This simp argument is unused:
+  List.toList_toArray
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [strsJson, List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:2248:57: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [jApalacheConfig, decApalacheConfig, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:2277:43: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [jTraceConfig, decTraceConfig, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:2277:51: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [jTraceConfig, decTraceConfig, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:2359:15: This simp argument is unused:
+  Prod.fst
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only at hbeq
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3148:34: This simp argument is unused:
+  List.toList_toArray
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3165:34: This simp argument is unused:
+  List.toList_toArray
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3262:40: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [henc, decDiffHint, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3262:48: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [henc, decDiffHint, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3305:40: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [henc, decDiffHint, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3305:48: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [henc, decDiffHint, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3350:40: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [henc, decDiffHint, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3350:48: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [henc, decDiffHint, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3392:40: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [henc, decDiffHint, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3392:48: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [henc, decDiffHint, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3413:36: This simp argument is unused:
+  List.toList_toArray
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3432:32: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [decTraceGenResult]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/Json.lean:3464:19: This simp argument is unused:
+  jJobOutcome
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Json.mkObj, decJobOutcome, toList_ofList_singleton]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [226/616] Replayed Codec.ExplorerRpc
+warning: Codec/ExplorerRpc.lean:416:55: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [jTransitionSummary, decTransitionSummary]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:429:34: This simp argument is unused:
+  List.toList_toArray
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:465:49: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [jSpecParameters, decSpecParameters]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:998:86: This simp argument is unused:
+  optJson
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcRequest, encodeParams, reqId, methodName, decodeRpcRequest, Option.map_none,
+    Option.map_some]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:998:95: This simp argument is unused:
+  Option.map_none
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcRequest, encodeParams, reqId, methodName, decodeRpcRequest, optJson, Option.map_some]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:998:112: This simp argument is unused:
+  Option.map_some
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcRequest, encodeParams, reqId, methodName, decodeRpcRequest, optJson, Option.map_none]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1133:65: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1133:73: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1162:65: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1162:73: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1182:65: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1182:73: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1202:65: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1202:73: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1225:65: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqNat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1225:73: This simp argument is unused:
+  reqNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1251:69: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, optJson, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1251:86: This simp argument is unused:
+  htrv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1276:69: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, optJson, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1276:86: This simp argument is unused:
+  htrv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1305:73: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, optJson, hopv, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1305:90: This simp argument is unused:
+  hopv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1305:96: This simp argument is unused:
+  htrv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, hopv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1336:73: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, optJson, hopv, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1336:90: This simp argument is unused:
+  hopv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1336:96: This simp argument is unused:
+  htrv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, hopv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1370:73: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, optJson, hopv, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1370:90: This simp argument is unused:
+  hopv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1370:96: This simp argument is unused:
+  htrv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, hopv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1409:73: This simp argument is unused:
+  reqStr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, optJson, hopv, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1409:90: This simp argument is unused:
+  hopv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, htrv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Codec/ExplorerRpc.lean:1409:96: This simp argument is unused:
+  htrv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [encodeRpcResult, decodeRpcResult, resultMethod, reqStr, optJson, hopv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [239/616] Replayed Shell.Jobs.Store
+warning: Shell/Jobs/Store.lean:300:24: Variable name `m` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _m
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [255/616] Replayed Shell.Net.Http
+warning: Shell/Net/Http.lean:50:45: `List.asString` has been deprecated: Use `String.ofList` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.asString` to `String.ofList x`).
+warning: Shell/Net/Http.lean:51:52: `List.asString` has been deprecated: Use `String.ofList` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.asString` to `String.ofList x`).
+⚠ [261/616] Replayed Shell.Apalache.Cli
+warning: Shell/Apalache/Cli.lean:266:19: `String.dropRightWhile` has been deprecated: Use `String.dropEndWhile` instead
+
+Note: The updated constant has a different type:
+  {ρ : Type} → String → (pat : ρ) → [String.Slice.Pattern.BackwardPattern pat] → String.Slice
+instead of
+  String → (Char → Bool) → String
+⚠ [278/616] Replayed tools.ReplayFixtures
+warning: tools/ReplayFixtures.lean:93:31: `String.mk` has been deprecated: Use `String.ofList` instead
+warning: tools/ReplayFixtures.lean:143:31: `String.mk` has been deprecated: Use `String.ofList` instead
+warning: tools/ReplayFixtures.lean:202:31: `String.mk` has been deprecated: Use `String.ofList` instead
+ℹ [578/616] Replayed tools.TlaLexerSpec
+info: tools/TlaLexerSpec.lean:1020:0: TLA LEXER SPEC GREEN
+ℹ [581/616] Replayed tools.TlaParserSpec
+info: tools/TlaParserSpec.lean:2868:0: TLA PARSER CORPUS: 61 fixtures (34 accepted, 27 rejected), 76 branches, 107 fixture-branch links
+TLA PARSER SPEC GREEN
+ℹ [587/616] Replayed tools.TlaElaborationSpec
+info: tools/TlaElaborationSpec.lean:1667:0: TLA ELABORATION CORPUS (accepted): 34 fixtures, 34 elaborated and matched to their summaries
+TLA ELABORATION CORPUS (rejected): 27 fixtures, 7 rejected by this slice's stages
+TLA ELABORATION SPEC GREEN
+ℹ [627/651] Replayed tools.AsyncResourceProofSpec
+info: tools/AsyncResourceProofSpec.lean:29:0: 'Core.AsyncResources.admission_bounded' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:30:0: 'Core.AsyncResources.eviction_preserves_other' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:31:0: 'Core.AsyncResources.lookup_dropped_absent' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:32:0: 'Core.AsyncResources.step_preserves' depends on axioms: [propext]
+info: tools/AsyncResourceProofSpec.lean:33:0: 'Core.AsyncResources.reachable_valid' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:34:0: 'Core.AsyncResources.released_has_no_further_release' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:35:0: 'Core.AsyncResources.Cancellation.reachable_ticket_unique' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:36:0: 'Core.AsyncResources.world_step_preserves' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:37:0: 'Core.AsyncResources.world_reachable_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:38:0: 'Core.AsyncResources.active_jobs_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:39:0: 'Core.AsyncResources.world_terminal_stable' depends on axioms: [propext]
+info: tools/AsyncResourceProofSpec.lean:40:0: 'Core.AsyncResources.reachable_world_quiescence_leak_free' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:41:0: 'Core.AsyncResources.quiescent_accounting_balanced' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [631/651] Replayed tools.ApalacheCliSpec
+warning: tools/ApalacheCliSpec.lean:752:9: Variable name `bin` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _bin
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [634/651] Replayed tools.ExplorerSpec
+warning: tools/ExplorerSpec.lean:60:24: `String.trim` has been deprecated: Use `String.trimAscii` instead
+
+Note: The updated constant has a different type:
+  String → String.Slice
+instead of
+  String → String
+✔ [646/651] Built tools.AsyncSpec (2.2s)
+✔ [648/651] Built tools.RegistrySpec (2.8s)
+✔ [650/651] Built async_spec:exe (1.2s)
+✔ [651/651] Built registry_spec:exe (1.1s)
+Build completed successfully (651 jobs).
+== async emitter ==
+Async emitter: deterministic targets, shared semantic identity, stable sync golden, and ownership rejection passed.
+== CMake consumers ==
+CMAKE CONSUMER GREEN: offline/configure/build freshness, paths, regeneration, preservation
+== native integer maps ==
+INTEGER MAP NATIVE GREEN
+TCP INTEGER MAP NATIVE GREEN
+INTEGER MAP NATIVE GREEN
+== suite bundle ==
+Suite bundle: hashes, deterministic generation, legacy bytes, read-only freshness and publication safety passed.
+== validate source closure ==
+VALIDATE CLOSURE CLI GREEN
+== trace capture spec ==
+TRACE CAPTURE SPEC GREEN
+== trace capture CLI ==
+TRACE CAPTURE CLI GREEN (14 protocol/publication cases)
+== validate async protocol codec ==
+ASYNC VALIDATE CLI GREEN (13 cases)
+== fixture replay ==
+ALL FIXTURES ROUND-TRIP BYTE-IDENTICAL
+== cross-codec diff ==
+DIFF ENGINE DIFFERENTIAL (test/fixtures/diff_cases.jsonl): 500/500 cases agree with Haskell
+== model-interface spec ==
+[scenario sha-strict-json]
+[scenario lease-reduction]
+[scenario canonical-diagnostics]
+[scenario replay-partition]
+[scenario integer-map-values]
+[scenario counter-resolution]
+[scenario resource-limits]
+[scenario negotiation]
+[scenario runtime-negotiation-matrix]
+[scenario negotiation-codec]
+[scenario cache]
+[scenario runtime-cache]
+[scenario preflight]
+[scenario cli-diagnostics]
+[scenario typescript-emitter]
+[scenario typescript-async-emitter]
+[scenario suite-bundle]
+[scenario cpp-emitter]
+[scenario rust-emitter]
+[scenario semantic-identity-and-large-lock]
+[scenario filesystem-hardening]
+MODEL INTERFACE SPEC GREEN
+== model-interface distribution spec ==
+[scenario legacy]
+[scenario descriptor]
+[scenario not-modified]
+[scenario unsupported-require]
+[scenario unsupported-prefer]
+[scenario disabled-require]
+[scenario verify]
+[scenario wrong-digest]
+[scenario preflight-reject]
+[scenario unreadable-trace]
+[scenario oracle-failure-sanitized]
+[scenario negotiated-trace-limits]
+[scenario trace-limit-policy]
+[scenario ineligible-negotiation-legacy-loader]
+[scenario invalid-evidence-prefer-terminal]
+[scenario generated-fallback-policy-flag]
+[scenario duplicate-nested-key]
+[scenario attacker-diagnostics-sanitized]
+MODEL INTERFACE DISTRIBUTION SPEC GREEN
+== framework catalog spec ==
+FRAMEWORK CATALOG SPEC GREEN
+== distribution contract ==
+..............................distribution qualification failed: installation has no active version
+...
+----------------------------------------------------------------------
+Ran 33 tests in 5.818s
+
+OK
+== distribution manifest ==
+REFERENCE DISTRIBUTION VALIDATE GREEN
+== durable evidence ==
+......................................................................................................................
+----------------------------------------------------------------------
+Ran 118 tests in 40.063s
+
+OK
+== model-interface scaffold CLI ==
+MODEL INTERFACE SCAFFOLD CLI SPEC GREEN
+== model-interface evidence ==
+MODEL INTERFACE EVIDENCE SPEC GREEN
+== TLA lexer ==
+TLA LEXER SPEC GREEN
+== TLA parser ==
+TLA PARSER CORPUS: 61 fixtures (34 accepted, 27 rejected), 76 branches, 107 fixture-branch links
+TLA PARSER SPEC GREEN
+== TLA module resolver ==
+TLA MODULE RESOLVER SPEC GREEN
+== TLA elaboration ==
+TLA ELABORATION CORPUS (accepted): 34 fixtures, 34 elaborated and matched to their summaries
+TLA ELABORATION CORPUS (rejected): 27 fixtures, 7 rejected by this slice's stages
+TLA ELABORATION SPEC GREEN
+== TLA frontend ==
+TLA FRONTEND SPEC GREEN
+== TLA frontend CLI ==
+TLA FRONTEND CLI GREEN
+== TLA differential offline ==
+.....................................................ssss......
+----------------------------------------------------------------------
+Ran 63 tests in 8.084s
+
+OK (skipped=4)
+verified Apalache archive: /tmp/tmptbl26uws/new-toolchain/downloads/apalache-0.61.0.tgz
+verified standalone SANY jar: /tmp/tmptbl26uws/new-toolchain/downloads/tla2tools-1.8.0.jar
+Version 2.2 created 08 July 2020
+verified Apalache archive: /tmp/tmptbl26uws/new-toolchain/downloads/apalache-0.61.0.tgz
+verified standalone SANY jar: /tmp/tmptbl26uws/new-toolchain/downloads/tla2tools-1.8.0.jar
+Version 2.2 created 08 July 2020
+JUNCTION SUMMARY CHECK GREEN
+JUNCTION SUMMARY GENERATION GREEN
+JUNCTION SUMMARY CHECK GREEN
+JUNCTION SUMMARY GENERATION GREEN
+acc-precedence: summary differs from the real frontend projection
+== model-interface scaffold ==
+MODEL INTERFACE SCAFFOLD SPEC GREEN
+== trace projection CLI ==
+MODEL INTERFACE TRACE PROJECTION CLI SPEC GREEN
+== trace projection ==
+MODEL INTERFACE TRACE PROJECTION SPEC GREEN
+== model-interface TypeScript golden ==
+model-interface check clean
+== model-interface async TypeScript golden ==
+model-interface check clean
+== model-interface C++ golden ==
+model-interface check clean
+== model-interface Rust golden ==
+model-interface check clean
+== model-interface Rust checks ==
+[scenario sha-strict-json]
+[scenario lease-reduction]
+[scenario canonical-diagnostics]
+[scenario replay-partition]
+[scenario integer-map-values]
+[scenario counter-resolution]
+[scenario resource-limits]
+[scenario negotiation]
+[scenario runtime-negotiation-matrix]
+[scenario negotiation-codec]
+[scenario cache]
+[scenario runtime-cache]
+[scenario preflight]
+[scenario cli-diagnostics]
+[scenario typescript-emitter]
+[scenario typescript-async-emitter]
+[scenario suite-bundle]
+[scenario cpp-emitter]
+[scenario rust-emitter]
+[scenario semantic-identity-and-large-lock]
+[scenario filesystem-hardening]
+MODEL INTERFACE SPEC GREEN
+   Compiling mirrorrust v1.0.0 (/home/nzsn/Repos/MirrorRust)
+   Compiling mirrors-generated-rust-tests v0.0.0 (/home/nzsn/Repos/Mirrors/.golden-build/model-interface-rust)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.16s
+     Running unittests /home/nzsn/Repos/Mirrors/tools/model-interface-rust/tests.rs (.golden-build/mirrorrust-target/debug/deps/mirrors_generated_rust_tests-a80fe0731e7b0c76)
+
+running 7 tests
+test tests::duplicate_sets_use_semantic_equality ... ok
+test tests::aliases_paths_and_all_inputs_before_effects ... ok
+test tests::config_failure_has_no_effects ... ok
+test tests::failures_poison_without_further_effects ... ok
+test tests::replay_and_coverage ... ok
+test tests::structural_codecs ... ok
+test tests::negotiated_stdio_replay ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+   Doc-tests mirrors_generated_rust_tests
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+{"actions":[{"count":1,"id":"Initialize"},{"count":2,"id":"Tick"}],"schema":"mirrors.model-interface-coverage/v1","semanticDigest":"193d6cc187d05c18f02ad483a44f8ad0c1634b02083df241df08b9281b045d1c","states":3,"traces":1,"unseenActions":[]}
+== stdio replay smoke ==
+version CLI: output and argument validation passed
+clean session: #[spec_validated, initial_state, step_ok, next_step, step_ok, initial_state, step_ok, next_step, step_ok, next_step, step_ok, all_steps_done]
+mismatch session: #[spec_validated, initial_state, step_ok, next_step, step_mismatch]
+STDIO SMOKE GREEN
+== async resource proofs ==
+ASYNC RESOURCE PROOFS GREEN
+== job store ==
+[scenario validateRoundTrip]
+[scenario genTracesRoundTrip]
+[scenario badBound]
+[scenario infraFailure]
+[scenario unknownJob]
+[scenario capacity]
+[scenario cancel]
+[scenario close]
+[scenario awaitTimeout]
+[scenario eviction]
+[scenario session-exit-cleanup]
+[scenario cancellation-ownership]
+[scenario cancelled-worker-slot]
+[scenario cancellation-failure-retirement]
+[scenario proved-resource-guard]
+JOBSTORE PARITY GREEN
+== Apalache CLI pure/unit ==
+[scenario moduleName]
+[scenario materialize]
+[scenario acquire]
+[scenario borrowed-counter-closure]
+[scenario borrowed-recursive-closure]
+[scenario client-recursive-closure]
+[scenario async-acquisition-cleanup]
+[scenario borrowed-closure-failures]
+[scenario borrowed-closure-symlinks]
+[scenario borrowed-trace-snapshot]
+[scenario unified-capture-equivalence]
+[scenario args]
+[scenario disk-trace-limits]
+[scenario generated-trace-parse-failure]
+[scenario generated-trace-resource-fallback]
+[scenario trace-generation-failure-formatting]
+[scenario generated-trace-delivery]
+[scenario trace-generation-cleanup-precedence]
+[scenario integration]
+SKIP integration (APALACHE_MC not set)
+APALACHE CLI GREEN
+== explorer pure/unit ==
+explorer integration: skipped (APALACHE_MC not set)
+EXPLORER SPEC: all green
+== transport ==
+warning: server certificate .lake/build/tmp-pki/expired.crt expires in 0 day(s)
+ok: framing accepts exactly 65535 UTF-8 bytes
+ok: framing rejects 65536 UTF-8 bytes
+ok: framing rejects embedded newline
+ok: framing rejects invalid UTF-8
+ok: delivery: sync boundary is exactly 65535 bytes
+ok: delivery: 65535 shared stays full
+ok: delivery: 65535 remote stays full
+ok: delivery: sync overflow is exactly 65536 bytes
+ok: delivery: 65536 durable shared uses paths only
+ok: delivery: 65536 ephemeral shared is a bounded failure
+ok: delivery: 65536 remote is a bounded failure
+ok: delivery: path-only overflow is a bounded failure
+ok: delivery: async boundary is exactly 65535 bytes
+ok: delivery: async 65535 stays full
+ok: delivery: async overflow is exactly 65536 bytes
+ok: delivery: async 65536 is a terminal error for the same job
+ok: delivery: stdio transport is shared-filesystem
+ok: delivery: TCP transport is remote
+ok: pki: server cert signed
+ok: pki: client cert signed
+ok: pki: nosan cert signed
+ok: pki: rogue cert signed
+ok: pki: soon-expiry cert signed
+ok: pki: other-san cert signed
+ok: pki: stray (unchainable) cert signed
+ok: pki: expired cert signed
+ok: server ctx (good PKI)
+ok: server ctx rejected: no SAN
+ok: server ctx rejected: group-readable key (non-vacuous)
+ok: server ctx rejected: unchainable cert
+ok: server ctx rejected: cert/key mismatch
+ok: server ctx rejected: garbage cert file
+ok: server ctx rejected: empty cert file
+ok: fingerprint of garbage cert is none
+ok: expired cert: ctx still created (warn-only)
+ok: expired cert days <= 0 (M2)
+ok: client ctx (good PKI)
+ok: fingerprint matches openssl CLI
+ok: sequential certificate fingerprints keep distinct output
+ok: mTLS leaf fingerprint grants exact allowlisted verify scope
+ok: mTLS leaf fingerprint denies a non-allowlisted principal
+ok: soon cert days in [1,2]
+ok: long cert days > 300
+ok: listenTcp binds 127.0.0.1
+ok: listenTcp rejects unresolvable bind name
+ok: listenTcp rejects invalid bind literal
+ok: tcp echo round trip
+ok: tcp server survived peer drop
+ok: bind 127.0.0.1 reachable via loopback
+ok: bind 127.0.0.1 NOT reachable via non-loopback addr
+ok: delivery: TLS transport is remote
+ok: mtls echo round trip (TLS 1.3, pinned fp)
+ok: ip-literal connect (M3)
+ok: mixed-case pin connect (t29)
+ok: oversized line rejected (m6)
+ok: server alive after oversized line
+ok: mtls wrong fingerprint rejected
+ok: client with wrong CA rejected by handshake
+ok: other-san ctx (locally valid)
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+connection skipped
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+connection skipped
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+connection skipped
+ok: client hostname SAN mismatch rejected
+ok: rogue client ctx (locally valid)
+ok: mtls untrusted client cert rejected by server
+ok: tls1.2-only peer rejected (no echo)
+ok: certificate-less client rejected (no echo)
+dbg before ip: pid 152610
+TRANSPORT SPEC: all green
+== trace transport failure fixture ==
+TG0 bytes: sync-boundary=65535/65536 async-boundary=65535/65536 counter-sync=101 counter-async=144
+TG0 bytes: sync-path-overflow=70073
+TG0 bytes: async-path-overflow=70110
+TRACE GENERATION TRANSPORT REPROS GREEN
+== registry ==
+ok: serve cli: ok
+ok: serve cli: bind
+ok: serve cli: bad port
+ok: serve cli: jobs
+ok: serve cli: jobs + bind any order
+ok: serve cli: dup jobs
+ok: serve cli: bad jobs
+ok: serve cli: unknown opt
+ok: server opts: happy
+ok: server opts: defaults jobs=4
+ok: server opts: model-interface access defaults disabled
+ok: mTLS auth: CA trust alone grants no model-interface access
+ok: server opts: allowlisted fingerprint is normalized
+ok: mTLS auth: allowlisted client receives verify-only access
+ok: mTLS auth: unlisted client remains model-interface disabled
+ok: server opts: descriptor-read policy is explicit
+ok: mTLS auth: descriptor-read policy grants descriptor access
+ok: mTLS auth: authorization scope carries peer principal
+ok: mTLS auth: distinct peers have distinct cache scopes
+ok: server opts: descriptor-read requires an allowlist
+ok: server opts: malformed client fingerprint rejected
+ok: server opts: duplicate normalized client fingerprint rejected
+ok: server opts: no tls
+ok: server opts: dup port
+ok: server opts: unknown
+ok: validate: direct happy
+ok: validate: async defaults off
+ok: validate: async enabled
+ok: validate: duplicate async rejected
+ok: validate: registry needs tls
+ok: validate: registry+host rejected
+ok: validate: pin requires tls
+ok: url: bare host
+ok: url: scheme + path
+ok: url: default port
+ok: url: https rejected
+ok: url: bad port
+ok: candidateFingerprint: pin wins
+ok: candidateFingerprint: registry fp
+ok: candidateFingerprint: none
+ok: tryCandidates: empty
+ok: tryCandidates: order + diagnostics
+mock consul on 42821
+ok: mock consul started
+ok: registerService ok
+ok: register request recorded
+ok: heartbeat request recorded
+ok: deregister request recorded
+ok: discover parses + drops empty + fails closed
+ok: dead registry -> []
+tls: listening on *:19007 (mTLS, TLS 1.3, worker pool, 4 workers)
+ok: server child registered with consul
+ok: SIGTERM -> deregistered + exit 0
+REGISTRY SPEC: all green
+== Counter live tier self-skip ==
+SKIP counter_spec (APALACHE_MC not set)
+== async live tier self-skip ==
+SKIP async_spec (APALACHE_MC not set)
+ALL LOCAL NON-MODEL GATES GREEN

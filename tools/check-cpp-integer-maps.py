@@ -7,6 +7,9 @@ import json
 from pathlib import Path
 import subprocess
 import tempfile
+import socket
+import time
+import hashlib
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -72,6 +75,11 @@ def main() -> None:
         assert any(argument["value"] == "type.value.key" for diagnostic in diagnostics
                    for argument in diagnostic["arguments"]), "nested integer-key location is absent"
         assert not (scratch / "unsupported").exists()
+        for target in ("mirrorecma-v1", "mirrorecma-async-v1", "mirrorrust-v1"):
+            rejected_target = run([str(compiler), "generate", "--lock", "lock.json", "--target", target,
+                                   "--out", "unsupported-" + target], False)
+            assert "MIC-E-TYPE-001" in rejected_target or "MIC-E-PATH-001" in rejected_target, (target, rejected_target)
+            assert not (scratch / ("unsupported-" + target)).exists()
         # Invalid IDs are rejected by resolution; both diagnostic formats must
         # retain their data without breaking human lines.
         quoted = json.loads(json.dumps(contract))
@@ -107,6 +115,45 @@ def main() -> None:
         run(["cmake", "--build", "build", "-j", "2"])
         print(run([str(scratch / "build/integer_maps"), str(ROOT / ".lake/build/bin/mirror"),
                    str(scratch / "trace.json")]).strip())
+        def serve(arguments: list[str], client_arguments: list[str]) -> None:
+            with socket.socket() as listener:
+                listener.bind(("127.0.0.1", 0)); port = listener.getsockname()[1]
+            log = (scratch / "server.log").open("w")
+            child = subprocess.Popen([str(ROOT / ".lake/build/bin/mirror"), arguments[0], str(port),
+                                      "--bind", "127.0.0.1", *arguments[1:]], cwd=scratch, stdout=log, stderr=log)
+            try:
+                for _ in range(100):
+                    if child.poll() is not None: raise AssertionError("fixture server exited")
+                    try:
+                        with socket.create_connection(("127.0.0.1", port), timeout=.1): pass
+                        break
+                    except OSError: time.sleep(.05)
+                else: raise AssertionError("fixture server not ready")
+                print(run([str(scratch / "build/integer_maps"), client_arguments[0], str(port),
+                           str(scratch / "trace.json"), *client_arguments[1:]]).strip())
+            finally:
+                child.terminate()
+                try: child.wait(timeout=10)
+                except subprocess.TimeoutExpired: child.kill(); child.wait()
+                log.close()
+        serve(["--serve"], ["--tcp"])
+        # Ephemeral test identities; no service credentials are read or copied.
+        run(["openssl", "req", "-x509", "-newkey", "rsa:2048", "-nodes", "-days", "1",
+             "-subj", "/CN=trace-fixture-ca", "-keyout", "ca.key", "-out", "ca.crt"])
+        for name, usage in (("server", "serverAuth"), ("client", "clientAuth")):
+            run(["openssl", "req", "-newkey", "rsa:2048", "-nodes", "-subj", f"/CN={name}",
+                 "-keyout", name + ".key", "-out", name + ".csr"])
+            (scratch / (name + ".ext")).write_text(f"extendedKeyUsage={usage}\n" +
+                ("subjectAltName=IP:127.0.0.1\n" if name == "server" else ""))
+            run(["openssl", "x509", "-req", "-days", "1", "-in", name + ".csr", "-CA", "ca.crt",
+                 "-CAkey", "ca.key", "-CAcreateserial", "-extfile", name + ".ext", "-out", name + ".crt"])
+            (scratch / (name + ".key")).chmod(0o600)
+        def fingerprint(name: str) -> str:
+            raw = subprocess.check_output(["openssl", "x509", "-in", str(scratch / (name + ".crt")), "-outform", "DER"])
+            return hashlib.sha256(raw).hexdigest()
+        serve(["--server", "--tls", "--cert", str(scratch / "server.crt"), "--key", str(scratch / "server.key"),
+               "--ca", str(scratch / "ca.crt"), "--model-interface-allow-client", fingerprint("client")],
+              ["--tls", str(scratch / "ca.crt"), str(scratch / "client.crt"), str(scratch / "client.key"), fingerprint("server")])
 
 
 if __name__ == "__main__":

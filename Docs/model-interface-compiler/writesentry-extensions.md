@@ -58,7 +58,11 @@ emitters retain their own strict capability boundaries. Native ordinary and nego
 registry profile invokes zero application factories/callbacks. The unmodified
 pinned client accepts only v1 for negotiated replay. The patch permits exactly
 v1/v2 and preserves the four-part registry key and existing v1 default. These
-checks do not certify every transport or cross-client combination.
+checks cover ordinary v2 recorded replay over stdio, loopback TCP, and ephemeral
+mTLS; v2 negotiated replay over stdio and allowlisted mTLS; plain-TCP
+authorization denial before application code; and rejection of incompatible
+TypeScript/Rust target profiles before output publication. They do not establish
+fresh deployed-service or every-platform qualification.
 
 ## Standard imports: frontend profile 5
 
@@ -78,9 +82,15 @@ fixture now uses `Nat` through `Integers` without explicitly extending
 
 Profile-4 differential approvals are preserved in
 `test/fixtures/tla-frontend/differential/archive/profile4-differences.json`.
-The active registry carries no renewed approvals. A new required differential
-run and review against the selected JDK/SANY/Apalache identities must qualify
-profile 5. Historical profile-4 results cannot do so.
+The active registry now renews fourteen outcome-only entries against actual
+profile-5 observations, unchanged source hashes, and verified reference pins.
+The seven strict/resource policies remain exactly those in language-profile
+section 9. Review:
+`Drafts/tla-profile5-policy-renewals.md`. The required retained final run passes
+all 183 observations, with 564 matches, fourteen reviewed policy differences,
+and 292 explicitly unsupported reference projections. It used the selected
+Microsoft JDK 25.0.4+7-LTS; its archive and executable hashes match the local
+qualification pins. Historical profile-4 results did not qualify this run.
 
 ## Optional generated CMake consumers
 
@@ -127,6 +137,25 @@ JSON and human outputs preserve escaped data without splitting lines. Unsupporte
 key guidance is relative to the selected target profile.
 
 ## Executable gates
+
+The additive remote `mirror trace-gen` command captures the existing synchronous
+or owned async protocol. Its option/correlation spec and fifteen actual CLI
+loopback cases cover source closure, raw ITF metadata, bounded polling and
+cancellation, strict reply parsing, local output preservation, and rejection of
+unconfigured path-only results. The separately configured, allowlisted shared
+Workspace mode validates direct-child destinations, original artifact hashes,
+strict JSON/ITF, byte/count bounds and unchanged metadata. Async destinations
+are rejected before execution. WriteSentry's remote campaign wrapper validates private
+service context, same-time operator observation and captured artifact hashes.
+The 2026-10-01 native Windows 0.62.2 / Java 25.0.4+7-LTS campaign passed all
+fourteen scenarios, 424 replayed snapshots (212 across fourteen distinct state
+sequences), eighteen actions, eight reached flags, and all three actual-server
+mutation controls. Normal rebuilt application acceptance passes 8/8 CTests.
+Its complete fresh corpus and deployment identities are retained in
+[Windows qualification evidence](../../Plans/model-interface-compiler/writesentry-windows-evidence-20261001/acceptance.json).
+Protocol fixtures remain separate from this live evidence. Frontend reference
+qualification retains its original 0.61.0 tool identity. Dependency publication,
+remote application replay, and Windows DR/VEH runtime behavior are separate tiers.
 
 `python3 tools/check-cmake-consumer.py` exercises offline/configure/build checks,
 captured dependencies, mutations, paths with spaces, unsafe/duplicate paths,

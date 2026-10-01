@@ -1,0 +1,19 @@
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /tmp/mic-profile5-reference-final/rej-level-assume-apalache-3rb8b2ss/input/.dv-apalache/RejectLevelAssume.tla/2026-10-01T00-06-26_6910711232041083677
+# APALACHE version: 0.61.0 | build: 831d473                       I@00:06:27.015
+Parse RejectLevelAssume.tla                                       I@00:06:27.018
+PASS #0: SanyParser                                               I@00:06:27.213
+Parsing error: Semantic errors:
+
+*** Errors: 1
+
+line 5, col 1 to line 5, col 12 of module RejectLevelAssume
+
+Level error: assumptions must be level 0 (Constant), 
+but this one has level 1. E@00:06:27.285
+Parser has failed                                                 I@00:06:27.308
+It took me 0 days  0 hours  0 min  0 sec                          I@00:06:27.309
+Total time: 0.291 sec                                             I@00:06:27.309
+EXITCODE: ERROR (255)

@@ -1,0 +1,201 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "AcceptConstants",
+            "from": {
+              "line": 4,
+              "column": 10
+            },
+            "to": {
+              "line": 4,
+              "column": 10
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaConstDecl",
+          "name": "K"
+        },
+        {
+          "source": {
+            "filename": "AcceptConstants",
+            "from": {
+              "line": 3,
+              "column": 14
+            },
+            "to": {
+              "line": 3,
+              "column": 14
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaConstDecl",
+          "name": "M"
+        },
+        {
+          "source": {
+            "filename": "AcceptConstants",
+            "from": {
+              "line": 3,
+              "column": 11
+            },
+            "to": {
+              "line": 3,
+              "column": 11
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaConstDecl",
+          "name": "N"
+        },
+        {
+          "source": {
+            "filename": "AcceptConstants",
+            "from": {
+              "line": 6,
+              "column": 1
+            },
+            "to": {
+              "line": 6,
+              "column": 33
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Pair",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptConstants",
+              "from": {
+                "line": 6,
+                "column": 9
+              },
+              "to": {
+                "line": 6,
+                "column": 33
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "RECORD",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptConstants",
+                  "from": {
+                    "line": 6,
+                    "column": 10
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 13
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "left"
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptConstants",
+                  "from": {
+                    "line": 6,
+                    "column": 19
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 19
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "N"
+              },
+              {
+                "source": {
+                  "filename": "AcceptConstants",
+                  "from": {
+                    "line": 6,
+                    "column": 22
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 26
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "right"
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptConstants",
+                  "from": {
+                    "line": 6,
+                    "column": 32
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 32
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "M"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptConstants",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 9
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Base",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptConstants",
+              "from": {
+                "line": 7,
+                "column": 9
+              },
+              "to": {
+                "line": 7,
+                "column": 9
+              }
+            },
+            "type": "Untyped",
+            "kind": "NameEx",
+            "name": "K"
+          }
+        }
+      ]
+    }
+  ]
+}

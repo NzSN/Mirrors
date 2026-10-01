@@ -1,0 +1,152 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "LevelRoot",
+            "from": {
+              "line": 5,
+              "column": 10
+            },
+            "to": {
+              "line": 5,
+              "column": 18
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "rootState"
+        },
+        {
+          "source": {
+            "filename": "LevelRoot",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 53
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "I!ChildOp",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "LevelChild",
+              "from": {
+                "line": 7,
+                "column": 12
+              },
+              "to": {
+                "line": 7,
+                "column": 25
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "PLUS",
+            "args": [
+              {
+                "source": {
+                  "filename": "LevelChild",
+                  "from": {
+                    "line": 7,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 21
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "rootState"
+              },
+              {
+                "source": {
+                  "filename": "LevelChild",
+                  "from": {
+                    "line": 7,
+                    "column": 25
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 25
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "LevelRoot",
+            "from": {
+              "line": 9,
+              "column": 1
+            },
+            "to": {
+              "line": 9,
+              "column": 19
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "RootOp",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "LevelRoot",
+              "from": {
+                "line": 9,
+                "column": 11
+              },
+              "to": {
+                "line": 9,
+                "column": 19
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "OPER_APP",
+            "args": [
+              {
+                "source": {
+                  "filename": "LevelRoot",
+                  "from": {
+                    "line": 9,
+                    "column": 11
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 19
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "I!ChildOp"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

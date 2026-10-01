@@ -1,0 +1,26 @@
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /tmp/mic-profile5-reference-first/rej-instance-invalid-substitution-apalache-zxjkk0gw/input/.dv-apalache/BadSubRoot.tla/2026-09-30T23-57-44_17644855254989705100
+# APALACHE version: 0.61.0 | build: 831d473                       I@23:57:44.367
+Parse BadSubRoot.tla                                              I@23:57:44.370
+PASS #0: SanyParser                                               I@23:57:44.551
+Parsing error: Semantic errors:
+
+*** Errors: 2
+
+line 6, col 57 to line 6, col 69 of module BadSubRoot
+
+Identifier 'missingSymbol' is not a legal target of a substitution. 
+A legal target must be a declared CONSTANT or VARIABLE in the module being instantiated. 
+(Also, check for warnings about multiple declarations of this same identifier.)
+
+
+line 6, col 1 to line 6, col 82 of module BadSubRoot
+
+Substitution missing for symbol childState declared at line 4, col 10 to line 4, col 19 of module BadSubChild 
+and instantiated in module BadSubRoot. E@23:57:44.629
+Parser has failed                                                 I@23:57:44.656
+It took me 0 days  0 hours  0 min  0 sec                          I@23:57:44.657
+Total time: 0.287 sec                                             I@23:57:44.657
+EXITCODE: ERROR (255)

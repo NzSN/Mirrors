@@ -1,0 +1,20 @@
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: /tmp/mic-profile5-reference-final/rej-extends-cycle-apalache-2e2a2zrp/input/.dv-apalache/CycleA.tla/2026-10-01T00-06-29_15325989422500812122
+# APALACHE version: 0.61.0 | build: 831d473                       I@00:06:29.684
+Parse CycleA.tla                                                  I@00:06:29.713
+PASS #0: SanyParser                                               I@00:06:29.893
+Parsing error: Syntax errors:
+
+*** Errors: 1
+
+Unknown location
+
+Circular dependency among .tla files; dependency cycle is:
+
+  /tmp/mic-profile5-reference-final/rej-extends-cycle-apalache-2e2a2zrp/input/CycleA.tla --> CycleB.tla --> /tmp/mic-profile5-reference-final/rej-extends-cycle-apalache-2e2a2zrp/input/CycleA.tla E@00:06:29.954
+Parser has failed                                                 I@00:06:29.975
+It took me 0 days  0 hours  0 min  0 sec                          I@00:06:29.976
+Total time: 0.262 sec                                             I@00:06:29.976
+EXITCODE: ERROR (255)

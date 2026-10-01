@@ -1,0 +1,124 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "RejectRealLiteral",
+            "from": {
+              "line": 3,
+              "column": 1
+            },
+            "to": {
+              "line": 3,
+              "column": 11
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Half",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "RejectRealLiteral",
+              "from": {
+                "line": 3,
+                "column": 9
+              },
+              "to": {
+                "line": 3,
+                "column": 11
+              }
+            },
+            "type": "Untyped",
+            "kind": "ValEx",
+            "value": {
+              "kind": "TlaDecimal",
+              "value": "1.5"
+            }
+          }
+        },
+        {
+          "source": {
+            "filename": "RejectRealLiteral",
+            "from": {
+              "line": 4,
+              "column": 1
+            },
+            "to": {
+              "line": 4,
+              "column": 19
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Scientific",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "RejectRealLiteral",
+              "from": {
+                "line": 4,
+                "column": 15
+              },
+              "to": {
+                "line": 4,
+                "column": 19
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "FUN_APP",
+            "args": [
+              {
+                "source": {
+                  "filename": "RejectRealLiteral",
+                  "from": {
+                    "line": 4,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 4,
+                    "column": 15
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "RejectRealLiteral",
+                  "from": {
+                    "line": 4,
+                    "column": 17
+                  },
+                  "to": {
+                    "line": 4,
+                    "column": 19
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaStr",
+                  "value": "5e3"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

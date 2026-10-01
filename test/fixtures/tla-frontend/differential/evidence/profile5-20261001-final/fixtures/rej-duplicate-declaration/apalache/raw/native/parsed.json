@@ -1,0 +1,29 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "RejectDuplicateDeclaration",
+            "from": {
+              "line": 3,
+              "column": 10
+            },
+            "to": {
+              "line": 3,
+              "column": 10
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaConstDecl",
+          "name": "N"
+        }
+      ]
+    }
+  ]
+}

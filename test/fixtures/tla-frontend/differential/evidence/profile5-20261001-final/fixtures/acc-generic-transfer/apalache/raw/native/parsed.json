@@ -1,0 +1,2437 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 7,
+              "column": 5
+            },
+            "to": {
+              "line": 7,
+              "column": 16
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "sourceCursor"
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 11,
+              "column": 5
+            },
+            "to": {
+              "line": 11,
+              "column": 15
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "targetLimit"
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 13,
+              "column": 5
+            },
+            "to": {
+              "line": 13,
+              "column": 18
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "transferCursor"
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 16,
+              "column": 5
+            },
+            "to": {
+              "line": 16,
+              "column": 15
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "batchBuffer"
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 14,
+              "column": 5
+            },
+            "to": {
+              "line": 14,
+              "column": 14
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "auditTrail"
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 8,
+              "column": 5
+            },
+            "to": {
+              "line": 8,
+              "column": 15
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "sourceLimit"
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 12,
+              "column": 5
+            },
+            "to": {
+              "line": 12,
+              "column": 19
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "transferJournal"
+        },
+        {
+          "source": {
+            "filename": "GenericTransfer",
+            "from": {
+              "line": 6,
+              "column": 5
+            },
+            "to": {
+              "line": 6,
+              "column": 15
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "activeBatch"
+        },
+        {
+          "source": {
+            "filename": "GenericTransfer",
+            "from": {
+              "line": 12,
+              "column": 5
+            },
+            "to": {
+              "line": 12,
+              "column": 17
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "verifyPending"
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 15,
+              "column": 5
+            },
+            "to": {
+              "line": 15,
+              "column": 15
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "auditCursor"
+        },
+        {
+          "source": {
+            "filename": "GenericTransfer",
+            "from": {
+              "line": 10,
+              "column": 5
+            },
+            "to": {
+              "line": 10,
+              "column": 14
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "retryCount"
+        },
+        {
+          "source": {
+            "filename": "GenericTransfer",
+            "from": {
+              "line": 9,
+              "column": 5
+            },
+            "to": {
+              "line": 9,
+              "column": 15
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "stagedValue"
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 10,
+              "column": 5
+            },
+            "to": {
+              "line": 10,
+              "column": 16
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "targetCursor"
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 17,
+              "column": 5
+            },
+            "to": {
+              "line": 17,
+              "column": 14
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "batchCount"
+        },
+        {
+          "source": {
+            "filename": "GenericTransfer",
+            "from": {
+              "line": 11,
+              "column": 5
+            },
+            "to": {
+              "line": 11,
+              "column": 17
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "commitPending"
+        },
+        {
+          "source": {
+            "filename": "GenericTransfer",
+            "from": {
+              "line": 7,
+              "column": 5
+            },
+            "to": {
+              "line": 7,
+              "column": 14
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "batchStage"
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 9,
+              "column": 5
+            },
+            "to": {
+              "line": 9,
+              "column": 17
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "targetRecords"
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 6,
+              "column": 5
+            },
+            "to": {
+              "line": 6,
+              "column": 17
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "sourceRecords"
+        },
+        {
+          "source": {
+            "filename": "GenericTransfer",
+            "from": {
+              "line": 8,
+              "column": 5
+            },
+            "to": {
+              "line": 8,
+              "column": 13
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaVarDecl",
+          "name": "stagedKey"
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 19,
+              "column": 1
+            },
+            "to": {
+              "line": 31,
+              "column": 21
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "BaseInit",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "GenericBase",
+              "from": {
+                "line": 20,
+                "column": 5
+              },
+              "to": {
+                "line": 31,
+                "column": 21
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "AND",
+            "args": [
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 20,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 20,
+                    "column": 25
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 20,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 20,
+                        "column": 20
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "sourceRecords"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 20,
+                        "column": 24
+                      },
+                      "to": {
+                        "line": 20,
+                        "column": 25
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "SET_ENUM",
+                    "args": []
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 21,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 21,
+                    "column": 23
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 21,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 21,
+                        "column": 19
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "sourceCursor"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 21,
+                        "column": 23
+                      },
+                      "to": {
+                        "line": 21,
+                        "column": 23
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 22,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 22,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 22,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 22,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "sourceLimit"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 22,
+                        "column": 22
+                      },
+                      "to": {
+                        "line": 22,
+                        "column": 22
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 23,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 23,
+                    "column": 25
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 23,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 23,
+                        "column": 20
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "targetRecords"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 23,
+                        "column": 24
+                      },
+                      "to": {
+                        "line": 23,
+                        "column": 25
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "SET_ENUM",
+                    "args": []
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 24,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 24,
+                    "column": 23
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 24,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 24,
+                        "column": 19
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "targetCursor"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 24,
+                        "column": 23
+                      },
+                      "to": {
+                        "line": 24,
+                        "column": 23
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 25,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 25,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 25,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 25,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "targetLimit"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 25,
+                        "column": 22
+                      },
+                      "to": {
+                        "line": 25,
+                        "column": 22
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 26,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 26,
+                    "column": 27
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 26,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 26,
+                        "column": 22
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "transferJournal"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 26,
+                        "column": 26
+                      },
+                      "to": {
+                        "line": 26,
+                        "column": 27
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "SET_ENUM",
+                    "args": []
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 27,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 27,
+                    "column": 25
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 27,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 27,
+                        "column": 21
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "transferCursor"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 27,
+                        "column": 25
+                      },
+                      "to": {
+                        "line": 27,
+                        "column": 25
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 28,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 28,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 28,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 28,
+                        "column": 17
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "auditTrail"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 28,
+                        "column": 21
+                      },
+                      "to": {
+                        "line": 28,
+                        "column": 22
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "SET_ENUM",
+                    "args": []
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 29,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 29,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 29,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 29,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "auditCursor"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 29,
+                        "column": 22
+                      },
+                      "to": {
+                        "line": 29,
+                        "column": 22
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 30,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 30,
+                    "column": 23
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 30,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 30,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "batchBuffer"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 30,
+                        "column": 22
+                      },
+                      "to": {
+                        "line": 30,
+                        "column": 23
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "SET_ENUM",
+                    "args": []
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 31,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 31,
+                    "column": 21
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 31,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 31,
+                        "column": 17
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "batchCount"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 31,
+                        "column": 21
+                      },
+                      "to": {
+                        "line": 31,
+                        "column": 21
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "GenericBase",
+            "from": {
+              "line": 33,
+              "column": 1
+            },
+            "to": {
+              "line": 36,
+              "column": 66
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "BaseUnchanged",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "GenericBase",
+              "from": {
+                "line": 34,
+                "column": 5
+              },
+              "to": {
+                "line": 36,
+                "column": 66
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "UNCHANGED",
+            "args": [
+              {
+                "source": {
+                  "filename": "GenericBase",
+                  "from": {
+                    "line": 34,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 36,
+                    "column": 66
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "TUPLE",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 34,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 34,
+                        "column": 29
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "sourceRecords"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 34,
+                        "column": 32
+                      },
+                      "to": {
+                        "line": 34,
+                        "column": 43
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "sourceCursor"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 34,
+                        "column": 46
+                      },
+                      "to": {
+                        "line": 34,
+                        "column": 56
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "sourceLimit"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 34,
+                        "column": 59
+                      },
+                      "to": {
+                        "line": 34,
+                        "column": 71
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "targetRecords"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 35,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 35,
+                        "column": 28
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "targetCursor"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 35,
+                        "column": 31
+                      },
+                      "to": {
+                        "line": 35,
+                        "column": 41
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "targetLimit"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 35,
+                        "column": 44
+                      },
+                      "to": {
+                        "line": 35,
+                        "column": 58
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "transferJournal"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 35,
+                        "column": 61
+                      },
+                      "to": {
+                        "line": 35,
+                        "column": 74
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "transferCursor"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 36,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 36,
+                        "column": 26
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "auditTrail"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 36,
+                        "column": 29
+                      },
+                      "to": {
+                        "line": 36,
+                        "column": 39
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "auditCursor"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 36,
+                        "column": 42
+                      },
+                      "to": {
+                        "line": 36,
+                        "column": 52
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "batchBuffer"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericBase",
+                      "from": {
+                        "line": 36,
+                        "column": 55
+                      },
+                      "to": {
+                        "line": 36,
+                        "column": 64
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "batchCount"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "GenericTransfer",
+            "from": {
+              "line": 14,
+              "column": 1
+            },
+            "to": {
+              "line": 22,
+              "column": 28
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "TransferInit",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "GenericTransfer",
+              "from": {
+                "line": 15,
+                "column": 5
+              },
+              "to": {
+                "line": 22,
+                "column": 28
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "AND",
+            "args": [
+              {
+                "source": {
+                  "filename": "GenericTransfer",
+                  "from": {
+                    "line": 15,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 15,
+                    "column": 15
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "OPER_APP",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 15,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 15,
+                        "column": 15
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "BaseInit"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericTransfer",
+                  "from": {
+                    "line": 16,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 16,
+                    "column": 23
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 16,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 16,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "activeBatch"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 16,
+                        "column": 22
+                      },
+                      "to": {
+                        "line": 16,
+                        "column": 23
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "SET_ENUM",
+                    "args": []
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericTransfer",
+                  "from": {
+                    "line": 17,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 17,
+                    "column": 26
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 17,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 17,
+                        "column": 17
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "batchStage"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 17,
+                        "column": 21
+                      },
+                      "to": {
+                        "line": 17,
+                        "column": 26
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaStr",
+                      "value": "idle"
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericTransfer",
+                  "from": {
+                    "line": 18,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 18,
+                    "column": 20
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 18,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 18,
+                        "column": 16
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "stagedKey"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 18,
+                        "column": 20
+                      },
+                      "to": {
+                        "line": 18,
+                        "column": 20
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericTransfer",
+                  "from": {
+                    "line": 19,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 19,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 19,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 19,
+                        "column": 18
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "stagedValue"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 19,
+                        "column": 22
+                      },
+                      "to": {
+                        "line": 19,
+                        "column": 22
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericTransfer",
+                  "from": {
+                    "line": 20,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 20,
+                    "column": 21
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 20,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 20,
+                        "column": 17
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "retryCount"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 20,
+                        "column": 21
+                      },
+                      "to": {
+                        "line": 20,
+                        "column": 21
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericTransfer",
+                  "from": {
+                    "line": 21,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 21,
+                    "column": 28
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 21,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 21,
+                        "column": 20
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "commitPending"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 21,
+                        "column": 24
+                      },
+                      "to": {
+                        "line": 21,
+                        "column": 28
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaBool",
+                      "value": false
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericTransfer",
+                  "from": {
+                    "line": 22,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 22,
+                    "column": 28
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "EQ",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 22,
+                        "column": 8
+                      },
+                      "to": {
+                        "line": 22,
+                        "column": 20
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "verifyPending"
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 22,
+                        "column": 24
+                      },
+                      "to": {
+                        "line": 22,
+                        "column": 28
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaBool",
+                      "value": false
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "GenericTransfer",
+            "from": {
+              "line": 24,
+              "column": 1
+            },
+            "to": {
+              "line": 33,
+              "column": 67
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "TransferNext",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "GenericTransfer",
+              "from": {
+                "line": 25,
+                "column": 5
+              },
+              "to": {
+                "line": 33,
+                "column": 67
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "OR",
+            "args": [
+              {
+                "source": {
+                  "filename": "GenericTransfer",
+                  "from": {
+                    "line": 25,
+                    "column": 10
+                  },
+                  "to": {
+                    "line": 30,
+                    "column": 90
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "AND",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 25,
+                        "column": 10
+                      },
+                      "to": {
+                        "line": 29,
+                        "column": 34
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "AND",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "GenericTransfer",
+                          "from": {
+                            "line": 25,
+                            "column": 10
+                          },
+                          "to": {
+                            "line": 28,
+                            "column": 38
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "AND",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 25,
+                                "column": 10
+                              },
+                              "to": {
+                                "line": 27,
+                                "column": 71
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "OperEx",
+                            "oper": "UNCHANGED",
+                            "args": [
+                              {
+                                "source": {
+                                  "filename": "GenericTransfer",
+                                  "from": {
+                                    "line": 25,
+                                    "column": 20
+                                  },
+                                  "to": {
+                                    "line": 27,
+                                    "column": 71
+                                  }
+                                },
+                                "type": "Untyped",
+                                "kind": "OperEx",
+                                "oper": "TUPLE",
+                                "args": [
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 25,
+                                        "column": 22
+                                      },
+                                      "to": {
+                                        "line": 25,
+                                        "column": 34
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "sourceRecords"
+                                  },
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 25,
+                                        "column": 37
+                                      },
+                                      "to": {
+                                        "line": 25,
+                                        "column": 48
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "sourceCursor"
+                                  },
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 25,
+                                        "column": 51
+                                      },
+                                      "to": {
+                                        "line": 25,
+                                        "column": 61
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "sourceLimit"
+                                  },
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 25,
+                                        "column": 64
+                                      },
+                                      "to": {
+                                        "line": 25,
+                                        "column": 76
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "targetRecords"
+                                  },
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 26,
+                                        "column": 22
+                                      },
+                                      "to": {
+                                        "line": 26,
+                                        "column": 33
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "targetCursor"
+                                  },
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 26,
+                                        "column": 36
+                                      },
+                                      "to": {
+                                        "line": 26,
+                                        "column": 46
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "targetLimit"
+                                  },
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 26,
+                                        "column": 49
+                                      },
+                                      "to": {
+                                        "line": 26,
+                                        "column": 63
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "transferJournal"
+                                  },
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 26,
+                                        "column": 66
+                                      },
+                                      "to": {
+                                        "line": 26,
+                                        "column": 79
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "transferCursor"
+                                  },
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 27,
+                                        "column": 22
+                                      },
+                                      "to": {
+                                        "line": 27,
+                                        "column": 31
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "auditTrail"
+                                  },
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 27,
+                                        "column": 34
+                                      },
+                                      "to": {
+                                        "line": 27,
+                                        "column": 44
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "auditCursor"
+                                  },
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 27,
+                                        "column": 47
+                                      },
+                                      "to": {
+                                        "line": 27,
+                                        "column": 57
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "batchBuffer"
+                                  },
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 27,
+                                        "column": 60
+                                      },
+                                      "to": {
+                                        "line": 27,
+                                        "column": 69
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "batchCount"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 28,
+                                "column": 13
+                              },
+                              "to": {
+                                "line": 28,
+                                "column": 38
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "OperEx",
+                            "oper": "EQ",
+                            "args": [
+                              {
+                                "source": {
+                                  "filename": "GenericTransfer",
+                                  "from": {
+                                    "line": 28,
+                                    "column": 13
+                                  },
+                                  "to": {
+                                    "line": 28,
+                                    "column": 24
+                                  }
+                                },
+                                "type": "Untyped",
+                                "kind": "OperEx",
+                                "oper": "PRIME",
+                                "args": [
+                                  {
+                                    "source": {
+                                      "filename": "GenericTransfer",
+                                      "from": {
+                                        "line": 28,
+                                        "column": 13
+                                      },
+                                      "to": {
+                                        "line": 28,
+                                        "column": 23
+                                      }
+                                    },
+                                    "type": "Untyped",
+                                    "kind": "NameEx",
+                                    "name": "activeBatch"
+                                  }
+                                ]
+                              },
+                              {
+                                "source": {
+                                  "filename": "GenericTransfer",
+                                  "from": {
+                                    "line": 28,
+                                    "column": 28
+                                  },
+                                  "to": {
+                                    "line": 28,
+                                    "column": 38
+                                  }
+                                },
+                                "type": "Untyped",
+                                "kind": "NameEx",
+                                "name": "activeBatch"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "source": {
+                          "filename": "GenericTransfer",
+                          "from": {
+                            "line": 29,
+                            "column": 13
+                          },
+                          "to": {
+                            "line": 29,
+                            "column": 34
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "EQ",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 29,
+                                "column": 13
+                              },
+                              "to": {
+                                "line": 29,
+                                "column": 23
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "OperEx",
+                            "oper": "PRIME",
+                            "args": [
+                              {
+                                "source": {
+                                  "filename": "GenericTransfer",
+                                  "from": {
+                                    "line": 29,
+                                    "column": 13
+                                  },
+                                  "to": {
+                                    "line": 29,
+                                    "column": 22
+                                  }
+                                },
+                                "type": "Untyped",
+                                "kind": "NameEx",
+                                "name": "batchStage"
+                              }
+                            ]
+                          },
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 29,
+                                "column": 27
+                              },
+                              "to": {
+                                "line": 29,
+                                "column": 34
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "ValEx",
+                            "value": {
+                              "kind": "TlaStr",
+                              "value": "staged"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 30,
+                        "column": 13
+                      },
+                      "to": {
+                        "line": 30,
+                        "column": 90
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "UNCHANGED",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "GenericTransfer",
+                          "from": {
+                            "line": 30,
+                            "column": 23
+                          },
+                          "to": {
+                            "line": 30,
+                            "column": 90
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "TUPLE",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 30,
+                                "column": 25
+                              },
+                              "to": {
+                                "line": 30,
+                                "column": 33
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "stagedKey"
+                          },
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 30,
+                                "column": 36
+                              },
+                              "to": {
+                                "line": 30,
+                                "column": 46
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "stagedValue"
+                          },
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 30,
+                                "column": 49
+                              },
+                              "to": {
+                                "line": 30,
+                                "column": 58
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "retryCount"
+                          },
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 30,
+                                "column": 61
+                              },
+                              "to": {
+                                "line": 30,
+                                "column": 73
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "commitPending"
+                          },
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 30,
+                                "column": 76
+                              },
+                              "to": {
+                                "line": 30,
+                                "column": 88
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "verifyPending"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "GenericTransfer",
+                  "from": {
+                    "line": 31,
+                    "column": 10
+                  },
+                  "to": {
+                    "line": 33,
+                    "column": 65
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "AND",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 31,
+                        "column": 10
+                      },
+                      "to": {
+                        "line": 31,
+                        "column": 22
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "OPER_APP",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "GenericTransfer",
+                          "from": {
+                            "line": 31,
+                            "column": 10
+                          },
+                          "to": {
+                            "line": 31,
+                            "column": 22
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "BaseUnchanged"
+                      }
+                    ]
+                  },
+                  {
+                    "source": {
+                      "filename": "GenericTransfer",
+                      "from": {
+                        "line": 32,
+                        "column": 13
+                      },
+                      "to": {
+                        "line": 33,
+                        "column": 65
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "UNCHANGED",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "GenericTransfer",
+                          "from": {
+                            "line": 32,
+                            "column": 23
+                          },
+                          "to": {
+                            "line": 33,
+                            "column": 65
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "TUPLE",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 32,
+                                "column": 25
+                              },
+                              "to": {
+                                "line": 32,
+                                "column": 35
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "activeBatch"
+                          },
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 32,
+                                "column": 38
+                              },
+                              "to": {
+                                "line": 32,
+                                "column": 47
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "batchStage"
+                          },
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 32,
+                                "column": 50
+                              },
+                              "to": {
+                                "line": 32,
+                                "column": 58
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "stagedKey"
+                          },
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 32,
+                                "column": 61
+                              },
+                              "to": {
+                                "line": 32,
+                                "column": 71
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "stagedValue"
+                          },
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 33,
+                                "column": 24
+                              },
+                              "to": {
+                                "line": 33,
+                                "column": 33
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "retryCount"
+                          },
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 33,
+                                "column": 36
+                              },
+                              "to": {
+                                "line": 33,
+                                "column": 48
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "commitPending"
+                          },
+                          {
+                            "source": {
+                              "filename": "GenericTransfer",
+                              "from": {
+                                "line": 33,
+                                "column": 51
+                              },
+                              "to": {
+                                "line": 33,
+                                "column": 63
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "verifyPending"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

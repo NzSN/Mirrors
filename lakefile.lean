@@ -109,6 +109,13 @@ distribution. -/
 lean_exe model_interface_distribution_spec where
   root := `tools.ModelInterfaceDistributionSpec
 
+@[default_target]
+lean_exe trace_capture_spec where
+  root := `tools.TraceCaptureSpec
+  moreLinkObjs := #[`@/socket_shim_o, `@/tls_shim_o]
+  moreLinkLibs := #[`@/openssl_ssl, `@/openssl_crypto]
+  moreLinkArgs := sockLinkArgs
+
 /-- Development-time model-interface compiler CLI. -/
 @[default_target]
 lean_exe model_interface_gen where
@@ -349,6 +356,18 @@ script test do
   if validateClosure.exitCode != 0 then
     IO.eprintln validateClosure.stderr
     return validateClosure.exitCode
+  let traceCaptureSpec ← IO.Process.output
+    ({ cmd := ".lake/build/bin/trace_capture_spec" } : IO.Process.SpawnArgs)
+  IO.println traceCaptureSpec.stdout
+  if traceCaptureSpec.exitCode != 0 then
+    IO.eprintln traceCaptureSpec.stderr
+    return traceCaptureSpec.exitCode
+  let traceCaptureCli ← IO.Process.output
+    ({ cmd := "python3", args := #["tools/check-trace-capture.py"] } : IO.Process.SpawnArgs)
+  IO.println traceCaptureCli.stdout
+  if traceCaptureCli.exitCode != 0 then
+    IO.eprintln traceCaptureCli.stderr
+    return traceCaptureCli.exitCode
   let validateAsync ← IO.Process.output
     ({ cmd := "python3", args := #["tools/check-validate-async.py"] } : IO.Process.SpawnArgs)
   IO.println validateAsync.stdout

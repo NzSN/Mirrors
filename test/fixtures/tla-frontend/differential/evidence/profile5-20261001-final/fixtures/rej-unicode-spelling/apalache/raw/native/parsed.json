@@ -1,0 +1,272 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "RejectUnicodeSpelling",
+            "from": {
+              "line": 5,
+              "column": 1
+            },
+            "to": {
+              "line": 5,
+              "column": 19
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "And",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "RejectUnicodeSpelling",
+              "from": {
+                "line": 5,
+                "column": 8
+              },
+              "to": {
+                "line": 5,
+                "column": 19
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "AND",
+            "args": [
+              {
+                "source": {
+                  "filename": "RejectUnicodeSpelling",
+                  "from": {
+                    "line": 5,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 11
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaBool",
+                  "value": true
+                }
+              },
+              {
+                "source": {
+                  "filename": "RejectUnicodeSpelling",
+                  "from": {
+                    "line": 5,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 19
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaBool",
+                  "value": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "RejectUnicodeSpelling",
+            "from": {
+              "line": 6,
+              "column": 1
+            },
+            "to": {
+              "line": 6,
+              "column": 20
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Member",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "RejectUnicodeSpelling",
+              "from": {
+                "line": 6,
+                "column": 11
+              },
+              "to": {
+                "line": 6,
+                "column": 20
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "SET_IN",
+            "args": [
+              {
+                "source": {
+                  "filename": "RejectUnicodeSpelling",
+                  "from": {
+                    "line": 6,
+                    "column": 11
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 11
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "RejectUnicodeSpelling",
+                  "from": {
+                    "line": 6,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 20
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "SET_ENUM",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "RejectUnicodeSpelling",
+                      "from": {
+                        "line": 6,
+                        "column": 16
+                      },
+                      "to": {
+                        "line": 6,
+                        "column": 16
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "source": {
+                      "filename": "RejectUnicodeSpelling",
+                      "from": {
+                        "line": 6,
+                        "column": 19
+                      },
+                      "to": {
+                        "line": 6,
+                        "column": 19
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 2
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "RejectUnicodeSpelling",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 12
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Leq",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "RejectUnicodeSpelling",
+              "from": {
+                "line": 7,
+                "column": 8
+              },
+              "to": {
+                "line": 7,
+                "column": 12
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "LE",
+            "args": [
+              {
+                "source": {
+                  "filename": "RejectUnicodeSpelling",
+                  "from": {
+                    "line": 7,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 8
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "RejectUnicodeSpelling",
+                  "from": {
+                    "line": 7,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 12
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 2
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+Parsing file /tmp/mic-profile5-reference-final/rej-instance-invalid-substitution-sany-ihy4ct3l/input/BadSubRoot.tla
+Parsing file /tmp/mic-profile5-reference-final/rej-instance-invalid-substitution-sany-ihy4ct3l/input/BadSubChild.tla
+Semantic processing of module BadSubChild
+Semantic processing of module BadSubRoot
+Semantic errors:
+
+*** Errors: 2
+
+line 6, col 57 to line 6, col 69 of module BadSubRoot
+
+Identifier 'missingSymbol' is not a legal target of a substitution. 
+A legal target must be a declared CONSTANT or VARIABLE in the module being instantiated. 
+(Also, check for warnings about multiple declarations of this same identifier.)
+
+
+line 6, col 1 to line 6, col 82 of module BadSubRoot
+
+Substitution missing for symbol childState declared at line 4, col 10 to line 4, col 19 of module BadSubChild 
+and instantiated in module BadSubRoot.
+
+

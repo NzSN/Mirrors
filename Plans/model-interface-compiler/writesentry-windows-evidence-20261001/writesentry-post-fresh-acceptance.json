@@ -1,0 +1,30 @@
+{
+  "runnerSha256": "061edd197a69c581fb9d675ead59d5d987a95c8d6a400a8abc53d9ebb8371be8",
+  "mirrorSha256": "e6e98919ed51a4119c7529c0a098e4402bda45d787b137b427b933fb75c7ca8f",
+  "checks": [
+    {
+      "check": "post-fresh-server-replay",
+      "exitCode": 0,
+      "log": "/tmp/writesentry-post-fresh-server-replay.log",
+      "sha256": "b400eb80ade3ed2dea92af6164aa5aec160abcea4c14d54158a8609337976864"
+    },
+    {
+      "check": "post-fresh-drop-reservation",
+      "exitCode": 0,
+      "log": "/tmp/writesentry-post-fresh-drop-reservation.log",
+      "sha256": "7279448d9a97a47b16cd62f05a47e757da2912e4504e6d4e0593fb88f4d20554"
+    },
+    {
+      "check": "post-fresh-skip-clear",
+      "exitCode": 0,
+      "log": "/tmp/writesentry-post-fresh-skip-clear.log",
+      "sha256": "98d37a3109af266e3546d019d1bf8a183730c7f602423f41840a65c1960ebb62"
+    },
+    {
+      "check": "post-fresh-allow-foreign-writer",
+      "exitCode": 0,
+      "log": "/tmp/writesentry-post-fresh-allow-foreign-writer.log",
+      "sha256": "b3f937147611342467f884c7e8ff651d347f07e6281079082ae9b2cc346adbdf"
+    }
+  ]
+}

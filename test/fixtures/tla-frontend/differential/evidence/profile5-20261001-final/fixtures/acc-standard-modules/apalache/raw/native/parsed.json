@@ -1,0 +1,3532 @@
+{
+  "name": "ApalacheIR",
+  "version": "1.0",
+  "description": "https://apalache-mc.org/docs/adr/005adr-json.html",
+  "modules": [
+    {
+      "kind": "TlaModule",
+      "name": "parsed",
+      "declarations": [
+        {
+          "source": {
+            "filename": "Sequences",
+            "from": {
+              "line": 99,
+              "column": 1
+            },
+            "to": {
+              "line": 105,
+              "column": 48
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "SelectSeq",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__s",
+              "arity": 0
+            },
+            {
+              "kind": "OperParam",
+              "name": "__Test",
+              "arity": 1
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "Sequences",
+              "from": {
+                "line": 100,
+                "column": 5
+              },
+              "to": {
+                "line": 105,
+                "column": 48
+              }
+            },
+            "type": "Untyped",
+            "kind": "LetInEx",
+            "body": {
+              "source": {
+                "filename": "Sequences",
+                "from": {
+                  "line": 105,
+                  "column": 5
+                },
+                "to": {
+                  "line": 105,
+                  "column": 48
+                }
+              },
+              "type": "Untyped",
+              "kind": "OperEx",
+              "oper": "Apalache!ApaFoldSeqLeft",
+              "args": [
+                {
+                  "source": {
+                    "filename": "Sequences",
+                    "from": {
+                      "line": 105,
+                      "column": 23
+                    },
+                    "to": {
+                      "line": 105,
+                      "column": 36
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "NameEx",
+                  "name": "__AppendIfTest"
+                },
+                {
+                  "source": {
+                    "filename": "Sequences",
+                    "from": {
+                      "line": 105,
+                      "column": 39
+                    },
+                    "to": {
+                      "line": 105,
+                      "column": 42
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "OperEx",
+                  "oper": "TUPLE",
+                  "args": []
+                },
+                {
+                  "source": {
+                    "filename": "Sequences",
+                    "from": {
+                      "line": 105,
+                      "column": 45
+                    },
+                    "to": {
+                      "line": 105,
+                      "column": 47
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "NameEx",
+                  "name": "__s"
+                }
+              ]
+            },
+            "decls": [
+              {
+                "source": {
+                  "filename": "Sequences",
+                  "from": {
+                    "line": 100,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 103,
+                    "column": 18
+                  }
+                },
+                "type": "Untyped",
+                "kind": "TlaOperDecl",
+                "name": "__AppendIfTest",
+                "formalParams": [
+                  {
+                    "kind": "OperParam",
+                    "name": "__res",
+                    "arity": 0
+                  },
+                  {
+                    "kind": "OperParam",
+                    "name": "__e",
+                    "arity": 0
+                  }
+                ],
+                "isRecursive": false,
+                "body": {
+                  "source": {
+                    "filename": "Sequences",
+                    "from": {
+                      "line": 101,
+                      "column": 9
+                    },
+                    "to": {
+                      "line": 103,
+                      "column": 18
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "OperEx",
+                  "oper": "IF_THEN_ELSE",
+                  "args": [
+                    {
+                      "source": {
+                        "filename": "Sequences",
+                        "from": {
+                          "line": 101,
+                          "column": 12
+                        },
+                        "to": {
+                          "line": 101,
+                          "column": 22
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "OperEx",
+                      "oper": "OPER_APP",
+                      "args": [
+                        {
+                          "source": {
+                            "filename": "Sequences",
+                            "from": {
+                              "line": 101,
+                              "column": 12
+                            },
+                            "to": {
+                              "line": 101,
+                              "column": 22
+                            }
+                          },
+                          "type": "Untyped",
+                          "kind": "NameEx",
+                          "name": "__Test"
+                        },
+                        {
+                          "source": {
+                            "filename": "Sequences",
+                            "from": {
+                              "line": 101,
+                              "column": 19
+                            },
+                            "to": {
+                              "line": 101,
+                              "column": 21
+                            }
+                          },
+                          "type": "Untyped",
+                          "kind": "NameEx",
+                          "name": "__e"
+                        }
+                      ]
+                    },
+                    {
+                      "source": {
+                        "filename": "Sequences",
+                        "from": {
+                          "line": 102,
+                          "column": 14
+                        },
+                        "to": {
+                          "line": 102,
+                          "column": 31
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "OperEx",
+                      "oper": "Sequences!Append",
+                      "args": [
+                        {
+                          "source": {
+                            "filename": "Sequences",
+                            "from": {
+                              "line": 102,
+                              "column": 21
+                            },
+                            "to": {
+                              "line": 102,
+                              "column": 25
+                            }
+                          },
+                          "type": "Untyped",
+                          "kind": "NameEx",
+                          "name": "__res"
+                        },
+                        {
+                          "source": {
+                            "filename": "Sequences",
+                            "from": {
+                              "line": 102,
+                              "column": 28
+                            },
+                            "to": {
+                              "line": 102,
+                              "column": 30
+                            }
+                          },
+                          "type": "Untyped",
+                          "kind": "NameEx",
+                          "name": "__e"
+                        }
+                      ]
+                    },
+                    {
+                      "source": {
+                        "filename": "Sequences",
+                        "from": {
+                          "line": 103,
+                          "column": 14
+                        },
+                        "to": {
+                          "line": 103,
+                          "column": 18
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "NameEx",
+                      "name": "__res"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 24,
+              "column": 1
+            },
+            "to": {
+              "line": 25,
+              "column": 37
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": ":>",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__key",
+              "arity": 0
+            },
+            {
+              "kind": "OperParam",
+              "name": "__value",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 25,
+                "column": 5
+              },
+              "to": {
+                "line": 25,
+                "column": 37
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "FUN_CTOR",
+            "args": [
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 25,
+                    "column": 29
+                  },
+                  "to": {
+                    "line": 25,
+                    "column": 35
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "__value"
+              },
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 25,
+                    "column": 5
+                  },
+                  "to": {
+                    "line": 25,
+                    "column": 37
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "__x"
+              },
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 25,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 25,
+                    "column": 23
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "SET_ENUM",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "TLC",
+                      "from": {
+                        "line": 25,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 25,
+                        "column": 21
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "__key"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 30,
+              "column": 1
+            },
+            "to": {
+              "line": 41,
+              "column": 33
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "@@",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__f1",
+              "arity": 0
+            },
+            {
+              "kind": "OperParam",
+              "name": "__f2",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 32,
+                "column": 5
+              },
+              "to": {
+                "line": 41,
+                "column": 33
+              }
+            },
+            "type": "Untyped",
+            "kind": "LetInEx",
+            "body": {
+              "source": {
+                "filename": "TLC",
+                "from": {
+                  "line": 35,
+                  "column": 5
+                },
+                "to": {
+                  "line": 41,
+                  "column": 33
+                }
+              },
+              "type": "Untyped",
+              "kind": "LetInEx",
+              "body": {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 38,
+                    "column": 5
+                  },
+                  "to": {
+                    "line": 41,
+                    "column": 33
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "FUN_CTOR",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "TLC",
+                      "from": {
+                        "line": 39,
+                        "column": 13
+                      },
+                      "to": {
+                        "line": 41,
+                        "column": 32
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "IF_THEN_ELSE",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "TLC",
+                          "from": {
+                            "line": 39,
+                            "column": 16
+                          },
+                          "to": {
+                            "line": 39,
+                            "column": 27
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "SET_IN",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "TLC",
+                              "from": {
+                                "line": 39,
+                                "column": 16
+                              },
+                              "to": {
+                                "line": 39,
+                                "column": 18
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "__x"
+                          },
+                          {
+                            "source": {
+                              "filename": "TLC",
+                              "from": {
+                                "line": 39,
+                                "column": 24
+                              },
+                              "to": {
+                                "line": 39,
+                                "column": 27
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "OperEx",
+                            "oper": "OPER_APP",
+                            "args": [
+                              {
+                                "source": {
+                                  "filename": "TLC",
+                                  "from": {
+                                    "line": 39,
+                                    "column": 24
+                                  },
+                                  "to": {
+                                    "line": 39,
+                                    "column": 27
+                                  }
+                                },
+                                "type": "Untyped",
+                                "kind": "NameEx",
+                                "name": "__d1"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "source": {
+                          "filename": "TLC",
+                          "from": {
+                            "line": 40,
+                            "column": 18
+                          },
+                          "to": {
+                            "line": 40,
+                            "column": 32
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "FUN_APP",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "TLC",
+                              "from": {
+                                "line": 40,
+                                "column": 18
+                              },
+                              "to": {
+                                "line": 40,
+                                "column": 27
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "OperEx",
+                            "oper": "OPER_APP",
+                            "args": [
+                              {
+                                "source": {
+                                  "filename": "TLC",
+                                  "from": {
+                                    "line": 40,
+                                    "column": 18
+                                  },
+                                  "to": {
+                                    "line": 40,
+                                    "column": 27
+                                  }
+                                },
+                                "type": "Untyped",
+                                "kind": "NameEx",
+                                "name": "__f1_cache"
+                              }
+                            ]
+                          },
+                          {
+                            "source": {
+                              "filename": "TLC",
+                              "from": {
+                                "line": 40,
+                                "column": 29
+                              },
+                              "to": {
+                                "line": 40,
+                                "column": 31
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "__x"
+                          }
+                        ]
+                      },
+                      {
+                        "source": {
+                          "filename": "TLC",
+                          "from": {
+                            "line": 41,
+                            "column": 18
+                          },
+                          "to": {
+                            "line": 41,
+                            "column": 32
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "FUN_APP",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "TLC",
+                              "from": {
+                                "line": 41,
+                                "column": 18
+                              },
+                              "to": {
+                                "line": 41,
+                                "column": 27
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "OperEx",
+                            "oper": "OPER_APP",
+                            "args": [
+                              {
+                                "source": {
+                                  "filename": "TLC",
+                                  "from": {
+                                    "line": 41,
+                                    "column": 18
+                                  },
+                                  "to": {
+                                    "line": 41,
+                                    "column": 27
+                                  }
+                                },
+                                "type": "Untyped",
+                                "kind": "NameEx",
+                                "name": "__f2_cache"
+                              }
+                            ]
+                          },
+                          {
+                            "source": {
+                              "filename": "TLC",
+                              "from": {
+                                "line": 41,
+                                "column": 29
+                              },
+                              "to": {
+                                "line": 41,
+                                "column": 31
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "__x"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "source": {
+                      "filename": "TLC",
+                      "from": {
+                        "line": 38,
+                        "column": 5
+                      },
+                      "to": {
+                        "line": 41,
+                        "column": 33
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "__x"
+                  },
+                  {
+                    "source": {
+                      "filename": "TLC",
+                      "from": {
+                        "line": 38,
+                        "column": 14
+                      },
+                      "to": {
+                        "line": 38,
+                        "column": 29
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "SET_UNION2",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "TLC",
+                          "from": {
+                            "line": 38,
+                            "column": 14
+                          },
+                          "to": {
+                            "line": 38,
+                            "column": 17
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "OPER_APP",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "TLC",
+                              "from": {
+                                "line": 38,
+                                "column": 14
+                              },
+                              "to": {
+                                "line": 38,
+                                "column": 17
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "__d1"
+                          }
+                        ]
+                      },
+                      {
+                        "source": {
+                          "filename": "TLC",
+                          "from": {
+                            "line": 38,
+                            "column": 26
+                          },
+                          "to": {
+                            "line": 38,
+                            "column": 29
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "OPER_APP",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "TLC",
+                              "from": {
+                                "line": 38,
+                                "column": 26
+                              },
+                              "to": {
+                                "line": 38,
+                                "column": 29
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "__d2"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "decls": [
+                {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 35,
+                      "column": 9
+                    },
+                    "to": {
+                      "line": 35,
+                      "column": 33
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "TlaOperDecl",
+                  "name": "__d1",
+                  "formalParams": [],
+                  "isRecursive": false,
+                  "body": {
+                    "source": {
+                      "filename": "TLC",
+                      "from": {
+                        "line": 35,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 35,
+                        "column": 33
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "DOMAIN",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "TLC",
+                          "from": {
+                            "line": 35,
+                            "column": 24
+                          },
+                          "to": {
+                            "line": 35,
+                            "column": 33
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "OPER_APP",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "TLC",
+                              "from": {
+                                "line": 35,
+                                "column": 24
+                              },
+                              "to": {
+                                "line": 35,
+                                "column": 33
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "__f1_cache"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 36,
+                      "column": 9
+                    },
+                    "to": {
+                      "line": 36,
+                      "column": 33
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "TlaOperDecl",
+                  "name": "__d2",
+                  "formalParams": [],
+                  "isRecursive": false,
+                  "body": {
+                    "source": {
+                      "filename": "TLC",
+                      "from": {
+                        "line": 36,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 36,
+                        "column": 33
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "DOMAIN",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "TLC",
+                          "from": {
+                            "line": 36,
+                            "column": 24
+                          },
+                          "to": {
+                            "line": 36,
+                            "column": 33
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "OPER_APP",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "TLC",
+                              "from": {
+                                "line": 36,
+                                "column": 24
+                              },
+                              "to": {
+                                "line": 36,
+                                "column": 33
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "__f2_cache"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "decls": [
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 32,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 32,
+                    "column": 26
+                  }
+                },
+                "type": "Untyped",
+                "kind": "TlaOperDecl",
+                "name": "__f1_cache",
+                "formalParams": [],
+                "isRecursive": false,
+                "body": {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 32,
+                      "column": 23
+                    },
+                    "to": {
+                      "line": 32,
+                      "column": 26
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "NameEx",
+                  "name": "__f1"
+                }
+              },
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 33,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 33,
+                    "column": 26
+                  }
+                },
+                "type": "Untyped",
+                "kind": "TlaOperDecl",
+                "name": "__f2_cache",
+                "formalParams": [],
+                "isRecursive": false,
+                "body": {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 33,
+                      "column": 23
+                    },
+                    "to": {
+                      "line": 33,
+                      "column": 26
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "NameEx",
+                  "name": "__f2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 46,
+              "column": 1
+            },
+            "to": {
+              "line": 47,
+              "column": 9
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Print",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__out",
+              "arity": 0
+            },
+            {
+              "kind": "OperParam",
+              "name": "__val",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 47,
+                "column": 5
+              },
+              "to": {
+                "line": 47,
+                "column": 9
+              }
+            },
+            "type": "Untyped",
+            "kind": "NameEx",
+            "name": "__val"
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 52,
+              "column": 1
+            },
+            "to": {
+              "line": 53,
+              "column": 8
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "PrintT",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__out",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 53,
+                "column": 5
+              },
+              "to": {
+                "line": 53,
+                "column": 8
+              }
+            },
+            "type": "Untyped",
+            "kind": "ValEx",
+            "value": {
+              "kind": "TlaBool",
+              "value": true
+            }
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 59,
+              "column": 1
+            },
+            "to": {
+              "line": 60,
+              "column": 10
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Assert",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__cond",
+              "arity": 0
+            },
+            {
+              "kind": "OperParam",
+              "name": "__out",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 60,
+                "column": 5
+              },
+              "to": {
+                "line": 60,
+                "column": 10
+              }
+            },
+            "type": "Untyped",
+            "kind": "NameEx",
+            "name": "__cond"
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 65,
+              "column": 1
+            },
+            "to": {
+              "line": 68,
+              "column": 7
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "JavaTime",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 68,
+                "column": 5
+              },
+              "to": {
+                "line": 68,
+                "column": 7
+              }
+            },
+            "type": "Untyped",
+            "kind": "ValEx",
+            "value": {
+              "kind": "TlaInt",
+              "value": 123
+            }
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 75,
+              "column": 1
+            },
+            "to": {
+              "line": 79,
+              "column": 32
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "TLCGet",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__i",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 76,
+                "column": 5
+              },
+              "to": {
+                "line": 79,
+                "column": 32
+              }
+            },
+            "type": "Untyped",
+            "kind": "LetInEx",
+            "body": {
+              "source": {
+                "filename": "TLC",
+                "from": {
+                  "line": 79,
+                  "column": 5
+                },
+                "to": {
+                  "line": 79,
+                  "column": 32
+                }
+              },
+              "type": "Untyped",
+              "kind": "OperEx",
+              "oper": "CHOOSE3",
+              "args": [
+                {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 79,
+                      "column": 5
+                    },
+                    "to": {
+                      "line": 79,
+                      "column": 32
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "NameEx",
+                  "name": "__x"
+                },
+                {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 79,
+                      "column": 20
+                    },
+                    "to": {
+                      "line": 79,
+                      "column": 26
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "OperEx",
+                  "oper": "OPER_APP",
+                  "args": [
+                    {
+                      "source": {
+                        "filename": "TLC",
+                        "from": {
+                          "line": 79,
+                          "column": 20
+                        },
+                        "to": {
+                          "line": 79,
+                          "column": 26
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "NameEx",
+                      "name": "__Empty"
+                    }
+                  ]
+                },
+                {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 79,
+                      "column": 29
+                    },
+                    "to": {
+                      "line": 79,
+                      "column": 32
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "ValEx",
+                  "value": {
+                    "kind": "TlaBool",
+                    "value": true
+                  }
+                }
+              ]
+            },
+            "decls": [
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 77,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 77,
+                    "column": 21
+                  }
+                },
+                "type": "Untyped",
+                "kind": "TlaOperDecl",
+                "name": "__Empty",
+                "formalParams": [],
+                "isRecursive": false,
+                "body": {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 77,
+                      "column": 20
+                    },
+                    "to": {
+                      "line": 77,
+                      "column": 21
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "OperEx",
+                  "oper": "SET_ENUM",
+                  "args": []
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 87,
+              "column": 1
+            },
+            "to": {
+              "line": 88,
+              "column": 8
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "TLCSet",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__i",
+              "arity": 0
+            },
+            {
+              "kind": "OperParam",
+              "name": "__v",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 88,
+                "column": 5
+              },
+              "to": {
+                "line": 88,
+                "column": 8
+              }
+            },
+            "type": "Untyped",
+            "kind": "ValEx",
+            "value": {
+              "kind": "TlaBool",
+              "value": true
+            }
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 91,
+              "column": 1
+            },
+            "to": {
+              "line": 93,
+              "column": 76
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Permutations",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__S",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 93,
+                "column": 4
+              },
+              "to": {
+                "line": 93,
+                "column": 76
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "SET_FILTER",
+            "args": [
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 93,
+                    "column": 4
+                  },
+                  "to": {
+                    "line": 93,
+                    "column": 76
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "__f"
+              },
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 93,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 93,
+                    "column": 24
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "FUN_SET",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "TLC",
+                      "from": {
+                        "line": 93,
+                        "column": 14
+                      },
+                      "to": {
+                        "line": 93,
+                        "column": 16
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "__S"
+                  },
+                  {
+                    "source": {
+                      "filename": "TLC",
+                      "from": {
+                        "line": 93,
+                        "column": 21
+                      },
+                      "to": {
+                        "line": 93,
+                        "column": 23
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "__S"
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 93,
+                    "column": 28
+                  },
+                  "to": {
+                    "line": 93,
+                    "column": 75
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "FORALL3",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "TLC",
+                      "from": {
+                        "line": 93,
+                        "column": 28
+                      },
+                      "to": {
+                        "line": 93,
+                        "column": 75
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "__w"
+                  },
+                  {
+                    "source": {
+                      "filename": "TLC",
+                      "from": {
+                        "line": 93,
+                        "column": 39
+                      },
+                      "to": {
+                        "line": 93,
+                        "column": 41
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "__S"
+                  },
+                  {
+                    "source": {
+                      "filename": "TLC",
+                      "from": {
+                        "line": 93,
+                        "column": 45
+                      },
+                      "to": {
+                        "line": 93,
+                        "column": 75
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "OperEx",
+                    "oper": "EXISTS3",
+                    "args": [
+                      {
+                        "source": {
+                          "filename": "TLC",
+                          "from": {
+                            "line": 93,
+                            "column": 45
+                          },
+                          "to": {
+                            "line": 93,
+                            "column": 75
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "__v"
+                      },
+                      {
+                        "source": {
+                          "filename": "TLC",
+                          "from": {
+                            "line": 93,
+                            "column": 56
+                          },
+                          "to": {
+                            "line": 93,
+                            "column": 58
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "NameEx",
+                        "name": "__S"
+                      },
+                      {
+                        "source": {
+                          "filename": "TLC",
+                          "from": {
+                            "line": 93,
+                            "column": 62
+                          },
+                          "to": {
+                            "line": 93,
+                            "column": 75
+                          }
+                        },
+                        "type": "Untyped",
+                        "kind": "OperEx",
+                        "oper": "EQ",
+                        "args": [
+                          {
+                            "source": {
+                              "filename": "TLC",
+                              "from": {
+                                "line": 93,
+                                "column": 62
+                              },
+                              "to": {
+                                "line": 93,
+                                "column": 69
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "OperEx",
+                            "oper": "FUN_APP",
+                            "args": [
+                              {
+                                "source": {
+                                  "filename": "TLC",
+                                  "from": {
+                                    "line": 93,
+                                    "column": 62
+                                  },
+                                  "to": {
+                                    "line": 93,
+                                    "column": 64
+                                  }
+                                },
+                                "type": "Untyped",
+                                "kind": "NameEx",
+                                "name": "__f"
+                              },
+                              {
+                                "source": {
+                                  "filename": "TLC",
+                                  "from": {
+                                    "line": 93,
+                                    "column": 66
+                                  },
+                                  "to": {
+                                    "line": 93,
+                                    "column": 68
+                                  }
+                                },
+                                "type": "Untyped",
+                                "kind": "NameEx",
+                                "name": "__v"
+                              }
+                            ]
+                          },
+                          {
+                            "source": {
+                              "filename": "TLC",
+                              "from": {
+                                "line": 93,
+                                "column": 73
+                              },
+                              "to": {
+                                "line": 93,
+                                "column": 75
+                              }
+                            },
+                            "type": "Untyped",
+                            "kind": "NameEx",
+                            "name": "__w"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 109,
+              "column": 1
+            },
+            "to": {
+              "line": 110,
+              "column": 29
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "RandomElement",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__s",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 110,
+                "column": 5
+              },
+              "to": {
+                "line": 110,
+                "column": 29
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "CHOOSE3",
+            "args": [
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 110,
+                    "column": 5
+                  },
+                  "to": {
+                    "line": 110,
+                    "column": 29
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "__x"
+              },
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 110,
+                    "column": 20
+                  },
+                  "to": {
+                    "line": 110,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "__s"
+              },
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 110,
+                    "column": 26
+                  },
+                  "to": {
+                    "line": 110,
+                    "column": 29
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaBool",
+                  "value": true
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 115,
+              "column": 1
+            },
+            "to": {
+              "line": 119,
+              "column": 32
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Any",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 116,
+                "column": 5
+              },
+              "to": {
+                "line": 119,
+                "column": 32
+              }
+            },
+            "type": "Untyped",
+            "kind": "LetInEx",
+            "body": {
+              "source": {
+                "filename": "TLC",
+                "from": {
+                  "line": 119,
+                  "column": 5
+                },
+                "to": {
+                  "line": 119,
+                  "column": 32
+                }
+              },
+              "type": "Untyped",
+              "kind": "OperEx",
+              "oper": "CHOOSE3",
+              "args": [
+                {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 119,
+                      "column": 5
+                    },
+                    "to": {
+                      "line": 119,
+                      "column": 32
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "NameEx",
+                  "name": "__x"
+                },
+                {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 119,
+                      "column": 20
+                    },
+                    "to": {
+                      "line": 119,
+                      "column": 26
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "OperEx",
+                  "oper": "OPER_APP",
+                  "args": [
+                    {
+                      "source": {
+                        "filename": "TLC",
+                        "from": {
+                          "line": 119,
+                          "column": 20
+                        },
+                        "to": {
+                          "line": 119,
+                          "column": 26
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "NameEx",
+                      "name": "__Empty"
+                    }
+                  ]
+                },
+                {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 119,
+                      "column": 29
+                    },
+                    "to": {
+                      "line": 119,
+                      "column": 32
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "ValEx",
+                  "value": {
+                    "kind": "TlaBool",
+                    "value": true
+                  }
+                }
+              ]
+            },
+            "decls": [
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 117,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 117,
+                    "column": 21
+                  }
+                },
+                "type": "Untyped",
+                "kind": "TlaOperDecl",
+                "name": "__Empty",
+                "formalParams": [],
+                "isRecursive": false,
+                "body": {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 117,
+                      "column": 20
+                    },
+                    "to": {
+                      "line": 117,
+                      "column": 21
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "OperEx",
+                  "oper": "SET_ENUM",
+                  "args": []
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 122,
+              "column": 1
+            },
+            "to": {
+              "line": 122,
+              "column": 19
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "ToString",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__v",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 122,
+                "column": 18
+              },
+              "to": {
+                "line": 122,
+                "column": 19
+              }
+            },
+            "type": "Untyped",
+            "kind": "ValEx",
+            "value": {
+              "kind": "TlaStr",
+              "value": ""
+            }
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 127,
+              "column": 1
+            },
+            "to": {
+              "line": 127,
+              "column": 19
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "TLCEval",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__v",
+              "arity": 0
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 127,
+                "column": 17
+              },
+              "to": {
+                "line": 127,
+                "column": 19
+              }
+            },
+            "type": "Untyped",
+            "kind": "NameEx",
+            "name": "__v"
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptStandardModules",
+            "from": {
+              "line": 5,
+              "column": 1
+            },
+            "to": {
+              "line": 5,
+              "column": 31
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Positive",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptStandardModules",
+              "from": {
+                "line": 5,
+                "column": 13
+              },
+              "to": {
+                "line": 5,
+                "column": 31
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "SET_FILTER",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptStandardModules",
+                  "from": {
+                    "line": 5,
+                    "column": 13
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 31
+                  }
+                },
+                "type": "Untyped",
+                "kind": "NameEx",
+                "name": "n"
+              },
+              {
+                "source": {
+                  "filename": "AcceptStandardModules",
+                  "from": {
+                    "line": 5,
+                    "column": 20
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaNatSet"
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptStandardModules",
+                  "from": {
+                    "line": 5,
+                    "column": 26
+                  },
+                  "to": {
+                    "line": 5,
+                    "column": 30
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "GT",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptStandardModules",
+                      "from": {
+                        "line": 5,
+                        "column": 26
+                      },
+                      "to": {
+                        "line": 5,
+                        "column": 26
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "NameEx",
+                    "name": "n"
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptStandardModules",
+                      "from": {
+                        "line": 5,
+                        "column": 30
+                      },
+                      "to": {
+                        "line": 5,
+                        "column": 30
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 0
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptStandardModules",
+            "from": {
+              "line": 6,
+              "column": 1
+            },
+            "to": {
+              "line": 6,
+              "column": 28
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Sequence",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptStandardModules",
+              "from": {
+                "line": 6,
+                "column": 13
+              },
+              "to": {
+                "line": 6,
+                "column": 28
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "Sequences!Append",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptStandardModules",
+                  "from": {
+                    "line": 6,
+                    "column": 20
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 24
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "TUPLE",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptStandardModules",
+                      "from": {
+                        "line": 6,
+                        "column": 22
+                      },
+                      "to": {
+                        "line": 6,
+                        "column": 22
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "source": {
+                  "filename": "AcceptStandardModules",
+                  "from": {
+                    "line": 6,
+                    "column": 27
+                  },
+                  "to": {
+                    "line": 6,
+                    "column": 27
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 2
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptStandardModules",
+            "from": {
+              "line": 7,
+              "column": 1
+            },
+            "to": {
+              "line": 7,
+              "column": 23
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "First",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptStandardModules",
+              "from": {
+                "line": 7,
+                "column": 10
+              },
+              "to": {
+                "line": 7,
+                "column": 23
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "Sequences!Head",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptStandardModules",
+                  "from": {
+                    "line": 7,
+                    "column": 15
+                  },
+                  "to": {
+                    "line": 7,
+                    "column": 22
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "TUPLE",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptStandardModules",
+                      "from": {
+                        "line": 7,
+                        "column": 17
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 17
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptStandardModules",
+                      "from": {
+                        "line": 7,
+                        "column": 20
+                      },
+                      "to": {
+                        "line": 7,
+                        "column": 20
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 2
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptStandardModules",
+            "from": {
+              "line": 8,
+              "column": 1
+            },
+            "to": {
+              "line": 8,
+              "column": 22
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Rest",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptStandardModules",
+              "from": {
+                "line": 8,
+                "column": 9
+              },
+              "to": {
+                "line": 8,
+                "column": 22
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "Sequences!Tail",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptStandardModules",
+                  "from": {
+                    "line": 8,
+                    "column": 14
+                  },
+                  "to": {
+                    "line": 8,
+                    "column": 21
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "TUPLE",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptStandardModules",
+                      "from": {
+                        "line": 8,
+                        "column": 16
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 16
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptStandardModules",
+                      "from": {
+                        "line": 8,
+                        "column": 19
+                      },
+                      "to": {
+                        "line": 8,
+                        "column": 19
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 2
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptStandardModules",
+            "from": {
+              "line": 9,
+              "column": 1
+            },
+            "to": {
+              "line": 9,
+              "column": 27
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Size",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptStandardModules",
+              "from": {
+                "line": 9,
+                "column": 9
+              },
+              "to": {
+                "line": 9,
+                "column": 27
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "FiniteSets!Cardinality",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptStandardModules",
+                  "from": {
+                    "line": 9,
+                    "column": 21
+                  },
+                  "to": {
+                    "line": 9,
+                    "column": 26
+                  }
+                },
+                "type": "Untyped",
+                "kind": "OperEx",
+                "oper": "SET_ENUM",
+                "args": [
+                  {
+                    "source": {
+                      "filename": "AcceptStandardModules",
+                      "from": {
+                        "line": 9,
+                        "column": 22
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 22
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "source": {
+                      "filename": "AcceptStandardModules",
+                      "from": {
+                        "line": 9,
+                        "column": 25
+                      },
+                      "to": {
+                        "line": 9,
+                        "column": 25
+                      }
+                    },
+                    "type": "Untyped",
+                    "kind": "ValEx",
+                    "value": {
+                      "kind": "TlaInt",
+                      "value": 2
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "AcceptStandardModules",
+            "from": {
+              "line": 10,
+              "column": 1
+            },
+            "to": {
+              "line": 10,
+              "column": 12
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "Sum",
+          "formalParams": [],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "AcceptStandardModules",
+              "from": {
+                "line": 10,
+                "column": 8
+              },
+              "to": {
+                "line": 10,
+                "column": 12
+              }
+            },
+            "type": "Untyped",
+            "kind": "OperEx",
+            "oper": "PLUS",
+            "args": [
+              {
+                "source": {
+                  "filename": "AcceptStandardModules",
+                  "from": {
+                    "line": 10,
+                    "column": 8
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 8
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 1
+                }
+              },
+              {
+                "source": {
+                  "filename": "AcceptStandardModules",
+                  "from": {
+                    "line": 10,
+                    "column": 12
+                  },
+                  "to": {
+                    "line": 10,
+                    "column": 12
+                  }
+                },
+                "type": "Untyped",
+                "kind": "ValEx",
+                "value": {
+                  "kind": "TlaInt",
+                  "value": 2
+                }
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "filename": "TLC",
+            "from": {
+              "line": 98,
+              "column": 1
+            },
+            "to": {
+              "line": 104,
+              "column": 49
+            }
+          },
+          "type": "Untyped",
+          "kind": "TlaOperDecl",
+          "name": "SortSeq",
+          "formalParams": [
+            {
+              "kind": "OperParam",
+              "name": "__s",
+              "arity": 0
+            },
+            {
+              "kind": "OperParam",
+              "name": "__Op",
+              "arity": 2
+            }
+          ],
+          "isRecursive": false,
+          "body": {
+            "source": {
+              "filename": "TLC",
+              "from": {
+                "line": 100,
+                "column": 5
+              },
+              "to": {
+                "line": 104,
+                "column": 49
+              }
+            },
+            "type": "Untyped",
+            "kind": "LetInEx",
+            "body": {
+              "source": {
+                "filename": "TLC",
+                "from": {
+                  "line": 104,
+                  "column": 9
+                },
+                "to": {
+                  "line": 104,
+                  "column": 49
+                }
+              },
+              "type": "Untyped",
+              "kind": "OperEx",
+              "oper": "FUN_CTOR",
+              "args": [
+                {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 104,
+                      "column": 33
+                    },
+                    "to": {
+                      "line": 104,
+                      "column": 48
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "OperEx",
+                  "oper": "FUN_APP",
+                  "args": [
+                    {
+                      "source": {
+                        "filename": "TLC",
+                        "from": {
+                          "line": 104,
+                          "column": 33
+                        },
+                        "to": {
+                          "line": 104,
+                          "column": 35
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "NameEx",
+                      "name": "__s"
+                    },
+                    {
+                      "source": {
+                        "filename": "TLC",
+                        "from": {
+                          "line": 104,
+                          "column": 37
+                        },
+                        "to": {
+                          "line": 104,
+                          "column": 47
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "OperEx",
+                      "oper": "FUN_APP",
+                      "args": [
+                        {
+                          "source": {
+                            "filename": "TLC",
+                            "from": {
+                              "line": 104,
+                              "column": 37
+                            },
+                            "to": {
+                              "line": 104,
+                              "column": 42
+                            }
+                          },
+                          "type": "Untyped",
+                          "kind": "OperEx",
+                          "oper": "OPER_APP",
+                          "args": [
+                            {
+                              "source": {
+                                "filename": "TLC",
+                                "from": {
+                                  "line": 104,
+                                  "column": 37
+                                },
+                                "to": {
+                                  "line": 104,
+                                  "column": 42
+                                }
+                              },
+                              "type": "Untyped",
+                              "kind": "NameEx",
+                              "name": "__Perm"
+                            }
+                          ]
+                        },
+                        {
+                          "source": {
+                            "filename": "TLC",
+                            "from": {
+                              "line": 104,
+                              "column": 44
+                            },
+                            "to": {
+                              "line": 104,
+                              "column": 46
+                            }
+                          },
+                          "type": "Untyped",
+                          "kind": "NameEx",
+                          "name": "__i"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 104,
+                      "column": 9
+                    },
+                    "to": {
+                      "line": 104,
+                      "column": 49
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "NameEx",
+                  "name": "__i"
+                },
+                {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 104,
+                      "column": 18
+                    },
+                    "to": {
+                      "line": 104,
+                      "column": 27
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "OperEx",
+                  "oper": "DOMAIN",
+                  "args": [
+                    {
+                      "source": {
+                        "filename": "TLC",
+                        "from": {
+                          "line": 104,
+                          "column": 25
+                        },
+                        "to": {
+                          "line": 104,
+                          "column": 27
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "NameEx",
+                      "name": "__s"
+                    }
+                  ]
+                }
+              ]
+            },
+            "decls": [
+              {
+                "source": {
+                  "filename": "TLC",
+                  "from": {
+                    "line": 100,
+                    "column": 9
+                  },
+                  "to": {
+                    "line": 103,
+                    "column": 46
+                  }
+                },
+                "type": "Untyped",
+                "kind": "TlaOperDecl",
+                "name": "__Perm",
+                "formalParams": [],
+                "isRecursive": false,
+                "body": {
+                  "source": {
+                    "filename": "TLC",
+                    "from": {
+                      "line": 100,
+                      "column": 19
+                    },
+                    "to": {
+                      "line": 103,
+                      "column": 46
+                    }
+                  },
+                  "type": "Untyped",
+                  "kind": "OperEx",
+                  "oper": "CHOOSE3",
+                  "args": [
+                    {
+                      "source": {
+                        "filename": "TLC",
+                        "from": {
+                          "line": 100,
+                          "column": 19
+                        },
+                        "to": {
+                          "line": 103,
+                          "column": 46
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "NameEx",
+                      "name": "__p"
+                    },
+                    {
+                      "source": {
+                        "filename": "TLC",
+                        "from": {
+                          "line": 100,
+                          "column": 34
+                        },
+                        "to": {
+                          "line": 100,
+                          "column": 57
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "OperEx",
+                      "oper": "OPER_APP",
+                      "args": [
+                        {
+                          "source": {
+                            "filename": "TLC",
+                            "from": {
+                              "line": 100,
+                              "column": 34
+                            },
+                            "to": {
+                              "line": 100,
+                              "column": 57
+                            }
+                          },
+                          "type": "Untyped",
+                          "kind": "NameEx",
+                          "name": "Permutations"
+                        },
+                        {
+                          "source": {
+                            "filename": "TLC",
+                            "from": {
+                              "line": 100,
+                              "column": 47
+                            },
+                            "to": {
+                              "line": 100,
+                              "column": 56
+                            }
+                          },
+                          "type": "Untyped",
+                          "kind": "OperEx",
+                          "oper": "DOMAIN",
+                          "args": [
+                            {
+                              "source": {
+                                "filename": "TLC",
+                                "from": {
+                                  "line": 100,
+                                  "column": 54
+                                },
+                                "to": {
+                                  "line": 100,
+                                  "column": 56
+                                }
+                              },
+                              "type": "Untyped",
+                              "kind": "NameEx",
+                              "name": "__s"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "source": {
+                        "filename": "TLC",
+                        "from": {
+                          "line": 101,
+                          "column": 9
+                        },
+                        "to": {
+                          "line": 103,
+                          "column": 46
+                        }
+                      },
+                      "type": "Untyped",
+                      "kind": "OperEx",
+                      "oper": "FORALL3",
+                      "args": [
+                        {
+                          "source": {
+                            "filename": "TLC",
+                            "from": {
+                              "line": 101,
+                              "column": 9
+                            },
+                            "to": {
+                              "line": 103,
+                              "column": 46
+                            }
+                          },
+                          "type": "Untyped",
+                          "kind": "NameEx",
+                          "name": "__i"
+                        },
+                        {
+                          "source": {
+                            "filename": "TLC",
+                            "from": {
+                              "line": 101,
+                              "column": 25
+                            },
+                            "to": {
+                              "line": 101,
+                              "column": 34
+                            }
+                          },
+                          "type": "Untyped",
+                          "kind": "OperEx",
+                          "oper": "DOMAIN",
+                          "args": [
+                            {
+                              "source": {
+                                "filename": "TLC",
+                                "from": {
+                                  "line": 101,
+                                  "column": 32
+                                },
+                                "to": {
+                                  "line": 101,
+                                  "column": 34
+                                }
+                              },
+                              "type": "Untyped",
+                              "kind": "NameEx",
+                              "name": "__s"
+                            }
+                          ]
+                        },
+                        {
+                          "source": {
+                            "filename": "TLC",
+                            "from": {
+                              "line": 101,
+                              "column": 9
+                            },
+                            "to": {
+                              "line": 103,
+                              "column": 46
+                            }
+                          },
+                          "type": "Untyped",
+                          "kind": "OperEx",
+                          "oper": "FORALL3",
+                          "args": [
+                            {
+                              "source": {
+                                "filename": "TLC",
+                                "from": {
+                                  "line": 101,
+                                  "column": 9
+                                },
+                                "to": {
+                                  "line": 103,
+                                  "column": 46
+                                }
+                              },
+                              "type": "Untyped",
+                              "kind": "NameEx",
+                              "name": "__j"
+                            },
+                            {
+                              "source": {
+                                "filename": "TLC",
+                                "from": {
+                                  "line": 101,
+                                  "column": 25
+                                },
+                                "to": {
+                                  "line": 101,
+                                  "column": 34
+                                }
+                              },
+                              "type": "Untyped",
+                              "kind": "OperEx",
+                              "oper": "DOMAIN",
+                              "args": [
+                                {
+                                  "source": {
+                                    "filename": "TLC",
+                                    "from": {
+                                      "line": 101,
+                                      "column": 32
+                                    },
+                                    "to": {
+                                      "line": 101,
+                                      "column": 34
+                                    }
+                                  },
+                                  "type": "Untyped",
+                                  "kind": "NameEx",
+                                  "name": "__s"
+                                }
+                              ]
+                            },
+                            {
+                              "source": {
+                                "filename": "TLC",
+                                "from": {
+                                  "line": 102,
+                                  "column": 13
+                                },
+                                "to": {
+                                  "line": 103,
+                                  "column": 46
+                                }
+                              },
+                              "type": "Untyped",
+                              "kind": "OperEx",
+                              "oper": "OR",
+                              "args": [
+                                {
+                                  "source": {
+                                    "filename": "TLC",
+                                    "from": {
+                                      "line": 102,
+                                      "column": 16
+                                    },
+                                    "to": {
+                                      "line": 102,
+                                      "column": 64
+                                    }
+                                  },
+                                  "type": "Untyped",
+                                  "kind": "OperEx",
+                                  "oper": "IMPLIES",
+                                  "args": [
+                                    {
+                                      "source": {
+                                        "filename": "TLC",
+                                        "from": {
+                                          "line": 102,
+                                          "column": 17
+                                        },
+                                        "to": {
+                                          "line": 102,
+                                          "column": 25
+                                        }
+                                      },
+                                      "type": "Untyped",
+                                      "kind": "OperEx",
+                                      "oper": "LT",
+                                      "args": [
+                                        {
+                                          "source": {
+                                            "filename": "TLC",
+                                            "from": {
+                                              "line": 102,
+                                              "column": 17
+                                            },
+                                            "to": {
+                                              "line": 102,
+                                              "column": 19
+                                            }
+                                          },
+                                          "type": "Untyped",
+                                          "kind": "NameEx",
+                                          "name": "__i"
+                                        },
+                                        {
+                                          "source": {
+                                            "filename": "TLC",
+                                            "from": {
+                                              "line": 102,
+                                              "column": 23
+                                            },
+                                            "to": {
+                                              "line": 102,
+                                              "column": 25
+                                            }
+                                          },
+                                          "type": "Untyped",
+                                          "kind": "NameEx",
+                                          "name": "__j"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "source": {
+                                        "filename": "TLC",
+                                        "from": {
+                                          "line": 102,
+                                          "column": 31
+                                        },
+                                        "to": {
+                                          "line": 102,
+                                          "column": 64
+                                        }
+                                      },
+                                      "type": "Untyped",
+                                      "kind": "OperEx",
+                                      "oper": "OPER_APP",
+                                      "args": [
+                                        {
+                                          "source": {
+                                            "filename": "TLC",
+                                            "from": {
+                                              "line": 102,
+                                              "column": 31
+                                            },
+                                            "to": {
+                                              "line": 102,
+                                              "column": 64
+                                            }
+                                          },
+                                          "type": "Untyped",
+                                          "kind": "NameEx",
+                                          "name": "__Op"
+                                        },
+                                        {
+                                          "source": {
+                                            "filename": "TLC",
+                                            "from": {
+                                              "line": 102,
+                                              "column": 36
+                                            },
+                                            "to": {
+                                              "line": 102,
+                                              "column": 48
+                                            }
+                                          },
+                                          "type": "Untyped",
+                                          "kind": "OperEx",
+                                          "oper": "FUN_APP",
+                                          "args": [
+                                            {
+                                              "source": {
+                                                "filename": "TLC",
+                                                "from": {
+                                                  "line": 102,
+                                                  "column": 36
+                                                },
+                                                "to": {
+                                                  "line": 102,
+                                                  "column": 38
+                                                }
+                                              },
+                                              "type": "Untyped",
+                                              "kind": "NameEx",
+                                              "name": "__s"
+                                            },
+                                            {
+                                              "source": {
+                                                "filename": "TLC",
+                                                "from": {
+                                                  "line": 102,
+                                                  "column": 40
+                                                },
+                                                "to": {
+                                                  "line": 102,
+                                                  "column": 47
+                                                }
+                                              },
+                                              "type": "Untyped",
+                                              "kind": "OperEx",
+                                              "oper": "FUN_APP",
+                                              "args": [
+                                                {
+                                                  "source": {
+                                                    "filename": "TLC",
+                                                    "from": {
+                                                      "line": 102,
+                                                      "column": 40
+                                                    },
+                                                    "to": {
+                                                      "line": 102,
+                                                      "column": 42
+                                                    }
+                                                  },
+                                                  "type": "Untyped",
+                                                  "kind": "NameEx",
+                                                  "name": "__p"
+                                                },
+                                                {
+                                                  "source": {
+                                                    "filename": "TLC",
+                                                    "from": {
+                                                      "line": 102,
+                                                      "column": 44
+                                                    },
+                                                    "to": {
+                                                      "line": 102,
+                                                      "column": 46
+                                                    }
+                                                  },
+                                                  "type": "Untyped",
+                                                  "kind": "NameEx",
+                                                  "name": "__i"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "source": {
+                                            "filename": "TLC",
+                                            "from": {
+                                              "line": 102,
+                                              "column": 51
+                                            },
+                                            "to": {
+                                              "line": 102,
+                                              "column": 63
+                                            }
+                                          },
+                                          "type": "Untyped",
+                                          "kind": "OperEx",
+                                          "oper": "FUN_APP",
+                                          "args": [
+                                            {
+                                              "source": {
+                                                "filename": "TLC",
+                                                "from": {
+                                                  "line": 102,
+                                                  "column": 51
+                                                },
+                                                "to": {
+                                                  "line": 102,
+                                                  "column": 53
+                                                }
+                                              },
+                                              "type": "Untyped",
+                                              "kind": "NameEx",
+                                              "name": "__s"
+                                            },
+                                            {
+                                              "source": {
+                                                "filename": "TLC",
+                                                "from": {
+                                                  "line": 102,
+                                                  "column": 55
+                                                },
+                                                "to": {
+                                                  "line": 102,
+                                                  "column": 62
+                                                }
+                                              },
+                                              "type": "Untyped",
+                                              "kind": "OperEx",
+                                              "oper": "FUN_APP",
+                                              "args": [
+                                                {
+                                                  "source": {
+                                                    "filename": "TLC",
+                                                    "from": {
+                                                      "line": 102,
+                                                      "column": 55
+                                                    },
+                                                    "to": {
+                                                      "line": 102,
+                                                      "column": 57
+                                                    }
+                                                  },
+                                                  "type": "Untyped",
+                                                  "kind": "NameEx",
+                                                  "name": "__p"
+                                                },
+                                                {
+                                                  "source": {
+                                                    "filename": "TLC",
+                                                    "from": {
+                                                      "line": 102,
+                                                      "column": 59
+                                                    },
+                                                    "to": {
+                                                      "line": 102,
+                                                      "column": 61
+                                                    }
+                                                  },
+                                                  "type": "Untyped",
+                                                  "kind": "NameEx",
+                                                  "name": "__j"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "source": {
+                                    "filename": "TLC",
+                                    "from": {
+                                      "line": 103,
+                                      "column": 17
+                                    },
+                                    "to": {
+                                      "line": 103,
+                                      "column": 45
+                                    }
+                                  },
+                                  "type": "Untyped",
+                                  "kind": "OperEx",
+                                  "oper": "EQ",
+                                  "args": [
+                                    {
+                                      "source": {
+                                        "filename": "TLC",
+                                        "from": {
+                                          "line": 103,
+                                          "column": 17
+                                        },
+                                        "to": {
+                                          "line": 103,
+                                          "column": 29
+                                        }
+                                      },
+                                      "type": "Untyped",
+                                      "kind": "OperEx",
+                                      "oper": "FUN_APP",
+                                      "args": [
+                                        {
+                                          "source": {
+                                            "filename": "TLC",
+                                            "from": {
+                                              "line": 103,
+                                              "column": 17
+                                            },
+                                            "to": {
+                                              "line": 103,
+                                              "column": 19
+                                            }
+                                          },
+                                          "type": "Untyped",
+                                          "kind": "NameEx",
+                                          "name": "__s"
+                                        },
+                                        {
+                                          "source": {
+                                            "filename": "TLC",
+                                            "from": {
+                                              "line": 103,
+                                              "column": 21
+                                            },
+                                            "to": {
+                                              "line": 103,
+                                              "column": 28
+                                            }
+                                          },
+                                          "type": "Untyped",
+                                          "kind": "OperEx",
+                                          "oper": "FUN_APP",
+                                          "args": [
+                                            {
+                                              "source": {
+                                                "filename": "TLC",
+                                                "from": {
+                                                  "line": 103,
+                                                  "column": 21
+                                                },
+                                                "to": {
+                                                  "line": 103,
+                                                  "column": 23
+                                                }
+                                              },
+                                              "type": "Untyped",
+                                              "kind": "NameEx",
+                                              "name": "__p"
+                                            },
+                                            {
+                                              "source": {
+                                                "filename": "TLC",
+                                                "from": {
+                                                  "line": 103,
+                                                  "column": 25
+                                                },
+                                                "to": {
+                                                  "line": 103,
+                                                  "column": 27
+                                                }
+                                              },
+                                              "type": "Untyped",
+                                              "kind": "NameEx",
+                                              "name": "__i"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "source": {
+                                        "filename": "TLC",
+                                        "from": {
+                                          "line": 103,
+                                          "column": 33
+                                        },
+                                        "to": {
+                                          "line": 103,
+                                          "column": 45
+                                        }
+                                      },
+                                      "type": "Untyped",
+                                      "kind": "OperEx",
+                                      "oper": "FUN_APP",
+                                      "args": [
+                                        {
+                                          "source": {
+                                            "filename": "TLC",
+                                            "from": {
+                                              "line": 103,
+                                              "column": 33
+                                            },
+                                            "to": {
+                                              "line": 103,
+                                              "column": 35
+                                            }
+                                          },
+                                          "type": "Untyped",
+                                          "kind": "NameEx",
+                                          "name": "__s"
+                                        },
+                                        {
+                                          "source": {
+                                            "filename": "TLC",
+                                            "from": {
+                                              "line": 103,
+                                              "column": 37
+                                            },
+                                            "to": {
+                                              "line": 103,
+                                              "column": 44
+                                            }
+                                          },
+                                          "type": "Untyped",
+                                          "kind": "OperEx",
+                                          "oper": "FUN_APP",
+                                          "args": [
+                                            {
+                                              "source": {
+                                                "filename": "TLC",
+                                                "from": {
+                                                  "line": 103,
+                                                  "column": 37
+                                                },
+                                                "to": {
+                                                  "line": 103,
+                                                  "column": 39
+                                                }
+                                              },
+                                              "type": "Untyped",
+                                              "kind": "NameEx",
+                                              "name": "__p"
+                                            },
+                                            {
+                                              "source": {
+                                                "filename": "TLC",
+                                                "from": {
+                                                  "line": 103,
+                                                  "column": 41
+                                                },
+                                                "to": {
+                                                  "line": 103,
+                                                  "column": 43
+                                                }
+                                              },
+                                              "type": "Untyped",
+                                              "kind": "NameEx",
+                                              "name": "__j"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

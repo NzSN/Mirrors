@@ -102,16 +102,34 @@ int main(int argc, char** argv) {
     } catch (const mirrorcpp::ModelInterfaceBindingError& error) {
       require(error.code() == "observation_shape_mismatch", "wrong observation classification");
     }
-    if (argc == 3) {
-      auto transport = mirrorcpp::spawn_mirror(argv[1]);
+    const bool tcp = argc == 4 && std::string(argv[1]) == "--tcp";
+    const bool tls = argc == 8 && std::string(argv[1]) == "--tls";
+    if (argc == 3 || tcp || tls) {
+      const std::string trace_path = argv[(tcp || tls) ? 3 : 2];
+      auto connect = [&]() -> std::unique_ptr<mirrorcpp::Transport> {
+        if (tcp) {
+          auto result = mirrorcpp::connect_tcp("127.0.0.1", static_cast<std::uint16_t>(std::stoi(argv[2])));
+          if (!result) throw std::runtime_error(result.error().message);
+          return std::move(*result);
+        }
+        if (tls) {
+          mirrorcpp::TlsOptions options;
+          options.ca_path = argv[4]; options.cert_path = argv[5]; options.key_path = argv[6]; options.pin = argv[7];
+          auto result = mirrorcpp::connect_tls("127.0.0.1", static_cast<std::uint16_t>(std::stoi(argv[2])), options);
+          if (!result) throw std::runtime_error(result.error().message);
+          return std::move(*result);
+        }
+        return mirrorcpp::spawn_mirror(argv[1]);
+      };
+      auto transport = connect();
       if (!transport) throw std::runtime_error("could not spawn Mirrors replay process");
       Port replay_port;
       auto replay = generated::bind_integerTables(replay_port, config);
-      const auto result = mirrorcpp::run_client_with_traces(*transport, config, {argv[2]}, replay.computer);
+      const auto result = mirrorcpp::run_client_with_traces(*transport, config, {trace_path}, replay.computer);
       if (!result) throw std::runtime_error(result.error().message);
       require(replay_port.callbacks == 2, "server replay did not dispatch both actions");
 
-      config.spec_path = (std::filesystem::path(argv[2]).parent_path() / "IntegerTables.tla").string();
+      config.spec_path = (std::filesystem::path(trace_path).parent_path() / "IntegerTables.tla").string();
       const auto digest = *mirrorcpp::semantic_digest_from_hex(std::string(generated::IntegerTablesSemanticDigest));
       Port negotiated_port;
       int factories = 0;
@@ -136,16 +154,22 @@ int main(int argc, char** argv) {
       selection.adapter_id = "integer-tables/v2";
       selection.target_profile = "mirrorcpp-v2";
       selection.registry = &registry;
-      auto negotiated_transport = mirrorcpp::spawn_mirror(argv[1]);
+      auto negotiated_transport = connect();
       const auto matched = mirrorcpp::run_client_with_traces_negotiated(
-          *negotiated_transport, config, {argv[2]}, selection);
+          *negotiated_transport, config, {trace_path}, selection);
+      if (tcp) {
+        require(!matched && factories == 0 && negotiated_port.callbacks == 0,
+                "plain TCP negotiation denial invoked application code");
+        std::cout << "TCP INTEGER MAP NATIVE GREEN\n";
+        return 0;
+      }
       if (!matched) throw std::runtime_error(matched.error().message);
       require(factories == 1 && negotiated_port.callbacks == 2,
               "v2 negotiated replay did not select the exact adapter");
       selection.target_profile = "mirrorcpp-v1";
-      auto incompatible_transport = mirrorcpp::spawn_mirror(argv[1]);
+      auto incompatible_transport = connect();
       const auto incompatible = mirrorcpp::run_client_with_traces_negotiated(
-          *incompatible_transport, config, {argv[2]}, selection);
+          *incompatible_transport, config, {trace_path}, selection);
       require(!incompatible && factories == 1 && negotiated_port.callbacks == 2,
               "incompatible target profile invoked an application factory or callback");
     }
