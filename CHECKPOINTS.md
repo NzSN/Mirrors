@@ -5,6 +5,42 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-01 — M5 completion source commits published
+
+The user authorized commit and push after the five-item completion campaign.
+The coordinated implementation and public evidence are published on each
+repository's `origin/main`:
+
+- Mirrors: `aaa5ad185d6d5fd4226823e73c55d1c31c16d1d1` — installed LeaseService origin/R1/full
+  reduced-corpus acceptance, prepared-snapshot recovery, Windows remote producers,
+  multiple-D scope approval and complete Q3/public evidence records.
+- MirrorECMA: `f2a6a5aa554d745e4497874ede7ce9ee9db9436f` — remote Apalache 0.62.2 pin,
+  awaited validator digest checks and updated remote-admission tests.
+- MirrorGate: `455e196c73332a1b0d85b1d822dfc4aa3542bbd9` — launch-helper `-B` and the
+  real package-immutability regression.
+
+The recorded acceptance remains bound to working-tree C0
+`f2080fd722ed097eb1d5e4b4fd8cd4e8d7a1d1092b91530d48a51ca3bf141670`:
+18 required commands, 16 tiers, the full 19-node scope with both D bindings,
+20 independently verified bundles and six rejected negative controls. Source
+validation is unchanged: Mirrors 129 evidence/36 distribution/63 capture tests;
+MirrorECMA 626 passed with 13 optional skips; required supported Gate gates passed.
+Both installed trees and the observed Windows deployment identities remained
+unchanged at campaign close. No local model checker ran.
+
+Public evidence blobs retain every recorded byte count/hash, including the four
+intentionally projected logs. Private envelopes, inputs, native receipts and
+credentials remain outside Git. The unrelated `.projectile-cache.eld` files
+remain on disk and untracked. Frozen readiness reports and previous checkpoint
+entries are historical and unchanged.
+
+Publication creates new source revisions. It does not relabel the retained
+pre-publication qualification as a clean-commit run; a later qualification round
+must refresh the catalog/snapshot from the published refs and rerun its gates.
+This newest entry records publication and supersedes the earlier uncommitted
+state. The following checkpoint-only commit preserves the source/evidence bytes
+published above.
+
 ## 2026-10-01 — Five-item M5 completion qualified
 
 The authorized five-item plan is complete for `m5-wsl-windows-remote/v1`
