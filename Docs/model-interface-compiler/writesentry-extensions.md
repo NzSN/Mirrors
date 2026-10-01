@@ -2,6 +2,11 @@
 
 Implementation decisions, 2026-10-01. These are source capabilities; publication,
 fresh remote-oracle qualification, and installed-service support are separate.
+The portable-model Windows oracle campaign and clean-pin C++ consumer acceptance
+have passed. MirrorCPP `e73dadbac6055fa3ff94b5ee90c0649e4ad03ebd` and WriteSentry
+`a8fe1cf19e973624f4f1ee883f90dee30e03bf13` are published; WriteSentry pins that
+immutable SDK revision. [Published-pin acceptance](../../Plans/model-interface-compiler/writesentry-publication-evidence-20261001/acceptance.json)
+records the independent submodule build, 8/8 CTests and fresh-data replay controls.
 The acceptance ledger is in
 [the implementation plan](../../Plans/model-interface-compiler/writesentry-integration-improvements.md).
 
@@ -154,8 +159,9 @@ mutation controls. Normal rebuilt application acceptance passes 8/8 CTests.
 Its complete fresh corpus and deployment identities are retained in
 [Windows qualification evidence](../../Plans/model-interface-compiler/writesentry-windows-evidence-20261001/acceptance.json).
 Protocol fixtures remain separate from this live evidence. Frontend reference
-qualification retains its original 0.61.0 tool identity. Dependency publication,
-remote application replay, and Windows DR/VEH runtime behavior are separate tiers.
+qualification retains its original 0.61.0 tool identity. Dependency publication
+is complete. Remote application replay and Windows DR/VEH runtime behavior are
+separate tiers.
 
 `python3 tools/check-cmake-consumer.py` exercises offline/configure/build checks,
 captured dependencies, mutations, paths with spaces, unsafe/duplicate paths,

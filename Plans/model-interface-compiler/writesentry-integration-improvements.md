@@ -2,9 +2,23 @@
 
 Date: 2026-09-30
 
-Status: resumed implementation, 2026-10-01. Local source and native recorded-replay acceptance have advanced; the full definition of done remains incomplete. See [the extension contract](../../Docs/model-interface-compiler/writesentry-extensions.md) and [retained local acceptance](writesentry-v2-evidence/acceptance.json). The original plan/baseline below remains historical.
+Status: implementation and scoped compiler/C++/remote-oracle acceptance passed,
+2026-10-01; publication and the immutable MirrorCPP v2 dependency pin are
+complete. See [the extension contract](../../Docs/model-interface-compiler/writesentry-extensions.md),
+[fresh Windows qualification](writesentry-windows-evidence-20261001/acceptance.json)
+and [published-pin consumer acceptance](writesentry-publication-evidence-20261001/acceptance.json).
+The original plan/baseline and earlier execution entries below remain historical.
 
 ## 2026-10-01 remaining-work execution
+
+Final publication: Mirrors `7398341`, MirrorCPP
+`e73dadbac6055fa3ff94b5ee90c0649e4ad03ebd`, and WriteSentry
+`a8fe1cf19e973624f4f1ee883f90dee30e03bf13` are published. WriteSentry pins that
+clean SDK revision. A fresh build compiles its submodule directly, passes 8/8
+CTests, retained-fresh native/stdio replay and all three genuine-server mutation
+controls. The remaining publication work is closed. These results qualify the
+documented portable model/C++ consumer combination; separate Windows DR/VEH,
+remote application replay and service-manager tiers are not inferred.
 
 Latest, Windows campaign: **fresh remote oracle qualification passes** against
 the explicitly selected current Windows host at `172.20.208.1:8999`, Apalache
@@ -16,8 +30,8 @@ preserved. The binding is regenerated/checked against fresh evidence, and the
 normal rebuilt application passes 8/8 CTests plus fresh native/stdio/mutation
 replays. [Acceptance and complete corpus](writesentry-windows-evidence-20261001/acceptance.json).
 The explicit confined Workspace transfer preserves the wire bound. Publication
-of the clean MirrorCPP v2 carrier and advancing WriteSentry's gitlink remain
-pending. Frontend reference evidence retains its selected 0.61.0 identity.
+of the clean MirrorCPP v2 carrier and advancing WriteSentry's gitlink are now
+complete as recorded above. Frontend reference evidence retains its selected 0.61.0 identity.
 The earlier entries below describe their respective execution checkpoints.
 
 - Applied the adoption to the user-identified `~/Repos/WriteSentry`, now at the intended `9dd4b57` history; initialized its pinned MirrorCPP submodule and applied the reviewed v2 client patch. Actual application build/CTest passes 8/8, and the actual SDK's 27 unit cases pass. Recorded native coverage is recounted as 14 scenarios, 212 states, 18 actions, and eight flags; the three actual stdio-server controls produce `step_mismatch`.

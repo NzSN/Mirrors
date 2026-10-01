@@ -1,0 +1,78 @@
+{
+  "schema": "writesentry.published-pin-consumer/v1",
+  "mirrorcppRevision": "e73dadbac6055fa3ff94b5ee90c0649e4ad03ebd",
+  "mirrorcppClean": true,
+  "configure": "CMAKE_DISABLE_FIND_PACKAGE_mirrorcpp=ON; pinned submodule compiled directly",
+  "runnerSha256": "e37cc0d4e2d71b98550d07eb877f178db95af1cba05c7e645ed1313719588069",
+  "mirrorSha256": "e6e98919ed51a4119c7529c0a098e4402bda45d787b137b427b933fb75c7ca8f",
+  "corpusManifestSha256": "d181b60af46acf74e8523723d5f91a1327301852be4b4f1efc5a5f4e244e12ac",
+  "coverage": {
+    "scenarios": 14,
+    "compared_states": 424,
+    "oracle_artifacts": 28,
+    "distinct_state_sequences": 14,
+    "distinct_sequence_states": 212,
+    "actions": [
+      "ArmApplyAll",
+      "ArmPayload",
+      "ArmSeqEvenRelease",
+      "ArmSeqOdd",
+      "ArmStart",
+      "ArmStartRejected",
+      "DisApplyAll",
+      "DisDeactivate",
+      "DisReleaseRegistry",
+      "DisSeqEvenRelease",
+      "DisSeqOdd",
+      "DisStart",
+      "ForeignStomp",
+      "WrDecide",
+      "WrReadPayload",
+      "WrReadSeq1",
+      "WrReadSeq2",
+      "WrStart"
+    ],
+    "flags": [
+      "filtered",
+      "foreignRepair",
+      "hit",
+      "rejected",
+      "searchInactive",
+      "silent",
+      "stomped",
+      "torn"
+    ]
+  },
+  "checks": [
+    {
+      "check": "native-replay",
+      "exitCode": 0,
+      "log": "writesentry-published-pin-native-replay.log",
+      "logSha256": "b434a97758af637ffdb04af89a85fb63d706f3884178680d46d2b7f26d15678a"
+    },
+    {
+      "check": "server-replay",
+      "exitCode": 0,
+      "log": "writesentry-published-pin-server-replay.log",
+      "logSha256": "b400eb80ade3ed2dea92af6164aa5aec160abcea4c14d54158a8609337976864"
+    },
+    {
+      "check": "drop-reservation",
+      "exitCode": 0,
+      "log": "writesentry-published-pin-drop-reservation.log",
+      "logSha256": "7279448d9a97a47b16cd62f05a47e757da2912e4504e6d4e0593fb88f4d20554"
+    },
+    {
+      "check": "skip-clear",
+      "exitCode": 0,
+      "log": "writesentry-published-pin-skip-clear.log",
+      "logSha256": "98d37a3109af266e3546d019d1bf8a183730c7f602423f41840a65c1960ebb62"
+    },
+    {
+      "check": "allow-foreign-writer",
+      "exitCode": 0,
+      "log": "writesentry-published-pin-allow-foreign-writer.log",
+      "logSha256": "b3f937147611342467f884c7e8ff651d347f07e6281079082ae9b2cc346adbdf"
+    }
+  ]
+}

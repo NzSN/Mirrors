@@ -1,0 +1,119 @@
+{
+  "schema": "mirrors.writesentry-published-pin-acceptance/v1",
+  "scope": "clean published SDK pin; direct-submodule normal consumer build and replay of retained fresh oracle corpus",
+  "mirrorsSourceCommit": "739834141d2f7cd4db2f8cb19be9e828262d258f",
+  "mirrorcppCommit": "e73dadbac6055fa3ff94b5ee90c0649e4ad03ebd",
+  "writesentryCommit": "a8fe1cf19e973624f4f1ee883f90dee30e03bf13",
+  "sdkPatchMatchesPreviouslyQualifiedBytes": true,
+  "sdkUnitSuites": {
+    "negotiation": {
+      "cases": 21,
+      "assertions": 393
+    },
+    "v1Binding": {
+      "cases": 6,
+      "assertions": 50
+    }
+  },
+  "normalCTest": {
+    "passed": 8,
+    "failed": 0
+  },
+  "publishedSdkClean": true,
+  "consumer": {
+    "schema": "writesentry.published-pin-consumer/v1",
+    "mirrorcppRevision": "e73dadbac6055fa3ff94b5ee90c0649e4ad03ebd",
+    "mirrorcppClean": true,
+    "configure": "CMAKE_DISABLE_FIND_PACKAGE_mirrorcpp=ON; pinned submodule compiled directly",
+    "runnerSha256": "e37cc0d4e2d71b98550d07eb877f178db95af1cba05c7e645ed1313719588069",
+    "mirrorSha256": "e6e98919ed51a4119c7529c0a098e4402bda45d787b137b427b933fb75c7ca8f",
+    "corpusManifestSha256": "d181b60af46acf74e8523723d5f91a1327301852be4b4f1efc5a5f4e244e12ac",
+    "coverage": {
+      "scenarios": 14,
+      "compared_states": 424,
+      "oracle_artifacts": 28,
+      "distinct_state_sequences": 14,
+      "distinct_sequence_states": 212,
+      "actions": [
+        "ArmApplyAll",
+        "ArmPayload",
+        "ArmSeqEvenRelease",
+        "ArmSeqOdd",
+        "ArmStart",
+        "ArmStartRejected",
+        "DisApplyAll",
+        "DisDeactivate",
+        "DisReleaseRegistry",
+        "DisSeqEvenRelease",
+        "DisSeqOdd",
+        "DisStart",
+        "ForeignStomp",
+        "WrDecide",
+        "WrReadPayload",
+        "WrReadSeq1",
+        "WrReadSeq2",
+        "WrStart"
+      ],
+      "flags": [
+        "filtered",
+        "foreignRepair",
+        "hit",
+        "rejected",
+        "searchInactive",
+        "silent",
+        "stomped",
+        "torn"
+      ]
+    },
+    "checks": [
+      {
+        "check": "native-replay",
+        "exitCode": 0,
+        "log": "writesentry-published-pin-native-replay.log",
+        "logSha256": "b434a97758af637ffdb04af89a85fb63d706f3884178680d46d2b7f26d15678a"
+      },
+      {
+        "check": "server-replay",
+        "exitCode": 0,
+        "log": "writesentry-published-pin-server-replay.log",
+        "logSha256": "b400eb80ade3ed2dea92af6164aa5aec160abcea4c14d54158a8609337976864"
+      },
+      {
+        "check": "drop-reservation",
+        "exitCode": 0,
+        "log": "writesentry-published-pin-drop-reservation.log",
+        "logSha256": "7279448d9a97a47b16cd62f05a47e757da2912e4504e6d4e0593fb88f4d20554"
+      },
+      {
+        "check": "skip-clear",
+        "exitCode": 0,
+        "log": "writesentry-published-pin-skip-clear.log",
+        "logSha256": "98d37a3109af266e3546d019d1bf8a183730c7f602423f41840a65c1960ebb62"
+      },
+      {
+        "check": "allow-foreign-writer",
+        "exitCode": 0,
+        "log": "writesentry-published-pin-allow-foreign-writer.log",
+        "logSha256": "b3f937147611342467f884c7e8ff651d347f07e6281079082ae9b2cc346adbdf"
+      }
+    ]
+  },
+  "freshOracleEvidence": "../writesentry-windows-evidence-20261001/acceptance.json",
+  "freshOracleCampaignReexecuted": false,
+  "validationBoundary": "Publication preserves the byte-qualified SDK patch. This run establishes clean-pin consumer acceptance against retained fresh data; it does not relabel the earlier dirty-source Windows campaign or requalify service-manager/Windows DR-VEH tiers.",
+  "artifactSha256": {
+    "writesentry-published-pin-configure-command.json": "6fc8941560ea58c65fd9eafe9d00eef192be5cd722f355b5e5879cfaed8233a4",
+    "writesentry-published-pin-configure.log": "8c6b2881185f0357ca2bac4854903c6689ec125b6c8b094dcf1be808f25a03d7",
+    "writesentry-published-pin-build.log": "c3b7a2119b96531540b050ef69ce20351a8242c661d079101423ede7ea4a9c00",
+    "writesentry-published-pin-ctest.log": "9cf92f5d7df917bce283c87e6a3bcb50fda6576b648d20d60d21182a330e2d57",
+    "writesentry-published-pin-acceptance.json": "0a38ec754fffe9f8a97bda4edb458ee11411ad3d5c20a793663f348d1424b8ac",
+    "writesentry-published-pin-native-replay.log": "b434a97758af637ffdb04af89a85fb63d706f3884178680d46d2b7f26d15678a",
+    "writesentry-published-pin-server-replay.log": "b400eb80ade3ed2dea92af6164aa5aec160abcea4c14d54158a8609337976864",
+    "writesentry-published-pin-drop-reservation.log": "7279448d9a97a47b16cd62f05a47e757da2912e4504e6d4e0593fb88f4d20554",
+    "writesentry-published-pin-skip-clear.log": "98d37a3109af266e3546d019d1bf8a183730c7f602423f41840a65c1960ebb62",
+    "writesentry-published-pin-allow-foreign-writer.log": "b3f937147611342467f884c7e8ff651d347f07e6281079082ae9b2cc346adbdf",
+    "writesentry-published-sdk-build.log": "3db71f41f2cb0e05448c266e0d958cfeb672d5a25ce76d20c7b701edcee315ad",
+    "writesentry-published-sdk-v2.log": "9b7e1b523dcc35b94df8aaee7e56fbbc06921a2b999d2a24488853a381b64919",
+    "writesentry-published-sdk-v1.log": "bc849f00826e7dd982c30de63c7d334c5cc20c7b02a016980db6136b08456807"
+  }
+}

@@ -5,6 +5,39 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-01 — WriteSentry publication and immutable dependency pin completed
+
+The user authorized commit/push and the remaining publication work. Published
+the qualified Mirrors compiler/capture implementation and exact retained
+evidence as `739834141d2f7cd4db2f8cb19be9e828262d258f` on `origin/main`.
+Raw evidence retains native CRLF/trailing blanks through path-specific Git
+attributes; all 202 linked retained hashes and 175 fresh corpus entries verify.
+The unrelated `.projectile-cache.eld` remains untracked on disk.
+
+Published the clean MirrorCPP v2 carrier as
+`e73dadbac6055fa3ff94b5ee90c0649e4ad03ebd` on `origin/main`. Its exact patch
+matches the earlier qualified dirty carrier. Negotiation tests pass 21 cases
+with 393 assertions; v1 binding tests pass six cases with 50 assertions.
+WriteSentry's gitlink now pins that full immutable SHA. Published its reviewed
+original-table integration, fresh-evidence binding, generated CMake guards,
+remote campaign and updated instructions as
+`a8fe1cf19e973624f4f1ee883f90dee30e03bf13` on `origin/main`.
+
+A new consumer build disables installed-package discovery and compiles the
+published SDK directly from WriteSentry's submodule. Configure/build and 8/8
+CTests pass. That consumer also passes native and real stdio replay of the
+complete retained fresh corpus, plus all three real-server mutation controls.
+The semantic digest remains
+`517189720fc2a3eee8015ba55ad771aed3c2a74212a1f70f0c22e6c4bfb6c8a5`.
+Acceptance: [published-pin evidence](Plans/model-interface-compiler/writesentry-publication-evidence-20261001/acceptance.json).
+
+The remaining publication/dependency-pin work is complete. The previous Windows
+campaign stays bound to its actual dirty source snapshot and process/tool
+identities; this separate clean-pin consumer run does not relabel it as a new
+remote generation campaign. Windows DR/VEH runtime, remote application replay,
+Q1 service-manager acceptance and frontend reference conformance against 0.62.2
+remain outside this scoped result. Earlier checkpoint entries are historical.
+
 ## 2026-10-01 — Fresh WriteSentry qualification on the current Windows host
 
 The user authorized a current-machine Windows oracle with Apalache 0.62.2 and
