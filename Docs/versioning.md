@@ -57,26 +57,29 @@ and is compiled into the executable:
 
 ```console
 $ .lake/build/bin/mirror --version
-Mirrors 0.0.3
+v0.0.3.2
 $ ModelMirrors --version
-Mirrors 0.0.3
+v0.0.3.2
 ```
 
 The second command requires installation under that name on `PATH`.
 See the [CLI reference](interface-reference.md) for exit codes and argument
 validation. The `--version` implementation was added after the baseline tag;
 checking out `v0.0.1` itself does not provide the flag. The original tag remains
-unchanged. Version output reports the declared version, not a Git SHA or a
+unchanged. The current Mirrors checkpoint label is `v0.0.3.2`; the standalone
+CLI prints that exact label. Its already-published source tag remains on its
+original commit. Version output reports the declared version, not a Git SHA or a
 clean-tree guarantee. Record `git rev-parse HEAD`, `git status --short`, and
 the executable's SHA-256 when exact build provenance is needed.
 
 ## Build and install on Linux or WSL
 
-From the Mirrors checkout, run `lake build` and `lake test`. The executable is
-`.lake/build/bin/mirror`. Lake reuses unchanged compilation results; removing
-only that generated executable before `lake build mirror` forces it to relink.
-For C-shim changes, also remove the affected shim object before rebuilding.
-Report any skipped external test tiers separately from successful checks.
+From the Mirrors checkout, run `lake build`. The executable is
+`.lake/build/bin/mirror`. Lake tracks native shim sources/headers and linker
+dependencies; rebuild normally after changes. Use `lake test` on hosts where
+its live model-checking tiers are authorized. On the WSL2 coordinator use
+`bash tools/run-local-no-model-check.sh`; do model checking through the
+designated remote Mirrors endpoint. Report skipped external tiers separately.
 
 To replace a per-user `ModelMirrors` installation, back up the existing file,
 stage the new executable beside it, and rename it into place. For an existing

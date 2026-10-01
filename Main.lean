@@ -15,7 +15,7 @@ def main : IO UInt32 := do
   let args ← getArgsIO
   match args with
   | ["--version"] =>
-      IO.println s!"Mirrors {Shell.Version.version}"
+      IO.println s!"v{Shell.Version.version}"
       return 0
   | "--serve" :: rest => serveCli rest
   | "--server" :: rest =>
