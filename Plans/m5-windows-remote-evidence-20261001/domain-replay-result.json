@@ -1,0 +1,32 @@
+{
+  "projection": "public-diagnostic",
+  "status": "reduced",
+  "baseline": "passed",
+  "fault": "mismatch",
+  "sameMismatchSignature": true,
+  "mismatch": {
+    "action": "write",
+    "stateIndex": 5
+  },
+  "changedInput": {
+    "stateIndex": 2,
+    "actionId": "Acquire",
+    "inputId": "Client",
+    "before": 2,
+    "after": 1
+  },
+  "cleanup": {
+    "baseline": {
+      "kind": "local-resource-census",
+      "status": "confirmed",
+      "remainingEntries": []
+    },
+    "fault": {
+      "kind": "local-resource-census",
+      "status": "confirmed",
+      "remainingEntries": []
+    }
+  },
+  "sources": "three framework repositories hidden",
+  "network": "unshared"
+}

@@ -1,0 +1,187 @@
+{
+  "schema": "mirrors.remote-interop/v1",
+  "profile": "remote-five-client-mtls/v1",
+  "scope": "five-client bounded verdicts/pin rejection and ECMA replay/generation/exploration; legacy all-transport matrix remains separate",
+  "endpoint": {
+    "host": "172.20.208.1",
+    "port": 8999
+  },
+  "transport": "pinned-mtls",
+  "revisions": {
+    "ecma": "61890cf14d8465df31ba6c95e72eade0a5716a66",
+    "cpp": "e73dadbac6055fa3ff94b5ee90c0649e4ad03ebd",
+    "rust": "a3f826f6590bea1bbbffe095353bf9a104c4c1d1",
+    "lean": "e5f50133968361ee00d6872162d9c874f93ff849",
+    "haskell": "4aa693f86e18349bb97c050dd33aecbf730b6fa2"
+  },
+  "binaries": {
+    "cpp": "5db2b6a3fd992d894d305dafbea93d8795af4137b769d7e7b22ea4de31853480",
+    "haskell": "cc3c378e31f2632bf96fcdcb127f902b7cdee0cead40e51d7911976e8a6e3e9d",
+    "rust": "bb0547927f1868c6dcc17b80c8e01f5c4717bbe2fea32118ed60183998b666f6",
+    "lean": "2ade6dd2f61383c79d1a3e8645179361deefd4bad82b7e3496899ddd7a724781",
+    "ecmaAdapter": "ecdf320210fff3fbb2f3772a3aab3a682a961abd35c7855aa319316770555f11"
+  },
+  "modelSha256": "3c88f0816b38fc188e1678e26ab15f2d9202ae162c4b427f611209607c67f6e4",
+  "deploymentObservationSha256": "a737e7e0b05454fc99315be027249d43d4aca1043aaea25af7e1dfefb7ebba4e",
+  "windowsFixtureSha256": {
+    "Counter.tla": "9d18338f44e5ae57a332cffd522cd13d7ca823f2cf114d661483602e85198f37",
+    "violation.itf.json": "f7135cdd39e4da69d81c2529919e899d3193f2a3afa532c0433f40f5e20c89eb"
+  },
+  "protocolAdapterSha256": "68e8312baa789be3d25c2aa4624b1c952adb2ba9adcf66d1a77c677e0f838d22",
+  "rows": [
+    {
+      "client": "cpp",
+      "case": "valid",
+      "exitCode": 0,
+      "log": "cpp-valid.log",
+      "logSha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+    },
+    {
+      "client": "cpp",
+      "case": "invalid",
+      "exitCode": 1,
+      "log": "cpp-invalid.log",
+      "logSha256": "e62e49618f85b0ea634481cd43b32aaba1c7ec44dc97f14bcccc5bb5a7be47e1"
+    },
+    {
+      "client": "cpp",
+      "case": "wrong-pin",
+      "exitCode": 2,
+      "log": "cpp-wrong-pin.log",
+      "logSha256": "2ecdf5b46581425e0f771e645054e6b7263997a4bc2db9b1b6ee117de499827c"
+    },
+    {
+      "client": "haskell",
+      "case": "valid",
+      "exitCode": 0,
+      "log": "haskell-valid.log",
+      "logSha256": "29f93fa8fd5c1dc2783c82f4485682ea6a963e22ef7b0cd557f652d491cad4f0"
+    },
+    {
+      "client": "haskell",
+      "case": "invalid",
+      "exitCode": 1,
+      "log": "haskell-invalid.log",
+      "logSha256": "7ab11391decb629edda765ad4f64d5992e5fe95ca081e818eee4d1510a7ba4ea"
+    },
+    {
+      "client": "haskell",
+      "case": "wrong-pin",
+      "exitCode": 2,
+      "log": "haskell-wrong-pin.log",
+      "logSha256": "ea0cc544d1982dc4a43c2405b0755efdbb685d07e50c7c469d5bb83791dfe973"
+    },
+    {
+      "client": "rust",
+      "case": "valid",
+      "exitCode": 0,
+      "log": "rust-valid.log",
+      "logSha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+    },
+    {
+      "client": "rust",
+      "case": "invalid",
+      "exitCode": 1,
+      "log": "rust-invalid.log",
+      "logSha256": "51d8e73b3b6bde5eaf27caf2d9b7188eb5d4d28e8f45ae2e99428d7345722bb7"
+    },
+    {
+      "client": "rust",
+      "case": "wrong-pin",
+      "exitCode": 2,
+      "log": "rust-wrong-pin.log",
+      "logSha256": "5293a7d30b47fc349de1f2181cfab4d11dbe8b107e2a8adc86740549f944c41a"
+    },
+    {
+      "client": "lean",
+      "case": "valid",
+      "exitCode": 0,
+      "log": "lean-valid.log",
+      "logSha256": "5240a22e9bd25a183d51f42622db478998602f750b071b61e424966801ebad9a"
+    },
+    {
+      "client": "lean",
+      "case": "invalid",
+      "exitCode": 1,
+      "log": "lean-invalid.log",
+      "logSha256": "5bf2353443f4d1690c4960e7dbfbc37a11b211c2034d8c3d743fc72761c13fd1"
+    },
+    {
+      "client": "lean",
+      "case": "wrong-pin",
+      "exitCode": 1,
+      "log": "lean-wrong-pin.log",
+      "logSha256": "fd654efd497c06e4baa8ae6123d4416b91c7bca2b50ea5c2e217ecba62ebaa9f"
+    },
+    {
+      "client": "ecma",
+      "case": "valid",
+      "exitCode": 0,
+      "log": "ecma-valid.log",
+      "logSha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+    },
+    {
+      "client": "ecma",
+      "case": "invalid",
+      "exitCode": 1,
+      "log": "ecma-invalid.log",
+      "logSha256": "db7726e81df013c693804ef9cb536c753bc5849b55715ad62b897bc5acdd2d10"
+    },
+    {
+      "client": "ecma",
+      "case": "wrong-pin",
+      "exitCode": 1,
+      "log": "ecma-wrong-pin.log",
+      "logSha256": "2286cb4778c12e6b7fd9244a08fcb8150a1066d376816fa0ba5025942a5d0737"
+    },
+    {
+      "client": "ecma",
+      "case": "register",
+      "exitCode": 0,
+      "log": "ecma-protocol.log",
+      "logSha256": "d941c7cf25fc2a68c0985fda6d9cadecb503dcda195b22bb56d89c260948276e"
+    },
+    {
+      "client": "ecma",
+      "case": "mismatch",
+      "exitCode": 0,
+      "log": "ecma-protocol.log",
+      "logSha256": "d941c7cf25fc2a68c0985fda6d9cadecb503dcda195b22bb56d89c260948276e"
+    },
+    {
+      "client": "ecma",
+      "case": "register_traces",
+      "exitCode": 0,
+      "log": "ecma-protocol.log",
+      "logSha256": "d941c7cf25fc2a68c0985fda6d9cadecb503dcda195b22bb56d89c260948276e"
+    },
+    {
+      "client": "ecma",
+      "case": "register_trace_gen",
+      "exitCode": 0,
+      "log": "ecma-protocol.log",
+      "logSha256": "d941c7cf25fc2a68c0985fda6d9cadecb503dcda195b22bb56d89c260948276e"
+    },
+    {
+      "client": "ecma",
+      "case": "register_explore",
+      "exitCode": 0,
+      "log": "ecma-protocol.log",
+      "logSha256": "d941c7cf25fc2a68c0985fda6d9cadecb503dcda195b22bb56d89c260948276e"
+    },
+    {
+      "client": "ecma",
+      "case": "register_explore_session",
+      "exitCode": 0,
+      "log": "ecma-protocol.log",
+      "logSha256": "d941c7cf25fc2a68c0985fda6d9cadecb503dcda195b22bb56d89c260948276e"
+    },
+    {
+      "client": "ecma",
+      "case": "inline_multimodule",
+      "exitCode": 0,
+      "log": "ecma-protocol.log",
+      "logSha256": "d941c7cf25fc2a68c0985fda6d9cadecb503dcda195b22bb56d89c260948276e"
+    }
+  ]
+}

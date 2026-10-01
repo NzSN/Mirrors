@@ -253,8 +253,10 @@ def evaluate_catalog_link(
             if artifact["requirement"] == "required"
         } | set(scope_verification["requiredArtifactRoles"])
         cleanup_records = [*envelope["outcomes"]["cleanup"], *scope_verification["cleanup"]]
-        distribution_manifest_sha256 = scope_verification["distributionManifestSha256"]
-        cache_index_sha256 = scope_verification["cacheIndexSha256"]
+        # Scope v2 may bind local and Gate nodes to separate distributions.
+        # Preserve the legacy singular projection only for a single D binding.
+        distribution_manifest_sha256 = scope_verification.get("distributionManifestSha256")
+        cache_index_sha256 = scope_verification.get("cacheIndexSha256")
     else:
         command_ids = {command["commandId"] for command in envelope["commands"]}
         tier_records = envelope["tiers"]
@@ -334,4 +336,6 @@ def evaluate_catalog_link(
     if distribution_manifest_sha256 is not None:
         result["distributionManifestSha256"] = distribution_manifest_sha256
         result["cacheIndexSha256"] = cache_index_sha256
+    if scope_verification is not None:
+        result["distributionBindings"] = scope_verification["bindings"]
     return result

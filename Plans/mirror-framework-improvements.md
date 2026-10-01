@@ -8,6 +8,25 @@ Planning baseline: Mirrors `eb5cd00`, MirrorGate `173075d`
 
 Task decomposition and agent assignments: [task index](mirror-framework-tasks.md).
 
+Current topology decision, 2026-10-01: the WSL2 coordinator uses the current
+machine's native Windows host as its designated remote oracle, with Apalache
+0.62.2 / Microsoft Java 25.0.4+7-LTS. The observed endpoint is
+`172.20.208.1:8999`, and Windows artifacts are confined to
+`C:\Users\ayden\Desktop\Workspace\MirrorsRemote`. This replaces the earlier
+server as the intended execution target. Pin migration is complete; domain materialization, remote checking and
+the declared 22-case mTLS interop matrix passed for the frozen candidate;
+historical milestone/evidence records below are not relabelled. Gate's separate
+Linux delegated-cgroup/native-host capabilities remain unqualified. See
+[the execution decision](execution-decisions.md#2026-10-01--current-windows-host-is-the-designated-remote-oracle).
+
+M5 scope revision, 2026-10-01: at the user's request the selected profile is
+`m5-wsl-windows-remote/v1`. Native Ubuntu acceptance and aggregate-cgroup
+enforcement are removed from M5 requirements. M4's ownership-safe recovery
+remains a dependency; its aggregate-limit clause belongs to the separate Linux
+scope. WSL-supported installation, isolation/recovery and retained-evidence
+checks keep their stated requirements. No excluded capability is counted as
+qualified. [Execution plan](m5-wsl-windows-remote.md).
+
 ## Objective and scope
 
 Make the framework easier to install, diagnose, and operate while strengthening
@@ -64,10 +83,10 @@ Preserve these boundaries throughout:
 | --- | --- | --- | --- | --- | --- |
 | M0 | Baseline inventory and contracts | Mirrors, with each component owner | None | Scope, schemas, failure rules, and supported initial path reviewed | Done: scope, contracts, and baseline reviewed and accepted 2026-09-22 |
 | M1 | Compatibility catalog and evidence format | Mirrors catalog; evidence producers in each repo | M0 | Generated support tables and durable evidence exercised together | Done: catalog selection and durable evidence exercised together in the 2026-09-25 pass |
-| M2 | Installable reference distribution | Component packaging owners; framework integration in Mirrors | M1 | Fresh isolated consumer completes local and Gate flows | Done (diagnostic WSL2 profile): both prefixes committed; local and Gate D audits qualified (`run-ae0b01c9…`, `run-2b6e15c6…`); native Ubuntu acceptance deferred 2026-09-29 (no native host) |
-| M3 | Failure reproduction and fidelity acceptance | MirrorECMA, Mirrors compiler, Gate integration | M1; use M2 distribution for final acceptance | Reproduction, safe reduction, and mutation controls pass | Partial: mutation controls qualified locally and through Gate (17/17); reproduction qualified and credited (`run-6accf0f9…`, `status: reproduced`); safe reduction: prefix tier qualified 2026-09-30 (`run-dcc51362…`, `shortest_reproducing_prefix`); domain tier pending the remote service |
-| M4 | Gate interruption recovery | MirrorGate | M1 evidence format | Ownership-safe recovery and aggregate-limit gates pass | Partial: ownership-safe recovery qualified (`run-efeb64cc…`, bound to a fresh origin run); aggregate-limit gate deferred 2026-09-29 (no delegated cgroup-v2 parent; no native Ubuntu host) |
-| M5 | Release-candidate qualification | All affected owners | M2–M4 | Exact candidate combination passes required installed and runtime gates | Not qualified: diagnostic-scope Q1/Q2 verified on WSL2 (selection `68a3ad58…`, 15 credited runs incl. reproduction, both D bindings); prefix reduction qualified 2026-09-30 (`run-dcc51362…`, `shortest_reproducing_prefix`); domain reduction pending the remote service; interop and remote model check remain open; cgroup tier deferred 2026-09-29 |
+| M2 | Installable reference distribution | Component packaging owners; framework integration in Mirrors | M1 | Fresh isolated consumer completes local and Gate flows | Done for selected WSL2 profile: committed local/Gate installs and source-hidden D audits (`run-2a4f088c…`, `run-20b4d70c…`) qualify current C0; native Ubuntu acceptance excluded |
+| M3 | Failure reproduction and fidelity acceptance | MirrorECMA, Mirrors compiler, Gate integration | M1; use M2 distribution for final acceptance | Reproduction, safe reduction, and mutation controls pass | Done for selected profile: both installed R1 branches reproduced; prefix best 2/16 with complete minimality; LeaseService R5 model-valid and actual reduced-corpus baseline/fault preserves the same signature; local/Gate mutation aggregates 17/17; exact R0/R1/R5 linkage independently verified |
+| M4 | Gate interruption recovery | MirrorGate | M1 evidence format | Ownership-safe recovery and aggregate-limit gates pass | Partial overall: current-candidate recovery reclaims four owned prepared filesystem resources with confirmed cleanup and exact fresh-origin linkage; this required M5 clause qualifies. Aggregate cgroups and active-process post-restart recovery remain separately unqualified |
+| M5 | Release-candidate qualification: `m5-wsl-windows-remote/v1` | All affected owners | M2, M3, M4 ownership-safe recovery | Exact candidate passes this profile's installed/runtime/evidence gates; native Ubuntu and aggregate-cgroup acceptance excluded | Done for `m5-wsl-windows-remote/v1`: C0 `f2080fd722ed…`, all 18 required commands/16 tiers; full 19-node scope with both D bindings and 20 bundles independently verified; six controls rejected; [Q3 completion](q3-m5-complete-2026-10-01.md) |
 
 Updated 2026-09-29: safe-reduction implementation landed on both mains
 (MirrorECMA `da18f1a`; Mirrors `abbf70b`, `b19e090`) and every tier requiring a
@@ -90,6 +109,22 @@ remote model check and interop remain unavailable and the native-Ubuntu/cgroup
 tiers stay deferred. Per-tier evidence is in
 [q3-readiness-2026-09-30.md](q3-readiness-2026-09-30.md) and the
 `CHECKPOINTS.md` 2026-09-30 records.
+
+Updated 2026-10-01: separate native-Linux requirements are removed from the
+selected M5 profile. The current Windows oracle is admitted and the requested
+remote checks passed. The domain result is individually qualified and reproduced
+by installed replay, while full linked-scope credit requires the same LeaseService
+bundle in a finalized R1. Current results, exact boundaries and remaining
+candidate-wide work are in [Windows remote readiness](q3-windows-remote-2026-10-01.md).
+Historical Q1/Q2 scopes above do not qualify this new selection.
+
+Updated 2026-10-01 after complete rerun: all five completion items qualify
+the exact named WSL2/Windows profile on C0 `f2080fd722ed097eb1d5e4b4fd8cd4e8d7a1d1092b91530d48a51ca3bf141670`.
+Both reproduction/reduction branches, fixed mutation aggregates, prepared-snapshot
+recovery, source/remote gates and the full independently verified Q1/Q2 graph
+pass. Current acceptance is in [completion readiness](q3-m5-complete-2026-10-01.md).
+M4's separate aggregate/process claims remain unqualified; only its exercised
+ownership-safe filesystem clause is required and credited by this M5 profile.
 
 Within M1, catalog and evidence work can progress independently after agreeing
 on identity fields. M3 and M4 can progress independently. Native-client expansion
@@ -425,7 +460,8 @@ M5 requires these end-to-end demonstrations:
 Required tiers must run where their primitives are permitted: `ptrace` (the
 installation audit traces its relocated replay), AF_INET/AF_UNIX loopback (Gate
 supervisor control, transport, registry), writable component checkouts and
-evidence store, and a delegated cgroup-v2 parent for aggregate-limit tiers.
+evidence store. Delegated cgroup-v2 enforcement and native Ubuntu acceptance
+are separate Linux-scope capabilities excluded from the selected M5 profile.
 The 2026-09-25 pass inside an agent sandbox that denies these primitives
 produced environment-limited incompletes, not product failures; such tiers
 remain incomplete and are never downgraded to optional or passed.
@@ -466,9 +502,11 @@ deployment profile that depends on them.
 
 ## Completion criteria and non-goals
 
-The roadmap is complete when all six workstreams have their owned contracts,
-implementation, acceptance evidence, and user guidance, and M5 qualifies an exact
-candidate combination. Track partial milestones explicitly; avoid a single
+The selected M5 profile is complete when its scoped contracts, implementation,
+acceptance evidence, and user guidance qualify an exact candidate combination.
+Native Ubuntu and aggregate-cgroup claims remain separately unqualified;
+M4 ownership-safe recovery stays required. The broader six-workstream roadmap
+retains those separate capability records. Track partial milestones explicitly; avoid a single
 framework-wide green status that hides incomplete capabilities.
 
 This roadmap does not require a new wire protocol, replacing MirrorECMA's suite

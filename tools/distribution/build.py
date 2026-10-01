@@ -42,11 +42,16 @@ def tool_record(tool_id: str, path: Path, version_args: list[str]) -> dict:
 
 
 def write_reference_project(application_root: Path, server: Path,
-    compiler: Path, package_root: Path, gate_package: Path | None = None) -> None:
-    project_root = application_root / "reference-project"
+    compiler: Path, package_root: Path, gate_package: Path | None = None,
+    application: str = "work-queue") -> None:
+    if application not in ("work-queue", "lease-service"):
+        raise ValueError(f"unsupported reference project: {application}")
+    lease = application == "lease-service"
+    module_name = "LeaseService" if lease else "WorkQueue"
+    project_root = application_root / ("lease-project" if lease else "reference-project")
     project_root.mkdir()
-    trace = application_root / "examples/work-queue/artifacts/witness.itf.json"
-    module = application_root / "dist-validation/examples/work-queue/artifacts/bundle/WorkQueue.suite.js"
+    trace = application_root / f"examples/{application}/artifacts/witness.itf.json"
+    module = application_root / f"dist-validation/examples/{application}/artifacts/bundle/{module_name}.suite.js"
     package_manifest = package_root / "package.json"
     server_sha = sha256_file(server)[1]
     compiler_sha = sha256_file(compiler)[1]
@@ -57,32 +62,34 @@ def write_reference_project(application_root: Path, server: Path,
     project = {
         "schema": "mirrorecma.project/v1",
         "frameworkAdmission": "required",
-        "suiteId": "work-queue.reference-installed/v1",
+        "suiteId": f"{application}.reference-installed/v1",
         "model": {
-            "source": "../examples/work-queue/specs/WorkQueue.tla",
-            "contract": "../examples/work-queue/artifacts/WorkQueue.mirror-interface.json",
-            "evidence": "../examples/work-queue/artifacts/witness.itf.json",
-            "lock": "../examples/work-queue/artifacts/WorkQueue.mirror-interface.lock.json",
+            "source": f"../examples/{application}/specs/{module_name}.tla",
+            "contract": f"../examples/{application}/artifacts/{module_name}.mirror-interface.json",
+            "evidence": f"../examples/{application}/artifacts/witness.itf.json",
+            "lock": f"../examples/{application}/artifacts/{module_name}.mirror-interface.lock.json",
             "target": "mirrorecma-async-v1",
-            "generatedDirectory": "../examples/work-queue/artifacts/bundle",
-            "module": "../dist-validation/examples/work-queue/artifacts/bundle/WorkQueue.suite.js",
+            "generatedDirectory": f"../examples/{application}/artifacts/bundle",
+            "module": f"../dist-validation/examples/{application}/artifacts/bundle/{module_name}.suite.js",
             "moduleSha256": module_sha,
-            "export": "WorkQueueModel",
+            "export": module_name + "Model",
         },
         "implementation": {"module": "reference-correct-adapter.mjs", "export": "createAdapter"},
         "replay": {
             "kind": "corpus",
-            "config": {"specPath": "../examples/work-queue/specs/WorkQueue.tla",
+            "config": {"specPath": f"../examples/{application}/specs/{module_name}.tla",
                 "initPredicate": "Init", "nextPredicate": "WitnessNext",
-                "invariant": "TraceComplete", "lengthBound": 15,
+                "invariant": "TraceComplete", "lengthBound": 10 if lease else 15,
                 "paramVars": "parameters"},
-            "traces": [{"path": "../examples/work-queue/artifacts/witness.itf.json",
-                "sha256": trace_sha}],
+            "traces": [{"path": f"../examples/{application}/artifacts/witness.itf.json",
+                "sha256": trace_sha} for _ in range(2 if lease else 1)],
         },
         "acceptance": {
-            "requiredActions": ["Complete", "Enqueue", "Fail", "Reset", "Retry", "Start"],
-            "requiredPairs": [["Enqueue", "Enqueue"], ["Fail", "Retry"],
-                ["Retry", "Complete"], ["Reset", "Enqueue"]],
+            "requiredActions": (["Acquire", "Advance", "Release", "Renew", "Write"] if lease
+                else ["Complete", "Enqueue", "Fail", "Reset", "Retry", "Start"]),
+            "requiredPairs": ([["Acquire", "Acquire"], ["Advance", "Write"], ["Release", "Renew"]]
+                if lease else [["Enqueue", "Enqueue"], ["Fail", "Retry"],
+                    ["Retry", "Complete"], ["Reset", "Enqueue"]]),
         },
         "execution": {"mirror": {"kind": "local"}, "timeouts": {
             "registrationMs": 30000, "actionMs": 5000, "receiveMs": 30000,
@@ -115,12 +122,18 @@ def write_reference_project(application_root: Path, server: Path,
                 "version": "model-interface-gen/1",
                 "capabilities": ["bundle-v1", "check-bundle-v1", "preflight-v1"]},
             "server": {"path": "../../bin/ModelMirrors", "sha256": server_sha,
-                "version": "Mirrors 0.0.2",
+                "version": "v0.0.3.2",
                 "capabilities": ["model-interface-v1", "checked-replay-v1"]}},
         "packages": packages,
     })
     for name, variant in (("reference-correct-adapter.mjs", "correct"),
-            ("reference-faulty-adapter.mjs", "enqueue-drops")):
+            ("reference-faulty-adapter.mjs", "expired-token" if lease else "enqueue-drops")):
+        if lease:
+            (project_root / name).write_text(
+                "import { createAdapter as createLeaseAdapter } from '../examples/lease-service/service.mjs';\n"
+                f"export function createAdapter() {{ return createLeaseAdapter('{variant}'); }}\n",
+                encoding="utf-8")
+            continue
         (project_root / name).write_text(
             "import { mkdtemp, rm } from 'node:fs/promises';\n"
             "import { tmpdir } from 'node:os';\n"
@@ -358,6 +371,11 @@ def main() -> int:
             bin_dir / "model_interface_gen", package_dir,
             gate_package=(sources / "mirrorgate/integrations/mirrorecma/package.json"
                 if args.profile == "checked-replay-gate" else None))
+        write_reference_project(application_fixture_dir, bin_dir / "ModelMirrors",
+            bin_dir / "model_interface_gen", package_dir,
+            gate_package=(sources / "mirrorgate/integrations/mirrorecma/package.json"
+                if args.profile == "checked-replay-gate" else None),
+            application="lease-service")
         application_fixture_out = artifacts_root / "examples/application-validation-fixtures.tar.gz"
         deterministic_tar(application_fixture_dir, application_fixture_out,
             "application-validation")

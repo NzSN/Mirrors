@@ -5,6 +5,95 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-01 — Five-item M5 completion qualified
+
+The authorized five-item plan is complete for `m5-wsl-windows-remote/v1`
+(`local-candidate`). Exact C0: `f2080fd722ed097eb1d5e4b4fd8cd4e8d7a1d1092b91530d48a51ca3bf141670`.
+Both caches rebuilt from one immutable snapshot and both installations committed;
+local D `run-2a4f088c-4ff0-4636-ace2-3b42609fa94f` and Gate D
+`run-20b4d70c-48c3-4c17-952a-14f34bec284d` qualified first.
+All 18 required commands and 16 tiers pass for this candidate.
+
+Installed LeaseService R0/R1 and full domain reduction preserve the same required
+bundle and actual reduced-corpus `write` mismatch at state 5, with a passed correct
+baseline and confirmed cleanup. WorkQueue prefix reduction proves best 2/16 with
+complete minimality after three actual stability reproductions. Both fixed
+17-mutant aggregates pass. Native recovery reclaims four prepared filesystem
+resources from its fresh, deliberately interrupted origin; that origin is retained
+without credit. Source-hidden/offline Lease origin, R1 and candidate replay pass.
+Fresh Windows bound-3 HourClock is `VALID`; all 22 declared five-client mTLS cases
+pass under the actual 0.62.2/25.0.4+7-LTS console identity.
+
+Q `run-9a271249-3947-4273-8a51-c5ccf9154119` verifies a full 19-node scope with both D
+bindings. Twenty selected bundles, the complete graph and the named C1 catalog
+qualification verify independently with installed pinned wheels, repositories and
+scratch hidden, archive read-only and network unshared. Six tamper, binding,
+linkage and incomplete-profile controls reject. C1 approval is
+`1b8db918f96fc713a2fab00bffd7158e06e491e71a019e4c42e12b03aa941ef5`.
+
+Real execution corrected Q's producer label and Gate helper bytecode writes;
+each source correction triggered a complete new freeze/build/install/rerun.
+Final materialization checks pass for both installed trees. Mirrors' non-model
+gate passes (129 evidence, 36 distribution, 63 capture tests); MirrorECMA check
+and 626 tests pass with 13 optional skips; required supported Gate gates pass.
+No local model checker ran.
+
+The [completion readiness report](Plans/q3-m5-complete-2026-10-01.md) records
+exact public references, boundaries and clause acceptance. Authoritative private
+evidence, native observations, raw receipts, exact caches/snapshot, independent
+results and failed attempts are owner-only under
+`~/.local/state/mirrors/m5-completion-20261001`. Credential bytes are excluded.
+Native Ubuntu/aggregate cgroups remain outside this named profile; active-process
+post-restart recovery and Windows service-manager acceptance remain unqualified.
+All Windows work remains within `C:\Users\ayden\Desktop\Workspace`.
+Changes are uncommitted; historical entries/reports remain unchanged.
+
+## 2026-10-01 — Five-item M5 completion campaign started
+
+The user authorized execution of `/tmp/m5-remaining-five-items-plan-2026-10-01.md`.
+Implementation and qualification are in progress; current report:
+[completion campaign](Plans/q3-m5-complete-2026-10-01.md).
+
+## 2026-10-01 — M5 Linux requirements removed; Windows remote work passed
+
+The user removes native Ubuntu host acceptance and real aggregate-cgroup
+acceptance from M5, selecting `m5-wsl-windows-remote/v1`. WSL-supported
+installed, isolation/recovery and evidence requirements remain. All Windows
+work stays under `C:\Users\ayden\Desktop\Workspace\MirrorsRemote`.
+The active oracle is `172.20.208.1:8999`, pinned mTLS, Apalache 0.62.2 and
+Microsoft Java 25.0.4+7-LTS, using an observed owned native console process.
+
+Final selection: `3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c`.
+Both caches were rebuilt from one immutable snapshot and both installations
+committed. Local D `run-d3cfb744…` and Gate D `run-1afaf007…` qualified.
+Remote model check `run-af4c9237…` returned bound-3 HourClock `VALID`.
+Interop `run-4f0f263b…` passed all 22 declared mTLS verdict/pin/protocol cases
+across five clients. Installed domain materialization `run-c938aa2f…` qualified:
+LeaseService input `Client: 2 -> 1` at state 2, fresh remote model validity,
+confirmed oracle cleanup. Installed replay with all three framework repositories
+hidden preserved the exact `write` mismatch at state 5 and confirmed cleanup.
+
+Real execution exposed and fixed the unresolved-digest Promise comparison in
+MirrorECMA and the evidence adapter's forbidden local-mirror field requirement.
+Mirrors' full non-model gate passed (including 123 evidence tests); MirrorECMA
+check and 626 tests passed with 13 skips; supported real Gate gates passed with
+the pinned Node runtime. No local model checker ran.
+
+Ten individual finalized bundles verified independently offline with sources,
+producer scratch and network unavailable. Missing required artifact and changed
+byte controls were rejected. A supporting nine-node scope verified with both D
+bindings. **Full M5 remains unqualified**: giving R5 complete scope credit needs
+its exact LeaseService bundle in a finalized R1, and current-candidate project
+replay/reproduction/prefix-reduction/mutation/recovery plus the complete installed
+Q1/Q2 graph remain. No excluded Linux capability or historical selection is
+credited to this candidate.
+
+The [readiness record](Plans/q3-windows-remote-2026-10-01.md) contains exact run
+IDs and remaining clauses. [Public summaries](Plans/m5-windows-remote-evidence-20261001/README.md)
+are diagnostic projections; authoritative private inputs, receipts, observations,
+verifier output and failed attempts are owner-only under
+`~/.local/state/mirrors/m5-windows-remote-20261001`. Changes remain uncommitted.
+
 ## 2026-10-01 — WriteSentry publication and immutable dependency pin completed
 
 The user authorized commit/push and the remaining publication work. Published

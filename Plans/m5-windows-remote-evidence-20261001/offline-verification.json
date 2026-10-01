@@ -1,0 +1,129 @@
+{
+  "projection": "public-diagnostic",
+  "bundleCount": 10,
+  "bundles": [
+    {
+      "commandId": "framework.install-diagnostics-gate",
+      "publicRunRef": {
+        "envelopeSha256": "3898064b1ab04aeb9c7ee5bb29ec91ca6b3c0c229ac17d1714fa1d304cfa784f",
+        "projectionKind": "public",
+        "runId": "run-1afaf007-9e84-46fc-93b2-c6dddf841a59",
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+      },
+      "status": "verified"
+    },
+    {
+      "commandId": "framework.install-diagnostics",
+      "publicRunRef": {
+        "envelopeSha256": "73fe8622d32cc9b18c0e29b3d08436678eed146f3a9b1b4c5def378eca364e24",
+        "projectionKind": "public",
+        "runId": "run-d3cfb744-5e95-4507-bbce-84e5ae7be430",
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+      },
+      "status": "verified"
+    },
+    {
+      "commandId": "mirrors.remote-model-check",
+      "publicRunRef": {
+        "envelopeSha256": "b86ec26580f1fbfb0e00d521c951a5c0f67d1134c3516ad4bbf063bbc76a4557",
+        "projectionKind": "public",
+        "runId": "run-af4c9237-c1ac-4886-b8c2-6c8b2e88dd0b",
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+      },
+      "status": "verified"
+    },
+    {
+      "commandId": "mirrors.interop",
+      "publicRunRef": {
+        "envelopeSha256": "4525d6753e86c8137c08105e54caf33b69cbb5745533c71de55c9349534f4dc9",
+        "projectionKind": "public",
+        "runId": "run-4f0f263b-f8d6-4b9e-9505-50bccebecffc",
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+      },
+      "status": "verified"
+    },
+    {
+      "commandId": "framework.lease-origin",
+      "publicRunRef": {
+        "envelopeSha256": "c23e8ff813e21b046ebaf415aab0e5ebd5ef2183ec0ae8dc735c6abe0f9956c1",
+        "projectionKind": "public",
+        "runId": "run-6cbd132d-d9fa-4b82-a0f7-7ead8a807133",
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+      },
+      "status": "verified"
+    },
+    {
+      "commandId": "framework.reduction",
+      "publicRunRef": {
+        "envelopeSha256": "1f4dbc7474966e130f09778e21e8e6d3e2feb160bc99cbe692afc36592ef79ea",
+        "projectionKind": "public",
+        "runId": "run-c938aa2f-d677-4554-897f-6b8854a3d84e",
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+      },
+      "status": "verified"
+    },
+    {
+      "commandId": "mirrors.local-no-model",
+      "publicRunRef": {
+        "envelopeSha256": "1c9044579a70183104be21fe36de5bd146a62ef56e8b0dda4e4449dad26e72a7",
+        "projectionKind": "public",
+        "runId": "run-815a5a3c-9a2d-42ef-ae91-43702c26a597",
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+      },
+      "status": "verified"
+    },
+    {
+      "commandId": "mirrorecma.project-check",
+      "publicRunRef": {
+        "envelopeSha256": "7307d04283d59361dc42e57d7228dcec8de5df4f5c36686c78586452b679b905",
+        "projectionKind": "public",
+        "runId": "run-a5f3dcf5-e277-42ac-bfb1-ec37df7c0c89",
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+      },
+      "status": "verified"
+    },
+    {
+      "commandId": "mirrorecma.test",
+      "publicRunRef": {
+        "envelopeSha256": "a5274f81dc111fd6356b57615eee27f4b69d78e63ff56f001724693105ca8805",
+        "projectionKind": "public",
+        "runId": "run-dc72b3bb-ce05-43de-b92c-7faa636a4858",
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+      },
+      "status": "verified"
+    },
+    {
+      "commandId": "mirrorgate.required",
+      "publicRunRef": {
+        "envelopeSha256": "f4012254a2e941e8f42dd087d8ed98ada5d94d3adc5944b637c9a00e732eb287",
+        "projectionKind": "public",
+        "runId": "run-603f94cb-b22f-4b24-9fcc-d08ee9b2703a",
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+      },
+      "status": "verified"
+    }
+  ],
+  "supportingScope": {
+    "scopeId": "windows-remote-supporting-scope-20261001",
+    "status": "verified",
+    "verifiedRunCount": 9
+  },
+  "controls": [
+    {
+      "case": "missing-required-artifact",
+      "status": "rejected"
+    },
+    {
+      "case": "changed-artifact-byte",
+      "status": "rejected"
+    }
+  ],
+  "environment": {
+    "network": "unshared",
+    "repositoryRoots": "hidden",
+    "producerScratch": "hidden",
+    "verifier": "installed schema and registry with installed pinned wheels"
+  },
+  "fullM5Qualified": false,
+  "domainScopeCredit": "requires the same LeaseService bundle in a finalized R1 dependency"
+}

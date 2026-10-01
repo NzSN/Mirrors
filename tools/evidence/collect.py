@@ -334,6 +334,7 @@ def prepare_attachment_plan(path: Path) -> AttachmentPlan:
                                 "mirrorecma.suite-result/v1",
                                 "mirrorecma.reproduction-capture/v1",
                                 "mirrors.installed-consumer-audit/v1",
+                                "mirrors.recovery-origin/v1",
                                 "mirrorgate.application-validation/v2",
                                 "mirrorgate.application-validation-aggregate/v1",
                                 "mirrorgate.recovery-receipt/v1"):
@@ -1404,7 +1405,7 @@ def _validate_reduction_service_identity(value: Any) -> dict[str, Any]:
         raise ValueError("reduction service endpoint port is invalid")
     _sha_identity({"id":"peer-leaf", "sha256":identity["peerLeafSha256"]},
                   "reduction service peer leaf")
-    if identity["apalacheVersion"] != "0.61.0" or identity["javaVersion"] != "25.0.4+7-LTS":
+    if identity["apalacheVersion"] != "0.62.2" or identity["javaVersion"] != "25.0.4+7-LTS":
         raise ValueError("reduction service versions are unsupported")
     if type(identity["observedAt"]) is not str or not identity["observedAt"]:
         raise ValueError("reduction service observation timestamp is invalid")
@@ -1415,23 +1416,16 @@ def _validate_reduction_service_identity(value: Any) -> dict[str, Any]:
 
 def _validate_reduction_remote_tool_manifest(tool_manifest: Any,
         validator: dict[str, Any]) -> None:
-    if type(tool_manifest) is not dict:
-        raise ValueError("reduction remote tool manifest is invalid")
+    tool_manifest = _closed_record(tool_manifest,
+        {"schema", "mode", "totalBudgetMs", "cleanupBudgetMs", "validator"}, set(),
+        "reduction remote tool manifest")
     if (tool_manifest.get("schema") != "mirrorecma.lease-reduction-tools/v2"
             or tool_manifest.get("mode") != "remote"):
         raise ValueError("reduction remote tool manifest schema is invalid")
-    if "apalache" in tool_manifest or "java" in tool_manifest:
-        raise ValueError("reduction remote tool manifest pins local tool bytes")
     for key in ("totalBudgetMs", "cleanupBudgetMs"):
         value = tool_manifest.get(key)
         if type(value) is not int or isinstance(value, bool) or not 1 <= value <= 0x7fffffff:
             raise ValueError("reduction remote tool manifest budgets are invalid")
-    mirror = _closed_record(tool_manifest.get("mirror"), {"path", "sha256"}, set(),
-                            "reduction remote mirror identity")
-    if type(mirror["path"]) is not str or not mirror["path"]:
-        raise ValueError("reduction remote mirror path is invalid")
-    _sha_identity({"id":"mirror", "sha256":mirror["sha256"]},
-                  "reduction remote mirror")
     remote_validator = _closed_record(tool_manifest.get("validator"),
         {"id", "path", "sha256"}, set(), "reduction remote validator identity")
     if (remote_validator["id"] != "mirrors.model-interface-reduction/v1"
@@ -1544,6 +1538,8 @@ def _reduction_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
                 and receipt["cleanup"].get("status") not in {None, "confirmed"}:
             cleanup_status = "failed"
         _validate_reduction_receipt(receipt, captured)
+        if getattr(plan, "application", None) == "lease-reduced":
+            _validate_lease_reduction_acceptance(captured)
         behavior: dict[str, Any] = {"status":"passed", "classification":{
             "namespace":"mirrorecma.lease-reduction-oracle", "code":"model-valid"}}
         producer = next((item for item in producer_results
@@ -1559,6 +1555,51 @@ def _reduction_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
                 [{"scope":"local-cooperative", "requirement":"required",
                   "status":cleanup_status, "reasonCode":"producer-result-invalid",
                   "artifactIds":[] if artifact_id is None else [artifact_id]}], "failed")
+
+
+def _validate_lease_reduction_acceptance(captured: dict[str, bytes]) -> None:
+    result = _closed_record(loads_json_bytes(captured["lease-reduction-acceptance"]),
+        {"schema", "status", "globalMinimumClaim", "originalBundleSha256",
+         "candidateTraceSha256", "oracleReceiptSha256", "originalSignature",
+         "candidateSignature", "originalReplayStatus", "baseline", "candidate"}, set(),
+        "LeaseService reduction acceptance")
+    if (result["schema"] != "mirrors.lease-reduction-acceptance/v1"
+            or result["status"] != "reduced" or result["globalMinimumClaim"] is not False
+            or result["originalReplayStatus"] != "reproduced"
+            or result["originalSignature"] != result["candidateSignature"]):
+        raise ValueError("LeaseService reduction did not preserve its reproduced signature")
+    for field, artifact in (("originalBundleSha256", "lease-reduction-original-bundle"),
+            ("candidateTraceSha256", "lease-reduction-candidate-trace"),
+            ("oracleReceiptSha256", "lease-reduction-receipt")):
+        if result[field] != _captured_sha256(captured, artifact):
+            raise ValueError("LeaseService reduction acceptance input identity differs")
+    bundle = loads_json_bytes(captured["lease-reduction-original-bundle"])
+    if result["originalSignature"] != bundle["signature"]:
+        raise ValueError("LeaseService reduction original signature differs from its bundle")
+    baseline, candidate = result["baseline"], result["candidate"]
+    cleanup = {"scope": "local", "status": "succeeded", "quiescence": "confirmed",
+               "bindingStatus": "succeeded"}
+    if (type(baseline) is not dict or type(candidate) is not dict
+            or baseline.get("schema") != "mirrorecma.suite-result/v1"
+            or candidate.get("schema") != "mirrorecma.suite-result/v1"
+            or baseline.get("suiteId") != "lease-service.reference-installed/v1"
+            or candidate.get("suiteId") != baseline["suiteId"]
+            or baseline.get("outcome") != "passed" or baseline.get("conformance") != "matched"
+            or type(baseline.get("acceptance")) is not dict
+            or baseline["acceptance"].get("status") != "met"
+            or candidate.get("outcome") != "mismatch" or candidate.get("conformance") != "mismatch"
+            or baseline.get("cleanup") != cleanup or candidate.get("cleanup") != cleanup):
+        raise ValueError("LeaseService reduction replay or cleanup did not pass")
+    failure = candidate.get("failure")
+    if (type(failure) is not dict or failure.get("kind") != "mismatch"
+            or failure.get("code") != "model_mismatch" or failure.get("traceIndex") != 0
+            or failure.get("stateIndex") != 5 or failure.get("action") != "write"):
+        raise ValueError("LeaseService reduction is not the declared expired-token mismatch")
+    oracle = loads_json_bytes(captured["lease-reduction-receipt"])
+    for suite in (baseline, candidate):
+        if (type(suite.get("identities")) is not dict
+                or suite["identities"].get("corpusDigest") != oracle["candidateCorpusSha256"]):
+            raise ValueError("LeaseService replay did not consume the materialized candidate corpus")
 
 
 _PREFIX_REDUCTION_CLAIMS = {"shortest_reproducing_prefix",
@@ -1889,7 +1930,7 @@ def _suite_result_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
         observation: ChildObservation) -> tuple[dict[str, Any], list[dict[str, Any]], str]:
     mode = plan.application
     artifact_id = plan.adapter_artifact_id
-    if mode not in ("correct", "faulty") or artifact_id is None or artifact_id not in captured:
+    if mode not in ("correct", "faulty", "lease-faulty") or artifact_id is None or artifact_id not in captured:
         raise ValueError("suite result mode or receipt is missing")
     expected_exit = 0 if mode == "correct" else 1
     if observation.timed_out or observation.returncode != expected_exit:
@@ -1908,14 +1949,28 @@ def _suite_result_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
         failure = receipt.get("failure")
         if (receipt.get("outcome") != "mismatch" or receipt.get("conformance") != "mismatch"
                 or type(failure) is not dict or failure.get("kind") != "mismatch"
-                or failure.get("traceIndex") != 0 or failure.get("stateIndex") != 1
-                or failure.get("action") != "enqueue"):
-            raise ValueError("faulty suite result is not the installed Counter mismatch")
+                or failure.get("traceIndex") != 0
+                or failure.get("stateIndex") != (5 if mode == "lease-faulty" else 1)
+                or failure.get("action") != ("write" if mode == "lease-faulty" else "enqueue")):
+            raise ValueError("faulty suite result is not the expected installed mismatch")
+        if mode == "lease-faulty":
+            baseline = loads_json_bytes(captured.get("lease-baseline", b"null"))
+            acceptance = baseline.get("acceptance") if type(baseline) is dict else None
+            if (receipt.get("suiteId") != "lease-service.reference-installed/v1"
+                    or type(baseline) is not dict
+                    or baseline.get("schema") != "mirrorecma.suite-result/v1"
+                    or baseline.get("suiteId") != receipt["suiteId"]
+                    or baseline.get("outcome") != "passed"
+                    or baseline.get("conformance") != "matched"
+                    or type(acceptance) is not dict or acceptance.get("status") != "met"
+                    or baseline.get("cleanup") != receipt["cleanup"]):
+                raise ValueError("LeaseService origin lacks its passed and cleaned baseline")
         code = "mismatch"
     behavior = {"status": "passed", "classification": {
         "namespace": "mirrorecma.suite-result", "code": code}}
     cleanup = [{"scope": "local-cooperative", "requirement": "required",
-                "status": "confirmed", "artifactIds": [artifact_id]}]
+                "status": "confirmed", "artifactIds": (["lease-baseline", artifact_id]
+                    if mode == "lease-faulty" else [artifact_id])}]
     return behavior, cleanup, "passed"
 
 
@@ -2047,6 +2102,24 @@ def _stage(
             behavior = native_behavior
             tier_status = native_tier_status
             behavior_reason = behavior["classification"]["code"]
+    elif (attachment_plan is not None
+            and attachment_plan.adapter_kind == "mirrors.recovery-origin/v1"):
+        origin = loads_json_bytes(captured.get("recovery-origin", b"null"))
+        valid = (type(origin) is dict and origin.get("schema") == "mirrors.recovery-origin/v1"
+            and origin.get("controllerExit") == 74 and observation.returncode == 74
+            and not observation.timed_out and origin.get("behavior") == "failed"
+            and origin.get("cleanup") == "unconfirmed"
+            and type(origin.get("resourceCount")) is int and origin["resourceCount"] > 0
+            and origin.get("interruptionStage") == "prepared-before-worker-start"
+            and origin.get("resourceKinds") == ["filesystem"])
+        behavior = {"status": "failed", "classification": {
+            "namespace": "mirrors.recovery-origin",
+            "code": "controller-interrupted" if valid else "producer-result-invalid"}}
+        cleanup_outcomes = [{"scope": "gate-physical", "requirement": "required",
+            "status": "unconfirmed", "reasonCode": "controller-interrupted",
+            "artifactIds": ["recovery-origin"]}]
+        tier_status, behavior_reason = "failed", behavior["classification"]["code"]
+        required_cleanup_scopes = ["gate-physical"]
     elif (attachment_plan is not None
             and attachment_plan.adapter_kind == "mirrorgate.recovery-receipt/v1"):
         native_behavior, cleanup_outcomes, native_tier_status = _gate_recovery_outcomes(

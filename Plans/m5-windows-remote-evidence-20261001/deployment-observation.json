@@ -1,0 +1,25 @@
+{
+  "projection": "public-diagnostic",
+  "privateObservationSchema": "mirrors.windows-deployment-observation/v1",
+  "observedAt": "2026-10-01T10:28:43.622Z",
+  "endpoint": {
+    "host": "172.20.208.1",
+    "port": 8999
+  },
+  "deploymentMode": "owned-native-console",
+  "serviceManagerQualification": false,
+  "processId": 25156,
+  "processCreatedAt": "2026-10-01T04:27:58.8056750Z",
+  "binarySha256": "5949af30735cd1bf515e64fb9d2299023e13b2c36245ce9be696d65944b32dec",
+  "sourceBaseRevision": "1a069cd3e34d7bfea272e3ee7e10f51acedcc7cb",
+  "sourceTreeSha256": "f49d59ab8cee2fc3bfb2ac5a9bad5f6695e48c6218b9156728ecc16064871f01",
+  "runtime": {
+    "apalacheVersion": "0.62.2",
+    "apalacheArchiveSha256": "7cfadf6e8c04c63f05ac907ec9541c66297005c8cb5efb1731f6a838dfc3fad2",
+    "apalacheJarSha256": "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8",
+    "javaVersion": "25.0.4+7-LTS",
+    "javaArchiveSha256": "54ba13f3ef80887fa74708b2a32daaae6262517ba68433d850bb4b426343172b",
+    "javaExecutableSha256": "58df5c13e5d6e68f242ad9b724479122828523008ef0907d3f2a02f54afaff23"
+  },
+  "serverLeafSha256": "94ccf49b04e24960ec79926e304c29f1f0441f6895cae5705d9a28cf87427a10"
+}

@@ -605,10 +605,10 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(
             commands["mirrors.remote-model-check"]["requiredEnvironment"], {
                 "MIRRORS_REMOTE_APALACHE_ARCHIVE_SHA256":
-                    "68fb56dd9d053cf21d692fd7ec3fbaaeba1395661ec7434fa2b4c47e6fc432b8",
+                    "7cfadf6e8c04c63f05ac907ec9541c66297005c8cb5efb1731f6a838dfc3fad2",
                 "MIRRORS_REMOTE_APALACHE_JAR_SHA256":
-                    "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346",
-                "MIRRORS_REMOTE_APALACHE_VERSION":"0.61.0",
+                    "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8",
+                "MIRRORS_REMOTE_APALACHE_VERSION":"0.62.2",
                 "MIRRORS_REMOTE_JAVA_ARCHIVE_SHA256":
                     "54ba13f3ef80887fa74708b2a32daaae6262517ba68433d850bb4b426343172b",
                 "MIRRORS_REMOTE_JAVA_EXECUTABLE_SHA256":
@@ -619,9 +619,10 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(commands["mirrors.remote-model-check"]["argvPrefix"],
                          ["python3", "tools/evidence/run_remote_model_check.py"])
         self.assertEqual(commands["mirrors.interop"]["requiredEnvironment"]["HS_REF"],
-                         "5ee414ee16b8aba50ceb480ac8013a56165272bb")
-        self.assertEqual(commands["mirrors.interop"]["requiredEnvironmentFileSha256"],
-                         {"HS_BIN":"6b8b46ce98b59c4bbb6a922ead08b1d576a77b8889454d106c10d1227584a087"})
+                         "4aa693f86e18349bb97c050dd33aecbf730b6fa2")
+        self.assertEqual(commands["mirrors.interop"]["argvPrefix"],
+                         ["python3", "tools/interop/run-remote.py"])
+        self.assertIn("MIRRORS_REMOTE_ADMIN_OBSERVATION", commands["mirrors.interop"]["requiredEnvironmentNames"])
         for application in ("work-queue", "persistent-transfer", "lease-service"):
             command = commands[f"mirrorgate.application-campaign.{application}"]
             self.assertEqual(command["argvLength"], 5)
@@ -1162,9 +1163,9 @@ class ReductionAdapterV2Tests(unittest.TestCase):
     JAVA_SHA = "c" * 64
     ARCHIVE_SHA = "d" * 64
     IDENTITY = {
-        "endpoint": {"host": "192.168.150.219", "port": 8999},
+        "endpoint": {"host": "172.20.208.1", "port": 8999},
         "peerLeafSha256": "f" * 64,
-        "apalacheVersion": "0.61.0",
+        "apalacheVersion": "0.62.2",
         "javaVersion": "25.0.4+7-LTS",
         "observedAt": "2026-09-29T00:00:00Z",
         "qualificationRef": "operator-observation/2026-09-29",
@@ -1204,7 +1205,6 @@ class ReductionAdapterV2Tests(unittest.TestCase):
             "mode": "remote",
             "totalBudgetMs": 600_000,
             "cleanupBudgetMs": 5_000,
-            "mirror": {"path": "bin/ModelMirrors", "sha256": "e" * 64},
             "validator": {"id": "mirrors.model-interface-reduction/v1",
                           "path": "bin/model-interface-reduction",
                           "sha256": validator_sha or self.VALIDATOR_SHA},
@@ -1298,6 +1298,17 @@ class ReductionAdapterV2Tests(unittest.TestCase):
         sys.path.insert(0, str(EVIDENCE))
         import collect
         plan = self.plan_stub("lease-reduction-receipt")
+
+        # The remote producer executes only the validator locally. Its closed
+        # tools/v2 contract forbids unused local mirror/Apalache/Java fields.
+        for extra in ("mirror", "apalache", "java", "unknown"):
+            captured = self.captured_inputs()
+            self.remote_manifest(captured)
+            manifest = json.loads(captured["lease-reduction-tool-manifest"])
+            manifest[extra] = {"path": "unused", "sha256": "e" * 64}
+            with self.subTest(extra=extra), self.assertRaisesRegex(ValueError, "closed record"):
+                collect._validate_reduction_remote_tool_manifest(
+                    manifest, {"sha256": self.VALIDATOR_SHA})
 
         # Missing captured identity observation.
         captured = self.captured_inputs()

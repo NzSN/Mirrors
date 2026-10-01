@@ -4,21 +4,29 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "fed55175b792feaec86cf71bf7fae1bae680a0313797a5c982f3a6ecc746f025"
+    "selectionValue": "f2080fd722ed097eb1d5e4b4fd8cd4e8d7a1d1092b91530d48a51ca3bf141670"
   },
   "profileId": "checked-replay-gate",
   "componentRefs": [
     {
       "componentId": "mirrorecma",
       "repository": "https://github.com/NzSN/MirrorECMA.git",
-      "revision": "4992b077dfe1faff914098f4926e3632ea883bb0",
+      "revision": "61890cf14d8465df31ba6c95e72eade0a5716a66",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "db0c7085c6e9ad24ef03d50a7b4ca1c8eb3e9b0a1c6cf2bd6d4f9f53aedbb206",
+        "digest": "2d331a2e2b718ddd36c68ee96e3055ba79f3faa097e8b740d4503eaf722ebd4b",
         "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [],
+        "includedPaths": [
+          "scripts/materialize-lease-reduction.mjs",
+          "src/lease-reduction.ts",
+          "test/reproduction-remote-oracle.test.ts"
+        ],
         "excludedPaths": [
+          {
+            "path": ".projectile-cache.eld",
+            "reasonCode": "pre-existing-unrelated"
+          },
           {
             "path": "catalog/framework-capabilities.json",
             "reasonCode": "evidence-output"
@@ -29,23 +37,134 @@
     {
       "componentId": "mirrorgate",
       "repository": "https://github.com/NzSN/MirrorGate.git",
-      "revision": "0fa8a311018db9cbfdf2bb516235c1ec09e1ddbd",
-      "dirty": false
+      "revision": "9d88ead482f0e53285b1bacd2e29dd23b81440ac",
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "5da7450c1bbf73a0b9c666221968defe3755f1bff351d84b7c4d2362cf971ddc",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "supervisor/mirrorgate/sandbox.py",
+          "tests/test_isolation.py"
+        ],
+        "excludedPaths": [
+          {
+            "path": ".projectile-cache.eld",
+            "reasonCode": "pre-existing-unrelated"
+          }
+        ]
+      }
     },
     {
       "componentId": "mirrors",
       "repository": "https://github.com/NzSN/Mirrors.git",
-      "revision": "e6772d594270759913f00a7ad945dcf508318660",
+      "revision": "d483ac220024a320cce724bc661f32f984805a9c",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "b434d78eda6d1e763dbdcea8696c5ed23d09f8835c38736f58b30b1456d39680",
+        "digest": "104a3f341fc20ab2a8638a37588b67646f29675c0221d2ab03f04566cc88c9e7",
         "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [],
+        "includedPaths": [
+          "Docs/qualification-harness-design.md",
+          "tools/distribution/build.py",
+          "tools/distribution/test_reference_projects.py",
+          "tools/evidence/catalog_links.py",
+          "tools/evidence/collect.py",
+          "tools/evidence/commands.json",
+          "tools/evidence/installed-lease-origin.mjs",
+          "tools/evidence/installed-lease-reduction.mjs",
+          "tools/evidence/installed-recovery-origin.py",
+          "tools/evidence/qualification-profiles.json",
+          "tools/evidence/qualification_scope.py",
+          "tools/evidence/run_lease_origin.mjs",
+          "tools/evidence/run_remote_model_check.py",
+          "tools/evidence/tests/test_catalog_links.py",
+          "tools/evidence/tests/test_collect.py",
+          "tools/evidence/tests/test_lease_acceptance.py",
+          "tools/evidence/tests/test_qualification_scope.py",
+          "tools/evidence/tests/test_remote_observation.py",
+          "tools/interop/remote-clients/RemoteM5.lean",
+          "tools/interop/remote-clients/ecma-protocol.mjs",
+          "tools/interop/remote-clients/ecma.mjs",
+          "tools/interop/remote-clients/rust/main.rs",
+          "tools/interop/run-remote.py"
+        ],
         "excludedPaths": [
+          {
+            "path": ".projectile-cache.eld",
+            "reasonCode": "pre-existing-unrelated"
+          },
+          {
+            "path": "CHECKPOINTS.md",
+            "reasonCode": "planning-documentation"
+          },
           {
             "path": "Docs/framework-map.md",
             "reasonCode": "evidence-output"
+          },
+          {
+            "path": "Plans/execution-decisions.md",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/m5-windows-remote-evidence-20261001/README.md",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/m5-windows-remote-evidence-20261001/acceptance.json",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/m5-windows-remote-evidence-20261001/admission-checks.json",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/m5-windows-remote-evidence-20261001/deployment-observation.json",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/m5-windows-remote-evidence-20261001/domain-oracle-receipt.json",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/m5-windows-remote-evidence-20261001/domain-replay-result.json",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/m5-windows-remote-evidence-20261001/interop-receipt.json",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/m5-windows-remote-evidence-20261001/offline-verification.json",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/m5-windows-remote-evidence-20261001/public-summaries.json",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/m5-windows-remote-evidence-20261001/run-index-public.json",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/m5-windows-remote-evidence-20261001/service-observation.json",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/m5-wsl-windows-remote.md",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/mirror-framework-improvements.md",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/q3-m5-complete-2026-10-01.md",
+            "reasonCode": "planning-documentation"
+          },
+          {
+            "path": "Plans/q3-windows-remote-2026-10-01.md",
+            "reasonCode": "planning-documentation"
           },
           {
             "path": "catalog/components/mirrors.json",
@@ -61,6 +180,10 @@
           },
           {
             "path": "distribution/reference-node/component-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/dependency-lock.json",
             "reasonCode": "evidence-output"
           },
           {
@@ -391,19 +514,19 @@
       "inputId": "profiles-lock",
       "path": "distribution/reference-node/profiles.json",
       "bytes": 4307,
-      "sha256": "c5319b581b7ad693422670a1cc14e21d4df0b9a1530a8e983a8bd48d8d029104"
+      "sha256": "210e31ed573ea884923ec236eac5d2a8d8f47b9ae78f0149c36999c2c90b2413"
     },
     {
       "inputId": "component-lock",
       "path": "distribution/reference-node/component-lock.json",
-      "bytes": 11526,
-      "sha256": "7c62df75e4748fdf34ac8c2726a25756357815e2d560d07486d0db3aca0a057a"
+      "bytes": 16579,
+      "sha256": "7079d20cfa56f70108f9a1171527efca662dd59bd688cf159bc7338da3b2a7c1"
     },
     {
       "inputId": "dependency-lock",
       "path": "distribution/reference-node/dependency-lock.json",
       "bytes": 2135,
-      "sha256": "e45725e9b2dc530323709e3eb5b1d281080792b88157dbc445e2b45343862bc7"
+      "sha256": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
     }
   ],
   "buildProvenance": {

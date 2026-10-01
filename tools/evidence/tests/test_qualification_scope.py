@@ -234,6 +234,28 @@ class ScopeMultiBindingTests(unittest.TestCase):
                          ["framework.install-diagnostics", "framework.replay-faulty",
                           "framework.reproduction"])
 
+    def test_lease_reproduction_uses_its_own_installed_origin_phase(self) -> None:
+        import hashlib
+        self.add_run("run-d", "framework.install-diagnostics", LOCAL_COMPONENTS,
+                     SELECTION_A, binding=True)
+        self.add_run("run-lease-r0", "framework.lease-origin-installed", LOCAL_COMPONENTS, SELECTION_A)
+        self.add_run("run-lease-r1", "framework.reproduction-lease", LOCAL_COMPONENTS, SELECTION_A)
+        relative = "artifacts/private/bundle.json"
+        payload = self.reproduction_bundle("run-lease-r1", run_ref("run-lease-r0", "private"), relative)
+        self.envelopes["run-lease-r1"]["artifacts"] = [{
+            "artifactId": "bundle", "role": "reproduction-input", "requirement": "required",
+            "location": {"kind": "bundle", "path": relative}, "bytes": len(payload),
+            "sha256": hashlib.sha256(payload).hexdigest()}]
+        document = self.scope(["run-d"], [
+            self.node("run-d", "distribution"),
+            self.node("run-lease-r0", "origin", "run-d", ("run-d",)),
+            self.node("run-lease-r1", "reproduction", "run-d", ("run-d", "run-lease-r0")),
+        ])
+        self.assertEqual(self.verify(document)["status"], "verified")
+        document["nodes"][1]["phase"] = "replay"
+        with self.assertRaisesRegex(ValueError, "wrong phase"):
+            self.verify(document)
+
     def test_reproduction_rejects_a_mismatched_r0_reference(self) -> None:
         self.add_run("run-local-d", "framework.install-diagnostics", LOCAL_COMPONENTS,
                      SELECTION_A, binding=True)

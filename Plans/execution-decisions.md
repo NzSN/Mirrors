@@ -6,6 +6,73 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
+## 2026-10-01 — Full named M5 profile qualified
+
+The five-item completion plan passes for `m5-wsl-windows-remote/v1`, exact C0
+`f2080fd722ed097eb1d5e4b4fd8cd4e8d7a1d1092b91530d48a51ca3bf141670`. Both committed D bindings, all required
+installed/source/remote producers, the complete linked graph and named catalog
+qualification pass; 20 bundles verify independently offline and six controls
+reject. Current acceptance and exact boundaries are in
+[completion readiness](q3-m5-complete-2026-10-01.md). The broader Linux/backend
+claims and earlier review/task assignments below remain historical or outside
+this selected qualification scope. Changes are uncommitted.
+
+## 2026-10-01 — Remote execution results retained
+
+The requested Windows remote operations passed under selection
+`3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c`:
+bound-3 HourClock validation, the declared 22-case five-client mTLS matrix,
+and installed LeaseService domain materialization plus source-hidden candidate
+replay preserving the original mismatch. Both installed D audits qualified.
+Ten individual bundles verify offline; a supporting nine-node scope verifies.
+Full M5 remains incomplete: LeaseService R1 linkage and the complete current-
+candidate installed Q1/Q2 graph are still required. The exact results and
+remaining clauses are in [Windows remote readiness](q3-windows-remote-2026-10-01.md).
+No excluded Linux capability receives credit.
+
+## 2026-10-01 — M5 separate Linux host requirements removed
+
+The user authorizes removing native Ubuntu host acceptance and real aggregate
+cgroup enforcement from M5, then executing the remaining remote work. The
+selected scope is `m5-wsl-windows-remote/v1`; its concrete plan is
+[M5 Windows remote execution](m5-wsl-windows-remote.md). WSL-supported Gate
+isolation, recovery and installed-evidence checks retain their own requirements.
+M5's M4 dependency now covers ownership-safe recovery only. Excluded Linux
+capabilities remain unqualified, rather than recorded as skipped successful
+tests. The selected oracle and Windows working-directory constraint below apply.
+
+## 2026-10-01 — Current Windows host is the designated remote oracle
+
+Operator instruction: use the current machine's native Windows host as the
+remote model-checking service for the WSL2 coordinator. The former server
+address is historical and is no longer the execution target. The observed
+endpoint for this host is `172.20.208.1:8999`; reconcile its address and TLS
+identity at preflight rather than assuming the NAT address survives a reboot.
+All Windows work remains under
+`C:\Users\ayden\Desktop\Workspace\MirrorsRemote`. The selected oracle is
+Apalache 0.62.2 with Microsoft Java 25.0.4+7-LTS.
+
+This topology is suitable for the remaining remote-dependent framework tiers:
+SR-5b domain reduction, remote model checking, and remote cross-client interop.
+The completed WriteSentry campaign establishes the exercised Windows oracle
+path; it does not qualify those distinct framework tiers automatically.
+
+Required implementation/qualification work is coordinated endpoint/version/hash
+migration in the registry, evidence validators and MirrorECMA reducer; a reviewed
+interop mode using the Windows endpoint for live model operations; and renewed
+candidate identities, snapshots, installed caches and retained Q1/Q2/Q3 evidence.
+The current native console deployment must have an explicitly reviewed ownership
+and identity contract for Q1, or satisfy the service-manager profile through a
+separately qualified service installation. Console execution is not reported as
+an AUTO_START Windows service.
+
+Gate continues to execute on the selected Linux/WSL backend. Moving the oracle
+does not supply a delegated cgroup-v2 parent or establish native Ubuntu host
+acceptance. The newer scope decision above excludes those aggregate/host tiers
+from M5 while retaining them as unqualified separate capabilities.
+This entry records the execution target and feasibility decision, not a claim
+that pin migration or the remaining framework campaign has already run.
+
 ## Selected scope
 
 - Implement the initial checked-corpus Node distribution, with a separately

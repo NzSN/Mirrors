@@ -382,6 +382,58 @@ class CatalogLinkTests(unittest.TestCase):
         self.assertEqual(cli.returncode, 0, cli.stderr.decode())
         self.assertEqual(json.loads(cli.stdout)["catalogLink"], first)
 
+    def test_registered_scope_attachment_links_to_catalog(self):
+        registry = json.loads((EVIDENCE / "commands.json").read_text())
+        command = next(entry for entry in registry["commands"]
+                       if entry["commandId"] == "evidence.offline-verify")
+        attachment = next(entry for entry in command["attachmentOutputs"]
+                          if entry["artifactId"] == "qualification-scope")
+
+        def scope_v2(scope):
+            scope["schemaVersion"] = attachment["producerResult"]["schemaVersion"]
+            scope["distributionBindingRunIds"] = [scope.pop("distributionBindingRunId")]
+
+        def registered_producer(document):
+            reference = {**attachment["producerResult"],
+                         "artifactId": attachment["artifactId"]}
+            document["producerResults"] = [reference]
+            document["outcomes"]["behavior"]["producerResult"] = reference
+
+        bundle, verification = self.bundle(mutate_scope=scope_v2,
+                                           mutate_staging=registered_producer)
+        catalog_path, _ = self.catalog(bundle, verification)
+        link = self.evaluate(catalog_path, bundle, verification)
+        self.assertEqual(link["qualification"], "accepted")
+        self.assertEqual(len(link["distributionBindings"]), 1)
+
+    def test_scope_attachment_with_wrong_producer_is_rejected(self):
+        def wrong_producer(document):
+            document["producerResults"][0]["producer"] = "mirrors"
+
+        bundle, verification = self.bundle(mutate_staging=wrong_producer)
+        catalog_path, _ = self.catalog(bundle, verification)
+        with self.assertRaisesRegex(ValueError, "exactly one qualification-scope producer"):
+            self.evaluate(catalog_path, bundle, verification)
+
+    def test_link_preserves_multiple_verified_distribution_bindings(self):
+        from unittest.mock import patch
+        bundle, verification = self.bundle()
+        catalog_path, _ = self.catalog(bundle, verification)
+        envelope = json.loads((bundle / "envelope.json").read_text())
+        result = qualification_scope.attached_scope(bundle, envelope, self.store)
+        first = result["bindings"][0]
+        second = {**first, "runId": "fixture-second-d", "distributionManifestSha256": "d" * 64,
+                  "cacheIndexSha256": "e" * 64}
+        result["bindings"] = [first, second]
+        for field in ["distributionManifestSha256", "cacheIndexSha256", "distributionBindingRunId"]:
+            result.pop(field, None)
+        with patch.object(qualification_scope, "attached_scope", return_value=result):
+            link = self.evaluate(catalog_path, bundle, verification)
+        self.assertEqual(link["qualification"], "accepted")
+        self.assertEqual(link["distributionBindings"], [first, second])
+        self.assertNotIn("distributionManifestSha256", link)
+        self.assertNotIn("cacheIndexSha256", link)
+
     def test_digest_mismatch_and_missing_public_projection_are_rejected(self):
         bundle, verification = self.bundle()
         catalog_path, catalog = self.catalog(bundle, verification)

@@ -1,0 +1,71 @@
+{
+  "schema": "mirrors.remote-admission-checks/v1",
+  "positive": "passed",
+  "negativeCases": [
+    {
+      "case": "old-apalache",
+      "status": "rejected",
+      "reason": "observed Windows runtime differs from selected archive/executable pins"
+    },
+    {
+      "case": "wrong-apalache-jar",
+      "status": "rejected",
+      "reason": "observed Windows runtime differs from selected archive/executable pins"
+    },
+    {
+      "case": "wrong-java-executable",
+      "status": "rejected",
+      "reason": "observed Windows runtime differs from selected archive/executable pins"
+    },
+    {
+      "case": "wrong-endpoint",
+      "status": "rejected",
+      "reason": "observed Windows deployment identity differs from the selected oracle"
+    },
+    {
+      "case": "wrong-deployment-mode",
+      "status": "rejected",
+      "reason": "observed Windows deployment identity differs from the selected oracle"
+    },
+    {
+      "case": "invalid-pid",
+      "status": "rejected",
+      "reason": "observed Windows deployment identity differs from the selected oracle"
+    },
+    {
+      "case": "wrong-pin",
+      "status": "rejected",
+      "reason": "observed Windows deployment identity differs from the selected oracle"
+    },
+    {
+      "case": "wrong-server-binary",
+      "status": "rejected",
+      "reason": "observed Windows deployment identity differs from the selected oracle"
+    },
+    {
+      "case": "wrong-source",
+      "status": "rejected",
+      "reason": "observed Windows deployment identity differs from the selected oracle"
+    },
+    {
+      "case": "stale-observation",
+      "status": "rejected",
+      "reason": "invalid observed process lifetime"
+    },
+    {
+      "case": "future-observation",
+      "status": "rejected",
+      "reason": "deployment observation is outside the one-hour admission window"
+    },
+    {
+      "case": "process-not-created",
+      "status": "rejected",
+      "reason": "invalid observed process lifetime"
+    },
+    {
+      "case": "bad-tree-digest",
+      "status": "rejected",
+      "reason": "invalid observed source/runtime digest"
+    }
+  ]
+}

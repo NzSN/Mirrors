@@ -42,6 +42,20 @@
       "requireQualified": true,
       "requirePublicProjection": true,
       "requireCatalogLineage": true
+    },
+    {
+      "profileId": "m5-wsl-windows-remote",
+      "qualificationClass": "local-candidate",
+      "catalogVisibility": "private",
+      "requiredCommandIds": ["evidence.offline-verify", "framework.install-diagnostics", "framework.lease-origin-installed", "framework.mutation-gate", "framework.mutation-local", "framework.reduction", "framework.reduction-prefix", "framework.replay-correct", "framework.replay-faulty", "framework.reproduction", "framework.reproduction-lease", "mirrorecma.project-check", "mirrorecma.test", "mirrorgate.recovery", "mirrorgate.required", "mirrors.interop", "mirrors.local-no-model", "mirrors.remote-model-check"],
+      "requiredTierIds": ["mirrorecma.project", "mirrorecma.required", "mirrorgate.required", "mirrors.interop", "mirrors.remote-model-check", "mirrors.required", "qualification.evidence", "qualification.install", "qualification.mutation-gate", "qualification.mutation-local", "qualification.origin-lease", "qualification.recovery", "qualification.reduction-domain", "qualification.reduction-prefix", "qualification.replay", "qualification.reproduction"],
+      "requiredArtifactRoles": ["cache-index", "cleanup-receipt", "command-log", "distribution-manifest", "producer-result", "recovery-receipt", "reproduction-input"],
+      "requiredCleanupScopes": ["gate-physical", "gate-recovery", "local-cooperative"],
+      "requiredObservationDimensions": ["installedConsumerAccepted", "locallyAccepted", "sourceTested"],
+      "allowedObservationDimensions": ["installedConsumerAccepted", "locallyAccepted", "sourceTested"],
+      "requireQualified": true,
+      "requirePublicProjection": true,
+      "requireCatalogLineage": true
     }
   ]
 }

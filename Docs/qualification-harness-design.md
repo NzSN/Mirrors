@@ -3,8 +3,52 @@
 Date: 2026-09-22
 
 Status: source commands and linked evidence verification implemented; installed
-command adapters await the final I4 runtime paths and producer wrappers named
-below. This document does not claim a qualified candidate.
+command adapters ship in the I4 distributions. The current operator-selected
+profile is `m5-wsl-windows-remote/v1`; its scope and execution evidence are in
+[the Windows execution plan](../Plans/m5-wsl-windows-remote.md). This document
+does not claim a qualified candidate.
+
+## Installed LeaseService qualification branch
+
+The selected Windows profile adds `framework.lease-origin-installed` and
+`framework.reproduction-lease`. The distribution materializes a separate
+`applications/lease-project` with correct and expired-token adapters, the
+compiler-owned LeaseService handle, two protected witness occurrences and exact
+server/package/tool locks. WorkQueue's reference project remains the prefix
+reduction branch.
+
+The installed origin wrapper runs the correct project before the fault and
+retains `lease-baseline.json` and `lease-origin.json`, both
+`mirrorecma.suite-result/v1`. Its evidence mode `lease-faulty` requires the passed
+baseline and exact trace-0/state-5 `write` mismatch with confirmed cleanup.
+The separate R1 command uses the normal public project authority and capture/
+reproduction path. Scope v2 declares its origin/reproduction phases and R5
+consumes that R1's exact required bundle bytes.
+
+`framework.reduction` invokes an installed wrapper around the remote materializer.
+After model validity and oracle cleanup, the wrapper rechecks actual LeaseService
+project authority, model/lock/original-corpus bytes and the finalized original
+reference, reproduces the original, then runs a correct baseline and the fault
+against the reduced two-occurrence corpus. It retains
+`lease-reduction-acceptance.json` (`mirrors.lease-reduction-acceptance/v1`),
+binding the original bundle, candidate trace and oracle receipt hashes to the
+same original/candidate signature and both cleanup results. The selected adapter
+requires that acceptance artifact; an oracle-only receipt cannot qualify R5.
+This changes qualification orchestration, not the wire or generated interface.
+
+The installed recovery origin `framework.recovery-origin-installed` abruptly
+exits a real owned Gate controller after protected snapshot preparation and
+before worker launch. It retains the public manifest and a typed
+`mirrors.recovery-origin/v1` result with failed behavior/unconfirmed physical
+cleanup. Q keeps this origin as a retained attempt, then credits only the native
+recovery receipt linked to its finalized private reference. This exercises
+filesystem snapshot reclamation. Post-restart process recovery without a
+non-PID/delegated-cgroup ownership proof remains ambiguous and unqualified;
+its refusal diagnostics are retained and no ownership check is relaxed.
+
+Catalog-link approval retains every verified distribution binding when scope v2
+uses separate local and Gate D runs. Singular manifest/cache fields remain only
+for one binding; multiple bindings are not flattened into one installation.
 
 ## Evidence order
 
@@ -16,7 +60,7 @@ catalog C0 -> distribution-binding D -> origin R0 -> bundle/replay R1
 ```
 
 Every command runs under E2 and finalizes independently. Q consumes a private
-`mirrors.qualification-scope/v1` DAG of already-finalized run references. It
+`mirrors.qualification-scope/v2` DAG of already-finalized run references. It
 does not copy those commands into its own envelope. E4 credits only selected
 successful attempts, while failed retries and supporting diagnostics remain
 retained without satisfying a requirement.
@@ -32,8 +76,8 @@ whose declared files are captured by E2.
 | Command ID | Phase and exact invocation | Required retained result | State |
 | --- | --- | --- | --- |
 | `mirrors.local-no-model` | cwd bound to the declared `mirrors` component root: `bash tools/run-local-no-model-check.sh` | local build, proof, codec, fixture and unit-gate logs; the script explicitly omits TLC and every live Apalache/model-check tier | Registered; deliberately non-model-checking |
-| `mirrors.remote-model-check` | Mirrors cwd: `python3 tools/evidence/run_remote_model_check.py`; fixed TLS 1.3 mTLS endpoint `192.168.150.219:8999`, pinned server leaf, fixed `HourClock.tla` `Init`/`Next`/`Inv`, bound 3 | private command context and log containing the declared service/source/binary identities, client and HourClock byte hashes, and terminal `VALID` | Registered; credentials remain operator-supplied private file paths |
-| `mirrors.interop` | cwd bound to the declared `mirrors` component root: `bash tools/interop/run.sh`; explicit companion roots/SHAs, `HS_BIN`, and Apalache 0.61.0 are required environment | command logs | Registered; final environment freezes with C0 |
+| `mirrors.remote-model-check` | Mirrors cwd: `python3 tools/evidence/run_remote_model_check.py`; fixed TLS 1.3 mTLS endpoint `172.20.208.1:8999`, pinned server leaf, fixed `HourClock.tla` `Init`/`Next`/`Inv`, bound 3 | private command context and log containing the declared service/source/binary identities, client and HourClock byte hashes, and terminal `VALID` | Registered; credentials remain operator-supplied private file paths |
+| `mirrors.interop` | cwd bound to the declared `mirrors` component root: `python3 tools/interop/run-remote.py`; explicit five-client roots/SHAs/binary hashes and private mTLS paths | logs, byte identities, and the declared 22-row pinned-mTLS receipt | Registered Windows profile; legacy all-transport matrix remains separate |
 | `mirrorecma.project-check` | cwd bound to the declared `mirrorecma` component root: `pnpm run check` | command logs | Registered |
 | `mirrorecma.test` | cwd bound to the declared `mirrorecma` component root: `pnpm run test` | command logs | Registered |
 | `mirrorgate.required` | cwd bound to the declared `mirrorgate` component root: `bash scripts/test.sh` | command logs | Registered; unavailable required backend remains incomplete |
@@ -41,7 +85,7 @@ whose declared files are captured by E2.
 | `framework.replay-correct` | source-hidden installed consumer, `ACTIVE_RUNTIME/runtimes/node/bin/node` plus the installed project replay wrapper in correct mode | typed producer result and local cleanup receipt | Awaiting installed project fixture path |
 | `framework.replay-faulty` | same installed wrapper in the deliberate-fault mode | exact normalized mismatch and local cleanup receipt | Awaiting installed project fixture path |
 | `framework.reproduction` | installed `mirrorecma reproduce` with explicit project, R0-derived bundle, framework input, C0 combination, finalized R0 envelope/artifact store, server, and installed tool registry | R1 reproduction input and typed replay result | CLI exists; source-hidden fixture/output wrapper pending |
-| `framework.reduction` | installed LeaseService reduction materializer in remote oracle mode with explicit candidate, R0-derived bundle, model, lock, original trace, tools/v2 manifest, service identity record, three TLS PEM files, output and receipt paths | bounded reduction result, `mirrorecma.lease-reduction-oracle/v2` receipt, original reproduction input | Registered and installed (driver ships in the `mirrorecma` package); operator service activation and same-time identity observation pending |
+| `framework.reduction` | installed LeaseService reduction materializer in remote oracle mode with explicit candidate, R0-derived bundle, model, lock, original trace, tools/v2 manifest, service identity record, three TLS PEM files, output and receipt paths | bounded reduction result, `mirrorecma.lease-reduction-oracle/v2` receipt, original reproduction input | Registered and installed (driver ships in the `mirrorecma` package); current Windows console ownership/identity observation required |
 | `framework.reduction-prefix` | installed prefix-reduction driver with explicit project, R0-derived bundle, stability record, original trace, framework input, combination, finalized R0 envelope, output root and policy bounds | `mirrorecma.reproduction-prefix-reduction/v1` bounded result plus the original reproduction bundle as `reproduction-input` | Registered and installed; qualified 2026-09-30 (`run-dcc51362…`, `shortest_reproducing_prefix`) |
 | `framework.mutation-local` | installed Node runs `run.mjs all --prevalidated-registry INSTALLED_REGISTRY --receipt PRIVATE_OUTPUT/local-application-campaigns.json` using the installed applications, Mirror and package tree | one `mirrorecma.application-campaign-aggregate/v1` result containing all three closed campaigns and confirmed local cleanup | Final installed paths pending |
 | `framework.mutation-gate` | installed aggregate wrapper directly runs `application-program-gate.mjs APPLICATION --receipt PRIVATE_OUTPUT/APPLICATION-gate-receipt.json` for all three applications through the installed Gate profile | three `mirrorgate.application-validation/v2` receipts and confirmed physical cleanup | Aggregate wrapper and final installed paths pending; source R0 commands cannot substitute |
@@ -69,7 +113,7 @@ local behaviors only and cannot receive model-check credit.
 
 The required model-check observation is the separate private command
 `mirrors.remote-model-check`. Its wrapper fixes the deployed endpoint to
-`192.168.150.219:8999`, the Windows service name to `ModelMirrors`, and the
+`172.20.208.1:8999`, the deployment to `workspace-native-console`, and the
 HourClock predicates and bound. It accepts only these private environment
 inputs:
 
@@ -81,7 +125,10 @@ inputs:
 - `MIRRORS_REMOTE_SERVICE_BINARY_SHA256` and
   `MIRRORS_REMOTE_SERVICE_SOURCE_REF`: values copied from the same-time remote
   administrative observation described below.
-- The registry fixes Apalache to 0.61.0 plus its selected archive and staged jar
+- `MIRRORS_REMOTE_ADMIN_OBSERVATION`: the bounded native Windows console
+  observation JSON, captured within one hour and matched to the selected
+  process lifetime, binary/source, certificate and complete runtime hashes.
+- The registry fixes Apalache to 0.62.2 plus its selected archive and staged jar
   SHA-256 values, and Java to selected 25.0.4+7 / observed 25.0.4+7-LTS plus
   the staged Windows archive and `java.exe` SHA-256 values. The activated remote
   deployment observation must report those same complete identities.
@@ -94,16 +141,18 @@ client invocation. The prelude hashes the exact local `HourClock.tla` bytes sent
 by that invocation. Exit zero plus `VALID` proves that the pinned mTLS endpoint
 performed this bounded validation; service-manager status by itself does not.
 
-Q1 must pair that run with a retained, same-time private remote administrative
-observation. That observation records UTC capture time, host/IP, service name,
-service state and start mode, listener port and owning PID, configured executable
-path and SHA-256, deployed source/full revision, service-account Apalache path and
-version, Java version, and hashes of the server certificate and non-secret
-deployment manifest. It omits environment secrets and all certificate/key bytes.
-The model-check command's endpoint, server-leaf pin, service binary hash and
-source revision must equal the administrative observation. A `VALID` result with
-missing or mismatched service identity remains retained diagnostic evidence but
-does not receive Q1 credit.
+Q1 pairs the run with a same-time `mirrors.windows-deployment-observation/v1`
+record from the owned native console deployment under Windows Workspace. The
+record binds UTC observation/process-creation time, host/IP, owning process and
+listener, executable/source/manifest hashes, mTLS leaf and complete Apalache/Java
+archive and executable hashes. It contains no credential bytes. A missing,
+stale or mismatched observation fails admission before remote contact. Console
+ownership establishes this profile only; it does not establish AUTO_START or
+service-manager acceptance. The current M5 scope excludes separate native
+Ubuntu and aggregate-cgroup requirements while retaining WSL-supported installed,
+isolation/recovery and evidence checks.
+
+Historical service-manager profile (2026-09-22; superseded for current execution):
 
 The 2026-09-22 boot check is supporting smoke evidence only. It observed the
 Windows `ModelMirrors` service as `RUNNING` and `AUTO_START`, listener
@@ -135,12 +184,21 @@ Local tiers pin the locally verified Linux carrier instead — archive
 `e7bc0bc01b516a2ade3d9fceabc12d16c3a3b737adbf186a353602872ba31aad`. The two
 pin sets name different carriers and are not interchangeable.
 
-The existing `mirrors.interop` registry entry still describes a source matrix
-that starts local model-check-backed servers. It must not be executed on this
-coordinator under the remote-only constraint. Until that matrix has a reviewed
-remote-service mode or is run on an authorized sufficiently provisioned host,
-its required Q tier is unavailable and Q3 remains incomplete; the standalone
-remote validation cannot substitute for transport/client matrix coverage.
+The selected remote interop command exercises five real clients' valid/invalid
+bounded verdicts and wrong-pin rejection, plus ECMA register/replay, deliberate
+mismatch, supplied Windows trace, inline trace generation, exploration/session
+cleanup and inline multi-module sources. Its receipt declares exactly 22 mTLS
+rows. The legacy `tools/interop/run.sh` all-transport/local-backend matrix remains
+a separate profile and must not be started on this WSL coordinator. The bounded
+Windows result is not an assertion that every legacy transport/client row ran.
+
+The remote `mirrorecma.lease-reduction-tools/v2` contract has exactly schema,
+mode, totalBudgetMs, cleanupBudgetMs and validator. Only the separately supplied,
+hash-pinned candidate validator runs locally; the remote SDK transport requires
+no local mirror, Apalache or Java entry. The installed materializer and evidence
+adapter validate the same closed contract. Model validity, candidate replay with
+the original mismatch signature, cleanup and linked-scope credit are distinct
+observations.
 
 ## Installed command handoff contract
 
@@ -157,7 +215,7 @@ exclusive creation. Existing inputs are captured with a pre-run SHA-256.
 | `framework.replay-correct` | Installed replay wrapper with one fixed `correct` mode and one output-root argument | New `replay-correct.json`, producer result `mirrorecma.suite-result/v1`; it must retain passed behavior plus confirmed local cleanup rather than relying on exit zero | Reproduction owner: wrapper path, complete argv, output flag/index, project/registry inputs, and the closed result-file contract |
 | `framework.replay-faulty` | The same installed replay wrapper with one fixed deliberate-fault mode and one output-root argument | New `replay-faulty.json`, producer result `mirrorecma.suite-result/v1`; it must retain the exact normalized mismatch coordinate plus confirmed local cleanup | Reproduction owner: wrapper path, complete argv, output flag/index, deliberate-fault identity, and the closed result-file contract |
 | `framework.reproduction` | Installed Node and installed MirrorECMA CLI/wrapper, with explicit project, bundle, framework input, combination, finalized R0 envelope, artifact store, server and tool registry, plus one output-root argument | Existing R0-derived bundle, role `reproduction-input`, schema `mirrorecma.reproduction-bundle/v1`; new `reproduction-result.json`, producer result `mirrorecma.reproduction-replay/v1`; any separate cleanup result must also have a fixed filename and schema | Reproduction owner: wrapper path and exact argv order, fixed result writer, optional-versus-required artifact-store decision, and cleanup representation. Current CLI stdout alone is not an attachment contract |
-| `framework.reduction` | Installed Node plus installed `materialize-lease-reduction.mjs --candidate CANDIDATE --bundle BUNDLE --model MODEL --lock LOCK --original-trace TRACE --tool-manifest TOOLS --out PRIVATE_OUTPUT/lease-reduction-candidate-trace.json --receipt PRIVATE_OUTPUT/lease-reduction-receipt.json --oracle-mode remote --service-identity PRIVATE_INPUT/lease-reduction-service-identity.json --tls-ca CA --tls-cert CERT --tls-key KEY` | Existing `lease-reduction-candidate.json`, `lease-reduction-original-bundle.json` (also role `reproduction-input`), `lease-reduction-model.tla`, `lease-reduction-lock.json`, `lease-reduction-original-trace.json`, `lease-reduction-tool-manifest.json` (`mirrorecma.lease-reduction-tools/v2`, mode `remote`), and `lease-reduction-service-identity.json`; new candidate trace and producer result `lease-reduction-receipt.json`, schema `mirrorecma.lease-reduction-oracle/v2` carrying `oracleMode: remote` and the observed service identity record | Operator: activated service at 192.168.150.219:8999 with the same-time identity observation and client TLS material (remaining); distribution/reproduction owners: installed Node/script paths and exact installed filenames and hashes for all seven inputs (satisfied, confirmed in `commands.json`) |
+| `framework.reduction` | Installed Node plus installed `materialize-lease-reduction.mjs --candidate CANDIDATE --bundle BUNDLE --model MODEL --lock LOCK --original-trace TRACE --tool-manifest TOOLS --out PRIVATE_OUTPUT/lease-reduction-candidate-trace.json --receipt PRIVATE_OUTPUT/lease-reduction-receipt.json --oracle-mode remote --service-identity PRIVATE_INPUT/lease-reduction-service-identity.json --tls-ca CA --tls-cert CERT --tls-key KEY` | Existing `lease-reduction-candidate.json`, `lease-reduction-original-bundle.json` (also role `reproduction-input`), `lease-reduction-model.tla`, `lease-reduction-lock.json`, `lease-reduction-original-trace.json`, `lease-reduction-tool-manifest.json` (`mirrorecma.lease-reduction-tools/v2`, mode `remote`), and `lease-reduction-service-identity.json`; new candidate trace and producer result `lease-reduction-receipt.json`, schema `mirrorecma.lease-reduction-oracle/v2` carrying `oracleMode: remote` and the observed service identity record | Operator: owned native Windows console at 172.20.208.1:8999, Apalache 0.62.2, same-time identity observation and client TLS material; distribution/reproduction owners: installed Node/script paths and exact installed filenames and hashes for all seven inputs (satisfied, confirmed in `commands.json`) |
 | `framework.reduction-prefix` | Installed Node plus installed `reduce-reproduction-prefix.mjs --project PROJECT --bundle BUNDLE --stability STABILITY --original-trace TRACE --framework-input FRAMEWORK_INPUT --combination ID --evidence-envelope R0_ENVELOPE --output-root PRIVATE_OUTPUT --candidate-limit N --total-budget-ms N --per-candidate-budget-ms N --cleanup-budget-ms N` | Existing `prefix-reduction-original-bundle.json` (role `reproduction-input`), `prefix-reduction-stability.json`, `prefix-reduction-original-trace.json`, `prefix-reduction-framework-input.json`, and `prefix-reduction-r0-envelope.json`; new `prefix-reduction-result.json`, producer result `mirrorecma.reproduction-prefix-reduction/v1` | Satisfied 2026-09-30: installed driver ships in the `mirrorecma` package; paths, filenames, and policy-bound argv values confirmed against `commands.json` |
 | `framework.mutation-local` | Installed Node plus installed `run.mjs all --prevalidated-registry INSTALLED_REGISTRY --receipt PRIVATE_OUTPUT/local-application-campaigns.json` | New `local-application-campaigns.json`, producer result `mirrorecma.application-campaign-aggregate/v1`; the evidence adapter fixes applications to WorkQueue, PersistentTransfer and LeaseService, denominator 17, 29 detailed executions, accepted campaigns and confirmed local cleanup | Distribution/reproduction owners: installed Node, runner and registry paths, plus confirmation that no extra argv/environment is needed |
 | `framework.mutation-gate` | One installed aggregate wrapper with one output-root argument. It invokes installed `application-program-gate.mjs` exactly once for each of `work-queue`, `persistent-transfer`, and `lease-service` | New `work-queue-gate-receipt.json`, `persistent-transfer-gate-receipt.json`, and `lease-service-gate-receipt.json`, each producer result `mirrorgate.application-validation/v2`; the aggregate evidence adapter requires all three fixed names and validates the frozen 9/4/4 case denominators, campaign acceptance, fidelity controls and physical cleanup | Recovery/reproduction owners: aggregate wrapper path, exact argv/environment, installed Gate profile inputs, and confirmation that the three v2 files are the complete output set |

@@ -1,0 +1,1022 @@
+{
+  "framework.install-diagnostics-gate": {
+    "artifacts": [],
+    "catalogSelectionRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c"
+    },
+    "commands": [
+      {
+        "approvedArgs": [],
+        "commandId": "framework.install-diagnostics-gate",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "requirement": "required",
+        "tierId": "qualification.install"
+      }
+    ],
+    "components": [
+      {
+        "componentId": "mirrorecma",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "2d331a2e2b718ddd36c68ee96e3055ba79f3faa097e8b740d4503eaf722ebd4b",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/MirrorECMA.git",
+        "revision": "61890cf14d8465df31ba6c95e72eade0a5716a66"
+      },
+      {
+        "componentId": "mirrorgate",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "3f1da21629e50118c27697df6d96e48be9118485f1af39edb9ec73c9978443d6",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/MirrorGate.git",
+        "revision": "9d88ead482f0e53285b1bacd2e29dd23b81440ac"
+      },
+      {
+        "componentId": "mirrors",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "806bc6d2a8a8152380234750a22de12bcf42f8ab67f62cae9aa6e805767d82cc",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "d483ac220024a320cce724bc661f32f984805a9c"
+      }
+    ],
+    "environment": {
+      "architecture": "x86_64",
+      "os": "linux",
+      "platformProfile": "local-collector",
+      "tools": [
+        {
+          "name": "python",
+          "version": "3.12.3"
+        }
+      ]
+    },
+    "outcomes": {
+      "behavior": {
+        "classification": {
+          "code": "passed",
+          "namespace": "mirrors.installed-consumer-audit"
+        },
+        "status": "passed"
+      },
+      "cleanup": [
+        {
+          "artifactIds": [],
+          "requirement": "required",
+          "scope": "local-cooperative",
+          "status": "confirmed"
+        }
+      ],
+      "persistence": {
+        "missingRequiredArtifactCount": 0,
+        "persistedArtifactCount": 8,
+        "requiredArtifactCount": 8,
+        "requirement": "required",
+        "status": "complete"
+      }
+    },
+    "producerResults": [],
+    "projectionKind": "public",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "releaseProfile": "mirrors.local-release-evidence/v1",
+    "runId": "run-1afaf007-9e84-46fc-93b2-c6dddf841a59",
+    "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+    "tiers": [
+      {
+        "artifactIds": [],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.install"
+      }
+    ],
+    "timestamps": {
+      "finishedAtUtc": "2026-10-01T10:38:35.464705Z",
+      "monotonicDurationNs": 64778108679,
+      "startedAtUtc": "2026-10-01T10:37:26.231659Z"
+    }
+  },
+  "framework.install-diagnostics": {
+    "artifacts": [],
+    "catalogSelectionRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c"
+    },
+    "commands": [
+      {
+        "approvedArgs": [],
+        "commandId": "framework.install-diagnostics",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "requirement": "required",
+        "tierId": "qualification.install"
+      }
+    ],
+    "components": [
+      {
+        "componentId": "mirrorecma",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "2d331a2e2b718ddd36c68ee96e3055ba79f3faa097e8b740d4503eaf722ebd4b",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/MirrorECMA.git",
+        "revision": "61890cf14d8465df31ba6c95e72eade0a5716a66"
+      },
+      {
+        "componentId": "mirrors",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "806bc6d2a8a8152380234750a22de12bcf42f8ab67f62cae9aa6e805767d82cc",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "d483ac220024a320cce724bc661f32f984805a9c"
+      }
+    ],
+    "environment": {
+      "architecture": "x86_64",
+      "os": "linux",
+      "platformProfile": "local-collector",
+      "tools": [
+        {
+          "name": "python",
+          "version": "3.12.3"
+        }
+      ]
+    },
+    "outcomes": {
+      "behavior": {
+        "classification": {
+          "code": "passed",
+          "namespace": "mirrors.installed-consumer-audit"
+        },
+        "status": "passed"
+      },
+      "cleanup": [
+        {
+          "artifactIds": [],
+          "requirement": "required",
+          "scope": "local-cooperative",
+          "status": "confirmed"
+        }
+      ],
+      "persistence": {
+        "missingRequiredArtifactCount": 0,
+        "persistedArtifactCount": 8,
+        "requiredArtifactCount": 8,
+        "requirement": "required",
+        "status": "complete"
+      }
+    },
+    "producerResults": [],
+    "projectionKind": "public",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "releaseProfile": "mirrors.local-release-evidence/v1",
+    "runId": "run-d3cfb744-5e95-4507-bbce-84e5ae7be430",
+    "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+    "tiers": [
+      {
+        "artifactIds": [],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.install"
+      }
+    ],
+    "timestamps": {
+      "finishedAtUtc": "2026-10-01T10:38:00.713757Z",
+      "monotonicDurationNs": 57649126535,
+      "startedAtUtc": "2026-10-01T10:36:57.849458Z"
+    }
+  },
+  "mirrors.remote-model-check": {
+    "artifacts": [],
+    "catalogSelectionRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c"
+    },
+    "commands": [
+      {
+        "approvedArgs": [],
+        "commandId": "mirrors.remote-model-check",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "requirement": "required",
+        "tierId": "mirrors.remote-model-check"
+      }
+    ],
+    "components": [
+      {
+        "componentId": "mirrors",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "806bc6d2a8a8152380234750a22de12bcf42f8ab67f62cae9aa6e805767d82cc",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "d483ac220024a320cce724bc661f32f984805a9c"
+      }
+    ],
+    "environment": {
+      "architecture": "x86_64",
+      "os": "linux",
+      "platformProfile": "local-collector",
+      "tools": [
+        {
+          "name": "python",
+          "version": "3.12.3"
+        }
+      ]
+    },
+    "outcomes": {
+      "behavior": {
+        "classification": {
+          "code": "exit-0",
+          "namespace": "process"
+        },
+        "status": "passed"
+      },
+      "cleanup": [
+        {
+          "artifactIds": [],
+          "requirement": "not-applicable",
+          "scope": "local-cooperative",
+          "status": "not_applicable"
+        }
+      ],
+      "persistence": {
+        "missingRequiredArtifactCount": 0,
+        "persistedArtifactCount": 5,
+        "requiredArtifactCount": 5,
+        "requirement": "required",
+        "status": "complete"
+      }
+    },
+    "producerResults": [],
+    "projectionKind": "public",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "releaseProfile": "mirrors.local-release-evidence/v1",
+    "runId": "run-af4c9237-c1ac-4886-b8c2-6c8b2e88dd0b",
+    "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+    "tiers": [
+      {
+        "artifactIds": [],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "mirrors.remote-model-check"
+      }
+    ],
+    "timestamps": {
+      "finishedAtUtc": "2026-10-01T10:39:06.438735Z",
+      "monotonicDurationNs": 5185219907,
+      "startedAtUtc": "2026-10-01T10:39:01.253488Z"
+    }
+  },
+  "mirrors.interop": {
+    "artifacts": [],
+    "catalogSelectionRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c"
+    },
+    "commands": [
+      {
+        "approvedArgs": [],
+        "commandId": "mirrors.interop",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "requirement": "required",
+        "tierId": "mirrors.interop"
+      }
+    ],
+    "components": [
+      {
+        "componentId": "mirrorecma",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "2d331a2e2b718ddd36c68ee96e3055ba79f3faa097e8b740d4503eaf722ebd4b",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/MirrorECMA.git",
+        "revision": "61890cf14d8465df31ba6c95e72eade0a5716a66"
+      },
+      {
+        "componentId": "mirrorgate",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "3f1da21629e50118c27697df6d96e48be9118485f1af39edb9ec73c9978443d6",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/MirrorGate.git",
+        "revision": "9d88ead482f0e53285b1bacd2e29dd23b81440ac"
+      },
+      {
+        "componentId": "mirrors",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "806bc6d2a8a8152380234750a22de12bcf42f8ab67f62cae9aa6e805767d82cc",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "d483ac220024a320cce724bc661f32f984805a9c"
+      }
+    ],
+    "environment": {
+      "architecture": "x86_64",
+      "os": "linux",
+      "platformProfile": "local-collector",
+      "tools": [
+        {
+          "name": "python",
+          "version": "3.12.3"
+        }
+      ]
+    },
+    "outcomes": {
+      "behavior": {
+        "classification": {
+          "code": "exit-0",
+          "namespace": "process"
+        },
+        "status": "passed"
+      },
+      "cleanup": [
+        {
+          "artifactIds": [],
+          "requirement": "not-applicable",
+          "scope": "local-cooperative",
+          "status": "not_applicable"
+        }
+      ],
+      "persistence": {
+        "missingRequiredArtifactCount": 0,
+        "persistedArtifactCount": 5,
+        "requiredArtifactCount": 5,
+        "requirement": "required",
+        "status": "complete"
+      }
+    },
+    "producerResults": [],
+    "projectionKind": "public",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "releaseProfile": "mirrors.local-release-evidence/v1",
+    "runId": "run-4f0f263b-f8d6-4b9e-9505-50bccebecffc",
+    "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+    "tiers": [
+      {
+        "artifactIds": [],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "mirrors.interop"
+      }
+    ],
+    "timestamps": {
+      "finishedAtUtc": "2026-10-01T10:40:36.639982Z",
+      "monotonicDurationNs": 79366870029,
+      "startedAtUtc": "2026-10-01T10:39:07.349026Z"
+    }
+  },
+  "framework.lease-origin": {
+    "artifacts": [],
+    "catalogSelectionRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c"
+    },
+    "commands": [
+      {
+        "approvedArgs": [],
+        "commandId": "framework.lease-origin",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "requirement": "required",
+        "tierId": "qualification.remote-lease-origin"
+      }
+    ],
+    "components": [
+      {
+        "componentId": "mirrorecma",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "2d331a2e2b718ddd36c68ee96e3055ba79f3faa097e8b740d4503eaf722ebd4b",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/MirrorECMA.git",
+        "revision": "61890cf14d8465df31ba6c95e72eade0a5716a66"
+      },
+      {
+        "componentId": "mirrors",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "806bc6d2a8a8152380234750a22de12bcf42f8ab67f62cae9aa6e805767d82cc",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "d483ac220024a320cce724bc661f32f984805a9c"
+      }
+    ],
+    "environment": {
+      "architecture": "x86_64",
+      "os": "linux",
+      "platformProfile": "local-collector",
+      "tools": [
+        {
+          "name": "python",
+          "version": "3.12.3"
+        }
+      ]
+    },
+    "outcomes": {
+      "behavior": {
+        "classification": {
+          "code": "exit-0",
+          "namespace": "process"
+        },
+        "status": "passed"
+      },
+      "cleanup": [
+        {
+          "artifactIds": [],
+          "requirement": "not-applicable",
+          "scope": "local-cooperative",
+          "status": "not_applicable"
+        }
+      ],
+      "persistence": {
+        "missingRequiredArtifactCount": 0,
+        "persistedArtifactCount": 5,
+        "requiredArtifactCount": 5,
+        "requirement": "required",
+        "status": "complete"
+      }
+    },
+    "producerResults": [],
+    "projectionKind": "public",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "releaseProfile": "mirrors.local-release-evidence/v1",
+    "runId": "run-6cbd132d-d9fa-4b82-a0f7-7ead8a807133",
+    "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+    "tiers": [
+      {
+        "artifactIds": [],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.remote-lease-origin"
+      }
+    ],
+    "timestamps": {
+      "finishedAtUtc": "2026-10-01T10:40:37.753433Z",
+      "monotonicDurationNs": 244313046,
+      "startedAtUtc": "2026-10-01T10:40:37.509088Z"
+    }
+  },
+  "framework.reduction": {
+    "artifacts": [],
+    "catalogSelectionRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c"
+    },
+    "commands": [
+      {
+        "approvedArgs": [],
+        "commandId": "framework.reduction",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "requirement": "required",
+        "tierId": "qualification.reduction-domain"
+      }
+    ],
+    "components": [
+      {
+        "componentId": "mirrorecma",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "2d331a2e2b718ddd36c68ee96e3055ba79f3faa097e8b740d4503eaf722ebd4b",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/MirrorECMA.git",
+        "revision": "61890cf14d8465df31ba6c95e72eade0a5716a66"
+      },
+      {
+        "componentId": "mirrors",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "806bc6d2a8a8152380234750a22de12bcf42f8ab67f62cae9aa6e805767d82cc",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "d483ac220024a320cce724bc661f32f984805a9c"
+      }
+    ],
+    "environment": {
+      "architecture": "x86_64",
+      "os": "linux",
+      "platformProfile": "local-collector",
+      "tools": [
+        {
+          "name": "python",
+          "version": "3.12.3"
+        }
+      ]
+    },
+    "outcomes": {
+      "behavior": {
+        "classification": {
+          "code": "model-valid",
+          "namespace": "mirrorecma.lease-reduction-oracle"
+        },
+        "status": "passed"
+      },
+      "cleanup": [
+        {
+          "artifactIds": [],
+          "requirement": "required",
+          "scope": "local-cooperative",
+          "status": "confirmed"
+        }
+      ],
+      "persistence": {
+        "missingRequiredArtifactCount": 0,
+        "persistedArtifactCount": 14,
+        "requiredArtifactCount": 14,
+        "requirement": "required",
+        "status": "complete"
+      }
+    },
+    "producerResults": [],
+    "projectionKind": "public",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "releaseProfile": "mirrors.local-release-evidence/v1",
+    "runId": "run-c938aa2f-d677-4554-897f-6b8854a3d84e",
+    "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+    "tiers": [
+      {
+        "artifactIds": [],
+        "reasonCode": "model-valid",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.reduction-domain"
+      }
+    ],
+    "timestamps": {
+      "finishedAtUtc": "2026-10-01T10:41:19.452246Z",
+      "monotonicDurationNs": 5833038057,
+      "startedAtUtc": "2026-10-01T10:41:13.619171Z"
+    }
+  },
+  "mirrors.local-no-model": {
+    "artifacts": [],
+    "catalogSelectionRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c"
+    },
+    "commands": [
+      {
+        "approvedArgs": [],
+        "commandId": "mirrors.local-no-model",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "requirement": "required",
+        "tierId": "mirrors.required"
+      }
+    ],
+    "components": [
+      {
+        "componentId": "mirrors",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "806bc6d2a8a8152380234750a22de12bcf42f8ab67f62cae9aa6e805767d82cc",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "d483ac220024a320cce724bc661f32f984805a9c"
+      }
+    ],
+    "environment": {
+      "architecture": "x86_64",
+      "os": "linux",
+      "platformProfile": "local-collector",
+      "tools": [
+        {
+          "name": "python",
+          "version": "3.12.3"
+        }
+      ]
+    },
+    "outcomes": {
+      "behavior": {
+        "classification": {
+          "code": "exit-0",
+          "namespace": "process"
+        },
+        "status": "passed"
+      },
+      "cleanup": [
+        {
+          "artifactIds": [],
+          "requirement": "not-applicable",
+          "scope": "local-cooperative",
+          "status": "not_applicable"
+        }
+      ],
+      "persistence": {
+        "missingRequiredArtifactCount": 0,
+        "persistedArtifactCount": 5,
+        "requiredArtifactCount": 5,
+        "requirement": "required",
+        "status": "complete"
+      }
+    },
+    "producerResults": [],
+    "projectionKind": "public",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "releaseProfile": "mirrors.local-release-evidence/v1",
+    "runId": "run-815a5a3c-9a2d-42ef-ae91-43702c26a597",
+    "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+    "tiers": [
+      {
+        "artifactIds": [],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "mirrors.required"
+      }
+    ],
+    "timestamps": {
+      "finishedAtUtc": "2026-10-01T10:34:38.865184Z",
+      "monotonicDurationNs": 175051484784,
+      "startedAtUtc": "2026-10-01T10:31:26.758932Z"
+    }
+  },
+  "mirrorecma.project-check": {
+    "artifacts": [],
+    "catalogSelectionRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c"
+    },
+    "commands": [
+      {
+        "approvedArgs": [],
+        "commandId": "mirrorecma.project-check",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "requirement": "required",
+        "tierId": "mirrorecma.project"
+      }
+    ],
+    "components": [
+      {
+        "componentId": "mirrorecma",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "2d331a2e2b718ddd36c68ee96e3055ba79f3faa097e8b740d4503eaf722ebd4b",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/MirrorECMA.git",
+        "revision": "61890cf14d8465df31ba6c95e72eade0a5716a66"
+      },
+      {
+        "componentId": "mirrors",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "806bc6d2a8a8152380234750a22de12bcf42f8ab67f62cae9aa6e805767d82cc",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "d483ac220024a320cce724bc661f32f984805a9c"
+      }
+    ],
+    "environment": {
+      "architecture": "x86_64",
+      "os": "linux",
+      "platformProfile": "local-collector",
+      "tools": [
+        {
+          "name": "python",
+          "version": "3.12.3"
+        }
+      ]
+    },
+    "outcomes": {
+      "behavior": {
+        "classification": {
+          "code": "exit-0",
+          "namespace": "process"
+        },
+        "status": "passed"
+      },
+      "cleanup": [
+        {
+          "artifactIds": [],
+          "requirement": "not-applicable",
+          "scope": "local-cooperative",
+          "status": "not_applicable"
+        }
+      ],
+      "persistence": {
+        "missingRequiredArtifactCount": 0,
+        "persistedArtifactCount": 5,
+        "requiredArtifactCount": 5,
+        "requirement": "required",
+        "status": "complete"
+      }
+    },
+    "producerResults": [],
+    "projectionKind": "public",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "releaseProfile": "mirrors.local-release-evidence/v1",
+    "runId": "run-a5f3dcf5-e277-42ac-bfb1-ec37df7c0c89",
+    "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+    "tiers": [
+      {
+        "artifactIds": [],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "mirrorecma.project"
+      }
+    ],
+    "timestamps": {
+      "finishedAtUtc": "2026-10-01T10:39:07.761375Z",
+      "monotonicDurationNs": 4104464112,
+      "startedAtUtc": "2026-10-01T10:39:03.656886Z"
+    }
+  },
+  "mirrorecma.test": {
+    "artifacts": [],
+    "catalogSelectionRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c"
+    },
+    "commands": [
+      {
+        "approvedArgs": [],
+        "commandId": "mirrorecma.test",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "requirement": "required",
+        "tierId": "mirrorecma.required"
+      }
+    ],
+    "components": [
+      {
+        "componentId": "mirrorecma",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "2d331a2e2b718ddd36c68ee96e3055ba79f3faa097e8b740d4503eaf722ebd4b",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/MirrorECMA.git",
+        "revision": "61890cf14d8465df31ba6c95e72eade0a5716a66"
+      },
+      {
+        "componentId": "mirrors",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "806bc6d2a8a8152380234750a22de12bcf42f8ab67f62cae9aa6e805767d82cc",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "d483ac220024a320cce724bc661f32f984805a9c"
+      }
+    ],
+    "environment": {
+      "architecture": "x86_64",
+      "os": "linux",
+      "platformProfile": "local-collector",
+      "tools": [
+        {
+          "name": "python",
+          "version": "3.12.3"
+        }
+      ]
+    },
+    "outcomes": {
+      "behavior": {
+        "classification": {
+          "code": "exit-0",
+          "namespace": "process"
+        },
+        "status": "passed"
+      },
+      "cleanup": [
+        {
+          "artifactIds": [],
+          "requirement": "not-applicable",
+          "scope": "local-cooperative",
+          "status": "not_applicable"
+        }
+      ],
+      "persistence": {
+        "missingRequiredArtifactCount": 0,
+        "persistedArtifactCount": 5,
+        "requiredArtifactCount": 5,
+        "requirement": "required",
+        "status": "complete"
+      }
+    },
+    "producerResults": [],
+    "projectionKind": "public",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "releaseProfile": "mirrors.local-release-evidence/v1",
+    "runId": "run-dc72b3bb-ce05-43de-b92c-7faa636a4858",
+    "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+    "tiers": [
+      {
+        "artifactIds": [],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "mirrorecma.required"
+      }
+    ],
+    "timestamps": {
+      "finishedAtUtc": "2026-10-01T10:39:20.959395Z",
+      "monotonicDurationNs": 9216268395,
+      "startedAtUtc": "2026-10-01T10:39:08.440749Z"
+    }
+  },
+  "mirrorgate.required": {
+    "artifacts": [],
+    "catalogSelectionRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c"
+    },
+    "commands": [
+      {
+        "approvedArgs": [],
+        "commandId": "mirrorgate.required",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "requirement": "required",
+        "tierId": "mirrorgate.required"
+      }
+    ],
+    "components": [
+      {
+        "componentId": "mirrorgate",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "3f1da21629e50118c27697df6d96e48be9118485f1af39edb9ec73c9978443d6",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/MirrorGate.git",
+        "revision": "9d88ead482f0e53285b1bacd2e29dd23b81440ac"
+      },
+      {
+        "componentId": "mirrors",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "806bc6d2a8a8152380234750a22de12bcf42f8ab67f62cae9aa6e805767d82cc",
+          "method": "git-diff-and-untracked-manifest-v1"
+        },
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "d483ac220024a320cce724bc661f32f984805a9c"
+      }
+    ],
+    "environment": {
+      "architecture": "x86_64",
+      "os": "linux",
+      "platformProfile": "local-collector",
+      "tools": [
+        {
+          "name": "python",
+          "version": "3.12.3"
+        }
+      ]
+    },
+    "outcomes": {
+      "behavior": {
+        "classification": {
+          "code": "exit-0",
+          "namespace": "process"
+        },
+        "status": "passed"
+      },
+      "cleanup": [
+        {
+          "artifactIds": [],
+          "requirement": "not-applicable",
+          "scope": "local-cooperative",
+          "status": "not_applicable"
+        }
+      ],
+      "persistence": {
+        "missingRequiredArtifactCount": 0,
+        "persistedArtifactCount": 5,
+        "requiredArtifactCount": 5,
+        "requirement": "required",
+        "status": "complete"
+      }
+    },
+    "producerResults": [],
+    "projectionKind": "public",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "releaseProfile": "mirrors.local-release-evidence/v1",
+    "runId": "run-603f94cb-b22f-4b24-9fcc-d08ee9b2703a",
+    "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+    "tiers": [
+      {
+        "artifactIds": [],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "mirrorgate.required"
+      }
+    ],
+    "timestamps": {
+      "finishedAtUtc": "2026-10-01T10:40:43.053058Z",
+      "monotonicDurationNs": 74781263502,
+      "startedAtUtc": "2026-10-01T10:39:21.650074Z"
+    }
+  }
+}

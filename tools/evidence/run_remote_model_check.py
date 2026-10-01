@@ -10,23 +10,25 @@ wrapper never reads or prints certificate or key contents.
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 import re
 import stat
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 
-HOST = "192.168.150.219"
+HOST = "172.20.208.1"
 PORT = "8999"
-SERVICE = "ModelMirrors"
+SERVICE = "workspace-native-console"
 MIRROR = Path(".lake/build/bin/mirror")
 SPEC = Path("test/specs/HourClock.tla")
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 SOURCE_REF = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
-APALACHE_VERSION = "0.61.0"
-APALACHE_ARCHIVE_SHA256 = "68fb56dd9d053cf21d692fd7ec3fbaaeba1395661ec7434fa2b4c47e6fc432b8"
-APALACHE_JAR_SHA256 = "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346"
+APALACHE_VERSION = "0.62.2"
+APALACHE_ARCHIVE_SHA256 = "7cfadf6e8c04c63f05ac907ec9541c66297005c8cb5efb1731f6a838dfc3fad2"
+APALACHE_JAR_SHA256 = "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8"
 JAVA_SELECTED_VERSION = "25.0.4+7"
 JAVA_OBSERVED_VERSION = "25.0.4+7-LTS"
 JAVA_ARCHIVE_SHA256 = "54ba13f3ef80887fa74708b2a32daaae6262517ba68433d850bb4b426343172b"
@@ -54,6 +56,37 @@ def sha256(path: Path) -> str:
         for block in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def validate_observation(path: Path, pin: str, binary: str, source: str) -> str:
+    """Admit an observed owned Windows process, without claiming a service."""
+    if path.is_symlink() or not path.is_file() or path.stat().st_size > 1024 * 1024:
+        raise ValueError("deployment observation is not a bounded regular file")
+    observation = json.loads(path.read_text())
+    if (observation["schema"] != "mirrors.windows-deployment-observation/v1"
+            or observation["endpoint"] != {"host": HOST, "port": int(PORT)}
+            or observation["deploymentMode"] != "owned-native-console"
+            or type(observation["processId"]) is not int or observation["processId"] < 1
+            or observation["binarySha256"] != binary
+            or observation["sourceBaseRevision"] != source
+            or observation["mtls"]["serverLeafSha256"] != pin):
+        raise ValueError("observed Windows deployment identity differs from the selected oracle")
+    expected_runtime = {
+        "apalacheVersion": APALACHE_VERSION, "apalacheArchiveSha256": APALACHE_ARCHIVE_SHA256,
+        "apalacheJarSha256": APALACHE_JAR_SHA256, "javaVersion": JAVA_OBSERVED_VERSION,
+        "javaArchiveSha256": JAVA_ARCHIVE_SHA256, "javaExecutableSha256": JAVA_EXECUTABLE_SHA256,
+    }
+    if any(observation["runtime"].get(key) != value for key, value in expected_runtime.items()):
+        raise ValueError("observed Windows runtime differs from selected archive/executable pins")
+    for key in ("sourceTreeSha256", "sourceManifestSha256", "runtimeManifestSha256"):
+        if not HEX64.fullmatch(observation[key]): raise ValueError("invalid observed source/runtime digest")
+    observed = datetime.fromisoformat(observation["observedAt"].replace("Z", "+00:00"))
+    created = datetime.fromisoformat(observation["processCreatedAt"].replace("Z", "+00:00"))
+    if observed.tzinfo is None or created.tzinfo is None or created > observed:
+        raise ValueError("invalid observed process lifetime")
+    if not -300 <= (datetime.now(timezone.utc) - observed).total_seconds() <= 3600:
+        raise ValueError("deployment observation is outside the one-hour admission window")
+    return sha256(path)
 
 
 def main() -> int:
@@ -85,11 +118,13 @@ def main() -> int:
         }
         if any(required(name) != value for name, value in required_fixed.items()):
             raise ValueError("remote model-check tool identity differs from the selected pins")
+        observation_sha = validate_observation(
+            Path(regular_file("MIRRORS_REMOTE_ADMIN_OBSERVATION")), pin, service_binary, source_ref)
         if not MIRROR.is_file() or not os.access(MIRROR, os.X_OK):
             raise ValueError("build the registered Mirrors client before remote qualification")
         if not SPEC.is_file():
             raise ValueError("registered HourClock qualification model is absent")
-    except (OSError, ValueError) as error:
+    except (OSError, ValueError, KeyError, TypeError) as error:
         print(f"remote model-check admission failed: {error}", file=sys.stderr)
         return 2
 
@@ -103,6 +138,7 @@ def main() -> int:
         f"apalache_jar_sha256={APALACHE_JAR_SHA256} java={JAVA_OBSERVED_VERSION} "
         f"java_archive_sha256={JAVA_ARCHIVE_SHA256} "
         f"java_executable_sha256={JAVA_EXECUTABLE_SHA256}",
+        f"deployment_observation_sha256={observation_sha}",
         flush=True,
     )
     argv = [
