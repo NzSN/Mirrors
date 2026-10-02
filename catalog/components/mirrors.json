@@ -7,37 +7,13 @@
       "componentRef": {
         "componentId": "mirrors",
         "repository": "https://github.com/NzSN/Mirrors.git",
-        "revision": "d483ac220024a320cce724bc661f32f984805a9c",
+        "revision": "29d50ab25ac46ece70c0628f57a70dca4e8aef43",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "104a3f341fc20ab2a8638a37588b67646f29675c0221d2ab03f04566cc88c9e7",
+          "digest": "29934655c7ef42614cdb933fc41432888924adafc6c934a85a22e06895e7bb73",
           "method": "git-diff-and-untracked-manifest-v1",
-          "includedPaths": [
-            "Docs/qualification-harness-design.md",
-            "tools/distribution/build.py",
-            "tools/distribution/test_reference_projects.py",
-            "tools/evidence/catalog_links.py",
-            "tools/evidence/collect.py",
-            "tools/evidence/commands.json",
-            "tools/evidence/installed-lease-origin.mjs",
-            "tools/evidence/installed-lease-reduction.mjs",
-            "tools/evidence/installed-recovery-origin.py",
-            "tools/evidence/qualification-profiles.json",
-            "tools/evidence/qualification_scope.py",
-            "tools/evidence/run_lease_origin.mjs",
-            "tools/evidence/run_remote_model_check.py",
-            "tools/evidence/tests/test_catalog_links.py",
-            "tools/evidence/tests/test_collect.py",
-            "tools/evidence/tests/test_lease_acceptance.py",
-            "tools/evidence/tests/test_qualification_scope.py",
-            "tools/evidence/tests/test_remote_observation.py",
-            "tools/interop/remote-clients/RemoteM5.lean",
-            "tools/interop/remote-clients/ecma-protocol.mjs",
-            "tools/interop/remote-clients/ecma.mjs",
-            "tools/interop/remote-clients/rust/main.rs",
-            "tools/interop/run-remote.py"
-          ],
+          "includedPaths": [],
           "excludedPaths": [
             {
               "path": ".projectile-cache.eld",
@@ -52,67 +28,7 @@
               "reasonCode": "evidence-output"
             },
             {
-              "path": "Plans/execution-decisions.md",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/m5-windows-remote-evidence-20261001/README.md",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/m5-windows-remote-evidence-20261001/acceptance.json",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/m5-windows-remote-evidence-20261001/admission-checks.json",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/m5-windows-remote-evidence-20261001/deployment-observation.json",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/m5-windows-remote-evidence-20261001/domain-oracle-receipt.json",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/m5-windows-remote-evidence-20261001/domain-replay-result.json",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/m5-windows-remote-evidence-20261001/interop-receipt.json",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/m5-windows-remote-evidence-20261001/offline-verification.json",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/m5-windows-remote-evidence-20261001/public-summaries.json",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/m5-windows-remote-evidence-20261001/run-index-public.json",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/m5-windows-remote-evidence-20261001/service-observation.json",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/m5-wsl-windows-remote.md",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/mirror-framework-improvements.md",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/q3-m5-complete-2026-10-01.md",
-              "reasonCode": "planning-documentation"
-            },
-            {
-              "path": "Plans/q3-windows-remote-2026-10-01.md",
+              "path": "Plans/q3-published-commits-2026-10-02.md",
               "reasonCode": "planning-documentation"
             },
             {
@@ -129,10 +45,6 @@
             },
             {
               "path": "distribution/reference-node/component-lock.json",
-              "reasonCode": "evidence-output"
-            },
-            {
-              "path": "distribution/reference-node/dependency-lock.json",
               "reasonCode": "evidence-output"
             },
             {
@@ -323,7 +235,7 @@
   "combinations": [],
   "extensions": {
     "org.nzsn.snapshot": {
-      "capturedAt": "2026-10-01T14:44:24Z",
+      "capturedAt": "2026-10-02T00:27:20Z",
       "provisional": true
     }
   }

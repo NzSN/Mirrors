@@ -4,24 +4,20 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "f2080fd722ed097eb1d5e4b4fd8cd4e8d7a1d1092b91530d48a51ca3bf141670"
+    "selectionValue": "77b9f27dbd6f806708bbf9609ed0169912bd7d0fc78463556c05c59f75cb44f6"
   },
   "profileId": "checked-replay-local",
   "componentRefs": [
     {
       "componentId": "mirrorecma",
       "repository": "https://github.com/NzSN/MirrorECMA.git",
-      "revision": "61890cf14d8465df31ba6c95e72eade0a5716a66",
+      "revision": "f2a6a5aa554d745e4497874ede7ce9ee9db9436f",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "2d331a2e2b718ddd36c68ee96e3055ba79f3faa097e8b740d4503eaf722ebd4b",
+        "digest": "9348787a66c78d5ae2970c015913c175b0b0ac1f347a9e04e8acbb339431e064",
         "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [
-          "scripts/materialize-lease-reduction.mjs",
-          "src/lease-reduction.ts",
-          "test/reproduction-remote-oracle.test.ts"
-        ],
+        "includedPaths": [],
         "excludedPaths": [
           {
             "path": ".projectile-cache.eld",
@@ -37,37 +33,13 @@
     {
       "componentId": "mirrors",
       "repository": "https://github.com/NzSN/Mirrors.git",
-      "revision": "d483ac220024a320cce724bc661f32f984805a9c",
+      "revision": "29d50ab25ac46ece70c0628f57a70dca4e8aef43",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "104a3f341fc20ab2a8638a37588b67646f29675c0221d2ab03f04566cc88c9e7",
+        "digest": "29934655c7ef42614cdb933fc41432888924adafc6c934a85a22e06895e7bb73",
         "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [
-          "Docs/qualification-harness-design.md",
-          "tools/distribution/build.py",
-          "tools/distribution/test_reference_projects.py",
-          "tools/evidence/catalog_links.py",
-          "tools/evidence/collect.py",
-          "tools/evidence/commands.json",
-          "tools/evidence/installed-lease-origin.mjs",
-          "tools/evidence/installed-lease-reduction.mjs",
-          "tools/evidence/installed-recovery-origin.py",
-          "tools/evidence/qualification-profiles.json",
-          "tools/evidence/qualification_scope.py",
-          "tools/evidence/run_lease_origin.mjs",
-          "tools/evidence/run_remote_model_check.py",
-          "tools/evidence/tests/test_catalog_links.py",
-          "tools/evidence/tests/test_collect.py",
-          "tools/evidence/tests/test_lease_acceptance.py",
-          "tools/evidence/tests/test_qualification_scope.py",
-          "tools/evidence/tests/test_remote_observation.py",
-          "tools/interop/remote-clients/RemoteM5.lean",
-          "tools/interop/remote-clients/ecma-protocol.mjs",
-          "tools/interop/remote-clients/ecma.mjs",
-          "tools/interop/remote-clients/rust/main.rs",
-          "tools/interop/run-remote.py"
-        ],
+        "includedPaths": [],
         "excludedPaths": [
           {
             "path": ".projectile-cache.eld",
@@ -82,67 +54,7 @@
             "reasonCode": "evidence-output"
           },
           {
-            "path": "Plans/execution-decisions.md",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/m5-windows-remote-evidence-20261001/README.md",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/m5-windows-remote-evidence-20261001/acceptance.json",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/m5-windows-remote-evidence-20261001/admission-checks.json",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/m5-windows-remote-evidence-20261001/deployment-observation.json",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/m5-windows-remote-evidence-20261001/domain-oracle-receipt.json",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/m5-windows-remote-evidence-20261001/domain-replay-result.json",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/m5-windows-remote-evidence-20261001/interop-receipt.json",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/m5-windows-remote-evidence-20261001/offline-verification.json",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/m5-windows-remote-evidence-20261001/public-summaries.json",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/m5-windows-remote-evidence-20261001/run-index-public.json",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/m5-windows-remote-evidence-20261001/service-observation.json",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/m5-wsl-windows-remote.md",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/mirror-framework-improvements.md",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/q3-m5-complete-2026-10-01.md",
-            "reasonCode": "planning-documentation"
-          },
-          {
-            "path": "Plans/q3-windows-remote-2026-10-01.md",
+            "path": "Plans/q3-published-commits-2026-10-02.md",
             "reasonCode": "planning-documentation"
           },
           {
@@ -159,10 +71,6 @@
           },
           {
             "path": "distribution/reference-node/component-lock.json",
-            "reasonCode": "evidence-output"
-          },
-          {
-            "path": "distribution/reference-node/dependency-lock.json",
             "reasonCode": "evidence-output"
           },
           {
@@ -421,13 +329,13 @@
       "inputId": "profiles-lock",
       "path": "distribution/reference-node/profiles.json",
       "bytes": 4307,
-      "sha256": "210e31ed573ea884923ec236eac5d2a8d8f47b9ae78f0149c36999c2c90b2413"
+      "sha256": "2fbc697a72df4a891f38be87342256eb520b808fa6cd2c5ec9c7dc255ba0c94d"
     },
     {
       "inputId": "component-lock",
       "path": "distribution/reference-node/component-lock.json",
-      "bytes": 16579,
-      "sha256": "7079d20cfa56f70108f9a1171527efca662dd59bd688cf159bc7338da3b2a7c1"
+      "bytes": 12469,
+      "sha256": "c2dcd7818330b035d325649a7f58784ca43b10b016813984674cc57404872d67"
     },
     {
       "inputId": "dependency-lock",

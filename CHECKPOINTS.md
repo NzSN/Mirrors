@@ -5,6 +5,53 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-02 — Published-commit M5 qualification complete
+
+The user-authorized qualification passes for published Mirrors `29d50ab25ac46ece70c0628f57a70dca4e8aef43`,
+MirrorECMA `f2a6a5aa554d745e4497874ede7ce9ee9db9436f` and MirrorGate `455e196c73332a1b0d85b1d822dfc4aa3542bbd9`.
+New C0: `77b9f27dbd6f806708bbf9609ed0169912bd7d0fc78463556c05c59f75cb44f6`. All included implementation-path
+lists are empty; no source/producer/registry change was required. Three refreshes
+reached byte stability, one immutable snapshot produced both verified caches,
+and both installations committed. Fresh local D `run-d582b76c-297b-464c-af40-f1ad7f842ce6`
+and Gate D `run-d7aa1a4e-b537-486f-a648-2168fd0b35a9` qualified first.
+
+All 18 required commands and 16 tiers pass. Both fresh R0/R1 branches reproduce;
+prefix reduction proves best 2/16 with complete minimality; full LeaseService R5
+preserves the same actual reduced-corpus state-5 `write` mismatch with a passed
+correct baseline and confirmed cleanup. Both fixed 17-mutant aggregates pass.
+Fresh recovery reclaims four prepared filesystem resources from its deliberately
+interrupted origin, retained without credit. Source-hidden/offline Lease origin,
+R1 and candidate replay pass. Fresh Windows HourClock is `VALID` and all 22
+declared five-client mTLS cases pass on the actual 0.62.2/25.0.4+7-LTS console.
+
+Outer Q `run-ef411ef2-976e-4732-818f-2a5aa698412c` and C1
+`bb6845ec78ab9184384ee302eb753b123f3dddc1ef3d8f5ca6662e7d6997942c` qualify the complete profile.
+The 19-node scope with both D bindings and all 20 selected bundles independently
+verify using installed pinned wheels, sources/scratch hidden, archive read-only
+and network unshared. All six tamper, binding, linkage and incomplete-profile
+controls reject. Final installed trees remain unchanged; native identity is
+stable before/after. No local model checker ran.
+
+Current [published-commit readiness](Plans/q3-published-commits-2026-10-02.md)
+records exact public references, acceptance and limits. Authoritative private
+evidence is owner-only under `~/.local/state/mirrors/m5-published-commits-20261002`;
+credential bytes are excluded. Native Ubuntu, aggregate cgroups, active-process
+post-restart recovery and service-manager acceptance remain outside this profile.
+Windows work stays within `C:\Users\ayden\Desktop\Workspace`.
+Target commits are unchanged; only generated metadata/reporting outputs are
+modified. Historical qualification evidence and entries are preserved.
+
+## 2026-10-02 — Published-commit M5 qualification started
+
+The user authorizes the full qualification campaign for published source refs
+Mirrors `29d50ab…`, MirrorECMA `f2a6a5a…` and MirrorGate `455e196…`.
+The selected profile remains `m5-wsl-windows-remote/v1`; native Ubuntu and
+aggregate cgroups remain excluded. Windows work stays under
+`C:\Users\ayden\Desktop\Workspace\MirrorsRemote`; no local model checker.
+The new [readiness record](Plans/q3-published-commits-2026-10-02.md) is pending
+fresh freeze, dual builds/installs and D audits, every Q1 producer, independent
+Q2 and final Q3. Previous qualified snapshots and evidence remain unchanged.
+
 ## 2026-10-01 — M5 completion source commits published
 
 The user authorized commit and push after the five-item completion campaign.
