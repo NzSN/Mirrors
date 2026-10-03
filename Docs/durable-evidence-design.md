@@ -63,8 +63,14 @@ selected untracked files. `includedPaths` may be empty when every observed dirty
 path is deliberately excluded, as with MirrorECMA's pre-existing unrelated
 `.work/`. Each exclusion records a logical path and one of
 `pre-existing-unrelated`, `evidence-output`, `build-output`, or
-`planning-documentation` (Mirrors planning/scratch documents: `Plans/**` other
-than the excluded Q3 report, `tmp/**`, and the root `CHECKPOINTS.md`). Evidence output
+`planning-documentation` in historical records. Current producers remove Mirrors
+planning paths (`Plans/**` except `Plans/q3-readiness-2026-09-25.md`, `tmp/**`,
+and root `CHECKPOINTS.md`) before forming component identity. E2 retains their
+before/after paths and content digests in a required private diagnostic artifact,
+`planning-documentation.json` (`mirrors.planning-documentation-audit/v1`). This
+audit is outside C0; planning changes during a command do not mark its source
+identity incomplete. Historical envelope shapes and digests remain readable.
+Evidence output
 uses a store outside the checkout by default, but a collector still records any
 checkout-local output exclusion. It must not silently exclude a changed source
 file merely because collection created or noticed it. E2 will capture before and

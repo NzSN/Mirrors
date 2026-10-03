@@ -4,18 +4,18 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "77b9f27dbd6f806708bbf9609ed0169912bd7d0fc78463556c05c59f75cb44f6"
+    "selectionValue": "de4e1864af4c5686d7620592adfead0c9822d9319c745ccc9bdee3ff25e534af"
   },
   "profileId": "checked-replay-gate",
   "componentRefs": [
     {
       "componentId": "mirrorecma",
       "repository": "https://github.com/NzSN/MirrorECMA.git",
-      "revision": "f2a6a5aa554d745e4497874ede7ce9ee9db9436f",
+      "revision": "3e7277b1a2812ef03e73a991c14bf9e5d8510c54",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "9348787a66c78d5ae2970c015913c175b0b0ac1f347a9e04e8acbb339431e064",
+        "digest": "dfc009da8bc822307b7eae742a2fea1c71dcce13623f05a0c171709a63bc4a61",
         "method": "git-diff-and-untracked-manifest-v1",
         "includedPaths": [],
         "excludedPaths": [
@@ -51,29 +51,42 @@
     {
       "componentId": "mirrors",
       "repository": "https://github.com/NzSN/Mirrors.git",
-      "revision": "29d50ab25ac46ece70c0628f57a70dca4e8aef43",
+      "revision": "ea8091c0c723f3f561044a5c1efb91d12e7aaf5f",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "29934655c7ef42614cdb933fc41432888924adafc6c934a85a22e06895e7bb73",
+        "digest": "ecd4ebec817658205c9e9c73b99ef534aba0ca2a23df578b162324305afe623b",
         "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [],
+        "includedPaths": [
+          "Docs/durable-evidence-design.md",
+          "Docs/framework-catalog-contract.md",
+          "Docs/qualification-harness-design.md",
+          "tools/distribution/refresh_identity.py",
+          "tools/distribution/snapshot_sources.py",
+          "tools/distribution/test_planning_docs_exclusion.py",
+          "tools/evidence/collect.py",
+          "tools/evidence/commands.json",
+          "tools/evidence/source_policy.py",
+          "tools/evidence/tests/test_collect.py",
+          "tools/evidence/tests/test_contract.py",
+          "tools/evidence/tests/test_ecma_runtime.py",
+          "tools/evidence/tests/test_remote_interop.py",
+          "tools/interop/INTEROP.md",
+          "tools/interop/ecma-runtime-pin.json",
+          "tools/interop/ecma_runtime.py",
+          "tools/interop/prepare-ecma-runtime.py",
+          "tools/interop/remote-clients/ecma-protocol.mjs",
+          "tools/interop/remote-clients/ecma.mjs",
+          "tools/interop/run-remote.py"
+        ],
         "excludedPaths": [
           {
             "path": ".projectile-cache.eld",
             "reasonCode": "pre-existing-unrelated"
           },
           {
-            "path": "CHECKPOINTS.md",
-            "reasonCode": "planning-documentation"
-          },
-          {
             "path": "Docs/framework-map.md",
             "reasonCode": "evidence-output"
-          },
-          {
-            "path": "Plans/q3-published-commits-2026-10-02.md",
-            "reasonCode": "planning-documentation"
           },
           {
             "path": "catalog/components/mirrors.json",
@@ -419,13 +432,13 @@
       "inputId": "profiles-lock",
       "path": "distribution/reference-node/profiles.json",
       "bytes": 4307,
-      "sha256": "2fbc697a72df4a891f38be87342256eb520b808fa6cd2c5ec9c7dc255ba0c94d"
+      "sha256": "bd8a7dc51c872178907096ee34cd450089238ecebcc2dd40f9eead25b3df8a6a"
     },
     {
       "inputId": "component-lock",
       "path": "distribution/reference-node/component-lock.json",
-      "bytes": 12469,
-      "sha256": "c2dcd7818330b035d325649a7f58784ca43b10b016813984674cc57404872d67"
+      "bytes": 13232,
+      "sha256": "3ce20e1e130f5577d2ae490c788da7c5221119d0f0da67c2c8880206a6d46409"
     },
     {
       "inputId": "dependency-lock",

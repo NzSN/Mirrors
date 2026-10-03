@@ -23,6 +23,7 @@ from typing import Any
 from jsonschema import Draft202012Validator
 
 from command_registry import parse_registry, select_command
+from source_policy import is_planning_documentation
 from store import (create_owner_directory, create_owner_directory_exclusive,
                    open_owner_directory, read_regular, write_exclusive)
 from validate import ROOT as EVIDENCE_ROOT, load_json, loads_json_bytes
@@ -175,9 +176,8 @@ def _selected_content_digest(
         digest.update(size.to_bytes(8, "big"))
         digest.update(content_digest.digest())
     for entry in excluded:
-        # Planning/scratch documents are audit input, not build input: the
-        # manifest records them, but they must not move the selected identity
-        # when a plan is edited, added, or removed.
+        # Preserve the legacy content-digest rule. Current component producers
+        # remove planning entries before constructing any identity-bearing list.
         if entry["reasonCode"] == "planning-documentation":
             continue
         digest.update(b"excluded\0")
@@ -197,7 +197,11 @@ def component_ref(component_id: str, repository: Path, exclusions: dict[str, str
         check=False,
     )
     remote = remote_result.stdout.decode("utf-8").strip() if remote_result.returncode == 0 else ""
-    changed = _changed_paths(root)
+    for path, reason in exclusions.items():
+        if reason == "planning-documentation" and not is_planning_documentation(component_id, path):
+            raise ValueError("planning exclusion is outside the Mirrors planning policy")
+    changed = [path for path in _changed_paths(root)
+               if not is_planning_documentation(component_id, path)]
     excluded_paths = [
         {"path": path, "reasonCode": exclusions[path]}
         for path in changed
@@ -219,6 +223,17 @@ def component_ref(component_id: str, repository: Path, exclusions: dict[str, str
             "excludedPaths": excluded_paths,
         }
     return result
+
+
+def planning_documentation_audit(component_id: str, repository: Path) -> dict[str, Any] | None:
+    if component_id != "mirrors":
+        return None
+    revision = _git(repository, "rev-parse", "HEAD").decode("ascii").strip()
+    paths = [path for path in _changed_paths(repository)
+             if is_planning_documentation(component_id, path)]
+    return {"componentId": component_id, "revision": revision, "paths": paths,
+            "algorithm": "mirrors-dirty-content-v1",
+            "digest": _selected_content_digest(repository, revision, paths, [])}
 
 
 @dataclass
@@ -2007,6 +2022,7 @@ def _stage(
     duration_ns: int,
     attachment_plan: AttachmentPlan | None,
     command_context: bytes,
+    planning_audit: bytes | None = None,
 ) -> Path:
     create_owner_directory(store)
     staging_root = store / "staging"
@@ -2037,6 +2053,14 @@ def _stage(
         "artifacts/private/command-context.json", command_context, "required")
     context_artifact["mediaType"] = "application/json"
     artifacts.append(context_artifact)
+
+    if planning_audit is not None:
+        _write_private(private / "planning-documentation.json", planning_audit)
+        audit_artifact = _artifact("planning-documentation", "diagnostic",
+            "artifacts/private/planning-documentation.json", planning_audit, "required")
+        audit_artifact["mediaType"] = "application/json"
+        artifacts.append(audit_artifact)
+        required_ids.append("planning-documentation")
 
     snapshots = _canonical_json({
         "schemaVersion": "mirrors.component-snapshots/v1",
@@ -2427,6 +2451,8 @@ def main(argv: list[str] | None = None) -> int:
         before = [component_ref(component_id, path, exclusions[component_id]) for component_id, path in sorted(components.items())]
         catalog = _catalog_selection(args, entry, components, before)
         command_context = _command_context(args, entry, registry_digest, registry_raw, before)
+        planning_before = [audit for component_id, path in sorted(components.items())
+                           if (audit := planning_documentation_audit(component_id, path)) is not None]
     except (OSError, ValueError, KeyError, json.JSONDecodeError) as error:
         if attachment_plan is not None:
             attachment_plan.close()
@@ -2456,6 +2482,12 @@ def main(argv: list[str] | None = None) -> int:
         if current_registry_raw != registry_raw:
             raise ValueError("command registry changed during collection")
         after = [component_ref(component_id, path, exclusions[component_id]) for component_id, path in sorted(components.items())]
+        planning_after = [audit for component_id, path in sorted(components.items())
+                          if (audit := planning_documentation_audit(component_id, path)) is not None]
+        planning_audit = (_canonical_json({
+            "schemaVersion": "mirrors.planning-documentation-audit/v1",
+            "before": planning_before, "after": planning_after,
+        }) if planning_before or planning_after else None)
         staging = _stage(
             args.store,
             run_id,
@@ -2470,6 +2502,7 @@ def main(argv: list[str] | None = None) -> int:
             finished_ns - started_ns,
             attachment_plan,
             command_context,
+            planning_audit,
         )
     except (OSError, ValueError, KeyError) as error:
         print(f"evidence collection persistence failed: {error}", file=sys.stderr)

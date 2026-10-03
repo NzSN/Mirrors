@@ -17,6 +17,7 @@ HERE = Path(__file__).resolve().parent
 MIRRORS = HERE.parents[1]
 sys.path.insert(0, str(MIRRORS / "tools/evidence"))
 from collect import component_ref  # type: ignore  # noqa: E402
+from source_policy import is_planning_documentation  # noqa: E402
 from store import logical_path, read_regular  # type: ignore  # noqa: E402
 
 MAX_FILES = 20_000
@@ -59,6 +60,8 @@ def snapshot(repository: Path, ref: dict, destination: Path) -> dict:
         metadata, raw_path = raw.split(b"\t", 1)
         mode, kind, object_id = metadata.decode("ascii").split(" ")
         path = logical_path(raw_path.decode("utf-8"))
+        if is_planning_documentation(ref["componentId"], path.as_posix()):
+            continue
         if kind != "blob" or mode not in {"100644", "100755"}:
             raise ValueError(f"unsupported tracked source entry: {path} {mode} {kind}")
         data = git(repository, "cat-file", "blob", object_id)
@@ -68,6 +71,8 @@ def snapshot(repository: Path, ref: dict, destination: Path) -> dict:
             raise ValueError("source snapshot bound exceeded")
         write_regular(destination / path, data, mode == "100755")
     for path in ref.get("dirtyContent", {}).get("includedPaths", []):
+        if is_planning_documentation(ref["componentId"], path):
+            raise ValueError("planning documentation cannot be a source build input")
         source = repository / logical_path(path)
         target = destination / path
         if not source.exists():

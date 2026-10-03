@@ -1,5 +1,38 @@
 # Client interop validation (Phase 6)
 
+## Selected remote Windows profile
+
+The qualification registry uses `python3 tools/interop/run-remote.py OUTPUT_ROOT`
+for five-client verdict/pin checks and ECMA protocol checks (22 mTLS rows).
+`OUTPUT_ROOT` must be new or an empty private directory. This profile uses the
+deployed Windows service; the local-backend matrix described below is separate.
+
+The registered `ECMA_REF` is built from Git objects into a new runtime root:
+
+```sh
+python3 tools/interop/prepare-ecma-runtime.py \
+  --repo "$ECMA_REPO" --ref "$ECMA_REF" --node "$ECMA_NODE_BIN" \
+  --node-modules "$ECMA_REPO/node_modules" \
+  --out "$ECMA_RUNTIME_ROOT" --pin-out /tmp/ecma-runtime-pin.json
+```
+
+Use absolute paths and prepared TypeScript dependencies. The builder ignores
+working-tree `dist`, compiles a clean source export, and packages `dist`,
+`package.json`, and protocol fixtures. Compare the resulting pin with the
+reviewed `ecma-runtime-pin.json` beside the runner; updating that checked-in pin
+is a source change requiring a fresh qualification selection. The current pin
+uses Node 24.15.0 and TypeScript 5.9.3. Runtime dependencies require an explicit
+closure extension before the builder accepts them.
+
+The runner verifies the complete runtime tree and Node executable before any
+client executes, clears ambient Node options/module paths, and checks identities
+again after the matrix. Both ECMA adapters import the admitted runtime. Its v2
+receipt records the actual bindings; the E2 attachment plan retains that receipt
+and the runtime pin as required diagnostic artifacts. Historical v1 receipts
+remain historical evidence and do not establish this new runtime binding.
+
+## Full local matrix
+
 Unmodified real clients must interoperate with the Lean mirror over the
 JSON-lines wire protocol, byte-for-byte, on every transport.
 

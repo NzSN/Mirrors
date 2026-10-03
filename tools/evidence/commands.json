@@ -57,7 +57,7 @@
         "python3",
         "tools/interop/run-remote.py"
       ],
-      "argvLength": 2,
+      "argvLength": 3,
       "requiredCwdComponentId": "mirrors",
       "requiredEnvironment": {
         "INTEROP_VERIFY_PINS": "1",
@@ -82,9 +82,10 @@
         "MIRRORS_REMOTE_CLIENT_KEY",
         "MIRRORS_REMOTE_SERVER_PIN",
         "MIRRORS_REMOTE_ADMIN_OBSERVATION",
-        "M5_INTEROP_OUTPUT",
         "MIRRORS_REMOTE_SERVICE_BINARY_SHA256",
-        "MIRRORS_REMOTE_SERVICE_SOURCE_REF"
+        "MIRRORS_REMOTE_SERVICE_SOURCE_REF",
+        "ECMA_RUNTIME_ROOT",
+        "ECMA_NODE_BIN"
       ],
       "defaultTimeoutSeconds": 7200,
       "catalogComponentId": "mirrors",
@@ -94,8 +95,40 @@
         "HS_BIN": "cc3c378e31f2632bf96fcdcb127f902b7cdee0cead40e51d7911976e8a6e3e9d",
         "CPP_BIN": "5db2b6a3fd992d894d305dafbea93d8795af4137b769d7e7b22ea4de31853480",
         "RUST_BIN": "bb0547927f1868c6dcc17b80c8e01f5c4717bbe2fea32118ed60183998b666f6",
-        "LEAN_CLIENT_BIN": "2ade6dd2f61383c79d1a3e8645179361deefd4bad82b7e3496899ddd7a724781"
-      }
+        "LEAN_CLIENT_BIN": "2ade6dd2f61383c79d1a3e8645179361deefd4bad82b7e3496899ddd7a724781",
+        "ECMA_NODE_BIN": "d1de76d8edf2fededf6f8b30d244e2c0529ac607923a018283b77e9c74bd932c"
+      },
+      "attachmentsAllowed": true,
+      "attachmentRootArgIndex": 2,
+      "attachmentAdapter": {
+        "kind": "none",
+        "application": null,
+        "artifactId": null
+      },
+      "attachmentOutputs": [
+        {
+          "artifactId": "remote-interop-receipt",
+          "relativePath": "receipt.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 1048576,
+          "expectedSha256": null,
+          "producerResult": null
+        },
+        {
+          "artifactId": "ecma-runtime-pin",
+          "relativePath": "ecma-runtime-pin.json",
+          "role": "diagnostic",
+          "mediaType": "application/json",
+          "requirement": "required",
+          "captureMode": "new-output",
+          "maxBytes": 2097152,
+          "expectedSha256": null,
+          "producerResult": null
+        }
+      ]
     },
     {
       "commandId": "mirrorecma.project-check",

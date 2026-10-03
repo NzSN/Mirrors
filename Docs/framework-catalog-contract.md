@@ -90,10 +90,17 @@ These types are byte-for-byte compatible with E1.
 
 The other permitted method is `filesystem-tree-v1`; exclusion reasons are
 `pre-existing-unrelated`, `evidence-output`, `build-output`, or
-`planning-documentation`. `planning-documentation` is used only for the Mirrors
-planning/scratch documents (`Plans/**` other than the excluded Q3 report,
-`tmp/**`, and the root `CHECKPOINTS.md`): they are recorded and hashed for
-audit, but they are not build inputs and do not move the selected identity. Paths are logical
+`planning-documentation`. Historical v1 references containing that last reason
+remain readable and retain their original canonical digest. Current producers
+omit Mirrors planning/scratch changes (`Plans/**` other than
+`Plans/q3-readiness-2026-09-25.md`, `tmp/**`, and root `CHECKPOINTS.md`) before
+computing `dirty`, `includedPaths`, and `excludedPaths`. E2 records their paths
+and content digests in the separate private `planning-documentation.json`
+artifact, outside the catalog and its extensions. Source snapshots omit these
+paths even when tracked. Planning edits, additions, deletions, and restorations
+therefore preserve the complete C0 selection; implementation edits and Git
+revision changes remain identity-bearing. Canonical v1 hashing is unchanged.
+Paths are logical
 repository paths, never host absolute paths. Lists are sorted and duplicate-free.
 `includedPaths` may be empty when every observed dirty path is explicitly listed
 as excluded; the digest/method still bind the selected content.

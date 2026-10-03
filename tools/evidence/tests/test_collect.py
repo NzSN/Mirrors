@@ -233,6 +233,29 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual((root / "artifacts/private/stdout.log").read_bytes(), b"out\n")
         self.assertEqual((root / "artifacts/private/stderr.log").read_bytes(), b"err\n")
 
+    def test_planning_changes_during_command_are_audited_outside_identity(self):
+        self.registry_for("fixture.planning", [sys.executable])
+        document = json.loads(self.registry.read_text())
+        document["commands"][0]["catalogComponentId"] = "mirrors"
+        self.registry.write_text(json.dumps(document))
+        program = "from pathlib import Path; Path('Plans').mkdir(); Path('Plans/new.md').write_text('new plan')"
+        result = subprocess.run([sys.executable, str(COLLECTOR),
+            "--store", str(self.store), "--registry", str(self.registry),
+            "--command-id", "fixture.planning", "--cwd", str(self.repository),
+            "--component", f"mirrors={self.repository}", "--", sys.executable, "-c", program],
+            capture_output=True, timeout=10)
+        self.assertEqual(result.returncode, 0, result.stderr.decode())
+        envelope, root = self.envelope()
+        self.assertEqual(envelope["outcomes"]["behavior"]["status"], "passed")
+        snapshots = json.loads((root / "artifacts/private/component-snapshots.json").read_text())
+        self.assertEqual(snapshots["before"], snapshots["after"])
+        audit = json.loads((root / "artifacts/private/planning-documentation.json").read_text())
+        self.assertEqual(audit["before"][0]["paths"], [])
+        self.assertEqual(audit["after"][0]["paths"], ["Plans/new.md"])
+        self.assertNotEqual(audit["before"][0]["digest"], audit["after"][0]["digest"])
+        artifact = next(a for a in envelope["artifacts"] if a["artifactId"] == "planning-documentation")
+        self.assertEqual(artifact["requirement"], "required")
+
     def test_nonzero_exit_is_preserved(self):
         self.registry_for("fixture.seven", [sys.executable])
         result = self.invoke("fixture.seven", [sys.executable, "-c", "raise SystemExit(7)"])

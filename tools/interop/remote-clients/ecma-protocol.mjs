@@ -3,7 +3,7 @@ import {readFile,writeFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import {resolve} from 'node:path';
 const env=process.env;
-const sdk=await import(pathToFileURL(resolve(env.ECMA_REPO,'dist/index.js')));
+const sdk=await import(pathToFileURL(resolve(env.ECMA_RUNTIME_ROOT,'dist/index.js')));
 const {connectTlsMirror,runClient,runClientWithTraces,runClientGenTraces,
   runClientExplore,startExploreSession,specFromFile,specFromFiles,presetClient,
   asInt,getParam}=sdk;
@@ -41,7 +41,7 @@ await check('register_trace_gen',async()=>{
     await writeFile(resolve(env.M5_INTEROP_OUTPUT,'ecma-generated-'+i+'.itf.json'),JSON.stringify(trace)+'\n',{flag:'wx',mode:0o600});
   }
 });
-const hourClock=await specFromFile(resolve(env.ECMA_REPO,'specs/HourClock.tla'));
+const hourClock=await specFromFile(resolve(env.ECMA_RUNTIME_ROOT,'specs/HourClock.tla'));
 await check('register_explore',async()=>runClientExplore(await connect(),hourClock,['Inv'],[],4,(_action,params,previous)=>{
   if(!previous.hr)return params;
   const hr=asInt(previous.hr),step=asInt(previous.step_count);
@@ -61,7 +61,7 @@ await check('register_explore_session',async()=>{
   }finally{await session.done();}
 });
 await check('inline_multimodule',async()=>{
-  const spec=await specFromFiles(resolve(env.ECMA_REPO,'specs/ExtMain.tla'));assert.equal(spec.sources.length,2);
+  const spec=await specFromFiles(resolve(env.ECMA_RUNTIME_ROOT,'specs/ExtMain.tla'));assert.equal(spec.sources.length,2);
   await runClient(await connect(),{specPath:'/nonexistent/ExtMain.tla',invariant:'TraceComplete',lengthBound:3},
     {numTraces:1},(_action,params,previous)=>previous.count?{
       count:{tag:'int',val:asInt(previous.count)+1n},action_taken:{tag:'str',val:'tick'}}:params,{spec});

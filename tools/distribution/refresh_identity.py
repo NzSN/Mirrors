@@ -19,6 +19,7 @@ sys.path.insert(0, str(MIRRORS / "tools/evidence"))
 sys.path.insert(0, str(HERE))
 
 from collect import _changed_paths, component_ref  # type: ignore  # noqa: E402
+from source_policy import is_planning_documentation as _is_planning_documentation  # noqa: E402
 from manifest_check import digest_json, validate_locks  # noqa: E402
 
 
@@ -41,17 +42,12 @@ def write(path: Path, value: dict[str, Any]) -> None:
 
 EDITOR_CACHE = ".projectile-cache.eld"
 
-# Planning and scratch documents are audit input, not build input: they are
-# recorded with their own reason code so that editing a plan does not move the
-# selected component identity. Product, tooling, build and evidence-output paths
-# stay in `includedPaths` (or their existing exclusion classes) unchanged.
-PLANNING_DOCUMENTATION_ROOTS = ("Plans/", "tmp/")
-PLANNING_DOCUMENTATION_FILES = ("CHECKPOINTS.md",)
+# The collector records planning changes in a separate private audit artifact.
+# New component refs omit those paths entirely; v1 historical records still read.
 
 
 def is_planning_documentation(path: str) -> bool:
-    return (path.startswith(PLANNING_DOCUMENTATION_ROOTS)
-            or path in PLANNING_DOCUMENTATION_FILES)
+    return _is_planning_documentation("mirrors", path)
 
 
 def exclusions(component_id: str, repository: Path) -> dict[str, str]:

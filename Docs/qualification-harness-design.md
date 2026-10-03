@@ -77,7 +77,7 @@ whose declared files are captured by E2.
 | --- | --- | --- | --- |
 | `mirrors.local-no-model` | cwd bound to the declared `mirrors` component root: `bash tools/run-local-no-model-check.sh` | local build, proof, codec, fixture and unit-gate logs; the script explicitly omits TLC and every live Apalache/model-check tier | Registered; deliberately non-model-checking |
 | `mirrors.remote-model-check` | Mirrors cwd: `python3 tools/evidence/run_remote_model_check.py`; fixed TLS 1.3 mTLS endpoint `172.20.208.1:8999`, pinned server leaf, fixed `HourClock.tla` `Init`/`Next`/`Inv`, bound 3 | private command context and log containing the declared service/source/binary identities, client and HourClock byte hashes, and terminal `VALID` | Registered; credentials remain operator-supplied private file paths |
-| `mirrors.interop` | cwd bound to the declared `mirrors` component root: `python3 tools/interop/run-remote.py`; explicit five-client roots/SHAs/binary hashes and private mTLS paths | logs, byte identities, and the declared 22-row pinned-mTLS receipt | Registered Windows profile; legacy all-transport matrix remains separate |
+| `mirrors.interop` | cwd bound to the declared `mirrors` component root: `python3 tools/interop/run-remote.py OUTPUT_ROOT`; explicit five-client roots/SHAs, binary hashes, prepared ECMA runtime and Node, and private mTLS paths | required retained runtime pin and v2 receipt with 22 pinned-mTLS rows | Registered Windows profile; legacy all-transport matrix remains separate |
 | `mirrorecma.project-check` | cwd bound to the declared `mirrorecma` component root: `pnpm run check` | command logs | Registered |
 | `mirrorecma.test` | cwd bound to the declared `mirrorecma` component root: `pnpm run test` | command logs | Registered |
 | `mirrorgate.required` | cwd bound to the declared `mirrorgate` component root: `bash scripts/test.sh` | command logs | Registered; unavailable required backend remains incomplete |
@@ -191,6 +191,16 @@ cleanup and inline multi-module sources. Its receipt declares exactly 22 mTLS
 rows. The legacy `tools/interop/run.sh` all-transport/local-backend matrix remains
 a separate profile and must not be started on this WSL coordinator. The bounded
 Windows result is not an assertion that every legacy transport/client row ran.
+
+The interop runner matches each client's declared terminal verdict and exit code.
+Argument errors, conflicting verdicts, transport errors, and timeouts do not
+count as counterexamples. Its ECMA adapters load only `ECMA_RUNTIME_ROOT` and
+execute the absolute `ECMA_NODE_BIN`; ambient `NODE_OPTIONS` and `NODE_PATH` are
+removed. The reviewed `tools/interop/ecma-runtime-pin.json` binds a clean build
+of the registered ECMA revision, the complete SDK runtime tree, and Node bytes.
+Admission precedes client execution; SDK, Node, and both adapter identities are
+checked again before writing the v2 receipt. E2 retains the receipt and pin as
+required artifacts; Q2 verifies those retained bytes with the rest of the bundle.
 
 The remote `mirrorecma.lease-reduction-tools/v2` contract has exactly schema,
 mode, totalBudgetMs, cleanupBudgetMs and validator. Only the separately supplied,

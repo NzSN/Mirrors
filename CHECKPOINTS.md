@@ -5,6 +5,35 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-03 — Qualification integrity fixes qualified
+
+All three reviewed gaps are fixed: exact interop verdict/exit classification,
+source-built and pinned ECMA runtime/Node with required v2 receipt retention,
+and planning audit records separated from C0 identity. Source regressions and
+owning checks pass (142 evidence, 39 distribution and 19 focused ECMA tests;
+Mirrors non-model suite and ECMA type checking). Historical v1 readers/hashes
+remain unchanged; planning edits/additions/deletions/restorations preserve C0.
+
+The corrected working-tree C0 `de4e1864af4c5686d7620592adfead0c9822d9319c745ccc9bdee3ff25e534af`
+qualifies for `m5-wsl-windows-remote/v1`. 2 refreshes reached byte stability; both
+caches and installs passed; local D `run-5f1bdf28-8ece-42f9-b337-ef53c5d64c56`
+and Gate D `run-c29693ba-8070-430f-aae5-2c994ffb4d54` qualified first.
+All 18 required commands/16 tiers, 22 remote client cases, both reproduction
+branches, prefix/domain reduction, both 17-case mutations and prepared-filesystem
+recovery pass. Source-hidden LeaseService acceptance also passes.
+
+Outer Q `run-cb7c34cf-cead-4b1d-85e3-ba3b4a092889` and independent Q2 accept
+all 20 selected bundles and the 19-node/two-D scope; six controls reject.
+Installed trees and native process/binary/runtime identities remain stable at
+close. The stopped Windows oracle was restarted from unchanged bytes before
+collection. No local model checker ran. Native Ubuntu, aggregate cgroups,
+active-process recovery, service-manager acceptance and legacy all-transport
+interop remain unqualified. No commit or push was performed for this batch.
+
+[Current Q3 readiness](Plans/q3-integrity-fixes-2026-10-03.md) records exact
+identities, run references and limits. Owner-only retained evidence lives at
+`~/.local/state/mirrors/m5-integrity-20261003`; credentials are excluded.
+
 ## 2026-10-02 — Published-commit M5 qualification complete
 
 The user-authorized qualification passes for published Mirrors `29d50ab25ac46ece70c0628f57a70dca4e8aef43`,

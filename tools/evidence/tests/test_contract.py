@@ -72,6 +72,14 @@ class ContractTests(unittest.TestCase):
         del document["components"][0]["dirtyContent"]
         self.assertRejected(document, "dirtyContent")
 
+    def test_historical_planning_exclusion_remains_readable(self):
+        document = fixture("envelope-private.dirty.valid.json")
+        document["components"][0]["dirtyContent"]["excludedPaths"] = [
+            {"path": "Plans/historical.md", "reasonCode": "planning-documentation"}]
+        before = copy.deepcopy(document)
+        self.assertValid(document)
+        self.assertEqual(document, before)
+
     def test_unknown_major_and_minor_fail_closed(self):
         for version in ["mirrors.evidence-envelope/v2.0", "mirrors.evidence-envelope/v1.1"]:
             document = fixture("envelope-private.valid.json")
