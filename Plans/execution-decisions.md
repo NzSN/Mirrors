@@ -8,27 +8,24 @@ implementation acceptance still requires reviewed destination files and checks.
 
 ## Current status — 2026-10-03
 
-The post-M6 working-tree C0
-`879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`
+The published-revision C0
+`f01fb7717ca9bab18a68443707f478d49c15a15d420273db1e881c9683b16384`
 qualifies for `m5-wsl-windows-remote/v1`: all 18 required commands and 16 tiers,
 the 19-node scope with both D bindings, and 20 independently verified bundles
-pass; six negative controls reject. [Current readiness](q3-post-m6-2026-10-03.md)
-records the exact candidate, installed runs and remote identity. This fresh
-freeze includes the Mirrors/MirrorECMA compiler/client follow-ups and M6 changes,
-plus regenerated example bundles after an initial stale-bundle rejection.
-Qualification remains bound to these exact recorded inputs.
+pass; six negative controls reject. [Current readiness](q3-published-2026-10-03.md)
+records the exact published component revisions, installed runs and remote
+identity. All three component references have zero included implementation
+edits. Planning records and generated catalog outputs retain their declared
+exclusions; a later source revision requires its own qualification.
 
 M4 remains partial overall: prepared-filesystem ownership recovery is credited,
 while aggregate cgroups and active-process post-restart recovery are unqualified.
 Native Ubuntu, Windows service-manager acceptance and the legacy all-transport
-interop matrix are also outside the completed profile. The separately authorized
+interop matrix remain outside the completed profile. The
 [compiler/client follow-ups](compiler-client-followups-2026-10-03.md) and
 [M6 reviewed-scaffold and corpus work](m6-reviewed-scaffolds-and-corpora.md) are
-complete for their declared source and public integration scope. M5's pinned
-compatibility matrix does not qualify every newly generated-client feature.
-The implementation is committed as recorded in the newest
-[publication checkpoint](../CHECKPOINTS.md); the new Git identities do not
-automatically inherit qualification of the recorded working-tree C0.
+complete for their declared source and public integration scope. M5's separately
+pinned compatibility matrix does not qualify every newly generated-client feature.
 
 The dated decisions below and the original September integration/ownership
 records are history. Their pending tasks and uncommitted states describe those

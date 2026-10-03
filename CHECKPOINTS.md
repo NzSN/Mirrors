@@ -5,6 +5,30 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-03 — Published revisions qualified
+
+Fresh qualification covers the compiler/client follow-ups and M6 implementation
+at the published component revisions under the established profile.
+
+The published-revision C0 `f01fb7717ca9bab18a68443707f478d49c15a15d420273db1e881c9683b16384`
+qualifies for `m5-wsl-windows-remote/v1`. 3 refreshes reached byte stability; both
+caches and installs passed; local D `run-2c926686-0c27-4877-bb4e-edc9ba92ff07`
+and Gate D `run-e0df2658-fbad-4ad8-aaf9-85a48872b083` qualified first.
+All 18 required commands/16 tiers, 22 remote client cases, both reproduction
+branches, prefix/domain reduction, both 17-case mutations and prepared-filesystem
+recovery pass. Source-hidden LeaseService acceptance also passes.
+
+Outer Q `run-5b93e3af-9ddf-4bef-979a-9159cbca6dcb` and independent Q2 accept
+all 20 selected bundles and the 19-node/two-D scope; six controls reject.
+Installed trees and native process/binary/runtime identities remain stable at
+close. No local model checker ran. Native Ubuntu, aggregate cgroups,
+active-process recovery, service-manager acceptance and legacy all-transport
+interop remain unqualified. No commit or push was performed for this batch.
+
+[Current Q3 readiness](Plans/q3-published-2026-10-03.md) records exact
+identities, run references and limits. Owner-only retained evidence lives at
+`~/.local/state/mirrors/m5-published-20261003`; credentials are excluded.
+
 ## 2026-10-03 — Post-M6 publication checkpoint
 
 The user authorized commit and push of the completed compiler/client, M6 and

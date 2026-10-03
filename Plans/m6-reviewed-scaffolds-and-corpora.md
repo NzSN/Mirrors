@@ -3,8 +3,9 @@
 Date: 2026-10-03
 
 Status: **complete for the declared source and public integration scope**.
-These working-tree changes are included in the fresh
-[M5 qualification](q3-post-m6-2026-10-03.md) for the named profile.
+The implementation is published; the selected component revisions are covered
+by the
+[M5 qualification](q3-published-2026-10-03.md) for the named profile.
 The user requested this plan
 and its execution after the [compiler/client follow-ups and documentation
 housekeeping](compiler-client-followups-2026-10-03.md), which are complete.
@@ -177,5 +178,6 @@ All five M6 clauses are satisfied at this scope. The
 [workflow reference](../Docs/model-interface-compiler/reviewed-corpora.md),
 [public fixture](../test/fixtures/model-interface/projected-cells/README.md) and
 [interop gate](../tools/model-interface-projected-corpus/README.md) describe the
-maintained interfaces and reproduction command. Current changes remain
-uncommitted and do not inherit the earlier frozen M5 qualification.
+maintained interfaces and reproduction command. Publication commits are recorded
+in [CHECKPOINTS.md](../CHECKPOINTS.md). The published component revisions passed the
+[named M5 profile](q3-published-2026-10-03.md), including independent Q2.

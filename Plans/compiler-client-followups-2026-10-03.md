@@ -2,8 +2,8 @@
 
 Status: **complete for the declared compiler/client scope**. Source checks, the
 five-base-profile/18-row aggregate and the additional C++ v2 shared-profile run
-passed. The Mirrors/MirrorECMA changes are now included in the fresh framework
-M5 candidate in [the qualification report](q3-post-m6-2026-10-03.md). The generated
+passed. The published Mirrors/MirrorECMA revisions are included in the qualified framework
+M5 candidate in [the qualification report](q3-published-2026-10-03.md). The generated
 client matrix retains its separate scope from M5's pinned compatibility matrix.
 
 ## Delivered behavior

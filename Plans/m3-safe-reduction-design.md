@@ -3,9 +3,9 @@
 Date: 2026-09-28. Status updated 2026-10-03.
 
 Status: prefix and domain reduction are qualified for the selected
-`m5-wsl-windows-remote/v1` profile on post-M6 working-tree C0
-`879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`.
-The [current readiness record](q3-post-m6-2026-10-03.md) binds the
+`m5-wsl-windows-remote/v1` profile on published-revision C0
+`f01fb7717ca9bab18a68443707f478d49c15a15d420273db1e881c9683b16384`.
+The [current readiness record](q3-published-2026-10-03.md) binds the
 installed reductions, reproduction linkage and independent Q2 verification.
 It does not qualify later commits or documentation changes. Broader M4
 aggregate/process recovery and native Ubuntu acceptance remain unqualified.
@@ -229,7 +229,7 @@ the re-freeze rules. The items below are the design-level summary.
 4. Re-freeze the selection; rerun the reduction tier(s) and every tier the
    change touches; update Q3. **Executed** — rounds m3r1–m3r5; Q3 readiness
    updated in [q3-readiness-2026-09-30.md](q3-readiness-2026-09-30.md). Later
-   full reruns qualified both tiers; [current readiness](q3-post-m6-2026-10-03.md)
+   full reruns qualified both tiers; [current readiness](q3-published-2026-10-03.md)
    records the latest exact candidate.
 
 ## 8. Acceptance (mapped to plan §3 and R4/R5 cards)

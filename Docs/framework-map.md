@@ -39,9 +39,9 @@ Catalog `mirrors.framework.candidate-2026-09-22` visibility: **private**. Dirty 
 
 | Component | Revision | Dirty |
 | --- | --- | --- |
-| `mirrorecma` | `c33d73922dd71f89462e2b071d0d8021b4911d6b` | true |
+| `mirrorecma` | `a03cf10a8787ff7691a4fd8b8f1013667501dfb7` | true |
 | `mirrorgate` | `455e196c73332a1b0d85b1d822dfc4aa3542bbd9` | true |
-| `mirrors` | `6abd893daedc86846c4c30beffc9ba8f1cf4d5eb` | true |
+| `mirrors` | `291961577b408cc135afe201f272ca684dc622e3` | true |
 
 | Capability | Owner | Declared | Source | Tested | Local | Installed | Hosted CI | Published |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |

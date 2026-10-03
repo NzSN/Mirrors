@@ -8,9 +8,9 @@ Original scope (2026-09-21): develop and assign implementation tasks; implementa
 was queued at that planning checkpoint.
 
 Current status (2026-10-03): the selected `m5-wsl-windows-remote/v1` profile is
-qualified for post-M6 working-tree C0
-`879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`.
-See [current readiness](q3-post-m6-2026-10-03.md) for the exact installed
+qualified for published-revision C0
+`f01fb7717ca9bab18a68443707f478d49c15a15d420273db1e881c9683b16384`.
+See [current readiness](q3-published-2026-10-03.md) for the exact installed
 runs, independent Q2 verification and limits, and [milestone status](mirror-framework-improvements.md#delivery-order-and-ownership)
 for the remaining broader M4 scope. Later commits and documentation changes
 do not inherit that qualification. The assignments and checkpoints below are

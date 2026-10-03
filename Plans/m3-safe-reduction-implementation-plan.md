@@ -3,9 +3,9 @@
 Date: 2026-09-28
 
 Status (2026-10-03): SR-5a and SR-5b are qualified for the selected
-`m5-wsl-windows-remote/v1` profile on post-M6 working-tree C0
-`879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`.
-The [current readiness record](q3-post-m6-2026-10-03.md) includes both
+`m5-wsl-windows-remote/v1` profile on published-revision C0
+`f01fb7717ca9bab18a68443707f478d49c15a15d420273db1e881c9683b16384`.
+The [current readiness record](q3-published-2026-10-03.md) includes both
 reduction tiers, their linked reproduction runs, affected-tier reruns and
 independent Q2 verification. This does not qualify later commits or edits;
 broader M4 aggregate/process recovery and native Ubuntu acceptance remain
