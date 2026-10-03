@@ -103,6 +103,33 @@ JSON, and TypeScript-emitter gate. -/
 lean_exe model_interface_spec where
   root := `tools.ModelInterfaceSpec
 
+/-- Shared portable model-interface judgments and generated-language corpus. -/
+@[default_target]
+lean_exe model_interface_language_spec where
+  root := `tools.ModelInterfaceLanguageSpec
+
+/-- Lean target emission, freshness and rejected-profile gate. -/
+@[default_target]
+lean_exe model_interface_lean_spec where
+  root := `tools.ModelInterfaceLeanSpec
+
+/-- Reviewed evidence, seal validation, corpus publication and provenance gates. -/
+@[default_target]
+lean_exe model_interface_workflow_spec where
+  root := `tools.ModelInterfaceWorkflowSpec
+
+@[default_target]
+lean_exe model_interface_workflow_cli_spec where
+  root := `tools.ModelInterfaceWorkflowCliSpec
+
+@[default_target]
+lean_exe model_interface_workflow_provenance_spec where
+  root := `tools.ModelInterfaceWorkflowProvenanceSpec
+
+@[default_target]
+lean_exe model_interface_corpus_spec where
+  root := `tools.ModelInterfaceCorpusSpec
+
 /-- In-memory JSONL negotiation and replay gate for runtime model-interface
 distribution. -/
 @[default_target]
@@ -396,6 +423,22 @@ script test do
   if outMi.exitCode != 0 then
     IO.println s!"model_interface_spec FAILED ({outMi.exitCode})"
     return outMi.exitCode
+  for executable in #["model_interface_language_spec", "model_interface_lean_spec",
+      "model_interface_workflow_spec", "model_interface_workflow_cli_spec",
+      "model_interface_workflow_provenance_spec", "model_interface_corpus_spec"] do
+    let generated ← IO.Process.output
+      ({ cmd := s!".lake/build/bin/{executable}", args := #[] } : IO.Process.SpawnArgs)
+    IO.println generated.stdout
+    if generated.exitCode != 0 then
+      IO.eprintln generated.stderr
+      return generated.exitCode
+  let outMiCorpusProbe ← IO.Process.output
+    ({ cmd := "python3", args := #["tools/model-interface-projected-corpus/test_check.py"] } :
+      IO.Process.SpawnArgs)
+  IO.println outMiCorpusProbe.stdout
+  IO.eprint outMiCorpusProbe.stderr
+  if outMiCorpusProbe.exitCode != 0 then
+    return outMiCorpusProbe.exitCode
   let outMiDistribution : IO.Process.Output ← IO.Process.output
     ({ cmd := ".lake/build/bin/model_interface_distribution_spec", args := #[] } :
       IO.Process.SpawnArgs)

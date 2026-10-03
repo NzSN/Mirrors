@@ -1,14 +1,21 @@
 # Mirrors documentation
 
+Start with the [architecture overview](architecture-overview.md),
+[interactive diagram](architecture-overview.html), and
+[module details](architecture-details.md), reviewed against base `6abd893` plus
+the current compiler/client working-tree changes on 2026-10-03. They cover the runtime, compiler, distribution/evidence tooling,
+and the boundary between pure proved laws and trusted effects.
 The [framework map](framework-map.md) covers the related repositories and
 distinguishes model clients, generated bindings, Gate evaluators and workers.
 The [2026-09-18 documentation audit](related-documentation-audit-20260918.md)
 records the inspected revisions, updates and link-check scope.
 
 Remote deployment and client operation: [remote server guide](remote-server-guide.md).
-Latest recorded Windows rollout: [2026-09-18 deployment](windows-deployment-20260918.md).
+Latest recorded qualification topology: [2026-10-03 readiness](../Plans/q3-integrity-fixes-2026-10-03.md)
+(WSL2 clients/tooling and a native Windows oracle, scoped to its recorded C0).
+The [2026-09-18 deployment](windows-deployment-20260918.md) remains historical.
 
-Current application-integration inventory reviewed on 2026-09-17 at Mirrors
+The detailed application-integration inventory was reviewed on 2026-09-17 at Mirrors
 `bc6eb7c`, MirrorECMA `9942248`, and MirrorGate `1388526`. This index describes the
 implemented interfaces and where to find their evidence; it does not certify
 an installed Windows service, a hosted CI run, or a published package.
@@ -27,7 +34,8 @@ an installed Windows service, a hosted CI run, or a published package.
 | Build, install, or identify Mirrors | [Product versions and installation](versioning.md) |
 | Run validation inside WSL2 or through `r_windev` | [WSL2 validation](wsl2-validation.md) |
 | Inspect a TLA+ model with the frontend CLI | [`tla_frontend` guide](model-interface-compiler/tla-frontend-cli.md) |
-| Understand component ownership | [Architecture overview](architecture-overview.md), [module details](architecture-details.md) |
+| Understand architecture and ownership | [Architecture overview](architecture-overview.md), [interactive diagram](architecture-overview.html), [module details](architecture-details.md) |
+| Follow source identity, installation, and retained qualification | [Catalog contract](framework-catalog-contract.md), [distribution tooling](architecture-details.md#5-framework-catalog-distribution-and-evidence), [evidence design](durable-evidence-design.md) |
 | Use the CLI or wire protocol | [Interface reference](interface-reference.md) |
 | Implement a client library | [Client implementation guide](client-implementation-guide.md) |
 | Generate a typed application port | [Generation design](model-interface-generation-design.md), [compiler designs](model-interface-compiler/README.md) |
@@ -42,13 +50,20 @@ an installed Windows service, a hosted CI run, or a published package.
   stdio replay is synchronous. TCP `--serve` and mTLS `--server` use connection
   worker pools and process-shared async job stores on Linux and Windows.
   Both accept `--jobs N`; the default is 4 and zero is clamped to 1.
+- `mirror validate` and `mirror trace-gen` connect to a selected Mirrors endpoint.
+  Trace capture records delivered ITF bytes and a receipt locally; path-only
+  delivery requires an explicitly shared filesystem scope. The runtime keeps
+  replay, validation, generation, exploration, and async dispatch paths distinct.
 - `model_interface_gen` implements `resolve`, `generate`, `check`, `preflight`,
   additive async `bundle` / `check-bundle` publication,
-  proposal-only `scaffold`, and strict `project-trace`. Scaffold accepts one
-  raw evidence document per invocation; projection accepts one trace and emits one
-  paired receipt. Neither command seals a proposal as a contract.
+  legacy proposal-only `scaffold`, and strict `project-trace`. The additive
+  [reviewed workflow](model-interface-compiler/reviewed-corpora.md) adds repeated
+  scaffold evidence, `seal-scaffold`, `resolve-sealed`, read-only sealed checks,
+  `project-corpus` and `check-corpus`. Review approval and closed action universes
+  remain explicit reviewer input.
   Implemented targets are `mirrorecma-v1`, experimental
-  `mirrorecma-async-v1`, `mirrorcpp-v1`, and `mirrorrust-v1`.
+  `mirrorecma-async-v1`, `mirrorcpp-v1`, `mirrorcpp-v2`, `mirrorrust-v1`, and
+  `mirrorlean-v1`.
 - The first bounded [model-validated reduction profile](model-interface-reduction.md)
   accepts only LeaseService input shrink requests; the evaluator still owns live
   model materialization before any SUT construction.
@@ -67,30 +82,35 @@ an installed Windows service, a hosted CI run, or a published package.
 - MirrorRust now has an exact adapter registry and compiled-verify runtime for
   reviewed bindings. Gate owns the new native Rust SDK and evaluator integration;
   see its [implementation/acceptance record](../../MirrorGate/docs/rust-evaluator-sdk-status.md).
-  The Lean generated target, the MirrorLean registry, common generated-binding
-  recording vectors and broader sandbox backends remain separate follow-up work.
-  Rust generation and negotiated stdio replay are covered by the
-  [Rust compiler target gate](model-interface-compiler/rust-target.md).
+  Lean generation and its additive required-verification registry are described
+  in the [Lean target contract](model-interface-compiler/lean-target.md).
+  The shared portable corpus exercises all five base generated targets and the C++ v2 profile;
+  separate generated Rust/Lean transport receipts cover supplied-trace stdio,
+  TCP authority denial and fresh owned-Windows mTLS replay. See
+  [generated-client acceptance](../tools/interop/INTEROP.md#generated-client-acceptance).
+  Broader sandbox backends and release qualification remain separate scope.
 
 ## Validation entry points
 
-[`lakefile.lean`](../lakefile.lean) defines the current `lake test` inventory:
-23 test executables (`fixtures_replay`, `diff_cross`, `model_interface_spec`,
-`model_interface_distribution_spec`, the five evidence/scaffold/projection
-specs, the lexer/parser/resolver/elaboration/frontend/inspection-CLI frontend
-gates, `stdio_smoke`, `jobstore_spec`, `apalache_cli_spec`, `explorer_spec`,
-`transport_spec`, `registry_spec`, `counter_spec`, and `async_spec`), three
-compiler freshness checks (sync TypeScript, async TypeScript, and C++), and
-Counter preflight with exact coverage comparison. The driver also runs
-`tools/check-async-emitter.py` and `tools/check-suite-bundle.py` for emitter
-structure and suite-bundle publication/freshness regressions.
-The script rebuilds first. `stdio_smoke` also checks the version CLI.
+[`lakefile.lean`](../lakefile.lean) defines the current `lake test` inventory
+and rebuilds first. It includes domain/codec, model-interface, frontend,
+catalog, capture, transport, job/resource, distribution and evidence gates,
+plus generated-target freshness and exact Counter preflight checks. Keep counts
+in dated run records rather than treating an old executable count as the gate list.
+`stdio_smoke` also checks the version CLI.
 
 Set `APALACHE_MC` to an absolute executable path for explicit live coverage.
 The Lake script also probes a developer-local Apalache path when the variable
 is absent; therefore an unset variable alone does not guarantee an offline
 run. Individual external tiers may skip when prerequisites are missing; inspect
 their output separately from the aggregate exit status.
+
+On the current coordinator, use
+[`tools/run-local-no-model-check.sh`](../tools/run-local-no-model-check.sh) for
+local non-model gates and the separately registered remote producers for model
+checking. [Qualification commands](../tools/evidence/commands.json) bind the
+selected runtime, installed audits and evidence dependencies. Documentation or
+publication changes do not silently renew a previously recorded qualification.
 
 `bash tools/interop/run.sh` covers MirrorECMA, MirrorCPP, MirrorLean, MirrorRust, and the
 Haskell reference client. MirrorGate's required-backend gate and the shared

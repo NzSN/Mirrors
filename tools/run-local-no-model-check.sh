@@ -42,6 +42,13 @@ run "validate async protocol codec" python3 tools/check-validate-async.py
 run "fixture replay" .lake/build/bin/fixtures_replay
 run "cross-codec diff" .lake/build/bin/diff_cross
 run "model-interface spec" .lake/build/bin/model_interface_spec
+run "model-interface language judgments" .lake/build/bin/model_interface_language_spec
+run "model-interface Lean target" .lake/build/bin/model_interface_lean_spec
+run "model-interface reviewed workflows" .lake/build/bin/model_interface_workflow_spec
+run "model-interface workflow CLI" .lake/build/bin/model_interface_workflow_cli_spec
+run "model-interface workflow provenance" .lake/build/bin/model_interface_workflow_provenance_spec
+run "model-interface corpus" .lake/build/bin/model_interface_corpus_spec
+run "corpus acceptance probe" python3 tools/model-interface-projected-corpus/test_check.py
 run "model-interface distribution spec" .lake/build/bin/model_interface_distribution_spec
 run "framework catalog spec" .lake/build/bin/framework_catalog_spec
 run "distribution contract" python3 -m unittest discover -s tools/distribution -p 'test_*.py'

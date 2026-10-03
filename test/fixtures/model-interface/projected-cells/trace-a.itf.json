@@ -1,0 +1,329 @@
+{
+  "#meta": {
+    "format": "ITF",
+    "description": "Public synthetic ProjectedCells witness; no model checker claim",
+    "varTypes": {
+      "cells": "(Int -> {count: Int, labels: Set(Str), weights: (Str -> Int)})",
+      "action_taken": "Str",
+      "parameters": "{index: Int, delta: Int, labels: Set(Str), weights: (Str -> Int)}"
+    }
+  },
+  "vars": [
+    "cells",
+    "action_taken",
+    "parameters"
+  ],
+  "param_vars": [
+    "parameters"
+  ],
+  "states": [
+    {
+      "#meta": {
+        "index": 0
+      },
+      "cells": {
+        "#map": [
+          [
+            {
+              "#bigint": "0"
+            },
+            {
+              "count": {
+                "#bigint": "0"
+              },
+              "labels": {
+                "#set": [
+                  "fresh"
+                ]
+              },
+              "weights": {
+                "#map": [
+                  [
+                    "seen",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "updates",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "#bigint": "1"
+            },
+            {
+              "count": {
+                "#bigint": "0"
+              },
+              "labels": {
+                "#set": [
+                  "fresh"
+                ]
+              },
+              "weights": {
+                "#map": [
+                  [
+                    "seen",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "updates",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "action_taken": "init",
+      "parameters": {
+        "index": {
+          "#bigint": "0"
+        },
+        "delta": {
+          "#bigint": "0"
+        },
+        "labels": {
+          "#set": [
+            "fresh"
+          ]
+        },
+        "weights": {
+          "#map": [
+            [
+              "seen",
+              {
+                "#bigint": "0"
+              }
+            ],
+            [
+              "updates",
+              {
+                "#bigint": "0"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "#meta": {
+        "index": 1
+      },
+      "cells": {
+        "#map": [
+          [
+            {
+              "#bigint": "0"
+            },
+            {
+              "count": {
+                "#bigint": "2"
+              },
+              "labels": {
+                "#set": [
+                  "blue",
+                  "hot"
+                ]
+              },
+              "weights": {
+                "#map": [
+                  [
+                    "seen",
+                    {
+                      "#bigint": "2"
+                    }
+                  ],
+                  [
+                    "updates",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "#bigint": "1"
+            },
+            {
+              "count": {
+                "#bigint": "0"
+              },
+              "labels": {
+                "#set": [
+                  "fresh"
+                ]
+              },
+              "weights": {
+                "#map": [
+                  [
+                    "seen",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "updates",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "action_taken": "update",
+      "parameters": {
+        "index": {
+          "#bigint": "0"
+        },
+        "delta": {
+          "#bigint": "2"
+        },
+        "labels": {
+          "#set": [
+            "blue",
+            "hot"
+          ]
+        },
+        "weights": {
+          "#map": [
+            [
+              "seen",
+              {
+                "#bigint": "2"
+              }
+            ],
+            [
+              "updates",
+              {
+                "#bigint": "1"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "#meta": {
+        "index": 2
+      },
+      "cells": {
+        "#map": [
+          [
+            {
+              "#bigint": "0"
+            },
+            {
+              "count": {
+                "#bigint": "2"
+              },
+              "labels": {
+                "#set": [
+                  "blue",
+                  "hot"
+                ]
+              },
+              "weights": {
+                "#map": [
+                  [
+                    "seen",
+                    {
+                      "#bigint": "2"
+                    }
+                  ],
+                  [
+                    "updates",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          ],
+          [
+            {
+              "#bigint": "1"
+            },
+            {
+              "count": {
+                "#bigint": "3"
+              },
+              "labels": {
+                "#set": [
+                  "blue",
+                  "hot"
+                ]
+              },
+              "weights": {
+                "#map": [
+                  [
+                    "seen",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "updates",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "action_taken": "update",
+      "parameters": {
+        "index": {
+          "#bigint": "1"
+        },
+        "delta": {
+          "#bigint": "3"
+        },
+        "labels": {
+          "#set": [
+            "blue",
+            "hot"
+          ]
+        },
+        "weights": {
+          "#map": [
+            [
+              "seen",
+              {
+                "#bigint": "3"
+              }
+            ],
+            [
+              "updates",
+              {
+                "#bigint": "1"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

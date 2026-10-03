@@ -7,15 +7,16 @@
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
-> Status: **version-1 contract with four implemented target slices;
-> remaining profiles and common conformance work are specified below**
+> Status: **version-1 contract with six implemented target profiles and shared
+> executable conformance vectors; broader qualification remains separate**
 >
 > The synchronous `mirrorecma-v1` reference target, the additive
-> `mirrorecma-async-v1` target, and the `mirrorcpp-v1` and `mirrorrust-v1`
-> static targets are implemented. The async target underlies the locally accepted suite-bundle and
+> `mirrorecma-async-v1` target, and the `mirrorcpp-v1`, `mirrorrust-v1`, and
+> `mirrorlean-v1` static targets are implemented. The async target underlies the
+> locally accepted suite-bundle and
 > Gate `evaluateSuite` application path; that acceptance is not a package
-> publication or every-client support claim. The
-> `mirrorlean-v1` profile remains specified for subsequent implementation.
+> publication or every-client support claim. The Lean target uses its additive
+> required-verification registry and the existing replay dispatcher.
 > The shared orchestration implementation is tracked separately
 > in the [client guide](client-implementation-guide.md#13-shared-sandbox-orchestration-design-profile)
 > and the companion acceptance ledger; implementing an emitter alone does not
@@ -31,15 +32,20 @@
 
 Mirrors currently implements the canonical lock, semantic digest, normalized
 contract handoff, ownership manifests, and the `mirrorecma-v1`,
-`mirrorecma-async-v1`, `mirrorcpp-v1`, and `mirrorrust-v1` emitters. MirrorECMA
-and MirrorCPP implement exact-digest adapter selection and exercise their generated Counter
-bindings over local stdio and allowlisted mTLS server mode.
+`mirrorecma-async-v1`, `mirrorcpp-v1`, `mirrorrust-v1`, and `mirrorlean-v1`
+emitters. MirrorECMA and MirrorCPP implement exact-digest adapter selection and
+exercise their generated Counter bindings over local stdio and allowlisted
+mTLS server mode.
 
-The common portable-profile check, cross-language recording vectors,
-`mirrorlean-v1`, and its negotiated client registry remain implementation work.
-The Rust emitter has native codec/lifecycle and negotiated stdio Counter gates;
-Rust mTLS acceptance is not established by those gates. The C++ emitter has
-direct executable coverage for the portable type baseline, but that is not yet the proposed shared vector suite.
+The common portable-profile judgments are implemented in
+[`Core.ModelInterface.Conformance`](../Core/ModelInterface/Conformance.lean),
+with shared codec, projection and recording vectors across six profiles.
+The [Lean target](model-interface-compiler/lean-target.md) and MirrorLean's
+required-only compiled registry are implemented. Rust and Lean each pass a
+bounded generated-Counter matrix with four offline rows and five fresh remote
+mTLS rows, with source roots hidden during replay. The
+[interop guide](../tools/interop/INTEROP.md) defines the gate scope; these results
+do not extend the legacy all-transport matrix or requalify the recorded M5 candidate.
 The compiler also implements proposal-only `scaffold` generation from a bounded
 TLA+ root and strict raw ITF evidence. Its unsealed actions are finite-trace
 observations, not a closed action universe, and the proposal is not a sealed
@@ -47,13 +53,17 @@ companion contract or an input accepted by target generation.
 An optional compiler-owned trace-projection plan can convert bounded integer-key
 function fields into a portable sequence-of-records comparison view before
 scaffold synthesis. Raw evidence must still exactly match the current source.
-The implemented commands operate on one evidence document or trace per
-invocation. Reviewed proposal sealing, multi-evidence synthesis, corpus-level
-projection manifests, and an implementation-side Gate adapter kit remain
-follow-up work; none is implied by the current scaffold or emitter status.
-Consequently, this document remains the normative target for the remaining
-work; four implemented outputs are not evidence that every specified profile
-conforms.
+The additive [reviewed workflow](model-interface-compiler/reviewed-corpora.md)
+accepts repeated evidence, explicit review and immutable seal publication,
+workflow-bearing v2 locks, and content-addressed projected corpora. Ordinary
+single-input scaffolds and v1 locks retain their existing format. The
+[M6 execution record](../Plans/m6-reviewed-scaffolds-and-corpora.md) separates
+compiler/source checks from the public local/Gate integration gate.
+Implementation-specific adapter logic still has to be written against the
+generated port.
+The implemented target and vector gates do not
+establish package publication, full framework qualification or every orchestration
+profile in this specification.
 
 ## 1. Purpose
 
@@ -1018,7 +1028,7 @@ Version-1 profile identifiers are:
 | MirrorCPP | `mirrorcpp-v1` | Implemented static C++23 profile. |
 | MirrorCPP | `mirrorcpp-v2` | Additive typed integer/string map source profile; local native recorded-replay acceptance, fresh qualification open. |
 | MirrorRust | `mirrorrust-v1` | Implemented static Rust profile; [native contract](model-interface-compiler/rust-target.md). |
-| MirrorLean | `mirrorlean-v1` | Planned static profile. |
+| MirrorLean | `mirrorlean-v1` | Implemented static Lean 4 profile with required compiled verification; [native contract](model-interface-compiler/lean-target.md). |
 
 The synchronous profiles target `mirrors.state-computer/v1`. The additive
 `mirrorecma-async-v1` profile targets
@@ -1246,6 +1256,28 @@ transport trust and authorization.
 
 Every profile MUST run the same language-neutral fixture families.
 
+The implemented entry point is
+[`tools/model-interface-conformance/check.py`](../tools/model-interface-conformance/check.py).
+It generates fresh bindings, compiles native consumers, compares the shared
+fixtures and emits a receipt containing fixture/generated/adapter hashes and the
+selected target set. A subset run is recorded as a subset.
+
+The October 3 source run checks 23 type, 54 value, 15 equivalence and 12 path
+fixtures plus four resource-bound checks in the Core gate. Native consumers pass
+99 cases for synchronous TypeScript, 99 for async TypeScript, and 96 each for
+C++ v1, C++ v2, Rust and Lean. C++ v2 was exercised in a supplemental focused
+run against the same fixtures. Their 15 common recordings have SHA-256
+`04d988e70d9af06d10af5f6e2dc8371d396377af188870f8ffe953f161e64cce`.
+The recordings include 16 actual SDK `report_state` payloads. Their canonical
+JSONL bytes have SHA-256
+`503df8c3f7f15417f788d1cde8e669bf8e5b40319b899b770b7a55aad9fa4272`;
+missing frames, wrong envelopes, duplicate keys and noncanonical bytes fail the
+verifier even when the recorded application events match.
+Missing, extra and mistyped native observations are three compile-rejection
+fixtures in Rust and Lean; they are not fabricated runtime results. The
+corresponding dynamic observation cases execute in TypeScript, while raw
+closed-record value negatives execute in all six profiles.
+
 ### 21.1 MITL judgment fixtures
 
 All targets consume shared fixtures that exercise the abstract language rather
@@ -1255,6 +1287,8 @@ than target source text:
 test/fixtures/model-interface/language/mitl-types.jsonl
 test/fixtures/model-interface/language/mitl-values.jsonl
 test/fixtures/model-interface/language/mitl-equivalence.jsonl
+test/fixtures/model-interface/language/mitl-paths.jsonl
+test/fixtures/model-interface/language/native-encoding.jsonl
 test/fixtures/model-interface/language/counter-binding-events.jsonl
 ```
 
@@ -1342,17 +1376,20 @@ v ≃τ w                         type-indexed equivalence
 τ ⊢ π : υ                      path result typing
 ```
 
-The native helpers `wellFormedType`, `modelValueHasType`,
-`modelValueEquivalent`, and `pathResultType` decide these judgments within
-the specified bounds. Their accepted results must correspond to derivations;
-the helpers' return carriers do not replace the definitions of the judgments.
+The pure helpers in `Core.ModelInterface.Conformance` are `typeWellFormed`,
+`valueWellTyped`, `equivalent`, and `pathType`. `portableType` adds the common
+version-1 type-profile restriction; `evaluatePath` checks dynamic projection
+against the statically determined result type. These procedures decide the
+judgments within the specified bounds. Their accepted results must correspond
+to derivations; the helpers' return carriers do not replace the definitions of
+the judgments.
 
 Statics and equivalence are defined once in the pure compiler module; target
 emitters do not redefine them. Generated target codecs are interpretations of
 those judgments and are checked by the common vectors.
 
-Once the second target exists, Mirrors should expose one target dispatch
-interface while retaining target-specific implementations:
+Mirrors exposes one target dispatch interface while retaining target-specific
+implementations:
 
 ```text
 L; ℓ ⊢ emit ⇓ tree
@@ -1384,25 +1421,30 @@ the shared interface; target source models remain private implementation.
 ## 23. Implementation sequence
 
 1. Freeze the MITL syntax, statics, dynamics, and common judgment vectors.
+   **Implemented in the Core judgment gate and shared fixture corpus.**
 2. Make the existing `Core.ModelInterface.ModelType` validation and path
    checking explicitly correspond to `⊢ τ type` and `τ ⊢ π : τ'`.
+   **Implemented by `Core.ModelInterface.Conformance`.**
 3. Add executable value-typing, `≃τ`, and codec-law fixtures without replacing
-   the existing proved Mirrors `Value` equality.
+   the existing proved Mirrors `Value` equality. **Implemented; type-indexed
+   equivalence validates both values before using `Core.valEq`.**
 4. Extract language-neutral emitter validation only where the current
    TypeScript implementation and the C++ implementation demonstrate actual
    duplication.
 5. Implement `mirrorcpp-v1` from the existing Counter lock. **Done.**
 6. Add a fallible negotiated-runner hook without breaking existing
-   `StateComputer` callers. **Done in MirrorCPP.**
+   `StateComputer` callers. **Implemented in MirrorCPP, MirrorRust and MirrorLean.**
 7. Require C++ and TypeScript to pass identical judgment, recording, and real
-   Counter acceptance tests. **Real Counter acceptance is implemented; common
-   judgment/recording vectors remain.**
+   Counter acceptance tests. **Implemented, including the six-profile shared
+   vector gate.**
 8. Implement `mirrorrust-v1` and `mirrorlean-v1` from the same lock and vectors.
-   **Rust emission and native execution gates implemented; Lean and shared
-   recording vectors remain.**
+   **Both emitters, native execution gates and shared recording vectors are
+   implemented.**
 9. Add all generated targets to `model_interface_gen check` and the top-level
-   interop matrix. **Compiler checks include TypeScript, C++, and Rust; full Rust interop
-   matrix acceptance and Lean remain.**
+   interop matrix. **Compiler checks include all six target profiles; Rust and
+   Lean have bounded source-hidden offline/mTLS generated-Counter acceptance.
+   The legacy all-transport matrix and framework qualification retain their
+   separate scope; see the [interop guide](../tools/interop/INTEROP.md).**
 
 ## 24. Acceptance criteria
 

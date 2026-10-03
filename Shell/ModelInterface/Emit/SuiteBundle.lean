@@ -72,6 +72,8 @@ private def renderCompanion (lock : LockedModelInterface) : EmitResult String :=
     "  schema: \"mirrors.suite-model/v1\",\n" ++
     "  nativeRepresentation: \"mirrors.node-native/v1\",\n" ++
     s!"  semanticDigest: {Shared.quote lock.semanticDigest},\n" ++
+    (if lock.provenance.workflow.isSome then
+      s!"  provenanceDigest: {Shared.quote lock.provenanceDigest},\n" else "") ++
     s!"  provenance: {Codec.ModelInterfaceJson.canonicalString (sourceProvenance lock)},\n" ++
     "  targetProfile: \"mirrorecma-async-v1\",\n" ++
     "  stateComputerContractVersion: \"mirrors.async-state-computer/v1\",\n" ++

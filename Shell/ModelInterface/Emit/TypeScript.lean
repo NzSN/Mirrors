@@ -182,7 +182,7 @@ private partial def renderTsType (profile : String) : ModelType → EmitResult S
         let payload ← renderTsType profile c.payload
         pure ("{ readonly tag: " ++ tsString c.tag ++
           "; readonly value: " ++ payload ++ " }")
-      pure (String.intercalate " | " rendered)
+      pure (if rendered.isEmpty then "never" else String.intercalate " | " rendered)
   | .opaqueItf description =>
       fail "MIC-E-TYPE-001"
         s!"{profile} cannot emit opaque ITF type: {description}"
@@ -342,7 +342,10 @@ private def runtimeSupport : String := lines [
   "    case \"str\": if (value.tag === \"str\") return value.val; break;",
   "    case \"null\": if (value.tag === \"null\") return null; break;",
   "    case \"set\":",
-  "      if (value.tag === \"set\") return value.val.map((item, i) => decodeNative(item, shape.element, path + \"[\" + i + \"]\"));",
+  "      if (value.tag === \"set\") {",
+  "        assertUniqueValues(value.val, path);",
+  "        return value.val.map((item, i) => decodeNative(item, shape.element, path + \"[\" + i + \"]\"));",
+  "      }",
   "      break;",
   "    case \"seq\":",
   "      if (value.tag === \"seq\") return value.val.map((item, i) => decodeNative(item, shape.element, path + \"[\" + i + \"]\"));",
@@ -363,10 +366,13 @@ private def runtimeSupport : String := lines [
   "      }",
   "      break;",
   "    case \"map\":",
-  "      if (value.tag === \"map\") return value.val.map(([key, item], i) => [",
-  "        decodeNative(key, shape.key, path + \"[\" + i + \"].key\"),",
-  "        decodeNative(item, shape.value, path + \"[\" + i + \"].value\"),",
-  "      ] as const);",
+  "      if (value.tag === \"map\") {",
+  "        assertUniqueValues(value.val.map(([key]) => key), path);",
+  "        return value.val.map(([key, item], i) => [",
+  "          decodeNative(key, shape.key, path + \"[\" + i + \"].key\"),",
+  "          decodeNative(item, shape.value, path + \"[\" + i + \"].value\"),",
+  "        ] as const);",
+  "      }",
   "      break;",
   "    case \"variant\":",
   "      if (value.tag === \"variant\") {",

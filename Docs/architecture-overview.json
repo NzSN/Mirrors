@@ -2,352 +2,1408 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "Mirrors — Verified Lean 4 Mirror Architecture",
+    "title": "Mirrors — Runtime, Compiler and Qualification Architecture",
+    "description": "Source architecture: client and application boundaries, conformance runtime, model-interface compilation, and distribution with retained evidence. Selected pure laws are proved; Shell, Ffi and external behavior remain outside that boundary.",
     "output": "Docs/architecture-overview.html",
     "quality_profile": "showcase",
     "viewBox": [
-      1400,
-      860
+      1600,
+      1440
+    ],
+    "updated": "2026-10-03",
+    "maintenance": "Companion JSON and the HTML embedded mirrors-architecture-data must match. The HTML renders the embedded data before initializing its retained Archify viewer; no external generator or fetch is required.",
+    "links": [
+      {
+        "label": "Architecture overview",
+        "href": "architecture-overview.md"
+      },
+      {
+        "label": "Module details and proof scope",
+        "href": "architecture-details.md"
+      },
+      {
+        "label": "Framework ownership",
+        "href": "framework-map.md"
+      },
+      {
+        "label": "Diagram source JSON",
+        "href": "architecture-overview.json"
+      }
     ],
     "views": [
       {
         "id": "wire-path",
-        "label": "Client wire path",
+        "label": "Conformance runtime",
         "focus": [
           "clients",
           "transports",
           "session",
           "core",
-          "codec"
+          "codec",
+          "interfaces",
+          "jobs",
+          "adapter",
+          "apalache"
         ],
-        "note": "One JSONL session: transport lines through the thin driver into the proven state machine."
+        "note": "JSONL dispatch coordinates replay, negotiation and oracle operations. Selected replay/admission paths use the pure protocol step; async jobs use their own checked transitions."
+      },
+      {
+        "id": "compiler",
+        "label": "Model-interface compilation",
+        "focus": [
+          "inputs",
+          "frontend",
+          "resolver",
+          "generated",
+          "clients"
+        ],
+        "note": "Captured TLA+ sources, a reviewed contract and ITF type evidence produce a semantic lock and generated bindings. The working tree provides four language families and five base execution targets: TypeScript sync/async, C++, Rust and Lean. The compiler also has the mirrorcpp-v2 profile. Node suite publication uses asynchronous TypeScript."
+      },
+      {
+        "id": "application",
+        "label": "Application ownership",
+        "focus": [
+          "generated",
+          "clients",
+          "application",
+          "gate",
+          "transports",
+          "session"
+        ],
+        "note": "The SDK owns negotiation and replay. The application supplies adapters and observations. Optional MirrorGate owns restricted execution and cleanup; it is a separate connection from the Mirrors protocol."
       },
       {
         "id": "verified-core",
-        "label": "The proven core",
+        "label": "Pure laws and proof boundary",
         "focus": [
+          "frontend",
+          "resolver",
           "core",
-          "codec",
-          "tla"
+          "codec"
         ],
-        "note": "Pure transition and codec laws are machine-checked; the session machine refines the TLA+ model."
+        "note": "Selected pure transitions, equality/diff/trace laws, policy and codecs have machine-checked properties. Protocol refinement is to a Lean-encoded tag relation; it does not prove arbitrary Shell, OS or Apalache execution."
       },
       {
         "id": "effect-boundary",
-        "label": "Trusted effect boundary",
+        "label": "Runtime effects and shared resources",
         "focus": [
-          "transports",
           "cli",
+          "transports",
+          "session",
+          "interfaces",
           "jobs",
+          "adapter",
+          "capture",
           "ffi",
           "registry",
-          "apalache",
-          "consul"
+          "consul",
+          "apalache"
         ],
-        "note": "The TCB: thin, audited IO and C shims — trusted, not proved."
+        "note": "Connection workers share a job store and interface service. Connection capacity, live-job permits and descriptor-resolution limits are distinct. Capture and delivery preserve bounded wire results and explicit path scope."
+      },
+      {
+        "id": "qualification",
+        "label": "Distribution and evidence",
+        "focus": [
+          "catalog",
+          "distribution",
+          "qualification",
+          "evidence",
+          "clients"
+        ],
+        "note": "Selected identities feed immutable snapshots, verified caches and installation. Registered commands retain evidence that an independent offline verifier checks against a selected scope; this diagram grants no acceptance status."
       }
-    ]
+    ],
+    "source_base_revision": "6abd893",
+    "source_state": "Working-tree implementation, including the generated Lean target"
   },
   "components": [
     {
-      "id": "ffi",
-      "type": "security",
-      "label": "Ffi shims (C)",
-      "sublabel": "OpenSSL TLS 1.3 · sockets · signals",
+      "id": "inputs",
+      "type": "external",
+      "label": "Reviewed model inputs",
+      "sublabel": "TLA+ + contract + ITF evidence",
       "pos": [
-        280,
-        110
+        60,
+        100
       ],
       "size": [
-        160,
-        62
+        260,
+        100
       ],
-      "tag": "TCB · reviewed"
+      "context": "Model author / evaluator",
+      "tag": "Model semantics and type evidence",
+      "sources": [
+        "model-interface-compiler/design.md"
+      ]
     },
     {
-      "id": "tla",
-      "type": "external",
-      "label": "MirrorProtocol.tla",
-      "sublabel": "model-level spec @3496251",
+      "id": "frontend",
+      "type": "frontend",
+      "label": "TLA+ frontend",
+      "sublabel": "Core.Tla + Shell.Tla",
       "pos": [
-        760,
-        110
+        390,
+        100
       ],
       "size": [
-        180,
-        62
+        250,
+        100
+      ],
+      "context": "Compiler frontend",
+      "tag": "Pure analysis / source IO seam",
+      "sources": [
+        "../Core/Tla/Elaboration.lean",
+        "../Shell/Tla/Frontend.lean"
+      ]
+    },
+    {
+      "id": "resolver",
+      "type": "frontend",
+      "label": "Interface resolution",
+      "sublabel": "Core.ModelInterface + compiler shell",
+      "pos": [
+        720,
+        100
+      ],
+      "size": [
+        280,
+        100
+      ],
+      "context": "Compiler pipeline",
+      "tag": "Pure resolution / publication effects",
+      "sources": [
+        "../Core/ModelInterface/Resolve.lean",
+        "../Shell/ModelInterface/Compiler.lean"
+      ]
+    },
+    {
+      "id": "generated",
+      "type": "database",
+      "label": "Semantic lock and generated artifacts",
+      "sublabel": "TS sync / async · C++ · Rust · Lean bindings",
+      "pos": [
+        1080,
+        100
+      ],
+      "size": [
+        460,
+        100
+      ],
+      "context": "Compiler outputs: four language families / five base execution targets; mirrorcpp-v2 is an additional C++ profile",
+      "tag": "Node suite bundle + public worker interface",
+      "sources": [
+        "generated-model-interface-spec.md",
+        "model-interface-compiler/suite-bundles.md",
+        "../Shell/ModelInterface/Emit/Lean.lean"
       ]
     },
     {
       "id": "clients",
       "type": "external",
-      "label": "Clients",
-      "sublabel": "ECMA · C++ · Rust · Haskell",
+      "label": "Client SDK / evaluator",
+      "sublabel": "MirrorECMA · C++ · Rust · Lean · Haskell",
       "pos": [
-        40,
-        330
+        60,
+        425
       ],
       "size": [
-        170,
-        66
+        270,
+        100
       ],
-      "tag": "wire protocol"
+      "context": "External client and replay owner",
+      "tag": "Protocol support varies by client",
+      "sources": [
+        "framework-map.md",
+        "client-test-coverage.md"
+      ]
+    },
+    {
+      "id": "application",
+      "type": "external",
+      "label": "Application + adapter",
+      "sublabel": "Domain operations + state observations",
+      "pos": [
+        60,
+        625
+      ],
+      "size": [
+        270,
+        100
+      ],
+      "context": "Application team",
+      "tag": "Local binding",
+      "sources": [
+        "application-integration-guide.md"
+      ]
+    },
+    {
+      "id": "gate",
+      "type": "external",
+      "label": "Optional MirrorGate",
+      "sublabel": "Restricted worker + physical cleanup",
+      "pos": [
+        60,
+        825
+      ],
+      "size": [
+        270,
+        100
+      ],
+      "context": "Optional application isolation",
+      "tag": "Separate provider channel",
+      "sources": [
+        "../../MirrorGate/docs/architecture.md"
+      ]
     },
     {
       "id": "transports",
       "type": "backend",
       "label": "Shell.Transport",
-      "sublabel": "Stdio · Tcp · Tls (mTLS)",
+      "sublabel": "stdio / TCP / mTLS JSONL",
       "pos": [
-        280,
-        330
+        390,
+        425
       ],
       "size": [
-        160,
-        66
+        270,
+        100
+      ],
+      "context": "Runtime IO boundary",
+      "tag": "Connection worker pool",
+      "sources": [
+        "../Shell/Transport/Tcp.lean",
+        "../Shell/Transport/Tls.lean"
       ]
     },
     {
       "id": "session",
       "type": "backend",
       "label": "Shell.Mirror.Session",
-      "sublabel": "thin fold over Core.step",
+      "sublabel": "Dispatch, replay and comparison",
       "pos": [
-        510,
-        330
+        740,
+        425
       ],
       "size": [
-        180,
-        66
+        300,
+        100
+      ],
+      "context": "Runtime orchestration",
+      "tag": "Selected Core transitions",
+      "sources": [
+        "../Shell/Mirror/Session.lean"
       ]
     },
     {
       "id": "core",
-      "type": "backend",
-      "label": "Core.* (pure)",
-      "sublabel": "Protocol · ModelInterface · values",
+      "type": "frontend",
+      "label": "Core domain models",
+      "sublabel": "Value · Trace · Diff · Protocol · Jobs",
       "pos": [
-        760,
-        330
+        1120,
+        425
       ],
       "size": [
-        190,
-        70
+        420,
+        100
       ],
-      "tag": "§6.1–6.5 proven"
+      "context": "Pure logic; selected properties proved",
+      "tag": "Resources · interfaces · selected proved laws",
+      "sources": [
+        "../Core/Protocol.lean",
+        "async-resource-lean-proofs.md"
+      ]
+    },
+    {
+      "id": "codec",
+      "type": "frontend",
+      "label": "Codec representations",
+      "sublabel": "JSONL · ITF · RPC · descriptor/catalog",
+      "pos": [
+        1120,
+        580
+      ],
+      "size": [
+        420,
+        100
+      ],
+      "context": "Pure representation boundary",
+      "tag": "Pure codecs and selected round-trip laws",
+      "sources": [
+        "../Codec/Json.lean",
+        "../Codec/ModelInterfaceDistributionJson.lean"
+      ]
     },
     {
       "id": "cli",
       "type": "backend",
       "label": "Main + Shell.Cli",
-      "sublabel": "--version · stdio · servers · validate",
+      "sublabel": "Servers, validate, capture and clients",
       "pos": [
-        280,
-        540
+        390,
+        580
       ],
       "size": [
-        160,
-        62
+        270,
+        100
+      ],
+      "context": "CLI entry and process wiring",
+      "tag": "Connection / service setup",
+      "sources": [
+        "../Main.lean",
+        "../Shell/Cli.lean"
+      ]
+    },
+    {
+      "id": "interfaces",
+      "type": "backend",
+      "label": "Interface runtime service",
+      "sublabel": "Negotiation · authorization · cache",
+      "pos": [
+        740,
+        580
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "context": "Admission and descriptor runtime",
+      "tag": "Shared service / bounded resolution",
+      "sources": [
+        "../Shell/ModelInterface/Runtime.lean",
+        "../Shell/ModelInterface/Auth.lean"
+      ]
+    },
+    {
+      "id": "ffi",
+      "type": "security",
+      "label": "Ffi native shims",
+      "sublabel": "OpenSSL · sockets · signals",
+      "pos": [
+        390,
+        735
+      ],
+      "size": [
+        270,
+        100
+      ],
+      "context": "Native boundary",
+      "tag": "Outside Lean proof boundary",
+      "sources": [
+        "../Ffi/README.md",
+        "tls-ffi-review.md"
       ]
     },
     {
       "id": "jobs",
       "type": "backend",
-      "label": "Shell.Jobs",
-      "sublabel": "async job store · Task workers",
+      "label": "Shared async job store",
+      "sublabel": "Submit / query / await / cancel",
       "pos": [
-        510,
-        540
+        740,
+        735
       ],
       "size": [
-        160,
-        62
+        300,
+        100
+      ],
+      "context": "Runtime scheduling and ownership",
+      "tag": "Live-job permits + checked transitions",
+      "sources": [
+        "../Shell/Jobs/Store.lean",
+        "async-resource-lean-proofs.md"
       ]
     },
     {
-      "id": "codec",
+      "id": "adapter",
       "type": "backend",
-      "label": "Codec.* (pure)",
-      "sublabel": "Wire · RPC · model-interface codecs",
+      "label": "Shell.Apalache",
+      "sublabel": "CLI + explorer RPC",
       "pos": [
-        990,
-        330
+        1120,
+        735
       ],
       "size": [
         190,
-        70
+        100
       ],
-      "tag": "§6.6 round-trips"
+      "context": "External oracle adapter",
+      "tag": "Owned processes / files",
+      "sources": [
+        "../Shell/Apalache/Runner.lean",
+        "../Shell/Apalache/Explorer.lean"
+      ]
     },
     {
       "id": "apalache",
       "type": "external",
-      "label": "apalache-mc",
-      "sublabel": "JVM oracle · CLI + explorer RPC",
+      "label": "Apalache + JVM",
+      "sublabel": "Model-checker backend",
       "pos": [
-        990,
-        540
+        1360,
+        735
       ],
       "size": [
-        160,
-        70
+        180,
+        100
       ],
-      "tag": "trusted"
+      "context": "External model execution",
+      "tag": "Outside Lean proofs",
+      "sources": [
+        "interface-reference.md"
+      ]
     },
     {
       "id": "registry",
       "type": "backend",
       "label": "Shell.Registry",
-      "sublabel": "register · heartbeat · discover",
+      "sublabel": "Optional service discovery",
       "pos": [
-        760,
-        720
+        390,
+        925
       ],
       "size": [
-        170,
-        62
+        270,
+        100
+      ],
+      "context": "Optional runtime service",
+      "tag": "Register / heartbeat / discover",
+      "sources": [
+        "../Shell/Registry.lean"
       ]
     },
     {
       "id": "consul",
       "type": "external",
       "label": "Consul",
-      "sublabel": "service discovery (plain HTTP)",
+      "sublabel": "Optional discovery via HTTP",
       "pos": [
-        990,
-        720
+        60,
+        925
       ],
       "size": [
-        150,
-        62
+        270,
+        100
+      ],
+      "context": "Optional discovery backend",
+      "tag": "External service",
+      "sources": [
+        "../Shell/Registry.lean"
+      ]
+    },
+    {
+      "id": "capture",
+      "type": "backend",
+      "label": "Trace capture and delivery",
+      "sublabel": "Shell.TraceCapture + TraceDelivery + SharedTrace",
+      "pos": [
+        740,
+        925
+      ],
+      "size": [
+        800,
+        100
+      ],
+      "context": "Client capture / server delivery seam",
+      "tag": "Bounded inline results or explicitly shared durable paths",
+      "sources": [
+        "../Shell/TraceCapture.lean",
+        "../Shell/Transport/TraceDelivery.lean",
+        "../Shell/SharedTrace.lean"
+      ]
+    },
+    {
+      "id": "catalog",
+      "type": "database",
+      "label": "Catalog + selected identities",
+      "sublabel": "Components · dependency locks · scope",
+      "pos": [
+        60,
+        1180
+      ],
+      "size": [
+        270,
+        100
+      ],
+      "context": "Distribution inputs",
+      "tag": "Exact sources and runtime pins",
+      "sources": [
+        "framework-catalog-contract.md"
+      ]
+    },
+    {
+      "id": "distribution",
+      "type": "backend",
+      "label": "Snapshot → cache → install",
+      "sublabel": "Immutable sources / verified artifacts",
+      "pos": [
+        400,
+        1180
+      ],
+      "size": [
+        325,
+        100
+      ],
+      "context": "Distribution tooling",
+      "tag": "tools/distribution",
+      "sources": [
+        "../tools/distribution/snapshot_sources.py",
+        "../tools/distribution/install.py"
+      ]
+    },
+    {
+      "id": "qualification",
+      "type": "backend",
+      "label": "Registered qualification commands",
+      "sublabel": "Installed consumer / interop / remote checks",
+      "pos": [
+        800,
+        1180
+      ],
+      "size": [
+        350,
+        100
+      ],
+      "context": "Qualification execution",
+      "tag": "tools/evidence + tools/interop",
+      "sources": [
+        "qualification-harness-design.md",
+        "../tools/evidence/command_registry.py"
+      ]
+    },
+    {
+      "id": "evidence",
+      "type": "database",
+      "label": "Retained bundles → verification",
+      "sublabel": "Independent offline identity + scope checks",
+      "pos": [
+        1220,
+        1180
+      ],
+      "size": [
+        320,
+        100
+      ],
+      "context": "Evidence custody and verification",
+      "tag": "No acceptance claim from topology alone",
+      "sources": [
+        "durable-evidence-design.md",
+        "../tools/evidence/verify.py"
       ]
     }
   ],
   "boundaries": [
     {
       "kind": "region",
-      "label": "verified pure core — no IO, machine-checked",
+      "label": "1  MODEL-INTERFACE COMPILATION — analysis, resolution and generated publication",
+      "pos": [
+        30,
+        35
+      ],
+      "size": [
+        1540,
+        240
+      ],
+      "wraps": [
+        "inputs",
+        "frontend",
+        "resolver",
+        "generated"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "2  CONFORMANCE RUNTIME + APPLICATION INTEGRATION",
+      "pos": [
+        30,
+        330
+      ],
+      "size": [
+        1540,
+        735
+      ],
+      "wraps": [
+        "clients",
+        "application",
+        "gate",
+        "transports",
+        "session",
+        "core",
+        "codec",
+        "cli",
+        "interfaces",
+        "ffi",
+        "jobs",
+        "adapter",
+        "apalache",
+        "registry",
+        "consul",
+        "capture"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Pure domain + codecs — selected proved laws",
+      "pos": [
+        1095,
+        385
+      ],
+      "size": [
+        470,
+        320
+      ],
       "wraps": [
         "core",
         "codec"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "3  DISTRIBUTION + QUALIFICATION — separate tooling and retained evidence",
+      "pos": [
+        30,
+        1105
+      ],
+      "size": [
+        1540,
+        225
+      ],
+      "wraps": [
+        "catalog",
+        "distribution",
+        "qualification",
+        "evidence"
       ]
     }
   ],
   "connections": [
     {
+      "from": "inputs",
+      "to": "frontend",
+      "label": "capture",
+      "points": [
+        [
+          320,
+          150
+        ],
+        [
+          390,
+          150
+        ]
+      ],
+      "labelAt": [
+        355,
+        135
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "frontend",
+      "to": "resolver",
+      "label": "analyze",
+      "points": [
+        [
+          640,
+          150
+        ],
+        [
+          720,
+          150
+        ]
+      ],
+      "labelAt": [
+        680,
+        135
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "resolver",
+      "to": "generated",
+      "label": "emit",
+      "points": [
+        [
+          1000,
+          150
+        ],
+        [
+          1080,
+          150
+        ]
+      ],
+      "labelAt": [
+        1040,
+        135
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "inputs",
+      "to": "resolver",
+      "label": "contract + evidence",
+      "points": [
+        [
+          190,
+          200
+        ],
+        [
+          190,
+          245
+        ],
+        [
+          860,
+          245
+        ],
+        [
+          860,
+          200
+        ]
+      ],
+      "labelAt": [
+        540,
+        239
+      ],
+      "variant": "dashed"
+    },
+    {
+      "from": "generated",
+      "to": "clients",
+      "label": "selected bindings / suite",
+      "points": [
+        [
+          1310,
+          200
+        ],
+        [
+          1310,
+          305
+        ],
+        [
+          195,
+          305
+        ],
+        [
+          195,
+          425
+        ]
+      ],
+      "labelAt": [
+        500,
+        299
+      ],
+      "variant": "dashed"
+    },
+    {
       "from": "clients",
       "to": "transports",
-      "label": "JSONL wire",
+      "label": "JSONL",
+      "points": [
+        [
+          330,
+          475
+        ],
+        [
+          390,
+          475
+        ]
+      ],
+      "labelAt": [
+        360,
+        458
+      ],
       "variant": "emphasis"
     },
     {
       "from": "transports",
       "to": "session",
-      "label": "lines"
+      "label": "lines",
+      "points": [
+        [
+          660,
+          475
+        ],
+        [
+          740,
+          475
+        ]
+      ],
+      "labelAt": [
+        700,
+        458
+      ],
+      "variant": "default"
     },
     {
       "from": "session",
       "to": "core",
-      "label": "Core.step",
-      "variant": "emphasis",
+      "label": "replay",
+      "points": [
+        [
+          1040,
+          475
+        ],
+        [
+          1120,
+          475
+        ]
+      ],
       "labelAt": [
-        725,
-        314
-      ]
+        1080,
+        458
+      ],
+      "variant": "emphasis"
     },
     {
-      "from": "core",
-      "to": "tla",
-      "label": "refines (theorem)",
-      "variant": "dashed",
-      "fromSide": "top",
-      "toSide": "bottom",
+      "from": "session",
+      "to": "codec",
+      "label": "decode / encode",
+      "points": [
+        [
+          1040,
+          500
+        ],
+        [
+          1070,
+          500
+        ],
+        [
+          1070,
+          630
+        ],
+        [
+          1120,
+          630
+        ]
+      ],
       "labelAt": [
-        905,
-        246
-      ]
+        1035,
+        558
+      ],
+      "variant": "default"
     },
     {
-      "from": "codec",
+      "from": "session",
+      "to": "interfaces",
+      "label": "negotiate",
+      "points": [
+        [
+          890,
+          525
+        ],
+        [
+          890,
+          580
+        ]
+      ],
+      "labelAt": [
+        945,
+        556
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "interfaces",
       "to": "core",
-      "label": "tag bridge (proven)",
-      "variant": "dashed",
+      "label": "resolve / preflight",
+      "points": [
+        [
+          1040,
+          600
+        ],
+        [
+          1088,
+          600
+        ],
+        [
+          1088,
+          510
+        ],
+        [
+          1120,
+          510
+        ]
+      ],
       "labelAt": [
-        970,
-        314
-      ]
+        1180,
+        558
+      ],
+      "variant": "dashed"
     },
     {
-      "from": "session",
-      "to": "apalache",
-      "label": "validate · explore"
-    },
-    {
-      "from": "session",
-      "to": "jobs",
-      "label": "async submit",
-      "fromSide": "bottom",
-      "toSide": "top"
-    },
-    {
-      "from": "jobs",
-      "to": "apalache",
-      "label": "worker spawn",
-      "variant": "dashed",
+      "from": "clients",
+      "to": "application",
+      "label": "operations / observations",
+      "points": [
+        [
+          150,
+          525
+        ],
+        [
+          150,
+          625
+        ]
+      ],
       "labelAt": [
-        830,
-        620
-      ]
+        205,
+        577
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "clients",
+      "to": "gate",
+      "label": "optional provider",
+      "points": [
+        [
+          90,
+          525
+        ],
+        [
+          40,
+          525
+        ],
+        [
+          40,
+          875
+        ],
+        [
+          60,
+          875
+        ]
+      ],
+      "labelAt": [
+        110,
+        781
+      ],
+      "variant": "dashed"
+    },
+    {
+      "from": "gate",
+      "to": "application",
+      "label": "worker binding",
+      "points": [
+        [
+          195,
+          825
+        ],
+        [
+          195,
+          725
+        ]
+      ],
+      "labelAt": [
+        247,
+        756
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "cli",
+      "to": "transports",
+      "label": "start",
+      "points": [
+        [
+          525,
+          580
+        ],
+        [
+          525,
+          525
+        ]
+      ],
+      "labelAt": [
+        570,
+        556
+      ],
+      "variant": "default"
     },
     {
       "from": "transports",
       "to": "ffi",
-      "label": "extern calls",
-      "variant": "security",
-      "fromSide": "top",
-      "toSide": "bottom"
+      "label": "native IO",
+      "points": [
+        [
+          660,
+          500
+        ],
+        [
+          682,
+          500
+        ],
+        [
+          682,
+          785
+        ],
+        [
+          660,
+          785
+        ]
+      ],
+      "labelAt": [
+        630,
+        710
+      ],
+      "variant": "security"
+    },
+    {
+      "from": "session",
+      "to": "jobs",
+      "label": "async dispatch",
+      "points": [
+        [
+          740,
+          510
+        ],
+        [
+          715,
+          510
+        ],
+        [
+          715,
+          755
+        ],
+        [
+          740,
+          755
+        ]
+      ],
+      "labelAt": [
+        790,
+        710
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "session",
+      "to": "adapter",
+      "label": "sync oracle calls",
+      "points": [
+        [
+          1040,
+          510
+        ],
+        [
+          1055,
+          510
+        ],
+        [
+          1055,
+          760
+        ],
+        [
+          1120,
+          760
+        ]
+      ],
+      "labelAt": [
+        1067,
+        718
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "jobs",
+      "to": "adapter",
+      "label": "job body",
+      "points": [
+        [
+          1040,
+          800
+        ],
+        [
+          1120,
+          800
+        ]
+      ],
+      "labelAt": [
+        1080,
+        821
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "adapter",
+      "to": "apalache",
+      "label": "CLI / RPC",
+      "points": [
+        [
+          1310,
+          785
+        ],
+        [
+          1360,
+          785
+        ]
+      ],
+      "labelAt": [
+        1335,
+        716
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "adapter",
+      "to": "capture",
+      "label": "ITF results",
+      "points": [
+        [
+          1215,
+          835
+        ],
+        [
+          1215,
+          925
+        ]
+      ],
+      "labelAt": [
+        1270,
+        884
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "capture",
+      "to": "session",
+      "label": "delivery plan",
+      "points": [
+        [
+          1040,
+          950
+        ],
+        [
+          1080,
+          950
+        ],
+        [
+          1080,
+          860
+        ],
+        [
+          700,
+          860
+        ],
+        [
+          700,
+          510
+        ],
+        [
+          740,
+          510
+        ]
+      ],
+      "labelAt": [
+        886,
+        884
+      ],
+      "variant": "dashed"
+    },
+    {
+      "from": "cli",
+      "to": "capture",
+      "label": "capture command",
+      "points": [
+        [
+          525,
+          680
+        ],
+        [
+          525,
+          705
+        ],
+        [
+          695,
+          705
+        ],
+        [
+          695,
+          975
+        ],
+        [
+          740,
+          975
+        ]
+      ],
+      "labelAt": [
+        720,
+        908
+      ],
+      "variant": "dashed"
     },
     {
       "from": "cli",
       "to": "registry",
-      "label": "--registry"
+      "label": "optional",
+      "points": [
+        [
+          390,
+          650
+        ],
+        [
+          365,
+          650
+        ],
+        [
+          365,
+          975
+        ],
+        [
+          390,
+          975
+        ]
+      ],
+      "labelAt": [
+        415,
+        897
+      ],
+      "variant": "dashed"
     },
     {
       "from": "registry",
       "to": "consul",
-      "label": "HTTP"
+      "label": "HTTP",
+      "points": [
+        [
+          390,
+          975
+        ],
+        [
+          330,
+          975
+        ]
+      ],
+      "labelAt": [
+        360,
+        958
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "catalog",
+      "to": "distribution",
+      "label": "freeze",
+      "points": [
+        [
+          330,
+          1230
+        ],
+        [
+          400,
+          1230
+        ]
+      ],
+      "labelAt": [
+        365,
+        1213
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "distribution",
+      "to": "qualification",
+      "label": "installed artifacts",
+      "points": [
+        [
+          725,
+          1230
+        ],
+        [
+          800,
+          1230
+        ]
+      ],
+      "labelAt": [
+        762,
+        1299
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "qualification",
+      "to": "evidence",
+      "label": "retain / verify",
+      "points": [
+        [
+          1150,
+          1230
+        ],
+        [
+          1220,
+          1230
+        ]
+      ],
+      "labelAt": [
+        1185,
+        1165
+      ],
+      "variant": "default"
+    },
+    {
+      "from": "qualification",
+      "to": "clients",
+      "label": "exercise selected paths",
+      "points": [
+        [
+          975,
+          1180
+        ],
+        [
+          975,
+          1083
+        ],
+        [
+          20,
+          1083
+        ],
+        [
+          20,
+          400
+        ],
+        [
+          195,
+          400
+        ],
+        [
+          195,
+          425
+        ]
+      ],
+      "labelAt": [
+        695,
+        1077
+      ],
+      "variant": "dashed"
     }
   ],
   "cards": [
     {
       "dot": "emerald",
-      "title": "What is proved (zero sorry)",
+      "title": "Selected pure proofs",
       "items": [
-        "§6.1 diff engine sound/complete, caps, paths",
-        "§6.2 trace pipeline losslessness",
-        "§6.3 session machine refines TLA+ model",
-        "§6.4 jobs: terminal-once, outcome congruence",
-        "§6.5 resources; §6.6 codec round-trips"
+        "Core/ and Codec/: domain logic and representation laws.",
+        "Replay/admission uses the pure protocol step selectively.",
+        "Jobs and async resources have separate checked transitions.",
+        "The protocol theorem targets a Lean tag-level relation."
       ]
     },
     {
       "dot": "amber",
-      "title": "What is trusted (TCB)",
+      "title": "Effect and observation boundary",
       "items": [
-        "OpenSSL + socket and TLS C shims",
-        "Shell drivers, interface compiler/cache, jobs",
-        "apalache/JVM, OS — explicitly inventoried",
-        "TLS shim passed adversarial review (t25/t26)"
+        "Shell orchestration, native Ffi and external tools require tests.",
+        "Apalache/JVM executes model checking outside Lean proofs.",
+        "Application adapters own the accuracy of reported state.",
+        "Generated bindings do not prove application conformance."
       ]
     },
     {
       "dot": "cyan",
-      "title": "Wire contract",
+      "title": "Topology and qualification",
       "items": [
-        "JSON-lines, byte-for-byte vs Haskell",
-        "70 golden fixtures byte-identical",
-        "diff engine 500/500 ordered parity",
-        "Interop: ECMA, C++, Rust, Haskell clients"
+        "Logical responsibilities can run across different machines.",
+        "Local application replay does not require MirrorGate.",
+        "Recorded WSL2 ↔ mTLS ↔ Windows is one deployment example.",
+        "Acceptance belongs to exact identities, scope and retained evidence."
       ]
     }
   ]

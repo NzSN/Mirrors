@@ -1,6 +1,11 @@
 # Mirrors framework map and support
 
-Current source inventory reviewed 2026-09-18. Start application onboarding with
+The [current architecture overview](architecture-overview.md),
+[interactive diagram](architecture-overview.html), and
+[module map](architecture-details.md) were reviewed against Mirrors `6abd893`
+on 2026-10-03. The cross-repository support inventory below retains its
+2026-09-18 review scope; generated catalog rows describe their recorded selection.
+Start application onboarding with
 [the integration guide](application-integration-guide.md); use the
 [remote server guide](remote-server-guide.md) for deployment and connections.
 Source implementation, local acceptance, package publication and machine
@@ -11,20 +16,21 @@ revisions, even when a repository advances.
 
 | Repository | Responsibility | Entry point |
 | --- | --- | --- |
-| Mirrors | Lean checker, TLA+ frontend, model-interface compiler, wire contracts and server resource proofs | [README](../README.md), [documentation index](README.md) |
+| Mirrors | Lean checker, bounded TLA+ frontend, model-interface compiler, selected pure proofs, catalog/distribution and qualification tooling | [README](../README.md), [documentation index](README.md) |
 | MirrorECMA | TypeScript client, generated application suites, project CLI, negotiated replay and reports | [README](../../MirrorECMA/README.md), [suite API](../../MirrorECMA/docs/application-suites.md) |
 | MirrorCPP | C++23 client and compiled generated bindings | [README](../../MirrorCPP/README.md) |
 | MirrorRust | Rust client, async jobs, strict compiled verification and deferred binding registry | [README](../../MirrorRust/README.md) |
-| MirrorLean | Lean client, recursive model sources, synchronous replay and typed server async jobs | [README](../../MirrorLean/README.md) |
+| MirrorLean | Lean client, recursive model sources, synchronous replay, required compiled verification and typed server async jobs | [README](../../MirrorLean/README.md), [generated target](model-interface-compiler/lean-target.md) |
 | MirrorGate | Shared controller, policy, isolation, snapshots, worker lifecycle, native SDKs and optional evaluator integrations | [README](../../MirrorGate/README.md), [SDK/facade selection](../../MirrorGate/docs/client-language-support.md) |
 | MirrorRegistry | Optional Consul-compatible discovery library/CLI; not a checker or worker supervisor | [README](../../MirrorRegistry/README.md) |
 | MirrorExamples | Counter/RBT examples and retained model/trace corpora | [README](../../MirrorExamples/README.md) |
-| ModelMirros | Haskell ModelMirrors reference implementation and historical protocol/deployment material | [README](../../ModelMirros/README.md) |
+| ModelMirrors | Haskell reference implementation and historical protocol/deployment material | [README](../../ModelMirrors/README.md) |
 
 The executable name `ModelMirrors` can identify different implementations.
 Record its implementation, source revision and binary hash rather than inferring
-features from the executable name or product version alone. The local Haskell
-checkout is named `ModelMirros`; its Cabal package/executable is `ModelMirrors`.
+features from the executable name or product version alone. The current local
+Haskell checkout, Cabal package and executable are named `ModelMirrors`;
+older records use the checkout name `ModelMirros`.
 
 ## Generated capability status
 
@@ -33,9 +39,9 @@ Catalog `mirrors.framework.candidate-2026-09-22` visibility: **private**. Dirty 
 
 | Component | Revision | Dirty |
 | --- | --- | --- |
-| `mirrorecma` | `3e7277b1a2812ef03e73a991c14bf9e5d8510c54` | true |
+| `mirrorecma` | `c33d73922dd71f89462e2b071d0d8021b4911d6b` | true |
 | `mirrorgate` | `455e196c73332a1b0d85b1d822dfc4aa3542bbd9` | true |
-| `mirrors` | `ea8091c0c723f3f561044a5c1efb91d12e7aaf5f` | true |
+| `mirrors` | `6abd893daedc86846c4c30beffc9ba8f1cf4d5eb` | true |
 
 | Capability | Owner | Declared | Source | Tested | Local | Installed | Hosted CI | Published |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -66,13 +72,20 @@ Catalog `mirrors.framework.candidate-2026-09-22` visibility: **private**. Dirty 
 | --- | --- | --- | --- |
 | TypeScript | stdio, TCP, mTLS; network async jobs through `Connection` | Generated synchronous/async bindings; compiled verification and dynamic descriptors; default `defineSuite` / `runSuite` and project CLI | Gate-owned `evaluateSuite`; native Node control-v1/v2 SDK |
 | C++ | stdio, TCP, mTLS; submit/query/await/cancel | Generated `mirrorcpp-v1` bindings and exact compiled verification | Native C++ control-v1/v2 SDK and reusable source integration; acceptance fixture, not a published generic suite API |
-| Rust | stdio, TCP, mTLS; correlated async jobs | Exact registry, reviewed metadata, required/preferred compiled verification and fallible replay; Mirrors now has a source-level `mirrorrust-v1` emitter, while generic installed-client acceptance remains unestablished | Native Rust control-v1/worker-v1 SDK and optional evaluator; Counter is a handwritten fixture, distinct from generic generated-application acceptance; current facade starts the model peer over local stdio |
-| Lean | stdio, TCP, separate native mTLS package; typed `Connection` async jobs | Base protocol; negotiated registry and generated Lean target remain planned | No native Lean Gate facade |
+| Rust | stdio, TCP, mTLS; correlated async jobs | Generated `mirrorrust-v1` bindings, exact registry, required/preferred compiled verification and fallible replay; shared vectors and bounded source-hidden generated-Counter offline/mTLS acceptance | Native Rust control-v1/worker-v1 SDK and optional evaluator; Counter is a handwritten fixture, distinct from generic generated-application acceptance; current facade starts the model peer over local stdio |
+| Lean | stdio, TCP, separate native mTLS package; typed `Connection` async jobs | Generated `mirrorlean-v1` bindings and additive required-only compiled registry sharing legacy replay; shared vectors and bounded source-hidden generated-Counter offline/mTLS acceptance | No native Lean Gate facade |
 
 Stdio does not accept server-job messages. Server async jobs, async application
 operations, and Gate operations have different owners and cancellation contracts.
 See the [client contract](client-implementation-guide.md) before advertising a
 profile; base interoperability does not imply generated bindings or a suite API.
+
+The [shared conformance gate](../tools/model-interface-conformance/check.py)
+executes six generated profiles. The [interop guide](../tools/interop/INTEROP.md)
+defines the bounded Rust/Lean generated-Counter matrix separately from the legacy
+all-transport matrix and recorded framework M5 qualification. Source, native and
+transport acceptance do not update catalog release claims automatically; the
+generated catalog table above retains its own selected identity.
 
 Gate currently isolates **Node and Rust workers** on **Linux/Bubblewrap**.
 Evaluator language and worker language are independent: C++ and Rust evaluators

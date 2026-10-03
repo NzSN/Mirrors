@@ -334,25 +334,25 @@ private def runtimeSupport : String := lines [
   "inline mirrorcpp::Value read_path(const mirrorcpp::State& root,",
   "    const std::vector<PathSegment>& path, std::string_view label) {",
   "  mirrorcpp::Value value(mirrorcpp::Value::Record{root});",
+  "  // Own a selected child before replacing its containing value.",
   "  for (const auto& segment : path) {",
   "    if (segment.kind == PathSegment::Kind::field) {",
   "      if (!value.is<mirrorcpp::Value::Record>()) throw binding_error(\"input_shape_mismatch\", std::string(label) + \": record expected\");",
   "      const auto& fields = value.get<mirrorcpp::Value::Record>().fields;",
   "      const auto found = fields.find(segment.text);",
   "      if (found == fields.end()) throw binding_error(\"input_shape_mismatch\", std::string(label) + \": missing field \" + segment.text);",
-  "      value = found->second;",
+  "      value = mirrorcpp::Value(found->second);",
   "    } else if (segment.kind == PathSegment::Kind::index) {",
   "      const std::vector<mirrorcpp::Value>* values = nullptr;",
   "      if (value.is<mirrorcpp::Value::Seq>()) values = &value.get<mirrorcpp::Value::Seq>().elems;",
   "      if (value.is<mirrorcpp::Value::Tuple>()) values = &value.get<mirrorcpp::Value::Tuple>().elems;",
   "      if (values == nullptr || segment.position >= values->size()) throw binding_error(\"input_shape_mismatch\", std::string(label) + \": index out of range\");",
-  "      value = (*values)[segment.position];",
+  "      value = mirrorcpp::Value((*values)[segment.position]);",
   "    } else {",
   "      if (!value.is<mirrorcpp::Value::Variant>() || value.get<mirrorcpp::Value::Variant>().tag != segment.text) throw binding_error(\"input_shape_mismatch\", std::string(label) + \": variant mismatch\");",
-  "      value = *value.get<mirrorcpp::Value::Variant>().value;",
+  "      value = mirrorcpp::Value(*value.get<mirrorcpp::Value::Variant>().value);",
   "    }",
   "  }",
-  "  if (path.empty()) throw binding_error(\"input_shape_mismatch\", std::string(label) + \": empty path cannot select the state record\");",
   "  return value;",
   "}",
   "",
@@ -379,6 +379,7 @@ private def runtimeSupport : String := lines [
   "  T value;",
   "};",
   "template <typename... Cases> struct MirrorVariant { std::variant<Cases...> value; };",
+  "template <> struct MirrorVariant<> { MirrorVariant() = delete; };",
   "",
   "inline std::string child_path(std::string_view path, std::string_view child) {",
   "  return std::string(path) + \".\" + std::string(child);",
@@ -500,6 +501,10 @@ private def runtimeSupport : String := lines [
   "  static mirrorcpp::Value encode(const MirrorVariant<Cases...>& value, std::string_view path) {",
   "    return std::visit([&](const auto& item) { using Case = std::decay_t<decltype(item)>; return mirrorcpp::Value(mirrorcpp::Value::Variant{std::string(Case::name.view()), mirrorcpp::Box<mirrorcpp::Value>(encode_native<typename Case::value_type>(item.value, child_path(path, Case::name.view())))}); }, value.value);",
   "  }",
+  "};",
+  "template <> struct NativeCodec<MirrorVariant<>> {",
+  "  static MirrorVariant<> decode(const mirrorcpp::Value&, std::string_view path) { throw binding_error(\"input_shape_mismatch\", std::string(path) + \": empty variant has no inhabitants\"); }",
+  "  static mirrorcpp::Value encode(const MirrorVariant<>&, std::string_view path) { throw binding_error(\"observation_shape_mismatch\", std::string(path) + \": empty variant has no inhabitants\"); }",
   "};"
 ]
 
@@ -536,13 +541,6 @@ private def runtimeSupportV2 : EmitResult String := do
         "    } else {"] ++ "      if (!value.is<mirrorcpp::Value::Variant>()")
   let support ← replaceRuntimeSection support "template <typename T> struct MirrorMap { std::vector<std::pair<std::string, T>> entries; };"
       "template <typename T, typename K = std::string> struct MirrorMap { std::vector<std::pair<K, T>> entries; };"
-  -- Copy selected children before replacing their owning boxed parent.
-  let support ← replaceRuntimeSection support "value = found->second;"
-    "value = mirrorcpp::Value(found->second);"
-  let support ← replaceRuntimeSection support "value = (*values)[segment.position];"
-    "value = mirrorcpp::Value((*values)[segment.position]);"
-  let support ← replaceRuntimeSection support "value = *value.get<mirrorcpp::Value::Variant>().value;"
-    "value = mirrorcpp::Value(*value.get<mirrorcpp::Value::Variant>().value);"
   let start := "template <typename T> struct NativeCodec<MirrorMap<T>> {"
   let finish := "template <typename... Cases> struct NativeCodec<MirrorVariant<Cases...>> {"
   let parts := support.splitOn start

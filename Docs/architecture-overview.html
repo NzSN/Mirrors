@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="generator" content="archify 2.14.0">
-  <title>Mirrors — Verified Lean 4 Mirror Architecture Diagram</title>
+  <meta name="generator" content="Mirrors architecture data renderer; viewer based on archify 2.14.0">
+  <title>Mirrors — Runtime, Compiler and Qualification Architecture Diagram</title>
   <script>
     // Resolve the theme before first paint so light-preference users don't
     // see a dark flash. The toolbar script below re-applies with UI state.
@@ -4730,6 +4730,11 @@
       .source-evidence-beacon,
       svg [data-node-id], svg [data-edge-from], svg [data-detail], svg [data-detail-anchor], svg [data-legend-hit], svg { transition: none !important; }
     }
+
+    .architecture-context { margin: 0.8rem 0; color: var(--text-muted); font-size: 0.8rem; line-height: 1.7; }
+    .architecture-links { margin-top: 0.7rem; font-size: 0.8rem; line-height: 1.8; }
+    .architecture-links a, .architecture-context a { color: var(--frontend-stroke); text-underline-offset: 0.2em; }
+    .architecture-links a:focus-visible, .architecture-context a:focus-visible { outline: 2px solid var(--frontend-stroke); outline-offset: 3px; }
   </style>
 </head>
 <body>
@@ -4836,11 +4841,15 @@
     <div class="header">
       <div class="header-row">
         <div class="pulse-dot"></div>
-        <h1>Mirrors — Verified Lean 4 Mirror Architecture</h1>
+        <h1>Mirrors — Runtime, Compiler and Qualification Architecture</h1>
       </div>
+      <p class="architecture-context">Working-tree architecture reviewed against base <code>6abd893</code> · 2026-10-03; includes generated Lean bindings. Logical boundaries do not fix the deployment topology.</p>
+      <nav class="architecture-links" aria-label="Architecture documentation"><a href="architecture-overview.md">Architecture overview</a> · <a href="architecture-details.md">Module details and proof scope</a> · <a href="framework-map.md">Framework ownership</a> · <a href="architecture-overview.json">Diagram source JSON</a></nav>
+      <noscript><p>Interactive controls require JavaScript. Read the linked Markdown overview and details for the complete architecture and proof scope.</p></noscript>
     </div>
 
-    <script id="archify-guided-views-data" type="application/json">[{"id":"wire-path","label":"Client wire path","focus":["clients","transports","session","core","codec"],"note":"One JSONL session: transport lines through the thin driver into the proven state machine."},{"id":"verified-core","label":"The proven core","focus":["core","codec","tla"],"note":"Pure transition and codec laws are machine-checked; the session machine refines the TLA+ model."},{"id":"effect-boundary","label":"Trusted effect boundary","focus":["transports","cli","jobs","ffi","registry","apalache","consul"],"note":"The TCB: thin, audited IO and C shims — trusted, not proved."}]</script>
+<script id="mirrors-architecture-data" type="application/json">{"schema_version":1,"diagram_type":"architecture","meta":{"title":"Mirrors — Runtime, Compiler and Qualification Architecture","description":"Source architecture: client and application boundaries, conformance runtime, model-interface compilation, and distribution with retained evidence. Selected pure laws are proved; Shell, Ffi and external behavior remain outside that boundary.","output":"Docs/architecture-overview.html","quality_profile":"showcase","viewBox":[1600,1440],"updated":"2026-10-03","maintenance":"Companion JSON and the HTML embedded mirrors-architecture-data must match. The HTML renders the embedded data before initializing its retained Archify viewer; no external generator or fetch is required.","links":[{"label":"Architecture overview","href":"architecture-overview.md"},{"label":"Module details and proof scope","href":"architecture-details.md"},{"label":"Framework ownership","href":"framework-map.md"},{"label":"Diagram source JSON","href":"architecture-overview.json"}],"views":[{"id":"wire-path","label":"Conformance runtime","focus":["clients","transports","session","core","codec","interfaces","jobs","adapter","apalache"],"note":"JSONL dispatch coordinates replay, negotiation and oracle operations. Selected replay/admission paths use the pure protocol step; async jobs use their own checked transitions."},{"id":"compiler","label":"Model-interface compilation","focus":["inputs","frontend","resolver","generated","clients"],"note":"Captured TLA+ sources, a reviewed contract and ITF type evidence produce a semantic lock and generated bindings. The working tree provides four language families and five base execution targets: TypeScript sync/async, C++, Rust and Lean. The compiler also has the mirrorcpp-v2 profile. Node suite publication uses asynchronous TypeScript."},{"id":"application","label":"Application ownership","focus":["generated","clients","application","gate","transports","session"],"note":"The SDK owns negotiation and replay. The application supplies adapters and observations. Optional MirrorGate owns restricted execution and cleanup; it is a separate connection from the Mirrors protocol."},{"id":"verified-core","label":"Pure laws and proof boundary","focus":["frontend","resolver","core","codec"],"note":"Selected pure transitions, equality/diff/trace laws, policy and codecs have machine-checked properties. Protocol refinement is to a Lean-encoded tag relation; it does not prove arbitrary Shell, OS or Apalache execution."},{"id":"effect-boundary","label":"Runtime effects and shared resources","focus":["cli","transports","session","interfaces","jobs","adapter","capture","ffi","registry","consul","apalache"],"note":"Connection workers share a job store and interface service. Connection capacity, live-job permits and descriptor-resolution limits are distinct. Capture and delivery preserve bounded wire results and explicit path scope."},{"id":"qualification","label":"Distribution and evidence","focus":["catalog","distribution","qualification","evidence","clients"],"note":"Selected identities feed immutable snapshots, verified caches and installation. Registered commands retain evidence that an independent offline verifier checks against a selected scope; this diagram grants no acceptance status."}],"source_base_revision":"6abd893","source_state":"Working-tree implementation, including the generated Lean target"},"components":[{"id":"inputs","type":"external","label":"Reviewed model inputs","sublabel":"TLA+ + contract + ITF evidence","pos":[60,100],"size":[260,100],"context":"Model author / evaluator","tag":"Model semantics and type evidence","sources":["model-interface-compiler/design.md"]},{"id":"frontend","type":"frontend","label":"TLA+ frontend","sublabel":"Core.Tla + Shell.Tla","pos":[390,100],"size":[250,100],"context":"Compiler frontend","tag":"Pure analysis / source IO seam","sources":["../Core/Tla/Elaboration.lean","../Shell/Tla/Frontend.lean"]},{"id":"resolver","type":"frontend","label":"Interface resolution","sublabel":"Core.ModelInterface + compiler shell","pos":[720,100],"size":[280,100],"context":"Compiler pipeline","tag":"Pure resolution / publication effects","sources":["../Core/ModelInterface/Resolve.lean","../Shell/ModelInterface/Compiler.lean"]},{"id":"generated","type":"database","label":"Semantic lock and generated artifacts","sublabel":"TS sync / async · C++ · Rust · Lean bindings","pos":[1080,100],"size":[460,100],"context":"Compiler outputs: four language families / five base execution targets; mirrorcpp-v2 is an additional C++ profile","tag":"Node suite bundle + public worker interface","sources":["generated-model-interface-spec.md","model-interface-compiler/suite-bundles.md","../Shell/ModelInterface/Emit/Lean.lean"]},{"id":"clients","type":"external","label":"Client SDK / evaluator","sublabel":"MirrorECMA · C++ · Rust · Lean · Haskell","pos":[60,425],"size":[270,100],"context":"External client and replay owner","tag":"Protocol support varies by client","sources":["framework-map.md","client-test-coverage.md"]},{"id":"application","type":"external","label":"Application + adapter","sublabel":"Domain operations + state observations","pos":[60,625],"size":[270,100],"context":"Application team","tag":"Local binding","sources":["application-integration-guide.md"]},{"id":"gate","type":"external","label":"Optional MirrorGate","sublabel":"Restricted worker + physical cleanup","pos":[60,825],"size":[270,100],"context":"Optional application isolation","tag":"Separate provider channel","sources":["../../MirrorGate/docs/architecture.md"]},{"id":"transports","type":"backend","label":"Shell.Transport","sublabel":"stdio / TCP / mTLS JSONL","pos":[390,425],"size":[270,100],"context":"Runtime IO boundary","tag":"Connection worker pool","sources":["../Shell/Transport/Tcp.lean","../Shell/Transport/Tls.lean"]},{"id":"session","type":"backend","label":"Shell.Mirror.Session","sublabel":"Dispatch, replay and comparison","pos":[740,425],"size":[300,100],"context":"Runtime orchestration","tag":"Selected Core transitions","sources":["../Shell/Mirror/Session.lean"]},{"id":"core","type":"frontend","label":"Core domain models","sublabel":"Value · Trace · Diff · Protocol · Jobs","pos":[1120,425],"size":[420,100],"context":"Pure logic; selected properties proved","tag":"Resources · interfaces · selected proved laws","sources":["../Core/Protocol.lean","async-resource-lean-proofs.md"]},{"id":"codec","type":"frontend","label":"Codec representations","sublabel":"JSONL · ITF · RPC · descriptor/catalog","pos":[1120,580],"size":[420,100],"context":"Pure representation boundary","tag":"Pure codecs and selected round-trip laws","sources":["../Codec/Json.lean","../Codec/ModelInterfaceDistributionJson.lean"]},{"id":"cli","type":"backend","label":"Main + Shell.Cli","sublabel":"Servers, validate, capture and clients","pos":[390,580],"size":[270,100],"context":"CLI entry and process wiring","tag":"Connection / service setup","sources":["../Main.lean","../Shell/Cli.lean"]},{"id":"interfaces","type":"backend","label":"Interface runtime service","sublabel":"Negotiation · authorization · cache","pos":[740,580],"size":[300,100],"context":"Admission and descriptor runtime","tag":"Shared service / bounded resolution","sources":["../Shell/ModelInterface/Runtime.lean","../Shell/ModelInterface/Auth.lean"]},{"id":"ffi","type":"security","label":"Ffi native shims","sublabel":"OpenSSL · sockets · signals","pos":[390,735],"size":[270,100],"context":"Native boundary","tag":"Outside Lean proof boundary","sources":["../Ffi/README.md","tls-ffi-review.md"]},{"id":"jobs","type":"backend","label":"Shared async job store","sublabel":"Submit / query / await / cancel","pos":[740,735],"size":[300,100],"context":"Runtime scheduling and ownership","tag":"Live-job permits + checked transitions","sources":["../Shell/Jobs/Store.lean","async-resource-lean-proofs.md"]},{"id":"adapter","type":"backend","label":"Shell.Apalache","sublabel":"CLI + explorer RPC","pos":[1120,735],"size":[190,100],"context":"External oracle adapter","tag":"Owned processes / files","sources":["../Shell/Apalache/Runner.lean","../Shell/Apalache/Explorer.lean"]},{"id":"apalache","type":"external","label":"Apalache + JVM","sublabel":"Model-checker backend","pos":[1360,735],"size":[180,100],"context":"External model execution","tag":"Outside Lean proofs","sources":["interface-reference.md"]},{"id":"registry","type":"backend","label":"Shell.Registry","sublabel":"Optional service discovery","pos":[390,925],"size":[270,100],"context":"Optional runtime service","tag":"Register / heartbeat / discover","sources":["../Shell/Registry.lean"]},{"id":"consul","type":"external","label":"Consul","sublabel":"Optional discovery via HTTP","pos":[60,925],"size":[270,100],"context":"Optional discovery backend","tag":"External service","sources":["../Shell/Registry.lean"]},{"id":"capture","type":"backend","label":"Trace capture and delivery","sublabel":"Shell.TraceCapture + TraceDelivery + SharedTrace","pos":[740,925],"size":[800,100],"context":"Client capture / server delivery seam","tag":"Bounded inline results or explicitly shared durable paths","sources":["../Shell/TraceCapture.lean","../Shell/Transport/TraceDelivery.lean","../Shell/SharedTrace.lean"]},{"id":"catalog","type":"database","label":"Catalog + selected identities","sublabel":"Components · dependency locks · scope","pos":[60,1180],"size":[270,100],"context":"Distribution inputs","tag":"Exact sources and runtime pins","sources":["framework-catalog-contract.md"]},{"id":"distribution","type":"backend","label":"Snapshot → cache → install","sublabel":"Immutable sources / verified artifacts","pos":[400,1180],"size":[325,100],"context":"Distribution tooling","tag":"tools/distribution","sources":["../tools/distribution/snapshot_sources.py","../tools/distribution/install.py"]},{"id":"qualification","type":"backend","label":"Registered qualification commands","sublabel":"Installed consumer / interop / remote checks","pos":[800,1180],"size":[350,100],"context":"Qualification execution","tag":"tools/evidence + tools/interop","sources":["qualification-harness-design.md","../tools/evidence/command_registry.py"]},{"id":"evidence","type":"database","label":"Retained bundles → verification","sublabel":"Independent offline identity + scope checks","pos":[1220,1180],"size":[320,100],"context":"Evidence custody and verification","tag":"No acceptance claim from topology alone","sources":["durable-evidence-design.md","../tools/evidence/verify.py"]}],"boundaries":[{"kind":"region","label":"1  MODEL-INTERFACE COMPILATION — analysis, resolution and generated publication","pos":[30,35],"size":[1540,240],"wraps":["inputs","frontend","resolver","generated"]},{"kind":"region","label":"2  CONFORMANCE RUNTIME + APPLICATION INTEGRATION","pos":[30,330],"size":[1540,735],"wraps":["clients","application","gate","transports","session","core","codec","cli","interfaces","ffi","jobs","adapter","apalache","registry","consul","capture"]},{"kind":"region","label":"Pure domain + codecs — selected proved laws","pos":[1095,385],"size":[470,320],"wraps":["core","codec"]},{"kind":"region","label":"3  DISTRIBUTION + QUALIFICATION — separate tooling and retained evidence","pos":[30,1105],"size":[1540,225],"wraps":["catalog","distribution","qualification","evidence"]}],"connections":[{"from":"inputs","to":"frontend","label":"capture","points":[[320,150],[390,150]],"labelAt":[355,135],"variant":"default"},{"from":"frontend","to":"resolver","label":"analyze","points":[[640,150],[720,150]],"labelAt":[680,135],"variant":"default"},{"from":"resolver","to":"generated","label":"emit","points":[[1000,150],[1080,150]],"labelAt":[1040,135],"variant":"default"},{"from":"inputs","to":"resolver","label":"contract + evidence","points":[[190,200],[190,245],[860,245],[860,200]],"labelAt":[540,239],"variant":"dashed"},{"from":"generated","to":"clients","label":"selected bindings / suite","points":[[1310,200],[1310,305],[195,305],[195,425]],"labelAt":[500,299],"variant":"dashed"},{"from":"clients","to":"transports","label":"JSONL","points":[[330,475],[390,475]],"labelAt":[360,458],"variant":"emphasis"},{"from":"transports","to":"session","label":"lines","points":[[660,475],[740,475]],"labelAt":[700,458],"variant":"default"},{"from":"session","to":"core","label":"replay","points":[[1040,475],[1120,475]],"labelAt":[1080,458],"variant":"emphasis"},{"from":"session","to":"codec","label":"decode / encode","points":[[1040,500],[1070,500],[1070,630],[1120,630]],"labelAt":[1035,558],"variant":"default"},{"from":"session","to":"interfaces","label":"negotiate","points":[[890,525],[890,580]],"labelAt":[945,556],"variant":"default"},{"from":"interfaces","to":"core","label":"resolve / preflight","points":[[1040,600],[1088,600],[1088,510],[1120,510]],"labelAt":[1180,558],"variant":"dashed"},{"from":"clients","to":"application","label":"operations / observations","points":[[150,525],[150,625]],"labelAt":[205,577],"variant":"default"},{"from":"clients","to":"gate","label":"optional provider","points":[[90,525],[40,525],[40,875],[60,875]],"labelAt":[110,781],"variant":"dashed"},{"from":"gate","to":"application","label":"worker binding","points":[[195,825],[195,725]],"labelAt":[247,756],"variant":"default"},{"from":"cli","to":"transports","label":"start","points":[[525,580],[525,525]],"labelAt":[570,556],"variant":"default"},{"from":"transports","to":"ffi","label":"native IO","points":[[660,500],[682,500],[682,785],[660,785]],"labelAt":[630,710],"variant":"security"},{"from":"session","to":"jobs","label":"async dispatch","points":[[740,510],[715,510],[715,755],[740,755]],"labelAt":[790,710],"variant":"default"},{"from":"session","to":"adapter","label":"sync oracle calls","points":[[1040,510],[1055,510],[1055,760],[1120,760]],"labelAt":[1067,718],"variant":"default"},{"from":"jobs","to":"adapter","label":"job body","points":[[1040,800],[1120,800]],"labelAt":[1080,821],"variant":"default"},{"from":"adapter","to":"apalache","label":"CLI / RPC","points":[[1310,785],[1360,785]],"labelAt":[1335,716],"variant":"default"},{"from":"adapter","to":"capture","label":"ITF results","points":[[1215,835],[1215,925]],"labelAt":[1270,884],"variant":"default"},{"from":"capture","to":"session","label":"delivery plan","points":[[1040,950],[1080,950],[1080,860],[700,860],[700,510],[740,510]],"labelAt":[886,884],"variant":"dashed"},{"from":"cli","to":"capture","label":"capture command","points":[[525,680],[525,705],[695,705],[695,975],[740,975]],"labelAt":[720,908],"variant":"dashed"},{"from":"cli","to":"registry","label":"optional","points":[[390,650],[365,650],[365,975],[390,975]],"labelAt":[415,897],"variant":"dashed"},{"from":"registry","to":"consul","label":"HTTP","points":[[390,975],[330,975]],"labelAt":[360,958],"variant":"default"},{"from":"catalog","to":"distribution","label":"freeze","points":[[330,1230],[400,1230]],"labelAt":[365,1213],"variant":"default"},{"from":"distribution","to":"qualification","label":"installed artifacts","points":[[725,1230],[800,1230]],"labelAt":[762,1299],"variant":"default"},{"from":"qualification","to":"evidence","label":"retain / verify","points":[[1150,1230],[1220,1230]],"labelAt":[1185,1165],"variant":"default"},{"from":"qualification","to":"clients","label":"exercise selected paths","points":[[975,1180],[975,1083],[20,1083],[20,400],[195,400],[195,425]],"labelAt":[695,1077],"variant":"dashed"}],"cards":[{"dot":"emerald","title":"Selected pure proofs","items":["Core/ and Codec/: domain logic and representation laws.","Replay/admission uses the pure protocol step selectively.","Jobs and async resources have separate checked transitions.","The protocol theorem targets a Lean tag-level relation."]},{"dot":"amber","title":"Effect and observation boundary","items":["Shell orchestration, native Ffi and external tools require tests.","Apalache/JVM executes model checking outside Lean proofs.","Application adapters own the accuracy of reported state.","Generated bindings do not prove application conformance."]},{"dot":"cyan","title":"Topology and qualification","items":["Logical responsibilities can run across different machines.","Local application replay does not require MirrorGate.","Recorded WSL2 ↔ mTLS ↔ Windows is one deployment example.","Acceptance belongs to exact identities, scope and retained evidence."]}]}</script>
+    <script id="archify-guided-views-data" type="application/json">[{"id":"wire-path","label":"Conformance runtime","focus":["clients","transports","session","core","codec","interfaces","jobs","adapter","apalache"],"note":"JSONL dispatch coordinates replay, negotiation and oracle operations. Selected replay/admission paths use the pure protocol step; async jobs use their own checked transitions."},{"id":"compiler","label":"Model-interface compilation","focus":["inputs","frontend","resolver","generated","clients"],"note":"Captured TLA+ sources, a reviewed contract and ITF type evidence produce a semantic lock and generated bindings. The working tree provides four language families and five base execution targets: TypeScript sync/async, C++, Rust and Lean. The compiler also has the mirrorcpp-v2 profile. Node suite publication uses asynchronous TypeScript."},{"id":"application","label":"Application ownership","focus":["generated","clients","application","gate","transports","session"],"note":"The SDK owns negotiation and replay. The application supplies adapters and observations. Optional MirrorGate owns restricted execution and cleanup; it is a separate connection from the Mirrors protocol."},{"id":"verified-core","label":"Pure laws and proof boundary","focus":["frontend","resolver","core","codec"],"note":"Selected pure transitions, equality/diff/trace laws, policy and codecs have machine-checked properties. Protocol refinement is to a Lean-encoded tag relation; it does not prove arbitrary Shell, OS or Apalache execution."},{"id":"effect-boundary","label":"Runtime effects and shared resources","focus":["cli","transports","session","interfaces","jobs","adapter","capture","ffi","registry","consul","apalache"],"note":"Connection workers share a job store and interface service. Connection capacity, live-job permits and descriptor-resolution limits are distinct. Capture and delivery preserve bounded wire results and explicit path scope."},{"id":"qualification","label":"Distribution and evidence","focus":["catalog","distribution","qualification","evidence","clients"],"note":"Selected identities feed immutable snapshots, verified caches and installation. Registered commands retain evidence that an independent offline verifier checks against a selected scope; this diagram grants no acceptance status."}]</script>
 
     <div class="guided-views no-print" id="guided-views" hidden aria-label="Guided diagram views">
       <button id="guided-view-prev" type="button" aria-label="Previous guided view" title="Previous guided view ([)">&#8592;</button>
@@ -4883,254 +4892,7 @@
 
     <!-- Main Diagram -->
     <div class="diagram-container" data-detail-level="read">
-      <svg viewBox="0 0 1400 860" role="img" aria-labelledby="archify-diagram-title archify-diagram-description" data-preset="classic" data-quality-profile="showcase">
-        <title id="archify-diagram-title">Mirrors — Verified Lean 4 Mirror Architecture</title>
-        <desc id="archify-diagram-description">A architecture diagram generated by Archify.</desc>
-        <!-- Definitions -->
-        <defs>
-          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-            <polygon points="0 0, 10 3.5, 0 7" class="m-default" />
-          </marker>
-          <marker id="arrowhead-emphasis" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-            <polygon points="0 0, 10 3.5, 0 7" class="m-emphasis" />
-          </marker>
-          <marker id="arrowhead-security" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-            <polygon points="0 0, 10 3.5, 0 7" class="m-security" />
-          </marker>
-          <marker id="arrowhead-dashed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-            <polygon points="0 0, 10 3.5, 0 7" class="m-dashed" />
-          </marker>
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" class="c-grid" stroke-width="0.5"/>
-          </pattern>
-        </defs>
-
-        <!-- Background Grid -->
-        <rect width="100%" height="100%" fill="url(#grid)" />
-
-        <!-- Boundaries (behind everything) -->
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="region" data-composition-frame-id="0" x="730" y="300" width="480" height="120" rx="12" class="c-region" stroke-width="1"/>
-        <text x="738" y="318" class="t-cloud" font-size="9" font-weight="600">verified pure core — no IO, machine-checked</text>
-
-        <!-- Connection paths (before components for correct z-order) -->
-        <path data-edge-from="clients" data-edge-to="transports" data-edge-label="JSONL wire" data-edge-key="0" data-composition-points="210,363;280,363" d="M 210 363 L 280 363" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="transports" data-edge-to="session" data-edge-label="lines" data-edge-key="1" data-composition-points="440,363;510,363" d="M 440 363 L 510 363" class="a-default" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="session" data-edge-to="core" data-edge-label="Core.step" data-edge-key="2" data-composition-points="690,363;714,363;714,381;736,381;736,365;760,365" d="M 690 363 L 706 363 Q 714 363 714 371 L 714 373 Q 714 381 722 381 L 728 381 Q 736 381 736 373 L 736 373 Q 736 365 744 365 L 760 365" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="core" data-edge-to="tla" data-edge-label="refines (theorem)" data-edge-key="3" data-composition-points="855,330;855,306;871,306;871,196;850,196;850,172" d="M 855 330 L 855 314 Q 855 306 863 306 L 863 306 Q 871 306 871 298 L 871 204 Q 871 196 863 196 L 858 196 Q 850 196 850 188 L 850 172" class="a-dashed" stroke-width="1.5" marker-end="url(#arrowhead-dashed)"/>
-        <path data-edge-from="codec" data-edge-to="core" data-edge-label="tag bridge (proven)" data-edge-key="4" data-composition-points="990,365;950,365" d="M 990 365 L 950 365" class="a-dashed" stroke-width="1.5" marker-end="url(#arrowhead-dashed)"/>
-        <path data-edge-from="session" data-edge-to="apalache" data-edge-label="validate · explore" data-edge-key="5" data-composition-points="690,363;714,363;714,575;990,575" d="M 690 363 L 706 363 Q 714 363 714 371 L 714 567 Q 714 575 722 575 L 990 575" class="a-default" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="session" data-edge-to="jobs" data-edge-label="async submit" data-edge-key="6" data-composition-points="600,396;600,420;616,420;616,516;590,516;590,540" d="M 600 396 L 600 412 Q 600 420 608 420 L 608 420 Q 616 420 616 428 L 616 508 Q 616 516 608 516 L 598 516 Q 590 516 590 524 L 590 540" class="a-default" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="jobs" data-edge-to="apalache" data-edge-label="worker spawn" data-edge-key="7" data-composition-points="670,571;694,571;694,591;966,591;966,575;990,575" d="M 670 571 L 686 571 Q 694 571 694 579 L 694 583 Q 694 591 702 591 L 958 591 Q 966 591 966 583 L 966 583 Q 966 575 974 575 L 990 575" class="a-dashed" stroke-width="1.5" marker-end="url(#arrowhead-dashed)"/>
-        <path data-edge-from="transports" data-edge-to="ffi" data-edge-label="extern calls" data-edge-key="8" data-composition-points="360,330;360,172" d="M 360 330 L 360 172" class="a-security" stroke-width="1.5" marker-end="url(#arrowhead-security)"/>
-        <path data-edge-from="cli" data-edge-to="registry" data-edge-label="--registry" data-edge-key="9" data-composition-points="440,571;464,571;464,751;760,751" d="M 440 571 L 456 571 Q 464 571 464 579 L 464 743 Q 464 751 472 751 L 760 751" class="a-default" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="registry" data-edge-to="consul" data-edge-label="HTTP" data-edge-key="10" data-composition-points="930,751;990,751" d="M 930 751 L 990 751" class="a-default" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-
-        <!-- Components -->
-        <g id="node-ffi" data-node-id="ffi" data-node-label="Ffi shims (C)" tabindex="0" role="button" aria-label="Focus Ffi shims (C), OpenSSL TLS 1.3 · sockets · signals, Architecture component" aria-pressed="false" data-node-kind="security" data-node-sublabel="OpenSSL TLS 1.3 · sockets · signals" data-node-tag="TCB · reviewed" data-node-context="Architecture component">
-          <title>Ffi shims (C) · OpenSSL TLS 1.3 · sockets · signals · Architecture component · TCB · reviewed</title>
-          <rect x="280" y="110" width="160" height="62" rx="6" class="c-mask"/>
-          <rect x="280" y="110" width="160" height="62" rx="6" class="c-security" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="security" class="semantic-sigil s-security" transform="translate(286 116) scale(0.6875)">
-            <path d="M8 2.2 13 4v3.5c0 3.1-1.8 5.4-5 6.5-3.2-1.1-5-3.4-5-6.5V4Z"/>
-            <path d="m5.8 8 1.5 1.5 3-3"/>
-          </g>
-          <text data-detail-anchor x="360" y="139" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Ffi shims (C)</text>
-        <text data-detail="context" x="360" y="155" class="t-muted" font-size="7.2" text-anchor="middle">OpenSSL TLS 1.3 · sockets · signals</text>
-        <text data-detail="fine" x="360" y="164" class="t-security" font-size="7" text-anchor="middle">TCB · reviewed</text>
-        </g>
-
-        <g id="node-tla" data-node-id="tla" data-node-label="MirrorProtocol.tla" tabindex="0" role="button" aria-label="Focus MirrorProtocol.tla, model-level spec @3496251, Architecture component" aria-pressed="false" data-node-kind="external" data-node-sublabel="model-level spec @3496251" data-node-context="Architecture component">
-          <title>MirrorProtocol.tla · model-level spec @3496251 · Architecture component</title>
-          <rect x="760" y="110" width="180" height="62" rx="6" class="c-mask"/>
-          <rect x="760" y="110" width="180" height="62" rx="6" class="c-external" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(766 116) scale(0.6875)">
-            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
-            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
-          </g>
-          <text data-detail-anchor x="850" y="139" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">MirrorProtocol.tla</text>
-        <text data-detail="context" x="850" y="155" class="t-muted" font-size="9" text-anchor="middle">model-level spec @3496251</text>
-        </g>
-
-        <g id="node-clients" data-node-id="clients" data-node-label="Clients" tabindex="0" role="button" aria-label="Focus Clients, ECMA · C++ · Rust · Haskell, Architecture component" aria-pressed="false" data-node-kind="external" data-node-sublabel="ECMA · C++ · Rust · Haskell" data-node-tag="wire protocol" data-node-context="Architecture component">
-          <title>Clients · ECMA · C++ · Rust · Haskell · Architecture component · wire protocol</title>
-          <rect x="40" y="330" width="170" height="66" rx="6" class="c-mask"/>
-          <rect x="40" y="330" width="170" height="66" rx="6" class="c-external" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(46 336) scale(0.6875)">
-            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
-            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
-          </g>
-          <text data-detail-anchor x="125" y="361" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Clients</text>
-        <text data-detail="context" x="125" y="377" class="t-muted" font-size="8.1" text-anchor="middle">ECMA · C++ · Rust · Haskell</text>
-        <text data-detail="fine" x="125" y="388" class="t-external" font-size="7" text-anchor="middle">wire protocol</text>
-        </g>
-
-        <g id="node-transports" data-node-id="transports" data-node-label="Shell.Transport" tabindex="0" role="button" aria-label="Focus Shell.Transport, Stdio · Tcp · Tls (mTLS), Architecture component" aria-pressed="false" data-node-kind="backend" data-node-sublabel="Stdio · Tcp · Tls (mTLS)" data-node-context="Architecture component">
-          <title>Shell.Transport · Stdio · Tcp · Tls (mTLS) · Architecture component</title>
-          <rect x="280" y="330" width="160" height="66" rx="6" class="c-mask"/>
-          <rect x="280" y="330" width="160" height="66" rx="6" class="c-backend" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(286 336) scale(0.6875)">
-            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
-          </g>
-          <text data-detail-anchor x="360" y="361" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Shell.Transport</text>
-        <text data-detail="context" x="360" y="377" class="t-muted" font-size="9" text-anchor="middle">Stdio · Tcp · Tls (mTLS)</text>
-        </g>
-
-        <g id="node-session" data-node-id="session" data-node-label="Shell.Mirror.Session" tabindex="0" role="button" aria-label="Focus Shell.Mirror.Session, thin fold over Core.step, Architecture component" aria-pressed="false" data-node-kind="backend" data-node-sublabel="thin fold over Core.step" data-node-context="Architecture component">
-          <title>Shell.Mirror.Session · thin fold over Core.step · Architecture component</title>
-          <rect x="510" y="330" width="180" height="66" rx="6" class="c-mask"/>
-          <rect x="510" y="330" width="180" height="66" rx="6" class="c-backend" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(516 336) scale(0.6875)">
-            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
-          </g>
-          <text data-detail-anchor x="600" y="361" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Shell.Mirror.Session</text>
-        <text data-detail="context" x="600" y="377" class="t-muted" font-size="9" text-anchor="middle">thin fold over Core.step</text>
-        </g>
-
-        <g id="node-core" data-node-id="core" data-node-label="Core.* (pure)" tabindex="0" role="button" aria-label="Focus Core.* (pure), Protocol · ModelInterface · values, verified pure core — no IO, machine-checked" aria-pressed="false" data-node-kind="backend" data-node-sublabel="Protocol · ModelInterface · values" data-node-tag="§6.1–6.5 proven" data-node-context="verified pure core — no IO, machine-checked">
-          <title>Core.* (pure) · Protocol · ModelInterface · values · verified pure core — no IO, machine-checked · §6.1–6.5 proven</title>
-          <rect x="760" y="330" width="190" height="70" rx="6" class="c-mask"/>
-          <rect x="760" y="330" width="190" height="70" rx="6" class="c-backend" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(766 336) scale(0.6875)">
-            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
-          </g>
-          <text data-detail-anchor x="855" y="363" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Core.* (pure)</text>
-        <text data-detail="context" x="855" y="379" class="t-muted" font-size="7.7" text-anchor="middle">Protocol · ModelInterface · values</text>
-        <text data-detail="fine" x="855" y="392" class="t-backend" font-size="7" text-anchor="middle">§6.1–6.5 proven</text>
-        </g>
-
-        <g id="node-cli" data-node-id="cli" data-node-label="Main + Shell.Cli" tabindex="0" role="button" aria-label="Focus Main + Shell.Cli, --version · stdio · servers · validate, Architecture component" aria-pressed="false" data-node-kind="backend" data-node-sublabel="--version · stdio · servers · validate" data-node-context="Architecture component">
-          <title>Main + Shell.Cli · --version · stdio · servers · validate · Architecture component</title>
-          <rect x="280" y="540" width="160" height="62" rx="6" class="c-mask"/>
-          <rect x="280" y="540" width="160" height="62" rx="6" class="c-backend" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(286 546) scale(0.6875)">
-            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
-          </g>
-          <text data-detail-anchor x="360" y="569" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Main + Shell.Cli</text>
-        <text data-detail="context" x="360" y="585" class="t-muted" font-size="6.8" text-anchor="middle">--version · stdio · servers · validate</text>
-        </g>
-
-        <g id="node-jobs" data-node-id="jobs" data-node-label="Shell.Jobs" tabindex="0" role="button" aria-label="Focus Shell.Jobs, async job store · Task workers, Architecture component" aria-pressed="false" data-node-kind="backend" data-node-sublabel="async job store · Task workers" data-node-context="Architecture component">
-          <title>Shell.Jobs · async job store · Task workers · Architecture component</title>
-          <rect x="510" y="540" width="160" height="62" rx="6" class="c-mask"/>
-          <rect x="510" y="540" width="160" height="62" rx="6" class="c-backend" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(516 546) scale(0.6875)">
-            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
-          </g>
-          <text data-detail-anchor x="590" y="569" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Shell.Jobs</text>
-        <text data-detail="context" x="590" y="585" class="t-muted" font-size="8.4" text-anchor="middle">async job store · Task workers</text>
-        </g>
-
-        <g id="node-codec" data-node-id="codec" data-node-label="Codec.* (pure)" tabindex="0" role="button" aria-label="Focus Codec.* (pure), Wire · RPC · model-interface codecs, verified pure core — no IO, machine-checked" aria-pressed="false" data-node-kind="backend" data-node-sublabel="Wire · RPC · model-interface codecs" data-node-tag="§6.6 round-trips" data-node-context="verified pure core — no IO, machine-checked">
-          <title>Codec.* (pure) · Wire · RPC · model-interface codecs · verified pure core — no IO, machine-checked · §6.6 round-trips</title>
-          <rect x="990" y="330" width="190" height="70" rx="6" class="c-mask"/>
-          <rect x="990" y="330" width="190" height="70" rx="6" class="c-backend" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(996 336) scale(0.6875)">
-            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
-          </g>
-          <text data-detail-anchor x="1085" y="363" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Codec.* (pure)</text>
-        <text data-detail="context" x="1085" y="379" class="t-muted" font-size="8.4" text-anchor="middle">Wire · RPC · model-interface codecs</text>
-        <text data-detail="fine" x="1085" y="392" class="t-backend" font-size="7" text-anchor="middle">§6.6 round-trips</text>
-        </g>
-
-        <g id="node-apalache" data-node-id="apalache" data-node-label="apalache-mc" tabindex="0" role="button" aria-label="Focus apalache-mc, JVM oracle · CLI + explorer RPC, Architecture component" aria-pressed="false" data-node-kind="external" data-node-sublabel="JVM oracle · CLI + explorer RPC" data-node-tag="trusted" data-node-context="Architecture component">
-          <title>apalache-mc · JVM oracle · CLI + explorer RPC · Architecture component · trusted</title>
-          <rect x="990" y="540" width="160" height="70" rx="6" class="c-mask"/>
-          <rect x="990" y="540" width="160" height="70" rx="6" class="c-external" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(996 546) scale(0.6875)">
-            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
-            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
-          </g>
-          <text data-detail-anchor x="1070" y="573" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">apalache-mc</text>
-        <text data-detail="context" x="1070" y="589" class="t-muted" font-size="8.1" text-anchor="middle">JVM oracle · CLI + explorer RPC</text>
-        <text data-detail="fine" x="1070" y="602" class="t-external" font-size="7" text-anchor="middle">trusted</text>
-        </g>
-
-        <g id="node-registry" data-node-id="registry" data-node-label="Shell.Registry" tabindex="0" role="button" aria-label="Focus Shell.Registry, register · heartbeat · discover, Architecture component" aria-pressed="false" data-node-kind="backend" data-node-sublabel="register · heartbeat · discover" data-node-context="Architecture component">
-          <title>Shell.Registry · register · heartbeat · discover · Architecture component</title>
-          <rect x="760" y="720" width="170" height="62" rx="6" class="c-mask"/>
-          <rect x="760" y="720" width="170" height="62" rx="6" class="c-backend" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(766 726) scale(0.6875)">
-            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
-          </g>
-          <text data-detail-anchor x="845" y="749" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Shell.Registry</text>
-        <text data-detail="context" x="845" y="765" class="t-muted" font-size="8.7" text-anchor="middle">register · heartbeat · discover</text>
-        </g>
-
-        <g id="node-consul" data-node-id="consul" data-node-label="Consul" tabindex="0" role="button" aria-label="Focus Consul, service discovery (plain HTTP), Architecture component" aria-pressed="false" data-node-kind="external" data-node-sublabel="service discovery (plain HTTP)" data-node-context="Architecture component">
-          <title>Consul · service discovery (plain HTTP) · Architecture component</title>
-          <rect x="990" y="720" width="150" height="62" rx="6" class="c-mask"/>
-          <rect x="990" y="720" width="150" height="62" rx="6" class="c-external" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(996 726) scale(0.6875)">
-            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
-            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
-          </g>
-          <text data-detail-anchor x="1065" y="749" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Consul</text>
-        <text data-detail="context" x="1065" y="765" class="t-muted" font-size="7.8" text-anchor="middle">service discovery (plain HTTP)</text>
-        </g>
-
-        <!-- Connection labels -->
-        <g data-detail="context" data-edge-from="clients" data-edge-to="transports" data-edge-label="JSONL wire" data-edge-key="0">
-          <rect x="216" y="343" width="58" height="14" rx="3" class="c-mask"/>
-          <text x="245" y="353" class="t-backend" font-size="8" text-anchor="middle">JSONL wire</text>
-        </g>
-        <g data-detail="context" data-edge-from="transports" data-edge-to="session" data-edge-label="lines" data-edge-key="1">
-          <rect x="458" y="343" width="34" height="14" rx="3" class="c-mask"/>
-          <text x="475" y="353" class="t-muted" font-size="8" text-anchor="middle">lines</text>
-        </g>
-        <g data-detail="context" data-edge-from="session" data-edge-to="core" data-edge-label="Core.step" data-edge-key="2">
-          <rect x="698.4" y="304" width="53.199999999999996" height="14" rx="3" class="c-mask"/>
-          <text x="725" y="314" class="t-backend" font-size="8" text-anchor="middle">Core.step</text>
-        </g>
-        <g data-detail="context" data-edge-from="core" data-edge-to="tla" data-edge-label="refines (theorem)" data-edge-key="3">
-          <rect x="859.2" y="236" width="91.6" height="14" rx="3" class="c-mask"/>
-          <text x="905" y="246" class="t-messagebus" font-size="8" text-anchor="middle">refines (theorem)</text>
-        </g>
-        <g data-detail="context" data-edge-from="codec" data-edge-to="core" data-edge-label="tag bridge (proven)" data-edge-key="4">
-          <rect x="919.4" y="304" width="101.2" height="14" rx="3" class="c-mask"/>
-          <text x="970" y="314" class="t-messagebus" font-size="8" text-anchor="middle">tag bridge (proven)</text>
-        </g>
-        <g data-detail="context" data-edge-from="session" data-edge-to="apalache" data-edge-label="validate · explore" data-edge-key="5">
-          <rect x="665.8" y="449" width="96.39999999999999" height="14" rx="3" class="c-mask"/>
-          <text x="714" y="459" class="t-muted" font-size="8" text-anchor="middle">validate · explore</text>
-        </g>
-        <g data-detail="context" data-edge-from="session" data-edge-to="jobs" data-edge-label="async submit" data-edge-key="6">
-          <rect x="574.2" y="400" width="67.6" height="14" rx="3" class="c-mask"/>
-          <text x="608" y="410" class="t-muted" font-size="8" text-anchor="middle">async submit</text>
-        </g>
-        <g data-detail="context" data-edge-from="jobs" data-edge-to="apalache" data-edge-label="worker spawn" data-edge-key="7">
-          <rect x="796.2" y="610" width="67.6" height="14" rx="3" class="c-mask"/>
-          <text x="830" y="620" class="t-messagebus" font-size="8" text-anchor="middle">worker spawn</text>
-        </g>
-        <g data-detail="context" data-edge-from="transports" data-edge-to="ffi" data-edge-label="extern calls" data-edge-key="8">
-          <rect x="326.2" y="310" width="67.6" height="14" rx="3" class="c-mask"/>
-          <text x="360" y="320" class="t-security" font-size="8" text-anchor="middle">extern calls</text>
-        </g>
-        <g data-detail="context" data-edge-from="cli" data-edge-to="registry" data-edge-label="--registry" data-edge-key="9">
-          <rect x="435" y="641" width="58" height="14" rx="3" class="c-mask"/>
-          <text x="464" y="651" class="t-muted" font-size="8" text-anchor="middle">--registry</text>
-        </g>
-        <g data-detail="context" data-edge-from="registry" data-edge-to="consul" data-edge-label="HTTP" data-edge-key="10">
-          <rect x="945" y="731" width="30" height="14" rx="3" class="c-mask"/>
-          <text x="960" y="741" class="t-muted" font-size="8" text-anchor="middle">HTTP</text>
-        </g>
-
-        <!-- Legend -->
-        <g data-legend data-legend-bridge>
-          <text x="40" y="824" class="t-primary" font-size="12" font-weight="650">Legend</text>
-          <g data-legend-semantic-kind="backend" data-legend-kind="backend" data-legend-label="Backend" data-legend-x="40" data-legend-baseline="844" data-legend-width="78">
-            <rect x="40" y="835" width="16" height="10" rx="2.5" class="c-backend" stroke-width="1"/>
-            <text x="62" y="844" class="t-muted" font-size="10" font-weight="500">Backend</text>
-          </g>
-          <g data-legend-semantic-kind="security" data-legend-kind="security" data-legend-label="Security" data-legend-x="140" data-legend-baseline="844" data-legend-width="83">
-            <rect x="140" y="835" width="16" height="10" rx="2.5" class="c-security" stroke-width="1"/>
-            <text x="162" y="844" class="t-muted" font-size="10" font-weight="500">Security</text>
-          </g>
-          <g data-legend-semantic-kind="external" data-legend-kind="external" data-legend-label="External" data-legend-x="245" data-legend-baseline="844" data-legend-width="83">
-            <rect x="245" y="835" width="16" height="10" rx="2.5" class="c-external" stroke-width="1"/>
-            <text x="267" y="844" class="t-muted" font-size="10" font-weight="500">External</text>
-          </g>
-        </g>
-      </svg>
+      <svg viewBox="0 0 1600 1440" role="img" aria-labelledby="archify-diagram-title archify-diagram-description" data-preset="classic" data-quality-profile="showcase"></svg>
       <p class="intent-trace-status no-print" id="intent-trace-status" role="status" aria-live="polite" aria-atomic="true"></p>
       <div class="share-chapter-cue no-print" id="share-chapter-cue" hidden role="status" aria-live="polite">
         <div class="share-chapter-index">
@@ -5311,50 +5073,105 @@
       </div>
     </div>
 
-    <!-- Info Cards -->
-    <div class="cards">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-dot emerald"></div>
-          <h3>What is proved (zero sorry)</h3>
-        </div>
-        <ul>
-          <li>&bull; §6.1 diff engine sound/complete, caps, paths</li>
-          <li>&bull; §6.2 trace pipeline losslessness</li>
-          <li>&bull; §6.3 session machine refines TLA+ model</li>
-          <li>&bull; §6.4 jobs: terminal-once, outcome congruence</li>
-          <li>&bull; §6.5 resources; §6.6 codec round-trips</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <div class="card-dot amber"></div>
-          <h3>What is trusted (TCB)</h3>
-        </div>
-        <ul>
-          <li>&bull; OpenSSL + socket and TLS C shims</li>
-          <li>&bull; Shell drivers, interface compiler/cache, jobs</li>
-          <li>&bull; apalache/JVM, OS — explicitly inventoried</li>
-          <li>&bull; TLS shim passed adversarial review (t25/t26)</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <div class="card-dot cyan"></div>
-          <h3>Wire contract</h3>
-        </div>
-        <ul>
-          <li>&bull; JSON-lines, byte-for-byte vs Haskell</li>
-          <li>&bull; 70 golden fixtures byte-identical</li>
-          <li>&bull; diff engine 500/500 ordered parity</li>
-          <li>&bull; Interop: ECMA, C++, Rust, Haskell clients</li>
-        </ul>
-      </div>
-    </div>
-
+    <!-- Info Cards: populated from the same embedded architecture data. -->
+    <div class="cards" id="architecture-cards"></div>
+    <p class="architecture-context">Recorded deployment example: WSL2 clients and tooling connect over pinned mTLS to a native Windows Mirrors server with Apalache/JVM. See <a href="../Plans/q3-integrity-fixes-2026-10-03.md">the retained scope and deployment record</a>; source implementation, installed acceptance and release qualification are separate claims.</p>
   </div>
+
+  <script id="mirrors-architecture-renderer">
+    // This standalone page embeds architecture-overview.json so file:// viewing
+    // needs neither a server nor a network fetch. Update both JSON copies together.
+    (function () {
+      'use strict';
+      var spec = JSON.parse(document.getElementById('mirrors-architecture-data').textContent);
+      var svg = document.querySelector('.diagram-container svg');
+      var ns = 'http://www.w3.org/2000/svg';
+      function el(tag, attrs, text, parent) {
+        var element = document.createElementNS(ns, tag);
+        Object.keys(attrs || {}).forEach(function (key) { element.setAttribute(key, attrs[key]); });
+        if (text !== undefined) element.textContent = text;
+        (parent || svg).appendChild(element);
+        return element;
+      }
+      svg.setAttribute('viewBox', '0 0 ' + spec.meta.viewBox.join(' '));
+      el('title', {id: 'archify-diagram-title'}, spec.meta.title);
+      el('desc', {id: 'archify-diagram-description'}, spec.meta.description);
+      var defs = el('defs', {});
+      ['default', 'emphasis', 'security', 'dashed'].forEach(function (variant) {
+        var marker = el('marker', {id: 'arrowhead-' + variant, markerWidth: 10, markerHeight: 7, refX: 9, refY: 3.5, orient: 'auto'}, undefined, defs);
+        el('polygon', {points: '0 0, 10 3.5, 0 7', 'class': 'm-' + variant}, undefined, marker);
+      });
+      var grid = el('pattern', {id: 'grid', width: 40, height: 40, patternUnits: 'userSpaceOnUse'}, undefined, defs);
+      el('path', {d: 'M 40 0 L 0 0 0 40', 'class': 'c-grid', 'stroke-width': 0.5}, undefined, grid);
+      el('rect', {width: '100%', height: '100%', fill: 'url(#grid)'});
+      spec.boundaries.forEach(function (boundary, index) {
+        el('rect', {'data-graph-role': 'structural-frame', 'data-composition-frame-kind': 'region', 'data-composition-frame-id': index,
+          x: boundary.pos[0], y: boundary.pos[1], width: boundary.size[0], height: boundary.size[1], rx: 12, 'class': 'c-region', 'stroke-width': 1});
+        el('text', {x: boundary.pos[0] + 14, y: boundary.pos[1] + 27, 'class': 't-cloud', 'font-size': 14, 'font-weight': 600}, boundary.label);
+      });
+      function edgeAttrs(edge, index) {
+        return {'data-edge-from': edge.from, 'data-edge-to': edge.to, 'data-edge-label': edge.label, 'data-edge-key': index};
+      }
+      spec.connections.forEach(function (edge, index) {
+        var attrs = edgeAttrs(edge, index);
+        attrs['data-composition-points'] = edge.points.map(function (point) { return point.join(','); }).join(';');
+        attrs.d = edge.points.map(function (point, i) { return (i ? 'L ' : 'M ') + point.join(' '); }).join(' ');
+        attrs['class'] = 'a-' + edge.variant;
+        attrs['stroke-width'] = edge.variant === 'emphasis' ? 2 : 1.6;
+        attrs['marker-end'] = 'url(#arrowhead-' + edge.variant + ')';
+        el('path', attrs);
+      });
+      spec.components.forEach(function (node) {
+        var x = node.pos[0], y = node.pos[1], width = node.size[0], height = node.size[1];
+        var context = node.context || 'Architecture component';
+        var label = [node.label, node.sublabel, node.tag, context].filter(Boolean).join(' · ');
+        var group = el('g', {id: 'node-' + node.id, 'data-node-id': node.id, 'data-node-label': node.label,
+          tabindex: 0, role: 'button', 'aria-label': 'Focus ' + label, 'aria-pressed': 'false', 'data-node-kind': node.type,
+          'data-node-sublabel': node.sublabel, 'data-node-tag': node.tag || '', 'data-node-context': context});
+        el('title', {}, label, group);
+        el('rect', {x: x, y: y, width: width, height: height, rx: 7, 'class': 'c-mask'}, undefined, group);
+        el('rect', {x: x, y: y, width: width, height: height, rx: 7, 'class': 'c-' + node.type, 'stroke-width': 1.7}, undefined, group);
+        el('text', {'data-detail-anchor': '', x: x + width / 2, y: y + 33, 'class': 't-primary', 'font-size': width < 200 ? 15 : 16, 'font-weight': 600, 'text-anchor': 'middle'}, node.label, group);
+        el('text', {'data-detail': 'context', x: x + width / 2, y: y + 57, 'class': 't-muted', 'font-size': width < 200 ? 11 : 12, 'text-anchor': 'middle'}, node.sublabel, group);
+        if (node.tag) el('text', {'data-detail': 'fine', x: x + width / 2, y: y + 80, 'class': 't-' + node.type, 'font-size': 11, 'text-anchor': 'middle'}, node.tag, group);
+        // Bound every line even when an offline system font is wider than the
+        // optional web font. This preserves node geometry for focus and export.
+        Array.prototype.forEach.call(group.querySelectorAll('text'), function (text) {
+          var length = text.getComputedTextLength();
+          if (length > width - 20) {
+            text.setAttribute('textLength', width - 20);
+            text.setAttribute('lengthAdjust', 'spacingAndGlyphs');
+          }
+        });
+      });
+      spec.connections.forEach(function (edge, index) {
+        var attrs = edgeAttrs(edge, index);
+        attrs['data-detail'] = 'context';
+        var group = el('g', attrs);
+        var x = edge.labelAt[0], y = edge.labelAt[1], width = edge.label.length * 6.3 + 12;
+        el('rect', {x: x - width / 2, y: y - 12, width: width, height: 17, rx: 3, 'class': 'c-mask'}, undefined, group);
+        el('text', {x: x, y: y, 'class': 't-muted', 'font-size': 11, 'text-anchor': 'middle'}, edge.label, group);
+      });
+      var legend = el('g', {'data-legend': '', 'data-legend-bridge': ''});
+      el('text', {x: 60, y: 1370, 'class': 't-primary', 'font-size': 15, 'font-weight': 600}, 'Responsibility colors (not acceptance status)', legend);
+      [['frontend','Pure logic / compiler seam',60,265], ['backend','Shell / tooling',355,175], ['security','Native Ffi',560,145], ['external','External component',735,230], ['database','Artifact / evidence',995,225]].forEach(function (item) {
+        var group = el('g', {'data-legend-semantic-kind': item[0], 'data-legend-kind': item[0], 'data-legend-label': item[1], 'data-legend-x': item[2], 'data-legend-baseline': 1405, 'data-legend-width': item[3]}, undefined, legend);
+        el('rect', {x: item[2], y: 1392, width: 20, height: 14, rx: 3, 'class': 'c-' + item[0], 'stroke-width': 1}, undefined, group);
+        el('text', {x: item[2] + 30, y: 1405, 'class': 't-muted', 'font-size': 13}, item[1], group);
+      });
+      var cards = document.getElementById('architecture-cards');
+      spec.cards.forEach(function (card) {
+        var article = document.createElement('div'); article.className = 'card';
+        var head = document.createElement('div'); head.className = 'card-header';
+        var dot = document.createElement('div'); dot.className = 'card-dot ' + card.dot; dot.setAttribute('aria-hidden', 'true');
+        var title = document.createElement('h3'); title.textContent = card.title;
+        head.appendChild(dot); head.appendChild(title); article.appendChild(head);
+        var list = document.createElement('ul');
+        card.items.forEach(function (item) { var li = document.createElement('li'); li.textContent = '• ' + item; list.appendChild(li); });
+        article.appendChild(list); cards.appendChild(article);
+      });
+    })();
+  </script>
 
   <script>
     var Archify = {};

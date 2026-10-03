@@ -102,5 +102,15 @@ stdio replay with both correct and deliberately incorrect observations.
 Negotiation mismatch must invoke no adapter factory. The existing pinned
 Counter trace is replayed; this gate does not generate fresh Apalache traces.
 Missing native prerequisites produce an explicit skip. Rust mTLS acceptance
-and the proposed common cross-language recording vectors remain unverified by
+and shared cross-language recording vectors are not established by
 this harness.
+
+The separate [generated-client entry point](../../tools/interop/INTEROP.md)
+executes the shared six-profile conformance corpus and generated Rust transport
+cases. Its offline supplied-trace leg proves exact `0,2,5` reports; its observed
+Windows mTLS leg uses fresh authoritative inline Counter generation, actual
+wrong-observer mismatch, and zero factories for wrong digest, unauthorized
+principal and wrong pin. Plain TCP denial is expected because that transport
+has no model-interface authority. Receipts bind prepared executable, source and
+runtime identities; this bounded acceptance does not relabel the historical
+all-transport matrix or qualify a new release candidate.

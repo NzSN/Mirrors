@@ -18,6 +18,9 @@ abbrev ProvenanceDigest := String
 
 def contractSchemaV1 : String := "mirrors.model-interface/v1"
 def lockSchemaV1 : String := "mirrors.model-interface-lock/v1"
+def lockSchemaV2 : String := "mirrors.model-interface-lock/v2"
+def workflowSchemaV1 : String := "mirrors.model-interface-workflow/v1"
+def maxWorkflowMembersV1 : Nat := 32
 def descriptorSchemaV1 : String := "mirrors.model-interface-descriptor/v1"
 def descriptorDigestDomainV1 : String := "mirrors-model-interface-descriptor/v1"
 def negotiationSchemaV1 : String := "mirrors.model-interface-negotiation/v1"
@@ -310,11 +313,39 @@ structure SemanticDescriptor where
   observations : List ResolvedObservation
   deriving Repr
 
+/-- Identities of one projected member. The canonical output and receipt use
+domain-separated hashes; `fileSha256` hashes exact published bytes, including LF. -/
+structure WorkflowProjectionMember where
+  outputSha256 : String
+  evidenceSha256 : String
+  fileSha256 : String
+  receiptSha256 : String
+  deriving Repr, DecidableEq
+
+/-- The exact input bytes and structural evidence reviewed for one member. -/
+structure WorkflowEvidenceMember where
+  rawFileSha256 : String
+  evidenceSha256 : String
+  projection : Option WorkflowProjectionMember := none
+  deriving Repr, DecidableEq
+
+/-- Review and corpus identities belong to build provenance, never to the
+runtime descriptor or its semantic identity. Members use strict raw-file order. -/
+structure WorkflowProvenance where
+  schema : String := workflowSchemaV1
+  proposalSha256 : String
+  reviewSha256 : String
+  projectionPlanSha256 : Option String := none
+  members : List WorkflowEvidenceMember
+  corpusManifestSha256 : Option String := none
+  deriving Repr, DecidableEq
+
 structure LockProvenance where
   compilerVersion : String
   contractSha256 : String
   evidenceSha256 : String
   sources : List SourceDigest
+  workflow : Option WorkflowProvenance := none
   deriving Repr, DecidableEq
 
 /-- A fully resolved interface before the shell computes canonical digests. -/

@@ -78,8 +78,8 @@ and a restricted application worker are independent choices.
 | Expose evaluation to another process through a service | [Gate evaluation service](../../MirrorGate/integrations/mirrorecma/service/README.md) → [service contract](../../MirrorGate/docs/evaluation-service-contract-v1.md) | Optional authenticated loopback service using approved evaluation callbacks; current examples use lower-level `evaluateImplementation` |
 | Integrate another language or implement a new client | [Client coverage](client-test-coverage.md) → [client implementation guide](client-implementation-guide.md) → [wire reference](interface-reference.md) → [generated target specification](generated-model-interface-spec.md) | A verified supported client path, or a separately implemented and tested client/profile |
 | Use a C++ evaluator | [MirrorCPP](../../MirrorCPP/README.md) → [Gate C++ integration](../../MirrorGate/integrations/mirrorcpp/README.md) when isolation is needed | Generated C++ bindings and exact verification; optional shared Gate controller |
-| Use a Rust evaluator | [MirrorRust](../../MirrorRust/README.md) → [Gate Rust integration](../../MirrorGate/integrations/mirrorrust/README.md) → [accepted scope](../../MirrorGate/docs/rust-evaluator-sdk-status.md) | Reviewed binding registry and fallible replay; control-v1 Gate integration with a handwritten Counter fixture; no generated Rust target |
-| Use Lean as the model client | [MirrorLean](../../MirrorLean/README.md) → [client contract](client-implementation-guide.md) | Synchronous replay and network async jobs; negotiated binding and Gate facade remain planned |
+| Use a Rust evaluator | [Rust compiler target](model-interface-compiler/rust-target.md) → [MirrorRust](../../MirrorRust/README.md) → [Gate Rust integration](../../MirrorGate/integrations/mirrorrust/README.md) → [accepted scope](../../MirrorGate/docs/rust-evaluator-sdk-status.md) | Generated `mirrorrust-v1` bindings, reviewed registry and fallible replay; the separate control-v1 Gate acceptance uses a handwritten Counter fixture |
+| Use Lean as the model client | [Lean compiler target](model-interface-compiler/lean-target.md) → [MirrorLean](../../MirrorLean/README.md) → [client contract](client-implementation-guide.md) | Generated `mirrorlean-v1` bindings, required compiled verification, synchronous replay and network async jobs; no Lean Gate facade |
 
 **Using a client is different from implementing one.** Most application authors
 should read the client suite and project guides, not implement the wire protocol.
@@ -87,9 +87,14 @@ The client implementation guide is for transport, codec, negotiation and
 conformance work. Consult its reference-client inventory and the coverage matrix
 before selecting another language: base protocol support, generated bindings,
 suite APIs and Gate worker support are separate capabilities. The Node suite
-workflow here is not a claim of equivalent suites in every language. Rust/Lean
-generated target profiles remain follow-up work; C++ has its documented generated
-binding path. Gate's current isolation backend is Linux/Bubblewrap.
+workflow here is not a claim of equivalent suites in every language. TypeScript,
+C++, Rust and Lean have implemented generated targets and shared native
+conformance vectors. Rust and Lean also have bounded source-hidden generated
+Counter acceptance: four offline rows and five fresh remote mTLS rows each.
+See the [interop guide](../tools/interop/INTEROP.md) for the exact scope; these
+results do not extend the legacy all-transport matrix or requalify M5. The Rust
+compiler target does not establish a generic generated Gate application path,
+and Lean has no Gate facade. Gate's current isolation backend is Linux/Bubblewrap.
 
 For the complete documentation catalogs, use the [Mirrors index](README.md),
 [MirrorECMA index](../../MirrorECMA/docs/README.md), and

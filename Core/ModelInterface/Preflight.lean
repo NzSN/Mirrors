@@ -41,6 +41,12 @@ private def nodupStrings (names : List String) : Bool :=
 private def sameStringSet (left right : List String) : Bool :=
   sortStrings (stableUniqueStrings left) == sortStrings (stableUniqueStrings right)
 
+/-- Typed sets have unique members under model equality, including nested sets.
+`Core.valEq` itself intentionally remains extensional for arbitrary raw values. -/
+private def uniqueValues : List Value → Bool
+  | [] => true
+  | value :: rest => !(rest.any (valEq value)) && uniqueValues rest
+
 private def wellFormedValueFuel : Nat → Value → Bool
   | 0, _ => false
   | fuel + 1, value =>
@@ -68,7 +74,8 @@ private def valueHasTypeFuel : Nat → Value → ModelType → Bool
       | .vstr _, .str => true
       | .vnull, .null => true
       | .vset values, .set element =>
-          values.all (fun value => valueHasTypeFuel fuel value element)
+          uniqueValues values &&
+            values.all (fun value => valueHasTypeFuel fuel value element)
       | .vseq values, .seq element =>
           values.all (fun value => valueHasTypeFuel fuel value element)
       | .vtuple values, .tuple elements =>
@@ -143,9 +150,13 @@ private def projectValueAux : Value → List PathSegment → Nat → Except Stri
         | .variantValue _, _ => .error s!"segment {index}: variantValue requires a variant"
       projectValueAux next rest (index + 1)
 
+/-- Evaluate a structural projection on an already-decoded value. -/
+def projectValue (value : Value) (path : List PathSegment) : Except String Value :=
+  projectValueAux value path 0
+
 /-- Project a typed input from a protocol state map. -/
 def projectState (state : ValueMap) (path : List PathSegment) : Except String Value :=
-  projectValueAux (.vrecord state) path 0
+  projectValue (.vrecord state) path
 
 private def traceLocation (traceIndex stepIndex : Nat) : SourceLocation :=
   { source := s!"<trace:{traceIndex}>"

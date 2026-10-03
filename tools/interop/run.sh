@@ -9,6 +9,10 @@
 set -euo pipefail
 
 MIRRORS="$(cd "$(dirname "$0")/../.." && pwd)"
+if [[ "${1:-}" == "--generated-clients" ]]; then
+  shift
+  exec python3 "$MIRRORS/tools/interop/generated-clients.py" "$@"
+fi
 LEAN_BIN="${LEAN_BIN:-$MIRRORS/.lake/build/bin/mirror}"
 ECMA="${ECMA_REPO:-$MIRRORS/../MirrorECMA}"
 CPP="${CPP_REPO:-$MIRRORS/../MirrorCPP}"

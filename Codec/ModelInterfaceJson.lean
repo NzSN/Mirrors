@@ -693,16 +693,40 @@ private def encodeSourceDigest (source : SourceDigest) : Json :=
     ("module", .str source.moduleName), ("path", .str source.logicalPath),
     ("sha256", .str source.contentSha256)]
 
+def encodeWorkflowProjectionMember (member : WorkflowProjectionMember) : Json :=
+  Json.mkObj [
+    ("outputSha256", .str member.outputSha256),
+    ("evidenceSha256", .str member.evidenceSha256),
+    ("fileSha256", .str member.fileSha256),
+    ("receiptSha256", .str member.receiptSha256)]
+
+def encodeWorkflowEvidenceMember (member : WorkflowEvidenceMember) : Json :=
+  Json.mkObj ([
+    ("rawFileSha256", .str member.rawFileSha256),
+    ("evidenceSha256", .str member.evidenceSha256)] ++
+    optionalField "projection" (member.projection.map encodeWorkflowProjectionMember))
+
+def encodeWorkflowProvenance (workflow : WorkflowProvenance) : Json :=
+  Json.mkObj ([
+    ("schema", .str workflow.schema),
+    ("proposalSha256", .str workflow.proposalSha256),
+    ("reviewSha256", .str workflow.reviewSha256),
+    ("members", array ((sortByString (·.rawFileSha256) workflow.members).map
+      encodeWorkflowEvidenceMember))] ++
+    optionalField "projectionPlanSha256" (workflow.projectionPlanSha256.map Json.str) ++
+    optionalField "corpusManifestSha256" (workflow.corpusManifestSha256.map Json.str))
+
 /-- Canonically encode the provenance projection used by the provenance digest. -/
 def encodeLockProvenance (provenance : LockProvenance) : Json :=
   let sources := provenance.sources.mergeSort fun a b =>
     if a.moduleName == b.moduleName then a.logicalPath ≤ b.logicalPath
     else a.moduleName ≤ b.moduleName
-  Json.mkObj [
+  Json.mkObj ([
     ("compilerVersion", .str provenance.compilerVersion),
     ("contractSha256", .str provenance.contractSha256),
     ("evidenceSha256", .str provenance.evidenceSha256),
-    ("sources", array (sources.map encodeSourceDigest))]
+    ("sources", array (sources.map encodeSourceDigest))] ++
+    optionalField "workflow" (provenance.workflow.map encodeWorkflowProvenance))
 
 /-- Canonically encode a complete checked-in lock. Evidence-origin annotations
 remain compiler diagnostics only: they are neither interface semantics nor an
@@ -710,7 +734,8 @@ independently authenticated lock projection. -/
 def encodeLock (lock : LockedModelInterface) : Json :=
   let descriptor := lock.semanticDescriptor
   match encodeSemanticDescriptorWithOrigins false
-      { descriptor with schema := lockSchemaV1 } with
+      { descriptor with schema := if lock.provenance.workflow.isSome then lockSchemaV2
+          else lockSchemaV1 } with
   | .obj fields => Json.mkObj (fields.toList ++ [
       ("contract", encodeContract lock.contract),
       ("provenance", encodeLockProvenance lock.provenance),
@@ -727,6 +752,79 @@ private def decodeDigestHex (context : String) (json : Json) : DecodeResult Stri
   if digest.length == 64 && digest.toList.all isLowerHex then return digest
   else fail context "64 lowercase hexadecimal characters expected"
 
+private def validWorkflowDigest (digest : String) : Bool :=
+  digest.length == 64 && digest.toList.all isLowerHex
+
+/-- Validate in-memory workflows too: constructing a Lean record cannot bypass
+the strict lock parser's identity, ordering, and resource constraints. -/
+def validateWorkflowProvenance (workflow : WorkflowProvenance) : DecodeResult Unit := do
+  let context := "lock.provenance.workflow"
+  if workflow.schema != workflowSchemaV1 then fail context "unsupported workflow schema"
+  let digests := [workflow.proposalSha256, workflow.reviewSha256] ++
+    workflow.projectionPlanSha256.toList ++ workflow.corpusManifestSha256.toList
+  if !digests.all validWorkflowDigest then fail context "invalid workflow digest"
+  if workflow.corpusManifestSha256.isSome && workflow.projectionPlanSha256.isNone then
+    fail context "a projected corpus manifest requires a projection plan"
+  if workflow.members.isEmpty || workflow.members.length > maxWorkflowMembersV1 then
+    fail context s!"expected 1..{maxWorkflowMembersV1} workflow members"
+  let keys := workflow.members.map (·.rawFileSha256)
+  if keys != sortStrings keys || keys.eraseDups.length != keys.length then
+    fail context "workflow members must have unique raw-file digests in canonical order"
+  for member in workflow.members do
+    if ![member.rawFileSha256, member.evidenceSha256].all validWorkflowDigest then
+      fail context "invalid evidence-member digest"
+    if member.projection.isSome != workflow.projectionPlanSha256.isSome then
+      fail context "projection plan and every projected member must be present together"
+    if let some projection := member.projection then
+      if ![projection.outputSha256, projection.evidenceSha256,
+          projection.fileSha256, projection.receiptSha256].all validWorkflowDigest then
+        fail context "invalid projection-member digest"
+
+private def decodeWorkflowProjectionMember (json : Json) :
+    DecodeResult WorkflowProjectionMember := do
+  let context := "lock.provenance.workflow.members[].projection"
+  let names := ["outputSha256", "evidenceSha256", "fileSha256", "receiptSha256"]
+  let fields ← checkObject context names names json
+  return {
+    outputSha256 := ← decodeDigestHex context (← required context fields "outputSha256")
+    evidenceSha256 := ← decodeDigestHex context (← required context fields "evidenceSha256")
+    fileSha256 := ← decodeDigestHex context (← required context fields "fileSha256")
+    receiptSha256 := ← decodeDigestHex context (← required context fields "receiptSha256")
+  }
+
+def decodeWorkflowEvidenceMember (json : Json) :
+    DecodeResult WorkflowEvidenceMember := do
+  let context := "lock.provenance.workflow.members[]"
+  let fields ← checkObject context ["rawFileSha256", "evidenceSha256", "projection"]
+    ["rawFileSha256", "evidenceSha256"] json
+  return {
+    rawFileSha256 := ← decodeDigestHex context (← required context fields "rawFileSha256")
+    evidenceSha256 := ← decodeDigestHex context (← required context fields "evidenceSha256")
+    projection := ← (fields.lookup "projection").mapM decodeWorkflowProjectionMember
+  }
+
+def decodeWorkflowProvenance (json : Json) : DecodeResult WorkflowProvenance := do
+  let context := "lock.provenance.workflow"
+  let names := ["schema", "proposalSha256", "reviewSha256", "projectionPlanSha256",
+    "members", "corpusManifestSha256"]
+  let fields ← checkObject context names ["schema", "proposalSha256", "reviewSha256", "members"] json
+  let memberJson ← required context fields "members"
+  match memberJson with
+  | .arr values =>
+      if values.isEmpty || values.size > maxWorkflowMembersV1 then
+        fail context s!"expected 1..{maxWorkflowMembersV1} workflow members"
+  | _ => fail context "members array expected"
+  let workflow : WorkflowProvenance := {
+    schema := ← decodeString context (← required context fields "schema")
+    proposalSha256 := ← decodeDigestHex context (← required context fields "proposalSha256")
+    reviewSha256 := ← decodeDigestHex context (← required context fields "reviewSha256")
+    projectionPlanSha256 := ← (fields.lookup "projectionPlanSha256").mapM (decodeDigestHex context)
+    members := ← decodeArray context decodeWorkflowEvidenceMember memberJson
+    corpusManifestSha256 := ← (fields.lookup "corpusManifestSha256").mapM (decodeDigestHex context)
+  }
+  validateWorkflowProvenance workflow
+  return workflow
+
 private def decodeSourceDigest (context : String) (json : Json) : DecodeResult SourceDigest := do
   let fields ← checkObject context ["module", "path", "sha256"]
     ["module", "path", "sha256"] json
@@ -739,7 +837,7 @@ private def decodeSourceDigest (context : String) (json : Json) : DecodeResult S
 /-- Strictly decode the provenance projection of a lock. -/
 def decodeLockProvenance (json : Json) : DecodeResult LockProvenance := do
   let context := "lock.provenance"
-  let fields ← checkObject context ["compilerVersion", "contractSha256", "evidenceSha256", "sources"]
+  let fields ← checkObject context ["compilerVersion", "contractSha256", "evidenceSha256", "sources", "workflow"]
     ["compilerVersion", "contractSha256", "evidenceSha256", "sources"] json
   return {
     compilerVersion := ← decodeString (context ++ ".compilerVersion")
@@ -750,6 +848,7 @@ def decodeLockProvenance (json : Json) : DecodeResult LockProvenance := do
       (← required context fields "evidenceSha256")
     sources := ← decodeArray (context ++ ".sources")
       (decodeSourceDigest (context ++ ".sources[]")) (← required context fields "sources")
+    workflow := ← (fields.lookup "workflow").mapM decodeWorkflowProvenance
   }
 
 /-- Strictly decode a complete checked-in lock. The lock JSON uses the lock
@@ -762,7 +861,11 @@ def decodeLock (json : Json) : DecodeResult LockedModelInterface := do
     "contract", "semanticDigest", "provenanceDigest", "provenance"]
   let fields ← checkObject context allowed allowed json
   let schema ← decodeString "lock.schema" (← required context fields "schema")
-  if schema != lockSchemaV1 then fail "lock.schema" s!"expected '{lockSchemaV1}'"
+  if schema != lockSchemaV1 && schema != lockSchemaV2 then
+    fail "lock.schema" s!"expected '{lockSchemaV1}' or '{lockSchemaV2}'"
+  let provenance ← decodeLockProvenance (← required context fields "provenance")
+  if (schema == lockSchemaV2) != provenance.workflow.isSome then
+    fail "lock.schema" "workflow provenance is required exactly for version-2 locks"
   let descriptorFields := fields.filter fun field =>
     field.1 != "contract" && field.1 != "semanticDigest" &&
       field.1 != "provenanceDigest" && field.1 != "provenance"
@@ -777,7 +880,7 @@ def decodeLock (json : Json) : DecodeResult LockedModelInterface := do
       (← required context fields "semanticDigest")
     provenanceDigest := ← decodeDigestHex "lock.provenanceDigest"
       (← required context fields "provenanceDigest")
-    provenance := ← decodeLockProvenance (← required context fields "provenance")
+    provenance
   }
 
 /-! ## Diagnostics -/

@@ -2,19 +2,27 @@
 
 Date: 2026-09-28
 
-Status: executed through SR-5a (2026-09-30). No task below claims qualification
-by passing source tests; a tier is credited only by retained installed-run
-evidence against a frozen selection. SR-5b remains operator-gated; the execution
-record at the end of this document lists rounds, defects, and the closing
-selection.
+Status (2026-10-03): SR-5a and SR-5b are qualified for the selected
+`m5-wsl-windows-remote/v1` profile on post-M6 working-tree C0
+`879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`.
+The [current readiness record](q3-post-m6-2026-10-03.md) includes both
+reduction tiers, their linked reproduction runs, affected-tier reruns and
+independent Q2 verification. This does not qualify later commits or edits;
+broader M4 aggregate/process recovery and native Ubuntu acceptance remain
+unqualified. Source tests alone never qualify a tier.
+
+The phase cards and September 30 execution record below preserve the original
+plan and its historical checkpoint. The October 1 [Windows oracle decision](execution-decisions.md#2026-10-01--current-windows-host-is-the-designated-remote-oracle)
+replaced their former endpoint/toolchain activation prerequisite; use the current
+readiness record for the exercised oracle identity and profile scope.
 
 Design: [m3-safe-reduction-design.md](m3-safe-reduction-design.md) (architecture,
 safety contract S1–S6, remote oracle mode). Roadmap:
 [mirror-framework-improvements.md](mirror-framework-improvements.md) §3. Task
 cards: [R4/R5](tasks/reproduction-and-fidelity.md#r4---add-safe-deterministic-prefix-reduction).
-Position record: [CHECKPOINTS.md](../CHECKPOINTS.md) (2026-09-27 standing).
+Position record: [CHECKPOINTS.md](../CHECKPOINTS.md) (dated execution history).
 
-## 0. Execution rules (apply to every phase)
+## 0. Original execution rules (2026-09-28)
 
 1. Any source or producer change invalidates the frozen selection: re-run
    identity refresh → snapshot → cache → install → affected tiers (Phase 4)
@@ -144,7 +152,7 @@ SR-0.3 (operator) ────────────────────�
 - If the tier split is declined, SR-2 is dropped and SR-5a merges into SR-5b;
   the M3 exit condition is unchanged either way.
 
-## 10. Execution record (2026-09-30)
+## 10. Historical execution record (2026-09-30)
 
 Rounds m3r1–m3r5 executed the SR-4/SR-5 chain (identity refresh → snapshot →
 dual caches → dual installs → affected-tier reruns + Q2) under the standing
@@ -181,6 +189,6 @@ and "Closing sweep complete") and the M3/M5 status rows, and
 [q3-readiness-2026-09-30.md](q3-readiness-2026-09-30.md) is the Q3 readiness
 report for this selection.
 
-Remaining gate: SR-5b (`qualification.reduction-domain`) — operator activation
+Remaining gate at that checkpoint: SR-5b (`qualification.reduction-domain`) — operator activation
 of Apalache 0.61.0 / Java 25.0.4+7-LTS at `192.168.150.219:8999` plus the
 same-time identity observation.

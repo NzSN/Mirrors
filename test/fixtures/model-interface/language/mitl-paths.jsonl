@@ -1,0 +1,12 @@
+{"id":"RootRecord","path":[],"result":{"number":{"#bigint":"7"},"text":"x"},"stateRoot":true,"type":{"fields":[{"type":{"kind":"str"},"wireName":"text"},{"type":{"kind":"int"},"wireName":"number"}],"kind":"record"},"typeId":"Record","value":{"number":{"#bigint":"7"},"text":"x"}}
+{"id":"RecordField","path":[{"field":"number"}],"result":{"#bigint":"7"},"type":{"kind":"int"},"typeId":"Record","value":{"number":{"#bigint":"7"},"text":"x"}}
+{"id":"MissingField","path":[{"field":"absent"}],"static":false,"typeId":"Record","value":{"number":{"#bigint":"7"},"text":"x"}}
+{"id":"TupleIndex","path":[{"index":1}],"result":true,"type":{"kind":"bool"},"typeId":"Pair","value":{"#tup":[{"#bigint":"7"},true]}}
+{"id":"TupleOutOfRange","path":[{"index":2}],"static":false,"typeId":"Pair","value":{"#tup":[{"#bigint":"7"},true]}}
+{"id":"SequenceIndex","path":[{"index":0}],"result":"x","type":{"kind":"str"},"typeId":"Sequence","value":["x"]}
+{"dynamic":false,"id":"SequenceOutOfRange","path":[{"index":0}],"type":{"kind":"str"},"typeId":"Sequence","value":[]}
+{"id":"VariantProjection","path":[{"variantValue":"some"}],"result":{"#bigint":"8"},"type":{"kind":"int"},"typeId":"Choice","value":{"tag":"some","value":{"#bigint":"8"}}}
+{"dynamic":false,"id":"VariantWrongTag","path":[{"variantValue":"some"}],"type":{"kind":"int"},"typeId":"Choice","value":{"tag":"none","value":null}}
+{"id":"NestedProjection","path":[{"field":"items"},{"index":0},{"variantValue":"flag"}],"result":true,"type":{"kind":"bool"},"typeId":"Nested","value":{"items":[{"tag":"flag","value":true}]}}
+{"generatedPortable":false,"id":"MapProjection","path":[{"mapKey":{"kind":"str","value":"a"}},{"index":0}],"result":{"#bigint":"9"},"type":{"kind":"int"},"typeId":"StringMap","value":{"#map":[["a",[{"#bigint":"9"}]]]}}
+{"dynamic":false,"generatedPortable":false,"id":"MapMissing","path":[{"mapKey":{"kind":"str","value":"a"}}],"type":{"element":{"kind":"int"},"kind":"seq"},"typeId":"StringMap","value":{"#map":[]}}

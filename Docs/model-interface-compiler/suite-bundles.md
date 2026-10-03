@@ -2,7 +2,7 @@
 
 `bundle` publishes the existing `mirrorecma-async-v1` target together with an
 inert `SuiteModel` companion. The target profile and semantic digest retain their
-existing meaning. This is a publication mode, not a fourth compiler target.
+existing meaning. The bundle is a publication mode for the async target.
 
 ```sh
 model_interface_gen bundle --lock Counter.mirror-interface.lock.json \
@@ -57,6 +57,10 @@ imports neither construct an application adapter nor start a process.
 
 The emitted provenance also appears on the model handle. Suite preflight compares
 the root model and full source closure before constructing an implementation.
+For reviewed workflow locks, the handle additionally carries `provenanceDigest`
+to bind the verified corpus loader to that exact workflow. Ordinary v1 bundle
+bytes retain their existing shape. Use `check-sealed-bundle` for the
+[reviewed scaffold and corpus workflow](reviewed-corpora.md).
 Prepared JavaScript evaluator modules remain trusted executable inputs; an
 optional module hash pin identifies bytes but does not prove TypeScript compilation.
 

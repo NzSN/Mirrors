@@ -31,6 +31,47 @@ receipt records the actual bindings; the E2 attachment plan retains that receipt
 and the runtime pin as required diagnostic artifacts. Historical v1 receipts
 remain historical evidence and do not establish this new runtime binding.
 
+## Generated-client acceptance
+
+The generated-language entry point is a separate profile and branches before
+the legacy runner probes any local model checker:
+
+```sh
+bash tools/interop/run.sh --generated-clients \
+  --out /tmp/generated-client-acceptance \
+  --cpp-prefix "$MIRRORCPP_PREFIX" --node "$ECMA_NODE_BIN" \
+  --context /private/generated-client-context.json \
+  --observation /private/windows-deployment-observation.json \
+  --allow-dirty-sdk
+```
+
+The private context supplies the normal CA/client credential paths and server
+identity, plus `MIRRORS_REMOTE_DENIED_CLIENT_CERT` and
+`MIRRORS_REMOTE_DENIED_CLIENT_KEY` for a valid same-CA leaf absent from the
+server's interface allowlist. A TLS handshake failure cannot satisfy interface
+authorization denial. `--allow-dirty-sdk` explicitly permits the Rust SDK's
+tracked working-tree edits and binds their hashes; omit it for clean SDK builds.
+Existing prepared native builds may be supplied with `--rust-build` and
+`--lean-build`; each native runner verifies its admitted bytes.
+
+This entry runs fresh shared type/value/equivalence/path and recording vectors
+through synchronous/asynchronous TypeScript, C++, Rust and Lean generated code,
+then runs four offline and five remote rows for each new Rust/Lean target.
+Offline stdio covers exact `0,2,5` reports, wrong observations and failed
+negotiation; plain TCP must deny interface authority before factory construction.
+Local servers use a forbidden-model-checker sentinel. Live model generation uses
+the observed Windows endpoint over pinned, allowlisted TLS 1.3 mTLS, including
+wrong digest, nonallowlisted principal and wrong pin cases. Each compiled client
+runs with source roots hidden. Exact known certificate-expiry warnings are
+retained without admitting other stderr as success.
+
+The aggregate receipt binds its shared-vector and transport receipts. It is
+source/generated-client acceptance, not the registered 22-case M5 interop run,
+the entire historical client matrix below, or an installed-distribution audit.
+See [Lean target](../../Docs/model-interface-compiler/lean-target.md),
+[Rust target](../../Docs/model-interface-compiler/rust-target.md), and
+[shared corpus](../../test/fixtures/model-interface/language/README.md).
+
 ## Full local matrix
 
 Unmodified real clients must interoperate with the Lean mirror over the
@@ -242,9 +283,11 @@ per-constructor parity with Protocol/Format/Json.hs.
    the peer's close_notify that \`SSL_read\` had already consumed —
    \`dsh_tls_close\` now flips the BIOs to non-blocking around the
    shutdown. Found ONLY by interop: \`transport_spec\` exercises one TLS
-   connection per server instance. Gotcha for future shim edits: the
-   executables do not relink when only the C shim changes — delete
-   \`bin/mirror\` (and the \`.o\`) to force a relink.
+   connection per server instance. The historical workaround required a manual
+   relink. The current [native build graph](../../Docs/native-build-design.md)
+   tracks shim sources, included headers, compiler identity and OpenSSL settings;
+   rebuild normally and use `bash tools/check-native-rebuild.sh` after dependency
+   graph changes.
 2. \`Codec\`: optional fields rejected when the key is absent (JS clients omit
    optional fields; Haskell clients send explicit nulls). \`optFieldStr\`
    now implements full Haskell \`.:?\` semantics (absent or null -> none).
@@ -255,6 +298,42 @@ per-constructor parity with Protocol/Format/Json.hs.
 4. \`Shell\`: the explorer dispatch passed \`exports\` and \`invariants\`
    swapped to the explorer oracles, so apalache was told about zero state
    invariants.
+
+## Reviewed projected-corpus integration
+
+```bash
+python3 tools/model-interface-projected-corpus/check.py \
+  --out /tmp/m6-public-corpus-new
+```
+
+The output directory must not exist. This explicit cross-repository gate needs
+the MirrorECMA and MirrorGate checkouts, their installed TypeScript dependencies,
+Node 24, npm, Python, tar, Bubblewrap permissions and prepared Gate prerequisites.
+`--compiler`, `--mirror`, `--ecma-repo` and `--gate-repo` select explicit paths.
+It remains separate from generic `lake test`, which does not require those
+external checkouts.
+
+The [public projected-cells fixture](../../test/fixtures/model-interface/projected-cells/)
+uses a fixed synthetic review record. The gate regenerates its proposal, seal,
+corpus, workflow lock and async bundle through the CLI, performs read-only checks
+and trace-member preflight, and type-checks the generated consumer against the
+packed SDK. It then relocates the installation and runs with the three source
+checkouts hidden and networking isolated.
+
+The same suite exercises local replay and Gate's actual worker collection bridge:
+complete action/pair coverage, a deliberate typed observation mismatch, deferred
+acquisition and confirmed cleanup. Disposer failures must prevent a passing
+outcome. Gate's persisted cleanup receipts are checked independently. Artifact
+loader rejection happens before any Gate preparation; later replay preflight
+can follow control-session preparation and must leave implementation binding
+unstarted while confirming control cleanup.
+
+All replay uses supplied traces. A forbidden model-check sentinel must remain
+untouched. `receipt.json` retains input, package, executable and artifact hashes
+plus runtime results and log identities. This is bounded source and relocated
+package integration evidence; it does not establish fresh M5 release
+qualification. The [M6 execution record](../../Plans/m6-reviewed-scaffolds-and-corpora.md)
+records the accepted run and limits.
 
 ## Focused C++ / Lean / Rust conformance
 

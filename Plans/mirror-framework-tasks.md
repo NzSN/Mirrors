@@ -4,7 +4,17 @@ Date: 2026-09-21
 
 Source: [improvement roadmap](mirror-framework-improvements.md)
 
-Scope: develop and assign implementation tasks; implementation is queued.
+Original scope (2026-09-21): develop and assign implementation tasks; implementation
+was queued at that planning checkpoint.
+
+Current status (2026-10-03): the selected `m5-wsl-windows-remote/v1` profile is
+qualified for post-M6 working-tree C0
+`879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`.
+See [current readiness](q3-post-m6-2026-10-03.md) for the exact installed
+runs, independent Q2 verification and limits, and [milestone status](mirror-framework-improvements.md#delivery-order-and-ownership)
+for the remaining broader M4 scope. Later commits and documentation changes
+do not inherit that qualification. The assignments and checkpoints below are
+historical; their queued or blocked labels are not the current backlog.
 
 Execution started on 2026-09-22 at the user's request. See
 [execution decisions and active ownership](execution-decisions.md). B1/C1/I1,
@@ -23,7 +33,7 @@ Planning-time source identities (recheck before implementation):
 These read-only observations identify the planning inputs, not a newly tested
 cross-repository combination.
 
-## 2026-09-25 candidate status
+## Historical candidate status — 2026-09-25
 
 This section records the uncommitted candidate. It does not qualify M5. The
 exact catalog selection, install digests, retained run identifiers, and the
@@ -49,7 +59,11 @@ to submit that same explore session to the deployed service at
 `25.0.4+7-LTS`. Aggregate cgroup enforcement, native Ubuntu acceptance, that
 remote tier, interop, publication, and deployment were not established.
 
-## Current execution checkpoint
+## Historical execution checkpoint — September 2026
+
+Superseded by the dated entries in [CHECKPOINTS.md](../CHECKPOINTS.md) and the
+current readiness record above. This section preserves the integration state
+and ownership at that checkpoint.
 
 The planning assignments below remain historical. Active implementation now uses
 four fresh-context `general-purpose-gpt` finish owners with non-overlapping
@@ -68,7 +82,7 @@ that result as incomplete unless actual retained evidence later changes it.
 The rerun follows the execution-environment routes and host preflight defined
 in the Q1 card below.
 
-## Assignment and status rules
+## Original assignment and status rules
 
 The requested `@general-purpose-gpt` role is assigned all task families below.
 Four agents completed source-grounded work packages with non-overlapping
@@ -81,7 +95,7 @@ specific file scope. Tasks that share a file run sequentially or hand off owners
 explicitly. No task authorizes unrelated refactoring, commits, pushes, publication,
 deployment, or broad host cleanup.
 
-| Assigned agent | Task IDs | Owned planning artifact | Implementation state |
+| Assigned agent | Task IDs | Owned planning artifact | Planning-time implementation state |
 | --- | --- | --- | --- |
 | `general-purpose-gpt` / `compatibility_install_tasks` | C1–C5, I1–I5 | [Compatibility and installation](tasks/compatibility-and-installation.md) | Queued |
 | `general-purpose-gpt` / `reproduction_fidelity_tasks` | R1–R5, F1–F5 | [Reproduction and fidelity](tasks/reproduction-and-fidelity.md) | Queued |
@@ -266,13 +280,13 @@ Acceptance: every completion claim has retained evidence; source-level, local
 installed, hosted CI, and published states remain separate. The report identifies
 what can be released and what still requires a distinct operational action.
 
-## Planning completion checklist
+## Historical planning completion checklist — 2026-09-21
 
 - [x] All 30 roadmap task IDs have concrete cards and assigned roles.
 - [x] B1–B3 and Q1–Q3 cover baseline, coordination, and final qualification.
 - [x] Cross-workstream dependencies and shared file ownership are reconciled.
 - [x] Relative links and document formatting pass validation.
-- [x] Implementation remains explicitly queued; no runtime acceptance is implied.
+- [x] Implementation was explicitly queued at this checkpoint; no runtime acceptance was implied.
 
 Planning validation on 2026-09-21 checked every relative link, all 30 roadmap IDs
 exactly once across the four packages, whitespace, and worktree scope. All four

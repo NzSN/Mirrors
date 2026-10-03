@@ -3,8 +3,7 @@
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
 > Status: **Mirrors compiler/distribution, MirrorECMA compiled/dynamic modes,
-> and MirrorCPP static compiled verification implemented; Rust/Lean static
-> registries planned**
+> and MirrorCPP/MirrorRust/MirrorLean static compiled verification implemented**
 > Compiler contract:
 > [`model-interface-compiler/design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-compiler/design.md)
 > Cross-language generated interface:
@@ -22,7 +21,8 @@ The Mirrors-side version-1 path is implemented:
   UTF-8 JSONL bound;
 - canonical descriptor resolution from the replay trace bundle, exact digest
   verification, descriptor delivery, `ifNoneMatch`, and final-envelope checks;
-- fail-closed protocol admission through `Core.step`, including the
+- fail-closed protocol admission through `step` in
+  [Core/Protocol.lean](../Core/Protocol.lean), including the
   `register_traces -> register_error` refinement branch;
 - negotiated-only trace preflight before replay;
 - a bounded, content-verified, realm/principal/tenant-scoped process cache with
@@ -75,9 +75,27 @@ MirrorCPP's static D5 path is implemented in its sibling repo:
   zero-SUT paths, wrong-observer `step_mismatch`, strict codec negatives, and
   the complete portable type baseline are executable tests.
 
-The remaining external-client work is D5 for MirrorRust and MirrorLean plus
-the common cross-language recording/vector suite. Existing handwritten
-`StateComputer` entry points remain unchanged in every client.
+MirrorRust's static compiled-verification path is also implemented. Its
+[runtime source](../../MirrorRust/src/model_interface.rs) provides an exact
+four-part adapter registry, deferred factories after validated admission,
+fallible replay, and disposal. Mirrors supplies the `mirrorrust-v1` emitter;
+the [Rust target contract](model-interface-compiler/rust-target.md) records its
+native execution contract. Its bounded generated-Counter acceptance now includes
+source-hidden offline replay and remote mTLS; see the
+[interop guide](../tools/interop/INTEROP.md).
+
+MirrorLean's [generated target](model-interface-compiler/lean-target.md) and
+additive `MirrorLean.ModelInterface` static registry are implemented. The initial
+profile requires verification: exact local metadata/registry checks precede
+transport opening, a validated `matched` reply precedes factory construction,
+and the negotiated path shares the legacy replay dispatcher. There is no implicit
+legacy fallback. Its bounded generated-Counter matrix covers the same four
+offline and five remote mTLS rows as Rust, with sources hidden during replay.
+
+The [shared vector gate](../tools/model-interface-conformance/check.py) executes
+six generated profiles. Existing handwritten `StateComputer` entry
+points remain unchanged. These source/native/transport results do not change the
+legacy all-transport matrix or requalify the recorded framework M5 candidate.
 
 MirrorECMA also implements additive async compiled replay through
 `AsyncCompiledAdapterRegistry`, `runClientNegotiatedWithReport`, and
@@ -966,8 +984,8 @@ normalized before repartition can discard metadata, and both descriptor
 resolution and replay use this single preparation. The two command cases
 retain their stated resolution/repartition order. Neither permits regenerating
 or reloading a different trace set for replay.
-`dispatchRegistration` follows the `Core.step` acceptance or rejection result
-as required in §18.2.
+`dispatchRegistration` follows the acceptance or rejection result of `step` in
+[Core/Protocol.lean](../Core/Protocol.lean), as required in §18.2.
 
 The current `ItfTrace` parser discards `#meta.varTypes`. Compiler integration
 therefore needs a richer trace bundle rather than attempting to recover type
@@ -1337,7 +1355,8 @@ kinds. Their accepted transitions retain the existing ordered stepping
 outputs. Absence of a derivation here is decidable from the finite Boolean
 inputs; it is not a general negation-as-failure rule for effectful programs.
 
-The shell must not bypass `Core.step` by sending `register_error` directly:
+The shell must not bypass `step` in [Core/Protocol.lean](../Core/Protocol.lean)
+by sending `register_error` directly:
 
 ```text
 decision ← resolveNegotiation(registration);
@@ -1568,7 +1587,7 @@ local handlers over stdio and authorized mTLS without evaluating remote code;
 descriptor-read denial and pre-binding failures make zero callbacks, while a
 behaviorally wrong observer reaches ordinary `step_mismatch`.
 
-### D5: static clients — C++ generated bindings; Rust runtime; Lean planned
+### D5: static clients — C++/Rust/Lean generated bindings
 
 - MirrorCPP implements exact digest verification, an immutable exact-key
   adapter registry, and generated `mirrorcpp-v1` bindings using the Counter
@@ -1580,11 +1599,19 @@ behaviorally wrong observer reaches ordinary `step_mismatch`.
 - MirrorRust now has strict compiled verification, an exact registry and deferred
   fallible bindings. Its Gate Counter is a reviewed handwritten fixture; see the
   [implementation record](../../MirrorGate/docs/rust-evaluator-sdk-status.md).
-- Rust/Lean generated targets and the MirrorLean registry remain follow-up work.
+- Mirrors implements the `mirrorrust-v1` generated target, including native
+  codecs and fallible bindings consumed by that runtime; see the
+  [Rust target and validation boundary](model-interface-compiler/rust-target.md).
+- Mirrors implements `mirrorlean-v1`; MirrorLean supplies required-only compiled
+  verification, an exact local registry and deferred fallible bindings. Its
+  negotiated runner shares the legacy dispatcher and disposes acquired bindings.
 
-Partial exit: the Rust runtime admission seam is delivered alongside the existing
-TypeScript/C++ paths. Full generated-target exit still requires Rust/Lean emitters
-and generated-binding acceptance; runtime support alone is not that milestone.
+Implemented exit evidence: six generated profiles pass the shared
+judgment/value/projection/recording suite. Rust and Lean each pass four offline
+and five remote mTLS generated-Counter rows, including zero-factory digest,
+authorization and pin failures and ordinary observer mismatch. See the
+[interop guide](../tools/interop/INTEROP.md) for the bounded matrix; these results
+do not establish release qualification or extend the legacy all-transport scope.
 
 ## 22. Rejected alternatives
 

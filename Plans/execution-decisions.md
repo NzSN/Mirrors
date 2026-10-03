@@ -6,6 +6,33 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
+## Current status — 2026-10-03
+
+The post-M6 working-tree C0
+`879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`
+qualifies for `m5-wsl-windows-remote/v1`: all 18 required commands and 16 tiers,
+the 19-node scope with both D bindings, and 20 independently verified bundles
+pass; six negative controls reject. [Current readiness](q3-post-m6-2026-10-03.md)
+records the exact candidate, installed runs and remote identity. This fresh
+freeze includes the Mirrors/MirrorECMA compiler/client follow-ups and M6 changes,
+plus regenerated example bundles after an initial stale-bundle rejection.
+Qualification remains bound to these exact recorded inputs.
+
+M4 remains partial overall: prepared-filesystem ownership recovery is credited,
+while aggregate cgroups and active-process post-restart recovery are unqualified.
+Native Ubuntu, Windows service-manager acceptance and the legacy all-transport
+interop matrix are also outside the completed profile. The separately authorized
+[compiler/client follow-ups](compiler-client-followups-2026-10-03.md) and
+[M6 reviewed-scaffold and corpus work](m6-reviewed-scaffolds-and-corpora.md) are
+complete for their declared source and public integration scope. M5's pinned
+compatibility matrix does not qualify every newly generated-client feature.
+The qualified working-tree changes remain uncommitted.
+
+The dated decisions below and the original September integration/ownership
+records are history. Their pending tasks and uncommitted states describe those
+checkpoints; they are superseded as current status by this section and the
+newest entries in [CHECKPOINTS.md](../CHECKPOINTS.md).
+
 ## 2026-10-01 — Full named M5 profile qualified
 
 The five-item completion plan passes for `m5-wsl-windows-remote/v1`, exact C0
@@ -73,7 +100,7 @@ from M5 while retaining them as unqualified separate capabilities.
 This entry records the execution target and feasibility decision, not a claim
 that pin migration or the remaining framework campaign has already run.
 
-## Selected scope
+## Original selected scope — 2026-09-22
 
 - Implement the initial checked-corpus Node distribution, with a separately
   selected Linux Gate profile and optional fresh-trace tooling. No package
@@ -101,7 +128,7 @@ that pin migration or the remaining framework campaign has already run.
   validation uses evaluator-selected pinned Apalache in the optional fresh-trace
   profile; ordinary checked replay does not acquire that dependency.
 
-## Active ownership
+## Historical initial ownership — 2026-09-22
 
 | Agent | Initial tasks | Exclusive files |
 | --- | --- | --- |
@@ -201,9 +228,9 @@ Focused checks run first. Owning-repository full gates run for changed behavior;
 required environment failures remain failures or unavailable tiers, never passes.
 No candidate qualifies through mocked enforcement or a missing retained log.
 
-## Reviewed progress
+## Historical reviewed progress — September 2026
 
-| Tasks | Current evidence and status |
+| Tasks | Evidence and status at this checkpoint |
 | --- | --- |
 | B1, C1, I1 | Inventory/profile artifacts reviewed and accepted; no runtime qualification implied |
 | C2, E1 | Shared local contracts reviewed; E1's 20 executable contract tests independently passed |
@@ -323,10 +350,11 @@ This resolves the missing-Java prerequisite without a global installation or pin
 relaxation. Existing immutable catalog/cache selections retain their original
 input records; a new build records the newly prepared dependency separately.
 
-## Current integration checkpoint
+## Historical integration checkpoint — September 2026
 
-This checkpoint supersedes earlier prerequisite and test-count observations;
-those paragraphs remain as execution history. Implementation is still active.
+At the time, this checkpoint superseded earlier prerequisite and test-count
+observations while implementation was active. All remain execution history;
+the current-status section above supersedes them as a statement of open work.
 
 - E2's predeclared private attachments passed the 73-test evidence suite. Command
   registration waits for the reproduction owner's exact argv and output contract.
@@ -397,7 +425,7 @@ recovery audit confirmed outstanding retryable cgroup cleanup, complete receipt
 validation, actual original-result immutability tests, real-workload test-source
 coverage, and stale documentation; these remain acceptance requirements.
 
-### Fresh-context finish assignments
+### Historical fresh-context finish assignments
 
 Four fresh-context `general-purpose-gpt` agents now own the remaining bounded
 implementation scopes. `distribution_finish` owns catalog/distribution and the

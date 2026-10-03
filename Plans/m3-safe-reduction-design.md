@@ -1,15 +1,25 @@
 # M3 safe reduction: reducer design
 
-Date: 2026-09-28. Updated 2026-09-30.
+Date: 2026-09-28. Status updated 2026-10-03.
 
-Status: implemented and published (Mirrors `b19e090`, MirrorECMA `da18f1a`;
-follow-up fixes through MirrorECMA `4992b07` and Mirrors `e8ba489`). The prefix
+Status: prefix and domain reduction are qualified for the selected
+`m5-wsl-windows-remote/v1` profile on post-M6 working-tree C0
+`879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`.
+The [current readiness record](q3-post-m6-2026-10-03.md) binds the
+installed reductions, reproduction linkage and independent Q2 verification.
+It does not qualify later commits or documentation changes. Broader M4
+aggregate/process recovery and native Ubuntu acceptance remain unqualified.
+
+Historical implementation and prefix acceptance: published in Mirrors `b19e090`
+and MirrorECMA `da18f1a`, with follow-up fixes through MirrorECMA `4992b07` and
+Mirrors `e8ba489`. The prefix
 tier `qualification.reduction-prefix` qualified 2026-09-30 under selection
 `fed55175b792feaec86cf71bf7fae1bae680a0313797a5c982f3a6ecc746f025`
 (`framework.reduction-prefix` run-dcc51362-9084-4c2d-9eeb-9329bacb8d01,
 `shortest_reproducing_prefix`, `minimalityComplete: true`; diagnostic WSL2
-profile). The domain tier `qualification.reduction-domain` remains pending the
-remote service activation.
+profile). At that September 30 checkpoint, the domain tier
+`qualification.reduction-domain` still awaited remote service activation;
+the later Windows oracle decision and qualification supersede that blocker.
 
 Deferrals (operator decision 2026-09-29): every tier that requires a native
 Ubuntu host is deferred — no native Ubuntu machine is available. For this
@@ -26,24 +36,23 @@ Task cards: [R4/R5](tasks/reproduction-and-fidelity.md#r4---add-safe-determinist
 Existing contracts: [model-interface reduction](../Docs/model-interface-reduction.md),
 [MirrorECMA reproduction bundles](../../MirrorECMA/docs/reproduction-bundles.md),
 [reproduction adapter handoff](../tmp/m5-reproduction-adapter.md).
-Position record: [CHECKPOINTS.md](../CHECKPOINTS.md) (2026-09-27 standing).
+Position record: [CHECKPOINTS.md](../CHECKPOINTS.md) (dated execution history).
 Implementation plan: [m3-safe-reduction-implementation-plan.md](m3-safe-reduction-implementation-plan.md)
 (sequencing, owners, validation commands, re-freeze rules).
 
 ## 1. Purpose and scope
 
-Close M3's remaining sub-requirement — **safe reduction** — and thereby unblock
-the reduction half of M5 demonstration 4. Mutation controls and reproduction are
-already qualified; reduction is the only open M3 component.
+The original scope was to close M3's **safe reduction** requirement and unblock
+the reduction half of M5 demonstration 4. That scope is now qualified for the
+exact named-profile candidate above.
 
 In scope:
 
 - R4: deterministic prefix reduction over a recorded reproduction trace.
 - R5: one model-validated domain profile (`lease-service-input-shrink/v1`) with
   a model oracle.
-- The missing execution mode that both the roadmap and the standing checkpoint
-  name as the blocker: a **remote explore-session oracle** against the deployed
-  model-check service, replacing the current local-Apalache pin.
+- A **remote explore-session oracle** against the deployed model-check service,
+  resolving the original local-Apalache execution blocker.
 
 Out of scope (unchanged from the parent plan): a general trace solver, new wire
 protocols, additional domain profiles, native-client reduction, publication,
@@ -58,16 +67,15 @@ deployment.
 | Domain profile (R5) | MirrorECMA `src/lease-reduction.ts` (`lease-service-input-shrink/v1`, domain `LeaseService.Next/v1`) | source-implemented; `test/reproduction-domain-reducer.test.ts` |
 | Candidate validator | Mirrors `Core/ModelInterface/Reduction.lean` + `Codec/ModelInterfaceReductionJson.lean`, gate `model_interface_spec` | source-implemented |
 | Installed oracle driver | MirrorECMA `scripts/materialize-lease-reduction.mjs` (tool manifest `mirrorecma.lease-reduction-tools/v1` local, `/v2` remote), shipped in the installed `mirrorecma` package | source-implemented; remote mode implemented (MirrorECMA `da18f1a`) |
-| Installed prefix driver | MirrorECMA `scripts/reduce-reproduction-prefix.mjs`, shipped in the installed `mirrorecma` package (packaging fix Mirrors `e8ba489`) | implemented; **qualified 2026-09-30** (`run-dcc51362-9084-4c2d-9eeb-9329bacb8d01`) |
-| Evidence commands | Mirrors `tools/evidence/commands.json`: `framework.reduction-prefix`, tier `qualification.reduction-prefix` (required), adapter `mirrorecma.reproduction-prefix-reduction/v1`; `framework.reduction`, tier `qualification.reduction-domain` (required), adapter `mirrorecma.lease-reduction-oracle/v2` | prefix registered and qualified; domain registered, not qualified (operator service activation pending) |
+| Installed prefix driver | MirrorECMA `scripts/reduce-reproduction-prefix.mjs`, shipped in the installed `mirrorecma` package (packaging fix Mirrors `e8ba489`) | qualified for the recorded C0 (`run-338af102-707b-4d52-8370-5b4e0aaf15f3`); shortest prefix 2/16 with complete minimality |
+| Evidence commands | Mirrors `tools/evidence/commands.json`: `framework.reduction-prefix`, tier `qualification.reduction-prefix` (required), adapter `mirrorecma.reproduction-prefix-reduction/v1`; `framework.reduction`, tier `qualification.reduction-domain` (required), adapter `mirrorecma.lease-reduction-oracle/v2` | both registered and qualified for the recorded C0; domain run `run-f9a88eae-87be-4cdb-9d2c-9e57b9b70d89` |
 | Development-oracle evidence | recorded in `Docs/model-interface-reduction.md` (cached Apalache 0.61.0 + JDK 25.0.4+7, 2026-09-22) | development-tier only; not installed-distribution qualification |
-| Remote oracle mode | MirrorECMA `src/lease-reduction.ts` (`openReductionOracleTransport`) and the materializer's `--oracle-mode remote` | implemented (MirrorECMA `da18f1a`); domain-tier qualification pending service activation |
+| Remote oracle mode | MirrorECMA `src/lease-reduction.ts` (`openReductionOracleTransport`) and the materializer's `--oracle-mode remote` | qualified against the recorded Windows Apalache 0.62.2 / Java 25.0.4+7-LTS oracle; same reduced-corpus mismatch and confirmed cleanup, with no global-minimum claim |
 
 `reduceReproductionPrefix` and the lease profile are exported from MirrorECMA's
-public API (`src/index.ts`). The prefix tier is qualified at the installed tier
-against the frozen selection above; the domain tier is not. Per checkpoint
-discipline, M3 remains Partial until `qualification.reduction-domain` is
-credited. Receipts emit integer-millisecond durations and the prefix probe
+public API (`src/index.ts`). Both reduction tiers are credited for the frozen C0
+above, including actual reduced-corpus baseline/fault replay and exact R0/R1/R5
+linkage. Receipts emit integer-millisecond durations and the prefix probe
 normalizes a truncated `coverage_unmet` prefix to "no signature"
 (MirrorECMA `b753695`, `4992b07`).
 
@@ -130,20 +138,27 @@ claim at all.
   Application output is never the validity oracle; unsupported domains return
   `reduction_profile_unsupported` without mutation.
 
-## 5. The missing piece: remote explore-session oracle mode
+## 5. Remote explore-session oracle mode
 
-### 5.1 Why the current driver cannot qualify here
+### 5.1 Historical local-only execution blocker
 
-`materialize-lease-reduction.mjs` sets `process.env.APALACHE_MC` to a local
-launcher, prepends a local JDK to `PATH`, byte-pins local mirror/validator/
-Apalache/JDK tools, and opens the oracle with `spawnMirror(local mirror)`. Local
-model checking is prohibited on this coordinator (AGENTS.md: every model check
-goes through the Mirrors CLI against `192.168.150.219:8999`; no local Apalache
-or TLC). The deployed service currently reports Apalache 0.58.2 / Java 21.0.11,
-not the selected 0.61.0 / 25.0.4+7-LTS, so a local-pin rerun on this host is
-both prohibited and identity-incompatible.
+This subsection records the pre-implementation blocker. The endpoint and
+versions below are historical; the October 1 [Windows oracle decision](execution-decisions.md#2026-10-01--current-windows-host-is-the-designated-remote-oracle)
+and current readiness record supersede them.
 
-### 5.2 Design: transport-selected oracle
+The local-only `materialize-lease-reduction.mjs` set `process.env.APALACHE_MC`
+to a local launcher, prepended a local JDK to `PATH`, byte-pinned local
+mirror/validator/Apalache/JDK tools, and opened the oracle with
+`spawnMirror(local mirror)`. Local model checking was prohibited on this
+coordinator; the then-designated service at `192.168.150.219:8999` reported
+Apalache 0.58.2 / Java 21.0.11 instead of the selected 0.61.0 / 25.0.4+7-LTS.
+A local-pin rerun was therefore both prohibited and identity-incompatible.
+
+### 5.2 Original design: transport-selected oracle
+
+The mechanism below is implemented. Original version pins and schema options
+record the design baseline; current remote acceptance uses the v2 receipt and
+the oracle identity in the current readiness record.
 
 The explore session is already transport-agnostic:
 `startExploreSession(target: string | Transport, …)` and the transport layer
@@ -181,19 +196,18 @@ driver already implements for forced close. Public projections are untouched.
 ## 6. Evidence and registry integration
 
 - `framework.reduction` keeps tier `qualification.reduction-domain`,
-  `required`, and is recorded as blocked — never skipped or optional — until
-  credited (the tier split was adopted; see the implementation plan).
-- The command's argv gains the oracle-mode flag and the service-identity
-  argument; per frozen-selection rules this invalidates the current selection,
-  so the change ships only together with re-freeze, re-snapshot, cache
-  rebuilds, reinstall, and rerun of affected tiers.
-- Sequencing option (recommended): split the tier into
+  `required`. An unavailable required tier is blocked, never skipped or optional;
+  both reduction tiers now have credit for the recorded C0.
+- The command's argv gained the oracle-mode flag and the service-identity
+  argument. That change required a new freeze, snapshot, cache rebuilds,
+  installation and affected-tier reruns before credit.
+- The adopted tier split separates
   `qualification.reduction-prefix` (R4; needs no model checker — replay only,
   qualifiable locally) and `qualification.reduction-domain` (R5; gated on the
-  activated remote service). This lets M3 evidence advance honestly while the
-  operator prerequisite is open, without diluting the M3 exit condition.
+  activated remote service). This allowed prefix acceptance before remote
+  activation without diluting the M3 exit condition.
 
-## 7. Remaining work
+## 7. Implementation and qualification record
 
 This list is executed by the [implementation plan](m3-safe-reduction-implementation-plan.md);
 the plan owns sequencing, per-task owners and files, validation commands, and
@@ -209,10 +223,14 @@ the re-freeze rules. The items below are the design-level summary.
    `b19e090`; packaging fix for the installed prefix driver in `e8ba489`.
 3. Operator: activate Apalache 0.61.0 / Java 25.0.4+7-LTS on
    `192.168.150.219:8999` and supply the same-time identity observation.
-   **Remaining — the only open item in this list (SR-5b).**
+   **Superseded** by the October 1 Windows oracle decision. SR-5b is now
+   credited under the current named-profile C0; the original server activation
+   is no longer its prerequisite.
 4. Re-freeze the selection; rerun the reduction tier(s) and every tier the
    change touches; update Q3. **Executed** — rounds m3r1–m3r5; Q3 readiness
-   updated in [q3-readiness-2026-09-30.md](q3-readiness-2026-09-30.md).
+   updated in [q3-readiness-2026-09-30.md](q3-readiness-2026-09-30.md). Later
+   full reruns qualified both tiers; [current readiness](q3-post-m6-2026-10-03.md)
+   records the latest exact candidate.
 
 ## 8. Acceptance (mapped to plan §3 and R4/R5 cards)
 
@@ -232,17 +250,18 @@ the re-freeze rules. The items below are the design-level summary.
 - Non-resettable or unstable cases retain the original bundle and report why
   reduction was unavailable or inconclusive.
 
-## 9. Preconditions and open decisions
+## 9. Decision record and separate open scope
 
-1. Operator service activation + identity observation (blocks R5 qualification
-   and, jointly, the remote model-check tier).
+1. Operator service activation + identity observation was the R5/remote-model
+   qualification prerequisite. The selected Windows oracle and same-campaign
+   identity observations satisfy it for the recorded C0.
 2. Reduction dispatch timing — settled 2026-09-29: the remote mode was
    implemented first and the prefix tier qualified 2026-09-30; the domain
-   tier qualifies after activation.
+   tier subsequently qualified under the Windows oracle decision.
 3. Remote JDK pin reconciliation — settled 2026-09-30 as a recorded rule
    (tools/evidence/README.md, Docs/qualification-harness-design.md): remote
-   pins name the service-host staged toolchain (pending operator
-   observation); local tiers pin the verified Linux carrier.
+   pins name the observed service-host toolchain; local tiers pin the verified
+   Linux carrier. Current remote observations are retained with the Q3 record.
 4. `handling` governance for reproduction policy IDs remains a separate open
    decision; reduction receipts reference but do not define them.
 5. Deferred with the native-Ubuntu decision: M4 aggregate cgroup-v2 enforcement

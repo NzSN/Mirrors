@@ -9,6 +9,7 @@ import Codec.StrictJson
 import Codec.Json
 import Shell.ModelInterface.Evidence
 import Shell.ModelInterface.Emit.Rust
+import Shell.ModelInterface.Emit.Lean
 import Shell.ModelInterface.Emit.Cpp
 import Shell.ModelInterface.Emit.CMake
 import Shell.ModelInterface.Emit.TypeScript
@@ -55,12 +56,13 @@ def generatedPublicationLockPath : String := ".model-interface-generation.lock"
 def mirrorecmaTarget : String := "mirrorecma-v1"
 def mirrorecmaAsyncTarget : String := "mirrorecma-async-v1"
 def mirrorrustTarget : String := "mirrorrust-v1"
+def mirrorleanTarget : String := "mirrorlean-v1"
 def mirrorcppTarget : String := "mirrorcpp-v1"
 def mirrorcppTypedMapsTarget : String := "mirrorcpp-v2"
 
 def supportedTarget (target : String) : Bool :=
   target == mirrorecmaTarget || target == mirrorecmaAsyncTarget || target == mirrorcppTarget ||
-    target == mirrorcppTypedMapsTarget || target == mirrorrustTarget
+    target == mirrorcppTypedMapsTarget || target == mirrorrustTarget || target == mirrorleanTarget
 def maxModelInterfaceItfArtifactBytes : Nat := 16 * 1024 * 1024
 def maxCompilerArtifactBytes : Nat := 16 * 1024 * 1024
 
@@ -147,7 +149,7 @@ private partial def readBoundedArtifactAux (handle : IO.FS.Handle)
   if chunk.isEmpty then return .ok accumulator
   readBoundedArtifactAux handle path limit (accumulator.append chunk)
 
-private def readBytesWithLimit (path : String) (limit : Nat) :
+def readBytesWithLimit (path : String) (limit : Nat) :
     IO (Except CompilerError ByteArray) := do
   try
     let handle ← IO.FS.Handle.mk path .read
@@ -254,7 +256,7 @@ private def scaffoldActionLabels (json : Lean.Json) (variables : List String) :
       transitions := appendUnique transitions action
   return (initializers, transitions)
 
-private def resolveLoaded (paths : InputPaths) (sources : List SourceDigest)
+def resolveLoaded (paths : InputPaths) (sources : List SourceDigest)
     (contract : ContractV1) (evidence : ModelEvidence) :
     Except CompilerError Compilation := do
   let contractBytes := MIJson.canonicalBytes (MIJson.encodeContract contract)
@@ -311,7 +313,7 @@ private def frontendDiagnostic (diagnostic : Core.Tla.Diagnostic) : Diagnostic :
 /-- Analyze one model source with the shared TLA+ frontend. A captured root that
 cannot be read stays an infrastructure failure; parse, graph, and elaboration
 failures are findings. -/
-private def analyzeSource (specPath : String) :
+def analyzeSource (specPath : String) :
     IO (Except CompilerError Shell.Tla.FrontendResult) := do
   match ← Shell.Tla.analyzeFile { specPath := specPath } with
   | .ok result => pure (.ok result)
@@ -371,7 +373,7 @@ private def sourceDigestOf (identity : Core.Tla.SourceIdentity) : SourceDigest :
     contentSha256 := identity.contentSha256 }
 
 /-- The complete captured source manifest as lock digests. -/
-private def frontendSourceDigests (result : Shell.Tla.FrontendResult) :
+def frontendSourceDigests (result : Shell.Tla.FrontendResult) :
     List SourceDigest :=
   result.sourceManifest.toList.map sourceDigestOf
 
@@ -413,9 +415,10 @@ def compile (paths : InputPaths) : IO (Except CompilerError Compilation) := do
       { source with logicalPath := contract.model.source } else source
   return resolveLoaded paths sources contract evidence
 
-private structure LoadedProjectionBase where
+structure LoadedProjectionBase where
   normalizedSourceBytes : ByteArray
   sourceDigest : SourceDigest
+  sources : List SourceDigest
   sourceVariables : List String
   rawBytes : ByteArray
   rawEvidence : ModelEvidence
@@ -427,14 +430,14 @@ private structure LoadedProjectionBase where
 /-- Load and validate the exact source/raw-evidence relationship before an
 optional projection plan is even read. This preserves stale-source failure as
 an independent boundary. -/
-private def loadProjectionBase (specPath evidencePath : String) :
-    IO (Except CompilerError LoadedProjectionBase) := do
-  let rawBytes ← match ← readBytesWithLimit evidencePath maxModelInterfaceItfArtifactBytes with
-    | .ok evidence => pure evidence
-    | .error error => return .error error
+def loadProjectionBaseFromCapture (result : Shell.Tla.FrontendResult)
+    (specPath evidencePath : String) (rawBytes : ByteArray) :
+    Except CompilerError LoadedProjectionBase := do
+  if rawBytes.size > maxModelInterfaceItfArtifactBytes then
+    return ← finding "raw evidence exceeds compiler artifact limit"
   let evidenceRaw ← match String.fromUTF8? rawBytes with
     | some evidence => pure evidence
-    | none => return finding s!"artifact {evidencePath} is not valid UTF-8"
+    | none => return ← finding s!"artifact {evidencePath} is not valid UTF-8"
   let evidenceLimits : Codec.StrictJson.Limits := {
     Codec.StrictJson.defaultLimits with maxBytes := maxModelInterfaceItfArtifactBytes }
   let evidenceName := diagnosticSourceName
@@ -443,31 +446,28 @@ private def loadProjectionBase (specPath evidencePath : String) :
     | .ok json => pure json
     | .error error =>
         let reason := s!"invalid structural evidence: {error}"
-        return finding reason [scaffoldInputDiagnostic "MIC-S-EVIDENCE-001"
+        return ← finding reason [scaffoldInputDiagnostic "MIC-S-EVIDENCE-001"
           "evidence" evidenceName reason]
   let evidence ← match Evidence.fromJson evidenceJson evidenceName with
     | .ok evidence => pure evidence
     | .error error =>
         let reason := s!"invalid structural evidence: {error}"
-        return finding reason [scaffoldInputDiagnostic "MIC-S-EVIDENCE-001"
+        return ← finding reason [scaffoldInputDiagnostic "MIC-S-EVIDENCE-001"
           "evidence" evidenceName reason]
-  let result ← match ← analyzeSource specPath with
-    | .ok result => pure result
-    | .error error => return .error error
   match admitSourceEvidence result evidence.traceVars specPath with
-  | .error error => return .error error
+  | .error error => throw error
   | .ok () => pure ()
   let sourceVariables := result.variableNames
   let some rootNode := result.graph.findNode? result.root
-    | return finding "model source closure does not identify its root module"
+    | return ← finding "model source closure does not identify its root module"
   let logicalSource ← match scaffoldLogicalSource specPath with
     | .ok path => pure path
-    | .error error => return .error error
+    | .error error => throw error
   let (rawInitializerLabels, rawTransitionLabels) ←
     match scaffoldActionLabels evidenceJson evidence.traceVars with
     | .ok labels => pure labels
     | .error error =>
-        return .error { error with diagnostics := error.diagnostics ++ [
+        throw { error with diagnostics := error.diagnostics ++ [
           scaffoldInputDiagnostic "MIC-S-EVIDENCE-001" "actionLabels"
             evidenceName error.message] }
   let normalizedSourceBytes := rootNode.unit.normalizedUtf8
@@ -483,9 +483,11 @@ private def loadProjectionBase (specPath evidencePath : String) :
     sourceVariables
     sourceTypes
   }
-  return .ok {
+  return {
     normalizedSourceBytes
     sourceDigest
+    sources := (frontendSourceDigests result).map fun source =>
+      if source.moduleName == result.root.name then sourceDigest else source
     sourceVariables
     rawBytes
     rawEvidence := evidence
@@ -495,7 +497,19 @@ private def loadProjectionBase (specPath evidencePath : String) :
     context
   }
 
-private def compileProjectionLoaded (base : LoadedProjectionBase) (planPath : String) :
+/-- Read one raw member against a captured source graph. Multi-member workflows
+capture the graph once and use `loadProjectionBaseFromCapture` for every input. -/
+def loadProjectionBase (specPath evidencePath : String) :
+    IO (Except CompilerError LoadedProjectionBase) := do
+  let rawBytes ← match ← readBytesWithLimit evidencePath maxModelInterfaceItfArtifactBytes with
+    | .ok bytes => pure bytes
+    | .error error => return .error error
+  let result ← match ← analyzeSource specPath with
+    | .ok result => pure result
+    | .error error => return .error error
+  return loadProjectionBaseFromCapture result specPath evidencePath rawBytes
+
+def compileProjectionLoaded (base : LoadedProjectionBase) (planPath : String) :
     IO (Except CompilerError TraceProjectionResult) := do
   let planBytes ← match ← readBytesWithLimit planPath maxCompilerArtifactBytes with
     | .ok bytes => pure bytes
@@ -574,6 +588,10 @@ def compileScaffold (paths : ScaffoldPaths) :
 
 /-- Recompute and verify both digests carried by a decoded lock. -/
 def verifyLock (lock : LockedModelInterface) : Except CompilerError Unit := do
+  if let some workflow := lock.provenance.workflow then
+    match Codec.ModelInterfaceJson.validateWorkflowProvenance workflow with
+    | .error error => return ← finding s!"invalid workflow provenance: {error}"
+    | .ok () => pure ()
   if !semanticDescriptorWellFormedV1 lock.semanticDescriptor then
     return ← finding "lock descriptor violates version-1 semantic invariants"
   let semantic := domainDigest descriptorDigestDomain
@@ -589,6 +607,26 @@ def verifyLock (lock : LockedModelInterface) : Except CompilerError Unit := do
   if provenance != lock.provenanceDigest then
     return ← finding "lock provenance digest does not match its provenance"
   return ()
+
+/-- Attach a validated review path without changing the resolved interface or
+its semantic identity. The caller has already recomputed source, review, raw
+evidence, and projection links; this seam validates the lock representation. -/
+def attachWorkflow (compilation : Compilation) (workflow : WorkflowProvenance) :
+    Except CompilerError Compilation := do
+  verifyLock compilation.lock
+  match Codec.ModelInterfaceJson.validateWorkflowProvenance workflow with
+  | .error error => return ← finding s!"invalid workflow provenance: {error}"
+  | .ok () => pure ()
+  let provenance := { compilation.lock.provenance with workflow := some workflow }
+  let provenanceBytes := MIJson.canonicalProvenanceBytes provenance
+  let lock := { compilation.lock with
+    provenance := provenance
+    provenanceDigest := domainDigest provenanceDigestDomain provenanceBytes }
+  return { compilation with
+    resolved := { compilation.resolved with provenance }
+    lock
+    provenanceBytes
+    lockBytes := MIJson.canonicalFileBytes (MIJson.encodeLock lock) }
 
 /-- Strictly load a checked-in lock and verify its content digests. -/
 def loadVerifiedLock (path : String) : IO (Except CompilerError LockedModelInterface) := do
@@ -613,6 +651,8 @@ def emitTarget (target : String) (lock : LockedModelInterface) :
       Emit.TypeScriptAsync.emitTypeScriptAsync lock
     else if target == mirrorrustTarget then
       Emit.Rust.emitRust lock
+    else if target == mirrorleanTarget then
+      Emit.Lean.emitLean lock
     else if target == mirrorcppTarget || target == mirrorcppTypedMapsTarget then
       Emit.Cpp.emitCpp lock target
     else
@@ -914,7 +954,7 @@ private def replaceStaged (temporary target : String) (mayRemoveTarget : Bool) :
             throw publishError
       | _ => throw firstError
 
-private def atomicWrite (path : String) (bytes : ByteArray)
+def atomicWrite (path : String) (bytes : ByteArray)
     (mayReplace : Bool) : IO (Except CompilerError Unit) := do
   let prepared ← prepareStandaloneTarget path true
   let (target, targetExists) ← match prepared with
@@ -1466,14 +1506,11 @@ private def compareContainedFile (root relative : String) (expected : ByteArray)
     | .error error => return .error error
   return .ok (actual == expected)
 
-/-- Resolve and emit entirely in memory, then byte-compare the lock and every
+/-- Emit an admitted compilation in memory, then byte-compare its lock and every
 owned target file. This function performs no filesystem writes or repairs. -/
-def check (paths : InputPaths) (lockPath target out : String) (bundle : Bool := false) :
+def checkCompilation (compilation : Compilation) (lockPath target out : String)
+    (bundle : Bool := false) :
     IO (Except CompilerError CheckReport) := do
-  let compilationResult ← compile paths
-  let compilation ← match compilationResult with
-    | .ok value => pure value
-    | .error error => return .error error
   let tree ← match emitPublication target compilation.lock bundle with
     | .ok tree => pure tree
     | .error error => return .error error
@@ -1495,6 +1532,15 @@ def check (paths : InputPaths) (lockPath target out : String) (bundle : Bool := 
     | .ok false => stale := stale ++ [path]
     | .ok true => pure ()
   return .ok { stalePaths := stale, diagnostics := compilation.diagnostics }
+
+/-- Recompute ordinary inputs and compare the lock and generated payloads
+without writing. Reviewed callers use `checkCompilation` after review admission. -/
+def check (paths : InputPaths) (lockPath target out : String) (bundle : Bool := false) :
+    IO (Except CompilerError CheckReport) := do
+  let compilation ← match ← compile paths with
+    | .ok value => pure value
+    | .error error => return .error error
+  checkCompilation compilation lockPath target out bundle
 
 /-! ## Read-only trace preflight -/
 
@@ -1673,9 +1719,17 @@ private def expandTracePath (path : String) : IO (Except CompilerError (List Str
   catch error =>
     return infrastructure s!"cannot inspect trace path {path}: {error}"
 
-private def readStrictTrace (path : String) :
-    IO (Except CompilerError (ItfTrace × ModelEvidence)) := do
-  let rawResult ← readBoundedTraceBytes path
+private structure LoadedPreflightTrace where
+  trace : ItfTrace
+  evidence : ModelEvidence
+  fileSha256 : String
+  fileBytes : Nat
+
+private def readStrictTrace (path : String) (remainingBytes : Option Nat := none) :
+    IO (Except CompilerError LoadedPreflightTrace) := do
+  let rawResult ← match remainingBytes with
+    | none => readBoundedTraceBytes path
+    | some remaining => readBytesWithLimit path (min remaining maxPreflightTraceArtifactBytes)
   let raw ← match rawResult with
     | .ok value => pure value
     | .error error => return .error error
@@ -1689,20 +1743,38 @@ private def readStrictTrace (path : String) :
     | .ok evidence => pure evidence
     | .error error =>
         return finding s!"invalid structural metadata in trace {path}: {error}"
-  return .ok (trace, evidence)
+  return .ok { trace, evidence, fileSha256 := Sha256.digestHex raw, fileBytes := raw.size }
 
-private def readStrictTraces (path : String) :
-    IO (Except CompilerError (List (ItfTrace × ModelEvidence))) := do
+def maxWorkflowPreflightTraceBytes : Nat := 64 * 1024 * 1024
+
+private def readStrictTraces (path : String) (memberBound : Option Nat := none) :
+    IO (Except CompilerError (List LoadedPreflightTrace)) := do
   let pathsResult ← expandTracePath path
   let paths ← match pathsResult with
     | .ok value => pure value
     | .error error => return .error error
+  if let some bound := memberBound then
+    if paths.isEmpty || paths.length > bound then
+      return finding s!"workflow preflight expects 1..{bound} traces"
   let mut traces := []
+  let mut remaining := maxWorkflowPreflightTraceBytes
   for tracePath in paths do
-    match ← readStrictTrace tracePath with
-    | .ok trace => traces := traces ++ [trace]
+    match ← readStrictTrace tracePath (memberBound.map fun _ => remaining) with
+    | .ok trace =>
+        traces := traces ++ [trace]
+        remaining := remaining - trace.fileBytes
     | .error error => return .error error
   return .ok traces
+
+/-- A reviewed trace must match both the declared structural metadata and the
+exact admitted file. Aggregate structural evidence is never a member identity. -/
+def workflowAdmitsTrace (workflow : WorkflowProvenance)
+    (fileSha256 evidenceSha256 : String) : Bool :=
+  workflow.members.any fun member =>
+    match member.projection with
+    | some projection => projection.fileSha256 == fileSha256 &&
+        projection.evidenceSha256 == evidenceSha256
+    | none => member.rawFileSha256 == fileSha256 && member.evidenceSha256 == evidenceSha256
 
 def encodeCoverageReport (lock : LockedModelInterface) (coverage : CoverageReport) :
     Lean.Json :=
@@ -1727,15 +1799,20 @@ def runPreflight (lockPath tracePath : String) (requireAllActions : Bool := fals
     | .ok value => pure value
     | .error error => return .error error
   let tracesResult ← readStrictTraces tracePath
+    (lock.provenance.workflow.map fun _ => maxWorkflowMembersV1)
   let loaded ← match tracesResult with
     | .ok value => pure value
     | .error error => return .error error
   match loaded.find? (fun item =>
-      item.2.evidenceSha256 != lock.provenance.evidenceSha256) with
+      match lock.provenance.workflow with
+      | some workflow => !workflowAdmitsTrace workflow item.fileSha256 item.evidence.evidenceSha256
+      | none => item.evidence.evidenceSha256 != lock.provenance.evidenceSha256) with
   | some _ =>
-      return finding "trace structural evidence does not match the verified lock"
+      return finding (if lock.provenance.workflow.isSome then
+        "trace identity or structural evidence does not match the verified lock"
+        else "trace structural evidence does not match the verified lock")
   | none => pure ()
-  let traces := loaded.map Prod.fst
+  let traces := loaded.map (·.trace)
   let configured := lock.runProfile.configuredParamVar.toList
   let traces := traces.map (applyParamVars configured)
   let result := Core.ModelInterface.preflight lock traces { requireAllActions }

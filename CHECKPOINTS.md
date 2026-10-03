@@ -5,6 +5,89 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-03 — Post-M6 candidate qualified
+
+Fresh qualification covers the compiler/client follow-ups and M6 implementation
+in the admitted working trees under the established profile.
+
+The post-M6 working-tree C0 `879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`
+qualifies for `m5-wsl-windows-remote/v1`. 2 refreshes reached byte stability; both
+caches and installs passed; local D `run-3bafa0a2-bab8-40a2-8ca3-4d75e2dea475`
+and Gate D `run-050b159c-eea4-440c-9e16-ed610c84e2ed` qualified first.
+All 18 required commands/16 tiers, 22 remote client cases, both reproduction
+branches, prefix/domain reduction, both 17-case mutations and prepared-filesystem
+recovery pass. Source-hidden LeaseService acceptance also passes.
+
+Outer Q `run-307609e0-303a-4cf3-82af-7cd7ab2090a2` and independent Q2 accept
+all 20 selected bundles and the 19-node/two-D scope; six controls reject.
+Installed trees and native process/binary/runtime identities remain stable at
+close. No local model checker ran. Native Ubuntu, aggregate cgroups,
+active-process recovery, service-manager acceptance and legacy all-transport
+interop remain unqualified. No commit or push was performed for this batch.
+
+[Current Q3 readiness](Plans/q3-post-m6-2026-10-03.md) records exact
+identities, run references and limits. Owner-only retained evidence lives at
+`~/.local/state/mirrors/m5-post-m6-final-20261003`; credentials are excluded.
+
+## 2026-10-03 — M6 reviewed scaffolds and public corpus integration complete
+
+The authorized M6 plan was presented after the compiler/client follow-ups and
+documentation housekeeping, then implemented. All five clauses pass at the
+declared source and public integration scope: deterministic multi-evidence
+scaffolding, explicit review and immutable sealing, workflow-bearing v2 lock
+provenance, atomic corpus publication, and the public projected-cells fixture.
+Legacy single-input proposal and v1 lock behavior remains available.
+
+Validation: 151 compiler/workflow/CLI checks, six read-only artifact controls,
+three optimized source-hiding probe checks, the full Mirrors local non-model
+runner, and MirrorECMA type checking plus 676 tests across 42 suites. MirrorECMA
+retains 13 optional skips; live model checks were not run for M6.
+
+The same generated suite passes ten runtime checks locally and through Gate's
+real worker collection bridge. Correct runs match two traces, four updates and
+two Update/Update pairs. Typed faulty observations produce expected-zero /
+actual-one model mismatches. Cleanup is independently confirmed and persisted;
+deliberate disposal failures prevent success. Corpus admission precedes all
+resource acquisition, while later Gate preflight rejection confirms cleanup of
+its already prepared control session without binding the implementation.
+
+Final relocated, source-hidden, network-isolated receipt:
+`/tmp/m6-projected-cells-integration-v2-20261003/receipt.json`, SHA-256
+`4cf4202297c0c0439a009eec1f9c21347e420496ac0c7a33e78551015198eda1`.
+The final run used `PYTHONOPTIMIZE=1`; the model-check sentinel records zero
+invocations. Receipt input, compiler, package, corpus and log hashes were
+independently rechecked. The [M6 execution record](Plans/m6-reviewed-scaffolds-and-corpora.md)
+and [workflow reference](Docs/model-interface-compiler/reviewed-corpora.md) retain
+the exact contracts, evidence and publication limits.
+
+These changes remain uncommitted and do not inherit the frozen M5 qualification.
+Native Ubuntu, aggregate cgroups, active-process recovery and Windows
+service-manager acceptance remain outside this work. The Windows publication
+path correction has source evidence only, without native Windows execution.
+
+## 2026-10-03 — Compiler/client follow-ups and documentation housekeeping complete
+
+Generated Lean bindings and required registry negotiation are implemented.
+Shared Core judgments and generated consumers cover all six supported profiles,
+including the additive C++ v2 profile. Fifteen common recordings and sixteen
+actual SDK `report_state` frames agree across the profiles. Codec regressions,
+typed observation failures, deferred construction, poisoning and cleanup checks
+pass. Rust and Lean each pass four supplied-trace/offline rows and five fresh
+owned-Windows mTLS rows, with source trees hidden and prepared inputs verified.
+
+The five-base-profile/18-row aggregate receipt is
+`fcc03960006c509e79bdbc0a40cb30f64a1342a597f19cda9237401096f87499`;
+the supplemental C++ v2 receipt is
+`d212c1f7986db6a8d5d53e89ff2e18219e57dcf9b054e6f990b34eda9947b264`.
+Mirrors non-model gates, SDK checks and regenerated Counter golden checks pass.
+Architecture references and stale plan headers were reconciled while retaining
+historical records. [The follow-up report](Plans/compiler-client-followups-2026-10-03.md)
+records exact scope, results and receipt paths.
+
+These working-tree changes do not inherit the frozen M5 qualification below.
+No local model checker, commit or push was performed. The user-authorized M6
+plan and execution follow this completed phase.
+
 ## 2026-10-03 — Qualification integrity fixes qualified
 
 All three reviewed gaps are fixed: exact interop verdict/exit classification,

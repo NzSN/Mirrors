@@ -176,6 +176,13 @@ private partial def lowerType (name : String) (type : ModelType) :
          s!"        let mut items = {if isRecord then "BTreeMap" else "Vec"}::new();"] ++ encode ++
         [s!"        Ok(Value::{constructor}(items))", "    }", "}"]])
   | .variant cases =>
+      if cases.isEmpty then
+        return (name, [lines [
+          "#[derive(Debug, Clone)]", s!"pub enum {name} " ++ "{}",
+          s!"impl NativeCodec for {name} " ++ "{",
+          "    fn decode(_value: &Value) -> Result<Self, BindingError> { Err(shape()) }",
+          "    fn encode(&self) -> Result<Value, BindingError> { match *self {} }",
+          "}"]])
       let cases := sortedBy (·.tag) cases
       let children ← cases.zipIdx.mapM fun (c, i) => lowerType s!"{name}C{i}" c.payload
       let variants := children.zipIdx.map fun ((ty, _), i) => s!"    Case{i}({ty}),"

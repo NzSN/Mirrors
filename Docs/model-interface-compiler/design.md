@@ -11,9 +11,8 @@
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
-> Status: **synchronous and experimental async TypeScript plus C++ and Rust
-> target slices implemented in Mirrors; the Lean profile and common
-> recording vectors remain planned**
+> Status: **synchronous and experimental async TypeScript plus C++, Rust and
+> Lean target slices implemented, with shared judgment and recording vectors**
 > Parent design: [`model-interface-generation-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-generation-design.md)
 > Runtime distribution:
 > [`model-interface-runtime-distribution-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-runtime-distribution-design.md)
@@ -37,10 +36,11 @@ Mirrors now contains the pure model-interface types, deterministic resolver,
 canonical contract/descriptor/lock codecs, pure SHA-256, strict ITF evidence
 normalization, trace preflight/coverage, the `mirrorecma-v1` TypeScript emitter,
 the additive `mirrorecma-async-v1` TypeScript emitter, the `mirrorcpp-v1` C++23
-emitter, the `mirrorrust-v1` Rust emitter, safe owned-file publication, and the standalone
-`model_interface_gen` executable. Counter resolve/generate/check,
-generated TypeScript/C++/Rust compilation, typed bindings, and real session replay
-are covered by the implementation gates and validation harnesses.
+emitter, the `mirrorrust-v1` Rust emitter, the `mirrorlean-v1` Lean emitter,
+safe owned-file publication, and the standalone `model_interface_gen` executable.
+Counter resolve/generate/check, generated TypeScript/C++/Rust/Lean compilation,
+typed bindings, and real session replay are covered by the implementation gates
+and validation harnesses.
 
 The async target also supports `bundle` / `check-bundle`, a generated trusted
 `SuiteModel`, and recursive local native conversion. See
@@ -48,13 +48,20 @@ The async target also supports `bundle` / `check-bundle`, a generated trusted
 publication rules, disposal transfer and validation. These commands preserve the
 existing target identity and generated binding bytes.
 
-The synchronous and async TypeScript plus C++ and Rust version-1 slices are implemented.
-Shared portable judgment/recording vectors and the later Lean target
-remain follow-up work as specified by M5 and the cross-language specification.
-Scaffolding and projection are deliberately narrower than the remaining
-review workflow: each invocation consumes one evidence document or projects
-one trace, and no compiler command currently promotes a reviewed proposal into
-a sealed companion contract.
+The synchronous and async TypeScript plus C++, Rust and Lean version-1 slices
+are implemented. `Core.ModelInterface.Conformance` supplies the shared pure
+judgments; [`tools/model-interface-conformance/check.py`](../../tools/model-interface-conformance/check.py)
+executes six profiles and compares 15 common recordings. The
+[cross-language specification](../generated-model-interface-spec.md#21-cross-language-conformance-suite)
+records the fixture counts and compile-rejection boundary. Rust and Lean also
+have bounded source-hidden generated-Counter acceptance over offline replay and
+remote mTLS; see the [interop guide](../../tools/interop/INTEROP.md). These gates
+do not requalify M5 or expand the legacy all-transport acceptance claim.
+The additive [reviewed workflow](reviewed-corpora.md) accepts multiple evidence
+inputs, validates an explicit review, seals a companion contract and publishes
+projected corpora. Workflow-bearing v2 locks retain that chain in provenance;
+ordinary v1 artifacts retain their existing bytes. Source and cross-repository
+acceptance are recorded separately in the [M6 plan](../../Plans/m6-reviewed-scaffolds-and-corpora.md).
 
 ## 1. Purpose
 
@@ -1287,8 +1294,25 @@ freshness. When Cargo and `RUST_REPO` (default `../MirrorRust`) are available,
 `tools/model-interface-rust/check.sh` compiles the actual generated Counter and
 structural-type corpus, executes codec/lifecycle tests, and runs negotiated
 stdio replay, deliberate observer mismatch, and negotiation-failure isolation.
-Rust mTLS and a full cross-language shared recording suite remain separate
-acceptance work.
+The bounded generated-Counter transport matrix additionally exercises remote
+mTLS with source roots hidden, while the common vector gate compares real
+Rust output with TypeScript, C++ and Lean. See the
+[interop guide](../../tools/interop/INTEROP.md) for scope and execution.
+
+### 13.11 `mirrorlean-v1` profile
+
+The [Lean target](lean-target.md) emits `<Model>Mirror.lean` and the standard
+ownership manifest from the same verified lock. It uses MirrorLean's public
+values and additive `ModelInterface` API, typed per-action input and observation
+structures, classified fallible callbacks and permanently poisoned failed
+bindings. `toLocalBinding` supplies deferred replay/disposal integration.
+
+MirrorLean's required-verification registry validates an exact four-part key
+before opening the transport and constructs the binding only after `matched`.
+The negotiated path shares the legacy replay dispatcher. Generator freshness,
+native compilation/lifecycle, shared vectors, and the bounded source-hidden
+offline/mTLS matrix exercise this implementation; they do not establish a Lean
+Gate facade or release qualification.
 
 ## 14. CLI design
 
@@ -1716,40 +1740,45 @@ Exit: the full Counter vertical slice is always-on.
 - Compile and exercise the generated Counter binding through the negotiated
   MirrorCPP runtime. **Done.**
 - Compare both targets using common raw `StateComputer` stimuli, normalized
-  recording logs, and canonical `report_state` bytes. **Pending shared vector
-  work; each target currently has direct behavioral tests.**
+  recording logs, and canonical `report_state` bytes. **Implemented in the
+  six-profile shared vector gate, including 15 common recordings.**
 
-Partial exit: both compiling targets and real Counter paths come from one
-semantic lock. The shared recording-log comparison remains before claiming the
-full M5 equivalence exit.
+Compiler milestone exit: compiling targets and real Counter paths come from one
+semantic lock, and shared recording logs agree across the six profiles. This
+compiler milestone is separate from the framework's M5 qualification profile.
 
 ### M6: reviewed scaffolds and evidence corpora
 
-Status: **proposed follow-up; not implemented**.
+Status: **implemented; source and public local/Gate integration accepted
+2026-10-03**. See the
+[execution plan](../../Plans/m6-reviewed-scaffolds-and-corpora.md) and
+[workflow contract](reviewed-corpora.md).
 
 The first non-Counter restricted implementation exposed three remaining manual
 steps. Proposal acceptance required extracting `proposal.contract` outside the
 compiler, a multi-trace corpus required one `project-trace` process per trace,
-and application code had to assemble its own corpus-level provenance. M6 should
-remove those steps without treating sampled actions as a complete universe.
+and application code had to assemble its own corpus-level provenance. M6 removes
+those steps while requiring explicit closed action universes from the review.
 
-1. Add an explicit `seal-scaffold` command. It consumes an unchanged scaffold
+1. `seal-scaffold` consumes an unchanged reviewable scaffold
    proposal plus a strict review record. The review record declares the complete
    closed initializer and transition universes, may supply explicit reviewed
    replacements, and gives a disposition for every target-support obligation.
    The compiler rejects omitted observed actions, phase overlap, or a silently
    dropped field, then atomically publishes the companion contract and a review
    receipt. It never infers review approval or action-universe closure.
-2. Carry proposal, review, and projection digests through resolution provenance
+2. Resolution carries proposal, review, and projection digests through provenance
    so the lock identifies the exact reviewed evidence path. Contract semantics
    and the semantic digest remain independent of sampled coverage.
-3. Accept repeated evidence inputs for scaffold synthesis. Merge structural
-   types and observed phase labels deterministically, reject cross-document
-   conflicts, and retain every input hash in canonical order.
-4. Add a corpus projection command that validates all inputs before publication,
+3. Scaffold synthesis accepts repeated evidence inputs. It merges structural
+   types and observed phase labels deterministically, rejects cross-document
+   conflicts, and retains every input hash in canonical order.
+4. `project-corpus` validates all inputs before publication,
    emits one trace/receipt pair per input plus a canonical corpus manifest, and
-   rolls back the whole publication on any conflict or failure.
-5. Add a public cross-repository fixture covering integer-function projection,
+   publishes one immutable directory and rolls back owned staging on caught
+   failures. Its controlled-parent and cooperating-publisher boundary is
+   explicit in the workflow contract.
+5. The public cross-repository fixture covers integer-function projection,
    generated async ports, Gate's collection bridge, successful replay, deliberate
    observation mismatch, and confirmed cleanup. Private application models and
    traces are not suitable fixtures.
@@ -1757,11 +1786,14 @@ remove those steps without treating sampled actions as a complete universe.
 M6 exits only when proposal-to-contract publication needs no ad hoc extraction,
 corpus output is content-addressed as a unit, stale or conflicting evidence
 writes nothing, and the projected-collection fixture passes through the real
-Mirrors, MirrorECMA, and MirrorGate path.
+Mirrors, MirrorECMA, and MirrorGate path. These clauses passed in the recorded
+source and relocated-package integration tier. This compiler milestone does not
+requalify the framework's frozen M5 candidate.
 
-Rust, Lean, compatibility migration helpers, and shared recording vectors
-remain follow-up work. Proposal-only scaffolding is implemented; contract
-review and sealing remain an explicit human step. The experimental async
+Compatibility migration helpers remain follow-up work. Rust, Lean and shared
+recording vectors are implemented. Legacy proposal-only scaffolding remains
+available. Reviewed sealing requires an explicit human-supplied review record;
+the compiler owns contract validation and publication. The experimental async
 TypeScript profile is a prerequisite slice; it does not by itself establish
 sandbox-orchestration support.
 

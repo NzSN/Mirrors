@@ -1,0 +1,15 @@
+{"equivalent":true,"id":"IntegerEqual","left":{"#bigint":"1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"},"leftAccepted":true,"right":{"#bigint":"1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"},"rightAccepted":true,"typeId":"Integer"}
+{"equivalent":false,"id":"IntegerDifferent","left":{"#bigint":"1"},"leftAccepted":true,"right":{"#bigint":"2"},"rightAccepted":true,"typeId":"Integer"}
+{"equivalent":true,"id":"SetPermutation","left":{"#set":[{"#bigint":"1"},{"#bigint":"2"}]},"leftAccepted":true,"right":{"#set":[{"#bigint":"2"},{"#bigint":"1"}]},"rightAccepted":true,"typeId":"Integers"}
+{"equivalent":false,"id":"SetDifferent","left":{"#set":[{"#bigint":"1"}]},"leftAccepted":true,"right":{"#set":[{"#bigint":"2"}]},"rightAccepted":true,"typeId":"Integers"}
+{"equivalent":false,"id":"DuplicateNotEqual","left":{"#set":[{"#bigint":"1"},{"#bigint":"1"}]},"leftAccepted":false,"right":{"#set":[{"#bigint":"1"}]},"rightAccepted":true,"typeId":"Integers"}
+{"equivalent":true,"id":"NestedSetPermutation","left":{"#set":[{"#set":[{"#bigint":"1"},{"#bigint":"2"}]},{"#set":[{"#bigint":"3"}]}]},"leftAccepted":true,"right":{"#set":[{"#set":[{"#bigint":"3"}]},{"#set":[{"#bigint":"2"},{"#bigint":"1"}]}]},"rightAccepted":true,"typeId":"NestedSets"}
+{"equivalent":false,"id":"SequencePermutation","left":["a","b"],"leftAccepted":true,"right":["b","a"],"rightAccepted":true,"typeId":"Sequence"}
+{"equivalent":true,"id":"TupleEqual","left":{"#tup":[{"#bigint":"1"},true]},"leftAccepted":true,"right":{"#tup":[{"#bigint":"1"},true]},"rightAccepted":true,"typeId":"Pair"}
+{"equivalent":true,"id":"RecordEqual","left":{"number":{"#bigint":"2"},"text":"x"},"leftAccepted":true,"right":{"number":{"#bigint":"2"},"text":"x"},"rightAccepted":true,"typeId":"Record"}
+{"equivalent":false,"id":"MarkerOrdinaryField","left":{"#set":[],"ordinary":false},"leftAccepted":true,"right":{"#set":[],"ordinary":true},"rightAccepted":true,"typeId":"MarkerRecord"}
+{"equivalent":true,"id":"MapPermutation","left":{"#map":[["b",[]],["a",[{"#bigint":"1"}]]]},"leftAccepted":true,"right":{"#map":[["a",[{"#bigint":"1"}]],["b",[]]]},"rightAccepted":true,"typeId":"StringMap"}
+{"equivalent":false,"id":"MapDuplicateNotEqual","left":{"#map":[["a",[]],["a",[]]]},"leftAccepted":false,"right":{"#map":[["a",[]]]},"rightAccepted":true,"typeId":"StringMap"}
+{"equivalent":false,"id":"VariantTag","left":{"tag":"some","value":{"#bigint":"0"}},"leftAccepted":true,"right":{"tag":"none","value":null},"rightAccepted":true,"typeId":"Choice"}
+{"equivalent":false,"id":"NullConstructor","left":null,"leftAccepted":true,"right":{"#tup":[]},"rightAccepted":false,"typeId":"Null"}
+{"equivalent":false,"id":"EmptyConstructors","left":{"#tup":[]},"leftAccepted":true,"right":{},"rightAccepted":false,"typeId":"EmptyTuple"}

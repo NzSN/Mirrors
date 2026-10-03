@@ -1,0 +1,156 @@
+import PortableMirror
+import RecordingMirror
+-- PATH_IMPORTS
+
+open Lean MirrorLean MirrorLean.ModelInterface
+
+def get (json : Json) (key : String) : IO Json := IO.ofExcept (json.getObjVal? key)
+def str (json : Json) (key : String) : IO String := IO.ofExcept ((json.getObjVal? key).bind Json.getStr?)
+def flag (json : Json) (key : String) (fallback := false) : Bool :=
+  ((json.getObjVal? key).bind Json.getBool?).toOption.getD fallback
+def lower (s : String) : String := String.ofList (s.toList.head!.toLower :: s.toList.tail)
+def bigint (n : Int) : Json := Json.mkObj [("#bigint", .str (toString n))]
+def config (valid := true) : ApalacheConfig := {
+  specPath := "Counter.tla", invariant := "TraceComplete", lengthBound := 3
+  paramVars := some (if valid then "parameters" else "wrong") }
+def empty : State := State.ofList []
+def rows (root : System.FilePath) (name : String) : IO (List Json) := do
+  ((← IO.FS.readFile (root / name)).splitOn "\n" |>.filter (!·.isEmpty)).mapM fun line =>
+    IO.ofExcept (Json.parse line)
+def emit (family : String) (id : Json) (result : Json) : IO Unit := do
+  let fields ← IO.ofExcept result.getObj?
+  IO.println (Json.mkObj (("family", .str family) :: ("id", id) :: fields.toList)).compress
+def unwrap (result : Except BindingError α) : IO α :=
+  match result with
+  | .ok value => pure value
+  | .error error => throw (IO.userError s!"unexpected binding error {error.code}: {error.message}")
+
+def observation (input : PortableMirror.InitializeInput) (mutation : String) :
+    Except BindingError PortableMirror.Observation := do
+  let boolean ← NativeCodec.decode (← NativeCodec.encode input.boolean)
+  let choice ← NativeCodec.decode (← NativeCodec.encode input.choice)
+  let emptyRecord ← NativeCodec.decode (← NativeCodec.encode input.emptyRecord)
+  let emptyTuple ← NativeCodec.decode (← NativeCodec.encode input.emptyTuple)
+  let emptyVariants ← NativeCodec.decode (← NativeCodec.encode input.emptyVariants)
+  let integer ← NativeCodec.decode (← NativeCodec.encode input.integer)
+  let integers ← NativeCodec.decode (← NativeCodec.encode input.integers)
+  let markerRecord ← NativeCodec.decode (← NativeCodec.encode input.markerRecord)
+  let nested ← NativeCodec.decode (← NativeCodec.encode input.nested)
+  let nestedSets ← NativeCodec.decode (← NativeCodec.encode input.nestedSets)
+  let null ← NativeCodec.decode (← NativeCodec.encode input.null)
+  let pair ← NativeCodec.decode (← NativeCodec.encode input.pair)
+  let record ← NativeCodec.decode (← NativeCodec.encode input.record)
+  let sequence ← NativeCodec.decode (← NativeCodec.encode input.sequence)
+  let stringMap ← NativeCodec.decode (← NativeCodec.encode input.stringMap)
+  let text ← NativeCodec.decode (← NativeCodec.encode input.text)
+  pure { boolean, choice, emptyRecord, emptyTuple, emptyVariants, integer, markerRecord, nested, null, pair, record, sequence, stringMap, text
+         integers := if mutation == "duplicate-set" then ⟨#[1, 1]⟩ else integers
+         nestedSets := if mutation == "duplicate-nested-set" then ⟨#[⟨#[1, 2]⟩, ⟨#[2, 1]⟩]⟩ else nestedSets }
+
+def roundtrip (defaults : State) (typeId : String) (value : Json) (mutation := "") : IO Json := do
+  let saved ← IO.mkRef (none : Option PortableMirror.InitializeInput)
+  let effects ← IO.mkRef (0 : Nat)
+  let port : PortableMirror.Port := {
+    «initialize» := fun input => do
+      effects.modify (· + 1)
+      saved.set (some input)
+      pure (.ok ())
+    observe := do
+      effects.modify (· + 1)
+      match ← saved.get with
+      | some input => pure (observation input mutation)
+      | none => pure (.error shape) }
+  let binding ← unwrap (← PortableMirror.bind port config)
+  let payload := defaults.insert (lower typeId) (← IO.ofExcept (Value.ofJson? value))
+  match ← binding.computer "init" payload empty with
+  | .ok result =>
+      let output ← get result.toJson (lower typeId)
+      let second ← unwrap (← binding.computer "init" result empty)
+      let again ← get second.toJson (lower typeId)
+      pure (Json.mkObj [("accepted", .bool true), ("output", output), ("again", again), ("effects", toJson (← effects.get))])
+  | .error error =>
+      let before ← effects.get
+      let again ← binding.computer "init" defaults empty
+      let poisoned := match again with | .error e => e.code == "binding_poisoned" | _ => false
+      pure (Json.mkObj [("accepted", .bool false), ("error", .str error.code),
+        ("effects", toJson (← effects.get)), ("poisoned", .bool (poisoned && (← effects.get) == before))])
+
+-- PATH_DEFINITIONS
+
+structure RecordingState where
+  count : Int := 0
+  events : Array Json := #[]
+  mode : String := "ok"
+
+def recording (row : Json) : IO Json := do
+  let sut ← IO.mkRef ({} : RecordingState)
+  let port : RecordingMirror.Port := {
+    «initialize» := do
+      sut.modify fun s => { s with events := s.events.push (Json.mkObj [
+        ("event", .str "action"), ("id", .str "Initialize"), ("inputs", Json.mkObj [])]) }
+      if (← sut.get).mode == "adapter_failure" then return .error { code := "custom", message := "deliberate failure" }
+      sut.modify fun s => { s with count := 0 }
+      pure (.ok ())
+    tick := fun input => do
+      sut.modify fun s => { s with events := s.events.push (Json.mkObj [
+        ("event", .str "action"), ("id", .str "Tick"), ("inputs", Json.mkObj [
+          ("Enabled", .bool input.enabled), ("Stride", bigint input.stride)])]) }
+      if (← sut.get).mode == "adapter_failure" then return .error { code := "custom", message := "deliberate failure" }
+      if input.enabled then sut.modify fun s => { s with count := s.count + input.stride }
+      pure (.ok ())
+    observe := do
+      let s ← sut.get
+      if s.mode == "observer_failure" then
+        sut.modify fun s => { s with events := s.events.push (Json.mkObj [("event", .str "observe_failure")]) }
+        return .error { code := "custom", message := "deliberate failure" }
+      sut.modify fun s => { s with events := s.events.push (Json.mkObj [
+        ("event", .str "observe"), ("values", Json.mkObj [("Count", bigint s.count)])]) }
+      pure (.ok { count := s.count }) }
+  let mut errors : Array Json := #[]
+  let mut wireFrames : Array Json := #[]
+  let mut coverage := Json.mkObj [("Initialize", toJson (0 : Nat)), ("Tick", toJson (0 : Nat))]
+  match ← RecordingMirror.bind port (config (flag row "configValid")) with
+  | .error error => errors := errors.push (.str error.code)
+  | .ok binding =>
+      for step in (← IO.ofExcept (← get row "steps").getArr?) do
+        let mode ← str step "mode"
+        sut.modify fun s => { s with mode }
+        let payload ← IO.ofExcept (State.ofJson? (← get step "payload"))
+        match ← binding.computer (← str step "action") payload empty with
+        | .error error => errors := errors.push (.str error.code)
+        | .ok result =>
+            errors := errors.push .null
+            wireFrames := wireFrames.push (.str (ClientMessage.encode (.reportState result)))
+            sut.modify fun s => { s with events := s.events.push (Json.mkObj [
+              ("event", .str "report"), ("state", result.toJson)]) }
+      coverage := Json.mkObj ((← binding.coverage).toList.map fun (id, count) => (id, toJson count))
+  pure (Json.mkObj [("events", .arr (← sut.get).events), ("errors", .arr errors), ("coverage", coverage), ("wireFrames", .arr wireFrames)])
+
+def main (args : List String) : IO Unit := do
+  let root := System.FilePath.mk args.head!
+  for (name, metadata) in [("Portable", PortableMirror.metadata), ("Recording", RecordingMirror.metadata)] do
+    emit "identity" (.str name) (Json.mkObj [("semanticDigest", .str metadata.semanticDigest),
+      ("contract", ← IO.ofExcept (Json.parse metadata.contractJson))])
+  let typeRows ← rows root "mitl-types.jsonl"
+  let mut defaults := empty
+  for row in typeRows do
+    if flag row "portable" then
+      defaults := defaults.insert (lower (← str row "id")) (← IO.ofExcept (Value.ofJson? (← get row "default")))
+  for row in ← rows root "mitl-values.jsonl" do
+    emit "value" (← get row "id") (← roundtrip defaults (← str row "typeId") (← get row "value"))
+  for row in ← rows root "mitl-equivalence.jsonl" do
+    let left ← roundtrip defaults (← str row "typeId") (← get row "left")
+    let right ← roundtrip defaults (← str row "typeId") (← get row "right")
+    emit "equivalence" (← get row "id") (Json.mkObj [("left", left), ("right", right)])
+  for row in ← rows root "native-encoding.jsonl" do
+    let field ← str row "field"
+    let value ← get defaults.toJson (lower field)
+    emit "encode" (← get row "id") (← roundtrip defaults field value (← str row "mutation"))
+  for row in ← rows root "mitl-paths.jsonl" do
+    if flag row "static" true && flag row "generatedPortable" true then
+      let id ← str row "id"
+      let value ← get row "value"
+      let result ← runPath id value
+      emit "path" (.str id) result
+  for row in ← rows root "counter-binding-events.jsonl" do
+    if !(row.getObjVal? "targets").isOk then emit "recording" (← get row "id") (← recording row)

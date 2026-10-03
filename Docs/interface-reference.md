@@ -127,14 +127,18 @@ any `"name"` is passed as `--view=name`).
 Arbitrary-precision ints as `{"#bigint": "…"}` (bare integral JSON
 numbers also accepted on decode), sets `{"#set": [...]}`, maps
 `{"#map": [[k,v],…]}`, tuples `{"#tup": [...]}`, variants
-`{"#variant": {"tag": "…", "value": …}}`, records as plain objects,
+`{"tag": "…", "value": …}`, records as plain objects,
 plus strings/bools/null.
+
+Wrapper recognition uses the exact singleton marker shape and its expected
+payload kind. A multi-key object with a marker-looking key is an ordinary
+record. The exact two-field `tag`/`value` shape is reserved for variants.
 
 ## 3. Synchronous interfaces
 
 The first message on any connection must be a `register*` message
-(phase-indexed; anything else is rejected — the session machine makes
-illegal orderings unrepresentable).
+(phase-indexed; other messages remain representable, but the session machine
+rejects their ordering).
 
 ### 3.1 `register` — validate, generate, then replay (full MBT)
 ```json

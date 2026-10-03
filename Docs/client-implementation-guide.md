@@ -271,15 +271,17 @@ The Mirrors server, MirrorECMA's compiled-verification and dynamic-descriptor
 paths, and MirrorCPP's static compiled-verification path are implemented.
 MirrorRust implements compiled verification with an exact registry and the
 compiler-emitted `mirrorrust-v1` binding. Its separate Gate Counter acceptance
-integration uses a handwritten fixture identity. Lean generation and the
-MirrorLean registry remain planned. See the [Rust implementation record](../../MirrorGate/docs/rust-evaluator-sdk-status.md)
-for validation status and limits. Implement only the profile your client can
-honestly advertise:
+integration uses a handwritten fixture identity. Mirrors also implements
+`mirrorlean-v1`, with MirrorLean's additive required-verification registry and
+shared legacy replay dispatcher. See the [Lean target](model-interface-compiler/lean-target.md),
+the [bounded generated-client interop guide](../tools/interop/INTEROP.md), and the
+separate [Rust Gate implementation record](../../MirrorGate/docs/rust-evaluator-sdk-status.md)
+for their validation scopes. Implement only the profile your client can advertise:
 
 | Client profile | Request | Local executable behavior | Version-1 use |
 | --- | --- | --- | --- |
 | Legacy stepping | no `modelInterface` field | caller supplies `StateComputer` | Existing, unchanged entry points |
-| Compiled verification | `verify` | precompiled generated binding plus application adapter | Default production profile; implemented in MirrorECMA, MirrorCPP, and MirrorRust |
+| Compiled verification | `verify` | precompiled generated binding plus application adapter | Implemented in MirrorECMA, MirrorCPP, MirrorRust and MirrorLean; Lean currently supports required verification only |
 | Dynamic descriptor | `descriptor` | local handler/observer registry interpreted by MirrorECMA | Development-only; implemented in MirrorECMA with deferred factory scopes |
 
 MirrorECMA additionally supports a local asynchronous replay profile for compiled
@@ -306,6 +308,15 @@ negotiation helpers and runners return the separate non-exhaustive
 `Registration` preserves structured server failures, and `ModelInterface` carries
 local admission failures. Consumers of the former negotiated `Result<_, Error>`
 API must migrate; legacy callers keep their signatures and wire behavior.
+
+MirrorLean exposes `MirrorLean.ModelInterface.runClientNegotiated` and
+`runClientWithTracesNegotiated` with separate classified `NegotiatedError`
+results. `CompiledAdapterSelection` supplies inert metadata and an exact local
+four-part registry. Validation precedes opening a transport or starting a
+process; `matched` precedes factory construction. Acquired bindings are disposed
+on success and failure. The initial Lean profile has no `prefer` fallback and
+does not change legacy `StateComputer` or `MirrorError` APIs.
+
 - **MI2.** A client **MUST** treat a descriptor and generated metadata as inert
   interface data. It **MUST NOT** evaluate or compile received content, load a
   module/plugin/symbol named by it, retrieve an executable adapter, or expose
@@ -331,7 +342,12 @@ is:
 ```
 
 The implemented targets are `mirrorecma-v1`, `mirrorecma-async-v1`,
-`mirrorcpp-v1`, and `mirrorrust-v1` (see the [Rust target profile](model-interface-compiler/rust-target.md)). The async TypeScript target uses the separate local
+`mirrorcpp-v1`, `mirrorrust-v1` and `mirrorlean-v1` (see the
+[Rust target profile](model-interface-compiler/rust-target.md) and
+[Lean target profile](model-interface-compiler/lean-target.md)). The additive
+`mirrorcpp-v2` source profile is documented in
+[WriteSentry compiler extensions](model-interface-compiler/writesentry-extensions.md).
+The async TypeScript target uses the separate local
 `mirrors.async-state-computer/v1` contract; section 9.7 defines the replay
 obligations and section 15.2 of `generated-model-interface-spec.md` defines
 the generated API. All targets obey that specification. Check the generated
@@ -735,6 +751,18 @@ stricter wildcard SAN scope; case-insensitive `--pin`.
    portable generated types, stdio/mTLS authorization, cleanup, and ordinary
    `step_mismatch`.
 
+The [shared conformance gate](../tools/model-interface-conformance/check.py)
+executes real generated synchronous/async TypeScript, C++, Rust and Lean
+consumers against the same value, path and recording corpus. Rust and Lean
+reject malformed native observation records at compilation; those cases are
+not simulated runtime failures. Their generated-Counter transport gates each
+cover four offline rows and five fresh remote mTLS rows with sources hidden:
+correct replay, ordinary observer mismatch, wrong-digest zero-factory rejection,
+authorization denial and, on mTLS, wrong-pin rejection. Follow the
+[interop guide](../tools/interop/INTEROP.md) for the exact bounded profile.
+This evidence does not change the legacy all-transport matrix or qualify a new
+framework M5 candidate.
+
 For a client claiming the compiled-verification profile, the minimum negative
 matrix is: duplicate/unknown nested fields, noncanonical and wrong digests,
 missing extension from an old server, every unexpected status, structured
@@ -753,8 +781,8 @@ section's Mirrors wire tests alone does not establish sandbox support.
 | `mirror validate` (this repo) | Lean 4 | sync/async validate over TCP/mTLS, recursive source delivery, registry discovery, pinning |
 | MirrorECMA (`test/smoke.test.ts`, `test/model-interface-*.ts`) | TypeScript | stdio/TCP/mTLS, registry, TLS negatives, D3 compiled verification, D4 dynamic descriptor/cache replay |
 | MirrorCPP (`test/unit/model_interface_test.cpp`, `test/unit/generated_model_interface_test.cpp`, `test/integration/real_mirror_test.cpp`) | C++23 | stdio/TCP/mTLS, registry/TLS negatives, D5 static exact-digest verification and generated Counter replay |
-| MirrorRust (`tests/model_interface.rs`, `tests/server_mode_smoke.rs`) | Rust | stdio/TCP/mTLS, registry and async jobs; strict verify runtime and compiler-generated Rust bindings; separate Gate-owned Counter fixture |
-| MirrorLean (`test/Main.lean`, `test/Async.lean`, `server-mode/Test/ServerModeSmoke.lean`) | Lean 4 | base replay/exploration, bounded framing, recursive sources and concurrent async jobs over TCP/mTLS; no negotiated binding or Gate facade |
+| MirrorRust (`tests/model_interface.rs`, `tests/server_mode_smoke.rs`) | Rust | stdio/TCP/mTLS, registry and async jobs; strict verify runtime, shared generated vectors and bounded source-hidden generated-Counter offline/mTLS acceptance; separate Gate-owned Counter fixture |
+| MirrorLean (`test/Main.lean`, `test/Async.lean`, `test/ModelInterface.lean`, `server-mode/Test/ServerModeSmoke.lean`) | Lean 4 | base replay/exploration, bounded framing, recursive sources and concurrent async jobs; additive required compiled registry, generated vectors and bounded source-hidden offline/mTLS acceptance; no Gate facade |
 | Haskell `ModelMirrors validate` | Haskell | the reference wire consumer |
 | `tools/CounterSpec.lean` | Lean 4 | full MBT replay incl. mismatch negatives |
 | `stress300v2.py` | Python | async jobs, connection pooling, cancel |

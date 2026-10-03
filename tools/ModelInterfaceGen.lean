@@ -1,5 +1,7 @@
 import Shell.ModelInterface.Compiler
 import Codec.ModelInterfaceJson
+import Shell.ModelInterface.ScaffoldWorkflow
+import Shell.ModelInterface.Corpus
 
 /-!
 # `model_interface_gen` command line
@@ -33,13 +35,25 @@ def usage : String := String.intercalate "\n" [
   "  model_interface_gen scaffold --spec FILE --evidence FILE",
   "    [--param-var NAME] [--projection PLAN] --proposal FILE",
   "    [--replace] [--diagnostics json]",
+  "  model_interface_gen scaffold --reviewable --spec FILE --evidence FILE",
+  "    [--evidence FILE ...] [--param-var NAME] [--projection PLAN] --proposal FILE",
+  "  model_interface_gen seal-scaffold --spec FILE --evidence FILE [--evidence FILE ...]",
+  "    [--param-var NAME] [--projection PLAN] --proposal FILE --review FILE --out DIR",
+  "  model_interface_gen resolve-sealed --spec FILE --evidence FILE [--evidence FILE ...]",
+  "    [--param-var NAME] [--projection PLAN] --sealed DIR [--corpus-manifest FILE] --lock FILE",
+  "  model_interface_gen check-sealed|check-sealed-bundle --spec FILE --evidence FILE",
+  "    [--evidence FILE ...] [--param-var NAME] [--projection PLAN] --sealed DIR",
+  "    [--corpus-manifest FILE] --lock FILE --target TARGET --out DIR",
+  "  model_interface_gen project-corpus --spec FILE --evidence RAW [--evidence RAW ...]",
+  "    --projection PLAN --out DIR [--diagnostics json]",
+  "  model_interface_gen check-corpus --out DIR --manifest-sha256 HASH [--diagnostics json]",
   "  model_interface_gen project-trace --spec FILE --evidence RAW",
   "    --projection PLAN --out PROJECTED --receipt RECEIPT",
   "    [--replace] [--diagnostics json]",
   "  model_interface_gen generate-cmake|check-cmake --spec FILE --contract FILE",
   "    --evidence FILE [--param-var NAME] --lock FILE --target CPP_TARGET --out DIR",
   "    (paths relative to the consumer root; optional CMake helpers)",
-  "  TARGET: mirrorecma-v1 | mirrorecma-async-v1 | mirrorcpp-v1 | mirrorcpp-v2 | mirrorrust-v1"
+  "  TARGET: mirrorecma-v1 | mirrorecma-async-v1 | mirrorcpp-v1 | mirrorcpp-v2 | mirrorrust-v1 | mirrorlean-v1"
 ]
 
 private inductive DiagnosticsMode where
@@ -50,6 +64,7 @@ private structure RawOptions where
   spec : Option String := none
   contract : Option String := none
   evidence : Option String := none
+  evidences : List String := []
   paramVar : Option String := none
   paramVarSeen : Bool := false
   lock : Option String := none
@@ -59,6 +74,10 @@ private structure RawOptions where
   proposal : Option String := none
   projection : Option String := none
   receipt : Option String := none
+  review : Option String := none
+  sealed : Option String := none
+  corpusManifest : Option String := none
+  manifestSha256 : Option String := none
   diagnostics : Option String := none
 
 private inductive Command where
@@ -70,6 +89,16 @@ private inductive Command where
   | preflight (lock trace : String) (requireAllActions : Bool)
   | scaffold (inputs : ScaffoldPaths)
   | projectTrace (inputs : ProjectTracePaths)
+  | scaffoldWorkflow (inputs : Shell.ModelInterface.ScaffoldWorkflow.WorkflowPaths)
+      (proposal : String) (replace : Bool)
+  | sealScaffold (inputs : Shell.ModelInterface.ScaffoldWorkflow.WorkflowPaths)
+      (proposal review out : String)
+  | resolveSealed (inputs : Shell.ModelInterface.ScaffoldWorkflow.WorkflowPaths)
+      (sealed : String) (corpusManifest : Option String) (lock : String)
+  | checkSealed (inputs : Shell.ModelInterface.ScaffoldWorkflow.WorkflowPaths)
+      (sealed : String) (corpusManifest : Option String) (lock target out : String) (bundle : Bool)
+  | projectCorpus (inputs : Shell.ModelInterface.Corpus.ProjectCorpusPaths)
+  | checkCorpus (out manifestSha256 : String)
 
 private structure ParsedCommand where
   command : Command
@@ -77,7 +106,8 @@ private structure ParsedCommand where
 
 private def allowedFlags : List String :=
   ["--spec", "--contract", "--evidence", "--param-var", "--lock", "--target", "--out",
-   "--trace", "--proposal", "--projection", "--receipt", "--diagnostics"]
+   "--trace", "--proposal", "--projection", "--receipt", "--diagnostics",
+   "--review", "--sealed", "--corpus-manifest", "--manifest-sha256"]
 
 private def optionPairs : List String → Except String (List (String × String))
   | [] => .ok []
@@ -89,7 +119,8 @@ private def optionPairs : List String → Except String (List (String × String)
 
 private def parseOptions (arguments : List String) : Except String RawOptions := do
   let pairs ← optionPairs arguments
-  let duplicateFlags := Core.ModelInterface.duplicateStrings (pairs.map Prod.fst)
+  let duplicateFlags := Core.ModelInterface.duplicateStrings
+    (pairs.map Prod.fst |>.filter (· != "--evidence"))
   match duplicateFlags with
   | flag :: _ => throw s!"duplicate option: {flag}"
   | [] => pure ()
@@ -98,6 +129,7 @@ private def parseOptions (arguments : List String) : Except String RawOptions :=
     spec := List.lookup "--spec" pairs
     contract := List.lookup "--contract" pairs
     evidence := List.lookup "--evidence" pairs
+    evidences := pairs.filterMap fun (flag, value) => if flag == "--evidence" then some value else none
     paramVar := param.bind fun value => if value.isEmpty then none else some value
     paramVarSeen := param.isSome
     lock := List.lookup "--lock" pairs
@@ -107,6 +139,10 @@ private def parseOptions (arguments : List String) : Except String RawOptions :=
     proposal := List.lookup "--proposal" pairs
     projection := List.lookup "--projection" pairs
     receipt := List.lookup "--receipt" pairs
+    review := List.lookup "--review" pairs
+    sealed := List.lookup "--sealed" pairs
+    corpusManifest := List.lookup "--corpus-manifest" pairs
+    manifestSha256 := List.lookup "--manifest-sha256" pairs
     diagnostics := List.lookup "--diagnostics" pairs
   }
 
@@ -125,11 +161,22 @@ private def inputsOf (options : RawOptions) : Except String InputPaths := do
     paramVar := options.paramVar
   }
 
+private def workflowInputsOf (options : RawOptions) :
+    Except String Shell.ModelInterface.ScaffoldWorkflow.WorkflowPaths := do
+  if options.evidences.isEmpty then throw "missing required option: --evidence"
+  return {
+    spec := ← requireOption "--spec" options.spec
+    evidence := options.evidences
+    paramVar := options.paramVar
+    projection := options.projection
+  }
+
 private def checkedTarget (options : RawOptions) : Except String String := do
   let target ← requireOption "--target" options.target
   if target != mirrorecmaTarget && target != mirrorecmaAsyncTarget &&
-      target != mirrorcppTarget && target != mirrorcppTypedMapsTarget && target != mirrorrustTarget then
-    throw s!"unsupported --target {target}; expected {mirrorecmaTarget}, {mirrorecmaAsyncTarget}, {mirrorcppTarget}, {mirrorcppTypedMapsTarget}, or {mirrorrustTarget}"
+      target != mirrorcppTarget && target != mirrorcppTypedMapsTarget && target != mirrorrustTarget &&
+      target != mirrorleanTarget then
+    throw s!"unsupported --target {target}; expected {mirrorecmaTarget}, {mirrorecmaAsyncTarget}, {mirrorcppTarget}, {mirrorcppTypedMapsTarget}, {mirrorrustTarget}, or {mirrorleanTarget}"
   return target
 
 private def diagnosticsMode (options : RawOptions) : Except String DiagnosticsMode :=
@@ -149,11 +196,60 @@ private def parseCommand (arguments : List String) : Except String ParsedCommand
   let replaceCount := rest.count "--replace"
   if replaceCount > 1 then throw "duplicate option: --replace"
   let replace := replaceCount == 1
+  let reviewableCount := rest.count "--reviewable"
+  if reviewableCount > 1 then throw "duplicate option: --reviewable"
+  let reviewable := reviewableCount == 1
+  if reviewable && name != "scaffold" then
+    throw "option --reviewable is only valid for scaffold"
   let optionArguments := rest.filter fun argument =>
-    argument != "--require-all-actions" && argument != "--replace"
+    argument != "--require-all-actions" && argument != "--replace" && argument != "--reviewable"
   let options ← parseOptions optionArguments
   let diagnostics ← diagnosticsMode options
+  let workflowCommands := ["seal-scaffold", "resolve-sealed", "check-sealed", "check-sealed-bundle",
+    "project-corpus", "check-corpus"]
+  if !workflowCommands.contains name then
+    for (flag, value) in [("--review", options.review), ("--sealed", options.sealed),
+        ("--corpus-manifest", options.corpusManifest), ("--manifest-sha256", options.manifestSha256)] do
+      let _ ← rejectPresent flag value
+    if name != "scaffold" && options.evidences.length > 1 then
+      throw "duplicate option: --evidence"
+  else
+    if requireAllActions || replace then throw "unsupported flag for workflow command"
+    let commandFlags := match name with
+      | "seal-scaffold" => ["--spec", "--evidence", "--param-var", "--projection", "--proposal", "--review", "--out"]
+      | "resolve-sealed" => ["--spec", "--evidence", "--param-var", "--projection", "--sealed", "--corpus-manifest", "--lock"]
+      | "check-sealed" | "check-sealed-bundle" =>
+          ["--spec", "--evidence", "--param-var", "--projection", "--sealed", "--corpus-manifest", "--lock", "--target", "--out"]
+      | "project-corpus" => ["--spec", "--evidence", "--projection", "--out"]
+      | _ => ["--out", "--manifest-sha256"]
+    for (flag, _) in ← optionPairs optionArguments do
+      if flag != "--diagnostics" && !commandFlags.contains flag then
+        throw s!"option {flag} is not valid for {name}"
   let command : Command ← match name with
+  | "seal-scaffold" =>
+      pure <| Command.sealScaffold (← workflowInputsOf options)
+        (← requireOption "--proposal" options.proposal) (← requireOption "--review" options.review)
+        (← requireOption "--out" options.out)
+  | "resolve-sealed" =>
+      pure <| Command.resolveSealed (← workflowInputsOf options)
+        (← requireOption "--sealed" options.sealed) options.corpusManifest
+        (← requireOption "--lock" options.lock)
+  | "check-sealed" | "check-sealed-bundle" =>
+      pure <| Command.checkSealed (← workflowInputsOf options)
+        (← requireOption "--sealed" options.sealed) options.corpusManifest
+        (← requireOption "--lock" options.lock) (← checkedTarget options)
+        (← requireOption "--out" options.out) (name == "check-sealed-bundle")
+  | "project-corpus" =>
+      if options.evidences.isEmpty then throw "missing required option: --evidence"
+      pure <| Command.projectCorpus {
+        spec := ← requireOption "--spec" options.spec
+        evidence := options.evidences
+        projection := ← requireOption "--projection" options.projection
+        out := ← requireOption "--out" options.out
+      }
+  | "check-corpus" =>
+      pure <| Command.checkCorpus (← requireOption "--out" options.out)
+        (← requireOption "--manifest-sha256" options.manifestSha256)
   | "resolve" =>
       if requireAllActions then throw "option --require-all-actions is not valid for resolve"
       if replace then throw "option --replace is not valid for resolve"
@@ -218,14 +314,18 @@ private def parseCommand (arguments : List String) : Except String ParsedCommand
       let _ ← rejectPresent "--out" options.out
       let _ ← rejectPresent "--trace" options.trace
       let _ ← rejectPresent "--receipt" options.receipt
-      pure <| Command.scaffold {
-        spec := ← requireOption "--spec" options.spec
-        evidence := ← requireOption "--evidence" options.evidence
-        paramVar := options.paramVar
-        projection := options.projection
-        proposal := ← requireOption "--proposal" options.proposal
-        replace := replace
-      }
+      if reviewable || options.evidences.length > 1 then
+        pure <| Command.scaffoldWorkflow (← workflowInputsOf options)
+          (← requireOption "--proposal" options.proposal) replace
+      else
+        pure <| Command.scaffold {
+          spec := ← requireOption "--spec" options.spec
+          evidence := ← requireOption "--evidence" options.evidence
+          paramVar := options.paramVar
+          projection := options.projection
+          proposal := ← requireOption "--proposal" options.proposal
+          replace := replace
+        }
   | "project-trace" =>
       if requireAllActions then throw "option --require-all-actions is not valid for project-trace"
       let _ ← rejectPresent "--contract" options.contract
@@ -402,6 +502,49 @@ private def runProjectTrace (mode : DiagnosticsMode) (inputs : ProjectTracePaths
       IO.println s!"projected trace {inputs.out} receipt {inputs.receipt} {result.result.receipt.outputSha256}"
       return 0
 
+private def workflowSuccess (mode : DiagnosticsMode) (message : String) : IO UInt32 := do
+  if let .json := mode then printJsonDiagnostics []
+  IO.println message
+  return 0
+
+private def runResolveSealed (mode : DiagnosticsMode)
+    (inputs : Shell.ModelInterface.ScaffoldWorkflow.WorkflowPaths)
+    (sealed : String) (corpusManifest : Option String) (lock : String) : IO UInt32 := do
+  match ← Shell.ModelInterface.ScaffoldWorkflow.compileResolveSealed inputs sealed corpusManifest with
+  | .error error => reportError mode error
+  | .ok compilation =>
+      match ← writeLock lock compilation with
+      | .error error => reportError mode error compilation.diagnostics
+      | .ok () =>
+          match mode with
+          | .human => printDiagnostics compilation.diagnostics
+          | .json => printJsonDiagnostics compilation.diagnostics
+          IO.println s!"resolved sealed {lock} {compilation.lock.semanticDigest}"
+          return 0
+
+private def runCheckSealed (mode : DiagnosticsMode)
+    (inputs : Shell.ModelInterface.ScaffoldWorkflow.WorkflowPaths)
+    (sealed : String) (corpusManifest : Option String) (lock target out : String)
+    (bundle : Bool) : IO UInt32 := do
+  match ← Shell.ModelInterface.ScaffoldWorkflow.compileResolveSealed inputs sealed corpusManifest with
+  | .error error => reportError mode error
+  | .ok compilation =>
+      match ← checkCompilation compilation lock target out bundle with
+      | .error error => reportError mode error compilation.diagnostics
+      | .ok report =>
+          match mode with
+          | .human => printDiagnostics report.diagnostics
+          | .json =>
+              let diagnostics := if !report.clean && report.diagnostics.isEmpty then
+                  [shellDiagnostic "MIC-C-STALE-001" "generatedOutput" "generated output is stale"]
+                else report.diagnostics
+              printJsonDiagnostics diagnostics
+          if report.clean then
+            IO.println "model-interface sealed check clean"
+            return 0
+          for path in report.stalePaths do IO.eprintln s!"stale: {path}"
+          return 1
+
 def run (arguments : List String) : IO UInt32 := do
   if arguments == ["--version"] then
     IO.println "model-interface-gen/1 mirrors.suite-bundle/v1"
@@ -438,6 +581,37 @@ def run (arguments : List String) : IO UInt32 := do
           runPreflightCommand parsed.diagnostics lock trace requireAllActions
       | .scaffold inputs => runScaffold parsed.diagnostics inputs
       | .projectTrace inputs => runProjectTrace parsed.diagnostics inputs
+      | .scaffoldWorkflow inputs proposal replace =>
+          match ← Shell.ModelInterface.ScaffoldWorkflow.writeScaffold inputs proposal replace with
+          | .error error => reportError parsed.diagnostics error
+          | .ok result =>
+              match parsed.diagnostics with
+              | .human => printDiagnostics result.diagnostics
+              | .json => printJsonDiagnostics result.diagnostics
+              IO.println s!"scaffolded reviewable proposal {proposal} {result.proposalSha256}"
+              return 0
+      | .sealScaffold inputs proposal review out =>
+          match ← Shell.ModelInterface.ScaffoldWorkflow.sealScaffold inputs proposal review out with
+          | .error error => reportError parsed.diagnostics error
+          | .ok result =>
+              match parsed.diagnostics with
+              | .human => printDiagnostics result.compilation.diagnostics
+              | .json => printJsonDiagnostics result.compilation.diagnostics
+              IO.println s!"sealed scaffold {out} {result.compilation.lock.semanticDigest}"
+              return 0
+      | .resolveSealed inputs sealed corpusManifest lock =>
+          runResolveSealed parsed.diagnostics inputs sealed corpusManifest lock
+      | .checkSealed inputs sealed corpusManifest lock target out bundle =>
+          runCheckSealed parsed.diagnostics inputs sealed corpusManifest lock target out bundle
+      | .projectCorpus inputs =>
+          match ← Shell.ModelInterface.Corpus.projectCorpus inputs with
+          | .error error => reportError parsed.diagnostics error
+          | .ok result =>
+              workflowSuccess parsed.diagnostics s!"projected corpus {inputs.out} {result.manifestSha256}"
+      | .checkCorpus out manifestSha256 =>
+          match ← Shell.ModelInterface.Corpus.checkCorpus out manifestSha256 with
+          | .error error => reportError parsed.diagnostics error
+          | .ok _ => workflowSuccess parsed.diagnostics "model-interface corpus check clean"
 
 end ModelInterfaceGen
 

@@ -1,0 +1,172 @@
+{
+  "schema": "mirrors.model-interface-scaffold-review/v1",
+  "approved": true,
+  "proposalSha256": "bd149db8c99d9246eab0d66486b48f9b25cc70001bbf70f6c3762686ba57b28a",
+  "universes": {
+    "complete": true,
+    "initializers": [
+      "init"
+    ],
+    "transitions": [
+      "update"
+    ]
+  },
+  "contract": {
+    "schema": "mirrors.model-interface/v1",
+    "interfaceVersion": "1.0.0",
+    "model": {
+      "module": "ProjectedCells",
+      "source": "test/fixtures/model-interface/projected-cells/ProjectedCells.tla"
+    },
+    "wire": {
+      "actionVariable": "action_taken",
+      "parameterVariable": "parameters"
+    },
+    "initializers": [
+      {
+        "id": "Initialize",
+        "wireAction": "init",
+        "wireAliases": [],
+        "inputs": []
+      }
+    ],
+    "actions": [
+      {
+        "id": "Update",
+        "wireAction": "update",
+        "wireAliases": [],
+        "inputs": [
+          {
+            "id": "Delta",
+            "from": {
+              "root": "stepParameters",
+              "path": [
+                {
+                  "field": "parameters"
+                },
+                {
+                  "field": "delta"
+                }
+              ]
+            },
+            "expectedType": {
+              "kind": "int"
+            }
+          },
+          {
+            "id": "Index",
+            "from": {
+              "root": "stepParameters",
+              "path": [
+                {
+                  "field": "parameters"
+                },
+                {
+                  "field": "index"
+                }
+              ]
+            },
+            "expectedType": {
+              "kind": "int"
+            }
+          },
+          {
+            "id": "Labels",
+            "from": {
+              "root": "stepParameters",
+              "path": [
+                {
+                  "field": "parameters"
+                },
+                {
+                  "field": "labels"
+                }
+              ]
+            },
+            "expectedType": {
+              "kind": "set",
+              "element": {
+                "kind": "str"
+              }
+            }
+          },
+          {
+            "id": "Weights",
+            "from": {
+              "root": "stepParameters",
+              "path": [
+                {
+                  "field": "parameters"
+                },
+                {
+                  "field": "weights"
+                }
+              ]
+            },
+            "expectedType": {
+              "kind": "map",
+              "key": {
+                "kind": "str"
+              },
+              "value": {
+                "kind": "int"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "observations": [
+      {
+        "id": "Cells",
+        "wireName": "cells",
+        "provenance": "implementation",
+        "expectedType": {
+          "kind": "seq",
+          "element": {
+            "kind": "record",
+            "fields": [
+              {
+                "wireName": "entry",
+                "type": {
+                  "kind": "record",
+                  "fields": [
+                    {
+                      "wireName": "count",
+                      "type": {
+                        "kind": "int"
+                      }
+                    },
+                    {
+                      "wireName": "labels",
+                      "type": {
+                        "kind": "set",
+                        "element": {
+                          "kind": "str"
+                        }
+                      }
+                    },
+                    {
+                      "wireName": "weights",
+                      "type": {
+                        "kind": "map",
+                        "key": {
+                          "kind": "str"
+                        },
+                        "value": {
+                          "kind": "int"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "replacements": [],
+  "obligations": []
+}

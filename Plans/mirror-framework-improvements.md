@@ -2,7 +2,13 @@
 
 Date: 2026-09-21
 
-Status: proposed; no implementation or release is authorized by this document
+Status (2026-10-03): the selected `m5-wsl-windows-remote/v1` profile is qualified
+for post-M6 working-tree C0
+`879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`.
+Broader M4 acceptance remains partial. This roadmap does not itself authorize
+new implementation or release actions. [Current readiness](q3-post-m6-2026-10-03.md)
+records the exact accepted candidate and limits; later commits and documentation
+changes do not automatically inherit its qualification.
 
 Planning baseline: Mirrors `eb5cd00`, MirrorGate `173075d`
 
@@ -39,12 +45,12 @@ the evidence behind its conformance claims. This plan covers six workstreams:
 5. Durable verification evidence.
 6. Gate recovery and aggregate resource accounting.
 
-This is a cross-repository roadmap, not a claim that the proposed APIs or
-capabilities already exist. Names for new schemas, commands, and files below are
-provisional until their owning repository records the contract. Implementation
-should proceed through scoped changes with the acceptance evidence specified
-here. Package publication, production deployment, and destructive host recovery
-remain separate operational actions.
+The workstream deliverables below retain the original cross-repository roadmap.
+The milestone table and linked readiness report distinguish implemented and
+qualified scope from remaining capabilities; historical proposed names are
+resolved by their owning contracts. Further implementation requires scoped
+changes and the specified acceptance evidence. Package publication, production
+deployment, and destructive host recovery remain separate operational actions.
 
 ## Existing foundations and constraints
 
@@ -83,10 +89,16 @@ Preserve these boundaries throughout:
 | --- | --- | --- | --- | --- | --- |
 | M0 | Baseline inventory and contracts | Mirrors, with each component owner | None | Scope, schemas, failure rules, and supported initial path reviewed | Done: scope, contracts, and baseline reviewed and accepted 2026-09-22 |
 | M1 | Compatibility catalog and evidence format | Mirrors catalog; evidence producers in each repo | M0 | Generated support tables and durable evidence exercised together | Done: catalog selection and durable evidence exercised together in the 2026-09-25 pass |
-| M2 | Installable reference distribution | Component packaging owners; framework integration in Mirrors | M1 | Fresh isolated consumer completes local and Gate flows | Done for selected WSL2 profile: committed local/Gate installs and source-hidden D audits (`run-2a4f088c…`, `run-20b4d70c…`) qualify current C0; native Ubuntu acceptance excluded |
+| M2 | Installable reference distribution | Component packaging owners; framework integration in Mirrors | M1 | Fresh isolated consumer completes local and Gate flows | Done for selected WSL2 profile: committed local/Gate installs and source-hidden D audits (`run-3bafa0a2…`, `run-050b159c…`) qualify recorded C0 `879be4fd92d3…`; native Ubuntu acceptance excluded |
 | M3 | Failure reproduction and fidelity acceptance | MirrorECMA, Mirrors compiler, Gate integration | M1; use M2 distribution for final acceptance | Reproduction, safe reduction, and mutation controls pass | Done for selected profile: both installed R1 branches reproduced; prefix best 2/16 with complete minimality; LeaseService R5 model-valid and actual reduced-corpus baseline/fault preserves the same signature; local/Gate mutation aggregates 17/17; exact R0/R1/R5 linkage independently verified |
-| M4 | Gate interruption recovery | MirrorGate | M1 evidence format | Ownership-safe recovery and aggregate-limit gates pass | Partial overall: current-candidate recovery reclaims four owned prepared filesystem resources with confirmed cleanup and exact fresh-origin linkage; this required M5 clause qualifies. Aggregate cgroups and active-process post-restart recovery remain separately unqualified |
-| M5 | Release-candidate qualification: `m5-wsl-windows-remote/v1` | All affected owners | M2, M3, M4 ownership-safe recovery | Exact candidate passes this profile's installed/runtime/evidence gates; native Ubuntu and aggregate-cgroup acceptance excluded | Done for `m5-wsl-windows-remote/v1`: corrected working-tree C0 `de4e1864af4c…`; all 18 commands/16 tiers, 19-node/two-D scope and 20 bundles independently verified; six controls rejected; [Q3 integrity fixes](q3-integrity-fixes-2026-10-03.md) |
+| M4 | Gate interruption recovery | MirrorGate | M1 evidence format | Ownership-safe recovery and aggregate-limit gates pass | Partial overall: recorded-candidate recovery reclaims four owned prepared filesystem resources with confirmed cleanup and exact fresh-origin linkage; this required M5 clause qualifies. Aggregate cgroups and active-process post-restart recovery remain separately unqualified |
+| M5 | Release-candidate qualification: `m5-wsl-windows-remote/v1` | All affected owners | M2, M3, M4 ownership-safe recovery | Exact candidate passes this profile's installed/runtime/evidence gates; native Ubuntu and aggregate-cgroup acceptance excluded | Done for `m5-wsl-windows-remote/v1`: post-M6 working-tree C0 `879be4fd92d3…`; all 18 commands/16 tiers, 19-node/two-D scope and 20 bundles independently verified; six controls rejected; [Q3 post-M6](q3-post-m6-2026-10-03.md) |
+
+### Historical milestone updates
+
+These dated notes preserve each earlier candidate's position. Their pending
+work and evidence apply to that date and selection; the table above and current
+readiness record supersede them as current status.
 
 Updated 2026-09-29: safe-reduction implementation landed on both mains
 (MirrorECMA `da18f1a`; Mirrors `abbf70b`, `b19e090`) and every tier requiring a
@@ -125,6 +137,8 @@ recovery, source/remote gates and the full independently verified Q1/Q2 graph
 pass. Current acceptance is in [completion readiness](q3-m5-complete-2026-10-01.md).
 M4's separate aggregate/process claims remain unqualified; only its exercised
 ownership-safe filesystem clause is required and credited by this M5 profile.
+
+### Ongoing implementation discipline
 
 Within M1, catalog and evidence work can progress independently after agreeing
 on identity fields. M3 and M4 can progress independently. Native-client expansion
