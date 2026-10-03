@@ -26,7 +26,9 @@ interop matrix are also outside the completed profile. The separately authorized
 [M6 reviewed-scaffold and corpus work](m6-reviewed-scaffolds-and-corpora.md) are
 complete for their declared source and public integration scope. M5's pinned
 compatibility matrix does not qualify every newly generated-client feature.
-The qualified working-tree changes remain uncommitted.
+The implementation is committed as recorded in the newest
+[publication checkpoint](../CHECKPOINTS.md); the new Git identities do not
+automatically inherit qualification of the recorded working-tree C0.
 
 The dated decisions below and the original September integration/ownership
 records are history. Their pending tasks and uncommitted states describe those

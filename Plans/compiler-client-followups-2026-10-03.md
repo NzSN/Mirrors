@@ -74,5 +74,6 @@ closures and source hiding; it is not a package release qualification. Local
 Apalache and TLC are prohibited on this coordinator. Live model generation
 uses the owned native Windows oracle, Apalache 0.62.2 with Java 25.0.4+7-LTS.
 
-Changes remain uncommitted. Native Ubuntu, aggregate cgroups, active-process
+Publication commits are recorded in [CHECKPOINTS.md](../CHECKPOINTS.md).
+Native Ubuntu, aggregate cgroups, active-process
 recovery and Windows service-manager acceptance remain outside this work.

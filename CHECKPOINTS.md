@@ -5,6 +5,24 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-03 — Post-M6 publication checkpoint
+
+The user authorized commit and push of the completed compiler/client, M6 and
+fresh M5 qualification work. Implementation commits:
+
+- MirrorCPP: `aa906a5cef166e7290a2636a93f89b1123cbff23`.
+- MirrorRust: `afbb694bd847ad34dbfbbba75a05038653a350a1`.
+- MirrorLean: `b161cbe7f61a7c468a67a451bba1765d6fe0336f`.
+- MirrorECMA: `a03cf10a8787ff7691a4fd8b8f1013667501dfb7`.
+- Mirrors: `fcaa34192b20c49a0e224e7491afe6f50236367c`.
+
+MirrorGate has no implementation changes in this batch. Editor caches remain
+untracked. The qualified selection remains the recorded working-tree C0
+`879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`;
+these new Git identities require a fresh freeze before claiming qualification
+of the published revisions. The retained Q3 and earlier checkpoint remain
+unchanged. This publication record is a documentation-only follow-up commit.
+
 ## 2026-10-03 — Post-M6 candidate qualified
 
 Fresh qualification covers the compiler/client follow-ups and M6 implementation
