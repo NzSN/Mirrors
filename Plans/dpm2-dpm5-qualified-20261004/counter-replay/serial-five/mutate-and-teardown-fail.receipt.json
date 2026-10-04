@@ -1,0 +1,343 @@
+{
+  "actualIdentity": {
+    "implementationSha256": "3255b068586c41bf311c9356d0494c3364ecf2ec012d0ad97ae62af8e3e32e63",
+    "mappingSha256": "e86366f57dd5f2a96ef7072d855d5b7d5751f0b84b9e7bbddd48708b70d2ef48",
+    "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+  },
+  "binding": {
+    "disposals": 1,
+    "disposed": true,
+    "executions": [
+      {
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "teardown_failed",
+        "cleanupAttempts": [
+          {
+            "detail": "deliberate SUT teardown failure",
+            "remainingActors": [],
+            "status": "teardown_failed"
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 1,
+            "step": 0
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 2,
+            "step": 1
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 3,
+            "step": 1
+          }
+        ],
+        "executionId": "6afffbd0efa17625b5d46c98e5cd3d8a",
+        "generation": 1,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 1,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 2,
+            "state": {
+              "count": {
+                "#bigint": "7"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "2"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "completed",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 30000,
+          "maxActors": 16,
+          "maxSteps": 4096
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "3255b068586c41bf311c9356d0494c3364ecf2ec012d0ad97ae62af8e3e32e63",
+            "mappingSha256": "e86366f57dd5f2a96ef7072d855d5b7d5751f0b84b9e7bbddd48708b70d2ef48",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "mutate-and-teardown-fail"
+          },
+          "profile": "mirrorcpp.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-replay/v1"
+      }
+    ],
+    "initializations": 1,
+    "receiptComplete": true,
+    "schema": "mirrors.scheduled-binding/v1"
+  },
+  "client": {
+    "actual": {
+      "count": {
+        "#bigint": "7"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "2"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "5"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      }
+    },
+    "expected": {
+      "count": {
+        "#bigint": "6"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "2"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "5"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      }
+    },
+    "kind": "step_mismatch",
+    "message": "conformance failure at action 'write': count: value mismatch (expected {\"#bigint\":\"6\"}, got {\"#bigint\":\"7\"})",
+    "orderedHints": [
+      "count: value mismatch (expected {\"#bigint\":\"6\"}, got {\"#bigint\":\"7\"})"
+    ],
+    "status": "failed"
+  },
+  "comparison": "step_mismatch",
+  "mode": "mutate-and-teardown-fail",
+  "passed": false,
+  "peerTerminal": "step_mismatch",
+  "peerTerminalRaw": "{\"actual\":{\"count\":{\"#bigint\":\"7\"},\"phase\":{\"#map\":[[\"a\",{\"#bigint\":\"2\"}],[\"b\",{\"#bigint\":\"0\"}]]},\"saved\":{\"#map\":[[\"a\",{\"#bigint\":\"5\"}],[\"b\",{\"#bigint\":\"0\"}]]}},\"expected\":{\"count\":{\"#bigint\":\"6\"},\"phase\":{\"#map\":[[\"a\",{\"#bigint\":\"2\"}],[\"b\",{\"#bigint\":\"0\"}]]},\"saved\":{\"#map\":[[\"a\",{\"#bigint\":\"5\"}],[\"b\",{\"#bigint\":\"0\"}]]}},\"hints\":[{\"actual\":{\"#bigint\":\"7\"},\"expected\":{\"#bigint\":\"6\"},\"kind\":\"value_mismatch\",\"path\":[{\"field\":\"count\"}]}],\"proto_step\":\"step_mismatch\"}",
+  "schema": "mirrors.scheduled-comparison/v1",
+  "sut": {
+    "acquisitions": 1,
+    "enteredWorkers": 1,
+    "teardowns": 1
+  }
+}

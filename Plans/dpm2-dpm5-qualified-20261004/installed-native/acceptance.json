@@ -1,0 +1,158 @@
+{
+  "schema": "mirrors.dpm3-native-acceptance/v1",
+  "status": "passed",
+  "profile": "dpm-writesentry-two-operation/v1",
+  "rows": [
+    {
+      "case": "00-stable-t1-normal-v3-ok",
+      "status": "passed",
+      "receipt": "00-stable-t1-normal-v3-ok/receipt.json",
+      "sha256": "45723deee2d8aa77127156754156bb7f824819355f5cf3698029f9688b787adb",
+      "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+      "mappingSha256": "95003460c3c7fafbc39f432c0280e194f75f2618267a76887f966068b9a08984",
+      "traceSha256": "8d17bac4aa8933fb4e75ed8d1a1db2a59195eacf73b6e941cc698f9d93c31f8e"
+    },
+    {
+      "case": "01-stable-t1-normal-v3-ok",
+      "status": "passed",
+      "receipt": "01-stable-t1-normal-v3-ok/receipt.json",
+      "sha256": "9983e76d8253ad13070f90c6d3a1271bcaf3326ae41d5ece40698ee95c8d2ce9",
+      "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+      "mappingSha256": "95003460c3c7fafbc39f432c0280e194f75f2618267a76887f966068b9a08984",
+      "traceSha256": "8d17bac4aa8933fb4e75ed8d1a1db2a59195eacf73b6e941cc698f9d93c31f8e"
+    },
+    {
+      "case": "02-stable-t2-normal-v3-ok",
+      "status": "passed",
+      "receipt": "02-stable-t2-normal-v3-ok/receipt.json",
+      "sha256": "650488f96f18f483f5afbde09f181943308056ba42c8f3ed99692aa4e2e73acc",
+      "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+      "mappingSha256": "2359c02884531a4eb64b93c9b350333e6fda61fae26774fbe677ba247a6c21d5",
+      "traceSha256": "f0ce5d89de79425a52a32804b962a9d94907926bd4d0d40f4865206b2b46e180"
+    },
+    {
+      "case": "03-stable-t2-normal-v3-ok",
+      "status": "passed",
+      "receipt": "03-stable-t2-normal-v3-ok/receipt.json",
+      "sha256": "14a2f610981f5c89dbf2a077f13d8b3e4665112f5ce67118410f116b9d832d1a",
+      "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+      "mappingSha256": "2359c02884531a4eb64b93c9b350333e6fda61fae26774fbe677ba247a6c21d5",
+      "traceSha256": "f0ce5d89de79425a52a32804b962a9d94907926bd4d0d40f4865206b2b46e180"
+    },
+    {
+      "case": "04-overlap-t1-normal-v3-ok",
+      "status": "passed",
+      "receipt": "04-overlap-t1-normal-v3-ok/receipt.json",
+      "sha256": "b0fc00e6cf34d972f74c7b1f13889740fe333e7d7402780351b8a7efc94d7502",
+      "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+      "mappingSha256": "d1fcd3ac22aa1f67b7b3ba5d35fc2e8bc96a6e645a88a75708899916e4ae8534",
+      "traceSha256": "d53e526e2d8e6c3025ca3a3a765a94e40cd142f89756e92c6360722cdd61e3be"
+    },
+    {
+      "case": "05-overlap-t1-normal-v3-ok",
+      "status": "passed",
+      "receipt": "05-overlap-t1-normal-v3-ok/receipt.json",
+      "sha256": "005d1550186fff143d615762a0a48da00585420287f829b7113062395bff6fa0",
+      "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+      "mappingSha256": "d1fcd3ac22aa1f67b7b3ba5d35fc2e8bc96a6e645a88a75708899916e4ae8534",
+      "traceSha256": "d53e526e2d8e6c3025ca3a3a765a94e40cd142f89756e92c6360722cdd61e3be"
+    },
+    {
+      "case": "06-overlap-t2-normal-v3-ok",
+      "status": "passed",
+      "receipt": "06-overlap-t2-normal-v3-ok/receipt.json",
+      "sha256": "35e6c6ae43bb016ee1515d7c0ae433069497d254b5618739da8d6c5141cb0038",
+      "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+      "mappingSha256": "560c0d326f00f4ecd7a99275d7f43b0645704a5714cf2551352a14f7a73a0730",
+      "traceSha256": "483db82e0a75ce9f765ebd7c534be9f1c8aa910422e42462409fccb15c91fdf8"
+    },
+    {
+      "case": "07-overlap-t2-normal-v3-ok",
+      "status": "passed",
+      "receipt": "07-overlap-t2-normal-v3-ok/receipt.json",
+      "sha256": "63180f35dddbea0c5ef7368204d9b281abbcb4f9eae0ea9fc024a004b5c6fd02",
+      "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+      "mappingSha256": "560c0d326f00f4ecd7a99275d7f43b0645704a5714cf2551352a14f7a73a0730",
+      "traceSha256": "483db82e0a75ce9f765ebd7c534be9f1c8aa910422e42462409fccb15c91fdf8"
+    },
+    {
+      "case": "08-stable-t1-duplicate-sink-call-ok",
+      "status": "passed",
+      "receipt": "08-stable-t1-duplicate-sink-call-ok/receipt.json",
+      "sha256": "d7a95e18fe64ca54f7220ce610af1cbc6e991e127cfa8f839e01e0bdf2a8c517",
+      "workerSha256": "7ef7c6c2883587b34320387b348ffba023ec498c7835eda894f3f122448c66ff",
+      "mappingSha256": "95003460c3c7fafbc39f432c0280e194f75f2618267a76887f966068b9a08984",
+      "traceSha256": "8d17bac4aa8933fb4e75ed8d1a1db2a59195eacf73b6e941cc698f9d93c31f8e"
+    },
+    {
+      "case": "09-stable-t1-skip-hit-release-ok",
+      "status": "passed",
+      "receipt": "09-stable-t1-skip-hit-release-ok/receipt.json",
+      "sha256": "65076e34c3fc7e85f0bce27a45a8515615500f066ca20d3e2ea4a2e56b1d58fa",
+      "workerSha256": "a4a48aa0332b7aa9a6a48d3a361eee5e6499b71db1e3fed41d084c85f393f5ec",
+      "mappingSha256": "95003460c3c7fafbc39f432c0280e194f75f2618267a76887f966068b9a08984",
+      "traceSha256": "8d17bac4aa8933fb4e75ed8d1a1db2a59195eacf73b6e941cc698f9d93c31f8e"
+    },
+    {
+      "case": "10-stable-t1-normal-v3-cancel",
+      "status": "passed",
+      "receipt": "10-stable-t1-normal-v3-cancel/receipt.json",
+      "sha256": "e7b4937bf20b0f1307912f569248cb37bc5378f793977485dcde60f91356dc5d",
+      "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+      "mappingSha256": "95003460c3c7fafbc39f432c0280e194f75f2618267a76887f966068b9a08984",
+      "traceSha256": "8d17bac4aa8933fb4e75ed8d1a1db2a59195eacf73b6e941cc698f9d93c31f8e"
+    },
+    {
+      "case": "11-stable-t1-normal-v3-wrong-image",
+      "status": "passed",
+      "receipt": "11-stable-t1-normal-v3-wrong-image/receipt.json",
+      "sha256": "c37421b69052d31f455cd2c4f4db46ebc6446bbabc9113c3679b16ddea40e2d3",
+      "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+      "mappingSha256": "95003460c3c7fafbc39f432c0280e194f75f2618267a76887f966068b9a08984",
+      "traceSha256": "8d17bac4aa8933fb4e75ed8d1a1db2a59195eacf73b6e941cc698f9d93c31f8e"
+    },
+    {
+      "case": "12-stable-t1-normal-v3-crash-peer",
+      "status": "passed",
+      "receipt": "12-stable-t1-normal-v3-crash-peer/receipt.json",
+      "sha256": "a03f0ad5bc4a8dd724bb383ad8b5cfc656dc2284e7ddc81e3d5e2eed17e2c2a7",
+      "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+      "mappingSha256": "95003460c3c7fafbc39f432c0280e194f75f2618267a76887f966068b9a08984",
+      "traceSha256": "8d17bac4aa8933fb4e75ed8d1a1db2a59195eacf73b6e941cc698f9d93c31f8e"
+    },
+    {
+      "case": "13-stable-t1-normal-v3-unexpected-phase",
+      "status": "passed",
+      "receipt": "13-stable-t1-normal-v3-unexpected-phase/receipt.json",
+      "sha256": "fa64f80e305ae417f20659bd26ece5dacbb4f09871c829e507c765928f5e73dc",
+      "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+      "mappingSha256": "27af2d35ea9239fa86e75e34e25497caa13290305360f02bf0a709c7e356538d",
+      "traceSha256": "13f4e423a203e450aa366aa1ec1b19a80c92f62326c9a750d0339eb8bbe2ee45"
+    }
+  ],
+  "compatibilityControls": [
+    {
+      "case": "unknown-profile",
+      "status": "passed",
+      "nativeAcquisitions": 0
+    },
+    {
+      "case": "extra-operation",
+      "status": "passed",
+      "nativeAcquisitions": 0
+    },
+    {
+      "case": "unknown-actor",
+      "status": "passed",
+      "nativeAcquisitions": 0
+    }
+  ],
+  "inputHashes": {
+    "/tmp/admitted/dpm_native": "72cb2356043ccc8b4fbde77c9327f94e5f73ff79dd11befcd15ff18f491816d1",
+    "/tmp/admitted/mirror": "748390bb0a9cec4291a38e2b06ba68a3e1a9e23c688a05b9805072ce726354a6",
+    "/tmp/admitted/generated.hpp": "5fff8b8014b8fbb047990794890e590c8cf563e280ff124355a7e55f7a1fe7fa"
+  },
+  "scope": "four named schedules, two fresh-process replays each, two production mutants, actual phase divergence, cancellation, verified peer termination and native image refusal",
+  "selectedCase": null,
+  "fullProductionQualified": false
+}

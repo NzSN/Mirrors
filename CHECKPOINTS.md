@@ -5,6 +5,82 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-04 — DPM-2–DPM-5 declared profiles accepted after approval
+
+The user approved the selected oracle/model transfers and native staging. The
+[final acceptance](Plans/dpm2-dpm5-qualified-20261004/README.md) closes the earlier
+Partial checkpoint for these stages. Four fresh counter cases pass 60 replay
+controls. Four native schedules each match on two fresh Windows processes; two
+staged production mutations cause actual `step_mismatch`. Actual phase divergence,
+paused cancellation, image mismatch and owned-child termination are classified;
+three incompatible mappings reject before acquisition. Four fixed-schedule
+`MBTSafety` checks returned VALID through the existing Windows oracle.
+
+The installed consumer compiles and runs with both source checkouts hidden and
+networking isolated. Portable replay/exploration gates and the installed native
+matrix pass. The native gate uses the existing WSL carrier to execute actual
+Windows workers, not a Windows build of the complete SDK. Final observation
+finds zero remaining owned test processes. The service kept PID 2572 and its
+original binary hash; it was not reconfigured or restarted.
+
+Counter type annotations and ordered overlap guards, native build/runtime working
+directories and a missing standard header were corrected during real acceptance.
+The native generated binding was regenerated from raw fresh ITF to preserve exact
+parameter-metadata negotiation; WriteSentry's existing lock/source work remains
+untouched. The SDK's unchanged runtime retains 220/220 unit passes. Generated
+counter/native outputs check clean. Changes remain uncommitted; no package was
+published. Scope excludes full WriteSentry qualification, a Windows Gate backend,
+universal concurrency correctness and a new M5 release candidate.
+
+## 2026-10-04 — DPM-2–DPM-5 local work retained; native acceptance pending
+
+The authorized stage plans and step-by-step local execution are retained in
+[the DPM-2–DPM-5 plan](Plans/deterministic-production-mbt-dpm2-dpm5.md) and
+[acceptance evidence](Plans/dpm2-dpm5-evidence-20261004/README.md). Incremental
+MirrorCPP binding/replay and finite exploration are implemented. All 220 SDK
+unit cases pass; generated output checks clean. A fresh installed consumer with
+repositories hidden and networking isolated passes 15 replay cases, 11 exploration
+cases and artifact/profile refusal controls. Full local exploration covers 20
+schedules and two inputs, with independent denominator and semantic coverage checks.
+
+The native WriteSentry bridge and frozen pilot/build inputs are prepared; seven
+synthetic transport controls pass. The transport crash control exposed and fixed
+a POSIX SIGPIPE failure, covered by a red/green child-process regression. No
+WriteSentry production source was changed by this work.
+
+Overall acceptance is **Partial**: explicit authorization is pending for new
+model/source transfers to the existing Windows oracle/owned staging root. No
+fresh oracle capture, native Windows pilot or native production-mutation acceptance
+was run. DPM-5 native capability therefore remains unqualified. No commit/push or
+external package publication was performed. Older records below remain historical.
+
+## 2026-10-04 — DPM-0 design and DPM-1 portable coordinator accepted
+
+The user authorized the deterministic-production-MBT recommendation: specify
+DPM-0 and implement DPM-1's small concurrent fixture. MirrorCPP now exposes an
+experimental cooperative scheduler with static admission before factories,
+real worker-stack preservation, exact checkpoint replay, quiescent observations,
+classified failures and retained ownership after cleanup timeout.
+
+The refreshed WriteSentry baseline already contains an application-specific
+native phase scheduler and recorded bounded v3 acceptance. This work adds the
+reusable portable interface; it does not replace its trap-safe atomic handshake
+or claim a new native WriteSentry result.
+
+Validation: 615 assertions across 18 focused cases; 202/202 local unit tests;
+17 fresh-process replays over two schedule shapes and two inputs; installed
+CMake consumer; Address/Leak/UndefinedBehavior fixture checks; ThreadSanitizer
+615-assertion suite. The successful TSan process used `setarch x86_64 -R` after
+a runtime mapping collision; diagnostic sanitizer startup failures receive no
+credit. No model checker ran.
+
+[Design and execution plan](Plans/deterministic-production-mbt-dpm0-dpm1.md)
+and [retained acceptance](Plans/dpm1-evidence-20261004/acceptance.json) record
+source/binary hashes, replay receipts, cleanup outcomes and limits. DPM-2
+comparison integration, DPM-3 native adapter, DPM-4 exploration and DPM-5
+capability publication remain separate proposed slices. Changes are uncommitted;
+this local acceptance does not modify the earlier M5 qualification.
+
 ## 2026-10-03 — Published revisions qualified
 
 Fresh qualification covers the compiler/client follow-ups and M6 implementation

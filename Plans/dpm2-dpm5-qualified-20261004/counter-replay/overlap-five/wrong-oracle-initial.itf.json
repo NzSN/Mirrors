@@ -1,0 +1,345 @@
+{
+  "#meta": {
+    "description": "Created by Apalache on Sun Oct 04 20:04:55 CST 2026",
+    "format": "ITF",
+    "format-description": "https://apalache-mc.org/docs/adr/015adr-trace.html",
+    "varTypes": {
+      "action_taken": "Str",
+      "count": "Int",
+      "parameters": "{ actor: Str }",
+      "phase": "(Str -> Int)",
+      "saved": "(Str -> Int)"
+    }
+  },
+  "states": [
+    {
+      "#meta": {
+        "index": {
+          "#bigint": "0"
+        }
+      },
+      "action_taken": "init",
+      "count": {
+        "#bigint": "105"
+      },
+      "parameters": {
+        "actor": "a"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "0"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "0"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "#meta": {
+        "index": {
+          "#bigint": "1"
+        }
+      },
+      "action_taken": "read",
+      "count": {
+        "#bigint": "5"
+      },
+      "parameters": {
+        "actor": "a"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "1"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "5"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "#meta": {
+        "index": {
+          "#bigint": "2"
+        }
+      },
+      "action_taken": "read",
+      "count": {
+        "#bigint": "5"
+      },
+      "parameters": {
+        "actor": "b"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "1"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "1"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "5"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "5"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "#meta": {
+        "index": {
+          "#bigint": "3"
+        }
+      },
+      "action_taken": "write",
+      "count": {
+        "#bigint": "6"
+      },
+      "parameters": {
+        "actor": "a"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "2"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "1"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "5"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "5"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "#meta": {
+        "index": {
+          "#bigint": "4"
+        }
+      },
+      "action_taken": "write",
+      "count": {
+        "#bigint": "6"
+      },
+      "parameters": {
+        "actor": "b"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "2"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "2"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "5"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "5"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "#meta": {
+        "index": {
+          "#bigint": "5"
+        }
+      },
+      "action_taken": "finish",
+      "count": {
+        "#bigint": "6"
+      },
+      "parameters": {
+        "actor": "a"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "3"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "2"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "5"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "5"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "#meta": {
+        "index": {
+          "#bigint": "6"
+        }
+      },
+      "action_taken": "finish",
+      "count": {
+        "#bigint": "6"
+      },
+      "parameters": {
+        "actor": "b"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "3"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "3"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "5"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "5"
+            }
+          ]
+        ]
+      }
+    }
+  ],
+  "vars": [
+    "phase",
+    "parameters",
+    "saved",
+    "action_taken",
+    "count"
+  ]
+}

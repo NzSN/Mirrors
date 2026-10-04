@@ -1,0 +1,154 @@
+{
+  "actualIdentity": {
+    "implementationSha256": "3255b068586c41bf311c9356d0494c3364ecf2ec012d0ad97ae62af8e3e32e63",
+    "mappingSha256": "e86366f57dd5f2a96ef7072d855d5b7d5751f0b84b9e7bbddd48708b70d2ef48",
+    "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+  },
+  "binding": {
+    "disposals": 1,
+    "disposed": true,
+    "executions": [
+      {
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "detail": "",
+            "remainingActors": [],
+            "status": "confirmed"
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "",
+        "events": [],
+        "executionId": "01c0b010228fa8d3557821dae209c093",
+        "generation": 1,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "completed",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 30000,
+          "maxActors": 16,
+          "maxSteps": 4096
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "3255b068586c41bf311c9356d0494c3364ecf2ec012d0ad97ae62af8e3e32e63",
+            "mappingSha256": "e86366f57dd5f2a96ef7072d855d5b7d5751f0b84b9e7bbddd48708b70d2ef48",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "ok"
+          },
+          "profile": "mirrorcpp.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-replay/v1"
+      }
+    ],
+    "initializations": 1,
+    "receiptComplete": true,
+    "schema": "mirrors.scheduled-binding/v1"
+  },
+  "client": {
+    "kind": "io",
+    "message": "transport closed unexpectedly",
+    "orderedHints": [],
+    "status": "failed"
+  },
+  "comparison": "incomplete",
+  "mode": "ok",
+  "passed": false,
+  "peerTerminal": "",
+  "peerTerminalRaw": "",
+  "schema": "mirrors.scheduled-comparison/v1",
+  "sut": {
+    "acquisitions": 1,
+    "enteredWorkers": 0,
+    "teardowns": 1
+  }
+}

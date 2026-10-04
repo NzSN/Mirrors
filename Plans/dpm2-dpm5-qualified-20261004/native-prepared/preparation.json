@@ -1,0 +1,28 @@
+{
+  "schema": "mirrors.dpm3-preparation/v1",
+  "workerSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+  "cases": [
+    {
+      "name": "stable-t1",
+      "steps": 28,
+      "mappingSha256": "95003460c3c7fafbc39f432c0280e194f75f2618267a76887f966068b9a08984"
+    },
+    {
+      "name": "stable-t2",
+      "steps": 28,
+      "mappingSha256": "2359c02884531a4eb64b93c9b350333e6fda61fae26774fbe677ba247a6c21d5"
+    },
+    {
+      "name": "overlap-t1",
+      "steps": 17,
+      "mappingSha256": "d1fcd3ac22aa1f67b7b3ba5d35fc2e8bc96a6e645a88a75708899916e4ae8534"
+    },
+    {
+      "name": "overlap-t2",
+      "steps": 17,
+      "mappingSha256": "560c0d326f00f4ecd7a99275d7f43b0645704a5714cf2551352a14f7a73a0730"
+    }
+  ],
+  "oracleCaptured": false,
+  "scope": "native schedule discovery only"
+}

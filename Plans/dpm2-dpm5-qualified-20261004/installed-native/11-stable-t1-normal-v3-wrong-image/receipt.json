@@ -1,0 +1,734 @@
+{
+  "binding": {
+    "disposals": 1,
+    "disposed": true,
+    "executions": [
+      {
+        "actors": [
+          {
+            "actor": "arm",
+            "operation": "native-arm-operation"
+          },
+          {
+            "actor": "write",
+            "operation": "native-write-operation"
+          }
+        ],
+        "checkpoints": [
+          "ArmFinishLock",
+          "ArmFinishUnlock",
+          "ArmLock",
+          "ArmOutcome",
+          "ArmSelect",
+          "ArmTarget",
+          "ArmUnlock",
+          "CallDone",
+          "Hit",
+          "HitReleased",
+          "PublishEven",
+          "PublishOdd",
+          "PublishPayload",
+          "Release",
+          "Reserve",
+          "SnapshotAccepted",
+          "SnapshotAdmissionChecked",
+          "SnapshotAdmissionValidated",
+          "SnapshotLease",
+          "SnapshotPayload",
+          "SnapshotProbe",
+          "SnapshotSeq1",
+          "SnapshotSeq2",
+          "TrapEntry",
+          "WriteBegin",
+          "WriteDone"
+        ],
+        "cleanup": "not_started",
+        "cleanupAttempts": [],
+        "coverage": "recorded-schedule-only",
+        "detail": "native process/image identity mismatch",
+        "events": [],
+        "executionId": "4c0f4859c32da66b82c982ba73d01716",
+        "generation": 1,
+        "observations": [],
+        "outcome": "application_failed",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 15000,
+          "executionTimeoutMs": 240000,
+          "maxActors": 16,
+          "maxSteps": 4096
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "56e20efbe8c581d9eb2df5e601fa04b657fedf2d9d531bc0b271f5bdded33418",
+            "mappingSha256": "95003460c3c7fafbc39f432c0280e194f75f2618267a76887f966068b9a08984",
+            "modelSemanticDigest": "60cd96b4961a4fd95f84ebb3ef66a1c26dd3a9ae266cd40f388f5454383294dd"
+          },
+          "inputs": {},
+          "profile": "mirrorcpp.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "arm",
+              "checkpoint": "Reserve"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "ArmLock"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "ArmSelect"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "PublishOdd"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "PublishPayload"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "PublishEven"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "ArmUnlock"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "ArmTarget"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "ArmTarget"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "ArmFinishLock"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "ArmFinishUnlock"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "ArmOutcome"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "Release"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "CallDone"
+            },
+            {
+              "actor": "arm",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "WriteBegin"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "TrapEntry"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "SnapshotProbe"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "SnapshotAdmissionChecked"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "SnapshotLease"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "SnapshotAdmissionValidated"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "SnapshotSeq1"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "SnapshotPayload"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "SnapshotSeq2"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "SnapshotAccepted"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "Hit"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "HitReleased"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "WriteDone"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "CallDone"
+            },
+            {
+              "actor": "write",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-replay/v1"
+      }
+    ],
+    "initializations": 1,
+    "receiptComplete": true,
+    "schema": "mirrors.scheduled-binding/v1"
+  },
+  "client": {
+    "code": "adapter_failure",
+    "kind": "model_interface",
+    "message": "application_failed: native process/image identity mismatch",
+    "orderedHints": [],
+    "status": "failed"
+  },
+  "comparison": "incomplete",
+  "fullProductionQualified": false,
+  "implementationSha256": "56e20efbe8c581d9eb2df5e601fa04b657fedf2d9d531bc0b271f5bdded33418",
+  "mode": "wrong-image",
+  "native": {
+    "acquisitions": 1,
+    "cleanups": 1,
+    "closed": true,
+    "exitCode": 0,
+    "identity": null,
+    "quitAcknowledged": false,
+    "schema": "mirrors.dpm-native-bridge/v1",
+    "transcript": [
+      {
+        "reply": {
+          "nativeIdentity": {
+            "actors": {
+              "t1": 27396,
+              "t2": 34352
+            },
+            "createdFileTime": "134355901692689218",
+            "imagePath": "C:\\Users\\ayden\\Desktop\\Workspace\\MirrorsRemote\\dpm-20261004\\normal-v3\\build\\dpm_native_worker.exe",
+            "imageSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+            "processId": 30176
+          },
+          "state": {
+            "budget": 10,
+            "calls": {
+              "#map": [
+                [
+                  "t1",
+                  {
+                    "address": "noAddr",
+                    "baseline": "noAddr",
+                    "command": "none",
+                    "span": 1,
+                    "value": "good",
+                    "writer": "allowed"
+                  }
+                ],
+                [
+                  "t2",
+                  {
+                    "address": "noAddr",
+                    "baseline": "noAddr",
+                    "command": "none",
+                    "span": 1,
+                    "value": "good",
+                    "writer": "allowed"
+                  }
+                ]
+              ]
+            },
+            "disarm_conflict": {
+              "#map": [
+                [
+                  "t1",
+                  false
+                ],
+                [
+                  "t2",
+                  false
+                ]
+              ]
+            },
+            "dr": {
+              "#map": [
+                [
+                  "t1",
+                  {
+                    "#map": [
+                      [
+                        1,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ],
+                      [
+                        2,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ],
+                      [
+                        3,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ],
+                      [
+                        4,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                [
+                  "t2",
+                  {
+                    "#map": [
+                      [
+                        1,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ],
+                      [
+                        2,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ],
+                      [
+                        3,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ],
+                      [
+                        4,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            },
+            "flags": {
+              "admissionRejected": false,
+              "contextRejected": false,
+              "filtered": false,
+              "hit": false,
+              "inactive": false,
+              "ownerRejected": false,
+              "rejected": false,
+              "torn": false
+            },
+            "locals": {
+              "#map": [
+                [
+                  "t1",
+                  {
+                    "active": false,
+                    "address": "noAddr",
+                    "baseline": "noAddr",
+                    "entry": 0,
+                    "owner": "noThread",
+                    "s1": 0,
+                    "s2": 0,
+                    "slot": 0
+                  }
+                ],
+                [
+                  "t2",
+                  {
+                    "active": false,
+                    "address": "noAddr",
+                    "baseline": "noAddr",
+                    "entry": 0,
+                    "owner": "noThread",
+                    "s1": 0,
+                    "s2": 0,
+                    "slot": 0
+                  }
+                ]
+              ]
+            },
+            "mem": {
+              "#map": [
+                [
+                  "A1",
+                  "good"
+                ],
+                [
+                  "A2",
+                  "good"
+                ],
+                [
+                  "A3",
+                  "good"
+                ]
+              ]
+            },
+            "mutex": "noThread",
+            "operation": "noThread",
+            "pc": {
+              "#map": [
+                [
+                  "t1",
+                  "Idle"
+                ],
+                [
+                  "t2",
+                  "Idle"
+                ]
+              ]
+            },
+            "progress": {
+              "#map": [
+                [
+                  "t1",
+                  {
+                    "asserted": 0,
+                    "count": 0,
+                    "fallback": false,
+                    "mask": 0,
+                    "order": 0,
+                    "unclaimed": 0
+                  }
+                ],
+                [
+                  "t2",
+                  {
+                    "asserted": 0,
+                    "count": 0,
+                    "fallback": false,
+                    "mask": 0,
+                    "order": 0,
+                    "unclaimed": 0
+                  }
+                ]
+              ]
+            },
+            "reg": {
+              "#map": [
+                [
+                  1,
+                  {
+                    "accept": false,
+                    "active": false,
+                    "address": "noAddr",
+                    "baseline": "noAddr",
+                    "dr": 0,
+                    "inflight": 0,
+                    "newThreads": false,
+                    "owner": "noThread",
+                    "seq": 0
+                  }
+                ],
+                [
+                  2,
+                  {
+                    "accept": false,
+                    "active": false,
+                    "address": "noAddr",
+                    "baseline": "noAddr",
+                    "dr": 0,
+                    "inflight": 0,
+                    "newThreads": false,
+                    "owner": "noThread",
+                    "seq": 0
+                  }
+                ],
+                [
+                  3,
+                  {
+                    "accept": false,
+                    "active": false,
+                    "address": "noAddr",
+                    "baseline": "noAddr",
+                    "dr": 0,
+                    "inflight": 0,
+                    "newThreads": false,
+                    "owner": "noThread",
+                    "seq": 0
+                  }
+                ],
+                [
+                  4,
+                  {
+                    "accept": false,
+                    "active": false,
+                    "address": "noAddr",
+                    "baseline": "noAddr",
+                    "dr": 0,
+                    "inflight": 0,
+                    "newThreads": false,
+                    "owner": "noThread",
+                    "seq": 0
+                  }
+                ]
+              ]
+            },
+            "result": {
+              "#map": [
+                [
+                  "t1",
+                  "none"
+                ],
+                [
+                  "t2",
+                  "none"
+                ]
+              ]
+            },
+            "selected": {
+              "#map": [
+                [
+                  "t1",
+                  0
+                ],
+                [
+                  "t2",
+                  0
+                ]
+              ]
+            },
+            "step_count": 0,
+            "targets": {
+              "#map": [
+                [
+                  "t1",
+                  {
+                    "#map": [
+                      [
+                        1,
+                        0
+                      ],
+                      [
+                        2,
+                        0
+                      ],
+                      [
+                        3,
+                        0
+                      ],
+                      [
+                        4,
+                        0
+                      ]
+                    ]
+                  }
+                ],
+                [
+                  "t2",
+                  {
+                    "#map": [
+                      [
+                        1,
+                        0
+                      ],
+                      [
+                        2,
+                        0
+                      ],
+                      [
+                        3,
+                        0
+                      ],
+                      [
+                        4,
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            },
+            "tls": {
+              "#map": [
+                [
+                  "t1",
+                  {
+                    "#map": [
+                      [
+                        1,
+                        "noAddr"
+                      ],
+                      [
+                        2,
+                        "noAddr"
+                      ],
+                      [
+                        3,
+                        "noAddr"
+                      ],
+                      [
+                        4,
+                        "noAddr"
+                      ]
+                    ]
+                  }
+                ],
+                [
+                  "t2",
+                  {
+                    "#map": [
+                      [
+                        1,
+                        "noAddr"
+                      ],
+                      [
+                        2,
+                        "noAddr"
+                      ],
+                      [
+                        3,
+                        "noAddr"
+                      ],
+                      [
+                        4,
+                        "noAddr"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            },
+            "trap": {
+              "#map": [
+                [
+                  "t1",
+                  {
+                    "#map": [
+                      [
+                        1,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ],
+                      [
+                        2,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ],
+                      [
+                        3,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ],
+                      [
+                        4,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                [
+                  "t2",
+                  {
+                    "#map": [
+                      [
+                        1,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ],
+                      [
+                        2,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ],
+                      [
+                        3,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ],
+                      [
+                        4,
+                        {
+                          "addr": "noAddr",
+                          "enabled": false
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        },
+        "request": {
+          "op": "Initialize"
+        }
+      },
+      {
+        "reply": {
+          "closed": true,
+          "nativeIdentity": {
+            "actors": {
+              "t1": 27396,
+              "t2": 34352
+            },
+            "createdFileTime": "134355901692689218",
+            "imagePath": "C:\\Users\\ayden\\Desktop\\Workspace\\MirrorsRemote\\dpm-20261004\\normal-v3\\build\\dpm_native_worker.exe",
+            "imageSha256": "f126fdefbea9a9a1cf06ba0f9f0f13f32e7e4be7d0b0016a2b6417deb060b0c7",
+            "processId": 30176
+          }
+        },
+        "request": {
+          "op": "Quit"
+        }
+      }
+    ]
+  },
+  "passed": false,
+  "peerTerminal": "",
+  "peerTerminalRaw": "",
+  "profile": "dpm-writesentry-two-operation/v1",
+  "schema": "mirrors.scheduled-comparison/v1"
+}

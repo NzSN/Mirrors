@@ -1,0 +1,79 @@
+{
+  "schema": "mirrors.dpm4-acceptance/v1",
+  "status": "passed",
+  "rows": [
+    {
+      "case": "all",
+      "status": "passed",
+      "report": "all.json",
+      "sha256": "3e81622301d6518bf73eceba38dab9de1f09c447527edd382c3c7dd35cb913c1"
+    },
+    {
+      "case": "zero-preemptions",
+      "status": "passed",
+      "report": "zero-preemptions.json",
+      "sha256": "eb9d19503285bf26cbfd1fee6e44468e915731073831b14bad519e5d9e6fd362"
+    },
+    {
+      "case": "one-preemption",
+      "status": "passed",
+      "report": "one-preemption.json",
+      "sha256": "17251d4538236a041f012b70e23c3dec362eb85f6940fea38f82f6e591b4fcd6"
+    },
+    {
+      "case": "two-preemptions",
+      "status": "passed",
+      "report": "two-preemptions.json",
+      "sha256": "6e9c51461ea27c13e6a330d1d8c9182321664462079a5aa0959ef8f8a167ff9f"
+    },
+    {
+      "case": "run-limit",
+      "status": "passed",
+      "report": "run-limit.json",
+      "sha256": "fb9ee5f409162c3db93bb540d6b0abc292f854459a04a123ea955f78c8250888"
+    },
+    {
+      "case": "enumeration-limit",
+      "status": "passed",
+      "report": "enumeration-limit.json",
+      "sha256": "5f9dfa80dbd987502406e771ddd183efc330d631e2858cd00f2f51409accae23"
+    },
+    {
+      "case": "evidence-limit",
+      "status": "passed",
+      "report": "evidence-limit.json",
+      "sha256": "b9df9a2493e9bd16197cf3a178a42f6a525fb79bbe94de518133c6ea974a2423"
+    },
+    {
+      "case": "cleanup-failure",
+      "status": "passed",
+      "report": "cleanup-failure.json",
+      "sha256": "75ec5dc47ccd47e9ac89bf97ed21b8cb09af3127fe4277c0a34cba18fb5ea8d4"
+    },
+    {
+      "case": "schedule-failure",
+      "status": "passed",
+      "report": "schedule-failure.json",
+      "sha256": "b6ec788be1a1c916933a8034b5f7ba0fac6b3f677a18dac4f58f790f4dd08c89"
+    },
+    {
+      "case": "cancel",
+      "status": "passed",
+      "report": "cancel.json",
+      "sha256": "008d4481d104b3f34cb91708c1befee96e9453b6c2468c971a231b217ff704fd"
+    },
+    {
+      "case": "comparison-required",
+      "status": "passed",
+      "report": "comparison-required.json",
+      "sha256": "073a89606c9b8abe278118e5fb1c78443e543c3c98c7e31ad1dc8e423e8ccfcc"
+    }
+  ],
+  "runnerSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+  "unboundedPreemptionFixtureSchedules": 20,
+  "declaredInputAssignments": 2,
+  "fullScopeRuns": 40,
+  "scope": "finite local schedule execution and semantic coverage; no model/property proof inferred",
+  "freshModelCheck": false,
+  "partialOrderReduction": "disabled"
+}

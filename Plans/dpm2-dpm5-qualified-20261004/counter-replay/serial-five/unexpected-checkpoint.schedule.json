@@ -1,0 +1,39 @@
+{
+  "identity": {
+    "implementationSha256": "3255b068586c41bf311c9356d0494c3364ecf2ec012d0ad97ae62af8e3e32e63",
+    "mappingSha256": "e86366f57dd5f2a96ef7072d855d5b7d5751f0b84b9e7bbddd48708b70d2ef48",
+    "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+  },
+  "inputs": {
+    "initial": 5,
+    "mode": "unexpected-checkpoint"
+  },
+  "profile": "mirrorcpp.cooperative-checkpoints/v1",
+  "schema": "mirrors.checkpoint-schedule/v1",
+  "steps": [
+    {
+      "actor": "a",
+      "checkpoint": "read"
+    },
+    {
+      "actor": "a",
+      "checkpoint": "write"
+    },
+    {
+      "actor": "a",
+      "checkpoint": "$done"
+    },
+    {
+      "actor": "b",
+      "checkpoint": "read"
+    },
+    {
+      "actor": "b",
+      "checkpoint": "write"
+    },
+    {
+      "actor": "b",
+      "checkpoint": "$done"
+    }
+  ]
+}

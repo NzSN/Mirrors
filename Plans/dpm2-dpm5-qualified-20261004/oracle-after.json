@@ -1,0 +1,55 @@
+{
+    "schema":  "mirrors.windows-deployment-observation/v1",
+    "observedAt":  "2026-10-04T12:23:23.460Z",
+    "host":  "L",
+    "endpoint":  {
+                     "host":  "172.20.208.1",
+                     "port":  8999
+                 },
+    "deploymentMode":  "owned-native-console",
+    "sharedTraceRoot":  "C:\\Users\\ayden\\Desktop\\Workspace\\MirrorsRemote\\trace-artifacts",
+    "serviceManagerQualification":  false,
+    "processId":  2572,
+    "processCreatedAt":  "2026-10-02T15:28:34.8512440Z",
+    "binarySha256":  "5949af30735cd1bf515e64fb9d2299023e13b2c36245ce9be696d65944b32dec",
+    "sourceBaseRevision":  "1a069cd3e34d7bfea272e3ee7e10f51acedcc7cb",
+    "sourceTrackedDiffSha256":  "b1c6c9df304de45b3f5c498d70a7bb8d3dfcd559ffeb9589d9d4e333ef6ef60f",
+    "sourceTreeSha256":  "f49d59ab8cee2fc3bfb2ac5a9bad5f6695e48c6218b9156728ecc16064871f01",
+    "sourceManifestSha256":  "6b7a775fa630b5d1e2235f88e419f8750a33d17ed4d77cb0ba9e8c449184b0a4",
+    "runtime":  {
+                    "schema":  "mirrors.windows-runtime/v1",
+                    "observedAt":  "2026-10-01T02:46:59.0782276Z",
+                    "apalacheVersion":  "0.62.2",
+                    "apalacheArchiveSha256":  "7cfadf6e8c04c63f05ac907ec9541c66297005c8cb5efb1731f6a838dfc3fad2",
+                    "apalacheJarSha256":  "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8",
+                    "javaVersion":  "25.0.4+7-LTS",
+                    "javaArchiveSha256":  "54ba13f3ef80887fa74708b2a32daaae6262517ba68433d850bb4b426343172b",
+                    "javaExecutableSha256":  "58df5c13e5d6e68f242ad9b724479122828523008ef0907d3f2a02f54afaff23",
+                    "launcherSourceSha256":  "93abdc9e24bb28cd13b378f31271eb945268a9c4ee2657946cd9f7254c4b6a92",
+                    "launcherExecutableSha256":  "b4632c60d1dc36a43be389a6c8027590bcd9970504f40c67faf85ef0f26f5617"
+                },
+    "mtls":  {
+                 "schema":  "mirrors.workspace-mtls/v1",
+                 "createdAt":  "2026-10-01T02:47:54.0283309Z",
+                 "endpoint":  {
+                                  "host":  "172.20.208.1",
+                                  "port":  8999
+                              },
+                 "serverLeafSha256":  "94ccf49b04e24960ec79926e304c29f1f0441f6895cae5705d9a28cf87427a10",
+                 "clientLeafSha256":  "0fbc726097267daf6df1ab495ccf06eca3d4c2248ef7192d1eaab90e149419b0",
+                 "serverCertificateFileSha256":  "a9dfbab1148f165e38a96d2b6ccce4802a79b79f33028fda560764fe5dba33ff",
+                 "caCertificateFileSha256":  "8db9f66090e02168491c323a898cc1223f897480b346f779fdff3d708524c914",
+                 "validityDays":  7
+             },
+    "runtimeManifestSha256":  "da12d9f23389089831cc91dfd93297cfbbfe96818728512432b1e03fc8d09af8",
+    "dlls":  [
+                 {
+                     "sha256":  "616e5c9cfd5c6f786fd81238198ec479076f5bf6702127f81686f46b31b2464d",
+                     "name":  "libcrypto-3-x64.dll"
+                 },
+                 {
+                     "sha256":  "7f53951cf786e299521e46d860f7764d6bd671ce85d2a03dc929a8184792e2ab",
+                     "name":  "libssl-3-x64.dll"
+                 }
+             ]
+}

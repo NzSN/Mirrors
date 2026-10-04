@@ -1,0 +1,376 @@
+{
+  "schema": "mirrors.dpm0-dpm1-acceptance/v1",
+  "date": "2026-10-04",
+  "status": "passed",
+  "profile": "mirrorcpp.cooperative-checkpoints/v1",
+  "scope": "DPM-0 design and DPM-1 local portable coordinator/fixture acceptance",
+  "sourceRevision": "aa906a5cef166e7290a2636a93f89b1123cbff23",
+  "sourceState": "uncommitted implementation and tests",
+  "sourceFiles": {
+    "CMakeLists.txt": "dc5f40390a25f2c68f124cbf2aefd16bd9a83fa4fa77dfa1f2c7c6c489d67306",
+    "cmake/mirrorcppConfig.cmake.in": "3fff282f8bccaf1f505cbc7e49e0b6f24f7cfd31655f40a0791d83bb8befe0d4",
+    "examples/CMakeLists.txt": "b317ceb897b2a0ce00cdd6101cbf702ff927afcb27185659dcde8d08c010e8c7",
+    "examples/scheduled_counter.cpp": "ff92d02881643df55f82659feb5c35a2130cbec93d043f2f2a18794955b1459f",
+    "examples/scheduled_counter.hpp": "6632e937003d8a5ead9b5c5f616591d6bf5a8c235ac0e1f947e48457bf4fd925",
+    "include/mirrorcpp/mirrorcpp.hpp": "82ebd4400a8a6cfe03b671b53d63f68eaf6e8048c3909e1a38b1716829558db4",
+    "include/mirrorcpp/schedule.hpp": "946ce8117aa28322b01411508537a1e35b332f0175b23f5a5b70ffcb75924a1a",
+    "src/schedule.cpp": "5652345a0ccca405855d0937e62c3fe76ec4b08d5354d0ee0b7fa297ce70dd7a",
+    "test/packaging/main.cpp": "6f5f2752f00c5a10f27fa0f02743c340858e75fd8a6f44cc666b71b291f13004",
+    "test/schedule/replay_check.py": "ec5d7e8fcb1b79755eefb91294301de08714a6a500e91cf92d0468fd5b6cc623",
+    "test/unit/CMakeLists.txt": "0ff4f2ca6b87181736ebea14f43f711113108e1427ff69b4f1cfd6cd2a6832c9",
+    "test/unit/schedule_test.cpp": "5eb8df3703eb3c9566933ebbd462ce50b5673d9db7fad73ca364591c9dd8f359"
+  },
+  "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "gates": {
+    "focusedAssertions": 615,
+    "focusedCases": 18,
+    "unitTests": 202,
+    "replayProcesses": 17,
+    "asanUbsanProcesses": 17,
+    "threadSanitizerAssertions": 615,
+    "threadSanitizerCases": 18,
+    "installedPackageConsumer": "passed",
+    "ctestFixture": "passed"
+  },
+  "binaries": {
+    "fixture": "535b60cb135676f1f73a278d3876bf35e2323bda6043072cfbd20bcd62bb32ac",
+    "focusedTests": "614bda897d95e3c972aac4bb28fb115b0b0b39575ad0afe6bf63840b97ed1379",
+    "asanFixture": "d8d688a68d2af355a8f982cd092cf7be3da28a9599358a687df11a9ad9d705d6",
+    "tsanTests": "b6c3ed5ebb181dc6ec9a7e0f1065decf4afceb585805b6f43a0f8c9b7dd5451a",
+    "installedConsumer": "6699a202f590404db05013370a9523b45ccb9b0f918facb2c6c80729f7230186"
+  },
+  "sanitizerLaunch": {
+    "addressUndefinedLeak": "normal owned process outside sandbox ptrace restriction",
+    "thread": "TSAN_OPTIONS=halt_on_error=1 timeout 30s setarch x86_64 -R /tmp/dpm1-tsan-tests [schedule]",
+    "diagnosticAttemptsCredited": false
+  },
+  "limits": [
+    "fixed recorded schedules only",
+    "one operation instance per actor",
+    "trusted prompt-returning callbacks; no hard process termination",
+    "no generated-binding or oracle comparison (DPM-2)",
+    "no WriteSentry adapter/native qualification (DPM-3)",
+    "no exploration completeness (DPM-4)",
+    "no capability publication (DPM-5)",
+    "fixture identity labels are not artifact attestations"
+  ],
+  "files": [
+    {
+      "path": "asan-replay/acceptance.json",
+      "sha256": "88baee84849942269a1b7fdba6ac024ec30325c633be613af4d6ed195a85c5d4"
+    },
+    {
+      "path": "asan-replay/baseline.receipt.json",
+      "sha256": "7a96c08674370154d8df7416712bb809569156d220765d7f776330d39e28a614"
+    },
+    {
+      "path": "asan-replay/overlap-0-0.receipt.json",
+      "sha256": "d6ec1c900f7f9930ae483b62ab1727e87cb444a1bbb591602f15d63038daec6b"
+    },
+    {
+      "path": "asan-replay/overlap-0-0.schedule.json",
+      "sha256": "198ffd04f31d640b45ccbdc86192d6aaa7236595f06cb05de57e83299054e420"
+    },
+    {
+      "path": "asan-replay/overlap-0-1.receipt.json",
+      "sha256": "987de8869a2ac75caf8849c3eed9bb7496783e52e47017926d307a21f9441e0c"
+    },
+    {
+      "path": "asan-replay/overlap-0-1.schedule.json",
+      "sha256": "198ffd04f31d640b45ccbdc86192d6aaa7236595f06cb05de57e83299054e420"
+    },
+    {
+      "path": "asan-replay/overlap-0-2.receipt.json",
+      "sha256": "1bc9068694a14c7098c0fe8f1de6b6237cdffe5261c19eab4e7ebb415d535fb4"
+    },
+    {
+      "path": "asan-replay/overlap-0-2.schedule.json",
+      "sha256": "198ffd04f31d640b45ccbdc86192d6aaa7236595f06cb05de57e83299054e420"
+    },
+    {
+      "path": "asan-replay/overlap-0-3.receipt.json",
+      "sha256": "e6c39115d2f90bcbac0cf9a68942dfb8701f4f7f30c942557d7fc47b4664c93b"
+    },
+    {
+      "path": "asan-replay/overlap-0-3.schedule.json",
+      "sha256": "198ffd04f31d640b45ccbdc86192d6aaa7236595f06cb05de57e83299054e420"
+    },
+    {
+      "path": "asan-replay/overlap-5-0.receipt.json",
+      "sha256": "ecd890a4cdff57f01eb2636f39efc07719a08e480504f72969e0f3719f68195c"
+    },
+    {
+      "path": "asan-replay/overlap-5-0.schedule.json",
+      "sha256": "a1aae1f6b5bb154752a5dc7e174f66d8b52eb7d217c694efea3464f0f8e85d2d"
+    },
+    {
+      "path": "asan-replay/overlap-5-1.receipt.json",
+      "sha256": "a045230c15a8bf342dc4a95f4ee10c671221848eb4420d566df02d349eaab0c9"
+    },
+    {
+      "path": "asan-replay/overlap-5-1.schedule.json",
+      "sha256": "a1aae1f6b5bb154752a5dc7e174f66d8b52eb7d217c694efea3464f0f8e85d2d"
+    },
+    {
+      "path": "asan-replay/overlap-5-2.receipt.json",
+      "sha256": "f4bc4ff12445a17fc556e979703385880272412a8428cb37e47a362383eaf5d6"
+    },
+    {
+      "path": "asan-replay/overlap-5-2.schedule.json",
+      "sha256": "a1aae1f6b5bb154752a5dc7e174f66d8b52eb7d217c694efea3464f0f8e85d2d"
+    },
+    {
+      "path": "asan-replay/overlap-5-3.receipt.json",
+      "sha256": "8ef42f73159e9f302b6ac18aa87633bc72353d9eb87ac2365d2ed11039f9e2a7"
+    },
+    {
+      "path": "asan-replay/overlap-5-3.schedule.json",
+      "sha256": "a1aae1f6b5bb154752a5dc7e174f66d8b52eb7d217c694efea3464f0f8e85d2d"
+    },
+    {
+      "path": "asan-replay/serial-0-0.receipt.json",
+      "sha256": "d6e0ab962154259efc5d935618c5ad35d9bec3176eb457bee7afffbfc55ff19f"
+    },
+    {
+      "path": "asan-replay/serial-0-0.schedule.json",
+      "sha256": "089483c279ac60722f9e43fa2223deafb28ac7a192fbe8c384c818fd0ad98cca"
+    },
+    {
+      "path": "asan-replay/serial-0-1.receipt.json",
+      "sha256": "7a1fe5dcea929a6344a2296e956876bba38e53409ec571f088bcf4115b9a5294"
+    },
+    {
+      "path": "asan-replay/serial-0-1.schedule.json",
+      "sha256": "089483c279ac60722f9e43fa2223deafb28ac7a192fbe8c384c818fd0ad98cca"
+    },
+    {
+      "path": "asan-replay/serial-0-2.receipt.json",
+      "sha256": "ee584557f41a74d89737c38d1a758ca2c2170543a1bb166781177667ff743404"
+    },
+    {
+      "path": "asan-replay/serial-0-2.schedule.json",
+      "sha256": "089483c279ac60722f9e43fa2223deafb28ac7a192fbe8c384c818fd0ad98cca"
+    },
+    {
+      "path": "asan-replay/serial-0-3.receipt.json",
+      "sha256": "8a3a9e8baacb7e30540ce3075359ccb7108f418716e56919d693d77043863c14"
+    },
+    {
+      "path": "asan-replay/serial-0-3.schedule.json",
+      "sha256": "089483c279ac60722f9e43fa2223deafb28ac7a192fbe8c384c818fd0ad98cca"
+    },
+    {
+      "path": "asan-replay/serial-5-0.receipt.json",
+      "sha256": "44c6ab56f587648bae60426f2b8201029463211735913cfcba53f46d4924362c"
+    },
+    {
+      "path": "asan-replay/serial-5-0.schedule.json",
+      "sha256": "a1f218e611c6ba6f955c84aaa25a28b9647343b3bdd2397ec544a2b3c526ad33"
+    },
+    {
+      "path": "asan-replay/serial-5-1.receipt.json",
+      "sha256": "f62c7c9fd99aeacf0b8ebd069d12707617e0aca6e16bb29cc247c03705949d52"
+    },
+    {
+      "path": "asan-replay/serial-5-1.schedule.json",
+      "sha256": "a1f218e611c6ba6f955c84aaa25a28b9647343b3bdd2397ec544a2b3c526ad33"
+    },
+    {
+      "path": "asan-replay/serial-5-2.receipt.json",
+      "sha256": "861e26a984d50150c7090e42500c01f79f8ca8dd826630b7271532a194e9a2c6"
+    },
+    {
+      "path": "asan-replay/serial-5-2.schedule.json",
+      "sha256": "a1f218e611c6ba6f955c84aaa25a28b9647343b3bdd2397ec544a2b3c526ad33"
+    },
+    {
+      "path": "asan-replay/serial-5-3.receipt.json",
+      "sha256": "86ba4b00d71034ede258aec40f562f3141d8a4e1c467d13951045e9a933e00e8"
+    },
+    {
+      "path": "asan-replay/serial-5-3.schedule.json",
+      "sha256": "a1f218e611c6ba6f955c84aaa25a28b9647343b3bdd2397ec544a2b3c526ad33"
+    },
+    {
+      "path": "logs/asan-ubsan.log",
+      "sha256": "c1f11fd72bee720e2e35ed12f75ade47437e7a069f7bf804c616aa105cabb0f7"
+    },
+    {
+      "path": "logs/build.log",
+      "sha256": "6ab7900bd21edf52e0079e89470c668b7b300ab2abae8b5cc75d271de3202c33"
+    },
+    {
+      "path": "logs/configure.log",
+      "sha256": "01598a107d330362ff924769448bdf642d6af2cccbbb3bb183507a02c95ad972"
+    },
+    {
+      "path": "logs/ctest-fixture.log",
+      "sha256": "cc4a769a5d5be8503c4182d92a9e3001e754fb811a165ed87941c9294b8a4aaa"
+    },
+    {
+      "path": "logs/focused-tests.log",
+      "sha256": "4cd09c6f9dead0f1bd2ad7620bf6b587603949dfdaed21e405b36181d546c210"
+    },
+    {
+      "path": "logs/packaging.log",
+      "sha256": "1e2c0c230405de0b7e34f0919f1ae692156b2b56ea4ce06011065c409ba9cc33"
+    },
+    {
+      "path": "logs/sandbox-lsan-diagnostic.log",
+      "sha256": "f83f097345903a7cfb992ae69f8c048adc26e8bc318d6e5008b9c81c0a708f4b"
+    },
+    {
+      "path": "logs/tsan-startup-diagnostic.log",
+      "sha256": "0f2673a0a548f924367b8ce005377b902746b3f3410e8ce165b458e182589e3d"
+    },
+    {
+      "path": "logs/tsan.log",
+      "sha256": "7e6788d3d583b500cda3865b7dd83a69bd6c124be0566e3a01d91fcd85db0006"
+    },
+    {
+      "path": "logs/unit-tests.log",
+      "sha256": "2e49a42e16a40f7faee4144b278df290f5ebe6624e0fc6d07d26b58274b68ba2"
+    },
+    {
+      "path": "replay/acceptance.json",
+      "sha256": "18b97437da0db11fa82a59c12c84583db124142a622fee7f452e4276252a7b1e"
+    },
+    {
+      "path": "replay/baseline.receipt.json",
+      "sha256": "191af07a28fb213ca677ce8cb00678db3efe3f43a7b7d7abd8e796bf08437958"
+    },
+    {
+      "path": "replay/overlap-0-0.receipt.json",
+      "sha256": "ce4554e255feba1b0cb81fa6a7737cf4843a83f45987cb6331c5d19de0c3b80e"
+    },
+    {
+      "path": "replay/overlap-0-0.schedule.json",
+      "sha256": "198ffd04f31d640b45ccbdc86192d6aaa7236595f06cb05de57e83299054e420"
+    },
+    {
+      "path": "replay/overlap-0-1.receipt.json",
+      "sha256": "624390189dab4ea889ce11398d54428421eee4e4b18a02cd4285064d8f9e3cfa"
+    },
+    {
+      "path": "replay/overlap-0-1.schedule.json",
+      "sha256": "198ffd04f31d640b45ccbdc86192d6aaa7236595f06cb05de57e83299054e420"
+    },
+    {
+      "path": "replay/overlap-0-2.receipt.json",
+      "sha256": "c90559ad22b3f484347cff5f66246e3f13e16ec34c4040419e07be27b237eec5"
+    },
+    {
+      "path": "replay/overlap-0-2.schedule.json",
+      "sha256": "198ffd04f31d640b45ccbdc86192d6aaa7236595f06cb05de57e83299054e420"
+    },
+    {
+      "path": "replay/overlap-0-3.receipt.json",
+      "sha256": "4fc9e3b957383e99588ddff509c1d9ec4c793161a13a406a3d9512813912569e"
+    },
+    {
+      "path": "replay/overlap-0-3.schedule.json",
+      "sha256": "198ffd04f31d640b45ccbdc86192d6aaa7236595f06cb05de57e83299054e420"
+    },
+    {
+      "path": "replay/overlap-5-0.receipt.json",
+      "sha256": "7dc0bb79d0d119364d382cb196f26978faa247bd6fe8b1641f1880a315988eb5"
+    },
+    {
+      "path": "replay/overlap-5-0.schedule.json",
+      "sha256": "a1aae1f6b5bb154752a5dc7e174f66d8b52eb7d217c694efea3464f0f8e85d2d"
+    },
+    {
+      "path": "replay/overlap-5-1.receipt.json",
+      "sha256": "ac3f44034d80ac523c034c67b4686ea33050a1aff5fd904b28a032751ac1b2f0"
+    },
+    {
+      "path": "replay/overlap-5-1.schedule.json",
+      "sha256": "a1aae1f6b5bb154752a5dc7e174f66d8b52eb7d217c694efea3464f0f8e85d2d"
+    },
+    {
+      "path": "replay/overlap-5-2.receipt.json",
+      "sha256": "989cb5481708358852c21c414f1671cf9f7873d20c9140726e6de1e29c7f5053"
+    },
+    {
+      "path": "replay/overlap-5-2.schedule.json",
+      "sha256": "a1aae1f6b5bb154752a5dc7e174f66d8b52eb7d217c694efea3464f0f8e85d2d"
+    },
+    {
+      "path": "replay/overlap-5-3.receipt.json",
+      "sha256": "46861047e6471eb63484addafc5fdcf000ba7c9e2786731967fba41d46018700"
+    },
+    {
+      "path": "replay/overlap-5-3.schedule.json",
+      "sha256": "a1aae1f6b5bb154752a5dc7e174f66d8b52eb7d217c694efea3464f0f8e85d2d"
+    },
+    {
+      "path": "replay/serial-0-0.receipt.json",
+      "sha256": "ed80c2b8eccd612a0dfa62cbf2123211829ddad3f1e4bdea69cc5c4ea0dc7b69"
+    },
+    {
+      "path": "replay/serial-0-0.schedule.json",
+      "sha256": "089483c279ac60722f9e43fa2223deafb28ac7a192fbe8c384c818fd0ad98cca"
+    },
+    {
+      "path": "replay/serial-0-1.receipt.json",
+      "sha256": "669e8c477f4ffbda15b9c82a4f9548ae5f45c543b7114adc21b353434e9cb2e1"
+    },
+    {
+      "path": "replay/serial-0-1.schedule.json",
+      "sha256": "089483c279ac60722f9e43fa2223deafb28ac7a192fbe8c384c818fd0ad98cca"
+    },
+    {
+      "path": "replay/serial-0-2.receipt.json",
+      "sha256": "6c800eea3cb23ccb4e64f3e8926d992eb325c2eea40fff87cd4de76f59d66543"
+    },
+    {
+      "path": "replay/serial-0-2.schedule.json",
+      "sha256": "089483c279ac60722f9e43fa2223deafb28ac7a192fbe8c384c818fd0ad98cca"
+    },
+    {
+      "path": "replay/serial-0-3.receipt.json",
+      "sha256": "8b970d6dee38dc98bfb6ece2b65ee1bc5b8b3b23ddcd2e462492d20936761fef"
+    },
+    {
+      "path": "replay/serial-0-3.schedule.json",
+      "sha256": "089483c279ac60722f9e43fa2223deafb28ac7a192fbe8c384c818fd0ad98cca"
+    },
+    {
+      "path": "replay/serial-5-0.receipt.json",
+      "sha256": "ee00c4b402aac3d0454a602ebd5fc305bfa7bc6f45a1484a3399c5a23acf42ef"
+    },
+    {
+      "path": "replay/serial-5-0.schedule.json",
+      "sha256": "a1f218e611c6ba6f955c84aaa25a28b9647343b3bdd2397ec544a2b3c526ad33"
+    },
+    {
+      "path": "replay/serial-5-1.receipt.json",
+      "sha256": "c083d574b70980fae2f52eb0d84b2c0bf28559de679288ace1508115a8897045"
+    },
+    {
+      "path": "replay/serial-5-1.schedule.json",
+      "sha256": "a1f218e611c6ba6f955c84aaa25a28b9647343b3bdd2397ec544a2b3c526ad33"
+    },
+    {
+      "path": "replay/serial-5-2.receipt.json",
+      "sha256": "f0f548e97059953201c1396071a942776a48b62d6f88a6e7bc2bd9955c6f2438"
+    },
+    {
+      "path": "replay/serial-5-2.schedule.json",
+      "sha256": "a1f218e611c6ba6f955c84aaa25a28b9647343b3bdd2397ec544a2b3c526ad33"
+    },
+    {
+      "path": "replay/serial-5-3.receipt.json",
+      "sha256": "e189f44e90245c915c599f3bcfd7335fe092cbcea78880a2238433bbe2c59085"
+    },
+    {
+      "path": "replay/serial-5-3.schedule.json",
+      "sha256": "a1f218e611c6ba6f955c84aaa25a28b9647343b3bdd2397ec544a2b3c526ad33"
+    },
+    {
+      "path": "sanitizer-build.py",
+      "sha256": "76642a0b52f1bb3af158b40ba144a446eec1d01191ee284316924765ef47b4e7"
+    }
+  ]
+}

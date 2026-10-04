@@ -1,0 +1,132 @@
+{
+  "schema": "mirrors.checkpoint-schedule/v1",
+  "profile": "mirrorcpp.cooperative-checkpoints/v1",
+  "identity": {
+    "modelSemanticDigest": "60cd96b4961a4fd95f84ebb3ef66a1c26dd3a9ae266cd40f388f5454383294dd",
+    "mappingSha256": "95003460c3c7fafbc39f432c0280e194f75f2618267a76887f966068b9a08984",
+    "implementationSha256": "d479a4d4317a81eab6bd02f0ea71acec3406a10a873501370dcededde2cf7259"
+  },
+  "inputs": {},
+  "steps": [
+    {
+      "actor": "arm",
+      "checkpoint": "Reserve"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmLock"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmSelect"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "PublishOdd"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "PublishPayload"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "PublishEven"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmUnlock"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmTarget"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmTarget"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmFinishLock"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmFinishUnlock"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmOutcome"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "Release"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "CallDone"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "$done"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "WriteBegin"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "TrapEntry"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "SnapshotProbe"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "SnapshotAdmissionChecked"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "SnapshotLease"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "SnapshotAdmissionValidated"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "SnapshotSeq1"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "SnapshotPayload"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "SnapshotSeq2"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "SnapshotAccepted"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "Hit"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "HitReleased"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "WriteDone"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "CallDone"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "$done"
+    }
+  ]
+}

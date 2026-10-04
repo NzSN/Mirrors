@@ -1,0 +1,19 @@
+{
+  "actions": {
+    "finish": "$done",
+    "read": "read",
+    "write": "write"
+  },
+  "actors": [
+    {
+      "actor": "a",
+      "operation": "increment-a"
+    },
+    {
+      "actor": "b",
+      "operation": "increment-b"
+    }
+  ],
+  "profile": "mirrorcpp.cooperative-checkpoints/v1",
+  "schema": "mirrors.dpm-counter-mapping/v1"
+}

@@ -1,0 +1,191 @@
+{
+  "bridge": {
+    "acquisitions": 1,
+    "cleanups": 1,
+    "closed": true,
+    "exitCode": 0,
+    "identity": {
+      "actors": {
+        "t1": 1001,
+        "t2": 1002
+      },
+      "createdFileTime": "synthetic-creation",
+      "imagePath": "synthetic-worker",
+      "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "processId": 16
+    },
+    "quitAcknowledged": true,
+    "schema": "mirrors.dpm-native-bridge/v1",
+    "transcript": [
+      {
+        "reply": {
+          "nativeIdentity": {
+            "actors": {
+              "t1": 1001,
+              "t2": 1002
+            },
+            "createdFileTime": "synthetic-creation",
+            "imagePath": "synthetic-worker",
+            "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "processId": 16
+          },
+          "state": {
+            "actual": 0
+          }
+        },
+        "request": {
+          "op": "Initialize"
+        }
+      },
+      {
+        "reply": {
+          "nativeIdentity": {
+            "actors": {
+              "t1": 1001,
+              "t2": 1002
+            },
+            "createdFileTime": "synthetic-creation",
+            "imagePath": "synthetic-worker",
+            "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "processId": 16
+          },
+          "phase": "Undeclared",
+          "state": {
+            "actual": 1
+          }
+        },
+        "request": {
+          "address": "A1",
+          "command": "Arm",
+          "op": "Begin",
+          "span": 1,
+          "thread": "t1",
+          "value": "good",
+          "writer": "allowed"
+        }
+      },
+      {
+        "reply": {
+          "closed": true,
+          "nativeIdentity": {
+            "actors": {
+              "t1": 1001,
+              "t2": 1002
+            },
+            "createdFileTime": "synthetic-creation",
+            "imagePath": "synthetic-worker",
+            "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "processId": 16
+          }
+        },
+        "request": {
+          "op": "Quit"
+        }
+      }
+    ]
+  },
+  "passed": true,
+  "scheduler": {
+    "actors": [
+      {
+        "actor": "arm",
+        "operation": "native-arm-operation"
+      },
+      {
+        "actor": "write",
+        "operation": "native-write-operation"
+      }
+    ],
+    "checkpoints": [
+      "CallDone",
+      "Reserve",
+      "WriteBegin"
+    ],
+    "cleanup": "confirmed",
+    "cleanupAttempts": [
+      {
+        "detail": "",
+        "remainingActors": [],
+        "status": "confirmed"
+      }
+    ],
+    "coverage": "recorded-schedule-only",
+    "detail": "undeclared checkpoint: Undeclared",
+    "events": [
+      {
+        "actor": "arm",
+        "checkpoint": "$start",
+        "kind": "permit",
+        "operation": "native-arm-operation",
+        "ordinal": 0,
+        "step": 0
+      },
+      {
+        "actor": "arm",
+        "checkpoint": "Undeclared",
+        "kind": "arrival",
+        "operation": "native-arm-operation",
+        "ordinal": 1,
+        "step": 0
+      }
+    ],
+    "executionId": "a912302b83a4f1549232e2e8cb8525a3",
+    "generation": 1,
+    "observations": [
+      {
+        "afterSteps": 0,
+        "state": {
+          "actual": 0
+        }
+      }
+    ],
+    "outcome": "unexpected_checkpoint",
+    "passed": false,
+    "policy": {
+      "cleanupTimeoutMs": 1000,
+      "executionTimeoutMs": 2000,
+      "maxActors": 16,
+      "maxSteps": 4096
+    },
+    "remainingActors": [],
+    "schedule": {
+      "identity": {
+        "implementationSha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "mappingSha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "modelSemanticDigest": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "inputs": {},
+      "profile": "mirrorcpp.cooperative-checkpoints/v1",
+      "schema": "mirrors.checkpoint-schedule/v1",
+      "steps": [
+        {
+          "actor": "arm",
+          "checkpoint": "Reserve"
+        },
+        {
+          "actor": "arm",
+          "checkpoint": "CallDone"
+        },
+        {
+          "actor": "arm",
+          "checkpoint": "$done"
+        },
+        {
+          "actor": "write",
+          "checkpoint": "WriteBegin"
+        },
+        {
+          "actor": "write",
+          "checkpoint": "CallDone"
+        },
+        {
+          "actor": "write",
+          "checkpoint": "$done"
+        }
+      ]
+    },
+    "scheduleCompleted": false,
+    "schema": "mirrors.checkpoint-replay/v1"
+  },
+  "scope": "synthetic transport control; not native execution"
+}

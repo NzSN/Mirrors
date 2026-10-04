@@ -1,0 +1,36 @@
+{
+  "binding": {
+    "disposals": 0,
+    "disposed": false,
+    "executions": [],
+    "initializations": 0,
+    "receiptComplete": true,
+    "schema": "mirrors.scheduled-binding/v1"
+  },
+  "client": {
+    "code": "interface_digest_mismatch",
+    "kind": "registration",
+    "message": "interface_digest_mismatch",
+    "orderedHints": [],
+    "status": "failed"
+  },
+  "comparison": "incomplete",
+  "fullProductionQualified": false,
+  "implementationSha256": "75ee490156b7d18134139de4b6e7ac58c3d1141b671ec3741605baa0bc7b3a95",
+  "mode": "ok",
+  "native": {
+    "acquisitions": 0,
+    "cleanups": 0,
+    "closed": false,
+    "exitCode": -1,
+    "identity": null,
+    "quitAcknowledged": false,
+    "schema": "mirrors.dpm-native-bridge/v1",
+    "transcript": []
+  },
+  "passed": false,
+  "peerTerminal": "",
+  "peerTerminalRaw": "",
+  "profile": "dpm-writesentry-two-operation/v1",
+  "schema": "mirrors.scheduled-comparison/v1"
+}

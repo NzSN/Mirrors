@@ -1,0 +1,446 @@
+Internal ctest changing into directory: /tmp/mirrorcpp-dpm1-build/test/unit
+Test project /tmp/mirrorcpp-dpm1-build/test/unit
+        Start   1: umbrella header compiles and links
+        Start   2: framing: two lines delivered in a single read
+  1/220 Test   #1: umbrella header compiles and links ........................................................   Passed    0.00 sec
+        Start   3: framing: long line assembled across partial reads
+  2/220 Test   #2: framing: two lines delivered in a single read .............................................   Passed    0.00 sec
+        Start   4: framing: clean EOF returns empty, EOF mid-line is an error
+  3/220 Test   #3: framing: long line assembled across partial reads .........................................   Passed    0.00 sec
+        Start   5: framing: EOF mid-line drops the partial line with an io error
+  4/220 Test   #4: framing: clean EOF returns empty, EOF mid-line is an error ................................   Passed    0.00 sec
+        Start   6: framing: oversized buffered inbound payload is rejected
+  5/220 Test   #5: framing: EOF mid-line drops the partial line with an io error .............................   Passed    0.00 sec
+        Start   7: framing: newline after oversized inbound payload is rejected
+  6/220 Test   #6: framing: oversized buffered inbound payload is rejected ...................................   Passed    0.00 sec
+        Start   8: tcp: echo round-trip and close returns 0
+  7/220 Test   #7: framing: newline after oversized inbound payload is rejected ..............................   Passed    0.00 sec
+        Start   9: tcp: two reply lines arrive in one read
+  8/220 Test   #8: tcp: echo round-trip and close returns 0 ..................................................   Passed    0.00 sec
+        Start  10: tcp: clean peer EOF mid-session is an io error
+  9/220 Test   #9: tcp: two reply lines arrive in one read ...................................................   Passed    0.00 sec
+        Start  11: tcp: embedded newline is rejected and nothing is written
+ 10/220 Test  #10: tcp: clean peer EOF mid-session is an io error ............................................   Passed    0.00 sec
+        Start  12: tcp: connection refused is an io error
+ 11/220 Test  #11: tcp: embedded newline is rejected and nothing is written ..................................   Passed    0.01 sec
+        Start  13: tcp: connect timeout is an io error
+ 12/220 Test  #12: tcp: connection refused is an io error ....................................................   Passed    0.00 sec
+        Start  14: stdio: /bin/cat echo round-trip and exit code 0
+ 13/220 Test  #14: stdio: /bin/cat echo round-trip and exit code 0 ...........................................   Passed    0.00 sec
+        Start  15: stdio: exit-code propagation via /bin/false
+ 14/220 Test  #15: stdio: exit-code propagation via /bin/false ...............................................   Passed    0.00 sec
+        Start  16: stdio: child exiting abnormally is ErrorKind::spawn
+ 15/220 Test  #16: stdio: child exiting abnormally is ErrorKind::spawn .......................................   Passed    0.00 sec
+        Start  17: stdio: spawn failure returns nullptr
+ 16/220 Test  #17: stdio: spawn failure returns nullptr ......................................................   Passed    0.00 sec
+        Start  18: stdio: embedded newline rejected and nothing written
+ 17/220 Test  #18: stdio: embedded newline rejected and nothing written ......................................   Passed    0.00 sec
+        Start  19: stdio: close() is idempotent
+ 18/220 Test  #19: stdio: close() is idempotent ..............................................................   Passed    0.00 sec
+        Start  20: stdio: dead child writes preserve caller signal state
+ 19/220 Test  #20: stdio: dead child writes preserve caller signal state .....................................   Passed    0.01 sec
+        Start  21: tls: good handshake, fingerprint matches openssl, framing works
+ 20/220 Test  #13: tcp: connect timeout is an io error .......................................................   Passed    0.20 sec
+        Start  22: tls: pin match succeeds
+ 21/220 Test  #21: tls: good handshake, fingerprint matches openssl, framing works ...........................   Passed    1.32 sec
+        Start  23: tls: CN-only server certificate is rejected (SAN required)
+ 22/220 Test  #22: tls: pin match succeeds ...................................................................   Passed    1.34 sec
+        Start  24: tls: pin mismatch fails with a tls error
+ 23/220 Test  #23: tls: CN-only server certificate is rejected (SAN required) ................................   Passed    1.17 sec
+        Start  25: tls: invalid pin is rejected before connecting
+ 24/220 Test  #24: tls: pin mismatch fails with a tls error ..................................................   Passed    1.11 sec
+        Start  26: tls: wrong-CA client certificate fails
+ 25/220 Test  #26: tls: wrong-CA client certificate fails ....................................................   Passed    1.34 sec
+        Start  27: tls: client key mode 0644 is refused, 0600 works
+ 26/220 Test  #25: tls: invalid pin is rejected before connecting ............................................   Passed    1.57 sec
+        Start  28: tls: TLS 1.2-only server fails against the TLS 1.3-only client
+ 27/220 Test  #27: tls: client key mode 0644 is refused, 0600 works ..........................................   Passed    1.25 sec
+        Start  29: tls: oversized inbound protocol payload is rejected
+ 28/220 Test  #28: tls: TLS 1.2-only server fails against the TLS 1.3-only client ............................   Passed    1.37 sec
+        Start  30: registry: unreachable registry fails closed (empty list)
+ 29/220 Test  #30: registry: unreachable registry fails closed (empty list) ..................................   Passed    0.00 sec
+        Start  31: registry: non-200 response fails closed (empty list)
+ 30/220 Test  #31: registry: non-200 response fails closed (empty list) ......................................   Passed    0.00 sec
+        Start  32: registry: malformed JSON fails closed (empty list)
+ 31/220 Test  #32: registry: malformed JSON fails closed (empty list) ........................................   Passed    0.02 sec
+        Start  33: registry: non-array top level fails closed (empty list)
+ 32/220 Test  #33: registry: non-array top level fails closed (empty list) ...................................   Passed    0.00 sec
+        Start  34: registry: chunked response fails closed (documented limitation)
+ 33/220 Test  #34: registry: chunked response fails closed (documented limitation) ...........................   Passed    0.00 sec
+        Start  35: registry: EOF-terminated body (no Content-Length) is parsed
+ 34/220 Test  #35: registry: EOF-terminated body (no Content-Length) is parsed ...............................   Passed    0.01 sec
+        Start  36: registry: unsupported URL schemes fail closed (empty list)
+ 35/220 Test  #36: registry: unsupported URL schemes fail closed (empty list) ................................   Passed    0.00 sec
+        Start  37: registry: requests the Consul health endpoint (path, Host, Accept)
+ 36/220 Test  #37: registry: requests the Consul health endpoint (path, Host, Accept) ........................   Passed    0.00 sec
+        Start  38: registry: skips entries with non-object Service or bad Address
+ 37/220 Test  #38: registry: skips entries with non-object Service or bad Address ............................   Passed    0.01 sec
+        Start  39: registry: skips entries with bad Port
+ 38/220 Test  #39: registry: skips entries with bad Port .....................................................   Passed    0.01 sec
+        Start  40: registry: malformed cert-sha256 skips the entire entry
+ 39/220 Test  #40: registry: malformed cert-sha256 skips the entire entry ....................................   Passed    0.01 sec
+        Start  41: registry: absent pin allowed; uppercase pin normalized
+ 40/220 Test  #29: tls: oversized inbound protocol payload is rejected .......................................   Passed    1.24 sec
+        Start  42: registry: valid entries parsed in order (id/host/port/pin)
+ 41/220 Test  #41: registry: absent pin allowed; uppercase pin normalized ....................................   Passed    1.36 sec
+        Start  43: registry: reachable registry with no candidates is a registry error
+ 42/220 Test  #42: registry: valid entries parsed in order (id/host/port/pin) ................................   Passed    1.17 sec
+        Start  44: registry: exhausted candidates -> registry error listing diagnostics
+ 43/220 Test  #43: registry: reachable registry with no candidates is a registry error .......................   Passed    1.39 sec
+        Start  45: registry: iterates candidates in order; first-dead then live succeeds
+ 44/220 Test  #44: registry: exhausted candidates -> registry error listing diagnostics ......................   Passed    1.41 sec
+        Start  46: registry: pin_override wins over the entry pin
+ 45/220 Test  #45: registry: iterates candidates in order; first-dead then live succeeds .....................   Passed    1.04 sec
+        Start  47: registry: absent pin allows connection without pinning
+ 46/220 Test  #47: registry: absent pin allows connection without pinning ....................................   Passed    1.00 sec
+        Start  48: Null round-trips as JSON null
+ 47/220 Test  #48: Null round-trips as JSON null .............................................................   Passed    0.00 sec
+        Start  49: Int round-trips as #bigint, never a JSON number
+ 48/220 Test  #49: Int round-trips as #bigint, never a JSON number ...........................................   Passed    0.00 sec
+        Start  50: Bool round-trips as JSON booleans
+ 49/220 Test  #50: Bool round-trips as JSON booleans .........................................................   Passed    0.00 sec
+        Start  51: Str round-trips as JSON string
+ 50/220 Test  #51: Str round-trips as JSON string ............................................................   Passed    0.00 sec
+        Start  52: Seq round-trips as bare JSON array
+ 51/220 Test  #52: Seq round-trips as bare JSON array ........................................................   Passed    0.00 sec
+        Start  53: Tuple round-trips as #tup
+ 52/220 Test  #53: Tuple round-trips as #tup .................................................................   Passed    0.00 sec
+        Start  54: Set round-trips as #set
+ 53/220 Test  #54: Set round-trips as #set ...................................................................   Passed    0.00 sec
+        Start  55: Record round-trips as JSON object
+ 54/220 Test  #55: Record round-trips as JSON object .........................................................   Passed    0.00 sec
+        Start  56: Map round-trips as #map
+ 55/220 Test  #56: Map round-trips as #map ...................................................................   Passed    0.00 sec
+        Start  57: Variant round-trips as {tag,value}
+ 56/220 Test  #57: Variant round-trips as {tag,value} ........................................................   Passed    0.00 sec
+        Start  58: Unserializable round-trips as #unserializable
+ 57/220 Test  #58: Unserializable round-trips as #unserializable .............................................   Passed    0.00 sec
+        Start  59: "#bigint empty string decodes as Null"
+ 58/220 Test  #59: "#bigint empty string decodes as Null" ....................................................   Passed    0.00 sec
+        Start  60: "#bigint negatives and zero"
+ 59/220 Test  #60: "#bigint negatives and zero" ..............................................................   Passed    0.00 sec
+        Start  61: "#bigint values larger than 2^64"
+ 60/220 Test  #61: "#bigint values larger than 2^64" .........................................................   Passed    0.00 sec
+        Start  62: "#bigint malformed digit strings throw JsonError"
+ 61/220 Test  #62: "#bigint malformed digit strings throw JsonError" .........................................   Passed    0.00 sec
+        Start  63: bare JSON numbers decode as Int
+ 62/220 Test  #63: bare JSON numbers decode as Int ...........................................................   Passed    0.00 sec
+        Start  64: "#map decodes both string and #bigint key forms"
+ 63/220 Test  #64: "#map decodes both string and #bigint key forms" ..........................................   Passed    0.00 sec
+        Start  65: "#map encodes keys as encoded values"
+ 64/220 Test  #65: "#map encodes keys as encoded values" .....................................................   Passed    0.00 sec
+        Start  66: two-key {tag,value} object decodes as Variant
+ 65/220 Test  #66: two-key {tag,value} object decodes as Variant .............................................   Passed    0.00 sec
+        Start  67: objects with more keys than {tag,value} decode as Record
+ 66/220 Test  #67: objects with more keys than {tag,value} decode as Record ..................................   Passed    0.00 sec
+        Start  68: single-key {tag} or {value} objects decode as Record
+ 67/220 Test  #68: single-key {tag} or {value} objects decode as Record ......................................   Passed    0.00 sec
+        Start  69: record field named tag/value but extra fields is a Record
+ 68/220 Test  #69: record field named tag/value but extra fields is a Record .................................   Passed    0.00 sec
+        Start  70: ITF markers require an exact singleton and payload shape
+ 69/220 Test  #70: ITF markers require an exact singleton and payload shape ..................................   Passed    0.00 sec
+        Start  71: exact marker and variant forms retain strict inner validation
+ 70/220 Test  #71: exact marker and variant forms retain strict inner validation .............................   Passed    0.00 sec
+        Start  72: state decoding preserves marker-looking record fields
+ 71/220 Test  #72: state decoding preserves marker-looking record fields .....................................   Passed    0.00 sec
+        Start  73: set equality is unordered by length + membership
+ 72/220 Test  #73: set equality is unordered by length + membership ..........................................   Passed    0.00 sec
+        Start  74: sequence equality is ordered (structural)
+ 73/220 Test  #74: sequence equality is ordered (structural) .................................................   Passed    0.00 sec
+        Start  75: Value deep-copies recursive payloads
+ 74/220 Test  #75: Value deep-copies recursive payloads ......................................................   Passed    0.00 sec
+        Start  76: Box is deep-copying
+ 75/220 Test  #76: Box is deep-copying .......................................................................   Passed    0.00 sec
+        Start  77: as_int returns optional<Int> or nullopt
+ 76/220 Test  #77: as_int returns optional<Int> or nullopt ...................................................   Passed    0.00 sec
+        Start  78: as_str returns pointer or nullptr
+ 77/220 Test  #78: as_str returns pointer or nullptr .........................................................   Passed    0.00 sec
+        Start  79: as_record returns pointer or nullptr
+ 78/220 Test  #79: as_record returns pointer or nullptr ......................................................   Passed    0.00 sec
+        Start  80: get_param / get_param_int extract params from a State
+ 79/220 Test  #80: get_param / get_param_int extract params from a State .....................................   Passed    0.00 sec
+        Start  81: encode_state / decode_state round-trip
+ 80/220 Test  #81: encode_state / decode_state round-trip ....................................................   Passed    0.00 sec
+        Start  82: decode_state rejects non-object input
+ 81/220 Test  #82: decode_state rejects non-object input .....................................................   Passed    0.00 sec
+        Start  83: decode arrays always yield Seq (not Tuple/Set)
+ 82/220 Test  #83: decode arrays always yield Seq (not Tuple/Set) ............................................   Passed    0.00 sec
+        Start  84: decode_record fields recurse
+ 83/220 Test  #84: decode_record fields recurse ..............................................................   Passed    0.00 sec
+        Start  85: to_string renders canonical ITF JSON
+ 84/220 Test  #85: to_string renders canonical ITF JSON ......................................................   Passed    0.00 sec
+        Start  86: ErrorKind has the §4.3 enumerators
+ 85/220 Test  #86: ErrorKind has the §4.3 enumerators .......................................................   Passed    0.00 sec
+        Start  87: Error default-constructs and takes kind+message
+ 86/220 Test  #87: Error default-constructs and takes kind+message ...........................................   Passed    0.00 sec
+        Start  88: make_error builds an Error
+ 87/220 Test  #88: make_error builds an Error ................................................................   Passed    0.00 sec
+        Start  89: step_mismatch errors carry expected/actual
+ 88/220 Test  #89: step_mismatch errors carry expected/actual ................................................   Passed    0.00 sec
+        Start  90: non-step-mismatch errors have no payload
+ 89/220 Test  #90: non-step-mismatch errors have no payload ..................................................   Passed    0.00 sec
+        Start  91: Result<T> success carries the value
+ 90/220 Test  #91: Result<T> success carries the value .......................................................   Passed    0.00 sec
+        Start  92: Result<T> failure carries the Error
+ 91/220 Test  #92: Result<T> failure carries the Error .......................................................   Passed    0.00 sec
+        Start  93: Result<void> success and failure
+ 92/220 Test  #93: Result<void> success and failure ..........................................................   Passed    0.00 sec
+        Start  94: Error is copyable and movable
+ 93/220 Test  #94: Error is copyable and movable .............................................................   Passed    0.00 sec
+        Start  95: register encodes specPath always + optional fields
+ 94/220 Test  #95: register encodes specPath always + optional fields ........................................   Passed    0.00 sec
+        Start  96: register omits spec when absent; empty invariant/paramVars allowed
+ 95/220 Test  #96: register omits spec when absent; empty invariant/paramVars allowed ........................   Passed    0.00 sec
+        Start  97: register_traces encodes itfTracePaths
+ 96/220 Test  #97: register_traces encodes itfTracePaths .....................................................   Passed    0.00 sec
+        Start  98: register_trace_gen optional destPath/spec
+ 97/220 Test  #98: register_trace_gen optional destPath/spec .................................................   Passed    0.00 sec
+        Start  99: register_explore maxSteps optional
+ 98/220 Test  #99: register_explore maxSteps optional ........................................................   Passed    0.00 sec
+        Start 100: register_explore_session / register_validate encode
+ 99/220 Test #100: register_explore_session / register_validate encode .......................................   Passed    0.00 sec
+        Start 101: report_state uses encode_state (no double wrap)
+100/220 Test #101: report_state uses encode_state (no double wrap) ...........................................   Passed    0.00 sec
+        Start 102: explore_assume_state state via encode_state
+101/220 Test #102: explore_assume_state state via encode_state ...............................................   Passed    0.00 sec
+        Start 103: explore commands encode transitionId/invariantId/snapshotId
+102/220 Test #103: explore commands encode transitionId/invariantId/snapshotId ...............................   Passed    0.00 sec
+        Start 104: empty explore commands encode with no extra fields
+103/220 Test #104: empty explore commands encode with no extra fields ........................................   Passed    0.00 sec
+        Start 105: encode output is compact single-line with no trailing newline
+104/220 Test #105: encode output is compact single-line with no trailing newline .............................   Passed    0.00 sec
+        Start 106: decode spec_validated valid + invalid shapes
+105/220 Test #106: decode spec_validated valid + invalid shapes ..............................................   Passed    0.00 sec
+        Start 107: decode ignores additive unknown fields while dispatching on proto_step
+106/220 Test #107: decode ignores additive unknown fields while dispatching on proto_step ....................   Passed    0.00 sec
+        Start 108: decode initial_state / next_step
+107/220 Test #108: decode initial_state / next_step ..........................................................   Passed    0.00 sec
+        Start 109: decode empty mirror messages
+108/220 Test #109: decode empty mirror messages ..............................................................   Passed    0.00 sec
+        Start 110: decode step_mismatch with and without hints
+109/220 Test #110: decode step_mismatch with and without hints ...............................................   Passed    0.00 sec
+        Start 111: decode gen_traces_done itfTraces optional
+110/220 Test #111: decode gen_traces_done itfTraces optional .................................................   Passed    0.00 sec
+        Start 112: decode error messages
+111/220 Test #112: decode error messages .....................................................................   Passed    0.00 sec
+        Start 113: decode explorer messages
+112/220 Test #113: decode explorer messages ..................................................................   Passed    0.00 sec
+        Start 114: decode explore_status values
+113/220 Test #114: decode explore_status values ..............................................................   Passed    0.00 sec
+        Start 115: decode unknown proto_step is ProtocolError (forward-compatible)
+114/220 Test #115: decode unknown proto_step is ProtocolError (forward-compatible) ...........................   Passed    0.00 sec
+        Start 116: decode malformed JSON returns Error{json}
+115/220 Test #116: decode malformed JSON returns Error{json} .................................................   Passed    0.00 sec
+        Start 117: decode missing/invalid proto_step returns Error{json}
+116/220 Test #117: decode missing/invalid proto_step returns Error{json} .....................................   Passed    0.00 sec
+        Start 118: decode bad spec_validated result returns Error{json}
+117/220 Test #118: decode bad spec_validated result returns Error{json} ......................................   Passed    0.00 sec
+        Start 119: decode bad status returns Error{json}
+118/220 Test #119: decode bad status returns Error{json} .....................................................   Passed    0.00 sec
+        Start 120: decode diff hint value_mismatch with path + values
+119/220 Test #120: decode diff hint value_mismatch with path + values ........................................   Passed    0.00 sec
+        Start 121: decode all diff hint kinds
+120/220 Test #121: decode all diff hint kinds ................................................................   Passed    0.00 sec
+        Start 122: truncated hint decodes and renders marker
+121/220 Test #122: truncated hint decodes and renders marker .................................................   Passed    0.00 sec
+        Start 123: render_path handles fields + indices
+122/220 Test #123: render_path handles fields + indices ......................................................   Passed    0.00 sec
+        Start 124: render_diff_hint formats each kind
+123/220 Test #124: render_diff_hint formats each kind ........................................................   Passed    0.00 sec
+        Start 125: render_diff_hints joins hints
+124/220 Test #125: render_diff_hints joins hints .............................................................   Passed    0.00 sec
+        Start 126: client_message_name returns proto_step tags
+125/220 Test #126: client_message_name returns proto_step tags ...............................................   Passed    0.00 sec
+        Start 127: mirror_message_name returns proto_step tags
+126/220 Test #127: mirror_message_name returns proto_step tags ...............................................   Passed    0.00 sec
+        Start 128: phase guard: stepping flow
+127/220 Test #128: phase guard: stepping flow ................................................................   Passed    0.00 sec
+        Start 129: phase guard: report_state in wrong phase is protocol error
+128/220 Test #129: phase guard: report_state in wrong phase is protocol error ................................   Passed    0.00 sec
+        Start 130: phase guard: unexpected mirror message yields expected/got error
+129/220 Test #130: phase guard: unexpected mirror message yields expected/got error ..........................   Passed    0.00 sec
+        Start 131: phase guard: spec_validated invalid is done
+130/220 Test #131: phase guard: spec_validated invalid is done ...............................................   Passed    0.00 sec
+        Start 132: phase guard: errors accepted at any point
+131/220 Test #132: phase guard: errors accepted at any point .................................................   Passed    0.00 sec
+        Start 133: phase guard: explorer session flow
+132/220 Test #133: phase guard: explorer session flow ........................................................   Passed    0.00 sec
+        Start 134: phase guard: gen_traces_done ends tracegen flow
+133/220 Test #134: phase guard: gen_traces_done ends tracegen flow ...........................................   Passed    0.00 sec
+        Start 135: phase_name returns readable names
+134/220 Test #135: phase_name returns readable names .........................................................   Passed    0.00 sec
+        Start 136: async: register_validate_async encodes corpus shape
+135/220 Test #136: async: register_validate_async encodes corpus shape .......................................   Passed    0.00 sec
+        Start 137: async: register_trace_gen_async encodes corpus shape
+136/220 Test #137: async: register_trace_gen_async encodes corpus shape ......................................   Passed    0.00 sec
+        Start 138: async: job control messages encode corpus shape
+137/220 Test #138: async: job control messages encode corpus shape ...........................................   Passed    0.00 sec
+        Start 139: async: job_accepted decodes both kinds
+138/220 Test #139: async: job_accepted decodes both kinds ....................................................   Passed    0.00 sec
+        Start 140: async: job_status decodes every phase incl. unknown (C21)
+139/220 Test #140: async: job_status decodes every phase incl. unknown (C21) .................................   Passed    0.00 sec
+        Start 141: async: job_result decodes all three outcome alternatives
+140/220 Test #141: async: job_result decodes all three outcome alternatives ..................................   Passed    0.00 sec
+        Start 142: phase guard: async submit stays idle, job control legal in idle/done only
+141/220 Test #142: phase guard: async submit stays idle, job control legal in idle/done only .................   Passed    0.00 sec
+        Start 143: register round-trips through JSON shape
+142/220 Test #143: register round-trips through JSON shape ...................................................   Passed    0.00 sec
+        Start 144: model interface digest is strict and branded at the wire boundary
+143/220 Test #144: model interface digest is strict and branded at the wire boundary .........................   Passed    0.00 sec
+        Start 145: verify request embeds the exact generated contract and digest
+144/220 Test #145: verify request embeds the exact generated contract and digest .............................   Passed    0.00 sec
+        Start 146: generated contract parsing rejects duplicate and unknown versioned fields
+145/220 Test #146: generated contract parsing rejects duplicate and unknown versioned fields .................   Passed    0.00 sec
+        Start 147: contract map-key codec validates every canonical literal form
+146/220 Test #147: contract map-key codec validates every canonical literal form .............................   Passed    0.01 sec
+        Start 148: contract map-key codec rejects malformed nested literals before registration
+147/220 Test #148: contract map-key codec rejects malformed nested literals before registration ..............   Passed    0.01 sec
+        Start 149: contract map-key codec retains the raw JSON nesting bound
+148/220 Test #149: contract map-key codec retains the raw JSON nesting bound .................................   Passed    0.01 sec
+        Start 150: registration failure descriptorBytes accepts absent null and nonnegative integers
+149/220 Test #150: registration failure descriptorBytes accepts absent null and nonnegative integers .........   Passed    0.00 sec
+        Start 151: malformed failure descriptorBytes closes before binding construction
+150/220 Test #151: malformed failure descriptorBytes closes before binding construction ......................   Passed    0.01 sec
+        Start 152: matched reply decoding is strict and additive only at the outer message
+151/220 Test #152: matched reply decoding is strict and additive only at the outer message ...................   Passed    0.00 sec
+        Start 153: compiled registry resolves only one exact four-part key
+152/220 Test #153: compiled registry resolves only one exact four-part key ...................................   Passed    0.00 sec
+        Start 154: negotiated runner creates and disposes one binding only after matched
+153/220 Test #154: negotiated runner creates and disposes one binding only after matched .....................   Passed    0.00 sec
+        Start 155: typed-map profile selects its exact registry entry
+154/220 Test #155: typed-map profile selects its exact registry entry ........................................   Passed    0.00 sec
+        Start 156: required missing or wrong negotiation runs no adapter code
+155/220 Test #156: required missing or wrong negotiation runs no adapter code ................................   Passed    0.00 sec
+        Start 157: prefer uses only an explicit fresh fallback and mismatch never falls back
+156/220 Test #157: prefer uses only an explicit fresh fallback and mismatch never falls back .................   Passed    0.00 sec
+        Start 158: binding validation and replay failures dispose exactly once
+157/220 Test #158: binding validation and replay failures dispose exactly once ...............................   Passed    0.00 sec
+        Start 159: negotiated runner converts classified binding throws and disposes
+158/220 Test #159: negotiated runner converts classified binding throws and disposes .........................   Passed    0.00 sec
+        Start 160: dispose failure is reported only when there is no primary failure
+159/220 Test #160: dispose failure is reported only when there is no primary failure .........................   Passed    0.01 sec
+        Start 161: every non-matched verify status fails before adapter construction
+160/220 Test #161: every non-matched verify status fails before adapter construction .........................   Passed    0.01 sec
+        Start 162: missing and ambiguous adapters fail before registration
+161/220 Test #162: missing and ambiguous adapters fail before registration ...................................   Passed    0.00 sec
+        Start 163: factory and configuration failures never enter replay
+162/220 Test #163: factory and configuration failures never enter replay .....................................   Passed    0.00 sec
+        Start 164: transport failure after binding construction disposes exactly once
+163/220 Test #164: transport failure after binding construction disposes exactly once ........................   Passed    0.00 sec
+        Start 165: generated Counter binding dispatches typed inputs and observations
+164/220 Test #165: generated Counter binding dispatches typed inputs and observations ........................   Passed    0.00 sec
+        Start 166: generated binding validates every input before adapter mutation
+165/220 Test #166: generated binding validates every input before adapter mutation ...........................   Passed    0.00 sec
+        Start 167: generated binding enforces lifecycle, poisoning, and configuration
+166/220 Test #167: generated binding enforces lifecycle, poisoning, and configuration ........................   Passed    0.00 sec
+        Start 168: generated binding classifies adapter and observation failures
+167/220 Test #168: generated binding classifies adapter and observation failures .............................   Passed    0.00 sec
+        Start 169: generated binding cannot be reentered or spoof mechanical errors
+168/220 Test #169: generated binding cannot be reentered or spoof mechanical errors ..........................   Passed    0.00 sec
+        Start 170: generated native codecs cover the portable model-interface types
+169/220 Test #170: generated native codecs cover the portable model-interface types ..........................   Passed    0.00 sec
+        Start 171: diamond imports are deduplicated by canonical path
+170/220 Test #171: diamond imports are deduplicated by canonical path ........................................   Passed    0.06 sec
+        Start 172: INSTANCE ... WITH resolves the first token as module name
+171/220 Test #172: INSTANCE ... WITH resolves the first token as module name .................................   Passed    0.00 sec
+        Start 173: continued EXTENDS and embedded INSTANCE forms resolve outside comments and strings
+172/220 Test #173: continued EXTENDS and embedded INSTANCE forms resolve outside comments and strings ........   Passed    0.01 sec
+        Start 174: missing module is a spec_source error naming module and importer
+173/220 Test #174: missing module is a spec_source error naming module and importer ..........................   Passed    0.00 sec
+        Start 175: same module name in two search dirs is ambiguous
+174/220 Test #175: same module name in two search dirs is ambiguous ..........................................   Passed    0.00 sec
+        Start 176: builtin EXTENDS modules are skipped
+175/220 Test #176: builtin EXTENDS modules are skipped .......................................................   Passed    0.00 sec
+        Start 177: dependency is resolved from search_dirs when not next to the importer
+176/220 Test #177: dependency is resolved from search_dirs when not next to the importer .....................   Passed    0.00 sec
+        Start 178: vendored ExtMain resolves with root first (sources[0])
+177/220 Test #178: vendored ExtMain resolves with root first (sources[0]) ....................................   Passed    0.01 sec
+        Start 179: missing root file is a spec_source error
+178/220 Test #179: missing root file is a spec_source error ..................................................   Passed    0.00 sec
+        Start 180: default_search_dirs splits TLA_LIBRARY_PATH on ':'
+179/220 Test #180: default_search_dirs splits TLA_LIBRARY_PATH on ':' ........................................   Passed    0.00 sec
+        Start 181: golden: mirror_messages.jsonl decodes to the manifest constructors
+180/220 Test #181: golden: mirror_messages.jsonl decodes to the manifest constructors ........................   Passed    0.01 sec
+        Start 182: golden: client_messages.jsonl re-encodes semantically
+181/220 Test #182: golden: client_messages.jsonl re-encodes semantically .....................................   Passed    0.01 sec
+        Start 183: golden: decode_only.jsonl JS-shape decode→re-encode vectors
+182/220 Test #183: golden: decode_only.jsonl JS-shape decode→re-encode vectors .............................   Passed    0.01 sec
+        Start 184: golden: consul_payloads.jsonl health responses parse fail-closed
+183/220 Test #184: golden: consul_payloads.jsonl health responses parse fail-closed ..........................   Passed    0.01 sec
+        Start 185: golden: diff_cases.jsonl value decode + equality semantics
+184/220 Test #185: golden: diff_cases.jsonl value decode + equality semantics ................................   Passed    0.18 sec
+        Start 186: scheduled workers retain real stacks and replay both interleavings
+185/220 Test #186: scheduled workers retain real stacks and replay both interleavings ........................   Passed    0.19 sec
+        Start 187: scheduler observation records actual behavior under a fixture mutation
+186/220 Test #187: scheduler observation records actual behavior under a fixture mutation ....................   Passed    0.01 sec
+        Start 188: invalid schedules and identity changes reject before factory
+187/220 Test #188: invalid schedules and identity changes reject before factory ..............................   Passed    0.01 sec
+        Start 189: schedule JSON rejects duplicate unknown malformed and excessive fields
+188/220 Test #189: schedule JSON rejects duplicate unknown malformed and excessive fields ....................   Passed    0.01 sec
+        Start 190: unexpected and premature arrivals preserve actual checkpoint evidence
+189/220 Test #190: unexpected and premature arrivals preserve actual checkpoint evidence .....................   Passed    0.01 sec
+        Start 191: foreign hook callers fail without corrupting actor ownership
+190/220 Test #191: foreign hook callers fail without corrupting actor ownership ..............................   Passed    0.00 sec
+        Start 192: actor and observer failures remain distinct from teardown failures
+191/220 Test #192: actor and observer failures remain distinct from teardown failures ........................   Passed    0.01 sec
+        Start 193: factory worker mismatch unwinds the constructed application once
+192/220 Test #193: factory worker mismatch unwinds the constructed application once ..........................   Passed    0.00 sec
+        Start 194: cancellation before factory and at every observation releases owned waits
+193/220 Test #194: cancellation before factory and at every observation releases owned waits .................   Passed    0.01 sec
+        Start 195: execution deadline cancels a cooperative actor without inventing an arrival
+194/220 Test #195: execution deadline cancels a cooperative actor without inventing an arrival ...............   Passed    0.15 sec
+        Start 196: incomplete cleanup retains thread ownership and permits an honest retry
+195/220 Test #196: incomplete cleanup retains thread ownership and permits an honest retry ...................   Passed    0.16 sec
+        Start 197: nested execution is rejected before constructing another application
+196/220 Test #197: nested execution is rejected before constructing another application ......................   Passed    0.01 sec
+        Start 198: observer hook reentry fails instead of blocking the coordinator
+197/220 Test #198: observer hook reentry fails instead of blocking the coordinator ...........................   Passed    0.00 sec
+        Start 199: cancellation during construction and running actors preserves cleanup
+198/220 Test #199: cancellation during construction and running actors preserves cleanup .....................   Passed    0.00 sec
+        Start 200: observation size and teardown failure cannot produce a passing receipt
+199/220 Test #200: observation size and teardown failure cannot produce a passing receipt ....................   Passed    0.01 sec
+        Start 201: timeout releases a parked lock owner before joining a blocked actor
+200/220 Test #201: timeout releases a parked lock owner before joining a blocked actor .......................   Passed    0.16 sec
+        Start 202: non-JSON inputs reject before factory and observations fail without lossy serialization
+201/220 Test #202: non-JSON inputs reject before factory and observations fail without lossy serialization ...   Passed    0.01 sec
+        Start 203: an omitted teardown is a failed cleanup rather than inferred success
+202/220 Test #203: an omitted teardown is a failed cleanup rather than inferred success ......................   Passed    0.00 sec
+        Start 204: incremental callbacks advance only admitted intervals and finish once
+203/220 Test #204: incremental callbacks advance only admitted intervals and finish once .....................   Passed    0.01 sec
+        Start 205: incremental wrong interval and early finish release all parked actors
+204/220 Test #205: incremental wrong interval and early finish release all parked actors .....................   Passed    0.01 sec
+        Start 206: incremental stop token remains active between generated callbacks
+205/220 Test #206: incremental stop token remains active between generated callbacks .........................   Passed    0.00 sec
+        Start 207: terminal observation occurs after actor thread-local teardown
+206/220 Test #207: terminal observation occurs after actor thread-local teardown .............................   Passed    0.00 sec
+        Start 208: scheduled binding is deferred and disposes once across trace generations
+207/220 Test #208: scheduled binding is deferred and disposes once across trace generations ..................   Passed    0.01 sec
+        Start 209: scheduled binding cannot discard an unfinished generation
+208/220 Test #209: scheduled binding cannot discard an unfinished generation .................................   Passed    0.00 sec
+        Start 210: scheduled disposal failure remains visible on repeated disposal
+209/220 Test #210: scheduled disposal failure remains visible on repeated disposal ...........................   Passed    0.01 sec
+        Start 211: scheduled deadline includes the gap between generated callbacks
+210/220 Test #211: scheduled deadline includes the gap between generated callbacks ...........................   Passed    0.08 sec
+        Start 212: old scheduled binding evidence cannot qualify a new connection
+211/220 Test #212: old scheduled binding evidence cannot qualify a new connection ............................   Passed    0.01 sec
+        Start 213: finite exploration exhausts the independent two-actor denominator
+212/220 Test #213: finite exploration exhausts the independent two-actor denominator .........................   Passed    0.35 sec
+        Start 214: finite exploration never credits a bounded prefix as complete
+213/220 Test #214: finite exploration never credits a bounded prefix as complete .............................   Passed    0.04 sec
+        Start 215: invalid exploration declarations acquire no application
+214/220 Test #215: invalid exploration declarations acquire no application ...................................   Passed    0.01 sec
+        Start 216: canonical coverage preserves semantic map and set equality
+215/220 Test #216: canonical coverage preserves semantic map and set equality ................................   Passed    0.00 sec
+        Start 217: instrumentation exclusion is explicit and cannot hide undeclared fields
+216/220 Test #217: instrumentation exclusion is explicit and cannot hide undeclared fields ...................   Passed    0.35 sec
+        Start 218: cancellation and time budget stop finite exploration honestly
+217/220 Test #218: cancellation and time budget stop finite exploration honestly .............................   Passed    0.01 sec
+        Start 219: unknown cleanup and reused execution evidence cannot qualify exploration
+218/220 Test #219: unknown cleanup and reused execution evidence cannot qualify exploration ..................   Passed    0.01 sec
+        Start 220: required model comparison cannot be satisfied by scheduling alone
+219/220 Test #220: required model comparison cannot be satisfied by scheduling alone .........................   Passed    0.11 sec
+220/220 Test  #46: registry: pin_override wins over the entry pin ............................................   Passed   11.02 sec
+
+100% tests passed, 0 tests failed out of 220
+
+Total Test time (real) =  20.13 sec

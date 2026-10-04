@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/MirrorCPP/test/schedule/replay_check.py", line 129, in <module>
+    main()
+  File "/home/nzsn/Repos/MirrorCPP/test/schedule/replay_check.py", line 90, in main
+    baseline = invoke("baseline")
+               ^^^^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/MirrorCPP/test/schedule/replay_check.py", line 54, in invoke
+    require(result.returncode == 0, f"{name}: fixture exited {result.returncode}: {result.stderr[:2000]}")
+  File "/home/nzsn/Repos/MirrorCPP/test/schedule/replay_check.py", line 14, in require
+    raise RuntimeError(message)
+RuntimeError: baseline: fixture exited 1: ==4==LeakSanitizer has encountered a fatal error.
+==4==HINT: For debugging, try setting environment variable LSAN_OPTIONS=verbosity=1:log_threads=1
+==4==HINT: LeakSanitizer does not work under ptrace (strace, gdb, etc)
+

@@ -1,0 +1,609 @@
+{
+  "actualIdentity": {
+    "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+    "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+    "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+  },
+  "attemptedRuns": 1,
+  "categories": {
+    "cleanup_failed": 1
+  },
+  "comparison": "not_requested",
+  "comparisonRequired": false,
+  "comparisonRuns": 0,
+  "complete": false,
+  "completedRuns": 0,
+  "declaredInputs": [
+    {
+      "initial": 0,
+      "mode": "teardown-fail"
+    },
+    {
+      "initial": 5,
+      "mode": "teardown-fail"
+    }
+  ],
+  "denominatorKnown": true,
+  "elapsedMs": 2,
+  "eligibleRuns": 40,
+  "eligibleRunsLowerBound": 40,
+  "enumeratedScheduleShapes": 20,
+  "enumerationExhausted": false,
+  "firstCounterexample": null,
+  "firstFailure": {
+    "category": "cleanup_failed",
+    "ordinal": 0,
+    "schedule": {
+      "identity": {
+        "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+        "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+        "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+      },
+      "inputs": {
+        "initial": 0,
+        "mode": "teardown-fail"
+      },
+      "profile": "mirrorcpp.cooperative-checkpoints/v1",
+      "schema": "mirrors.checkpoint-schedule/v1",
+      "steps": [
+        {
+          "actor": "a",
+          "checkpoint": "read"
+        },
+        {
+          "actor": "a",
+          "checkpoint": "write"
+        },
+        {
+          "actor": "a",
+          "checkpoint": "$done"
+        },
+        {
+          "actor": "b",
+          "checkpoint": "read"
+        },
+        {
+          "actor": "b",
+          "checkpoint": "write"
+        },
+        {
+          "actor": "b",
+          "checkpoint": "$done"
+        }
+      ]
+    }
+  },
+  "inputAssignments": 2,
+  "limits": {
+    "maxEnumeratedSchedules": 4096,
+    "maxEvidenceBytes": 16777216,
+    "maxRuns": 4096,
+    "timeBudgetMs": 30000
+  },
+  "maxPreemptions": 64,
+  "mode": "teardown-fail",
+  "por": "disabled",
+  "profile": "mirrorcpp.finite-checkpoint-exploration/v1",
+  "projection": {
+    "baseVariables": [
+      "count",
+      "saved",
+      "phase"
+    ],
+    "instrumentationVariables": []
+  },
+  "runs": [
+    {
+      "category": "cleanup_failed",
+      "execution": {
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "teardown_failed",
+        "cleanupAttempts": [
+          {
+            "detail": "deliberate SUT teardown failure",
+            "remainingActors": [],
+            "status": "teardown_failed"
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 1,
+            "step": 0
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 2,
+            "step": 1
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 3,
+            "step": 1
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 4,
+            "step": 2
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 5,
+            "step": 2
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 6,
+            "step": 3
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 7,
+            "step": 3
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 8,
+            "step": 4
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 9,
+            "step": 4
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 10,
+            "step": 5
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 11,
+            "step": 5
+          }
+        ],
+        "executionId": "f6340ed517845e96ab7f97f7a9de5da0",
+        "generation": 1,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 1,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 2,
+            "state": {
+              "count": {
+                "#bigint": "1"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "2"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 3,
+            "state": {
+              "count": {
+                "#bigint": "1"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 4,
+            "state": {
+              "count": {
+                "#bigint": "1"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 5,
+            "state": {
+              "count": {
+                "#bigint": "2"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "2"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 6,
+            "state": {
+              "count": {
+                "#bigint": "2"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "completed",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 16,
+          "maxSteps": 4096
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+            "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "teardown-fail"
+          },
+          "profile": "mirrorcpp.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": true,
+        "schema": "mirrors.checkpoint-replay/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 0,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+          "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "teardown-fail"
+        },
+        "profile": "mirrorcpp.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    }
+  ],
+  "schema": "mirrors.finite-exploration/v1",
+  "states": [],
+  "status": "incomplete",
+  "stopReason": "unconfirmed_cleanup",
+  "sut": {
+    "acquisitions": 1,
+    "enteredWorkers": 2,
+    "teardowns": 1
+  },
+  "transitions": []
+}

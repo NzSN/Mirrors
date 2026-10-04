@@ -1,0 +1,116 @@
+{
+  "comparison": "actual Mirrors for positive and mutation cases; synthetic peers only for negative protocol controls",
+  "inputs": {
+    "/home/nzsn/Repos/MirrorCPP/include/mirrorcpp/schedule.hpp": "43785b8edc8ce895d5620388636a57b6168279285ca3c5995102e138a5cabcd3",
+    "/home/nzsn/Repos/MirrorCPP/include/mirrorcpp/schedule_binding.hpp": "009c8e190ab1f568c5bb6b792934af4118a8d9319e05fed715c7fb977b1d8c58",
+    "/home/nzsn/Repos/MirrorCPP/src/schedule.cpp": "a0e1c41ce6e9ba3a8f56fa130fc0b179ef59d7c95ad16f4de98036a07243842b",
+    "/home/nzsn/Repos/MirrorCPP/src/schedule_binding.cpp": "957f87e6f3b4f3f540904c35c2604c9300394bb380f18f0eb1ab6c3ab9cd66a0",
+    "/home/nzsn/Repos/Mirrors/.lake/build/bin/mirror": "748390bb0a9cec4291a38e2b06ba68a3e1a9e23c688a05b9805072ce726354a6",
+    "/home/nzsn/Repos/Mirrors/test/fixtures/deterministic-scheduling/ScheduledCounter.lock.json": "adba5b865bc91ac9855ea0bf5170b6681630cc9d6745a7e8bc096e6c865590a5",
+    "/home/nzsn/Repos/Mirrors/test/fixtures/deterministic-scheduling/ScheduledCounter.mirror-interface.json": "60eac85d70220c5dde84bd1e9fde2ad0c0a3944c27e8d6851f83bc02a5ba449f",
+    "/home/nzsn/Repos/Mirrors/test/fixtures/deterministic-scheduling/ScheduledCounter.tla": "2cd490021c10d053f37c3cf2b556396f2c9feb174410836333443212f840047e",
+    "/home/nzsn/Repos/Mirrors/test/fixtures/deterministic-scheduling/generated-cpp/ScheduledCounterMirror.generated.hpp": "bd70f394cf23585a21c007a76acb226fce4f3e914a86df0ab647271f76e9f04e",
+    "/home/nzsn/Repos/Mirrors/tools/deterministic-scheduling/check.py": "2b7317b43c63408206372ea0c21abe1e33ca451095f82a37e2de6316a637d268",
+    "/home/nzsn/Repos/Mirrors/tools/deterministic-scheduling/counter.cpp": "29ef6e7d59b473b9dad5881fe87fca734a2ffbb08f0a3b863168cc8a4c4a8f0b",
+    "/home/nzsn/Repos/Mirrors/tools/deterministic-scheduling/counter_support.hpp": "acafcfd6a2b7e5ea28f71981761db36c7d52597eb4f9669092a47f273f282643",
+    "/tmp/dpm2-counter-build/dpm_counter": "3255b068586c41bf311c9356d0494c3364ecf2ec012d0ad97ae62af8e3e32e63",
+    "/tmp/dpm2-counter-oracles-v3-20261004/serial-five/trace-0.itf.json": "62244086e5f3e7fa32012c35782314c8b94a56bc7106f3a11fa2f035de119016"
+  },
+  "localModelCheckerInvocations": 0,
+  "rows": [
+    {
+      "case": "ok",
+      "receipt": "ok.receipt.json",
+      "sha256": "10c62157181e476ff5ea79a35875662515ca69a05da243579709b4d56d66412d",
+      "status": "passed"
+    },
+    {
+      "case": "mutate",
+      "receipt": "mutate.receipt.json",
+      "sha256": "aafe0eb8e8b1e315f447899fb733165393d199c86b53d28c21abe6a5f6033198",
+      "status": "passed"
+    },
+    {
+      "case": "teardown-fail",
+      "receipt": "teardown-fail.receipt.json",
+      "sha256": "448e2d95e64aa9913d927c5f9129ed2bebad94cf96a04dd2d9628cf81d393741",
+      "status": "passed"
+    },
+    {
+      "case": "mutate-and-teardown-fail",
+      "receipt": "mutate-and-teardown-fail.receipt.json",
+      "sha256": "2c6f2bbf73425797d62719c2b7250d1e31d2f84830cd1a7841afadb9c83c66fa",
+      "status": "passed"
+    },
+    {
+      "case": "wrong-identity",
+      "receipt": "wrong-identity.receipt.json",
+      "sha256": "2d798c7701ee22de7d5932f3282d6a5445576fd4f9c4b6289656363ebba11dee",
+      "status": "passed"
+    },
+    {
+      "case": "denied-negotiation",
+      "receipt": "denied-negotiation.receipt.json",
+      "sha256": "10e653f8ab421b71f28cfaf29caaea543a9c260c6a91c10adfeb91feb1d4e620",
+      "status": "passed"
+    },
+    {
+      "case": "unexpected-checkpoint",
+      "receipt": "unexpected-checkpoint.receipt.json",
+      "sha256": "3d1b94af83410b624e6b9472831133f3562779410222723c0bcf308cb34ff39a",
+      "status": "passed"
+    },
+    {
+      "case": "cancel",
+      "receipt": "cancel.receipt.json",
+      "sha256": "a83f3af34b86e1ba92e6669c7b3c87ee6fe39d638b070767aed70535a66179d4",
+      "status": "passed"
+    },
+    {
+      "case": "bad-observation",
+      "receipt": "bad-observation.receipt.json",
+      "sha256": "773a2a158a720a94753552175c5edf7f0f3c0f35525e4da3250b58f6f51a1db5",
+      "status": "passed"
+    },
+    {
+      "case": "malformed-input",
+      "receipt": "malformed-input.receipt.json",
+      "sha256": "5b678691d8f53118b1784f67a92ef61f99e9e6eea5a71ac14feee4351b29d59b",
+      "status": "passed"
+    },
+    {
+      "case": "reentrant",
+      "receipt": "reentrant.receipt.json",
+      "sha256": "7270052500abe7f0fb6d7fff8e15cc892f6983a1922932dda27fd22e429f242d",
+      "status": "passed"
+    },
+    {
+      "case": "early-done",
+      "receipt": "early-done.receipt.json",
+      "sha256": "c5031a95ddf1aaa721ab384ac5b0648f86c47a4df458f303dec603bc4869489d",
+      "status": "passed"
+    },
+    {
+      "case": "early-eof",
+      "receipt": "early-eof.receipt.json",
+      "sha256": "73ed5d29c7fc11eab59cd976b3a4fcfa709dbb745f0825c9f8b54c8aadb9b846",
+      "status": "passed"
+    },
+    {
+      "case": "repeat",
+      "receipt": "repeat.receipt.json",
+      "sha256": "86181434671c408e8dda5f06af010206381acf05a55d20ed79f5c1e495c8c2c6",
+      "status": "passed"
+    },
+    {
+      "case": "oracle-init-not-adopted",
+      "receipt": "oracle-init-not-adopted.receipt.json",
+      "sha256": "b4da41bfa313eb282b46f8be565939d4957cf407a30752cc5f43cb23cbb10542",
+      "status": "passed"
+    }
+  ],
+  "schema": "mirrors.dpm2-acceptance/v1",
+  "semanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da",
+  "status": "passed",
+  "traceOrigin": "supplied trace; inspect its capture provenance"
+}

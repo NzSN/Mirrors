@@ -1,0 +1,35 @@
+{
+  "schema": "mirrors.dpm3-adapter-controls/v1",
+  "status": "passed",
+  "scope": "synthetic Linux transport controls only; native execution not performed",
+  "rows": [
+    {
+      "case": "ok",
+      "status": "passed"
+    },
+    {
+      "case": "bad-mapping",
+      "status": "passed"
+    },
+    {
+      "case": "identity-change",
+      "status": "passed"
+    },
+    {
+      "case": "duplicate-actors",
+      "status": "passed"
+    },
+    {
+      "case": "unexpected-phase",
+      "status": "passed"
+    },
+    {
+      "case": "missing-quit",
+      "status": "passed"
+    },
+    {
+      "case": "crash",
+      "status": "passed"
+    }
+  ]
+}

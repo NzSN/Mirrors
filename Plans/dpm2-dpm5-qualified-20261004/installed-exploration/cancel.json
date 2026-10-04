@@ -1,0 +1,329 @@
+{
+  "actualIdentity": {
+    "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+    "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+    "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+  },
+  "attemptedRuns": 1,
+  "categories": {
+    "cancelled": 1
+  },
+  "comparison": "not_requested",
+  "comparisonRequired": false,
+  "comparisonRuns": 0,
+  "complete": false,
+  "completedRuns": 0,
+  "declaredInputs": [
+    {
+      "initial": 0,
+      "mode": "cancel"
+    },
+    {
+      "initial": 5,
+      "mode": "cancel"
+    }
+  ],
+  "denominatorKnown": true,
+  "elapsedMs": 1,
+  "eligibleRuns": 40,
+  "eligibleRunsLowerBound": 40,
+  "enumeratedScheduleShapes": 20,
+  "enumerationExhausted": false,
+  "firstCounterexample": null,
+  "firstFailure": {
+    "category": "cancelled",
+    "ordinal": 0,
+    "schedule": {
+      "identity": {
+        "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+        "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+        "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+      },
+      "inputs": {
+        "initial": 0,
+        "mode": "cancel"
+      },
+      "profile": "mirrorcpp.cooperative-checkpoints/v1",
+      "schema": "mirrors.checkpoint-schedule/v1",
+      "steps": [
+        {
+          "actor": "a",
+          "checkpoint": "read"
+        },
+        {
+          "actor": "a",
+          "checkpoint": "write"
+        },
+        {
+          "actor": "a",
+          "checkpoint": "$done"
+        },
+        {
+          "actor": "b",
+          "checkpoint": "read"
+        },
+        {
+          "actor": "b",
+          "checkpoint": "write"
+        },
+        {
+          "actor": "b",
+          "checkpoint": "$done"
+        }
+      ]
+    }
+  },
+  "inputAssignments": 2,
+  "limits": {
+    "maxEnumeratedSchedules": 4096,
+    "maxEvidenceBytes": 16777216,
+    "maxRuns": 4096,
+    "timeBudgetMs": 30000
+  },
+  "maxPreemptions": 64,
+  "mode": "cancel",
+  "por": "disabled",
+  "profile": "mirrorcpp.finite-checkpoint-exploration/v1",
+  "projection": {
+    "baseVariables": [
+      "count",
+      "saved",
+      "phase"
+    ],
+    "instrumentationVariables": []
+  },
+  "runs": [
+    {
+      "category": "cancelled",
+      "execution": {
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "detail": "",
+            "remainingActors": [],
+            "status": "confirmed"
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "execution cancelled",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 1,
+            "step": 0
+          }
+        ],
+        "executionId": "60e58cec5aad536a0b8e8ab20c1d6b02",
+        "generation": 1,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 1,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "cancelled",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 16,
+          "maxSteps": 4096
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+            "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "cancel"
+          },
+          "profile": "mirrorcpp.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-replay/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 0,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+          "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "cancel"
+        },
+        "profile": "mirrorcpp.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    }
+  ],
+  "schema": "mirrors.finite-exploration/v1",
+  "states": [],
+  "status": "incomplete",
+  "stopReason": "cancelled",
+  "sut": {
+    "acquisitions": 1,
+    "enteredWorkers": 1,
+    "teardowns": 1
+  },
+  "transitions": []
+}

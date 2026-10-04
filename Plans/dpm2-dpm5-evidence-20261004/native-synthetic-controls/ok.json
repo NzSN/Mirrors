@@ -1,0 +1,378 @@
+{
+  "bridge": {
+    "acquisitions": 1,
+    "cleanups": 1,
+    "closed": true,
+    "exitCode": 0,
+    "identity": {
+      "actors": {
+        "t1": 1001,
+        "t2": 1002
+      },
+      "createdFileTime": "synthetic-creation",
+      "imagePath": "synthetic-worker",
+      "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "processId": 5
+    },
+    "quitAcknowledged": true,
+    "schema": "mirrors.dpm-native-bridge/v1",
+    "transcript": [
+      {
+        "reply": {
+          "nativeIdentity": {
+            "actors": {
+              "t1": 1001,
+              "t2": 1002
+            },
+            "createdFileTime": "synthetic-creation",
+            "imagePath": "synthetic-worker",
+            "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "processId": 5
+          },
+          "state": {
+            "actual": 0
+          }
+        },
+        "request": {
+          "op": "Initialize"
+        }
+      },
+      {
+        "reply": {
+          "nativeIdentity": {
+            "actors": {
+              "t1": 1001,
+              "t2": 1002
+            },
+            "createdFileTime": "synthetic-creation",
+            "imagePath": "synthetic-worker",
+            "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "processId": 5
+          },
+          "phase": "Reserve",
+          "state": {
+            "actual": 1
+          }
+        },
+        "request": {
+          "address": "A1",
+          "command": "Arm",
+          "op": "Begin",
+          "span": 1,
+          "thread": "t1",
+          "value": "good",
+          "writer": "allowed"
+        }
+      },
+      {
+        "reply": {
+          "nativeIdentity": {
+            "actors": {
+              "t1": 1001,
+              "t2": 1002
+            },
+            "createdFileTime": "synthetic-creation",
+            "imagePath": "synthetic-worker",
+            "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "processId": 5
+          },
+          "phase": "CallDone",
+          "state": {
+            "actual": 2
+          }
+        },
+        "request": {
+          "op": "Advance",
+          "thread": "t1"
+        }
+      },
+      {
+        "reply": {
+          "nativeIdentity": {
+            "actors": {
+              "t1": 1001,
+              "t2": 1002
+            },
+            "createdFileTime": "synthetic-creation",
+            "imagePath": "synthetic-worker",
+            "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "processId": 5
+          },
+          "phase": "WriteBegin",
+          "state": {
+            "actual": 3
+          }
+        },
+        "request": {
+          "address": "A1",
+          "command": "Write",
+          "op": "Begin",
+          "span": 1,
+          "thread": "t2",
+          "value": "bad",
+          "writer": "allowed"
+        }
+      },
+      {
+        "reply": {
+          "nativeIdentity": {
+            "actors": {
+              "t1": 1001,
+              "t2": 1002
+            },
+            "createdFileTime": "synthetic-creation",
+            "imagePath": "synthetic-worker",
+            "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "processId": 5
+          },
+          "phase": "CallDone",
+          "state": {
+            "actual": 4
+          }
+        },
+        "request": {
+          "op": "Advance",
+          "thread": "t2"
+        }
+      },
+      {
+        "reply": {
+          "closed": true,
+          "nativeIdentity": {
+            "actors": {
+              "t1": 1001,
+              "t2": 1002
+            },
+            "createdFileTime": "synthetic-creation",
+            "imagePath": "synthetic-worker",
+            "imageSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "processId": 5
+          }
+        },
+        "request": {
+          "op": "Quit"
+        }
+      }
+    ]
+  },
+  "passed": true,
+  "scheduler": {
+    "actors": [
+      {
+        "actor": "arm",
+        "operation": "native-arm-operation"
+      },
+      {
+        "actor": "write",
+        "operation": "native-write-operation"
+      }
+    ],
+    "checkpoints": [
+      "CallDone",
+      "Reserve",
+      "WriteBegin"
+    ],
+    "cleanup": "confirmed",
+    "cleanupAttempts": [
+      {
+        "detail": "",
+        "remainingActors": [],
+        "status": "confirmed"
+      }
+    ],
+    "coverage": "recorded-schedule-only",
+    "detail": "",
+    "events": [
+      {
+        "actor": "arm",
+        "checkpoint": "$start",
+        "kind": "permit",
+        "operation": "native-arm-operation",
+        "ordinal": 0,
+        "step": 0
+      },
+      {
+        "actor": "arm",
+        "checkpoint": "Reserve",
+        "kind": "arrival",
+        "operation": "native-arm-operation",
+        "ordinal": 1,
+        "step": 0
+      },
+      {
+        "actor": "arm",
+        "checkpoint": "Reserve",
+        "kind": "permit",
+        "operation": "native-arm-operation",
+        "ordinal": 2,
+        "step": 1
+      },
+      {
+        "actor": "arm",
+        "checkpoint": "CallDone",
+        "kind": "arrival",
+        "operation": "native-arm-operation",
+        "ordinal": 3,
+        "step": 1
+      },
+      {
+        "actor": "arm",
+        "checkpoint": "CallDone",
+        "kind": "permit",
+        "operation": "native-arm-operation",
+        "ordinal": 4,
+        "step": 2
+      },
+      {
+        "actor": "arm",
+        "checkpoint": "$done",
+        "kind": "arrival",
+        "operation": "native-arm-operation",
+        "ordinal": 5,
+        "step": 2
+      },
+      {
+        "actor": "write",
+        "checkpoint": "$start",
+        "kind": "permit",
+        "operation": "native-write-operation",
+        "ordinal": 6,
+        "step": 3
+      },
+      {
+        "actor": "write",
+        "checkpoint": "WriteBegin",
+        "kind": "arrival",
+        "operation": "native-write-operation",
+        "ordinal": 7,
+        "step": 3
+      },
+      {
+        "actor": "write",
+        "checkpoint": "WriteBegin",
+        "kind": "permit",
+        "operation": "native-write-operation",
+        "ordinal": 8,
+        "step": 4
+      },
+      {
+        "actor": "write",
+        "checkpoint": "CallDone",
+        "kind": "arrival",
+        "operation": "native-write-operation",
+        "ordinal": 9,
+        "step": 4
+      },
+      {
+        "actor": "write",
+        "checkpoint": "CallDone",
+        "kind": "permit",
+        "operation": "native-write-operation",
+        "ordinal": 10,
+        "step": 5
+      },
+      {
+        "actor": "write",
+        "checkpoint": "$done",
+        "kind": "arrival",
+        "operation": "native-write-operation",
+        "ordinal": 11,
+        "step": 5
+      }
+    ],
+    "executionId": "f59cf36f544704bac5e4c0f75884f87b",
+    "generation": 1,
+    "observations": [
+      {
+        "afterSteps": 0,
+        "state": {
+          "actual": 0
+        }
+      },
+      {
+        "afterSteps": 1,
+        "state": {
+          "actual": 1
+        }
+      },
+      {
+        "afterSteps": 2,
+        "state": {
+          "actual": 2
+        }
+      },
+      {
+        "afterSteps": 3,
+        "state": {
+          "actual": 2
+        }
+      },
+      {
+        "afterSteps": 4,
+        "state": {
+          "actual": 3
+        }
+      },
+      {
+        "afterSteps": 5,
+        "state": {
+          "actual": 4
+        }
+      },
+      {
+        "afterSteps": 6,
+        "state": {
+          "actual": 4
+        }
+      }
+    ],
+    "outcome": "completed",
+    "passed": true,
+    "policy": {
+      "cleanupTimeoutMs": 1000,
+      "executionTimeoutMs": 2000,
+      "maxActors": 16,
+      "maxSteps": 4096
+    },
+    "remainingActors": [],
+    "schedule": {
+      "identity": {
+        "implementationSha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "mappingSha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "modelSemanticDigest": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "inputs": {},
+      "profile": "mirrorcpp.cooperative-checkpoints/v1",
+      "schema": "mirrors.checkpoint-schedule/v1",
+      "steps": [
+        {
+          "actor": "arm",
+          "checkpoint": "Reserve"
+        },
+        {
+          "actor": "arm",
+          "checkpoint": "CallDone"
+        },
+        {
+          "actor": "arm",
+          "checkpoint": "$done"
+        },
+        {
+          "actor": "write",
+          "checkpoint": "WriteBegin"
+        },
+        {
+          "actor": "write",
+          "checkpoint": "CallDone"
+        },
+        {
+          "actor": "write",
+          "checkpoint": "$done"
+        }
+      ]
+    },
+    "scheduleCompleted": true,
+    "schema": "mirrors.checkpoint-replay/v1"
+  },
+  "scope": "synthetic transport control; not native execution"
+}

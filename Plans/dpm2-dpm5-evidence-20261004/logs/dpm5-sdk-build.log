@@ -1,0 +1,69 @@
+-- mirrorcpp: nlohmann_json not found, fetching v3.11.3 into build tree
+-- Using the multi-header code from /tmp/mic-mirrorcpp-build/_deps/nlohmann_json-src/include/
+-- mirrorcpp: system Boost.Multiprecision not found; fetching boostorg headers (boost-1.85.0)
+-- mirrorcpp: Catch2 v3 not found, fetching v3.5.0 into build tree
+-- Configuring done (4.9s)
+-- Generating done (0.1s)
+-- Build files have been written to: /tmp/mirrorcpp-dpm1-build
+[  1%] Building CXX object CMakeFiles/mirrorcpp.dir/src/detail/process.cpp.o
+[ 64%] Built target Catch2
+[ 65%] Built target Catch2WithMain
+[ 66%] Linking CXX static library libmirrorcpp.a
+[ 73%] Built target mirrorcpp
+[ 74%] Linking CXX executable scheduled_counter
+[ 75%] Building CXX object examples/CMakeFiles/hourclock.dir/hourclock.cpp.o
+[ 76%] Built target scheduled_counter
+[ 77%] Building CXX object test/unit/CMakeFiles/mirrorcpp_smoke_test.dir/smoke_test.cpp.o
+[ 78%] Linking CXX executable mirrorcpp_smoke_test
+[ 78%] Built target mirrorcpp_smoke_test
+[ 78%] Linking CXX executable mirrorcpp_transport_test
+[ 79%] Linking CXX executable hourclock
+[ 80%] Built target mirrorcpp_transport_test
+[ 80%] Building CXX object test/unit/CMakeFiles/mirrorcpp_tls_test.dir/tls_test.cpp.o
+[ 80%] Built target hourclock
+[ 80%] Building CXX object test/unit/CMakeFiles/mirrorcpp_registry_test.dir/registry_test.cpp.o
+[ 81%] Linking CXX executable mirrorcpp_tls_test
+[ 81%] Built target mirrorcpp_tls_test
+[ 81%] Linking CXX executable mirrorcpp_value_test
+[ 82%] Built target mirrorcpp_value_test
+[ 83%] Linking CXX executable mirrorcpp_error_test
+[ 84%] Linking CXX executable mirrorcpp_registry_test
+[ 84%] Built target mirrorcpp_error_test
+[ 84%] Linking CXX executable mirrorcpp_protocol_test
+[ 84%] Built target mirrorcpp_registry_test
+[ 84%] Building CXX object test/unit/CMakeFiles/mirrorcpp_model_interface_test.dir/model_interface_test.cpp.o
+[ 85%] Built target mirrorcpp_protocol_test
+[ 86%] Building CXX object test/unit/CMakeFiles/mirrorcpp_generated_model_interface_test.dir/generated_model_interface_test.cpp.o
+[ 86%] Linking CXX executable mirrorcpp_generated_model_interface_test
+[ 86%] Built target mirrorcpp_generated_model_interface_test
+[ 87%] Linking CXX executable mirrorcpp_spec_test
+[ 87%] Built target mirrorcpp_spec_test
+[ 88%] Building CXX object test/unit/CMakeFiles/mirrorcpp_golden_corpus_test.dir/golden_corpus_test.cpp.o
+[ 89%] Linking CXX executable mirrorcpp_model_interface_test
+[ 89%] Built target mirrorcpp_model_interface_test
+[ 89%] Linking CXX executable mirrorcpp_schedule_test
+[ 90%] Built target mirrorcpp_schedule_test
+[ 91%] Linking CXX executable mirrorcpp_schedule_binding_test
+[ 91%] Built target mirrorcpp_schedule_binding_test
+[ 91%] Linking CXX executable mirrorcpp_schedule_exploration_test
+[ 92%] Built target mirrorcpp_schedule_exploration_test
+[ 92%] Building CXX object test/integration/CMakeFiles/mirrorcpp_client_integration_test.dir/client_integration_test.cpp.o
+[ 93%] Linking CXX executable mirrorcpp_golden_corpus_test
+[ 93%] Built target mirrorcpp_golden_corpus_test
+[ 94%] Building CXX object test/integration/CMakeFiles/mirrorcpp_one_shot_flows_test.dir/one_shot_flows_test.cpp.o
+[ 95%] Linking CXX executable mirrorcpp_client_integration_test
+[ 95%] Built target mirrorcpp_client_integration_test
+[ 96%] Building CXX object test/integration/CMakeFiles/mirrorcpp_explore_session_test.dir/explore_session_test.cpp.o
+[ 96%] Linking CXX executable mirrorcpp_one_shot_flows_test
+[ 96%] Built target mirrorcpp_one_shot_flows_test
+[ 96%] Building CXX object test/integration/CMakeFiles/mirrorcpp_async_jobs_test.dir/async_jobs_test.cpp.o
+[ 96%] Linking CXX executable mirrorcpp_explore_session_test
+[ 96%] Built target mirrorcpp_explore_session_test
+[ 96%] Building CXX object test/integration/CMakeFiles/mirrorcpp_mbt_test.dir/mbt_test.cpp.o
+[ 97%] Linking CXX executable mirrorcpp_async_jobs_test
+[ 97%] Built target mirrorcpp_async_jobs_test
+[ 98%] Building CXX object test/integration/CMakeFiles/mirrorcpp_real_mirror_test.dir/real_mirror_test.cpp.o
+[ 99%] Linking CXX executable mirrorcpp_mbt_test
+[ 99%] Built target mirrorcpp_mbt_test
+[100%] Linking CXX executable mirrorcpp_real_mirror_test
+[100%] Built target mirrorcpp_real_mirror_test

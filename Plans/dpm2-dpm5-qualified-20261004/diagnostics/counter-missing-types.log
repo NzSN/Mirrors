@@ -1,0 +1,23 @@
+warning: client certificate /tmp/writesentry-windows-private-20261001/client.pem expires in 3 day(s)
+APALACHE_TRACE_GENERATION_FAILED: apalache exit 255
+stdout:
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: <run>\_apalache-out\ScheduledCounter.tla\2026-10-04T20-00-30_14611336979514084630
+# APALACHE version: 0.62.2 | build: f0dec98                       I@20:00:30.443
+Tuning: search.outputTraces=true                                  I@20:00:30.450
+PASS #0: SanyParser                                               I@20:00:30.642
+PASS #1: TypeCheckerSnowcat                                       I@20:00:30.877
+ > Running Snowcat .::.                                           I@20:00:30.877
+ScheduledCounter.tla:3:11-3:15: type input error: Expected a type annotation for VARIABLE count E@20:00:30.987
+It took me 0 days  0 hours  0 min  0 sec                          I@20:00:30.987
+Total time: 0.541 sec                                             I@20:00:30.987
+EXITCODE: ERROR (255)
+
+stderr:
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/C:/Users/ayden/Desktop/Workspace/MirrorsRemote/tools/apalache/apalache-0.62.2/lib/apalache.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+

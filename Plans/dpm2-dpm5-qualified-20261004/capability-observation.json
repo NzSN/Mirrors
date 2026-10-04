@@ -1,0 +1,53 @@
+{
+  "schema": "mirrors.scheduling-capability-observation/v1",
+  "observedAt": "2026-10-04",
+  "staticDeclarationSha256": "17d9d0e50efbf9ac21674d71a71af3bf5d653504a8bf78d23de3319a932989ab",
+  "sdkStability": "experimental",
+  "status": "accepted_for_declared_profiles",
+  "profiles": [
+    {
+      "profile": "mirrorcpp.cooperative-checkpoints/v1",
+      "status": "accepted",
+      "scope": "fixed and incremental generated replay; four fresh counter oracle cases; 60 replay controls"
+    },
+    {
+      "profile": "mirrorcpp.finite-checkpoint-exploration/v1",
+      "status": "accepted",
+      "scope": "20 schedules x 2 inputs, finite local execution and semantic coverage",
+      "allSchedulesModelCompared": false
+    },
+    {
+      "profile": "dpm-writesentry-two-operation/v1",
+      "status": "accepted",
+      "owner": "application bridge",
+      "scope": [
+        "stable-t1",
+        "stable-t2",
+        "overlap-t1",
+        "overlap-t2"
+      ],
+      "nativeReplayPasses": 8,
+      "productionMutationsDetected": 2,
+      "nativeFailureControls": 4,
+      "preAcquisitionRefusals": 3,
+      "platform": "WSL Linux installed controller and actual Windows x64 native workers"
+    }
+  ],
+  "evidence": {
+    "installed-build-acceptance.json": "82232671fc61ee160fa01a905fba62647b201a7be849249e06543efe93945ddf",
+    "installed-native-acceptance.json": "c8a36fe5d4433fde4fc02014b3dad028b7844c8b7de353af003cb222b085412a",
+    "native-model-validation/acceptance.json": "e1f81499d6fe8d8072440fdbd758e5a7eee14329b1702e11d8c2dd7fd90573c1"
+  },
+  "excluded": [
+    "arbitrary or instruction-level thread control",
+    "unbounded or weak-memory completeness",
+    "generic native scheduler",
+    "hard in-process termination",
+    "partial-order reduction",
+    "complete Windows SDK qualification",
+    "full WriteSentry qualification",
+    "Windows Gate backend",
+    "new M5 candidate",
+    "external package publication"
+  ]
+}

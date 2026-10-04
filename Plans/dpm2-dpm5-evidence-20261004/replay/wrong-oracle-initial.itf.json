@@ -1,0 +1,311 @@
+{
+  "#meta": {
+    "format": "ITF",
+    "origin": "authored type evidence; not a fresh oracle capture",
+    "varTypes": {
+      "action_taken": "Str",
+      "count": "Int",
+      "parameters": "{ actor: Str }",
+      "phase": "(Str -> Int)",
+      "saved": "(Str -> Int)"
+    }
+  },
+  "param_vars": [],
+  "params": [],
+  "states": [
+    {
+      "action_taken": "init",
+      "count": {
+        "#bigint": "100"
+      },
+      "parameters": {
+        "actor": "a"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "0"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "0"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "action_taken": "read",
+      "count": {
+        "#bigint": "0"
+      },
+      "parameters": {
+        "actor": "a"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "1"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "0"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "action_taken": "write",
+      "count": {
+        "#bigint": "1"
+      },
+      "parameters": {
+        "actor": "a"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "2"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "0"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "action_taken": "finish",
+      "count": {
+        "#bigint": "1"
+      },
+      "parameters": {
+        "actor": "a"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "3"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "0"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "0"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "action_taken": "read",
+      "count": {
+        "#bigint": "1"
+      },
+      "parameters": {
+        "actor": "b"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "3"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "1"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "0"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "1"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "action_taken": "write",
+      "count": {
+        "#bigint": "2"
+      },
+      "parameters": {
+        "actor": "b"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "3"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "2"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "0"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "1"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "action_taken": "finish",
+      "count": {
+        "#bigint": "2"
+      },
+      "parameters": {
+        "actor": "b"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "3"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "3"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "0"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "1"
+            }
+          ]
+        ]
+      }
+    }
+  ],
+  "vars": [
+    "action_taken",
+    "parameters",
+    "count",
+    "saved",
+    "phase"
+  ]
+}

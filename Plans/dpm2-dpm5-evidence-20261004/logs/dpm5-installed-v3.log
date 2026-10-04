@@ -1,0 +1,25 @@
+{
+  "schema": "mirrors.dpm5-installed-acceptance/v1",
+  "status": "passed",
+  "scope": "Linux installed cooperative binding and finite local exploration",
+  "sourceHidden": true,
+  "networkNamespaceIsolated": true,
+  "replayCases": 15,
+  "explorationCases": 11,
+  "artifactControls": [
+    "tampered",
+    "missing"
+  ],
+  "compatibilityControls": [
+    "unsupported-profile",
+    "unsupported-mapping"
+  ],
+  "freshModelCheck": false,
+  "nativeWindowsAcceptance": "pending",
+  "manifestSha256": "ff841c03a25d43bbc754a5484c489cd5637f2f9cd137d4f3431d495c41033e4a",
+  "capabilityDeclarationSha256": "17d9d0e50efbf9ac21674d71a71af3bf5d653504a8bf78d23de3319a932989ab",
+  "evidence": {
+    "replay/acceptance.json": "a98495367f9d012a6401392b06701b220149b7d95ea7955b427a2ecbf70b0827",
+    "exploration/acceptance.json": "a607b156b024f7994a9c297156a7fb32e10715dc55d07b991f8e688a4b28ae30"
+  }
+}

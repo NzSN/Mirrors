@@ -2,7 +2,14 @@
 
 Date: 2026-09-30
 
-Status: proposed. The scheduling capability and interfaces described here have not been implemented or qualified by this proposal.
+Status (2026-10-04): DPM-0 design and the DPM-1 portable MirrorCPP coordinator
+and concurrent fixture are implemented and locally accepted. See the
+[DPM-0/DPM-1 design and acceptance record](../Plans/deterministic-production-mbt-dpm0-dpm1.md).
+DPM-2 generated replay, the bounded DPM-3 native pilot, DPM-4 finite local
+exploration and DPM-5 installed acceptance now pass for their declared profiles.
+See the [detailed execution plan](../Plans/deterministic-production-mbt-dpm2-dpm5.md)
+and [final scoped acceptance](../Plans/dpm2-dpm5-qualified-20261004/README.md).
+These results do not extend full WriteSentry qualification or the selected M5 candidate.
 
 ## 1. Decision requested
 
@@ -10,13 +17,26 @@ Add a reusable deterministic production-MBT module to the Mirror Framework. For 
 
 The model-interface compiler continues to generate typed ports, dispatch, codecs, and identity metadata. Apalache supplies model checking and model traces. Neither a generated binding nor a successful symbolic model check establishes control over real operating-system threads.
 
-This proposal requests an architectural capability and an acceptance program. Interface names below are illustrative until reviewed contracts and an implementation plan define them.
+This proposal requests an architectural capability and an acceptance program. The interface sketches below are historical; the linked DPM-0/DPM-1 record and MirrorCPP public scheduling header define the implemented first profile.
 
 ## 2. Motivation and inspected baseline
 
-WriteSentry demonstrates the missing seam. Its generated binding can dispatch every declared action and encode observations, but the application port currently delegates to a separate portable `ProtocolModel`. Hardware and thread scheduling are simulated. That validates selected abstract protocol executions, while production arm/disarm/VEH concurrency remains a separate obligation.
+At the original September 30 inspection, the examined WriteSentry binding
+delegated to the portable `ProtocolModel`. That evidence described selected
+abstract protocol executions.
 
-The inspected baseline is:
+**Baseline refresh, 2026-10-04.** WriteSentry
+`62b62298c5c764dc63cde10968c2555a79df1d3c` now has an application-specific
+native phase scheduler, compile-time production hooks, a model correspondence
+and a recorded bounded `native-runtime-phase/v3` qualification. Its portable
+port remains available, but no longer describes the full native testing scope.
+This proposal addresses reusable framework coordination. The new MirrorCPP
+portable mutex/condition-variable hook cannot replace WriteSentry's trap-safe
+POD/atomic handshake directly. The accepted DPM-3 bridge schedules command
+proxies outside trap paths and retains that native handshake. Its four-case
+pilot is separate from WriteSentry's historical full native qualification.
+
+The original inspected baseline was:
 
 - Mirrors HEAD: `b009cafebc8f057901ce98c66cc9772898c04d57`. The working tree contains concurrent compiler-improvement work; this proposal does not treat those edits as qualified capabilities.
 - WriteSentry: `9dd4b57844603878d93fdecc2ee43f7f1abe0ee2`.

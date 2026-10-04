@@ -1,0 +1,349 @@
+{
+  "schema": "mirrors.dpm3-native-mapping/v1",
+  "profile": "dpm-writesentry-two-operation/v1",
+  "roles": {
+    "arm": {
+      "nativeActor": "t2",
+      "operation": "Arm"
+    },
+    "write": {
+      "nativeActor": "t1",
+      "operation": "Write"
+    }
+  },
+  "modelSteps": [
+    {
+      "role": "arm",
+      "request": {
+        "op": "Begin",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1
+      },
+      "parameters": {
+        "action": "Reserve",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 0,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "ArmLock",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 0,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "ArmSelect",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 1,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "PublishOdd",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 1,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "write",
+      "request": {
+        "op": "Begin",
+        "thread": "t1",
+        "command": "Write",
+        "address": "A1",
+        "value": "bad",
+        "writer": "allowed",
+        "span": 1
+      },
+      "parameters": {
+        "action": "WriteBegin",
+        "thread": "t1",
+        "command": "Write",
+        "address": "A1",
+        "value": "bad",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 0,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "write",
+      "request": {
+        "op": "Advance",
+        "thread": "t1"
+      },
+      "parameters": {
+        "action": "WriteDone",
+        "thread": "t1",
+        "command": "Write",
+        "address": "A1",
+        "value": "bad",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 0,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "write",
+      "request": {
+        "op": "Advance",
+        "thread": "t1"
+      },
+      "parameters": {
+        "action": "CallDone",
+        "thread": "t1",
+        "command": "Write",
+        "address": "A1",
+        "value": "bad",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 0,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "PublishPayload",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 1,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "PublishEven",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 1,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "ArmUnlock",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 0,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "ArmTarget",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 1,
+        "slot": 4,
+        "target": "t2"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "ArmTarget",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 1,
+        "slot": 4,
+        "target": "t1"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "ArmFinishLock",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 0,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "ArmFinishUnlock",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 0,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "ArmOutcome",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 1,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "Release",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 0,
+        "slot": 0,
+        "target": "noThread"
+      }
+    },
+    {
+      "role": "arm",
+      "request": {
+        "op": "Advance",
+        "thread": "t2"
+      },
+      "parameters": {
+        "action": "CallDone",
+        "thread": "t2",
+        "command": "Arm",
+        "address": "A1",
+        "value": "good",
+        "writer": "allowed",
+        "span": 1,
+        "entry": 0,
+        "slot": 0,
+        "target": "noThread"
+      }
+    }
+  ]
+}

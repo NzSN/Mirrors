@@ -1,0 +1,116 @@
+{
+  "capabilityPublication": "not claimed",
+  "executableSha256": "535b60cb135676f1f73a278d3876bf35e2323bda6043072cfbd20bcd62bb32ac",
+  "explorationCompleteness": "not claimed",
+  "identityLabels": "fixture labels; source and executable hashes retained separately",
+  "inputAssignments": 2,
+  "modelComparison": "not exercised; DPM-2",
+  "productionWriteSentry": "not exercised; DPM-3",
+  "records": [
+    {
+      "case": "baseline",
+      "file": "baseline.receipt.json",
+      "sha256": "191af07a28fb213ca677ce8cb00678db3efe3f43a7b7d7abd8e796bf08437958"
+    },
+    {
+      "case": "overlap-0-0",
+      "file": "overlap-0-0.receipt.json",
+      "sha256": "ce4554e255feba1b0cb81fa6a7737cf4843a83f45987cb6331c5d19de0c3b80e"
+    },
+    {
+      "case": "overlap-0-1",
+      "file": "overlap-0-1.receipt.json",
+      "sha256": "624390189dab4ea889ce11398d54428421eee4e4b18a02cd4285064d8f9e3cfa"
+    },
+    {
+      "case": "overlap-0-2",
+      "file": "overlap-0-2.receipt.json",
+      "sha256": "c90559ad22b3f484347cff5f66246e3f13e16ec34c4040419e07be27b237eec5"
+    },
+    {
+      "case": "overlap-0-3",
+      "file": "overlap-0-3.receipt.json",
+      "sha256": "4fc9e3b957383e99588ddff509c1d9ec4c793161a13a406a3d9512813912569e"
+    },
+    {
+      "case": "overlap-5-0",
+      "file": "overlap-5-0.receipt.json",
+      "sha256": "7dc0bb79d0d119364d382cb196f26978faa247bd6fe8b1641f1880a315988eb5"
+    },
+    {
+      "case": "overlap-5-1",
+      "file": "overlap-5-1.receipt.json",
+      "sha256": "ac3f44034d80ac523c034c67b4686ea33050a1aff5fd904b28a032751ac1b2f0"
+    },
+    {
+      "case": "overlap-5-2",
+      "file": "overlap-5-2.receipt.json",
+      "sha256": "989cb5481708358852c21c414f1671cf9f7873d20c9140726e6de1e29c7f5053"
+    },
+    {
+      "case": "overlap-5-3",
+      "file": "overlap-5-3.receipt.json",
+      "sha256": "46861047e6471eb63484addafc5fdcf000ba7c9e2786731967fba41d46018700"
+    },
+    {
+      "case": "serial-0-0",
+      "file": "serial-0-0.receipt.json",
+      "sha256": "ed80c2b8eccd612a0dfa62cbf2123211829ddad3f1e4bdea69cc5c4ea0dc7b69"
+    },
+    {
+      "case": "serial-0-1",
+      "file": "serial-0-1.receipt.json",
+      "sha256": "669e8c477f4ffbda15b9c82a4f9548ae5f45c543b7114adc21b353434e9cb2e1"
+    },
+    {
+      "case": "serial-0-2",
+      "file": "serial-0-2.receipt.json",
+      "sha256": "6c800eea3cb23ccb4e64f3e8926d992eb325c2eea40fff87cd4de76f59d66543"
+    },
+    {
+      "case": "serial-0-3",
+      "file": "serial-0-3.receipt.json",
+      "sha256": "8b970d6dee38dc98bfb6ece2b65ee1bc5b8b3b23ddcd2e462492d20936761fef"
+    },
+    {
+      "case": "serial-5-0",
+      "file": "serial-5-0.receipt.json",
+      "sha256": "ee00c4b402aac3d0454a602ebd5fc305bfa7bc6f45a1484a3399c5a23acf42ef"
+    },
+    {
+      "case": "serial-5-1",
+      "file": "serial-5-1.receipt.json",
+      "sha256": "c083d574b70980fae2f52eb0d84b2c0bf28559de679288ace1508115a8897045"
+    },
+    {
+      "case": "serial-5-2",
+      "file": "serial-5-2.receipt.json",
+      "sha256": "f0f548e97059953201c1396071a942776a48b62d6f88a6e7bc2bd9955c6f2438"
+    },
+    {
+      "case": "serial-5-3",
+      "file": "serial-5-3.receipt.json",
+      "sha256": "e189f44e90245c915c599f3bcfd7335fe092cbcea78880a2238433bbe2c59085"
+    }
+  ],
+  "replayExecutions": 17,
+  "scheduleShapes": 2,
+  "schema": "mirrorcpp.dpm1-fixture-acceptance/v1",
+  "scope": "portable cooperative fixture; scheduling and actual observations only",
+  "sourceFiles": {
+    "CMakeLists.txt": "dc5f40390a25f2c68f124cbf2aefd16bd9a83fa4fa77dfa1f2c7c6c489d67306",
+    "cmake/mirrorcppConfig.cmake.in": "3fff282f8bccaf1f505cbc7e49e0b6f24f7cfd31655f40a0791d83bb8befe0d4",
+    "examples/CMakeLists.txt": "b317ceb897b2a0ce00cdd6101cbf702ff927afcb27185659dcde8d08c010e8c7",
+    "examples/scheduled_counter.cpp": "ff92d02881643df55f82659feb5c35a2130cbec93d043f2f2a18794955b1459f",
+    "examples/scheduled_counter.hpp": "6632e937003d8a5ead9b5c5f616591d6bf5a8c235ac0e1f947e48457bf4fd925",
+    "include/mirrorcpp/mirrorcpp.hpp": "82ebd4400a8a6cfe03b671b53d63f68eaf6e8048c3909e1a38b1716829558db4",
+    "include/mirrorcpp/schedule.hpp": "946ce8117aa28322b01411508537a1e35b332f0175b23f5a5b70ffcb75924a1a",
+    "src/schedule.cpp": "5652345a0ccca405855d0937e62c3fe76ec4b08d5354d0ee0b7fa297ce70dd7a",
+    "test/packaging/main.cpp": "6f5f2752f00c5a10f27fa0f02743c340858e75fd8a6f44cc666b71b291f13004",
+    "test/schedule/replay_check.py": "ec5d7e8fcb1b79755eefb91294301de08714a6a500e91cf92d0468fd5b6cc623",
+    "test/unit/CMakeLists.txt": "0ff4f2ca6b87181736ebea14f43f711113108e1427ff69b4f1cfd6cd2a6832c9",
+    "test/unit/schedule_test.cpp": "5eb8df3703eb3c9566933ebbd462ce50b5673d9db7fad73ca364591c9dd8f359"
+  },
+  "sourceRevision": "aa906a5cef166e7290a2636a93f89b1123cbff23",
+  "status": "passed"
+}

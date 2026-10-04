@@ -1,0 +1,25 @@
+Filters: [sigpipe]
+Randomness seeded to: 1384021156
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mirrorcpp_transport_test is a Catch2 v3.5.0 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+stdio: dead child writes preserve caller signal state
+-------------------------------------------------------------------------------
+/home/nzsn/Repos/MirrorCPP/test/unit/transport_test.cpp:409
+...............................................................................
+
+/home/nzsn/Repos/MirrorCPP/test/unit/transport_test.cpp:443: FAILED:
+  REQUIRE( (((status) & 0x7f) == 0) )
+with expansion:
+  false
+with messages:
+  mode := 0
+  status := 13
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 3 | 2 passed | 1 failed
+

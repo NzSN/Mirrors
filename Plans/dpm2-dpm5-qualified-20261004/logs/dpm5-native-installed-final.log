@@ -1,0 +1,15 @@
+{
+  "schema": "mirrors.dpm5-native-installed-acceptance/v1",
+  "status": "passed",
+  "profile": "dpm-writesentry-two-operation/v1",
+  "sourceHidden": true,
+  "networkNamespaceIsolated": true,
+  "nativeRuns": 14,
+  "compatibilityControls": 3,
+  "installedBuildAcceptanceSha256": "82232671fc61ee160fa01a905fba62647b201a7be849249e06543efe93945ddf",
+  "controllerSha256": "72cb2356043ccc8b4fbde77c9327f94e5f73ff79dd11befcd15ff18f491816d1",
+  "nativeAcceptanceSha256": "841888a31fab7ac016331fb199959699de84e32334a0dd0acc4bbd00068755d8",
+  "admittedManifestSha256": "cdb9a408c1d4bc4865a2ac7e1fa8bcee2943da0b3e3e1f2031dcb6340915fe63",
+  "fullProductionQualified": false,
+  "hostScope": "WSL Linux controller and actual Windows workers via existing local interoperability carrier"
+}

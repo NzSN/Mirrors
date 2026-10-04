@@ -1,0 +1,31 @@
+{
+  "schema": "mirrors.dpm3-bounded-model-validation/v1",
+  "status": "passed",
+  "rows": [
+    {
+      "case": "stable-t1",
+      "bound": 28,
+      "invariant": "MBTSafety",
+      "verdict": "VALID"
+    },
+    {
+      "case": "stable-t2",
+      "bound": 28,
+      "invariant": "MBTSafety",
+      "verdict": "VALID"
+    },
+    {
+      "case": "overlap-t1",
+      "bound": 17,
+      "invariant": "MBTSafety",
+      "verdict": "VALID"
+    },
+    {
+      "case": "overlap-t2",
+      "bound": 17,
+      "invariant": "MBTSafety",
+      "verdict": "VALID"
+    }
+  ],
+  "scope": "four fixed pilot schedules only"
+}

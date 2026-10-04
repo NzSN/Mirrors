@@ -6,7 +6,7 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
-## Current status — 2026-10-03
+## Current status — 2026-10-04
 
 The published-revision C0
 `f01fb7717ca9bab18a68443707f478d49c15a15d420273db1e881c9683b16384`
@@ -26,6 +26,17 @@ interop matrix remain outside the completed profile. The
 [M6 reviewed-scaffold and corpus work](m6-reviewed-scaffolds-and-corpora.md) are
 complete for their declared source and public integration scope. M5's separately
 pinned compatibility matrix does not qualify every newly generated-client feature.
+
+The separately authorized [DPM-0/DPM-1 work](deterministic-production-mbt-dpm0-dpm1.md)
+is now specified and locally accepted: a reusable MirrorCPP cooperative scheduler
+and portable concurrent fixture. Its source changes remain uncommitted. The separately authorized
+[DPM-2–DPM-5 execution](deterministic-production-mbt-dpm2-dpm5.md) now supplies
+generated replay, finite exploration and installed acceptance. Explicit transfer
+approval enabled fresh oracle captures and the real native Windows pilot; all
+DPM-2–DPM-5 exit gates now pass for the declared profiles. The
+[final record](dpm2-dpm5-qualified-20261004/README.md) separates native pilot,
+finite local coverage and installed evidence. This work does not extend the
+recorded M5 candidate.
 
 The dated decisions below and the original September integration/ownership
 records are history. Their pending tasks and uncommitted states describe those

@@ -1,0 +1,219 @@
+{
+  "actors": [
+    {
+      "actor": "a",
+      "operation": "increment-a"
+    },
+    {
+      "actor": "b",
+      "operation": "increment-b"
+    }
+  ],
+  "checkpoints": [
+    "read",
+    "write"
+  ],
+  "cleanup": "confirmed",
+  "cleanupAttempts": [
+    {
+      "detail": "",
+      "remainingActors": [],
+      "status": "confirmed"
+    }
+  ],
+  "coverage": "recorded-schedule-only",
+  "detail": "",
+  "events": [
+    {
+      "actor": "a",
+      "checkpoint": "$start",
+      "kind": "permit",
+      "operation": "increment-a",
+      "ordinal": 0,
+      "step": 0
+    },
+    {
+      "actor": "a",
+      "checkpoint": "read",
+      "kind": "arrival",
+      "operation": "increment-a",
+      "ordinal": 1,
+      "step": 0
+    },
+    {
+      "actor": "a",
+      "checkpoint": "read",
+      "kind": "permit",
+      "operation": "increment-a",
+      "ordinal": 2,
+      "step": 1
+    },
+    {
+      "actor": "a",
+      "checkpoint": "write",
+      "kind": "arrival",
+      "operation": "increment-a",
+      "ordinal": 3,
+      "step": 1
+    },
+    {
+      "actor": "a",
+      "checkpoint": "write",
+      "kind": "permit",
+      "operation": "increment-a",
+      "ordinal": 4,
+      "step": 2
+    },
+    {
+      "actor": "a",
+      "checkpoint": "$done",
+      "kind": "arrival",
+      "operation": "increment-a",
+      "ordinal": 5,
+      "step": 2
+    },
+    {
+      "actor": "b",
+      "checkpoint": "$start",
+      "kind": "permit",
+      "operation": "increment-b",
+      "ordinal": 6,
+      "step": 3
+    },
+    {
+      "actor": "b",
+      "checkpoint": "read",
+      "kind": "arrival",
+      "operation": "increment-b",
+      "ordinal": 7,
+      "step": 3
+    },
+    {
+      "actor": "b",
+      "checkpoint": "read",
+      "kind": "permit",
+      "operation": "increment-b",
+      "ordinal": 8,
+      "step": 4
+    },
+    {
+      "actor": "b",
+      "checkpoint": "write",
+      "kind": "arrival",
+      "operation": "increment-b",
+      "ordinal": 9,
+      "step": 4
+    },
+    {
+      "actor": "b",
+      "checkpoint": "write",
+      "kind": "permit",
+      "operation": "increment-b",
+      "ordinal": 10,
+      "step": 5
+    },
+    {
+      "actor": "b",
+      "checkpoint": "$done",
+      "kind": "arrival",
+      "operation": "increment-b",
+      "ordinal": 11,
+      "step": 5
+    }
+  ],
+  "executionId": "182e7751159d1b43921130d14cc7b24f",
+  "generation": 1,
+  "observations": [
+    {
+      "afterSteps": 0,
+      "state": {
+        "value": 5
+      }
+    },
+    {
+      "afterSteps": 1,
+      "state": {
+        "value": 5
+      }
+    },
+    {
+      "afterSteps": 2,
+      "state": {
+        "value": 6
+      }
+    },
+    {
+      "afterSteps": 3,
+      "state": {
+        "value": 6
+      }
+    },
+    {
+      "afterSteps": 4,
+      "state": {
+        "value": 6
+      }
+    },
+    {
+      "afterSteps": 5,
+      "state": {
+        "value": 7
+      }
+    },
+    {
+      "afterSteps": 6,
+      "state": {
+        "value": 7
+      }
+    }
+  ],
+  "outcome": "completed",
+  "passed": true,
+  "policy": {
+    "cleanupTimeoutMs": 1000,
+    "executionTimeoutMs": 2000,
+    "maxActors": 16,
+    "maxSteps": 4096
+  },
+  "remainingActors": [],
+  "schedule": {
+    "identity": {
+      "implementationSha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "mappingSha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "modelSemanticDigest": "1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    "inputs": {
+      "initial": 5
+    },
+    "profile": "mirrorcpp.cooperative-checkpoints/v1",
+    "schema": "mirrors.checkpoint-schedule/v1",
+    "steps": [
+      {
+        "actor": "a",
+        "checkpoint": "read"
+      },
+      {
+        "actor": "a",
+        "checkpoint": "write"
+      },
+      {
+        "actor": "a",
+        "checkpoint": "$done"
+      },
+      {
+        "actor": "b",
+        "checkpoint": "read"
+      },
+      {
+        "actor": "b",
+        "checkpoint": "write"
+      },
+      {
+        "actor": "b",
+        "checkpoint": "$done"
+      }
+    ]
+  },
+  "scheduleCompleted": true,
+  "schema": "mirrors.checkpoint-replay/v1"
+}

@@ -1,0 +1,4041 @@
+{
+  "actualIdentity": {
+    "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+    "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+    "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+  },
+  "attemptedRuns": 4,
+  "categories": {
+    "passed": 4
+  },
+  "comparison": "not_requested",
+  "comparisonRequired": false,
+  "comparisonRuns": 0,
+  "complete": true,
+  "completedRuns": 4,
+  "declaredInputs": [
+    {
+      "initial": 0,
+      "mode": "ok"
+    },
+    {
+      "initial": 5,
+      "mode": "ok"
+    }
+  ],
+  "denominatorKnown": true,
+  "elapsedMs": 10,
+  "eligibleRuns": 4,
+  "eligibleRunsLowerBound": 4,
+  "enumeratedScheduleShapes": 2,
+  "enumerationExhausted": true,
+  "firstCounterexample": null,
+  "firstFailure": null,
+  "inputAssignments": 2,
+  "limits": {
+    "maxEnumeratedSchedules": 4096,
+    "maxEvidenceBytes": 16777216,
+    "maxRuns": 4096,
+    "timeBudgetMs": 30000
+  },
+  "maxPreemptions": 0,
+  "mode": "ok",
+  "por": "disabled",
+  "profile": "mirrorcpp.finite-checkpoint-exploration/v1",
+  "projection": {
+    "baseVariables": [
+      "count",
+      "saved",
+      "phase"
+    ],
+    "instrumentationVariables": []
+  },
+  "runs": [
+    {
+      "category": "passed",
+      "execution": {
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "detail": "",
+            "remainingActors": [],
+            "status": "confirmed"
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 1,
+            "step": 0
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 2,
+            "step": 1
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 3,
+            "step": 1
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 4,
+            "step": 2
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 5,
+            "step": 2
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 6,
+            "step": 3
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 7,
+            "step": 3
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 8,
+            "step": 4
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 9,
+            "step": 4
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 10,
+            "step": 5
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 11,
+            "step": 5
+          }
+        ],
+        "executionId": "25e91e207759a1e4eaf3890be78f40de",
+        "generation": 1,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 1,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 2,
+            "state": {
+              "count": {
+                "#bigint": "1"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "2"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 3,
+            "state": {
+              "count": {
+                "#bigint": "1"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 4,
+            "state": {
+              "count": {
+                "#bigint": "1"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 5,
+            "state": {
+              "count": {
+                "#bigint": "2"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "2"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 6,
+            "state": {
+              "count": {
+                "#bigint": "2"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "completed",
+        "passed": true,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 16,
+          "maxSteps": 4096
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+            "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "ok"
+          },
+          "profile": "mirrorcpp.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": true,
+        "schema": "mirrors.checkpoint-replay/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 0,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+          "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "ok"
+        },
+        "profile": "mirrorcpp.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "passed",
+      "execution": {
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "detail": "",
+            "remainingActors": [],
+            "status": "confirmed"
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 1,
+            "step": 0
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 2,
+            "step": 1
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 3,
+            "step": 1
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 4,
+            "step": 2
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 5,
+            "step": 2
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 6,
+            "step": 3
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 7,
+            "step": 3
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 8,
+            "step": 4
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 9,
+            "step": 4
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 10,
+            "step": 5
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 11,
+            "step": 5
+          }
+        ],
+        "executionId": "fddbc37ae90d87c4b152987e8fc34f87",
+        "generation": 2,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 1,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 2,
+            "state": {
+              "count": {
+                "#bigint": "6"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "2"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 3,
+            "state": {
+              "count": {
+                "#bigint": "6"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 4,
+            "state": {
+              "count": {
+                "#bigint": "6"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "6"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 5,
+            "state": {
+              "count": {
+                "#bigint": "7"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "2"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "6"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 6,
+            "state": {
+              "count": {
+                "#bigint": "7"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "6"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "completed",
+        "passed": true,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 16,
+          "maxSteps": 4096
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+            "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "ok"
+          },
+          "profile": "mirrorcpp.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": true,
+        "schema": "mirrors.checkpoint-replay/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 1,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+          "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "ok"
+        },
+        "profile": "mirrorcpp.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "passed",
+      "execution": {
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "detail": "",
+            "remainingActors": [],
+            "status": "confirmed"
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 1,
+            "step": 0
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 2,
+            "step": 1
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 3,
+            "step": 1
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 4,
+            "step": 2
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 5,
+            "step": 2
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 6,
+            "step": 3
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 7,
+            "step": 3
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 8,
+            "step": 4
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 9,
+            "step": 4
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 10,
+            "step": 5
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 11,
+            "step": 5
+          }
+        ],
+        "executionId": "3521d38d1aab16690b4001c4f199c1ea",
+        "generation": 3,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 1,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 2,
+            "state": {
+              "count": {
+                "#bigint": "1"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "2"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 3,
+            "state": {
+              "count": {
+                "#bigint": "1"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 4,
+            "state": {
+              "count": {
+                "#bigint": "1"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 5,
+            "state": {
+              "count": {
+                "#bigint": "2"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "2"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 6,
+            "state": {
+              "count": {
+                "#bigint": "2"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "completed",
+        "passed": true,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 16,
+          "maxSteps": 4096
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+            "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "ok"
+          },
+          "profile": "mirrorcpp.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": true,
+        "schema": "mirrors.checkpoint-replay/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 2,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+          "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "ok"
+        },
+        "profile": "mirrorcpp.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "passed",
+      "execution": {
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "detail": "",
+            "remainingActors": [],
+            "status": "confirmed"
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 1,
+            "step": 0
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 2,
+            "step": 1
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 3,
+            "step": 1
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 4,
+            "step": 2
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 5,
+            "step": 2
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 6,
+            "step": 3
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 7,
+            "step": 3
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 8,
+            "step": 4
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 9,
+            "step": 4
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 10,
+            "step": 5
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 11,
+            "step": 5
+          }
+        ],
+        "executionId": "8de1cf33d4954ef816263d43637acdf8",
+        "generation": 4,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 1,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "5"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 2,
+            "state": {
+              "count": {
+                "#bigint": "6"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "2"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "5"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 3,
+            "state": {
+              "count": {
+                "#bigint": "6"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "5"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 4,
+            "state": {
+              "count": {
+                "#bigint": "6"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "6"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "5"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 5,
+            "state": {
+              "count": {
+                "#bigint": "7"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "2"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "6"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "5"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 6,
+            "state": {
+              "count": {
+                "#bigint": "7"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "6"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "5"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "completed",
+        "passed": true,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 16,
+          "maxSteps": 4096
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+            "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "ok"
+          },
+          "profile": "mirrorcpp.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": true,
+        "schema": "mirrors.checkpoint-replay/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 3,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "05058da121e32d680dda4488aa125c3cf7cd1b958bee178d6d254da60f0b0176",
+          "mappingSha256": "ab2183ff2b558f35f85a4982229698f3ec1baa92542e1fc0c54bd9421e640db9",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "ok"
+        },
+        "profile": "mirrorcpp.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    }
+  ],
+  "schema": "mirrors.finite-exploration/v1",
+  "states": [
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "0"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 0
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "0"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 1
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "1"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "2"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 2
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "1"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 3
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "1"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 4
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "2"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "2"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 5
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "2"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 6
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "5"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 7
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "5"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "5"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 8
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "6"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "2"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "5"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 9
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "6"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "5"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 10
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "6"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "5"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "6"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 11
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "7"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "2"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "5"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "6"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 12
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "7"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "5"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "6"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 13
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "0"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 14
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "1"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "2"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 15
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "1"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 16
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "1"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 17
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "2"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "2"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 18
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "2"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 19
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "5"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "5"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 20
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "6"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "2"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "5"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 21
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "6"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "5"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 22
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "6"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "6"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "5"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 23
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "7"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "2"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "6"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "5"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 24
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "7"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "6"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "5"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 25
+    }
+  ],
+  "status": "complete",
+  "stopReason": "complete",
+  "sut": {
+    "acquisitions": 4,
+    "enteredWorkers": 8,
+    "teardowns": 4
+  },
+  "transitions": [
+    {
+      "count": 1,
+      "from": 0,
+      "to": 1
+    },
+    {
+      "count": 1,
+      "from": 0,
+      "to": 14
+    },
+    {
+      "count": 1,
+      "from": 1,
+      "to": 2
+    },
+    {
+      "count": 1,
+      "from": 2,
+      "to": 3
+    },
+    {
+      "count": 1,
+      "from": 3,
+      "to": 4
+    },
+    {
+      "count": 1,
+      "from": 4,
+      "to": 5
+    },
+    {
+      "count": 1,
+      "from": 5,
+      "to": 6
+    },
+    {
+      "count": 1,
+      "from": 7,
+      "to": 8
+    },
+    {
+      "count": 1,
+      "from": 7,
+      "to": 20
+    },
+    {
+      "count": 1,
+      "from": 8,
+      "to": 9
+    },
+    {
+      "count": 1,
+      "from": 9,
+      "to": 10
+    },
+    {
+      "count": 1,
+      "from": 10,
+      "to": 11
+    },
+    {
+      "count": 1,
+      "from": 11,
+      "to": 12
+    },
+    {
+      "count": 1,
+      "from": 12,
+      "to": 13
+    },
+    {
+      "count": 1,
+      "from": 14,
+      "to": 15
+    },
+    {
+      "count": 1,
+      "from": 15,
+      "to": 16
+    },
+    {
+      "count": 1,
+      "from": 16,
+      "to": 17
+    },
+    {
+      "count": 1,
+      "from": 17,
+      "to": 18
+    },
+    {
+      "count": 1,
+      "from": 18,
+      "to": 19
+    },
+    {
+      "count": 1,
+      "from": 20,
+      "to": 21
+    },
+    {
+      "count": 1,
+      "from": 21,
+      "to": 22
+    },
+    {
+      "count": 1,
+      "from": 22,
+      "to": 23
+    },
+    {
+      "count": 1,
+      "from": 23,
+      "to": 24
+    },
+    {
+      "count": 1,
+      "from": 24,
+      "to": 25
+    }
+  ]
+}

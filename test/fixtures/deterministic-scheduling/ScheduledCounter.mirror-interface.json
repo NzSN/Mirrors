@@ -1,0 +1,102 @@
+{
+  "schema": "mirrors.model-interface/v1",
+  "interfaceVersion": "1.0.0",
+  "model": {
+    "module": "ScheduledCounter",
+    "source": "test/fixtures/deterministic-scheduling/ScheduledCounter.tla"
+  },
+  "wire": {
+    "actionVariable": "action_taken",
+    "parameterVariable": "parameters"
+  },
+  "initializers": [
+    {
+      "id": "Initialize",
+      "wireAction": "init",
+      "wireAliases": [],
+      "inputs": []
+    }
+  ],
+  "actions": [
+    {
+      "id": "Read",
+      "wireAction": "read",
+      "wireAliases": [],
+      "inputs": [
+        {
+          "id": "Actor",
+          "from": {
+            "root": "stepParameters",
+            "path": [
+              {
+                "field": "parameters"
+              },
+              {
+                "field": "actor"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Write",
+      "wireAction": "write",
+      "wireAliases": [],
+      "inputs": [
+        {
+          "id": "Actor",
+          "from": {
+            "root": "stepParameters",
+            "path": [
+              {
+                "field": "parameters"
+              },
+              {
+                "field": "actor"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Finish",
+      "wireAction": "finish",
+      "wireAliases": [],
+      "inputs": [
+        {
+          "id": "Actor",
+          "from": {
+            "root": "stepParameters",
+            "path": [
+              {
+                "field": "parameters"
+              },
+              {
+                "field": "actor"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "id": "Count",
+      "wireName": "count",
+      "provenance": "implementation"
+    },
+    {
+      "id": "Saved",
+      "wireName": "saved",
+      "provenance": "implementation"
+    },
+    {
+      "id": "Phase",
+      "wireName": "phase",
+      "provenance": "implementation"
+    }
+  ]
+}
