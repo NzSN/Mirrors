@@ -1,0 +1,11 @@
+   Compiling mirrors-dpm-rust-consumer v0.1.0 (/tmp/work/rust)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.82s
+     Running unittests src/main.rs (/tmp/work/rust-build/debug/deps/mirrors_dpm_rust_consumer-daffeed3fa20f172)
+
+running 3 tests
+test generated_v2_codecs::integer_maps_roundtrip_without_precision_loss ... ok
+test generated_v2_codecs::literal_map_projection_is_typed_and_checks_all_keys ... ok
+test generated_v2_codecs::map_codecs_refuse_wrong_domains_and_duplicate_keys ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

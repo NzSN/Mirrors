@@ -1,0 +1,39 @@
+{
+  "schema": "mirrors.checkpoint-schedule/v1",
+  "profile": "mirrorrust.cooperative-checkpoints/v1",
+  "identity": {
+    "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+    "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+    "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+  },
+  "inputs": {
+    "initial": 5,
+    "mode": "denied-negotiation"
+  },
+  "steps": [
+    {
+      "actor": "a",
+      "checkpoint": "read"
+    },
+    {
+      "actor": "b",
+      "checkpoint": "read"
+    },
+    {
+      "actor": "a",
+      "checkpoint": "write"
+    },
+    {
+      "actor": "b",
+      "checkpoint": "write"
+    },
+    {
+      "actor": "a",
+      "checkpoint": "$done"
+    },
+    {
+      "actor": "b",
+      "checkpoint": "$done"
+    }
+  ]
+}

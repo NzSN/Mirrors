@@ -1025,9 +1025,11 @@ Version-1 profile identifiers are:
 | --- | --- | --- |
 | MirrorECMA | `mirrorecma-v1` | Implemented reference profile. |
 | MirrorECMA | `mirrorecma-async-v1` | Implemented experimental async emission profile. |
+| MirrorECMA | `mirrorecma-async-v2` | Additive compiled async profile with integer-keyed maps; existing v1 output unchanged. |
 | MirrorCPP | `mirrorcpp-v1` | Implemented static C++23 profile. |
 | MirrorCPP | `mirrorcpp-v2` | Additive typed integer/string map source profile; local native recorded-replay acceptance, fresh qualification open. |
 | MirrorRust | `mirrorrust-v1` | Implemented static Rust profile; [native contract](model-interface-compiler/rust-target.md). |
+| MirrorRust | `mirrorrust-v2` | Additive integer-keyed maps and typed literal map projections. |
 | MirrorLean | `mirrorlean-v1` | Implemented static Lean 4 profile with required compiled verification; [native contract](model-interface-compiler/lean-target.md). |
 
 The synchronous profiles target `mirrors.state-computer/v1`. The additive

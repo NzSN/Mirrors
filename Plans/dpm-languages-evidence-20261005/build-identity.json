@@ -1,0 +1,18 @@
+{
+  "schema": "mirrors.dpm-language-build-identity/v1",
+  "sourceArtifactEquality": {
+    "rustSource": true,
+    "ecmaCompiledDist": true
+  },
+  "packages": {
+    "mirrorrust-1.0.0.crate": "9620f0d431eced926a3dfb25a381c77eab0a0fc4f40960924fd2247a68d600ef",
+    "mirrorecma-2.0.0.tgz": "b2eaa2d6e0fc969667c104eab1c587a5fa2e1891cae3ec55e5dc3ba35e3f0e49"
+  },
+  "binaries": {
+    "/home/nzsn/Repos/Mirrors/.lake/build/bin/model_interface_gen": "ff17fe50cf9c8017429f36be5114b2bdc37c65be05936f1d57a73d007b8150f4",
+    "/tmp/dpm-languages-installed-20261004/admitted/runtime/mirror": "748390bb0a9cec4291a38e2b06ba68a3e1a9e23c688a05b9805072ce726354a6",
+    "/tmp/dpm-languages-installed-20261004/work/rust-build/debug/mirrors-dpm-rust-consumer": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+    "/usr/local/bin/node": "d1de76d8edf2fededf6f8b30d244e2c0529ac607923a018283b77e9c74bd932c"
+  },
+  "retention": "Receipts, packages, input hashes and model closure retained. Full toolchains, vendor tree and large executables remain temporary; not a self-contained release archive."
+}

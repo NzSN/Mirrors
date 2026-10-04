@@ -55,14 +55,16 @@ def generatedManifestPath : String := ".model-interface-generated.json"
 def generatedPublicationLockPath : String := ".model-interface-generation.lock"
 def mirrorecmaTarget : String := "mirrorecma-v1"
 def mirrorecmaAsyncTarget : String := "mirrorecma-async-v1"
+def mirrorecmaAsyncTypedMapsTarget : String := "mirrorecma-async-v2"
 def mirrorrustTarget : String := "mirrorrust-v1"
+def mirrorrustTypedMapsTarget : String := "mirrorrust-v2"
 def mirrorleanTarget : String := "mirrorlean-v1"
 def mirrorcppTarget : String := "mirrorcpp-v1"
 def mirrorcppTypedMapsTarget : String := "mirrorcpp-v2"
 
 def supportedTarget (target : String) : Bool :=
-  target == mirrorecmaTarget || target == mirrorecmaAsyncTarget || target == mirrorcppTarget ||
-    target == mirrorcppTypedMapsTarget || target == mirrorrustTarget || target == mirrorleanTarget
+  target == mirrorecmaTarget || target == mirrorecmaAsyncTarget || target == mirrorecmaAsyncTypedMapsTarget || target == mirrorcppTarget ||
+    target == mirrorcppTypedMapsTarget || target == mirrorrustTarget || target == mirrorrustTypedMapsTarget || target == mirrorleanTarget
 def maxModelInterfaceItfArtifactBytes : Nat := 16 * 1024 * 1024
 def maxCompilerArtifactBytes : Nat := 16 * 1024 * 1024
 
@@ -647,10 +649,10 @@ def emitTarget (target : String) (lock : LockedModelInterface) :
   let _ ← verifyLock lock
   let emitted := if target == mirrorecmaTarget then
       Emit.TypeScript.emitTypeScript lock
-    else if target == mirrorecmaAsyncTarget then
-      Emit.TypeScriptAsync.emitTypeScriptAsync lock
-    else if target == mirrorrustTarget then
-      Emit.Rust.emitRust lock
+    else if target == mirrorecmaAsyncTarget || target == mirrorecmaAsyncTypedMapsTarget then
+      Emit.TypeScriptAsync.emitTypeScriptAsync lock target
+    else if target == mirrorrustTarget || target == mirrorrustTypedMapsTarget then
+      Emit.Rust.emitRust lock target
     else if target == mirrorleanTarget then
       Emit.Lean.emitLean lock
     else if target == mirrorcppTarget || target == mirrorcppTypedMapsTarget then
@@ -1201,7 +1203,7 @@ private def parseOwnershipManifest (raw : ByteArray) : Except String OwnershipMa
   let target ← jsonString "manifest.targetProfile" (← requiredJson fields "targetProfile")
   if !supportedTarget target then throw "ownership manifest target is unsupported"
   let version ← jsonNat "manifest.profileVersion" (← requiredJson fields "profileVersion")
-  if version != (if target == mirrorcppTypedMapsTarget then 2 else 1) then
+  if version != (if target == mirrorcppTypedMapsTarget || target == mirrorrustTypedMapsTarget || target == mirrorecmaAsyncTypedMapsTarget then 2 else 1) then
     throw "unsupported generated ownership profile version"
   let digest ← jsonString "manifest.semanticDigest" (← requiredJson fields "semanticDigest")
   if digest.length != 64 || !digest.toList.all lowerHex then

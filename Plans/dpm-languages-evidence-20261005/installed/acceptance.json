@@ -1,0 +1,58 @@
+{
+  "schema": "mirrors.dpm-language-installed-acceptance/v1",
+  "status": "passed",
+  "sourceHidden": true,
+  "networkNamespaceIsolated": true,
+  "hostScope": "Linux controllers and existing Windows workers via local WSL carrier; Windows workers are not namespace-sandboxed",
+  "rows": [
+    {
+      "language": "ecma",
+      "scope": "counter",
+      "cases": 60,
+      "report": "ecma-acceptance/counter/acceptance.json",
+      "sha256": "fe852856a54306be9d48f470d1c95e7f4f1cd1c44123e51a109c8b3ccf0acd56"
+    },
+    {
+      "language": "ecma",
+      "scope": "exploration",
+      "cases": 11,
+      "report": "ecma-acceptance/exploration/acceptance.json",
+      "sha256": "4a94c0ba56e36abd9a0f99fb97d96bd989c2e2d8353891dcbe73357bc42b769c"
+    },
+    {
+      "language": "ecma",
+      "scope": "native",
+      "cases": 14,
+      "report": "ecma-acceptance/native/acceptance.json",
+      "sha256": "df6174690e51aecaeba873b2c958f1021890f04f1733cd08d351e2f57d60bccb"
+    },
+    {
+      "language": "rust",
+      "scope": "counter",
+      "cases": 60,
+      "report": "rust-acceptance/counter/acceptance.json",
+      "sha256": "79ab2745e48f16ab05dee742167fcc379cf4d15b836d2b232066daed5e96baec"
+    },
+    {
+      "language": "rust",
+      "scope": "exploration",
+      "cases": 11,
+      "report": "rust-acceptance/exploration/acceptance.json",
+      "sha256": "0222593141cdf30ba6f4383641518ad1401edd566bb7a925cd66caabf4ac6901"
+    },
+    {
+      "language": "rust",
+      "scope": "native",
+      "cases": 14,
+      "report": "rust-acceptance/native/acceptance.json",
+      "sha256": "3fe9106b18f4be8f8960ca2f00fa4fa5be6ef7afbda895f20a26f477b8e7bc11"
+    }
+  ],
+  "artifactControls": [
+    "tampered",
+    "missing"
+  ],
+  "manifestSha256": "8d820363885b56b6b96fd1a9aa3a1a80bb6552f4b2d663c6d8503a03d6796237",
+  "capabilitySha256": "bd555e5b304242b340711dff8f38fcd8656e26df8ea76696afff33f38d15ee24",
+  "externalPublication": false
+}

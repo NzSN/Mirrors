@@ -1,0 +1,158 @@
+# DPM extension to MirrorECMA and MirrorRust
+
+Date: 2026-10-04
+Status (2026-10-05): DPM-0–DPM-5 accepted for both declared profiles.
+See [retained acceptance](dpm-languages-evidence-20261005/README.md).
+The plan below was frozen before implementation.
+
+The user requested complete DPM for both clients. Complete means all six DPM
+stages for the execution profiles below, with actual model comparison, native
+pilot, finite coverage and installed acceptance. Source implementation alone
+will not be reported as completion. The existing C++ evidence remains unchanged.
+
+## Execution profiles and ownership
+
+- MirrorECMA: `mirrorecma.worker-checkpoints/v1`, real Node worker threads with a
+  private message channel and retained async function stacks. Application modules
+  are imported only after the first permit. Each exports a worker function using
+  awaited checkpoint calls. Shared application state may use SharedArrayBuffer;
+  a controller-side observer runs only at quiescence. An optional typed JSON RPC
+  seam supports an owned native-process adapter. Main-event-loop task scheduling,
+  arbitrary promise interception and browser Web Workers are different profiles.
+- MirrorRust: `mirrorrust.cooperative-checkpoints/v1`, real owned Rust threads,
+  mutex/condition-variable permits, stack-preserving checkpoints and explicit
+  cancellation/cleanup ownership. Async executor scheduling is a separate profile.
+- Both use the existing `mirrors.checkpoint-schedule/v1` artifact shape and the
+  same interval semantics: a selected parked actor runs to the named next
+  checkpoint, and `$done` denotes completion. Profile identity is checked, not
+  silently translated between languages. Generated wire contracts do not change.
+- Applications own concrete commands, checkpoints, actual observations and any
+  native resources. Factories construct SUT state only after admission. Expected
+  model state is never supplied to implementation initialization or observation.
+- The native application dependency is the explicitly frozen and already built
+  four-case WriteSentry pilot from `dpm2-dpm5-qualified-20261004`: stable-t1,
+  stable-t2, overlap-t1 and overlap-t2 plus its two production mutants. Verify
+  hashes before use and retain fresh process identities. Do not modify unrelated
+  WriteSentry work or expand its product qualification.
+- Preserve the pre-existing MirrorRust `tests/protocol.rs` change and editor
+  caches. No commit/push or external package publication is authorized by this task.
+
+## DPM-0 — Contracts, limits and receipt equivalence
+
+1. Read each client's generated replay, ownership, codec and package contracts.
+2. Define actor identity, full static schedule admission, one active permit,
+   quiescent observations, exact next-step checking and no implicit repair.
+3. Bound actors (64), steps (65,536), identifiers (128), inputs/observations
+   (65,535 UTF-8 bytes), aggregate observations (8 MiB), session receipts
+   (16 MiB/64 executions), time budgets (positive, at most 24 hours).
+4. Separate primary failure, schedule completion, comparison result and cleanup.
+   An execution ID and process-local generation distinguish fresh instances;
+   raw native thread/process identity is retained separately from replay equality.
+5. Specify cooperative cancellation and retryable incomplete cleanup. Neither
+   profile promises arbitrary in-process preemption, weak-memory completeness or
+   safe rollback of external effects. Rust Drop joins owned threads and can block;
+   ECMA keeps workers referenced until explicit cleanup. Trusted factory,
+   observer and teardown callbacks must return promptly. No silent detach/unref.
+
+Exit: durable reviewed contract and concrete public interfaces for both clients.
+
+## DPM-1 — Coordinator and real concurrent fixture
+
+1. Implement strict schedule decoding and admission before factory invocation.
+2. Start owned actors behind a barrier; issue one permit, receive the actual
+   arrival, verify it, observe real state, and retain ordered permit/arrival logs.
+3. Preserve actor-local stack values across two split-increment operations.
+4. Exercise serial and overlapping-read schedules, replay determinism, wrong
+   identities/actors/checkpoints, premature completion, application/observer
+   errors, timeouts/cancellation, teardown failure and retained cleanup retry.
+5. Include evidence bounds, reentry protection and all-worker-exit ownership.
+
+Exit: real threads reproduce expected serial/lost-update behavior; every negative
+case reports failure and preserves cleanup evidence without leaking workers.
+
+## DPM-2 — Generated binding and actual Mirrors comparison
+
+1. Generate `mirrorecma-async-v1` and `mirrorrust-v1` from the checked counter lock;
+   generate native bindings from the raw-ITF native lock. The native model requires
+   additive typed-map targets `mirrorecma-async-v2` and `mirrorrust-v2`; preserve
+   all v1 generated bytes and use explicit v2 negotiation keys. Check all output through
+   the compiler; never hand-edit generated files.
+2. Add a connection-local binding-session owner: deferred initialize, incremental
+   advance, actual observation, fresh generation per initialization and disposal.
+3. Integrate the existing negotiated replay runners and preserve their lifecycle,
+   poisoning, codecs and ordered mismatch hints. Capture the actual peer verdict
+   separately from binding/cleanup status. Rust may add a private receive observer
+   to its concrete transport; ordinary wire and public replay behavior stay intact.
+4. Replay four independently captured counter scenarios (serial/overlap, input
+   0/5). Test actual SUT mutations, negotiation refusal before acquisition, stale
+   session/identity, bad observations, repeated initialization and cleanup failure.
+5. Retain primary comparison and secondary cleanup failures independently.
+
+Exit: both clients' generated callbacks drive live workers and actual Mirrors
+comparison detects changed implementation behavior. No model-simulation shortcut.
+
+## DPM-3 — Actual native bridge in both languages
+
+1. Admit the frozen native model/mapping/build identities and application scope.
+2. Implement each client's bridge over the same Begin/Advance/Quit protocol;
+   report actual native phases and observe returned production state. Do not
+   introduce portable scheduler locks or allocations into trap paths.
+3. Map model actions through generated typed ports; CallDone may include an
+   explicitly recorded stuttering proxy `$done` interval.
+4. Replay all four schedules twice in fresh native processes. Detect both staged
+   production mutations through genuine `step_mismatch`, not proxy exceptions.
+5. Exercise actual phase mismatch, cancellation, wrong image, owned-worker exit
+   and invalid mappings; verify process/thread identity and cleanup separately.
+6. Use the existing approved oracle destination and selected model payloads for
+   campaign captures/validation as needed. No local Apalache/TLC and no server
+   restart/reconfiguration. All Windows writes remain under MirrorsRemote.
+
+Exit: each language independently drives the actual four-case native pilot and
+passes its positive, mutation, refusal and cleanup controls.
+
+## DPM-4 — Finite exploration and semantic coverage
+
+1. Enumerate all actor-order-preserving merges for declared finite inputs, with
+   the established unfinished-actor preemption definition and no POR.
+2. Use the same coordinator/binding receipts; validate exact candidate identity,
+   fresh execution IDs, complete events/observations and confirmed cleanup.
+3. Canonicalize protocol Value types: extensional sets, sorted maps with distinct
+   homogeneous integer/string keys, ordered sequences/tuples, ordinary record
+   keys and explicit base/instrumentation variable projection.
+4. Keep enumeration, attempted/completed counts, comparison counts, first failure
+   and actual model counterexample distinct. Unknown totals stay unknown.
+5. Independently verify 20 interleavings x two inputs (40 executions) and bounded
+   subsets. Run/enumeration/time/evidence caps, cancellation and failures never
+   earn complete/pass credit. Required comparison cannot accept local-only runs.
+
+Exit: exhaustive finite local execution/coverage for the declared fixture, with
+independent accounting and explicit limits; no universal model-conformance claim.
+
+## DPM-5 — Packages, compatibility and retention
+
+1. Publish experimental declarations through normal package/crate artifacts.
+2. Build/package each client, install into new prefixes/projects, hide source
+   checkouts and remove network access for offline gates. Admit dependencies
+   explicitly; no hidden sibling path or workspace build fallback.
+3. Compile/check generated consumers and run counter replay/exploration plus the
+   native pilot from installed artifacts. Native workers are an explicit external
+   application dependency; namespace isolation applies to the Linux controller.
+4. Refuse unknown profiles, incorrect mappings and missing/tampered inputs. Link
+   exact artifact hashes and acceptance records to scoped capability observations.
+5. Run relevant existing regression suites, preserve unrelated changes, retain
+   source/build/model/receipt identities and update proposal/checkpoints/docs.
+
+Exit: both installed clients pass all declared stages. This adds no general
+Windows SDK, browser scheduler, async Rust runtime, Gate backend, full WriteSentry
+or new M5 release qualification. Skipped/blocked checks remain explicit.
+
+## Execution ledger
+
+| Stage | MirrorECMA | MirrorRust |
+| --- | --- | --- |
+| DPM-0 | Contract and declarations accepted | Contract and declarations accepted |
+| DPM-1 | Real Node workers; 22 scheduling/lifecycle tests | Real Rust threads; 19 scheduling/lifecycle tests |
+| DPM-2 | 60 installed generated replay cases | 60 installed generated replay cases |
+| DPM-3 | 14 native runs and 3 admission controls | 14 native runs and 3 admission controls |
+| DPM-4 | 11 checks; 40 full-scope executions | 11 checks; 40 full-scope executions |
+| DPM-5 | Source-hidden installed npm consumer passed | Source-hidden installed crate consumer passed |

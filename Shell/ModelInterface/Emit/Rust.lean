@@ -134,9 +134,56 @@ fn read_path<'a>(root: &'a Value, path: &[Segment]) -> Result<&'a Value, Binding
 enum Lifecycle { Fresh, Initialized, Poisoned }
 "###
 
+private def runtimeSupportV2 : String :=
+  (runtimeSupport.replace
+    "enum Segment { Field(&'static str), Index(usize), Variant(&'static str) }"
+    "enum Segment { Field(&'static str), Index(usize), Variant(&'static str), MapStr(&'static str), MapInt(&'static str) }").replace
+    "            _ => return Err(shape()),"
+    ("            (Segment::MapStr(key), Value::Map(items)) => map_string_key(items, key)?,\n" ++
+     "            (Segment::MapInt(key), Value::Map(items)) => map_integer_key(items, key)?,\n" ++
+     "            _ => return Err(shape()),") ++ r###"
+#[derive(Debug, Clone)]
+pub struct MirrorIntMap<T>(pub BTreeMap<BigInt, T>);
+impl<T: NativeCodec> NativeCodec for MirrorIntMap<T> {
+    fn decode(value: &Value) -> Result<Self, BindingError> {
+        let Value::Map(items) = value else { return Err(shape()); };
+        let mut result = BTreeMap::new();
+        for (key, value) in items {
+            let key = BigInt::decode(key)?;
+            if result.insert(key, T::decode(value)?).is_some() { return Err(shape()); }
+        }
+        Ok(Self(result))
+    }
+    fn encode(&self) -> Result<Value, BindingError> {
+        Ok(Value::Map(self.0.iter().map(|(k,v)| Ok((Value::Int(k.clone()), v.encode()?))).collect::<Result<_,BindingError>>()?))
+    }
+}
+fn map_string_key<'a>(items: &'a [(Value, Value)], wanted: &str) -> Result<&'a Value, BindingError> {
+    let mut seen = std::collections::BTreeSet::new();
+    let mut found = None;
+    for (key, value) in items {
+        let Value::Str(key) = key else { return Err(shape()); };
+        if !seen.insert(key) { return Err(shape()); }
+        if key == wanted { found = Some(value); }
+    }
+    found.ok_or_else(shape)
+}
+fn map_integer_key<'a>(items: &'a [(Value, Value)], wanted: &str) -> Result<&'a Value, BindingError> {
+    let wanted = wanted.parse::<BigInt>().map_err(|_| shape())?;
+    let mut seen = std::collections::BTreeSet::new();
+    let mut found = None;
+    for (key, value) in items {
+        let Value::Int(key) = key else { return Err(shape()); };
+        if !seen.insert(key) { return Err(shape()); }
+        if *key == wanted { found = Some(value); }
+    }
+    found.ok_or_else(shape)
+}
+"###
+
 /-- Native spelling and declarations for one structural type. Numeric child names
 keep arbitrary record keys and variant tags out of Rust identifier namespaces. -/
-private partial def lowerType (name : String) (type : ModelType) :
+private partial def lowerType (profile name : String) (type : ModelType) :
     EmitResult (String × List String) := do
   match type with
   | .int => pure ("BigInt", [])
@@ -144,11 +191,18 @@ private partial def lowerType (name : String) (type : ModelType) :
   | .str => pure ("String", [])
   | .null => pure ("MirrorNull", [])
   | .seq t | .set t | .map .str t =>
-      let (child, decls) ← lowerType (name ++ "Item") t
+      let (child, decls) ← lowerType profile (name ++ "Item") t
       let wrapper := match type with
         | .seq _ => "MirrorSeq" | .set _ => "MirrorSet" | _ => "MirrorMap"
       pure (s!"{wrapper}<{child}>", decls)
-  | .map _ _ => fail "MIC-E-TYPE-001" "mirrorrust-v1 supports only string-keyed maps"
+  | .map .int t =>
+      if profile != "mirrorrust-v2" then
+        fail "MIC-E-TYPE-001" "mirrorrust-v1 supports only string-keyed maps"
+      else
+        let (child, decls) ← lowerType profile (name ++ "Item") t
+        pure (s!"MirrorIntMap<{child}>", decls)
+  | .map _ _ =>
+      fail "MIC-E-TYPE-001" (if profile == "mirrorrust-v2" then "mirrorrust-v2 supports only string and integer-keyed maps" else "mirrorrust-v1 supports only string-keyed maps")
   | .opaqueItf text => fail "MIC-E-TYPE-001" s!"mirrorrust-v1 cannot emit opaque ITF: {text}"
   | .tuple _ | .record _ =>
       let fields : List (String × ModelType) := match type with
@@ -156,7 +210,7 @@ private partial def lowerType (name : String) (type : ModelType) :
         | .record fields => (sortedBy (fun (f : ModelField) => f.wireName) fields).map fun f => (f.wireName, f.type)
         | _ => []
       let isRecord := match type with | .record _ => true | _ => false
-      let children ← fields.zipIdx.mapM fun ((_, t), i) => lowerType s!"{name}F{i}" t
+      let children ← fields.zipIdx.mapM fun ((_, t), i) => lowerType profile s!"{name}F{i}" t
       let declarations := children.zipIdx.map fun ((ty, _), i) => s!"    pub field_{i}: {ty},"
       let decode := (fields.zip children).zipIdx.map fun ((f, (ty, _)), i) =>
         let access := if isRecord then s!"items.get({quote f.1}).ok_or_else(shape)?" else s!"&items[{i}]"
@@ -184,7 +238,7 @@ private partial def lowerType (name : String) (type : ModelType) :
           "    fn encode(&self) -> Result<Value, BindingError> { match *self {} }",
           "}"]])
       let cases := sortedBy (·.tag) cases
-      let children ← cases.zipIdx.mapM fun (c, i) => lowerType s!"{name}C{i}" c.payload
+      let children ← cases.zipIdx.mapM fun (c, i) => lowerType profile s!"{name}C{i}" c.payload
       let variants := children.zipIdx.map fun ((ty, _), i) => s!"    Case{i}({ty}),"
       let decode := (cases.zip children).zipIdx.map fun ((c, (ty, _)), i) =>
         s!"            {quote c.tag} => Ok(Self::Case{i}(<{ty}>::decode(payload)?)),"
@@ -200,17 +254,23 @@ private partial def lowerType (name : String) (type : ModelType) :
          "    fn encode(&self) -> Result<Value, BindingError> {", "        match self {"] ++ encode ++
         ["        }", "    }", "}"]])
 
-private def renderPath (path : List PathSegment) : EmitResult String := do
+private def renderPath (profile : String) (path : List PathSegment) : EmitResult String := do
   let parts ← path.mapM fun segment => match segment with
     | .field name => pure s!"Segment::Field({quote name})"
     | .index n =>
         if n > 4294967295 then fail "MIC-E-PATH-001" "mirrorrust-v1 index exceeds portable usize range"
         else pure s!"Segment::Index({n})"
     | .variantValue tag => pure s!"Segment::Variant({quote tag})"
-    | .mapKey _ => fail "MIC-E-PATH-001" "mirrorrust-v1 does not support mapKey paths"
+    | .mapKey key =>
+        if profile != "mirrorrust-v2" then
+          fail "MIC-E-PATH-001" "mirrorrust-v1 does not support mapKey paths"
+        else match key with
+          | .str text => pure s!"Segment::MapStr({quote text})"
+          | .int value => pure s!"Segment::MapInt({quote (toString value)})"
+          | _ => fail "MIC-E-PATH-001" "mirrorrust-v2 supports only string and integer mapKey literals"
   pure ("&[" ++ String.intercalate ", " parts ++ "]")
 
-private def renderModule (lock : LockedModelInterface) : EmitResult String := do
+private def renderModule (profile : String) (lock : LockedModelInterface) : EmitResult String := do
   validateNames [lock.modelModule]
   let actions := sortedBy (·.id) (lock.initializers ++ lock.actions)
   validateNames (actions.map (·.id)) ["observe"]
@@ -224,10 +284,10 @@ private def renderModule (lock : LockedModelInterface) : EmitResult String := do
     let mut fields : List String := []
     let mut decoders : List String := []
     for (input, ii) in inputs.zipIdx do
-      let (ty, decls) ← lowerType s!"MiTypeA{ai}I{ii}" input.projection.type
+      let (ty, decls) ← lowerType profile s!"MiTypeA{ai}I{ii}" input.projection.type
       declarations := declarations ++ decls
       fields := fields ++ [s!"    pub {snake input.id}: {ty},"]
-      let path ← renderPath input.projection.path
+      let path ← renderPath profile input.projection.path
       let root := if input.projection.root == .initialState then "initial" else "payload"
       let label := quote (action.id ++ "." ++ input.id)
       decoders := decoders ++ [s!"                    {snake input.id}: read_path(&{root}, {path}).and_then(<{ty}>::decode).map_err(|e| BindingError::new(e.code, e.message + \" at \" + {label}))?,"]
@@ -247,16 +307,16 @@ private def renderModule (lock : LockedModelInterface) : EmitResult String := do
   let mut observationFields : List String := []
   let mut encoders : List String := []
   for (observation, oi) in (sortedBy (·.id) lock.observations).zipIdx do
-    let (ty, decls) ← lowerType s!"MiTypeO{oi}" observation.type
+    let (ty, decls) ← lowerType profile s!"MiTypeO{oi}" observation.type
     declarations := declarations ++ decls
     observationFields := observationFields ++ [s!"    pub {snake observation.id}: {ty},"]
     encoders := encoders ++ [s!"            state.insert({quote observation.wireName}.into(), observation.{snake observation.id}.encode()?);"]
   let model := lock.modelModule
   let contract := Codec.ModelInterfaceJson.canonicalString (Codec.ModelInterfaceJson.encodeContract lock.contract)
   pure <| lines <|
-    ["// @generated by Mirrors model_interface_gen", "// target-profile: mirrorrust-v1",
-     "// profile-version: 1", s!"// semantic-sha256: {lock.semanticDigest}", "// DO NOT EDIT",
-     runtimeSupport, s!"pub const SEMANTIC_DIGEST: &str = {quote lock.semanticDigest};",
+    ["// @generated by Mirrors model_interface_gen", s!"// target-profile: {profile}",
+     s!"// profile-version: {if profile == "mirrorrust-v2" then 2 else 1}", s!"// semantic-sha256: {lock.semanticDigest}", "// DO NOT EDIT",
+     (if profile == "mirrorrust-v2" then runtimeSupportV2 else runtimeSupport), s!"pub const SEMANTIC_DIGEST: &str = {quote lock.semanticDigest};",
      s!"pub const CONTRACT_JSON: &str = {quote contract};",
      "pub fn model_interface() -> GeneratedModelInterface {",
      "    GeneratedModelInterface { semantic_digest: SEMANTIC_DIGEST.into(), contract_json: CONTRACT_JSON.into() }", "}",
@@ -301,13 +361,15 @@ private def renderModule (lock : LockedModelInterface) : EmitResult String := do
      "        }", "    }", "}"]
 
 /-- Emit a Rust module and the standard owned-file manifest. -/
-def emitRust (lock : LockedModelInterface) : EmitResult TypeScript.GeneratedTree := do
-  let source ← renderModule lock
+def emitRust (lock : LockedModelInterface) (profile : String := "mirrorrust-v1") : EmitResult TypeScript.GeneratedTree := do
+  if profile != "mirrorrust-v1" && profile != "mirrorrust-v2" then
+    fail "MIC-E-TARGET-001" s!"unsupported Rust target: {profile}"
+  let source ← renderModule profile lock
   let path := s!"{lock.modelModule}Mirror.generated.rs"
   let manifestPath := ".model-interface-generated.json"
   let manifest := Codec.ModelInterfaceJson.canonicalString (Lean.Json.mkObj [
     ("files", .arr #[.str manifestPath, .str path]),
-    ("profileVersion", .num 1), ("schema", .str "mirrors.model-interface-generated/v1"),
-    ("semanticDigest", .str lock.semanticDigest), ("targetProfile", .str "mirrorrust-v1")]) ++ "\n"
+    ("profileVersion", .num (if profile == "mirrorrust-v2" then 2 else 1)), ("schema", .str "mirrors.model-interface-generated/v1"),
+    ("semanticDigest", .str lock.semanticDigest), ("targetProfile", .str profile)]) ++ "\n"
   pure { files := [{ relativePath := manifestPath, bytes := manifest.toUTF8 }, { relativePath := path, bytes := source.toUTF8 }] }
 end Shell.ModelInterface.Emit.Rust

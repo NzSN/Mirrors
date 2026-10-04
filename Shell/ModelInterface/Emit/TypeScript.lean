@@ -173,9 +173,16 @@ private partial def renderTsType (profile : String) : ModelType → EmitResult S
   | .map .str value => do
       let v ← renderTsType profile value
       pure s!"MirrorMap<string, {v}>"
+  | .map .int value => do
+      if profile != "mirrorecma-async-v2" then
+        fail "MIC-E-TYPE-001" s!"{profile} supports only string-keyed ITF maps"
+      else
+        let v ← renderTsType profile value
+        pure s!"MirrorMap<bigint, {v}>"
   | .map _ _ =>
       fail "MIC-E-TYPE-001"
-        s!"{profile} supports only string-keyed ITF maps"
+        (if profile == "mirrorecma-async-v2" then s!"{profile} supports only string and integer-keyed ITF maps"
+         else s!"{profile} supports only string-keyed ITF maps")
   | .variant cases => do
       let cases := sortedBy (fun c => c.tag) cases
       let rendered ← cases.mapM fun c => do
@@ -210,9 +217,16 @@ private partial def renderShape (profile : String) : ModelType → EmitResult St
   | .map .str value => do
       let v ← renderShape profile value
       pure ("{ kind: \"map\", key: { kind: \"str\" }, value: " ++ v ++ " }")
+  | .map .int value => do
+      if profile != "mirrorecma-async-v2" then
+        fail "MIC-E-TYPE-001" s!"{profile} supports only string-keyed ITF maps"
+      else
+        let v ← renderShape profile value
+        pure ("{ kind: \"map\", key: { kind: \"int\" }, value: " ++ v ++ " }")
   | .map _ _ =>
       fail "MIC-E-TYPE-001"
-        s!"{profile} supports only string-keyed ITF maps"
+        (if profile == "mirrorecma-async-v2" then s!"{profile} supports only string and integer-keyed ITF maps"
+         else s!"{profile} supports only string-keyed ITF maps")
   | .variant cases => do
       let cases := sortedBy (fun c => c.tag) cases
       let cs ← cases.mapM fun c => do
@@ -758,7 +772,7 @@ def ownershipManifest (target semanticDigest : String)
   let paths := sortedStrings ownedPaths
   let json := Lean.Json.mkObj [
     ("files", .arr (paths.map Lean.Json.str).toArray),
-    ("profileVersion", .num profileVersion),
+    ("profileVersion", .num (if target == "mirrorecma-async-v2" then 2 else profileVersion)),
     ("schema", .str "mirrors.model-interface-generated/v1"),
     ("semanticDigest", .str semanticDigest),
     ("targetProfile", .str target)

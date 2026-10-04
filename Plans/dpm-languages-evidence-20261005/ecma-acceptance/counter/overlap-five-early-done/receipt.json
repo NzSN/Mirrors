@@ -1,0 +1,41 @@
+{
+  "schema": "mirrors.scheduled-comparison/v1",
+  "passed": false,
+  "comparison": "matched",
+  "peerTerminal": "all_steps_done",
+  "peerTerminalRaw": "{\"proto_step\":\"all_steps_done\"}",
+  "client": {
+    "status": "succeeded",
+    "report": {
+      "status": "completed",
+      "acceptedTraces": 0,
+      "acceptedSteps": 0,
+      "actionCoverage": {
+        "Finish": 0,
+        "Initialize": 0,
+        "Read": 0,
+        "Write": 0
+      },
+      "diagnostics": []
+    }
+  },
+  "binding": {
+    "schema": "mirrors.scheduled-binding/v1",
+    "initializations": 0,
+    "disposals": 1,
+    "disposed": true,
+    "receiptComplete": true,
+    "executions": []
+  },
+  "actualIdentity": {
+    "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da",
+    "mappingSha256": "3da0e2576ca8c99ff89a0fdcb777ab4430c2b24ff375baa343664c2d430eb4db",
+    "implementationSha256": "7dd7c65d6d535a76761e288401674e09498d462f9f5d888516371954aaa748d1"
+  },
+  "mode": "ok",
+  "sut": {
+    "acquisitions": 0,
+    "enteredWorkers": 0,
+    "teardowns": 0
+  }
+}

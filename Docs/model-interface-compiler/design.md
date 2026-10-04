@@ -1870,3 +1870,28 @@ Everything else—source loading, evidence collection, filesystem writes,
 foreign compilation, LLM mapping, and real trace replay—sits outside those
 pure interfaces at explicit seams. This gives the compiler locality without
 expanding its claim beyond what Mirrors can actually verify.
+
+## Additive typed-map targets for deterministic native replay
+
+`mirrorecma-async-v2` and `mirrorrust-v2` are explicit experimental generation
+profiles. Both add native integer-keyed maps required by the bounded WriteSentry
+DPM adapter. Their generated ownership manifests use `profileVersion: 2`; model
+semantic descriptors and the existing synchronous/asynchronous StateComputer
+contracts remain version 1. Existing v1 generated trees remain byte-stable.
+
+The async TypeScript profile emits `MirrorMap<bigint, T>` with the existing strict
+async lifecycle, native observation codecs and stable-ID public-port adapter.
+String-keyed maps keep their existing representation. `mapKey` projections and
+opaque ITF remain outside that emitter profile. The new target is supported by
+`generate`/`check` and lower-level compiled async replay; suite-bundle/project
+onboarding stays on its existing `mirrorecma-async-v1` profile.
+
+Rust v2 emits `MirrorIntMap<T>(BTreeMap<BigInt, T>)`; string maps remain
+`MirrorMap<T>`. Decoding rejects duplicate and wrong-domain keys. Typed string and
+integer `mapKey` projections check the complete key domain and uniqueness before
+selecting a value, preserving arbitrary-precision integer literals. Boolean and
+compound map keys and opaque ITF remain unsupported.
+
+The DPM client/application acceptance is separate from general Gate, browser,
+async-Rust-executor or full-platform qualification. See
+[the coordinated plan](../../Plans/dpm-mirrorecma-mirrorrust.md).

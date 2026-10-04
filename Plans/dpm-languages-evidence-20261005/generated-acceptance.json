@@ -1,0 +1,36 @@
+[
+  {
+    "target": "mirrorecma-async-v1",
+    "lockSha256": "adba5b865bc91ac9855ea0bf5170b6681630cc9d6745a7e8bc096e6c865590a5",
+    "destinations": [
+      "test/fixtures/deterministic-scheduling/generated-ecma-async",
+      "tools/deterministic-scheduling/languages/ecma/generated/counter"
+    ],
+    "status": "byte-identical"
+  },
+  {
+    "target": "mirrorrust-v1",
+    "lockSha256": "adba5b865bc91ac9855ea0bf5170b6681630cc9d6745a7e8bc096e6c865590a5",
+    "destinations": [
+      "test/fixtures/deterministic-scheduling/generated-rust",
+      "tools/deterministic-scheduling/languages/rust/src/generated/counter"
+    ],
+    "status": "byte-identical"
+  },
+  {
+    "target": "mirrorecma-async-v2",
+    "lockSha256": "c287b74d106ef1feff3bc7dd793fc1a34b303d1d36e47ccf789fc3f99b44cee1",
+    "destinations": [
+      "tools/deterministic-scheduling/languages/ecma/generated/native"
+    ],
+    "status": "byte-identical"
+  },
+  {
+    "target": "mirrorrust-v2",
+    "lockSha256": "c287b74d106ef1feff3bc7dd793fc1a34b303d1d36e47ccf789fc3f99b44cee1",
+    "destinations": [
+      "tools/deterministic-scheduling/languages/rust/src/generated/native"
+    ],
+    "status": "byte-identical"
+  }
+]

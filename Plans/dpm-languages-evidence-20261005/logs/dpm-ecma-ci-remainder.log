@@ -1,0 +1,25 @@
+Already up to date
+Done in 456ms using pnpm v11.22.0
+$ pnpm run build && node scripts/check-package-boundary.mjs
+$ node scripts/clean-dist.mjs && tsc
+PACKED MIRRORECMA 2 CORE: declarations, local MBT, mismatch, report, cancellation and disposal GREEN
+Already up to date
+Done in 457ms using pnpm v11.22.0
+$ pnpm run build:examples && node dist-test/test/async-generated-counter.smoke.js
+$ tsc -p tsconfig.examples.json
+Async filesystem Counter replay passed: 1 trace, 3 matched states, 2 transitions.
+Async filesystem Counter faulty replay: typed mismatch at trace 1 state 1, expected 2, got 1.
+Already up to date
+Done in 445ms using pnpm v11.22.0
+$ pnpm run build:examples && node dist-test/test/work-queue.smoke.js
+$ tsc -p tsconfig.examples.json
+AssertionError [ERR_ASSERTION]: exit 1
+stale: /home/nzsn/Repos/MirrorECMA/examples/work-queue/artifacts/generated/WorkQueueMirror.generated.ts
+
+
+1 !== 0
+
+    at success (file:///home/nzsn/Repos/MirrorECMA/dist-test/test/work-queue.smoke.js:50:35)
+    at main (file:///home/nzsn/Repos/MirrorECMA/dist-test/test/work-queue.smoke.js:114:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[ELIFECYCLE] Command failed with exit code 1.

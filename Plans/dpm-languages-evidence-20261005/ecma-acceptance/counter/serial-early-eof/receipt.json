@@ -1,0 +1,156 @@
+{
+  "schema": "mirrors.scheduled-comparison/v1",
+  "passed": false,
+  "comparison": "incomplete",
+  "peerTerminal": "",
+  "peerTerminalRaw": "",
+  "client": {
+    "status": "failed",
+    "message": "transport closed unexpectedly",
+    "kind": "model_interface"
+  },
+  "binding": {
+    "schema": "mirrors.scheduled-binding/v1",
+    "initializations": 1,
+    "disposals": 1,
+    "disposed": true,
+    "receiptComplete": true,
+    "executions": [
+      {
+        "outcome": "cancelled",
+        "detail": "caller cancellation",
+        "scheduleCompleted": false,
+        "cleanup": "confirmed",
+        "remainingActors": [],
+        "generation": 1,
+        "executionId": "ff91851a72ea6d954422064d52772d96",
+        "events": [],
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "remainingActors": []
+          }
+        ],
+        "schema": "mirrors.checkpoint-execution/v1",
+        "schedule": {
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "profile": "mirrorecma.worker-checkpoints/v1",
+          "identity": {
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da",
+            "mappingSha256": "3da0e2576ca8c99ff89a0fdcb777ab4430c2b24ff375baa343664c2d430eb4db",
+            "implementationSha256": "7dd7c65d6d535a76761e288401674e09498d462f9f5d888516371954aaa748d1"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "ok"
+          },
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "policy": {
+          "maxActors": 64,
+          "maxSteps": 65536,
+          "executionTimeoutMs": 5000,
+          "cleanupTimeoutMs": 2000
+        },
+        "coverage": "recorded-schedule-only",
+        "actorThreads": {
+          "a": 1,
+          "b": 2
+        },
+        "passed": false
+      }
+    ]
+  },
+  "actualIdentity": {
+    "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da",
+    "mappingSha256": "3da0e2576ca8c99ff89a0fdcb777ab4430c2b24ff375baa343664c2d430eb4db",
+    "implementationSha256": "7dd7c65d6d535a76761e288401674e09498d462f9f5d888516371954aaa748d1"
+  },
+  "mode": "ok",
+  "sut": {
+    "acquisitions": 1,
+    "enteredWorkers": 0,
+    "teardowns": 1
+  }
+}

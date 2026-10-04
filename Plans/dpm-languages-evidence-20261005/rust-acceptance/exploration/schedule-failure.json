@@ -1,0 +1,7221 @@
+{
+  "attemptedRuns": 40,
+  "categories": {
+    "schedule_failed": 40
+  },
+  "comparison": "not_requested",
+  "comparisonRequired": false,
+  "comparisonRuns": 0,
+  "complete": false,
+  "completedRuns": 0,
+  "declaredInputs": [
+    {
+      "initial": 0,
+      "mode": "unexpected-checkpoint"
+    },
+    {
+      "initial": 5,
+      "mode": "unexpected-checkpoint"
+    }
+  ],
+  "denominatorKnown": true,
+  "elapsedMs": 47,
+  "eligibleRuns": 40,
+  "eligibleRunsLowerBound": 40,
+  "enumeratedScheduleShapes": 20,
+  "enumerationExhausted": true,
+  "firstCounterexample": null,
+  "firstFailure": {
+    "category": "schedule_failed",
+    "ordinal": 0,
+    "schedule": {
+      "identity": {
+        "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+        "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+        "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+      },
+      "inputs": {
+        "initial": 0,
+        "mode": "unexpected-checkpoint"
+      },
+      "profile": "mirrorrust.cooperative-checkpoints/v1",
+      "schema": "mirrors.checkpoint-schedule/v1",
+      "steps": [
+        {
+          "actor": "a",
+          "checkpoint": "read"
+        },
+        {
+          "actor": "a",
+          "checkpoint": "write"
+        },
+        {
+          "actor": "a",
+          "checkpoint": "$done"
+        },
+        {
+          "actor": "b",
+          "checkpoint": "read"
+        },
+        {
+          "actor": "b",
+          "checkpoint": "write"
+        },
+        {
+          "actor": "b",
+          "checkpoint": "$done"
+        }
+      ]
+    }
+  },
+  "inputAssignments": 2,
+  "limits": {
+    "maxEnumeratedSchedules": 4096,
+    "maxEvidenceBytes": 16777216,
+    "maxRuns": 4096,
+    "timeBudgetMs": 30000
+  },
+  "maxPreemptions": 64,
+  "por": "disabled",
+  "profile": "mirrorrust.finite-checkpoint-exploration/v1",
+  "projection": {
+    "baseVariables": [
+      "count",
+      "saved",
+      "phase"
+    ],
+    "instrumentationVariables": []
+  },
+  "runs": [
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(2)",
+          "b": "ThreadId(3)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "a91113ef81ee342974ab80b7c8b01d03",
+        "generation": 1,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 0,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(4)",
+          "b": "ThreadId(5)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "acb97b4db78d9a7539921846f7721bea",
+        "generation": 2,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 1,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(6)",
+          "b": "ThreadId(7)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "b21e7c2b84e0eee8453d20f4c322c06f",
+        "generation": 3,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 2,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(8)",
+          "b": "ThreadId(9)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "3b53ff51e1e627cde1591146005f3699",
+        "generation": 4,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 3,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(10)",
+          "b": "ThreadId(11)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "0eaee1525f61cb54d9460016600274bc",
+        "generation": 5,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 4,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(12)",
+          "b": "ThreadId(13)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "08a0c1e8ad19afcf5f10fd4c9b83b58e",
+        "generation": 6,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 5,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(14)",
+          "b": "ThreadId(15)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "bb846873b12390660f396307245ccc36",
+        "generation": 7,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 6,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(16)",
+          "b": "ThreadId(17)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "a7674505fd302651209995f3f108ffdc",
+        "generation": 8,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 7,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(18)",
+          "b": "ThreadId(19)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "32fa1e4132a626d90f39bf32ef4e9b54",
+        "generation": 9,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 8,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(20)",
+          "b": "ThreadId(21)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "3988791e1dbbb276adc3566da856d4f1",
+        "generation": 10,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 9,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(22)",
+          "b": "ThreadId(23)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "23d02ffb4a111fbbe11e356aa5159e96",
+        "generation": 11,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 10,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(24)",
+          "b": "ThreadId(25)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "da979ceceb156d300ae42f34fbdf4324",
+        "generation": 12,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 11,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(26)",
+          "b": "ThreadId(27)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "08e28bff384f9231cef15bf8b1f41866",
+        "generation": 13,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 12,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(28)",
+          "b": "ThreadId(29)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "a5e7e8928f065316834d14f7bd2408de",
+        "generation": 14,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 13,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(30)",
+          "b": "ThreadId(31)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "6cd54d864bd3df133a4e23f8908314a5",
+        "generation": 15,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 14,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(32)",
+          "b": "ThreadId(33)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "2bec4520ed457a8c1f32000ac04c7cd9",
+        "generation": 16,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 15,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(34)",
+          "b": "ThreadId(35)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "f4544d75a41040b19167939216df4d48",
+        "generation": 17,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 16,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(36)",
+          "b": "ThreadId(37)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "277868cff5d0e05ed4e01c4d292df714",
+        "generation": 18,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 17,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(38)",
+          "b": "ThreadId(39)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "96e01975aef02c21d58f08ebb02c6eaa",
+        "generation": 19,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 18,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(40)",
+          "b": "ThreadId(41)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "f0be1ea94ba7ee3bc78a2c93ca9b6cc9",
+        "generation": 20,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 19,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(42)",
+          "b": "ThreadId(43)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "21af2fac85137a8a574349e59f9f791f",
+        "generation": 21,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 20,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(44)",
+          "b": "ThreadId(45)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "27dfa4533298a597d909632405c4fd70",
+        "generation": 22,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 21,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(46)",
+          "b": "ThreadId(47)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "aedd359c0296cf892de79a137423fbd4",
+        "generation": 23,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 22,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(48)",
+          "b": "ThreadId(49)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "43d6476147bbd59712b99cb92daf0af8",
+        "generation": 24,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 23,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(50)",
+          "b": "ThreadId(51)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "90a1d9bb30ccb245047049dc86ba9d92",
+        "generation": 25,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 24,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(52)",
+          "b": "ThreadId(53)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "eb02fb2968c19063a8df02e8970aaa86",
+        "generation": 26,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 25,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(54)",
+          "b": "ThreadId(55)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "cc925de9b6b5fb937d59acb27f95ea0e",
+        "generation": 27,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 26,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(56)",
+          "b": "ThreadId(57)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "dc105bdda7252e6c6bde8077b5548ba0",
+        "generation": 28,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 27,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(58)",
+          "b": "ThreadId(59)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "659b420e8a4110fa686dbb8fb109b3ec",
+        "generation": 29,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 28,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(60)",
+          "b": "ThreadId(61)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "1b10ea18aec0b1e8e9f0aba6555a45f5",
+        "generation": 30,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 29,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(62)",
+          "b": "ThreadId(63)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "220dbf258437511cea872099ff51c968",
+        "generation": 31,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 30,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(64)",
+          "b": "ThreadId(65)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "6fc8aec9c26681852a13972c85b62621",
+        "generation": 32,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 31,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(66)",
+          "b": "ThreadId(67)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "9b45e3a31008fd062b531655d569851f",
+        "generation": 33,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 32,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(68)",
+          "b": "ThreadId(69)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "fa4d425b0e1507c35c2f0650463f4791",
+        "generation": 34,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 33,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(70)",
+          "b": "ThreadId(71)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "17f54d18c200a64cc75e8a0ac0129645",
+        "generation": 35,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 34,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(72)",
+          "b": "ThreadId(73)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "4b746b3947853f15897b6320584664a5",
+        "generation": 36,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 35,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(74)",
+          "b": "ThreadId(75)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "d38fd6c013600635440594c323d60093",
+        "generation": 37,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 36,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(76)",
+          "b": "ThreadId(77)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "686e1844cf8d630abc3d2dc091bb67d6",
+        "generation": 38,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 37,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(78)",
+          "b": "ThreadId(79)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "be5f6e207f577c1e6c7115a3b725f619",
+        "generation": 39,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 38,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    },
+    {
+      "category": "schedule_failed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(80)",
+          "b": "ThreadId(81)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "undeclared checkpoint",
+        "events": [
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 0,
+            "step": 0
+          }
+        ],
+        "executionId": "ce0c9e6d548dac694ec91b2b9254cbf2",
+        "generation": 40,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "unexpected_checkpoint",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "unexpected-checkpoint"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 1,
+      "ordinal": 39,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 5,
+          "mode": "unexpected-checkpoint"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    }
+  ],
+  "schema": "mirrors.finite-exploration/v1",
+  "states": [],
+  "status": "incomplete",
+  "stopReason": "non_pass_runs",
+  "sut": {
+    "acquisitions": 40,
+    "enteredWorkers": 40,
+    "teardowns": 40
+  },
+  "transitions": []
+}

@@ -5,6 +5,26 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-05 — MirrorECMA and MirrorRust DPM-0–DPM-5 accepted
+
+Both declared language profiles now pass the [stage plan](Plans/dpm-mirrorecma-mirrorrust.md).
+[Retained acceptance](Plans/dpm-languages-evidence-20261005/README.md) binds source,
+packages, generated consumers, fresh oracles and installed receipts. Each client
+passes 60 counter replay cases, 11 finite-exploration checks, 14 actual Windows
+native runs and three pre-acquisition mapping controls. Installed consumers build
+and run with source checkouts hidden and Linux networking isolated. The native
+Windows dependency remains external to that namespace.
+
+Six bounded remote safety checks are VALID; no local model checker ran. Final
+owned-worker count is zero; the oracle PID and binary are unchanged. Additive
+async-ECMA/Rust v2 targets supply integer-key maps while v1 output stays stable.
+Local Mirrors gates, Rust tests/clippy and ECMA stages pass with skips and earlier
+failed combined invocations explicitly distinguished in the retained report.
+
+Changes remain uncommitted. No package publication or new M5/full-WriteSentry
+qualification is claimed. The unrelated Rust protocol test and editor caches
+remain untouched.
+
 ## 2026-10-04 — DPM-2–DPM-5 declared profiles accepted after approval
 
 The user approved the selected oracle/model transfers and native staging. The

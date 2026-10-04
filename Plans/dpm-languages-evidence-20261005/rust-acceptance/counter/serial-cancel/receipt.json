@@ -1,0 +1,216 @@
+{
+  "actualIdentity": {
+    "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+    "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+    "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+  },
+  "binding": {
+    "disposals": 1,
+    "disposed": true,
+    "executions": [
+      {
+        "actorThreads": {
+          "a": "ThreadId(2)",
+          "b": "ThreadId(3)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "caller cancellation",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 1,
+            "step": 0
+          }
+        ],
+        "executionId": "0c12cf7a42c9c0056f51e67184b581b3",
+        "generation": 1,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 1,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "cancelled",
+        "passed": false,
+        "policy": {
+          "cleanupTimeoutMs": 15000,
+          "executionTimeoutMs": 240000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "cancel"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": false,
+        "schema": "mirrors.checkpoint-execution/v1"
+      }
+    ],
+    "initializations": 1,
+    "receiptComplete": true,
+    "schema": "mirrors.scheduled-binding/v1"
+  },
+  "client": {
+    "code": "adapter_failure",
+    "kind": "model_interface",
+    "message": "model interface (adapter_failure): Cancelled: caller cancellation",
+    "orderedHints": [],
+    "status": "failed"
+  },
+  "comparison": "incomplete",
+  "mode": "cancel",
+  "passed": false,
+  "peerTerminal": "",
+  "peerTerminalRaw": "",
+  "schema": "mirrors.scheduled-comparison/v1",
+  "sut": {
+    "acquisitions": 1,
+    "enteredWorkers": 1,
+    "teardowns": 1
+  }
+}

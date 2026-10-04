@@ -1,0 +1,88 @@
+{
+  "schema": "mirrors.checkpoint-schedule/v1",
+  "profile": "mirrorrust.cooperative-checkpoints/v1",
+  "identity": {
+    "implementationSha256": "7a4611c627aad13eb4924bc5993f17bb51d785d95b03e6e003b4336964185dbf",
+    "mappingSha256": "560c0d326f00f4ecd7a99275d7f43b0645704a5714cf2551352a14f7a73a0730",
+    "modelSemanticDigest": "60cd96b4961a4fd95f84ebb3ef66a1c26dd3a9ae266cd40f388f5454383294dd"
+  },
+  "inputs": {},
+  "steps": [
+    {
+      "actor": "arm",
+      "checkpoint": "Reserve"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmLock"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmSelect"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "PublishOdd"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "WriteBegin"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "WriteDone"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "CallDone"
+    },
+    {
+      "actor": "write",
+      "checkpoint": "$done"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "PublishPayload"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "PublishEven"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmUnlock"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmTarget"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmTarget"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmFinishLock"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmFinishUnlock"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "ArmOutcome"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "Release"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "CallDone"
+    },
+    {
+      "actor": "arm",
+      "checkpoint": "$done"
+    }
+  ]
+}

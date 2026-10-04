@@ -1,0 +1,451 @@
+[
+  {
+    "id": "mirrorecma@2.0.0",
+    "name": "mirrorecma",
+    "version": "2.0.0",
+    "size": 186845,
+    "unpackedSize": 837902,
+    "shasum": "806c8a9d1f9fce35ea0bd0b42d77e78e0f614623",
+    "integrity": "sha512-8roNdu79bGrvdb153eDXttPUwKZDlM7IWlvFsoYXIb46zvqK6H4w/X+UT+wwqmsLjX9pbOo5tsEMjLLPIiaWuw==",
+    "filename": "mirrorecma-2.0.0.tgz",
+    "files": [
+      {
+        "path": "README.md",
+        "size": 40965,
+        "mode": 420
+      },
+      {
+        "path": "dist/acceptance.d.ts",
+        "size": 1421,
+        "mode": 420
+      },
+      {
+        "path": "dist/acceptance.js",
+        "size": 2857,
+        "mode": 420
+      },
+      {
+        "path": "dist/adapter-registry.d.ts",
+        "size": 3526,
+        "mode": 420
+      },
+      {
+        "path": "dist/adapter-registry.js",
+        "size": 2914,
+        "mode": 420
+      },
+      {
+        "path": "dist/async-replay.d.ts",
+        "size": 1918,
+        "mode": 420
+      },
+      {
+        "path": "dist/async-replay.js",
+        "size": 4627,
+        "mode": 420
+      },
+      {
+        "path": "dist/cli.d.ts",
+        "size": 31,
+        "mode": 420
+      },
+      {
+        "path": "dist/cli.js",
+        "size": 14207,
+        "mode": 420
+      },
+      {
+        "path": "dist/client.d.ts",
+        "size": 4755,
+        "mode": 420
+      },
+      {
+        "path": "dist/client.js",
+        "size": 10121,
+        "mode": 420
+      },
+      {
+        "path": "dist/connection.d.ts",
+        "size": 7224,
+        "mode": 420
+      },
+      {
+        "path": "dist/connection.js",
+        "size": 15920,
+        "mode": 420
+      },
+      {
+        "path": "dist/descriptor-cache.d.ts",
+        "size": 1861,
+        "mode": 420
+      },
+      {
+        "path": "dist/descriptor-cache.js",
+        "size": 5676,
+        "mode": 420
+      },
+      {
+        "path": "dist/dynamic-binding.d.ts",
+        "size": 3730,
+        "mode": 420
+      },
+      {
+        "path": "dist/dynamic-binding.js",
+        "size": 25185,
+        "mode": 420
+      },
+      {
+        "path": "dist/framework-catalog.d.ts",
+        "size": 7556,
+        "mode": 420
+      },
+      {
+        "path": "dist/framework-catalog.js",
+        "size": 53483,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts",
+        "size": 11867,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js",
+        "size": 5549,
+        "mode": 420
+      },
+      {
+        "path": "dist/lease-reduction.d.ts",
+        "size": 9664,
+        "mode": 420
+      },
+      {
+        "path": "dist/lease-reduction.js",
+        "size": 29418,
+        "mode": 420
+      },
+      {
+        "path": "dist/matched-evidence.d.ts",
+        "size": 2339,
+        "mode": 420
+      },
+      {
+        "path": "dist/matched-evidence.js",
+        "size": 7850,
+        "mode": 420
+      },
+      {
+        "path": "dist/model-interface.d.ts",
+        "size": 12308,
+        "mode": 420
+      },
+      {
+        "path": "dist/model-interface.js",
+        "size": 60346,
+        "mode": 420
+      },
+      {
+        "path": "dist/mutation-campaign.d.ts",
+        "size": 5547,
+        "mode": 420
+      },
+      {
+        "path": "dist/mutation-campaign.js",
+        "size": 26420,
+        "mode": 420
+      },
+      {
+        "path": "dist/negotiated.d.ts",
+        "size": 7060,
+        "mode": 420
+      },
+      {
+        "path": "dist/negotiated.js",
+        "size": 31810,
+        "mode": 420
+      },
+      {
+        "path": "dist/negotiation-core.d.ts",
+        "size": 2455,
+        "mode": 420
+      },
+      {
+        "path": "dist/negotiation-core.js",
+        "size": 4798,
+        "mode": 420
+      },
+      {
+        "path": "dist/opaque-itf.d.ts",
+        "size": 1211,
+        "mode": 420
+      },
+      {
+        "path": "dist/opaque-itf.js",
+        "size": 8031,
+        "mode": 420
+      },
+      {
+        "path": "dist/project-config.d.ts",
+        "size": 4877,
+        "mode": 420
+      },
+      {
+        "path": "dist/project-config.js",
+        "size": 19408,
+        "mode": 420
+      },
+      {
+        "path": "dist/project.d.ts",
+        "size": 7848,
+        "mode": 420
+      },
+      {
+        "path": "dist/project.js",
+        "size": 42838,
+        "mode": 420
+      },
+      {
+        "path": "dist/projected-corpus.d.ts",
+        "size": 1894,
+        "mode": 420
+      },
+      {
+        "path": "dist/projected-corpus.js",
+        "size": 29744,
+        "mode": 420
+      },
+      {
+        "path": "dist/protocol.d.ts",
+        "size": 9164,
+        "mode": 420
+      },
+      {
+        "path": "dist/protocol.js",
+        "size": 13416,
+        "mode": 420
+      },
+      {
+        "path": "dist/registry.d.ts",
+        "size": 2852,
+        "mode": 420
+      },
+      {
+        "path": "dist/registry.js",
+        "size": 4623,
+        "mode": 420
+      },
+      {
+        "path": "dist/replay-control.d.ts",
+        "size": 1703,
+        "mode": 420
+      },
+      {
+        "path": "dist/replay-control.js",
+        "size": 4197,
+        "mode": 420
+      },
+      {
+        "path": "dist/replay-core.d.ts",
+        "size": 2082,
+        "mode": 420
+      },
+      {
+        "path": "dist/replay-core.js",
+        "size": 7107,
+        "mode": 420
+      },
+      {
+        "path": "dist/replay-report.d.ts",
+        "size": 5030,
+        "mode": 420
+      },
+      {
+        "path": "dist/replay-report.js",
+        "size": 9340,
+        "mode": 420
+      },
+      {
+        "path": "dist/replay.d.ts",
+        "size": 1850,
+        "mode": 420
+      },
+      {
+        "path": "dist/replay.js",
+        "size": 4170,
+        "mode": 420
+      },
+      {
+        "path": "dist/reproduction-bundle.d.ts",
+        "size": 10742,
+        "mode": 420
+      },
+      {
+        "path": "dist/reproduction-bundle.js",
+        "size": 40131,
+        "mode": 420
+      },
+      {
+        "path": "dist/reproduction-prefix-reducer.d.ts",
+        "size": 2107,
+        "mode": 420
+      },
+      {
+        "path": "dist/reproduction-prefix-reducer.js",
+        "size": 10202,
+        "mode": 420
+      },
+      {
+        "path": "dist/reproduction-stability.d.ts",
+        "size": 1695,
+        "mode": 420
+      },
+      {
+        "path": "dist/reproduction-stability.js",
+        "size": 8110,
+        "mode": 420
+      },
+      {
+        "path": "dist/schedule-binding.d.ts",
+        "size": 1981,
+        "mode": 420
+      },
+      {
+        "path": "dist/schedule-binding.js",
+        "size": 10796,
+        "mode": 420
+      },
+      {
+        "path": "dist/schedule-data.d.ts",
+        "size": 1593,
+        "mode": 420
+      },
+      {
+        "path": "dist/schedule-data.js",
+        "size": 5644,
+        "mode": 420
+      },
+      {
+        "path": "dist/schedule-exploration.d.ts",
+        "size": 2032,
+        "mode": 420
+      },
+      {
+        "path": "dist/schedule-exploration.js",
+        "size": 20333,
+        "mode": 420
+      },
+      {
+        "path": "dist/schedule-worker.d.ts",
+        "size": 373,
+        "mode": 420
+      },
+      {
+        "path": "dist/schedule-worker.js",
+        "size": 3879,
+        "mode": 420
+      },
+      {
+        "path": "dist/schedule.d.ts",
+        "size": 3514,
+        "mode": 420
+      },
+      {
+        "path": "dist/schedule.js",
+        "size": 20304,
+        "mode": 420
+      },
+      {
+        "path": "dist/scheduling-capabilities.d.ts",
+        "size": 1064,
+        "mode": 420
+      },
+      {
+        "path": "dist/scheduling-capabilities.js",
+        "size": 1014,
+        "mode": 420
+      },
+      {
+        "path": "dist/spec.d.ts",
+        "size": 923,
+        "mode": 420
+      },
+      {
+        "path": "dist/spec.js",
+        "size": 6189,
+        "mode": 420
+      },
+      {
+        "path": "dist/suite-definition.d.ts",
+        "size": 4007,
+        "mode": 420
+      },
+      {
+        "path": "dist/suite-definition.js",
+        "size": 9015,
+        "mode": 420
+      },
+      {
+        "path": "dist/suite-lifetime.d.ts",
+        "size": 734,
+        "mode": 420
+      },
+      {
+        "path": "dist/suite-lifetime.js",
+        "size": 1400,
+        "mode": 420
+      },
+      {
+        "path": "dist/suite-preflight.d.ts",
+        "size": 613,
+        "mode": 420
+      },
+      {
+        "path": "dist/suite-preflight.js",
+        "size": 9768,
+        "mode": 420
+      },
+      {
+        "path": "dist/suite-result.d.ts",
+        "size": 1613,
+        "mode": 420
+      },
+      {
+        "path": "dist/suite-result.js",
+        "size": 11,
+        "mode": 420
+      },
+      {
+        "path": "dist/suite-runner.d.ts",
+        "size": 1889,
+        "mode": 420
+      },
+      {
+        "path": "dist/suite-runner.js",
+        "size": 20106,
+        "mode": 420
+      },
+      {
+        "path": "dist/transport.d.ts",
+        "size": 2991,
+        "mode": 420
+      },
+      {
+        "path": "dist/transport.js",
+        "size": 15523,
+        "mode": 420
+      },
+      {
+        "path": "docs/deterministic-scheduling.md",
+        "size": 7213,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 3600,
+        "mode": 420
+      }
+    ],
+    "entryCount": 87,
+    "bundled": []
+  }
+]

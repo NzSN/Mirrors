@@ -1,0 +1,593 @@
+{
+  "attemptedRuns": 1,
+  "categories": {
+    "passed": 1
+  },
+  "comparison": "not_requested",
+  "comparisonRequired": false,
+  "comparisonRuns": 0,
+  "complete": false,
+  "completedRuns": 1,
+  "declaredInputs": [
+    {
+      "initial": 0,
+      "mode": "ok"
+    },
+    {
+      "initial": 5,
+      "mode": "ok"
+    }
+  ],
+  "denominatorKnown": true,
+  "elapsedMs": 4,
+  "eligibleRuns": 40,
+  "eligibleRunsLowerBound": 40,
+  "enumeratedScheduleShapes": 20,
+  "enumerationExhausted": false,
+  "firstCounterexample": null,
+  "firstFailure": null,
+  "inputAssignments": 2,
+  "limits": {
+    "maxEnumeratedSchedules": 4096,
+    "maxEvidenceBytes": 1,
+    "maxRuns": 4096,
+    "timeBudgetMs": 30000
+  },
+  "maxPreemptions": 64,
+  "por": "disabled",
+  "profile": "mirrorrust.finite-checkpoint-exploration/v1",
+  "projection": {
+    "baseVariables": [
+      "count",
+      "saved",
+      "phase"
+    ],
+    "instrumentationVariables": []
+  },
+  "runs": [
+    {
+      "category": "passed",
+      "evidenceOmitted": "byte_budget",
+      "ordinal": 0
+    }
+  ],
+  "schema": "mirrors.finite-exploration/v1",
+  "states": [
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "0"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 0
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "0"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 1
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "1"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "2"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 2
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "1"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 3
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "1"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 4
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "2"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "2"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 5
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "2"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 6
+    }
+  ],
+  "status": "incomplete",
+  "stopReason": "evidence_limit",
+  "sut": {
+    "acquisitions": 1,
+    "enteredWorkers": 2,
+    "teardowns": 1
+  },
+  "transitions": [
+    {
+      "count": 1,
+      "from": 0,
+      "to": 1
+    },
+    {
+      "count": 1,
+      "from": 1,
+      "to": 2
+    },
+    {
+      "count": 1,
+      "from": 2,
+      "to": 3
+    },
+    {
+      "count": 1,
+      "from": 3,
+      "to": 4
+    },
+    {
+      "count": 1,
+      "from": 4,
+      "to": 5
+    },
+    {
+      "count": 1,
+      "from": 5,
+      "to": 6
+    }
+  ]
+}

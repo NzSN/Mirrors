@@ -161,8 +161,8 @@ def validateScaffoldReview (proposal : ReviewableScaffold) (proposalDigest : Str
   for obligation in review.obligations do
     if obligation.reason.trimAscii.toString.isEmpty then
       throw "target-support disposition requires a reason"
-    if !["mirrorecma-v1", "mirrorecma-async-v1", "mirrorcpp-v1", "mirrorcpp-v2",
-        "mirrorrust-v1", "mirrorlean-v1"].contains obligation.target then
+    if !["mirrorecma-v1", "mirrorecma-async-v1", "mirrorecma-async-v2", "mirrorcpp-v1", "mirrorcpp-v2",
+        "mirrorrust-v1", "mirrorrust-v2", "mirrorlean-v1"].contains obligation.target then
       throw "unknown target in target-support disposition"
     if obligation.disposition == "replaced" then
       if !(review.replacements.any fun r =>

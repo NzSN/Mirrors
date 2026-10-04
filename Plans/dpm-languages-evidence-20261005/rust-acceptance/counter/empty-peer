@@ -1,0 +1,5 @@
+#!/usr/bin/env python3
+import json,sys
+request=json.loads(sys.stdin.readline());mi=request['modelInterface']
+print(json.dumps({'proto_step':'spec_validated','result':'valid','modelInterface':{'schema':'mirrors.model-interface-negotiation/v1','status':'matched','descriptorSchema':'mirrors.model-interface-descriptor/v1','semanticDigest':mi['expectedSemanticDigest']}}),flush=True)
+print('{"proto_step":"all_steps_done"}',flush=True)

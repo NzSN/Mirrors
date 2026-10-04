@@ -1,0 +1,177 @@
+   Compiling mirrorrust v1.0.0 (/home/nzsn/Repos/MirrorRust)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.44s
+     Running unittests src/lib.rs (/tmp/dpm-rust-build/debug/deps/mirrorrust-16ec28c73c8666a7)
+
+running 1 test
+test spec::tests::scanner_handles_continued_clauses_and_skips_comments_and_strings ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/async.rs (/tmp/dpm-rust-build/debug/deps/async-982b064f5a1db4dd)
+
+running 8 tests
+test protocol_error_poisons_the_async_connection ... ok
+test rejects_wrong_submission_kind ... ok
+test query_and_await_preserve_timeout_unknown_and_idempotent_terminal_results ... ok
+test async_preflight_rejects_stdio_and_invalid_bounds_before_writing ... ok
+test trace_generation_submission_and_cancellation_use_the_job_protocol ... ok
+test submit_validate_async_returns_the_accepted_job ... ok
+test rejects_uncorrelated_and_malformed_async_replies ... ok
+test shared_async_reply_vectors ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/golden.rs (/tmp/dpm-rust-build/debug/deps/golden-705fc3535f682ede)
+
+running 2 tests
+test supported_client_messages_round_trip_the_canonical_wire_corpus ... ok
+test supported_mirror_messages_decode_the_canonical_wire_corpus ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/legacy_compatibility.rs (/tmp/dpm-rust-build/debug/deps/legacy_compatibility-6ff4135d2cf702ee)
+
+running 1 test
+test legacy_runner_retains_signature_and_wire_without_negotiation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/model_interface.rs (/tmp/dpm-rust-build/debug/deps/model_interface-07ea73cdf6470c5b)
+
+running 14 tests
+test metadata_validates_recursive_closed_map_key_literals ... ok
+test verify_metadata_is_strict_and_duplicate_aware ... ok
+test callback_panic_remains_primary_and_disposal_is_attempted_once ... ok
+test structured_authorization_denial_is_registration_error_with_zero_callbacks ... ok
+test prefer_fallback_validates_status_fields_before_factory ... ok
+test matched_reply_creates_and_disposes_exactly_one_binding ... ok
+test exact_registry_rejects_duplicate_and_unregistered_keys_without_factories ... ok
+test wrong_or_duplicate_match_runs_no_adapter_code ... ok
+test reply_parser_preserves_additive_numbers_private_key_objects_and_exact_depth ... ok
+test registration_failures_validate_all_digests_and_request_pin ... ok
+test prefer_requires_an_explicit_fresh_fallback_factory ... ok
+test binding_validation_and_cleanup_keep_exact_lifetime_and_precedence ... ok
+test verify_failures_reject_descriptor_status_and_payload ... ok
+test compiled_verify_rejects_descriptor_statuses_before_any_callback ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.28s
+
+     Running tests/protocol.rs (/tmp/dpm-rust-build/debug/deps/protocol-7b9d6f47abcf806b)
+
+running 34 tests
+test decode_gen_traces_done_and_errors ... ok
+test decode_async_job_replies_preserves_kinds_phases_and_outcomes ... ok
+test decode_initial_state ... ok
+test decode_integral_json_numbers_exactly_and_reject_fractional_numbers ... ok
+test decode_spec_validated_invalid ... ok
+test decode_next_step ... ok
+test decode_spec_validated_valid ... ok
+test decode_step_mismatch ... ok
+test decode_step_ok_and_all_done ... ok
+test decode_step_mismatch_hints ... ok
+test decode_unknown_proto_step ... ok
+test decode_value_kinds_via_initial_state ... ok
+test decode_value_seq_map_variant_unserializable ... ok
+test encode_async_trace_and_job_control_messages_match_conformance_shapes ... ok
+test encode_register ... ok
+test encode_register_traces ... ok
+test encode_register_validate_async_matches_conformance_wire_shape ... ok
+test encode_report_state_clean_new_variants ... ok
+test encode_report_state_uses_clean_itf_values ... ok
+test encode_state_clean_itf ... ok
+test encode_state_decode_round_trip_bigint ... ok
+test encode_state_seq_map_variant_unserializable ... ok
+test encode_state_set_tuple_record_null ... ok
+test helper_as_int ... ok
+test helper_as_record ... ok
+test helper_as_str ... ok
+test helper_get_param_and_int ... ok
+test malformed_itf_values_are_errors_instead_of_silent_zero_or_drops ... ok
+test itf_variants_require_exact_tag_value_shape ... ok
+test ordinary_serde_arbitrary_precision_key_remains_a_record_key ... ok
+test preset_client_panics_when_exhausted - should panic ... ok
+test preset_client_serves_in_order ... ok
+test itf_markers_require_exact_singleton_shapes ... ok
+test tag_value_with_extra_fields_is_a_record_not_a_variant ... ok
+
+test result: ok. 34 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/registry.rs (/tmp/dpm-rust-build/debug/deps/registry-e7777692b7cd2017)
+
+running 3 tests
+test registry_connection_fails_closed_when_no_candidates_exist ... ok
+test registry_discovery_parses_valid_entries_and_skips_invalid_ones ... ok
+test registry_discovery_fails_closed_on_http_and_json_errors ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/schedule.rs (/tmp/dpm-rust-build/debug/deps/schedule-2d2ba36ce2787a49)
+
+running 10 tests
+test admission_is_before_factory ... ok
+test finished_observation_includes_thread_local_destructor ... ok
+test strict_artifact_decoder_rejects_duplicate_and_unknown_fields ... ok
+test cancellation_before_and_between_intervals ... ok
+test incremental_callbacks_release_only_selected_worker ... ok
+test cancellation_during_final_observation_cannot_pass ... ok
+test factory_reentry_rejects_nested_acquisition ... ok
+test actual_threads_retain_stack_across_interleavings ... ok
+test failures_preserve_primary_and_cleanup ... ok
+test timeout_retains_thread_then_cleanup_can_retry ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/schedule_lifecycle.rs (/tmp/dpm-rust-build/debug/deps/schedule_lifecycle-08e6e916a4e639cc)
+
+running 9 tests
+test canonical_coverage_preserves_types_and_ordinary_keys ... ok
+test invalid_exploration_declarations_never_acquire ... ok
+test binding_disposal_failure_is_stable ... ok
+test incomplete_previous_binding_execution_blocks_acquisition ... ok
+test binding_generations_are_fresh_and_disposal_is_once ... ok
+test model_counterexample_survives_separate_cleanup_failure ... ok
+test exploration_checks_schedule_freshness_events_and_projection ... ok
+test unknown_cleanup_halts_and_late_runner_never_earns_complete ... ok
+test retry_updates_retained_cleanup_without_converting_failed_replay ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests/server_mode_smoke.rs (/tmp/dpm-rust-build/debug/deps/server_mode_smoke-cf15c645b95a513c)
+
+running 2 tests
+test async_jobs_cover_cross_connection_long_poll_ordering_cancellation_and_eviction ... ok
+test counter_replays_over_real_tcp_and_mtls_server_modes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/smoke.rs (/tmp/dpm-rust-build/debug/deps/smoke-7d0953253ebe184a)
+
+running 1 test
+test smoke ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/spec.rs (/tmp/dpm-rust-build/debug/deps/spec-3647d60f61e6dc5e)
+
+running 2 tests
+test spec_builder_finds_continued_extends_and_embedded_instance ... ok
+test spec_builder_reports_ambiguous_modules ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/transport.rs (/tmp/dpm-rust-build/debug/deps/transport-0387ffe4168db782)
+
+running 4 tests
+test protocol_line_validation_uses_utf8_bytes_and_exact_boundary ... ok
+test client_key_requires_exact_0600_before_loading_credentials ... ok
+test tcp_transport_round_trips_one_framed_session ... ok
+test rejected_lines_write_nothing_to_stdio_transport ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests mirrorrust
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -53,7 +53,7 @@ def usage : String := String.intercalate "\n" [
   "  model_interface_gen generate-cmake|check-cmake --spec FILE --contract FILE",
   "    --evidence FILE [--param-var NAME] --lock FILE --target CPP_TARGET --out DIR",
   "    (paths relative to the consumer root; optional CMake helpers)",
-  "  TARGET: mirrorecma-v1 | mirrorecma-async-v1 | mirrorcpp-v1 | mirrorcpp-v2 | mirrorrust-v1 | mirrorlean-v1"
+  "  TARGET: mirrorecma-v1 | mirrorecma-async-v1 | mirrorecma-async-v2 | mirrorcpp-v1 | mirrorcpp-v2 | mirrorrust-v1 | mirrorrust-v2 | mirrorlean-v1"
 ]
 
 private inductive DiagnosticsMode where
@@ -173,10 +173,8 @@ private def workflowInputsOf (options : RawOptions) :
 
 private def checkedTarget (options : RawOptions) : Except String String := do
   let target ← requireOption "--target" options.target
-  if target != mirrorecmaTarget && target != mirrorecmaAsyncTarget &&
-      target != mirrorcppTarget && target != mirrorcppTypedMapsTarget && target != mirrorrustTarget &&
-      target != mirrorleanTarget then
-    throw s!"unsupported --target {target}; expected {mirrorecmaTarget}, {mirrorecmaAsyncTarget}, {mirrorcppTarget}, {mirrorcppTypedMapsTarget}, {mirrorrustTarget}, or {mirrorleanTarget}"
+  if !supportedTarget target then
+    throw s!"unsupported --target {target}; see the supported TARGET list"
   return target
 
 private def diagnosticsMode (options : RawOptions) : Except String DiagnosticsMode :=

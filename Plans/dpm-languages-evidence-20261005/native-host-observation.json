@@ -1,0 +1,30 @@
+{
+    "scope":  "post-run observation of owned test root only",
+    "observedAt":  "2026-10-04T16:08:42.0550871Z",
+    "architecture":  "AMD64",
+    "schema":  "mirrors.dpm3-native-host-observation/v1",
+    "tools":  [
+                  {
+                      "path":  "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+                      "sha256":  "315a654ea116864516a1674858e587e535e3bc3045ff32ed2f2739a2c1ec5640",
+                      "name":  "cl.exe",
+                      "fileVersion":  "19.51.36257.0"
+                  },
+                  {
+                      "path":  "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\ml64.exe",
+                      "sha256":  "2bca6092a750bd69023ab9047619a98672837fd22b154892aca3877beac9abe9",
+                      "name":  "ml64.exe",
+                      "fileVersion":  "14.51.36257.0"
+                  },
+                  {
+                      "path":  "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\link.exe",
+                      "sha256":  "610aae3d74a66fa5ef54cac5df8ea8bcbb1fdd2a3db9087eb92088bd395eaf34",
+                      "name":  "link.exe",
+                      "fileVersion":  "14.51.36257.0"
+                  }
+              ],
+    "ownedRemainingProcesses":  [
+
+                                ],
+    "os":  "Microsoft Windows NT 10.0.26200.0"
+}

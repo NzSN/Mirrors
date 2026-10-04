@@ -1,0 +1,12 @@
+[package]
+name = "mirrors-dpm-rust-consumer"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+mirrorrust = "=1.0.0"
+serde_json = { version = "1", features = ["arbitrary_precision"] }
+num-bigint = "0.4"
+num-traits = "0.2"
+sha2 = "0.10"

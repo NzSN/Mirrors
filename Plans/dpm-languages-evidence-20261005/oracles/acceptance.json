@@ -1,0 +1,73 @@
+{
+  "schema": "mirrors.dpm-language-oracles/v1",
+  "status": "passed",
+  "cliSha256": "748390bb0a9cec4291a38e2b06ba68a3e1a9e23c688a05b9805072ce726354a6",
+  "rows": [
+    {
+      "scope": "counter",
+      "case": "serial",
+      "capture": "counter/serial"
+    },
+    {
+      "scope": "counter",
+      "case": "overlap",
+      "capture": "counter/overlap"
+    },
+    {
+      "scope": "counter",
+      "case": "serial-five",
+      "capture": "counter/serial-five"
+    },
+    {
+      "scope": "counter",
+      "case": "overlap-five",
+      "capture": "counter/overlap-five"
+    },
+    {
+      "scope": "counter-safety",
+      "initializer": "Init",
+      "bound": 6,
+      "verdict": "VALID"
+    },
+    {
+      "scope": "counter-safety",
+      "initializer": "InitFive",
+      "bound": 6,
+      "verdict": "VALID"
+    },
+    {
+      "scope": "native",
+      "case": "stable-t1",
+      "capture": "native/stable-t1",
+      "bound": 28,
+      "invariant": "MBTSafety",
+      "verdict": "VALID"
+    },
+    {
+      "scope": "native",
+      "case": "stable-t2",
+      "capture": "native/stable-t2",
+      "bound": 28,
+      "invariant": "MBTSafety",
+      "verdict": "VALID"
+    },
+    {
+      "scope": "native",
+      "case": "overlap-t1",
+      "capture": "native/overlap-t1",
+      "bound": 17,
+      "invariant": "MBTSafety",
+      "verdict": "VALID"
+    },
+    {
+      "scope": "native",
+      "case": "overlap-t2",
+      "capture": "native/overlap-t2",
+      "bound": 17,
+      "invariant": "MBTSafety",
+      "verdict": "VALID"
+    }
+  ],
+  "scope": "four counter and four fixed native cases; six bounded safety checks",
+  "localModelCheckerInvocations": 0
+}

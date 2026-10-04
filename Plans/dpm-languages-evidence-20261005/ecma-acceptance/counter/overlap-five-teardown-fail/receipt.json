@@ -1,0 +1,494 @@
+{
+  "schema": "mirrors.scheduled-comparison/v1",
+  "passed": false,
+  "comparison": "matched",
+  "peerTerminal": "all_steps_done",
+  "peerTerminalRaw": "{\"proto_step\":\"all_steps_done\"}",
+  "client": {
+    "status": "failed",
+    "message": "adapter binding disposal failed",
+    "kind": "model_interface",
+    "code": "adapter_dispose_failed"
+  },
+  "binding": {
+    "schema": "mirrors.scheduled-binding/v1",
+    "initializations": 1,
+    "disposals": 1,
+    "disposed": true,
+    "receiptComplete": true,
+    "executions": [
+      {
+        "outcome": "completed",
+        "detail": "",
+        "scheduleCompleted": true,
+        "cleanup": "teardown_failed",
+        "remainingActors": [],
+        "generation": 1,
+        "executionId": "acb268ffb00b733b12231f1bb63053a2",
+        "events": [
+          {
+            "ordinal": 0,
+            "kind": "permit",
+            "step": 0,
+            "actor": "a",
+            "operation": "increment-a",
+            "checkpoint": "$start"
+          },
+          {
+            "ordinal": 1,
+            "kind": "arrival",
+            "step": 0,
+            "actor": "a",
+            "operation": "increment-a",
+            "checkpoint": "read"
+          },
+          {
+            "ordinal": 2,
+            "kind": "permit",
+            "step": 1,
+            "actor": "b",
+            "operation": "increment-b",
+            "checkpoint": "$start"
+          },
+          {
+            "ordinal": 3,
+            "kind": "arrival",
+            "step": 1,
+            "actor": "b",
+            "operation": "increment-b",
+            "checkpoint": "read"
+          },
+          {
+            "ordinal": 4,
+            "kind": "permit",
+            "step": 2,
+            "actor": "a",
+            "operation": "increment-a",
+            "checkpoint": "read"
+          },
+          {
+            "ordinal": 5,
+            "kind": "arrival",
+            "step": 2,
+            "actor": "a",
+            "operation": "increment-a",
+            "checkpoint": "write"
+          },
+          {
+            "ordinal": 6,
+            "kind": "permit",
+            "step": 3,
+            "actor": "b",
+            "operation": "increment-b",
+            "checkpoint": "read"
+          },
+          {
+            "ordinal": 7,
+            "kind": "arrival",
+            "step": 3,
+            "actor": "b",
+            "operation": "increment-b",
+            "checkpoint": "write"
+          },
+          {
+            "ordinal": 8,
+            "kind": "permit",
+            "step": 4,
+            "actor": "a",
+            "operation": "increment-a",
+            "checkpoint": "write"
+          },
+          {
+            "ordinal": 9,
+            "kind": "arrival",
+            "step": 4,
+            "actor": "a",
+            "operation": "increment-a",
+            "checkpoint": "$done"
+          },
+          {
+            "ordinal": 10,
+            "kind": "permit",
+            "step": 5,
+            "actor": "b",
+            "operation": "increment-b",
+            "checkpoint": "write"
+          },
+          {
+            "ordinal": 11,
+            "kind": "arrival",
+            "step": 5,
+            "actor": "b",
+            "operation": "increment-b",
+            "checkpoint": "$done"
+          }
+        ],
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 1,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 2,
+            "state": {
+              "count": {
+                "#bigint": "5"
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "5"
+                    }
+                  ]
+                ]
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 3,
+            "state": {
+              "count": {
+                "#bigint": "6"
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "5"
+                    }
+                  ]
+                ]
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "2"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 4,
+            "state": {
+              "count": {
+                "#bigint": "6"
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "5"
+                    }
+                  ]
+                ]
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "2"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "2"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 5,
+            "state": {
+              "count": {
+                "#bigint": "6"
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "5"
+                    }
+                  ]
+                ]
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "2"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 6,
+            "state": {
+              "count": {
+                "#bigint": "6"
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "5"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "5"
+                    }
+                  ]
+                ]
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "cleanupAttempts": [
+          {
+            "cleanup": "teardown_failed",
+            "error": "deliberate teardown failure"
+          }
+        ],
+        "schema": "mirrors.checkpoint-execution/v1",
+        "schedule": {
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "profile": "mirrorecma.worker-checkpoints/v1",
+          "identity": {
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da",
+            "mappingSha256": "3da0e2576ca8c99ff89a0fdcb777ab4430c2b24ff375baa343664c2d430eb4db",
+            "implementationSha256": "7dd7c65d6d535a76761e288401674e09498d462f9f5d888516371954aaa748d1"
+          },
+          "inputs": {
+            "initial": 5,
+            "mode": "teardown-fail"
+          },
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "policy": {
+          "maxActors": 64,
+          "maxSteps": 65536,
+          "executionTimeoutMs": 5000,
+          "cleanupTimeoutMs": 2000
+        },
+        "coverage": "recorded-schedule-only",
+        "actorThreads": {
+          "a": 1,
+          "b": 2
+        },
+        "passed": false
+      }
+    ]
+  },
+  "actualIdentity": {
+    "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da",
+    "mappingSha256": "3da0e2576ca8c99ff89a0fdcb777ab4430c2b24ff375baa343664c2d430eb4db",
+    "implementationSha256": "7dd7c65d6d535a76761e288401674e09498d462f9f5d888516371954aaa748d1"
+  },
+  "mode": "teardown-fail",
+  "sut": {
+    "acquisitions": 1,
+    "enteredWorkers": 2,
+    "teardowns": 1
+  }
+}

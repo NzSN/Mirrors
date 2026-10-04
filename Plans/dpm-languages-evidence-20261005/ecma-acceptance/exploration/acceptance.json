@@ -1,0 +1,76 @@
+{
+  "schema": "mirrors.dpm-language-exploration/v1",
+  "language": "ecma",
+  "status": "passed",
+  "rows": [
+    {
+      "case": "all",
+      "status": "passed",
+      "report": "all.json",
+      "sha256": "b68bf7a8e05cedffc50a812f7f16c32b1115e13bb918048dacf469f64e9bcb8a"
+    },
+    {
+      "case": "zero-preemptions",
+      "status": "passed",
+      "report": "zero-preemptions.json",
+      "sha256": "8674ca329514569f492c0046009e57713370b85476d0446a9cc9b156f73013f0"
+    },
+    {
+      "case": "one-preemption",
+      "status": "passed",
+      "report": "one-preemption.json",
+      "sha256": "66cca8c9c8105f567c4d204e88f902c79b366804adb775911952b38c1ae6adad"
+    },
+    {
+      "case": "two-preemptions",
+      "status": "passed",
+      "report": "two-preemptions.json",
+      "sha256": "14c99aa28e4d466774f4408dd0ffc8d7ff34fc2608e274ef93a2006ada35e65a"
+    },
+    {
+      "case": "run-limit",
+      "status": "passed",
+      "report": "run-limit.json",
+      "sha256": "0520e226939c5a63cd88b61cc222324219d28634c7beb01ef7df07ba63e2214d"
+    },
+    {
+      "case": "enumeration-limit",
+      "status": "passed",
+      "report": "enumeration-limit.json",
+      "sha256": "9ae9b543b66cbf24946d41c3f27b6ce5edb41df187c44ca6aabc2201a0fbfb09"
+    },
+    {
+      "case": "evidence-limit",
+      "status": "passed",
+      "report": "evidence-limit.json",
+      "sha256": "6c41e0ed1b909bd6ebb079f5c5b6ea397e62ecbbe8d9813db2891ed1336cf011"
+    },
+    {
+      "case": "cleanup-failure",
+      "status": "passed",
+      "report": "cleanup-failure.json",
+      "sha256": "10021a3d8fc8954e664bd619035e0418a545eb56cd1fdc0d4137fbd40acb934d"
+    },
+    {
+      "case": "schedule-failure",
+      "status": "passed",
+      "report": "schedule-failure.json",
+      "sha256": "e47aec570e8dcfcc00d6af987839ad85c3d9ac73c02d86ce76ce71871bcab5e5"
+    },
+    {
+      "case": "cancel",
+      "status": "passed",
+      "report": "cancel.json",
+      "sha256": "ecfe9197073060353fca051dc244f1d8e70b4927b68c6feb14783ebd9a61bcbf"
+    },
+    {
+      "case": "comparison-required",
+      "status": "passed",
+      "report": "comparison-required.json",
+      "sha256": "67253da0f527cb30cd32145d7cf301660d22aa17cc1a06b258b2bba0f1031bf4"
+    }
+  ],
+  "fullScopeRuns": 40,
+  "partialOrderReduction": "disabled",
+  "scope": "finite local execution and semantic coverage"
+}

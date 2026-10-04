@@ -1,0 +1,10 @@
+Already up to date
+Done in 464ms using pnpm v11.22.0
+$ pnpm run build:examples && node dist-test/test/work-queue.smoke.js
+$ tsc -p tsconfig.examples.json
+Queue provenance, compiler freshness, required-action preflight, and stale-output rejection passed.
+Offline queue replay passed: FIFO, all duplicate phases, fail/retry, reset, and trace initialization.
+Faulty queue failed at duplicate enqueue with expected [1], actual [1, 1]; cleanup passed.
+Rejected descriptor negotiation did not create application resources.
+Live generation skipped; add --live with APALACHE_MC to include it.
+Work queue example acceptance passed.

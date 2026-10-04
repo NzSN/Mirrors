@@ -1,0 +1,13 @@
+file:///tmp/work/ecma/runner.mjs:11
+const requireValue=(v,message)=>{if(!v)throw new Error(message);};
+                                             ^
+
+Error: unknown or reused native role
+    at requireValue (file:///tmp/work/ecma/runner.mjs:11:46)
+    at validateNative (file:///tmp/work/ecma/runner.mjs:33:136)
+    at file:///tmp/work/ecma/runner.mjs:42:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at async node:internal/modules/esm/loader:639:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.15.0

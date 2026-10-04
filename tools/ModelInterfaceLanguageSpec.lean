@@ -70,9 +70,11 @@ def makeLock (base : LockedModelInterface) (name : String)
 def emitters : List (String × (LockedModelInterface → Shell.ModelInterface.Emit.TypeScript.EmitResult Shell.ModelInterface.Emit.TypeScript.GeneratedTree)) := [
   ("ts", Shell.ModelInterface.Emit.TypeScript.emitTypeScript),
   ("async", Shell.ModelInterface.Emit.TypeScriptAsync.emitTypeScriptAsync),
+  ("async-v2", fun lock => Shell.ModelInterface.Emit.TypeScriptAsync.emitTypeScriptAsync lock "mirrorecma-async-v2"),
   ("cpp", Shell.ModelInterface.Emit.Cpp.emitCpp),
   ("cpp-v2", fun lock => Shell.ModelInterface.Emit.Cpp.emitCpp lock "mirrorcpp-v2"),
   ("rust", Shell.ModelInterface.Emit.Rust.emitRust),
+  ("rust-v2", fun lock => Shell.ModelInterface.Emit.Rust.emitRust lock "mirrorrust-v2"),
   ("lean", Shell.ModelInterface.Emit.Lean.emitLean)]
 
 def emit (output : System.FilePath) (lock : LockedModelInterface) : IO Unit := do
@@ -114,7 +116,7 @@ def run (output : System.FilePath) : IO Unit := do
         -- This fixture is outside the common v1 baseline but is the explicit
         -- integer-key-map extension of mirrorcpp-v2.
         let accepted := bool row "portable" ||
-          (target == "cpp-v2" && type == ModelType.map .int .int)
+          ((target == "cpp-v2" || target == "rust-v2" || target == "async-v2") && type == ModelType.map .int .int)
         check (name ++ ".emission." ++ target)
           ((generate probe).isOk == accepted)
   let valueRows ← rows "mitl-values.jsonl"
@@ -204,8 +206,8 @@ def run (output : System.FilePath) : IO Unit := do
       else
         for (target, generate) in emitters do
           check (name ++ ".excludedPath." ++ target)
-            ((generate probe).isOk == (target == "cpp-v2"))
-  IO.println s!"MITL judgments: {typeRows.length} types, {valueRows.length} values, {eqRows.length} equivalence, {pathRows.length} paths; fresh bindings: 6 profiles"
+            ((generate probe).isOk == (target == "cpp-v2" || target == "rust-v2"))
+  IO.println s!"MITL judgments: {typeRows.length} types, {valueRows.length} values, {eqRows.length} equivalence, {pathRows.length} paths; fresh bindings: {emitters.length} profiles"
 
 end ModelInterfaceLanguageSpec
 

@@ -11,6 +11,12 @@ See the [detailed execution plan](../Plans/deterministic-production-mbt-dpm2-dpm
 and [final scoped acceptance](../Plans/dpm2-dpm5-qualified-20261004/README.md).
 These results do not extend full WriteSentry qualification or the selected M5 candidate.
 
+Update (2026-10-05): DPM-0–DPM-5 also pass for MirrorECMA's Node-worker and
+MirrorRust's cooperative-thread profiles. See the
+[language plan](../Plans/dpm-mirrorecma-mirrorrust.md) and
+[retained installed acceptance](../Plans/dpm-languages-evidence-20261005/README.md).
+These are additional experimental client profiles with the same explicit limits.
+
 ## 1. Decision requested
 
 Add a reusable deterministic production-MBT module to the Mirror Framework. For the first C++ slice, MirrorCPP should own the client-side schedule coordinator and replay integration. Applications should supply instrumented production ports, declared scheduling checkpoints, and the mapping between concrete execution and model actions.

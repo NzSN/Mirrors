@@ -1,0 +1,19 @@
+{
+  "schema": "mirrors.dpm-counter-mapping/v1",
+  "profile": "mirrorrust.cooperative-checkpoints/v1",
+  "actors": [
+    {
+      "actor": "a",
+      "operation": "increment-a"
+    },
+    {
+      "actor": "b",
+      "operation": "increment-b"
+    }
+  ],
+  "actions": {
+    "read": "read",
+    "write": "write",
+    "finish": "$done"
+  }
+}

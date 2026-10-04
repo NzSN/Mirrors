@@ -1,0 +1,4 @@
+#!/usr/bin/env python3
+from pathlib import Path
+(Path(__file__).parent/"model-check-invoked").write_text("unexpected")
+raise SystemExit(97)

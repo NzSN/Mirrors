@@ -1,0 +1,32 @@
+{
+    "schema":  "mirrors.dpm3-native-build/v1",
+    "observedAt":  "2026-10-04T12:06:12.1269089Z",
+    "sourceBaseRevision":  "62b62298c5c764dc63cde10968c2555a79df1d3c",
+    "sourceHashes":  {
+                         "src/self_watch.cpp":  "df0db90e13ba3582e086a710ba6027f538536eeda56d192700c8a11bf593014e",
+                         "src/veh.cpp":  "413b322af59e28dfa53c8acee8275fa9ed722145e2145df3d5d82d2700bc3e09",
+                         "src/self_watch_internal.h":  "d00f2bc28fe558075a94c0b6ed58ddba62a781bbba7c8519009cda45437ecfea",
+                         "src/mbt_phase_hooks.h":  "741522eeb3b191dc334284ab8d9808c339d96bd91ce0dc5055537b687589ee87",
+                         "src/test_fault_hooks.h":  "6a56fc6e215e825f3ef1aedf472b0bcdc93ac7258ddc5ec74d2fd50bf8388dd7",
+                         "src/arm_timing_diagnostic.h":  "79b6811b436e3653df84c84e526b8834eb464baaff322bdaf77daf9de209fe55",
+                         "include/writesentry/evidence.h":  "0cf4ef5606a87d5bff339d01bcc2998ba46cefded146d724f2bb569be6610ea6",
+                         "include/writesentry/core_policy.h":  "25a92b93d9a1638a5fc1dc2df923be8d50761ae5e79494a22ba69cf821aa0f8a",
+                         "include/writesentry/writesentry.h":  "3a8f68ea834c75030559515c4e25d1ba9ace1ce91e73b3137efec369143c0cde",
+                         "tests/mbt/phase_worker.cpp":  "478040d46665f3972cae293615888ec6cc424bce00ecd7f9a41a2271a606d7df",
+                         "tests/mbt/runtime_writers.asm":  "630a346fad5885c6b9329663045239ae4b318848e120c50cfac8d813a3fcb2bd",
+                         "Specs/WriteSentry.tla":  "f06d899bd6a70b2af57440776e8512a54bb9e16fa5e1ba7af9c56e3601e28c8e",
+                         "Specs/WriteSentryMBT.tla":  "8f638a8779b7954cad43bc215b8db2dfdf51693227329391a64221c7670b4608",
+                         "model-interface/phase/WriteSentryPhase.mirror-interface.json":  "983845f5be266b2fb06bbb902a34703769aaea0d404cab60d801b16a8491bd51",
+                         "model-interface/phase/WriteSentryPhase.mirror-interface.lock.json":  "d993ada24b1881fceede5b181b890226abdc7ac29a8c5d94e7f7e73e99590bc0",
+                         "model-interface/phase/WriteSentryPhase.evidence.itf.json":  "9393fbe559ec68ff35a3b24eb6a04db79139504a97548a887872248f58621115",
+                         "docs/production-readiness/multi-slot-correspondence.md":  "039ccf9459d48e1f8145875a4af5d6c5b8e8826b13b9fab6967fc7e994399946"
+                     },
+    "wrapperSha256":  "5a5b5e0ee1e9c1f818e8855a7fc2fa1a81b0acca8b42da46483548814d9d8afe",
+    "sourceMutation":  "duplicate-sink-call",
+    "stagedVehSha256":  "6f0a79ea0463844e2d79310c4c418303e8486bfe4a48eba108f03069e37046f0",
+    "executableSha256":  "7ef7c6c2883587b34320387b348ffba023ec498c7835eda894f3f122448c66ff",
+    "executable":  "C:\\Users\\ayden\\Desktop\\Workspace\\MirrorsRemote\\dpm-20261004\\duplicate-sink-call\\build\\dpm_native_worker.exe",
+    "compilerFlags":  "/nologo /std:c++20 /O2 /W4 /EHsc /MD /DWIN32_LEAN_AND_MEAN /DNOMINMAX /DWRITESENTRY_MBT_PHASES /I \"C:\\Users\\ayden\\Desktop\\Workspace\\MirrorsRemote\\dpm-20261004\\duplicate-sink-call\\source\\include\" /I \"C:\\Users\\ayden\\Desktop\\Workspace\\MirrorsRemote\\dpm-20261004\\duplicate-sink-call\\source\\src\" /I \"C:\\Users\\ayden\\Desktop\\Workspace\\MirrorsRemote\\dpm-20261004\\duplicate-sink-call\\source\\tests\\mbt\" /I \"C:\\Users\\ayden\\Desktop\\Workspace\\MirrorsRemote\\dpm-20261004\\duplicate-sink-call\\source\\jsoninclude\" ",
+    "phaseHooks":  true,
+    "profile":  "dpm-writesentry-two-operation/v1"
+}

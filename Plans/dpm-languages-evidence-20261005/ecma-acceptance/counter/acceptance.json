@@ -1,0 +1,429 @@
+{
+  "schema": "mirrors.dpm-language-counter/v1",
+  "language": "ecma",
+  "status": "passed",
+  "rows": [
+    {
+      "case": "serial-ok",
+      "status": "passed",
+      "receipt": "serial-ok/receipt.json",
+      "sha256": "56d8cec541619a4d69924856bf0acdab6bcaf0fa4ad213c6aad3b88f2fe093ad",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-mutate",
+      "status": "passed",
+      "receipt": "serial-mutate/receipt.json",
+      "sha256": "da78092e8b85df63b621bac064000c46c4098e26f03d06759dd64cecb9280610",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-teardown-fail",
+      "status": "passed",
+      "receipt": "serial-teardown-fail/receipt.json",
+      "sha256": "bd20f34f25b0b5a54855c86b6e992c48ca48f109bbd0ee96549bb5fe5e9beed0",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-mutate-and-teardown-fail",
+      "status": "passed",
+      "receipt": "serial-mutate-and-teardown-fail/receipt.json",
+      "sha256": "8edced7a2a16a5368b0b2461c57e77f559c4e7b0c1568af6de87a47d390fd1e4",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-wrong-identity",
+      "status": "passed",
+      "receipt": "serial-wrong-identity/receipt.json",
+      "sha256": "8539b49b34e87db4d7a742684cc5c1a3c6b9eb89dd9f3452925fa24665c4aa6c",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-denied-negotiation",
+      "status": "passed",
+      "receipt": "serial-denied-negotiation/receipt.json",
+      "sha256": "7262f26685bce417d0478d0f3252a693d638fe4a1abc7e9c1d44fbcf49cd1785",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-unexpected-checkpoint",
+      "status": "passed",
+      "receipt": "serial-unexpected-checkpoint/receipt.json",
+      "sha256": "1e41c1b7589248d9ac723ba77a2df5dc6d7d6394552a30f74da979d7b9757822",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-cancel",
+      "status": "passed",
+      "receipt": "serial-cancel/receipt.json",
+      "sha256": "def98df0f5969aa307ed82a7131283e22d55f9d4be5e7005a8d3acc9e62f9517",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-bad-observation",
+      "status": "passed",
+      "receipt": "serial-bad-observation/receipt.json",
+      "sha256": "43293fd531009ec09fe5357b43461b2707cbea589148ae0d1ff91f32b64a2509",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-malformed-input",
+      "status": "passed",
+      "receipt": "serial-malformed-input/receipt.json",
+      "sha256": "6ce1150e3df6e8eb1c7f5836b1a6c4dfcef256ef166c7225b4ed4c717b64a90b",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-reentrant",
+      "status": "passed",
+      "receipt": "serial-reentrant/receipt.json",
+      "sha256": "dc76246ae3ba926c096dda0f9f2606bbc3ac8415a6851d002a9ecc5e8448284b",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-early-done",
+      "status": "passed",
+      "receipt": "serial-early-done/receipt.json",
+      "sha256": "5d2cb67c741d7181ac2620b4f1b7498df7b7291396dc813fc20be67a8d535027",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-early-eof",
+      "status": "passed",
+      "receipt": "serial-early-eof/receipt.json",
+      "sha256": "40a2c55f893516619c3f21e60d7e0f31296c822f2e9fa47a20545ddb7d794862",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-repeat",
+      "status": "passed",
+      "receipt": "serial-repeat/receipt.json",
+      "sha256": "8fada06fe2224a8624365ff532aafb887a87ad8ee074bfd105474e14622839b0",
+      "traceSha256": "1d3ff44eb811836ee4f4b97304f952984820c63e1b764f175ea1659fb10bf1ad"
+    },
+    {
+      "case": "serial-oracle-init-not-adopted",
+      "status": "passed",
+      "receipt": "serial-oracle-init-not-adopted/receipt.json",
+      "sha256": "c0a04f6f1d635c704b09223ec703d8568cbf5faa6607eaf99353347f93ef3483",
+      "traceSha256": "2b77b04c618644c8e2063a8c8656844a3a5e83f3c6682e412175e0d6a6f776ed"
+    },
+    {
+      "case": "overlap-ok",
+      "status": "passed",
+      "receipt": "overlap-ok/receipt.json",
+      "sha256": "bd01be3a2f2a738171515e6c5c33191bfed1bcedec9aec2b58e3689085e230f0",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-mutate",
+      "status": "passed",
+      "receipt": "overlap-mutate/receipt.json",
+      "sha256": "a9875676212d0a4c6748eaa2bb99e677fdf51c632405e39a29b047f4ccf61457",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-teardown-fail",
+      "status": "passed",
+      "receipt": "overlap-teardown-fail/receipt.json",
+      "sha256": "106adb0e0543f458864d3fee32ed4cf41f1413c6739199e86e82e372cc12a835",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-mutate-and-teardown-fail",
+      "status": "passed",
+      "receipt": "overlap-mutate-and-teardown-fail/receipt.json",
+      "sha256": "3baeda59e1db4f778e02578192333297f607f228d19ff789e60d4850802bca97",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-wrong-identity",
+      "status": "passed",
+      "receipt": "overlap-wrong-identity/receipt.json",
+      "sha256": "1afbdcc7d7f3bbeb4b4619dccc2525fbde956051c552f29f4068a272e0e457fb",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-denied-negotiation",
+      "status": "passed",
+      "receipt": "overlap-denied-negotiation/receipt.json",
+      "sha256": "7262f26685bce417d0478d0f3252a693d638fe4a1abc7e9c1d44fbcf49cd1785",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-unexpected-checkpoint",
+      "status": "passed",
+      "receipt": "overlap-unexpected-checkpoint/receipt.json",
+      "sha256": "841187b275e2e8a0152d7d5b320ab03bdffaadcfeb7836a5ecc0314f6252a268",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-cancel",
+      "status": "passed",
+      "receipt": "overlap-cancel/receipt.json",
+      "sha256": "32cdf3e560e94c0912bc48e8bb9f6a5a95e4924dc72158f44889cfb0fadd8e25",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-bad-observation",
+      "status": "passed",
+      "receipt": "overlap-bad-observation/receipt.json",
+      "sha256": "67bcea5c08697a4410bb799e0e4cd9c4e1f441c7a60f9b7a91fa5136ca230083",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-malformed-input",
+      "status": "passed",
+      "receipt": "overlap-malformed-input/receipt.json",
+      "sha256": "fd160ded31a63cf4b2ed944ddc7fa7baf79a5e79c35b8f11e6e6e3c0e3849d92",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-reentrant",
+      "status": "passed",
+      "receipt": "overlap-reentrant/receipt.json",
+      "sha256": "502085a57c9af7804851c2d30f79c3434b123973f0e4547edaa308effeee39fe",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-early-done",
+      "status": "passed",
+      "receipt": "overlap-early-done/receipt.json",
+      "sha256": "5d2cb67c741d7181ac2620b4f1b7498df7b7291396dc813fc20be67a8d535027",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-early-eof",
+      "status": "passed",
+      "receipt": "overlap-early-eof/receipt.json",
+      "sha256": "a09b996bc63a6cc3138e2df29fb2ff453ac2862e16805b6e7cc0e005ccf7abd2",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-repeat",
+      "status": "passed",
+      "receipt": "overlap-repeat/receipt.json",
+      "sha256": "4503c02f11930b39da8a8e9506862425fa356584b8d9b002683b1dccc5d6a8e6",
+      "traceSha256": "8acb09b1e98aeea249d1f1b2bbfc0921c919e04749cefca10a394ed8936d09b3"
+    },
+    {
+      "case": "overlap-oracle-init-not-adopted",
+      "status": "passed",
+      "receipt": "overlap-oracle-init-not-adopted/receipt.json",
+      "sha256": "16db632f18b7424fd48df978b54f32c336f1b6b48cfffc10db8367110cc6d1fd",
+      "traceSha256": "0ff98a8b1627e0ae4a01102d7e464556e347c83fae31b8562ab668a32241f97b"
+    },
+    {
+      "case": "serial-five-ok",
+      "status": "passed",
+      "receipt": "serial-five-ok/receipt.json",
+      "sha256": "80c702aa47108d1eb3459da979277944d6148ffeb9b5e1c7240bbbbd8e0462b5",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-mutate",
+      "status": "passed",
+      "receipt": "serial-five-mutate/receipt.json",
+      "sha256": "351a0f087cf1efc2a27a166dc91fab6e1968d2a5173c1f146179b611e2c6f298",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-teardown-fail",
+      "status": "passed",
+      "receipt": "serial-five-teardown-fail/receipt.json",
+      "sha256": "451706d86670da226797404e9226a85794aaad7924595ac2a12a11685465645a",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-mutate-and-teardown-fail",
+      "status": "passed",
+      "receipt": "serial-five-mutate-and-teardown-fail/receipt.json",
+      "sha256": "14a6801e2eb317710ee4f58f255b76ffc37cc99a78aeeb5e39700b4526f6298a",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-wrong-identity",
+      "status": "passed",
+      "receipt": "serial-five-wrong-identity/receipt.json",
+      "sha256": "97ffa6b58478365c6b9f37e3da286fe47e835724eaa6a0cd755297b28e2ad460",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-denied-negotiation",
+      "status": "passed",
+      "receipt": "serial-five-denied-negotiation/receipt.json",
+      "sha256": "7262f26685bce417d0478d0f3252a693d638fe4a1abc7e9c1d44fbcf49cd1785",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-unexpected-checkpoint",
+      "status": "passed",
+      "receipt": "serial-five-unexpected-checkpoint/receipt.json",
+      "sha256": "ef0860ad59790c7da372c1dab83b663e7e7c51d3686bf40f7515baf9bccf7eb0",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-cancel",
+      "status": "passed",
+      "receipt": "serial-five-cancel/receipt.json",
+      "sha256": "d771950d6d3e2dba138679f57aacf96ca15bff8fdfe7666dbdea0ab4ace80c2b",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-bad-observation",
+      "status": "passed",
+      "receipt": "serial-five-bad-observation/receipt.json",
+      "sha256": "3686f31ab40b3c1c099280f4d60a05b2c8298eb6494f9fd58dea5b1d238e46f4",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-malformed-input",
+      "status": "passed",
+      "receipt": "serial-five-malformed-input/receipt.json",
+      "sha256": "e3fb119ed903c42c0ad01165388b0749322249640d8e2b8dbeecfc3c22e5b1b0",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-reentrant",
+      "status": "passed",
+      "receipt": "serial-five-reentrant/receipt.json",
+      "sha256": "c0014f32db58713bf5e3128c664c9268df8c3f9c1a4dd7991e2a783ca853e443",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-early-done",
+      "status": "passed",
+      "receipt": "serial-five-early-done/receipt.json",
+      "sha256": "5d2cb67c741d7181ac2620b4f1b7498df7b7291396dc813fc20be67a8d535027",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-early-eof",
+      "status": "passed",
+      "receipt": "serial-five-early-eof/receipt.json",
+      "sha256": "84c5585a027ee271434eb40c6f6eb3333d8880175be6222b9ff8d96aa8b954ca",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-repeat",
+      "status": "passed",
+      "receipt": "serial-five-repeat/receipt.json",
+      "sha256": "e37ab95866055341918588b8febc2f2bdf5fc3ff060576164042b1e1ba4ed832",
+      "traceSha256": "93087b7815f5af48c72067d033edddf0de19c9564dc2624ccce3a526818a1585"
+    },
+    {
+      "case": "serial-five-oracle-init-not-adopted",
+      "status": "passed",
+      "receipt": "serial-five-oracle-init-not-adopted/receipt.json",
+      "sha256": "8c9baa75b38fcce37c4efb401aae617e5b17da70921c6a33ea0a2f1e4550bc6a",
+      "traceSha256": "3a14bc5584490de0153fdf85a96b77a9dd390872dd8f1c6626e612affd8fb23b"
+    },
+    {
+      "case": "overlap-five-ok",
+      "status": "passed",
+      "receipt": "overlap-five-ok/receipt.json",
+      "sha256": "84a66a1d74382766eb0e17cd1bf6dd907fbcc45d9066b931a1053cc6610ecc47",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-mutate",
+      "status": "passed",
+      "receipt": "overlap-five-mutate/receipt.json",
+      "sha256": "6bf6d23cc6712ea518d6ebd88eab5c45de4df0e3cae087dd94386e7fe9d87b95",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-teardown-fail",
+      "status": "passed",
+      "receipt": "overlap-five-teardown-fail/receipt.json",
+      "sha256": "018d8f08dd68e96411a261b5e2fe47fdf7a8c2e19ec56f7cd6e69efca7b90b21",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-mutate-and-teardown-fail",
+      "status": "passed",
+      "receipt": "overlap-five-mutate-and-teardown-fail/receipt.json",
+      "sha256": "b9329ef165aade07b87087691c3ac9ce4300d891b428343f033aba6069ac7931",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-wrong-identity",
+      "status": "passed",
+      "receipt": "overlap-five-wrong-identity/receipt.json",
+      "sha256": "46c0b61daf876dfdd7a502351a82102c452cca32180295001cce6c012ac0ed75",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-denied-negotiation",
+      "status": "passed",
+      "receipt": "overlap-five-denied-negotiation/receipt.json",
+      "sha256": "7262f26685bce417d0478d0f3252a693d638fe4a1abc7e9c1d44fbcf49cd1785",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-unexpected-checkpoint",
+      "status": "passed",
+      "receipt": "overlap-five-unexpected-checkpoint/receipt.json",
+      "sha256": "cfc3c55113ee4345c779369093cedaf441b13d72cd0fc31f00b0fb958b88ebd9",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-cancel",
+      "status": "passed",
+      "receipt": "overlap-five-cancel/receipt.json",
+      "sha256": "5f85fb01764d8660f67c3f0e67e9aa26b864c1d29ae7632709dc5f165e2fd9d3",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-bad-observation",
+      "status": "passed",
+      "receipt": "overlap-five-bad-observation/receipt.json",
+      "sha256": "c000489fb457f25bf484d20aae4c78f6e6793d88d74380b293b66d0c9316ffb7",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-malformed-input",
+      "status": "passed",
+      "receipt": "overlap-five-malformed-input/receipt.json",
+      "sha256": "546ce2fe7af6f9633ee705e6b1f9cda7d867de957835d2582ab54d7cb761e3e2",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-reentrant",
+      "status": "passed",
+      "receipt": "overlap-five-reentrant/receipt.json",
+      "sha256": "201b90fccb76f1f4947c000956f9469fd8c617778af439f77444a15e879c70dd",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-early-done",
+      "status": "passed",
+      "receipt": "overlap-five-early-done/receipt.json",
+      "sha256": "5d2cb67c741d7181ac2620b4f1b7498df7b7291396dc813fc20be67a8d535027",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-early-eof",
+      "status": "passed",
+      "receipt": "overlap-five-early-eof/receipt.json",
+      "sha256": "a7586efc342f8f70559fb9da9fe428587567c84ee24da994f51d01fe0e7df0cc",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-repeat",
+      "status": "passed",
+      "receipt": "overlap-five-repeat/receipt.json",
+      "sha256": "21c444e09daf48558ef134be62e03e67a9742b6546adaa00078ffdf092a91ab1",
+      "traceSha256": "f733112aae17fd869f76e79924a16b151a2d18867b9f6798190153cac6fabf01"
+    },
+    {
+      "case": "overlap-five-oracle-init-not-adopted",
+      "status": "passed",
+      "receipt": "overlap-five-oracle-init-not-adopted/receipt.json",
+      "sha256": "619446adf4ac361007cb59cd77c31c651039eb4f296d11c7cb565ce9bdcdf632",
+      "traceSha256": "fd8580094aa84900b796bf6e5d0c0743efd24eeef80829f10873c5e390776bbb"
+    }
+  ],
+  "freshOracles": false,
+  "oracleProvenance": "inspect supplied capture manifests; no new capture is inferred by replay"
+}

@@ -1,0 +1,1094 @@
+{
+  "attemptedRuns": 1,
+  "categories": {
+    "passed": 1
+  },
+  "comparison": "not_requested",
+  "comparisonRequired": false,
+  "comparisonRuns": 0,
+  "complete": false,
+  "completedRuns": 1,
+  "declaredInputs": [
+    {
+      "initial": 0,
+      "mode": "cancel"
+    },
+    {
+      "initial": 5,
+      "mode": "cancel"
+    }
+  ],
+  "denominatorKnown": true,
+  "elapsedMs": 4,
+  "eligibleRuns": 40,
+  "eligibleRunsLowerBound": 40,
+  "enumeratedScheduleShapes": 20,
+  "enumerationExhausted": false,
+  "firstCounterexample": null,
+  "firstFailure": null,
+  "inputAssignments": 2,
+  "limits": {
+    "maxEnumeratedSchedules": 4096,
+    "maxEvidenceBytes": 16777216,
+    "maxRuns": 4096,
+    "timeBudgetMs": 30000
+  },
+  "maxPreemptions": 64,
+  "por": "disabled",
+  "profile": "mirrorrust.finite-checkpoint-exploration/v1",
+  "projection": {
+    "baseVariables": [
+      "count",
+      "saved",
+      "phase"
+    ],
+    "instrumentationVariables": []
+  },
+  "runs": [
+    {
+      "category": "passed",
+      "execution": {
+        "actorThreads": {
+          "a": "ThreadId(2)",
+          "b": "ThreadId(3)"
+        },
+        "actors": [
+          {
+            "actor": "a",
+            "operation": "increment-a"
+          },
+          {
+            "actor": "b",
+            "operation": "increment-b"
+          }
+        ],
+        "checkpoints": [
+          "read",
+          "write"
+        ],
+        "cleanup": "confirmed",
+        "cleanupAttempts": [
+          {
+            "cleanup": "confirmed",
+            "error": null,
+            "remainingActors": []
+          }
+        ],
+        "coverage": "recorded-schedule-only",
+        "detail": "",
+        "events": [
+          {
+            "actor": "a",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 0,
+            "step": 0
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 1,
+            "step": 0
+          },
+          {
+            "actor": "a",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 2,
+            "step": 1
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 3,
+            "step": 1
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write",
+            "kind": "permit",
+            "operation": "increment-a",
+            "ordinal": 4,
+            "step": 2
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done",
+            "kind": "arrival",
+            "operation": "increment-a",
+            "ordinal": 5,
+            "step": 2
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$start",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 6,
+            "step": 3
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 7,
+            "step": 3
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 8,
+            "step": 4
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 9,
+            "step": 4
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write",
+            "kind": "permit",
+            "operation": "increment-b",
+            "ordinal": 10,
+            "step": 5
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done",
+            "kind": "arrival",
+            "operation": "increment-b",
+            "ordinal": 11,
+            "step": 5
+          }
+        ],
+        "executionId": "f0275684d2633246fcf8d36082d1b01b",
+        "generation": 1,
+        "observations": [
+          {
+            "afterSteps": 0,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 1,
+            "state": {
+              "count": {
+                "#bigint": "0"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "1"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 2,
+            "state": {
+              "count": {
+                "#bigint": "1"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "2"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 3,
+            "state": {
+              "count": {
+                "#bigint": "1"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "0"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 4,
+            "state": {
+              "count": {
+                "#bigint": "1"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 5,
+            "state": {
+              "count": {
+                "#bigint": "2"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "2"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "afterSteps": 6,
+            "state": {
+              "count": {
+                "#bigint": "2"
+              },
+              "phase": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "3"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "3"
+                    }
+                  ]
+                ]
+              },
+              "saved": {
+                "#map": [
+                  [
+                    "a",
+                    {
+                      "#bigint": "0"
+                    }
+                  ],
+                  [
+                    "b",
+                    {
+                      "#bigint": "1"
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "outcome": "completed",
+        "passed": true,
+        "policy": {
+          "cleanupTimeoutMs": 1000,
+          "executionTimeoutMs": 2000,
+          "maxActors": 64,
+          "maxSteps": 65536
+        },
+        "remainingActors": [],
+        "schedule": {
+          "identity": {
+            "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+            "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+            "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+          },
+          "inputs": {
+            "initial": 0,
+            "mode": "cancel"
+          },
+          "profile": "mirrorrust.cooperative-checkpoints/v1",
+          "schema": "mirrors.checkpoint-schedule/v1",
+          "steps": [
+            {
+              "actor": "a",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "a",
+              "checkpoint": "$done"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "read"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "write"
+            },
+            {
+              "actor": "b",
+              "checkpoint": "$done"
+            }
+          ]
+        },
+        "scheduleCompleted": true,
+        "schema": "mirrors.checkpoint-execution/v1"
+      },
+      "inputIndex": 0,
+      "ordinal": 0,
+      "schedule": {
+        "identity": {
+          "implementationSha256": "8da2cfe04abdb457547a555acc320698b07bb0f588ba23b27c6376429dd0163e",
+          "mappingSha256": "d924d303ab3bb0208ae3565a9f32df73586c491c5d693cf9fb2a88e047ae09c6",
+          "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+        },
+        "inputs": {
+          "initial": 0,
+          "mode": "cancel"
+        },
+        "profile": "mirrorrust.cooperative-checkpoints/v1",
+        "schema": "mirrors.checkpoint-schedule/v1",
+        "steps": [
+          {
+            "actor": "a",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "a",
+            "checkpoint": "$done"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "read"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "write"
+          },
+          {
+            "actor": "b",
+            "checkpoint": "$done"
+          }
+        ]
+      }
+    }
+  ],
+  "schema": "mirrors.finite-exploration/v1",
+  "states": [
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "0"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 0
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "0"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 1
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "1"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "2"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 2
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "1"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 3
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "1"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 4
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "2"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "2"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 5
+    },
+    {
+      "canonical": [
+        "mirrors.canonical-state/v1",
+        [
+          [
+            "count",
+            [
+              "integer",
+              "2"
+            ]
+          ],
+          [
+            "phase",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "3"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "saved",
+            [
+              "map",
+              [
+                [
+                  [
+                    "string",
+                    "a"
+                  ],
+                  [
+                    "integer",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "string",
+                    "b"
+                  ],
+                  [
+                    "integer",
+                    "1"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "id": 6
+    }
+  ],
+  "status": "incomplete",
+  "stopReason": "cancelled",
+  "sut": {
+    "acquisitions": 1,
+    "enteredWorkers": 2,
+    "teardowns": 1
+  },
+  "transitions": [
+    {
+      "count": 1,
+      "from": 0,
+      "to": 1
+    },
+    {
+      "count": 1,
+      "from": 1,
+      "to": 2
+    },
+    {
+      "count": 1,
+      "from": 2,
+      "to": 3
+    },
+    {
+      "count": 1,
+      "from": 3,
+      "to": 4
+    },
+    {
+      "count": 1,
+      "from": 4,
+      "to": 5
+    },
+    {
+      "count": 1,
+      "from": 5,
+      "to": 6
+    }
+  ]
+}

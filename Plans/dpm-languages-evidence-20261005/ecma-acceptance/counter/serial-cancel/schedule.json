@@ -1,0 +1,39 @@
+{
+  "schema": "mirrors.checkpoint-schedule/v1",
+  "profile": "mirrorecma.worker-checkpoints/v1",
+  "identity": {
+    "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da",
+    "mappingSha256": "3da0e2576ca8c99ff89a0fdcb777ab4430c2b24ff375baa343664c2d430eb4db",
+    "implementationSha256": "7dd7c65d6d535a76761e288401674e09498d462f9f5d888516371954aaa748d1"
+  },
+  "inputs": {
+    "initial": 0,
+    "mode": "cancel"
+  },
+  "steps": [
+    {
+      "actor": "a",
+      "checkpoint": "read"
+    },
+    {
+      "actor": "a",
+      "checkpoint": "write"
+    },
+    {
+      "actor": "a",
+      "checkpoint": "$done"
+    },
+    {
+      "actor": "b",
+      "checkpoint": "read"
+    },
+    {
+      "actor": "b",
+      "checkpoint": "write"
+    },
+    {
+      "actor": "b",
+      "checkpoint": "$done"
+    }
+  ]
+}
