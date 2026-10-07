@@ -2,21 +2,14 @@
 
 Date: 2026-09-21
 
-Status (2026-10-03): the selected `m5-wsl-windows-remote/v1` profile is qualified
-for published-revision C0
-`f01fb7717ca9bab18a68443707f478d49c15a15d420273db1e881c9683b16384`.
-Broader M4 acceptance remains partial. This roadmap does not itself authorize
-new implementation or release actions. [Current readiness](q3-published-2026-10-03.md)
-records the exact accepted candidate and limits; later commits and documentation
-changes do not automatically inherit its qualification.
-
-Current refresh (2026-10-07): the working-tree candidate including the compiler
-migration helper is frozen at `d5358150…`. Both installed D audits and 14/18
-required command IDs pass; the three remote producers and full Q1/Q2 remain
-pending while the selected Windows oracle is stopped. See
-[current refresh readiness](q3-roadmap-refresh-2026-10-07.md). This incomplete
-refresh neither removes the previous candidate's scoped qualification nor
-extends it to the new source automatically.
+Status (2026-10-07): published-revision C0
+`94271a543085118e47c7fd540ee8d34d3f427fa5f45fedaeba0c852534f4f34a`
+is qualified for `m5-wsl-windows-remote/v1`: 18 commands/16 tiers, both D
+bindings, 19 linked nodes, 20 independently verified bundles and six rejected
+controls. [Current readiness](q3-published-roadmap-2026-10-07.md) records exact
+published revisions and boundaries. Broader M4 acceptance remains partial;
+later commits never inherit qualification automatically. The earlier October 3
+qualified candidate and October 7 incomplete working-tree candidate are history.
 
 Planning baseline: Mirrors `eb5cd00`, MirrorGate `173075d`
 
@@ -100,7 +93,7 @@ Preserve these boundaries throughout:
 | M2 | Installable reference distribution | Component packaging owners; framework integration in Mirrors | M1 | Fresh isolated consumer completes local and Gate flows | Done for selected WSL2 profile: committed local/Gate installs and source-hidden D audits (`run-2c926686…`, `run-e0df2658…`) qualify recorded C0 `f01fb7717ca9…`; native Ubuntu acceptance excluded |
 | M3 | Failure reproduction and fidelity acceptance | MirrorECMA, Mirrors compiler, Gate integration | M1; use M2 distribution for final acceptance | Reproduction, safe reduction, and mutation controls pass | Done for selected profile: both installed R1 branches reproduced; prefix best 2/16 with complete minimality; LeaseService R5 model-valid and actual reduced-corpus baseline/fault preserves the same signature; local/Gate mutation aggregates 17/17; exact R0/R1/R5 linkage independently verified |
 | M4 | Gate interruption recovery | MirrorGate | M1 evidence format | Ownership-safe recovery and aggregate-limit gates pass | Partial overall: recorded-candidate recovery reclaims four owned prepared filesystem resources with confirmed cleanup and exact fresh-origin linkage; this required M5 clause qualifies. Aggregate cgroups and active-process post-restart recovery remain separately unqualified |
-| M5 | Release-candidate qualification: `m5-wsl-windows-remote/v1` | All affected owners | M2, M3, M4 ownership-safe recovery | Exact candidate passes this profile's installed/runtime/evidence gates; native Ubuntu and aggregate-cgroup acceptance excluded | Done for `m5-wsl-windows-remote/v1`: published-revision C0 `f01fb7717ca9…`; all 18 commands/16 tiers, 19-node/two-D scope and 20 bundles independently verified; six controls rejected; [Q3 published revisions](q3-published-2026-10-03.md). New `d5358150…` refresh incomplete: dual D and 14/18 commands pass, remote/full Q pending; [current readiness](q3-roadmap-refresh-2026-10-07.md) |
+| M5 | Release-candidate qualification: `m5-wsl-windows-remote/v1` | All affected owners | M2, M3, M4 ownership-safe recovery | Exact candidate passes this profile's installed/runtime/evidence gates; native Ubuntu and aggregate-cgroup acceptance excluded | Done for `m5-wsl-windows-remote/v1`: published C0 `94271a54…`, Mirrors f0894d2/ECMA eef6f71/Gate 455e196; all 18 commands/16 tiers, 19-node/two-D scope and 20 bundles independently verified; six controls rejected; [current readiness](q3-published-roadmap-2026-10-07.md). Earlier freezes remain historical |
 
 ### Historical milestone updates
 

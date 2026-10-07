@@ -5,6 +5,36 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-07 — Published roadmap revisions fully qualified
+
+The user authorized the remaining qualification and necessary unchanged-deployment
+startup. Fresh published C0 `94271a543085118e47c7fd540ee8d34d3f427fa5f45fedaeba0c852534f4f34a`
+qualifies for `m5-wsl-windows-remote/v1` at Mirrors f0894d2, MirrorECMA eef6f71
+and MirrorGate 455e196. Three refreshes reached byte stability; one immutable
+snapshot produced verified local/Gate caches and committed installations. Both
+D audits ran first. All 18 required commands and 16 tiers pass.
+
+Fresh HourClock is VALID, the declared 22-case remote matrix passes, and
+LeaseService domain reduction is model-valid with the same mismatch and confirmed
+cleanup. Full Q1 verifies 19 linked nodes and both D bindings. Independent Q2
+accepts 20 selected bundles with source/scratch hidden, networking unshared and
+read-only archived inputs; all six negative controls reject. Final source/catalog/
+lock and installed inventories are unchanged.
+
+[Published readiness](Plans/q3-published-roadmap-2026-10-07.md) records identities,
+fresh public run references, diagnostics and exact scope. Native before/after
+observations preserve PID 35888, binary 5949af… and original Apalache 0.62.2,
+Java 25.0.4+7-LTS and TLS identities. Only the intended resident server remains;
+no owned qualification/model images remain. No local model checker ran.
+
+First approval B omitted required observation bindings and was correctly refused;
+its bytes and archive remain diagnostic. Corrected later approval binds only
+actual required source/local/installed observations. Prior incomplete and older
+qualified records remain unchanged. Full private evidence is retained owner-only
+at ~/.local/state/mirrors/m5-roadmap-final-20261007, excluding credential bytes.
+M4 native enforcement/process restart and broader platform acceptance remain
+unqualified. No commit/push is included in this qualification task.
+
 ## 2026-10-07 — Current roadmap candidate: available gates accepted, full Q pending
 
 The fresh working-tree C0 `d5358150e9fe041c930a066b6f2f0f88b2f617e782692dd7ad0e9c5b2bfe7109`

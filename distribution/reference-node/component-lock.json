@@ -3,18 +3,18 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "d5358150e9fe041c930a066b6f2f0f88b2f617e782692dd7ad0e9c5b2bfe7109"
+    "selectionValue": "94271a543085118e47c7fd540ee8d34d3f427fa5f45fedaeba0c852534f4f34a"
   },
   "components": [
     {
       "componentRef": {
         "componentId": "mirrorecma",
         "repository": "https://github.com/NzSN/MirrorECMA.git",
-        "revision": "18735bd29982c3c153266c52c71b713a71b7eab8",
+        "revision": "eef6f71f2ff2d22c6e3a83274d150638a010b663",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "31244e64f20825cc82416683e62fb8abf0bea4e91bea78074188bbf8bdd0e4b4",
+          "digest": "67ac802f10ef5ca421425b6e20a487b9874a7ce076ccb281b01bcdd8eba7a8ca",
           "method": "git-diff-and-untracked-manifest-v1",
           "includedPaths": [],
           "excludedPaths": [
@@ -62,25 +62,13 @@
       "componentRef": {
         "componentId": "mirrors",
         "repository": "https://github.com/NzSN/Mirrors.git",
-        "revision": "05a9ce1437a53ef3f1c84816579268c4e141137e",
+        "revision": "f0894d2c89426278900ba79f2b7a1b9b9c5d6620",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "b044c3e99f813968810c58f934a7f65bace74d68659dea8e71655203be14e618",
+          "digest": "77778d6a7d451b1114d69a13481968f9ba8922123cfe38763c3f77a591088ff7",
           "method": "git-diff-and-untracked-manifest-v1",
-          "includedPaths": [
-            "Codec/ModelInterfaceMigrationJson.lean",
-            "Core/ModelInterface/Migration.lean",
-            "Docs/model-interface-compiler/README.md",
-            "Docs/model-interface-compiler/design.md",
-            "Docs/model-interface-compiler/lock-migration.md",
-            "Shell/ModelInterface/Migration.lean",
-            "lakefile.lean",
-            "tools/ModelInterfaceGen.lean",
-            "tools/ModelInterfaceMigrationSpec.lean",
-            "tools/qualification/preflight_m4.py",
-            "tools/run-local-no-model-check.sh"
-          ],
+          "includedPaths": [],
           "excludedPaths": [
             {
               "path": ".projectile-cache.eld",
@@ -104,10 +92,6 @@
             },
             {
               "path": "distribution/reference-node/component-lock.json",
-              "reasonCode": "evidence-output"
-            },
-            {
-              "path": "distribution/reference-node/dependency-lock.json",
               "reasonCode": "evidence-output"
             },
             {

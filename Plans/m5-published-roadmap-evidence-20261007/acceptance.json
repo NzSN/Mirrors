@@ -1,0 +1,352 @@
+{
+  "schema": "mirrors.published-head-qualification-status/v1",
+  "profileId": "m5-wsl-windows-remote",
+  "qualification": "accepted",
+  "selection": "94271a543085118e47c7fd540ee8d34d3f427fa5f45fedaeba0c852534f4f34a",
+  "sourceBaseRefs": {
+    "mirrorecma": "eef6f71f2ff2d22c6e3a83274d150638a010b663",
+    "mirrorgate": "455e196c73332a1b0d85b1d822dfc4aa3542bbd9",
+    "mirrors": "f0894d2c89426278900ba79f2b7a1b9b9c5d6620"
+  },
+  "requiredCommandsQualified": 18,
+  "requiredCommandsTotal": 18,
+  "requiredTiersPassed": 16,
+  "selectedBundleCount": 20,
+  "qualifiedBundleCount": 19,
+  "scopeNodes": 19,
+  "scopeCreditedRefs": 18,
+  "fullQ1": "passed",
+  "fullQ2": "passed",
+  "independentControlsRejected": 6,
+  "approvalCatalogSha256": "28dc8f5abe998d1e2a0e18544e7a83a08b08ba05315962928a0696e34b6d0e10",
+  "q2ResultSha256": "2df89d8c1d3f206cd676e04e59208b81e8dfd8a81b37fd51fe30b4e8be738162",
+  "deploymentMode": "owned-native-console",
+  "serviceManagerQualification": false,
+  "scopeLimits": [
+    "M4 active-process restart recovery and aggregate cgroup enforcement remain unqualified",
+    "native Ubuntu host/platform Gate backends and legacy all-transport matrix remain separate",
+    "package-registry publication and production deployment remain unclaimed"
+  ],
+  "bundles": [
+    {
+      "commandId": "framework.install-diagnostics",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-46fac8f1-7074-4d00-9f91-719023a64a3d",
+        "envelopeSha256": "a5ade2d645cec34843b21fc90306fe6902648305f1c981c6efa23a458fb1f19e",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-46fac8f1-7074-4d00-9f91-719023a64a3d",
+        "envelopeSha256": "b5dd00ce4dec0734e331bdfd4079017ca010773489fe34b817fd82322275ede7",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "framework.install-diagnostics-gate",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-c7fa2a9a-003d-4f57-a29c-f9cabf5c98f2",
+        "envelopeSha256": "6e11a07d2ce25e838587d90dd9efe9168b37fc5a02c1679e126fcf615fda0b9f",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-c7fa2a9a-003d-4f57-a29c-f9cabf5c98f2",
+        "envelopeSha256": "9c507d261bbcd89e3c329e0b0bfa899e1fe111f93e2adc363469028e030212da",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "mirrors.local-no-model",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-e1ed8f60-afc9-4f87-a686-d688d4a23d86",
+        "envelopeSha256": "60f32f48084725e6784cbf3b72d9d5b9b3faf82b710efee23837f90f3adbe13f",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-e1ed8f60-afc9-4f87-a686-d688d4a23d86",
+        "envelopeSha256": "8e3be51eb8d059822defcc66614e5ddbea956383341de539f837178c84b308ca",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "mirrorecma.project-check",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-e8c3dc89-c0e5-4bf8-a1fa-5b6aaefcd770",
+        "envelopeSha256": "79354e0755d54a297a2af596e341e46621476886413b5840644d6402d9693cf2",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-e8c3dc89-c0e5-4bf8-a1fa-5b6aaefcd770",
+        "envelopeSha256": "939ab0bf6f0b0c802bff0e51129ffc08b6ba18a7e03c897a80061c5cf6aea6b8",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "mirrorecma.test",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-ac1da6d9-71f0-400a-98ca-898dbe2ec203",
+        "envelopeSha256": "3230ddb45763736d28f4f5729b79112d415fe7902a45ae7003c04ff45eee3601",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-ac1da6d9-71f0-400a-98ca-898dbe2ec203",
+        "envelopeSha256": "4f5341b0cbdba9ad4c5f4e6f6efb5d61fc213cff18b43b29d826f27fb2aa1079",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "mirrorgate.required",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-9933a880-7c41-4d52-b822-9d300c53349a",
+        "envelopeSha256": "db91921efea14d06cc2984dfbb6ff88a3c9550d5706c8e298c7116f48b2f4dce",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-9933a880-7c41-4d52-b822-9d300c53349a",
+        "envelopeSha256": "d3de2403d0c9168e1a1354708542250d17500df546a176599c52247636a65e83",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "framework.replay-correct",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-596d71b0-fb4e-4740-9959-b3fc0ffa41ec",
+        "envelopeSha256": "38644e1f0dacb69f90f27f5ea1aabbb513ae6978a0711025bcdfbea784d301e7",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-596d71b0-fb4e-4740-9959-b3fc0ffa41ec",
+        "envelopeSha256": "c293a69dc0587a19e830ad437f6597af4eee168969785e179f3f1b9dad4eef7d",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "framework.replay-faulty",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-3b2171e6-6780-46bd-ac2c-5e0840710168",
+        "envelopeSha256": "59ff6a7b9469b413fe78a2555f1647d9e3dcc210ab4235a11db03b383e04dd11",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-3b2171e6-6780-46bd-ac2c-5e0840710168",
+        "envelopeSha256": "bd45a114f193dc992f2c22665c3dec326e6ec99c689f02110b3388e11e78a833",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "framework.mutation-local",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-0ffec770-d5a6-4579-bd81-8c0d4196231c",
+        "envelopeSha256": "2763032a898902a2c13af691ef97da5fe20e10868ad555b259e6f37ef636acad",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-0ffec770-d5a6-4579-bd81-8c0d4196231c",
+        "envelopeSha256": "7c6109e7afe4d2d139a63417ced85782f8234cf7a56d7d0c77fe582d987b1b83",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "framework.lease-origin-installed",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-3bf0edf6-9b54-491c-95af-820c184c4df3",
+        "envelopeSha256": "60a3630a60545b2fc41e9bf1d464b43c695217e728a8c3b6385c8c28d6cb73aa",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-3bf0edf6-9b54-491c-95af-820c184c4df3",
+        "envelopeSha256": "3d17abe1c2a7ff4b12eb640ec14a97c78301187b0363ca8bdbd1d2c14a07af60",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "framework.reproduction",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-f6e1f385-5d53-4821-81dc-37ee8a95b99e",
+        "envelopeSha256": "fe66c7b7369c436135d48b709f0c0caf0f984ab5becf155406eeb26a5b14de2e",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-f6e1f385-5d53-4821-81dc-37ee8a95b99e",
+        "envelopeSha256": "23b53275c9908354109ab4be01eaf0a21de461bcae2586cc696dafef5c6f3ffc",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "framework.reproduction-lease",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-be05ec4f-283e-4363-97a4-3b9fa703565b",
+        "envelopeSha256": "000b7175aeb2c9e869658cb7480928b701cf77855834e757ed7c7571fc57e17a",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-be05ec4f-283e-4363-97a4-3b9fa703565b",
+        "envelopeSha256": "0e4da51a5714f211f1873751d5dad645d320c3eb1809329b55dccb686a71fdf0",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "framework.reduction-prefix",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-348ca359-5f9c-4a69-a1ae-6b157331941e",
+        "envelopeSha256": "acc424451cb76105ca5f29d198373e70ac9852b41ab69a7811a516d70bc7770e",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-348ca359-5f9c-4a69-a1ae-6b157331941e",
+        "envelopeSha256": "f6f82b5c7b90337eeb8459f92e4d87d2e2fc1b162d9bf1af1c060fdfb1e8d430",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "framework.mutation-gate",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-bfe425ad-294a-495b-abf7-172dc6244638",
+        "envelopeSha256": "3525e15d592391f0c387a5eb3826551c672b0d53f178fad4339348ebdba0c953",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-bfe425ad-294a-495b-abf7-172dc6244638",
+        "envelopeSha256": "5b660e3ae83aa94125888c3817fa658742ac9716294879bd7bbab63d5116210b",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "framework.recovery-origin-installed",
+      "qualification": "not_qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-3ce69442-b5c4-4a77-8933-449ece0214d0",
+        "envelopeSha256": "a0e41581a1c5c0e94d27fa3a980b1a7dd5942d5425be9ff5e1d8c75b90726d7d",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-3ce69442-b5c4-4a77-8933-449ece0214d0",
+        "envelopeSha256": "4bbb22166466c21e9dcd1d8f37fa153c230c5c108a942d14261620b00c0518c2",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "mirrorgate.recovery",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-aae7f7e9-fe17-493c-a597-20bf12c5cd4e",
+        "envelopeSha256": "b81402dd85c35e601f066826ad3bc75d0218eee1786d57104d691c804691a6a1",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-aae7f7e9-fe17-493c-a597-20bf12c5cd4e",
+        "envelopeSha256": "37efcf11d081820caba3c0edd7ed822c1f2ad952495bb697f1d7785e14b4ccaf",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "mirrors.remote-model-check",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-767eb4d2-d312-4fa7-a956-808d208501a3",
+        "envelopeSha256": "436b52aaaa8d3502fcae0db440d8705010bfb2907369142165cd474074d3881d",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-767eb4d2-d312-4fa7-a956-808d208501a3",
+        "envelopeSha256": "07cadf107f5b0e735a281c3a8aca5c4e822248669935b09e50401b6fc9516d59",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "mirrors.interop",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-117a32f9-a974-4262-b2b8-4215ee319ec4",
+        "envelopeSha256": "00755e7e88b952bd141b208e2f8944b1e82ca06f39763b1c6b8b4ecf9c063723",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-117a32f9-a974-4262-b2b8-4215ee319ec4",
+        "envelopeSha256": "de4116c210e7e8f6709663b7db4d96d8ccdd381f6edc7c99b4fc552676f795a3",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "framework.reduction",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-705afaad-5879-4a28-98b3-5dd4b7bc32df",
+        "envelopeSha256": "4bc906addd19449342ad856243d01790666877171243753e1284c01cf6005c52",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-705afaad-5879-4a28-98b3-5dd4b7bc32df",
+        "envelopeSha256": "33154dcc0b958f2a2667e6814acbfc55558766a1c20c6dd6bb0a3770c87e3f17",
+        "projectionKind": "public"
+      }
+    },
+    {
+      "commandId": "evidence.offline-verify",
+      "qualification": "qualified",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-8de7b167-1dfc-4cee-820c-51f75ec7353f",
+        "envelopeSha256": "ff2bdf7135ba9e8e2be08ae11095b0a600343c1c858e343dc35a90f818f1bddf",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-8de7b167-1dfc-4cee-820c-51f75ec7353f",
+        "envelopeSha256": "1d759f172c26a071584efe55dca130d9420443a1dec17bd879491ba3b156b6e8",
+        "projectionKind": "public"
+      }
+    }
+  ]
+}

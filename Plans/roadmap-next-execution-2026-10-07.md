@@ -1,7 +1,9 @@
 # Next framework roadmap execution
 
 Date: 2026-10-07
-Status: authorized by the user's “apply your recommendation”; preparation active.
+Status: first slice accepted; remaining selected M5 qualification completed on
+a fresh published candidate in [the final execution](m5-published-roadmap-qualification-2026-10-07.md).
+The incomplete working-tree candidate described below remains historical.
 
 This executes the sequence proposed after the framework roadmap review. Existing
 M5 and DPM evidence stays immutable. Current implementation heads are Mirrors
@@ -106,3 +108,12 @@ unchanged. Private retention completed with 5,736 files (about 1.7 GiB) at
 `~/.local/state/mirrors/m5-roadmap-20261007-incomplete`; credential bytes are
 excluded. No qualification producer remains active. Remote startup approval is
 still pending; no service action was performed.
+
+## Superseding completion
+
+The user's later “perform remaining qualifications” authorized the necessary
+existing oracle startup. A fresh candidate from the pushed revisions now passes
+all 18/18 required commands, 16 tiers, full Q1/Q2 and six controls; see
+[published readiness](q3-published-roadmap-2026-10-07.md). Earlier 14/18 results
+and their private archive are unchanged. The native M4 source/host prerequisites
+and future platform designs remain outside this completed named profile.

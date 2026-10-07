@@ -8,52 +8,47 @@ implementation acceptance still requires reviewed destination files and checks.
 
 ## Current status — 2026-10-07
 
-The published-revision C0
-`f01fb7717ca9bab18a68443707f478d49c15a15d420273db1e881c9683b16384`
-qualifies for `m5-wsl-windows-remote/v1`: all 18 required commands and 16 tiers,
-the 19-node scope with both D bindings, and 20 independently verified bundles
-pass; six negative controls reject. [Current readiness](q3-published-2026-10-03.md)
-records the exact published component revisions, installed runs and remote
-identity. All three component references have zero included implementation
-edits. Planning records and generated catalog outputs retain their declared
-exclusions; a later source revision requires its own qualification.
+The published roadmap candidate C0
+`94271a543085118e47c7fd540ee8d34d3f427fa5f45fedaeba0c852534f4f34a`
+qualifies for `m5-wsl-windows-remote/v1`: all 18 commands/16 tiers, two D bindings,
+19 linked nodes, 20 independently verified bundles and six rejected controls.
+[Published readiness](q3-published-roadmap-2026-10-07.md) records exact component
+revisions (Mirrors f0894d2, MirrorECMA eef6f71, MirrorGate 455e196), installed runs,
+fresh native oracle observations and scope limits. The earlier incomplete
+working-tree selection and October 3 qualification remain unchanged history.
 
-M4 remains partial overall: prepared-filesystem ownership recovery is credited,
-while aggregate cgroups and active-process post-restart recovery are unqualified.
-Native Ubuntu, Windows service-manager acceptance and the legacy all-transport
-interop matrix remain outside the completed profile. The
-[compiler/client follow-ups](compiler-client-followups-2026-10-03.md) and
-[M6 reviewed-scaffold and corpus work](m6-reviewed-scaffolds-and-corpora.md) are
-complete for their declared source and public integration scope. M5's separately
-pinned compatibility matrix does not qualify every newly generated-client feature.
+The user authorized remaining qualification and necessary startup of the existing
+verified Windows oracle. Its binary, runtime and certificate pins remain unchanged;
+fresh HourClock is VALID, all 22 remote client cases pass, LeaseService domain
+materialization preserves the original mismatch, and full Q1/Q2 passes. The
+intended resident server remains running with no remaining owned test/model images.
+No local model checker, new package publication or commit/push occurred.
 
-The separately authorized [DPM-0/DPM-1 work](deterministic-production-mbt-dpm0-dpm1.md)
-is now specified and locally accepted: a reusable MirrorCPP cooperative scheduler
-and portable concurrent fixture. The C++ changes were committed and pushed in
-Mirrors `5a0578f` and MirrorCPP `530304e`. The separately authorized
-[DPM-2–DPM-5 execution](deterministic-production-mbt-dpm2-dpm5.md) now supplies
-generated replay, finite exploration and installed acceptance. Explicit transfer
-approval enabled fresh oracle captures and the real native Windows pilot; all
-DPM-2–DPM-5 exit gates now pass for the declared profiles. The
-[final record](dpm2-dpm5-qualified-20261004/README.md) separates native pilot,
-finite local coverage and installed evidence. This work does not extend the
-recorded M5 candidate.
+Scope decision reaffirmed by the user (2026-10-07): keep broader M4 as a
+separate roadmap track; it is not remaining work for the completed named M5
+profile or a prerequisite for publishing its existing acceptance record.
 
-The [MirrorECMA/MirrorRust extension](dpm-mirrorecma-mirrorrust.md) now passes
-DPM-0–DPM-5 for real Node worker threads and cooperative Rust threads. The
-[language acceptance record](dpm-languages-evidence-20261005/README.md) retains
-installed package, native pilot, fresh oracle and finite coverage evidence.
-These language changes were committed and pushed in Mirrors `05a9ce1`,
-MirrorECMA `18735bd` and MirrorRust `08d189f`; they do not revise M5 qualification.
+M4 remains partial overall: prepared-filesystem ownership recovery is credited;
+aggregate cgroups and active-process post-restart recovery remain unqualified.
+The [native-host/platform plan](m4-native-host-and-platform-plan-2026-10-07.md)
+selects native Linux acceptance first and specifies the missing durable
+process-to-cgroup resource binding. Native Ubuntu, Windows service-manager,
+new platform Gate backends and legacy all-transport acceptance remain separate.
 
-The [next roadmap execution](roadmap-next-execution-2026-10-07.md) is active.
-The read-only compiler lock migration helper passes 23 controls and the existing
-compiler/language gates. M4 host eligibility/refusal and native-host/platform
-sequencing are documented; real cgroup/process-recovery acceptance remains
-unqualified. The fresh `d5358150…` candidate passes both D audits and 14/18 required
-commands; [current readiness](q3-roadmap-refresh-2026-10-07.md) keeps full Q1/Q2
-incomplete while the stopped Windows oracle awaits startup approval. The previous
-selected M5 qualification remains historical until the new scope actually passes.
+[Compiler/client follow-ups](compiler-client-followups-2026-10-03.md) and
+[M6](m6-reviewed-scaffolds-and-corpora.md) are complete for their declared scope.
+The read-only lock migration helper passes 23 controls and installed consumers;
+its published implementation is included in this fresh qualification candidate.
+[Current roadmap execution](roadmap-next-execution-2026-10-07.md) records its
+first slice; [published-candidate execution](m5-published-roadmap-qualification-2026-10-07.md)
+closes the earlier remote/full-Q prerequisites.
+
+DPM-0–DPM-5 pass for MirrorCPP, MirrorECMA's real Node workers and MirrorRust's
+cooperative threads. [C++ acceptance](dpm2-dpm5-qualified-20261004/README.md) and
+[language acceptance](dpm-languages-evidence-20261005/README.md) keep their native
+pilot/finite coverage/package boundaries. This M5 compatibility matrix retains
+its separate pinned client/runtime scope; it does not imply universal DPM or
+full WriteSentry qualification.
 
 The dated decisions below and the original September integration/ownership
 records are history. Their pending tasks and uncommitted states describe those
