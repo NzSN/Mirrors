@@ -3,6 +3,7 @@ import Codec.ModelInterfaceJson
 import Shell.ModelInterface.ScaffoldWorkflow
 import Shell.ModelInterface.Corpus
 import Shell.ModelInterface.Migration
+import Shell.ModelInterface.ScheduleKit
 
 /-!
 # `model_interface_gen` command line
@@ -30,6 +31,8 @@ def usage : String := String.intercalate "\n" [
   "    [--diagnostics json]",
   "  model_interface_gen check --spec FILE --contract FILE --evidence FILE",
   "    [--param-var NAME] --lock FILE --target TARGET --out DIR",
+  "    [--diagnostics json]",
+  "  model_interface_gen generate-dpm|check-dpm --lock FILE --mapping FILE --target TARGET --out DIR",
   "    [--diagnostics json]",
   "  model_interface_gen compare-locks --from-lock OLD --to-lock NEW",
   "    [--diagnostics json]",
@@ -64,6 +67,7 @@ private inductive DiagnosticsMode where
   | json
 
 private structure RawOptions where
+  mapping : Option String := none
   fromLock : Option String := none
   toLock : Option String := none
   spec : Option String := none
@@ -86,6 +90,7 @@ private structure RawOptions where
   diagnostics : Option String := none
 
 private inductive Command where
+  | scheduleKit (lock mapping target out : String) (check : Bool)
   | compareLocks (fromLock toLock : String)
   | resolve (inputs : InputPaths) (lock : String)
   | generate (lock target out : String) (bundle : Bool)
@@ -111,7 +116,7 @@ private structure ParsedCommand where
   diagnostics : DiagnosticsMode
 
 private def allowedFlags : List String :=
-  ["--from-lock", "--to-lock", "--spec", "--contract", "--evidence", "--param-var", "--lock", "--target", "--out",
+  ["--mapping", "--from-lock", "--to-lock", "--spec", "--contract", "--evidence", "--param-var", "--lock", "--target", "--out",
    "--trace", "--proposal", "--projection", "--receipt", "--diagnostics",
    "--review", "--sealed", "--corpus-manifest", "--manifest-sha256"]
 
@@ -132,6 +137,7 @@ private def parseOptions (arguments : List String) : Except String RawOptions :=
   | [] => pure ()
   let param := List.lookup "--param-var" pairs
   return {
+    mapping := List.lookup "--mapping" pairs
     fromLock := List.lookup "--from-lock" pairs
     toLock := List.lookup "--to-lock" pairs
     spec := List.lookup "--spec" pairs
@@ -211,6 +217,17 @@ private def parseCommand (arguments : List String) : Except String ParsedCommand
     argument != "--require-all-actions" && argument != "--replace" && argument != "--reviewable"
   let options ← parseOptions optionArguments
   let diagnostics ← diagnosticsMode options
+  if name == "generate-dpm" || name == "check-dpm" then
+    if requireAllActions || replace || reviewable then throw "unsupported flag for DPM kit"
+    for (flag, _) in (← optionPairs optionArguments) do
+      unless ["--lock", "--mapping", "--target", "--out", "--diagnostics"].contains flag do
+        throw s!"option {flag} is not valid for DPM kit"
+    return {
+      command := .scheduleKit (← requireOption "--lock" options.lock)
+        (← requireOption "--mapping" options.mapping) (← checkedTarget options)
+        (← requireOption "--out" options.out) (name == "check-dpm")
+      diagnostics }
+  let _ ← rejectPresent "--mapping" options.mapping
   if name == "compare-locks" then
     if requireAllActions || replace || reviewable then
       throw "unsupported flag for compare-locks"
@@ -574,6 +591,20 @@ def run (arguments : List String) : IO UInt32 := do
       return 2
   | .ok parsed =>
       match parsed.command with
+      | .scheduleKit lock mapping target out check =>
+          if check then
+            match ← Shell.ModelInterface.ScheduleKit.check lock mapping target out with
+            | .error error => reportError parsed.diagnostics error
+            | .ok report =>
+                IO.println s!"DPM kit check: {if report.clean then "clean" else "stale"}"
+                for path in report.stalePaths do IO.eprintln s!"stale: {path}"
+                return if report.clean then 0 else 1
+          else
+            match ← Shell.ModelInterface.ScheduleKit.generate lock mapping target out with
+            | .error error => reportError parsed.diagnostics error
+            | .ok paths =>
+                IO.println s!"generated DPM kit: {paths.length} owned files in {out}"
+                return 0
       | .compareLocks fromLock toLock =>
           match ← Shell.ModelInterface.Migration.compareLocks fromLock toLock with
           | .error error => reportError parsed.diagnostics error

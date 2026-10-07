@@ -1,0 +1,18 @@
+DPM timeline
+Comparison: step_mismatch; passed: false; receipt complete: true
+
+Execution 0: 01c50146b7574012e80ae91b084b2033; outcome: cancelled
+Cleanup: confirmed; remaining actors: []
+Step | Model action | Actor | Permit | Expected point | Actual point | Observation | Comparison
+0 | - | - | no | $start | $start | retained | unknown
+1 | read | a | yes | read | read | retained | unknown
+2 | write | a | yes | write | write | retained | step_mismatch
+3 | finish | a | no | $done | - | absent | unknown
+4 | read | b | no | read | - | absent | unknown
+5 | write | b | no | write | - | absent | unknown
+6 | finish | b | no | $done | - | absent | unknown
+
+Model mismatch (retained peer verdict):
+  at count: expected 1, got 2
+  expected: {"count":{"#bigint":"1"},"phase":{"#map":[["a",{"#bigint":"2"}],["b",{"#bigint":"0"}]]},"saved":{"#map":[["a",{"#bigint":"0"}],["b",{"#bigint":"0"}]]}}
+  actual:   {"count":{"#bigint":"2"},"phase":{"#map":[["a",{"#bigint":"2"}],["b",{"#bigint":"0"}]]},"saved":{"#map":[["a",{"#bigint":"0"}],["b",{"#bigint":"0"}]]}}

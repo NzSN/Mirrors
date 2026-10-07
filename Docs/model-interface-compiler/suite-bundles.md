@@ -1,5 +1,10 @@
 # Trusted suite bundles
 
+[Current framework status](../current-status.md) indexes the October 7
+frozen qualification, eight compiler emitters and separately scoped generated/
+DPM acceptance. This document retains its own normative profile and dated
+results; broader M4/platform and package-release claims remain separate.
+
 `bundle` publishes the existing `mirrorecma-async-v1` target together with an
 inert `SuiteModel` companion. The target profile and semantic digest retain their
 existing meaning. The bundle is a publication mode for the async target.

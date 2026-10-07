@@ -1,17 +1,23 @@
 # Reference Node distribution
 
-Status: I2 locked-input contract. I3 build/install implementation is pending
-review of these manifests. Nothing here publishes a package or installs into a
-real user prefix.
+Status: locked-input contracts, bounded cache build/verification, transactional
+installation and installed audits are implemented. Checked local and Gate
+profiles passed [October 7 qualification](../../Plans/q3-published-roadmap-2026-10-07.md)
+from the same immutable snapshot. This is the named WSL2/Windows-oracle profile,
+not native Ubuntu acceptance, package-registry publication or an automatic user install.
 
 The distribution targets Ubuntu 24.04 x86_64 and has three deliberately
 separate profiles:
 
 | Profile | Purpose | State |
 | --- | --- | --- |
-| `checked-replay-local` | Offline local replay of a prepared checked corpus | Build required |
-| `checked-replay-gate` | The same replay through the optional Gate provider | Build required; extends the entire local artifact closure |
-| `fresh-trace` | Explicit trace generation with Java and Apalache | Build required; exact Java 25.0.4+7 and Apalache 0.61.0 archives are prepared and locked |
+| `checked-replay-local` | Offline local replay of a prepared checked corpus | Implemented; selected installed profile qualified |
+| `checked-replay-gate` | The same replay through the optional Gate provider | Implemented and qualified; extends the entire local artifact closure |
+| `fresh-trace` | Explicit local trace generation with Java and Apalache | Blocked: required Java artifact is missing from the dependency lock; local Apalache 0.61.0 pin is separate from the remote oracle |
+
+Live model operations for the current coordinator use the owned Windows oracle
+(Apalache 0.62.2/Java 25.0.4+7-LTS), not this blocked local fresh-trace profile.
+Do not launch local Apalache/TLC or interchange Windows and Linux archive pins.
 
 `profiles.json` is the selection and inheritance contract. `component-lock.json`
 binds build recipes to full C4 component identities. `dependency-lock.json`

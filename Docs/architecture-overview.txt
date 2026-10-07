@@ -1,0 +1,76 @@
+MIRRORS FRAMEWORK — current source architecture (2026-10-07)
+Acceptance: Docs/current-status.md; frozen qualification is revision-specific.
+
+                  MODEL PREPARATION
++------------------------------------------------------+
+| TLA+ sources + reviewed contract + ITF evidence/corpus |
++--------------------------+---------------------------+
+                           |
+                           v
++------------------------------------------------------+
+| TLA+ frontend -> model-interface compiler              |
+| Resolve / review / seal / emit                        |
+| Corpus projection, freshness and lock migration       |
++--------------------------+---------------------------+
+                           |
+                           v
++------------------------------------------------------+
+| Lock + typed bindings + sanitized public manifest     |
+| Trusted suite bundle + checked trace corpus           |
++--------------------------+---------------------------+
+                           |
+                           v
+                 TRUSTED EXECUTION
++------------------------------------------------------+
+| Client SDK / evaluator: ECMA, C++, Rust, Lean          |
+| Admission, replay, binding lifetime, result reporting |
++-------------+------------------------------+---------+
+              |                              |
+      typed actions / observations           | JSONL
+              |                              | stdio/TCP/mTLS
+              v                              v
++---------------------------+    +---------------------------+
+| Application-owned port    |    | Mirrors runtime           |
+| Actual operations/state   |    | Session/admission/diff    |
++-------------+-------------+    | Shared async server jobs  |
+              |                  +-------------+-------------+
+       +------+-------+                        |
+       |              |                        v
+       v              v                        v
++-------------+ +------------------+ +---------------------------+
+| Local SUT   | | Optional Gate    | | Apalache adapter          |
+| + optional  | | Policy/freeze/   | +-------------+-------------+
+| DPM workers | | Linux/Bubblewrap |               |
++-------------+ | Node/Rust SUT    |               v
+                | Physical cleanup| +---------------------------+
+                +------------------+ | Apalache + JVM            |
+                                     | Model checks/traces/explore|
+                                     +---------------------------+
+
+DPM: generated action -> binding session -> one actor permit
+        -> actual checkpoint arrival -> park -> observe -> compare
+C++/Rust retain OS-thread stacks; Node uses owned worker/message channels.
+Application hooks, safe checkpoint placement and observation remain handwritten.
+Native phase bridges are application-specific. Gate isolation is a separate seam.
+
+INSIDE MIRRORS
++------------------------------------------------------+
+| Main + Shell: CLI, transport/session, jobs, processes  |
+|                                                      |
+|  Core: protocol/value/diff/jobs/compiler pure domains  |
+|  Codec: wire/ITF/canonical representations             |
+|  Selected Lean laws; no whole-executable proof claim   |
+|                                                      |
+| Ffi: native socket/TLS/signal/platform implementations |
++------------------------------------------------------+
+
+DISTRIBUTION AND EVIDENCE
+Catalog + source/dependency locks -> snapshot -> cache -> verified install
+                                                       |
+                          results + cleanup -> bundles -> offline Q1/Q2
+
+CURRENT QUALIFIED TOPOLOGY
+WSL2: clients, supplied-trace local replay, Linux/Bubblewrap Gate.
+Windows: mTLS Mirrors service -> Apalache/JVM for live model operations.
+Gate workers receive public operations/inputs, not private expected model state.
+Broader M4 recovery/enforcement remains a separate roadmap track.

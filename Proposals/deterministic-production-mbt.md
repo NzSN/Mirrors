@@ -2,7 +2,14 @@
 
 Date: 2026-09-30
 
-Status (2026-10-04): DPM-0 design and the DPM-1 portable MirrorCPP coordinator
+Current summary (2026-10-07): DPM-0–DPM-5 are accepted for declared C++, Node-worker
+and Rust-thread profiles. See [current scheduling](../Docs/deterministic-scheduling.md)
+and the exact retained pilot/package records linked below. The framework's
+[October 7 M5 profile](../Plans/q3-published-roadmap-2026-10-07.md) has its own frozen
+scope; neither result implies full WriteSentry, new Gate backends or unrestricted
+thread preemption. The decision-request/interface sketches are proposal history.
+
+Historical status (2026-10-04): DPM-0 design and the DPM-1 portable MirrorCPP coordinator
 and concurrent fixture are implemented and locally accepted. See the
 [DPM-0/DPM-1 design and acceptance record](../Plans/deterministic-production-mbt-dpm0-dpm1.md).
 DPM-2 generated replay, the bounded DPM-3 native pilot, DPM-4 finite local

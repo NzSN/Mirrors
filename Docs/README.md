@@ -1,17 +1,20 @@
 # Mirrors documentation
 
-Start with the [architecture overview](architecture-overview.md),
+Start with [current status and roadmap boundaries](current-status.md), the
+[plain-text block diagram](architecture-overview.txt),
+[architecture overview](architecture-overview.md),
 [interactive diagram](architecture-overview.html), and
-[module details](architecture-details.md), reviewed against base `6abd893` plus
-the current compiler/client working-tree changes on 2026-10-03. They cover the runtime, compiler, distribution/evidence tooling,
-and the boundary between pure proved laws and trusted effects.
+[module details](architecture-details.md). Source navigation was synchronized on
+2026-10-07 at Mirrors `6422451`; qualification belongs to the separately frozen
+implementation revisions recorded in the current status page. These references
+cover runtime, compiler, DPM, distribution/evidence and the proof/effect boundary.
 The [framework map](framework-map.md) covers the related repositories and
 distinguishes model clients, generated bindings, Gate evaluators and workers.
 The [2026-09-18 documentation audit](related-documentation-audit-20260918.md)
 records the inspected revisions, updates and link-check scope.
 
 Remote deployment and client operation: [remote server guide](remote-server-guide.md).
-Latest recorded qualification topology: [2026-10-03 readiness](../Plans/q3-integrity-fixes-2026-10-03.md)
+Latest recorded qualification topology: [2026-10-07 published readiness](../Plans/q3-published-roadmap-2026-10-07.md)
 (WSL2 clients/tooling and a native Windows oracle, scoped to its recorded C0).
 The [2026-09-18 deployment](windows-deployment-20260918.md) remains historical.
 
@@ -34,6 +37,9 @@ an installed Windows service, a hosted CI run, or a published package.
 | Build, install, or identify Mirrors | [Product versions and installation](versioning.md) |
 | Run validation inside WSL2 or through `r_windev` | [WSL2 validation](wsl2-validation.md) |
 | Inspect a TLA+ model with the frontend CLI | [`tla_frontend` guide](model-interface-compiler/tla-frontend-cli.md) |
+| Generate DPM wiring or inspect a counterexample timeline | [Kit/timeline design](dpm-usability-design.md) |
+| Schedule real application workers under MBT | [Deterministic scheduling guide](deterministic-scheduling.md) |
+| Compare interface locks before migration | [Read-only migration comparison](model-interface-compiler/lock-migration.md) |
 | Understand architecture and ownership | [Architecture overview](architecture-overview.md), [interactive diagram](architecture-overview.html), [module details](architecture-details.md) |
 | Follow source identity, installation, and retained qualification | [Catalog contract](framework-catalog-contract.md), [distribution tooling](architecture-details.md#5-framework-catalog-distribution-and-evidence), [evidence design](durable-evidence-design.md) |
 | Use the CLI or wire protocol | [Interface reference](interface-reference.md) |

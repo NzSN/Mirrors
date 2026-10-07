@@ -1,5 +1,10 @@
 # Lean generated model-interface target
 
+[Current framework status](../current-status.md) indexes the October 7
+frozen qualification, eight compiler emitters and separately scoped generated/
+DPM acceptance. This document retains its own normative profile and dated
+results; broader M4/platform and package-release claims remain separate.
+
 `mirrorlean-v1` is the synchronous Lean 4 target for the portable generated
 interface contract. It emits `<Model>Mirror.lean` and the compiler-owned manifest
 through the same publication and freshness-check seam as the other targets.

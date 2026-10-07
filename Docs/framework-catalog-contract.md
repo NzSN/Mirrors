@@ -3,6 +3,13 @@
 Status: C2/E1 identity seam reviewed for local C3 implementation, 2026-09-22.
 E1 validator acceptance and later catalog migration remain separate gates.
 
+Current implementation and frozen acceptance are recorded in
+[current status](current-status.md) and [October 7 readiness](../Plans/q3-published-roadmap-2026-10-07.md).
+Catalog A freezes declarations/source identity; later approval B links actual
+source/local/installed observations to fresh finalized evidence. Unknown hosted
+CI or package-publication fields remain unknown. The original seam-review date
+above is historical, not a remaining implementation blocker.
+
 This contract defines the strict, versioned catalog that describes framework
 components, declared capabilities, observed acceptance dimensions and exact
 component combinations. It does not replace wire negotiation, Gate admission,

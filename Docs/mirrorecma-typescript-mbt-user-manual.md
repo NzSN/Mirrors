@@ -1,5 +1,11 @@
 # Model-based testing of TypeScript with MirrorECMA
 
+[Current framework status](current-status.md) records completed named-profile
+qualification and separate broader M4/platform/release work. For cooperative
+thread control, use [DPM](deterministic-scheduling.md); application hooks and
+actual observations remain handwritten. The default suite/project path in this
+guide stays `mirrorecma-async-v1`; explicit v2 native bindings have separate scope.
+
 This tutorial uses the current application-integration model: a compiler-owned
 asynchronous suite bundle, an immutable MirrorECMA suite, a checked trace corpus,
 and a small native adapter that calls the real TypeScript application.

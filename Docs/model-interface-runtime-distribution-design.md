@@ -33,6 +33,12 @@ The Mirrors-side version-1 path is implemented:
 - always-on pure and mock-session gates in `model_interface_spec` and
   `model_interface_distribution_spec`.
 
+[Current scoped qualification](../Plans/q3-published-roadmap-2026-10-07.md)
+now covers the published candidate f0894d2/eef6f71/455e196. These mechanisms keep
+ordinary wire bytes and exact admission keys unchanged. Explicit async-ECMA/Rust
+v2 typed-map selection and DPM use the same deferred/admitted binding boundary;
+see [current status](current-status.md) and [scheduling](deterministic-scheduling.md).
+
 MirrorECMA's D3 compiled-verification path is implemented in its sibling repo:
 
 - strict verification request/reply codecs leave the frozen legacy protocol

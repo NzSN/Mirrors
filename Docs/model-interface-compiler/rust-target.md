@@ -1,5 +1,10 @@
 # Rust target: `mirrorrust-v1`
 
+[Current framework status](../current-status.md) indexes the October 7
+frozen qualification, eight compiler emitters and separately scoped generated/
+DPM acceptance. This document retains its own normative profile and dated
+results; broader M4/platform and package-release claims remain separate.
+
 Profile version 1 generates a synchronous Rust module from the same verified
 semantic lock as the TypeScript and C++ targets. Generation and freshness
 checking require only Mirrors; compiling the output requires Rust 2021,

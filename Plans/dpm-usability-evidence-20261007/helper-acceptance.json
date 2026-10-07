@@ -1,0 +1,19 @@
+{
+  "schema": "mirrors.dpm-kit-source-acceptance/v1",
+  "status": "passed",
+  "languages": [
+    "cpp",
+    "ecma",
+    "rust"
+  ],
+  "actualNodeComparisons": [
+    "matched",
+    "step_mismatch"
+  ],
+  "scope": "source SDK helper/seed compile and real generated Node comparison; not installed/release qualification",
+  "helperSha256": {
+    "cpp/DpmKit.generated.hpp": "b190c761343926c21cd94870a31c8b9f9a73a03f02d0eb4384d6516310ea3155",
+    "ecma/DpmKit.generated.ts": "ebdd4fcbc630214ad902013677b6677765be3681496887dbd10f33b3de5eb04b",
+    "rust/DpmKit.generated.rs": "c33817fcffdb2e51b70cfcc88844b761a877c2580005f088e830c9d0f945d796"
+  }
+}

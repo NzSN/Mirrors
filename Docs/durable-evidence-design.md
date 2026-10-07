@@ -10,6 +10,12 @@ behavioral result, cleanup observations, and persistence result independent.
 Qualification is derived from all required observations; it never rewrites one
 axis to hide a failure on another.
 
+The current source implementation includes collection, finalization, linked scope
+verification and installed independent Q2. [October 7 qualification](../Plans/q3-published-roadmap-2026-10-07.md)
+records 18 commands/16 tiers and 20 selected bundles with six rejected controls.
+This updates source/acceptance navigation; the dated E1 baseline below and all
+historical records retain their original identities.
+
 The implementation baseline is [the B1 snapshot](../Plans/implementation-baseline.md).
 At that snapshot Mirrors was
 `e7c8681d7db62000555675188d0125931136e002`, MirrorGate was

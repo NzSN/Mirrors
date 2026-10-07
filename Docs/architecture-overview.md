@@ -1,11 +1,12 @@
 # Mirrors — Architecture Overview
 
-Source architecture reviewed 2026-10-03 against base `6abd893` plus the current
-compiler/client working-tree changes. This describes
-implemented responsibilities and boundaries; acceptance remains attached to
-its recorded source, distribution, and evidence identities.
+Source architecture synchronized 2026-10-07 at Mirrors `6422451`, with linked
+client/runtime source checked at their current repository heads. This describes
+implemented responsibilities; [current acceptance](current-status.md) remains
+attached to frozen implementation, distribution and evidence identities.
 
-Use the [interactive diagram](architecture-overview.html) for focused views
+Use the [plain-text block diagram](architecture-overview.txt) in terminal clients
+and the [interactive diagram](architecture-overview.html) for focused views
 ([diagram data](architecture-overview.json)), and [architecture details](architecture-details.md)
 for the module map. Application ownership is defined in the
 [integration guide](application-integration-guide.md).
@@ -26,42 +27,58 @@ The production runtime executes the same pure functions used in its Lean proofs.
 Those proofs cover stated laws and transition models; they do not prove the
 whole executable, effectful shell, native shims, external tools, or application.
 
-```mermaid
-flowchart TB
-    Inputs["TLA+ model + interface contract + ITF evidence"]
-    Compiler["Model-interface compiler"]
-    Generated["Semantic lock + typed bindings + suite bundle"]
-    Inputs --> Compiler --> Generated
-    Generated --> Client["Client / trusted evaluator"]
-    Client <-->|Actions and observations| App["Application + adapter: local or Gate worker"]
+```text
+TLA+ sources + reviewed contract + ITF evidence/corpus
+                        |
+                        v
+       TLA+ frontend -> model-interface compiler
+                        |
+                        v
+       Lock + typed bindings + trusted suite bundle
+                        |
+                        v
+               Trusted client / evaluator
+                  |                 |
+        actions / observations      | JSONL: stdio / TCP / mTLS
+                  |                 v
+                  |       Mirrors conformance runtime
+                  |       Session / admission / diff / jobs
+                  |                 |
+                  v                 v
+          Application adapter   Apalache adapter -> Apalache/JVM
+              |       |
+              |       +-> Optional Gate -> isolated Node/Rust SUT
+              v
+          Local SUT / optional DPM checkpoint workers
+          C++ threads | Node workers | Rust threads
 
-    subgraph Runtime["Mirrors runtime"]
-        Transport["stdio / TCP / mTLS"]
-        Session["Session dispatch + interface admission"]
-        Pure["Core + Codec: pure logic and selected proved laws"]
-        Jobs["Shared jobs + checked resource accounting"]
-        Adapter["Apalache adapter"]
-        Native["Native C shims: sockets, TLS, signals"]
-        Transport <--> Session
-        Transport --- Native
-        Session <--> Pure
-        Session <--> Jobs
-        Session --> Adapter
-        Jobs --> Adapter
-    end
-
-    Client <-->|JSONL| Transport
-    Adapter <-->|CLI and explorer RPC| Apalache["Apalache + JVM"]
-    Catalog["Catalog + source/dependency locks"] --> Install["Snapshot, build cache, verified installation"]
-    Install --> Evidence["Qualification, retained bundles, offline verification"]
-    Client -. Results .-> Evidence
-    Session -. Results .-> Evidence
+Catalog + source/dependency locks -> snapshot -> cache -> install
+                                             |
+                         results + cleanup -> evidence -> offline Q1/Q2
 ```
 
-The dotted result edges describe qualification collection around the processes,
+The result/evidence path describes qualification collection around the processes,
 not automatic persistence of every wire session. Compiler products are inputs
 to the selected clients; equivalent suite/Gate capabilities are not implied for
 every client language.
+
+## Application scheduling and current topology
+
+DPM is a client-side/application seam. The generated port maps model actions to
+an owned binding session; the coordinator admits an exact schedule, grants one
+actor a permit, verifies its actual checkpoint arrival, observes the quiescent
+SUT and retains cleanup. Applications supply safe checkpoint calls and actual
+observations; the generated binding does not insert hooks or infer behavior.
+The [scheduling guide](deterministic-scheduling.md) and SDK guides cover C++,
+Node workers and Rust threads. Native phase bridges remain application-specific.
+Gate worker isolation and DPM execution control are independent; generic DPM
+inside every Gate worker profile is not implied by the local/native pilot.
+
+The qualified deployment uses WSL2 clients, supplied-trace local replay and
+Linux/Bubblewrap Gate, with live model operations through the owned Windows
+mTLS Mirrors server and its Apalache/JVM. No local model checker runs on this
+coordinator. Broader M4 is a separate recovery/enforcement track. See
+[current status](current-status.md) for the exact qualified profile and revisions.
 
 ## Runtime: admission, execution, comparison
 

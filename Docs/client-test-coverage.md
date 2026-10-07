@@ -1,5 +1,10 @@
 # Client conformance-test coverage
 
+[Current framework status](current-status.md) indexes the October 7
+frozen qualification, eight compiler emitters and separately scoped generated/
+DPM acceptance. This document retains its own normative profile and dated
+results; broader M4/platform and package-release claims remain separate.
+
 Status: MirrorECMA, MirrorCPP, and MirrorRust have executable coverage for the
 normative C1–C27 client rules in `Docs/client-implementation-guide.md`.
 MirrorCPP now enforces the 65,535-byte inbound payload cap in its shared

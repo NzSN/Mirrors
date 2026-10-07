@@ -63,10 +63,10 @@ candidate gate. The platform plan does not remove requirements from M5 or M4.
 | --- | --- | --- |
 | Compiler migration helper | Validated lock comparison; read-only, malformed/tamper/change controls; no v1 emission changes | Source accepted: 23 controls and existing compiler/language gates |
 | M4 preflight and platform decision | Current host facts and explicit usable/blocked acceptance commands | Implemented/documented; real native enforcement and process-recovery extension remain unqualified |
-| Full current candidate qualification | Byte-stable freeze, dual D, 18 commands/16 tiers, linked Q1/Q2 and 6 controls | Dual D and 14/18 required commands pass; remote/full Q pending |
+| Full published candidate qualification | Byte-stable freeze, dual D, 18 commands/16 tiers, linked Q1/Q2 and 6 controls | Complete at published C0 94271a54…; earlier working-tree 14/18 ledger below is history |
 | Documentation | New checkpoint and roadmap state matching actual results | Updated with incomplete refresh and preserved historical qualification |
 
-## Preparation findings
+## Historical preparation findings (superseded by published completion)
 
 The October 3 private archive survives, but its /tmp orchestration paths and
 prepared carriers do not. The campaign executor is reconstructing those from
@@ -88,7 +88,7 @@ The fresh local distribution build passed with manifest
 Gate build, both installs/D audits and remaining current-candidate producers
 are still running or pending. This is not a fresh M5 qualification pass.
 
-## Available qualification phase accepted
+## Historical available phase (working-tree candidate)
 
 Both canonical installed D audits pass; all four source commands and all
 available installed replay/mutation/origin/R1/prefix/recovery commands pass.

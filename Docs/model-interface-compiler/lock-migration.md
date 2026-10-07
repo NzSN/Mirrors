@@ -2,7 +2,9 @@
 
 Date: 2026-10-07
 Status: implemented; 23 migration controls and existing compiler/language gates
-passed 2026-10-07. Full candidate qualification is separate.
+passed 2026-10-07. The published implementation is included in
+[October 7 qualification](../../Plans/q3-published-roadmap-2026-10-07.md); exact
+framework/profile acceptance remains separate from this API definition.
 
 `model_interface_gen compare-locks --from-lock OLD --to-lock NEW` helps an
 application owner assess a freshly resolved interface against its previous lock.

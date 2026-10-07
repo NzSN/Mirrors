@@ -2,15 +2,34 @@
 
 The [current architecture overview](architecture-overview.md),
 [interactive diagram](architecture-overview.html), and
-[module map](architecture-details.md) were reviewed against Mirrors `6abd893`
-on 2026-10-03. The cross-repository support inventory below retains its
-2026-09-18 review scope; generated catalog rows describe their recorded selection.
+[module map](architecture-details.md) were synchronized against Mirrors `6422451`
+and current linked client sources on 2026-10-07. [Current status](current-status.md)
+records exact frozen qualification; the generated catalog block retains its own
+selection and observation vocabulary. Older source-review baselines are history.
 Start application onboarding with
 [the integration guide](application-integration-guide.md); use the
 [remote server guide](remote-server-guide.md) for deployment and connections.
 Source implementation, local acceptance, package publication and machine
 installation are separate claims. Dated evidence remains tied to its recorded
 revisions, even when a repository advances.
+
+## Current acceptance and scheduling
+
+[Current status](current-status.md) and [published readiness](../Plans/q3-published-roadmap-2026-10-07.md)
+record the qualified `m5-wsl-windows-remote/v1` candidate: 18 commands/16 tiers,
+19 linked nodes, 20 independently verified bundles and six rejected controls.
+Broader M4, new platform backends and package-publication remain separate.
+The table below is a generated declaration snapshot from catalog A, not the later
+approval B's observed acceptance; its `unknown` cells do not negate scoped Q1/Q2.
+Do not hand-edit that generated block or infer unsupported capability observations.
+
+The compiler implements eight emitters: TypeScript sync, async v1/v2, C++ v1/v2,
+Rust v1/v2 and Lean v1. The common portable shared vector gate retains six-profile
+scope; additional v2 language/codec/native acceptance is separately bound.
+[DPM](deterministic-scheduling.md) supplies declared-checkpoint coordinators and
+incremental replay for C++, Node workers and Rust threads. Gate's Node/Rust worker
+isolation remains a separate path; no generic generated Rust Gate evaluator or
+Lean Gate facade is implied.
 
 ## Repository ownership
 
@@ -22,8 +41,8 @@ revisions, even when a repository advances.
 | MirrorRust | Rust client, async jobs, strict compiled verification and deferred binding registry | [README](../../MirrorRust/README.md) |
 | MirrorLean | Lean client, recursive model sources, synchronous replay, required compiled verification and typed server async jobs | [README](../../MirrorLean/README.md), [generated target](model-interface-compiler/lean-target.md) |
 | MirrorGate | Shared controller, policy, isolation, snapshots, worker lifecycle, native SDKs and optional evaluator integrations | [README](../../MirrorGate/README.md), [SDK/facade selection](../../MirrorGate/docs/client-language-support.md) |
-| MirrorRegistry | Optional Consul-compatible discovery library/CLI; not a checker or worker supervisor | [README](../../MirrorRegistry/README.md) |
-| MirrorExamples | Counter/RBT examples and retained model/trace corpora | [README](../../MirrorExamples/README.md) |
+| MirrorRegistry | Optional Consul-compatible discovery library/CLI; not a checker or worker supervisor | Optional checkout; see [discovery](#sources-traces-and-discovery) |
+| MirrorExamples | Counter/RBT examples and retained model/trace corpora | Optional checkout; this repository also retains [fixtures](../test/fixtures/) |
 | ModelMirrors | Haskell reference implementation and historical protocol/deployment material | [README](../../ModelMirrors/README.md) |
 
 The executable name `ModelMirrors` can identify different implementations.
@@ -71,8 +90,8 @@ Catalog `mirrors.framework.candidate-2026-09-22` visibility: **private**. Dirty 
 | Client | Base transport / server jobs | Model-interface path | Gate evaluator path |
 | --- | --- | --- | --- |
 | TypeScript | stdio, TCP, mTLS; network async jobs through `Connection` | Generated synchronous/async bindings; compiled verification and dynamic descriptors; default `defineSuite` / `runSuite` and project CLI | Gate-owned `evaluateSuite`; native Node control-v1/v2 SDK |
-| C++ | stdio, TCP, mTLS; submit/query/await/cancel | Generated `mirrorcpp-v1` bindings and exact compiled verification | Native C++ control-v1/v2 SDK and reusable source integration; acceptance fixture, not a published generic suite API |
-| Rust | stdio, TCP, mTLS; correlated async jobs | Generated `mirrorrust-v1` bindings, exact registry, required/preferred compiled verification and fallible replay; shared vectors and bounded source-hidden generated-Counter offline/mTLS acceptance | Native Rust control-v1/worker-v1 SDK and optional evaluator; Counter is a handwritten fixture, distinct from generic generated-application acceptance; current facade starts the model peer over local stdio |
+| C++ | stdio, TCP, mTLS; submit/query/await/cancel | Generated `mirrorcpp-v1/v2` bindings and exact compiled verification | Native C++ control-v1/v2 SDK and reusable source integration; acceptance fixture, not a published generic suite API |
+| Rust | stdio, TCP, mTLS; correlated async jobs | Generated `mirrorrust-v1/v2` bindings, exact registry, required/preferred compiled verification and fallible replay; shared vectors and bounded source-hidden generated-Counter offline/mTLS acceptance | Native Rust control-v1/worker-v1 SDK and optional evaluator; Counter is a handwritten fixture, distinct from generic generated-application acceptance; current facade starts the model peer over local stdio |
 | Lean | stdio, TCP, separate native mTLS package; typed `Connection` async jobs | Generated `mirrorlean-v1` bindings and additive required-only compiled registry sharing legacy replay; shared vectors and bounded source-hidden generated-Counter offline/mTLS acceptance | No native Lean Gate facade |
 
 Stdio does not accept server-job messages. Server async jobs, async application

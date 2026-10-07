@@ -1,0 +1,30 @@
+{
+  "schema": "mirrors.dpm-usability-source-acceptance/v1",
+  "status": "accepted_for_first_slice",
+  "features": {
+    "F1": "generated integration kit implemented",
+    "F2": "actual receipt timeline implemented",
+    "F3": "approved follow-on schedule reducer",
+    "F4": "approved follow-on installed CLI",
+    "F5": "approved separate synchronization-wrapper prototype"
+  },
+  "compilerTargetsPublishedChecked": 6,
+  "focusedTests": 21,
+  "nativeHelpersCompiled": [
+    "cpp",
+    "ecma",
+    "rust"
+  ],
+  "actualNodeWorkerComparison": [
+    "matched",
+    "step_mismatch"
+  ],
+  "cleanupConfirmed": true,
+  "existingCompilerRegression": "passed",
+  "existingLanguageEmitterProfiles": 8,
+  "migrationRegressionChecks": 23,
+  "retainedReceiptDiagnosticProbe": 148,
+  "freshModelCheckerInvocations": 0,
+  "qualification": "source acceptance only; old M5/DPM artifacts remain immutable, new source needs its own freeze/gates",
+  "installedPackageQualification": false
+}

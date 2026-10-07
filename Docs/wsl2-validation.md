@@ -6,6 +6,19 @@ filesystem, such as `$HOME/Repos/Mirrors`, rather than under `/mnt/c` or
 `/mnt/d`; this avoids mounted-filesystem build overhead and Linux permission
 differences.
 
+## Current coordinator policy (2026-10-07)
+
+The current coordinator uses `bash tools/run-local-no-model-check.sh` for source
+checks. All model operations go through the owned Windows oracle described in
+[remote operation](remote-server-guide.md) and [current status](current-status.md).
+Do not install/start local Apalache/TLC or run `lake test` here: an unset
+APALACHE_MC does not prevent its fallback/TLC paths. The legacy `r_windev` and
+complete live-gate procedure below describes the separately authorized September
+12 host run; it is not the current coordinator's execution prescription.
+
+The selected `m5-wsl-windows-remote/v1` profile passed on October 7. WSL acceptance
+is not native Ubuntu or aggregate-cgroup acceptance. Broader M4 remains separate.
+
 ## Enter WSL2
 
 From Windows, start the Ubuntu distribution directly:
@@ -64,7 +77,7 @@ undefined `GLIBC_2.33` or `GLIBC_2.34` reference from `libcrypto.so` indicates
 that environment mismatch. Use a compatible OpenSSL installation or a
 user-local static-library overlay rather than changing Mirrors sources.
 
-## Run the complete gate
+## Historical complete live gate (separately authorized host)
 
 Use an explicit Apalache path so the live model-checking tiers do not
 self-skip:

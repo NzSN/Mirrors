@@ -7,7 +7,7 @@
 
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
-> Status: **version-1 contract with six implemented target profiles and shared
+> Status: **version-1 core contract with eight implemented emitters and shared
 > executable conformance vectors; broader qualification remains separate**
 >
 > The synchronous `mirrorecma-v1` reference target, the additive
@@ -28,12 +28,29 @@
 > Runtime negotiation:
 > [`model-interface-runtime-distribution-design.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/model-interface-runtime-distribution-design.md)
 
+## Current acceptance and additive profiles
+
+Source/navigation synchronized 2026-10-07. [Current status](current-status.md)
+separates frozen framework qualification from each generated/native profile.
+The common shared corpus still covers six portable profiles; fresh language
+bindings exercise all eight emitters. Explicit `mirrorecma-async-v2` and
+`mirrorrust-v2` add typed integer-keyed maps for the native DPM pilot. The ECMA
+suite/project bundle path remains `mirrorecma-async-v1`; v2 is explicit generation
+and negotiated async replay, without integer map-key projections. The Rust v2
+profile supports its declared typed-map/literal-projection subset. Ordinary v1
+bytes and wire protocol remain stable.
+
+The [migration helper](model-interface-compiler/lock-migration.md) compares
+verified locks without inferring runtime compatibility. [DPM](deterministic-scheduling.md)
+connects handwritten generated-port implementations to real checkpoint workers;
+checkpoint insertion and SUT observation remain application-owned.
+
 ## 0. Implementation status
 
 Mirrors currently implements the canonical lock, semantic digest, normalized
 contract handoff, ownership manifests, and the `mirrorecma-v1`,
-`mirrorecma-async-v1`, `mirrorcpp-v1`, `mirrorrust-v1`, and `mirrorlean-v1`
-emitters. MirrorECMA and MirrorCPP implement exact-digest adapter selection and
+`mirrorecma-async-v1/v2`, `mirrorcpp-v1/v2`, `mirrorrust-v1/v2`, and
+`mirrorlean-v1` emitters. MirrorECMA and MirrorCPP implement exact-digest adapter selection and
 exercise their generated Counter bindings over local stdio and allowlisted
 mTLS server mode.
 

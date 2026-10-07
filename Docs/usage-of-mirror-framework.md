@@ -1,5 +1,11 @@
 # Using the Mirror Framework
 
+[Current framework status](current-status.md) records completed named-profile
+qualification and separate broader M4/platform/release work. For cooperative
+thread control, use [DPM](deterministic-scheduling.md); application hooks and
+actual observations remain handwritten. The default suite/project path in this
+guide stays `mirrorecma-async-v1`; explicit v2 native bindings have separate scope.
+
 The default Node application workflow composes three core repositories. Other
 clients and supporting repositories are listed in the [framework map](framework-map.md);
 its capability table distinguishes generated suites, native bindings and workers.

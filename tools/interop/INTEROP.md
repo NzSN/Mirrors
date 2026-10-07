@@ -1,5 +1,11 @@
 # Client interop validation (Phase 6)
 
+Documentation synchronized 2026-10-07. The [current named profile](../../Plans/q3-published-roadmap-2026-10-07.md)
+passed all 22 declared remote rows at its frozen compatibility pins. Generated
+client source/transport gates, DPM profiles and legacy all-transport acceptance
+retain their separate scopes. No local model checker runs on the current
+coordinator; follow [current status](../../Docs/current-status.md).
+
 ## Selected remote Windows profile
 
 The qualification registry uses `python3 tools/interop/run-remote.py OUTPUT_ROOT`

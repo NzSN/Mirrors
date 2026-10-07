@@ -1,0 +1,366 @@
+{
+  "schema": "mirrors.dpm-timeline/v1",
+  "sourceSha256": "1ad1bb562636c563b4e8e5852c6b89b9f8650bc0f6c36aadfc8f96f604683069",
+  "inputSchema": "mirrors.scheduled-comparison/v1",
+  "comparison": "matched",
+  "passed": true,
+  "sourcePassed": true,
+  "receiptComplete": true,
+  "peerTerminal": "all_steps_done",
+  "clientFailure": {
+    "status": "succeeded"
+  },
+  "mismatch": null,
+  "executions": [
+    {
+      "ordinal": 0,
+      "executionId": "8324076584e9dc33640a3c579741600b",
+      "generation": 1,
+      "identity": {
+        "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da",
+        "mappingSha256": "5c37b697b199019fdb8210686c063a155b2841494fa506a92db0b3b57c2067c3",
+        "implementationSha256": "868511edca470ccce660686294bfca179ed019f6a9b533d278a857dbf010d421"
+      },
+      "profile": "mirrorecma.worker-checkpoints/v1",
+      "outcome": "completed",
+      "detail": "",
+      "scheduleCompleted": true,
+      "cleanup": "confirmed",
+      "remainingActors": [],
+      "rows": [
+        {
+          "afterSteps": 0,
+          "actor": null,
+          "expectedCheckpoint": "$start",
+          "actualCheckpoint": "$start",
+          "permit": false,
+          "observation": {
+            "count": {
+              "#bigint": "0"
+            },
+            "saved": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "0"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            },
+            "phase": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "0"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            }
+          },
+          "observationRetained": true,
+          "comparison": "matched_by_terminal",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 1,
+          "actor": "a",
+          "expectedCheckpoint": "read",
+          "actualCheckpoint": "read",
+          "permit": true,
+          "observation": {
+            "count": {
+              "#bigint": "0"
+            },
+            "saved": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "0"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            },
+            "phase": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "1"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            }
+          },
+          "observationRetained": true,
+          "comparison": "matched_by_terminal",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 2,
+          "actor": "a",
+          "expectedCheckpoint": "write",
+          "actualCheckpoint": "write",
+          "permit": true,
+          "observation": {
+            "count": {
+              "#bigint": "1"
+            },
+            "saved": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "0"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            },
+            "phase": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "2"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            }
+          },
+          "observationRetained": true,
+          "comparison": "matched_by_terminal",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 3,
+          "actor": "a",
+          "expectedCheckpoint": "$done",
+          "actualCheckpoint": "$done",
+          "permit": true,
+          "observation": {
+            "count": {
+              "#bigint": "1"
+            },
+            "saved": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "0"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            },
+            "phase": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "3"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            }
+          },
+          "observationRetained": true,
+          "comparison": "matched_by_terminal",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 4,
+          "actor": "b",
+          "expectedCheckpoint": "read",
+          "actualCheckpoint": "read",
+          "permit": true,
+          "observation": {
+            "count": {
+              "#bigint": "1"
+            },
+            "saved": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "0"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "1"
+                  }
+                ]
+              ]
+            },
+            "phase": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "3"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "1"
+                  }
+                ]
+              ]
+            }
+          },
+          "observationRetained": true,
+          "comparison": "matched_by_terminal",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 5,
+          "actor": "b",
+          "expectedCheckpoint": "write",
+          "actualCheckpoint": "write",
+          "permit": true,
+          "observation": {
+            "count": {
+              "#bigint": "2"
+            },
+            "saved": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "0"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "1"
+                  }
+                ]
+              ]
+            },
+            "phase": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "3"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "2"
+                  }
+                ]
+              ]
+            }
+          },
+          "observationRetained": true,
+          "comparison": "matched_by_terminal",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 6,
+          "actor": "b",
+          "expectedCheckpoint": "$done",
+          "actualCheckpoint": "$done",
+          "permit": true,
+          "observation": {
+            "count": {
+              "#bigint": "2"
+            },
+            "saved": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "0"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "1"
+                  }
+                ]
+              ]
+            },
+            "phase": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "3"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "3"
+                  }
+                ]
+              ]
+            }
+          },
+          "observationRetained": true,
+          "comparison": "matched_by_terminal",
+          "modelAction": null
+        }
+      ],
+      "receiptPassed": true
+    }
+  ],
+  "kitMetadataSha256": null,
+  "scope": "read-only diagnostic correlation; no fresh replay or model qualification"
+}

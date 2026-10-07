@@ -300,12 +300,23 @@ sessions on Linux and Windows; the older Windows synchronous fallback has been
 retired. Standard input/output remains synchronous by design for Haskell
 compatibility.
 
-Known compatibility differences, the remaining top-level interop-runner
-integration, and the Haskell deprecation criteria are tracked in
+The named `m5-wsl-windows-remote/v1` profile is qualified at the recorded
+published implementation revisions: all 18 commands/16 tiers and independent
+Q1/Q2 pass. [Current status](Docs/current-status.md) separates that result from
+broader M4, new platform backends and package-registry publication. DPM-0–DPM-5
+are accepted for the declared C++, Node-worker and Rust-thread profiles.
+
+Known compatibility differences, the separate legacy all-transport matrix,
+and the Haskell deprecation criteria are tracked in
 [`Docs/cutover.md`](https://github.com/NzSN/Mirrors/blob/main/Docs/cutover.md).
 Notable implementation changes are recorded in [`CHANGELOG.md`](https://github.com/NzSN/Mirrors/blob/main/CHANGELOG.md).
 
 ## Documentation
+
+- [Current status and scope](Docs/current-status.md) — exact acceptance and separate work.
+- [Plain-text architecture](Docs/architecture-overview.txt) — block diagram for terminals.
+- [Deterministic scheduling](Docs/deterministic-scheduling.md) — DPM ownership and hooks.
+- [Lock migration comparison](Docs/model-interface-compiler/lock-migration.md) — read-only migration decisions.
 
 - [Application integration guide](Docs/application-integration-guide.md)
   — start here for the supported suite-bundle, project-tools, local replay, and

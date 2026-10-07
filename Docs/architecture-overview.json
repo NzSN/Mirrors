@@ -3,16 +3,24 @@
   "diagram_type": "architecture",
   "meta": {
     "title": "Mirrors — Runtime, Compiler and Qualification Architecture",
-    "description": "Source architecture: client and application boundaries, conformance runtime, model-interface compilation, and distribution with retained evidence. Selected pure laws are proved; Shell, Ffi and external behavior remain outside that boundary.",
+    "description": "Source architecture: client/application boundaries, cooperative DPM, conformance runtime, model-interface preparation and verified distribution/evidence. Broader M4 stays separate; selected pure laws do not prove all Shell/Ffi/external behavior.",
     "output": "Docs/architecture-overview.html",
     "quality_profile": "showcase",
     "viewBox": [
       1600,
       1440
     ],
-    "updated": "2026-10-03",
+    "updated": "2026-10-07",
     "maintenance": "Companion JSON and the HTML embedded mirrors-architecture-data must match. The HTML renders the embedded data before initializing its retained Archify viewer; no external generator or fetch is required.",
     "links": [
+      {
+        "label": "Current status and scope",
+        "href": "current-status.md"
+      },
+      {
+        "label": "Plain-text block diagram",
+        "href": "architecture-overview.txt"
+      },
       {
         "label": "Architecture overview",
         "href": "architecture-overview.md"
@@ -57,7 +65,7 @@
           "generated",
           "clients"
         ],
-        "note": "Captured TLA+ sources, a reviewed contract and ITF type evidence produce a semantic lock and generated bindings. The working tree provides four language families and five base execution targets: TypeScript sync/async, C++, Rust and Lean. The compiler also has the mirrorcpp-v2 profile. Node suite publication uses asynchronous TypeScript."
+        "note": "Captured sources, reviewed contract and ITF evidence produce semantic locks, typed bindings and corpora. Eight emitters cover TS sync/async v1/v2, C++ v1/v2, Rust v1/v2 and Lean v1. Node suite/project bundle publication stays async v1. Read-only lock comparison reports migration requirements."
       },
       {
         "id": "application",
@@ -70,7 +78,7 @@
           "transports",
           "session"
         ],
-        "note": "The SDK owns negotiation and replay. The application supplies adapters and observations. Optional MirrorGate owns restricted execution and cleanup; it is a separate connection from the Mirrors protocol."
+        "note": "SDKs own admitted replay and binding lifetime. Applications supply actual operations/state and safe hooks. Optional cooperative DPM controls C++/Rust threads and Node workers; Gate independently owns Linux/Bubblewrap Node/Rust isolation. Generic DPM Gate integration is not implied."
       },
       {
         "id": "verified-core",
@@ -111,11 +119,23 @@
           "evidence",
           "clients"
         ],
-        "note": "Selected identities feed immutable snapshots, verified caches and installation. Registered commands retain evidence that an independent offline verifier checks against a selected scope; this diagram grants no acceptance status."
+        "note": "Frozen source/dependency identities feed snapshots, verified caches and transactional installs. The October 7 named profile passed 18 commands/16 tiers, two D bindings, 19 scope nodes, 20 bundles and six controls. Unknown publication/hosted-CI and broader M4 claims remain separate."
+      },
+      {
+        "id": "dpm",
+        "label": "Deterministic checkpoint scheduling",
+        "focus": [
+          "generated",
+          "clients",
+          "application",
+          "session",
+          "core"
+        ],
+        "note": "A handwritten generated port maps a model action to an admitted binding-session interval. The coordinator permits one participating actor, verifies actual checkpoint arrival and observes real quiescent SUT state. Application hooks are intrusive; arbitrary preemption and external effects stay outside the profile."
       }
     ],
-    "source_base_revision": "6abd893",
-    "source_state": "Working-tree implementation, including the generated Lean target"
+    "source_base_revision": "6422451",
+    "source_state": "Current source navigation; frozen qualification remains tied to f0894d2/eef6f71/455e196"
   },
   "components": [
     {
@@ -181,7 +201,7 @@
       "id": "generated",
       "type": "database",
       "label": "Semantic lock and generated artifacts",
-      "sublabel": "TS sync / async · C++ · Rust · Lean bindings",
+      "sublabel": "TS sync/async v1/v2 · C++ v1/v2 · Rust v1/v2 · Lean",
       "pos": [
         1080,
         100
@@ -190,12 +210,14 @@
         460,
         100
       ],
-      "context": "Compiler outputs: four language families / five base execution targets; mirrorcpp-v2 is an additional C++ profile",
+      "context": "Compiler outputs: four language families / eight explicit emitter profiles; Node suite/project bundle path stays async v1",
       "tag": "Node suite bundle + public worker interface",
       "sources": [
         "generated-model-interface-spec.md",
         "model-interface-compiler/suite-bundles.md",
-        "../Shell/ModelInterface/Emit/Lean.lean"
+        "../Shell/ModelInterface/Emit/Lean.lean",
+        "model-interface-compiler/lock-migration.md",
+        "model-interface-compiler/reviewed-corpora.md"
       ]
     },
     {
@@ -215,14 +237,15 @@
       "tag": "Protocol support varies by client",
       "sources": [
         "framework-map.md",
-        "client-test-coverage.md"
+        "client-test-coverage.md",
+        "deterministic-scheduling.md"
       ]
     },
     {
       "id": "application",
       "type": "external",
-      "label": "Application + adapter",
-      "sublabel": "Domain operations + state observations",
+      "label": "Application adapter + optional DPM",
+      "sublabel": "Actual operations/state + checkpoint hooks",
       "pos": [
         60,
         625
@@ -231,10 +254,12 @@
         270,
         100
       ],
-      "context": "Application team",
-      "tag": "Local binding",
+      "context": "Application-owned behavior and observations; SDK binding sessions/coordinators control declared participating workers. Native phase bridges and Gate isolation have separate scopes.",
+      "tag": "C++ / Node workers / Rust threads",
       "sources": [
-        "application-integration-guide.md"
+        "application-integration-guide.md",
+        "deterministic-scheduling.md",
+        "../tools/deterministic-scheduling/counter_support.hpp"
       ]
     },
     {
@@ -250,7 +275,7 @@
         270,
         100
       ],
-      "context": "Optional application isolation",
+      "context": "Optional Linux/Bubblewrap supervisor for Node/Rust workers. Broader M4 process recovery/quota acceptance and new OS backends remain a separate track.",
       "tag": "Separate provider channel",
       "sources": [
         "../../MirrorGate/docs/architecture.md"
@@ -565,11 +590,12 @@
         350,
         100
       ],
-      "context": "Qualification execution",
+      "context": "Exact October 7 frozen published candidate; all required gates and offline controls pass for m5-wsl-windows-remote/v1. This component is tooling, not automatic session persistence.",
       "tag": "tools/evidence + tools/interop",
       "sources": [
         "qualification-harness-design.md",
-        "../tools/evidence/command_registry.py"
+        "../tools/evidence/command_registry.py",
+        "../Plans/q3-published-roadmap-2026-10-07.md"
       ]
     },
     {
@@ -1393,7 +1419,8 @@
         "Shell orchestration, native Ffi and external tools require tests.",
         "Apalache/JVM executes model checking outside Lean proofs.",
         "Application adapters own the accuracy of reported state.",
-        "Generated bindings do not prove application conformance."
+        "Generated bindings do not prove application conformance.",
+        "DPM requires application hooks and accurate observations; it does not preempt arbitrary instructions."
       ]
     },
     {
@@ -1403,7 +1430,8 @@
         "Logical responsibilities can run across different machines.",
         "Local application replay does not require MirrorGate.",
         "Recorded WSL2 ↔ mTLS ↔ Windows is one deployment example.",
-        "Acceptance belongs to exact identities, scope and retained evidence."
+        "Acceptance belongs to exact identities, scope and retained evidence.",
+        "The current named profile is qualified; broader M4 remains separate."
       ]
     }
   ]

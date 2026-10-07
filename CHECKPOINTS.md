@@ -5,6 +5,92 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-07 — DPM usability and documentation publication checkpoint
+
+The user requested recording the current state and committing/pushing the completed
+work. F1 generated DPM integration kits and F2 counterexample timelines are source
+accepted. `model_interface_gen generate-dpm/check-dpm` covers six C++/async-ECMA/
+Rust target modes; the read-only timeline consumes actual SDK receipts with explicit
+identity, digest and attribution checks. Applications own checkpoints and actual
+observations; scheduling remains cooperative at declared checkpoints.
+
+[First-slice evidence](Plans/dpm-usability-evidence-20261007/README.md) records 21
+focused tests, compiler/eight-emitter language/23 migration regressions, actual
+helper/seed compilation in three languages, and a generated Node consumer with
+real workers: normal match and increment mutation `step_mismatch`, both with
+confirmed cleanup. Parsing 148 retained receipts is diagnostic coverage. No fresh
+model check or installed-package qualification is claimed for these new changes.
+
+Maintained documentation across Mirrors, MirrorECMA, MirrorCPP, MirrorRust,
+MirrorGate and MirrorLean is synchronized. [Current status](Docs/current-status.md)
+and the [terminal architecture diagram](Docs/architecture-overview.txt) describe
+implemented boundaries. Historical evidence and prior entries retain their bytes;
+the earlier C0 94271a54… acceptance remains tied to its exact frozen profile.
+
+Resume approved F3 schedule reduction, F4 installed cross-language CLI and F5
+synchronization-wrapper research from the [feature plan](Plans/dpm-usability-features-2026-10-07.md)
+and [design](Docs/dpm-usability-design.md). Those follow-ons remain unimplemented;
+broader M4 remains separate. Any qualification of the new source/tool revisions
+requires a new identity freeze and corresponding gates.
+
+Publication includes the feature, source evidence and coordinated documentation
+changes. The unrelated MirrorRust `tests/protocol.rs` edit and untracked editor
+caches are excluded. Commit and remote identities are verified after publication;
+this entry records the state prepared for that operation.
+
+## 2026-10-07 — Approved DPM usability first slice source accepted
+
+The user approved the five feature recommendations, with the generated integration
+kit and timeline first. [Feature contracts](Plans/dpm-usability-features-2026-10-07.md)
+were written before code. `generate-dpm/check-dpm` now validates explicit model/
+actor/action/checkpoint mappings and publishes ordinary bindings plus native
+helper, canonical metadata, application seed and checklist through existing owned
+atomic generation. Six C++/async-ECMA/Rust target modes pass; ordinary binding
+bytes stay unchanged. Lean/sync-ECMA, malformed/incomplete mappings and bad actor
+inputs reject before output. Applications still own actual hooks/observations.
+
+The read-only timeline consumes actual CPP/ECMA/Rust/native receipts, correlates
+permits/arrivals/observations, preserves model failure versus cleanup cancellation,
+and leaves absent/ambiguous attribution unknown. Trusted kit metadata annotation,
+input digest checks, event/identity/terminal contradictions, truncated evidence
+and no-clobber controls pass. The viewer parsed 148 retained actual receipts;
+that diagnostic probe is not fresh replay/model qualification.
+
+[Source acceptance](Plans/dpm-usability-evidence-20261007/README.md) records 21
+focused tests, compiler/eight-emitter language/23 migration regressions and actual
+SDK helper/seed compiles in all three languages. A fresh generated Node consumer
+runs real workers and real local supplied-trace comparison: normal match and
+production increment mutation `step_mismatch`, both with confirmed cleanup.
+No new model checker ran. Regression inputs are copied byte-identically from
+accepted records; historical proof/acceptance files stay unchanged.
+
+Schedule reduction, installed CLI and synchronization wrappers remain approved
+follow-ons, not implemented by this first slice. Broader M4 stays separate.
+Source/tool changes require their own later freeze/gates; old C094271… is still
+its exact frozen profile record. Concurrent documentation sync, unrelated Rust
+edit and editor caches remain preserved. No commit/push is included.
+
+## 2026-10-07 — Maintained documentation synchronized
+
+The user requested all docs synchronized after published qualification and the
+plain-text architecture explanation. [Documentation audit](Plans/documentation-sync-2026-10-07.md)
+updates maintained Mirrors/client entry points, current status, architecture
+Markdown/plain text/JSON/HTML, compiler/migration/profile scope, operator commands
+and SDK DPM/Lean/Gate guides. Broader M4 remains explicitly separate.
+
+[Current status](Docs/current-status.md), [terminal block diagram](Docs/architecture-overview.txt)
+and [DPM guide](Docs/deterministic-scheduling.md) form the new navigation paths.
+The accepted named profile remains frozen at C0 94271a54… with implementation
+bases f0894d2/eef6f71/455e196; documentation changes are not fresh qualification.
+Dated evidence, fixtures, source identities and prior checkpoint entries retain
+original bytes/counts. Optional checkouts no longer cause local broken links.
+
+Changed-document targets/anchors/fences, architecture graph/embedded copies,
+JavaScript/Python snippet syntax and all repository whitespace checks pass.
+Three evidence inventories (11+25+700 files) remain unchanged. No source/runtime
+code, service operation, model check or commit/push was included; unrelated editor
+caches and Rust protocol-test edits remain preserved.
+
 ## 2026-10-07 — Published roadmap revisions fully qualified
 
 The user authorized the remaining qualification and necessary unchanged-deployment

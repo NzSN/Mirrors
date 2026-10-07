@@ -1,0 +1,40 @@
+{
+  "schema": "mirrors.dpm-kit-plan/v1",
+  "semanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da",
+  "actors": [
+    {
+      "actor": "a",
+      "operation": "increment-a"
+    },
+    {
+      "actor": "b",
+      "operation": "increment-b"
+    }
+  ],
+  "actions": [
+    {
+      "actionId": "Read",
+      "actorSource": {
+        "kind": "input",
+        "inputId": "Actor"
+      },
+      "checkpoint": "read"
+    },
+    {
+      "actionId": "Write",
+      "actorSource": {
+        "kind": "input",
+        "inputId": "Actor"
+      },
+      "checkpoint": "write"
+    },
+    {
+      "actionId": "Finish",
+      "actorSource": {
+        "kind": "input",
+        "inputId": "Actor"
+      },
+      "checkpoint": "$done"
+    }
+  ]
+}

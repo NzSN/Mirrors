@@ -1,5 +1,10 @@
 # Reviewed scaffolds and projected evidence corpora
 
+[Current framework status](../current-status.md) indexes the October 7
+frozen qualification, eight compiler emitters and separately scoped generated/
+DPM acceptance. This document retains its own normative profile and dated
+results; broader M4/platform and package-release claims remain separate.
+
 Status: **implemented; public local/Gate integration accepted 2026-10-03**.
 The [M6 execution record](../../Plans/m6-reviewed-scaffolds-and-corpora.md)
 records the exact source gates, retained artifacts and qualification limits.

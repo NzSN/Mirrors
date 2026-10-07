@@ -3,12 +3,19 @@
 This directory contains the design authority for Mirrors' model-interface
 compiler and its implemented TLA+ source frontend.
 
+[Current status](../current-status.md) separates the eight source emitters,
+six-profile common portable corpus, explicit v2 native/codecs and the frozen
+October 7 M5 compatibility profile. The [DPM guide](../deterministic-scheduling.md)
+explains application-owned hooks and observations; [migration comparison](lock-migration.md)
+reports validated lock changes without rewriting behavior or approval.
+
 | Document | Status | Scope |
 | --- | --- | --- |
-| [Compiler detailed design](design.md) | Implemented version-1 compiler with identified follow-up milestones | Contracts, evidence, resolution, targets, deterministic emission, CLI, diagnostics, and publication |
+| [Compiler detailed design](design.md) | Implemented compiler, eight emitters, M6 workflow and read-only migration comparison | Contracts, evidence, resolution, targets, deterministic emission, CLI, diagnostics, and publication |
 | [Rust target](rust-target.md) | Implemented with native/shared-vector gates and bounded source-hidden offline/mTLS acceptance | Rust types, ports, codecs, ownership, dependencies, generation and validation |
 | [Lean target](lean-target.md) | Implemented with required compiled verification, native/shared-vector gates and bounded source-hidden offline/mTLS acceptance | Lean types, ports, codecs, lifecycle, additive registry and shared replay |
 | [Trusted suite bundles](suite-bundles.md) | Implemented with focused compiler and executable native bridge gates | Async bundle publication, ownership hashes, immutable model handles and local native conversion |
+| [DPM integration kit](../dpm-usability-design.md) | First source slice implemented; native/helper/real replay gates passed | Explicit actor/action/checkpoint mapping, owned helper/seed publication and readonly freshness |
 | [Lock migration comparison](lock-migration.md) | Implemented; 23 migration controls and compiler/language gates passed | Read-only comparison of validated semantic/provenance identities and regeneration requirements |
 | [Reviewed scaffolds and corpora](reviewed-corpora.md) | Implemented; public local/Gate integration accepted 2026-10-03 | Explicit review, immutable sealing, workflow provenance, corpus projection and verified replay loading |
 | [General TLA+ frontend design](tla-frontend-design.md) | Delivery slices TF0–TF8 accepted 2026-09-12; active language profile 5 | Lossless parsing, module resolution, semantic elaboration, effective declarations, conformance, and compiler integration |

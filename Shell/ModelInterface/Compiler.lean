@@ -1535,6 +1535,20 @@ def checkCompilation (compilation : Compilation) (lockPath target out : String)
     | .ok true => pure ()
   return .ok { stalePaths := stale, diagnostics := compilation.diagnostics }
 
+/-- Read-only comparison for an already admitted compiler publication mode. -/
+def checkGeneratedTree (out : String) (tree : Emit.TypeScript.GeneratedTree) :
+    IO (Except CompilerError CheckReport) := do
+  let root ← match ← canonicalOutputRoot out false with
+    | .ok root => pure root
+    | .error error => return .error error
+  let mut stale : List String := []
+  for file in tree.files do
+    match ← compareContainedFile root file.relativePath file.bytes with
+    | .error error => return .error error
+    | .ok false => stale := stale ++ [joinPath root file.relativePath]
+    | .ok true => pure ()
+  return .ok { stalePaths := stale, diagnostics := [] }
+
 /-- Recompute ordinary inputs and compare the lock and generated payloads
 without writing. Reviewed callers use `checkCompilation` after review admission. -/
 def check (paths : InputPaths) (lockPath target out : String) (bundle : Bool := false) :

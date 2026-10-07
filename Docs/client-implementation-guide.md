@@ -36,6 +36,17 @@
 > requirements do not imply released support for every client or
 > change the existing Mirrors wire protocol.
 
+## Current source and acceptance scope
+
+[Current status](current-status.md) records the October 7 qualified framework
+profile and separately bound generated-client/DPM acceptance. Compiler targets
+include explicit async-ECMA/Rust v2 typed-map profiles; normal Node suite/project
+publication remains async v1. The [migration comparison](model-interface-compiler/lock-migration.md)
+is a read-only development tool. [DPM checkpoints](deterministic-scheduling.md)
+are an optional application/client execution-control seam, not new wire messages
+or the server job scheduler. Generated ports still require application behavior
+and observation implementations. Broader M4 remains separate.
+
 ## 1. Where a client can attach
 
 | Endpoint | Transport | Session model | Use for |

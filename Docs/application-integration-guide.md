@@ -1,5 +1,11 @@
 # Integrating an application
 
+[Current framework status](current-status.md) records completed named-profile
+qualification and separate broader M4/platform/release work. For cooperative
+thread control, use [DPM](deterministic-scheduling.md); application hooks and
+actual observations remain handwritten. The default suite/project path in this
+guide stays `mirrorecma-async-v1`; explicit v2 native bindings have separate scope.
+
 For a non-Node application, start with the [language/repository map](framework-map.md)
 and [Gate SDK/facade selection](../../MirrorGate/docs/client-language-support.md).
 
@@ -23,21 +29,16 @@ below, then follow the role sections for the work your team owns. One person may
 fill several roles. Detailed client APIs belong to the client repository;
 restricted execution and hosting configuration belong to MirrorGate.
 
-```mermaid
-flowchart LR
-  Inputs["Reviewed model, contract and evidence"] --> Compiler["Mirrors compiler"]
-  Compiler --> Bundle["Trusted generated suite bundle"]
-  Bundle --> Suite["Suite declaration and checked corpus"]
-  Suite -->|"Local runSuite"| Runner["MirrorECMA runner"]
-  Suite -->|"Restricted evaluateSuite"| Workflow["Gate integration workflow"]
-  Workflow -->|"runSuiteWithFactory"| Runner
-  Runner <-->|"Model protocol"| Server["Mirrors replay and comparison"]
-  Runner -->|"Local binding"| Local["Application adapter and SUT"]
-  Runner -->|"Admitted Gate provider"| Worker["Restricted worker: adapter and SUT"]
-  Workflow -->|"Preparation and physical cleanup"| Worker
-  Public["Approved public contract and adapter kit"] --> Author["Optional Gate-hosted author"]
-  Author -->|"Frozen submission"| Workflow
+```text
+Reviewed model/contract/evidence -> Mirrors compiler -> trusted suite bundle
+                                                        |
+                                                        v
+Local adapter <-> MirrorECMA suite/evaluator <-> Mirrors JSONL comparison
+                       |
+                       +-> optional Gate provider -> isolated implementation
 ```
+See the [terminal architecture](architecture-overview.txt) or
+[interactive diagram](architecture-overview.html) for detailed component views.
 
 The model, traces, generated evaluator bundle and results stay on the trusted
 side. A restricted author or worker receives only approved public material and

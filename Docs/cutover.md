@@ -3,10 +3,21 @@
 Status: source inventory refreshed 2026-09-08. The Lean port implements the
 original phases 0–6, pooled async server sessions on both platforms,
 model-interface compilation/negotiation, and the product-version CLI. The
-[documentation index](README.md) lists the current 12 test executables,
+[documentation index](README.md) lists the current gate entry points,
 compiler checks, and external tiers. The interop runner includes MirrorECMA,
 MirrorCPP, MirrorRust, and the Haskell reference client. Dated results below
 remain evidence of their recorded runs, not a current hosted-CI or service check.
+
+## Current scope and remaining decisions
+
+The [October 7 profile](../Plans/q3-published-roadmap-2026-10-07.md) passed its
+22-case five-client remote mTLS matrix; the legacy all-transport/release-cycle
+matrix below remains a separate qualification scope. The runner includes Lean,
+Rust, C++, ECMA and Haskell; top-level runner integration is implemented.
+Two cutover decisions remain: the stdio async error-tag choice in §3 and the
+Haskell deprecation/soak criteria in §5. Source comments and old test counts below
+are historical; current SDKs implement generated Lean/Rust replay and the
+separately scoped DPM profiles. Haskell remains a pinned compatibility oracle.
 
 ## 1. Final state
 

@@ -2,8 +2,10 @@
 
 Status: C1 source inventory, 2026-09-22
 
-This inventory identifies the current producers and owners that a future strict
-framework catalog must adapt. It is not itself a support catalog. Repository
+This inventory identifies producers and fact owners used by the implemented
+strict catalog, distribution and evidence tooling. It is not itself a support
+catalog. [Current status](current-status.md) links the October 7 qualification;
+the C1 baseline below remains a dated inventory. Repository
 identities and dirty state are recorded in
 [the implementation baseline](../Plans/implementation-baseline.md).
 

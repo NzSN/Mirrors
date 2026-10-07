@@ -31,54 +31,80 @@ runner enumerates the build/unit/codec/evidence gates and prints its excluded
 model-check obligations. Do not run a local Apalache/TLC process as a substitute
 for the remote qualification tier.
 
-The private remote tier uses the deployed TLS 1.3 mTLS service at
-`192.168.150.219:8999`. Supply credential *paths*, the pinned server leaf, and
-the identity from the retained same-time service observation; no credential
-bytes belong in the registry, command line, or public evidence:
+The selected private remote tier uses the observed owned Windows console at
+`172.20.208.1:8999`, TLS 1.3 mTLS, Apalache 0.62.2 and Java 25.0.4+7-LTS.
+[October 7 qualification](../../Plans/q3-published-roadmap-2026-10-07.md) records
+fresh exact identities and completed Q1/Q2; earlier deployment/tool observations
+remain historical. Revalidate endpoint, certificate validity and process/binary/
+runtime identity before a new collection. Static PID or product versions alone
+are not admission evidence. Broader M4 and service-manager acceptance are separate.
+
+Supply credential paths and a fresh bounded
+`mirrors.windows-deployment-observation/v1` record. Credential bytes never enter
+the registry, argv or public projection. The following setup reads public identity
+values from that operator-observed file and selected constants from the actual
+producer module; replace the private file paths with your admitted inputs:
 
 ```bash
-export MIRRORS_REMOTE_CLIENT_CERT=/private/client.crt
-export MIRRORS_REMOTE_CLIENT_KEY=/private/client.key
-export MIRRORS_REMOTE_CA=/private/ca.crt
-export MIRRORS_REMOTE_SERVER_PIN=<64-lowercase-hex-server-leaf-fingerprint>
-export MIRRORS_REMOTE_SERVICE_BINARY_SHA256=<64-lowercase-hex-installed-binary>
-export MIRRORS_REMOTE_SERVICE_SOURCE_REF=<full-deployed-source-revision>
-export MIRRORS_REMOTE_APALACHE_VERSION=0.61.0
-export MIRRORS_REMOTE_APALACHE_ARCHIVE_SHA256=68fb56dd9d053cf21d692fd7ec3fbaaeba1395661ec7434fa2b4c47e6fc432b8
-export MIRRORS_REMOTE_APALACHE_JAR_SHA256=33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346
-export MIRRORS_REMOTE_JAVA_SELECTED_VERSION=25.0.4+7
-export MIRRORS_REMOTE_JAVA_OBSERVED_VERSION=25.0.4+7-LTS
-export MIRRORS_REMOTE_JAVA_ARCHIVE_SHA256=54ba13f3ef80887fa74708b2a32daaae6262517ba68433d850bb4b426343172b
-export MIRRORS_REMOTE_JAVA_EXECUTABLE_SHA256=58df5c13e5d6e68f242ad9b724479122828523008ef0907d3f2a02f54afaff23
+export MIRRORS_REMOTE_CLIENT_CERT=/private/client.pem
+export MIRRORS_REMOTE_CLIENT_KEY=/private/client.key.pem
+export MIRRORS_REMOTE_CA=/private/ca.pem
+export MIRRORS_REMOTE_ADMIN_OBSERVATION=/private/fresh-deployment-observation.json
+
+# Inspect the generated exports before evaluating them; values come from the
+# trusted observation and repository-owned producer, never credential contents.
+python3 - <<'PYSETUP' > /tmp/mirrors-remote-qualified-env.sh
+import importlib.util, json, os, shlex
+from pathlib import Path
+spec = importlib.util.spec_from_file_location(
+    'remote_probe', 'tools/evidence/run_remote_model_check.py')
+probe = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(probe)
+with open(os.environ['MIRRORS_REMOTE_ADMIN_OBSERVATION']) as stream:
+    observed = json.load(stream)
+probe.validate_observation(
+    Path(os.environ['MIRRORS_REMOTE_ADMIN_OBSERVATION']),
+    observed['mtls']['serverLeafSha256'], observed['binarySha256'],
+    observed['sourceBaseRevision'])
+values = {
+    'MIRRORS_REMOTE_SERVER_PIN': observed['mtls']['serverLeafSha256'],
+    'MIRRORS_REMOTE_SERVICE_BINARY_SHA256': observed['binarySha256'],
+    'MIRRORS_REMOTE_SERVICE_SOURCE_REF': observed['sourceBaseRevision'],
+    'MIRRORS_REMOTE_APALACHE_VERSION': probe.APALACHE_VERSION,
+    'MIRRORS_REMOTE_APALACHE_ARCHIVE_SHA256': probe.APALACHE_ARCHIVE_SHA256,
+    'MIRRORS_REMOTE_APALACHE_JAR_SHA256': probe.APALACHE_JAR_SHA256,
+    'MIRRORS_REMOTE_JAVA_SELECTED_VERSION': probe.JAVA_SELECTED_VERSION,
+    'MIRRORS_REMOTE_JAVA_OBSERVED_VERSION': probe.JAVA_OBSERVED_VERSION,
+    'MIRRORS_REMOTE_JAVA_ARCHIVE_SHA256': probe.JAVA_ARCHIVE_SHA256,
+    'MIRRORS_REMOTE_JAVA_EXECUTABLE_SHA256': probe.JAVA_EXECUTABLE_SHA256,
+}
+for name, value in values.items():
+    print('export ' + name + '=' + shlex.quote(value))
+PYSETUP
+cat /tmp/mirrors-remote-qualified-env.sh
+source /tmp/mirrors-remote-qualified-env.sh
+: "${MIRRORS_CATALOG_SELECTION:?Set the verified current candidate SHA-256 selection}"
 python3 tools/evidence/collect.py \
   --command-id mirrors.remote-model-check \
   --component mirrors=. \
+  --catalog-selection-kind sha256 \
+  --catalog-selection-value "$MIRRORS_CATALOG_SELECTION" \
   -- python3 tools/evidence/run_remote_model_check.py
 ```
 
-Java pin reconciliation: the two `MIRRORS_REMOTE_JAVA_*` pins above name the
-toolchain **staged on the service host** (the operator-observed Windows
-archive / `java.exe` pair) and remain **pending-operator-observation** — they
-are verified only by the same-time service identity observation at activation,
-not by any local run. Local tiers pin the locally verified Linux carrier
-instead: archive
-`75894d107e474ffb6c947ab050e3893e0a1d3d40d36f107d42936ac6088769c1`, `bin/java`
-`e7bc0bc01b516a2ade3d9fceabc12d16c3a3b737adbf186a353602872ba31aad`, which
-`mirrors.local-no-model` and the local oracle mode recheck. The two sets name
-different carriers and must never be interchanged or silently relaxed into each
-other.
+Run from the Mirrors root with an admitted selected catalog (see below). The
+wrapper enforces the original fixed HourClock predicates/bound, one-hour native
+observation window, exact server source/binary, staged archive/executable pins,
+and client credential file types before remote contact. POSIX key permissions,
+TLS chain/SAN/pin and allowlisted principal remain separate transport checks.
+The context records paths/declarations and the log records the bounded verdict;
+neither a service status nor a `VALID` line alone replaces the full observation.
 
-The private command context retains the credential paths and declared service
-identity, while the command log retains the endpoint, TLS mode, server pin,
-remote binary/source declarations, local client binary hash, exact HourClock
-source hash, and terminal verdict. Pair it with the private remote administrative observation specified in
-the qualification harness design; a service status check or `VALID` line alone
-does not bind the deployed executable and backend identity.
-
-The 2026-09-22 live `VALID` probe used the still-running Apalache 0.58.2 / Java
-21.0.11 service. It confirms reachability and function, but it is not a qualifying
-run for the pinned 0.61.0 / 25.0.4+7 tier. Rerun collection only after the staged
-tools are activated and independently re-observed.
+The Windows runtime pins are not the Linux local-carrier pins. The September 22
+probe used Apalache 0.58.2/Java 21.0.11 and is historical smoke, not the current
+selected 0.62.2/25.0.4+7 qualification. The separate optional local fresh-trace
+profile remains blocked by its missing Java artifact. No local model checker
+is allowed on this coordinator.
 
 The selected catalog file must exist at the clean registered revision, or the
 caller must provide an already computed C2 `--catalog-selection-kind sha256`

@@ -1,6 +1,11 @@
 # Reference distribution profile
 
-Status: I1 selected proposal under the B2 execution decision, 2026-09-22
+Status: the I1 proposal baseline below is historical (2026-09-22). Checked local
+and Gate profiles are implemented, built, installed and accepted in
+[October 7 qualification](../Plans/q3-published-roadmap-2026-10-07.md). The
+separate fresh-trace distribution still lacks its locked Java artifact; do not
+confuse the owned Windows oracle with a packaged local toolchain. Native Ubuntu
+acceptance remains separate from the selected WSL2 profile.
 
 The first distribution candidate is Ubuntu 24.04 x86_64. This selects a narrow
 build and qualification target; it is not a generic Linux support claim. The

@@ -1,0 +1,31 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {pathToFileURL} from 'node:url';
+import assert from 'node:assert/strict';
+import {ScheduleBindingSession,replayScheduledTraces,AsyncCompiledAdapterRegistry,semanticDigestFromHex} from 'mirrorecma';
+import * as generated from './compiled/ScheduledCounterMirror.generated.js';
+import * as kit from './compiled/DpmKit.generated.js';
+const root=process.argv[3],mode=process.argv[2]??'ok';
+assert(root, 'explicit Mirrors source root required');
+const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
+const identity={modelSemanticDigest:kit.modelSemanticDigest,mappingSha256:kit.mappingSha256,implementationSha256:hash(new URL(import.meta.url))};
+assert.equal(hash(new URL('./DpmKit.plan.json',import.meta.url)),kit.mappingSha256);
+const steps=[['Read','a'],['Write','a'],['Finish','a'],['Read','b'],['Write','b'],['Finish','b']].map(([action,actor])=>kit.stepFor(action,actor));
+const schedule={schema:'mirrors.checkpoint-schedule/v1',profile:'mirrorecma.worker-checkpoints/v1',identity,inputs:{initial:0,mode},steps};
+const stats={acquired:0,disposed:0};
+const adapter={identity,actors:kit.actors,checkpoints:kit.checkpoints,factory(input){
+ stats.acquired++;const buffer=new SharedArrayBuffer(12*4),state=new Int32Array(buffer);Atomics.store(state,0,input.initial);
+ return {workers:kit.actors.map((actor,index)=>({actor:actor.actor,module:pathToFileURL(root+'/tools/deterministic-scheduling/languages/ecma/counter-worker.mjs'),data:{buffer,index,mode:input.mode}})),
+  observe(){const big=v=>({'#bigint':String(v)}),map=offset=>({'#map':[['a',big(Atomics.load(state,offset))],['b',big(Atomics.load(state,offset+1))]]});return{count:big(Atomics.load(state,0)),saved:map(3),phase:map(5)};},teardown(){stats.disposed++;}};
+}};
+const session=new ScheduleBindingSession(schedule,adapter,{executionTimeoutMs:5000,cleanupTimeoutMs:2000});
+const {fromWire:nativeValue}=await import(pathToFileURL(root+'/tools/deterministic-scheduling/languages/ecma/value-bridge.mjs'));
+const port={async invoke(action,inputs){if(action==='Initialize'){await session.initialize();return;}await session.advance(kit.stepFor(action,inputs.Actor));},async observe(){const state=nativeValue(session.observation());return{Count:state.count,Phase:state.phase,Saved:state.saved};}};
+const semanticDigest=semanticDigestFromHex(kit.modelSemanticDigest),targetProfile=generated.ScheduledCounterAsyncTargetProfile;
+const registry=new AsyncCompiledAdapterRegistry([{key:{semanticDigest,adapterId:'generated-dpm-kit',targetProfile,stateComputerContractVersion:'mirrors.async-state-computer/v1'},factory:async config=>{const binding=generated.bindScheduledCounterAsyncPublicPort(port,config);return{semanticDigest,computer:binding.computer,assertCompatibleConfig:binding.assertCompatibleConfig,coverage:binding.coverage,dispose:()=>session.dispose()};}}]);
+const selection={execution:'async',metadata:generated.ScheduledCounterModelInterface,adapterId:'generated-dpm-kit',targetProfile,stateComputerContractVersion:'mirrors.async-state-computer/v1',registry,policy:'require'};
+const config={specPath:root+'/test/fixtures/deterministic-scheduling/ScheduledCounter.tla',paramVars:'parameters',invariant:'Safety',initPredicate:'Init',nextPredicate:'Next',lengthBound:6};
+const result=await replayScheduledTraces(root+'/.lake/build/bin/mirror',config,[root+'/Plans/dpm-languages-evidence-20261005/oracles/counter/serial/trace-0.itf.json'],selection,session,{deadlines:{registrationMs:30000,stepMs:5000,receiveMs:5000}});
+const receipt={...result.evidence,sut:stats};writeFileSync(new URL('./actual-'+mode+'.receipt.json',import.meta.url),JSON.stringify(receipt,null,2)+'\n');
+assert.equal(stats.acquired,1);assert.equal(stats.disposed,1);assert.equal(receipt.comparison,mode==='mutate'?'step_mismatch':'matched');assert.equal(receipt.passed,mode!=='mutate');assert.equal(receipt.binding.executions[0].cleanup,'confirmed');
+console.log('Generated kit actual workers: '+receipt.comparison+'; cleanup confirmed');

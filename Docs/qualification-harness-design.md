@@ -2,11 +2,12 @@
 
 Date: 2026-09-22
 
-Status: source commands and linked evidence verification implemented; installed
-command adapters ship in the I4 distributions. The current operator-selected
-profile is `m5-wsl-windows-remote/v1`; its scope and execution evidence are in
-[the Windows execution plan](../Plans/m5-wsl-windows-remote.md). This document
-does not claim a qualified candidate.
+Status: source commands, installed adapters, linked Q1 and independent offline
+Q2 are implemented. The current named profile `m5-wsl-windows-remote/v1`
+qualifies at the exact published revisions in
+[October 7 readiness](../Plans/q3-published-roadmap-2026-10-07.md): 18 commands/16
+tiers, two D bindings, 19 nodes, 20 bundles and six rejected controls. This design
+describes mechanisms; source or documentation changes do not renew that evidence.
 
 ## Installed LeaseService qualification branch
 
@@ -73,7 +74,7 @@ directory selected by the final I4 installation manifest, never a source
 checkout or `PATH` fallback. `PRIVATE_OUTPUT` is a fresh owner-only directory
 whose declared files are captured by E2.
 
-| Command ID | Phase and exact invocation | Required retained result | State |
+| Command ID | Phase and exact invocation | Required retained result | Current implemented/scoped state |
 | --- | --- | --- | --- |
 | `mirrors.local-no-model` | cwd bound to the declared `mirrors` component root: `bash tools/run-local-no-model-check.sh` | local build, proof, codec, fixture and unit-gate logs; the script explicitly omits TLC and every live Apalache/model-check tier | Registered; deliberately non-model-checking |
 | `mirrors.remote-model-check` | Mirrors cwd: `python3 tools/evidence/run_remote_model_check.py`; fixed TLS 1.3 mTLS endpoint `172.20.208.1:8999`, pinned server leaf, fixed `HourClock.tla` `Init`/`Next`/`Inv`, bound 3 | private command context and log containing the declared service/source/binary identities, client and HourClock byte hashes, and terminal `VALID` | Registered; credentials remain operator-supplied private file paths |
@@ -81,16 +82,30 @@ whose declared files are captured by E2.
 | `mirrorecma.project-check` | cwd bound to the declared `mirrorecma` component root: `pnpm run check` | command logs | Registered |
 | `mirrorecma.test` | cwd bound to the declared `mirrorecma` component root: `pnpm run test` | command logs | Registered |
 | `mirrorgate.required` | cwd bound to the declared `mirrorgate` component root: `bash scripts/test.sh` | command logs | Registered; unavailable required backend remains incomplete |
-| `framework.install-diagnostics` | Mirrors cwd: `python3 tools/distribution/qualification.py --prefix INSTALL_PREFIX --framework-catalog-bin TRUSTED_C3 --framework-catalog-sha256 C3_SHA --bwrap BWRAP --strace STRACE --strace-sha256 STRACE_SHA --audit-out PRIVATE_OUTPUT/install-diagnostics.json --hide-root MIRRORS --hide-root MIRRORECMA --hide-root MIRRORGATE` | installed audit, D manifest and cache index | Producer exists; E2 copy/attachment wrapper still required |
-| `framework.replay-correct` | source-hidden installed consumer, `ACTIVE_RUNTIME/runtimes/node/bin/node` plus the installed project replay wrapper in correct mode | typed producer result and local cleanup receipt | Awaiting installed project fixture path |
+| `framework.install-diagnostics` | Mirrors cwd: `python3 tools/distribution/qualification.py --prefix INSTALL_PREFIX --framework-catalog-bin TRUSTED_C3 --framework-catalog-sha256 C3_SHA --bwrap BWRAP --strace STRACE --strace-sha256 STRACE_SHA --audit-out PRIVATE_OUTPUT/install-diagnostics.json --hide-root MIRRORS --hide-root MIRRORECMA --hide-root MIRRORGATE` | installed audit, D manifest and cache index | Implemented E2 wrapper; exact installed local D qualified |
+| `framework.replay-correct` | source-hidden installed consumer, `ACTIVE_RUNTIME/runtimes/node/bin/node` plus the installed project replay wrapper in correct mode | typed producer result and local cleanup receipt | Implemented installed wrapper; scoped replay qualified |
 | `framework.replay-faulty` | same installed wrapper in the deliberate-fault mode | exact normalized mismatch and local cleanup receipt | Awaiting installed project fixture path |
-| `framework.reproduction` | installed `mirrorecma reproduce` with explicit project, R0-derived bundle, framework input, C0 combination, finalized R0 envelope/artifact store, server, and installed tool registry | R1 reproduction input and typed replay result | CLI exists; source-hidden fixture/output wrapper pending |
+| `framework.reproduction` | installed `mirrorecma reproduce` with explicit project, R0-derived bundle, framework input, C0 combination, finalized R0 envelope/artifact store, server, and installed tool registry | R1 reproduction input and typed replay result | Implemented source-hidden installed R1 wrapper; qualified |
 | `framework.reduction` | installed LeaseService reduction materializer in remote oracle mode with explicit candidate, R0-derived bundle, model, lock, original trace, tools/v2 manifest, service identity record, three TLS PEM files, output and receipt paths | bounded reduction result, `mirrorecma.lease-reduction-oracle/v2` receipt, original reproduction input | Registered and installed (driver ships in the `mirrorecma` package); current Windows console ownership/identity observation required |
 | `framework.reduction-prefix` | installed prefix-reduction driver with explicit project, R0-derived bundle, stability record, original trace, framework input, combination, finalized R0 envelope, output root and policy bounds | `mirrorecma.reproduction-prefix-reduction/v1` bounded result plus the original reproduction bundle as `reproduction-input` | Registered and installed; qualified 2026-09-30 (`run-dcc51362…`, `shortest_reproducing_prefix`) |
-| `framework.mutation-local` | installed Node runs `run.mjs all --prevalidated-registry INSTALLED_REGISTRY --receipt PRIVATE_OUTPUT/local-application-campaigns.json` using the installed applications, Mirror and package tree | one `mirrorecma.application-campaign-aggregate/v1` result containing all three closed campaigns and confirmed local cleanup | Final installed paths pending |
-| `framework.mutation-gate` | installed aggregate wrapper directly runs `application-program-gate.mjs APPLICATION --receipt PRIVATE_OUTPUT/APPLICATION-gate-receipt.json` for all three applications through the installed Gate profile | three `mirrorgate.application-validation/v2` receipts and confirmed physical cleanup | Aggregate wrapper and final installed paths pending; source R0 commands cannot substitute |
-| `mirrorgate.recovery` | installed Gate administrative CLI `recovery reclaim` with explicit state root, optional delegated cgroup parent, complete original private run linkage, and `--receipt PRIVATE_OUTPUT/recovery-receipt.json` | private native recovery receipt with `gate-recovery` cleanup | E1 adapter implemented; CLI file output pending |
+| `framework.mutation-local` | installed Node runs `run.mjs all --prevalidated-registry INSTALLED_REGISTRY --receipt PRIVATE_OUTPUT/local-application-campaigns.json` using the installed applications, Mirror and package tree | one `mirrorecma.application-campaign-aggregate/v1` result containing all three closed campaigns and confirmed local cleanup | Implemented installed aggregate; qualified for the declared campaigns |
+| `framework.mutation-gate` | installed aggregate wrapper directly runs `application-program-gate.mjs APPLICATION --receipt PRIVATE_OUTPUT/APPLICATION-gate-receipt.json` for all three applications through the installed Gate profile | three `mirrorgate.application-validation/v2` receipts and confirmed physical cleanup | Implemented installed aggregate; qualified; source R0 cannot substitute |
+| `mirrorgate.recovery` | installed Gate administrative CLI `recovery reclaim` with explicit state root, optional delegated cgroup parent, complete original private run linkage, and `--receipt PRIVATE_OUTPUT/recovery-receipt.json` | private native recovery receipt with `gate-recovery` cleanup | Native receipt-output CLI implemented; prepared-filesystem recovery qualified |
 | `evidence.offline-verify` | installed verifier: `python3 qualification_scope.py --scope PRIVATE_OUTPUT/qualification-scope.json --store EVIDENCE_STORE` with pinned wheels | required private qualification-scope producer result | Implemented |
+
+The selected full profile also registers these installed/supporting branches:
+
+| Command ID | Invocation/role | State |
+| --- | --- | --- |
+| `framework.install-diagnostics-gate` | Same D tool against exact registered Gate prefix; separate component-set binding | Implemented and qualified; runs before dependent installed producers |
+| `framework.lease-origin-installed` | Installed Node plus `verification/bundle/tools/evidence/installed-lease-origin.mjs PRIVATE_OUTPUT` | Fresh correct/fault LeaseService origin qualified |
+| `framework.reproduction-lease` | Installed public project reproduction path for the LeaseService origin | Fresh R0→R1 linkage qualified |
+| `framework.recovery-origin-installed` | Installed Python plus `verification/bundle/tools/evidence/installed-recovery-origin.py PRIVATE_OUTPUT` | Supporting abrupt-interruption origin retained without qualification credit |
+
+Exact argv, runtime paths and artifact attachments are owned by
+`tools/evidence/commands.json` and each admitted installed manifest. The summary
+rows do not authorize substitution of source checkouts or historical run refs.
+Broader M4 process recovery/aggregate enforcement stays on its separate track.
 
 The three source campaign IDs
 `mirrorgate.application-campaign.{work-queue,persistent-transfer,lease-service}`

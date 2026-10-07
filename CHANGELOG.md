@@ -4,6 +4,39 @@ All notable changes to the Lean 4 port of ModelMirrors. The port target is
 byte-for-byte JSON-lines wire compatibility with ModelMirros@3496251
 (Haskell); divergences are listed as ACCEPTED with rationale.
 
+## Compiler migration and published-profile qualification (2026-10-07)
+
+- Added read-only `model_interface_gen compare-locks`: validated semantic/
+  provenance identities, canonical section deltas and explicit regeneration/
+  artifact-refresh requirements. No lock or application code is rewritten.
+- The named `m5-wsl-windows-remote/v1` published candidate passed all 18 commands,
+  16 tiers, two D bindings, 19 linked nodes, 20 independent bundles and six
+  rejection controls. [Readiness](Plans/q3-published-roadmap-2026-10-07.md) binds
+  exact implementation/runtime identities; later documentation is not new proof.
+- Broader M4 process recovery/enforcement stays separate. Added read-only native-
+  host eligibility facts and a concrete platform/process-ownership plan.
+- Documentation now includes terminal block diagrams, current status navigation,
+  eight-emitter versus six-profile shared-corpus scope and cross-SDK DPM guides.
+
+## Cross-client deterministic scheduling (2026-10-04–05)
+
+- DPM-0–DPM-5 accepted for real C++ threads, Node workers and Rust threads at
+  declared cooperative checkpoints, with generated replay, finite coverage,
+  bounded native phase bridge and source-hidden installed consumers.
+- Added explicit `mirrorecma-async-v2` and `mirrorrust-v2` integer-key typed-map
+  emitters for the native pilot, preserving ordinary v1 output. Node suite/project
+  publication remains async v1. [Scheduling](Docs/deterministic-scheduling.md)
+  links exact evidence and limits; no arbitrary preemption or universal claim.
+
+## Reviewed corpora and cross-language interfaces (2026-10-03)
+
+- M6 added repeated evidence merge, explicit review/seal, workflow provenance,
+  immutable corpus projection and public local/Gate integration.
+- Generated Lean required-verification replay and shared language fixtures passed
+  their separately declared source/native/transport gates. See
+  [M6](Plans/m6-reviewed-scaffolds-and-corpora.md) and
+  [compiler/client follow-ups](Plans/compiler-client-followups-2026-10-03.md).
+
 ## Remote validation and async resource safety (2026-09-18)
 
 - Validation CLI recursively sends the entry module's TLA+ dependency closure;

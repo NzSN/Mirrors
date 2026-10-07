@@ -4,6 +4,19 @@ These consumers exercise MirrorCPP's experimental cooperative scheduling APIs.
 They do not change generated bindings or use expected model state to initialize
 implementation state. Run from the Mirrors repository root.
 
+## Integration kit and read-only timeline
+
+`model_interface_gen generate-dpm/check-dpm` prepares/checks reviewed mapping
+helpers alongside ordinary bindings. `timeline.py --receipt FILE --format text|json`
+reads actual comparison/worker receipts without changing them or starting a run.
+[Kit/timeline contract](../../Docs/dpm-usability-design.md) defines supported
+profiles, input trust, actor/checkpoint mapping and honest unknown attribution.
+
+`python3 -m unittest discover -s tools/deterministic-scheduling/tests` runs focused
+compiler publication and timeline integrity controls. Static real-receipt inputs
+are copied byte-for-byte by `prepare_timeline_fixtures.py`; they are diagnostic
+regression data, not fresh model qualification. Never edit retained receipt bytes.
+
 ## Portable installed gate
 
 ```sh

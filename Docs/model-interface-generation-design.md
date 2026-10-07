@@ -1,5 +1,10 @@
 # Deterministic Model-Interface Generation — Design
 
+[Current framework status](current-status.md) indexes the October 7
+frozen qualification, eight compiler emitters and separately scoped generated/
+DPM acceptance. This document retains its own normative profile and dated
+results; broader M4/platform and package-release claims remain separate.
+
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
 > Status: **sync/async TypeScript, C++, Rust, and Lean generation implemented;

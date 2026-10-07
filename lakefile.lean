@@ -427,6 +427,13 @@ script test do
   if outMi.exitCode != 0 then
     IO.println s!"model_interface_spec FAILED ({outMi.exitCode})"
     return outMi.exitCode
+  let dpmUsability ← IO.Process.output
+    ({ cmd := "python3", args := #["-m", "unittest", "discover", "-s",
+      "tools/deterministic-scheduling/tests"] } : IO.Process.SpawnArgs)
+  IO.println dpmUsability.stdout
+  if dpmUsability.exitCode != 0 then
+    IO.eprintln dpmUsability.stderr
+    return dpmUsability.exitCode
   for executable in #["model_interface_language_spec", "model_interface_lean_spec",
       "model_interface_workflow_spec", "model_interface_workflow_cli_spec",
       "model_interface_workflow_provenance_spec", "model_interface_corpus_spec",

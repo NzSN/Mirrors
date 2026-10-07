@@ -1,0 +1,125 @@
+{
+  "schema": "mirrors.dpm-timeline-fixtures/v1",
+  "rows": [
+    {
+      "fixture": "ecma/counter/serial-ok/receipt.json",
+      "source": "Plans/dpm-languages-evidence-20261005/ecma-acceptance/counter/serial-ok/receipt.json",
+      "sha256": "56d8cec541619a4d69924856bf0acdab6bcaf0fa4ad213c6aad3b88f2fe093ad"
+    },
+    {
+      "fixture": "ecma/counter/serial-mutate/receipt.json",
+      "source": "Plans/dpm-languages-evidence-20261005/ecma-acceptance/counter/serial-mutate/receipt.json",
+      "sha256": "da78092e8b85df63b621bac064000c46c4098e26f03d06759dd64cecb9280610"
+    },
+    {
+      "fixture": "ecma/counter/serial-mutate-and-teardown-fail/receipt.json",
+      "source": "Plans/dpm-languages-evidence-20261005/ecma-acceptance/counter/serial-mutate-and-teardown-fail/receipt.json",
+      "sha256": "8edced7a2a16a5368b0b2461c57e77f559c4e7b0c1568af6de87a47d390fd1e4"
+    },
+    {
+      "fixture": "ecma/counter/serial-repeat/receipt.json",
+      "source": "Plans/dpm-languages-evidence-20261005/ecma-acceptance/counter/serial-repeat/receipt.json",
+      "sha256": "8fada06fe2224a8624365ff532aafb887a87ad8ee074bfd105474e14622839b0"
+    },
+    {
+      "fixture": "rust/counter/serial-ok/receipt.json",
+      "source": "Plans/dpm-languages-evidence-20261005/rust-acceptance/counter/serial-ok/receipt.json",
+      "sha256": "562d87e6cde4937aabf2e1dfb8b567c7ab0925e69aef09d9de0bde2c6423539f"
+    },
+    {
+      "fixture": "rust/counter/serial-mutate/receipt.json",
+      "source": "Plans/dpm-languages-evidence-20261005/rust-acceptance/counter/serial-mutate/receipt.json",
+      "sha256": "9395bdef0ccf48c73809005147124e38f6864d28fb16ca02c23d9071c1bc5916"
+    },
+    {
+      "fixture": "rust/counter/serial-mutate-and-teardown-fail/receipt.json",
+      "source": "Plans/dpm-languages-evidence-20261005/rust-acceptance/counter/serial-mutate-and-teardown-fail/receipt.json",
+      "sha256": "280dfa3caca16c6e9ea665b6890c01f1c18abbb9e49f7c5be9a8187b1fb7cc38"
+    },
+    {
+      "fixture": "rust/counter/serial-repeat/receipt.json",
+      "source": "Plans/dpm-languages-evidence-20261005/rust-acceptance/counter/serial-repeat/receipt.json",
+      "sha256": "1eb3e9504849184998cf05916eccdcf73061a90f2969627f2f456c22afda15e2"
+    },
+    {
+      "fixture": "ecma/native/00-stable-t1-normal-v3-ok/receipt.json",
+      "source": "Plans/dpm-languages-evidence-20261005/ecma-acceptance/native/00-stable-t1-normal-v3-ok/receipt.json",
+      "sha256": "f9fd806b51816017a3c80365ace7c63c3f749a85eb51d5e2863938caacdf0cdf"
+    },
+    {
+      "fixture": "ecma/native/08-stable-t1-duplicate-sink-call-ok/receipt.json",
+      "source": "Plans/dpm-languages-evidence-20261005/ecma-acceptance/native/08-stable-t1-duplicate-sink-call-ok/receipt.json",
+      "sha256": "1cbb9d7cfe252dd7b44489710dd09acd5ea43df0cd9bd07fe30839994e78c161"
+    },
+    {
+      "fixture": "cpp/counter/bad-observation.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/bad-observation.receipt.json",
+      "sha256": "6ebdbc9f106d623abf68ea38a3ea840ae54882fc3b13767033fe55346b77ba38"
+    },
+    {
+      "fixture": "cpp/counter/cancel.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/cancel.receipt.json",
+      "sha256": "6683b6a3eea8ca6c1318eba5d2bef2ef54615da22b24b3d2d4a802b0b40bf122"
+    },
+    {
+      "fixture": "cpp/counter/denied-negotiation.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/denied-negotiation.receipt.json",
+      "sha256": "10e653f8ab421b71f28cfaf29caaea543a9c260c6a91c10adfeb91feb1d4e620"
+    },
+    {
+      "fixture": "cpp/counter/early-done.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/early-done.receipt.json",
+      "sha256": "c5031a95ddf1aaa721ab384ac5b0648f86c47a4df458f303dec603bc4869489d"
+    },
+    {
+      "fixture": "cpp/counter/early-eof.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/early-eof.receipt.json",
+      "sha256": "9493213b09a24dd61598ab2b6c95ed9631dfb41a8ecb07ac165fb55f0ebde6bf"
+    },
+    {
+      "fixture": "cpp/counter/mutate-and-teardown-fail.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/mutate-and-teardown-fail.receipt.json",
+      "sha256": "0c82537be0fb4f6be4ea3331aa3585bbc4f607c2c4f8e6a4e7fb102ef7214983"
+    },
+    {
+      "fixture": "cpp/counter/mutate.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/mutate.receipt.json",
+      "sha256": "8834682805dcf2460fe0278d3ab42b81db652a8b6dcd179a635f53d53ff6c5e7"
+    },
+    {
+      "fixture": "cpp/counter/ok.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/ok.receipt.json",
+      "sha256": "091c4e93c20fa5d8459a4d643ca5709d50239f65444d7121990a924d67b485f9"
+    },
+    {
+      "fixture": "cpp/counter/oracle-init-not-adopted.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/oracle-init-not-adopted.receipt.json",
+      "sha256": "fd52c1a97ea9ba0cd04e1421ba473afaff0618bb8dbf6b10be0cfd97b1971fc7"
+    },
+    {
+      "fixture": "cpp/counter/repeat.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/repeat.receipt.json",
+      "sha256": "447b4590c54790627df3eaab3535d9c12b9e6425b8329476bc9ba0b49c55a37b"
+    },
+    {
+      "fixture": "cpp/counter/teardown-fail.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/teardown-fail.receipt.json",
+      "sha256": "dd1a8fcf6544459e82651ef2f8788596e4d5455e00855e5d4f84ea9c26c01077"
+    },
+    {
+      "fixture": "cpp/counter/unexpected-checkpoint.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/unexpected-checkpoint.receipt.json",
+      "sha256": "b96620f8263ac6cc5dcf844a0aea2262e33e5aa256705bf666586976ba40c5c1"
+    },
+    {
+      "fixture": "cpp/counter/wrong-identity.receipt.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/counter-replay/serial/wrong-identity.receipt.json",
+      "sha256": "196f06352e27082344348a5874b0675ef3b47ccc1009f440d94f8fe30d9cdf56"
+    },
+    {
+      "fixture": "native.lock.json",
+      "source": "Plans/dpm2-dpm5-qualified-20261004/native-fresh.lock.json",
+      "sha256": "c287b74d106ef1feff3bc7dd793fc1a34b303d1d36e47ccf789fc3f99b44cee1"
+    }
+  ]
+}

@@ -4,6 +4,18 @@ Start here to deploy Mirrors on one machine and validate models or run applicati
 conformance checks from another. The [application integration guide](application-integration-guide.md)
 explains which path your application needs; validation alone does not test a SUT.
 
+## Current qualified topology
+
+The [October 7 record](../Plans/q3-published-roadmap-2026-10-07.md) qualifies WSL2
+clients/tooling with an owned native Windows console oracle at the observed
+172.20.208.1:8999, Apalache 0.62.2 and Java 25.0.4+7-LTS. Reobserve address,
+process/binary/runtime/certificate identities before use; the record is not a
+permanent live-health claim. Its certificates were valid through
+2026-10-08T02:47:53Z; renewal requires explicit identity/pin reconciliation.
+Service-manager/AUTO_START acceptance and Windows Gate isolation remain separate.
+On this coordinator, all model operations use that remote oracle; do not launch
+local Apalache/TLC. Ordinary supplied-trace replay remains available locally.
+
 ## Choose the operation
 
 | Need | Client | Source and lifetime rules |

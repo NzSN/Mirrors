@@ -3,7 +3,10 @@
 > Additive source extensions (2026-10-01): `mirrorcpp-v2`, repaired replay
 > partitioning, frontend profile 5, and optional generated CMake consumers are
 > specified in [WriteSentry compiler extensions](writesentry-extensions.md).
-> Fresh remote and full cross-client qualification remain separate.
+> Current declared acceptance is indexed in [framework status](../current-status.md)
+> and [October 7 readiness](../../Plans/q3-published-roadmap-2026-10-07.md).
+> Eight emitters include explicit async-ECMA/Rust v2 typed maps; common portable
+> vectors and DPM/native profiles retain their separately declared scopes.
 
 > Design index: [`README.md`](README.md)
 > Implemented general TLA+ frontend:
