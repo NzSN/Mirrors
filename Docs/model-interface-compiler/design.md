@@ -1790,8 +1790,9 @@ Mirrors, MirrorECMA, and MirrorGate path. These clauses passed in the recorded
 source and relocated-package integration tier. This compiler milestone does not
 requalify the framework's frozen M5 candidate.
 
-Compatibility migration helpers remain follow-up work. Rust, Lean and shared
-recording vectors are implemented. Legacy proposal-only scaffolding remains
+The read-only [lock migration comparison](lock-migration.md) is implemented
+(2026-10-07); runtime compatibility and automatic application-code rewriting
+remain separate. Rust, Lean and shared recording vectors are implemented. Legacy proposal-only scaffolding remains
 available. Reviewed sealing requires an explicit human-supplied review record;
 the compiler owns contract validation and publication. The experimental async
 TypeScript profile is a prerequisite slice; it does not by itself establish

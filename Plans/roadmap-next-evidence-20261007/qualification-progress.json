@@ -1,0 +1,63 @@
+{
+  "schema": "mirrors.roadmap-qualification-progress/v1",
+  "status": "incomplete",
+  "selection": "d5358150e9fe041c930a066b6f2f0f88b2f617e782692dd7ad0e9c5b2bfe7109",
+  "snapshotIndexSha256": "1db2f318dad77ab0bf1190e69f1cdca3fe7056318fb7cf4a8c3ce429a77ccaf9",
+  "localDistributionManifest": "1327123d01b7401975f3e3cbed83ed1e9e3c496078362c001c3ceb519cf40f9d",
+  "sourceMigrationChecks": 23,
+  "compilerSpec": "passed",
+  "languageProfiles": 8,
+  "remoteOracle": "stopped; operational startup approval pending",
+  "m4NativeAcceptance": "unqualified; native delegated runner and durable process/group binding required",
+  "previousCandidateReuse": "no historical producer result receives fresh candidate credit",
+  "gateDistributionManifest": "27022d4284f484e04a84561165f5f363ba29022c897dea04383b8f7945a26479",
+  "bothTransactionalInstalls": "committed",
+  "installedMigrationSupplement": "passed",
+  "distributionBindings": {
+    "framework.install-diagnostics": {
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-fcd69b0a-eeac-4a64-bcd6-0c277843f106",
+        "envelopeSha256": "a62e626849c28c1ea6eca9a04b0cb1985d62c2424054c29b22e93cbcfbd3bbef",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-fcd69b0a-eeac-4a64-bcd6-0c277843f106",
+        "envelopeSha256": "c733360732805581db8d83b0b8bde68ecd408c63eca72d511ad16b0b646f80c6",
+        "projectionKind": "public"
+      }
+    },
+    "framework.install-diagnostics-gate": {
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-f5f7d59a-1b37-4d84-a9bd-63ec554b2e19",
+        "envelopeSha256": "be7d68b9b77ee0cf42c07229ad693dfc91e1f84def2751d7f00ccc79018d86ea",
+        "projectionKind": "private"
+      },
+      "publicRunRef": {
+        "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+        "runId": "run-f5f7d59a-1b37-4d84-a9bd-63ec554b2e19",
+        "envelopeSha256": "8a5530edf09c47547c6ae0fe1f782faa20ae922bd98fa302ce16616e53a4f71c",
+        "projectionKind": "public"
+      }
+    }
+  },
+  "requiredCommandsPassed": 14,
+  "requiredCommandsTotal": 18,
+  "missingRequiredCommands": [
+    "evidence.offline-verify",
+    "framework.reduction",
+    "mirrors.interop",
+    "mirrors.remote-model-check"
+  ],
+  "availableQualifiedCommands": 15,
+  "retainedSupportingOrigins": 1,
+  "q1Complete": false,
+  "q2FullProfilePassed": false,
+  "durablePrivateArchive": "/home/nzsn/.local/state/mirrors/m5-roadmap-20261007-incomplete",
+  "fullProfileRefusalObserved": true,
+  "durableRetention": "completed; 5736 files; TLS credential bytes excluded",
+  "finalFrozenSourceCheck": "byte-identical",
+  "finalInstalledInventories": "verified"
+}

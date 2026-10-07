@@ -1,0 +1,177 @@
+{
+  "schema": "mirrors.partial-evidence-integrity/v1",
+  "status": "verified",
+  "profileQualification": "incomplete",
+  "q1Complete": false,
+  "q2FullProfilePassed": false,
+  "bundleCount": 16,
+  "partialScopeNodes": 16,
+  "bundles": [
+    {
+      "commandId": "framework.install-diagnostics",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-fcd69b0a-eeac-4a64-bcd6-0c277843f106",
+        "envelopeSha256": "a62e626849c28c1ea6eca9a04b0cb1985d62c2424054c29b22e93cbcfbd3bbef",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "framework.install-diagnostics-gate",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-f5f7d59a-1b37-4d84-a9bd-63ec554b2e19",
+        "envelopeSha256": "be7d68b9b77ee0cf42c07229ad693dfc91e1f84def2751d7f00ccc79018d86ea",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "mirrors.local-no-model",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-d6e51185-bc4e-4238-b5a0-9abe1dfe7a2e",
+        "envelopeSha256": "ce103c6088e32f74b630bf5a153880fd1220eee433ae8890d2d1908fd12db6d6",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "mirrorecma.project-check",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-3cd6afcc-cc53-4939-b809-e7fef13c6093",
+        "envelopeSha256": "be30fa4a28c0aaea7650803f6cc922a0677338ea563117c4ac5d95e480479a95",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "mirrorecma.test",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-05e86afc-cec2-4752-8f7c-a5323d08aebd",
+        "envelopeSha256": "6077b8821005fb43d8301bf12c9dd88b983d65f5ddd1b6bfb4d3eb8becb0f297",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "mirrorgate.required",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-f3f37f76-3b7c-4123-8294-c408d106ed4f",
+        "envelopeSha256": "08c45759ef7cc1995b0b3c47cef89dd321913d39c933bcb2e3dda58e5bb5aa14",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "framework.replay-correct",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-e8cb5ccc-aaaf-41e8-8a99-88a9d8ecfb31",
+        "envelopeSha256": "abd655acd999cfd803509febd2a7cff3cc7041c5843f3f03ad8a13c5c5af070f",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "framework.replay-faulty",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-d748dda3-64a4-4faa-9843-5e55af3c8673",
+        "envelopeSha256": "89e726dc148e839a13d27fe2243c89601b0f24b2a61b0a3f00675492312e6527",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "framework.mutation-local",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-76bf90ee-cf50-4cd9-8f62-2a4ced92ca3a",
+        "envelopeSha256": "0b1e69b4318eb1e36ee52122388ae22caba6e5c5e987fd32ca5b857cc6e66997",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "framework.lease-origin-installed",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-287a4876-546e-49d8-bcb8-bda5e803f3f6",
+        "envelopeSha256": "21e7bb641dd80fe2f60800f47cffbf874959b3cdd4d005183112e205cfc1ab2b",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "framework.reproduction",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-01b8f88d-93d5-4e33-8cbf-27568778b03a",
+        "envelopeSha256": "85c4bdd88b24a0f30aecea30a5b288f6a58d3076fe132b99af8b71389f7e4db3",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "framework.reproduction-lease",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-64337d17-a118-4d6a-be7a-ed9328069c93",
+        "envelopeSha256": "f3a14643b26f14c0f06ff1d007c83ab23999e1b6406b9ffc3bc438e9d2962fd8",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "framework.reduction-prefix",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-6a8faf91-0a2a-40e8-bccf-d5a525cbf799",
+        "envelopeSha256": "3d94d9946c046229c97b31b0d6f7de0f42dde0c8cd6d0ce3fad0785c937d6515",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "framework.mutation-gate",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-2ceb9f3e-4877-4e05-a6b3-25fe20a13cad",
+        "envelopeSha256": "2bca6ded7dbe1409675102d642d37edca491ca1450b4d64ff72974dec8d0c84e",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "framework.recovery-origin-installed",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-e2eb7ee7-0213-43da-8a66-6ca00a84d6e5",
+        "envelopeSha256": "9ec27843e47897e2b0ce79747e5d1ef5be82901c797a932c1c17e974a9e1ab05",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    },
+    {
+      "commandId": "mirrorgate.recovery",
+      "privateRunRef": {
+        "schemaVersion": "mirrors.evidence-envelope/v1.0",
+        "runId": "run-2ecf7d34-450c-4b4c-b318-48fc2f6e2006",
+        "envelopeSha256": "decb72d48313dd1dab1f386cdfcaa6e01ca1b7d6704659236cbf51415bcced88",
+        "projectionKind": "private"
+      },
+      "status": "integrity-verified"
+    }
+  ],
+  "environment": {
+    "sources": "hidden",
+    "network": "unshared",
+    "archive": "read-only",
+    "verifier": "installed pinned schema and wheels"
+  }
+}

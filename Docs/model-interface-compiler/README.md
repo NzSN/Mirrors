@@ -9,6 +9,7 @@ compiler and its implemented TLA+ source frontend.
 | [Rust target](rust-target.md) | Implemented with native/shared-vector gates and bounded source-hidden offline/mTLS acceptance | Rust types, ports, codecs, ownership, dependencies, generation and validation |
 | [Lean target](lean-target.md) | Implemented with required compiled verification, native/shared-vector gates and bounded source-hidden offline/mTLS acceptance | Lean types, ports, codecs, lifecycle, additive registry and shared replay |
 | [Trusted suite bundles](suite-bundles.md) | Implemented with focused compiler and executable native bridge gates | Async bundle publication, ownership hashes, immutable model handles and local native conversion |
+| [Lock migration comparison](lock-migration.md) | Implemented; 23 migration controls and compiler/language gates passed | Read-only comparison of validated semantic/provenance identities and regeneration requirements |
 | [Reviewed scaffolds and corpora](reviewed-corpora.md) | Implemented; public local/Gate integration accepted 2026-10-03 | Explicit review, immutable sealing, workflow provenance, corpus projection and verified replay loading |
 | [General TLA+ frontend design](tla-frontend-design.md) | Delivery slices TF0–TF8 accepted 2026-09-12; active language profile 5 | Lossless parsing, module resolution, semantic elaboration, effective declarations, conformance, and compiler integration |
 | [TLA+ language profile](tla-language-profile.md) | Active revision 5 | Accepted language subset, standard-module facts, limits, and compatibility policies |

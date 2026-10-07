@@ -4,18 +4,18 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "f01fb7717ca9bab18a68443707f478d49c15a15d420273db1e881c9683b16384"
+    "selectionValue": "d5358150e9fe041c930a066b6f2f0f88b2f617e782692dd7ad0e9c5b2bfe7109"
   },
   "profileId": "checked-replay-local",
   "componentRefs": [
     {
       "componentId": "mirrorecma",
       "repository": "https://github.com/NzSN/MirrorECMA.git",
-      "revision": "a03cf10a8787ff7691a4fd8b8f1013667501dfb7",
+      "revision": "18735bd29982c3c153266c52c71b713a71b7eab8",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "c5d2d14c61fa5549bb4de7b7824ecb64c75e36ec6d2e53f0bf74f88753c31fc6",
+        "digest": "31244e64f20825cc82416683e62fb8abf0bea4e91bea78074188bbf8bdd0e4b4",
         "method": "git-diff-and-untracked-manifest-v1",
         "includedPaths": [],
         "excludedPaths": [
@@ -33,13 +33,25 @@
     {
       "componentId": "mirrors",
       "repository": "https://github.com/NzSN/Mirrors.git",
-      "revision": "291961577b408cc135afe201f272ca684dc622e3",
+      "revision": "05a9ce1437a53ef3f1c84816579268c4e141137e",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "40a5e2c141de1456b9e035d6e54c090df6c9d6395fe8019a99728cb016d8acfb",
+        "digest": "b044c3e99f813968810c58f934a7f65bace74d68659dea8e71655203be14e618",
         "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [],
+        "includedPaths": [
+          "Codec/ModelInterfaceMigrationJson.lean",
+          "Core/ModelInterface/Migration.lean",
+          "Docs/model-interface-compiler/README.md",
+          "Docs/model-interface-compiler/design.md",
+          "Docs/model-interface-compiler/lock-migration.md",
+          "Shell/ModelInterface/Migration.lean",
+          "lakefile.lean",
+          "tools/ModelInterfaceGen.lean",
+          "tools/ModelInterfaceMigrationSpec.lean",
+          "tools/qualification/preflight_m4.py",
+          "tools/run-local-no-model-check.sh"
+        ],
         "excludedPaths": [
           {
             "path": ".projectile-cache.eld",
@@ -63,6 +75,10 @@
           },
           {
             "path": "distribution/reference-node/component-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/dependency-lock.json",
             "reasonCode": "evidence-output"
           },
           {
@@ -321,19 +337,19 @@
       "inputId": "profiles-lock",
       "path": "distribution/reference-node/profiles.json",
       "bytes": 4307,
-      "sha256": "1fb580e16a3f948ff56b8b4be43a4627958ff82f8b78109b76c917aa4a78b2c9"
+      "sha256": "1991beb2ff51ebe0974000c07bb1b9898b91cc3b100a16847c4278a0ab471a7a"
     },
     {
       "inputId": "component-lock",
       "path": "distribution/reference-node/component-lock.json",
-      "bytes": 12199,
-      "sha256": "dd884e8ce76dbce107cb62ae20d9b475a6a2551d7153ea220cc7e7ae3b192be1"
+      "bytes": 12913,
+      "sha256": "9bcc96240ed1d3371bf518d5175e8ce13ec0785bc5a18c821051fb2007aaecc9"
     },
     {
       "inputId": "dependency-lock",
       "path": "distribution/reference-node/dependency-lock.json",
       "bytes": 2135,
-      "sha256": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+      "sha256": "e45725e9b2dc530323709e3eb5b1d281080792b88157dbc445e2b45343862bc7"
     }
   ],
   "buildProvenance": {

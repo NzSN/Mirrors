@@ -5,6 +5,65 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-07 — Current roadmap candidate: available gates accepted, full Q pending
+
+The fresh working-tree C0 `d5358150e9fe041c930a066b6f2f0f88b2f617e782692dd7ad0e9c5b2bfe7109`
+reached byte stability after three refreshes. One immutable snapshot produced
+verified local/Gate caches and committed canonical-prefix installations. Both
+D audits qualify with relocation, hidden sources, offline namespaces and actual
+correct/mismatch replay. The installed migration supplement passes in both
+runtimes with tamper refusal and unchanged inputs.
+
+14/18 required command IDs pass; the extra Gate D and retained interruption
+origin give 16 selected bundles. All source commands, installed correct/fault
+replay, local/Gate mutation, LeaseService origin, both R1 branches, shortest-prefix
+reduction (2/16, complete minimality) and recovery of four owned prepared filesystem
+resources pass. Independent installed/offline verification accepts their integrity
+and linkage, with `q1Complete=false` and `q2FullProfilePassed=false`.
+
+[Current readiness](Plans/q3-roadmap-refresh-2026-10-07.md) records exact boundaries.
+The selected owned Windows oracle has no live process/listener; startup approval
+is still pending. Remote model check, 22-case interop, domain reduction and final
+full-scope verification remain required. No local model checker ran, no service
+was started/reconfigured, and no historical envelope was rewritten.
+
+Earlier failed setup/bytecode/missing-runtime attempts remain diagnostic. The
+migration helper is source accepted (23 controls and compiler/language gates);
+M4 native enforcement and durable process-to-cgroup recovery remain unqualified.
+No commit/push is included. Unrelated editor caches and the Rust protocol-test
+edit remain untouched.
+
+## 2026-10-07 — Roadmap continuation: migration helper accepted, refresh active
+
+The user authorized applying the recommended roadmap sequence. The
+[execution plan](Plans/roadmap-next-execution-2026-10-07.md) batches source changes
+before a fresh M5 freeze. `compare-locks` now reads and validates both locks,
+reports canonical semantic/provenance differences and explicit regeneration
+requirements, and performs no output-file writes. All 23 migration controls,
+the existing compiler spec and eight-emitter language gate pass; the helper is
+registered in both local and Lake gates. [Source/preflight evidence](Plans/roadmap-next-evidence-20261007/README.md)
+is distinct from fresh installed or release qualification.
+
+The M4 preflight imports Gate's actual delegation validator. WSL2 and the
+absence of an admitted parent keep native enforcement unqualified; the root
+control refuses. Source audit also identifies the missing durable process-to-
+cgroup resource binding needed for post-restart process recovery. The
+[native-host/platform plan](Plans/m4-native-host-and-platform-plan-2026-10-07.md)
+selects native Linux acceptance first and describes the required extension and
+negative controls. No Gate process ownership rule was weakened.
+
+The retained October 3 archive survives; old /tmp drivers/carriers were restored
+from admitted bytes. The Batteries commit stays pinned at 4488d40…; a regenerated
+same-revision Git bundle has an explicit new archive byte/hash pin. Current
+candidate refresh is active. The owned Windows oracle is stopped; unchanged-
+deployment startup has been prepared and approval requested, so remote producers
+remain pending. Historical M5/DPM records stay unchanged. No commit/push is
+included; editor caches and unrelated Rust protocol-test edits remain untouched.
+
+The October 5 DPM changes were committed and pushed after their acceptance
+checkpoint: Mirrors 05a9ce1, MirrorECMA 18735bd, MirrorRust 08d189f. Earlier
+“uncommitted” entries describe their original acceptance times.
+
 ## 2026-10-05 — MirrorECMA and MirrorRust DPM-0–DPM-5 accepted
 
 Both declared language profiles now pass the [stage plan](Plans/dpm-mirrorecma-mirrorrust.md).

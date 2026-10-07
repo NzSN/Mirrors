@@ -44,6 +44,7 @@ run "cross-codec diff" .lake/build/bin/diff_cross
 run "model-interface spec" .lake/build/bin/model_interface_spec
 run "model-interface language judgments" .lake/build/bin/model_interface_language_spec
 run "model-interface Lean target" .lake/build/bin/model_interface_lean_spec
+run "model-interface lock migration" .lake/build/bin/model_interface_migration_spec
 run "model-interface reviewed workflows" .lake/build/bin/model_interface_workflow_spec
 run "model-interface workflow CLI" .lake/build/bin/model_interface_workflow_cli_spec
 run "model-interface workflow provenance" .lake/build/bin/model_interface_workflow_provenance_spec

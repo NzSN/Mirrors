@@ -2,6 +2,7 @@ import Shell.ModelInterface.Compiler
 import Codec.ModelInterfaceJson
 import Shell.ModelInterface.ScaffoldWorkflow
 import Shell.ModelInterface.Corpus
+import Shell.ModelInterface.Migration
 
 /-!
 # `model_interface_gen` command line
@@ -29,6 +30,8 @@ def usage : String := String.intercalate "\n" [
   "    [--diagnostics json]",
   "  model_interface_gen check --spec FILE --contract FILE --evidence FILE",
   "    [--param-var NAME] --lock FILE --target TARGET --out DIR",
+  "    [--diagnostics json]",
+  "  model_interface_gen compare-locks --from-lock OLD --to-lock NEW",
   "    [--diagnostics json]",
   "  model_interface_gen preflight --lock FILE --trace PATH",
   "    [--require-all-actions] [--diagnostics json]",
@@ -61,6 +64,8 @@ private inductive DiagnosticsMode where
   | json
 
 private structure RawOptions where
+  fromLock : Option String := none
+  toLock : Option String := none
   spec : Option String := none
   contract : Option String := none
   evidence : Option String := none
@@ -81,6 +86,7 @@ private structure RawOptions where
   diagnostics : Option String := none
 
 private inductive Command where
+  | compareLocks (fromLock toLock : String)
   | resolve (inputs : InputPaths) (lock : String)
   | generate (lock target out : String) (bundle : Bool)
   | check (inputs : InputPaths) (lock target out : String) (bundle : Bool)
@@ -105,7 +111,7 @@ private structure ParsedCommand where
   diagnostics : DiagnosticsMode
 
 private def allowedFlags : List String :=
-  ["--spec", "--contract", "--evidence", "--param-var", "--lock", "--target", "--out",
+  ["--from-lock", "--to-lock", "--spec", "--contract", "--evidence", "--param-var", "--lock", "--target", "--out",
    "--trace", "--proposal", "--projection", "--receipt", "--diagnostics",
    "--review", "--sealed", "--corpus-manifest", "--manifest-sha256"]
 
@@ -126,6 +132,8 @@ private def parseOptions (arguments : List String) : Except String RawOptions :=
   | [] => pure ()
   let param := List.lookup "--param-var" pairs
   return {
+    fromLock := List.lookup "--from-lock" pairs
+    toLock := List.lookup "--to-lock" pairs
     spec := List.lookup "--spec" pairs
     contract := List.lookup "--contract" pairs
     evidence := List.lookup "--evidence" pairs
@@ -203,6 +211,18 @@ private def parseCommand (arguments : List String) : Except String ParsedCommand
     argument != "--require-all-actions" && argument != "--replace" && argument != "--reviewable"
   let options ← parseOptions optionArguments
   let diagnostics ← diagnosticsMode options
+  if name == "compare-locks" then
+    if requireAllActions || replace || reviewable then
+      throw "unsupported flag for compare-locks"
+    for (flag, _) in (← optionPairs optionArguments) do
+      unless ["--from-lock", "--to-lock", "--diagnostics"].contains flag do
+        throw s!"option {flag} is not valid for compare-locks"
+    return {
+      command := .compareLocks (← requireOption "--from-lock" options.fromLock)
+        (← requireOption "--to-lock" options.toLock)
+      diagnostics }
+  let _ ← rejectPresent "--from-lock" options.fromLock
+  let _ ← rejectPresent "--to-lock" options.toLock
   let workflowCommands := ["seal-scaffold", "resolve-sealed", "check-sealed", "check-sealed-bundle",
     "project-corpus", "check-corpus"]
   if !workflowCommands.contains name then
@@ -554,6 +574,12 @@ def run (arguments : List String) : IO UInt32 := do
       return 2
   | .ok parsed =>
       match parsed.command with
+      | .compareLocks fromLock toLock =>
+          match ← Shell.ModelInterface.Migration.compareLocks fromLock toLock with
+          | .error error => reportError parsed.diagnostics error
+          | .ok report =>
+              IO.println (Lean.Json.compress report)
+              return 0
       | .resolve inputs lock => runResolve parsed.diagnostics inputs lock
       | .generate lock target out bundle => runGenerate parsed.diagnostics lock target out bundle
       | .generateCmake inputs lock target out =>

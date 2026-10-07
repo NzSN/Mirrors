@@ -115,6 +115,10 @@ lean_exe model_interface_lean_spec where
 
 /-- Reviewed evidence, seal validation, corpus publication and provenance gates. -/
 @[default_target]
+lean_exe model_interface_migration_spec where
+  root := `tools.ModelInterfaceMigrationSpec
+
+@[default_target]
 lean_exe model_interface_workflow_spec where
   root := `tools.ModelInterfaceWorkflowSpec
 
@@ -425,7 +429,8 @@ script test do
     return outMi.exitCode
   for executable in #["model_interface_language_spec", "model_interface_lean_spec",
       "model_interface_workflow_spec", "model_interface_workflow_cli_spec",
-      "model_interface_workflow_provenance_spec", "model_interface_corpus_spec"] do
+      "model_interface_workflow_provenance_spec", "model_interface_corpus_spec",
+      "model_interface_migration_spec"] do
     let generated ← IO.Process.output
       ({ cmd := s!".lake/build/bin/{executable}", args := #[] } : IO.Process.SpawnArgs)
     IO.println generated.stdout

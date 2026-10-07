@@ -1,0 +1,310 @@
+[
+  {
+    "commandId": "framework.install-diagnostics",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-fcd69b0a-eeac-4a64-bcd6-0c277843f106",
+      "envelopeSha256": "a62e626849c28c1ea6eca9a04b0cb1985d62c2424054c29b22e93cbcfbd3bbef",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-fcd69b0a-eeac-4a64-bcd6-0c277843f106",
+      "envelopeSha256": "c733360732805581db8d83b0b8bde68ecd408c63eca72d511ad16b0b646f80c6",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "framework.install-diagnostics-gate",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-f5f7d59a-1b37-4d84-a9bd-63ec554b2e19",
+      "envelopeSha256": "be7d68b9b77ee0cf42c07229ad693dfc91e1f84def2751d7f00ccc79018d86ea",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-f5f7d59a-1b37-4d84-a9bd-63ec554b2e19",
+      "envelopeSha256": "8a5530edf09c47547c6ae0fe1f782faa20ae922bd98fa302ce16616e53a4f71c",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "mirrors.local-no-model",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-d6e51185-bc4e-4238-b5a0-9abe1dfe7a2e",
+      "envelopeSha256": "ce103c6088e32f74b630bf5a153880fd1220eee433ae8890d2d1908fd12db6d6",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-d6e51185-bc4e-4238-b5a0-9abe1dfe7a2e",
+      "envelopeSha256": "85fa871ca2430f7329e38adf0c865d503e06de135796ba23dcdc0cbbd024b95f",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "mirrorecma.project-check",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-3cd6afcc-cc53-4939-b809-e7fef13c6093",
+      "envelopeSha256": "be30fa4a28c0aaea7650803f6cc922a0677338ea563117c4ac5d95e480479a95",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-3cd6afcc-cc53-4939-b809-e7fef13c6093",
+      "envelopeSha256": "e8c5c6515666d72633b158090d991e671cf77d3e18a1ff5c62795ac25fdab4de",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "mirrorecma.test",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-05e86afc-cec2-4752-8f7c-a5323d08aebd",
+      "envelopeSha256": "6077b8821005fb43d8301bf12c9dd88b983d65f5ddd1b6bfb4d3eb8becb0f297",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-05e86afc-cec2-4752-8f7c-a5323d08aebd",
+      "envelopeSha256": "af99274c033c4eaffdb11b61d5e8070ddb36d72508ad56576e37b2b2363bce10",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "mirrorgate.required",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-f3f37f76-3b7c-4123-8294-c408d106ed4f",
+      "envelopeSha256": "08c45759ef7cc1995b0b3c47cef89dd321913d39c933bcb2e3dda58e5bb5aa14",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-f3f37f76-3b7c-4123-8294-c408d106ed4f",
+      "envelopeSha256": "77e8144a65772f530db134afe192460e34bc9ab0cd4c4d0e874ef3b4102b876c",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "framework.replay-correct",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-e8cb5ccc-aaaf-41e8-8a99-88a9d8ecfb31",
+      "envelopeSha256": "abd655acd999cfd803509febd2a7cff3cc7041c5843f3f03ad8a13c5c5af070f",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-e8cb5ccc-aaaf-41e8-8a99-88a9d8ecfb31",
+      "envelopeSha256": "22d177b3b695d7de7a5fe2082922cdf97fff9e49568610e1c1ec3624bd5d0477",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "framework.replay-faulty",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-d748dda3-64a4-4faa-9843-5e55af3c8673",
+      "envelopeSha256": "89e726dc148e839a13d27fe2243c89601b0f24b2a61b0a3f00675492312e6527",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-d748dda3-64a4-4faa-9843-5e55af3c8673",
+      "envelopeSha256": "1b895690eb14c81a7e32e6431d582f3c14209d0f1e773add8bf966a5d2b0b5ee",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "framework.mutation-local",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-76bf90ee-cf50-4cd9-8f62-2a4ced92ca3a",
+      "envelopeSha256": "0b1e69b4318eb1e36ee52122388ae22caba6e5c5e987fd32ca5b857cc6e66997",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-76bf90ee-cf50-4cd9-8f62-2a4ced92ca3a",
+      "envelopeSha256": "3031508f0d1586dadf74d537be5c9d37113b9c0efe89a93af68db5f74d163c0c",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "framework.lease-origin-installed",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-287a4876-546e-49d8-bcb8-bda5e803f3f6",
+      "envelopeSha256": "21e7bb641dd80fe2f60800f47cffbf874959b3cdd4d005183112e205cfc1ab2b",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-287a4876-546e-49d8-bcb8-bda5e803f3f6",
+      "envelopeSha256": "9131d745196368c10c7e759dd667e9ef213db39ff119ad39cbf4047612d24160",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "framework.reproduction",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-01b8f88d-93d5-4e33-8cbf-27568778b03a",
+      "envelopeSha256": "85c4bdd88b24a0f30aecea30a5b288f6a58d3076fe132b99af8b71389f7e4db3",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-01b8f88d-93d5-4e33-8cbf-27568778b03a",
+      "envelopeSha256": "6e930a6f083dbddc66e3fae5e5022de348a6dd9eab78907b63b58300c02b04f6",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "framework.reproduction-lease",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-64337d17-a118-4d6a-be7a-ed9328069c93",
+      "envelopeSha256": "f3a14643b26f14c0f06ff1d007c83ab23999e1b6406b9ffc3bc438e9d2962fd8",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-64337d17-a118-4d6a-be7a-ed9328069c93",
+      "envelopeSha256": "5d174f065f2bf02700bf278f69679c8cc7ec635974080d2a1f4f59f028589e3d",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "framework.reduction-prefix",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-6a8faf91-0a2a-40e8-bccf-d5a525cbf799",
+      "envelopeSha256": "3d94d9946c046229c97b31b0d6f7de0f42dde0c8cd6d0ce3fad0785c937d6515",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-6a8faf91-0a2a-40e8-bccf-d5a525cbf799",
+      "envelopeSha256": "7313589d979b36476bf27e47936ba817a2a5a160486abbad4c6f557a940c7672",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "framework.mutation-gate",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-2ceb9f3e-4877-4e05-a6b3-25fe20a13cad",
+      "envelopeSha256": "2bca6ded7dbe1409675102d642d37edca491ca1450b4d64ff72974dec8d0c84e",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-2ceb9f3e-4877-4e05-a6b3-25fe20a13cad",
+      "envelopeSha256": "b8878b44b123a52005fdcf854882438bce3a92b8718c986589fd03409ca7fe0f",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "framework.recovery-origin-installed",
+    "qualification": {
+      "reasonCodes": [
+        "behavior-failed",
+        "cleanup-gate-physical-unconfirmed",
+        "tier-qualification.recovery-origin-failed"
+      ],
+      "status": "not_qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-e2eb7ee7-0213-43da-8a66-6ca00a84d6e5",
+      "envelopeSha256": "9ec27843e47897e2b0ce79747e5d1ef5be82901c797a932c1c17e974a9e1ab05",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-e2eb7ee7-0213-43da-8a66-6ca00a84d6e5",
+      "envelopeSha256": "480ce9d5f7f07d6373dc78ede2a6544c0d93886931f766c13f7b030608ad3972",
+      "projectionKind": "public"
+    }
+  },
+  {
+    "commandId": "mirrorgate.recovery",
+    "qualification": {
+      "reasonCodes": [],
+      "status": "qualified"
+    },
+    "privateRunRef": {
+      "schemaVersion": "mirrors.evidence-envelope/v1.0",
+      "runId": "run-2ecf7d34-450c-4b4c-b318-48fc2f6e2006",
+      "envelopeSha256": "decb72d48313dd1dab1f386cdfcaa6e01ca1b7d6704659236cbf51415bcced88",
+      "projectionKind": "private"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-2ecf7d34-450c-4b4c-b318-48fc2f6e2006",
+      "envelopeSha256": "7f3e301ac3ce2db4436c309fbc04e362a678e70ad98643058aa3a2ec32390d24",
+      "projectionKind": "public"
+    }
+  }
+]

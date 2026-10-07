@@ -6,7 +6,7 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
-## Current status — 2026-10-05
+## Current status — 2026-10-07
 
 The published-revision C0
 `f01fb7717ca9bab18a68443707f478d49c15a15d420273db1e881c9683b16384`
@@ -43,7 +43,17 @@ The [MirrorECMA/MirrorRust extension](dpm-mirrorecma-mirrorrust.md) now passes
 DPM-0–DPM-5 for real Node worker threads and cooperative Rust threads. The
 [language acceptance record](dpm-languages-evidence-20261005/README.md) retains
 installed package, native pilot, fresh oracle and finite coverage evidence.
-These language changes remain uncommitted and do not revise M5 qualification.
+These language changes were committed and pushed in Mirrors `05a9ce1`,
+MirrorECMA `18735bd` and MirrorRust `08d189f`; they do not revise M5 qualification.
+
+The [next roadmap execution](roadmap-next-execution-2026-10-07.md) is active.
+The read-only compiler lock migration helper passes 23 controls and the existing
+compiler/language gates. M4 host eligibility/refusal and native-host/platform
+sequencing are documented; real cgroup/process-recovery acceptance remains
+unqualified. The fresh `d5358150…` candidate passes both D audits and 14/18 required
+commands; [current readiness](q3-roadmap-refresh-2026-10-07.md) keeps full Q1/Q2
+incomplete while the stopped Windows oracle awaits startup approval. The previous
+selected M5 qualification remains historical until the new scope actually passes.
 
 The dated decisions below and the original September integration/ownership
 records are history. Their pending tasks and uncommitted states describe those

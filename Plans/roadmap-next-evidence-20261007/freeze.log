@@ -1,0 +1,12 @@
+RUN: ["/home/nzsn/.venv/bin/python3", "/home/nzsn/Repos/Mirrors/tools/distribution/refresh_identity.py", "--framework-catalog-bin", "/home/nzsn/Repos/Mirrors/.lake/build/bin/framework_catalog"]
+framework catalog rendered
+IDENTITY REFRESH GREEN catalogSha256=d5358150e9fe041c930a066b6f2f0f88b2f617e782692dd7ad0e9c5b2bfe7109
+RUN: ["/home/nzsn/.venv/bin/python3", "/home/nzsn/Repos/Mirrors/tools/distribution/refresh_identity.py", "--framework-catalog-bin", "/home/nzsn/Repos/Mirrors/.lake/build/bin/framework_catalog"]
+framework catalog rendered
+IDENTITY REFRESH GREEN catalogSha256=d5358150e9fe041c930a066b6f2f0f88b2f617e782692dd7ad0e9c5b2bfe7109
+RUN: ["/home/nzsn/.venv/bin/python3", "/home/nzsn/Repos/Mirrors/tools/distribution/refresh_identity.py", "--framework-catalog-bin", "/home/nzsn/Repos/Mirrors/.lake/build/bin/framework_catalog"]
+framework catalog rendered
+IDENTITY REFRESH GREEN catalogSha256=d5358150e9fe041c930a066b6f2f0f88b2f617e782692dd7ad0e9c5b2bfe7109
+RUN: ["/home/nzsn/.venv/bin/python3", "/home/nzsn/Repos/Mirrors/tools/distribution/snapshot_sources.py", "--component-lock", "/home/nzsn/Repos/Mirrors/distribution/reference-node/component-lock.json", "--out", "/tmp/m5-roadmap-20261007/source-snapshot", "--mirrors", "/home/nzsn/Repos/Mirrors", "--mirrorecma", "/home/nzsn/Repos/MirrorECMA", "--mirrorgate", "/home/nzsn/Repos/MirrorGate"]
+SOURCE SNAPSHOT GREEN
+Byte-stable source snapshot complete with exact canonical selection d5358150e9fe041c930a066b6f2f0f88b2f617e782692dd7ad0e9c5b2bfe7109

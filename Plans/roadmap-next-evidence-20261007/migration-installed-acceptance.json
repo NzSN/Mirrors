@@ -1,0 +1,42 @@
+{
+  "schema": "mirrors.migration-installed-supplement/v1",
+  "status": "passed",
+  "sourceHidden": true,
+  "networkNamespaceIsolated": true,
+  "inputsUnchanged": true,
+  "rows": [
+    {
+      "distribution": "local",
+      "case": "valid.json",
+      "exitCode": 0,
+      "expectedAcceptance": true,
+      "status": "passed",
+      "binarySha256": "64b526ad70fffc3c07cb07edf1d2884202f0b7990648863a77342fc5b05b6de3"
+    },
+    {
+      "distribution": "local",
+      "case": "tampered.json",
+      "exitCode": 1,
+      "expectedAcceptance": false,
+      "status": "passed",
+      "binarySha256": "64b526ad70fffc3c07cb07edf1d2884202f0b7990648863a77342fc5b05b6de3"
+    },
+    {
+      "distribution": "gate",
+      "case": "valid.json",
+      "exitCode": 0,
+      "expectedAcceptance": true,
+      "status": "passed",
+      "binarySha256": "64b526ad70fffc3c07cb07edf1d2884202f0b7990648863a77342fc5b05b6de3"
+    },
+    {
+      "distribution": "gate",
+      "case": "tampered.json",
+      "exitCode": 1,
+      "expectedAcceptance": false,
+      "status": "passed",
+      "binarySha256": "64b526ad70fffc3c07cb07edf1d2884202f0b7990648863a77342fc5b05b6de3"
+    }
+  ],
+  "scope": "new read-only helper supplement; does not replace registered M5 gates"
+}
