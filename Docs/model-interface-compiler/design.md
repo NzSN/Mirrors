@@ -38,8 +38,8 @@
 Mirrors now contains the pure model-interface types, deterministic resolver,
 canonical contract/descriptor/lock codecs, pure SHA-256, strict ITF evidence
 normalization, trace preflight/coverage, the `mirrorecma-v1` TypeScript emitter,
-the additive `mirrorecma-async-v1` TypeScript emitter, the `mirrorcpp-v1` C++23
-emitter, the `mirrorrust-v1` Rust emitter, the `mirrorlean-v1` Lean emitter,
+the additive `mirrorecma-async-v1/v2` TypeScript emitters, the `mirrorcpp-v1/v2` C++23
+emitters, the `mirrorrust-v1/v2` Rust emitters, the `mirrorlean-v1` Lean emitter,
 safe owned-file publication, and the standalone `model_interface_gen` executable.
 Counter resolve/generate/check, generated TypeScript/C++/Rust/Lean compilation,
 typed bindings, and real session replay are covered by the implementation gates
@@ -50,6 +50,18 @@ The async target also supports `bundle` / `check-bundle`, a generated trusted
 [trusted suite bundles](suite-bundles.md) for owned files, hash coverage,
 publication rules, disposal transfer and validation. These commands preserve the
 existing target identity and generated binding bytes.
+
+The additive [DPM integration kit](../dpm-usability-design.md) implements
+`generate-dpm/check-dpm --lock FILE --mapping FILE --target TARGET --out DIR`
+for six C++/async-ECMA/Rust v1/v2 modes. Pure mapping validation and encoding live
+in `Core/ModelInterface/ScheduleKit.lean` and `Codec/ModelInterfaceScheduleKitJson.lean`;
+bounded loading, helper emission and owned atomic publication live in
+`Shell/ModelInterface/ScheduleKit.lean` and `Shell/ModelInterface/Emit/ScheduleKit.lean`.
+The kit owns mapping helpers, metadata, seeds and checklists alongside ordinary
+bindings. Applications supply real operations, hooks and observations. This newer
+path has source acceptance only; installed-package or current-source qualification
+requires its own freeze and gates. The read-only receipt timeline is separate
+Python tooling, not a compiler/model-check producer.
 
 The synchronous and async TypeScript plus C++, Rust and Lean version-1 slices
 are implemented. `Core.ModelInterface.Conformance` supplies the shared pure

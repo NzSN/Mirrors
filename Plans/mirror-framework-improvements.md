@@ -11,6 +11,13 @@ published revisions and boundaries. Broader M4 acceptance remains partial;
 later commits never inherit qualification automatically. The earlier October 3
 qualified candidate and October 7 incomplete working-tree candidate are history.
 
+Continuation reviewed 2026-10-09 at Mirrors `548ba71`: F1 generated DPM kits
+and F2 receipt timelines are source accepted. Approved F3 schedule reduction,
+F4 installed CLI and F5 synchronization-wrapper research remain unimplemented;
+follow [their feature plan](dpm-usability-features-2026-10-07.md). These newer
+source/tool changes need their own freeze and gates for installed/current-source
+qualification. Broader M4 remains a separate track.
+
 Planning baseline: Mirrors `eb5cd00`, MirrorGate `173075d`
 
 Task decomposition and agent assignments: [task index](mirror-framework-tasks.md).

@@ -1,4 +1,4 @@
-MIRRORS FRAMEWORK — current source architecture (2026-10-07)
+MIRRORS FRAMEWORK — current source architecture (2026-10-09, Mirrors 548ba71)
 Acceptance: Docs/current-status.md; frozen qualification is revision-specific.
 
                   MODEL PREPARATION
@@ -47,11 +47,16 @@ Acceptance: Docs/current-status.md; frozen qualification is revision-specific.
                                      | Model checks/traces/explore|
                                      +---------------------------+
 
-DPM: generated action -> binding session -> one actor permit
+DPM kit: reviewed mapping -> generated helper/metadata + application seed.
+DPM: generated action -> kit helper/application port -> binding session
+        -> one actor permit
         -> actual checkpoint arrival -> park -> observe -> compare
 C++/Rust retain OS-thread stacks; Node uses owned worker/message channels.
 Application hooks, safe checkpoint placement and observation remain handwritten.
 Native phase bridges are application-specific. Gate isolation is a separate seam.
+
+Timeline: actual SDK receipt -> read-only text/JSON -> verdict + cleanup.
+Kit/timeline have source acceptance only; F3/F4/F5 remain follow-ons.
 
 INSIDE MIRRORS
 +------------------------------------------------------+

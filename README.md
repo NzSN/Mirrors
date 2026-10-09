@@ -25,6 +25,10 @@ there is no separate code-extraction step. The wire format remains compatible
 with the Haskell reference implementation, as checked by golden fixtures,
 differential tests, and client interop tests.
 
+For current completion and remaining work, see [framework status](Docs/current-status.md).
+The latest source slice adds [generated DPM kits and receipt timelines](Docs/dpm-usability-design.md);
+it has source acceptance only, separate from the frozen October 7 M5 qualification.
+
 ## Features
 
 - Synchronous mirror sessions over standard input/output.
@@ -315,6 +319,7 @@ Notable implementation changes are recorded in [`CHANGELOG.md`](https://github.c
 
 - [Current status and scope](Docs/current-status.md) — exact acceptance and separate work.
 - [Plain-text architecture](Docs/architecture-overview.txt) — block diagram for terminals.
+- [DPM kit and timeline](Docs/dpm-usability-design.md) — generated mapping helpers and actual-receipt diagnostics.
 - [Deterministic scheduling](Docs/deterministic-scheduling.md) — DPM ownership and hooks.
 - [Lock migration comparison](Docs/model-interface-compiler/lock-migration.md) — read-only migration decisions.
 

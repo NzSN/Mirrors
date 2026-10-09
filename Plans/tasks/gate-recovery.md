@@ -8,7 +8,14 @@ Coordination: [Mirror Framework task assignments](../mirror-framework-tasks.md)
 
 Assigned role: `general-purpose-gpt`
 
-Implementation state: **queued; no product implementation or host recovery is authorized**
+Historical planning state (2026-09-21): **queued; no product implementation or host recovery was authorized at that checkpoint**
+
+Current navigation (2026-10-09): these September task cards and their queued
+labels are historical planning. [Framework status](../../Docs/current-status.md)
+and [current milestone ledger](../mirror-framework-improvements.md#delivery-order-and-ownership)
+record completed named-profile work and separate broader M4 gaps. The newest
+[checkpoint](../../CHECKPOINTS.md) directs continuation through the approved
+DPM usability follow-ons; these cards are not the current backlog.
 
 ## Scope and claim boundary
 

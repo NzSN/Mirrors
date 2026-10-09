@@ -11,7 +11,10 @@ clients/tooling with an owned native Windows console oracle at the observed
 172.20.208.1:8999, Apalache 0.62.2 and Java 25.0.4+7-LTS. Reobserve address,
 process/binary/runtime/certificate identities before use; the record is not a
 permanent live-health claim. Its certificates were valid through
-2026-10-08T02:47:53Z; renewal requires explicit identity/pin reconciliation.
+2026-10-08T02:47:53Z. That recorded validity window has ended; this October 9
+documentation review did not inspect live service health or replacement credentials.
+Before a remote run, inspect current certificate validity and reconcile any renewed
+certificate, trust and pin identities with the selected deployment/campaign.
 Service-manager/AUTO_START acceptance and Windows Gate isolation remain separate.
 On this coordinator, all model operations use that remote oracle; do not launch
 local Apalache/TLC. Ordinary supplied-trace replay remains available locally.

@@ -1,21 +1,22 @@
 # TLA+ frontend differential validation
 
-> Status: **profile-4 differential acceptance passed on 2026-09-15. The initial
-> 2026-09-13 failure was superseded by the compatibility/catalog repairs.
-> Unsupported comparisons remain uncertified. See the
-> [current acceptance record](tla-frontend-tasks.md#1811-profile-4-standard-catalog-closure-2026-09-15).**
+> Status: **active profile 5 has retained differential acceptance dated
+> 2026-10-01; [final report](../../test/fixtures/tla-frontend/differential/evidence/profile5-20261001-final/summary.md).
+> The initial September 13 failure and profile-4 closure are historical.
+> Unsupported comparisons remain uncertified; retained acceptance is tied to
+> the captured source/tool identities and is not a fresh run of current HEAD.**
 > Authority: [frontend compatibility contract](tla-frontend-design.md#5-compatibility-authority)
 > and [language profile](tla-language-profile.md).
 > Delivery: [differential validation tasks](../../Drafts/tla-differential-validation-tasks.md).
 
-## 1. Objective and current evidence
+## 1. Objective and retained evidence
 
 Run the same public source bundles through Mirrors, pinned SANY, and pinned
 Apalache. Preserve observations, compare supported facts, and make every
 disagreement or unavailable comparison explicit. External tools are compatibility
 oracles, not production dependencies and not infallible authorities.
 
-The profile-4 acceptance manifest contains 61 fixtures: 34 accepted and 27
+The historical profile-4 acceptance manifest contains 61 fixtures: 34 accepted and 27
 rejected, covering 76 branches and 107 fixture-branch links. Required runs T/U
 each completed 183 observations, with 564 exact matches, 14 reviewed differences,
 292 explicitly unsupported comparisons, and no unresolved/incomplete findings.

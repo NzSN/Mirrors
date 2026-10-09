@@ -16,9 +16,12 @@ Read the relevant contract before changing behavior:
 - Architecture: `Docs/architecture-overview.md`.
 - Protocol or client compatibility: `Docs/interface-reference.md` and
   `Docs/client-implementation-guide.md`.
-- Model-interface compilation or emission: `Docs/model-interface-compiler/design.md`;
-  general TLA+ frontend work: `Docs/model-interface-compiler/tla-frontend-design.md`.
-  and `Docs/generated-model-interface-spec.md`.
+- Model-interface compilation or emission: `Docs/model-interface-compiler/design.md`
+  and `Docs/generated-model-interface-spec.md`; general TLA+ frontend work:
+  `Docs/model-interface-compiler/tla-frontend-design.md`.
+- DPM kits, timelines, or checkpoint scheduling: `Docs/dpm-usability-design.md`
+  and `Docs/deterministic-scheduling.md`; remaining approved features:
+  `Plans/dpm-usability-features-2026-10-07.md`.
 - Negotiation, authorization, or caching:
   `Docs/model-interface-runtime-distribution-design.md`.
 - Native boundary: `Ffi/README.md` and `Docs/tls-ffi-review.md`.
@@ -30,63 +33,36 @@ Read the relevant contract before changing behavior:
 Distinguish proposed target profiles from implemented behavior; consult each
 design document's implementation-status section and current code.
 
-## 2026-09-25 candidate
+## Current framework checkpoint
 
-Untracked `.projectile-cache.eld` files stay on disk and are excluded from the
-selected component refs as pre-existing-unrelated editor caches. The exact
-catalog selection, install digests, and remaining Q1–Q3 gaps are in
-`Plans/q3-readiness-2026-09-25.md`. That report is evidence output and is not
-part of the selection digest. The v5 hashes below remain historical.
+Documentation reviewed 2026-10-09 against Mirrors `548ba71`. For status or
+continuation work, read `Docs/current-status.md`, the newest `CHECKPOINTS.md`
+entry, and `Plans/execution-decisions.md` before selecting work. September stop
+instructions and original queued task cards are historical; their frozen
+identities remain in dated readiness reports and the archived
+`Plans/framework-checkpoint-reference-2026-09-22.md`.
 
-## Stopped framework-completion checkpoint (2026-09-22)
+The October 7 C0 `94271a54…` qualifies `m5-wsl-windows-remote/v1` at Mirrors
+`f0894d2`, MirrorECMA `eef6f71`, and MirrorGate `455e196`; the exact record is
+`Plans/q3-published-roadmap-2026-10-07.md`. Later source changes require a new
+identity freeze and corresponding gates before qualification credit.
 
-Superseded (2026-09-30): framework work resumed 2026-09-25; the current
-position lives in `CHECKPOINTS.md` (latest entries 2026-09-30). The v5 hashes
-and counts below remain historical, and the resume instructions in this section
-no longer apply.
+DPM-0–DPM-5 are accepted for declared C++/Node-worker/Rust-thread profiles.
+F1 generated integration kits and F2 receipt timelines have source acceptance
+only; approved F3 schedule reduction, F4 installed CLI, and F5 synchronization
+wrappers remain unimplemented. Broader M4 aggregate enforcement and active-
+process post-restart recovery stay separate; follow
+`Plans/m4-native-host-and-platform-plan-2026-10-07.md` for their prerequisites.
 
-Work is intentionally stopped at the user's request. Resume from
-`Plans/execution-decisions.md` and `Docs/qualification-harness-design.md`; do
-not restart the framework work from its historical queued task-card labels.
+Run live model operations through the Mirrors CLI against the selected owned
+remote service. Reobserve endpoint, binary, runtime and certificate identities
+before use; October 7 observed `172.20.208.1:8999`, Apalache 0.62.2 and Java
+25.0.4+7-LTS. The recorded certificate validity ended 2026-10-08T02:47:53Z;
+that old identity cannot establish a current connection. See
+`Docs/remote-server-guide.md`. Do not start local Apalache or TLC here.
 
-- Mirrors, MirrorECMA, and MirrorGate contain the coordinated uncommitted
-  implementation. No background worker or qualification command remains live.
-- The byte-stable v5 catalog selection is
-  `e3b691a60a87708b50c24085303fd313359cef33c50b11f7cc89fbd2358c3b7d`.
-  Its snapshot is `/tmp/mirrors-reference-final-snapshot-v5`. The local cache
-  build passed with canonical manifest digest
-  `6579da18768b3efa5f6e6a61e7d7aa190e25f81bb520b9823f2b7e1a2e7fa8c2`;
-  cache-index and manifest file hashes are respectively
-  `2d3590e70e61537d97536e3d67af0f563a045d0a32b3d95d297c6993d8cb857a`
-  and `942c794d66ef236f279e9b7a10a066da120cd7886d1cf4d307e205093c956321`.
-  Installation committed at `/tmp/mirrors-reference-final-local-install-v5`.
-- The v5 selection records the pre-commit dirty working trees. The checkpoint
-  commits requested after this stop create new clean repository revisions, so
-  v5 remains diagnostic and cannot qualify those pushed revisions. Refresh the
-  catalog and snapshot from the pushed SHAs before resuming qualification.
-- Stop occurred before v5 installed-consumer qualification. The Gate cache was
-  not built. Q1, Q2, and Q3 therefore remain incomplete. Earlier v3/v4 failed
-  audits are diagnostic only; their findings were fixed in source and covered
-  by the current 22-test distribution suite.
-- Focused source validation at stop: Mirrors evidence 94/94 and distribution
-  22/22; MirrorECMA TypeScript plus installed wrapper/project 19/19 and catalog
-  regression 3/3; MirrorGate recovery 40 tests with 34 passes and six
-  environment skips, plus installed campaign wrappers 7/7. Model checking was
-  excluded from these local results.
-- Run every model check through the Mirrors CLI against the deployed service at
-  `192.168.150.219:8999`. Do not start local Apalache or TLC. The direct mTLS
-  CLI smoke returned `VALID` for bound-3 HourClock. The service still runs
-  Apalache 0.58.2 and Java 21.0.11, so that observation is smoke evidence, not
-  the selected 0.61.0/25.0.4+7 qualification. Newer toolchains are staged on
-  the server but inactive; the service was not restarted or reconfigured.
-- The current WSL2 host has no writable delegated cgroup-v2 parent. Real
-  aggregate enforcement remains required but unavailable, and WSL2 does not
-  establish native Ubuntu host acceptance.
-
-Resume in this order: refresh identities and the immutable snapshot from the
-pushed SHAs, rebuild and verify the local cache, run installed-consumer
-qualification, build and install the Gate cache from that same snapshot, freeze
-the installed evidence commands, run Q1, verify Q2 offline, then update Q3.
+Untracked `.projectile-cache.eld` files stay on disk as unrelated editor caches.
+Preserve dated evidence and checkpoint entries; record new results separately.
 
 ## Build and validation
 
@@ -97,14 +73,16 @@ builds need a C compiler, OpenSSL 3 development files, and `pkg-config`.
 - `.lake/build/bin/mirror` runs synchronous stdio mode.
 - `lake test` rebuilds before running the gates defined in `lakefile.lean`,
   including model-interface golden checks and preflight.
-- On the memory-constrained coordinator described by the stopped checkpoint,
-  run `bash tools/run-local-no-model-check.sh` for local gates and use the
-  Mirrors CLI against `192.168.150.219:8999` for model verification.
+- On this coordinator, run `bash tools/run-local-no-model-check.sh` for local
+  gates and use the Mirrors CLI against the reobserved selected remote service
+  for model verification.
 - After building, run focused suites such as
   `.lake/build/bin/fixtures_replay` or `.lake/build/bin/model_interface_spec`.
-- `APALACHE_MC=/path/to/apalache-mc lake test` enables live model-checking tiers.
-  The driver also probes a local fallback installation. Report skipped tiers;
-  Python, OpenSSL, and loopback access are needed for integration coverage.
+- On a separately admitted live-check host, `APALACHE_MC=/path/to/apalache-mc
+  lake test` enables live model-checking tiers. The driver also probes local
+  fallbacks; merely unsetting `APALACHE_MC` is not an offline gate on this
+  coordinator. Report skipped tiers; Python, OpenSSL, and loopback access are
+  needed for integration coverage.
 - For cross-client changes, follow `tools/interop/INTEROP.md` before running
   `bash tools/interop/run.sh`; it requires external client checkouts and tools.
 

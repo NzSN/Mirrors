@@ -7,7 +7,7 @@
 > outcome-only renewals and retained final evidence are documented in
 > `Drafts/tla-profile5-policy-renewals.md`. The profile-4 record below is historical.
 
-> Status: **revision-4 profile; frozen with the TF0 corpus on 2026-09-11,
+> Historical revision-4 status: **revision-4 profile; frozen with the TF0 corpus on 2026-09-11,
 > revised on 2026-09-12 when TF5 lifted the staged `INSTANCE` limit, and
 > revised on 2026-09-13 for the shared junction level, then revised on
 > 2026-09-14 for three reference-confirmed Unicode aliases, then revised on
@@ -22,7 +22,7 @@
 > Design authority: [general TLA+ frontend design](tla-frontend-design.md).
 > Task package: [TLA+ frontend tasks](tla-frontend-tasks.md), package TF0.
 > Conformance corpus: [`test/fixtures/tla-frontend/manifest.json`](../../test/fixtures/tla-frontend/manifest.json).
-> Differential status: **profile-4 aggregate validation passed; profile-3
+> Historical differential status: **profile-4 aggregate validation passed; profile-3
 > remains the historical DC4 closure**. The profile-2 failure remains historical evidence;
 > profile-3 and profile-4 final captures and
 > the fourteen exact reviewed policy bindings are indexed in

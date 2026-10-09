@@ -1,11 +1,14 @@
-Currency (2026-09-30): the remote explore-session oracle mode design lives in
-[Plans/m3-safe-reduction-design.md](../Plans/m3-safe-reduction-design.md) §5;
-the prefix tier is qualified 2026-09-30 (diagnostic WSL2 profile,
-`run-dcc51362…`, `shortest_reproducing_prefix`) and domain-tier qualification
-remains pending the remote service activation. The contract content below is
-unchanged.
-
 # Model-validated reduction profiles
+
+Current status (2026-10-09): prefix and domain reduction are qualified for the
+frozen October 7 `m5-wsl-windows-remote/v1` candidate, C0 `94271a54…`.
+[Published readiness](../Plans/q3-published-roadmap-2026-10-07.md) binds exact
+installed runs, remote oracle identities and independent Q1/Q2 verification.
+The former remote-activation blocker is superseded. Later tool/source changes
+require a new freeze; broader M4 stays separate. The
+[reducer design](../Plans/m3-safe-reduction-design.md) defines the remote
+explore-session oracle contract. The development observations below remain
+historical, not qualification of current HEAD.
 
 The first domain profile is
 `mirrors.reduction-candidate/lease-service-input-shrink/v1`. It is a narrow

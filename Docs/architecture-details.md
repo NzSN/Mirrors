@@ -1,6 +1,6 @@
 # Mirrors — Architecture Details
 
-> Source map synchronized 2026-10-07 at Mirrors `6422451` and current linked
+> Source map synchronized 2026-10-09 at Mirrors `548ba71` and current linked
 > client sources. [Current status](current-status.md) records frozen acceptance;
 > documentation synchronization does not execute or renew qualification.
 > This describes implemented source paths and proof scope, not a new build,
@@ -276,6 +276,16 @@ these functions and premises. They do not establish that arbitrary evidence is
 true of a TLA+ model or that an application's observer reports honest state.
 
 ## 4. TLA+ frontend, compiler and descriptor service
+
+The newer [DPM kit/timeline](dpm-usability-design.md) paths have source acceptance:
+[Core mapping validation](../Core/ModelInterface/ScheduleKit.lean),
+[pure mapping codec](../Codec/ModelInterfaceScheduleKitJson.lean),
+[Shell loading/publication](../Shell/ModelInterface/ScheduleKit.lean),
+[native helper emission](../Shell/ModelInterface/Emit/ScheduleKit.lean), and
+[read-only receipt rendering](../tools/deterministic-scheduling/timeline.py).
+The [compiler entry point](../tools/ModelInterfaceGen.lean) exposes
+`generate-dpm/check-dpm`. Application hooks and observations remain outside
+generation; installed/current-source qualification requires its own freeze.
 
 [`Core.Tla`](../Core/Tla/) owns source normalization, tokens, lossless concrete
 syntax, AST parsing, names, levels, graph representations and elaboration.

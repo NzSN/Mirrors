@@ -1,12 +1,14 @@
 # Tracked native shim builds
 
-## Problem and intended behavior
+## Historical problem and implemented behavior
 
-The socket and TLS targets currently run a shell timestamp probe, compile an
-object as a side effect, and expose the object through `extraDepTargets`.
-Executable link commands mention the object paths as plain strings. A C-only
-change therefore lacks a dependable object-to-link trace edge, and developers
-have been instructed to delete objects and executables manually.
+Before the tracked-build change, socket/TLS targets used a shell timestamp
+probe and side-effect compilation through `extraDepTargets`; executable links
+mentioned object paths as plain strings. That graph lacked a dependable C-only
+object-to-link trace edge. Current [Lake targets](../lakefile.lean) use the traced
+inputs, `buildO`, `moreLinkObjs` and fetched OpenSSL libraries described below.
+[Implementation evidence](native-build-plan.md) retains the September 6 regression
+run; documentation review does not rerun that gate.
 
 A normal `lake build <target>` must compile a changed shim and relink every
 requested executable that consumes it. An unchanged build must leave both

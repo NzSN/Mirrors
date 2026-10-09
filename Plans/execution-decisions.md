@@ -6,7 +6,20 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
-## Current status — 2026-10-07
+## Current continuation — 2026-10-09
+
+Mirrors `548ba71` includes source-accepted F1 generated DPM kits and F2
+counterexample timelines. [Latest checkpoint](../CHECKPOINTS.md) and
+[feature plan](dpm-usability-features-2026-10-07.md) direct the approved,
+unimplemented F3 reducer, F4 installed CLI and F5 synchronization-wrapper
+research. Their source/tool revisions have no new installed-package/full-M5
+qualification; the frozen acceptance below remains revision-specific. Broader
+M4 stays separate. The recorded oracle certificate validity ended October 8;
+future remote work must reobserve identities as described in
+[the remote guide](../Docs/remote-server-guide.md). No live probe was run
+during this documentation review.
+
+## Latest frozen qualification — 2026-10-07
 
 The published roadmap candidate C0
 `94271a543085118e47c7fd540ee8d34d3f427fa5f45fedaeba0c852534f4f34a`
@@ -20,8 +33,10 @@ working-tree selection and October 3 qualification remain unchanged history.
 The user authorized remaining qualification and necessary startup of the existing
 verified Windows oracle. Its binary, runtime and certificate pins remain unchanged;
 fresh HourClock is VALID, all 22 remote client cases pass, LeaseService domain
-materialization preserves the original mismatch, and full Q1/Q2 passes. The
-intended resident server remains running with no remaining owned test/model images.
+materialization preserves the original mismatch, and full Q1/Q2 passes.
+At campaign completion, the
+intended resident server remained running with no remaining owned test/model images;
+this is a retained observation, not current service health.
 No local model checker, new package publication or commit/push occurred.
 
 Scope decision reaffirmed by the user (2026-10-07): keep broader M4 as a

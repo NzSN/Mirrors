@@ -5,13 +5,14 @@ Start with [current status and roadmap boundaries](current-status.md), the
 [architecture overview](architecture-overview.md),
 [interactive diagram](architecture-overview.html), and
 [module details](architecture-details.md). Source navigation was synchronized on
-2026-10-07 at Mirrors `6422451`; qualification belongs to the separately frozen
+2026-10-09 at Mirrors `548ba71`; qualification belongs to the separately frozen
 implementation revisions recorded in the current status page. These references
 cover runtime, compiler, DPM, distribution/evidence and the proof/effect boundary.
 The [framework map](framework-map.md) covers the related repositories and
 distinguishes model clients, generated bindings, Gate evaluators and workers.
-The [2026-09-18 documentation audit](related-documentation-audit-20260918.md)
-records the inspected revisions, updates and link-check scope.
+The [October 9 synchronization audit](../Plans/documentation-sync-2026-10-09.md)
+records the inspected revisions, updates and validation scope. The
+[September 18 audit](related-documentation-audit-20260918.md) remains historical.
 
 Remote deployment and client operation: [remote server guide](remote-server-guide.md).
 Latest recorded qualification topology: [2026-10-07 published readiness](../Plans/q3-published-roadmap-2026-10-07.md)
@@ -67,9 +68,11 @@ an installed Windows service, a hosted CI run, or a published package.
   scaffold evidence, `seal-scaffold`, `resolve-sealed`, read-only sealed checks,
   `project-corpus` and `check-corpus`. Review approval and closed action universes
   remain explicit reviewer input.
-  Implemented targets are `mirrorecma-v1`, experimental
-  `mirrorecma-async-v1`, `mirrorcpp-v1`, `mirrorcpp-v2`, `mirrorrust-v1`, and
-  `mirrorlean-v1`.
+  Read-only `compare-locks` reports validated migration requirements;
+  `generate-dpm/check-dpm` publishes/checks reviewed mapping helpers and seeds.
+  The eight implemented emitters are `mirrorecma-v1`, `mirrorecma-async-v1/v2`,
+  `mirrorcpp-v1/v2`, `mirrorrust-v1/v2`, and `mirrorlean-v1`. The newer kit/timeline
+  slice has source acceptance only; the common portable corpus still has six profiles.
 - The first bounded [model-validated reduction profile](model-interface-reduction.md)
   accepts only LeaseService input shrink requests; the evaluator still owns live
   model materialization before any SUT construction.

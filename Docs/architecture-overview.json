@@ -10,7 +10,7 @@
       1600,
       1440
     ],
-    "updated": "2026-10-07",
+    "updated": "2026-10-09",
     "maintenance": "Companion JSON and the HTML embedded mirrors-architecture-data must match. The HTML renders the embedded data before initializing its retained Archify viewer; no external generator or fetch is required.",
     "links": [
       {
@@ -65,7 +65,7 @@
           "generated",
           "clients"
         ],
-        "note": "Captured sources, reviewed contract and ITF evidence produce semantic locks, typed bindings and corpora. Eight emitters cover TS sync/async v1/v2, C++ v1/v2, Rust v1/v2 and Lean v1. Node suite/project bundle publication stays async v1. Read-only lock comparison reports migration requirements."
+        "note": "Captured sources, reviewed contract and ITF evidence produce semantic locks, typed bindings and corpora. Eight emitters cover TS sync/async v1/v2, C++ v1/v2, Rust v1/v2 and Lean v1. Node suite/project bundle publication stays async v1. Read-only lock comparison reports migration requirements. Reviewed DPM mappings generate native helpers, metadata and application seeds for six C++/async-ECMA/Rust modes; source acceptance only."
       },
       {
         "id": "application",
@@ -131,11 +131,11 @@
           "session",
           "core"
         ],
-        "note": "A handwritten generated port maps a model action to an admitted binding-session interval. The coordinator permits one participating actor, verifies actual checkpoint arrival and observes real quiescent SUT state. Application hooks are intrusive; arbitrary preemption and external effects stay outside the profile."
+        "note": "An application-owned port uses optional generated action/actor/checkpoint helpers to map model actions to binding-session intervals. The coordinator permits one actor, verifies actual arrival and observes real quiescent SUT state. Read-only timelines render actual receipts. Kit/timeline have source acceptance only; hooks remain application-owned and F3/F4/F5 stay queued."
       }
     ],
-    "source_base_revision": "6422451",
-    "source_state": "Current source navigation; frozen qualification remains tied to f0894d2/eef6f71/455e196"
+    "source_base_revision": "548ba71",
+    "source_state": "Inspected source navigation at 548ba71; F1/F2 source accepted only; frozen qualification remains tied to f0894d2/eef6f71/455e196"
   },
   "components": [
     {
@@ -217,7 +217,8 @@
         "model-interface-compiler/suite-bundles.md",
         "../Shell/ModelInterface/Emit/Lean.lean",
         "model-interface-compiler/lock-migration.md",
-        "model-interface-compiler/reviewed-corpora.md"
+        "model-interface-compiler/reviewed-corpora.md",
+        "dpm-usability-design.md"
       ]
     },
     {
@@ -1431,7 +1432,8 @@
         "Local application replay does not require MirrorGate.",
         "Recorded WSL2 ↔ mTLS ↔ Windows is one deployment example.",
         "Acceptance belongs to exact identities, scope and retained evidence.",
-        "The current named profile is qualified; broader M4 remains separate."
+        "The current named profile is qualified; broader M4 remains separate.",
+        "Newer DPM kits/timelines have source acceptance only; current HEAD needs fresh qualification gates."
       ]
     }
   ]

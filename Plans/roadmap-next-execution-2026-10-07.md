@@ -6,7 +6,7 @@ a fresh published candidate in [the final execution](m5-published-roadmap-qualif
 The incomplete working-tree candidate described below remains historical.
 
 This executes the sequence proposed after the framework roadmap review. Existing
-M5 and DPM evidence stays immutable. Current implementation heads are Mirrors
+M5 and DPM evidence stays immutable. The execution-start implementation heads were Mirrors
 05a9ce1, MirrorECMA 18735bd, MirrorCPP 530304e, MirrorRust 08d189f and MirrorGate
 455e196. The October 3 M5 candidate qualifies its original frozen combination;
 it does not qualify the later DPM changes automatically.
@@ -64,7 +64,7 @@ candidate gate. The platform plan does not remove requirements from M5 or M4.
 | Compiler migration helper | Validated lock comparison; read-only, malformed/tamper/change controls; no v1 emission changes | Source accepted: 23 controls and existing compiler/language gates |
 | M4 preflight and platform decision | Current host facts and explicit usable/blocked acceptance commands | Implemented/documented; real native enforcement and process-recovery extension remain unqualified |
 | Full published candidate qualification | Byte-stable freeze, dual D, 18 commands/16 tiers, linked Q1/Q2 and 6 controls | Complete at published C0 94271a54…; earlier working-tree 14/18 ledger below is history |
-| Documentation | New checkpoint and roadmap state matching actual results | Updated with incomplete refresh and preserved historical qualification |
+| Documentation | New checkpoint and roadmap state matching actual results | Published completion and later source-accepted F1/F2 are indexed in current status; incomplete refresh remains historical |
 
 ## Historical preparation findings (superseded by published completion)
 

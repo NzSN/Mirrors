@@ -1,6 +1,6 @@
 # Mirrors — Architecture Overview
 
-Source architecture synchronized 2026-10-07 at Mirrors `6422451`, with linked
+Source architecture synchronized 2026-10-09 at Mirrors `548ba71`, with linked
 client/runtime source checked at their current repository heads. This describes
 implemented responsibilities; [current acceptance](current-status.md) remains
 attached to frozen implementation, distribution and evidence identities.
@@ -74,6 +74,14 @@ Node workers and Rust threads. Native phase bridges remain application-specific.
 Gate worker isolation and DPM execution control are independent; generic DPM
 inside every Gate worker profile is not implied by the local/native pilot.
 
+[Generated DPM kits](dpm-usability-design.md) now publish action/actor/checkpoint
+mapping helpers, metadata and application seeds for six C++/async-ECMA/Rust
+target modes. The application connects those helpers to its real binding
+session and workers. The read-only [timeline](../tools/deterministic-scheduling/timeline.py)
+renders actual receipts and keeps model failure distinct from cleanup. These
+new compiler/tooling paths have source acceptance only; the frozen M5 record
+and earlier DPM package acceptance remain tied to their original identities.
+
 The qualified deployment uses WSL2 clients, supplied-trace local replay and
 Linux/Bubblewrap Gate, with live model operations through the owned Windows
 mTLS Mirrors server and its Apalache/JVM. No local model checker runs on this
@@ -142,9 +150,8 @@ not an implementation of full TLA+ evaluation or model checking.
 The [compiler](../Shell/ModelInterface/Compiler.lean) combines the root model,
 strict interface contract, and typed ITF evidence. Pure resolution creates a
 semantic descriptor and provenance, with separate canonical identities.
-Implemented generated targets are synchronous and asynchronous TypeScript,
-C++ (`mirrorcpp-v1` and `mirrorcpp-v2`), Rust (`mirrorrust-v1`), and Lean
-(`mirrorlean-v1`). The initial Lean SDK registry requires exact matched
+The eight implemented emitters are `mirrorecma-v1`, `mirrorecma-async-v1/v2`,
+`mirrorcpp-v1/v2`, `mirrorrust-v1/v2`, and `mirrorlean-v1`. The initial Lean SDK registry requires exact matched
 verification before constructing a binding. Async suite
 bundles add trusted evaluator material and a sanitized public worker interface.
 The application still supplies its implementation, adapter, reset, and observations.

@@ -7,8 +7,10 @@
 
 > Status: **design; delivery slices TF0–TF8 of the implementation plan are
 > implemented and accepted for the Mirrors-local scope as of 2026-09-12.
-> The pinned differential gate executed on 2026-09-13 and failed acceptance;
-> see task ledger §17.7. The inspection tool (§24) ships as
+> The September 13 differential failure was superseded by profile-3/4
+> repairs and the retained October 1 profile-5 acceptance; see
+> [the differential guide](tla-differential-validation-design.md).
+> The inspection tool (§24) ships as
 > the separate `tla_frontend` development executable; see
 > [the CLI guide](tla-frontend-cli.md). Ecosystem and differential tiers are
 > recorded per run in the task ledger.**

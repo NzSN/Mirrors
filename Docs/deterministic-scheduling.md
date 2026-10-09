@@ -14,7 +14,7 @@ contracts are separate from the earlier frozen DPM/runtime qualification.
 ```text
 Model trace action
        |
-Generated binding -> handwritten application port
+Generated binding + optional generated kit helper -> application-owned port
        |
 DPM binding session: initialize / advance / observe / dispose
        |
@@ -43,6 +43,23 @@ Only declared participating actors are controlled. Background threads, external
 I/O, clocks, randomness, non-returning callbacks and effects inside a checkpoint
 interval require their own application contract. Scheduling changes timing and
 synchronization; finite checkpoint coverage is not all weak-memory behavior.
+
+## Generate wiring and inspect receipts
+
+`model_interface_gen generate-dpm/check-dpm --lock FILE --mapping FILE
+--target TARGET --out DIR` generates/checks a reviewed action/actor/checkpoint
+mapping for `mirrorcpp-v1/v2`, `mirrorecma-async-v1/v2`, or `mirrorrust-v1/v2`.
+The helper and seed use the existing binding-session API; the application
+provides worker factories, checkpoint placement and actual observations.
+Sync ECMA and Lean have no accepted DPM execution profile.
+
+`python3 tools/deterministic-scheduling/timeline.py --receipt FILE --format text`
+renders existing comparison/binding/checkpoint-execution receipts. JSON output,
+trusted receipt/kit digests and unknown attribution are described in
+[the kit/timeline contract](dpm-usability-design.md). Rendering starts no replay
+or model check. [Source acceptance](../Plans/dpm-usability-evidence-20261007/README.md)
+is separate from the frozen installed/native records below. Approved schedule
+reduction, installed CLI and synchronization wrappers remain unimplemented.
 
 ## Profiles and references
 

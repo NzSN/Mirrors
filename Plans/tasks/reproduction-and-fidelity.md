@@ -2,11 +2,18 @@
 
 Date: 2026-09-21
 
-Status: assigned to `general-purpose-gpt`; implementation queued
+Historical planning status (2026-09-21): assigned to `general-purpose-gpt`; implementation was queued
 
 Roadmap: [failure reproduction and adapter fidelity](../mirror-framework-improvements.md#3-failure-capture-replay-and-minimization)
 
 Coordination: [framework task assignments](../mirror-framework-tasks.md)
+
+Current navigation (2026-10-09): these September task cards and their queued
+labels are historical planning. [Framework status](../../Docs/current-status.md)
+and [current milestone ledger](../mirror-framework-improvements.md#delivery-order-and-ownership)
+record completed named-profile work and separate broader M4 gaps. The newest
+[checkpoint](../../CHECKPOINTS.md) directs continuation through the approved
+DPM usability follow-ons; these cards are not the current backlog.
 
 ## Scope and execution rules
 

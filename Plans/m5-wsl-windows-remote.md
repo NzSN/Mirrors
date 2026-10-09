@@ -8,6 +8,12 @@ Final installed/remote/evidence acceptance is recorded in
 [completion readiness](q3-m5-complete-2026-10-01.md). The earlier
 [Windows remote readiness](q3-windows-remote-2026-10-01.md) remains historical.
 
+Latest frozen acceptance: the [October 7 published candidate](q3-published-roadmap-2026-10-07.md)
+qualifies C0 `94271a54…` at its exact component/tool identities. The October 1
+records and deployment observations below retain their original scope.
+[Current status](../Docs/current-status.md) distinguishes that qualification
+from newer source-accepted DPM usability changes and current service health.
+
 ## Scope decision
 
 The user removes separate native-Linux host requirements from M5 and selects

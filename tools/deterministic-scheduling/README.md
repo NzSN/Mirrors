@@ -1,7 +1,9 @@
 # Deterministic scheduling acceptance tools
 
-These consumers exercise MirrorCPP's experimental cooperative scheduling APIs.
-They do not change generated bindings or use expected model state to initialize
+These tools exercise C++ checkpoint threads, Node workers and Rust threads,
+including generated replay, finite exploration, installed consumers and the bounded
+native pilot. Kit generation and read-only timelines are a newer source-accepted
+slice. Ordinary binding bytes stay stable, and expected model state never initializes
 implementation state. Run from the Mirrors repository root.
 
 ## Integration kit and read-only timeline

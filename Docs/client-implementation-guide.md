@@ -47,6 +47,11 @@ are an optional application/client execution-control seam, not new wire messages
 or the server job scheduler. Generated ports still require application behavior
 and observation implementations. Broader M4 remains separate.
 
+The additive [DPM kit and timeline](dpm-usability-design.md) prepare reviewed
+mapping helpers and render actual SDK receipts without changing wire messages.
+They have source acceptance only; application hooks, observations and a future
+current-source installed qualification remain explicit responsibilities.
+
 ## 1. Where a client can attach
 
 | Endpoint | Transport | Session model | Use for |
@@ -352,8 +357,8 @@ is:
   --out generated/mirrorcpp
 ```
 
-The implemented targets are `mirrorecma-v1`, `mirrorecma-async-v1`,
-`mirrorcpp-v1`, `mirrorrust-v1` and `mirrorlean-v1` (see the
+The eight implemented emitters are `mirrorecma-v1`, `mirrorecma-async-v1/v2`,
+`mirrorcpp-v1/v2`, `mirrorrust-v1/v2` and `mirrorlean-v1` (see the
 [Rust target profile](model-interface-compiler/rust-target.md) and
 [Lean target profile](model-interface-compiler/lean-target.md)). The additive
 `mirrorcpp-v2` source profile is documented in

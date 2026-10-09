@@ -39,6 +39,11 @@ ordinary wire bytes and exact admission keys unchanged. Explicit async-ECMA/Rust
 v2 typed-map selection and DPM use the same deferred/admitted binding boundary;
 see [current status](current-status.md) and [scheduling](deterministic-scheduling.md).
 
+Newer [DPM kits and receipt timelines](dpm-usability-design.md) have source
+acceptance only. Helpers use the existing exact admission and binding-session
+boundary; they neither introduce wire messages nor confer descriptor authority.
+Current source/tool revisions need a new freeze and corresponding installed gates.
+
 MirrorECMA's D3 compiled-verification path is implemented in its sibling repo:
 
 - strict verification request/reply codecs leave the frozen legacy protocol

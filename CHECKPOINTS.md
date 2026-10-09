@@ -5,6 +5,36 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-09 — Maintained documentation synchronized to current source
+
+The user requested synchronization of outdated documentation. The review starts
+at Mirrors 548ba71, MirrorECMA 1e87f3e, MirrorCPP 25a44b5, MirrorRust 0f77fdf,
+MirrorGate 8afae26 and MirrorLean b8b9491; these are source-navigation identities,
+not a new qualification freeze. [Synchronization audit](Plans/documentation-sync-2026-10-09.md)
+records the exact changed-document inventory and validation results.
+
+Current status, architecture Markdown/text/JSON/HTML, compiler/target guides,
+roadmap/task navigation, AGENTS instructions and linked C++/ECMA/Rust scheduling
+and remote guides now include source-accepted F1/F2. F3 reducer, F4 installed CLI
+and F5 synchronization-wrapper research remain approved and unimplemented;
+broader M4 stays separate. Frozen M5 C0 94271a54… remains bound to
+f0894d2/eef6f71/455e196; the newer compiler/tools have no new installed-package
+or full-current-source qualification.
+
+Reduction and frontend guides now distinguish completed October 7 domain
+qualification and retained profile-5 differential acceptance from earlier
+pending/failed records. The old AGENTS September sections are archived verbatim
+in [the checkpoint reference](Plans/framework-checkpoint-reference-2026-09-22.md).
+Remote guides record that the old certificate validity ended October 8, while
+leaving live service/replacement identities unobserved. No service or credential
+was changed and no model-check/qualification campaign ran.
+
+All maintained local document targets/anchors, architecture payload/graph/source
+references and embedded JavaScript syntax are checked in the audit. Historical
+checkpoint entries, frozen source/evidence/fixture bytes, generated catalog block,
+unrelated Rust protocol-test edit and editor caches remain preserved. Changes
+are documentation only and remain uncommitted; no push or package publication.
+
 ## 2026-10-07 — DPM usability and documentation publication checkpoint
 
 The user requested recording the current state and committing/pushing the completed

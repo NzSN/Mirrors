@@ -30,7 +30,7 @@
 
 ## Current acceptance and additive profiles
 
-Source/navigation synchronized 2026-10-07. [Current status](current-status.md)
+Source/navigation synchronized 2026-10-09 at Mirrors `548ba71`. [Current status](current-status.md)
 separates frozen framework qualification from each generated/native profile.
 The common shared corpus still covers six portable profiles; fresh language
 bindings exercise all eight emitters. Explicit `mirrorecma-async-v2` and
@@ -42,8 +42,13 @@ bytes and wire protocol remain stable.
 
 The [migration helper](model-interface-compiler/lock-migration.md) compares
 verified locks without inferring runtime compatibility. [DPM](deterministic-scheduling.md)
-connects handwritten generated-port implementations to real checkpoint workers;
-checkpoint insertion and SUT observation remain application-owned.
+connects application-owned generated-port implementations to real checkpoint
+workers. The additive [DPM integration kit](dpm-usability-design.md) emits reviewed
+action/actor/checkpoint helpers and seeds for six C++/async-ECMA/Rust modes;
+checkpoint insertion and SUT observation remain application-owned. Kit generation
+and receipt timelines have source acceptance only, separate from the frozen
+installed/runtime qualification. Ordinary binding bytes and wire semantics stay
+unchanged.
 
 ## 0. Implementation status
 
@@ -1460,7 +1465,8 @@ the shared interface; target source models remain private implementation.
    **Both emitters, native execution gates and shared recording vectors are
    implemented.**
 9. Add all generated targets to `model_interface_gen check` and the top-level
-   interop matrix. **Compiler checks include all six target profiles; Rust and
+   interop matrix. **Compiler/language checks include all eight emitters; the
+   common portable shared corpus retains six-profile scope. Rust and
    Lean have bounded source-hidden offline/mTLS generated-Counter acceptance.
    The legacy all-transport matrix and framework qualification retain their
    separate scope; see the [interop guide](../tools/interop/INTEROP.md).**

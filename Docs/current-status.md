@@ -1,8 +1,13 @@
 # Current framework status and navigation
 
-Documentation synchronized 2026-10-07. Source-navigation heads: Mirrors `6422451`,
-MirrorECMA `720dfda`, MirrorCPP `530304e`, MirrorRust `08d189f`, MirrorGate `455e196` and
-MirrorLean `b161cbe`. These heads identify the inspected source, not new qualification.
+Documentation synchronized 2026-10-09. Inspected checkout heads: Mirrors `548ba71`,
+MirrorECMA `1e87f3e`, MirrorCPP `25a44b5`, MirrorRust `0f77fdf`, MirrorGate `8afae26` and
+MirrorLean `b8b9491`. These heads identify the inspected source, not new qualification.
+At review start, Mirrors had only an unrelated untracked editor cache; MirrorRust
+also retained an unrelated local `tests/protocol.rs` edit. This synchronization
+adds documentation edits; those checkout observations are not clean-snapshot
+qualification. [Synchronization audit](../Plans/documentation-sync-2026-10-09.md)
+records this documentation review.
 
 ## Qualified scope and evidence
 
@@ -27,8 +32,11 @@ The latest qualified topology uses WSL2 clients, local supplied-trace replay and
 Linux/Bubblewrap Gate; live model operations use an owned native Windows mTLS
 Mirrors service with Apalache 0.62.2 / Java 25.0.4+7-LTS. The service was started and
 observed as PID 35888 during that campaign; reobserve before use. Its original
-certificates were recorded as valid through 2026-10-08T02:47:53Z. Neither static documentation nor an
-old PID/certificate record establishes current health or permission to re-pin.
+certificates were recorded as valid through 2026-10-08T02:47:53Z; that validity
+window has ended as of this documentation review. No live service or replacement
+certificate was inspected. Reconcile any renewed credential and pin identities
+before remote work. Neither static documentation nor an old PID/certificate
+record establishes current health or permission to re-pin.
 No local Apalache/TLC runs on this coordinator.
 
 ## Approved usability features after the frozen candidate
@@ -39,6 +47,8 @@ tooling changes are newer than the frozen M5 candidate above; no new installed
 package or full current-source qualification is inferred. The approved follow-on
 schedule reducer, installed CLI and synchronization-wrapper profile remain queued
 with explicit exit gates in [the feature plan](../Plans/dpm-usability-features-2026-10-07.md).
+The latest continuation order is F3 schedule reduction, F4 installed cross-language
+CLI, then F5 synchronization-wrapper research; broader M4 stays independent.
 
 ## Separate work and open choices
 

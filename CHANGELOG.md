@@ -4,6 +4,20 @@ All notable changes to the Lean 4 port of ModelMirrors. The port target is
 byte-for-byte JSON-lines wire compatibility with ModelMirros@3496251
 (Haskell); divergences are listed as ACCEPTED with rationale.
 
+## DPM integration kits and counterexample timelines (2026-10-07)
+
+- Added `model_interface_gen generate-dpm/check-dpm` for six C++/async-ECMA/
+  Rust target modes, publishing explicit mapping helpers, metadata, application
+  seeds and checklists through owned atomic generation. Applications supply
+  actual operations, checkpoint hooks and observations.
+- Added a read-only terminal/JSON timeline for actual comparison, binding and
+  checkpoint-execution receipts, preserving model verdict and cleanup separately.
+- [Source acceptance](Plans/dpm-usability-evidence-20261007/README.md) records
+  21 focused tests, actual three-language helper/seed compilation and real
+  Node-worker match/mismatch replay with confirmed cleanup. These changes
+  are newer than the frozen M5 candidate and have no new installed-package
+  or full-current-source qualification. F3–F5 remain approved follow-ons.
+
 ## Compiler migration and published-profile qualification (2026-10-07)
 
 - Added read-only `model_interface_gen compare-locks`: validated semantic/

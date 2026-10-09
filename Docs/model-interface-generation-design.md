@@ -5,6 +5,11 @@ frozen qualification, eight compiler emitters and separately scoped generated/
 DPM acceptance. This document retains its own normative profile and dated
 results; broader M4/platform and package-release claims remain separate.
 
+The newer [DPM kit and timeline](dpm-usability-design.md) have source acceptance:
+explicit action/actor/checkpoint helpers, application seeds and read-only actual
+receipt diagnostics. They preserve ordinary binding bytes and application-owned
+hooks/observations; they do not renew the frozen installed/runtime qualification.
+
 > Explanatory types and judgments use the [shared semantic notation](https://github.com/NzSN/Mirrors/blob/main/Docs/semantic-notation.md).
 
 > Status: **sync/async TypeScript, C++, Rust, and Lean generation implemented;

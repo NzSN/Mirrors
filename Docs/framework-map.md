@@ -2,8 +2,8 @@
 
 The [current architecture overview](architecture-overview.md),
 [interactive diagram](architecture-overview.html), and
-[module map](architecture-details.md) were synchronized against Mirrors `6422451`
-and current linked client sources on 2026-10-07. [Current status](current-status.md)
+[module map](architecture-details.md) were synchronized against Mirrors `548ba71`
+and current linked client sources on 2026-10-09. [Current status](current-status.md)
 records exact frozen qualification; the generated catalog block retains its own
 selection and observation vocabulary. Older source-review baselines are history.
 Start application onboarding with
@@ -30,6 +30,13 @@ scope; additional v2 language/codec/native acceptance is separately bound.
 incremental replay for C++, Node workers and Rust threads. Gate's Node/Rust worker
 isolation remains a separate path; no generic generated Rust Gate evaluator or
 Lean Gate facade is implied.
+
+The newer [DPM integration kit and receipt timeline](dpm-usability-design.md)
+are source accepted for six C++/async-ECMA/Rust kit modes. Their generated
+mapping helpers reduce adapter setup; applications retain hooks, observations
+and execution ownership. F3 schedule reduction, F4 installed CLI and F5
+synchronization wrappers remain approved follow-ons. Current tool revisions
+do not inherit the frozen M5 or earlier DPM installed-package qualification.
 
 ## Repository ownership
 

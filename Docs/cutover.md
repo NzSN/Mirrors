@@ -1,12 +1,13 @@
 # Cutover plan: Haskell ModelMirros → Lean 4 Mirrors
 
-Status: source inventory refreshed 2026-09-08. The Lean port implements the
+Historical source inventory (2026-09-08). The Lean port implements the
 original phases 0–6, pooled async server sessions on both platforms,
 model-interface compilation/negotiation, and the product-version CLI. The
 [documentation index](README.md) lists the current gate entry points,
-compiler checks, and external tiers. The interop runner includes MirrorECMA,
-MirrorCPP, MirrorRust, and the Haskell reference client. Dated results below
-remain evidence of their recorded runs, not a current hosted-CI or service check.
+compiler checks, and external tiers. The current interop runner includes
+MirrorECMA, MirrorCPP, MirrorRust, MirrorLean and the Haskell reference client.
+Dated results below remain evidence of their recorded runs, not a current
+hosted-CI or service check.
 
 ## Current scope and remaining decisions
 
