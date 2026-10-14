@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "scope": "supplemental installed runtime admission in tool sandbox",
+  "profiles": [
+    {
+      "language": "cpp",
+      "status": "passed",
+      "exit": 2,
+      "target": "runner",
+      "projectSha256": "f1a15b88f9941b09c8a9501de9adb56c7113f75280df5c260e3194ccb913e58e",
+      "sourceHidden": false,
+      "command": [
+        "/tmp/mirrors-dpm-installed-gate-final-20261013/cpp/bin/mirrors-dpm",
+        "doctor",
+        "--project",
+        "/tmp/mirrors-dpm-installed-gate-final-20261013/cpp/project.json",
+        "--project-sha256",
+        "f1a15b88f9941b09c8a9501de9adb56c7113f75280df5c260e3194ccb913e58e"
+      ]
+    },
+    {
+      "language": "ecma",
+      "status": "passed",
+      "exit": 2,
+      "target": "ecma/runner.mjs",
+      "projectSha256": "67f0f0022cd834dfe09e2969cadca0d1dbf34fb276397268beb7f86b2f38854b",
+      "sourceHidden": false,
+      "command": [
+        "/tmp/mirrors-dpm-installed-gate-final-20261013/ecma/bin/mirrors-dpm",
+        "doctor",
+        "--project",
+        "/tmp/mirrors-dpm-installed-gate-final-20261013/ecma/project.json",
+        "--project-sha256",
+        "67f0f0022cd834dfe09e2969cadca0d1dbf34fb276397268beb7f86b2f38854b"
+      ]
+    },
+    {
+      "language": "rust",
+      "status": "passed",
+      "exit": 2,
+      "target": "runner",
+      "projectSha256": "c573376c5ebab1f5a0c100da1308b8f099b35b7da5d32d9b736790f4f0dc76c1",
+      "sourceHidden": false,
+      "command": [
+        "/tmp/mirrors-dpm-installed-gate-final-20261013/rust/bin/mirrors-dpm",
+        "doctor",
+        "--project",
+        "/tmp/mirrors-dpm-installed-gate-final-20261013/rust/project.json",
+        "--project-sha256",
+        "c573376c5ebab1f5a0c100da1308b8f099b35b7da5d32d9b736790f4f0dc76c1"
+      ]
+    }
+  ]
+}

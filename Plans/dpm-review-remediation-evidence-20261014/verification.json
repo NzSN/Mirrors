@@ -1,0 +1,67 @@
+{
+  "curation": {
+    "archiveSha256": "f70660548f63bc776eb07603d6b4c0b5b6bd5fb245d2a642cbddf6a21b2aa7be",
+    "binariesTransferredToRepository": false,
+    "largeHashingAndCuration": "remote WSL"
+  },
+  "finalExitCodes": {
+    "acceptance-phase.exit": 0,
+    "local-gates-qualified-phase.exit": 0
+  },
+  "gatePortabilityEditsThisFinalExecution": [],
+  "historicalCheckpointBytes": {
+    "method": "only new dated entry inserted; removal recovers all earlier bytes",
+    "preserved": true,
+    "sha256": "d77d5d2eb010d27b560dbca12a656afad47da7a63f334f4604bc07dabe1d2f91"
+  },
+  "historicalOriginalEvidence": {
+    "files": 891,
+    "path": "../dpm-f3-f5-evidence-20261013/",
+    "status": "unchanged",
+    "verifiedBy": "coordinator before final curation"
+  },
+  "independentReviewSha256": "170cb453ebc00ab4b114ed39279d7fb24ab18102eeca9bf45f4bcfade79a7ea2",
+  "installedManifestSha256": "829f09ddef80a5db433f3580160092b80e0134e55032c8263ad14f087f341285",
+  "rawFinalGates": {
+    "installed": "installed/acceptance.json",
+    "nonModel": "logs/local-no-model-check-qualified.log"
+  },
+  "schema": "mirrors.dpm-remediation-verification/v1",
+  "source": {
+    "implementationParity": "current local bytes equal qualified remote bytes",
+    "postValidationDocumentation": [
+      {
+        "bytes": 6813,
+        "executable": false,
+        "path": "AGENTS.md",
+        "repository": "Mirrors",
+        "sha256": "280541ff412d655665fdb7485b5d5eb7948ec6a0d9ceb5546d1b498c4eeec4d9"
+      },
+      {
+        "bytes": 95105,
+        "executable": false,
+        "path": "CHECKPOINTS.md",
+        "repository": "Mirrors",
+        "sha256": "d58640a733b0926353175ba9cc159f7bed1f9d4b03761d6fa6761ec74695912c"
+      },
+      {
+        "bytes": 6528,
+        "executable": false,
+        "path": "Docs/current-status.md",
+        "repository": "Mirrors",
+        "sha256": "3d6bbe7c9c481b1abdec74d54034ee79401446a455708b1c68b398dbc7a4e983"
+      },
+      {
+        "bytes": 16287,
+        "executable": false,
+        "path": "Plans/dpm-review-remediation-2026-10-13.md",
+        "repository": "Mirrors",
+        "sha256": "feee5b81666722db0373a966f1dbc35960a13454e5e69d7fc010cd19803af40a"
+      }
+    ],
+    "remoteSnapshotRecord": "qualified-source-verification.json",
+    "selectedImplementationFiles": 35,
+    "transferredFiles": 5270
+  },
+  "status": "verified"
+}

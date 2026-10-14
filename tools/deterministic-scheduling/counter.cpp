@@ -73,15 +73,16 @@ int main(int argc, char** argv) {
       "wrong-identity", "denied-negotiation", "unexpected-checkpoint", "cancel", "malformed-input", "reentrant"};
     if (!modes.contains(mode)) throw std::invalid_argument("unsupported fixture mode");
     sc::Identity identity{std::string(generated::ScheduledCounterSemanticDigest), sha(o.mapping), sha(fs::canonical(argv[0]))};
+    const bool spectator = plan.inputs.value("spectator", false);
     auto stats = std::make_shared<Stats>();
     auto stop = std::make_shared<std::stop_source>();
     sc::Policy policy; policy.execution_timeout = 30s;
-    auto session = std::make_shared<sc::BindingSession>(plan, adapter(identity, stats, stop), policy, stop->get_token());
+    auto session = std::make_shared<sc::BindingSession>(plan, adapter(identity, stats, stop, spectator), policy, stop->get_token());
     mirrorcpp::ApalacheConfig config; config.spec_path = fs::absolute(o.spec).string(); config.param_vars = "parameters";
     config.init_predicate = plan.inputs.at("initial") == 5 ? "InitFive" : "Init"; config.next_predicate = "Next"; config.invariant = "Safety"; config.length_bound = 6;
     json evidence;
     if (mode == "malformed-input" || mode == "reentrant") {
-      auto port = std::make_shared<Port>(session, mode);
+      auto port = std::make_shared<Port>(session, mode, spectator);
       auto binding = generated::bind_scheduledCounter(*port, config);
       port->reenter = binding.computer;
       (void)binding.computer("init", {}, {});
@@ -98,8 +99,8 @@ int main(int argc, char** argv) {
       auto digest = mirrorcpp::semantic_digest_from_hex(generated::ScheduledCounterSemanticDigest);
       if (!digest) throw std::runtime_error("generated semantic digest invalid");
       mirrorcpp::CompiledAdapterKey key{*digest, "dpm-counter", "mirrorcpp-v1", std::string(mirrorcpp::state_computer_contract_version)};
-      mirrorcpp::CompiledAdapterRegistry registry({{key, [session, mode, digest](const mirrorcpp::ApalacheConfig& config) -> mirrorcpp::Result<mirrorcpp::LocalBinding> {
-        auto port = std::make_shared<Port>(session, mode);
+      mirrorcpp::CompiledAdapterRegistry registry({{key, [session, mode, digest, spectator](const mirrorcpp::ApalacheConfig& config) -> mirrorcpp::Result<mirrorcpp::LocalBinding> {
+        auto port = std::make_shared<Port>(session, mode, spectator);
         auto bound = generated::bind_scheduledCounter(*port, config);
         mirrorcpp::LocalBinding binding;
         binding.semantic_digest = *digest;

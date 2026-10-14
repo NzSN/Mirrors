@@ -1,0 +1,39 @@
+{
+  "scenario": "cleanup-entry-repeated",
+  "hostPid": 22666,
+  "pid": 22667,
+  "pgid": 22667,
+  "cleanupSynchronization": {
+    "point": "cleanup-first-instruction",
+    "sourceLine": 262,
+    "time": 1090.202584797
+  },
+  "hostExit": 2,
+  "stdout": "{\"result\": \"refused\", \"exception\": \"ProcessFailure\", \"message\": \"operation cancelled; {\\\"logsTruncated\\\": false, \\\"observedDiscardedBytes\\\": 0, \\\"processCleanup\\\": \\\"confirmed\\\", \\\"requestOutputBytes\\\": 1048576, \\\"requestOvershoot\\\": 0, \\\"retainedRequestBytes\\\": 30}\", \"accounting\": {\"processCleanup\": \"confirmed\", \"retainedRequestBytes\": 30, \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"logsTruncated\": false, \"observedDiscardedBytes\": 0}, \"handlersRestored\": true, \"maskRestored\": true, \"ownerRegistrationRestored\": true, \"retainedBytesAfterReturn\": 30, \"openLogDescriptorsAfterReturn\": []}\n",
+  "stderr": "",
+  "hostResult": {
+    "result": "refused",
+    "exception": "ProcessFailure",
+    "message": "operation cancelled; {\"logsTruncated\": false, \"observedDiscardedBytes\": 0, \"processCleanup\": \"confirmed\", \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"retainedRequestBytes\": 30}",
+    "accounting": {
+      "processCleanup": "confirmed",
+      "retainedRequestBytes": 30,
+      "requestOutputBytes": 1048576,
+      "requestOvershoot": 0,
+      "logsTruncated": false,
+      "observedDiscardedBytes": 0
+    },
+    "handlersRestored": true,
+    "maskRestored": true,
+    "ownerRegistrationRestored": true,
+    "retainedBytesAfterReturn": 30,
+    "openLogDescriptorsAfterReturn": []
+  },
+  "runnerStateAfterHostExit": null,
+  "stdoutLog": "runner-ready\n",
+  "stderrLog": "runner-error-log\n",
+  "controllerReapedRunner": false,
+  "runnerStateAfterControllerCleanup": null,
+  "hostStateAfterControllerCleanup": null,
+  "allControllerChildrenReaped": true
+}

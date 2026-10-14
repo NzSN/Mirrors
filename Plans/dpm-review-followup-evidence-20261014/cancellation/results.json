@@ -1,0 +1,273 @@
+{
+  "schema": "mirrors.dpm-cancellation-controls/v1",
+  "scope": "owned-process-and-exact-cli-handler",
+  "sourceSha256": {
+    "cli.py": "2ee2d285bfe4dc48e06e13fd09855cb8dde39a06949419f3f1f010f31a5ff26f",
+    "dpm_host.py": "79261eb8bc4d1b4a823bf5324427ef22a549b821cb115c625840bb44da23dea1"
+  },
+  "rows": [
+    {
+      "scenario": "normal",
+      "hostPid": 22647,
+      "pid": 22649,
+      "pgid": 22649,
+      "cleanupSynchronization": {
+        "point": "term-grace-wait",
+        "sourceLine": 266,
+        "time": 1088.521771486
+      },
+      "hostExit": 0,
+      "stdout": "{\"result\": \"returned\", \"handlersRestored\": true, \"maskRestored\": true, \"ownerRegistrationRestored\": true, \"retainedBytesAfterReturn\": 30, \"openLogDescriptorsAfterReturn\": []}\n",
+      "stderr": "",
+      "hostResult": {
+        "result": "returned",
+        "handlersRestored": true,
+        "maskRestored": true,
+        "ownerRegistrationRestored": true,
+        "retainedBytesAfterReturn": 30,
+        "openLogDescriptorsAfterReturn": []
+      },
+      "runnerStateAfterHostExit": null,
+      "stdoutLog": "runner-ready\n",
+      "stderrLog": "runner-error-log\n",
+      "controllerReapedRunner": false,
+      "runnerStateAfterControllerCleanup": null,
+      "hostStateAfterControllerCleanup": null,
+      "allControllerChildrenReaped": true
+    },
+    {
+      "scenario": "single",
+      "hostPid": 22650,
+      "pid": 22651,
+      "pgid": 22651,
+      "cleanupSynchronization": {
+        "point": "term-grace-wait",
+        "sourceLine": 266,
+        "time": 1088.587731287
+      },
+      "hostExit": 2,
+      "stdout": "{\"result\": \"refused\", \"exception\": \"ProcessFailure\", \"message\": \"operation cancelled; {\\\"logsTruncated\\\": false, \\\"observedDiscardedBytes\\\": 0, \\\"processCleanup\\\": \\\"confirmed\\\", \\\"requestOutputBytes\\\": 1048576, \\\"requestOvershoot\\\": 0, \\\"retainedRequestBytes\\\": 30}\", \"accounting\": {\"processCleanup\": \"confirmed\", \"retainedRequestBytes\": 30, \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"logsTruncated\": false, \"observedDiscardedBytes\": 0}, \"handlersRestored\": true, \"maskRestored\": true, \"ownerRegistrationRestored\": true, \"retainedBytesAfterReturn\": 30, \"openLogDescriptorsAfterReturn\": []}\n",
+      "stderr": "",
+      "hostResult": {
+        "result": "refused",
+        "exception": "ProcessFailure",
+        "message": "operation cancelled; {\"logsTruncated\": false, \"observedDiscardedBytes\": 0, \"processCleanup\": \"confirmed\", \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"retainedRequestBytes\": 30}",
+        "accounting": {
+          "processCleanup": "confirmed",
+          "retainedRequestBytes": 30,
+          "requestOutputBytes": 1048576,
+          "requestOvershoot": 0,
+          "logsTruncated": false,
+          "observedDiscardedBytes": 0
+        },
+        "handlersRestored": true,
+        "maskRestored": true,
+        "ownerRegistrationRestored": true,
+        "retainedBytesAfterReturn": 30,
+        "openLogDescriptorsAfterReturn": []
+      },
+      "runnerStateAfterHostExit": null,
+      "stdoutLog": "runner-ready\n",
+      "stderrLog": "runner-error-log\n",
+      "controllerReapedRunner": false,
+      "runnerStateAfterControllerCleanup": null,
+      "hostStateAfterControllerCleanup": null,
+      "allControllerChildrenReaped": true
+    },
+    {
+      "scenario": "repeated",
+      "hostPid": 22653,
+      "pid": 22654,
+      "pgid": 22654,
+      "cleanupSynchronization": {
+        "point": "term-grace-wait",
+        "sourceLine": 266,
+        "time": 1088.857030889
+      },
+      "hostExit": 2,
+      "stdout": "{\"result\": \"refused\", \"exception\": \"ProcessFailure\", \"message\": \"operation cancelled; {\\\"logsTruncated\\\": false, \\\"observedDiscardedBytes\\\": 0, \\\"processCleanup\\\": \\\"confirmed\\\", \\\"requestOutputBytes\\\": 1048576, \\\"requestOvershoot\\\": 0, \\\"retainedRequestBytes\\\": 30}\", \"accounting\": {\"processCleanup\": \"confirmed\", \"retainedRequestBytes\": 30, \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"logsTruncated\": false, \"observedDiscardedBytes\": 0}, \"handlersRestored\": true, \"maskRestored\": true, \"ownerRegistrationRestored\": true, \"retainedBytesAfterReturn\": 30, \"openLogDescriptorsAfterReturn\": []}\n",
+      "stderr": "",
+      "hostResult": {
+        "result": "refused",
+        "exception": "ProcessFailure",
+        "message": "operation cancelled; {\"logsTruncated\": false, \"observedDiscardedBytes\": 0, \"processCleanup\": \"confirmed\", \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"retainedRequestBytes\": 30}",
+        "accounting": {
+          "processCleanup": "confirmed",
+          "retainedRequestBytes": 30,
+          "requestOutputBytes": 1048576,
+          "requestOvershoot": 0,
+          "logsTruncated": false,
+          "observedDiscardedBytes": 0
+        },
+        "handlersRestored": true,
+        "maskRestored": true,
+        "ownerRegistrationRestored": true,
+        "retainedBytesAfterReturn": 30,
+        "openLogDescriptorsAfterReturn": []
+      },
+      "runnerStateAfterHostExit": null,
+      "stdoutLog": "runner-ready\n",
+      "stderrLog": "runner-error-log\n",
+      "controllerReapedRunner": false,
+      "runnerStateAfterControllerCleanup": null,
+      "hostStateAfterControllerCleanup": null,
+      "allControllerChildrenReaped": true
+    },
+    {
+      "scenario": "timeout-first",
+      "hostPid": 22656,
+      "pid": 22657,
+      "pgid": 22657,
+      "cleanupSynchronization": {
+        "point": "term-grace-wait",
+        "sourceLine": 266,
+        "time": 1089.310947291
+      },
+      "hostExit": 2,
+      "stdout": "{\"result\": \"refused\", \"exception\": \"ProcessFailure\", \"message\": \"runner timeout; {\\\"logsTruncated\\\": false, \\\"observedDiscardedBytes\\\": 0, \\\"processCleanup\\\": \\\"confirmed\\\", \\\"requestOutputBytes\\\": 1048576, \\\"requestOvershoot\\\": 0, \\\"retainedRequestBytes\\\": 30}\", \"accounting\": {\"processCleanup\": \"confirmed\", \"retainedRequestBytes\": 30, \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"logsTruncated\": false, \"observedDiscardedBytes\": 0}, \"handlersRestored\": true, \"maskRestored\": true, \"ownerRegistrationRestored\": true, \"retainedBytesAfterReturn\": 30, \"openLogDescriptorsAfterReturn\": []}\n",
+      "stderr": "",
+      "hostResult": {
+        "result": "refused",
+        "exception": "ProcessFailure",
+        "message": "runner timeout; {\"logsTruncated\": false, \"observedDiscardedBytes\": 0, \"processCleanup\": \"confirmed\", \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"retainedRequestBytes\": 30}",
+        "accounting": {
+          "processCleanup": "confirmed",
+          "retainedRequestBytes": 30,
+          "requestOutputBytes": 1048576,
+          "requestOvershoot": 0,
+          "logsTruncated": false,
+          "observedDiscardedBytes": 0
+        },
+        "handlersRestored": true,
+        "maskRestored": true,
+        "ownerRegistrationRestored": true,
+        "retainedBytesAfterReturn": 30,
+        "openLogDescriptorsAfterReturn": []
+      },
+      "runnerStateAfterHostExit": null,
+      "stdoutLog": "runner-ready\n",
+      "stderrLog": "runner-error-log\n",
+      "controllerReapedRunner": false,
+      "runnerStateAfterControllerCleanup": null,
+      "hostStateAfterControllerCleanup": null,
+      "allControllerChildrenReaped": true
+    },
+    {
+      "scenario": "finalization-first",
+      "hostPid": 22660,
+      "pid": 22661,
+      "pgid": 22661,
+      "cleanupSynchronization": {
+        "point": "term-grace-wait",
+        "sourceLine": 266,
+        "time": 1089.669414894
+      },
+      "hostExit": 2,
+      "stdout": "{\"result\": \"refused\", \"exception\": \"ProcessFailure\", \"message\": \"operation cancelled; {\\\"logsTruncated\\\": false, \\\"observedDiscardedBytes\\\": 0, \\\"processCleanup\\\": \\\"confirmed\\\", \\\"requestOutputBytes\\\": 1048576, \\\"requestOvershoot\\\": 0, \\\"retainedRequestBytes\\\": 30}\", \"accounting\": {\"processCleanup\": \"confirmed\", \"retainedRequestBytes\": 30, \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"logsTruncated\": false, \"observedDiscardedBytes\": 0}, \"handlersRestored\": true, \"maskRestored\": true, \"ownerRegistrationRestored\": true, \"retainedBytesAfterReturn\": 30, \"openLogDescriptorsAfterReturn\": []}\n",
+      "stderr": "",
+      "hostResult": {
+        "result": "refused",
+        "exception": "ProcessFailure",
+        "message": "operation cancelled; {\"logsTruncated\": false, \"observedDiscardedBytes\": 0, \"processCleanup\": \"confirmed\", \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"retainedRequestBytes\": 30}",
+        "accounting": {
+          "processCleanup": "confirmed",
+          "retainedRequestBytes": 30,
+          "requestOutputBytes": 1048576,
+          "requestOvershoot": 0,
+          "logsTruncated": false,
+          "observedDiscardedBytes": 0
+        },
+        "handlersRestored": true,
+        "maskRestored": true,
+        "ownerRegistrationRestored": true,
+        "retainedBytesAfterReturn": 30,
+        "openLogDescriptorsAfterReturn": []
+      },
+      "runnerStateAfterHostExit": null,
+      "stdoutLog": "runner-ready\n",
+      "stderrLog": "runner-error-log\n",
+      "controllerReapedRunner": false,
+      "runnerStateAfterControllerCleanup": null,
+      "hostStateAfterControllerCleanup": null,
+      "allControllerChildrenReaped": true
+    },
+    {
+      "scenario": "cleanup-entry-timeout-first",
+      "hostPid": 22663,
+      "pid": 22664,
+      "pgid": 22664,
+      "cleanupSynchronization": {
+        "point": "cleanup-first-instruction",
+        "sourceLine": 262,
+        "time": 1089.921195195
+      },
+      "hostExit": 2,
+      "stdout": "{\"result\": \"refused\", \"exception\": \"ProcessFailure\", \"message\": \"runner timeout; {\\\"logsTruncated\\\": false, \\\"observedDiscardedBytes\\\": 0, \\\"processCleanup\\\": \\\"confirmed\\\", \\\"requestOutputBytes\\\": 1048576, \\\"requestOvershoot\\\": 0, \\\"retainedRequestBytes\\\": 30}\", \"accounting\": {\"processCleanup\": \"confirmed\", \"retainedRequestBytes\": 30, \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"logsTruncated\": false, \"observedDiscardedBytes\": 0}, \"handlersRestored\": true, \"maskRestored\": true, \"ownerRegistrationRestored\": true, \"retainedBytesAfterReturn\": 30, \"openLogDescriptorsAfterReturn\": []}\n",
+      "stderr": "",
+      "hostResult": {
+        "result": "refused",
+        "exception": "ProcessFailure",
+        "message": "runner timeout; {\"logsTruncated\": false, \"observedDiscardedBytes\": 0, \"processCleanup\": \"confirmed\", \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"retainedRequestBytes\": 30}",
+        "accounting": {
+          "processCleanup": "confirmed",
+          "retainedRequestBytes": 30,
+          "requestOutputBytes": 1048576,
+          "requestOvershoot": 0,
+          "logsTruncated": false,
+          "observedDiscardedBytes": 0
+        },
+        "handlersRestored": true,
+        "maskRestored": true,
+        "ownerRegistrationRestored": true,
+        "retainedBytesAfterReturn": 30,
+        "openLogDescriptorsAfterReturn": []
+      },
+      "runnerStateAfterHostExit": null,
+      "stdoutLog": "runner-ready\n",
+      "stderrLog": "runner-error-log\n",
+      "controllerReapedRunner": false,
+      "runnerStateAfterControllerCleanup": null,
+      "hostStateAfterControllerCleanup": null,
+      "allControllerChildrenReaped": true
+    },
+    {
+      "scenario": "cleanup-entry-repeated",
+      "hostPid": 22666,
+      "pid": 22667,
+      "pgid": 22667,
+      "cleanupSynchronization": {
+        "point": "cleanup-first-instruction",
+        "sourceLine": 262,
+        "time": 1090.202584797
+      },
+      "hostExit": 2,
+      "stdout": "{\"result\": \"refused\", \"exception\": \"ProcessFailure\", \"message\": \"operation cancelled; {\\\"logsTruncated\\\": false, \\\"observedDiscardedBytes\\\": 0, \\\"processCleanup\\\": \\\"confirmed\\\", \\\"requestOutputBytes\\\": 1048576, \\\"requestOvershoot\\\": 0, \\\"retainedRequestBytes\\\": 30}\", \"accounting\": {\"processCleanup\": \"confirmed\", \"retainedRequestBytes\": 30, \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"logsTruncated\": false, \"observedDiscardedBytes\": 0}, \"handlersRestored\": true, \"maskRestored\": true, \"ownerRegistrationRestored\": true, \"retainedBytesAfterReturn\": 30, \"openLogDescriptorsAfterReturn\": []}\n",
+      "stderr": "",
+      "hostResult": {
+        "result": "refused",
+        "exception": "ProcessFailure",
+        "message": "operation cancelled; {\"logsTruncated\": false, \"observedDiscardedBytes\": 0, \"processCleanup\": \"confirmed\", \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"retainedRequestBytes\": 30}",
+        "accounting": {
+          "processCleanup": "confirmed",
+          "retainedRequestBytes": 30,
+          "requestOutputBytes": 1048576,
+          "requestOvershoot": 0,
+          "logsTruncated": false,
+          "observedDiscardedBytes": 0
+        },
+        "handlersRestored": true,
+        "maskRestored": true,
+        "ownerRegistrationRestored": true,
+        "retainedBytesAfterReturn": 30,
+        "openLogDescriptorsAfterReturn": []
+      },
+      "runnerStateAfterHostExit": null,
+      "stdoutLog": "runner-ready\n",
+      "stderrLog": "runner-error-log\n",
+      "controllerReapedRunner": false,
+      "runnerStateAfterControllerCleanup": null,
+      "hostStateAfterControllerCleanup": null,
+      "allControllerChildrenReaped": true
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "exits": {
+    "acceptance-phase.exit": 0,
+    "cpp-phase.exit": 0,
+    "languages-phase.exit": 0,
+    "lean-phase.exit": 1,
+    "local-gates-qualified-phase.exit": 0,
+    "python-final-phase.exit": 0
+  },
+  "finalInstalled": "acceptance-phase.exit",
+  "finalNonModel": "local-gates-qualified-phase.exit",
+  "finalPython": "python-final-phase.exit",
+  "superseded": {
+    "lean-phase.exit": "Lean build/pure gates passed; one Python check found old copied helpers at executable-resolved D share. New D share was refreshed; final focused suite passed."
+  }
+}

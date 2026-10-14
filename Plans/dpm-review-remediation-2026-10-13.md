@@ -1,7 +1,13 @@
 # DPM review remediation plan
 
 Date: 2026-10-13
-Status: design complete; implementation not started.
+Status: completed 2026-10-14 for the declared remote WSL scope.
+
+[Final evidence](dpm-review-remediation-evidence-20261014/README.md) records both
+remote gate exits 0, exact source/runtime/installation identities, independent
+review and preserved superseded diagnostics. All final heavy qualification ran
+on the owned remote WSL host; no fresh model checker, commit, push or production
+change was made.
 
 Two Astra subagents using `gpt-6-astra` with `reasoning_effort: high` developed
 the design. The coordinator independently reproduced all four review findings.
@@ -46,8 +52,8 @@ No local Apalache/TLC, commit or push is included in this plan.
 
 ## Ownership and execution order
 
-Ownership below assigns implementation responsibility; the current turn created
-only this design. Keep one editor for `dpm_host.py`. The evidence specialist may
+Ownership below assigns implementation responsibility. Keep one editor for
+`dpm_host.py`. The evidence specialist may
 develop the new pure codec and dedicated tests concurrently, but host integration
 requires a sequential handoff or application by the host owner.
 

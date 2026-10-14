@@ -1,0 +1,134 @@
+{
+  "excludedRepositories": [
+    "MirrorExamples",
+    "ModelMirrors",
+    "ModelMirros"
+  ],
+  "installationManifestSha256": "81a0bb368f108ea12880ed3f7cec6a253c329390817e2f6e81d0c91c42078ef2",
+  "installedAcceptanceSha256": "ca6c9e7f566b69111ee7c2aeb51575371e9fd0b81c16072dbbd0755b9b9ce42f",
+  "reductions": [
+    {
+      "claim": "minimal_in_admitted_catalog",
+      "language": "cpp",
+      "projectSha256": "f1a15b88f9941b09c8a9501de9adb56c7113f75280df5c260e3194ccb913e58e",
+      "reductionExecutionIds": [
+        "33bab83e419a2e31453b9ed5131d519c",
+        "6d684f2e2481700ace83135b77e86f67",
+        "065aa1d30797535045ecaa14b94ef0e2",
+        "c4a35fd4e144569aa6708e55f028e17a",
+        "8d84b36bafb2692b4a4a2f3a69936842",
+        "6cf84f21b83e733177eba8f94a6a531c",
+        "ba46f746598ed4c3b3a3550be37a85bf",
+        "eff11e215d1d96d6ee2fb975b68d46a4",
+        "bd8f9a87a0f40a06fbd518e4de3c511e",
+        "2513750189fcfc1d39e62e1b27eb9a4d"
+      ],
+      "reductionModelReplays": 10,
+      "smallerCandidates": 7
+    },
+    {
+      "claim": "minimal_in_admitted_catalog",
+      "language": "ecma",
+      "projectSha256": "67f0f0022cd834dfe09e2969cadca0d1dbf34fb276397268beb7f86b2f38854b",
+      "reductionExecutionIds": [
+        "5c7294d82628f5359ab80a16a42b0b8a",
+        "41224c454ac9ebb8e9502025a612e65c",
+        "e3cc4b52e0e1749e541a95ba96d231cf",
+        "53aeb8f108b4c0dad49f6c5bace1d80f",
+        "82be064277471acfd7f3e0cca5a3c871",
+        "496b04a7bc73bbbe69457c4f896c72ce",
+        "711aced7c119257bf631954f4266c7d0",
+        "f2dcc492583a4634e83c65bf0aa3c638",
+        "daaa0c402b6e5ce0fb85e23a7bc6f9f9",
+        "cde47aedae00c281cce8855b6f307517"
+      ],
+      "reductionModelReplays": 10,
+      "smallerCandidates": 7
+    },
+    {
+      "claim": "minimal_in_admitted_catalog",
+      "language": "rust",
+      "projectSha256": "c573376c5ebab1f5a0c100da1308b8f099b35b7da5d32d9b736790f4f0dc76c1",
+      "reductionExecutionIds": [
+        "e5c03753c9c0dee8431b9405427fd949",
+        "8211334633baa70b2da73eef35b882c7",
+        "71f8db358a005ae412d651a3e9bcb391",
+        "8e80d420f1a8ac06375cb001e07a0189",
+        "27e1f571aab1937271e7f2244f51cf28",
+        "48dcd85fe27d433aae3e84e4929c2097",
+        "852923e92e43eb21e2c20f17cf1393c3",
+        "ad30aa0f37220a4fb932b91ec905e6fa",
+        "e0239110e9e6668ec8508d17840f7ad2",
+        "12e3f1fff329d05ad8ac8a5991215747"
+      ],
+      "reductionModelReplays": 10,
+      "smallerCandidates": 7
+    }
+  ],
+  "schema": "mirrors.dpm-f3-f5-acceptance/v1",
+  "scope": {
+    "commitPushDeployment": false,
+    "experimentalSync": "C++ controlled mutex/bounded FIFO only",
+    "freshModelCheck": false,
+    "installedPlatform": "current WSL2 Linux with explicit host runtimes",
+    "newM5Qualification": false,
+    "oracleAuthority": "exact retained October 5 remote captures",
+    "reducer": "explicit-finite-admitted-catalog"
+  },
+  "stages": [
+    {
+      "stage": 1,
+      "status": "accepted"
+    },
+    {
+      "stage": 2,
+      "status": "accepted"
+    },
+    {
+      "stage": 3,
+      "status": "accepted"
+    },
+    {
+      "stage": 4,
+      "status": "accepted"
+    },
+    {
+      "stage": 5,
+      "status": "accepted"
+    },
+    {
+      "stage": 6,
+      "status": "accepted"
+    }
+  ],
+  "status": "passed",
+  "supplementalControlledReceiptRendering": {
+    "environment": "ordinary tool sandbox",
+    "sourceHidden": false,
+    "status": "passed"
+  },
+  "supplementalRuntimeTamper": {
+    "environment": "ordinary tool sandbox",
+    "profiles": 3,
+    "sourceHidden": false,
+    "status": "passed"
+  },
+  "tests": {
+    "cppControlledSyncAssertions": 179,
+    "cppControlledSyncCases": 11,
+    "cppLegacyAssertions": 752,
+    "cppLegacyScheduleCases": 35,
+    "dpmPython": 34,
+    "ecmaSchedulingCases": 23,
+    "installedProfiles": 3,
+    "leanBuildJobs": 722,
+    "localNonModelGates": "passed",
+    "modelCatalogCasesPerProfile": 8,
+    "purePolicyGates": 8,
+    "sdkCasesPerProfile": 40
+  },
+  "unrelatedPreserved": [
+    ".projectile-cache.eld",
+    "MirrorECMA/.work/"
+  ]
+}

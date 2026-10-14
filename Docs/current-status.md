@@ -1,13 +1,19 @@
 # Current framework status and navigation
 
-Documentation synchronized 2026-10-09. Inspected checkout heads: Mirrors `548ba71`,
-MirrorECMA `1e87f3e`, MirrorCPP `25a44b5`, MirrorRust `0f77fdf`, MirrorGate `8afae26` and
-MirrorLean `b8b9491`. These heads identify the inspected source, not new qualification.
-At review start, Mirrors had only an unrelated untracked editor cache; MirrorRust
-also retained an unrelated local `tests/protocol.rs` edit. This synchronization
-adds documentation edits; those checkout observations are not clean-snapshot
-qualification. [Synchronization audit](../Plans/documentation-sync-2026-10-09.md)
-records this documentation review.
+Implementation checked 2026-10-14 against working trees based on Mirrors `6e0cbce`,
+MirrorCPP `75a63db`, MirrorECMA `fe9a648` and MirrorRust `7606173`.
+The corrected F3–F5 changes remain uncommitted and have a separate
+[October 14 review follow-up acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md).
+The [preceding remediation record](../Plans/dpm-review-remediation-evidence-20261014/README.md)
+retains its earlier source/runtime identities.
+The [original October 13 evidence](../Plans/dpm-f3-f5-evidence-20261013/README.md)
+remains historical and unchanged.
+The [review follow-up plan](../Plans/dpm-review-followup-2026-10-14.md) completed
+cancellation ownership, retained C++ evidence admission and empty literal argv
+corrections, plus bounded CTest isolation. New remote installed/non-model gates
+and independent review qualify their declared WSL scope.
+The [October 9 documentation audit](../Plans/documentation-sync-2026-10-09.md)
+remains a historical documentation review, separate from this implementation.
 
 ## Qualified scope and evidence
 
@@ -42,13 +48,23 @@ No local Apalache/TLC runs on this coordinator.
 ## Approved usability features after the frozen candidate
 
 The [generated DPM kit and counterexample timeline](dpm-usability-design.md)
-are implemented and source accepted as the first approved slice. Their compiler/
-tooling changes are newer than the frozen M5 candidate above; no new installed
-package or full current-source qualification is inferred. The approved follow-on
-schedule reducer, installed CLI and synchronization-wrapper profile remain queued
-with explicit exit gates in [the feature plan](../Plans/dpm-usability-features-2026-10-07.md).
-The latest continuation order is F3 schedule reduction, F4 installed cross-language
-CLI, then F5 synchronization-wrapper research; broader M4 stays independent.
+remain source accepted. F3 now supplies a deterministic reducer over an explicit
+finite oracle-backed catalog, with baseline reproduction and fresh best replay.
+F4 supplies the [installed CLI](dpm-cli-guide.md) for C++/Node-worker/Rust-thread
+application runners. F5 supplies a separate experimental C++ controlled mutex/
+bounded FIFO profile; its local execution receipts do not establish model comparison.
+See the [runner contract](dpm-runner-contract.md),
+[feature plan](../Plans/dpm-usability-features-2026-10-07.md) and
+[October 14 follow-up evidence](../Plans/dpm-review-followup-evidence-20261014/README.md)
+for current source/runtime identities, actual gate results and limits. Both remote
+installed acceptance and the full non-model suite passed. Independent review
+confirmed all three fresh profiles and found no remaining confirmed findings in
+its reviewed scope. Current projects use v2 typed commands; receipt/oracle checks,
+retained-output accounting and C++ callback/join deadlines include the review
+corrections. Cancellation preserves ownership through the first cleanup
+instruction and final accounting; C++ admission measures complete retained
+rows and commas; empty literal arguments remain intact. These changes do not extend the frozen M5 candidate or
+qualify a new framework release. Broader M4 stays independent.
 
 ## Separate work and open choices
 

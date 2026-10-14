@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/compile_languages.py", line 45, in <module>
+    run(['cargo','build','--offline','--manifest-path',str(rust/'Cargo.toml')],
+  File "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/compile_languages.py", line 13, in run
+    subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,check=True,**kwargs)
+  File "/usr/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['cargo', 'build', '--offline', '--manifest-path', '/home/jlc/Tools/mirrors-dpm-remediation-20261013/rust/Cargo.toml']' returned non-zero exit status 101.

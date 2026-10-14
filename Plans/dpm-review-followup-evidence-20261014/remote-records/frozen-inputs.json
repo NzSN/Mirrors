@@ -1,0 +1,80 @@
+{
+  "schema": "mirrors.dpm-followup-frozen-inputs/v1",
+  "status": "verified",
+  "sourceRoot": "/home/jlc/Tools/mirrors-dpm-followup-20261014/source",
+  "selectedChanges": [
+    {
+      "repository": "Mirrors",
+      "path": "Codec/Dpm.lean",
+      "sha256": "ceec79e8d1d408b5a3cbaa4710255be3f548e7b88f65e707237e887302631012"
+    },
+    {
+      "repository": "Mirrors",
+      "path": "tools/DpmSpec.lean",
+      "sha256": "e9ed369f47619ee3feefb5a53c8cee5f60e8f42c7c12a15f687574760afa442f"
+    },
+    {
+      "repository": "Mirrors",
+      "path": "Docs/dpm-runner-contract.md",
+      "sha256": "a9dce9f40f6f91af7f8c7664aac591ef064b77f0f26dab4a351fa7a8a5229e82"
+    },
+    {
+      "repository": "MirrorCPP",
+      "path": "src/schedule_sync.cpp",
+      "sha256": "f11a9e02b6c1fcc7d45b55406429d3aee29457e15f608b4adb5901c53d09cb50"
+    },
+    {
+      "repository": "MirrorCPP",
+      "path": "test/unit/schedule_sync_test.cpp",
+      "sha256": "297fe8d588eaea8512339f2caf16f336acbd5931335685637846a32ddf70dbc0"
+    },
+    {
+      "repository": "MirrorCPP",
+      "path": "test/unit/CMakeLists.txt",
+      "sha256": "1869f7083f8fdab79882c9f98f26f8292af4fdfd3cb42d38c492634da3ab9597"
+    },
+    {
+      "repository": "MirrorCPP",
+      "path": "docs/controlled-synchronization.md",
+      "sha256": "06e8fb0de56132deae09d64dae2afb84626a2cf227b67ded95b40a3cc6888510"
+    },
+    {
+      "repository": "Mirrors",
+      "path": "tools/deterministic-scheduling/dpm_host.py",
+      "sha256": "79261eb8bc4d1b4a823bf5324427ef22a549b821cb115c625840bb44da23dea1"
+    },
+    {
+      "repository": "Mirrors",
+      "path": "tools/deterministic-scheduling/cli.py",
+      "sha256": "2ee2d285bfe4dc48e06e13fd09855cb8dde39a06949419f3f1f010f31a5ff26f"
+    },
+    {
+      "repository": "Mirrors",
+      "path": "tools/deterministic-scheduling/tests/test_dpm_host.py",
+      "sha256": "43778c35a29085c22da07f61d46b0f6c01c820c14adf633c24d38438e44fe42e"
+    },
+    {
+      "repository": "Mirrors",
+      "path": "tools/deterministic-scheduling/tests/cancellation_control.py",
+      "sha256": "227bababa2bc5aa1fd8fa99ca9578f2949dea8f063cd56f4b331db85340a36b8"
+    },
+    {
+      "repository": "Mirrors",
+      "path": "Shell/Dpm/HostIdentity.lean",
+      "sha256": "49ab9c56beb6cb72f9f9e1509b2b4e023f184d41505684c655497504d0a66c25"
+    },
+    {
+      "repository": "Mirrors",
+      "path": "tools/deterministic-scheduling/install_cli.py",
+      "sha256": "8d780c7de072bce66deb0425935565f3858268725844a61235b098e658bb3166"
+    },
+    {
+      "repository": "Mirrors",
+      "path": "tools/deterministic-scheduling/check_cli_installed.py",
+      "sha256": "4ecdb762c17f175293e3a90e193e3b6da5eb06f08e6b31cebce391f323aeceda"
+    }
+  ],
+  "baselineCopy": "baseline-copy.json",
+  "identityRefresh": "identity-refresh.json",
+  "sourceMutationsAfterFreezeAllowed": false
+}

@@ -1,0 +1,48 @@
+{
+  "scratch": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/new-review/cancellation-d92ddcc69c5947b0acd487adca725f35",
+  "sourceSha256": {
+    "cli.py": "6ca3f1cafb3a756e3cb24ff666de0f5f3795b9b37ca293a2c821393ad7e5cb52",
+    "dpm_host.py": "250f79d558d2277fe7849fb0b77f91c41b8b2d5d5cdb6618618b97c134e63ff6"
+  },
+  "rows": [
+    {
+      "scenario": "normal",
+      "hostPid": 2003,
+      "pid": 2005,
+      "pgid": 2005,
+      "hostExit": 0,
+      "stdout": "{\"result\": \"returned\"}\n",
+      "stderr": "",
+      "runnerStateAfterHostExit": null,
+      "controllerReapedRunner": false,
+      "runnerStateAfterControllerCleanup": null,
+      "hostStateAfterControllerCleanup": null
+    },
+    {
+      "scenario": "single-cancel",
+      "hostPid": 2007,
+      "pid": 2009,
+      "pgid": 2009,
+      "hostExit": 2,
+      "stdout": "{\"result\": \"refused\", \"exception\": \"ProcessFailure\", \"message\": \"operation cancelled; {\\\"logsTruncated\\\": false, \\\"observedDiscardedBytes\\\": 0, \\\"processCleanup\\\": \\\"confirmed\\\", \\\"requestOutputBytes\\\": 1048576, \\\"requestOvershoot\\\": 0, \\\"retainedRequestBytes\\\": 27}\"}\n",
+      "stderr": "DPM operation refused: operation cancelled; {\"logsTruncated\": false, \"observedDiscardedBytes\": 0, \"processCleanup\": \"confirmed\", \"requestOutputBytes\": 1048576, \"requestOvershoot\": 0, \"retainedRequestBytes\": 27}\n",
+      "runnerStateAfterHostExit": null,
+      "controllerReapedRunner": false,
+      "runnerStateAfterControllerCleanup": null,
+      "hostStateAfterControllerCleanup": null
+    },
+    {
+      "scenario": "double-cancel",
+      "hostPid": 2013,
+      "pid": 2016,
+      "pgid": 2016,
+      "hostExit": 2,
+      "stdout": "{\"result\": \"refused\", \"exception\": \"Refusal\", \"message\": \"operation cancelled\"}\n",
+      "stderr": "DPM operation refused: operation cancelled\n",
+      "runnerStateAfterHostExit": "S",
+      "controllerReapedRunner": true,
+      "runnerStateAfterControllerCleanup": null,
+      "hostStateAfterControllerCleanup": null
+    }
+  ]
+}

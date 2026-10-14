@@ -1,0 +1,62 @@
+{
+  "additionalSetupDiagnostics": "original logs retained; only explicitly passing final phases receive acceptance credit",
+  "exits": {
+    "acceptance-phase.exit": 0,
+    "cpp-phase.exit": 0,
+    "languages-phase.exit": 1,
+    "lean-focus-phase.exit": 0,
+    "lean-phase.exit": 1,
+    "local-gates-complete-phase.exit": 1,
+    "local-gates-final-phase.exit": 1,
+    "local-gates-phase.exit": 1,
+    "local-gates-qualified-phase.exit": 0,
+    "local-gates-retry-phase.exit": 1,
+    "rust-retry-phase.exit": 0
+  },
+  "finalInstalled": "acceptance-phase.exit",
+  "finalNonModel": "local-gates-qualified-phase.exit",
+  "schema": "mirrors.dpm-remediation-phases/v1",
+  "supersededBuildAttempts": {
+    "languages-phase.exit": {
+      "cause": "Rust offline cache lacked locked rustls-pemfile package; completed ECMA tests retained",
+      "exit": 1,
+      "finalExit": 0,
+      "supersededBy": "rust-retry-phase.exit"
+    },
+    "lean-phase.exit": {
+      "causes": [
+        "relocated launcher lacked its adjacent verified host-driver tree",
+        "raw-write regression assumed an interrupted write retained exactly its requested length"
+      ],
+      "exit": 1,
+      "finalExit": 0,
+      "supersededBy": "lean-focus-phase.exit"
+    }
+  },
+  "supersededNonModelAttempts": {
+    "local-gates-complete-phase.exit": {
+      "cause": "missing pinned offline acquisition archive fixture cache",
+      "exit": 1,
+      "finalExit": 0,
+      "supersededBy": "local-gates-qualified-phase.exit"
+    },
+    "local-gates-final-phase.exit": {
+      "cause": "insufficient Linux root space while copying a launcher fixture",
+      "exit": 1,
+      "finalExit": 0,
+      "supersededBy": "local-gates-qualified-phase.exit"
+    },
+    "local-gates-phase.exit": {
+      "cause": "symlink build-root layout incompatible with strict filesystem checks",
+      "exit": 1,
+      "finalExit": 0,
+      "supersededBy": "local-gates-qualified-phase.exit"
+    },
+    "local-gates-retry-phase.exit": {
+      "cause": "missing pinned jsonschema dependency",
+      "exit": 1,
+      "finalExit": 0,
+      "supersededBy": "local-gates-qualified-phase.exit"
+    }
+  }
+}

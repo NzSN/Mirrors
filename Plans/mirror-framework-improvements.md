@@ -11,9 +11,10 @@ published revisions and boundaries. Broader M4 acceptance remains partial;
 later commits never inherit qualification automatically. The earlier October 3
 qualified candidate and October 7 incomplete working-tree candidate are history.
 
-Continuation reviewed 2026-10-09 at Mirrors `548ba71`: F1 generated DPM kits
-and F2 receipt timelines are source accepted. Approved F3 schedule reduction,
-F4 installed CLI and F5 synchronization-wrapper research remain unimplemented;
+Continuation updated 2026-10-13 against base Mirrors `66f9418`: F1 generated DPM kits
+and F2 receipt timelines are source accepted. F3 finite-catalog reduction,
+F4 installed CLI and the F5 C++ controlled mutex/FIFO prototype are implemented
+with separate [October 13 evidence](dpm-f3-f5-evidence-20261013/README.md);
 follow [their feature plan](dpm-usability-features-2026-10-07.md). These newer
 source/tool changes need their own freeze and gates for installed/current-source
 qualification. Broader M4 remains a separate track.

@@ -1,0 +1,148 @@
+TAP version 13
+# Subtest: binding owns fresh generations across initialization and disposes once
+ok 1 - binding owns fresh generations across initialization and disposes once
+  ---
+  duration_ms: 167.846083
+  type: 'test'
+  ...
+# Subtest: incomplete prior execution forbids another SUT acquisition
+ok 2 - incomplete prior execution forbids another SUT acquisition
+  ---
+  duration_ms: 62.70255
+  type: 'test'
+  ...
+# Subtest: disposal failure is stable on repeated calls
+ok 3 - disposal failure is stable on repeated calls
+  ---
+  duration_ms: 64.264778
+  type: 'test'
+  ...
+# Subtest: disposal joins a late factory and reclaims its program without entering workers
+ok 4 - disposal joins a late factory and reclaims its program without entering workers
+  ---
+  duration_ms: 55.068588
+  type: 'test'
+  ...
+# Subtest: cleanup retry updates the retained receipt without converting the failed replay to a pass
+ok 5 - cleanup retry updates the retained receipt without converting the failed replay to a pass
+  ---
+  duration_ms: 345.474716
+  type: 'test'
+  ...
+# Subtest: invalid finite declarations cannot acquire a SUT
+ok 6 - invalid finite declarations cannot acquire a SUT
+  ---
+  duration_ms: 2.677035
+  type: 'test'
+  ...
+# Subtest: evidence must match the exact candidate and use fresh execution identifiers
+ok 7 - evidence must match the exact candidate and use fresh execution identifiers
+  ---
+  duration_ms: 397.604063
+  type: 'test'
+  ...
+# Subtest: unknown cleanup stops another acquisition and a late runner cannot claim time-budget completion
+ok 8 - unknown cleanup stops another acquisition and a late runner cannot claim time-budget completion
+  ---
+  duration_ms: 139.981539
+  type: 'test'
+  ...
+# Subtest: validated model counterexample survives a separate cleanup failure
+ok 9 - validated model counterexample survives a separate cleanup failure
+  ---
+  duration_ms: 71.029545
+  type: 'test'
+  ...
+# Subtest: semantic coverage preserves types and ordinary record keys while normalizing sets and map order
+ok 10 - semantic coverage preserves types and ordinary record keys while normalizing sets and map order
+  ---
+  duration_ms: 2.233644
+  type: 'test'
+  ...
+# Subtest: real workers retain stacks and reproduce serial and overlapping schedules
+ok 11 - real workers retain stacks and reproduce serial and overlapping schedules
+  ---
+  duration_ms: 315.05434
+  type: 'test'
+  ...
+# Subtest: static admission precedes factory and profile mismatch is rejected
+ok 12 - static admission precedes factory and profile mismatch is rejected
+  ---
+  duration_ms: 1.893835
+  type: 'test'
+  ...
+# Subtest: decoder rejects duplicate input keys and unknown fields
+ok 13 - decoder rejects duplicate input keys and unknown fields
+  ---
+  duration_ms: 0.851566
+  type: 'test'
+  ...
+# Subtest: incremental callbacks select one actor and refuse a changed interval
+ok 14 - incremental callbacks select one actor and refuse a changed interval
+  ---
+  duration_ms: 67.956252
+  type: 'test'
+  ...
+# Subtest: actual wrong checkpoint, premature return, worker and observer failures clean up
+ok 15 - actual wrong checkpoint, premature return, worker and observer failures clean up
+  ---
+  duration_ms: 462.693124
+  type: 'test'
+  ...
+# Subtest: cancellation before acquisition and between intervals
+ok 16 - cancellation before acquisition and between intervals
+  ---
+  duration_ms: 78.570849
+  type: 'test'
+  ...
+# Subtest: incomplete cleanup retains an uncooperative worker and allows retry
+ok 17 - incomplete cleanup retains an uncooperative worker and allows retry
+  ---
+  duration_ms: 315.385968
+  type: 'test'
+  ...
+# Subtest: factory reentry rejects nested acquisition
+ok 18 - factory reentry rejects nested acquisition
+  ---
+  duration_ms: 75.643855
+  type: 'test'
+  ...
+# Subtest: identity and interval comparisons ignore JSON member order
+ok 19 - identity and interval comparisons ignore JSON member order
+  ---
+  duration_ms: 72.044793
+  type: 'test'
+  ...
+# Subtest: failed worker construction reclaims created channels and runs teardown
+ok 20 - failed worker construction reclaims created channels and runs teardown
+  ---
+  duration_ms: 1.627915
+  type: 'test'
+  ...
+# Subtest: cancellation cannot release workers while the observer is reading shared state
+ok 21 - cancellation cannot release workers while the observer is reading shared state
+  ---
+  duration_ms: 115.18309
+  type: 'test'
+  ...
+# Subtest: a late hook after callback return cannot be silently credited as completion
+ok 22 - a late hook after callback return cannot be silently credited as completion
+  ---
+  duration_ms: 70.217302
+  type: 'test'
+  ...
+# Subtest: terminal acknowledgement survives delayed private-channel delivery
+ok 23 - terminal acknowledgement survives delayed private-channel delivery
+  ---
+  duration_ms: 86.321788
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3099.568284

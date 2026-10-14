@@ -1,0 +1,29 @@
+{
+  "scenario": "normal",
+  "hostPid": 22647,
+  "pid": 22649,
+  "pgid": 22649,
+  "cleanupSynchronization": {
+    "point": "term-grace-wait",
+    "sourceLine": 266,
+    "time": 1088.521771486
+  },
+  "hostExit": 0,
+  "stdout": "{\"result\": \"returned\", \"handlersRestored\": true, \"maskRestored\": true, \"ownerRegistrationRestored\": true, \"retainedBytesAfterReturn\": 30, \"openLogDescriptorsAfterReturn\": []}\n",
+  "stderr": "",
+  "hostResult": {
+    "result": "returned",
+    "handlersRestored": true,
+    "maskRestored": true,
+    "ownerRegistrationRestored": true,
+    "retainedBytesAfterReturn": 30,
+    "openLogDescriptorsAfterReturn": []
+  },
+  "runnerStateAfterHostExit": null,
+  "stdoutLog": "runner-ready\n",
+  "stderrLog": "runner-error-log\n",
+  "controllerReapedRunner": false,
+  "runnerStateAfterControllerCleanup": null,
+  "hostStateAfterControllerCleanup": null,
+  "allControllerChildrenReaped": true
+}

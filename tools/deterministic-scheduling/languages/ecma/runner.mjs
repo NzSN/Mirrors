@@ -15,11 +15,12 @@ function closureHash(worker){
  const packageDir=dirname(fileURLToPath(import.meta.resolve('mirrorecma'))),files=[];
  const collect=(dir)=>{for(const name of readdirSync(dir).sort()){const p=resolve(dir,name);if(statSync(p).isDirectory())collect(p);else if(name.endsWith('.js'))files.push(['sdk/'+relative(packageDir,p),hash(p)]);}};
  collect(packageDir);
- for(const name of ['runner.mjs','counter-worker.mjs','native-worker.mjs','value-bridge.mjs','generated/counter/ScheduledCounterMirror.generated.js','generated/native/WriteSentryMBTMirror.generated.js'])files.push([name,hash(resolve(here,name))]);
+ for(const name of ['runner.mjs','counter-worker.mjs','spectator-worker.mjs','native-worker.mjs','value-bridge.mjs','generated/counter/ScheduledCounterMirror.generated.js','generated/native/WriteSentryMBTMirror.generated.js'])files.push([name,hash(resolve(here,name))]);
  files.push(['sdk/package.json',hash(resolve(packageDir,'../package.json'))]);files.push(['node',hash(process.execPath)]);if(worker)files.push(['native-worker',hash(worker)]);
  return createHash('sha256').update(JSON.stringify(files)).digest('hex');
 }
 const args=Object.create(null);for(let i=2;i<process.argv.length;i++){const key=process.argv[i];if(!key.startsWith('--')||Object.hasOwn(args,key))throw new Error('invalid/duplicate option');if(key==='--describe'){args[key]=true;continue;}if(++i===process.argv.length)throw new Error('missing option value');args[key]=process.argv[i];}
+const spectator=args['--spectator']==='true';
 const kind=args['--kind']??'counter',mode=args['--mode']??'ok';
 requireValue(['counter','native','explore'].includes(kind),'unknown consumer kind');
 const mapping=read(args['--mapping']);
@@ -47,9 +48,11 @@ if(args['--launcher'])identity.implementationSha256=createHash('sha256').update(
 if(args['--describe']){console.log(JSON.stringify({profile:WORKER_SCHEDULE_PROFILE,identity}));process.exit(0);}
 const stats={acquisitions:0,enteredWorkers:0,teardowns:0},stop=new AbortController();
 const big=n=>({'#bigint':String(n)}),map=values=>({'#map':[['a',big(values[0])],['b',big(values[1])]]});
-function counterAdapter(){return{identity,actors:expectedCounterMapping.actors,checkpoints:['read','write'],factory(inputs){
+function counterAdapter(){return{identity,actors:[...expectedCounterMapping.actors,...(spectator?[{actor:'spectator',operation:'model-inert-initialization'}]:[])],checkpoints:['read','write'],factory(inputs){
  requireValue(inputs&&[0,5].includes(inputs.initial)&&['ok','mutate','teardown-fail','mutate-and-teardown-fail','unexpected-checkpoint','cancel','bad-observation','denied-negotiation','reentrant'].includes(inputs.mode),'invalid counter input');stats.acquisitions++;const buffer=new SharedArrayBuffer(40),state=new Int32Array(buffer);state[0]=inputs.initial;
- return{workers:['a','b'].map((actor,index)=>({actor,module:new URL('./counter-worker.mjs',import.meta.url),data:{buffer,index,mode:inputs.mode==='mutate-and-teardown-fail'?'mutate':inputs.mode==='unexpected-checkpoint'?'unknown':inputs.mode}})),
+ const workers=['a','b'].map((actor,index)=>({actor,module:new URL('./counter-worker.mjs',import.meta.url),data:{buffer,index,mode:inputs.mode==='mutate-and-teardown-fail'?'mutate':inputs.mode==='unexpected-checkpoint'?'unknown':inputs.mode}}));
+ if(spectator)workers.push({actor:'spectator',module:new URL('./spectator-worker.mjs',import.meta.url),data:{buffer}});
+ return{workers,
   observe(){return{count:big(state[0]),saved:map([state[3],state[4]]),phase:map([state[5],state[6]])};},
   teardown(){stats.enteredWorkers+=state[1];stats.teardowns++;if(['teardown-fail','mutate-and-teardown-fail'].includes(inputs.mode))throw new Error('deliberate teardown failure');}
  };
@@ -83,7 +86,7 @@ if(kind==='native'){const expected=[];for(const step of mapping.modelSteps){expe
 const session=new ScheduleBindingSession(schedule,kind==='native'?nativeAdapter():counterAdapter(),{executionTimeoutMs:kind==='native'?240_000:5_000,cleanupTimeoutMs:kind==='native'?15_000:2_000},stop.signal);
 let nativeIndex=0,currentBinding;
 const publicPort={async invoke(operation,inputs,context){
- if(operation==='Initialize'){nativeIndex=0;await session.initialize();return;}
+ if(operation==='Initialize'){nativeIndex=0;await session.initialize();if(spectator)await session.advance({actor:'spectator',checkpoint:'$done'});return;}
  if(kind==='native'){
   const next=mapping.modelSteps[nativeIndex];requireValue(next,'extra native operation');const parameters=Object.fromEntries(Object.entries(inputs).map(([k,v])=>[k[0].toLowerCase()+k.slice(1),typeof v==='bigint'?Number(v):v]));requireValue(operation===parameters.action&&isDeepStrictEqual(parameters,next.parameters),'generated native input differs from mapping');
   if(mode==='cancel'&&nativeIndex===1)stop.abort();await session.advance({actor:next.role,checkpoint:operation});if(operation==='CallDone')await session.advance({actor:next.role,checkpoint:'$done'});nativeIndex++;

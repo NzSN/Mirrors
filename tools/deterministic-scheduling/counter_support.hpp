@@ -22,12 +22,13 @@ inline json mapping(const std::array<int, 2>& values) {
   return {{"#map", json::array({json::array({"a", big(values[0])}), json::array({"b", big(values[1])})})}};
 }
 inline sc::Adapter adapter(sc::Identity identity, const std::shared_ptr<Stats>& stats,
-                    const std::shared_ptr<std::stop_source>& stop) {
+                    const std::shared_ptr<std::stop_source>& stop, bool spectator = false) {
   sc::Adapter value;
   value.identity = std::move(identity);
   value.actors = {{"a", "increment-a"}, {"b", "increment-b"}};
+  if (spectator) value.actors.push_back({"spectator", "model-inert-initialization"});
   value.checkpoints = {"read", "write"};
-  value.factory = [stats, stop](const json& inputs) {
+  value.factory = [stats, stop, spectator](const json& inputs) {
     const auto initial = inputs.at("initial").get<int>();
     if (initial != 0 && initial != 5) throw std::invalid_argument("unsupported initial fixture input");
     const auto mode = inputs.at("mode").get<std::string>();
@@ -48,6 +49,7 @@ inline sc::Adapter adapter(sc::Identity identity, const std::shared_ptr<Stats>& 
         state->phase[index] = 3;
       }});
     }
+    if (spectator) program.workers.push_back({"spectator", [stats](sc::Checkpoint&) { ++stats->entered; }});
     program.observe = [state, mode, stop] {
       if (mode == "cancel" && state->phase[0] == 1) stop->request_stop();
       json observed = {{"count", big(state->count)}, {"saved", mapping(state->saved)}, {"phase", mapping(state->phase)}};
@@ -64,9 +66,9 @@ inline sc::Adapter adapter(sc::Identity identity, const std::shared_ptr<Stats>& 
 }
 class Port final : public generated::ScheduledCounterPort {
  public:
-  explicit Port(std::shared_ptr<sc::BindingSession> session, std::string mode)
-      : session_(std::move(session)), mode_(std::move(mode)) {}
-  void initialize() override { session_->initialize(); }
+  explicit Port(std::shared_ptr<sc::BindingSession> session, std::string mode, bool spectator = false)
+      : session_(std::move(session)), mode_(std::move(mode)), spectator_(spectator) {}
+  void initialize() override { session_->initialize(); if (spectator_) session_->advance({"spectator", "$done"}); }
   void read(const generated::ReadInput& input) override {
     if (mode_ == "reentrant") {
       try { reenter("read", mirrorcpp::decode_state(json{{"parameters", {{"actor", input.actor}}}}), {}); }
@@ -89,6 +91,7 @@ class Port final : public generated::ScheduledCounterPort {
  private:
   std::shared_ptr<sc::BindingSession> session_;
   std::string mode_;
+  bool spectator_;
 };
 
 }  // namespace dpm_counter

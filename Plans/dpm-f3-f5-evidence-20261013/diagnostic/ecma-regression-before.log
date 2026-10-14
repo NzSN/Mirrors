@@ -1,0 +1,33 @@
+TAP version 13
+# Subtest: terminal acknowledgement survives delayed private-channel delivery
+not ok 1 - terminal acknowledgement survives delayed private-channel delivery
+  ---
+  duration_ms: 81.270612
+  type: 'test'
+  location: '/tmp/mirrors-dpm-ecma-regression/test/schedule/schedule.test.mjs:82:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/mirrors-dpm-ecma-regression/test/schedule/schedule.test.mjs:89:39)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 208.901006

@@ -1,0 +1,10 @@
+{
+   "filesystems": [
+      {
+         "target": "/home/jlc/Tools/mirrors-dpm-remediation-20261013/tmp-tests-ext4",
+         "source": "/dev/loop0",
+         "fstype": "ext4",
+         "options": "rw,relatime"
+      }
+   ]
+}

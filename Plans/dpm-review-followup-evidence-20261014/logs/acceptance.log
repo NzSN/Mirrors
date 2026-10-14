@@ -1,0 +1,259 @@
+{
+  "buildPrerequisites": {
+    "cmake": "/home/jlc/Tools/mirrors-dpm-remediation-toolchain-20261013/cmake-python/cmake/data/bin/cmake",
+    "cxx": "/usr/bin/x86_64-linux-gnu-g++-12"
+  },
+  "freshModelCheck": false,
+  "hiddenSourceRoots": [
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/MirrorCPP",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/MirrorECMA",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/MirrorRust"
+  ],
+  "installedInventoryUnchanged": true,
+  "networkNamespaceIsolated": true,
+  "profiles": [
+    {
+      "baselineCost": [
+        3,
+        1,
+        4,
+        7
+      ],
+      "bestCost": [
+        2,
+        0,
+        0,
+        6
+      ],
+      "bestReplay": "confirmed",
+      "catalogModelReplayCases": 8,
+      "controls": [
+        "tampered_mapping",
+        "tampered_runtime",
+        "unsupported_profile",
+        "tampered_oracle",
+        "bounded_search",
+        "cleanup_failure",
+        "isolated_host_import",
+        "isolated_app_import",
+        "request_output_overflow",
+        "aggregate_output_overflow",
+        "launcher_policy_argument_refused"
+      ],
+      "freshConsumerBuilt": true,
+      "freshModelCheck": false,
+      "freshReceiptMutants": [
+        {
+          "control": "original_truncated_cancelled_match",
+          "reason": "observation index or state malformed",
+          "status": "refused"
+        },
+        {
+          "control": "wrong_event_ordinal",
+          "reason": "event/permit/arrival differs from actual scheduled interval",
+          "status": "refused"
+        },
+        {
+          "control": "boolean_observation_index",
+          "reason": "observation index or state malformed",
+          "status": "refused"
+        },
+        {
+          "control": "boolean_integer_state_conflation",
+          "reason": "observed execution differs from admitted oracle",
+          "status": "refused"
+        },
+        {
+          "control": "missing_cleanup_evidence",
+          "reason": "cleanup attempts missing",
+          "status": "refused"
+        },
+        {
+          "control": "terminal_observation_disagreement",
+          "reason": "terminal/client/oracle/observation states differ",
+          "status": "refused"
+        },
+        {
+          "control": "empty_complete_exploration",
+          "reason": "known exploration denominator differs from lower bound",
+          "status": "refused"
+        },
+        {
+          "control": "missing_complete_exploration_run",
+          "reason": "known exploration denominator differs from lower bound",
+          "status": "refused"
+        }
+      ],
+      "language": "cpp",
+      "networkNamespaceIsolated": true,
+      "projectSha256": "1a95312afc2927a3ad98e670df010ced317e8f3d59dfb0bfa2b3fc959861c568",
+      "sdkFiniteCases": 40,
+      "sourceHidden": true,
+      "status": "passed"
+    },
+    {
+      "baselineCost": [
+        3,
+        1,
+        4,
+        7
+      ],
+      "bestCost": [
+        2,
+        0,
+        0,
+        6
+      ],
+      "bestReplay": "confirmed",
+      "catalogModelReplayCases": 8,
+      "controls": [
+        "tampered_mapping",
+        "tampered_runtime",
+        "unsupported_profile",
+        "tampered_oracle",
+        "bounded_search",
+        "cleanup_failure",
+        "isolated_host_import",
+        "isolated_app_import",
+        "request_output_overflow",
+        "aggregate_output_overflow",
+        "launcher_policy_argument_refused"
+      ],
+      "freshConsumerBuilt": true,
+      "freshModelCheck": false,
+      "freshReceiptMutants": [
+        {
+          "control": "original_truncated_cancelled_match",
+          "reason": "observation index or state malformed",
+          "status": "refused"
+        },
+        {
+          "control": "wrong_event_ordinal",
+          "reason": "event/permit/arrival differs from actual scheduled interval",
+          "status": "refused"
+        },
+        {
+          "control": "boolean_observation_index",
+          "reason": "observation index or state malformed",
+          "status": "refused"
+        },
+        {
+          "control": "boolean_integer_state_conflation",
+          "reason": "observed execution differs from admitted oracle",
+          "status": "refused"
+        },
+        {
+          "control": "missing_cleanup_evidence",
+          "reason": "cleanup attempts missing",
+          "status": "refused"
+        },
+        {
+          "control": "terminal_observation_disagreement",
+          "reason": "terminal/client/oracle/observation states differ",
+          "status": "refused"
+        },
+        {
+          "control": "empty_complete_exploration",
+          "reason": "known exploration denominator differs from lower bound",
+          "status": "refused"
+        },
+        {
+          "control": "missing_complete_exploration_run",
+          "reason": "known exploration denominator differs from lower bound",
+          "status": "refused"
+        }
+      ],
+      "language": "ecma",
+      "networkNamespaceIsolated": true,
+      "projectSha256": "1c41c1b82e8d712bef05f92f98778eb6c3b3c0cd264804a9a98c140721004183",
+      "sdkFiniteCases": 40,
+      "sourceHidden": true,
+      "status": "passed"
+    },
+    {
+      "baselineCost": [
+        3,
+        1,
+        4,
+        7
+      ],
+      "bestCost": [
+        2,
+        0,
+        0,
+        6
+      ],
+      "bestReplay": "confirmed",
+      "catalogModelReplayCases": 8,
+      "controls": [
+        "tampered_mapping",
+        "tampered_runtime",
+        "unsupported_profile",
+        "tampered_oracle",
+        "bounded_search",
+        "cleanup_failure",
+        "isolated_host_import",
+        "isolated_app_import",
+        "request_output_overflow",
+        "aggregate_output_overflow",
+        "launcher_policy_argument_refused"
+      ],
+      "freshConsumerBuilt": true,
+      "freshModelCheck": false,
+      "freshReceiptMutants": [
+        {
+          "control": "original_truncated_cancelled_match",
+          "reason": "observation index or state malformed",
+          "status": "refused"
+        },
+        {
+          "control": "wrong_event_ordinal",
+          "reason": "event/permit/arrival differs from actual scheduled interval",
+          "status": "refused"
+        },
+        {
+          "control": "boolean_observation_index",
+          "reason": "observation index or state malformed",
+          "status": "refused"
+        },
+        {
+          "control": "boolean_integer_state_conflation",
+          "reason": "observed execution differs from admitted oracle",
+          "status": "refused"
+        },
+        {
+          "control": "missing_cleanup_evidence",
+          "reason": "cleanup attempts missing",
+          "status": "refused"
+        },
+        {
+          "control": "terminal_observation_disagreement",
+          "reason": "terminal/client/oracle/observation states differ",
+          "status": "refused"
+        },
+        {
+          "control": "empty_complete_exploration",
+          "reason": "known exploration denominator differs from lower bound",
+          "status": "refused"
+        },
+        {
+          "control": "missing_complete_exploration_run",
+          "reason": "known exploration denominator differs from lower bound",
+          "status": "refused"
+        }
+      ],
+      "language": "rust",
+      "networkNamespaceIsolated": true,
+      "projectSha256": "4a7081fffa8c9dcb968b3b519aad89a1acc5f4b888866faa3f07a80c12fbeacd",
+      "sdkFiniteCases": 40,
+      "sourceHidden": true,
+      "status": "passed"
+    }
+  ],
+  "schema": "mirrors.dpm-cli-installed-acceptance/v1",
+  "sourceHidden": true,
+  "status": "passed",
+  "syncPrimitiveSample": "passed",
+  "syncReturningCallbackOverrun": "refused"
+}

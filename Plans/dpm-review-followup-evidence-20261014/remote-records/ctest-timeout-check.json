@@ -1,0 +1,464 @@
+{
+  "status": "passed",
+  "tests": [
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "controlled mutex holder remains enabled while contender blocks"
+      ],
+      "name": "controlled mutex holder remains enabled while contender blocks",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "fixed replay refuses a disabled actor without running the owner"
+      ],
+      "name": "fixed replay refuses a disabled actor without running the owner",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "bounded queue parks full senders and preserves actual FIFO"
+      ],
+      "name": "bounded queue parks full senders and preserves actual FIFO",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "declared resource wait cycle is deadlock and retains cleanup"
+      ],
+      "name": "declared resource wait cycle is deadlock and retains cleanup",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "resource misuse and malformed declarations refuse"
+      ],
+      "name": "resource misuse and malformed declarations refuse",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "fresh prefix exploration closes a small enabled state space"
+      ],
+      "name": "fresh prefix exploration closes a small enabled state space",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "timeout is distinct from controlled deadlock and cleanup can retry"
+      ],
+      "name": "timeout is distinct from controlled deadlock and cleanup can retry",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "teardown failure and evidence exhaustion never pass"
+      ],
+      "name": "teardown failure and evidence exhaustion never pass",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "actual early-release mutation exposes overlapping logical critical sections"
+      ],
+      "name": "actual early-release mutation exposes overlapping logical critical sections",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "queue duplicate and reorder application mutations violate independent FIFO specification"
+      ],
+      "name": "queue duplicate and reorder application mutations violate independent FIFO specification",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "early cancellation joins initial workers without entering the application"
+      ],
+      "name": "early cancellation joins initial workers without entering the application",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "late controlled factory starts no workers and retains one teardown"
+      ],
+      "name": "late controlled factory starts no workers and retains one teardown",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "initial intermediate and final controlled observers cannot return late and pass"
+      ],
+      "name": "initial intermediate and final controlled observers cannot return late and pass",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "callback exceptions retain primary attribution when they also return late"
+      ],
+      "name": "callback exceptions retain primary attribution when they also return late",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "late teardown confirms physical cleanup once but never restores pass"
+      ],
+      "name": "late teardown confirms physical cleanup once but never restores pass",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "execution timing ends after final observation independently of cleanup"
+      ],
+      "name": "execution timing ends after final observation independently of cleanup",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "late cleanup preserves primary resource failure and original graph"
+      ],
+      "name": "late cleanup preserves primary resource failure and original graph",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "cancelled worker TLS join consumes cleanup budget and teardown retries once"
+      ],
+      "name": "cancelled worker TLS join consumes cleanup budget and teardown retries once",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "each completion observation includes actual thread exit effects"
+      ],
+      "name": "each completion observation includes actual thread exit effects",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "late completion TLS join cannot retain an observation or pass"
+      ],
+      "name": "late completion TLS join cannot retain an observation or pass",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "review final observer and teardown overrun reproduction cannot pass"
+      ],
+      "name": "review final observer and teardown overrun reproduction cannot pass",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "exploration last prefix observer and cleanup obey the total deadline"
+      ],
+      "name": "exploration last prefix observer and cleanup obey the total deadline",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "exploration retains outer factory errors and factory deadline attempts"
+      ],
+      "name": "exploration retains outer factory errors and factory deadline attempts",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "exploration cleanup failure retains the failed row and retryable execution"
+      ],
+      "name": "exploration cleanup failure retains the failed row and retryable execution",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "exploration retains teardown failures and bounded omission metadata"
+      ],
+      "name": "exploration retains teardown failures and bounded omission metadata",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "final observation admission measures its complete row at the exact byte limit"
+      ],
+      "name": "final observation admission measures its complete row at the exact byte limit",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit/mirrorcpp_schedule_sync_test",
+        "event admission charges the separator in a nonempty array"
+      ],
+      "name": "event admission charges the separator in a nonempty array",
+      "properties": [
+        {
+          "name": "TIMEOUT",
+          "value": 30.0
+        },
+        {
+          "name": "WORKING_DIRECTORY",
+          "value": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/test/unit"
+        }
+      ]
+    }
+  ]
+}

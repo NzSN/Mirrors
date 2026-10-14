@@ -1,0 +1,21 @@
+{
+  "schema": "mirrors.dpm-followup-setup/v1",
+  "status": "preflight_passed",
+  "host": "windows-dev / Ubuntu WSL",
+  "sourceRoot": "/home/jlc/Tools/mirrors-dpm-followup-20261014/source",
+  "installationRoot": "/home/jlc/Tools/mirrors-dpm-followup-20261014/installed-final",
+  "buildRoot": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014",
+  "image": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/followup.ext4",
+  "imageBytes": 12884901888,
+  "ownedPhaseMaximumNativeBuildJobs": 2,
+  "fullSuiteCargoBuildJobs": 2,
+  "installedGateRustBuildParallelism": "The unchanged installed gate uses a sanitized environment that omits CARGO_BUILD_JOBS, so the fresh Rust build used Cargo default parallelism. It completed in 15.81 seconds with ample remote RAM and no overlap with other native builds. CPP gate uses -j2. This exception receives no two-job bound claim.",
+  "localBuildsOrTests": false,
+  "oldQualificationInputsMutated": false,
+  "setupDiagnostics": [
+    "Root-mode mount setup completed; subsequent elan probe refused because root has no configured toolchain. Repeated tool probing as jlc passed.",
+    "New D output and empty ext4 source/tmp subdirectories initially had root ownership. Corrected only these new task-owned paths to jlc.",
+    "WSL idle shutdown removed the new loop mount between calls. A bounded two-hour host session runs mount-keeper.sh to retain mount visibility; build user confirms ext4."
+  ],
+  "recovery": "If WSL restarts, run mount-keeper.sh as root before using source/install directories. Reuse the existing image; do not reformat it. All source/install bytes reside in that image."
+}

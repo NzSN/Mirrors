@@ -5,6 +5,132 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-14 — DPM review follow-up fixes accepted on remote WSL
+
+The [fix plan](Plans/dpm-review-followup-2026-10-14.md) and
+[tasks](Plans/dpm-review-followup-tasks-2026-10-14.md) completed against working
+trees based on Mirrors 6e0cbce, MirrorCPP 75a63db, MirrorECMA fe9a648 and
+MirrorRust 7606173. [New acceptance evidence](Plans/dpm-review-followup-evidence-20261014/README.md)
+binds the corrected sources and fresh installation. Earlier checkpoint entries
+and both previous October acceptance dossiers retain their original bytes.
+
+Cooperative cancellation registers ownership before acquisition and preserves
+it through the first cleanup instruction, termination/reaping, stream closure
+and final accounting. Repeated signals cannot bypass cleanup; the primary
+failure retains precedence. Seven function/handler controls and separate
+public single/repeated cancellation controls confirm owned-runner absence.
+C++ event/observation admission measures fully wrapped rows and commas before
+retention. Exact-limit/one-byte-over regressions pass; the original 1,024-byte
+reproducer now refuses with 420 retained bytes and confirmed cleanup. Empty
+literal argv entries are admitted and delivered intact; path/NUL/UTF-8 bounds
+remain. All 27 synchronization CTest cases have TIMEOUT 30.
+
+All heavy validation ran on windows-dev Ubuntu WSL. Lean 727 targets, 25 pure
+policy gates, 11 typed-evidence gates, 65 Python tests, C++ scheduling/binding/
+exploration 35 cases/752 assertions, synchronization 27 cases/362 assertions,
+ECMA 23 tests and Rust offline consumer/vendoring passed. Fresh three-profile
+installed acceptance and the full non-model suite exited 0. The selected
+installation manifest is aa12b8377ee829558d8b872bb2ae793505e471cb21a22599a094fe54501351f8;
+all 5,265 files/hash/modes verify and its inventory remains unchanged.
+
+Independent review verified 36 implementation-file parity, 24 supplied-trace
+catalog matches, 120 local SDK schedules, 24 malformed-receipt refusals and
+30 unique cleaned reduction executions, with no remaining confirmed finding
+in the corrected scope. Each reduction retains its two baselines, seven
+smaller trials and fresh best replay. The public empty-argv control proves
+actual invocation and intentional missing-response refusal, not model match.
+Stale copied helpers and incomplete first curation remain superseded diagnostics.
+
+The new source/install namespace uses an owned 12-GiB ext4 image on D:; its
+mount recovery workflow preserves the image after WSL shutdown. Earlier remote
+source/install trees remain unchanged. No local builds/tests, fresh model
+checking, new M5/native-platform qualification, production change, commit or
+push occurred. Live tiers remain explicitly skipped. F5 modelComparison stays
+false; broader M4, hard quotas and uninterruptible-wait termination stay separate.
+
+## 2026-10-14 — DPM review remediation accepted on remote WSL
+
+The [approved remediation plan](Plans/dpm-review-remediation-2026-10-13.md)
+completed R1–R5 against working trees based on Mirrors 6e0cbce, MirrorCPP
+75a63db, MirrorECMA fe9a648 and MirrorRust 7606173. The
+[new evidence record](Plans/dpm-review-remediation-evidence-20261014/README.md)
+binds exact source/runtime/installation identities and all final raw gates.
+Original October 13 evidence and earlier checkpoint entries remain unchanged.
+
+Corrected behavior includes v2 typed commands and isolated verified Python
+loading, launcher-owned pure policy, complete retained-output accounting,
+profile-aware execution/typed oracle validation, SDK denominator consistency,
+model-action aliases and initial-mismatch compatibility. C++ controlled-resource
+deadlines cover returning callbacks and actual joins; late cleanup stays
+non-passing while preserving physical cleanup and the primary failure.
+
+At the user's request, all final heavy qualification ran on the owned remote
+Windows/Ubuntu WSL host. Installed acceptance and the full non-model gate both
+exited 0. The three fresh source-hidden, network-isolated consumers each passed
+match/mismatch, eight catalog comparisons, 40 SDK schedules, 11 control families
+and eight fresh receipt mutants. Their reductions each confirmed two baselines,
+seven smaller trials and a fresh best replay, reducing [3,1,4,7] to [2,0,0,6].
+The selected installation manifest is
+829f09ddef80a5db433f3580160092b80e0134e55032c8263ad14f087f341285;
+independent review verified 5,265 installed files and found no remaining confirmed
+findings in its reviewed scope.
+
+Validation includes Lean 727 targets, 16 pure policy gates, 11 typed evidence
+gates, 58 DPM Python tests, C++ scheduling 35 cases/752 assertions, controlled
+synchronization 25 cases/331 assertions, ECMA 23 tests and Rust offline/fresh
+consumer gates. The full suite includes 39 distribution, 142 durable-evidence
+and 63 offline TLA differential tests; four live reference tests and the live
+Apalache/Counter/async tiers stay explicitly skipped. Environment/cache/layout
+failures are preserved as superseded diagnostics, not passes.
+
+The independent audit confirms 24 catalog matches, 120 local SDK runs, 30 fresh
+reduction executions and 24 malformed-receipt refusals. The separate installed
+controlled-resource overrun reports timed_out/passed=false with both budget
+flags true and cleanup confirmed; modelComparison remains false. There was no
+fresh model check, new M5/native-platform qualification, production deployment,
+commit or push. Broader M4 and hard OS resource confinement remain separate.
+
+## 2026-10-13 — F3 reducer, F4 installed CLI and F5 C++ prototype accepted
+
+The user authorized all six execution stages. The working changes start from
+Mirrors 66f9418, MirrorCPP 75a63db, MirrorECMA fe9a648 and MirrorRust 7606173.
+[Implementation and evidence](Plans/dpm-f3-f5-evidence-20261013/README.md)
+records exact source/installation identities, commands, receipts and limitations.
+The changes remain uncommitted; no push, publication, service change or fresh
+model check ran. MirrorExamples and ModelMirrors remain excluded.
+
+F3 validates whole actor-local chains and deterministically searches a finite
+oracle-backed catalog. C++, Node and Rust actually reduce cost [3,1,4,7] to
+[2,0,0,6] with the same write/count delta-1 failure, two baseline reproductions,
+seven smaller trials and fresh confirmed best replay. Minimality is confined to
+the admitted catalog. F4 installs an artifact/runtime-bound CLI with doctor,
+replay, exploration, reduction and receipt reporting. All three fresh consumers
+rebuilt with checkouts hidden and Linux networking isolated; each passed actual
+match/mismatch, eight model-backed catalog cases, 40 SDK local finite cases,
+report, tamper, bounded-search and cleanup controls. The selected install
+manifest is 81a0bb368f108ea12880ed3f7cec6a253c329390817e2f6e81d0c91c42078ef2.
+
+F5 is a separate C++ controlled nonrecursive mutex/bounded FIFO prototype on
+real threads, with explicit enabledness, retained deadlock graph, fresh prefix
+exploration and joins. Eleven cases/179 assertions and an installed public API
+sample pass; resource receipts explicitly have modelComparison false.
+The installed ECMA gate exposed a private-channel completion/exit race.
+MirrorECMA now acknowledges completion before unreferencing that channel;
+the real-exit/late-hook behavior and the new delayed-delivery regression pass.
+
+Validation: full Lean build (722 jobs), eight pure gates, 34 DPM Python tests,
+all local non-model gates, 35 legacy C++ scheduling cases/752 assertions and
+23 ECMA scheduling cases passed. Live Counter/async model tiers were explicitly
+skipped. Exact October 5 remote captures were reused and provenance checked;
+no local Apalache/TLC started. C++ unit tests used Debug with warnings as errors;
+a pre-existing GCC optimized fixture warning blocked the initial Release unit
+build, while the fresh installed C++ consumers compiled in Release.
+
+This acceptance is separate from frozen M5 C0 94271a54… and does not qualify a
+new framework release or native Ubuntu/Windows/macOS platform. Broader M4 and
+Node/Rust controlled-resource wrappers remain separate. Historical evidence and
+unrelated editor caches/ECMA .work/ remain preserved.
+
 ## 2026-10-09 — Maintained documentation synchronized to current source
 
 The user requested synchronization of outdated documentation. The review starts

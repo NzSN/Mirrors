@@ -1,0 +1,236 @@
+{
+  "auditPython": "3.10.12",
+  "buildRoot": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014",
+  "cancellationControlsSha256": "3f4e1c24dfdba19645a9fc5cbd3809893bd71b19acdd6eb3ae693da45add77d4",
+  "cancellationScenariosVerified": [
+    "cleanup-entry-repeated",
+    "cleanup-entry-timeout-first",
+    "finalization-first",
+    "normal",
+    "repeated",
+    "single",
+    "timeout-first"
+  ],
+  "cppSynchronizationAssertions": 362,
+  "cppSynchronizationCases": 27,
+  "ctestTimeoutSeconds": 30,
+  "executionHost": "DESKTOP-6DKB5JD",
+  "freshModelCheck": false,
+  "frozenInputsSha256": "b77a6d6b5ba95069fd9ba5f34f759cfd8b2a0cce69dfec3e50cc4b6cee2b2000",
+  "gateRoot": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/installed-gate-final",
+  "hiddenSourceRoots": [
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/MirrorCPP",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/MirrorECMA",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/MirrorRust",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors"
+  ],
+  "historicalPhaseDisposition": {
+    "lean-phase.exit": "Lean build and pure gates passed; stale relocated helper setup diagnostic superseded by python-final-phase.exit"
+  },
+  "hostPins": {
+    "cli.py": "2ee2d285bfe4dc48e06e13fd09855cb8dde39a06949419f3f1f010f31a5ff26f",
+    "dpm_host.py": "79261eb8bc4d1b4a823bf5324427ef22a549b821cb115c625840bb44da23dea1",
+    "timeline.py": "7de0734db5aef34e841761a4bd3ebd85349ff906d4f39f2e4e5560fdbf1daa44"
+  },
+  "installationManifestSha256": "aa12b8377ee829558d8b872bb2ae793505e471cb21a22599a094fe54501351f8",
+  "installedFilesVerified": 5265,
+  "installedOverrun": {
+    "budgetExceeded": {
+      "cleanup": true,
+      "execution": true
+    },
+    "cleanup": "confirmed",
+    "modelComparison": false,
+    "outcome": "timed_out",
+    "passed": false
+  },
+  "installedRoot": "/home/jlc/Tools/mirrors-dpm-followup-20261014/installed-final",
+  "interpreter": "/usr/bin/python3.10",
+  "interpreterSha256": "a2f33a6e006989270f4340528eb61f8f97366e00a5d1b602ac8672ea44fc56ae",
+  "launcherSha256": "f2612250953dc67fe0de43b0d5c40b0b53bf715234c6cf3f748c2758a8b37c94",
+  "limits": [
+    "No fresh model or platform qualification",
+    "F5 is C++ only; no model comparison",
+    "Output accounting is not a hard disk quota",
+    "Returning callback checks do not provide hard in-process interruption",
+    "Declared trusted platform and stable non-detaching runner prerequisites remain"
+  ],
+  "localBuildsOrTestsRunByReviewer": false,
+  "networkNamespaceIsolated": true,
+  "phaseExits": {
+    "acceptance-phase.exit": "0",
+    "cpp-phase.exit": "0",
+    "languages-phase.exit": "0",
+    "lean-phase.exit": "1",
+    "local-gates-qualified-phase.exit": "0",
+    "python-final-phase.exit": "0"
+  },
+  "profiles": [
+    {
+      "catalogMatches": 8,
+      "controls": [
+        "aggregate_output_overflow",
+        "bounded_search",
+        "cleanup_failure",
+        "isolated_app_import",
+        "isolated_host_import",
+        "launcher_policy_argument_refused",
+        "request_output_overflow",
+        "tampered_mapping",
+        "tampered_oracle",
+        "tampered_runtime",
+        "unsupported_profile"
+      ],
+      "freshReceiptMutantsRefused": 8,
+      "language": "cpp",
+      "localSdkRuns": 40,
+      "projectSha256": "1a95312afc2927a3ad98e670df010ced317e8f3d59dfb0bfa2b3fc959861c568",
+      "reductionExecutionIds": [
+        "f0ff34ee8260a3668564bb00eb6e8514",
+        "4ead1936d735b27c43978b6ed2f578e4",
+        "7ef96ebf6a573f481419deeb3d19b088",
+        "52687f842abb8144ba5b7eb5e71d17c5",
+        "e0f312a871679168acdd34210ec55441",
+        "3df2af154882f82f87a69df74d556aeb",
+        "2256dde8e81ec23e2d65b010a3cbd72e",
+        "c06e5ef72ab8a901f9398f593dc1d982",
+        "3aa066be6df27760392928218e7ab0f2",
+        "a3b605c88f4c89d996505d1c92ea0de1"
+      ]
+    },
+    {
+      "catalogMatches": 8,
+      "controls": [
+        "aggregate_output_overflow",
+        "bounded_search",
+        "cleanup_failure",
+        "isolated_app_import",
+        "isolated_host_import",
+        "launcher_policy_argument_refused",
+        "request_output_overflow",
+        "tampered_mapping",
+        "tampered_oracle",
+        "tampered_runtime",
+        "unsupported_profile"
+      ],
+      "freshReceiptMutantsRefused": 8,
+      "language": "ecma",
+      "localSdkRuns": 40,
+      "projectSha256": "1c41c1b82e8d712bef05f92f98778eb6c3b3c0cd264804a9a98c140721004183",
+      "reductionExecutionIds": [
+        "50285cf40236438a0eac8a2a0d97434d",
+        "d47bd04c8a75a1271bb6e012eb0b15c1",
+        "ff86fc6da33887f0b4ab33cd5797bb30",
+        "fb119a8e579bb260825cd82522401a61",
+        "33f9e401730ca929ac5199c9d7ef0955",
+        "863cfb047f4b564a5b13bc6be60edc1d",
+        "cd4cf46ad0cb5261cc8ed1f46c8105dd",
+        "f74092673118e1bbd8e8ddf0abc886f2",
+        "94d9f7baf99734fece6e83f43c116f08",
+        "9420eeac2231febc91c9ab715ee28a38"
+      ]
+    },
+    {
+      "catalogMatches": 8,
+      "controls": [
+        "aggregate_output_overflow",
+        "bounded_search",
+        "cleanup_failure",
+        "isolated_app_import",
+        "isolated_host_import",
+        "launcher_policy_argument_refused",
+        "request_output_overflow",
+        "tampered_mapping",
+        "tampered_oracle",
+        "tampered_runtime",
+        "unsupported_profile"
+      ],
+      "freshReceiptMutantsRefused": 8,
+      "language": "rust",
+      "localSdkRuns": 40,
+      "projectSha256": "4a7081fffa8c9dcb968b3b519aad89a1acc5f4b888866faa3f07a80c12fbeacd",
+      "reductionExecutionIds": [
+        "41ddce1f2a46caa0366bc71c19e3a1ef",
+        "63620d96481c87d19170c3d3ad155c8f",
+        "ee5c15a02cd96b6f8f46aaf93c15f303",
+        "a6a026db8324e840f7559ead04187a07",
+        "a83a86b0bc526685b8b73f8da4174ccc",
+        "a5f822ef6ae76d9a656688b76fe94b61",
+        "ce9bdb8ccd1c47fa3ebc821f20b189e7",
+        "cb8e0b4847818904741281176019ca3e",
+        "f27dd5ce14eadb15266eac24852cfb98",
+        "a0551626f85c5bdb14f7019a91ad5fc8"
+      ]
+    }
+  ],
+  "publicControlsSha256": "4f724cf2eafdf4f3799c26ccdd46aaba5853441897827fd36007d6b2ed1b9c5e",
+  "purePolicyGates": 25,
+  "pythonRegressionTests": 65,
+  "remoteLogHashes": {
+    "acceptance.log": "28bfa8cf3268d2dc8503eae461826169d7745e9fc56f395f998822dd56b08ebc",
+    "cpp-build.log": "f9caa5aee5ec1b8dae908a2622bfbf494c8c58714e34baad5c3cd395643854fc",
+    "cpp-configure.log": "d8bfd32329db752bd4c82dc8a192b52ed7cc8c4f63052244f0140adcf8e2bf90",
+    "cpp-consumer-build.log": "cf6dd5f274e168fd87e548f7ead08a5936c667dbeac4bcae260a70f638972685",
+    "cpp-consumer-configure.log": "9433ea6691de9c7459abfde93da79366bab9d9ddcae6791b6523c8b8faf73743",
+    "cpp-install.log": "08670876f84071893fd19d6c669273b4a19bc285342775f1969d5e3e5e49a367",
+    "dpm-evidence-spec.log": "71735b2d4ddc48db9f09168fc215d39317fa29813d60d64782dab6f75f33205e",
+    "dpm-python-final.log": "a641bc693eded268f8570cb3b46914f99357902b8a8b80a2e7a6e1eab75cb53a",
+    "dpm-python.log": "71ec7e9f27a15ae017a4cbd832a9578ca12bd8e67f33b0bfbb180ba859c3ac6b",
+    "dpm-spec.log": "1cd7596129d22c373174bfc55527bbc119ce9fb0b2a08355802b77c7967f379e",
+    "ecma-binding-tests.log": "5bc619ce314467185548a8311c3961290d07fce4bb8a8de8393b135656bf73ee",
+    "ecma-consumer-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ecma-exploration-tests.log": "2719ac6712d18378a1c3c65e643e07e866b9bae0b923fc7e17b0110618d40e37",
+    "ecma-schedule-tests.log": "bafed380971414e428ad8df834500659e984deeb1d632fd28bb321cf55e864d1",
+    "ecma-sdk-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed-cpp-evidence-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "install-final.log": "ee75955e95fd15739efc7b9d15c3af66038ab9e8019dbb0dd769f3d47956b691",
+    "installation-manifest.log": "dd0c80fd336b2accec67310a89f83548c6195749ec6253ac0ac1188bf0b6fce3",
+    "lean-build.log": "9b494d21f85eeaca7a3086124b83ca9cfa85566dc267c14a4e66f7faca388a03",
+    "local-no-model-check-qualified.log": "ce18b2e56cac447edc900ec217317063b0efc9166b76ee424e56de05b9670b81",
+    "mirrorcpp_schedule_binding_test.log": "a42b6dcac27583eeaa7e2f0811dc0a7cf0ffa4cab680364626e6bd2a6468968c",
+    "mirrorcpp_schedule_exploration_test.log": "6282e5c3b2801d6bfcb7a0870e9896776c28c3d18e32600807a214a38418bd53",
+    "mirrorcpp_schedule_sync_test.log": "3b522ef85b45b194f9c0429467beff270f8f6081cf5ad9912578dfdfae4757bf",
+    "mirrorcpp_schedule_test.log": "232218863ef79e687705d877fceb8f36145d58f615fe8937ed8d343e8ecd321d",
+    "prepare-final.log": "4103c0f819e371551b867b81471a36b1c9b6bd6abf4ea4573c1a949fc66a7cf3",
+    "rust-consumer-build.log": "0a9160f31145497ec44df9c230315d244904558598e6044d650c67b3f694789a",
+    "rust-vendor.log": "d6280ddd38f41a60edb04d9f3520b608eaa47ff7958fd9d9618e2895aefb1508"
+  },
+  "repositoryOrGateMutationsByAudit": false,
+  "reviewedSourceHashes": {
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/MirrorCPP/include/mirrorcpp/schedule_sync.hpp": "86be9c086a8dc1f5579ad1445cb5f666a3a1d4ca8cdba11a22c679b612f086dc",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/MirrorCPP/src/schedule_sync.cpp": "f11a9e02b6c1fcc7d45b55406429d3aee29457e15f608b4adb5901c53d09cb50",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/MirrorCPP/test/unit/CMakeLists.txt": "1869f7083f8fdab79882c9f98f26f8292af4fdfd3cb42d38c492634da3ab9597",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/MirrorCPP/test/unit/schedule_sync_test.cpp": "297fe8d588eaea8512339f2caf16f336acbd5931335685637846a32ddf70dbc0",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors/Codec/Dpm.lean": "ceec79e8d1d408b5a3cbaa4710255be3f548e7b88f65e707237e887302631012",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors/Codec/DpmEvidence.lean": "61c38dbe9110068516075ca0a429f31d0896d4978e2b2fb0c94f342c8c951df1",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors/Shell/Dpm/Cli.lean": "5e11ea335ce12ad10c4935435234293d5158941969483951dc9883417d7753c4",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors/Shell/Dpm/HostIdentity.lean": "49ab9c56beb6cb72f9f9e1509b2b4e023f184d41505684c655497504d0a66c25",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors/tools/DpmSpec.lean": "e9ed369f47619ee3feefb5a53c8cee5f60e8f42c7c12a15f687574760afa442f",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors/tools/deterministic-scheduling/apps/counter_runner.py": "3cc8de3858338fcc8cb01098d1bf98b7026f63abf14312b453cbb85f526138ac",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors/tools/deterministic-scheduling/check_cli_installed.py": "4ecdb762c17f175293e3a90e193e3b6da5eb06f08e6b31cebce391f323aeceda",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors/tools/deterministic-scheduling/cli.py": "2ee2d285bfe4dc48e06e13fd09855cb8dde39a06949419f3f1f010f31a5ff26f",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors/tools/deterministic-scheduling/dpm_host.py": "79261eb8bc4d1b4a823bf5324427ef22a549b821cb115c625840bb44da23dea1",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors/tools/deterministic-scheduling/tests/cancellation_control.py": "227bababa2bc5aa1fd8fa99ca9578f2949dea8f063cd56f4b331db85340a36b8",
+    "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors/tools/deterministic-scheduling/tests/test_dpm_host.py": "43778c35a29085c22da07f61d46b0f6c01c820c14adf633c24d38438e44fe42e"
+  },
+  "schema": "mirrors.dpm-independent-followup-review/v1",
+  "scope": [
+    "Scoped cooperative cancellation including cleanup entry and repeated signals",
+    "Fully wrapped observation/event rows and separator byte admission",
+    "Empty literal argv admission with path and UTF-8 bounds",
+    "Thirty-second synchronization CTest timeout",
+    "Final remote installation identities and actual acceptance artifacts"
+  ],
+  "selectedFinalAcceptancePhase": "acceptance-phase.exit",
+  "selectedFinalLocalLog": "local-no-model-check-qualified.log",
+  "selectedFinalLocalPhase": "local-gates-qualified-phase.exit",
+  "sourceHidden": true,
+  "sourceRoot": "/home/jlc/Tools/mirrors-dpm-followup-20261014/source",
+  "status": "no_remaining_confirmed_findings_in_reviewed_scope",
+  "totals": {
+    "catalogMatches": 24,
+    "freshReceiptMutantsRefused": 24,
+    "localSdkRuns": 120,
+    "reductionExecutions": 30
+  }
+}

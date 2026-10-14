@@ -1,0 +1,332 @@
+{
+  "committed": false,
+  "controlledResourceOverrun": {
+    "budgetExceeded": {
+      "cleanup": true,
+      "execution": true
+    },
+    "cleanup": "confirmed",
+    "modelComparison": false,
+    "outcome": "timed_out",
+    "passed": false
+  },
+  "date": "2026-10-14",
+  "excluded": [
+    "fresh model checking",
+    "new M5/framework release qualification",
+    "native Ubuntu/Windows/macOS qualification",
+    "broader M4 aggregate confinement and restart recovery",
+    "publication/deployment",
+    "commit/push"
+  ],
+  "executionHost": "windows-dev Ubuntu 22.04 WSL2",
+  "finalPhases": {
+    "acceptance-phase.exit": 0,
+    "local-gates-qualified-phase.exit": 0
+  },
+  "freshModelCheck": false,
+  "independentReview": {
+    "path": "independent-review.json",
+    "sha256": "170cb453ebc00ab4b114ed39279d7fb24ab18102eeca9bf45f4bcfade79a7ea2",
+    "status": "no_remaining_confirmed_findings_in_reviewed_scope"
+  },
+  "installationManifestSha256": "829f09ddef80a5db433f3580160092b80e0134e55032c8263ad14f087f341285",
+  "installedFilesVerified": 5265,
+  "installedInventoryUnchanged": true,
+  "limits": [
+    "output polling is admission/accounting rather than a hard disk or memory quota",
+    "uninterruptible callbacks and joins may return late; late completion cannot pass",
+    "OS Python standard library, extension modules and loader remain trusted runtime prerequisites",
+    "non-detaching runners and stable admitted artifacts are required"
+  ],
+  "localQualificationBuildsOrTests": false,
+  "networkNamespaceIsolated": true,
+  "plan": "../dpm-review-remediation-2026-10-13.md",
+  "profiles": [
+    {
+      "baselineCost": [
+        3,
+        1,
+        4,
+        7
+      ],
+      "bestCost": [
+        2,
+        0,
+        0,
+        6
+      ],
+      "bestReplay": "confirmed",
+      "catalogModelReplayCases": 8,
+      "controls": [
+        "tampered_mapping",
+        "tampered_runtime",
+        "unsupported_profile",
+        "tampered_oracle",
+        "bounded_search",
+        "cleanup_failure",
+        "isolated_host_import",
+        "isolated_app_import",
+        "request_output_overflow",
+        "aggregate_output_overflow",
+        "launcher_policy_argument_refused"
+      ],
+      "freshConsumerBuilt": true,
+      "freshModelCheck": false,
+      "freshReceiptMutants": [
+        {
+          "control": "original_truncated_cancelled_match",
+          "reason": "observation index or state malformed",
+          "status": "refused"
+        },
+        {
+          "control": "wrong_event_ordinal",
+          "reason": "event/permit/arrival differs from actual scheduled interval",
+          "status": "refused"
+        },
+        {
+          "control": "boolean_observation_index",
+          "reason": "observation index or state malformed",
+          "status": "refused"
+        },
+        {
+          "control": "boolean_integer_state_conflation",
+          "reason": "observed execution differs from admitted oracle",
+          "status": "refused"
+        },
+        {
+          "control": "missing_cleanup_evidence",
+          "reason": "cleanup attempts missing",
+          "status": "refused"
+        },
+        {
+          "control": "terminal_observation_disagreement",
+          "reason": "terminal/client/oracle/observation states differ",
+          "status": "refused"
+        },
+        {
+          "control": "empty_complete_exploration",
+          "reason": "known exploration denominator differs from lower bound",
+          "status": "refused"
+        },
+        {
+          "control": "missing_complete_exploration_run",
+          "reason": "known exploration denominator differs from lower bound",
+          "status": "refused"
+        }
+      ],
+      "language": "cpp",
+      "networkNamespaceIsolated": true,
+      "projectSha256": "09dfdd3c68deefe3983aab5cc949f48ab4a6fdb558a6471c1cac2a057b25e515",
+      "sdkFiniteCases": 40,
+      "sourceHidden": true,
+      "status": "passed"
+    },
+    {
+      "baselineCost": [
+        3,
+        1,
+        4,
+        7
+      ],
+      "bestCost": [
+        2,
+        0,
+        0,
+        6
+      ],
+      "bestReplay": "confirmed",
+      "catalogModelReplayCases": 8,
+      "controls": [
+        "tampered_mapping",
+        "tampered_runtime",
+        "unsupported_profile",
+        "tampered_oracle",
+        "bounded_search",
+        "cleanup_failure",
+        "isolated_host_import",
+        "isolated_app_import",
+        "request_output_overflow",
+        "aggregate_output_overflow",
+        "launcher_policy_argument_refused"
+      ],
+      "freshConsumerBuilt": true,
+      "freshModelCheck": false,
+      "freshReceiptMutants": [
+        {
+          "control": "original_truncated_cancelled_match",
+          "reason": "observation index or state malformed",
+          "status": "refused"
+        },
+        {
+          "control": "wrong_event_ordinal",
+          "reason": "event/permit/arrival differs from actual scheduled interval",
+          "status": "refused"
+        },
+        {
+          "control": "boolean_observation_index",
+          "reason": "observation index or state malformed",
+          "status": "refused"
+        },
+        {
+          "control": "boolean_integer_state_conflation",
+          "reason": "observed execution differs from admitted oracle",
+          "status": "refused"
+        },
+        {
+          "control": "missing_cleanup_evidence",
+          "reason": "cleanup attempts missing",
+          "status": "refused"
+        },
+        {
+          "control": "terminal_observation_disagreement",
+          "reason": "terminal/client/oracle/observation states differ",
+          "status": "refused"
+        },
+        {
+          "control": "empty_complete_exploration",
+          "reason": "known exploration denominator differs from lower bound",
+          "status": "refused"
+        },
+        {
+          "control": "missing_complete_exploration_run",
+          "reason": "known exploration denominator differs from lower bound",
+          "status": "refused"
+        }
+      ],
+      "language": "ecma",
+      "networkNamespaceIsolated": true,
+      "projectSha256": "3f4454a2297cee0108f7eb2e5f5e4e7d4df49d87cbfaced4da12f04d819706a8",
+      "sdkFiniteCases": 40,
+      "sourceHidden": true,
+      "status": "passed"
+    },
+    {
+      "baselineCost": [
+        3,
+        1,
+        4,
+        7
+      ],
+      "bestCost": [
+        2,
+        0,
+        0,
+        6
+      ],
+      "bestReplay": "confirmed",
+      "catalogModelReplayCases": 8,
+      "controls": [
+        "tampered_mapping",
+        "tampered_runtime",
+        "unsupported_profile",
+        "tampered_oracle",
+        "bounded_search",
+        "cleanup_failure",
+        "isolated_host_import",
+        "isolated_app_import",
+        "request_output_overflow",
+        "aggregate_output_overflow",
+        "launcher_policy_argument_refused"
+      ],
+      "freshConsumerBuilt": true,
+      "freshModelCheck": false,
+      "freshReceiptMutants": [
+        {
+          "control": "original_truncated_cancelled_match",
+          "reason": "observation index or state malformed",
+          "status": "refused"
+        },
+        {
+          "control": "wrong_event_ordinal",
+          "reason": "event/permit/arrival differs from actual scheduled interval",
+          "status": "refused"
+        },
+        {
+          "control": "boolean_observation_index",
+          "reason": "observation index or state malformed",
+          "status": "refused"
+        },
+        {
+          "control": "boolean_integer_state_conflation",
+          "reason": "observed execution differs from admitted oracle",
+          "status": "refused"
+        },
+        {
+          "control": "missing_cleanup_evidence",
+          "reason": "cleanup attempts missing",
+          "status": "refused"
+        },
+        {
+          "control": "terminal_observation_disagreement",
+          "reason": "terminal/client/oracle/observation states differ",
+          "status": "refused"
+        },
+        {
+          "control": "empty_complete_exploration",
+          "reason": "known exploration denominator differs from lower bound",
+          "status": "refused"
+        },
+        {
+          "control": "missing_complete_exploration_run",
+          "reason": "known exploration denominator differs from lower bound",
+          "status": "refused"
+        }
+      ],
+      "language": "rust",
+      "networkNamespaceIsolated": true,
+      "projectSha256": "8c50704f3cd00e4f6fbde5b007b674055c93f2bf572f49f288546c75245847f2",
+      "sdkFiniteCases": 40,
+      "sourceHidden": true,
+      "status": "passed"
+    }
+  ],
+  "pushed": false,
+  "remoteBinaryIdentities": 200,
+  "schema": "mirrors.dpm-remediation-acceptance/v1",
+  "selectedWorkingDocumentationFiles": 16,
+  "selectedWorkingImplementationFiles": 35,
+  "sourceFilesVerified": 5270,
+  "sourceHidden": true,
+  "stages": {
+    "R0": "original findings documented and reproduced before remediation; original frozen evidence preserved",
+    "R1": "isolated Python/admitted commands/output accounting passed focused and fresh installed controls",
+    "R2": "shared execution/typed oracle validation passed focused and fresh installed controls",
+    "R3": "returning callbacks/actual joins/cleanup deadlines passed C++ suites and installed overrun control",
+    "R4": "remote-runtime identities refreshed; new manifest staged and atomically activated on Linux ext4",
+    "R5": "fresh source-hidden offline three-profile acceptance, full non-model gate and independent review passed"
+  },
+  "status": "accepted_in_declared_scope",
+  "supersededAttempts": "phase-results.json and logs retain all failed setup/cache/layout attempts without pass credit",
+  "totals": {
+    "catalogMatches": 24,
+    "freshReceiptMutantsRefused": 24,
+    "localSdkRuns": 120,
+    "reductionExecutions": 30
+  },
+  "validation": {
+    "cppControlledSynchronization": {
+      "assertions": 331,
+      "cases": 25
+    },
+    "cppScheduling": {
+      "assertions": 752,
+      "cases": 35
+    },
+    "distributionContractTests": 39,
+    "dpmPythonTests": 58,
+    "durableEvidenceTests": 142,
+    "ecmaSchedulingTests": 23,
+    "fullNonModelGate": "passed",
+    "leanBuildTargets": 727,
+    "purePolicyGates": 16,
+    "rustGeneratedBindingTests": 7,
+    "rustOfflineConsumerBuild": "passed",
+    "tlaDifferentialOffline": {
+      "skippedLiveReferences": 4,
+      "status": "passed",
+      "tests": 63
+    },
+    "typedEvidenceGates": 11
+  }
+}

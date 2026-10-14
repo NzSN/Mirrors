@@ -1,0 +1,16 @@
+uid=1000(jlc) gid=1000(jlc) groups=1000(jlc),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev),116(netdev),119(libvirt),1001(docker)
+Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)
+rustc 1.96.0 (ac68faa20 2026-05-25)
+a2f33a6e006989270f4340528eb61f8f97366e00a5d1b602ac8672ea44fc56ae  /usr/bin/python3.10
+bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12  /home/jlc/Tools/mirrors-dpm-remediation-toolchain-20261013/node/bin/node
+{
+   "filesystems": [
+      {
+         "target": "/home/jlc/Tools/mirrors-dpm-followup-20261014",
+         "source": "/dev/loop0",
+         "fstype": "ext4",
+         "options": "rw,relatime"
+      }
+   ]
+}
+FOLLOWUP_PREFLIGHT_PASSED

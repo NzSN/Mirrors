@@ -1,0 +1,393 @@
+{
+  "schema": "mirrors.dpm-timeline/v1",
+  "sourceSha256": "11f0a20c339fd2bca10ad4de43345c3e5a000bc6e8387b8c88d42ab6c2d86bda",
+  "inputSchema": "mirrors.scheduled-comparison/v1",
+  "comparison": "step_mismatch",
+  "passed": false,
+  "sourcePassed": false,
+  "receiptComplete": true,
+  "peerTerminal": "step_mismatch",
+  "clientFailure": {
+    "kind": "step_mismatch",
+    "message": "conformance failure at action 'write': count: value mismatch (expected {\"#bigint\":\"6\"}, got {\"#bigint\":\"7\"})",
+    "orderedHints": [
+      "count: value mismatch (expected {\"#bigint\":\"6\"}, got {\"#bigint\":\"7\"})"
+    ],
+    "status": "failed"
+  },
+  "mismatch": {
+    "expected": {
+      "count": {
+        "#bigint": "6"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "2"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "1"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "5"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "5"
+            }
+          ]
+        ]
+      }
+    },
+    "actual": {
+      "count": {
+        "#bigint": "7"
+      },
+      "phase": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "2"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "1"
+            }
+          ]
+        ]
+      },
+      "saved": {
+        "#map": [
+          [
+            "a",
+            {
+              "#bigint": "5"
+            }
+          ],
+          [
+            "b",
+            {
+              "#bigint": "5"
+            }
+          ]
+        ]
+      }
+    },
+    "orderedHints": [
+      "count: value mismatch (expected {\"#bigint\":\"6\"}, got {\"#bigint\":\"7\"})"
+    ],
+    "location": {
+      "execution": 0,
+      "afterSteps": 4,
+      "basis": "unique matching actual observation in final execution; model action may remain unknown"
+    }
+  },
+  "executions": [
+    {
+      "ordinal": 0,
+      "executionId": "c5942914d3d6a8f93b4e161a6d27cece",
+      "generation": 1,
+      "identity": {
+        "implementationSha256": "febab48efa6b17a0c81996300821f28bca8404db2c0d56ccb0a9919c4b8b7eb9",
+        "mappingSha256": "4e22d31a352d11573187b2b674e0514924a8f56da6ef8d014f9fc52bad34b880",
+        "modelSemanticDigest": "d54bd0b831cdfffd1b42ec41e0cd9c71e4ad9374dce7719932a67120faeff3da"
+      },
+      "profile": "mirrorcpp.cooperative-checkpoints/v1",
+      "outcome": "completed",
+      "detail": "",
+      "scheduleCompleted": false,
+      "cleanup": "confirmed",
+      "remainingActors": [],
+      "rows": [
+        {
+          "afterSteps": 0,
+          "actor": null,
+          "expectedCheckpoint": "$start",
+          "actualCheckpoint": "$start",
+          "permit": false,
+          "observation": {
+            "count": {
+              "#bigint": "5"
+            },
+            "phase": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "0"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            },
+            "saved": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "0"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            }
+          },
+          "observationRetained": true,
+          "comparison": "unknown",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 1,
+          "actor": "spectator",
+          "expectedCheckpoint": "$done",
+          "actualCheckpoint": "$done",
+          "permit": true,
+          "observation": {
+            "count": {
+              "#bigint": "5"
+            },
+            "phase": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "0"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            },
+            "saved": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "0"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            }
+          },
+          "observationRetained": true,
+          "comparison": "unknown",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 2,
+          "actor": "a",
+          "expectedCheckpoint": "read",
+          "actualCheckpoint": "read",
+          "permit": true,
+          "observation": {
+            "count": {
+              "#bigint": "5"
+            },
+            "phase": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "1"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            },
+            "saved": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "5"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "0"
+                  }
+                ]
+              ]
+            }
+          },
+          "observationRetained": true,
+          "comparison": "unknown",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 3,
+          "actor": "b",
+          "expectedCheckpoint": "read",
+          "actualCheckpoint": "read",
+          "permit": true,
+          "observation": {
+            "count": {
+              "#bigint": "5"
+            },
+            "phase": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "1"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "1"
+                  }
+                ]
+              ]
+            },
+            "saved": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "5"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "5"
+                  }
+                ]
+              ]
+            }
+          },
+          "observationRetained": true,
+          "comparison": "unknown",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 4,
+          "actor": "a",
+          "expectedCheckpoint": "write",
+          "actualCheckpoint": "write",
+          "permit": true,
+          "observation": {
+            "count": {
+              "#bigint": "7"
+            },
+            "phase": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "2"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "1"
+                  }
+                ]
+              ]
+            },
+            "saved": {
+              "#map": [
+                [
+                  "a",
+                  {
+                    "#bigint": "5"
+                  }
+                ],
+                [
+                  "b",
+                  {
+                    "#bigint": "5"
+                  }
+                ]
+              ]
+            }
+          },
+          "observationRetained": true,
+          "comparison": "step_mismatch",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 5,
+          "actor": "b",
+          "expectedCheckpoint": "write",
+          "actualCheckpoint": null,
+          "permit": false,
+          "observation": null,
+          "observationRetained": false,
+          "comparison": "unknown",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 6,
+          "actor": "a",
+          "expectedCheckpoint": "$done",
+          "actualCheckpoint": null,
+          "permit": false,
+          "observation": null,
+          "observationRetained": false,
+          "comparison": "unknown",
+          "modelAction": null
+        },
+        {
+          "afterSteps": 7,
+          "actor": "b",
+          "expectedCheckpoint": "$done",
+          "actualCheckpoint": null,
+          "permit": false,
+          "observation": null,
+          "observationRetained": false,
+          "comparison": "unknown",
+          "modelAction": null
+        }
+      ],
+      "receiptPassed": false
+    }
+  ],
+  "kitMetadataSha256": null,
+  "scope": "read-only diagnostic correlation; no fresh replay or model qualification"
+}

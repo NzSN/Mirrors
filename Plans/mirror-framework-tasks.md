@@ -7,7 +7,7 @@ Source: [improvement roadmap](mirror-framework-improvements.md)
 Original scope (2026-09-21): develop and assign implementation tasks; implementation
 was queued at that planning checkpoint.
 
-Current status (2026-10-09): the selected `m5-wsl-windows-remote/v1` profile is
+Current status (2026-10-13): the selected `m5-wsl-windows-remote/v1` profile is
 qualified for published-revision C0
 `94271a543085118e47c7fd540ee8d34d3f427fa5f45fedaeba0c852534f4f34a`.
 See [current readiness](q3-published-roadmap-2026-10-07.md) for the exact installed
@@ -15,6 +15,9 @@ runs, independent Q2 verification and limits, and [milestone status](mirror-fram
 for the remaining broader M4 scope. Later commits and documentation changes
 do not inherit that qualification. The assignments and checkpoints below are
 historical; their queued or blocked labels are not the current backlog.
+The approved F3–F5 DPM continuation is implemented with separate
+[October 13 acceptance](dpm-f3-f5-evidence-20261013/README.md); broader M4 remains
+a separate track.
 
 Execution started on 2026-09-22 at the user's request. See
 [execution decisions and active ownership](execution-decisions.md). B1/C1/I1,

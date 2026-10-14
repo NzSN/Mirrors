@@ -201,19 +201,12 @@ struct CounterState {
     saved: [i64; 2],
     phase: [i64; 2],
 }
-fn counter_adapter(identity: sc::Identity, stats: Arc<Stats>) -> sc::Adapter {
+fn counter_adapter(identity: sc::Identity, stats: Arc<Stats>, spectator: bool) -> sc::Adapter {
+    let mut actors = vec![sc::ActorDeclaration { actor: "a".into(), operation: "increment-a".into() }, sc::ActorDeclaration { actor: "b".into(), operation: "increment-b".into() }];
+    if spectator { actors.push(sc::ActorDeclaration { actor: "spectator".into(), operation: "model-inert-initialization".into() }); }
     sc::Adapter {
         identity,
-        actors: vec![
-            sc::ActorDeclaration {
-                actor: "a".into(),
-                operation: "increment-a".into(),
-            },
-            sc::ActorDeclaration {
-                actor: "b".into(),
-                operation: "increment-b".into(),
-            },
-        ],
+        actors,
         checkpoints: vec!["read".into(), "write".into()],
         factory: Arc::new(move |input| {
             let initial = input["initial"].as_i64().ok_or("invalid initial input")?;
@@ -280,6 +273,7 @@ fn counter_adapter(identity: sc::Identity, stats: Arc<Stats>) -> sc::Adapter {
                     }),
                 });
             }
+            if spectator { let stats = stats.clone(); workers.push(sc::Worker { actor: "spectator".into(), execute: Box::new(move |_| { stats.entered.fetch_add(1, Ordering::SeqCst); Ok(()) }) }); }
             let observe = state.clone();
             let stats = stats.clone();
             Ok(sc::Program {
@@ -468,10 +462,13 @@ struct CounterPort {
     session: Rc<RefCell<BindingSession>>,
     cancel: sc::Cancellation,
     mode: String,
+    spectator: bool,
 }
 impl counter::ScheduledCounterPort for CounterPort {
     fn initialize(&mut self) -> Result<(), BindingError> {
-        self.session.borrow_mut().initialize()
+        self.session.borrow_mut().initialize()?;
+        if self.spectator { self.session.borrow_mut().advance(&sc::Step::new("spectator", "$done"))?; }
+        Ok(())
     }
     fn read(&mut self, p: counter::ReadInput) -> Result<(), BindingError> {
         if self.mode == "reentrant" {
@@ -749,7 +746,7 @@ fn run() -> Result<Json, String> {
             instrumentation_variables: vec![],
         };
         let mut base = ex::local_exploration_runner(
-            counter_adapter(identity, counts.clone()),
+            counter_adapter(identity, counts.clone(), false),
             sc::Policy::default(),
         );
         let trigger = cancel.clone();
@@ -794,6 +791,7 @@ fn run() -> Result<Json, String> {
             "native schedule correspondence differs",
         )?;
     }
+    let fixture_spectator = schedule.inputs["spectator"] == true;
     let fixture_mode = schedule.inputs["mode"].as_str().unwrap_or("ok").to_owned();
     let mut native_context = NativeContext::default();
     native_context.exit_code = -1;
@@ -815,7 +813,7 @@ fn run() -> Result<Json, String> {
             context.clone(),
         )
     } else {
-        counter_adapter(identity.clone(), counts.clone())
+        counter_adapter(identity.clone(), counts.clone(), schedule.inputs["spectator"] == true)
     };
     let session = Rc::new(RefCell::new(BindingSession::new(
         schedule,
@@ -892,6 +890,7 @@ fn run() -> Result<Json, String> {
                         session: owner.clone(),
                         cancel: cancellation.clone(),
                         mode: counter_mode.clone(),
+                        spectator: fixture_spectator,
                     },
                     authority.effective_config(),
                 )?

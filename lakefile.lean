@@ -157,6 +157,18 @@ lean_exe model_interface_gen where
 lean_exe model_interface_reduction where
   root := `tools.ModelInterfaceReduction
 
+@[default_target]
+lean_exe mirrors_dpm where
+  root := `tools.MirrorsDpm
+
+@[default_target]
+lean_exe dpm_spec where
+  root := `tools.DpmSpec
+
+@[default_target]
+lean_exe dpm_evidence_spec where
+  root := `tools.DpmEvidenceSpec
+
 /-- Strict framework capability catalog validator and deterministic renderer. -/
 @[default_target]
 lean_exe framework_catalog where
@@ -434,7 +446,7 @@ script test do
   if dpmUsability.exitCode != 0 then
     IO.eprintln dpmUsability.stderr
     return dpmUsability.exitCode
-  for executable in #["model_interface_language_spec", "model_interface_lean_spec",
+  for executable in #["dpm_spec", "dpm_evidence_spec", "model_interface_language_spec", "model_interface_lean_spec",
       "model_interface_workflow_spec", "model_interface_workflow_cli_spec",
       "model_interface_workflow_provenance_spec", "model_interface_corpus_spec",
       "model_interface_migration_spec"] do

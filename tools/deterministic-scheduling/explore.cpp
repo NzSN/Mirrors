@@ -36,8 +36,10 @@ int main(int argc, char** argv) {
     std::size_t preemptions = 64;
     std::string mode = "ok";
     bool require_comparison = false;
+    bool describe = false;
     for (int i = 1; i < argc; ++i) {
       const std::string key = argv[i];
+      if (key == "--describe") { describe = true; continue; }
       if (key == "--require-comparison") { require_comparison = true; continue; }
       if (++i == argc) throw std::invalid_argument("missing argument value");
       const std::string value = argv[i];
@@ -50,12 +52,20 @@ int main(int argc, char** argv) {
       else if (key == "--mode") mode = value;
       else throw std::invalid_argument("unknown option");
     }
-    if (output.empty() || (mode != "ok" && mode != "teardown-fail" && mode != "cancel" && mode != "unexpected-checkpoint"))
-      throw std::invalid_argument("invalid exploration invocation");
+    if (describe && argc != 2) throw std::invalid_argument("describe takes no other arguments");
     std::ifstream executable(fs::canonical(argv[0]), std::ios::binary);
     if (!executable) throw std::runtime_error("cannot hash explorer executable");
     std::istringstream mapping(dpm_counter::expected_mapping().dump());
     sc::Identity identity{std::string(mirrors_generated::scheduledCounter::ScheduledCounterSemanticDigest), hash(mapping), hash(executable)};
+    if (describe) {
+      std::cout << json{{"profile", sc::profile}, {"identity", {
+        {"modelSemanticDigest", identity.model_semantic_digest},
+        {"mappingSha256", identity.mapping_sha256},
+        {"implementationSha256", identity.implementation_sha256}}}}.dump() << '\n';
+      return 0;
+    }
+    if (output.empty() || (mode != "ok" && mode != "teardown-fail" && mode != "cancel" && mode != "unexpected-checkpoint"))
+      throw std::invalid_argument("invalid exploration invocation");
     sc::FiniteSpace space;
     space.identity = identity;
     space.actors = {{{"a", "increment-a"}, {"read", "write", "$done"}},

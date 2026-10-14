@@ -1,0 +1,25 @@
+-- The CXX compiler identification is GNU 12.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/g++-12 - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- mirrorcpp: nlohmann_json not found, fetching v3.11.3 into build tree
+-- Using the multi-header code from /home/jlc/Tools/mirrors-dpm-followup-20261014/prerequisites/cpp-dependencies/nlohmann_json-src/include/
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found suitable version "3.0.2", minimum required is "3.0")  
+-- mirrorcpp: system Boost.Multiprecision not found; fetching boostorg headers (boost-1.85.0)
+-- mirrorcpp: Catch2 v3 not found, fetching v3.5.0 into build tree
+-- Performing Test HAVE_FLAG__ffile_prefix_map__home_jlc_Tools_mirrors_dpm_followup_20261014_prerequisites_cpp_dependencies_catch2_src__
+-- Performing Test HAVE_FLAG__ffile_prefix_map__home_jlc_Tools_mirrors_dpm_followup_20261014_prerequisites_cpp_dependencies_catch2_src__ - Success
+-- Configuring done (1.0s)
+-- Generating done (1.0s)
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    CMAKE_C_COMPILER
+
+
+-- Build files have been written to: /mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp

@@ -1,0 +1,78 @@
+test_first_cancellation_at_timeout_cleanup_entry_preserves_timeout (test_dpm_host.CancellationOwnershipTests) ... ok
+test_first_cancellation_during_normal_finalization_refuses_after_cleanup (test_dpm_host.CancellationOwnershipTests) ... ok
+test_first_cancellation_during_timeout_cleanup_preserves_timeout (test_dpm_host.CancellationOwnershipTests) ... ok
+test_normal_execution_reaps_and_restores_signal_state (test_dpm_host.CancellationOwnershipTests) ... ok
+test_repeated_cancellation_at_cleanup_entry_cannot_skip_cleanup (test_dpm_host.CancellationOwnershipTests) ... ok
+test_repeated_cancellation_cannot_interrupt_cleanup (test_dpm_host.CancellationOwnershipTests) ... ok
+test_single_execution_cancellation_reaps_and_accounts (test_dpm_host.CancellationOwnershipTests) ... ok
+test_actual_retained_mismatch_and_cancelled_cleanup_are_independent (test_dpm_host.DpmHostTests) ... ok
+test_duplicate_nonfinite_and_symlink_json_refuse (test_dpm_host.DpmHostTests) ... ok
+test_launcher_refuses_changed_host_before_execution (test_dpm_host.DpmHostTests) ... ok
+test_public_cli_cannot_override_launcher_policy (test_dpm_host.DpmHostTests) ... FAIL
+test_receipt_tamper_controls (test_dpm_host.DpmHostTests) ... ok
+test_terminal_and_observation_must_correspond (test_dpm_host.DpmHostTests) ... ok
+test_timeout_and_output_bound_stop_actual_owned_process (test_dpm_host.DpmHostTests) ... ok
+test_unknown_ambiguous_normalization_refuses (test_dpm_host.DpmHostTests) ... ok
+test_all_three_actual_full_matches_and_early_mismatches (test_dpm_host.EvidenceRegressionTests) ... ok
+test_all_three_event_observation_and_completion_mutants (test_dpm_host.EvidenceRegressionTests) ... ok
+test_client_action_uses_admitted_model_alias_in_all_profiles (test_dpm_host.EvidenceRegressionTests) ... ok
+test_complete_exploration_cannot_erase_rows_or_contradict_denominators (test_dpm_host.EvidenceRegressionTests) ... ok
+test_final_interval_mismatch_preserves_completed_execution (test_dpm_host.EvidenceRegressionTests) ... ok
+test_initial_observation_mismatch_is_exact_terminal_only (test_dpm_host.EvidenceRegressionTests) ... ok
+test_local_exploration_uses_shared_validator_and_global_ids (test_dpm_host.EvidenceRegressionTests) ... ok
+test_map_order_equivalence_and_spectator_offsets (test_dpm_host.EvidenceRegressionTests) ... ok
+test_materialization_uses_exact_json_identity (test_dpm_host.EvidenceRegressionTests) ... ok
+test_reducer_does_not_equate_boolean_and_integer_failures (test_dpm_host.EvidenceRegressionTests) ... ok
+test_replay_ids_are_fresh_across_independent_generation_one_processes (test_dpm_host.EvidenceRegressionTests) ... ok
+test_terminal_client_and_typed_map_mutants (test_dpm_host.EvidenceRegressionTests) ... ok
+test_adjacent_host_source_and_bytecode_never_execute (test_dpm_host.OutputAndImportRegressionTests) ... ok
+test_exact_limit_duplicates_and_aggregate_budget (test_dpm_host.OutputAndImportRegressionTests) ... ok
+test_exact_raw_receipt_reproduction_and_post_exit_response (test_dpm_host.OutputAndImportRegressionTests) ... ok
+test_failed_raw_overshoot_is_preserved_and_measured (test_dpm_host.OutputAndImportRegressionTests) ... ok
+test_host_copies_and_final_report_reserve_are_charged (test_dpm_host.OutputAndImportRegressionTests) ... ok
+test_nonregular_output_refuses (test_dpm_host.OutputAndImportRegressionTests) ... ok
+test_stream_flood_is_capped_and_descendant_writer_is_stopped (test_dpm_host.OutputAndImportRegressionTests) ... ok
+test_typed_python_command_blocks_adjacent_json (test_dpm_host.OutputAndImportRegressionTests) ... ok
+test_actor_chains_and_closed_schema (test_dpm_host.PurePolicyTests) ... ok
+test_actual_v1_project_has_reprepare_diagnostic (test_dpm_host.PurePolicyTests) ... ok
+test_complete_two_actor_interleavings_have_correct_costs (test_dpm_host.PurePolicyTests) ... ok
+test_pure_admission_and_cost (test_dpm_host.PurePolicyTests) ... ok
+test_atomic_activation_preserves_existing_destination (test_dpm_install.InstallationTests) ... ok
+test_content_mode_missing_and_extra_files_refuse (test_dpm_install.InstallationTests) ... ok
+test_isolated_installer_rejects_tampered_helper_and_ignores_shadow_modules (test_dpm_install.InstallationTests) ... ok
+test_symlink_tree_refuses (test_dpm_install.InstallationTests) ... ok
+test_wrong_invocation_refuses_before_adjacent_imports (test_dpm_install.InstallationTests) ... ok
+test_all_profiles_publish_and_check_without_changing_ordinary_bindings (test_kit_cli.KitTests) ... ok
+test_invalid_static_mappings_reject_before_output_creation (test_kit_cli.KitTests) ... ok
+test_mapping_order_normalizes_to_identical_payloads (test_kit_cli.KitTests) ... ok
+test_non_string_actor_input_and_fixed_actor_semantics (test_kit_cli.KitTests) ... ok
+test_owned_collision_readonly_stale_and_unrelated_file_preservation (test_kit_cli.KitTests) ... ok
+test_wrong_profile_duplicate_json_and_foreign_flags (test_kit_cli.KitTests) ... ok
+test_actual_cleanup_failure_remains_independent (test_timeline.TimelineTests) ... ok
+test_actual_cross_language_mismatch_is_not_cleanup_cancellation (test_timeline.TimelineTests) ... ok
+test_actual_matched_receipt (test_timeline.TimelineTests) ... ok
+test_actual_native_and_cpp_receipts (test_timeline.TimelineTests) ... ok
+test_actual_repeated_initialization_sections (test_timeline.TimelineTests) ... ok
+test_ambiguous_actual_does_not_invent_failure_index (test_timeline.TimelineTests) ... ok
+test_bare_local_success_never_becomes_model_conformance (test_timeline.TimelineTests) ... ok
+test_cli_read_only_and_no_output_clobber (test_timeline.TimelineTests) ... ok
+test_duplicate_and_nonfinite_input_refuse (test_timeline.TimelineTests) ... ok
+test_explicit_hash_bound_kit_annotation_and_identity_refusal (test_timeline.TimelineTests) ... ok
+test_hash_bound_tamper_refusal (test_timeline.TimelineTests) ... ok
+test_passing_leaks_and_reused_execution_identity_refuse (test_timeline.TimelineTests) ... ok
+test_truncated_evidence_is_visible_and_not_passing (test_timeline.TimelineTests) ... ok
+test_unconfirmed_comparison_and_contradictory_pass_refuse (test_timeline.TimelineTests) ... ok
+test_wrong_order_actor_and_unconfirmed_observation_refuse (test_timeline.TimelineTests) ... ok
+
+======================================================================
+FAIL: test_public_cli_cannot_override_launcher_policy (test_dpm_host.DpmHostTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/jlc/Tools/mirrors-dpm-followup-20261014/source/Mirrors/tools/deterministic-scheduling/tests/test_dpm_host.py", line 120, in test_public_cli_cannot_override_launcher_policy
+    self.assertIn('usage: mirrors-dpm', process.stderr)
+AssertionError: 'usage: mirrors-dpm' not found in 'DPM operation refused: DPM host artifact differs: cli.py\n'
+
+----------------------------------------------------------------------
+Ran 65 tests in 18.348s
+
+FAILED (failures=1)

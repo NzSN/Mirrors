@@ -8,6 +8,9 @@ checkpoint control, not arbitrary OS instruction preemption.
 [Generated integration kit and timeline](dpm-usability-design.md) implement the
 first approved usability slice; their source acceptance and remaining feature
 contracts are separate from the earlier frozen DPM/runtime qualification.
+The [installed CLI and reducer](dpm-cli-guide.md) and
+[C++ controlled-resource prototype](../../MirrorCPP/docs/controlled-synchronization.md)
+have separate [October 13 evidence](../Plans/dpm-f3-f5-evidence-20261013/README.md).
 
 ## Ownership and execution path
 
@@ -58,8 +61,9 @@ renders existing comparison/binding/checkpoint-execution receipts. JSON output,
 trusted receipt/kit digests and unknown attribution are described in
 [the kit/timeline contract](dpm-usability-design.md). Rendering starts no replay
 or model check. [Source acceptance](../Plans/dpm-usability-evidence-20261007/README.md)
-is separate from the frozen installed/native records below. Approved schedule
-reduction, installed CLI and synchronization wrappers remain unimplemented.
+is separate from the frozen installed/native records below. The October 13
+reducer searches an admitted finite catalog; the installed CLI uses existing
+SDK runners, and controlled synchronization is a separate C++ prototype.
 
 ## Profiles and references
 

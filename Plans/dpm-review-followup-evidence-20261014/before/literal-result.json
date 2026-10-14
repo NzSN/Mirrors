@@ -1,0 +1,17 @@
+{
+  "test": "closed-v2-literal-argv-admission",
+  "rows": [
+    {
+      "name": "normal",
+      "exit": 0,
+      "stderr": "",
+      "stdout": "{\"order\":[{\"cost\":[2,0,0,6],\"id\":\"serial\"},{\"cost\":[2,0,4,6],\"id\":\"overlap\"},{\"cost\":[2,1,0,6],\"id\":\"serial-five\"},{\"cost\":[2,1,4,6],\"id\":\"overlap-five\"},{\"cost\":[3,0,0,7],\"id\":\"serial-spectator\"},{\"cost\":[3,0,4,7],\"id\":\"overlap-spectator\"},{\"cost\":[3,1,0,7],\"id\":\"serial-five-spectator\"},{\"cost\":[3,1,4,7],\"id\":\"overlap-five-spectator\"}],\"schema\":\"mirrors.dpm-search-plan/v1\",\"scope\":\"admitted-catalog-only\"}\n"
+    },
+    {
+      "name": "empty",
+      "exit": 2,
+      "stderr": "invalid command argument\n",
+      "stdout": ""
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "cancellationScenarios": [
+    "cleanup-entry-repeated",
+    "cleanup-entry-timeout-first",
+    "finalization-first",
+    "normal",
+    "repeated",
+    "single",
+    "timeout-first"
+  ],
+  "committed": false,
+  "date": "2026-10-14",
+  "finalPhases": {
+    "exits": {
+      "acceptance-phase.exit": 0,
+      "cpp-phase.exit": 0,
+      "languages-phase.exit": 0,
+      "lean-phase.exit": 1,
+      "local-gates-qualified-phase.exit": 0,
+      "python-final-phase.exit": 0
+    },
+    "finalInstalled": "acceptance-phase.exit",
+    "finalNonModel": "local-gates-qualified-phase.exit",
+    "finalPython": "python-final-phase.exit",
+    "superseded": {
+      "lean-phase.exit": "Lean build/pure gates passed; one Python check found old copied helpers at executable-resolved D share. New D share was refreshed; final focused suite passed."
+    }
+  },
+  "freshModelCheck": false,
+  "implementationFilesVerified": 36,
+  "independentReview": {
+    "path": "independent-review.json",
+    "sha256": "c1e07a7e990bb788430518cb60e76d07fbfb8c43fa4d5f27dde521fbee813f36",
+    "status": "no_remaining_confirmed_findings_in_reviewed_scope"
+  },
+  "installationManifestSha256": "aa12b8377ee829558d8b872bb2ae793505e471cb21a22599a094fe54501351f8",
+  "installedFilesVerified": 5265,
+  "installedInventoryUnchanged": true,
+  "limits": [
+    "No fresh model or platform qualification",
+    "F5 is C++ only; no model comparison",
+    "Output accounting is not a hard disk quota",
+    "Returning callback checks do not provide hard in-process interruption",
+    "Declared trusted platform and stable non-detaching runner prerequisites remain"
+  ],
+  "localBuildsOrTests": false,
+  "plan": "../dpm-review-followup-2026-10-14.md",
+  "publicLauncherControls": [
+    {
+      "doctorExit": 0,
+      "exit": 2,
+      "runner": {
+        "argv": [
+          "",
+          "--request",
+          "/home/jlc/Tools/mirrors-dpm-followup-20261014/public-controls/empty-argument/public-run/execution/materialize/request.json",
+          "--response",
+          "/home/jlc/Tools/mirrors-dpm-followup-20261014/public-controls/empty-argument/public-run/execution/materialize/response.json"
+        ],
+        "hostPid": 35381,
+        "pgid": 35390,
+        "pid": 35390
+      },
+      "runnerAbsentAfterReturn": true,
+      "scenario": "empty-argument",
+      "status": "passed"
+    },
+    {
+      "doctorExit": 0,
+      "exit": 2,
+      "runner": {
+        "argv": [
+          "single-cancellation",
+          "--request",
+          "/home/jlc/Tools/mirrors-dpm-followup-20261014/public-controls/single-cancellation/public-run/execution/materialize/request.json",
+          "--response",
+          "/home/jlc/Tools/mirrors-dpm-followup-20261014/public-controls/single-cancellation/public-run/execution/materialize/response.json"
+        ],
+        "hostPid": 35409,
+        "pgid": 35416,
+        "pid": 35416
+      },
+      "runnerAbsentAfterReturn": true,
+      "scenario": "single-cancellation",
+      "status": "passed"
+    },
+    {
+      "doctorExit": 0,
+      "exit": 2,
+      "runner": {
+        "argv": [
+          "repeated-cancellation",
+          "--request",
+          "/home/jlc/Tools/mirrors-dpm-followup-20261014/public-controls/repeated-cancellation/public-run/execution/materialize/request.json",
+          "--response",
+          "/home/jlc/Tools/mirrors-dpm-followup-20261014/public-controls/repeated-cancellation/public-run/execution/materialize/response.json"
+        ],
+        "hostPid": 35436,
+        "pgid": 35451,
+        "pid": 35451
+      },
+      "runnerAbsentAfterReturn": true,
+      "scenario": "repeated-cancellation",
+      "status": "passed"
+    }
+  ],
+  "pushed": false,
+  "schema": "mirrors.dpm-followup-acceptance/v1",
+  "status": "accepted_in_declared_remote_wsl_scope",
+  "tasks": "../dpm-review-followup-tasks-2026-10-14.md",
+  "totals": {
+    "catalogMatches": 24,
+    "freshReceiptMutantsRefused": 24,
+    "localSdkRuns": 120,
+    "reductionExecutions": 30
+  }
+}

@@ -1,16 +1,18 @@
 # Approved DPM usability features
 
 Date: 2026-10-07
-Status: first slice F1/F2 implemented and source accepted; F3–F5 approved
-follow-ons. Design below was frozen before implementation.
+Status updated 2026-10-13: F1/F2 source accepted; F3 finite-catalog reducer,
+F4 installed CLI and F5 C++ experimental controlled resources implemented.
+[Execution evidence](dpm-f3-f5-evidence-20261013/README.md) records acceptance
+and limits. Design below was frozen before implementation.
 [First-slice evidence](dpm-usability-evidence-20261007/README.md) records exact
 source/helper/input identities and honest qualification limits.
 
 The user approved five recommendations after the completed DPM and M5 profiles:
 generated integration kit, unified counterexample timeline, schedule-aware
 reduction, installed cross-language CLI and experimental synchronization wrappers.
-Start with features 1 and 2 as recommended. Features 3–5 are approved follow-on
-slices with distinct contracts/exit gates below, not claimed implemented by a plan.
+The first slice delivered features 1 and 2. The October 13 execution delivers
+features 3–5 within the explicit contracts and acceptance scopes below.
 Broader M4 stays separate. Preserve the concurrent documentation synchronization,
 all frozen evidence, unrelated Rust edit and editor caches. No commit/push.
 
@@ -77,16 +79,16 @@ kit's one-transition/one-interval contract does not claim automatic native bindi
 | --- | --- | --- |
 | F1 Generated kit | All three language helpers compile; real generated replay; static admission negatives; readonly freshness; ownership rollback/unrelated files; v1 bytes stable | Source accepted: six target modes and three actual SDK helper/seed compiles |
 | F2 Timeline | Actual pass/mismatch/cleanup/repeated/native receipts render; input bytes unchanged; malformed/tampered/incomplete controls; no invented model attribution | Source accepted: real match/mismatch plus integrity and unknown-attribution controls |
-| F3 DPM reducer | Reduce inputs/actors/preemptions only through valid reconstructed schedules; fresh replay and same mismatch+cleanup; deterministic budgets and honest minimality scope | Approved follow-on |
-| F4 Installed CLI | Package a standard replay/explore/report interface around existing SDK runners; explicit installed artifacts/dependencies; source-hidden offline consumer and tamper/refusal gates | Approved follow-on |
-| F5 Synchronization wrappers | Separate experimental profile for controlled blocking/resources; explicit enabledness and ownership; two real abstractions and tests preserving intended lock/queue semantics; no unmodified-binary/preemption claim | Approved research/prototype follow-on |
+| F3 DPM reducer | Reduce inputs/actors/preemptions only through valid reconstructed schedules; fresh replay and same mismatch+cleanup; deterministic budgets and honest minimality scope | Implemented: finite admitted catalog; source and installed Counter reductions |
+| F4 Installed CLI | Package a standard replay/explore/report interface around existing SDK runners; explicit installed artifacts/dependencies; source-hidden offline consumer and tamper/refusal gates | Implemented: three source-hidden offline consumer profiles |
+| F5 Synchronization wrappers | Separate experimental profile for controlled blocking/resources; explicit enabledness and ownership; two real abstractions and tests preserving intended lock/queue semantics; no unmodified-binary/preemption claim | Implemented prototype: C++ controlled mutex and bounded FIFO; no model comparison |
 
 F3 must preserve actor-local chains; dropping arbitrary intervals may be unrealizable.
 F4 reuses existing replay/explorer/timeline rather than changing wire messages.
 F5 cannot simply park an actor while holding a lock needed by the next permitted
 actor. The coordinator must account for blocked/enabled actors before claiming a
-wrapper can explore synchronization operations. CHESS-style API shimming is a
-reference design, not current implemented support.
+wrapper can explore synchronization operations. The separate C++ prototype implements explicit controlled mutex/FIFO boundaries;
+CHESS-style arbitrary API shimming remains a reference design.
 
 ## Validation and reporting
 

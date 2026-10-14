@@ -1,0 +1,21 @@
+✔ real workers retain stacks and reproduce serial and overlapping schedules (90.0118ms)
+✔ static admission precedes factory and profile mismatch is rejected (0.7024ms)
+✔ decoder rejects duplicate input keys and unknown fields (0.3323ms)
+✔ incremental callbacks select one actor and refuse a changed interval (19.1906ms)
+✔ actual wrong checkpoint, premature return, worker and observer failures clean up (140.4923ms)
+✔ cancellation before acquisition and between intervals (19.456ms)
+✔ incomplete cleanup retains an uncooperative worker and allows retry (311.8052ms)
+✔ factory reentry rejects nested acquisition (19.3252ms)
+✔ identity and interval comparisons ignore JSON member order (19.6902ms)
+✔ failed worker construction reclaims created channels and runs teardown (0.5654ms)
+✔ cancellation cannot release workers while the observer is reading shared state (69.5013ms)
+✔ a late hook after callback return cannot be silently credited as completion (26.8682ms)
+✔ terminal acknowledgement survives delayed private-channel delivery (46.5911ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 770.9314

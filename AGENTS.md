@@ -20,8 +20,8 @@ Read the relevant contract before changing behavior:
   and `Docs/generated-model-interface-spec.md`; general TLA+ frontend work:
   `Docs/model-interface-compiler/tla-frontend-design.md`.
 - DPM kits, timelines, or checkpoint scheduling: `Docs/dpm-usability-design.md`
-  and `Docs/deterministic-scheduling.md`; remaining approved features:
-  `Plans/dpm-usability-features-2026-10-07.md`.
+  and `Docs/deterministic-scheduling.md`. For reducer/installed runner changes,
+  read `Docs/dpm-runner-contract.md` and `Docs/dpm-cli-guide.md`.
 - Negotiation, authorization, or caching:
   `Docs/model-interface-runtime-distribution-design.md`.
 - Native boundary: `Ffi/README.md` and `Docs/tls-ffi-review.md`.
@@ -35,7 +35,7 @@ design document's implementation-status section and current code.
 
 ## Current framework checkpoint
 
-Documentation reviewed 2026-10-09 against Mirrors `548ba71`. For status or
+Implementation checkpoint updated 2026-10-14 against base Mirrors `6e0cbce`. For status or
 continuation work, read `Docs/current-status.md`, the newest `CHECKPOINTS.md`
 entry, and `Plans/execution-decisions.md` before selecting work. September stop
 instructions and original queued task cards are historical; their frozen
@@ -49,8 +49,12 @@ identity freeze and corresponding gates before qualification credit.
 
 DPM-0–DPM-5 are accepted for declared C++/Node-worker/Rust-thread profiles.
 F1 generated integration kits and F2 receipt timelines have source acceptance
-only; approved F3 schedule reduction, F4 installed CLI, and F5 synchronization
-wrappers remain unimplemented. Broader M4 aggregate enforcement and active-
+only. F3 finite-catalog reduction, F4 installed CLI and the separate F5 C++ controlled
+mutex/FIFO prototype have October 14 remote WSL review follow-up acceptance. F5
+still has no model comparison. For v2 runner admission, receipt validation,
+evidence limits or callback/join deadlines, read
+`Plans/dpm-review-followup-evidence-20261014/README.md` for exact identities,
+remote workflows and scope. The original October 13 evidence remains historical. Broader M4 aggregate enforcement and active-
 process post-restart recovery stay separate; follow
 `Plans/m4-native-host-and-platform-plan-2026-10-07.md` for their prerequisites.
 

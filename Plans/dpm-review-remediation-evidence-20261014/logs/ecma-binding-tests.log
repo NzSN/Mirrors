@@ -1,0 +1,13 @@
+✔ binding owns fresh generations across initialization and disposes once (43.6622ms)
+✔ incomplete prior execution forbids another SUT acquisition (19.7038ms)
+✔ disposal failure is stable on repeated calls (17.3524ms)
+✔ disposal joins a late factory and reclaims its program without entering workers (16.7029ms)
+✔ cleanup retry updates the retained receipt without converting the failed replay to a pass (342.3865ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 443.925

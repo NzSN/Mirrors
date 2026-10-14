@@ -1,0 +1,302 @@
+{
+  "historical": [
+    {
+      "manifestSha256": "dfec0c769eeb92f57a3b2431aedf8764a5124a50baec840267e9c0db2bd7453e",
+      "path": "Plans/dpm-f3-f5-evidence-20261013",
+      "verifiedFiles": 891
+    },
+    {
+      "manifestSha256": "948db6239c3b5d6c7bab4b6d1f18d7bce90d4e388cd3e8a9b2914c6be86c5dbc",
+      "path": "Plans/dpm-review-remediation-evidence-20261014",
+      "verifiedFiles": 1460
+    }
+  ],
+  "noLocalBuildsOrTests": true,
+  "previousCheckpointSha256": "d58640a733b0926353175ba9cc159f7bed1f9d4b03761d6fa6761ec74695912c",
+  "repositories": [
+    {
+      "head": "6e0cbce8649b818d28431774e27731267598180e",
+      "localPath": "/home/nzsn/Repos/Mirrors",
+      "name": "Mirrors",
+      "workingFiles": {
+        "AGENTS.md": {
+          "bytes": 6813,
+          "scope": "documentation",
+          "sha256": "280541ff412d655665fdb7485b5d5eb7948ec6a0d9ceb5546d1b498c4eeec4d9"
+        },
+        "CHECKPOINTS.md": {
+          "bytes": 95105,
+          "scope": "documentation",
+          "sha256": "d58640a733b0926353175ba9cc159f7bed1f9d4b03761d6fa6761ec74695912c"
+        },
+        "Codec/Dpm.lean": {
+          "bytes": 6354,
+          "scope": "implementation",
+          "sha256": "67932af1b1764ba1a2389b3c9e24b24b0bb94a275f9b370e81b600a799f0ce51"
+        },
+        "Codec/DpmEvidence.lean": {
+          "bytes": 4095,
+          "scope": "implementation",
+          "sha256": "61c38dbe9110068516075ca0a429f31d0896d4978e2b2fb0c94f342c8c951df1"
+        },
+        "Core/Dpm.lean": {
+          "bytes": 3634,
+          "scope": "implementation",
+          "sha256": "dea49ccd978ae96e000d19d6f8faee8f64c43002405be5591aafb39edbc69b5e"
+        },
+        "Docs/current-status.md": {
+          "bytes": 6528,
+          "scope": "documentation",
+          "sha256": "3d6bbe7c9c481b1abdec74d54034ee79401446a455708b1c68b398dbc7a4e983"
+        },
+        "Docs/deterministic-scheduling.md": {
+          "bytes": 6560,
+          "scope": "documentation",
+          "sha256": "046aafe1464689338803ca13eb8bd26c34fa5fc97a488b6523d334cb9d147240"
+        },
+        "Docs/dpm-cli-guide.md": {
+          "bytes": 7035,
+          "scope": "documentation",
+          "sha256": "b77b63ecfa5e1a4ba519d83c12fceeee7d5bc8cde74239d172d11800e1513e19"
+        },
+        "Docs/dpm-runner-contract.md": {
+          "bytes": 10468,
+          "scope": "documentation",
+          "sha256": "fe4f2537e77aadd3cfacffac3270084c35789c33b6565f82f9dc2c10fb78a176"
+        },
+        "Docs/dpm-usability-design.md": {
+          "bytes": 5811,
+          "scope": "documentation",
+          "sha256": "aa7796391d66d7f2122d680f7849f5ccf8b18a7c7ae96f474ba108981ad5f231"
+        },
+        "Plans/dpm-f3-f5-execution-2026-10-13.md": {
+          "bytes": 2180,
+          "scope": "documentation",
+          "sha256": "86d3c79cce0291c63c688342603b2c527dfb912a6b084fc3ec6e8cdfd6339c64"
+        },
+        "Plans/dpm-review-remediation-2026-10-13.md": {
+          "bytes": 16287,
+          "scope": "documentation",
+          "sha256": "feee5b81666722db0373a966f1dbc35960a13454e5e69d7fc010cd19803af40a"
+        },
+        "Plans/dpm-usability-features-2026-10-07.md": {
+          "bytes": 7470,
+          "scope": "documentation",
+          "sha256": "eaec932a8b996cdccc7d44e648ee3565e22d058d1230af226b3ff9d296c59a57"
+        },
+        "Plans/mirror-framework-improvements.md": {
+          "bytes": 32627,
+          "scope": "documentation",
+          "sha256": "28e20fe7e54e20df165cfca3afdeb3bfd0c9ebf8e57e24b51be4c6fff5323011"
+        },
+        "Plans/mirror-framework-tasks.md": {
+          "bytes": 16776,
+          "scope": "documentation",
+          "sha256": "f1940f17d76ab9b6ec42677d62d3f5c8eb34a1b4ede2b4678b5bdfbbd35e21af"
+        },
+        "Shell/Dpm/Cli.lean": {
+          "bytes": 2338,
+          "scope": "implementation",
+          "sha256": "5e11ea335ce12ad10c4935435234293d5158941969483951dc9883417d7753c4"
+        },
+        "Shell/Dpm/HostIdentity.lean": {
+          "bytes": 581,
+          "scope": "implementation",
+          "sha256": "96775bf274b21679f90023e0e2654d052893fef8760890d4825a3d86a913a505"
+        },
+        "lakefile.lean": {
+          "bytes": 34500,
+          "scope": "implementation",
+          "sha256": "4aeb8fcd6b90a4bb5fb552434469d8e5cd92e2f0799be701f652988c5666038d"
+        },
+        "tools/DpmEvidenceSpec.lean": {
+          "bytes": 3348,
+          "scope": "implementation",
+          "sha256": "0b2d8bab76d3841644fd73a62bb6d5bf5ea43f2e7d501d17f6d9ca4cc9e254a9"
+        },
+        "tools/DpmSpec.lean": {
+          "bytes": 4969,
+          "scope": "implementation",
+          "sha256": "9d6794d88c0e710a68e83bd9602647c3c47249f75ede1c9fc5910612dacb0e60"
+        },
+        "tools/MirrorsDpm.lean": {
+          "bytes": 86,
+          "scope": "implementation",
+          "sha256": "97cac2d0b947389bf0fa0064f74bd8eab9f70c6b81edfafd4a26351073152238"
+        },
+        "tools/deterministic-scheduling/apps/counter_runner.py": {
+          "bytes": 4312,
+          "scope": "implementation",
+          "sha256": "3cc8de3858338fcc8cb01098d1bf98b7026f63abf14312b453cbb85f526138ac"
+        },
+        "tools/deterministic-scheduling/check_cli_installed.py": {
+          "bytes": 20793,
+          "scope": "implementation",
+          "sha256": "53abc4052635895f16d6408a15ba0d23c6efea0230d5172117727747d67a3f84"
+        },
+        "tools/deterministic-scheduling/cli.py": {
+          "bytes": 9782,
+          "scope": "implementation",
+          "sha256": "6ca3f1cafb3a756e3cb24ff666de0f5f3795b9b37ca293a2c821393ad7e5cb52"
+        },
+        "tools/deterministic-scheduling/counter.cpp": {
+          "bytes": 8376,
+          "scope": "implementation",
+          "sha256": "e57ff2b4c7333daab812a7c92e277680f7651069efd8b15e9d6a8f8c9cbb11a9"
+        },
+        "tools/deterministic-scheduling/counter_support.hpp": {
+          "bytes": 4765,
+          "scope": "implementation",
+          "sha256": "ec233e2df0ea5379ba7904ee2ff50e69f3a30f035af558d176bb44c6f87f2dff"
+        },
+        "tools/deterministic-scheduling/dpm_host.py": {
+          "bytes": 49496,
+          "scope": "implementation",
+          "sha256": "250f79d558d2277fe7849fb0b77f91c41b8b2d5d5cdb6618618b97c134e63ff6"
+        },
+        "tools/deterministic-scheduling/explore.cpp": {
+          "bytes": 5126,
+          "scope": "implementation",
+          "sha256": "f8fdc2c70dfd4a175d9a826b1f42fd0c650c3e63253807d078ad5573cfa4aa20"
+        },
+        "tools/deterministic-scheduling/install_cli.py": {
+          "bytes": 5300,
+          "scope": "implementation",
+          "sha256": "ae27986c95369ecaf7561b4496f7f4d87cd7085d1ab338eb9f55577b6b668f21"
+        },
+        "tools/deterministic-scheduling/languages/ecma/runner.mjs": {
+          "bytes": 16058,
+          "scope": "implementation",
+          "sha256": "69b1ac19f6b5ad48b972b658244ce5157a2b76fdfd90375adb250b54a1daea6d"
+        },
+        "tools/deterministic-scheduling/languages/ecma/spectator-worker.mjs": {
+          "bytes": 190,
+          "scope": "implementation",
+          "sha256": "a2a122ec14d8f9d2797945919e136750fd8698388f5008d79b259ec8e60c1e14"
+        },
+        "tools/deterministic-scheduling/languages/rust/src/main.rs": {
+          "bytes": 40289,
+          "scope": "implementation",
+          "sha256": "ebf8f8d1662e0ce01af0566c52c055595a27eba0179b7d9dd0c2dca7a94a0456"
+        },
+        "tools/deterministic-scheduling/prepare_cli.py": {
+          "bytes": 10031,
+          "scope": "implementation",
+          "sha256": "f5a50c3dd0cddee08722d8dfb26f32cc2a2d7d9f07f670b3cc648a82809e1309"
+        },
+        "tools/deterministic-scheduling/refresh_host_identity.py": {
+          "bytes": 2600,
+          "scope": "implementation",
+          "sha256": "5e04be1b7f44e06a619039e1b2bbb9334b1e406586890e2731c0be7d7815802d"
+        },
+        "tools/deterministic-scheduling/tests/test_dpm_host.py": {
+          "bytes": 33552,
+          "scope": "implementation",
+          "sha256": "59eefdd6f1ffd1b1d93898e875d94ca21f87638526678c0f0ddd2a330006e6ec"
+        },
+        "tools/deterministic-scheduling/tests/test_dpm_install.py": {
+          "bytes": 4140,
+          "scope": "implementation",
+          "sha256": "abadcc2a0310825f3ffb6de24e3686ad4a82d129d21e36bf3a93cb9e030182b5"
+        },
+        "tools/run-local-no-model-check.sh": {
+          "bytes": 6606,
+          "scope": "implementation",
+          "sha256": "c4d5d06f7458bdb0e5b6a1b0cc64bf1abe045a7e76f6787eb96e8f5e83d0b0b6"
+        }
+      }
+    },
+    {
+      "head": "75a63dba6b55a4514b8f0d75687066a2c55c8ef7",
+      "localPath": "/home/nzsn/Repos/MirrorCPP",
+      "name": "MirrorCPP",
+      "workingFiles": {
+        "CMakeLists.txt": {
+          "bytes": 8411,
+          "scope": "implementation",
+          "sha256": "9204023276a883481582b15ac2da0076ebf38005b22b5f098b37ad5b981c19ef"
+        },
+        "docs/controlled-synchronization.md": {
+          "bytes": 8361,
+          "scope": "documentation",
+          "sha256": "7060a60a28fd1161f313a17d5b6a28e4ecb2e431c3fef52fbff4b202a4ae3aa0"
+        },
+        "docs/deterministic-scheduling.md": {
+          "bytes": 14770,
+          "scope": "documentation",
+          "sha256": "2b944edee255c1b639a45a4a844664fa9d1b1766b184d7cd993262f09ab09017"
+        },
+        "examples/controlled_sync.cpp": {
+          "bytes": 1821,
+          "scope": "implementation",
+          "sha256": "0586cc1873a58ea14cc20e59b53824030e96954e51820cfc7bb06598b404e31c"
+        },
+        "include/mirrorcpp/schedule_sync.hpp": {
+          "bytes": 3641,
+          "scope": "implementation",
+          "sha256": "86be9c086a8dc1f5579ad1445cb5f666a3a1d4ca8cdba11a22c679b612f086dc"
+        },
+        "share/mirrorcpp/controlled-sync-capabilities.json": {
+          "bytes": 504,
+          "scope": "implementation",
+          "sha256": "4747c762cb012132b25b4ed57d4e161cf3549f3ae5b51b213619a9c58a771486"
+        },
+        "src/schedule_sync.cpp": {
+          "bytes": 25162,
+          "scope": "implementation",
+          "sha256": "93967599900be28fe3a454d50ffada26cbd67ce532bc9da4006e0dd42acdf3e5"
+        },
+        "test/unit/CMakeLists.txt": {
+          "bytes": 6265,
+          "scope": "implementation",
+          "sha256": "617dfb2fd19d91c9ea090549e6a4fd1b42f7be6e43faf456207a028a7c415348"
+        },
+        "test/unit/schedule_sync_test.cpp": {
+          "bytes": 24428,
+          "scope": "implementation",
+          "sha256": "246c26a6d501fd5f87e23510ee299454e0437343f4d3c780879b251a745f2938"
+        }
+      }
+    },
+    {
+      "head": "fe9a648136a63a5b348892e69033f44487f641f0",
+      "localPath": "/home/nzsn/Repos/MirrorECMA",
+      "name": "MirrorECMA",
+      "workingFiles": {
+        "docs/deterministic-scheduling.md": {
+          "bytes": 9674,
+          "scope": "documentation",
+          "sha256": "3e71587411d9512ea9cc84db48d8b8f825ff09f512105e41b848cc8e081b565d"
+        },
+        "src/schedule-worker.ts": {
+          "bytes": 4275,
+          "scope": "implementation",
+          "sha256": "22fc22ac888699d6386b23484b874f9f18a64d792ae74edbdf691427a893d811"
+        },
+        "src/schedule.ts": {
+          "bytes": 18610,
+          "scope": "implementation",
+          "sha256": "3e0e3d1dfd999a301ad1efc8260549300270cb14bd90caf8095761daa32936cd"
+        },
+        "test/schedule/schedule.test.mjs": {
+          "bytes": 9674,
+          "scope": "implementation",
+          "sha256": "c0a583dd2ba4149cfd03cb8d9aa3dbff9de966bbe442b55bbce2c67d1e756d57"
+        }
+      }
+    },
+    {
+      "head": "76061732f9ad46e063941dd48b10d1d9fb56dcb2",
+      "localPath": "/home/nzsn/Repos/MirrorRust",
+      "name": "MirrorRust",
+      "workingFiles": {
+        "docs/deterministic-scheduling.md": {
+          "bytes": 8206,
+          "scope": "documentation",
+          "sha256": "267581a4e86f48bfaac327b3d5a40e16a0d00e3f5680cc2e3b3749a0cc6eedb5"
+        }
+      }
+    }
+  ],
+  "schema": "mirrors.dpm-followup-baseline/v1"
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "mirrors.dpm-remote-input-verification/v1",
+  "status": "verified",
+  "files": 5270,
+  "archives": {
+    "prerequisites.tar": {
+      "bytes": 228259840,
+      "sha256": "d3cb75a821389677354cd9935ea75f3fa9a732ff05c3febf9bcde949ca730a19"
+    },
+    "source-transfer.json": {
+      "bytes": 1349295,
+      "sha256": "dcc0dfcd1b39adfc3668461ca80c1de335294fcef278232cc087763b047e36af"
+    },
+    "sources.tar": {
+      "bytes": 122081280,
+      "sha256": "aa5336dc277ec94c0f337e9f9a78afc5b78978f286f6fb4265de584fd63afdbb"
+    }
+  },
+  "sourceRoot": "/home/jlc/Tools/mirrors-dpm-remediation-20261013/source",
+  "buildRoot": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build",
+  "toolRoot": "/home/jlc/Tools/mirrors-dpm-remediation-toolchain-20261013",
+  "localBuildsRequested": false
+}

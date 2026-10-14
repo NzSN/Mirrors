@@ -1,0 +1,13 @@
+baseline: "overlap-five-spectator"
+baselineCost: [3, 1, 4, 7]
+best: "serial"
+bestCost: [2, 0, 0, 6]
+bestReplay: "confirmed"
+claim: "minimal_in_admitted_catalog"
+failure: null
+freshModelCheck: false
+projectSha256: "4a7081fffa8c9dcb968b3b519aad89a1acc5f4b888866faa3f07a80c12fbeacd"
+schema: "mirrors.dpm-reduction/v1"
+scope: "admitted-catalog-only"
+signature: {"action": "write", "delta": "1", "path": ["count"], "profile": "counter-count-delta/v1"}
+status: "completed"

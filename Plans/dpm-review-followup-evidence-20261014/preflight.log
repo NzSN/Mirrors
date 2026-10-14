@@ -1,0 +1,25 @@
+2026-10-14T02:51:10+00:00
+Linux DESKTOP-6DKB5JD 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdd       1007G  953G  2.9G 100% /
+D:\             3.7T  3.5T  235G  94% /mnt/d
+/dev/loop0       12G   32K   12G   1% /home/jlc/Tools/mirrors-dpm-followup-20261014
+               total        used        free      shared  buff/cache   available
+Mem:            58Gi       937Mi        57Gi       3.0Mi       718Mi        57Gi
+Swap:           15Gi          0B        15Gi
+Python 3.10.12
+g++-12 (Ubuntu 12.3.0-1ubuntu1~22.04.3) 12.3.0
+Copyright (C) 2022 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+v24.19.0
+cmake version 3.28.4
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+warning: could not canonicalize path: '/root/.elan/toolchains'
+warning: could not canonicalize path: '/root/.elan/toolchains'
+warning: could not canonicalize path: '/root/.elan/toolchains'
+warning: could not canonicalize path: '/root/.elan/toolchains'
+warning: could not canonicalize path: '/root/.elan/toolchains'
+error: no default toolchain configured. run `elan default stable` to install & configure the latest Lean 4 stable release.

@@ -3,8 +3,10 @@
 Date: 2026-10-07
 Status: first approved slice implemented and source accepted. The
 [approved feature plan](../Plans/dpm-usability-features-2026-10-07.md) keeps the
-schedule reducer, installed CLI and controlled synchronization wrappers as
-follow-on slices. Broader M4 remains separate; no new framework/package release
+original feature contracts. Their October 13 implementation and bounded
+acceptance are in the [CLI guide](dpm-cli-guide.md),
+[runner contract](dpm-runner-contract.md) and
+[execution evidence](../Plans/dpm-f3-f5-evidence-20261013/README.md). Broader M4 remains separate; no new framework/package release
 qualification is inferred from these source gates.
 
 ## Generated integration kit
@@ -78,7 +80,7 @@ pass/terminal refuses. Outputs use exclusive creation and cannot overwrite the
 input. Display control characters are escaped; source receipt bytes stay unchanged.
 The timeline is diagnostic tooling, not a fresh replay or qualification producer.
 
-## Accepted source evidence and remaining slices
+## Accepted source evidence and later slices
 
 [First-slice evidence](../Plans/dpm-usability-evidence-20261007/README.md) records
 21 focused tests plus compiler/language/migration regressions. C++, Rust and Node
@@ -89,9 +91,10 @@ Mirrors supplied-trace comparison: normal replay matches, a real mutation causes
 no new model check is credited. Generated binding/kit ownership checks and ordinary
 v1 outputs pass without editing any frozen source/evidence record.
 
-Next slices reuse these seams: a schedule-valid same-signature reducer, a packaged
-cross-language replay/explore/report CLI, and a separate synchronization-wrapper
-profile that explicitly models blocked/enabled actors. None is silently claimed
-implemented or accepted by this first kit/timeline delivery. Source/tool changes
-mean a future current-candidate qualification needs a new freeze and actual gates;
-the earlier accepted C094271a54… remains its immutable profile record.
+The October 13 execution implements finite-catalog schedule reduction, an
+installed cross-language replay/explore/reduce/report CLI and a separate C++
+controlled mutex/FIFO prototype. Their exact installed/source acceptance is in
+[the execution record](../Plans/dpm-f3-f5-evidence-20261013/README.md).
+Source/tool changes mean a future full current-candidate qualification needs a
+new freeze and actual gates; the earlier accepted C0 94271a54… remains its
+immutable profile record.

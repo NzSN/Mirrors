@@ -1,0 +1,6 @@
+error: no matching package named `rustls-pemfile` found
+location searched: crates.io index
+required by package `mirrorrust v1.0.0 (/home/jlc/Tools/mirrors-dpm-remediation-20261013/rust/sdk)`
+    ... which satisfies path dependency `mirrorrust` (locked to 1.0.0) of package `mirrors-dpm-rust-consumer v0.1.0 (/home/jlc/Tools/mirrors-dpm-remediation-20261013/rust)`
+note: offline mode (via `--offline`) can sometimes cause surprising resolution failures
+help: if this error is too confusing you may wish to retry without `--offline`

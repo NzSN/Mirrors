@@ -1,0 +1,13 @@
+✔ invalid finite declarations cannot acquire a SUT (1.789ms)
+✔ evidence must match the exact candidate and use fresh execution identifiers (131.127903ms)
+✔ unknown cleanup stops another acquisition and a late runner cannot claim time-budget completion (50.248701ms)
+✔ validated model counterexample survives a separate cleanup failure (20.5093ms)
+✔ semantic coverage preserves types and ordinary record keys while normalizing sets and map order (0.4379ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 208.094204
