@@ -1,0 +1,15 @@
+2026-10-15T07:41:26Z
+uid=1000(jlc) gid=1000(jlc) groups=1000(jlc),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev),116(netdev),119(libvirt),1001(docker)
+CapEff:	0000000000000000
+CapAmb:	0000000000000000
+mnt:[4026532287]
+bubblewrap 0.9.0
+58ada8a498ddb5d350419a68ad9131e505dd7e4eb7efe1121663f526a17b5479  /usr/bin/bwrap
+d1de76d8edf2fededf6f8b30d244e2c0529ac607923a018283b77e9c74bd932c  /home/jlc/Tools/mirrors-client-fixes-20261015/tools/node/bin/node
+v24.15.0
+Python 3.12.14
+/tmp/fix-tests/sdk-real.3ziYxT/policy.json
+C++ control e2e stdio node-v1 Count=2 passed
+C++ control e2e stdio node-v1 Count=1 passed
+C++ control e2e unix node-v1 Count=2 passed
+CPP_GATE_SDK_REAL_NODE_WORKERS_PASSED

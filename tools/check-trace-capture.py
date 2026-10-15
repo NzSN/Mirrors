@@ -27,12 +27,14 @@ def job_result(job: str = "owned", outcome: dict | None = None) -> dict:
 def run_case(root: Path, label: str, replies: list, expected: int, *, asynchronous: bool = False,
              text: str = "", extra: list[str] | None = None, cancellation: bool = False) -> None:
     failures, requests = [], []
+    connections = []
     output = root / label
     with socket.socket() as listener:
         listener.bind(("127.0.0.1", 0)); listener.listen(); listener.settimeout(8)
         def serve() -> None:
             try:
                 with listener.accept()[0] as connection:
+                    connections.append(connection)
                     connection.settimeout(8)
                     with connection.makefile("rb") as stream:
                         for index, reply in enumerate(replies):
@@ -51,18 +53,32 @@ def run_case(root: Path, label: str, replies: list, expected: int, *, asynchrono
                             connection.sendall((payload + "\n").encode())
                         if cancellation:
                             packet = stream.readline(65537)
-                            assert json.loads(packet) == {"proto_step": "cancel_job", "jobId": "owned"}
+                            request = json.loads(packet); requests.append(request)
+                            assert request == {"proto_step": "cancel_job", "jobId": "owned"}
+                        # Closing the reply direction also delivers the EOF case.
+                        # Every terminal peer reply must be followed by zero writes.
+                        connection.shutdown(socket.SHUT_WR)
+                        assert stream.readline(65537) == b"", (label, "unexpected follow-up write")
             except Exception as error:
                 failures.append(repr(error))
         thread = threading.Thread(target=serve, daemon=True); thread.start()
         command = [str(BINARY), "trace-gen", "--host", "127.0.0.1", "--port", str(listener.getsockname()[1]),
                    "--spec", str(root / "Main.tla"), "--out", str(output), "--param-var", "parameters"]
         if asynchronous: command += ["--async"]
-        result = subprocess.run(command + (extra or []), capture_output=True, text=True, timeout=15)
-        thread.join(9)
+        try:
+            result = subprocess.run(command + (extra or []), capture_output=True, text=True, timeout=15)
+            thread.join(9)
+        finally:
+            for connection in connections:
+                try: connection.shutdown(socket.SHUT_RDWR)
+                except OSError: pass
+                connection.close()
+            listener.close()
+            thread.join(9)
         assert not thread.is_alive() and not failures, (label, result, failures)
         assert result.returncode == expected, (label, result)
         assert text in result.stderr, (label, result)
+        assert len(requests) == len(replies) + int(cancellation), (label, requests)
         if expected == 0:
             assert json.loads((output / "trace-0.itf.json").read_text()) == TRACE
             receipt = json.loads((output / "capture.json").read_text())
@@ -89,12 +105,22 @@ def main() -> None:
         run_case(root, "duplicate-field", ['{"proto_step":"gen_traces_done","itfTracePaths":[],"itfTraces":[],"itfTraces":[]}'], 2, text="bad json")
         run_case(root, "wrong-kind", [{**ACCEPTED, "kind": "validate"}], 2, asynchronous=True, text="trace-generation job_accepted")
         run_case(root, "empty-job", [{**ACCEPTED, "jobId": ""}], 2, asynchronous=True, text="empty")
-        run_case(root, "wrong-job", [ACCEPTED, job_result("other")], 2, asynchronous=True, text="job id mismatch", cancellation=True)
-        run_case(root, "wrong-result", [ACCEPTED, job_result(outcome={"validate": "valid"})], 2, asynchronous=True, text="validation result", cancellation=True)
+        run_case(root, "wrong-job", [ACCEPTED, job_result("other")], 2, asynchronous=True, text="job id mismatch")
+        run_case(root, "wrong-result", [ACCEPTED, job_result(outcome={"validate": "valid"})], 2, asynchronous=True, text="validation result")
         run_case(root, "poll-budget", [ACCEPTED, {"proto_step": "job_status", "jobId": "owned", "phase": "running"}], 2,
                  asynchronous=True, text="poll budget", extra=["--max-polls", "1"], cancellation=True)
         run_case(root, "cancelled", [ACCEPTED, {"proto_step": "job_status", "jobId": "owned", "phase": "cancelled"}], 2,
-                 asynchronous=True, text="cancelled", cancellation=True)
+                 asynchronous=True, text="cancelled")
+        run_case(root, "unknown", [ACCEPTED, {"proto_step": "job_status", "jobId": "owned", "phase": "unknown"}], 2,
+                 asynchronous=True, text="unknown or evicted")
+        run_case(root, "terminal-protocol", [ACCEPTED, {"proto_step": "protocol_error", "error": "peer terminal"}], 2,
+                 asynchronous=True, text="peer terminal")
+        run_case(root, "terminal-register", [ACCEPTED, {"proto_step": "register_error", "error": "peer rejected"}], 2,
+                 asynchronous=True, text="peer rejected")
+        run_case(root, "terminal-infra", [ACCEPTED, job_result(outcome={"error": "backend failed"})], 2,
+                 asynchronous=True, text="backend failed")
+        run_case(root, "malformed-after-accept", [ACCEPTED, "{"], 2, asynchronous=True, text="bad json")
+        run_case(root, "eof-after-accept", [ACCEPTED, None], 2, asynchronous=True, text="connection closed")
         # Refuse local failures before opening a connection.
         with socket.socket() as listener:
             listener.bind(("127.0.0.1", 0)); listener.listen(); listener.settimeout(.1)
@@ -111,7 +137,7 @@ def main() -> None:
             except TimeoutError: pass
             else:
                 connection.close(); raise AssertionError("local failure opened a connection")
-    print("TRACE CAPTURE CLI GREEN (15 protocol/publication cases)")
+    print("TRACE CAPTURE CLI GREEN (terminal failures emit no follow-up writes; budget cancels once)")
 
 
 if __name__ == "__main__":

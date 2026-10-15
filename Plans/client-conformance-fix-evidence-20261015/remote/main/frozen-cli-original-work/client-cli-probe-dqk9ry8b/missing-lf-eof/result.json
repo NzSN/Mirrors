@@ -1,0 +1,59 @@
+{
+  "capture_published": false,
+  "child_reaped": true,
+  "command": [
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/cpp-gate/immutable/mirror",
+    "validate",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "35101",
+    "--spec",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/frozen-cli-original-work/client-cli-probe-dqk9ry8b/missing-lf-eof/Main.tla"
+  ],
+  "elapsed_seconds": 0.17111,
+  "exit_code": 2,
+  "finding_reproduced": false,
+  "mode": "valid-eof",
+  "name": "missing-lf-eof",
+  "peer_error": null,
+  "peer_events": [
+    {
+      "reply": {
+        "proto_step": "spec_validated",
+        "result": "valid"
+      },
+      "terminated": false
+    },
+    "client EOF"
+  ],
+  "peer_thread_stopped": true,
+  "requests": [
+    {
+      "bytes": 293,
+      "json": {
+        "apalacheConfig": {
+          "constInit": null,
+          "initPredicate": null,
+          "invariant": "",
+          "lengthBound": 10,
+          "nextPredicate": null,
+          "paramVars": "",
+          "specPath": "Main.tla"
+        },
+        "bound": 10,
+        "proto_step": "register_validate",
+        "spec": {
+          "sources": [
+            "---- MODULE Main ----\nEXTENDS Child\n====\n",
+            "---- MODULE Child ----\n====\n"
+          ]
+        }
+      }
+    }
+  ],
+  "required_behavior": "Reject the nonempty EOF frame lacking LF; no VALID success.",
+  "stderr": "TCP connection closed with an unterminated protocol line\n",
+  "stdout": "",
+  "timed_out": false
+}

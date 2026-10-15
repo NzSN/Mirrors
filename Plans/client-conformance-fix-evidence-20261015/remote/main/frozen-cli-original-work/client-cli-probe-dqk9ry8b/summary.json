@@ -1,0 +1,345 @@
+{
+  "all_owned_processes_reaped": true,
+  "cases": [
+    {
+      "capture_published": false,
+      "child_reaped": true,
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/cpp-gate/immutable/mirror",
+        "validate",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "39885",
+        "--spec",
+        "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/frozen-cli-original-work/client-cli-probe-dqk9ry8b/valid-lf-control/Main.tla"
+      ],
+      "control_passed": true,
+      "elapsed_seconds": 0.17139,
+      "exit_code": 0,
+      "mode": "valid-lf",
+      "name": "valid-lf-control",
+      "peer_error": null,
+      "peer_events": [
+        {
+          "reply": {
+            "proto_step": "spec_validated",
+            "result": "valid"
+          },
+          "terminated": true
+        },
+        "client EOF"
+      ],
+      "peer_thread_stopped": true,
+      "requests": [
+        {
+          "bytes": 293,
+          "json": {
+            "apalacheConfig": {
+              "constInit": null,
+              "initPredicate": null,
+              "invariant": "",
+              "lengthBound": 10,
+              "nextPredicate": null,
+              "paramVars": "",
+              "specPath": "Main.tla"
+            },
+            "bound": 10,
+            "proto_step": "register_validate",
+            "spec": {
+              "sources": [
+                "---- MODULE Main ----\nEXTENDS Child\n====\n",
+                "---- MODULE Child ----\n====\n"
+              ]
+            }
+          }
+        }
+      ],
+      "stderr": "",
+      "stdout": "VALID\n",
+      "timed_out": false
+    },
+    {
+      "capture_published": false,
+      "child_reaped": true,
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/cpp-gate/immutable/mirror",
+        "validate",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "35101",
+        "--spec",
+        "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/frozen-cli-original-work/client-cli-probe-dqk9ry8b/missing-lf-eof/Main.tla"
+      ],
+      "elapsed_seconds": 0.17111,
+      "exit_code": 2,
+      "finding_reproduced": false,
+      "mode": "valid-eof",
+      "name": "missing-lf-eof",
+      "peer_error": null,
+      "peer_events": [
+        {
+          "reply": {
+            "proto_step": "spec_validated",
+            "result": "valid"
+          },
+          "terminated": false
+        },
+        "client EOF"
+      ],
+      "peer_thread_stopped": true,
+      "requests": [
+        {
+          "bytes": 293,
+          "json": {
+            "apalacheConfig": {
+              "constInit": null,
+              "initPredicate": null,
+              "invariant": "",
+              "lengthBound": 10,
+              "nextPredicate": null,
+              "paramVars": "",
+              "specPath": "Main.tla"
+            },
+            "bound": 10,
+            "proto_step": "register_validate",
+            "spec": {
+              "sources": [
+                "---- MODULE Main ----\nEXTENDS Child\n====\n",
+                "---- MODULE Child ----\n====\n"
+              ]
+            }
+          }
+        }
+      ],
+      "required_behavior": "Reject the nonempty EOF frame lacking LF; no VALID success.",
+      "stderr": "TCP connection closed with an unterminated protocol line\n",
+      "stdout": "",
+      "timed_out": false
+    },
+    {
+      "capture_published": false,
+      "child_reaped": true,
+      "command": [
+        "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/cpp-gate/immutable/mirror",
+        "trace-gen",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "42071",
+        "--spec",
+        "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/frozen-cli-original-work/client-cli-probe-dqk9ry8b/terminal-protocol-error-cancel/Main.tla",
+        "--async",
+        "--max-polls",
+        "1",
+        "--out",
+        "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/frozen-cli-original-work/client-cli-probe-dqk9ry8b/terminal-protocol-error-cancel/capture"
+      ],
+      "elapsed_seconds": 0.171291,
+      "exit_code": 2,
+      "finding_reproduced": false,
+      "mode": "terminal-cancel",
+      "name": "terminal-protocol-error-cancel",
+      "peer_error": null,
+      "peer_events": [
+        {
+          "reply": {
+            "jobId": "probe-owned",
+            "kind": "gen_traces",
+            "proto_step": "job_accepted"
+          },
+          "terminated": true
+        },
+        {
+          "reply": {
+            "error": "deliberate scripted terminal protocol error",
+            "proto_step": "protocol_error"
+          },
+          "terminated": true
+        },
+        "client EOF"
+      ],
+      "peer_thread_stopped": true,
+      "requests": [
+        {
+          "bytes": 331,
+          "json": {
+            "apalacheConfig": {
+              "constInit": null,
+              "initPredicate": null,
+              "invariant": "",
+              "lengthBound": 10,
+              "nextPredicate": null,
+              "paramVars": "",
+              "specPath": "Main.tla"
+            },
+            "proto_step": "register_trace_gen_async",
+            "spec": {
+              "sources": [
+                "---- MODULE Main ----\nEXTENDS Child\n====\n",
+                "---- MODULE Child ----\n====\n"
+              ]
+            },
+            "traceConfig": {
+              "numTraces": 1,
+              "view": null
+            }
+          }
+        },
+        {
+          "bytes": 65,
+          "json": {
+            "jobId": "probe-owned",
+            "proto_step": "await_job",
+            "timeoutSecs": 30
+          }
+        }
+      ],
+      "required_behavior": "Return the original terminal protocol error without sending cancel_job.",
+      "stderr": "deliberate scripted terminal protocol error\n",
+      "stdout": "",
+      "timed_out": false
+    }
+  ],
+  "metadata": {
+    "binary": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/cpp-gate/immutable/mirror",
+    "binary_sha256": "6e06ecd3d4d2975a42db2a1822b2d28d9e382f6d5b9bf48fa36c6c9ce27fa77d",
+    "binary_version": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "v0.0.3.2\n"
+    },
+    "host": "DESKTOP-6DKB5JD",
+    "kernel_release": "6.6.87.2-microsoft-standard-WSL2",
+    "no_builds_or_model_operations": true,
+    "probe_sha256": "425b57836a1c3f7843e9a16e6793458a67a2adadbfd7762d9c334cffac5de281",
+    "python": "3.12.14",
+    "source_parity": [
+      {
+        "matches": true,
+        "observed_sha256": "66025903b7a6b007076449eb9cc07ce7d7de554efe7cea497392b37fafa14f43",
+        "path": "Main.lean",
+        "sha256": "66025903b7a6b007076449eb9cc07ce7d7de554efe7cea497392b37fafa14f43"
+      },
+      {
+        "matches": true,
+        "observed_sha256": "8563b15183976d34698cb4bd6d407113db65e7e390114e2ce64b4f911b48284f",
+        "path": "Shell/Cli.lean",
+        "sha256": "8563b15183976d34698cb4bd6d407113db65e7e390114e2ce64b4f911b48284f"
+      },
+      {
+        "matches": true,
+        "observed_sha256": "4f07e637f37e56151172a51f1f99e9b458f8e0040e7183553b86e2d31992a8cb",
+        "path": "Shell/Client.lean",
+        "sha256": "4f07e637f37e56151172a51f1f99e9b458f8e0040e7183553b86e2d31992a8cb"
+      },
+      {
+        "matches": true,
+        "observed_sha256": "fa6c55dec6a831074b3b789673a4c64d966cc0e452133cddbc218f1bb21e145e",
+        "path": "Shell/TraceCapture.lean",
+        "sha256": "fa6c55dec6a831074b3b789673a4c64d966cc0e452133cddbc218f1bb21e145e"
+      },
+      {
+        "matches": true,
+        "observed_sha256": "e7cf63bf6d625df9073a1eab569fff9a904770a79ad914c5643c5c732172e065",
+        "path": "Shell/Transport/Stdio.lean",
+        "sha256": "e7cf63bf6d625df9073a1eab569fff9a904770a79ad914c5643c5c732172e065"
+      },
+      {
+        "matches": true,
+        "observed_sha256": "f69c592261a9cd8718eaab38a39132070551d671aacfeea98498adb69634775a",
+        "path": "Shell/Transport/Tcp.lean",
+        "sha256": "f69c592261a9cd8718eaab38a39132070551d671aacfeea98498adb69634775a"
+      },
+      {
+        "matches": true,
+        "observed_sha256": "b321b7a8927acae12e6d7b1ae0fec9a1c9ee8b71645d332214b823837f742863",
+        "path": "Shell/Apalache/SpecSource.lean",
+        "sha256": "b321b7a8927acae12e6d7b1ae0fec9a1c9ee8b71645d332214b823837f742863"
+      },
+      {
+        "matches": true,
+        "observed_sha256": "f8efa9b68190cbb030756eeab04f5d1ad415377a98b923e084f0cd7ba2b01afa",
+        "path": "Codec/Json.lean",
+        "sha256": "f8efa9b68190cbb030756eeab04f5d1ad415377a98b923e084f0cd7ba2b01afa"
+      },
+      {
+        "matches": true,
+        "observed_sha256": "c47fa454e9123e599c77e91c5c1050889d0addf91de6de7ac03be7148cd61146",
+        "path": "Codec/Bridge.lean",
+        "sha256": "c47fa454e9123e599c77e91c5c1050889d0addf91de6de7ac03be7148cd61146"
+      },
+      {
+        "matches": true,
+        "observed_sha256": "baeab272807bb6e67c47c596f3cafef4fca3da17e8813137ec595ee8f8ef3b63",
+        "path": "tools/check-validate-async.py",
+        "sha256": "baeab272807bb6e67c47c596f3cafef4fca3da17e8813137ec595ee8f8ef3b63"
+      },
+      {
+        "matches": true,
+        "observed_sha256": "fe121e4dc582b0547d6a25c7a474f98e56bcac6bca943e54b13cc0bc638d7e2d",
+        "path": "tools/TraceCaptureSpec.lean",
+        "sha256": "fe121e4dc582b0547d6a25c7a474f98e56bcac6bca943e54b13cc0bc638d7e2d"
+      }
+    ],
+    "source_reference": {
+      "baseHead": "c17bae951c4d5bbc5818c2a4f82e2d93d07abc52",
+      "files": [
+        {
+          "path": "Main.lean",
+          "sha256": "66025903b7a6b007076449eb9cc07ce7d7de554efe7cea497392b37fafa14f43"
+        },
+        {
+          "path": "Shell/Cli.lean",
+          "sha256": "8563b15183976d34698cb4bd6d407113db65e7e390114e2ce64b4f911b48284f"
+        },
+        {
+          "path": "Shell/Client.lean",
+          "sha256": "4f07e637f37e56151172a51f1f99e9b458f8e0040e7183553b86e2d31992a8cb"
+        },
+        {
+          "path": "Shell/TraceCapture.lean",
+          "sha256": "fa6c55dec6a831074b3b789673a4c64d966cc0e452133cddbc218f1bb21e145e"
+        },
+        {
+          "path": "Shell/Transport/Stdio.lean",
+          "sha256": "e7cf63bf6d625df9073a1eab569fff9a904770a79ad914c5643c5c732172e065"
+        },
+        {
+          "path": "Shell/Transport/Tcp.lean",
+          "sha256": "f69c592261a9cd8718eaab38a39132070551d671aacfeea98498adb69634775a"
+        },
+        {
+          "path": "Shell/Apalache/SpecSource.lean",
+          "sha256": "b321b7a8927acae12e6d7b1ae0fec9a1c9ee8b71645d332214b823837f742863"
+        },
+        {
+          "path": "Codec/Json.lean",
+          "sha256": "f8efa9b68190cbb030756eeab04f5d1ad415377a98b923e084f0cd7ba2b01afa"
+        },
+        {
+          "path": "Codec/Bridge.lean",
+          "sha256": "c47fa454e9123e599c77e91c5c1050889d0addf91de6de7ac03be7148cd61146"
+        },
+        {
+          "path": "tools/check-validate-async.py",
+          "sha256": "baeab272807bb6e67c47c596f3cafef4fca3da17e8813137ec595ee8f8ef3b63"
+        },
+        {
+          "path": "tools/TraceCaptureSpec.lean",
+          "sha256": "fe121e4dc582b0547d6a25c7a474f98e56bcac6bca943e54b13cc0bc638d7e2d"
+        }
+      ],
+      "purpose": "Post-fix relevant source bytes; full source manifest separately binds candidate",
+      "repo": "Mirrors"
+    },
+    "source_root": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/Mirrors",
+    "started_utc": "2026-10-15T08:27:33.541861+00:00",
+    "work_root": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/frozen-cli-original-work/client-cli-probe-dqk9ry8b"
+  },
+  "missing_lf_finding_reproduced": false,
+  "post_terminal_cancel_finding_reproduced": false,
+  "status": "completed",
+  "valid_lf_control_passed": true
+}

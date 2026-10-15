@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "originalMarkerClosureNowContainsDependency": true,
+  "originalEmptyTlsIdentityNowRejected": true,
+  "nullableDecoderNowAcceptsNull": true,
+  "positiveSanControlPreserved": true,
+  "tlsCommand": [
+    "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/bin/python3",
+    "run-tls-probe.py",
+    "--client-root",
+    "/home/jlc/Tools/mirrors-client-fixes-20261015/source/MirrorLean",
+    "--output",
+    "/home/jlc/Tools/mirrors-client-fixes-20261015/tmp/lean-original-probe-tls"
+  ],
+  "tlsPosixOutputRoot": "/home/jlc/Tools/mirrors-client-fixes-20261015/tmp/lean-original-probe-tls",
+  "probeRoot": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/lean-original-probes",
+  "privateKeysTransferred": false,
+  "binaries": {
+    "closure-probe": "5be7a688d4096bbfa7f459966035f5bfac394f9255814adc23d5479bfce9ae44",
+    "tls-identity-probe": "d8acb453ecb70841a682b099e8a8592f26d89358e5c2d8607a2c887ed8a06925"
+  }
+}

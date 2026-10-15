@@ -1,0 +1,8 @@
+repository hackage.haskell.org
+  url: https://mirrors.ustc.edu.cn/hackage/
+  secure: True
+remote-repo-cache: /home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/packages
+store-dir: /home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/store
+logs-dir: /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/cabal-logs
+jobs: 2
+http-transport: curl

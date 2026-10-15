@@ -1,0 +1,114 @@
+cpp-gate-sources.tar: OK
+cpp-gate-sources.sha256: OK
+verified source files: 493
+bubblewrap-0.9.0.tar.xz: OK
+{"tagObject": "5beb8d46d5edde6e53f6e7d4e6e37cbb645c5f4e", "tagCommit": "8e51677abd7e3338e4952370bf7d902e37d8cbb6", "releaseAsset": "https://github.com/containers/bubblewrap/releases/download/v0.9.0/bubblewrap-0.9.0.tar.xz", "releaseDigest": null, "observedArchiveSha256": "c6347eaced49ac0141996f46bba3b089e5e6ea4408bc1c43bab9f2d05dd094e1", "tagSignatureVerified": false}
+option(
+  'bash_completion',
+  type : 'feature',
+  description : 'install bash completion script',
+  value : 'enabled',
+)
+option(
+  'bash_completion_dir',
+  type : 'string',
+  description : 'install bash completion script in this directory',
+  value : '',
+)
+option(
+  'bwrapdir',
+  type : 'string',
+  description : 'install bwrap in this directory [default: bindir, or libexecdir in subprojects]',
+)
+option(
+  'build_rpath',
+  type : 'string',
+  description : 'set a RUNPATH or RPATH on the bwrap executable',
+)
+option(
+  'install_rpath',
+  type : 'string',
+  description : 'set a RUNPATH or RPATH on the bwrap executable',
+)
+option(
+  'man',
+  type : 'feature',
+  description : 'generate man pages',
+  value : 'auto',
+)
+option(
+  'program_prefix',
+  type : 'string',
+  description : 'Prepend string to bwrap executable name, for use with subprojects',
+)
+option(
+  'python',
+  type : 'string',
+  description : 'Path to Python 3, or empty to use python3',
+)
+option(
+  'require_userns',
+  type : 'boolean',
+  description : 'require user namespaces by default when installed setuid',
+  value : 'false',
+)
+option(
+  'selinux',
+  type : 'feature',
+  description : 'enable optional SELINUX support',
+  value : 'auto',
+)
+option(
+  'tests',
+  type : 'boolean',
+  description : 'build tests',
+  value : 'true',
+)
+option(
+  'zsh_completion',
+  type : 'feature',
+  description : 'install zsh completion script',
+  value : 'enabled',
+)
+option(
+  'zsh_completion_dir',
+  type : 'string',
+  description : 'install zsh completion script in this directory',
+  value : '',
+)
+project(
+  'bubblewrap',
+  'c',
+  version : '0.9.0',
+  meson_version : '>=0.49.0',
+  default_options : [
+    'warning_level=2',
+  ],
+)
+
+cc = meson.get_compiler('c')
+add_project_arguments('-D_GNU_SOURCE', language : 'c')
+common_include_directories = include_directories('.')
+
+# Keep this in sync with ostree, except remove -Wall (part of Meson
+# warning_level 2) and -Werror=declaration-after-statement
+add_project_arguments(
+  cc.get_supported_arguments([
+    '-Werror=shadow',
+    '-Werror=empty-body',
+    '-Werror=strict-prototypes',
+    '-Werror=missing-prototypes',
+    '-Werror=implicit-function-declaration',
+    '-Werror=pointer-arith',
+    '-Werror=init-self',
+    '-Werror=missing-declarations',
+    '-Werror=return-type',
+    '-Werror=overflow',
+    '-Werror=int-conversion',
+    '-Werror=parenthesis',
+    '-Werror=incompatible-pointer-types',
+    '-Werror=misleading-indentation',
+    '-Werror=missing-include-dirs',
+    '-Werror=aggregate-return',
+
+CPP_GATE_SOURCE_AND_BWRAP_READY

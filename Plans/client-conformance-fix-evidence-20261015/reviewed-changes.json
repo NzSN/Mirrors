@@ -1,0 +1,537 @@
+{
+  "schema": "mirrors.client-remediation-changes/v1",
+  "stage": "reviewed-initial",
+  "files": [
+    {
+      "repository": "MirrorLean",
+      "path": "MirrorLean/Protocol.lean",
+      "oldSha256": "1a4fd8964c15366e8033d5bf834852067b87f42ef8b9fb23b3f572d07ff9dd25",
+      "newSha256": "cd1ce4e4dcbca797cb666c013b37c4423369bd90770a08639cab067518425fe3",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/MirrorLean/Protocol.lean",
+      "destination": "/home/nzsn/Repos/MirrorLean/MirrorLean/Protocol.lean",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "MirrorLean/ServerMode.lean",
+      "oldSha256": "e2aa0b2ad1358361baa5ab861466e87911be5ff81cde4536e7f1cdf8762cc6a2",
+      "newSha256": "45eddab44082501c0e6ba3b4e8fd9a9cfdd7a99f785512fb8a81662adf8cab97",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/MirrorLean/ServerMode.lean",
+      "destination": "/home/nzsn/Repos/MirrorLean/MirrorLean/ServerMode.lean",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "MirrorLean/Spec.lean",
+      "oldSha256": "3032d715f9abddb76e3b8024a4ff5a948046c275198ab10755e7455a7ac45740",
+      "newSha256": "93cfba3a293de3d15b00f1e634bdbe06ea5958bfe083143ad3e6b7f2e1004658",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/MirrorLean/Spec.lean",
+      "destination": "/home/nzsn/Repos/MirrorLean/MirrorLean/Spec.lean",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "README.md",
+      "oldSha256": "83a21619998946cc9c05e0d353fac97db3dbf34a87e70ebc426bbd8d8698e892",
+      "newSha256": "bc8fa60a7fe1af4c3e5be52d6e5c252743d02cfa08a084dfdcdbf50259cce8fb",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/README.md",
+      "destination": "/home/nzsn/Repos/MirrorLean/README.md",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "server-mode/Test/ServerMode.lean",
+      "oldSha256": "204bec6d733c46f0d963d0747fff61d8874ac16a5f94064c3eafd28b2612997e",
+      "newSha256": "71bc16060ce10943fa0cd3d78db93d8f81346eaa5567822e665e73b57ca1b411",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/server-mode/Test/ServerMode.lean",
+      "destination": "/home/nzsn/Repos/MirrorLean/server-mode/Test/ServerMode.lean",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "server-mode/native/mirrorlean_tls.c",
+      "oldSha256": "d970e6f14cc715ffcdc4d90ca557b31e730251d4f5d73ef04bd69fa0128d598b",
+      "newSha256": "9803f3891c842e579507a65772c9114dfa2ce49eecbb2697d2e08328cf77add6",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/server-mode/native/mirrorlean_tls.c",
+      "destination": "/home/nzsn/Repos/MirrorLean/server-mode/native/mirrorlean_tls.c",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "server-mode/test/gen-test-certs.sh",
+      "oldSha256": "e9ec6f3faf73384d9133d56fa8daf9b17fc8d02d09d5e3561912284c5996e290",
+      "newSha256": "7c86fa2c0f8bc75fd951cd1533ed91b8e2c1c72acaf2c5d693ae800c728b6a7b",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/server-mode/test/gen-test-certs.sh",
+      "destination": "/home/nzsn/Repos/MirrorLean/server-mode/test/gen-test-certs.sh",
+      "newFileMode": "0o755"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "server-mode/test/no-connect-listener.py",
+      "oldSha256": null,
+      "newSha256": "590e41152097e197a05732f034465bbda4dedc4480cc218e64299d6bcddce4fd",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/server-mode/test/no-connect-listener.py",
+      "destination": "/home/nzsn/Repos/MirrorLean/server-mode/test/no-connect-listener.py",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "test/Main.lean",
+      "oldSha256": "6bb4072d4d896d024fdd5bb64cf1910cf41b7e39c3b52ff7cab0cf37d6e5104b",
+      "newSha256": "fb03267d65b9eba719fca963aadcd8e46f3d795c34c87c931a1013a6f7a2c637",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/test/Main.lean",
+      "destination": "/home/nzsn/Repos/MirrorLean/test/Main.lean",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "test/fixtures/scanner/Boundary.tla",
+      "oldSha256": null,
+      "newSha256": "c9e0469c86a8698df7c36c1073f39b25651a2e6bfcd6a4ecc8cc1a5ccd8412ef",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/test/fixtures/scanner/Boundary.tla",
+      "destination": "/home/nzsn/Repos/MirrorLean/test/fixtures/scanner/Boundary.tla",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "test/fixtures/scanner/BoundaryDep.tla",
+      "oldSha256": null,
+      "newSha256": "dd62ac52445f06a682d8cbd76388e185b8a7bada84469d85e561f2fed30589b4",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/test/fixtures/scanner/BoundaryDep.tla",
+      "destination": "/home/nzsn/Repos/MirrorLean/test/fixtures/scanner/BoundaryDep.tla",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "test/fixtures/scanner/LexicalA.tla",
+      "oldSha256": null,
+      "newSha256": "999fdfb055a80d3589853e43bb4d7bd8b5b150f85e229b711a023697adb5e3e6",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/test/fixtures/scanner/LexicalA.tla",
+      "destination": "/home/nzsn/Repos/MirrorLean/test/fixtures/scanner/LexicalA.tla",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "test/fixtures/scanner/LexicalB.tla",
+      "oldSha256": null,
+      "newSha256": "0492a3c5f6147cf4a57ef79a227ca017a38df17db64953440e2fddf0ef1149bc",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/test/fixtures/scanner/LexicalB.tla",
+      "destination": "/home/nzsn/Repos/MirrorLean/test/fixtures/scanner/LexicalB.tla",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "test/fixtures/scanner/LexicalRoot.tla",
+      "oldSha256": null,
+      "newSha256": "6733e1e75f3370654c7cef1644ceed119a44670416bef8722dd592aeca99bebd",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/test/fixtures/scanner/LexicalRoot.tla",
+      "destination": "/home/nzsn/Repos/MirrorLean/test/fixtures/scanner/LexicalRoot.tla",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "test/fixtures/scanner/LexicalShared.tla",
+      "oldSha256": null,
+      "newSha256": "9475868abff9ce942d777a87dc9489d16e89958d4c013b500427820509f71b0b",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/test/fixtures/scanner/LexicalShared.tla",
+      "destination": "/home/nzsn/Repos/MirrorLean/test/fixtures/scanner/LexicalShared.tla",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorLean",
+      "path": "test/fixtures/scanner/MissingAfterMarker.tla",
+      "oldSha256": null,
+      "newSha256": "bc49ac25c0b6b8228dfabcf7896f974405e7af3d969d3f005f2636598173bc0b",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorLean/test/fixtures/scanner/MissingAfterMarker.tla",
+      "destination": "/home/nzsn/Repos/MirrorLean/test/fixtures/scanner/MissingAfterMarker.tla",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorECMA",
+      "path": "README.md",
+      "oldSha256": "0aa5a81ff6c6c2f554f2c71ebdba78e8219a8884e146bb3fe88cecff4f69b676",
+      "newSha256": "ce6880980bd14a1baeea8130e99b8e2856c6775a6b474fa3a98bf34ea4c547b9",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorECMA/README.md",
+      "destination": "/home/nzsn/Repos/MirrorECMA/README.md",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorECMA",
+      "path": "docs/client-admission-release-notes.md",
+      "oldSha256": null,
+      "newSha256": "dab41fcf53c0baa94c4e2417d69c4076e847de24a919bdf2e370853b6af31d22",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorECMA/docs/client-admission-release-notes.md",
+      "destination": "/home/nzsn/Repos/MirrorECMA/docs/client-admission-release-notes.md",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorECMA",
+      "path": "docs/replay-and-async.md",
+      "oldSha256": "b7cc716cc6fc874871adf0e4f9399753d515f1406ba4348ad3d9bde3a18aa0cd",
+      "newSha256": "68f1ee376e88f316a6c8e73f0894cda6c536dabbba628df62355c92d37003095",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorECMA/docs/replay-and-async.md",
+      "destination": "/home/nzsn/Repos/MirrorECMA/docs/replay-and-async.md",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorECMA",
+      "path": "src/negotiated.ts",
+      "oldSha256": "961975f7616d3a59c57d17e15fa0f0e06c7a035473bbb80436199a5897dece29",
+      "newSha256": "9561bab3f821a39ba83bb271d70fdd722f64f73d0bd6b725b20c7e74e7c9b385",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorECMA/src/negotiated.ts",
+      "destination": "/home/nzsn/Repos/MirrorECMA/src/negotiated.ts",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorECMA",
+      "path": "src/transport.ts",
+      "oldSha256": "0327dc6e844b96fa05504f4b87d68a92b1ba4ec75a345fe7f0990221df4cb88f",
+      "newSha256": "6ff9c836b398df609c314b406ac67752f1f96f102bda05b855327768df583f56",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorECMA/src/transport.ts",
+      "destination": "/home/nzsn/Repos/MirrorECMA/src/transport.ts",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorECMA",
+      "path": "test/async-replay-report.test.ts",
+      "oldSha256": "89d4454541b64d3285ddcb8eab88e1ab7176e1c08be8a3aa03d1e5223fe89f72",
+      "newSha256": "e2bde556c37d720156e64ffa40d3b5448e6f91e8e745d71bcb8d70b2b67830d7",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorECMA/test/async-replay-report.test.ts",
+      "destination": "/home/nzsn/Repos/MirrorECMA/test/async-replay-report.test.ts",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorECMA",
+      "path": "test/client-spawn-allocation.test.ts",
+      "oldSha256": "f6ee8158aa5780470d9cb14e8210b30d5650431a47405cd04dc5f0fb49e965e7",
+      "newSha256": "06ae978bbd3a3ef06cb1d7a79b587ebe0cdf84388579eb88bb6f41a1690b935a",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorECMA/test/client-spawn-allocation.test.ts",
+      "destination": "/home/nzsn/Repos/MirrorECMA/test/client-spawn-allocation.test.ts",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorECMA",
+      "path": "test/model-interface-runner.test.ts",
+      "oldSha256": "60805118bc197ef2a59029883eb1319afe3d9c956a3493b91d5a8b8528b1083b",
+      "newSha256": "68f01507ceaf6dae314773dfd7d520758a1907ff41551942eed1b33d84530d84",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorECMA/test/model-interface-runner.test.ts",
+      "destination": "/home/nzsn/Repos/MirrorECMA/test/model-interface-runner.test.ts",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorECMA",
+      "path": "test/tls-key-mode.test.ts",
+      "oldSha256": null,
+      "newSha256": "91eaa748a8f26d6f88a5111d6388c884e99a9a6f5c184381c02fc2600d5ceac2",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorECMA/test/tls-key-mode.test.ts",
+      "destination": "/home/nzsn/Repos/MirrorECMA/test/tls-key-mode.test.ts",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorCPP",
+      "path": "README.md",
+      "oldSha256": "60b5d3e7182b445d8f333ef489e0a8b416d7a50628e925af15bb912ac092cdf9",
+      "newSha256": "41f3c90f89b4dd9ad88886e9bac30a5e6747606b32b110653dc13da8494e8f0c",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorCPP/README.md",
+      "destination": "/home/nzsn/Repos/MirrorCPP/README.md",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorCPP",
+      "path": "docs/design.md",
+      "oldSha256": "ecc683929516b5487463fbff973bb21cde2be54e715851222902d32b4e5251a4",
+      "newSha256": "729f3befe40c85a31323b819397c6f4fda4ab973b902862cdbab0cd37d4207b1",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorCPP/docs/design.md",
+      "destination": "/home/nzsn/Repos/MirrorCPP/docs/design.md",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorCPP",
+      "path": "src/detail/tls.cpp",
+      "oldSha256": "504f9b681ba43acd46628c947f85c674f133d8c794acfb5e1468f8da6a0a6a5d",
+      "newSha256": "8490e59e203120eaa246172d8c552cde8bdf469fbb3fef82f65a4c167ea80c9d",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorCPP/src/detail/tls.cpp",
+      "destination": "/home/nzsn/Repos/MirrorCPP/src/detail/tls.cpp",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorCPP",
+      "path": "test/unit/tls_test.cpp",
+      "oldSha256": "48b9f2d41bc90adb4c13c1c48b0b4e92c9bf8d8410d6ab877bd11b498db30a28",
+      "newSha256": "d37fc1e067717f3a8942f3163dc5db4a5a97567dd919cd5b6db5dd9cfcdd5836",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorCPP/test/unit/tls_test.cpp",
+      "destination": "/home/nzsn/Repos/MirrorCPP/test/unit/tls_test.cpp",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "conformance/control-v1/failure-counter.mjs",
+      "oldSha256": null,
+      "newSha256": "3d0c1ee8802e180be9c7bb2ba8b36ffa6be332c6e95f36887f1a3fc33a09c126",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/conformance/control-v1/failure-counter.mjs",
+      "destination": "/home/nzsn/Repos/MirrorGate/conformance/control-v1/failure-counter.mjs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "conformance/control-v1/run-cpp-failures",
+      "oldSha256": null,
+      "newSha256": "448a92f490f965a3c3e9d63ba5804c270d17e9edf911a6b3d93a47fcc16859fe",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/conformance/control-v1/run-cpp-failures",
+      "destination": "/home/nzsn/Repos/MirrorGate/conformance/control-v1/run-cpp-failures",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "integrations/mirrorcpp/README.md",
+      "oldSha256": "273846dd89df60467efc317148100072052909a1f3484ab3cb6c730d0dc74620",
+      "newSha256": "d83292dbe9468843558545adaf06ed340ae991a195044476f98f72563c56f1e6",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/integrations/mirrorcpp/README.md",
+      "destination": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/README.md",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "integrations/mirrorcpp/counter_driver.cpp",
+      "oldSha256": "5c55ecc7d529cf396def5ffd3bf045a4aba4ef70e7a68be5c121ba0fd119d7c7",
+      "newSha256": "63c1c64224c1d0f28f4d8c594edd0ac23eac3b82aeb6f81f45aab60aecd95786",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/integrations/mirrorcpp/counter_driver.cpp",
+      "destination": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/counter_driver.cpp",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "integrations/mirrorcpp/orchestration.cpp",
+      "oldSha256": "4a5c65245c5e2e0b63fce0bb06c8986a1da65ccc7ab150e5777abf0f0db982cd",
+      "newSha256": "9fb2f3a61ea150eba0edc26d80fc23105dd6f338137a36973d74e19a54692d30",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+      "destination": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "integrations/mirrorcpp/orchestration.hpp",
+      "oldSha256": "d73ebeda4b6c0cdf1430b92ff8f7627f6743d17067c24c7525c2d86c4254f65b",
+      "newSha256": "ba228a6cf164f121b4ac95e975dee72bb9ce2d65d09d07169be5f2ec488ceb3f",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/integrations/mirrorcpp/orchestration.hpp",
+      "destination": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.hpp",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "sdk/cpp/README.md",
+      "oldSha256": "2cbf7083276915e23a1a617b6a7014386aef5d7752eace98d4735a529094f024",
+      "newSha256": "159a4c9a811aff70b0744c142a3adc84795365106db42c23f7f52667bfd0f205",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/sdk/cpp/README.md",
+      "destination": "/home/nzsn/Repos/MirrorGate/sdk/cpp/README.md",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "sdk/cpp/include/mirrorgate/json.hpp",
+      "oldSha256": "9516c1a124c4c6efce4faffc568e17e4568f4018e95ce55e4eca4a31a9072717",
+      "newSha256": "5969e114ab88c9a705d223902759c5cc3fe8fd944e4c3b6a511c70a9f2b4bd83",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/sdk/cpp/include/mirrorgate/json.hpp",
+      "destination": "/home/nzsn/Repos/MirrorGate/sdk/cpp/include/mirrorgate/json.hpp",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "sdk/cpp/include/mirrorgate/managed_worker.hpp",
+      "oldSha256": "9dabeea4de74c17a49def454f49c4e8a3fb2179520523355cf3798614cd01fee",
+      "newSha256": "adc6e2a2d963aa746a4775365737d77d453a608c84a758a4d299fbdd2471df40",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/sdk/cpp/include/mirrorgate/managed_worker.hpp",
+      "destination": "/home/nzsn/Repos/MirrorGate/sdk/cpp/include/mirrorgate/managed_worker.hpp",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "sdk/cpp/src/control.cpp",
+      "oldSha256": "db5d86866164bd281cfc96037dd20b30f1c339fca082c4e52a34a85b4a478176",
+      "newSha256": "61e02db7380335b1fe2511bbe16ee96d6bbe3082386de55600380a7b4f0ea368",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/sdk/cpp/src/control.cpp",
+      "destination": "/home/nzsn/Repos/MirrorGate/sdk/cpp/src/control.cpp",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "sdk/cpp/src/json.cpp",
+      "oldSha256": "b3dd1b4994b2ae6ab5b8cf7b932ba3b1de773c71b848ec271ec0c899e6402c1c",
+      "newSha256": "3cb495b084e51731071ff6c9e555e4336fc5dc1d852ac616a1b88d1ee11b9b31",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/sdk/cpp/src/json.cpp",
+      "destination": "/home/nzsn/Repos/MirrorGate/sdk/cpp/src/json.cpp",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "sdk/cpp/src/managed_worker.cpp",
+      "oldSha256": "fe1d2a1f682f88b3b0d842bd1f8bf51ec122cb5f15a9cf28cb31b70c9dfb2817",
+      "newSha256": "689847008e40a4ff8d250dc619b4a8c620ff4bbe252f7df061923a853fdab088",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/sdk/cpp/src/managed_worker.cpp",
+      "destination": "/home/nzsn/Repos/MirrorGate/sdk/cpp/src/managed_worker.cpp",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "tests/cpp/orchestration_receipt_test.cpp",
+      "oldSha256": "d015e4f1329798070d0db1e2a6ffea8dc359668fa8fd10e649352f1916d7d603",
+      "newSha256": "d5979d72c1a14f7143f3c9eeee421c8efaa24f00d3dbef31fc6396538fa2b082",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/tests/cpp/orchestration_receipt_test.cpp",
+      "destination": "/home/nzsn/Repos/MirrorGate/tests/cpp/orchestration_receipt_test.cpp",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "MirrorGate",
+      "path": "tests/cpp/sdk_test.cpp",
+      "oldSha256": "8f9b780ffa2eb2c8f0a7844c5ed32a69ec2f9569279011c55947195a078f87d4",
+      "newSha256": "9986641dae5a6ce0d270d6b7e0cc7a6199580799c5d9efbfb69c1ccbccc0142c",
+      "source": "/tmp/mirrors-client-fix-20261015/MirrorGate/tests/cpp/sdk_test.cpp",
+      "destination": "/home/nzsn/Repos/MirrorGate/tests/cpp/sdk_test.cpp",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "ModelMirrors.cabal",
+      "oldSha256": "c29b473376cd192d97ead71c70bf4a587120c1b325f46f37fbc2477937d10370",
+      "newSha256": "8cb083241b07b76d2cca80a1e2181377489b73fc31129c7018470ff7e67ac423",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/ModelMirrors.cabal",
+      "destination": "/home/nzsn/Repos/ModelMirros/ModelMirrors.cabal",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "docs/transport-framing.md",
+      "oldSha256": null,
+      "newSha256": "0e688624dc5d359f23f4e1e66f9b2cbb4947b4c0d4533d48d2f2588bee53bbd6",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/docs/transport-framing.md",
+      "destination": "/home/nzsn/Repos/ModelMirros/docs/transport-framing.md",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "src/Protocol/Client.hs",
+      "oldSha256": "0760df92b951995bf540fb3822e84dc8b2b1640118ff9531529c77b2dd258c24",
+      "newSha256": "2ec95a91223dc12fd0cfc4943ce1893b4fa47cacb29d34ddf97c962a5a4aa4f6",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/src/Protocol/Client.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "src/Protocol/Mirror.hs",
+      "oldSha256": "7694e0cb9734e57e253e81a125b1660edc24167e8d9e81a9fe71569138c4295e",
+      "newSha256": "d282f6bfa5aaaf936532837221664e91a4793b8efd913fe0806941ee5fda23aa",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/src/Protocol/Mirror.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/src/Protocol/Mirror.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "src/Protocol/Transport/Core.hs",
+      "oldSha256": "d7a0e1eea90b0ac5f3d4425c6b8807c686fda6bd66b9b2b6082aceb6679c412f",
+      "newSha256": "3d150ebc85a2521cba61fb9c54877d85dbc35b858537e417c1963647aac00ac6",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/src/Protocol/Transport/Core.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/src/Protocol/Transport/Core.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "src/Protocol/Transport/Framing.hs",
+      "oldSha256": null,
+      "newSha256": "0ecc631076c395f9497570b4a82def9651156401e9d0637dc2280ee4d32993e5",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/src/Protocol/Transport/Framing.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/src/Protocol/Transport/Framing.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "src/Protocol/Transport/Stdio.hs",
+      "oldSha256": "6e68396f806aee56822028f92c0ac374319218e80c5b704e4ff445b0d456c573",
+      "newSha256": "92ef4b74cf9fca2ff7b70f36c211f7cd8609cda180672c3d49766ec9c0e45120",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/src/Protocol/Transport/Stdio.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/src/Protocol/Transport/Stdio.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "src/Protocol/Transport/Tcp.hs",
+      "oldSha256": "b3854518c09360c5fe5008ba0b388aa5978be782e5516b272ea2b424e42d2c26",
+      "newSha256": "d3637a7d0e8c0ce338c45b2cdbc05f9cd559eb05b563498a018294cbe0194c43",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/src/Protocol/Transport/Tcp.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/src/Protocol/Transport/Tcp.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "src-tls/Protocol/Transport/Tls.hs",
+      "oldSha256": "d918cbd74d0043c826cb976c6a06a3e0b6af8264554be46b6533335090988154",
+      "newSha256": "23d6b57db6d8f0b212e7aeaf3fffcf9028d5cba565d92e5ae5085fb5db6b703b",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/src-tls/Protocol/Transport/Tls.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/src-tls/Protocol/Transport/Tls.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "test/ClientReplySpec.hs",
+      "oldSha256": null,
+      "newSha256": "7e07aafd36e607c86709ffbbd28bb9f876cf8e7931644a5e5dc4fd4a3f960e87",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/test/ClientReplySpec.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/test/ClientReplySpec.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "test/Main.hs",
+      "oldSha256": "1b7e49cdbb755a6b2fe018fbb4ad4628b4dda2fb9cf09d12e914d0c5adcc8ec4",
+      "newSha256": "f16788e67564880e57d38f4da1e4037ec1a3cf0c05650b5579d180ff8868a945",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/test/Main.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/test/Main.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "test/ServerFramingSpec.hs",
+      "oldSha256": null,
+      "newSha256": "d6d735c19bfcd1b82c823cf61532a7757b0d436d3723a4fa3126ef72883df7ca",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/test/ServerFramingSpec.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/test/ServerFramingSpec.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "test/StdioTransportSpec.hs",
+      "oldSha256": null,
+      "newSha256": "caba6c48b6b6857d0de372ba9d62ada00e6b4e27e3ff93010270396cd00f2a5f",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/test/StdioTransportSpec.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/test/StdioTransportSpec.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "test/TlsPolicySpec.hs",
+      "oldSha256": null,
+      "newSha256": "9aa2f50379bcc7caa8f5fac3f9eae7ac3b69fde7c3b5c18cb44392b8c6a69253",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/test/TlsPolicySpec.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/test/TlsPolicySpec.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "test/TransportFramingSpec.hs",
+      "oldSha256": null,
+      "newSha256": "e1c71d60cd8392b037dae4481fa7a7d0b8c73b8f9d9407e304f13599ed58e6f1",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/test/TransportFramingSpec.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/test/TransportFramingSpec.hs",
+      "newFileMode": "0o644"
+    },
+    {
+      "repository": "ModelMirros",
+      "path": "test/TransportTestSupport.hs",
+      "oldSha256": null,
+      "newSha256": "8baff3e32949dd69a0300ab2f12700582c1eee0e3ea0ad06d664332ea336d058",
+      "source": "/tmp/mirrors-client-fix-20261015/ModelMirros/test/TransportTestSupport.hs",
+      "destination": "/home/nzsn/Repos/ModelMirros/test/TransportTestSupport.hs",
+      "newFileMode": "0o644"
+    }
+  ]
+}

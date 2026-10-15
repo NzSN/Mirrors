@@ -1,0 +1,723 @@
+{
+  "repo": "MirrorRust",
+  "head": "5049e99886a3d1f775e60190478c26e39c9aefc9",
+  "profiles": [
+    "legacy stdio replay/validation/trace generation",
+    "TCP/mTLS TLS1.3 server-mode replay and async jobs",
+    "compiled model-interface verification require and explicit prefer",
+    "optional Gate Rust control-v1 owned stdio/attached Unix and Counter fixture; Gate 4a8d0d361589059ad72fe52e05789f302b4b65c8"
+  ],
+  "rules": [
+    {
+      "id": "C1",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/transport.rs",
+          "line": 283
+        }
+      ],
+      "note": "Shared JSONL writer appends LF; bounded UTF-8 receiver; protocol encoders emit objects."
+    },
+    {
+      "id": "C2",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/transport.rs",
+          "line": 299
+        }
+      ],
+      "note": "Receiver uses Read::take(65537); checks raw bytes before protocol decoding. Send checks String byte length <=65535 before writing. tests/transport.rs exact and multibyte boundaries."
+    },
+    {
+      "id": "C3",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/protocol.rs",
+          "line": 623
+        }
+      ],
+      "note": "Dispatches string proto_step and reads required keys without rejecting additive outer fields."
+    },
+    {
+      "id": "C4",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 95
+        }
+      ],
+      "note": "Replay, generation and validation helpers register first. Job helpers query existing IDs directly and reject stdio async before writing."
+    },
+    {
+      "id": "C5",
+      "status": "shared-contract-discrepancy",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 249
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Docs/client-implementation-guide.md",
+          "line": 716
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Mirror/Session.lean",
+          "line": 900
+        }
+      ],
+      "note": "Literal C5 says register_error ends the physical session, but guide section 10 says terminal for that register attempt. Rust async helpers intentionally retain connection, matching server dispatchAsync which sends register_error then returns true and preserving other owner jobs."
+    },
+    {
+      "id": "C6",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/transport.rs",
+          "line": 242
+        }
+      ],
+      "note": "Consumed replay transports close on completion and error; close/Drop tolerate network NotConnected. Async owner lifetime remains caller-managed."
+    },
+    {
+      "id": "C7",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/transport.rs",
+          "line": 170
+        }
+      ],
+      "note": "Only handshake read/write timeouts are installed and cleared after handshake; no protocol heartbeat or established idle timeout."
+    },
+    {
+      "id": "C8",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 445
+        }
+      ],
+      "note": "Initial and action branches each compute then send one report_state."
+    },
+    {
+      "id": "C9",
+      "status": "application-obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 26
+        }
+      ],
+      "note": "StateComputer returns observable State; full state is encoded. SDK cannot prove that arbitrary application observations are complete or truthful."
+    },
+    {
+      "id": "C10",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 465
+        }
+      ],
+      "note": "StepMismatch returns immediately, preserving hints; no trailing all_steps_done wait."
+    },
+    {
+      "id": "C11",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/protocol.rs",
+          "line": 11
+        }
+      ],
+      "note": "Value::Int is BigInt and clean encoder uses #bigint; tests/protocol.rs:506 round-trips beyond native integer precision."
+    },
+    {
+      "id": "C12",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 442
+        }
+      ],
+      "note": "Replay dispatch loop continues until terminal response rather than a fixed step count."
+    },
+    {
+      "id": "C13",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/spec.rs",
+          "line": 154
+        }
+      ],
+      "note": "spec_from_files builds recursive EXTENDS/INSTANCE closure, handles multiline/comments, canonical-path cycles and ambiguity. Complete registration limit enforced by Transport.send; manual ApalacheSpec remains caller responsibility."
+    },
+    {
+      "id": "C14",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/protocol.rs",
+          "line": 190
+        }
+      ],
+      "note": "Optional config values use Option and skip None; caller chooses concrete required/default fields. Does not implement server config decoding."
+    },
+    {
+      "id": "C15",
+      "status": "application-obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/protocol.rs",
+          "line": 198
+        }
+      ],
+      "note": "const_init is exposed; README quickstart and tests/server_mode_smoke.rs:517 explicitly supply CInit for Counter. Arbitrary application CONSTANTS require caller configuration."
+    },
+    {
+      "id": "C16",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 201
+        }
+      ],
+      "note": "Sync and async validation preflight bounds [1,100] before writes."
+    },
+    {
+      "id": "C17",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 333
+        }
+      ],
+      "note": "Job ID supplied by caller, no connection-local ID assumption. tests/server_mode_smoke.rs:730 covers cross-connection owner and observer lifetimes."
+    },
+    {
+      "id": "C18",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 345
+        }
+      ],
+      "note": "await_job accepts optional timeout and returns Status versus Result without implicit retry or timeout conversion."
+    },
+    {
+      "id": "C19",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 363
+        }
+      ],
+      "note": "Explicit cancel_job helper; tests/server_mode_smoke.rs:823 covers running cancellation; process termination remains server authority."
+    },
+    {
+      "id": "C20",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/protocol.rs",
+          "line": 306
+        }
+      ],
+      "note": "JobOutcome::Validate reuses SpecResult; live-smoke source compares async result to sync validation. No fresh live run."
+    },
+    {
+      "id": "C21",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/protocol.rs",
+          "line": 685
+        }
+      ],
+      "note": "Unknown is a distinct phase returned once; library has no unknown retry loop. Smoke loop exits immediately on Unknown."
+    },
+    {
+      "id": "C22",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 249
+        }
+      ],
+      "note": "Full queue maps to RegisterFailed; no pool is imposed by library. Terminal connection handling has separate C5 gap."
+    },
+    {
+      "id": "C23",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 314
+        }
+      ],
+      "note": "Replies must correlate exact job IDs; independent queries do not assume completion order; reverse-order await smoke present."
+    },
+    {
+      "id": "C24",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/transport.rs",
+          "line": 159
+        }
+      ],
+      "note": "rustls configured TLS13 only with client certificate/key and CA roots. TLS12/client-auth failure smoke present; not rerun."
+    },
+    {
+      "id": "C25",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/transport.rs",
+          "line": 165
+        }
+      ],
+      "note": "Default rustls/webpki server-name verifier uses SAN, DNS/IP ServerName; CN-only rejection smoke at tests/server_mode_smoke.rs:354."
+    },
+    {
+      "id": "C26",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/transport.rs",
+          "line": 189
+        }
+      ],
+      "note": "SHA256 leaf pin compared after handshake and before Transport returned/protocol bytes. Registry precedence preserves pin_override then caller pin then candidate pin in registry.rs:130."
+    },
+    {
+      "id": "C27",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/transport.rs",
+          "line": 345
+        }
+      ],
+      "note": "POSIX mode requires mode&07777 ==0600 before credential load. Transport tests reject readonly/group/special bits; non-Unix uses ACL/platform policy."
+    },
+    {
+      "id": "MI1",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 95
+        }
+      ],
+      "note": "Legacy encoders have no modelInterface; legacy Error API retained; tests/legacy_compatibility.rs:23 tests signature and wire."
+    },
+    {
+      "id": "MI2",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 129
+        }
+      ],
+      "note": "Metadata is inert JSON/digest, exact local factory registry; no received executable retrieval or dynamic interpreter."
+    },
+    {
+      "id": "MI3",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1126
+        }
+      ],
+      "note": "Complete metadata and canonical semantic digest select compiled binding. Generated-file provenance/freshness is compiler/application-owned and needs coordinated gate."
+    },
+    {
+      "id": "MI4",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1557
+        }
+      ],
+      "note": "Contract-version preflight and post-creation assert_compatible_config precede computer/observer replay; compatibility function is binding-owned."
+    },
+    {
+      "id": "MI5",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 587
+        }
+      ],
+      "note": "Strict lexical duplicate-aware, byte/depth/node-limited parser; nested closed-shape contract, negotiation and failure checks. Additive outer fields retained."
+    },
+    {
+      "id": "MI6",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1140
+        }
+      ],
+      "note": "Request always includes complete contract inline; no contract reference or companion inference."
+    },
+    {
+      "id": "MI7",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1126
+        }
+      ],
+      "note": "make_verify_request obtains digest and validated contract from same GeneratedModelInterface. Metadata authenticity remains trusted build responsibility."
+    },
+    {
+      "id": "MI8",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1531
+        }
+      ],
+      "note": "First reply strictly decoded before factory; all failures close consumed transport; negative tests require zero callbacks."
+    },
+    {
+      "id": "MI9",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1411
+        }
+      ],
+      "note": "Compiled verify accepts only matched accepted descriptor schema and exact parsed digest, rejects descriptor payload/bytes and inappropriate statuses."
+    },
+    {
+      "id": "MI10",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1377
+        }
+      ],
+      "note": "Prefer fallback requires explicit separate factory; malformed/digest mismatch fail; selected negotiated factory is not reused implicitly."
+    },
+    {
+      "id": "MI11",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 213
+        }
+      ],
+      "note": "Exact four-field registry match; zero/multiple matches yield classified errors without invoking factories."
+    },
+    {
+      "id": "MI12",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1532
+        }
+      ],
+      "note": "Fresh creation after checked authority; binding digest and effective config rechecked before shared replay. Factory must itself return fresh binding."
+    },
+    {
+      "id": "MI13",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1553
+        }
+      ],
+      "note": "Shared run_stepping_loop; catch_unwind surrounds binding validation/replay; one dispose attempted, primary failure preserved."
+    },
+    {
+      "id": "MI14",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 22
+        }
+      ],
+      "note": "Separate NegotiatedError::ModelInterface stable codes, Registration structured errors, Legacy preserves legacy variants."
+    },
+    {
+      "id": "MI15",
+      "status": "not-applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1411
+        }
+      ],
+      "note": "Dynamic descriptor profile not advertised or implemented; compiled path rejects resolved/not_modified."
+    },
+    {
+      "id": "MI16",
+      "status": "not-applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1484
+        }
+      ],
+      "note": "No dynamic descriptor cache or ifNoneMatch path."
+    },
+    {
+      "id": "MI17",
+      "status": "not-applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1484
+        }
+      ],
+      "note": "No dynamic handler interpreter profile; static generated adapter is a separate contract."
+    },
+    {
+      "id": "MI18",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/model_interface.rs",
+          "line": 1308
+        }
+      ],
+      "note": "Authorization register_error is terminal; no negotiation-dropping retry. TCP/mTLS identity and pin handling remain independent transport paths."
+    },
+    {
+      "id": "SO1",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorrust/src/lib.rs",
+          "line": 386
+        }
+      ],
+      "note": "Facade delegates prepare/authorize/acquire/cleanup to Gate Rust SDK; no MirrorECMA evaluator prerequisite. Scope is optional control-v1 Counter fixture and caller-supplied binding seam."
+    },
+    {
+      "id": "SO2",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/rust/src/transport.rs",
+          "line": 367
+        }
+      ],
+      "note": "Owned stdio startup versus attached Unix; attached close reports NotOwned; process shutdown belongs only to owned child."
+    },
+    {
+      "id": "SO3",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorrust/src/lib.rs",
+          "line": 509
+        }
+      ],
+      "note": "Separate Gate control, Mirrors stdio negotiated runner and managed public worker channel."
+    },
+    {
+      "id": "SO4",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorrust/src/lib.rs",
+          "line": 306
+        }
+      ],
+      "note": "Trusted Counter binding projects declared Initialize/Tick and Stride and observes Count. Does not send raw model messages/state/credentials to worker. Arbitrary user binding still trusted."
+    },
+    {
+      "id": "SO5",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorrust/src/lib.rs",
+          "line": 515
+        }
+      ],
+      "note": "Worker authorization/acquisition/connect occurs only inside post-match factory, after prepare/admission."
+    },
+    {
+      "id": "SO6",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorrust/src/lib.rs",
+          "line": 461
+        }
+      ],
+      "note": "Gate prepare snapshot/challenge used for authorize; manifest digest/model revision/runtime/submission remain separate inputs. Supervisor implementation itself outside this Rust audit."
+    },
+    {
+      "id": "SO7",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorrust/src/lib.rs",
+          "line": 95
+        }
+      ],
+      "note": "Gate code families retained as mirrorgate.* codes; negotiated/registration/legacy mismatch preserved; no raw subprocess isolation fallback. Error classification accuracy requires live failure gate."
+    },
+    {
+      "id": "SO8",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorrust/src/lib.rs",
+          "line": 205
+        }
+      ],
+      "note": "worker.finish and session.close use authoritative cleanup; confirms Closed/Succeeded/no resources. Primary result retained if cleanup also fails. Control close checked separately."
+    },
+    {
+      "id": "SO9",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/rust/src/control.rs",
+          "line": 442
+        }
+      ],
+      "note": "Connection/session-bound opaque authorizations/reservations; Unix socket verification validates filesystem identity/owner/mode. No remote control profile advertised."
+    },
+    {
+      "id": "SO10",
+      "status": "external-obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorrust/README.md",
+          "line": 6
+        }
+      ],
+      "note": "Library trusted evaluator can return private mismatch detail; host must restrict tools/context and disclosure. Counter privacy canary historical tests do not prove arbitrary host blindness or observation fidelity."
+    },
+    {
+      "id": "SO11",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/rust/src/control.rs",
+          "line": 329
+        }
+      ],
+      "note": "Control-v1 hello capabilities, request correlation, bounded strict codecs, opaque session handles, cleanup outcomes and shared fixtures present. Does not advertise control-v2 managed hosting."
+    },
+    {
+      "id": "SO12",
+      "status": "historical-evidence-only",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/docs/rust-evaluator-sdk-status.md",
+          "line": 63
+        }
+      ],
+      "note": "Historical real 20-row owned/attached x Node/Rust matrix and reference-facade parity documented. Not rerun for current source, not generic generated Rust Gate acceptance, no current framework qualification credit."
+    }
+  ],
+  "findings": [
+    {
+      "priority": "P2-documentation-contract",
+      "rule": "C5/section10",
+      "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+      "line": 249,
+      "trigger": "Async registration rejected (e.g. queue full) while the connection may already own jobs.",
+      "impact": "Guide C5 requires a new connection, whereas section10/server and Rust helpers permit further async operations. Consumers following blanket-close advice may cancel and evict other jobs owned by that session (C6). This does not establish a Rust runtime defect.",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 249
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 284
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/src/client.rs",
+          "line": 320
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorRust/tests/server_mode_smoke.rs",
+          "line": 899
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Docs/client-implementation-guide.md",
+          "line": 96
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Docs/client-implementation-guide.md",
+          "line": 716
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Mirror/Session.lean",
+          "line": 900
+        }
+      ],
+      "confidence": "high-source-confirmed shared guide/implementation discrepancy; no fresh runtime probe",
+      "fix": "Clarify C5 to distinguish terminal replay/registration flows from an async registration-attempt rejection on a still-live server-mode job connection, and align the conformance tests. Do not automatically close Rust async transports without deciding the cross-client/server contract and owner-job consequences."
+    }
+  ],
+  "testEvidence": [
+    {
+      "kind": "source-present-not-run",
+      "path": "/home/nzsn/Repos/MirrorRust/tests/transport.rs",
+      "cases": "UTF8 exact send boundary, no-write rejection, TCP roundtrip, POSIX0600"
+    },
+    {
+      "kind": "source-present-not-run",
+      "path": "/home/nzsn/Repos/MirrorRust/tests/model_interface.rs",
+      "cases": "strict malformed/duplicate negotiation; explicit fallback; exact registry; disposal on success/panic/invalid binding"
+    },
+    {
+      "kind": "source-present-not-run",
+      "path": "/home/nzsn/Repos/MirrorRust/tests/server_mode_smoke.rs",
+      "cases": "real server normal replay/mismatch, TLS12/CN-only/wrong pin/client auth denial, async crossconnection/order/cancellation/eviction/queue pressure; requires live Mirrors/model tools and env, can skip"
+    },
+    {
+      "kind": "source-present-not-run",
+      "path": "/home/nzsn/Repos/MirrorGate/sdk/rust/tests/managed_worker_failures.rs",
+      "cases": "cancellation, timeout, EOF, malformed observation, partial acquisition and cleanup precedence"
+    },
+    {
+      "kind": "historical-not-revalidated",
+      "path": "/home/nzsn/Repos/MirrorGate/docs/rust-evaluator-sdk-status.md",
+      "cases": "20 live Counter rows, cross-facade comparison, feature/default SDK vectors and real backend claims"
+    }
+  ],
+  "limits": [
+    "Read-only static audit; no local or remote builds/tests/model operations/services invoked.",
+    "No blanket current-source conformance acceptance. Source paths and checked-in tests establish implementation intent, not current backend/runtime success.",
+    "Application state fidelity, constInit selection, complete manual inline sources, trusted metadata provenance, and agent-host mediation remain explicit application/operator obligations.",
+    "Gate supervisor/backend implementation and full runtime shim code were not re-audited as part of Rust facade review.",
+    "Dynamic descriptor profile MI15-MI17, explorer facade, remote Gate control, control-v2 Rust hosting, other host backends and generic generated Rust Gate application acceptance are not advertised by these scoped entrypoints."
+  ]
+}

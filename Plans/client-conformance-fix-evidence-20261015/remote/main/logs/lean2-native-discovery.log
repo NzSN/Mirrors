@@ -1,0 +1,50 @@
+MirrorLean server-mode: registry discovery tests
+-----------------------------------------------
+[registry URL parse]   ok   - parse: bare host
+  ok   - parse: host:port
+  ok   - parse: prefix
+  ok   - parse: prefix trailing slash
+  ok   - parse: root slash
+  ok   - parse: deep prefix
+  ok   - parse: rejects https
+  ok   - parse: rejects missing scheme
+  ok   - parse: rejects empty host
+  ok   - parse: rejects empty port
+  ok   - parse: rejects non-numeric port
+  ok   - parse: rejects zero port
+  ok   - parse: rejects out-of-range port
+  ok   - parse: rejects ipv6 literal
+PASS
+[discover: valid response]   ok   - discover valid: request line
+  ok   - discover valid: Host header
+  ok   - discover valid: Connection header
+  ok   - discover valid: Accept header
+  ok   - discover valid: candidate count
+  ok   - discover valid: exact candidates
+PASS
+[discover: malformed JSON]   ok   - discover malformed json: empty
+PASS
+[discover: non-array JSON]   ok   - discover non-array json: empty
+PASS
+[discover: empty array]   ok   - discover empty array: empty
+PASS
+[discover: non-200 status]   ok   - discover non-200: empty
+PASS
+[discover: garbage response]   ok   - discover garbage: empty
+PASS
+[discover: closed without response]   ok   - discover closed: throws
+PASS
+[discover: chunked body]   ok   - discover chunked: count
+  ok   - discover chunked: candidate
+PASS
+[discover: read-to-EOF body]   ok   - discover eof-framed: count
+  ok   - discover eof-framed: candidate
+PASS
+[discover: connection refused]   ok   - discover refused: throws
+PASS
+[discover: read timeout]   ok   - discover timeout: throws
+PASS
+[discover: bad URL]   ok   - discover bad url: throws
+PASS
+
+13 tests, 0 failures

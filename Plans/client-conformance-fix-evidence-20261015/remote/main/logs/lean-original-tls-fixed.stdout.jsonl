@@ -1,0 +1,6 @@
+{"case":"default","connected":true,"peer":"server"}
+{"case":"wrong-name","connected":false,"error":"connectMirrorTls: TLS 1.3 handshake with '127.0.0.1:48047' failed; verification failed: hostname mismatch; error:0A000086:SSL routines::certificate verify failed","peer":"server"}
+{"case":"empty-name","connected":false,"error":"connectMirrorTls: TLS server identity must be nonempty","peer":"server"}
+{"case":"default","connected":false,"error":"connectMirrorTls: TLS 1.3 handshake with '127.0.0.1:39319' failed; verification failed: IP address mismatch; error:0A000086:SSL routines::certificate verify failed","peer":"server-cn"}
+{"case":"wrong-name","connected":false,"error":"connectMirrorTls: TLS 1.3 handshake with '127.0.0.1:39319' failed; verification failed: hostname mismatch; error:0A000086:SSL routines::certificate verify failed","peer":"server-cn"}
+{"case":"empty-name","connected":false,"error":"connectMirrorTls: TLS server identity must be nonempty","peer":"server-cn"}

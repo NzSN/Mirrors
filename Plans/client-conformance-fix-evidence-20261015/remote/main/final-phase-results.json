@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "phaseExits": {
+    "lean-final-2.exit": "0",
+    "mirrors-focused-2.exit": "0",
+    "mirrors-full-2.exit": "0",
+    "ecma-focused-2.exit": "0",
+    "ecma-ci-3.exit": "0"
+  },
+  "nativeRebuildLog": "logs/native-rebuild.log",
+  "rustResult": "rust-control-result.json",
+  "finalProducer": "frozen-mirror-producer.json",
+  "finalFramingAndOriginalCli": "frozen-cli-checks.json",
+  "finalLeanOriginalRepros": "lean-original-postfix.json",
+  "finalEcmaOriginalRepro": "postfix-ecma-cli.json",
+  "sourceOnlyPostCiDelta": {
+    "path": "tools/check-client-framing.py",
+    "sha256": "fe2b77b8e24bdff58f9b08dc1b594174ce2b0ece765fab76a382e4fbc7df0dca",
+    "compiledInputsChanged": false,
+    "focusedGateRerun": true
+  },
+  "skippedTiers": [
+    "Apalache/TLC/live model checking and all production service operations",
+    "native Windows/macOS runtime, TLS and ACL profiles",
+    "hosted CI runner qualification and GCC13 baseline parity",
+    "other Gate backends and current-source Rust worker replay",
+    "broader M5/native platform qualification"
+  ],
+  "diagnostics": "Earlier nonzero attempts are retained; only final named phases receive success credit. See parent report and per-stream READMEs for individual causes."
+}

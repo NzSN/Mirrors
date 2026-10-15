@@ -1,0 +1,255 @@
+Build profile: -w ghc-9.14.1 -O1
+In order, the following will be built (use -v for more details):
+ - ModelMirrors-0.1.1.0 (test:ModelMirrors-test) (ephemeral targets)
+Preprocessing test suite 'ModelMirrors-test' for ModelMirrors-0.1.1.0...
+Building test suite 'ModelMirrors-test' for ModelMirrors-0.1.1.0...
+Running 1 test suites...
+Test suite ModelMirrors-test: RUNNING...
+ModelMirrors
+  ClientReplyNonModel
+    submission validates accepted kind before any await:                  OK
+    wrong poll and await IDs fail with no follow-up writes:               OK
+    cancel accepts matching status and every legal terminal result:       OK
+    matching async validate retains normal result and exact flow:         OK
+  ServerFramingNonModel
+    server fake backend normal async request reply and owned cleanup:     resource: re-release ignored: session-dir
+resource: re-release ignored: spec (borrowed)
+OK
+    oversized server request cancels only that session's fake job:        resource: re-release ignored: session-dir
+resource: re-release ignored: spec (borrowed)
+resource: re-release ignored: session-dir
+resource: re-release ignored: spec (borrowed)
+OK (0.04s)
+  StdioFramingNonModel
+    actual stdio preserves coalesced lines split UTF8 and byte caps:      OK (0.02s)
+    unterminated stdio frame fails and emits no payload:                  OK
+    stdio oversized input fails before EOF and cannot resume suffix:      OK (0.01s)
+    direct and encoded stdio oversized sends write zero bytes:            OK
+generated new CA
+generated server.crt/server.key (CN=127.0.0.1, expires in 1 days)
+generated client.crt/client.key (CN=modelmirrors-client, expires in 1 days)
+
+Done. Start the server:
+
+  ModelMirrors --server <port> --tls \
+      --cert /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt --key /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.key --ca /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/ca.crt
+
+Connect a client with ca.crt + client.crt + client.key.
+Keep ca.key offline; re-run this script to renew before expiry.
+  TlsPolicyNonModel
+    client and server exact 0600 predicate preserves key modes and bytes: warning: server certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-46a3455607f2eeaf/server.crt expires in 1 day(s)
+generated new CA
+generated server.crt/server.key (CN=127.0.0.1, expires in 1 days)
+generated client.crt/client.key (CN=modelmirrors-client, expires in 1 days)
+
+Done. Start the server:
+
+  ModelMirrors --server <port> --tls \
+      --cert /tmp/fix-tests/modelmirrors-framing-62dc308256ac0c1f/server.crt --key /tmp/fix-tests/modelmirrors-framing-62dc308256ac0c1f/server.key --ca /tmp/fix-tests/modelmirrors-framing-62dc308256ac0c1f/ca.crt
+
+Connect a client with ca.crt + client.crt + client.key.
+Keep ca.key offline; re-run this script to renew before expiry.
+OK (0.30s)
+    SAN-only rejects CN-only before protocol bytes:                       warning: server certificate /tmp/fix-tests/modelmirrors-framing-62dc308256ac0c1f/server.crt expires in 1 day(s)
+..+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+..+......+.........+...+.........+.+..+.....................+....+..+.....................+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*............+....+.........+..+.............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+...........+...+.+........+.+......+...+..+.+........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+...+...+..+.......+......+..+.+............+........+.+...+...+............+.....+.......+........+...............+.+............+..+.+...........+...+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = service.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-62dc308256ac0c1f/client.crt expires in 1 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+OK (0.54s)
+    SAN-only accepts correct IP SAN with a different CN:                  generated new CA
+generated server.crt/server.key (CN=127.0.0.1, expires in 1 days)
+generated client.crt/client.key (CN=modelmirrors-client, expires in 1 days)
+
+Done. Start the server:
+
+  ModelMirrors --server <port> --tls \
+      --cert /tmp/fix-tests/modelmirrors-framing-a309cb65351095f0/server.crt --key /tmp/fix-tests/modelmirrors-framing-a309cb65351095f0/server.key --ca /tmp/fix-tests/modelmirrors-framing-a309cb65351095f0/ca.crt
+
+Connect a client with ca.crt + client.crt + client.key.
+Keep ca.key offline; re-run this script to renew before expiry.
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-a309cb65351095f0/server.crt expires in 1 day(s)
+..............+......+..+.+.....+....+..+...+.......+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+.......+.........+........+...+....+...+...........+.......+..+............................+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+..+............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+...+..+....+.....+...+............+....+..+...+.+...+.....+..........+...+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*............+..+......+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = wrong.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-a309cb65351095f0/client.crt expires in 1 day(s)
+generated new CA
+generated server.crt/server.key (CN=127.0.0.1, expires in 1 days)
+generated client.crt/client.key (CN=modelmirrors-client, expires in 1 days)
+
+Done. Start the server:
+
+  ModelMirrors --server <port> --tls \
+      --cert /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/server.crt --key /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/server.key --ca /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/ca.crt
+
+Connect a client with ca.crt + client.crt + client.key.
+Keep ca.key offline; re-run this script to renew before expiry.
+OK (0.69s)
+    SAN-only DNS IP wildcard cache and pin controls:                      warning: server certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/server.crt expires in 1 day(s)
+.......+....+...+............+.....+.............+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*........+.....+.........+....+..+.........+.+...+...+...+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+............+.+..+...+.+......+..+......+.+...+.................+...+......+.......+........+.+......+..............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+...+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..........+...+.....+....+..+...+...+...+.+......+...+.........+..+.+.....+............+.+..+..................+.......+...............+..+.+.....+....+........+...+.....................+.+...+.........+..+....+......+...+...........+......+.+...+......+...........+.......+.....+............+.........+....+..+.+.....+.......+.....+......+.+........+............+..........+...........+...+...............+.+.....+.+...+............+...+.........+.....+.+.....+....+........+...+......+...+......+.+...............+...+...+.......................+....+..+....+...........+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = wrong.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 1 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+......+...+...........+...+.+..+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*......+.+...+..+....+.....+.........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...........+......+....+.....+......+.+.....+..........+.........+..+.........+...+.......+.....+.............+...+...+..+....+...+.....+...+...........................+.+......+.....+....+.....+......+......+...+....+..+.+........+................+.....+.............+...........+................+...........+....+........+...+.......+...+............+..+.+..+.+..+.........+.........+.........+...+...+....+...........+.+.........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+...+......+.........+.+.....+....+............+..+......+......+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+..+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*............+.......+.....+............................+..+......+..........+..+...............+.+.....+......+....+..+.........+.+.....+....+...+..+.+...+...............+..............+.+..+..........+............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = unused.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 1 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 1 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 1 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+.+...+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..........+......+.......+......+..+...+.+.........+..+...+....+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+...+...+........+................+.....+...+.+.........+...+..+.......+......+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+......+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+.........+.+..+.......+..+...+..................+...+....+..+.+..+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+.........+..+.......+......+..+.........+...+......+....+...+..+..........+.......................+...+......+......+...+....+......+.........+......+......+.....+....+..+...+................+...+...+..+......+.+.....................+..+.............+.....+...+.........+.+..+....+........+.+..+...................+.....+.........................+...+.....+......+......+....+..+.......+......+...........+....+......+........+.....................+.........+.+..+....+......+.........+.....+....+..+...+.......+............+..+...+..................+...+.+.....+.+.........+........+.+..............+...+...+..........+.........+..+...+...+....+...+...............+.....+............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = service.example.test
+...+..+.+............+..+.............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+.........+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*........+....+.........+..+...+....+......+.....+.+.........+......+........+...+...+....+......+.....+.......+..+.......+..................+...+..+.......+..............+.........+.+.........+........+..................+....+..+...+.+.........+..+....+.....+....+......+..+.......+..+....+.....+.+.....+...............+.+.....+.......+...+........+.........+...+.......+..+...+.+......+........+......+.+.........+..............+.+......+...+...+........+....+...+........+....+..+.+.........+...+..+...+.+..+............+...+............+.+...........+..........+...+..+...+......+.+...+...........+............+...............+...+.......+...+..+....+......+..+.+...........+.+...+...........+..........+.....+......+............+..........+..+.........+.........+...+...+....+..+.+..................+.....+......+.+..+............+....+..+..........+.................+......+.+....................+.+.........+..............+....+...............+...............+..+...+..........+.....+...+............+.+..+....+..............+............+.......+.....+......+....+......+...........+.+.........+........+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.+...+.+...+.....+...+.......+...+.....+.........+...................+.....+.+..................+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*......+...+.+..+.............+.....+....+..+.........+.......+..+.+.....+....+...........+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+.....+.+........+...+.........+.+.................+.+.........+..+...+...+.............+..+.........+......+....+........................+..+...+.....................+.........+....+..+.+........+.+...+...+.....+..........+...+......+.....+....+.....+.+.........+..+.......+...+...+.....+.+.....+......+...+................+...+...........+....+..+......+.........+...+.+.....+....+......+.....+.+..............+.+.....+...+..........+..+...+...+...+....+........+.........+....+..+....+.....+.....................+..........+..+.+............+...+..+..................+....+...+..............+...............+.............+...+..+.+......+.....+...+.......+......+..+.+..+...+.......+..+.............+.....+...+....+.................+....+..+.............+.....+......+.+...+.....+..........+..+............+...+....+......+...+..+...+....+.....+.+..+......................+...+..+...+.......+...+..+......+.+...........+...+...............+......+.+...+..+.......+..+....+.........+...........+.......+...+..+.......+..+.........+.+........+...+.......+...+.....+.........+.............+......+...........+.............+......+......+...+...+..+.+.....+..........+.........+...+..+............+.+.................+............+.........+.+...+......+......+.....+.........+.......+............+...+..+...+...+.+.........+..............+..........+...............+...........+.+......+..+.+......+.....+....+..+.........+...+...+...+.+.....+......+...+......+......+............+.+............+..+...+...+.+..............+.......+...+.........+..+.+............+..+.+.....+.............+......+...........+.............+......+.....+...+.+................................+...+.+...+..+.+..............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = 127.0.0.1
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+.................+.+...+...+............+.....+......+............+....+......+..+...+...+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.........+.......+...+..............+.+..+..........+.........+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+....+...+.....+...+................+........+...+.......+...........+....+.....+............+.+........+.+......+.....+.........+.............+..+.+...+...........+......+.......+.....+......+......+..........+......+.....+.......+...........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+..+.+............+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..............+......+......+....+...+........+....+...+.....+...+..........+..+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+.........+..............+......+...+.+.....+.......+.....+...............+..........+...+..+...............+....+...+...+...+.........+...+...+..............+.+.....+............+..........+.....+.......+..+.+..+.+......+...+.....+.+......+......+.....+...+.+........+.......+......+..+.+..+............+..........+..+................+...+..+..................+.+...+......+......+........+............+...+...+...+...............+....+...+.....+.......+..+..................+......+.+...+...+..+......+.+....................+......+...+....+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = 127.0.0.1
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+.....+....+.........+.....+......+......+.......+..+.+........+..........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+......+...+.+......+...+...........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+...+........+.......+..+.+..+......+.+....................+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.+.......+...........+....+...+...+...+...........+......+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.......+.+.....+......................+...............+...+..+...+.......+......+.....+.+......+.....+.........+....+............+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...............+....+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = 127.0.0.1
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+.+.+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+.+........+...+....+...+........+.............+..+.............+..............+.+......+.........+..+..........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+.+.................+.+..+....+........+......+.........+.....................+.+..............+.+...+...+.....+.........+.+........+.....................+................+..+................+.....+.........+............+......+....+...+..+.............+...+............+.....+...+....+......+...+..+....+.....+................+..+.+.....+.+.....+.+.....+...............+.......+.....+.+.........+.....+...+..........+.....+...+.+...+.....+......+.......+.....+.................................+....+...+..+...+.......+......+.....+.+........+...+...+.+.....+....+......+.....+.+..+.+.........+.....+...+.......+..+.+...+...........+.+.....+....+...+......+.....+.......+.........+.........+......+.....+.+...+..+............+......+.......+...........................+.....+.+.........+.....+.......+.....+...............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.....+..........+...+.................+...............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*......+.+..................+..+..................+...+....+.........+..+...+.........+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.........................+.+...+..+.+...............+..+.+..+....+.....+....+..+...+............+....+......+..............+...+.+.....+....+..+..........+.....+....+.........+.....+...+............+...+.......+...+..+.+..+.......+..+.+..+......+.......+........+....+...........+.+...+...+..............+...+.+..+.......+..+...+..........+...+..+.+..+..........+.........+.....+....+...........+......+....+...+..+.+........+....+........+.......+.....+...+....+.........+.....+....+..+.+.........+.....+.+...+..+...................+......+...+.....+............+....+...+..+....+.....+.........+.+..+....+...+......+.....+.........+......+.........+...+.......+..+.+...+.........+..+......+.......+......+............+........+.........+..................+..........+..+.......+....................+.+..+.......+...........+....+...+...+.....+...+.+........+.......+.........+.........+...............+..+.+...+.....+.......+...+...........+.............+...+........+....+......+.....+.......+...+..+...+.......+..................+.....+......+.+..+.+..+...............+...+....+.....+.+.....+.........+.+............+....................+.......+..+.+............+..+.............+......+..+...+.+...+...........+.........+.+......+.....+...+...+....+.....+.+.....+...+.+...+...........+.......+...+...........+...+.+.....+.........+.+..+....+...+..+.+..+................+......+.....+.+........+.+...........+.......+......+..+....+...+........+...+.+...........+.........+.+...+..............+............+.+..+...+.............+..+.........+...+.+..+....+.....+....+....................+......+.........+.+......+..+......+....+..+.........+......+.+............+.....+...+............+.+......+......+...+......+......+..+............+.+.....+...+....+..+..........+.................................+.....+.+..+.......+...+..+.+..+...+.+.........+......+.....+...+...+.......+..+...+..........+........+..........+.........+.....+..........+...+.....+...+..................+......+.+.....+...+................+......+...+............+...+..+.........+...+................+.....+.+...+..+.+........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = service.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+...+..+.+.........+.....+.........+....+...+.....+...+....+...+............+...+..............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+.....+.......+............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+....+.+.........+...........+.+..+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.........+......+....+......+.....+.+.....+.............+..+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+........+....+......+..+..........+...+...+...........+......+...+.+.....+...+...+....+...+...+...+.....+....+..+...+.+..+.......+..+......+...+.+......+..+......+....+...........+............+..........+.........+......+.....+.......+..+.+..................+..+...+.+......+...+......+.....+....+..............+...+..........+.....+....+...+..+.........+.........+.......+.....+....+.....+.......+.....+...+....+......+.....+...............+......+...+......+.+....................+....+.........+...........+....+........+...+....+.....................+......+......+........+....+........+...+......+.+..............+..........+...+...+.....+...+.......+..+.+...........+...+...+...+.........+.......+.....+....+..+...+.......+..+................+.....+....+........+...+..........+........................+............+......+..............+...+...+....+...+........+...+.+........+...+...+.+.....+.+........+.........+...............+...+...+.+.....+......+.............+......+.........+....................+.+...+.....+......+......+...+.............+..+............+.............+..+....+..+....+........+...+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = service.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+...+.......+..+...+...+.......+........+.+..............+....+...+..+.+..+.......+..+................+...+.........+..+...+.+.....+.........+...+...+.+..................+...+...+..+...+..........+.........+..+................+..+...+...+.......+..+......+......+.+........+.+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+..+.+..+...+.......+........+....+..+.+.....+............+.+......+...+............+...+.....+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+.........+...+...+.+..........................+...+....+...+.........+.........+..+.............+.....+.+...+...+..............+...+...+............+...+...........................+............+.............+...+...+.........+...+..+............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+....+......+...+................+...+...........+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*........+.......+...+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*......+..............+....+......+..+...+....+...............+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = 127.0.0.1
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+..+...+.....+...+......+..........+........+...+....+...+........+...+...............+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+........+.+...+.....+......+.......+.........+...+..+...+.......+.........+.........+...+..+..........+.....+.+..+....+...+...+..+..........+...+.........+...........+...+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+....+......+.....+...+....+..+.+..............+.............+...+............+...........+.......+...............+..+......+.+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+...+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+..+....+..+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+........+.+..+....+.........+..+........................+.+.........+...+.....+...+..........+...+..+..........+.....+....+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = wrong.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+...........+.........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*........+.....+...+.+..+...+.........+...+...+.+.....+.+..+......+.........+.+............+.....+.......+..+......+.......+...+.....+.........+....+.........+.....+.+..+.........+...............+.+..+...+.........+...+..........+........+...................+...+........+...+.......+..+.+.....+................+......+.....+...+......+.............+......+.....+..........+......+.....+.........+...............+.........+......+......+..........+...+.....+...+...+.......+...............+...+..+....+.........+...............+...........+.........+......+.+...+..+....+.....+......+....+...........+...+....+..+...+.+.........+..+.............+...+...+......+......+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+..+...+...........+......+.+...............+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+...............+......+...+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+...+.+.....+....+...+.....+...........................+.......+...+..+...+...+....+...+......+.....+............+.......+..+..........+...+.................+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = ::1
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+......+..+.+.....+....+.........+.....+.......+..............................+..+......+....+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*......+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+...+......+.........+......+...+.+......+.....+....+......+...........+.......+..+....+...........+...+.+.....+....+..+.+.........+...+.................+.............+..+..................+...+...+....+......+......+......+...+.....+......+.+.........+.....+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+..+......+..+.......+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*......+......+....+......+.......................+......+.+...+.....+...............+.+.........+.....+.......+......+........+.......+..+...+....+...+...........+.+...+...+..............+...+.+...........+.+..............+.+..+...+....+......+...+..+.........+......+.......+.....+.+..+.......+...+.........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = wrong.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/cn-only.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+generated new CA
+generated server.crt/server.key (CN=127.0.0.1, expires in 1 days)
+generated client.crt/client.key (CN=modelmirrors-client, expires in 1 days)
+
+Done. Start the server:
+
+  ModelMirrors --server <port> --tls \
+      --cert /tmp/fix-tests/modelmirrors-framing-1feaa42d53c16beb/server.crt --key /tmp/fix-tests/modelmirrors-framing-1feaa42d53c16beb/server.key --ca /tmp/fix-tests/modelmirrors-framing-1feaa42d53c16beb/ca.crt
+
+Connect a client with ca.crt + client.crt + client.key.
+Keep ca.key offline; re-run this script to renew before expiry.
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-cd547230217d7e52/client.crt expires in 0 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=0 protocolBytes=0
+OK (3.89s)
+  TransportFramingNonModel
+    final encoded byte boundaries and unchanged JSON:                     OK
+    TCP raw receive boundaries split UTF8 coalescing and EOF:             OK (0.01s)
+    TCP direct send refuses oversized or raw LF before writing:           generated new CA
+generated server.crt/server.key (CN=127.0.0.1, expires in 1 days)
+generated client.crt/client.key (CN=modelmirrors-client, expires in 1 days)
+
+Done. Start the server:
+
+  ModelMirrors --server <port> --tls \
+      --cert /tmp/fix-tests/modelmirrors-framing-e6455f598f078a91/server.crt --key /tmp/fix-tests/modelmirrors-framing-e6455f598f078a91/server.key --ca /tmp/fix-tests/modelmirrors-framing-e6455f598f078a91/ca.crt
+
+Connect a client with ca.crt + client.crt + client.key.
+Keep ca.key offline; re-run this script to renew before expiry.
+OK
+    mTLS framing direct send and receive actual records:                  warning: server certificate /tmp/fix-tests/modelmirrors-framing-e6455f598f078a91/server.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-e6455f598f078a91/client.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-e6455f598f078a91/server.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-e6455f598f078a91/client.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-e6455f598f078a91/server.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-e6455f598f078a91/client.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-e6455f598f078a91/server.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-e6455f598f078a91/client.crt expires in 1 day(s)
+OK (0.68s)
+
+All 18 tests passed (6.21s)
+Test suite ModelMirrors-test: PASS
+Test suite logged to:
+/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell-h2/dist/build/x86_64-linux/ghc-9.14.1/ModelMirrors-0.1.1.0/t/ModelMirrors-test/test/ModelMirrors-0.1.1.0-ModelMirrors-test.log
+1 of 1 test suites (1 of 1 test cases) passed.

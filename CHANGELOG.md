@@ -4,6 +4,20 @@ All notable changes to the Lean 4 port of ModelMirrors. The port target is
 byte-for-byte JSON-lines wire compatibility with ModelMirros@3496251
 (Haskell); divergences are listed as ACCEPTED with rationale.
 
+## Client conformance corrections (unreleased)
+
+- Rejected async submissions end only that attempt and preserve earlier jobs
+  on the connection. Synchronous flows end the connection when they return;
+  applications retaining async jobs must use a separate synchronous connection.
+- Built-in stream transports reject unterminated EOF frames and propagate read
+  failures. Async trace capture cancels only after local poll-budget exhaustion
+  on a healthy connection with an accepted pending/running job.
+- POSIX TLS key permissions must now equal `0600`, including rejection of
+  owner-only `0400`/`0700` and special-bit modes. Validation never changes the
+  caller's key. Windows ACL behavior remains separately governed.
+- The [remediation record](Plans/client-conformance-fix-evidence-20261015/README.md)
+  tracks source identities, remote validation and remaining platform checks.
+
 ## DPM integration kits and counterexample timelines (2026-10-07)
 
 - Added `model_interface_gen generate-dpm/check-dpm` for six C++/async-ECMA/

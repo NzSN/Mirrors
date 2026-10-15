@@ -1,0 +1,43 @@
+{
+  "probe": "ECMA-MI4-target-computer-pair",
+  "root": "/home/jlc/Tools/mirrors-dpm-remediation-20261013/ecma/node_modules/mirrorecma",
+  "results": [
+    {
+      "name": "callback-valid-control",
+      "outcome": "accepted",
+      "reportStatus": "passed",
+      "counts": {
+        "factory": 1,
+        "computer": 1,
+        "dispose": 1,
+        "close": 1,
+        "sends": 2
+      }
+    },
+    {
+      "name": "callback-invalid-pair",
+      "outcome": "accepted",
+      "reportStatus": "passed",
+      "counts": {
+        "factory": 1,
+        "computer": 1,
+        "dispose": 1,
+        "close": 1,
+        "sends": 2
+      }
+    },
+    {
+      "name": "explicit-sync-invalid-pair",
+      "outcome": "rejected",
+      "code": "state_computer_contract_mismatch",
+      "message": "sync execution requires mirrors.state-computer/v1",
+      "counts": {
+        "factory": 0,
+        "computer": 0,
+        "dispose": 0,
+        "close": 0,
+        "sends": 0
+      }
+    }
+  ]
+}

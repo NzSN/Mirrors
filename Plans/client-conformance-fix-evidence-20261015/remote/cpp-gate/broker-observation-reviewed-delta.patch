@@ -1,0 +1,63 @@
+--- a/integrations/mirrorcpp/counter_driver.cpp
++++ b/integrations/mirrorcpp/counter_driver.cpp
+@@ -82,6 +82,8 @@
+     const std::string mode = argv[1];
+     const std::string expected_outcome = argv[11];
+     const bool error_case = expected_outcome.starts_with("error-");
++    const bool broker_protocol_fault = expected_outcome == "error-invoke-protocol" ||
++        expected_outcome == "error-observe-protocol";
+     require(mode == "owned" || mode == "attached", "invalid control mode");
+     require(expected_outcome == "correct" || expected_outcome == "faulty" ||
+                 expected_outcome == "wrong-digest" ||
+@@ -260,6 +262,7 @@
+         require(static_cast<bool>(failure), "injected failure lost structured evidence");
+         const std::string expected_family = expected_outcome == "error-build" ? "build"
+             : expected_outcome == "error-admission" ? "admission"
++            : broker_protocol_fault ? "worker_transport"
+             : expected_outcome.find("protocol") != std::string::npos
+             ? "worker_protocol" : expected_outcome.find("transport") != std::string::npos
+             ? "worker_transport" : expected_outcome.find("timeout") != std::string::npos
+@@ -278,6 +281,13 @@
+               failure->code == (expected_outcome == "error-build" ? "BUILD_FAILED" : "BACKEND_ADMISSION_FAILED") &&
+               failure->stage == (expected_outcome == "error-build" ? "build" : "authorize"),
+               "control failure lost exact code or stage");
++        } else if (broker_protocol_fault) {
++          require(failure->origin == mirrorgate::FailureOrigin::sdk &&
++              failure->code == "CONTROL_DISCONNECTED" && failure->stage.empty() &&
++              failure->operation_id == 0 &&
++              failure->operation == (expected_outcome == "error-invoke-protocol" ? "invoke" : "observe") &&
++              result.error().code == "mirrorgate.CONTROL_DISCONNECTED",
++              "broker-filtered invalid response lost its observed SDK disconnect classification");
+         } else require(failure->stage.empty() && failure->operation_id == 0,
+             "local context overwrote exact worker stage or operation ID");
+       }
+@@ -322,6 +332,9 @@
+         {"workerAcquisitions", evidence.worker_acquisitions},
+         {"workerStartedEvents", evidence.worker_started_events},
+         {"nodeEvaluator", false}, {"mirrorEcmaDependency", false}};
++    if (broker_protocol_fault) record["faultInjection"] = {
++        {"kind", "uncorrelated_worker_response_id"},
++        {"operation", expected_outcome == "error-invoke-protocol" ? "invoke" : "observe"}};
+     const auto encode_failure = [](const std::shared_ptr<const mirrorgate::FailureSnapshot>& failure) -> mirrorgate::Json {
+       if (!failure) return nullptr;
+       return {{"origin", mirrorgate::failure_origin_name(failure->origin)},
+--- a/integrations/mirrorcpp/README.md
++++ b/integrations/mirrorcpp/README.md
+@@ -70,6 +70,17 @@
+ versus cleanup precedence and unconfirmed process shutdown. Backend denial is
+ exercised in attached mode; it does not claim every OS/backend failure profile.
+ 
++SO7 requires a distinct combined worker transport/protocol failure family. The
++two actual broker-fault rows inject an uncorrelated worker response ID. Gate's
++broker rejects that response before relaying it, so the SDK observes its own
++`CONTROL_DISCONNECTED` transport failure with an empty original stage and the
++local invoke/observe operation. The facade must preserve that observable code,
++origin and context. Evidence records the injected wrong-ID scenario separately
++in `faultInjection`; it does not infer a finer broker cause from message text
++or an exit code. Direct SDK tests that receive invalid responses without the
++broker retain their `worker_protocol` classification. A finer authenticated
++broker diagnostic channel is an optional future change, outside this repair.
++
+ The deliberate `error-cleanup` row must return its original structured cleanup
+ failure with no body-failure snapshot. It can report `cleanup: "failed"`; it
+ still requires confirmed control shutdown, external process-absence evidence

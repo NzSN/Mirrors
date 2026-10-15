@@ -940,15 +940,17 @@ private def dispatchAsync (t : Shell.Transport.Transport) (sess : SessionRef)
           dispatch t sess orc m interfaceRequest interfaceAccess interfaceScope
             interfaceService
       | _ => sendError t "unexpected message in async session"
-      let current ← sess.get
-      return current.1 != .done
+      -- A synchronous dispatch owns one complete flow. Its return ends the
+      -- connection on success and failure, including failures that leave the
+      -- pure phase idle. Only the explicit async/job arms above may continue.
+      return false
 
 /-- The async-session entry point (Haskell @runAsyncSession@): a
 recv-dispatch loop over one transport with a job store. Async registers
 fork (dedicated task) and return to the loop immediately; job operations
 are answered from the store (terminal query/await replies with
 @job_result@, per the async contract); a /sync/ register received
-mid-session still runs to completion inline. Transport EOF or a decode
+mid-session runs to completion inline and then ends the connection. Transport EOF or a decode
 failure ends the session: a reply on the way out is best-effort and the
 session's jobs are cancelled (Haskell @endSession@ semantics). -/
 def runAsync (t : Shell.Transport.Transport) (orc : Oracles)

@@ -1,0 +1,1285 @@
+{
+  "repo": "/home/nzsn/Repos/MirrorCPP",
+  "head": "410c58a175c3135d9cd76c85e33a718f63761855",
+  "companionRepo": "/home/nzsn/Repos/MirrorGate",
+  "companionHead": "4a8d0d361589059ad72fe52e05789f302b4b65c8",
+  "profiles": [
+    "legacy sync replay/validation/trace generation/exploration over stdio,TCP,mTLS and registry",
+    "server asynchronous jobs",
+    "compiled verify mirrorcpp-v1/v2 with synchronous state computer",
+    "Gate-owned native C++ control-v1 acceptance seam over owned stdio/attached Unix with Node/Rust workers",
+    "Gate C++ SDK optional control-v2 hosting source inspected only for ownership boundaries"
+  ],
+  "guide": "/home/nzsn/Repos/Mirrors/Docs/client-implementation-guide.md",
+  "rules": [
+    {
+      "id": "C1",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/protocol.cpp",
+          "line": 357
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/line.hpp",
+          "line": 37
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/transport.cpp",
+          "line": 30
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/protocol_test.cpp",
+          "line": 201
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/transport_test.cpp",
+          "line": 158
+        }
+      ],
+      "note": "Compact JSON object encoding, LF transport framing and blank-line/EOF handling; stdio/TCP/TLS paths."
+    },
+    {
+      "id": "C2",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/line.hpp",
+          "line": 35
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/line.hpp",
+          "line": 84
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/tls.cpp",
+          "line": 289
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 570
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/transport_test.cpp",
+          "line": 192
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/tls_test.cpp",
+          "line": 155
+        }
+      ],
+      "note": "Raw std::string byte bounds before parsing and final writes, bounded 4096-byte read chunks, identical TLS cap. No fresh runtime qualification."
+    },
+    {
+      "id": "C3",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/protocol.cpp",
+          "line": 428
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/protocol_test.cpp",
+          "line": 225
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 324
+        }
+      ],
+      "note": "Dispatches on string proto_step; known-message decoder ignores additional outer fields; negotiation is closed separately."
+    },
+    {
+      "id": "C4",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 455
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/protocol.cpp",
+          "line": 550
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 845
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/protocol_test.cpp",
+          "line": 488
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/async_jobs_test.cpp",
+          "line": 108
+        }
+      ],
+      "note": "All replay/validate/generation/explore runners send registration; async job control permits existing IDs and stdio refuses async before dispatch."
+    },
+    {
+      "id": "C5",
+      "status": "contract_ambiguity",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 138
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 830
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 856
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/async_jobs_test.cpp",
+          "line": 177
+        }
+      ],
+      "note": "Synchronous and exploration runners close on terminal messages. Async register_error intentionally leaves the borrowed transport open. C5 requires a new connection, whereas guide section 10 says terminal for that register attempt; clarify the guide before imposing close-on-queue-full (which evicts existing owned jobs)."
+    },
+    {
+      "id": "C6",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 80
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/transport.cpp",
+          "line": 58
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/transport.cpp",
+          "line": 99
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/transport_test.cpp",
+          "line": 251
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/client_integration_test.cpp",
+          "line": 123
+        }
+      ],
+      "note": "Replay paths close owned flow transport on normal/error outcomes, tolerate server EOF; asynchronous helper transport is caller-owned."
+    },
+    {
+      "id": "C7",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/include/mirrorcpp/transport.hpp",
+          "line": 34
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 924
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/tls.cpp",
+          "line": 109
+        }
+      ],
+      "note": "No invented heartbeat; raw receive has no established-session timeout, configurable TCP connect and TLS handshake bounds; query helpers available."
+    },
+    {
+      "id": "C8",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 96
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 116
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/client_integration_test.cpp",
+          "line": 61
+        }
+      ],
+      "note": "Shared stepping loop calls StateComputer once and sends exactly one ReportState for initial_state/next_step; exceptions terminate before reporting."
+    },
+    {
+      "id": "C9",
+      "status": "caller_obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/value.cpp",
+          "line": 205
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 106
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/include/mirrorcpp/client.hpp",
+          "line": 16
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/value_test.cpp",
+          "line": 292
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/protocol_test.cpp",
+          "line": 159
+        }
+      ],
+      "note": "SDK State and ITF codecs preserve all ordinary keys; caller supplies truthful full observations. Generated Counter port emits actual count; SDK cannot prove arbitrary application observation fidelity."
+    },
+    {
+      "id": "C10",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 141
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/client_integration_test.cpp",
+          "line": 143
+        }
+      ],
+      "note": "StepMismatch returns failure and closes immediately without waiting for all_steps_done; expected/actual/hints retained."
+    },
+    {
+      "id": "C11",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/value.cpp",
+          "line": 73
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/value_test.cpp",
+          "line": 202
+        }
+      ],
+      "note": "Native arbitrary-precision integers always encode #bigint; bare integer JSON accepted on decode."
+    },
+    {
+      "id": "C12",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 79
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/client_integration_test.cpp",
+          "line": 61
+        }
+      ],
+      "note": "Loop is terminal driven and has no fixed step count. preset_client is explicitly supplied user sequence, separate from normal runner."
+    },
+    {
+      "id": "C13",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/spec.cpp",
+          "line": 34
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/spec.cpp",
+          "line": 87
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/protocol.cpp",
+          "line": 86
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/spec_test.cpp",
+          "line": 30
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/spec_test.cpp",
+          "line": 53
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/one_shot_flows_test.cpp",
+          "line": 62
+        }
+      ],
+      "note": "Inline ApalacheSpec sources plus recursive EXTENDS/INSTANCE closure collector, canonical deduplication and explicit missing/ambiguous import errors. Builtin modules are intentionally not vendored."
+    },
+    {
+      "id": "C14",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/protocol.cpp",
+          "line": 67
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/include/mirrorcpp/protocol.hpp",
+          "line": 29
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/protocol_test.cpp",
+          "line": 53
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/protocol_test.cpp",
+          "line": 82
+        }
+      ],
+      "note": "Config encoder omits absent optionals and sends default invariant/paramVars/lengthBound through typed config."
+    },
+    {
+      "id": "C15",
+      "status": "caller_obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/protocol.cpp",
+          "line": 72
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/real_mirror_test.cpp",
+          "line": 64
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/one_shot_flows_test.cpp",
+          "line": 48
+        }
+      ],
+      "note": "constInit and paramVars exposed and encoded exactly. Application selects constInit for its spec; Counter integration sets CInit/parameters."
+    },
+    {
+      "id": "C16",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 563
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/one_shot_flows_test.cpp",
+          "line": 105
+        }
+      ],
+      "note": "Validate helpers send caller bound for server registration validation, preserve registration error; no requirement to duplicate server range checking locally."
+    },
+    {
+      "id": "C17",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 924
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/async_jobs_test.cpp",
+          "line": 217
+        }
+      ],
+      "note": "Job handles are opaque strings; query/await/cancel can use different connection; helpers retain submitting borrowed transport until caller closes."
+    },
+    {
+      "id": "C18",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 894
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 938
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/async_jobs_test.cpp",
+          "line": 119
+        }
+      ],
+      "note": "await helper exposes status/result variant and optional timeout; no receive deadline imposed by transport; repeated terminal returns supported."
+    },
+    {
+      "id": "C19",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 945
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/async_jobs_test.cpp",
+          "line": 217
+        }
+      ],
+      "note": "cancel_job exists and retains normal job status/result handling; cancellation of server process remains server guarantee."
+    },
+    {
+      "id": "C20",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/protocol.cpp",
+          "line": 143
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/async_jobs_test.cpp",
+          "line": 119
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/async_jobs_test.cpp",
+          "line": 202
+        }
+      ],
+      "note": "Sync and job validate use shared decode_validate_result; infraError remains separate string outcome."
+    },
+    {
+      "id": "C21",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 894
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/protocol_test.cpp",
+          "line": 623
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/async_jobs_test.cpp",
+          "line": 187
+        }
+      ],
+      "note": "Unknown job phase decoded and returned; SDK has no hidden retry loop for job appearance."
+    },
+    {
+      "id": "C22",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 856
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/async_jobs_test.cpp",
+          "line": 177
+        }
+      ],
+      "note": "Caller controls connections; SDK creates no implicit oversized pool; queue-full register_error propagated as registration failure."
+    },
+    {
+      "id": "C23",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 860
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/async_jobs_test.cpp",
+          "line": 217
+        }
+      ],
+      "note": "No cross-connection job ordering assumption; each exchange verifies returned job ID."
+    },
+    {
+      "id": "C24",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/tls.cpp",
+          "line": 198
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/tls.cpp",
+          "line": 204
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/tls_test.cpp",
+          "line": 106
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/tls_test.cpp",
+          "line": 147
+        }
+      ],
+      "note": "OpenSSL min/max TLS 1.3, CA verification, certificate chain and private key loaded, key match checked before handshake."
+    },
+    {
+      "id": "C25",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/tls.cpp",
+          "line": 235
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/tls_test.cpp",
+          "line": 75
+        }
+      ],
+      "note": "IP SAN checking for literals; hostname path sets NEVER_CHECK_SUBJECT before SSL_set1_host, excluding CN fallback."
+    },
+    {
+      "id": "C26",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/tls.cpp",
+          "line": 79
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/tls.cpp",
+          "line": 261
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/registry.cpp",
+          "line": 133
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/tls_test.cpp",
+          "line": 86
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/registry_test.cpp",
+          "line": 398
+        }
+      ],
+      "note": "Pin normalized case-insensitively and checked over leaf DER SHA256 before a usable transport returns. Registry explicit override/advertised pin policy is documented."
+    },
+    {
+      "id": "C27",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/tls.cpp",
+          "line": 58
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/tls.cpp",
+          "line": 246
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/tls_test.cpp",
+          "line": 128
+        }
+      ],
+      "note": "POSIX refuses group/other permission bits before key loading; Windows leaves ACL control to platform. OpenSSL hostname checking limits wildcard placement."
+    },
+    {
+      "id": "MI1",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 455
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 640
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 174
+        }
+      ],
+      "note": "Legacy APIs encode unextended ClientMessage; only register/register_traces overloaded negotiated paths add modelInterface; same legacy stepping loop reused."
+    },
+    {
+      "id": "MI2",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 630
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 198
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/fixtures/model-interface/counter/generated/CounterMirror.generated.hpp",
+          "line": 286
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/generated_model_interface_test.cpp",
+          "line": 76
+        }
+      ],
+      "note": "Metadata/contract are validated JSON, exact compiled factory lookup; no descriptor interpreter/module or artifact retrieval path. Generated port projects declared inputs rather than passing raw expected state."
+    },
+    {
+      "id": "MI3",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/fixtures/model-interface/counter/generated/CounterMirror.generated.hpp",
+          "line": 26
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 630
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/generated_model_interface_test.cpp",
+          "line": 58
+        }
+      ],
+      "note": "Generated Counter embeds digest/contract, selects compiled bind_counter; generated vectors and generated tests are present. This audit checks consumption, not compiler derivation or every application-generated file."
+    },
+    {
+      "id": "MI4",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 198
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 407
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/fixtures/model-interface/counter/generated/CounterMirror.generated.hpp",
+          "line": 272
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 691
+        }
+      ],
+      "note": "Profile/computer contract checked before registration; generated binding checks effective paramVars before port handlers/observers; returned binding compatibility checked before shared replay."
+    },
+    {
+      "id": "MI5",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 28
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 77
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 441
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 498
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 191
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 324
+        }
+      ],
+      "note": "Duplicate-aware bounded strict JSON and exact nested object field sets; canonical digest parsing and status/field combinations checked; outer message remains additive."
+    },
+    {
+      "id": "MI6",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 548
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 174
+        }
+      ],
+      "note": "Request JSON always embeds complete validated metadata contract inline and contains no file inference/contract digest reference."
+    },
+    {
+      "id": "MI7",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 630
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 216
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 174
+        }
+      ],
+      "note": "make_verify_request takes digest and contract from same GeneratedModelInterface; exact semantic key used, no compatible/version-range selection."
+    },
+    {
+      "id": "MI8",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 352
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 362
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 368
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 421
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 625
+        }
+      ],
+      "note": "First reply strict decode and authorization precede factory call; all missing/malformed/digest/schema/status failures close with zero factory calls."
+    },
+    {
+      "id": "MI9",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 470
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 275
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 324
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 625
+        }
+      ],
+      "note": "Matched must have supported schema, exact parsed digest, no descriptor payload/bytes; mode-inappropriate descriptor statuses rejected."
+    },
+    {
+      "id": "MI10",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 262
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 283
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 442
+        }
+      ],
+      "note": "Default require; prefer accepts only explicit fallback factory after permitted omission/unsupported/unavailable. Wrong semantic digest never falls back."
+    },
+    {
+      "id": "MI11",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 687
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 691
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 349
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 656
+        }
+      ],
+      "note": "Registry copies registrations and resolves exactly four-part key; duplicates fail ambiguous; no guessing or speculative factories."
+    },
+    {
+      "id": "MI12",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 368
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 395
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 407
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 374
+        }
+      ],
+      "note": "Factory invoked after match, returned binding digest and config checked before replay; freshness is application factory obligation, exercised by session-local test factory."
+    },
+    {
+      "id": "MI13",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 312
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 389
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 427
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 502
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 571
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 750
+        }
+      ],
+      "note": "PrefixedTransport replays validated first reply through shared loop; explicit binding cleanup attempted exactly once on validation, throw and Result failure, preserving earlier primary failure."
+    },
+    {
+      "id": "MI14",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 163
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 236
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 421
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+          "line": 530
+        }
+      ],
+      "note": "Local stable model-interface codes and structured server register_error code remain distinct from conformance mismatch. Gate-specific code loss separately violates SO7."
+    },
+    {
+      "id": "MI15",
+      "status": "not_applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 493
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/include/mirrorcpp/model_interface.hpp",
+          "line": 30
+        }
+      ],
+      "note": "Native CPP advertises compiled verify only; no descriptor interpretation/cache/dynamic handler registry. Descriptor-mode replies are deliberately rejected."
+    },
+    {
+      "id": "MI16",
+      "status": "not_applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 493
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/include/mirrorcpp/model_interface.hpp",
+          "line": 30
+        }
+      ],
+      "note": "Native CPP advertises compiled verify only; no descriptor interpretation/cache/dynamic handler registry. Descriptor-mode replies are deliberately rejected."
+    },
+    {
+      "id": "MI17",
+      "status": "not_applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/model_interface.cpp",
+          "line": 493
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/include/mirrorcpp/model_interface.hpp",
+          "line": 30
+        }
+      ],
+      "note": "Native CPP advertises compiled verify only; no descriptor interpretation/cache/dynamic handler registry. Descriptor-mode replies are deliberately rejected."
+    },
+    {
+      "id": "MI18",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 236
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/tls.cpp",
+          "line": 235
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/integration/real_mirror_test.cpp",
+          "line": 1
+        }
+      ],
+      "note": "Negotiation is independent of TLS authentication; registration authorization failure terminates before factory and is never retried by dropping extension. Real-mirror auth/pin gate exists but was not executed."
+    },
+    {
+      "id": "SO1",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 99
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 113
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/README.md",
+          "line": 10
+        }
+      ],
+      "note": "Gate-owned acceptance seam delegates open/prepare/authorize/acquire/release/close to one ControlClient; no second evaluator or independent sandbox state machine."
+    },
+    {
+      "id": "SO2",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 100
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 208
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/tests/cpp/orchestration_receipt_test.cpp",
+          "line": 16
+        }
+      ],
+      "note": "One native seam selects owned stdio launch or attached Unix; checks process ownership and final structured close receipt; attached client cannot terminate daemon."
+    },
+    {
+      "id": "SO3",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 62
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/cpp/src/control.cpp",
+          "line": 535
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/cpp/src/managed_worker.cpp",
+          "line": 369
+        }
+      ],
+      "note": "Gate control, model Transport and ManagedWorker public RPC are separate typed APIs/transports; no use of worker commands for host policy."
+    },
+    {
+      "id": "SO4",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/counter_driver.cpp",
+          "line": 26
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 139
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/README.md",
+          "line": 5
+        }
+      ],
+      "note": "CounterPort forwards declared Initialize/Tick(Stride)/observe only. Generated model binding remains trusted and keeps expected state/config/trace out of worker."
+    },
+    {
+      "id": "SO5",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 123
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/cpp/src/managed_worker.cpp",
+          "line": 384
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/counter_driver.cpp",
+          "line": 157
+        }
+      ],
+      "note": "Worker authorization/acquisition and managed attach occur in post-matched factory; attach requires valid hello before create. Wrong-digest fixture asserts no factory/acquisition/physical-start events."
+    },
+    {
+      "id": "SO6",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/cpp/src/control.cpp",
+          "line": 761
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 116
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/tests/test_control_backend.py",
+          "line": 140
+        }
+      ],
+      "note": "Session prepare returns artifact/source/hash/runtime/policy/revision identities, authorize uses challenge and revision, worker descriptor session-owned. Shared backend owns immutable freeze, SDK validates separate fields."
+    },
+    {
+      "id": "SO7",
+      "status": "confirmed_deviation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 11
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 164
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 382
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/fixtures/model-interface/counter/generated/CounterMirror.generated.hpp",
+          "line": 329
+        }
+      ],
+      "note": "Gate error codes during authorize/acquire/attach are wrapped as adapter_factory_failed by MirrorCPP; worker invoke/observe errors become adapter_failure or observation_shape_mismatch in generated binding, losing distinct admission/transport/timeout/application families. Core SDK retains SdkError families; integration boundary loses them."
+    },
+    {
+      "id": "SO8",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/cpp/src/managed_worker.cpp",
+          "line": 542
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 189
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 33
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/tests/cpp/orchestration_receipt_test.cpp",
+          "line": 59
+        }
+      ],
+      "note": "Worker close is logical at most once, release goes through Gate and waits for authoritative cleanup; outer session close/receipt checks confirmation and preserves primary failure. Physical bounded enforcement requires backend qualification."
+    },
+    {
+      "id": "SO9",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/cpp/include/mirrorgate/control.hpp",
+          "line": 44
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/cpp/src/managed_worker.cpp",
+          "line": 369
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/tests/cpp/sdk_test.cpp",
+          "line": 256
+        }
+      ],
+      "note": "Local trusted control endpoints, closed request schemas and private session-owned authorization/worker handles; SDK rejects wrong owner before worker operation. Endpoint OS authorization belongs to Gate/host."
+    },
+    {
+      "id": "SO10",
+      "status": "host_obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/README.md",
+          "line": 5
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/counter_driver.cpp",
+          "line": 191
+        }
+      ],
+      "note": "Native Counter facade is trusted evaluator seam, not an agent-facing tool. Worker sees only public inputs and observations. Full agent-tool mediation and disclosure policy remain trusted host obligations; no proof of observation honesty claimed."
+    },
+    {
+      "id": "SO11",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/cpp/src/control.cpp",
+          "line": 535
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/cpp/src/control.cpp",
+          "line": 787
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/tests/cpp/sdk_test.cpp",
+          "line": 130
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/tests/cpp/sdk_test.cpp",
+          "line": 201
+        }
+      ],
+      "note": "Native SDK uses control v1 shared fixtures, version/capability negotiation, correlations, handles/events/results and separate worker v1. Capability availability/scopes validated. Control v2 hosting exists separately."
+    },
+    {
+      "id": "SO12",
+      "status": "acceptance_fixture_not_release",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/README.md",
+          "line": 10
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/README.md",
+          "line": 26
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/conformance/control-v1/run",
+          "line": 1
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/tests/test_control_acceptance.py",
+          "line": 201
+        }
+      ],
+      "note": "Gate-owned fixture contains two facades x Node/Rust x owned/attached correct/faulty/wrong-digest and backend acceptance tests. Guide and integration explicitly withhold generic released MirrorCPP API claim. No new runtime gates executed, so current source is not freshly qualified by this audit."
+    }
+  ],
+  "findings": [
+    {
+      "priority": "P2",
+      "rule": "SO7",
+      "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+      "line": 382,
+      "trigger": "The Gate post-match factory returns a classified SdkError mapped to Error(model_interface, message, mirrorgate.BACKEND_ADMISSION_FAILED / ATTACHMENT_FAILED / WORKER_PROTOCOL_FAILED / DEADLINE_EXCEEDED).",
+      "impact": "The native acceptance seam publicly reports adapter_factory_failed for all factory-returned failures; typed callers cannot distinguish backend isolation refusal, worker handshake/protocol failure, timeout/cancellation and adapter construction failure as required. Mid-replay worker failures similarly lose SdkError code through generated callback wrapping. No successful-conformance false positive or sandbox fallback established.",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 11
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 139
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.cpp",
+          "line": 164
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/client.cpp",
+          "line": 382
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/fixtures/model-interface/counter/generated/CounterMirror.generated.hpp",
+          "line": 329
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorCPP/include/mirrorcpp/error.hpp",
+          "line": 62
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/cpp/src/json.cpp",
+          "line": 267
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorcpp/orchestration.hpp",
+          "line": 38
+        }
+      ],
+      "confidence": "high_source_trace_no_fresh_runtime",
+      "recommendation": "Keep a trusted native orchestration error side channel or typed wrapper preserving the original Gate code/stage across factory and generated binding boundaries; restore it at facade return, retaining mismatch/model errors and primary-over-cleanup priority. Add a remote-only fixture for backend denial, bad worker handshake, worker deadline and application failure. Do not broadly pass through untrusted callback exceptions as mechanical errors.",
+      "evidenceDetail": "Error has no cause or inner error field. SdkError::what() contains only the human message; code, stage and operation_id are separate fields. SandboxEvidence does not retain the original failure, only cleanup diagnostics. Therefore the typed family is lost, not merely normalized at the top level."
+    }
+  ],
+  "testEvidence": {
+    "executedThisAudit": [],
+    "referencesOnly": [
+      {
+        "path": "/home/nzsn/Repos/MirrorCPP/test/unit/transport_test.cpp",
+        "line": 121,
+        "covers": "normal framing, EOF, byte-limit failure, send rejection"
+      },
+      {
+        "path": "/home/nzsn/Repos/MirrorCPP/test/unit/tls_test.cpp",
+        "line": 44,
+        "covers": "TLS normal, CN-only failure, pin failure, bad CA, bad key permissions, TLS1.2 rejection"
+      },
+      {
+        "path": "/home/nzsn/Repos/MirrorCPP/test/unit/model_interface_test.cpp",
+        "line": 374,
+        "covers": "normal negotiated binding, zero-factory negatives, exactly-once disposal, primary preservation"
+      },
+      {
+        "path": "/home/nzsn/Repos/MirrorCPP/test/integration/async_jobs_test.cpp",
+        "line": 119,
+        "covers": "normal async, timeout/status/result, queue full, unknown ID, cross connection"
+      },
+      {
+        "path": "/home/nzsn/Repos/MirrorGate/tests/cpp/sdk_test.cpp",
+        "line": 256,
+        "covers": "foreign handle rejection and worker negative paths"
+      },
+      {
+        "path": "/home/nzsn/Repos/MirrorGate/tests/cpp/orchestration_receipt_test.cpp",
+        "line": 59,
+        "covers": "cleanup failure preserving primary mismatch"
+      },
+      {
+        "path": "/home/nzsn/Repos/MirrorGate/conformance/control-v1/run",
+        "line": 1,
+        "covers": "actual backend and two-facade integration matrix; not rerun"
+      }
+    ]
+  },
+  "limits": [
+    "Read-only source audit; no source edits, builds, local tests, network services or model checkers.",
+    "C9/C15 application state truth/configuration, SO9 host access policy and SO10 agent mediation cannot be certified for arbitrary consumer applications from SDK alone.",
+    "C5 wording conflicts with guide section10 for async register_error; document clarification required, not classified as confirmed operational defect.",
+    "Optional descriptor MI15-MI17 and ECMA asynchronous/WithReport profiles do not apply to native CPP.",
+    "SO12 runtime evidence is referenced source fixtures only. A current-source framework/platform qualification would require separately admitted remote gates."
+  ]
+}

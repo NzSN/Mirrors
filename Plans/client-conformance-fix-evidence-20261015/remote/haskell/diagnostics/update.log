@@ -1,0 +1,34 @@
+Warning: Caught exception during _mirrors lookup:DnsHostNotFound
+HasCallStack backtrace:
+collectBacktraces, called at
+libraries/ghc-internal/src/GHC/Internal/ExceSelected mirror https://mirrors.ustc.edu.cn/hackage/
+Downloading root
+Running: /home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/curl 'https://mirrors.ustc.edu.cn/hackage/root.json' --output /tmp/fix-tests/transportAdapterGet73712-1 --location --write-out '%{http_code}' --user-agent 'cabal-install/3.16.1.0 (linux; x86_64)' --silent --show-error --dump-header /tmp/fix-tests/curl-headers73712-2.txt
+Waiting to acquire cache lock on
+/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/packages/hackage.haskell.org/hackage-security-lock
+Acquired cache lock on
+/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/packages/hackage.haskell.org/hackage-security-lock
+Released cache lock on
+/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/packages/hackage.haskell.org/hackage-security-lock
+Downloading the latest package list from hackage.haskell.org
+Selected mirror https://mirrors.ustc.edu.cn/hackage/
+Downloading timestamp
+Running: /home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/curl 'https://mirrors.ustc.edu.cn/hackage/timestamp.json' --output /tmp/fix-tests/transportAdapterGet73712-4 --location --write-out '%{http_code}' --user-agent 'cabal-install/3.16.1.0 (linux; x86_64)' --silent --show-error --dump-header /tmp/fix-tests/curl-headers73712-5.txt
+Downloading snapshot
+Running: /home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/curl 'https://mirrors.ustc.edu.cn/hackage/snapshot.json' --output /tmp/fix-tests/transportAdapterGet73712-7 --location --write-out '%{http_code}' --user-agent 'cabal-install/3.16.1.0 (linux; x86_64)' --silent --show-error --dump-header /tmp/fix-tests/curl-headers73712-8.txt
+Downloading mirrors
+Running: /home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/curl 'https://mirrors.ustc.edu.cn/hackage/mirrors.json' --output /tmp/fix-tests/transportAdapterGet73712-10 --location --write-out '%{http_code}' --user-agent 'cabal-install/3.16.1.0 (linux; x86_64)' --silent --show-error --dump-header /tmp/fix-tests/curl-headers73712-11.txt
+Updating index
+Running: /home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/curl 'https://mirrors.ustc.edu.cn/hackage/01-index.tar.gz' --output /tmp/fix-tests/transportAdapterGet73712-13 --location --write-out '%{http_code}' --user-agent 'cabal-install/3.16.1.0 (linux; x86_64)' --silent --show-error --dump-header /tmp/fix-tests/curl-headers73712-14.txt --header 'Range: bytes=139373374-139438909'
+Waiting to acquire cache lock on
+/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/packages/hackage.haskell.org/hackage-security-lock
+Acquired cache lock on
+/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/packages/hackage.haskell.org/hackage-security-lock
+Released cache lock on
+/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/packages/hackage.haskell.org/hackage-security-lock
+Updating index cache file
+/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/packages/hackage.haskell.org/01-index.cache
+...
+Index cache updated to index-state 2026-10-14T22:40:44Z
+Package list of hackage.haskell.org has been updated.
+The index-state is set to 2026-10-14T22:40:44Z.

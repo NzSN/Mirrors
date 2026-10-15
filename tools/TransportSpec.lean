@@ -60,6 +60,31 @@ def throws (action : IO α) : IO Bool := do
     return false
   catch _ => return true
 
+/-- A complete buffered frame is available before a later socket failure;
+read errors, including one after an otherwise valid JSON fragment, are never
+reported as EOF or a successful line. Actual orderly EOF is covered by the
+CLI framing gate over TCP, TLS and stdio. -/
+def bufferedFraming (f : Failures) : IO Unit := do
+  let buffered ← IO.mkRef "first\nsecond\r\n".toUTF8
+  let t := tcpTransport {
+    fd := Ffi.fdError
+    buf := buffered
+    rbuf := ByteArray.mk ((List.replicate 65536 0).toArray) }
+  check f "TCP coalesced first LF frame survives later read failure" ((← t.recv) == some "first")
+  check f "TCP coalesced CRLF suffix is preserved" ((← t.recv) == some "second")
+  let readFailed ← try
+      let _ ← t.recv
+      pure false
+    catch error => pure ((toString error).contains "TCP read failed")
+  check f "TCP empty read error is not clean EOF" readFailed
+  buffered.set "{\"proto_step\":\"spec_validated\",\"result\":\"valid\"}".toUTF8
+  let partialFailed ← try
+      let _ ← t.recv
+      pure false
+    catch error => pure ((toString error).contains "TCP read failed")
+  check f "TCP read error cannot complete an unterminated JSON fragment" partialFailed
+  check f "TCP read error discards retained fragment" (← buffered.get).isEmpty
+
 /-! ### Trace-result delivery planning (TG3)
 
 The planner is pure, so its whole boundary matrix is exercised before any
@@ -339,6 +364,7 @@ def mainTests : IO UInt32 := do
   check f "framing rejects invalid UTF-8"
     (← throws (decodeProtocolUtf8 (ByteArray.mk #[0xff])))
 
+  bufferedFraming f
   deliveryPlanning f
 
   let ov ← IO.Process.output { cmd := "openssl", args := #["version"] }
@@ -418,12 +444,32 @@ def mainTests : IO UInt32 := do
   let _ ← expectOk f "server ctx (good PKI)" (← mkServerCtx good)
   expectErr f "server ctx rejected: no SAN" (← mkServerCtx
     { certFile := path "nosan.crt", keyFile := path "nosan.key", caFile := path "ca.crt" })
-  let _ ← runCmd "chmod" #["640", path "server640.key"]
-  -- t26/M1: GOOD cert with a chmod-640 copy of the matching key, so the
-  -- rejection can only come from the server-side perms check
-  expectErr f "server ctx rejected: group-readable key (non-vacuous)" (← mkServerCtx
-    { certFile := path "server.crt", keyFile := path "server640.key", caFile := path "ca.crt" })
-  let _ ← runCmd "chmod" #["600", path "server640.key"]
+  if !System.Platform.isWindows then
+    -- Use matching, valid credentials for both roles. Observe mode before
+    -- restoring the fixture to read its bytes, so a loader chmod is detected.
+    for (role, files) in [("server", good), ("client", clientFiles)] do
+      let original ← IO.FS.readBinFile files.keyFile
+      let key := path s!"{role}-mode.key"
+      IO.FS.writeBinFile key original
+      for mode in ["600", "400", "700", "640", "000", "1600", "2600", "4600"] do
+        let changed ← IO.Process.output { cmd := "chmod", args := #[mode, key] }
+        check f s!"{role} mode {mode}: fixture chmod succeeded" (changed.exitCode == 0)
+        let modeArgs := #["-c", "import os,sys; print(oct(os.stat(sys.argv[1]).st_mode & 0o7777))", key]
+        let before ← runCmd "python3" modeArgs
+        let expectedMode := "0o" ++ (if mode == "000" then "0" else mode) ++ "\n"
+        check f s!"{role} mode {mode}: POSIX bits match the fixture" (before == expectedMode)
+        let candidate := { files with keyFile := key }
+        let result ← if role == "server" then mkServerCtx candidate else mkClientCtx candidate
+        if mode == "600" then
+          let _ ← expectOk f s!"{role} exact 0600 accepted" result
+        else
+          expectErr f s!"{role} non-0600 mode {mode} rejected" result
+          if let .error error := result then
+            check f s!"{role} mode {mode}: diagnostic names 0600" (error.contains "0600")
+        let after ← runCmd "python3" modeArgs
+        check f s!"{role} mode {mode}: loader preserves permissions" (before == after)
+        let _ ← runCmd "chmod" #["600", key]
+        check f s!"{role} mode {mode}: loader preserves key bytes" ((← IO.FS.readBinFile key) == original)
   -- t26: unchainable server cert (SAN present, but signed by another CA)
   expectErr f "server ctx rejected: unchainable cert" (← mkServerCtx
     { certFile := path "stray.crt", keyFile := path "stray.key", caFile := path "ca.crt" })

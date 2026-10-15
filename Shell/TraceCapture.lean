@@ -44,35 +44,47 @@ private def cancelOwned (t : Shell.Transport.Transport) (jobId : String) : IO Un
   try Shell.Client.sendMsg t (.cancelJob jobId)
   catch _ => pure ()
 
+/- A cancellation is justified only by our own polling limit while the last
+reply still described the accepted job as pending/running. Peer failures and
+terminal jobs must not cause any further writes to this connection. -/
+private inductive TraceJobStop where
+  | pollBudgetExhausted
+  | terminalJobFailure (message : String)
+  | peerOrTransportFailure (message : String)
+
+private def TraceJobStop.message : TraceJobStop → String
+  | .pollBudgetExhausted => "async trace-generation poll budget exhausted"
+  | .terminalJobFailure message | .peerOrTransportFailure message => message
+
 private def awaitTraceJob (t : Shell.Transport.Transport) (jobId : String)
-    (request : Lean.Json) : Nat → List String → IO (Except String Capture)
-  | 0, _ => pure (.error "async trace-generation poll budget exhausted")
+    (request : Lean.Json) : Nat → List String → IO (Except TraceJobStop Capture)
+  | 0, _ => pure (.error .pollBudgetExhausted)
   | remaining + 1, replies => do
     Shell.Client.sendMsg t (.awaitJob jobId (some 30))
     match ← receive t with
-    | .error error => return .error error
+    | .error error => return .error (.peerOrTransportFailure error)
     | .ok (line, json, message) =>
       let replies := replies ++ [line]
       match message with
       | .jobResult id outcome =>
-        if id != jobId then return .error "async trace-generation job id mismatch"
+        if id != jobId then return .error (.peerOrTransportFailure "async trace-generation job id mismatch")
         match outcome with
         | .genTraces _ =>
           let result := (json.getObjVal? "outcome").bind (·.getObjVal? "genTraces")
           match result.bind inlineTraces with
-          | .error error => return .error error
+          | .error error => return .error (.terminalJobFailure error)
           | .ok traces => return .ok { request, replies, traces, jobId := some jobId }
-        | .validate _ => return .error "unexpected validation result for trace-generation job"
-        | .infraError error => return .error error
+        | .validate _ => return .error (.peerOrTransportFailure "unexpected validation result for trace-generation job")
+        | .infraError error => return .error (.terminalJobFailure error)
       | .jobStatus id phase =>
-        if id != jobId then return .error "async trace-generation job id mismatch"
+        if id != jobId then return .error (.peerOrTransportFailure "async trace-generation job id mismatch")
         match phase with
         | .pending | .running => awaitTraceJob t jobId request remaining replies
-        | .cancelled => return .error "async trace-generation job cancelled"
-        | .unknown => return .error "async trace-generation job unknown or evicted"
-        | .done | .failed => return .error "async trace-generation job ended without a result"
-      | .registerError error | .protocolError error => return .error error
-      | _ => return .error "unexpected message: expected trace-generation job result"
+        | .cancelled => return .error (.terminalJobFailure "async trace-generation job cancelled")
+        | .unknown => return .error (.terminalJobFailure "async trace-generation job unknown or evicted")
+        | .done | .failed => return .error (.terminalJobFailure "async trace-generation job ended without a result")
+      | .registerError error | .protocolError error => return .error (.peerOrTransportFailure error)
+      | _ => return .error (.peerOrTransportFailure "unexpected message: expected trace-generation job result")
 
 def run (t : Shell.Transport.Transport) (cfg : Codec.ApalacheConfig)
     (spec : Codec.SpecConfig) (traceConfig : Codec.TraceConfig)
@@ -91,11 +103,13 @@ def run (t : Shell.Transport.Transport) (cfg : Codec.ApalacheConfig)
       | .jobAccepted jobId .genTraces =>
         if jobId.isEmpty then return .error "empty async trace-generation job id"
         let result ← try awaitTraceJob t jobId request maxPolls [line]
-          catch error => pure (.error (toString error))
+          catch error => pure (.error (.peerOrTransportFailure (toString error)))
         match result with
-        | .error _ => cancelOwned t jobId
-        | .ok _ => pure ()
-        return result
+        | .error .pollBudgetExhausted =>
+            cancelOwned t jobId
+            return .error (TraceJobStop.message .pollBudgetExhausted)
+        | .error reason => return .error reason.message
+        | .ok capture => return .ok capture
       | .registerError error | .protocolError error => return .error error
       | _ => return .error "unexpected message: expected trace-generation job_accepted"
     else

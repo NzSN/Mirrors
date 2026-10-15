@@ -123,7 +123,7 @@ def stdio : IO Transport := do
         match findLfByte acc with
         | none =>
             buffered.set ByteArray.empty
-            return some (← decodeProtocolUtf8 (stripTrailingCrByte acc))
+            throw (IO.userError "stdio closed with an unterminated protocol line")
         | some index =>
             let payload := stripTrailingCrByte (acc.extract 0 index)
             buffered.set (acc.extract (index + 1) acc.size)

@@ -1,0 +1,127 @@
+Build profile: -w ghc-9.14.1 -O1
+In order, the following will be built (use -v for more details):
+ - ModelMirrors-0.1.1.0 (test:ModelMirrors-test) (ephemeral targets)
+Preprocessing test suite 'ModelMirrors-test' for ModelMirrors-0.1.1.0...
+Building test suite 'ModelMirrors-test' for ModelMirrors-0.1.1.0...
+Running 1 test suites...
+Test suite ModelMirrors-test: RUNNING...
+ModelMirrors
+  ClientReplyNonModel
+    submission validates accepted kind before any await:                  OK
+    wrong poll and await IDs fail with no follow-up writes:               OK
+    cancel accepts matching status and every legal terminal result:       OK
+    matching async validate retains normal result and exact flow:         OK
+  ServerFramingNonModel
+    server fake backend normal async request reply and owned cleanup:     resource: re-release ignored: session-dir
+resource: re-release ignored: spec (borrowed)
+OK (0.01s)
+    oversized server request cancels only that session's fake job:        resource: re-release ignored: session-dir
+resource: re-release ignored: spec (borrowed)
+resource: re-release ignored: session-dir
+resource: re-release ignored: spec (borrowed)
+OK (0.05s)
+  StdioFramingNonModel
+    actual stdio preserves coalesced lines split UTF8 and byte caps:      OK (0.02s)
+    unterminated stdio frame fails and emits no payload:                  OK
+    stdio oversized input fails before EOF and cannot resume suffix:      OK (0.01s)
+    direct and encoded stdio oversized sends write zero bytes:            OK
+  TlsPolicyNonModel
+    client and server exact 0600 predicate preserves key modes and bytes: generated new CA
+generated server.crt/server.key (CN=127.0.0.1, expires in 1 days)
+generated client.crt/client.key (CN=modelmirrors-client, expires in 1 days)
+
+Done. Start the server:
+
+  ModelMirrors --server <port> --tls \
+      --cert /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt --key /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.key --ca /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/ca.crt
+
+Connect a client with ca.crt + client.crt + client.key.
+Keep ca.key offline; re-run this script to renew before expiry.
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-bf3205233f9f2781/server.crt expires in 1 day(s)
+generated new CA
+generated server.crt/server.key (CN=127.0.0.1, expires in 1 days)
+generated client.crt/client.key (CN=modelmirrors-client, expires in 1 days)
+
+Done. Start the server:
+
+  ModelMirrors --server <port> --tls \
+      --cert /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/server.crt --key /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/server.key --ca /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/ca.crt
+
+Connect a client with ca.crt + client.crt + client.key.
+Keep ca.key offline; re-run this script to renew before expiry.
+OK (0.38s)
+    actual TLS dependency DNS SAN CN wildcard IP and pin policy:          warning: server certificate /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/server.crt expires in 1 day(s)
+...+.+.....+......+...+....+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+......+......+.........+..+....+.....+.+...+..............+............+......+.........+....+..+...+.........+..........+.....+...+..........+........+.......+...+.....+......+.+..+......+....+...............+......+..+..........+.....+....+........+......+.+.........+...........+...+.+.....+................+......+.....+.......+........+...+..........+.................+.......+......+.....+....+..+.........+......+......+....+...+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+.+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+.............+......+......+.....+....+......+........+......+....+..................+.........+...........+...+.......+.....+.............+......+...+........+....+...+...+.....+...+....+..+...+.......+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = wrong.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/client.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/client.crt expires in 1 day(s)
+......+..+....+........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+..+.....................+.+........+............+.+............+.....+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.....+......+......+.+...+............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+..........+.....+.+........+...+...+.......+...+...........+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+...+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = unused.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/client.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/client.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/client.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/client.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/client.crt expires in 1 day(s)
+.....+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.......+...+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+............+.................+...+...+...+.......+.........+...+...+...+..+.......+...+.........+...+..+..................+.+..............+.+..............+.+..+.......+..+...+...+....+..............+.......+............+.....+.+..+...+....+......+..+.........+...+......+......+...+.......+.....+.+.....+....+......+...+..+.......+...+.........+.....+...+......+....+.....+.+............+..+......+.......+........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.......+...+.....+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+.........+...+.....+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+...............+............+......+..+....+..............+.......+..............+...+.......+...+..+.........+......................+............+..+....+......+...+...+..+...+....+...............+......+..+.+..+...+......+.........+............+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = service.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/client.crt expires in 0 day(s)
+TLS_POLICY_CN_ONLY=accepted
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/cn-only.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-2d249e8eb9b7570f/client.crt expires in 0 day(s)
+OK (1.06s)
+  TransportFramingNonModel
+    final encoded byte boundaries and unchanged JSON:                     OK
+    TCP raw receive boundaries split UTF8 coalescing and EOF:             OK (0.01s)
+    TCP direct send refuses oversized or raw LF before writing:           generated new CA
+generated server.crt/server.key (CN=127.0.0.1, expires in 1 days)
+generated client.crt/client.key (CN=modelmirrors-client, expires in 1 days)
+
+Done. Start the server:
+
+  ModelMirrors --server <port> --tls \
+      --cert /tmp/fix-tests/modelmirrors-framing-330ad3df202d4b81/server.crt --key /tmp/fix-tests/modelmirrors-framing-330ad3df202d4b81/server.key --ca /tmp/fix-tests/modelmirrors-framing-330ad3df202d4b81/ca.crt
+
+Connect a client with ca.crt + client.crt + client.key.
+Keep ca.key offline; re-run this script to renew before expiry.
+OK
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-330ad3df202d4b81/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-330ad3df202d4b81/client.c    mTLS framing direct send and receive actual records:                  rt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-330ad3df202d4b81/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-330ad3df202d4b81/client.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-330ad3df202d4b81/server.crt expires in 1 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-330ad3df202d4b81/client.crt expires in 1 day(s)
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-330ad3df202d4b81/server.crt expires in 0 day(s)
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-330ad3df202d4b81/client.crt expires in 0 day(s)
+OK (0.71s)
+
+All 16 tests passed (2.26s)
+Test suite ModelMirrors-test: PASS
+Test suite logged to:
+/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/dist/build/x86_64-linux/ghc-9.14.1/ModelMirrors-0.1.1.0/t/ModelMirrors-test/test/ModelMirrors-0.1.1.0-ModelMirrors-test.log
+1 of 1 test suites (1 of 1 test cases) passed.

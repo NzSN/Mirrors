@@ -1,0 +1,27 @@
+Build profile: -w ghc-9.14.1 -O1
+In order, the following will be built (use -v for more details):
+ - ModelMirrors-0.1.1.0 (test:ModelMirrors-test) (ephemeral targets)
+Preprocessing test suite 'ModelMirrors-test' for ModelMirrors-0.1.1.0...
+Building test suite 'ModelMirrors-test' for ModelMirrors-0.1.1.0...
+Running 1 test suites...
+Test suite ModelMirrors-test: RUNNING...
+ModelMirrors.ClientReplyNonModel.submission validates accepted kind before any await
+ModelMirrors.ClientReplyNonModel.wrong poll and await IDs fail with no follow-up writes
+ModelMirrors.ClientReplyNonModel.cancel accepts matching status and every legal terminal result
+ModelMirrors.ClientReplyNonModel.matching async validate retains normal result and exact flow
+ModelMirrors.ServerFramingNonModel.server fake backend normal async request reply and owned cleanup
+ModelMirrors.ServerFramingNonModel.oversized server request cancels only that session's fake job
+ModelMirrors.StdioFramingNonModel.actual stdio preserves coalesced lines split UTF8 and byte caps
+ModelMirrors.StdioFramingNonModel.unterminated stdio frame fails and emits no payload
+ModelMirrors.StdioFramingNonModel.stdio oversized input fails before EOF and cannot resume suffix
+ModelMirrors.StdioFramingNonModel.direct and encoded stdio oversized sends write zero bytes
+ModelMirrors.TlsPolicyNonModel.client and server exact 0600 predicate preserves key modes and bytes
+ModelMirrors.TlsPolicyNonModel.actual TLS dependency DNS SAN CN wildcard IP and pin policy
+ModelMirrors.TransportFramingNonModel.final encoded byte boundaries and unchanged JSON
+ModelMirrors.TransportFramingNonModel.TCP raw receive boundaries split UTF8 coalescing and EOF
+ModelMirrors.TransportFramingNonModel.TCP direct send refuses oversized or raw LF before writing
+ModelMirrors.TransportFramingNonModel.mTLS framing direct send and receive actual records
+Test suite ModelMirrors-test: PASS
+Test suite logged to:
+/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/dist/build/x86_64-linux/ghc-9.14.1/ModelMirrors-0.1.1.0/t/ModelMirrors-test/test/ModelMirrors-0.1.1.0-ModelMirrors-test.log
+1 of 1 test suites (1 of 1 test cases) passed.

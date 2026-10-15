@@ -1,0 +1,645 @@
+{
+  "schema": "mirrors.client-remediation-final-source-verification/v1",
+  "date": "2026-10-15",
+  "status": "passed",
+  "remoteLeafManifestChecks": {
+    "main": {
+      "manifest": "remote/main/artifact-manifest.json",
+      "sha256": "c347e0091349488a05c586f34a4354eb689dea95ac19d4873eb43f43f608a4aa",
+      "files": 180,
+      "bytes": 6637571,
+      "mismatches": []
+    },
+    "haskell": {
+      "manifest": "remote/haskell/evidence-manifest.json",
+      "sha256": "005eaff0be2d1cda40977b3ce97ec4c239dbd7f160e2c99b5066e5897496817b",
+      "files": 67,
+      "bytes": 1766459,
+      "mismatches": []
+    },
+    "haskell-h2": {
+      "manifest": "remote/haskell-h2/evidence-manifest.json",
+      "sha256": "c19d799201cebffc08917d56c64b4d91600ef4658de6216c5b9f037babe246b3",
+      "files": 34,
+      "bytes": 378309,
+      "mismatches": []
+    }
+  },
+  "cppGateIndependentChecks": {
+    "sourceManifestSha256": "5d2cb565c8d9dc51681171ae768a01d8e7cf2607402bfaaa1342cbd478e47d71",
+    "selectedFiles": 493,
+    "sourceMismatches": [],
+    "matrixRows": 37,
+    "exactUniqueCaseInventory": true,
+    "attachedSecondSessionSurvived": 19,
+    "allControlShutdownConfirmed": true,
+    "intentionalCleanupFailureRows": 2,
+    "exactBrokerObservableClassRows": 4,
+    "wrongDigestZeroAcquisitionRows": 2
+  },
+  "remoteSourceToAppliedCheckout": {
+    "Mirrors": {
+      "selectedFiles": 8067,
+      "mismatches": []
+    },
+    "MirrorLean": {
+      "selectedFiles": 74,
+      "mismatches": []
+    },
+    "MirrorECMA": {
+      "selectedFiles": 392,
+      "mismatches": []
+    },
+    "MirrorCPP": {
+      "selectedFiles": 179,
+      "mismatches": []
+    },
+    "MirrorGate": {
+      "selectedFiles": 314,
+      "mismatches": []
+    },
+    "MirrorRust": {
+      "selectedFiles": 78,
+      "mismatches": []
+    },
+    "ModelMirros": {
+      "selectedFiles": 120,
+      "mismatches": []
+    }
+  },
+  "repositories": {
+    "Mirrors": {
+      "head": "c17bae951c4d5bbc5818c2a4f82e2d93d07abc52",
+      "matchesBaselineHead": true,
+      "diffCheckExit": 0,
+      "diffCheckOutput": "",
+      "status": "M CHANGELOG.md\n M Docs/async-enablement-design.md\n M Docs/client-implementation-guide.md\n M Docs/interface-reference.md\n M Ffi/tls_shim.c\n M Shell/Mirror/Session.lean\n M Shell/TraceCapture.lean\n M Shell/Transport/Stdio.lean\n M Shell/Transport/Tcp.lean\n M Shell/Transport/Tls.lean\n M lakefile.lean\n M tools/JobStoreSpec.lean\n M tools/TraceCaptureSpec.lean\n M tools/TransportSpec.lean\n M tools/check-trace-capture.py\n M tools/run-local-no-model-check.sh\n?? .projectile-cache.eld\n?? Plans/client-conformance-fix-evidence-20261015/\n?? Plans/client-conformance-fix-plan-2026-10-15.md\n?? Plans/dpm-review-remediation-evidence-20261013/\n?? tools/check-client-framing.py"
+    },
+    "MirrorLean": {
+      "head": "b8b9491bd96e3126da55d34a7ba3a4493766dcf3",
+      "matchesBaselineHead": true,
+      "diffCheckExit": 0,
+      "diffCheckOutput": "",
+      "status": "M MirrorLean/Protocol.lean\n M MirrorLean/ServerMode.lean\n M MirrorLean/Spec.lean\n M README.md\n M server-mode/Test/ServerMode.lean\n M server-mode/native/mirrorlean_tls.c\n M server-mode/test/gen-test-certs.sh\n M test/Main.lean\n?? server-mode/test/no-connect-listener.py\n?? test/fixtures/scanner/"
+    },
+    "MirrorECMA": {
+      "head": "19f6ae6ce8d9b073bef888fc66efc4c49f2a07ab",
+      "matchesBaselineHead": true,
+      "diffCheckExit": 0,
+      "diffCheckOutput": "",
+      "status": "M README.md\n M docs/replay-and-async.md\n M src/negotiated.ts\n M src/transport.ts\n M test/async-replay-report.test.ts\n M test/client-spawn-allocation.test.ts\n M test/model-interface-runner.test.ts\n?? .work/\n?? docs/client-admission-release-notes.md\n?? test/tls-key-mode.test.ts"
+    },
+    "MirrorCPP": {
+      "head": "410c58a175c3135d9cd76c85e33a718f63761855",
+      "matchesBaselineHead": true,
+      "diffCheckExit": 0,
+      "diffCheckOutput": "",
+      "status": "M README.md\n M docs/design.md\n M src/detail/tls.cpp\n M test/unit/tls_test.cpp"
+    },
+    "MirrorGate": {
+      "head": "4a8d0d361589059ad72fe52e05789f302b4b65c8",
+      "matchesBaselineHead": true,
+      "diffCheckExit": 0,
+      "diffCheckOutput": "",
+      "status": "M integrations/mirrorcpp/README.md\n M integrations/mirrorcpp/counter_driver.cpp\n M integrations/mirrorcpp/orchestration.cpp\n M integrations/mirrorcpp/orchestration.hpp\n M sdk/cpp/README.md\n M sdk/cpp/include/mirrorgate/json.hpp\n M sdk/cpp/include/mirrorgate/managed_worker.hpp\n M sdk/cpp/src/control.cpp\n M sdk/cpp/src/json.cpp\n M sdk/cpp/src/managed_worker.cpp\n M tests/cpp/orchestration_receipt_test.cpp\n M tests/cpp/sdk_test.cpp\n?? conformance/control-v1/failure-counter.mjs\n?? conformance/control-v1/run-cpp-failures"
+    },
+    "ModelMirros": {
+      "head": "5ee414ee16b8aba50ceb480ac8013a56165272bb",
+      "matchesBaselineHead": true,
+      "diffCheckExit": 0,
+      "diffCheckOutput": "",
+      "status": "M ModelMirrors.cabal\n M src-tls/Protocol/Transport/Tls.hs\n M src/Protocol/Client.hs\n M src/Protocol/Mirror.hs\n M src/Protocol/Transport/Core.hs\n M src/Protocol/Transport/Stdio.hs\n M src/Protocol/Transport/Tcp.hs\n M test/Main.hs\n?? docs/transport-framing.md\n?? src/Protocol/Transport/Framing.hs\n?? test/ClientReplySpec.hs\n?? test/ServerFramingSpec.hs\n?? test/StdioTransportSpec.hs\n?? test/TlsPolicySpec.hs\n?? test/TransportFramingSpec.hs\n?? test/TransportTestSupport.hs"
+    },
+    "MirrorRust": {
+      "head": "5049e99886a3d1f775e60190478c26e39c9aefc9",
+      "matchesBaselineHead": true,
+      "diffCheckExit": 0,
+      "diffCheckOutput": "",
+      "status": ""
+    }
+  },
+  "protectedBoundaries": {
+    "Mirrors": {
+      "existingAgentInstructionsUnchanged": true,
+      "existingFixturesAndGeneratedOutputsUnchanged": true,
+      "newRegressionFixtures": [],
+      "coreAndCodecUnchanged": true,
+      "priorCheckpointsUnchanged": true
+    },
+    "MirrorLean": {
+      "existingAgentInstructionsUnchanged": true,
+      "existingFixturesAndGeneratedOutputsUnchanged": true,
+      "newRegressionFixtures": [
+        "test/fixtures/scanner/Boundary.tla",
+        "test/fixtures/scanner/BoundaryDep.tla",
+        "test/fixtures/scanner/LexicalA.tla",
+        "test/fixtures/scanner/LexicalB.tla",
+        "test/fixtures/scanner/LexicalRoot.tla",
+        "test/fixtures/scanner/LexicalShared.tla",
+        "test/fixtures/scanner/MissingAfterMarker.tla"
+      ]
+    },
+    "MirrorECMA": {
+      "existingAgentInstructionsUnchanged": true,
+      "existingFixturesAndGeneratedOutputsUnchanged": true,
+      "newRegressionFixtures": []
+    },
+    "MirrorCPP": {
+      "existingAgentInstructionsUnchanged": true,
+      "existingFixturesAndGeneratedOutputsUnchanged": true,
+      "newRegressionFixtures": []
+    },
+    "MirrorGate": {
+      "existingAgentInstructionsUnchanged": true,
+      "existingFixturesAndGeneratedOutputsUnchanged": true,
+      "newRegressionFixtures": []
+    },
+    "ModelMirros": {
+      "existingAgentInstructionsUnchanged": true,
+      "existingFixturesAndGeneratedOutputsUnchanged": true,
+      "newRegressionFixtures": []
+    },
+    "MirrorRust": {
+      "existingAgentInstructionsUnchanged": true,
+      "existingFixturesAndGeneratedOutputsUnchanged": true,
+      "newRegressionFixtures": []
+    },
+    "unrelatedPathsPresent": {
+      "Mirrors/.projectile-cache.eld": true,
+      "Mirrors/Plans/dpm-review-remediation-evidence-20261013": true,
+      "MirrorECMA/.work": true
+    }
+  },
+  "changedSourceFiles": {
+    "Mirrors": [
+      {
+        "path": "CHANGELOG.md",
+        "oldSha256": "906a625cf4639deb874f781a60af1bf1ae76d283112be178f136980b480a4e08",
+        "sha256": "b54f59c1ead478eb43feec63665bafa5e17eee632b4f86b623ead3e61cec06d5",
+        "bytes": 13681
+      },
+      {
+        "path": "Docs/async-enablement-design.md",
+        "oldSha256": "605399344bd80b0409b8681aa70c6f34b8ccb5e0f86a36004ca4578dfe7e6618",
+        "sha256": "7298abb7ef0c38c4dd3bb07f5651d2db35c0038569bcf95f25a67324e44badac",
+        "bytes": 11762
+      },
+      {
+        "path": "Docs/client-implementation-guide.md",
+        "oldSha256": "8017baebdb0a73473107a88b16422311afe84a1e3afa754f58887190fc73c7b4",
+        "sha256": "cb32f1262a5e5b7d351f3a137dc9228d435d0bc3a4f4135b68ff283aa0850b66",
+        "bytes": 70842
+      },
+      {
+        "path": "Docs/interface-reference.md",
+        "oldSha256": "51ab9d7d584f5a8d5e3b69ef132f45cd18db3e05726a3cf95318368faa0859b7",
+        "sha256": "2962eebdf18c2f3bce90336f456bad6a32c417935f0c1f8034079bf8e3571d6d",
+        "bytes": 22179
+      },
+      {
+        "path": "Ffi/tls_shim.c",
+        "oldSha256": "7f1f631d38ebd08b7c06a16450bde624cf5c2d54f2e7e9f2cae58da4f50e8667",
+        "sha256": "c322aa6a2252dbac200f33828b03d5ca5ff3bf8017ecca684dd7b625f620c53d",
+        "bytes": 27085
+      },
+      {
+        "path": "Shell/Mirror/Session.lean",
+        "oldSha256": "7edf6d11cd801d3509650b79a19df95bcb8380958b57153613246466e3f9c59b",
+        "sha256": "5856d51ef9f6ee32d5a853ef519df9a15a422a8ce19a6e9c65012ef8be727e0d",
+        "bytes": 46680
+      },
+      {
+        "path": "Shell/TraceCapture.lean",
+        "oldSha256": "ad287e5e94922779cb685d3326daa1e64f284bef7751423e90b78b322995171a",
+        "sha256": "fa6c55dec6a831074b3b789673a4c64d966cc0e452133cddbc218f1bb21e145e",
+        "bytes": 9788
+      },
+      {
+        "path": "Shell/Transport/Stdio.lean",
+        "oldSha256": "d18c7ad45c984a623634eb5bfc3039ab0d43cd936761b6348c423c141a06728d",
+        "sha256": "e7cf63bf6d625df9073a1eab569fff9a904770a79ad914c5643c5c732172e065",
+        "bytes": 5390
+      },
+      {
+        "path": "Shell/Transport/Tcp.lean",
+        "oldSha256": "c8ad67fce31d6849338a4292a10855390830492206def945f727f7a3536cd90d",
+        "sha256": "f69c592261a9cd8718eaab38a39132070551d671aacfeea98498adb69634775a",
+        "bytes": 13120
+      },
+      {
+        "path": "Shell/Transport/Tls.lean",
+        "oldSha256": "217af67687d3fd975bb70889a03713f1eca5688b6fe7ae38fe8aed41eaf9d41b",
+        "sha256": "1cc97fbbf6fa578509ad8d4b350258b262b969cd515cb11ad8c5bdd096d8ba5d",
+        "bytes": 16310
+      },
+      {
+        "path": "lakefile.lean",
+        "oldSha256": "4aeb8fcd6b90a4bb5fb552434469d8e5cd92e2f0799be701f652988c5666038d",
+        "sha256": "f8bb7da8f5136667be5720a1bb1a126fa5b83ddedc963d4e6410faaf26b4bced",
+        "bytes": 34779
+      },
+      {
+        "path": "tools/JobStoreSpec.lean",
+        "oldSha256": "1bcbb552cdf8bc5e16745cda68fc2e30d7605232f57a44753e6ddee176aab328",
+        "sha256": "c4a4b03f02080331c71a74f835346c2cec6ac1b6a1989b89afe5405056e98465",
+        "bytes": 28113
+      },
+      {
+        "path": "tools/TraceCaptureSpec.lean",
+        "oldSha256": "9197e786ad971941962229caf19313242dd2048bcaf85d9d2c50d52056dec90f",
+        "sha256": "fe121e4dc582b0547d6a25c7a474f98e56bcac6bca943e54b13cc0bc638d7e2d",
+        "bytes": 10666
+      },
+      {
+        "path": "tools/TransportSpec.lean",
+        "oldSha256": "d4fd7511b8fa9e90373205319a0e773968c00530e8b65ea730cce5484e07b6e1",
+        "sha256": "e13243a42f3ff5d7233fae9da22b5dcc57b4c13ff7dd6806010ee896408b65cc",
+        "bytes": 37049
+      },
+      {
+        "path": "tools/check-trace-capture.py",
+        "oldSha256": "88e2c7761ad35913034f6b4ebd32d8f2539660d53c6c6c3d2c7374d52a5622a6",
+        "sha256": "b2a48dd5cd64fa4788b4daf3a6f1d059d701fa71fd924289a9735c42f12c56ef",
+        "bytes": 9349
+      },
+      {
+        "path": "tools/run-local-no-model-check.sh",
+        "oldSha256": "c4d5d06f7458bdb0e5b6a1b0cc64bf1abe045a7e76f6787eb96e8f5e83d0b0b6",
+        "sha256": "539a6e9e94a14a197bd73979562e0bbac73aee5285489ed0b2fbb95bdfe714bf",
+        "bytes": 6671
+      },
+      {
+        "path": "tools/check-client-framing.py",
+        "change": "added",
+        "sha256": "fe2b77b8e24bdff58f9b08dc1b594174ce2b0ece765fab76a382e4fbc7df0dca",
+        "bytes": 11159
+      }
+    ],
+    "MirrorLean": [
+      {
+        "path": "MirrorLean/Protocol.lean",
+        "oldSha256": "1a4fd8964c15366e8033d5bf834852067b87f42ef8b9fb23b3f572d07ff9dd25",
+        "sha256": "cd1ce4e4dcbca797cb666c013b37c4423369bd90770a08639cab067518425fe3",
+        "bytes": 19205
+      },
+      {
+        "path": "MirrorLean/ServerMode.lean",
+        "oldSha256": "e2aa0b2ad1358361baa5ab861466e87911be5ff81cde4536e7f1cdf8762cc6a2",
+        "sha256": "45eddab44082501c0e6ba3b4e8fd9a9cfdd7a99f785512fb8a81662adf8cab97",
+        "bytes": 9938
+      },
+      {
+        "path": "MirrorLean/Spec.lean",
+        "oldSha256": "3032d715f9abddb76e3b8024a4ff5a948046c275198ab10755e7455a7ac45740",
+        "sha256": "93cfba3a293de3d15b00f1e634bdbe06ea5958bfe083143ad3e6b7f2e1004658",
+        "bytes": 7722
+      },
+      {
+        "path": "README.md",
+        "oldSha256": "83a21619998946cc9c05e0d353fac97db3dbf34a87e70ebc426bbd8d8698e892",
+        "sha256": "bc8fa60a7fe1af4c3e5be52d6e5c252743d02cfa08a084dfdcdbf50259cce8fb",
+        "bytes": 33722
+      },
+      {
+        "path": "server-mode/Test/ServerMode.lean",
+        "oldSha256": "204bec6d733c46f0d963d0747fff61d8874ac16a5f94064c3eafd28b2612997e",
+        "sha256": "71bc16060ce10943fa0cd3d78db93d8f81346eaa5567822e665e73b57ca1b411",
+        "bytes": 28594
+      },
+      {
+        "path": "server-mode/native/mirrorlean_tls.c",
+        "oldSha256": "d970e6f14cc715ffcdc4d90ca557b31e730251d4f5d73ef04bd69fa0128d598b",
+        "sha256": "9803f3891c842e579507a65772c9114dfa2ce49eecbb2697d2e08328cf77add6",
+        "bytes": 17157
+      },
+      {
+        "path": "server-mode/test/gen-test-certs.sh",
+        "oldSha256": "e9ec6f3faf73384d9133d56fa8daf9b17fc8d02d09d5e3561912284c5996e290",
+        "sha256": "7c86fa2c0f8bc75fd951cd1533ed91b8e2c1c72acaf2c5d693ae800c728b6a7b",
+        "bytes": 4697
+      },
+      {
+        "path": "test/Main.lean",
+        "oldSha256": "6bb4072d4d896d024fdd5bb64cf1910cf41b7e39c3b52ff7cab0cf37d6e5104b",
+        "sha256": "d4a02f94142d4007ed09a28827880b44e7e8376dd2bfb8cc21619f2f203c09f5",
+        "bytes": 51806
+      },
+      {
+        "path": "server-mode/test/no-connect-listener.py",
+        "change": "added",
+        "sha256": "590e41152097e197a05732f034465bbda4dedc4480cc218e64299d6bcddce4fd",
+        "bytes": 1125
+      },
+      {
+        "path": "test/fixtures/scanner/Boundary.tla",
+        "change": "added",
+        "sha256": "c9e0469c86a8698df7c36c1073f39b25651a2e6bfcd6a4ecc8cc1a5ccd8412ef",
+        "bytes": 73
+      },
+      {
+        "path": "test/fixtures/scanner/BoundaryDep.tla",
+        "change": "added",
+        "sha256": "dd62ac52445f06a682d8cbd76388e185b8a7bada84469d85e561f2fed30589b4",
+        "bytes": 34
+      },
+      {
+        "path": "test/fixtures/scanner/LexicalA.tla",
+        "change": "added",
+        "sha256": "999fdfb055a80d3589853e43bb4d7bd8b5b150f85e229b711a023697adb5e3e6",
+        "bytes": 69
+      },
+      {
+        "path": "test/fixtures/scanner/LexicalB.tla",
+        "change": "added",
+        "sha256": "0492a3c5f6147cf4a57ef79a227ca017a38df17db64953440e2fddf0ef1149bc",
+        "bytes": 111
+      },
+      {
+        "path": "test/fixtures/scanner/LexicalRoot.tla",
+        "change": "added",
+        "sha256": "6733e1e75f3370654c7cef1644ceed119a44670416bef8722dd592aeca99bebd",
+        "bytes": 464
+      },
+      {
+        "path": "test/fixtures/scanner/LexicalShared.tla",
+        "change": "added",
+        "sha256": "9475868abff9ce942d777a87dc9489d16e89958d4c013b500427820509f71b0b",
+        "bytes": 57
+      },
+      {
+        "path": "test/fixtures/scanner/MissingAfterMarker.tla",
+        "change": "added",
+        "sha256": "bc49ac25c0b6b8228dfabcf7896f974405e7af3d969d3f005f2636598173bc0b",
+        "bytes": 77
+      }
+    ],
+    "MirrorECMA": [
+      {
+        "path": "README.md",
+        "oldSha256": "0aa5a81ff6c6c2f554f2c71ebdba78e8219a8884e146bb3fe88cecff4f69b676",
+        "sha256": "ce6880980bd14a1baeea8130e99b8e2856c6775a6b474fa3a98bf34ea4c547b9",
+        "bytes": 42040
+      },
+      {
+        "path": "docs/replay-and-async.md",
+        "oldSha256": "b7cc716cc6fc874871adf0e4f9399753d515f1406ba4348ad3d9bde3a18aa0cd",
+        "sha256": "68f1ee376e88f316a6c8e73f0894cda6c536dabbba628df62355c92d37003095",
+        "bytes": 17227
+      },
+      {
+        "path": "src/negotiated.ts",
+        "oldSha256": "961975f7616d3a59c57d17e15fa0f0e06c7a035473bbb80436199a5897dece29",
+        "sha256": "9561bab3f821a39ba83bb271d70fdd722f64f73d0bd6b725b20c7e74e7c9b385",
+        "bytes": 39538
+      },
+      {
+        "path": "src/transport.ts",
+        "oldSha256": "0327dc6e844b96fa05504f4b87d68a92b1ba4ec75a345fe7f0990221df4cb88f",
+        "sha256": "6ff9c836b398df609c314b406ac67752f1f96f102bda05b855327768df583f56",
+        "bytes": 16581
+      },
+      {
+        "path": "test/async-replay-report.test.ts",
+        "oldSha256": "89d4454541b64d3285ddcb8eab88e1ab7176e1c08be8a3aa03d1e5223fe89f72",
+        "sha256": "e2bde556c37d720156e64ffa40d3b5448e6f91e8e745d71bcb8d70b2b67830d7",
+        "bytes": 21647
+      },
+      {
+        "path": "test/client-spawn-allocation.test.ts",
+        "oldSha256": "f6ee8158aa5780470d9cb14e8210b30d5650431a47405cd04dc5f0fb49e965e7",
+        "sha256": "06ae978bbd3a3ef06cb1d7a79b587ebe0cdf84388579eb88bb6f41a1690b935a",
+        "bytes": 5046
+      },
+      {
+        "path": "test/model-interface-runner.test.ts",
+        "oldSha256": "60805118bc197ef2a59029883eb1319afe3d9c956a3493b91d5a8b8528b1083b",
+        "sha256": "68f01507ceaf6dae314773dfd7d520758a1907ff41551942eed1b33d84530d84",
+        "bytes": 53240
+      },
+      {
+        "path": "docs/client-admission-release-notes.md",
+        "change": "added",
+        "sha256": "dab41fcf53c0baa94c4e2417d69c4076e847de24a919bdf2e370853b6af31d22",
+        "bytes": 2058
+      },
+      {
+        "path": "test/tls-key-mode.test.ts",
+        "change": "added",
+        "sha256": "91eaa748a8f26d6f88a5111d6388c884e99a9a6f5c184381c02fc2600d5ceac2",
+        "bytes": 4653
+      }
+    ],
+    "MirrorCPP": [
+      {
+        "path": "README.md",
+        "oldSha256": "60b5d3e7182b445d8f333ef489e0a8b416d7a50628e925af15bb912ac092cdf9",
+        "sha256": "41f3c90f89b4dd9ad88886e9bac30a5e6747606b32b110653dc13da8494e8f0c",
+        "bytes": 14198
+      },
+      {
+        "path": "docs/design.md",
+        "oldSha256": "ecc683929516b5487463fbff973bb21cde2be54e715851222902d32b4e5251a4",
+        "sha256": "729f3befe40c85a31323b819397c6f4fda4ab973b902862cdbab0cd37d4207b1",
+        "bytes": 51500
+      },
+      {
+        "path": "src/detail/tls.cpp",
+        "oldSha256": "504f9b681ba43acd46628c947f85c674f133d8c794acfb5e1468f8da6a0a6a5d",
+        "sha256": "8490e59e203120eaa246172d8c552cde8bdf469fbb3fef82f65a4c167ea80c9d",
+        "bytes": 14132
+      },
+      {
+        "path": "test/unit/tls_test.cpp",
+        "oldSha256": "48b9f2d41bc90adb4c13c1c48b0b4e92c9bf8d8410d6ab877bd11b498db30a28",
+        "sha256": "d37fc1e067717f3a8942f3163dc5db4a5a97567dd919cd5b6db5dd9cfcdd5836",
+        "bytes": 9367
+      }
+    ],
+    "MirrorGate": [
+      {
+        "path": "integrations/mirrorcpp/README.md",
+        "oldSha256": "273846dd89df60467efc317148100072052909a1f3484ab3cb6c730d0dc74620",
+        "sha256": "19b56dd6a773b963868a2e1298d78970bc9e948dddce65265f89f48d1e4b1f1f",
+        "bytes": 5760
+      },
+      {
+        "path": "integrations/mirrorcpp/counter_driver.cpp",
+        "oldSha256": "5c55ecc7d529cf396def5ffd3bf045a4aba4ef70e7a68be5c121ba0fd119d7c7",
+        "sha256": "5904003d28699b1b128254486cfb8c411c34ac829c515cd761366570795736be",
+        "bytes": 18172
+      },
+      {
+        "path": "integrations/mirrorcpp/orchestration.cpp",
+        "oldSha256": "4a5c65245c5e2e0b63fce0bb06c8986a1da65ccc7ab150e5777abf0f0db982cd",
+        "sha256": "9fb2f3a61ea150eba0edc26d80fc23105dd6f338137a36973d74e19a54692d30",
+        "bytes": 15745
+      },
+      {
+        "path": "integrations/mirrorcpp/orchestration.hpp",
+        "oldSha256": "d73ebeda4b6c0cdf1430b92ff8f7627f6743d17067c24c7525c2d86c4254f65b",
+        "sha256": "ba228a6cf164f121b4ac95e975dee72bb9ce2d65d09d07169be5f2ec488ceb3f",
+        "bytes": 2626
+      },
+      {
+        "path": "sdk/cpp/README.md",
+        "oldSha256": "2cbf7083276915e23a1a617b6a7014386aef5d7752eace98d4735a529094f024",
+        "sha256": "159a4c9a811aff70b0744c142a3adc84795365106db42c23f7f52667bfd0f205",
+        "bytes": 8676
+      },
+      {
+        "path": "sdk/cpp/include/mirrorgate/json.hpp",
+        "oldSha256": "9516c1a124c4c6efce4faffc568e17e4568f4018e95ce55e4eca4a31a9072717",
+        "sha256": "5969e114ab88c9a705d223902759c5cc3fe8fd944e4c3b6a511c70a9f2b4bd83",
+        "bytes": 2431
+      },
+      {
+        "path": "sdk/cpp/include/mirrorgate/managed_worker.hpp",
+        "oldSha256": "9dabeea4de74c17a49def454f49c4e8a3fb2179520523355cf3798614cd01fee",
+        "sha256": "adc6e2a2d963aa746a4775365737d77d453a608c84a758a4d299fbdd2471df40",
+        "bytes": 4182
+      },
+      {
+        "path": "sdk/cpp/src/control.cpp",
+        "oldSha256": "db5d86866164bd281cfc96037dd20b30f1c339fca082c4e52a34a85b4a478176",
+        "sha256": "61e02db7380335b1fe2511bbe16ee96d6bbe3082386de55600380a7b4f0ea368",
+        "bytes": 52715
+      },
+      {
+        "path": "sdk/cpp/src/json.cpp",
+        "oldSha256": "b3dd1b4994b2ae6ab5b8cf7b932ba3b1de773c71b848ec271ec0c899e6402c1c",
+        "sha256": "3cb495b084e51731071ff6c9e555e4336fc5dc1d852ac616a1b88d1ee11b9b31",
+        "bytes": 16887
+      },
+      {
+        "path": "sdk/cpp/src/managed_worker.cpp",
+        "oldSha256": "fe1d2a1f682f88b3b0d842bd1f8bf51ec122cb5f15a9cf28cb31b70c9dfb2817",
+        "sha256": "689847008e40a4ff8d250dc619b4a8c620ff4bbe252f7df061923a853fdab088",
+        "bytes": 31525
+      },
+      {
+        "path": "tests/cpp/orchestration_receipt_test.cpp",
+        "oldSha256": "d015e4f1329798070d0db1e2a6ffea8dc359668fa8fd10e649352f1916d7d603",
+        "sha256": "d5979d72c1a14f7143f3c9eeee421c8efaa24f00d3dbef31fc6396538fa2b082",
+        "bytes": 8030
+      },
+      {
+        "path": "tests/cpp/sdk_test.cpp",
+        "oldSha256": "8f9b780ffa2eb2c8f0a7844c5ed32a69ec2f9569279011c55947195a078f87d4",
+        "sha256": "9986641dae5a6ce0d270d6b7e0cc7a6199580799c5d9efbfb69c1ccbccc0142c",
+        "bytes": 33003
+      },
+      {
+        "path": "conformance/control-v1/failure-counter.mjs",
+        "change": "added",
+        "sha256": "3d0c1ee8802e180be9c7bb2ba8b36ffa6be332c6e95f36887f1a3fc33a09c126",
+        "bytes": 1460
+      },
+      {
+        "path": "conformance/control-v1/run-cpp-failures",
+        "change": "added",
+        "sha256": "5b93a2d1cc19af783cafefaada1ef538f34d2d053a9bf84b4d6976057bfd2c1a",
+        "bytes": 6107
+      }
+    ],
+    "ModelMirros": [
+      {
+        "path": "ModelMirrors.cabal",
+        "oldSha256": "c29b473376cd192d97ead71c70bf4a587120c1b325f46f37fbc2477937d10370",
+        "sha256": "e142d77c74aef4aa82298f1320c4d6b6768765d78fd79a83b22c20f250500b49",
+        "bytes": 6939
+      },
+      {
+        "path": "src-tls/Protocol/Transport/Tls.hs",
+        "oldSha256": "d918cbd74d0043c826cb976c6a06a3e0b6af8264554be46b6533335090988154",
+        "sha256": "afc5618b129a0cebc6ee4d5237f40f6fb55e6b79e8832d788fdeeb3ff3ecaba0",
+        "bytes": 21746
+      },
+      {
+        "path": "src/Protocol/Client.hs",
+        "oldSha256": "0760df92b951995bf540fb3822e84dc8b2b1640118ff9531529c77b2dd258c24",
+        "sha256": "2ec95a91223dc12fd0cfc4943ce1893b4fa47cacb29d34ddf97c962a5a4aa4f6",
+        "bytes": 14839
+      },
+      {
+        "path": "src/Protocol/Mirror.hs",
+        "oldSha256": "7694e0cb9734e57e253e81a125b1660edc24167e8d9e81a9fe71569138c4295e",
+        "sha256": "d282f6bfa5aaaf936532837221664e91a4793b8efd913fe0806941ee5fda23aa",
+        "bytes": 35951
+      },
+      {
+        "path": "src/Protocol/Transport/Core.hs",
+        "oldSha256": "d7a0e1eea90b0ac5f3d4425c6b8807c686fda6bd66b9b2b6082aceb6679c412f",
+        "sha256": "3d150ebc85a2521cba61fb9c54877d85dbc35b858537e417c1963647aac00ac6",
+        "bytes": 684
+      },
+      {
+        "path": "src/Protocol/Transport/Stdio.hs",
+        "oldSha256": "6e68396f806aee56822028f92c0ac374319218e80c5b704e4ff445b0d456c573",
+        "sha256": "92ef4b74cf9fca2ff7b70f36c211f7cd8609cda180672c3d49766ec9c0e45120",
+        "bytes": 842
+      },
+      {
+        "path": "src/Protocol/Transport/Tcp.hs",
+        "oldSha256": "b3854518c09360c5fe5008ba0b388aa5978be782e5516b272ea2b424e42d2c26",
+        "sha256": "d3637a7d0e8c0ce338c45b2cdbc05f9cd559eb05b563498a018294cbe0194c43",
+        "bytes": 5261
+      },
+      {
+        "path": "test/Main.hs",
+        "oldSha256": "1b7e49cdbb755a6b2fe018fbb4ad4628b4dda2fb9cf09d12e914d0c5adcc8ec4",
+        "sha256": "f16788e67564880e57d38f4da1e4037ec1a3cf0c05650b5579d180ff8868a945",
+        "bytes": 1813
+      },
+      {
+        "path": "docs/transport-framing.md",
+        "change": "added",
+        "sha256": "4a86e4da9f7a31d4f003fcca81896ae073225bcbd50fca0203a16a3f2ae0e318",
+        "bytes": 4540
+      },
+      {
+        "path": "src/Protocol/Transport/Framing.hs",
+        "change": "added",
+        "sha256": "0ecc631076c395f9497570b4a82def9651156401e9d0637dc2280ee4d32993e5",
+        "bytes": 3654
+      },
+      {
+        "path": "test/ClientReplySpec.hs",
+        "change": "added",
+        "sha256": "7e07aafd36e607c86709ffbbd28bb9f876cf8e7931644a5e5dc4fd4a3f960e87",
+        "bytes": 3784
+      },
+      {
+        "path": "test/ServerFramingSpec.hs",
+        "change": "added",
+        "sha256": "d6d735c19bfcd1b82c823cf61532a7757b0d436d3723a4fa3126ef72883df7ca",
+        "bytes": 4801
+      },
+      {
+        "path": "test/StdioTransportSpec.hs",
+        "change": "added",
+        "sha256": "caba6c48b6b6857d0de372ba9d62ada00e6b4e27e3ff93010270396cd00f2a5f",
+        "bytes": 3930
+      },
+      {
+        "path": "test/TlsPolicySpec.hs",
+        "change": "added",
+        "sha256": "311c6d171ca50eee9aee8fe0192a91432427c2883fe6ec5c90403cc69e96f85a",
+        "bytes": 9406
+      },
+      {
+        "path": "test/TransportFramingSpec.hs",
+        "change": "added",
+        "sha256": "e1c71d60cd8392b037dae4481fa7a7d0b8c73b8f9d9407e304f13599ed58e6f1",
+        "bytes": 6798
+      },
+      {
+        "path": "test/TransportTestSupport.hs",
+        "change": "added",
+        "sha256": "52acf084ba033f25bf6476e7dc2b748f19c8a5ddb0c0be2b4af83b0a25b85dd8",
+        "bytes": 7362
+      }
+    ],
+    "MirrorRust": []
+  },
+  "problems": []
+}

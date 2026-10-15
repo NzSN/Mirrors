@@ -1,0 +1,51 @@
+{
+  "repo": "Mirrors",
+  "head": "c17bae951c4d5bbc5818c2a4f82e2d93d07abc52",
+  "purpose": "Relevant current source parity for existing remote binary probes; binary build provenance requires separate retained record.",
+  "files": [
+    {
+      "path": "Main.lean",
+      "sha256": "66025903b7a6b007076449eb9cc07ce7d7de554efe7cea497392b37fafa14f43"
+    },
+    {
+      "path": "Shell/Cli.lean",
+      "sha256": "8563b15183976d34698cb4bd6d407113db65e7e390114e2ce64b4f911b48284f"
+    },
+    {
+      "path": "Shell/Client.lean",
+      "sha256": "4f07e637f37e56151172a51f1f99e9b458f8e0040e7183553b86e2d31992a8cb"
+    },
+    {
+      "path": "Shell/TraceCapture.lean",
+      "sha256": "ad287e5e94922779cb685d3326daa1e64f284bef7751423e90b78b322995171a"
+    },
+    {
+      "path": "Shell/Transport/Stdio.lean",
+      "sha256": "d18c7ad45c984a623634eb5bfc3039ab0d43cd936761b6348c423c141a06728d"
+    },
+    {
+      "path": "Shell/Transport/Tcp.lean",
+      "sha256": "c8ad67fce31d6849338a4292a10855390830492206def945f727f7a3536cd90d"
+    },
+    {
+      "path": "Shell/Apalache/SpecSource.lean",
+      "sha256": "b321b7a8927acae12e6d7b1ae0fec9a1c9ee8b71645d332214b823837f742863"
+    },
+    {
+      "path": "Codec/Json.lean",
+      "sha256": "f8efa9b68190cbb030756eeab04f5d1ad415377a98b923e084f0cd7ba2b01afa"
+    },
+    {
+      "path": "Codec/Bridge.lean",
+      "sha256": "c47fa454e9123e599c77e91c5c1050889d0addf91de6de7ac03be7148cd61146"
+    },
+    {
+      "path": "tools/check-validate-async.py",
+      "sha256": "baeab272807bb6e67c47c596f3cafef4fca3da17e8813137ec595ee8f8ef3b63"
+    },
+    {
+      "path": "tools/TraceCaptureSpec.lean",
+      "sha256": "9197e786ad971941962229caf19313242dd2048bcaf85d9d2c50d52056dec90f"
+    }
+  ]
+}

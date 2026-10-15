@@ -1,0 +1,793 @@
+{
+  "repo": "MirrorECMA",
+  "head": "19f6ae6ce8d9b073bef888fc66efc4c49f2a07ab",
+  "companion": {
+    "repo": "MirrorGate",
+    "head": "4a8d0d361589059ad72fe52e05789f302b4b65c8",
+    "scope": [
+      "sdk/node",
+      "integrations/mirrorecma"
+    ]
+  },
+  "profiles": [
+    "legacy stdio/TCP/mTLS/registry replay and exploration",
+    "server asynchronous jobs",
+    "compiled verify mirrorecma-v1 and mirrorecma-async-v1/v2",
+    "development dynamic descriptor sync/async",
+    "structured replay reports",
+    "Gate owned/attached Node facade with Node/Rust workers"
+  ],
+  "rules": [
+    {
+      "id": "C1",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/transport.ts",
+          "line": 290
+        }
+      ],
+      "note": "Outbound LF terminated UTF-8 JSONL and inbound fatal UTF-8 framing."
+    },
+    {
+      "id": "C2",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/transport.ts",
+          "line": 144
+        }
+      ],
+      "note": "65535-byte final outbound payload and bounded raw pending inbound line before parsing; this does not establish a total queued-message memory quota."
+    },
+    {
+      "id": "C3",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/protocol.ts",
+          "line": 406
+        }
+      ],
+      "note": "Dispatch uses proto_step; ordinary message field selection ignores additions."
+    },
+    {
+      "id": "C4",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/client.ts",
+          "line": 95
+        }
+      ],
+      "note": "Runners send their registration first; Connection allows job query/await/cancel without a new registration."
+    },
+    {
+      "id": "C5",
+      "status": "guide_implementation_contract_discrepancy",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/connection.ts",
+          "line": 447
+        }
+      ],
+      "note": "Literal C5 requires new connection after register_error; section10 says terminal for that attempt. SDK preserves async connection; parent confirms server queue-full preserves it and other SDKs agree. Closing evicts unrelated jobs underC6. Reconcile guide/server semantics before client changes."
+    },
+    {
+      "id": "C6",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/replay.ts",
+          "line": 125
+        }
+      ],
+      "note": "One-shot replay closes transport on all outcomes; framing closure yields terminal receive failure."
+    },
+    {
+      "id": "C7",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/connection.ts",
+          "line": 373
+        }
+      ],
+      "note": "Optional liveness probe uses query_job for an unknown ID; no protocol heartbeat introduced."
+    },
+    {
+      "id": "C8",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/replay-core.ts",
+          "line": 112
+        }
+      ],
+      "note": "One report_state per normally completed initialization/action; callback errors terminate and close."
+    },
+    {
+      "id": "C9",
+      "status": "application_obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/protocol.ts",
+          "line": 371
+        }
+      ],
+      "note": "Encoder retains every application-returned observable field including prototype-looking keys; completeness/fidelity depends on adapter."
+    },
+    {
+      "id": "C10",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/replay-core.ts",
+          "line": 164
+        }
+      ],
+      "note": "Mismatch throws immediately and does not wait for all_steps_done."
+    },
+    {
+      "id": "C11",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/protocol.ts",
+          "line": 385
+        }
+      ],
+      "note": "Integer values encode as decimal #bigint markers without native-number coercion."
+    },
+    {
+      "id": "C12",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/replay-core.ts",
+          "line": 109
+        }
+      ],
+      "note": "Loop terminates on mirror terminal reply rather than configured expected count."
+    },
+    {
+      "id": "C13",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/spec.ts",
+          "line": 128
+        }
+      ],
+      "note": "Recursive EXTENDS/INSTANCE closure with skipped strings/comments, dependency deduplication and ambiguity rejection; caller must select inline sources."
+    },
+    {
+      "id": "C14",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/protocol.ts",
+          "line": 358
+        }
+      ],
+      "note": "Optional undefined properties omitted; null values retained as permitted by server contract."
+    },
+    {
+      "id": "C15",
+      "status": "application_obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/protocol.ts",
+          "line": 97
+        }
+      ],
+      "note": "Caller-supplied ApalacheConfig exposes constInit/paramVars; source resolver does not independently prove a model constants initializer exists."
+    },
+    {
+      "id": "C16",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/connection.ts",
+          "line": 132
+        }
+      ],
+      "note": "Both sync and async validate reject noninteger/outside1..100 bounds before sending."
+    },
+    {
+      "id": "C17",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/connection.ts",
+          "line": 303
+        }
+      ],
+      "note": "Public job methods accept external job IDs, with no submitting-connection restriction."
+    },
+    {
+      "id": "C18",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/connection.ts",
+          "line": 330
+        }
+      ],
+      "note": "await maps job_status to nonterminal result and leaves request timeout absent unless caller chooses one."
+    },
+    {
+      "id": "C19",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/connection.ts",
+          "line": 351
+        }
+      ],
+      "note": "Explicit cooperative cancel_job sends retained; physical Apalache termination is server responsibility."
+    },
+    {
+      "id": "C20",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/protocol.ts",
+          "line": 575
+        }
+      ],
+      "note": "Async validate payload decoded through same ValidateResult shape; server congruence not re-proven by client."
+    },
+    {
+      "id": "C21",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/connection.ts",
+          "line": 158
+        }
+      ],
+      "note": "Unknown phase becomes JobEvictedError in handle await and is never internally retried."
+    },
+    {
+      "id": "C22",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/connection.ts",
+          "line": 447
+        }
+      ],
+      "note": "Queue-full errors are classified explicitly; connection reuse follows server async session implementation, subject to C5/section10 guide ambiguity. Caller owns pooling."
+    },
+    {
+      "id": "C23",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/connection.ts",
+          "line": 391
+        }
+      ],
+      "note": "Only exchanges within one connection serialize; no cross-connection ordering assumed."
+    },
+    {
+      "id": "C24",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/transport.ts",
+          "line": 445
+        }
+      ],
+      "note": "TLS1.3-only options, CA bundle and required client certificate/key supplied."
+    },
+    {
+      "id": "C25",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/transport.ts",
+          "line": 455
+        }
+      ],
+      "note": "X509 checkIP/checkHost with subject never prevents CN fallback; hostname defaults to connection host."
+    },
+    {
+      "id": "C26",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/transport.ts",
+          "line": 473
+        }
+      ],
+      "note": "DER leaf SHA256 pin verified before returning transport; wrong pin destroys socket."
+    },
+    {
+      "id": "C27",
+      "status": "literal_contract_inconsistency_private_access_enforced",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/transport.ts",
+          "line": 367
+        }
+      ],
+      "note": "Guide mandates literal0600; validator only rejects group/other bits and permits0400/0700. This is contract precision, not evidence of secret disclosure. Existing smoke rejects0644 but does not test private non0600 modes."
+    },
+    {
+      "id": "MI1",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/client.ts",
+          "line": 95
+        }
+      ],
+      "note": "Legacy registrations omit extension; negotiated encoder restricts extension to register/register_traces at model-interface.ts1267."
+    },
+    {
+      "id": "MI2",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/dynamic-binding.ts",
+          "line": 437
+        }
+      ],
+      "note": "Received descriptor parsed as inert data; local callback map supplies executable behavior; no received module loading."
+    },
+    {
+      "id": "MI3",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/negotiated.ts",
+          "line": 316
+        }
+      ],
+      "note": "Compiled path uses provided generated contract/digest and exact precompiled registry. Generated provenance/freshness remains build gate obligation."
+    },
+    {
+      "id": "MI4",
+      "status": "confirmed_violation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/negotiated.ts",
+          "line": 226
+        }
+      ],
+      "note": "Synchronous target plus async computer contract accepted. Binding config recheck exists at499-519 but cannot repair this target/contract admission gap. Callback selection without execution field has gap; explicit execution sync rejects pair at815-822."
+    },
+    {
+      "id": "MI5",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/model-interface.ts",
+          "line": 1440
+        }
+      ],
+      "note": "First reply decoded from bounded duplicate-aware strict raw parser; every versioned object uses exact schema validation; outer additions ignored."
+    },
+    {
+      "id": "MI6",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/model-interface.ts",
+          "line": 1191
+        }
+      ],
+      "note": "Inline ContractV1 required; reserved digest references explicitly rejected."
+    },
+    {
+      "id": "MI7",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/negotiated.ts",
+          "line": 320
+        }
+      ],
+      "note": "Verification request and registry digest derived from same generated metadata; exact digest compared after match."
+    },
+    {
+      "id": "MI8",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/negotiated.ts",
+          "line": 540
+        }
+      ],
+      "note": "First-reply strict decode and authorization complete before any deferred binding/registry factory; prebuilt dynamic registry explicitly has weaker zero-construction scope."
+    },
+    {
+      "id": "MI9",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/model-interface.ts",
+          "line": 1315
+        }
+      ],
+      "note": "matched requires supported descriptor schema, digest and no descriptor bytes; authorizeReply matches expected digest."
+    },
+    {
+      "id": "MI10",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/negotiated.ts",
+          "line": 373
+        }
+      ],
+      "note": "Prefer requires separate explicit fallback; mismatch always fatal and structured registration errors throw before fallback."
+    },
+    {
+      "id": "MI11",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/adapter-registry.ts",
+          "line": 99
+        }
+      ],
+      "note": "Immutable registry exact four-key matching; ambiguity rejected, no nearest/latest selection."
+    },
+    {
+      "id": "MI12",
+      "status": "source_supported_except_MI4",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/negotiated.ts",
+          "line": 550
+        }
+      ],
+      "note": "Factory after authorized matched/fallback; digest and configuration rechecked before replay. Freshness is factory contract."
+    },
+    {
+      "id": "MI13",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/negotiated.ts",
+          "line": 605
+        }
+      ],
+      "note": "Created binding disposed once on success/failure; dynamic returned scope cleanup retained even binding validation fails; earlier primary retained."
+    },
+    {
+      "id": "MI14",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/negotiation-core.ts",
+          "line": 102
+        }
+      ],
+      "note": "Structured server failures have ModelInterfaceRegistrationError distinct from local stable NegotiatedRunnerError codes."
+    },
+    {
+      "id": "MI15",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/model-interface.ts",
+          "line": 1326
+        }
+      ],
+      "note": "Resolved descriptor canonical bytes/digest checked; strict depth/node/type limits and32768byte descriptor/65535byte line limits."
+    },
+    {
+      "id": "MI16",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/descriptor-cache.ts",
+          "line": 158
+        }
+      ],
+      "note": "Cached bytes and digest recomputed; corruption quarantined. not_modified requires sent validator and exact valid cache entry."
+    },
+    {
+      "id": "MI17",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/dynamic-binding.ts",
+          "line": 437
+        }
+      ],
+      "note": "Exact registry keys/digest, aliases same action, input projection before mutation, one observer pass, poisoned lifecycle after invalid output."
+    },
+    {
+      "id": "MI18",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/negotiation-core.ts",
+          "line": 102
+        }
+      ],
+      "note": "Unauthorized structured registration fails before SUT; no silent retry without negotiation; authenticated transport constructed separately."
+    },
+    {
+      "id": "ASYNC_9_7",
+      "status": "partial_violation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/negotiated.ts",
+          "line": 226
+        }
+      ],
+      "note": "Invalid synchronous target+async computer pair accepted. Async replay otherwise serially awaits full action/observation, terminal abort/deadline suppresses late report. Callback selection without execution field has gap; explicit execution sync rejects pair at815-822."
+    },
+    {
+      "id": "REPORTS_9_8",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/replay-report.ts",
+          "line": 174
+        }
+      ],
+      "note": "Submitted/matched counts independent, init excluded from steps, immutable JSON-safe ITF snapshots, coverage caps/dropped counts exposed."
+    },
+    {
+      "id": "SO1",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorecma/src/sandbox.ts",
+          "line": 867
+        }
+      ],
+      "note": "Facade uses control SDK and session reservation; no independent sandbox process state machine."
+    },
+    {
+      "id": "SO2",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/node/control.mjs",
+          "line": 948
+        }
+      ],
+      "note": "One-call owned launch and explicit attached Unix endpoint; transport ownership separates process termination authority."
+    },
+    {
+      "id": "SO3",
+      "status": "source_supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/node/managed-worker.mjs",
+          "line": 47
+        }
+      ],
+      "note": "Private attachment/control distinct from worker hello/create/invoke; Mirrors registration retained in trusted ECMA transport."
+    },
+    {
+      "id": "SO4",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorecma/src/sandbox.ts",
+          "line": 782
+        }
+      ],
+      "note": "Native proxy forwards declared stable input IDs/converted values and observation request; no expected states/private coordinates forwarded."
+    },
+    {
+      "id": "SO5",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorecma/src/sandbox.ts",
+          "line": 888
+        }
+      ],
+      "note": "Deferred factory receives matched authority, then session.authorize/acquireWorker; physical native startup confinement requires actual backend test."
+    },
+    {
+      "id": "SO6",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorecma/src/provider.ts",
+          "line": 34
+        }
+      ],
+      "note": "Prepared identity preserves source/artifact/manifest/runtime/policy separately; actual immutable snapshot ownership belongs to supervisor."
+    },
+    {
+      "id": "SO7",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorecma/src/sandbox.ts",
+          "line": 980
+        }
+      ],
+      "note": "Failure family separation plus cancellation/deadline public variants; no raw subprocess fallback found."
+    },
+    {
+      "id": "SO8",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/node/managed-worker.mjs",
+          "line": 104
+        }
+      ],
+      "note": "Worker closes through owner-bound Gate reservation release and awaited cleanup. Real descendant teardown/ownership requires backend verification."
+    },
+    {
+      "id": "SO9",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/node/control.mjs",
+          "line": 742
+        }
+      ],
+      "note": "Opaque owner-bound handles, trusted local stdio/Unix endpoints and restrictive socket-path checks; no remote control transport advertised here."
+    },
+    {
+      "id": "SO10",
+      "status": "host_dependent_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorecma/src/sandbox.ts",
+          "line": 1150
+        }
+      ],
+      "note": "Default redacted public result and trusted diagnostics exist. Complete agent access-capable tool mediation cannot be established from client library alone."
+    },
+    {
+      "id": "SO11",
+      "status": "source_supported_runtime_unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/sdk/node/control.mjs",
+          "line": 316
+        }
+      ],
+      "note": "Versioned control framing, capability scope, correlation, ownership and lifecycle validation; v1/v2 additive support independently selected."
+    },
+    {
+      "id": "SO12",
+      "status": "runtime_evidence_not_rerun",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorecma/VALIDATION.md",
+          "line": 1
+        }
+      ],
+      "note": "Current source audit does not execute common fixtures or real backend/two-facade matrix; earlier ledger scope must not be extended to a current runtime pass."
+    }
+  ],
+  "findings": [
+    {
+      "priority": "P2",
+      "rule": "MI4; section9.7",
+      "path": "/home/nzsn/Repos/MirrorECMA/src/negotiated.ts",
+      "line": 226,
+      "trigger": "Select mirrorecma-v1 with mirrors.async-state-computer/v1 and register exact same four-key pair. Use callback selection without execution field; explicit execution sync already rejects.",
+      "impact": "Factory/application construction permitted under forbidden local computer/target contract pair.",
+      "evidence": "selectedKey checks only async target requires async contract; exact registry and post-match runner do not recheck reverse pairing.",
+      "confidence": "high_source_confirmed_runtime_probe_pending",
+      "recommendedFix": "Reject both invalid target/computer combinations before transport or factory; zero-factory/zero-send test."
+    }
+  ],
+  "testEvidence": [
+    {
+      "path": "/home/nzsn/Repos/MirrorECMA/test/transport.test.ts",
+      "lines": [
+        75,
+        97,
+        107,
+        117,
+        141,
+        151,
+        170,
+        186
+      ],
+      "kind": "source_assertions_reviewed_not_executed",
+      "note": "Exact/over UTF8 bounds, split multibyte, fatal UTF8, LF EOF, framing fatal discards."
+    },
+    {
+      "path": "/home/nzsn/Repos/MirrorECMA/test/model-interface-runner.test.ts",
+      "lines": [
+        825,
+        858,
+        878,
+        948,
+        978,
+        1031,
+        1081,
+        1106,
+        1130,
+        1206,
+        1221
+      ],
+      "kind": "source_assertions_reviewed_not_executed",
+      "note": "Normal match, missing/wrong/structured errors, explicit fallback, config/handler/mismatch/cleanup failures."
+    },
+    {
+      "path": "/home/nzsn/Repos/MirrorECMA/test/replay-report.test.ts",
+      "lines": [
+        28,
+        52,
+        100,
+        116
+      ],
+      "kind": "source_assertions_reviewed_not_executed",
+      "note": "Independent counts, bigint/ITF mismatch, frozen report, primary-error retention, coverage omissions."
+    },
+    {
+      "path": "/home/nzsn/Repos/MirrorECMA/test/async-replay.test.ts",
+      "lines": [
+        32,
+        53,
+        82,
+        110
+      ],
+      "kind": "source_assertions_reviewed_not_executed",
+      "note": "Serial full operation, timeout/cancel late suppression, registration receive timeout."
+    },
+    {
+      "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorecma/test/sandbox-facade.test.ts",
+      "lines": [
+        221,
+        237,
+        246
+      ],
+      "kind": "source_assertions_reviewed_not_executed",
+      "note": "Scripted normal pass contains no private canary; mismatch zero authorizations/workers; pre-abort zero acquisition."
+    },
+    {
+      "path": "/home/nzsn/Repos/MirrorGate/integrations/mirrorecma/test/sandbox-failure-paths.test.ts",
+      "lines": [
+        296,
+        308,
+        341
+      ],
+      "kind": "source_assertions_reviewed_not_executed",
+      "note": "Primary mismatch survives cleanup error, unconfirmed cleanup blocks pass, cancellation seals author tools."
+    }
+  ],
+  "limits": [
+    "No local or remote tests/builds executed by this reviewer. Parent requested focused scripted remote probe for invalid target/computer pairing.",
+    "No fresh oracle/model checks; no production service mutation.",
+    "Transport/custom Transport callers must supply valid line framing; framing constructor scope explicitly reviewed.",
+    "C9 truthful complete observations and C15 constants/config are application obligations; a reusable library cannot prove them for arbitrary consumers.",
+    "Generated output byte freshness/provenance requires compiler gate; source review only verifies client selection and metadata consumption.",
+    "TLS actual trust/hostname/pin handshake and backend denial/cleanup must be checked against actual host identity; source option evidence is not runtime qualification.",
+    "SO10 complete external host tool mediation and SO12 cross-language/backend acceptance cannot be concluded from Node client source alone."
+  ],
+  "contractDiscrepancies": [
+    {
+      "rule": "C5 vs section10",
+      "path": "/home/nzsn/Repos/MirrorECMA/src/connection.ts",
+      "line": 447,
+      "note": "Literal C5 requires new connection after register_error; section10 says terminal for that attempt. SDK preserves async connection; parent confirms server queue-full preserves it and other SDKs agree. Closing evicts unrelated jobs underC6. Reconcile guide/server semantics before client changes.",
+      "confidence": "high_doc_source_discrepancy"
+    },
+    {
+      "rule": "C27",
+      "path": "/home/nzsn/Repos/MirrorECMA/src/transport.ts",
+      "line": 371,
+      "note": "Private-only access implemented; exact0600 guide differs. Align contract and mode tests across SDKs; do not infer key disclosure from0400/0700 acceptance.",
+      "confidence": "high_source_confirmed"
+    }
+  ],
+  "probes": [
+    {
+      "path": "/home/nzsn/Repos/Mirrors/tmp/reports/client-conformance-2026-10-15/ecma-probes/invalid-pair.mjs",
+      "command": "node invalid-pair.mjs /absolute/prepared/MirrorECMA",
+      "status": "materialized_not_locally_executed"
+    }
+  ]
+}

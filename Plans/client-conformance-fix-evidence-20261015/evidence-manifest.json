@@ -1,0 +1,2365 @@
+{
+  "schema": "mirrors.client-remediation-dossier/v1",
+  "date": "2026-10-15",
+  "status": "accepted_in_declared_remote_wsl_scope",
+  "selfExcluded": "evidence-manifest.json",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 43,
+      "sha256": "23928f13659f9edeb68d6b71eaa2af06dd78f7ae50635bc5c72320c2f938a74c"
+    },
+    {
+      "path": "README.md",
+      "bytes": 15684,
+      "sha256": "544b28a0064c5cb50b0ffdb25a16208f311e34800a92fdd06c8b2a007e083183"
+    },
+    {
+      "path": "acceptance.json",
+      "bytes": 10480,
+      "sha256": "bac4d41d6babca8e1e302e04a0a8048f99c472728c98111360899cc140771321"
+    },
+    {
+      "path": "applied-updates.jsonl",
+      "bytes": 6966,
+      "sha256": "af40d433e98f3b64b70ef0564002c4d23aa4c8d33a3365cd8707dae8fa4fe4a9"
+    },
+    {
+      "path": "baseline.json",
+      "bytes": 1551915,
+      "sha256": "a83e09c7e2fac9d414b484d85dd7a7909f699abb4114dcccb9108be73ce4c31d"
+    },
+    {
+      "path": "conformance-matrix.json",
+      "bytes": 417608,
+      "sha256": "eb73fa68e8cddf099de410ec9d0f5c5e0f212c78ec1a7f4b3f48743b60604826"
+    },
+    {
+      "path": "final-source-verification.json",
+      "bytes": 26272,
+      "sha256": "68df4c46452c1b060217af184f4ce629638a1b14cc1c6f2bd7f80c9934b50bf9"
+    },
+    {
+      "path": "haskell-san-followup-plan.md",
+      "bytes": 10521,
+      "sha256": "a5b1d982d5b41b5827f8faa836593f76b4fd14880ccf8f9b44ce5eeffe80f1f7"
+    },
+    {
+      "path": "index.html",
+      "bytes": 242064,
+      "sha256": "8b4b8a5dbf62bad9f4f543029c16b154a9a82045308a99152cec8a9c55313534"
+    },
+    {
+      "path": "publication-verification.json",
+      "bytes": 647,
+      "sha256": "55db49696670471877093a2ef74cdd7f51fe48226d3bcd9de5d07eadd069db38"
+    },
+    {
+      "path": "remote/README.md",
+      "bytes": 6216,
+      "sha256": "54fe449824cd289a1a212658940feb3f8ff91c2eadb3d81da068252911a9989e"
+    },
+    {
+      "path": "remote/cleanup-receipt.json",
+      "bytes": 1998,
+      "sha256": "e55c51cb47f57b6a938fc6690a59ffa6b4fdb5b4e62207aad2595abfea823e01"
+    },
+    {
+      "path": "remote/cpp-gate/00-preflight.log",
+      "bytes": 5915,
+      "sha256": "269b25c553eba614de1184d31361cb5296cccc9782691b8e458fc914a5ff3b29"
+    },
+    {
+      "path": "remote/cpp-gate/00-preflight.sh",
+      "bytes": 1604,
+      "sha256": "e6fc999977b896ab4b27eb987597e160297fbffb8f52fdefbe48004f813b5f21"
+    },
+    {
+      "path": "remote/cpp-gate/01-source-and-bwrap-prepare.log",
+      "bytes": 3032,
+      "sha256": "02094a2550069e4b5af7b1f93849f74e6957e3ca2de09ca88dd77e71699867bc"
+    },
+    {
+      "path": "remote/cpp-gate/01-source-and-bwrap-prepare.sh",
+      "bytes": 3231,
+      "sha256": "564619fac19b5d9fb1e3dc752642898a6d17bf6aebc54091d003688580ed4748"
+    },
+    {
+      "path": "remote/cpp-gate/02-bwrap-and-sdk.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "remote/cpp-gate/02-bwrap-and-sdk.log",
+      "bytes": 6120,
+      "sha256": "3707066fd10fdc0c9adda70882a71c8ce0dacad420272dedc1df143d3796fad6"
+    },
+    {
+      "path": "remote/cpp-gate/02-bwrap-and-sdk.sh",
+      "bytes": 2955,
+      "sha256": "02e198ee43ddf7b139865a242f02e5dda541ab927dec1e85808cc3ba4402d298"
+    },
+    {
+      "path": "remote/cpp-gate/03-tls-build-and-tests.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "remote/cpp-gate/03-tls-build-and-tests.log",
+      "bytes": 15947,
+      "sha256": "2bedb77158c28ef53f5b389d4964efb42354f202de2f0b9616905814699f9d7b"
+    },
+    {
+      "path": "remote/cpp-gate/03-tls-build-and-tests.sh",
+      "bytes": 2193,
+      "sha256": "a2f9c6125efb8b190ae4c736f567e3f688f689fe85b34c3c6266d42b5cb71621"
+    },
+    {
+      "path": "remote/cpp-gate/04-private-bwrap-namespace.sh",
+      "bytes": 899,
+      "sha256": "0a02a5af62aaed4545a9524c125bce1a3d5de772007472fa2fa8e6c2051c84b8"
+    },
+    {
+      "path": "remote/cpp-gate/05-sdk-real-worker.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "remote/cpp-gate/05-sdk-real-worker.log",
+      "bytes": 729,
+      "sha256": "081b526ccd0c978bbcd943d6a9eb9cb72e72977fc6c58b88d38b35bd765502c6"
+    },
+    {
+      "path": "remote/cpp-gate/05-sdk-real-worker.sh",
+      "bytes": 2212,
+      "sha256": "5da287a193ab507367d319078ec6fb9373f00c054dc455a09d7714350b4e201a"
+    },
+    {
+      "path": "remote/cpp-gate/06-initial-missing-json.log",
+      "bytes": 2535,
+      "sha256": "9c96efbd58fe74d947a8fa20a48faefc053ffaf643e52630c4caea7fcdb99e14"
+    },
+    {
+      "path": "remote/cpp-gate/06-install-and-consumers.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "remote/cpp-gate/06-install-and-consumers.log",
+      "bytes": 13795,
+      "sha256": "78c55ee6b786d6791cae9864f618914901a6984e65b674429bb7e527d9b7e334"
+    },
+    {
+      "path": "remote/cpp-gate/06-install-and-consumers.sh",
+      "bytes": 5352,
+      "sha256": "a6c7f567c1174fa2e0cab54e1af5fe2d919e0c9d33dab2c3eefa2d794f7a6f18"
+    },
+    {
+      "path": "remote/cpp-gate/07-facade-matrix-attempt1.exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "remote/cpp-gate/07-facade-matrix-attempt1.log",
+      "bytes": 5898,
+      "sha256": "09c85de6f3dd9d406f142e3d247c4b50bd63f0d05c32ba3aaca10aa9170ff072"
+    },
+    {
+      "path": "remote/cpp-gate/07-facade-matrix-attempt2-unaffected.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "remote/cpp-gate/07-facade-matrix-attempt2-unaffected.log",
+      "bytes": 23711,
+      "sha256": "6f913f88224833fe7b3230de0ba3ab44e0d0d0354e1e6078b6534fa862df1406"
+    },
+    {
+      "path": "remote/cpp-gate/07-facade-matrix-attempt2.exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "remote/cpp-gate/07-facade-matrix-attempt2.log",
+      "bytes": 7420,
+      "sha256": "d7a310001a48679a45b964debc9847bf4a50a3604b8d42089d2f53f8ec41920e"
+    },
+    {
+      "path": "remote/cpp-gate/07-facade-matrix-attempt3.exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "remote/cpp-gate/07-facade-matrix-attempt3.log",
+      "bytes": 420,
+      "sha256": "e36c3255dea7e366b429333b8db254a4350b69a49f7c4cd20064483231a43228"
+    },
+    {
+      "path": "remote/cpp-gate/07-facade-matrix-attempt4.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "remote/cpp-gate/07-facade-matrix-attempt4.log",
+      "bytes": 27213,
+      "sha256": "6c36e2f301315e61b592c0697a9856839c60eabafd87295ad0f070bfc6ae1d99"
+    },
+    {
+      "path": "remote/cpp-gate/07-facade-matrix.sh",
+      "bytes": 4261,
+      "sha256": "66e163e8f2a395ca21882bc1327246c426978a97c0455f7783b01b910341f8f9"
+    },
+    {
+      "path": "remote/cpp-gate/08-cleanup-test-delta.log",
+      "bytes": 266,
+      "sha256": "150c3588730a39b3310b87fc65e3fe8274d502e0942a86199d37fc2df99c5b9b"
+    },
+    {
+      "path": "remote/cpp-gate/08-cleanup-test-delta.sh",
+      "bytes": 1263,
+      "sha256": "df812bd2cf8e1d13126cf2b8c45b445c2dd179739e42e89fa942a1285324aaac"
+    },
+    {
+      "path": "remote/cpp-gate/09-unaffected-selection.sh",
+      "bytes": 1680,
+      "sha256": "1e092b0f0b055e457e7cafdb85565e7ee5cdca8012e4b363ca38a9b1fcbcb7be"
+    },
+    {
+      "path": "remote/cpp-gate/10-broker-snapshot-diagnostic.log",
+      "bytes": 5406,
+      "sha256": "183841094087d01539b1550fdbaab93b87440c657218fb388d05bf5240252a5b"
+    },
+    {
+      "path": "remote/cpp-gate/10-broker-snapshot-diagnostic.sh",
+      "bytes": 5653,
+      "sha256": "ffb39bd03da4977491bfc2c476bd8e0b898af50123db84580b74b0c86fb73c0b"
+    },
+    {
+      "path": "remote/cpp-gate/11-broker-observation-test-delta.log",
+      "bytes": 229,
+      "sha256": "f433259447a97dd7167b879bf81f504a5b66ce6e9565fc2c23796afc4fc828f9"
+    },
+    {
+      "path": "remote/cpp-gate/11-broker-observation-test-delta.sh",
+      "bytes": 1321,
+      "sha256": "822fa07bb1fcbbb88931b750a52b1b1def76beb2c2ee5fac56d60daf58bfc840"
+    },
+    {
+      "path": "remote/cpp-gate/12-focused-counter-build.log",
+      "bytes": 298,
+      "sha256": "31ce4f1ca3092ebbcfe591f03a58dfd6da9a2ead27856a805174d400347dfb3a"
+    },
+    {
+      "path": "remote/cpp-gate/12-focused-counter-build.sh",
+      "bytes": 810,
+      "sha256": "001622dc45f2135f74a212dc29ab48db77cf09100fac92c8248bfcabd80757ff"
+    },
+    {
+      "path": "remote/cpp-gate/13-final-evidence.log",
+      "bytes": 3459,
+      "sha256": "d9d4b89b7359dde65785d3c10d8294fa8fb78faad8de8c41d8130c72382f582e"
+    },
+    {
+      "path": "remote/cpp-gate/13-final-evidence.sh",
+      "bytes": 4955,
+      "sha256": "b483d9885962a380d6451ab16ebfe4fc9970c16c88347c26b8362f524c03dd26"
+    },
+    {
+      "path": "remote/cpp-gate/README.md",
+      "bytes": 8906,
+      "sha256": "30325af15f7c0297c0309e49abd611793ebd08ea47eb483c2748d831158ad8ad"
+    },
+    {
+      "path": "remote/cpp-gate/broker-observation-reviewed-delta.patch",
+      "bytes": 4136,
+      "sha256": "b7eae8b4e937c8bc7cf371a8ed703e7062e8e58848a88970c838c8755ffc8874"
+    },
+    {
+      "path": "remote/cpp-gate/broker-snapshot-diagnostic.jsonl",
+      "bytes": 1382,
+      "sha256": "eabbdb1d8eb361ea06e33944b89e8ec4ec538a524f357695fdd2d23962304083"
+    },
+    {
+      "path": "remote/cpp-gate/cleanup-harness-reviewed-delta.patch",
+      "bytes": 5287,
+      "sha256": "a39b0dccdfe044d3604c8406915f09dda49dce2557e13e735a56744f25d92508"
+    },
+    {
+      "path": "remote/cpp-gate/cmake-commands.log",
+      "bytes": 2777,
+      "sha256": "f5f7eba26cef694124b39cee0e4b1fa8233b0ec6e249d510dc66cdcc178506c5"
+    },
+    {
+      "path": "remote/cpp-gate/consumer-noop-build.log",
+      "bytes": 22,
+      "sha256": "8c35b1682f73592d30612d7b0fabdb384fcfff35cb5a076cb48b85b1368aa794"
+    },
+    {
+      "path": "remote/cpp-gate/counter-driver-snapshot-diagnostic.cpp",
+      "bytes": 17760,
+      "sha256": "3c975ae9943cf80c5bbb99ee7450aa1fe7f6540ddb988c8b584055582716fd31"
+    },
+    {
+      "path": "remote/cpp-gate/cpp-failure-matrix-attempt1.jsonl",
+      "bytes": 2097,
+      "sha256": "0bc29915b6e7a8a879570f28ea66a61222961e406018fb82f2f4c897eb42b258"
+    },
+    {
+      "path": "remote/cpp-gate/cpp-failure-matrix-attempt2-unaffected.jsonl",
+      "bytes": 22764,
+      "sha256": "c57f3409e4e0e2c9b619bc44c9ac51afa369cc479a01fc78316a94096f9ca5f0"
+    },
+    {
+      "path": "remote/cpp-gate/cpp-failure-matrix-attempt2.jsonl",
+      "bytes": 3636,
+      "sha256": "0a2c9c80debc2a45435d5ab7c4e484f60fe7ed73d8dfb20d497cf6f5bef84dac"
+    },
+    {
+      "path": "remote/cpp-gate/cpp-failure-matrix-attempt4.jsonl",
+      "bytes": 26040,
+      "sha256": "031326f2e5626dd47ef3efe64f001a806bc404921e3fe1fc2b0c0b38d3536ed0"
+    },
+    {
+      "path": "remote/cpp-gate/diagnostic-attached-invoke.stderr",
+      "bytes": 306,
+      "sha256": "af0eb6cc55180654669ef49904d94c5965897fb3ba59af9df7118bb4a34fbe95"
+    },
+    {
+      "path": "remote/cpp-gate/diagnostic-attached-invoke.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/cpp-gate/diagnostic-attached-observe.stderr",
+      "bytes": 308,
+      "sha256": "54f997160b310c3a1f4ad90fb44b5004f7d3ef9bdee29aff79d61bd3ca7b7de4"
+    },
+    {
+      "path": "remote/cpp-gate/diagnostic-attached-observe.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/cpp-gate/diagnostic-owned-invoke.stderr",
+      "bytes": 306,
+      "sha256": "af0eb6cc55180654669ef49904d94c5965897fb3ba59af9df7118bb4a34fbe95"
+    },
+    {
+      "path": "remote/cpp-gate/diagnostic-owned-invoke.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/cpp-gate/diagnostic-owned-observe.stderr",
+      "bytes": 308,
+      "sha256": "54f997160b310c3a1f4ad90fb44b5004f7d3ef9bdee29aff79d61bd3ca7b7de4"
+    },
+    {
+      "path": "remote/cpp-gate/diagnostic-owned-observe.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/cpp-gate/final-source-hash-verification.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/gate-processes-after-attempt1.json",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "remote/cpp-gate/gate-processes-after-attempt2-unaffected.json",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "remote/cpp-gate/gate-processes-after-attempt2.json",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "remote/cpp-gate/gate-processes-after-attempt3.json",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "remote/cpp-gate/gate-processes-after-attempt4.json",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "remote/cpp-gate/installed-prefix-ready.json",
+      "bytes": 552,
+      "sha256": "4f72613d0b2151918216614ba9b893c294228315db45fc6635d7954e3beb0497"
+    },
+    {
+      "path": "remote/cpp-gate/local-applied-source-parity.sha256",
+      "bytes": 1929,
+      "sha256": "40e8b7d972092e712197363ba535740ff9a8a3135bdca89e94d08f72f04143a6"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/broker-observation-test-source-delta.diff",
+      "bytes": 1463,
+      "sha256": "1de75e6d117b7f3548d56e7d4fe5b2e8034c844c1a3d1c6cf61416d7c96dc6d3"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/broker-snapshot-diagnostic.json",
+      "bytes": 385,
+      "sha256": "7db979932bc25ba7f0679915e44547d382956953f2bc2acbe663f509d5fbf99e"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/bubblewrap-metadata.sha256",
+      "bytes": 666,
+      "sha256": "dc67a5e746d22fd542592ea92028054e90e00a2cb0a19cb51dc5f8f911f094e9"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/bubblewrap-provenance.json",
+      "bytes": 385,
+      "sha256": "1fbced759276055ed12be41ae86eb9f21cc2498da3879c70fa6e7030f4b18b12"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/bubblewrap-release.json",
+      "bytes": 6774,
+      "sha256": "fb72c30fb2e2f7c7eb094d0d64ecb04492da6a2aa2bcc12c6476cdf8474cb750"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/bubblewrap-tag-object.json",
+      "bytes": 5524,
+      "sha256": "90b3a566e248f6518506bf10dff7df998a425f240a77984877ee70c292c6cc70"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/bubblewrap-tag-ref.json",
+      "bytes": 384,
+      "sha256": "ab14cbce21b986fb8dac991d93a3f45a18f219269823a1eb69dde73fc23609a6"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/cleanup-test-source-delta.diff",
+      "bytes": 2403,
+      "sha256": "3a486f2478b18b7d4a975d3bdd633700b5f5e2765685034475854e47d752e83f"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/downstream-consumers.sha256",
+      "bytes": 370,
+      "sha256": "73e3db00bef0dd4698a070836c414a7221e8e95d22643c297db5ac837797998d"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/final-tools.sha256",
+      "bytes": 1125,
+      "sha256": "7c690aa6501de076212938ebd7b236486fdc5a3afedfb965e61c5e95b2a94fda"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/frozen-mirror-producer.json",
+      "bytes": 1520,
+      "sha256": "b7b508f62941936a128645cdbec31a033a6a95514b77663337ce77a27ff573d0"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/installed-prefix.sha256",
+      "bytes": 631,
+      "sha256": "d9122f5a60b9ed4f4795301a859ef6598d6b57cf0d9218fb2313e312aa520e0c"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/integration-attempt1-CMakeCache.txt",
+      "bytes": 22985,
+      "sha256": "5eb582a4b07310af1c384ccffbf1a4f80610b88f2499aa97a976209017bc6c43"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/integration-attempt1-compile-commands.json",
+      "bytes": 38306,
+      "sha256": "9e20addd4e1b4af2a6d61121717c28817301669c99420da42ad5cd7d74a48a75"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/integration-attempt2-CMakeCache.txt",
+      "bytes": 23321,
+      "sha256": "72ace9ce8349d85085a9ec378177850c183a2d8b53555732dcefebcf2c925aea"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/integration-attempt2-compile-commands.json",
+      "bytes": 38894,
+      "sha256": "7b9ef1bc275532d4a9e3fd7182d6fe73649d4d30494a5da944a93f8523986a5e"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/integration-attempt2-unaffected-CMakeCache.txt",
+      "bytes": 23321,
+      "sha256": "72ace9ce8349d85085a9ec378177850c183a2d8b53555732dcefebcf2c925aea"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/integration-attempt2-unaffected-compile-commands.json",
+      "bytes": 38894,
+      "sha256": "7b9ef1bc275532d4a9e3fd7182d6fe73649d4d30494a5da944a93f8523986a5e"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/integration-attempt4-CMakeCache.txt",
+      "bytes": 23321,
+      "sha256": "72ace9ce8349d85085a9ec378177850c183a2d8b53555732dcefebcf2c925aea"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/integration-attempt4-compile-commands.json",
+      "bytes": 38894,
+      "sha256": "7b9ef1bc275532d4a9e3fd7182d6fe73649d4d30494a5da944a93f8523986a5e"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/matrix-artifacts.sha256",
+      "bytes": 1842,
+      "sha256": "98bc5009fb01ee53cd8820430b7540badf19bdfe6e20d18d63fa4c0bfe312e6a"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/matrix-noop-attempt4.sha256",
+      "bytes": 352,
+      "sha256": "d5385a74d9109fc3033e10163b38a2d05d967e7761bb6088731af5bea3de2a69"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/matrix-runtime-attempt1.sha256",
+      "bytes": 363,
+      "sha256": "23a61c4e951218510697aee9ee61f9fce218dafe9360eacad1d085d350ad75b3"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/matrix-runtime-attempt2-unaffected.sha256",
+      "bytes": 363,
+      "sha256": "23a61c4e951218510697aee9ee61f9fce218dafe9360eacad1d085d350ad75b3"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/matrix-runtime-attempt2.sha256",
+      "bytes": 363,
+      "sha256": "23a61c4e951218510697aee9ee61f9fce218dafe9360eacad1d085d350ad75b3"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/matrix-runtime-attempt4.sha256",
+      "bytes": 361,
+      "sha256": "5f47e7bea5cc9da00f83b7367a252a5fa3f0b65af97e24de928ae3e390f08bb7"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/private-bwrap.sha256",
+      "bytes": 136,
+      "sha256": "00574717f6195e48ce02ee9b79c62953bea4a46f4f1bfe941a15f4ab877845bd"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/reviewed-counter-binary.sha256",
+      "bytes": 173,
+      "sha256": "c3adcd9c3998070a33f28b41ea54f8a1efb063d9e1d1e9a76869b4a34625cacc"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/sdk-binaries.sha256",
+      "bytes": 657,
+      "sha256": "75762168ba6744d76222fcb97a7cd1836223e43bf6cfd0bbb24e608cbbff9cd0"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/source-files-before-broker-test-fix.sha256",
+      "bytes": 54968,
+      "sha256": "259cd85a20b68a235e12fcab900aef3c059b51926d5171b536113df94bc32513"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/source-files-before-cleanup-fix.sha256",
+      "bytes": 54968,
+      "sha256": "22ffa7cfacbc611263dcc0fbd5b47cc9d4c7fd3c48d63221e8561478b721c1b4"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/source-files.sha256",
+      "bytes": 54968,
+      "sha256": "5d2cb565c8d9dc51681171ae768a01d8e7cf2607402bfaaa1342cbd478e47d71"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/system-bwrap-before.sha256",
+      "bytes": 81,
+      "sha256": "44770d472799faa25c9d6481ec605fa14d65c399ad4db4813ac880827b8f5c50"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/tls-binaries.sha256",
+      "bytes": 326,
+      "sha256": "95b2b88bc2a21ed956050eab34666cc8103d320735407824de207f35b1dcb56e"
+    },
+    {
+      "path": "remote/cpp-gate/manifests/unaffected-selection.json",
+      "bytes": 545,
+      "sha256": "92106435e579d9e20eb2c247bf91381c942368cbba61757f0b3c601cc0a1288a"
+    },
+    {
+      "path": "remote/cpp-gate/matrix-final-summary.json",
+      "bytes": 3815,
+      "sha256": "aa21ff969b659acf367582f89276afbc3511b2fd54db8aa7db758fb0d5999b8f"
+    },
+    {
+      "path": "remote/cpp-gate/matrix-noop-attempt4.log",
+      "bytes": 22,
+      "sha256": "8c35b1682f73592d30612d7b0fabdb384fcfff35cb5a076cb48b85b1368aa794"
+    },
+    {
+      "path": "remote/cpp-gate/owned-files.txt",
+      "bytes": 741,
+      "sha256": "4aeb1d20ea04e8baa81f45599e778fbb327e4b2b2ed1d8ad57cdac2526bbe8c1"
+    },
+    {
+      "path": "remote/cpp-gate/run-cpp-unaffected",
+      "bytes": 6066,
+      "sha256": "08291efa1d8d384f67eada5f5e6a27957d4e913469612568d22690e81ac6e0f5"
+    },
+    {
+      "path": "remote/cpp-gate/sdk-ctest-LastTest.log",
+      "bytes": 2669,
+      "sha256": "0e8d1742eeddbad2d856e48181b6af2b7a15100ed3337612f1f382d3b32e76da"
+    },
+    {
+      "path": "remote/cpp-gate/sdk-noop-build.log",
+      "bytes": 22,
+      "sha256": "8c35b1682f73592d30612d7b0fabdb384fcfff35cb5a076cb48b85b1368aa794"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-after-attempt1.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-after-attempt2-unaffected.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-after-attempt2.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-after-attempt3.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-after-attempt4.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-after-broker-test-delta.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-after-cleanup-delta.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-before-attempt1.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-before-attempt2-unaffected.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-before-attempt2.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-before-attempt4.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-before-broker-test-delta.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-before-cleanup-delta.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/source-hash-verification.log",
+      "bytes": 24402,
+      "sha256": "1e8d139f428da707e1de78120fa1f6b376fc0ec74858e679cb6623a2f8abc8e1"
+    },
+    {
+      "path": "remote/cpp-gate/tls-key-mode.log",
+      "bytes": 188,
+      "sha256": "2d077d5051202c46a3fee28c282f2128bc5f295cdc5787bf56dfb80c938a0327"
+    },
+    {
+      "path": "remote/cpp-gate/tls-noop-build.log",
+      "bytes": 22,
+      "sha256": "8c35b1682f73592d30612d7b0fabdb384fcfff35cb5a076cb48b85b1368aa794"
+    },
+    {
+      "path": "remote/cpp-gate/tls-normal-and-framing.log",
+      "bytes": 180,
+      "sha256": "70aea5b0a90da5d9b4c16f4e8797bde70b88a8f28d65cebed1e9dbfaed209219"
+    },
+    {
+      "path": "remote/haskell/README.md",
+      "bytes": 4015,
+      "sha256": "ef855cf0cf8ff45c9c14f581619b5323a6d235ba8cfd8ada60c7ec404b8d3205"
+    },
+    {
+      "path": "remote/haskell/artifacts.json",
+      "bytes": 1579,
+      "sha256": "f67142406dd97f01e41037c9cdcfca6ac356778658658750e61c1bd021e89b7b"
+    },
+    {
+      "path": "remote/haskell/cleanup.json",
+      "bytes": 205,
+      "sha256": "09c9e9de8bbe07315e5b088922bc0d02390dfc4acafa312eeab834e4d733c041"
+    },
+    {
+      "path": "remote/haskell/dependency-archives.json",
+      "bytes": 17064,
+      "sha256": "ccf1bb2594c8c0ca1efea584fd6d3bcba47236769cb8fcafa7bb0e051879ca1e"
+    },
+    {
+      "path": "remote/haskell/dependency-plan.json",
+      "bytes": 86664,
+      "sha256": "66e2d5256b4e6bfc6c59f8dacc79f2ef3aff652428e6abc2f3aafe5f873ea27e"
+    },
+    {
+      "path": "remote/haskell/diagnostics/cabal-SHA256SUMS",
+      "bytes": 2799,
+      "sha256": "19ef5e11a70d6d06ae23a2b4cae6b52bcf19575be7343fc9dfcce4104bce8bb3"
+    },
+    {
+      "path": "remote/haskell/diagnostics/first-build.log",
+      "bytes": 8682,
+      "sha256": "e60e632b7f231890578e401ac58b49c0ac79b3c13cd97ec1561fa5cfa3a806a4"
+    },
+    {
+      "path": "remote/haskell/diagnostics/first-run-phases.log",
+      "bytes": 8,
+      "sha256": "892f442077b3cfb0c8066d5ffb7d11508b1f22a43ddf25ed172382dd5b7a297c"
+    },
+    {
+      "path": "remote/haskell/diagnostics/ghc-SHA256SUMS",
+      "bytes": 6605,
+      "sha256": "1f6d108e1065f6b7be4e3011ae987d6c7bff9586548599d6969048916546f990"
+    },
+    {
+      "path": "remote/haskell/diagnostics/ghc-download.log",
+      "bytes": 472,
+      "sha256": "fa4932aa60fd8da5626938832db60bc45be0ea736d9e469093ec76ed61e55100"
+    },
+    {
+      "path": "remote/haskell/diagnostics/ghc-install.log",
+      "bytes": 97918,
+      "sha256": "60af55ed84ce9ee51bd69f8efd7b4e2adf9ba9b75446792335e9af55251b8320"
+    },
+    {
+      "path": "remote/haskell/diagnostics/ghc-ustc.log",
+      "bytes": 2395,
+      "sha256": "f37aff1e70b76f1b8a71e4a651c0aee2121fdf8d0d258e389810280f506eafc6"
+    },
+    {
+      "path": "remote/haskell/diagnostics/hackage-index-download.log",
+      "bytes": 7100,
+      "sha256": "d36ec6dee1e46b4d9af6b5bf76c2da3c0f780df74bb821a46442fe59408cb847"
+    },
+    {
+      "path": "remote/haskell/diagnostics/hackage-tuna.log",
+      "bytes": 7100,
+      "sha256": "0b5238ae977292e7c7cf634a1b83cd48521bd45b1e1d82f65e1d95051214939d"
+    },
+    {
+      "path": "remote/haskell/diagnostics/hackage-ustc.log",
+      "bytes": 1954,
+      "sha256": "08ba79bfc9155516e9828ad2637e55bf18f7e4fcfc3a674538a20fc0b6793674"
+    },
+    {
+      "path": "remote/haskell/diagnostics/prefetch.log",
+      "bytes": 11474,
+      "sha256": "0f6e519a7a5c0f1e64616896ebb983bd888b14a44184a86b9a4e983055b2bcd1"
+    },
+    {
+      "path": "remote/haskell/diagnostics/retry.log",
+      "bytes": 1408695,
+      "sha256": "823e06bfa9db5941a80dd13fb4f1da8612d84f94196c0870f0b2c764a5227de6"
+    },
+    {
+      "path": "remote/haskell/diagnostics/run-phases.log",
+      "bytes": 184,
+      "sha256": "535cdcb6bc2bcc3727d5333857b5093af3cd7bf1f95f679b6436685adc160c40"
+    },
+    {
+      "path": "remote/haskell/diagnostics/segmented.log",
+      "bytes": 53,
+      "sha256": "955e1baf4c2a5dded28ad28bf5cef53a1d00d64d0448cc9a281663bd80735134"
+    },
+    {
+      "path": "remote/haskell/diagnostics/solve.log",
+      "bytes": 5521,
+      "sha256": "0d0d8c3f05b3ca380352050a64c13d6f5b4477d5edeb2d492944c9e1e7b16fb7"
+    },
+    {
+      "path": "remote/haskell/diagnostics/update.log",
+      "bytes": 3368,
+      "sha256": "6c1313df71f4180931ca6285d799237ac5febbb1276b39545394137c050e7caf"
+    },
+    {
+      "path": "remote/haskell/diagnostics/ustc-list.html",
+      "bytes": 7206,
+      "sha256": "36e9b482457a97ed9e4aea39e53236d90a7805b84a82cde7921f263264de7688"
+    },
+    {
+      "path": "remote/haskell/evidence-manifest.json",
+      "bytes": 10593,
+      "sha256": "005eaff0be2d1cda40977b3ce97ec4c239dbd7f160e2c99b5066e5897496817b"
+    },
+    {
+      "path": "remote/haskell/first-phases.json",
+      "bytes": 491,
+      "sha256": "1738e31f6b917aa731c57935e1cab84b03ab7c53a798a6ebcc43888432a3fa77"
+    },
+    {
+      "path": "remote/haskell/hackage-index.json",
+      "bytes": 471,
+      "sha256": "2601cb89b556031334877100f5582cd3c4b5afde896fee023616906cc53211fc"
+    },
+    {
+      "path": "remote/haskell/incremental-binaries.json",
+      "bytes": 573,
+      "sha256": "33f6edb965916480fc6809d00ac80a86a254c91c4b26881fd94c2602eff91f71"
+    },
+    {
+      "path": "remote/haskell/logs/build.log",
+      "bytes": 11,
+      "sha256": "215517150aee2d4e7c37e9a89aed453be29626db56807e943248b5085841cc31"
+    },
+    {
+      "path": "remote/haskell/logs/incremental.log",
+      "bytes": 321,
+      "sha256": "dff978c8140e0f70cf064b93aaf78d6b5f47ae4c0ef0f42df7df62e7d7b76536"
+    },
+    {
+      "path": "remote/haskell/logs/probe-compile-baseline.log",
+      "bytes": 723,
+      "sha256": "0c513d459cb804c2909ec410f1fab0006f37befe1f14502bde157aa8936a2d07"
+    },
+    {
+      "path": "remote/haskell/logs/probe-compile-fixed.log",
+      "bytes": 958,
+      "sha256": "7c1038d459c39c376f9b3a61869b44a5734ee6fdbbaa893ddbb24900abbf8af6"
+    },
+    {
+      "path": "remote/haskell/logs/probe-run-baseline.log",
+      "bytes": 86,
+      "sha256": "722f5ba5753712bbd6fea483479678255c2ff1758f556d363fd7e9d96f92a657"
+    },
+    {
+      "path": "remote/haskell/logs/probe-run-fixed-repeat.log",
+      "bytes": 71,
+      "sha256": "9a66adccbe4660a25c2d48ab0e8d8acd64a98ba5352db7bbc2b13757ef5e6429"
+    },
+    {
+      "path": "remote/haskell/logs/probe-run-fixed.log",
+      "bytes": 71,
+      "sha256": "9a66adccbe4660a25c2d48ab0e8d8acd64a98ba5352db7bbc2b13757ef5e6429"
+    },
+    {
+      "path": "remote/haskell/logs/test-list.log",
+      "bytes": 2160,
+      "sha256": "30d4813fab855f423865b0388e58fc8676cf9696a13fc568647fd147d0be8a14"
+    },
+    {
+      "path": "remote/haskell/logs/test-non-model.log",
+      "bytes": 11330,
+      "sha256": "f5a801bba96f373b5cb5ad9b6e99ea89dff883661f659688adf51f3df622b21a"
+    },
+    {
+      "path": "remote/haskell/phases.json",
+      "bytes": 4907,
+      "sha256": "f9c5edae7487ed7359e9ce58a3a4c97cf02684c516f1004f663d9ff39d3be788"
+    },
+    {
+      "path": "remote/haskell/signed-index/mirrors.json",
+      "bytes": 409,
+      "sha256": "672d24b787e96564937fdd0b072a48ef1588f7a4cfe92ad15d6fd8468dfb4d20"
+    },
+    {
+      "path": "remote/haskell/signed-index/root.json",
+      "bytes": 4603,
+      "sha256": "f62e46cb51d4a499a8336894d7a46071b7e528135ad71614c7102c1de0aeeabc"
+    },
+    {
+      "path": "remote/haskell/signed-index/snapshot.json",
+      "bytes": 972,
+      "sha256": "b07dd649c87c4eac494986ed66311c5018329f7878b34ee71414e3a288087dc5"
+    },
+    {
+      "path": "remote/haskell/signed-index/timestamp.json",
+      "bytes": 465,
+      "sha256": "1944cdc23c936e6406c537b3596abcdbc537a60881575100010e772171f71aa0"
+    },
+    {
+      "path": "remote/haskell/source-manifest.json",
+      "bytes": 19603,
+      "sha256": "65de21e7e6a852bd8f0fbe87906d28670898f89252048d7ad70e857cd98a5bf0"
+    },
+    {
+      "path": "remote/haskell/source-verification-final.json",
+      "bytes": 17093,
+      "sha256": "c0f6a2218f20343cf476d79b129249cade2b715dc0fb20f98908e24d01a8c6c8"
+    },
+    {
+      "path": "remote/haskell/source-verification.json",
+      "bytes": 114,
+      "sha256": "5ffb3541828f0b4a1c5ac6c80572f089d919b1da4ea7a7d8f828655b95cf6d61"
+    },
+    {
+      "path": "remote/haskell/tool-downloads.json",
+      "bytes": 1095,
+      "sha256": "3e4ef071f6bf1197002fded896235413a638ca6027fd4a24080522b21b7100ee"
+    },
+    {
+      "path": "remote/haskell/toolchain.json",
+      "bytes": 930,
+      "sha256": "e3a439cd0e275475b3dfb4626ba3481fc9784a2ece4e8092543bbbca73b6e1e7"
+    },
+    {
+      "path": "remote/haskell/workflow/RedCoreProbe.hs",
+      "bytes": 1112,
+      "sha256": "b3f588803ad4f462f9025d675d66d912ea8a1693fb385837d6e7d7a9909951e4"
+    },
+    {
+      "path": "remote/haskell/workflow/build.sh",
+      "bytes": 890,
+      "sha256": "89f58f5b50c8013dfc659e2e24ec9be1f3683346c4c95a1284b1735e2049b2b8"
+    },
+    {
+      "path": "remote/haskell/workflow/cabal-config",
+      "bytes": 381,
+      "sha256": "e40ac6eab698c246b1c5056aa07b7370925f0ae1a09468090e3b8813bb1ae018"
+    },
+    {
+      "path": "remote/haskell/workflow/cabal.project.local",
+      "bytes": 34,
+      "sha256": "660324e5ea329084711dd5e7f5f5c6e3a0a675539e95becc64699732a2bdd5db"
+    },
+    {
+      "path": "remote/haskell/workflow/cleanup.py",
+      "bytes": 972,
+      "sha256": "87873c4cf4569c404e59684e50967cbc8c8ce2eccc59840228f80d6a296e1d36"
+    },
+    {
+      "path": "remote/haskell/workflow/collect.py",
+      "bytes": 3519,
+      "sha256": "9fe41deee002177fc79ca64868e83667df39f24e32c7164d5cf0be41d7122af2"
+    },
+    {
+      "path": "remote/haskell/workflow/configure.py",
+      "bytes": 530,
+      "sha256": "ca28e3d904b181a14c7fb6653b204d0ef7ff82d3c205c1daa46cc697c65db32a"
+    },
+    {
+      "path": "remote/haskell/workflow/curl-wrapper.py",
+      "bytes": 307,
+      "sha256": "640e12bfc4a875d64048d0e823e69eb4df09da18b338506774fc00a3e0fa5456"
+    },
+    {
+      "path": "remote/haskell/workflow/diagnose.py",
+      "bytes": 540,
+      "sha256": "786aeeb8aa5dd9f2b00ca35d97fdd2dde85046bf1bc0d98ff7c93013a0d98cf9"
+    },
+    {
+      "path": "remote/haskell/workflow/final-metadata.py",
+      "bytes": 2015,
+      "sha256": "61b2ae0bf7773e2d15733f4d183f68692d1856d50d61b14aad9c93a3573f8dc0"
+    },
+    {
+      "path": "remote/haskell/workflow/haskell-download.sh",
+      "bytes": 1134,
+      "sha256": "d9ddb62cd5d98b23b6f1d9e22804f06b58251ccc9da2b51036a14b40db28d1d6"
+    },
+    {
+      "path": "remote/haskell/workflow/haskell-ghc-install.sh",
+      "bytes": 629,
+      "sha256": "a97cd11750b4bf3365d37c5f27cacbc2a096ad1b131c8326a7f5e697d20cc6e7"
+    },
+    {
+      "path": "remote/haskell/workflow/haskell-segmented.py",
+      "bytes": 2222,
+      "sha256": "935b59503f847761c2ab7cd7c8069eb2f4b8244d8cc67ef2613af7261c6a9062"
+    },
+    {
+      "path": "remote/haskell/workflow/haskell-setup.py",
+      "bytes": 706,
+      "sha256": "2b09e111c2c55369b21b5a415218a986d2caba0cecf9eebd9efd3282ae75af04"
+    },
+    {
+      "path": "remote/haskell/workflow/index-setup.py",
+      "bytes": 812,
+      "sha256": "5b3b43aba30586dd732a6e2fbe3d01aaaf025b82c7acb7cfb244bb87f22df41b"
+    },
+    {
+      "path": "remote/haskell/workflow/prefetch.sh",
+      "bytes": 429,
+      "sha256": "fb16f3c4a85004fcacc3520f3ae2bfcf876768130a5db4910646e3085e7efdeb"
+    },
+    {
+      "path": "remote/haskell/workflow/preserve-first.py",
+      "bytes": 324,
+      "sha256": "cbfda74c0c2956889640d95b3647601c71dc1d22138c9409e7ea76f98f24a10f"
+    },
+    {
+      "path": "remote/haskell/workflow/retry.sh",
+      "bytes": 417,
+      "sha256": "c71d1eb5c1da05ece0aeef179c61543fe4fe09311020eca773a5ef5e3dec5e39"
+    },
+    {
+      "path": "remote/haskell/workflow/run-phases.py",
+      "bytes": 2899,
+      "sha256": "534c8361f24bd74340d8e78b1dc7baadd8c366ae8b998ea585ea1d0e07b6e8ac"
+    },
+    {
+      "path": "remote/haskell/workflow/secure-index.py",
+      "bytes": 553,
+      "sha256": "f0dc9496a3f8946313ae507fe40902b2d3a5e911252d4861b6c1939014261101"
+    },
+    {
+      "path": "remote/haskell/workflow/solve.sh",
+      "bytes": 437,
+      "sha256": "af3b1ab7cd860cbf9c1e66c74ef902bded6793cf78ca7c0d6730f175027661a8"
+    },
+    {
+      "path": "remote/haskell/workflow/stop-download.py",
+      "bytes": 582,
+      "sha256": "23ac844b522b44cf09582dfa4c52beda3f5e4aac966af45ac3e0e8fd6134940a"
+    },
+    {
+      "path": "remote/haskell/workflow/switch-mirror.py",
+      "bytes": 238,
+      "sha256": "1487739419313c56143ccd1e50431e6ab89c53720ba68e7eeaaacc9ef26db76e"
+    },
+    {
+      "path": "remote/haskell/workflow/update.sh",
+      "bytes": 274,
+      "sha256": "25c08bbd44c71405b002b89ab185599eedeb14a074c6e334861174d293a604d5"
+    },
+    {
+      "path": "remote/haskell-h2/README.md",
+      "bytes": 3804,
+      "sha256": "7b788424aae1cb3a4f42dea131149500fb4a55e8f80a9ab54a3e20454406c6d0"
+    },
+    {
+      "path": "remote/haskell-h2/acceptance.json",
+      "bytes": 1329,
+      "sha256": "0963e82672e772074977826e05448e5c11d91b4febee14488f5afa95d48de9a8"
+    },
+    {
+      "path": "remote/haskell-h2/artifacts.json",
+      "bytes": 743,
+      "sha256": "36c1afd51ad48f2b588bbaafc381b2966b97b9aecf30b7b6425be2001586f915"
+    },
+    {
+      "path": "remote/haskell-h2/baseline-dist-dependency-plan.json",
+      "bytes": 87153,
+      "sha256": "67d2bd3c125b2bdc333b44772ccfa879cdc04ecf925a2a1d66b934c33366d203"
+    },
+    {
+      "path": "remote/haskell-h2/cleanup.json",
+      "bytes": 159,
+      "sha256": "af0f423fe1d2963a921d32b1db94d7dcf77e5e0e0e91d4d4b4ffd1404932d7ee"
+    },
+    {
+      "path": "remote/haskell-h2/dependency-source-manifest.json",
+      "bytes": 3925,
+      "sha256": "77741271e4ef2661a11229fc10dc3524a93d0123d4d80cdff7cec3d562c4e7dc"
+    },
+    {
+      "path": "remote/haskell-h2/diagnostics/phases.log",
+      "bytes": 185,
+      "sha256": "e2b8f81eb7cff5d43903eaa9cce35f2fcc9edef996ecd0f141da17d7996352e3"
+    },
+    {
+      "path": "remote/haskell-h2/dist-dependency-plan.json",
+      "bytes": 87054,
+      "sha256": "f59481c7200669f96d65d1999e08c985bdd6f4d4a9dce1077f26c15ed015f44a"
+    },
+    {
+      "path": "remote/haskell-h2/evidence-manifest.json",
+      "bytes": 5417,
+      "sha256": "c19d799201cebffc08917d56c64b4d91600ef4658de6216c5b9f037babe246b3"
+    },
+    {
+      "path": "remote/haskell-h2/h2-source-manifest.json",
+      "bytes": 19603,
+      "sha256": "24f70e4f397574e8c8c936e42cc7f5f919f00bae785ebf593deac004b3089db6"
+    },
+    {
+      "path": "remote/haskell-h2/inherited-h1/dependency-archives.json",
+      "bytes": 17064,
+      "sha256": "ccf1bb2594c8c0ca1efea584fd6d3bcba47236769cb8fcafa7bb0e051879ca1e"
+    },
+    {
+      "path": "remote/haskell-h2/inherited-h1/tool-downloads.json",
+      "bytes": 1095,
+      "sha256": "3e4ef071f6bf1197002fded896235413a638ca6027fd4a24080522b21b7100ee"
+    },
+    {
+      "path": "remote/haskell-h2/inherited-h1/toolchain.json",
+      "bytes": 930,
+      "sha256": "e3a439cd0e275475b3dfb4626ba3481fc9784a2ece4e8092543bbbca73b6e1e7"
+    },
+    {
+      "path": "remote/haskell-h2/logs/baseline-build.log",
+      "bytes": 21448,
+      "sha256": "5caa38f9164238659703f1b144f8df942d7aed56bb36bc05bddcf30a5bd09b48"
+    },
+    {
+      "path": "remote/haskell-h2/logs/baseline-cn-red.log",
+      "bytes": 2411,
+      "sha256": "fb1d05fef1260224c31a6e27845e1f3c303a17b73b68599d86c683be8882d70c"
+    },
+    {
+      "path": "remote/haskell-h2/logs/baseline-ip-red.log",
+      "bytes": 2970,
+      "sha256": "25e28618db1b3a31b51efaf86910d8d855eb7cd4f505369d8cae394785ecb30b"
+    },
+    {
+      "path": "remote/haskell-h2/logs/candidate-build.log",
+      "bytes": 20629,
+      "sha256": "05893a3c91f5d265c687771538e1bf5bb8677325c45331a9653705fdfdae74af"
+    },
+    {
+      "path": "remote/haskell-h2/logs/candidate-incremental.log",
+      "bytes": 321,
+      "sha256": "dff978c8140e0f70cf064b93aaf78d6b5f47ae4c0ef0f42df7df62e7d7b76536"
+    },
+    {
+      "path": "remote/haskell-h2/logs/candidate-non-model-repeat.log",
+      "bytes": 35260,
+      "sha256": "6275d79910d9578d6f81259c9a4a0fb808103fdad2332d83f42ab1688081ddaf"
+    },
+    {
+      "path": "remote/haskell-h2/logs/candidate-non-model.log",
+      "bytes": 33229,
+      "sha256": "2b0436e638f9a7ae99206bd097b1c75a05358238d1f6bef2a40da254f764f59e"
+    },
+    {
+      "path": "remote/haskell-h2/logs/candidate-test-list.log",
+      "bytes": 2312,
+      "sha256": "4ce4e1fc8b979ba520b469635cea23540e9dce44171111f16a0c8b4e80957928"
+    },
+    {
+      "path": "remote/haskell-h2/phases.json",
+      "bytes": 4486,
+      "sha256": "0b8087743308cd605f035cea1cc1f9b260fd0737edb4f1f9228acea77ed058ce"
+    },
+    {
+      "path": "remote/haskell-h2/preserved-h1.json",
+      "bytes": 939,
+      "sha256": "ac365be8cf4c03199ed9f3061bbb0ce1a9eddf9daa6fdc73fa34f2c4f033fb61"
+    },
+    {
+      "path": "remote/haskell-h2/signed-index/mirrors.json",
+      "bytes": 409,
+      "sha256": "672d24b787e96564937fdd0b072a48ef1588f7a4cfe92ad15d6fd8468dfb4d20"
+    },
+    {
+      "path": "remote/haskell-h2/signed-index/root.json",
+      "bytes": 4603,
+      "sha256": "f62e46cb51d4a499a8336894d7a46071b7e528135ad71614c7102c1de0aeeabc"
+    },
+    {
+      "path": "remote/haskell-h2/signed-index/snapshot.json",
+      "bytes": 972,
+      "sha256": "b07dd649c87c4eac494986ed66311c5018329f7878b34ee71414e3a288087dc5"
+    },
+    {
+      "path": "remote/haskell-h2/signed-index/timestamp.json",
+      "bytes": 465,
+      "sha256": "1944cdc23c936e6406c537b3596abcdbc537a60881575100010e772171f71aa0"
+    },
+    {
+      "path": "remote/haskell-h2/source-review-h2.md",
+      "bytes": 3855,
+      "sha256": "cc73c25544550f1e40c1144a20adec2c73199f6a7d4016d4209bdde44ad388fc"
+    },
+    {
+      "path": "remote/haskell-h2/source-verification-final.json",
+      "bytes": 17093,
+      "sha256": "92454ff994c785682da60b58a2c9ee7a4ecc9d54a33d2d09a3baf6f4a365d9b3"
+    },
+    {
+      "path": "remote/haskell-h2/source-verification.json",
+      "bytes": 552,
+      "sha256": "d6336b95dbbce20fd323913fbf308c1d5a6fcf6f3666c666648c75dc21bf8cf4"
+    },
+    {
+      "path": "remote/haskell-h2/workflow/cabal-config",
+      "bytes": 381,
+      "sha256": "e40ac6eab698c246b1c5056aa07b7370925f0ae1a09468090e3b8813bb1ae018"
+    },
+    {
+      "path": "remote/haskell-h2/workflow/cabal.project.local",
+      "bytes": 34,
+      "sha256": "660324e5ea329084711dd5e7f5f5c6e3a0a675539e95becc64699732a2bdd5db"
+    },
+    {
+      "path": "remote/haskell-h2/workflow/collect.py",
+      "bytes": 3725,
+      "sha256": "4a5ca26faafeeeaff9e08b0f3de6c3dbb27115a305dd29139b9ed52cac0668b9"
+    },
+    {
+      "path": "remote/haskell-h2/workflow/ip-api.py",
+      "bytes": 747,
+      "sha256": "7447bb19a2ffdc4d521843612bbd8d4133b00757856a444eb9e76e8b43df14fb"
+    },
+    {
+      "path": "remote/haskell-h2/workflow/ip-export.py",
+      "bytes": 1211,
+      "sha256": "68c8f513515a5085cbb591f49c3eb51e0fddc9f412538cdefdd1116419bdf612"
+    },
+    {
+      "path": "remote/haskell-h2/workflow/phases.py",
+      "bytes": 3469,
+      "sha256": "431ddbf067d6053becd02ed0a51db31f9fee2ebef8bfdb11908fe163363d6c27"
+    },
+    {
+      "path": "remote/haskell-h2/workflow/setup.py",
+      "bytes": 1403,
+      "sha256": "30874907e07baacecb25bb5a23fe7548cf5a70fb83265c2e0bcc08f3a9ea91aa"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source/crypton-x509-1.9.1/Data/X509/AlgorithmIdentifier.hs",
+      "bytes": 7416,
+      "sha256": "19957ed22dcebceec4420e9f911f18d567c6a01c3297160ba62e9dd9c6f0c794"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source/crypton-x509-1.9.1/Data/X509/Cert.hs",
+      "bytes": 4479,
+      "sha256": "5c3adb208df683ef65ce78f91fb327a9cd9431b08e40ba70036cda388776fc41"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source/crypton-x509-1.9.1/Data/X509/CertificateChain.hs",
+      "bytes": 1658,
+      "sha256": "8a8385be49d9a3cfa81cd4afa29d703f990db4533f74feb78cce4025ff1dce3b"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source/crypton-x509-1.9.1/Data/X509/Ext.hs",
+      "bytes": 19136,
+      "sha256": "81de91ba5fd833afcecdba4c8f9449e70bd4f2393a28180a5ce3be264362f983"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source/crypton-x509-1.9.1/Data/X509/ExtensionRaw.hs",
+      "bytes": 2501,
+      "sha256": "491155f618156a17ea5e3c65b2387285002550fe136deeff284792823bb7b81c"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source/crypton-x509-1.9.1/Data/X509.hs",
+      "bytes": 3523,
+      "sha256": "f7c4deb02cb01470e32aa1348816aa50a2081b83b00591a34d49f7a9bdb80697"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source/crypton-x509-validation-1.9.1/Data/X509/Validation/Cache.hs",
+      "bytes": 4240,
+      "sha256": "945ec2e89069315e285c97a9790078cf5a68d14c3508862282a2d092fecd6443"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source/crypton-x509-validation-1.9.1/Data/X509/Validation/Types.hs",
+      "bytes": 871,
+      "sha256": "9a9f23f7baf85b12e3a6a312a039af070ff8204be823d9f5dbd9626099e34b66"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source/crypton-x509-validation-1.9.1/Data/X509/Validation.hs",
+      "bytes": 26345,
+      "sha256": "ca1d21086ff41d0f4ef58cf36a302b76dd215e390e51b1bed157c64f8ebe3422"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source/iproute-1.7.15/Data/IP/Addr.hs",
+      "bytes": 22458,
+      "sha256": "6014fc095c46f0a0ba5a9690bd604e16ef105e7da97545ce12dcf0a158c5fbfc"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source/iproute-1.7.15/Data/IP.hs",
+      "bytes": 721,
+      "sha256": "17865bee798aa3081d80eafe4f23837e09c21b2b0a89f878373427c98b49219d"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source/tls-2.4.3/Network/TLS/Parameters.hs",
+      "bytes": 34662,
+      "sha256": "3b748d393bc6acdd0a480ddc0d19783adb9123fdb0050617f282a193d1654016"
+    },
+    {
+      "path": "remote/haskell-h2-design/dependency-source-manifest.json",
+      "bytes": 3925,
+      "sha256": "77741271e4ef2661a11229fc10dc3524a93d0123d4d80cdff7cec3d562c4e7dc"
+    },
+    {
+      "path": "remote/main/00-preflight.sh",
+      "bytes": 1604,
+      "sha256": "e6fc999977b896ab4b27eb987597e160297fbffb8f52fdefbe48004f813b5f21"
+    },
+    {
+      "path": "remote/main/01-source-and-bwrap-prepare.sh",
+      "bytes": 3231,
+      "sha256": "564619fac19b5d9fb1e3dc752642898a6d17bf6aebc54091d003688580ed4748"
+    },
+    {
+      "path": "remote/main/02-bwrap-and-sdk.sh",
+      "bytes": 2955,
+      "sha256": "02e198ee43ddf7b139865a242f02e5dda541ab927dec1e85808cc3ba4402d298"
+    },
+    {
+      "path": "remote/main/03-tls-build-and-tests.sh",
+      "bytes": 2193,
+      "sha256": "a2f9c6125efb8b190ae4c736f567e3f688f689fe85b34c3c6266d42b5cb71621"
+    },
+    {
+      "path": "remote/main/artifact-manifest.json",
+      "bytes": 30592,
+      "sha256": "c347e0091349488a05c586f34a4354eb689dea95ac19d4873eb43f43f608a4aa"
+    },
+    {
+      "path": "remote/main/build-ecma-focused-2.sh",
+      "bytes": 1293,
+      "sha256": "e00c7ffefda1de8e223c2affba5936425f673e62a8d8a851d20ffa3397cce225"
+    },
+    {
+      "path": "remote/main/build-ecma-focused.sh",
+      "bytes": 1947,
+      "sha256": "067003c41094f545a059866fa21979c6ca430418a656f1ea9d3f544bb771d848"
+    },
+    {
+      "path": "remote/main/build-lean-2.sh",
+      "bytes": 1141,
+      "sha256": "481e36f4b80bc4f55684349a5411db84485b756abf525318b2f42475db4865b8"
+    },
+    {
+      "path": "remote/main/build-lean.sh",
+      "bytes": 1133,
+      "sha256": "ddd24d0c15fe41f7231d8d18c1a9172f3d566171a13b980f1b69facd7b7e06dd"
+    },
+    {
+      "path": "remote/main/build-mirrors-focused-2.sh",
+      "bytes": 1289,
+      "sha256": "23d42b395755e4e68061a6583607d27bfa501397ab136553d0910b7c67c83e3f"
+    },
+    {
+      "path": "remote/main/build-mirrors-focused.sh",
+      "bytes": 1282,
+      "sha256": "509b5a1850b0a40444c59a38dc428cf0460deafc0128ee3fd3bedf24c3bb1761"
+    },
+    {
+      "path": "remote/main/compiled-artifact-identities.json",
+      "bytes": 94677,
+      "sha256": "2941926bc469d43f65178b5bfe3e07db5744b504301113b7447c3840a1a0313f"
+    },
+    {
+      "path": "remote/main/copy-mirrors-cache.py",
+      "bytes": 1177,
+      "sha256": "a6f961937b57adf6cc140989cf6b895d1a370cc945991ce388b813d5dcec8f75"
+    },
+    {
+      "path": "remote/main/download-priority.sh",
+      "bytes": 1345,
+      "sha256": "9d98cb59303610648cc997171f2329c0ceaf67353bf68b5ba33f2537c2413cdd"
+    },
+    {
+      "path": "remote/main/download-toolchains.sh",
+      "bytes": 1384,
+      "sha256": "a235de203f52582ab0085151b717229a7e95bf640809367660b93702433709ca"
+    },
+    {
+      "path": "remote/main/ecma-ci-2.exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "remote/main/ecma-ci-3.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "remote/main/ecma-ci.exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "remote/main/ecma-dependency-metadata.json",
+      "bytes": 289,
+      "sha256": "842819ff9244ff3c2513a675b39a375e7e26c96ed79f69cb9e306d397637f163"
+    },
+    {
+      "path": "remote/main/ecma-focused-2.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "remote/main/ecma-focused.exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "remote/main/final-main-source-manifest.json",
+      "bytes": 2229019,
+      "sha256": "373b990bbca98dbda79f73c260412afb0aec776c3efbd92347119eaed852bb6a"
+    },
+    {
+      "path": "remote/main/final-phase-results.json",
+      "bytes": 1250,
+      "sha256": "1b2c9311995a024598da72f1cf2f29d8657bed517f6cbcd52e11efd4353970e7"
+    },
+    {
+      "path": "remote/main/finalize-main-evidence.py",
+      "bytes": 4911,
+      "sha256": "98ff217f76931db6ee67884dc1e3897a0d5f79344767e004f65dceaf82b28faa"
+    },
+    {
+      "path": "remote/main/finish-stop-download.ps1",
+      "bytes": 1181,
+      "sha256": "f4fee44c77ac32484ea831b8bad5dc4b2eb3f7403b7b1510c3f6aeaa2387dcd1"
+    },
+    {
+      "path": "remote/main/fix-mount.json",
+      "bytes": 207,
+      "sha256": "832f5903a384bb11a0c45843e66ca9576b8ee11b681018a5cfa024ab75823a75"
+    },
+    {
+      "path": "remote/main/framing-portability-update.py",
+      "bytes": 11159,
+      "sha256": "fe2b77b8e24bdff58f9b08dc1b594174ce2b0ece765fab76a382e4fbc7df0dca"
+    },
+    {
+      "path": "remote/main/freeze-mirror.py",
+      "bytes": 1892,
+      "sha256": "c8710998c7a65b72e35f7cc9a7fa17f6410e474199dea34bd313cf16f154b557"
+    },
+    {
+      "path": "remote/main/frozen-cli-checks.json",
+      "bytes": 1427,
+      "sha256": "b3e26eb9b2f5086a1bb0e21a40a9d614849bea7d20e0fbaee20f224342853e70"
+    },
+    {
+      "path": "remote/main/frozen-cli-checks.py",
+      "bytes": 2651,
+      "sha256": "a79058b315cfde0f7540082207b340016b3d7b83d5e8124c68e049bf2d65a09e"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-probe/README.md",
+      "bytes": 4495,
+      "sha256": "d9dd4ef4df0b04ec231c9be48e709176a54b3989fcd1220077d63aaff3f26802"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-probe/probe.py",
+      "bytes": 13817,
+      "sha256": "425b57836a1c3f7843e9a16e6793458a67a2adadbfd7762d9c334cffac5de281"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-probe/source-reference.json",
+      "bytes": 1680,
+      "sha256": "d0484e40af9aad38a3467b8482f2bd7729836a29765ebbc794829ba3b517d504"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/metadata.json",
+      "bytes": 5362,
+      "sha256": "7a41e6032034e946b62afe54f54eb9ac86b84ed58a1cadcdfb472dbe8bac522c"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/missing-lf-eof/Child.tla",
+      "bytes": 28,
+      "sha256": "1588140e7c9f73d00948b5ceec95ff2cb2dc71429f92d8f6606a1c213a4a4d07"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/missing-lf-eof/Main.tla",
+      "bytes": 41,
+      "sha256": "f64649b509366a132bfb82464b6be57ade0faa1429a733fc636fccb77088f0b6"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/missing-lf-eof/result.json",
+      "bytes": 1503,
+      "sha256": "425c20b88c9adaf171bef79acb442b82296ca5a70086db19c2f41aeeab4a7650"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/missing-lf-eof/stderr.txt",
+      "bytes": 57,
+      "sha256": "a9c81c56a4bece0f3d1a4f74713eeb79ba8ab48a9554789fcfac8396ac22202c"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/missing-lf-eof/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/summary.json",
+      "bytes": 11698,
+      "sha256": "dead06f963c99169f9e5a0c84292f0166448749f93358092751b03527fbd79e0"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/terminal-protocol-error-cancel/Child.tla",
+      "bytes": 28,
+      "sha256": "1588140e7c9f73d00948b5ceec95ff2cb2dc71429f92d8f6606a1c213a4a4d07"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/terminal-protocol-error-cancel/Main.tla",
+      "bytes": 41,
+      "sha256": "f64649b509366a132bfb82464b6be57ade0faa1429a733fc636fccb77088f0b6"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/terminal-protocol-error-cancel/result.json",
+      "bytes": 2170,
+      "sha256": "f7c0f212c86db6a43121fbceb5c752d0221b44c8d42c77fea8edb5ad1ba9a003"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/terminal-protocol-error-cancel/stderr.txt",
+      "bytes": 44,
+      "sha256": "d0c48768879087d39e217599c1983d4922ca1a1f6a60fdd886df13eda00850bc"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/terminal-protocol-error-cancel/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/valid-lf-control/Child.tla",
+      "bytes": 28,
+      "sha256": "1588140e7c9f73d00948b5ceec95ff2cb2dc71429f92d8f6606a1c213a4a4d07"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/valid-lf-control/Main.tla",
+      "bytes": 41,
+      "sha256": "f64649b509366a132bfb82464b6be57ade0faa1429a733fc636fccb77088f0b6"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/valid-lf-control/result.json",
+      "bytes": 1363,
+      "sha256": "64a508b97b265071bbb1bcad77f7f02db4f5c92d131996dbda7160b2a5417eee"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/valid-lf-control/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/frozen-cli-original-work/client-cli-probe-dqk9ry8b/valid-lf-control/stdout.txt",
+      "bytes": 6,
+      "sha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+    },
+    {
+      "path": "remote/main/frozen-mirror-producer.json",
+      "bytes": 1520,
+      "sha256": "b7b508f62941936a128645cdbec31a033a6a95514b77663337ce77a27ff573d0"
+    },
+    {
+      "path": "remote/main/haskell-download.sh",
+      "bytes": 1134,
+      "sha256": "d9ddb62cd5d98b23b6f1d9e22804f06b58251ccc9da2b51036a14b40db28d1d6"
+    },
+    {
+      "path": "remote/main/haskell-ghc-install.sh",
+      "bytes": 629,
+      "sha256": "a97cd11750b4bf3365d37c5f27cacbc2a096ad1b131c8326a7f5e697d20cc6e7"
+    },
+    {
+      "path": "remote/main/haskell-h2-api-export.py",
+      "bytes": 1701,
+      "sha256": "62e9744649e33bef77dc3d9ec81dd83f661dc0bb7e110df98c3ac570f5d909b8"
+    },
+    {
+      "path": "remote/main/haskell-install.sh",
+      "bytes": 878,
+      "sha256": "75332c80a869c7f4b006acf9494b030e6c6116a33f7b7f4a81445b4aa677b980"
+    },
+    {
+      "path": "remote/main/haskell-segmented.py",
+      "bytes": 2222,
+      "sha256": "935b59503f847761c2ab7cd7c8069eb2f4b8244d8cc67ef2613af7261c6a9062"
+    },
+    {
+      "path": "remote/main/haskell-setup.py",
+      "bytes": 706,
+      "sha256": "2b09e111c2c55369b21b5a415218a986d2caba0cecf9eebd9efd3282ae75af04"
+    },
+    {
+      "path": "remote/main/install-node-pnpm.py",
+      "bytes": 2229,
+      "sha256": "ddca53f0bbb427b5bb6b82f5965de7231cfd1e31bbdd21c63bbf2c1c5b678f22"
+    },
+    {
+      "path": "remote/main/lean-final-2.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "remote/main/lean-final.exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "remote/main/lean-first-lean-version.log",
+      "bytes": 106,
+      "sha256": "64f534c7cd1d0dbe701f44b4da6679d120b63f0f9f3bfab60540a07af143f1f2"
+    },
+    {
+      "path": "remote/main/lean-first-native-tls-build.log",
+      "bytes": 2057,
+      "sha256": "05b42caea49077c6d98d92c704361cbc4e586b7b0698c8514915d17ddb13abfd"
+    },
+    {
+      "path": "remote/main/lean-first-results.json",
+      "bytes": 498,
+      "sha256": "9883b3f9138cf67e1be5ce13a849a04bc28f6a1bfd9241a10e538a1e292c3ef1"
+    },
+    {
+      "path": "remote/main/lean-first-run.py",
+      "bytes": 1656,
+      "sha256": "5202cc81dc3cbb84a8c5fcbc635b367151b4624db37808a920559788eafb947f"
+    },
+    {
+      "path": "remote/main/lean-iteration2-lean-version.log",
+      "bytes": 106,
+      "sha256": "64f534c7cd1d0dbe701f44b4da6679d120b63f0f9f3bfab60540a07af143f1f2"
+    },
+    {
+      "path": "remote/main/lean-iteration2-native-tls-build.log",
+      "bytes": 287,
+      "sha256": "9c9ab35e74d33a08dd71475364bd6b773e637fee4a8b6c8343dce9fefdf6e4b0"
+    },
+    {
+      "path": "remote/main/lean-iteration2-native-tls-test.log",
+      "bytes": 14623,
+      "sha256": "7e6443fc7baa61ea00d24bccb6106487a17702b4c7bfaa01e2aa367e59bced1a"
+    },
+    {
+      "path": "remote/main/lean-iteration2-results.json",
+      "bytes": 760,
+      "sha256": "cb84095467bac077d3bc0e507982ccf31c4678af8911ff4e7602d066a937734d"
+    },
+    {
+      "path": "remote/main/lean-iteration2-run.py",
+      "bytes": 1664,
+      "sha256": "75f11bb73ebbc27b18db5a05f11fa8368f5da3c0122ba1a6da78ce3494daef46"
+    },
+    {
+      "path": "remote/main/lean-original-closure-fixed.jsonl",
+      "bytes": 229,
+      "sha256": "a45e887356db8cc21f3bf75995cb09a5517c9c0db54e0f208831484f8bb51014"
+    },
+    {
+      "path": "remote/main/lean-original-postfix.json",
+      "bytes": 943,
+      "sha256": "16f7ee02598d6de33b45305a2c06bed83a53db0da0a45c10d46f47a7ba724e18"
+    },
+    {
+      "path": "remote/main/lean-original-probes.py",
+      "bytes": 2429,
+      "sha256": "729acd6e1a60bf53f5c9a01fb97f5e8117528a05f8773f0e40fef788f25ac748"
+    },
+    {
+      "path": "remote/main/logs/download-cabal.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/logs/download-node.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/logs/download-pnpm.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/logs/ecma-build-repeat.log",
+      "bytes": 37,
+      "sha256": "1edd1dbca65a7f5d9c389a151bd6b429365f11f4c8feef05ef3ac5c2145a2cf9"
+    },
+    {
+      "path": "remote/main/logs/ecma-build.log",
+      "bytes": 37,
+      "sha256": "1edd1dbca65a7f5d9c389a151bd6b429365f11f4c8feef05ef3ac5c2145a2cf9"
+    },
+    {
+      "path": "remote/main/logs/ecma-check-examples.log",
+      "bytes": 41,
+      "sha256": "80d80dafc69cad009c0282f5b2bd0b1a1e225a189df221e57f15d60befbb699d"
+    },
+    {
+      "path": "remote/main/logs/ecma-check-model-interface.log",
+      "bytes": 48,
+      "sha256": "22dcdb78d0694c1e38529d390613a6b6f4e413f9e8be6821061342741c74aa93"
+    },
+    {
+      "path": "remote/main/logs/ecma-check.log",
+      "bytes": 15,
+      "sha256": "8366207267355d3e3d5bf3bf6e8c94c5f93f6078c34f08973fa2b38cdda6cc92"
+    },
+    {
+      "path": "remote/main/logs/ecma-ci-2.log",
+      "bytes": 80311,
+      "sha256": "8997383255fa603c9b0394e3c05866d97f8dbdf02a46ff7104c98510ba77dc48"
+    },
+    {
+      "path": "remote/main/logs/ecma-ci-3.log",
+      "bytes": 80138,
+      "sha256": "33c103991945867ed71b03146e705c4b55654a02294ee6f4f316e72e8b73b513"
+    },
+    {
+      "path": "remote/main/logs/ecma-ci.log",
+      "bytes": 1867,
+      "sha256": "20bd25d92862809a82caa598c96d8f51446cdc5f3fa78a08ae28943c5abf398f"
+    },
+    {
+      "path": "remote/main/logs/ecma-focused-tests.log",
+      "bytes": 1103,
+      "sha256": "fadadceaaf3cbb9c24fe56ba6feab4f9e629f2271347e9e38a16f9a81a661899"
+    },
+    {
+      "path": "remote/main/logs/ecma-frozen-install-online.log",
+      "bytes": 6166,
+      "sha256": "e48b3b71926cb45bc9853e10b4fffd8b55788f71c22fbca65612950eb34ec8c8"
+    },
+    {
+      "path": "remote/main/logs/ecma-frozen-install.log",
+      "bytes": 370,
+      "sha256": "b9e352c143f6076e99cd94056a16de21973765796311a013892b79be106d1be6"
+    },
+    {
+      "path": "remote/main/logs/framing-final-producer.log",
+      "bytes": 875,
+      "sha256": "25d4277aec237004acafb4c079fa13476f76b3f2a474d0f9c596824c714b8c86"
+    },
+    {
+      "path": "remote/main/logs/frozen-original-cli.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/logs/frozen-original-cli.stdout.json",
+      "bytes": 283,
+      "sha256": "43c51573c66fdc513c1008eb5f30d3ae81e9ff37c5970bdfa6b49987656841b2"
+    },
+    {
+      "path": "remote/main/logs/lean-original-build.log",
+      "bytes": 502,
+      "sha256": "b4b769e2735309c416bbde42972e7b61edfc12ecc47fdcfc40aadee64184ded1"
+    },
+    {
+      "path": "remote/main/logs/lean-original-tls-fixed.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/logs/lean-original-tls-fixed.stdout.jsonl",
+      "bytes": 986,
+      "sha256": "2d12330516a365cc09df9fac442841d7bac67844db229cd4bc860f2dd5017390"
+    },
+    {
+      "path": "remote/main/logs/lean-root-build.log",
+      "bytes": 2830,
+      "sha256": "243b2022f65b0a4948335b9eb020fb6f5cefdf955ffac996f980562152bd4ce0"
+    },
+    {
+      "path": "remote/main/logs/lean2-async-test.log",
+      "bytes": 31,
+      "sha256": "7e5da25adfc9875b8d02d2c393dbf552b3c7f00f8607fb82959498ef52bffb16"
+    },
+    {
+      "path": "remote/main/logs/lean2-model-interface-test.log",
+      "bytes": 5406,
+      "sha256": "c6948ff5d9105ad28018850924886b2586aa0e6a18ec3ffafdd87be1900b3fef"
+    },
+    {
+      "path": "remote/main/logs/lean2-native-build.log",
+      "bytes": 609,
+      "sha256": "d19e234817dac846b0074fcb0e5b419681f11ea2c836c1e377734352e28f3014"
+    },
+    {
+      "path": "remote/main/logs/lean2-native-discovery.log",
+      "bytes": 1697,
+      "sha256": "f37b0adae5908d0a0ce8e32030f7c72cd59d108a980890d9634a64e9eb99ab20"
+    },
+    {
+      "path": "remote/main/logs/lean2-native-noop.log",
+      "bytes": 40,
+      "sha256": "5832ef94f54926cec58507e0729ac1b2940808694280c3a7dcade0932b83ac69"
+    },
+    {
+      "path": "remote/main/logs/lean2-native-test.log",
+      "bytes": 14688,
+      "sha256": "2b04a5eb6a0b31f288da36aaea292bae9e1d89fd6458ae701a18226159548ac4"
+    },
+    {
+      "path": "remote/main/logs/lean2-root-build.log",
+      "bytes": 150,
+      "sha256": "5b30a4feb20426a56da9213c2e7f97d4497c700b4b0a77f63255aab7759c9385"
+    },
+    {
+      "path": "remote/main/logs/lean2-test.log",
+      "bytes": 11112,
+      "sha256": "782b0c9d2c8447bd3a7840f800bca423d51a534b025ed5c745413408ecc68e3a"
+    },
+    {
+      "path": "remote/main/logs/mirrors-focused-build.log",
+      "bytes": 72924,
+      "sha256": "f14065e615b44ce4eb48dcc54c97f9eabd685d8ee7111ab0246586ce61df5014"
+    },
+    {
+      "path": "remote/main/logs/mirrors-full-no-model-2.log",
+      "bytes": 110281,
+      "sha256": "4cd0de78538405d6ebcb72d0c3bd6df8fbe0a3154ae24372584e156fff1e1e9a"
+    },
+    {
+      "path": "remote/main/logs/mirrors-full-no-model.log",
+      "bytes": 90842,
+      "sha256": "01b8e93ebc271f8fcc96cb19af6b3de3e87ab9c441ffe51a5c8b3d862cea3544"
+    },
+    {
+      "path": "remote/main/logs/mirrors2-client-framing.log",
+      "bytes": 875,
+      "sha256": "25d4277aec237004acafb4c079fa13476f76b3f2a474d0f9c596824c714b8c86"
+    },
+    {
+      "path": "remote/main/logs/mirrors2-focused-build.log",
+      "bytes": 70792,
+      "sha256": "dc07b236b188827ace44d530f65c04e9c53f659024668fa3ac1d2fe5350eefd6"
+    },
+    {
+      "path": "remote/main/logs/mirrors2-jobstore_spec.log",
+      "bytes": 453,
+      "sha256": "12700d41853df91b411cbe1f39d67ea1895af6623bf1f850e1cbff1d1251e9d8"
+    },
+    {
+      "path": "remote/main/logs/mirrors2-trace-capture.log",
+      "bytes": 90,
+      "sha256": "615242b69324ec8327fdfe1248515275989447fec9778cdd1b8c4ebc629a6114"
+    },
+    {
+      "path": "remote/main/logs/mirrors2-trace_capture_spec.log",
+      "bytes": 49,
+      "sha256": "244e6f2afd1e5754787402de3d4044a2405c46db549d22e3fcdfac5da0997e2d"
+    },
+    {
+      "path": "remote/main/logs/mirrors2-transport_spec.log",
+      "bytes": 7530,
+      "sha256": "2a4c79c58fc829e2f700408252b300a11377fd56149aa10f3889d607b1ed858e"
+    },
+    {
+      "path": "remote/main/logs/mirrors2-validate-async.log",
+      "bytes": 36,
+      "sha256": "e109aba6d1d0771d308ca4d2a44a0e165c7a6ae3281890188ac763360458671e"
+    },
+    {
+      "path": "remote/main/logs/native-rebuild.log",
+      "bytes": 2748,
+      "sha256": "3b7f631e2a45346e5fb372e8d853175480534aa8300cd0b319cb0e70316a28f5"
+    },
+    {
+      "path": "remote/main/logs/postfix-cli.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/logs/postfix-cli.stdout.json",
+      "bytes": 275,
+      "sha256": "404947e2dbefc2df950119b350d89d212db066667feec48f2204653d15d49cdb"
+    },
+    {
+      "path": "remote/main/logs/postfix-ecma.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/logs/postfix-ecma.stdout.json",
+      "bytes": 1134,
+      "sha256": "24e262a3e981b7e0f99129fb22375f9c0d44d055a9369807f09d82270293ae5a"
+    },
+    {
+      "path": "remote/main/logs/rust-control.log",
+      "bytes": 2099,
+      "sha256": "6b14a9f2ebff38c20752804dcd1c6cc30ed3b5f0849c37f3cf2e01458d06d439"
+    },
+    {
+      "path": "remote/main/mirror-cache-copy.json",
+      "bytes": 425,
+      "sha256": "6f258a082ee5098d5eda1e50093432181b0baefa3ab2cfb595f4cf27b9f18077"
+    },
+    {
+      "path": "remote/main/mirrors-final.exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "remote/main/mirrors-focused-2.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "remote/main/mirrors-focused.exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "remote/main/mirrors-full-2.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "remote/main/mount-keeper.json",
+      "bytes": 28,
+      "sha256": "ff8c1c7ca3a69afb67e44d47846fdbce46e953d935bb4e7ba4051013357894b5"
+    },
+    {
+      "path": "remote/main/node-cli-paths.json",
+      "bytes": 139,
+      "sha256": "e84771f35a27f963da6f99cb6858db59cdcc20c1035dc2190a5de0545c24e7eb"
+    },
+    {
+      "path": "remote/main/node-cli-paths.py",
+      "bytes": 689,
+      "sha256": "7304a9da41341e3b968cc487cc843c8c724ac746d8863c5f200a4fe0af063cf7"
+    },
+    {
+      "path": "remote/main/node-pnpm-install.json",
+      "bytes": 544,
+      "sha256": "9f588ceb6c6eba58c20c3ca77e93fcb90e3f1a2205ec7ff73cb89be1d8d626e9"
+    },
+    {
+      "path": "remote/main/offline-fixture-artifacts.json",
+      "bytes": 886,
+      "sha256": "393dd2bc8bf1ea8edf6298f5c218ab3fa1020211029b1f1ff83e4695c3199144"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/metadata.json",
+      "bytes": 5350,
+      "sha256": "b528f784339dd623ef9aaed4e333d548cd7b0bbcc9a1c473a522b81371cba2ba"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/missing-lf-eof/Child.tla",
+      "bytes": 28,
+      "sha256": "1588140e7c9f73d00948b5ceec95ff2cb2dc71429f92d8f6606a1c213a4a4d07"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/missing-lf-eof/Main.tla",
+      "bytes": 41,
+      "sha256": "f64649b509366a132bfb82464b6be57ade0faa1429a733fc636fccb77088f0b6"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/missing-lf-eof/result.json",
+      "bytes": 1492,
+      "sha256": "56d655717030fc20930f7540e618e847588e62638f7010e899eae9d5ab1904b8"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/missing-lf-eof/stderr.txt",
+      "bytes": 57,
+      "sha256": "a9c81c56a4bece0f3d1a4f74713eeb79ba8ab48a9554789fcfac8396ac22202c"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/missing-lf-eof/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/summary.json",
+      "bytes": 11644,
+      "sha256": "9a970c7ebd3f6efe0ad8fac0b810b0566a796f90a9ac19fad151f958492c5078"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/terminal-protocol-error-cancel/Child.tla",
+      "bytes": 28,
+      "sha256": "1588140e7c9f73d00948b5ceec95ff2cb2dc71429f92d8f6606a1c213a4a4d07"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/terminal-protocol-error-cancel/Main.tla",
+      "bytes": 41,
+      "sha256": "f64649b509366a132bfb82464b6be57ade0faa1429a733fc636fccb77088f0b6"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/terminal-protocol-error-cancel/result.json",
+      "bytes": 2150,
+      "sha256": "30789ff4554c1b4ac9985c821043ad7922615f314d10392be825186e79e1db50"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/terminal-protocol-error-cancel/stderr.txt",
+      "bytes": 44,
+      "sha256": "d0c48768879087d39e217599c1983d4922ca1a1f6a60fdd886df13eda00850bc"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/terminal-protocol-error-cancel/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/valid-lf-control/Child.tla",
+      "bytes": 28,
+      "sha256": "1588140e7c9f73d00948b5ceec95ff2cb2dc71429f92d8f6606a1c213a4a4d07"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/valid-lf-control/Main.tla",
+      "bytes": 41,
+      "sha256": "f64649b509366a132bfb82464b6be57ade0faa1429a733fc636fccb77088f0b6"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/valid-lf-control/result.json",
+      "bytes": 1352,
+      "sha256": "6c9169f6911b93d27bb9b587293d51aa88c0d06ea3669615950cb73502ea097d"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/valid-lf-control/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "remote/main/postfix-cli-work/client-cli-probe-txemyiks/valid-lf-control/stdout.txt",
+      "bytes": 6,
+      "sha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+    },
+    {
+      "path": "remote/main/postfix-ecma-cli.json",
+      "bytes": 1271,
+      "sha256": "189a5f59994c30aaf373aa1754208ef3eabc76aa28cf4d7df9e839d2a90ddcc0"
+    },
+    {
+      "path": "remote/main/postfix-probes/cli-probes/README.md",
+      "bytes": 4495,
+      "sha256": "d9dd4ef4df0b04ec231c9be48e709176a54b3989fcd1220077d63aaff3f26802"
+    },
+    {
+      "path": "remote/main/postfix-probes/cli-probes/probe.py",
+      "bytes": 13817,
+      "sha256": "425b57836a1c3f7843e9a16e6793458a67a2adadbfd7762d9c334cffac5de281"
+    },
+    {
+      "path": "remote/main/postfix-probes/cli-probes/source-reference.json",
+      "bytes": 1680,
+      "sha256": "d0484e40af9aad38a3467b8482f2bd7729836a29765ebbc794829ba3b517d504"
+    },
+    {
+      "path": "remote/main/postfix-probes/ecma-probes/invalid-pair.mjs",
+      "bytes": 3175,
+      "sha256": "40fe19d88fce07736d29ca1b97e9d8efb57ecd8505765489e871dd3115f5e37c"
+    },
+    {
+      "path": "remote/main/postfix-probes/lean-probes/ClosureProbe.lean",
+      "bytes": 1113,
+      "sha256": "573051f8ea118ddc1e544c7b0575299bdcb91096c9a68ff6939d262a1f0175ef"
+    },
+    {
+      "path": "remote/main/postfix-probes/lean-probes/README.md",
+      "bytes": 2336,
+      "sha256": "11b7bc9e8c8c3d5c484d6b2a3b81304c71d08d9cd438a2aa8d7db27c256632d0"
+    },
+    {
+      "path": "remote/main/postfix-probes/lean-probes/TlsIdentityProbe.lean",
+      "bytes": 969,
+      "sha256": "05bcb5720e012c1411183f082f674085c6306e4dece7657b733c88f1b8aaa639"
+    },
+    {
+      "path": "remote/main/postfix-probes/lean-probes/fixtures/ControlRoot.tla",
+      "bytes": 92,
+      "sha256": "dbc8e5798a53ab5292b3d0d2e57c6f84233442052f27e9d26d02725b0e015b15"
+    },
+    {
+      "path": "remote/main/postfix-probes/lean-probes/fixtures/Dep.tla",
+      "bytes": 37,
+      "sha256": "efc42aa6f893658c9a74d03f34148a748957372288d9e1e1f352769d56b1e523"
+    },
+    {
+      "path": "remote/main/postfix-probes/lean-probes/fixtures/MarkerRoot.tla",
+      "bytes": 88,
+      "sha256": "e818d61f06a48820927410552fcfcff0e45b74a28aa89ecd1162ba8c157fa7da"
+    },
+    {
+      "path": "remote/main/postfix-probes/lean-probes/lakefile.lean",
+      "bytes": 843,
+      "sha256": "14f254748b05de1d5c39f5a0605a20dcc2cad6773fdaf35eb1b748d1e2a92bd9"
+    },
+    {
+      "path": "remote/main/postfix-probes/lean-probes/lean-toolchain",
+      "bytes": 25,
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    {
+      "path": "remote/main/postfix-probes/lean-probes/run-tls-probe.py",
+      "bytes": 1987,
+      "sha256": "61d4f6014d8d6e8b1c396818a40378b2ac485cfe7c6831b9b63725d587e24964"
+    },
+    {
+      "path": "remote/main/postfix-probes.py",
+      "bytes": 2603,
+      "sha256": "a286514aa36b8e6de56bbf2b2a3b665213aef8f27eeb4e84c70f3656620a2641"
+    },
+    {
+      "path": "remote/main/preflight.json",
+      "bytes": 5168,
+      "sha256": "a3fbd6dbd8c8bb1ed10dd8e04dc743f6c433f296d5c36a32e839833b2da75de7"
+    },
+    {
+      "path": "remote/main/preflight.py",
+      "bytes": 1516,
+      "sha256": "304cf2dbda93e9bfd86414820ee21a4ea8f190ec47b6fb4ac4fd9e6008cc8578"
+    },
+    {
+      "path": "remote/main/prepare-offline-fixtures.py",
+      "bytes": 1980,
+      "sha256": "615a10016b674449e171cf3d869c0c2c485d215fcdc9fe0f038df2bee7c63216"
+    },
+    {
+      "path": "remote/main/python-environment-guard.json",
+      "bytes": 370,
+      "sha256": "7e13bc009942a21439f1b1e935b442aa77146a1628e0157f8c8530e19dc15baf"
+    },
+    {
+      "path": "remote/main/python-environment-guard.py",
+      "bytes": 1158,
+      "sha256": "1d07b5accfe6a695cc442b05826f00089d936558caedcf50c91acdacd95b7dfd"
+    },
+    {
+      "path": "remote/main/ready-source-manifest.json",
+      "bytes": 2048314,
+      "sha256": "8e44c9073245ece7a506ba70fc394decd028d4e40bc774114d8bc86df6f6e0b9"
+    },
+    {
+      "path": "remote/main/run-ecma-ci-2.sh",
+      "bytes": 865,
+      "sha256": "faf73b57d6b76ba91668a53048d056f1708f32d4d18e397207282fc520aeab0e"
+    },
+    {
+      "path": "remote/main/run-ecma-ci-3.sh",
+      "bytes": 959,
+      "sha256": "1716b543107ab685960736e12e066c04c3471361bbd585db0a171b6c4a479091"
+    },
+    {
+      "path": "remote/main/run-ecma-ci.sh",
+      "bytes": 799,
+      "sha256": "b9e91f417cb23c26b3da5cda1d0026aad846ea39759e089b4ee4b5348b8472dd"
+    },
+    {
+      "path": "remote/main/run-mirrors-final.sh",
+      "bytes": 1248,
+      "sha256": "75c65c239ed597aa7ec58cd3f53f6b50da58e8a08038465696930c0582103b3c"
+    },
+    {
+      "path": "remote/main/run-mirrors-full-2.sh",
+      "bytes": 1392,
+      "sha256": "005ce83e650336e74c0175058f49fa512bc784111a37606f2c1feaa5eeded667"
+    },
+    {
+      "path": "remote/main/rust-control-result.json",
+      "bytes": 6230,
+      "sha256": "4c68121a885ce9dccc456845b228e1c1615c5a8fd50cd143a3a73730c5e6391b"
+    },
+    {
+      "path": "remote/main/rust-control-source.json",
+      "bytes": 8338,
+      "sha256": "0d55507f510a321ff355a0c486e69c33c0537bed2832d50b3545431c0881cea5"
+    },
+    {
+      "path": "remote/main/rust-control.py",
+      "bytes": 2978,
+      "sha256": "72e90f3250c7bc753d88dfbc318707028e537f848535805fc47df69ebfd3a223"
+    },
+    {
+      "path": "remote/main/setup-mount.sh",
+      "bytes": 791,
+      "sha256": "f847345fce02b07c4fe3f95a879f400c76f1afce93f9ef32a02ab7f408ff7950"
+    },
+    {
+      "path": "remote/main/setup-sources.py",
+      "bytes": 1461,
+      "sha256": "549b52e816af8c800a2ae77522a4d18d2d185c986a10ac8f43535c53850ee9db"
+    },
+    {
+      "path": "remote/main/source-manifest.json",
+      "bytes": 19603,
+      "sha256": "65de21e7e6a852bd8f0fbe87906d28670898f89252048d7ad70e857cd98a5bf0"
+    },
+    {
+      "path": "remote/main/source-transfer-ready.json",
+      "bytes": 345,
+      "sha256": "86a2761f3ee45f4bbabac01b2e18f145ed870aa8a5767562ee1efe882179093b"
+    },
+    {
+      "path": "remote/main/stop-download.ps1",
+      "bytes": 1384,
+      "sha256": "4a55f4e9ac5f716dd850d8750928d5b3b66cf4a584a73e66b3c87f8091c80e97"
+    },
+    {
+      "path": "remote/main/tool-download-stop.json",
+      "bytes": 1196,
+      "sha256": "fe3ad7fc754518f2a3a81e6f71f053108b2a5aa3c5a67351d361b20ae21d35b6"
+    },
+    {
+      "path": "remote/main/validation-commits.json",
+      "bytes": 1451055,
+      "sha256": "17a4a4ea308a3725d7f5e7ad6342d6ca3071eb6dcb7aaa858c0db1197bf28bfa"
+    },
+    {
+      "path": "remote/main/validation-commits.py",
+      "bytes": 1969,
+      "sha256": "13c2a5ccb5b48073347d5f6888369b76c03cecf48dc5c1cda6003548a3db8a99"
+    },
+    {
+      "path": "remote/main-evidence-transport.json",
+      "bytes": 481,
+      "sha256": "f6e333199530b6d847ae0e43402e705604e6da0156552f8e8659e9eaf6a92350"
+    },
+    {
+      "path": "remote/workflow/build-ecma-focused-2.sh",
+      "bytes": 1293,
+      "sha256": "e00c7ffefda1de8e223c2affba5936425f673e62a8d8a851d20ffa3397cce225"
+    },
+    {
+      "path": "remote/workflow/build-ecma-focused.sh",
+      "bytes": 1947,
+      "sha256": "067003c41094f545a059866fa21979c6ca430418a656f1ea9d3f544bb771d848"
+    },
+    {
+      "path": "remote/workflow/build-lean-2.sh",
+      "bytes": 1141,
+      "sha256": "481e36f4b80bc4f55684349a5411db84485b756abf525318b2f42475db4865b8"
+    },
+    {
+      "path": "remote/workflow/build-lean.sh",
+      "bytes": 1133,
+      "sha256": "ddd24d0c15fe41f7231d8d18c1a9172f3d566171a13b980f1b69facd7b7e06dd"
+    },
+    {
+      "path": "remote/workflow/build-mirrors-focused-2.sh",
+      "bytes": 1289,
+      "sha256": "23d42b395755e4e68061a6583607d27bfa501397ab136553d0910b7c67c83e3f"
+    },
+    {
+      "path": "remote/workflow/build-mirrors-focused.sh",
+      "bytes": 1282,
+      "sha256": "509b5a1850b0a40444c59a38dc428cf0460deafc0128ee3fd3bedf24c3bb1761"
+    },
+    {
+      "path": "remote/workflow/cleanup-new-image.py",
+      "bytes": 3032,
+      "sha256": "62fccd4c179bcf91a0dc1e62da13bd14eba27bbd4429678d7dd31149c64de99f"
+    },
+    {
+      "path": "remote/workflow/copy-mirrors-cache.py",
+      "bytes": 1177,
+      "sha256": "a6f961937b57adf6cc140989cf6b895d1a370cc945991ce388b813d5dcec8f75"
+    },
+    {
+      "path": "remote/workflow/download-priority.sh",
+      "bytes": 1345,
+      "sha256": "9d98cb59303610648cc997171f2329c0ceaf67353bf68b5ba33f2537c2413cdd"
+    },
+    {
+      "path": "remote/workflow/finalize-main-evidence.py",
+      "bytes": 4911,
+      "sha256": "98ff217f76931db6ee67884dc1e3897a0d5f79344767e004f65dceaf82b28faa"
+    },
+    {
+      "path": "remote/workflow/freeze-mirror.py",
+      "bytes": 1892,
+      "sha256": "c8710998c7a65b72e35f7cc9a7fa17f6410e474199dea34bd313cf16f154b557"
+    },
+    {
+      "path": "remote/workflow/frozen-cli-checks.py",
+      "bytes": 2651,
+      "sha256": "a79058b315cfde0f7540082207b340016b3d7b83d5e8124c68e049bf2d65a09e"
+    },
+    {
+      "path": "remote/workflow/install-node-pnpm.py",
+      "bytes": 2229,
+      "sha256": "ddca53f0bbb427b5bb6b82f5965de7231cfd1e31bbdd21c63bbf2c1c5b678f22"
+    },
+    {
+      "path": "remote/workflow/lean-original-probes.py",
+      "bytes": 2429,
+      "sha256": "729acd6e1a60bf53f5c9a01fb97f5e8117528a05f8773f0e40fef788f25ac748"
+    },
+    {
+      "path": "remote/workflow/node-cli-paths.py",
+      "bytes": 689,
+      "sha256": "7304a9da41341e3b968cc487cc843c8c724ac746d8863c5f200a4fe0af063cf7"
+    },
+    {
+      "path": "remote/workflow/postfix-probes.py",
+      "bytes": 2603,
+      "sha256": "a286514aa36b8e6de56bbf2b2a3b665213aef8f27eeb4e84c70f3656620a2641"
+    },
+    {
+      "path": "remote/workflow/prepare-offline-fixtures.py",
+      "bytes": 1980,
+      "sha256": "615a10016b674449e171cf3d869c0c2c485d215fcdc9fe0f038df2bee7c63216"
+    },
+    {
+      "path": "remote/workflow/python-environment-guard.py",
+      "bytes": 1158,
+      "sha256": "1d07b5accfe6a695cc442b05826f00089d936558caedcf50c91acdacd95b7dfd"
+    },
+    {
+      "path": "remote/workflow/recover-new-image.sh",
+      "bytes": 985,
+      "sha256": "7222ee2f978c69553f9f797f2aad005e3a36256a88a03b0ddddee8fce9e65780"
+    },
+    {
+      "path": "remote/workflow/run-ecma-ci-2.sh",
+      "bytes": 865,
+      "sha256": "faf73b57d6b76ba91668a53048d056f1708f32d4d18e397207282fc520aeab0e"
+    },
+    {
+      "path": "remote/workflow/run-ecma-ci-3.sh",
+      "bytes": 959,
+      "sha256": "1716b543107ab685960736e12e066c04c3471361bbd585db0a171b6c4a479091"
+    },
+    {
+      "path": "remote/workflow/run-ecma-ci.sh",
+      "bytes": 799,
+      "sha256": "b9e91f417cb23c26b3da5cda1d0026aad846ea39759e089b4ee4b5348b8472dd"
+    },
+    {
+      "path": "remote/workflow/run-mirrors-final.sh",
+      "bytes": 1248,
+      "sha256": "75c65c239ed597aa7ec58cd3f53f6b50da58e8a08038465696930c0582103b3c"
+    },
+    {
+      "path": "remote/workflow/run-mirrors-full-2.sh",
+      "bytes": 1392,
+      "sha256": "005ce83e650336e74c0175058f49fa512bc784111a37606f2c1feaa5eeded667"
+    },
+    {
+      "path": "remote/workflow/rust-control.py",
+      "bytes": 2978,
+      "sha256": "72e90f3250c7bc753d88dfbc318707028e537f848535805fc47df69ebfd3a223"
+    },
+    {
+      "path": "remote/workflow/setup-mount.sh",
+      "bytes": 791,
+      "sha256": "f847345fce02b07c4fe3f95a879f400c76f1afce93f9ef32a02ab7f408ff7950"
+    },
+    {
+      "path": "remote/workflow/setup-sources.py",
+      "bytes": 1461,
+      "sha256": "549b52e816af8c800a2ae77522a4d18d2d185c986a10ac8f43535c53850ee9db"
+    },
+    {
+      "path": "remote/workflow/validation-commits.py",
+      "bytes": 1969,
+      "sha256": "13c2a5ccb5b48073347d5f6888369b76c03cecf48dc5c1cda6003548a3db8a99"
+    },
+    {
+      "path": "remote-preflight-initial.json",
+      "bytes": 5168,
+      "sha256": "a3fbd6dbd8c8bb1ed10dd8e04dc743f6c433f296d5c36a32e839833b2da75de7"
+    },
+    {
+      "path": "reviewed-changes.json",
+      "bytes": 26592,
+      "sha256": "d740eee52258ea0e0f471dfbd6929d4a3cb3335b311abfd773abfc82f39eb232"
+    },
+    {
+      "path": "reviews/final-source-review.md",
+      "bytes": 5365,
+      "sha256": "4c49bd6e41d3c40b468d7d743d372421240162cf67f89ee0109bec1ae0235da4"
+    },
+    {
+      "path": "reviews/source-review-1.md",
+      "bytes": 5735,
+      "sha256": "9647c9e371b636a9264a29d7386ce58ed10e5f211eb0626257e7b11378b2ccfd"
+    },
+    {
+      "path": "reviews/source-review-2.md",
+      "bytes": 9777,
+      "sha256": "0060e638c099a427dcab221dc5855a82c4c51fe23c4dffc8b081cc7995753cd8"
+    }
+  ],
+  "fileCount": 471,
+  "totalBytes": 12442828
+}

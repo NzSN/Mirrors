@@ -363,6 +363,91 @@ def scenarioSessionExitCleanup (fails : Failures) : IO Unit := do
       check fails s!"session cleanup: {mode} preserves other owner" (phase != .jobUnknown)
     Shell.Jobs.closeJobStore store
 
+/-- Rejected async attempts preserve earlier jobs, while fatal input and every
+synchronous flow terminate explicitly even if the pure phase remains idle.
+Finite scripted input lets these cases detect accidental continuation without
+blocking on a mock transport after the session has returned. -/
+def scenarioRequestContinuation (fails : Failures) : IO Unit := do
+  for mode in ["rejected_bound", "rejected_capacity", "malformed", "unexpected",
+      "sync_validate_ok", "sync_validate_error", "sync_bad_bound", "sync_register_error",
+      "replay_bad_json", "replay_wrong_message", "replay_success"] do
+    let release ← IO.mkRef true
+    let store ← Shell.Jobs.newJobStoreWith 1 (fakeBlockingRunner release)
+    let other ← Shell.Jobs.submitValidateJob store hcCfg 1 none
+    let .ok otherId := other
+      | check fails s!"continuation {mode}: other job admitted" false; continue
+    let _ ← Shell.Jobs.awaitJob store otherId (some 30)
+    release.set false
+    let own ← IO.mkRef (none : Option String)
+    let received ← IO.mkRef (0 : Nat)
+    let replies ← IO.mkRef ([] : List Codec.MirrorMessage)
+    let encode (message : Codec.ClientMessage) := (Codec.encodeClient message).compress
+    let recoverable := mode == "rejected_bound" || mode == "rejected_capacity"
+    let replay := mode.startsWith "replay_"
+    let transport : Shell.Transport.Transport := {
+      recv := do
+        let n ← received.get
+        received.set (n + 1)
+        if n == 0 then return some (encode (.registerValidateAsync hcCfg 1 none))
+        let jid := (← own.get).getD "missing-owned-job"
+        if n == 1 then
+          return some (if mode == "rejected_bound" then encode (.registerValidateAsync hcCfg 0 none)
+            else if mode == "rejected_capacity" then encode (.registerValidateAsync hcCfg 1 none)
+            else if mode == "malformed" then "{"
+            else if mode == "unexpected" then encode (.reportState [])
+            else if mode == "sync_bad_bound" then encode (.registerValidate hcCfg 0 none)
+            else if mode.startsWith "sync_validate_" then encode (.registerValidate hcCfg 1 none)
+            else encode (.register hcCfg none hcTc))
+        if recoverable then
+          if n == 2 then
+            let (phase, _) ← Shell.Jobs.queryJob store { text := jid }
+            check fails s!"continuation {mode}: rejection preserves accepted A" (phase != .jobUnknown)
+            return some (encode (.awaitJob jid (some 0)))
+          if n == 3 then return some (encode (.cancelJob jid))
+          if n == 4 then return some "{"
+        else if replay && n == 2 then
+          return some (if mode == "replay_bad_json" then "{"
+            else if mode == "replay_wrong_message" then encode (.queryJob otherId.text)
+            else encode (.reportState [("action_taken", .vstr "Init")]))
+        -- This queued request must never be read after fatal/sync completion.
+        if n < 6 then return some (encode (.queryJob otherId.text))
+        return none
+      send := fun line => do
+        match (Lean.Json.parse line).bind (fun json =>
+            (Codec.decodeMirror json).mapError (fun error => error.msg)) with
+        | .error error => check fails s!"continuation {mode}: decode reply" false error
+        | .ok message =>
+          replies.modify (· ++ [message])
+          if let .jobAccepted jid _ := message then own.set (some jid) }
+    let oracles : Shell.Mirror.Oracles := { Shell.Mirror.stubOracles with
+      validateSpec := fun _ _ _ => pure (if mode == "sync_validate_error" then
+        .error "scripted synchronous validation failure" else .ok .valid)
+      generateTraces := fun _ _ _ _ _ => pure (if mode == "sync_register_error" then
+        .error "scripted synchronous registration failure" else .ok { traces := [
+          { traceVars := [], paramVars := [], traceParams := [],
+            traceStates := [{ actionTaken := "Init", parameters := [], stateVars := [] }] }] }) }
+    try Shell.Mirror.runAsync transport oracles store
+    finally release.set true
+    let messages ← replies.get
+    check fails s!"continuation {mode}: exactly one accepted job; B owns nothing"
+      ((messages.filter (fun message => match message with | .jobAccepted .. => true | _ => false)).length == 1)
+    if recoverable then
+      check fails s!"continuation {mode}: rejected submission emitted register_error"
+        (messages.any (fun message => match message with | .registerError _ => true | _ => false))
+      check fails s!"continuation {mode}: await and cancel A remain usable"
+        ((messages.filter (fun message => match message with | .jobStatus .. => true | _ => false)).length == 2)
+    let expectedReads := if recoverable then 5 else if replay then 3 else 2
+    check fails s!"continuation {mode}: no queued request after terminal outcome"
+      ((← received.get) == expectedReads) (toString (← received.get))
+    match ← own.get with
+    | none => check fails s!"continuation {mode}: owned job accepted" false
+    | some jid =>
+      let (phase, _) ← Shell.Jobs.queryJob store { text := jid }
+      check fails s!"continuation {mode}: own job evicted" (phase == .jobUnknown)
+    let (phase, _) ← Shell.Jobs.queryJob store otherId
+    check fails s!"continuation {mode}: other owner's job survives" (phase != .jobUnknown)
+    Shell.Jobs.closeJobStore store
+
 /-- Cancellation cannot lose a late hook or replace an earlier registration. -/
 def scenarioCancellationOwnership (fails : Failures) : IO Unit := do
   let tokenRef ← IO.mkRef (none : Option Shell.Jobs.CancelToken)
@@ -492,6 +577,7 @@ def main : IO UInt32 := do
   run "awaitTimeout" scenarioAwaitTimeout
   run "eviction" scenarioEviction
   run "session-exit-cleanup" scenarioSessionExitCleanup
+  run "request-continuation" scenarioRequestContinuation
   run "cancellation-ownership" scenarioCancellationOwnership
   run "cancelled-worker-slot" scenarioCancelledWorkerSlot
   run "cancellation-failure-retirement" scenarioCancellationFailureAndRetirement

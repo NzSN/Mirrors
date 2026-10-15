@@ -1,0 +1,23 @@
+[
+  {
+    "label": "lean-version",
+    "command": [
+      "lean",
+      "--version"
+    ],
+    "exitCode": 0,
+    "seconds": 0.267,
+    "log": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-first-lean-version.log"
+  },
+  {
+    "label": "native-tls-build",
+    "command": [
+      "lake",
+      "build",
+      "server-mode-test"
+    ],
+    "exitCode": 1,
+    "seconds": 13.441,
+    "log": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-first-native-tls-build.log"
+  }
+]

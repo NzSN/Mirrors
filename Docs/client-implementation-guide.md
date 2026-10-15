@@ -93,12 +93,20 @@ and shared job store exist precisely to make that cheap — see §7).
   operations with `register_error`. The pure phase-indexed session machine
   constrains successful transitions; malformed inputs remain representable
   and are rejected at the shell/codec or protocol boundary.
-- **C5.** After a terminal mirror message (`all_steps_done`,
+- **C5.** After a terminal synchronous-flow message (`all_steps_done`,
   `gen_traces_done`, `spec_validated` for validate-only,
-  `explorer_session_done`, `step_mismatch`, `register_error`, or
-  `protocol_error`), the flow is over. A
-  client **MUST NOT** send further flow messages on that session; start
-  a new connection instead.
+  `explorer_session_done`, `step_mismatch`, or `register_error`), the
+  flow is over. A client **MUST NOT** send further flow messages on that
+  connection; use a new connection for another synchronous flow.
+  A `register_error` rejecting an **async submission** ends only that
+  attempt: no new job is owned, and the connection and its earlier jobs
+  remain usable. A terminal async job result/status ends that job or
+  lookup, not the connection. `protocol_error`, malformed framing/JSON,
+  or a transport failure makes the connection unusable; clients **MUST NOT**
+  send cancellation or further flow messages on it. A synchronous flow
+  submitted on a connection with async jobs ends that connection when
+  it returns and triggers C6 cleanup; use a separate connection to retain
+  existing jobs.
 - **C6.** A client **SHOULD** close connections cleanly and **MUST**
   tolerate the server closing first. On connection end the server
   cancels and evicts exactly that session's async jobs (Haskell
@@ -271,8 +279,11 @@ When the endpoint is `--server --tls`:
   discovery, `--pin`), the client **MUST** verify the server's
   SHA-256 certificate fingerprint (case-insensitive compare). A wrong
   pin **MUST** fail the connection before any protocol bytes flow.
-- **C27.** Client key files **MUST** be `0600` on POSIX (enforced;
-  Windows ACLs govern there). Wildcard server certificates match the
+- **C27.** Client key files **MUST** have exactly `0600` permission bits
+  on POSIX: `(mode & 07777) == 0600`. Owner-only `0400`/`0700`, group/other
+  access and special bits are rejected. Clients validate the mode and
+  **MUST NOT** change caller-owned key files automatically. Windows ACLs
+  govern there. Wildcard server certificates match the
   leftmost label only (OpenSSL semantics — stricter than the Haskell
   `tls` package; accepted divergence, fail-closed).
 
@@ -713,8 +724,8 @@ current APIs, stable error access, factory examples, and concrete limits.
 
 | Reply | Meaning | Client obligation |
 | ----- | ------- | ----------------- |
-| `register_error` | registration/submit failures: bad spec, apalache infra failure, queue full, bad bound, async-in-stdio, or required model-interface failure | **MUST** treat as terminal for that register attempt; the base `error` is human-readable, while negotiated failures may also carry stable structured `modelInterface` data |
-| `protocol_error` | decode failures, out-of-phase messages | **MUST** treat as a client bug; the connection is unusable for that flow |
+| `register_error` | registration/submit failures: bad spec, apalache infra failure, queue full, bad bound, async-in-stdio, or required model-interface failure | **MUST** end that attempt. An async submission rejection preserves the connection and earlier jobs; a synchronous flow ends the connection. The base `error` is human-readable; negotiated failures may also carry stable structured `modelInterface` data |
+| `protocol_error` | decode failures, out-of-phase messages | **MUST** treat the connection as unusable; send no cancellation or further flow messages |
 | `step_mismatch` | implementation diverged from the spec trace | terminal; consume `expected`/`actual`/`hints` for diagnosis |
 | `infraError` inside a job outcome | apalache died without output (e.g. loader failure) | **MUST NOT** confuse with a spec verdict; retryable |
 

@@ -1,0 +1,16 @@
+# C1 and C27 precision cross-check — 2026-10-15
+
+Read-only static cross-check of the four SDKs, their receiver/key-mode branches, and relevant test assertions. No local builds or tests.
+
+| SDK | C1: nonempty EOF buffer without LF | C27: literal POSIX `0600` |
+| --- | --- | --- |
+| MirrorECMA `19f6ae6` | Rejected by `src/transport.ts:201–205`; exact missing-LF test at `test/transport.test.ts:151–159`. | **Literal contract gap:** `src/transport.ts:367–375` rejects group/other bits but permits private owner modes such as `0400` and `0700`. Existing smoke checks `0644` rejection at `test/smoke.test.ts:773–781`. |
+| MirrorCPP `410c58a` | Plain/stdio reject at `src/detail/line.hpp:67–71`; TLS rejects clean close before LF at `src/detail/tls.cpp:311–319`. Exact partial-EOF test at `test/unit/transport_test.cpp:176–189`. | **Literal contract gap:** `src/detail/tls.cpp:67` tests `st_mode & 0077`, permitting `0400`/`0700`. `test/unit/tls_test.cpp:128–144` checks `0644` refusal and `0600` success. |
+| MirrorRust `5049e99` | All three transports use `read_protocol_line` (`src/transport.rs:228–230`), which rejects any non-LF final byte (`307–311`). The inspected `tests/transport.rs` covers outbound bounds and normal TCP/stdio; it does not directly assert malformed inbound EOF. | **Literal rule implemented:** `src/transport.rs:348` compares low `07777` bits to exactly `0600`. Test `tests/transport.rs:7–30` rejects `0400`, `0500`, `0700`, group/other modes and special bits before credentials load. |
+| MirrorLean `b8b9491` | Stdio rejects at `MirrorLean/Transport.lean:84–87`; shared TCP/TLS framing rejects at `164–170`. Test `test/AsyncSupport.lean:62–65` asserts rejection of unterminated buffered bytes. | **Literal contract gap:** `server-mode/native/mirrorlean_tls.c:86` rejects group/other bits but permits `0400`/`0700`. Test `server-mode/Test/ServerMode.lean:377–401` checks `0644` rejection only. |
+
+C1 is source-supported for all four SDK receivers; this conclusion does not cover Mirrors' separate built-in CLI reader. No SDK EOF-flushing defect was found in these paths.
+
+C27's guide says keys **MUST** be `0600`, while ECMA/CPP/Lean actually enforce private-only group/other access. This is a confirmed literal contract/implementation inconsistency, with lower security severity than a readable-by-others key: neither `0400` nor `0700` exposes the secret to another principal. `0400` is also more restrictive than `0600`; an owner execute bit on `0700` does not grant anyone new read access. The smallest coherent intervention is to decide whether the guide requires exact modes or private access, then align all SDK validators and mode-matrix tests. If exact `0600` remains required, use Rust's predicate and tests as the reference. These branches alone do not establish ACL, symlink, ownership or TOCTOU properties.
+
+The ECMA invalid target/computer-pair probe is materialized at `ecma-probes/invalid-pair.mjs`; it imports only existing `dist/client.js` and `dist/model-interface.js`, using their actual current exports. Run on the prepared remote WSL copy with its path as the first argument. It exercises a normal callback pair, the invalid callback pair, and the explicit synchronous overload's rejection without a live model service.

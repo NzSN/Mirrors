@@ -1,0 +1,96 @@
+--- a/integrations/mirrorcpp/counter_driver.cpp
++++ b/integrations/mirrorcpp/counter_driver.cpp
+@@ -207,9 +207,19 @@
+           return local;
+         }, &evidence);
+ 
+-    require(evidence.cleanup_confirmed, "Gate cleanup was not confirmed: " +
+-            evidence.cleanup_error + (result ? std::string() :
+-            " primary=" + result.error().message));
++    if (expected_outcome == "error-cleanup") {
++      require(!result && !evidence.primary_failure && evidence.cleanup_failure,
++              "intentional cleanup failure lost its cleanup-only outcome");
++      const auto& failure = *evidence.cleanup_failure;
++      require(failure.origin == mirrorgate::FailureOrigin::worker_application &&
++          failure.family == mirrorgate::FailureFamily::worker_application &&
++          failure.code == "APPLICATION" && failure.stage.empty() &&
++          failure.operation_id == 0 && failure.operation == "dispose" &&
++          result.error().code == "mirrorgate.worker_application",
++          "intentional cleanup failure lost its original trusted-boundary evidence");
++    } else require(evidence.cleanup_confirmed, "Gate cleanup was not confirmed: " +
++        evidence.cleanup_error + (result ? std::string() :
++        " primary=" + result.error().message));
+     require(evidence.control_shutdown_confirmed,
+             "Gate control shutdown was not confirmed: " +
+                 evidence.control_process_state);
+@@ -304,7 +314,8 @@
+         {"resultStatus", result ? "passed" :
+             (sut_outcome == "wrong-digest" ? "negotiation-rejected" : error_case ? "failed" : "mismatch")},
+         {"replay", generated_replay ? "generate" : "traces"},
+-        {"cleanup", "succeeded"},
++        {"cleanup", evidence.cleanup_confirmed ? "succeeded" : "failed"},
++        {"cleanupConfirmed", evidence.cleanup_confirmed},
+         {"controlShutdown", "confirmed"},
+         {"controlProcessState", evidence.control_process_state},
+         {"bindingFactoryCalls", evidence.binding_factory_calls},
+--- a/conformance/control-v1/run-cpp-failures
++++ b/conformance/control-v1/run-cpp-failures
+@@ -22,12 +22,33 @@
+ trap cleanup EXIT
+ mkdir -p "$scratch/submissions/observer" "$(dirname "$evidence_file")"
+ cp "$gate_root/runtimes/node/examples/counter.mjs" "$scratch/submissions/observer/adapter.mjs"
+-cmake -S "$gate_root/integrations/mirrorcpp" -B "$scratch/build" \
++cpp_build_dir="${MIRRORGATE_CPP_FAILURE_BUILD_DIR:-$scratch/build}"
++[[ "$cpp_build_dir" == /* ]] || { echo 'C++ build directory must be absolute' >&2; exit 1; }
++if [[ -f "$cpp_build_dir/CMakeCache.txt" ]]; then
++  cache_source=""
++  cache_compiler=""
++  while IFS= read -r line; do
++    case "$line" in
++      CMAKE_HOME_DIRECTORY:INTERNAL=*) cache_source="${line#*=}" ;;
++      CMAKE_CXX_COMPILER:FILEPATH=*) cache_compiler="${line#*=}" ;;
++    esac
++  done < "$cpp_build_dir/CMakeCache.txt"
++  [[ "$cache_source" == "$gate_root/integrations/mirrorcpp" ]] || {
++    echo 'C++ build cache belongs to a different source directory' >&2; exit 1;
++  }
++  if [[ -n "${CXX:-}" ]]; then
++    requested_compiler="$(command -v "$CXX")"
++    [[ "$(realpath "$cache_compiler")" == "$(realpath "$requested_compiler")" ]] || {
++      echo 'C++ build cache belongs to a different compiler' >&2; exit 1;
++    }
++  fi
++fi
++cmake -S "$gate_root/integrations/mirrorcpp" -B "$cpp_build_dir" \
+   -DMIRRORCPP_ROOT="$mirrorcpp_root" -DMIRRORCPP_DEPENDENCY_CACHE="$dependency_cache" \
+   -DBUILD_TESTING=OFF
+-cmake --build "$scratch/build" --parallel "$build_jobs"
+-"$scratch/build/mirrorgate_mirrorcpp_receipt_tests"
+-driver="$scratch/build/mirrorgate_mirrorcpp_counter"
++cmake --build "$cpp_build_dir" --parallel "$build_jobs"
++"$cpp_build_dir/mirrorgate_mirrorcpp_receipt_tests"
++driver="$cpp_build_dir/mirrorgate_mirrorcpp_counter"
+ manifest="$gate_root/conformance/manifests/counter.json"
+ trace="$gate_root/conformance/control-v1/counter.itf.json"
+ spec="$mirrors_root/specs/Counter.tla"
+--- a/integrations/mirrorcpp/README.md
++++ b/integrations/mirrorcpp/README.md
+@@ -69,3 +69,18 @@
+ preconditions, encoding, owned snapshot lifetime, equal messages, primary
+ versus cleanup precedence and unconfirmed process shutdown. Backend denial is
+ exercised in attached mode; it does not claim every OS/backend failure profile.
++
++The deliberate `error-cleanup` row must return its original structured cleanup
++failure with no body-failure snapshot. It can report `cleanup: "failed"`; it
++still requires confirmed control shutdown, external process-absence evidence
++and continued operation of the other attached session. All other rows require
++successful cleanup. Evidence serializes the actual cleanup outcome.
++
++By default the script builds in its owned temporary directory. For diagnostic
++iterations, `MIRRORGATE_CPP_FAILURE_BUILD_DIR` may name a new absolute private
++build directory in the validation namespace. Never share it between concurrent
++invocations or use an old qualification build. The harness checks an existing
++cache's source and explicit `CXX` executable identity, configures normally and
++keeps bounded parallelism; changed files rebuild through CMake dependencies.
++The exit trap removes only its temporary submissions/socket workspace and
++never removes this externally selected build directory.

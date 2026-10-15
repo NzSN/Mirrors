@@ -1,0 +1,26 @@
+ModelMirrors
+  TlsPolicyNonModel
+    SAN-only rejects CN-only before protocol bytes: generated new CA
+generated server.crt/server.key (CN=127.0.0.1, expires in 1 days)
+generated client.crt/client.key (CN=modelmirrors-client, expires in 1 days)
+
+Done. Start the server:
+
+  ModelMirrors --server <port> --tls \
+      --cert /tmp/fix-tests/modelmirrors-framing-363ef94c9fbdb90a/server.crt --key /tmp/fix-tests/modelmirrors-framing-363ef94c9fbdb90a/server.key --ca /tmp/fix-tests/modelmirrors-framing-363ef94c9fbdb90a/ca.crt
+
+Connect a client with ca.crt + client.crt + client.key.
+Keep ca.key offline; re-run this script to renew before expiry.
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-363ef94c9fbdb90a/server.crt expires in 1 day(s)
+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+..+...+...+.+......+.................+...+....+...+......+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.............+........+.+........+......+......+.+.........+...+...........+......+.............+..+.+............+..+.........+.+......+...+............+........+...............+....+..+......+...+.+...+...........+.........+..........+.....+.+.....................+...+...+........+.........+.+.....+.........+.......+.........+...........+...+...+...................+...+...+...+..+...+.+...+.....+...............+.+.....+.......+.....+.........+.+...+.........+..+....+.........+............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.+...........+....+...+.....+.......+...+..+.+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.........+..+.......+.........+..+..................+.+..............+......+......+...+....+...........+......+....+.....+......+.+.....+............................+.....+.+.....+...+......................+......+.....+...+......+.+........+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+Certificate request self-signature ok
+subject=CN = service.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-363ef94c9fbdb90a/client.crt expires in 1 day(s)
+TLS_REJECTION_RECEIPT protocolWrites=1 protocolBytes=35
+FAIL (0.77s)
+      test/TransportTestSupport.hs:159:
+      TLS identity accepted and the client sent protocol bytes
+
+1 out of 1 tests failed (0.77s)

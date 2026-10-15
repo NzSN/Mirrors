@@ -1,0 +1,22 @@
+--- /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/cpp-gate/manifests/source-files-before-cleanup-fix.sha256	2026-10-15 15:59:24.955234800 +0800
++++ /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/cpp-gate/manifests/source-files.sha256	2026-10-15 15:59:25.002108300 +0800
+@@ -188,7 +188,7 @@
+ 3d0c1ee8802e180be9c7bb2ba8b36ffa6be332c6e95f36887f1a3fc33a09c126  MirrorGate/conformance/control-v1/failure-counter.mjs
+ 77d9c04502c6ba7a566e54cb6b79704a072fe13a9a9ea1149277800b07b71c8e  MirrorGate/conformance/control-v1/pending-counter.mjs
+ ae4aa1b4ea4827aa7a575572e028208732085ef3bdf91cd6c9d9e45a63fd7dd9  MirrorGate/conformance/control-v1/run
+-448a92f490f965a3c3e9d63ba5804c270d17e9edf911a6b3d93a47fcc16859fe  MirrorGate/conformance/control-v1/run-cpp-failures
++5b93a2d1cc19af783cafefaada1ef538f34d2d053a9bf84b4d6976057bfd2c1a  MirrorGate/conformance/control-v1/run-cpp-failures
+ c49cd6e46fcba9d6cf804b75813286fb23db1a03280cddd0078b4a5a41254364  MirrorGate/conformance/control-v1/run-rust
+ c2ab5d2ee7502f4d249671ede3f230bb852214ff53ccf9f3d261951a0a4e2991  MirrorGate/conformance/control-v1/vectors.jsonl
+ b37e52217c6cda552a1bcbde08a0ee2dd7eb450a19eb095724621163a581c89a  MirrorGate/conformance/control-v2/lifecycle.json
+@@ -245,8 +245,8 @@
+ 078fa33282553ec7f0a60f23e8d9e0e425028b7309a8bc50466670e4d4bdeae3  MirrorGate/integrations/agent-host/mcp.mjs
+ ca7ce4f8541f2e586ca8b8bccc444c84c32484c6b629903e3f775c8590439308  MirrorGate/integrations/agent-host/tool.mjs
+ 92ba13db9cd9e608ba88083eeb3ecfa8ff9dc75980827dca92a09822ac220adf  MirrorGate/integrations/mirrorcpp/CMakeLists.txt
+-d83292dbe9468843558545adaf06ed340ae991a195044476f98f72563c56f1e6  MirrorGate/integrations/mirrorcpp/README.md
+-63c1c64224c1d0f28f4d8c594edd0ac23eac3b82aeb6f81f45aab60aecd95786  MirrorGate/integrations/mirrorcpp/counter_driver.cpp
++813a683cf76347f0c8fbd85845dcac762c42e2aec3a8eeddae03cc7ec8947a42  MirrorGate/integrations/mirrorcpp/README.md
++7fe1e5f7942bf21c19c12047da8b8b5f957efdb5f290fe2819b244096ab0f551  MirrorGate/integrations/mirrorcpp/counter_driver.cpp
+ 9fb2f3a61ea150eba0edc26d80fc23105dd6f338137a36973d74e19a54692d30  MirrorGate/integrations/mirrorcpp/orchestration.cpp
+ ba228a6cf164f121b4ac95e975dee72bb9ce2d65d09d07169be5f2ec488ceb3f  MirrorGate/integrations/mirrorcpp/orchestration.hpp
+ 36d1c57a55ba4344c991647372c679f419e90f0f2dccaac8ba5da459a306adae  MirrorGate/integrations/mirrorecma/.gitignore

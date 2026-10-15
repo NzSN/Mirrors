@@ -1,0 +1,32 @@
+[
+  {
+    "label": "lean-version",
+    "command": [
+      "lean",
+      "--version"
+    ],
+    "exitCode": 0,
+    "seconds": 0.268,
+    "log": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-iteration2-lean-version.log"
+  },
+  {
+    "label": "native-tls-build",
+    "command": [
+      "lake",
+      "build",
+      "server-mode-test"
+    ],
+    "exitCode": 0,
+    "seconds": 15.498,
+    "log": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-iteration2-native-tls-build.log"
+  },
+  {
+    "label": "native-tls-test",
+    "command": [
+      ".lake/build/bin/server-mode-test"
+    ],
+    "exitCode": 0,
+    "seconds": 5.479,
+    "log": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-iteration2-native-tls-test.log"
+  }
+]

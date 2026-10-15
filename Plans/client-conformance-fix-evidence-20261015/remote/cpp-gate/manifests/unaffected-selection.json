@@ -1,0 +1,12 @@
+{
+  "purpose": "Explicit partial diagnostic selection; not full37 C1 acceptance",
+  "originalHarnessSha256": "5b93a2d1cc19af783cafefaada1ef538f34d2d053a9bf84b4d6976057bfd2c1a",
+  "selectorSha256": "08291efa1d8d384f67eada5f5e6a27957d4e913469612568d22690e81ac6e0f5",
+  "changes": [
+    "source-root literal because external selector lives outside checkout",
+    "omit only error-invoke-protocol and error-observe-protocol in both modes"
+  ],
+  "expectedRows": 33,
+  "protocolClassificationStillFailed": true,
+  "predicateOrDriverChanges": false
+}

@@ -1,0 +1,23 @@
+{
+  "artifacts": [
+    {
+      "name": "ghc-9.14.1-x86_64-deb11-linux.tar.xz",
+      "url": "https://mirrors.ustc.edu.cn/ghcup/downloads.haskell.org/~ghc/9.14.1/ghc-9.14.1-x86_64-deb11-linux.tar.xz",
+      "bytes": 307306404,
+      "sha256": "98f42ba5b44e50d680434b9d3c7ad51b257678899cf7f806a0c85cf63b6d1095",
+      "officialManifest": "ghc-SHA256SUMS",
+      "officialManifestSha256": "1f6d108e1065f6b7be4e3011ae987d6c7bff9586548599d6969048916546f990",
+      "officialSha256VerifiedBeforeExecution": true
+    },
+    {
+      "name": "cabal-install-3.16.1.0-x86_64-linux-deb11.tar.xz",
+      "url": "https://downloads.haskell.org/~cabal/cabal-install-3.16.1.0/cabal-install-3.16.1.0-x86_64-linux-deb11.tar.xz",
+      "bytes": 5295044,
+      "sha256": "0af41eac80718dc4396340cffa2dbf525e777ec3e877f689718a9ef5aedcb6ab",
+      "officialManifest": "cabal-SHA256SUMS",
+      "officialManifestSha256": "19ef5e11a70d6d06ae23a2b4cae6b52bcf19575be7343fc9dfcce4104bce8bb3",
+      "officialSha256VerifiedBeforeExecution": true
+    }
+  ],
+  "initialOfficialAndRegionalFailuresRetainedInDiagnostics": true
+}

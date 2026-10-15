@@ -1,0 +1,339 @@
+{
+  "files": [
+    {
+      "path": "artifacts.json",
+      "bytes": 1579,
+      "sha256": "f67142406dd97f01e41037c9cdcfca6ac356778658658750e61c1bd021e89b7b"
+    },
+    {
+      "path": "cleanup.json",
+      "bytes": 205,
+      "sha256": "09c9e9de8bbe07315e5b088922bc0d02390dfc4acafa312eeab834e4d733c041"
+    },
+    {
+      "path": "dependency-archives.json",
+      "bytes": 17064,
+      "sha256": "ccf1bb2594c8c0ca1efea584fd6d3bcba47236769cb8fcafa7bb0e051879ca1e"
+    },
+    {
+      "path": "dependency-plan.json",
+      "bytes": 86664,
+      "sha256": "66e2d5256b4e6bfc6c59f8dacc79f2ef3aff652428e6abc2f3aafe5f873ea27e"
+    },
+    {
+      "path": "diagnostics/cabal-SHA256SUMS",
+      "bytes": 2799,
+      "sha256": "19ef5e11a70d6d06ae23a2b4cae6b52bcf19575be7343fc9dfcce4104bce8bb3"
+    },
+    {
+      "path": "diagnostics/first-build.log",
+      "bytes": 8682,
+      "sha256": "e60e632b7f231890578e401ac58b49c0ac79b3c13cd97ec1561fa5cfa3a806a4"
+    },
+    {
+      "path": "diagnostics/first-run-phases.log",
+      "bytes": 8,
+      "sha256": "892f442077b3cfb0c8066d5ffb7d11508b1f22a43ddf25ed172382dd5b7a297c"
+    },
+    {
+      "path": "diagnostics/ghc-SHA256SUMS",
+      "bytes": 6605,
+      "sha256": "1f6d108e1065f6b7be4e3011ae987d6c7bff9586548599d6969048916546f990"
+    },
+    {
+      "path": "diagnostics/ghc-download.log",
+      "bytes": 472,
+      "sha256": "fa4932aa60fd8da5626938832db60bc45be0ea736d9e469093ec76ed61e55100"
+    },
+    {
+      "path": "diagnostics/ghc-install.log",
+      "bytes": 97918,
+      "sha256": "60af55ed84ce9ee51bd69f8efd7b4e2adf9ba9b75446792335e9af55251b8320"
+    },
+    {
+      "path": "diagnostics/ghc-ustc.log",
+      "bytes": 2395,
+      "sha256": "f37aff1e70b76f1b8a71e4a651c0aee2121fdf8d0d258e389810280f506eafc6"
+    },
+    {
+      "path": "diagnostics/hackage-index-download.log",
+      "bytes": 7100,
+      "sha256": "d36ec6dee1e46b4d9af6b5bf76c2da3c0f780df74bb821a46442fe59408cb847"
+    },
+    {
+      "path": "diagnostics/hackage-tuna.log",
+      "bytes": 7100,
+      "sha256": "0b5238ae977292e7c7cf634a1b83cd48521bd45b1e1d82f65e1d95051214939d"
+    },
+    {
+      "path": "diagnostics/hackage-ustc.log",
+      "bytes": 1954,
+      "sha256": "08ba79bfc9155516e9828ad2637e55bf18f7e4fcfc3a674538a20fc0b6793674"
+    },
+    {
+      "path": "diagnostics/prefetch.log",
+      "bytes": 11474,
+      "sha256": "0f6e519a7a5c0f1e64616896ebb983bd888b14a44184a86b9a4e983055b2bcd1"
+    },
+    {
+      "path": "diagnostics/retry.log",
+      "bytes": 1408695,
+      "sha256": "823e06bfa9db5941a80dd13fb4f1da8612d84f94196c0870f0b2c764a5227de6"
+    },
+    {
+      "path": "diagnostics/run-phases.log",
+      "bytes": 184,
+      "sha256": "535cdcb6bc2bcc3727d5333857b5093af3cd7bf1f95f679b6436685adc160c40"
+    },
+    {
+      "path": "diagnostics/segmented.log",
+      "bytes": 53,
+      "sha256": "955e1baf4c2a5dded28ad28bf5cef53a1d00d64d0448cc9a281663bd80735134"
+    },
+    {
+      "path": "diagnostics/solve.log",
+      "bytes": 5521,
+      "sha256": "0d0d8c3f05b3ca380352050a64c13d6f5b4477d5edeb2d492944c9e1e7b16fb7"
+    },
+    {
+      "path": "diagnostics/update.log",
+      "bytes": 3368,
+      "sha256": "6c1313df71f4180931ca6285d799237ac5febbb1276b39545394137c050e7caf"
+    },
+    {
+      "path": "diagnostics/ustc-list.html",
+      "bytes": 7206,
+      "sha256": "36e9b482457a97ed9e4aea39e53236d90a7805b84a82cde7921f263264de7688"
+    },
+    {
+      "path": "first-phases.json",
+      "bytes": 491,
+      "sha256": "1738e31f6b917aa731c57935e1cab84b03ab7c53a798a6ebcc43888432a3fa77"
+    },
+    {
+      "path": "hackage-index.json",
+      "bytes": 471,
+      "sha256": "2601cb89b556031334877100f5582cd3c4b5afde896fee023616906cc53211fc"
+    },
+    {
+      "path": "incremental-binaries.json",
+      "bytes": 573,
+      "sha256": "33f6edb965916480fc6809d00ac80a86a254c91c4b26881fd94c2602eff91f71"
+    },
+    {
+      "path": "logs/build.log",
+      "bytes": 11,
+      "sha256": "215517150aee2d4e7c37e9a89aed453be29626db56807e943248b5085841cc31"
+    },
+    {
+      "path": "logs/incremental.log",
+      "bytes": 321,
+      "sha256": "dff978c8140e0f70cf064b93aaf78d6b5f47ae4c0ef0f42df7df62e7d7b76536"
+    },
+    {
+      "path": "logs/probe-compile-baseline.log",
+      "bytes": 723,
+      "sha256": "0c513d459cb804c2909ec410f1fab0006f37befe1f14502bde157aa8936a2d07"
+    },
+    {
+      "path": "logs/probe-compile-fixed.log",
+      "bytes": 958,
+      "sha256": "7c1038d459c39c376f9b3a61869b44a5734ee6fdbbaa893ddbb24900abbf8af6"
+    },
+    {
+      "path": "logs/probe-run-baseline.log",
+      "bytes": 86,
+      "sha256": "722f5ba5753712bbd6fea483479678255c2ff1758f556d363fd7e9d96f92a657"
+    },
+    {
+      "path": "logs/probe-run-fixed-repeat.log",
+      "bytes": 71,
+      "sha256": "9a66adccbe4660a25c2d48ab0e8d8acd64a98ba5352db7bbc2b13757ef5e6429"
+    },
+    {
+      "path": "logs/probe-run-fixed.log",
+      "bytes": 71,
+      "sha256": "9a66adccbe4660a25c2d48ab0e8d8acd64a98ba5352db7bbc2b13757ef5e6429"
+    },
+    {
+      "path": "logs/test-list.log",
+      "bytes": 2160,
+      "sha256": "30d4813fab855f423865b0388e58fc8676cf9696a13fc568647fd147d0be8a14"
+    },
+    {
+      "path": "logs/test-non-model.log",
+      "bytes": 11330,
+      "sha256": "f5a801bba96f373b5cb5ad9b6e99ea89dff883661f659688adf51f3df622b21a"
+    },
+    {
+      "path": "phases.json",
+      "bytes": 4907,
+      "sha256": "f9c5edae7487ed7359e9ce58a3a4c97cf02684c516f1004f663d9ff39d3be788"
+    },
+    {
+      "path": "signed-index/mirrors.json",
+      "bytes": 409,
+      "sha256": "672d24b787e96564937fdd0b072a48ef1588f7a4cfe92ad15d6fd8468dfb4d20"
+    },
+    {
+      "path": "signed-index/root.json",
+      "bytes": 4603,
+      "sha256": "f62e46cb51d4a499a8336894d7a46071b7e528135ad71614c7102c1de0aeeabc"
+    },
+    {
+      "path": "signed-index/snapshot.json",
+      "bytes": 972,
+      "sha256": "b07dd649c87c4eac494986ed66311c5018329f7878b34ee71414e3a288087dc5"
+    },
+    {
+      "path": "signed-index/timestamp.json",
+      "bytes": 465,
+      "sha256": "1944cdc23c936e6406c537b3596abcdbc537a60881575100010e772171f71aa0"
+    },
+    {
+      "path": "source-manifest.json",
+      "bytes": 19603,
+      "sha256": "65de21e7e6a852bd8f0fbe87906d28670898f89252048d7ad70e857cd98a5bf0"
+    },
+    {
+      "path": "source-verification-final.json",
+      "bytes": 17093,
+      "sha256": "c0f6a2218f20343cf476d79b129249cade2b715dc0fb20f98908e24d01a8c6c8"
+    },
+    {
+      "path": "source-verification.json",
+      "bytes": 114,
+      "sha256": "5ffb3541828f0b4a1c5ac6c80572f089d919b1da4ea7a7d8f828655b95cf6d61"
+    },
+    {
+      "path": "tool-downloads.json",
+      "bytes": 1095,
+      "sha256": "3e4ef071f6bf1197002fded896235413a638ca6027fd4a24080522b21b7100ee"
+    },
+    {
+      "path": "toolchain.json",
+      "bytes": 930,
+      "sha256": "e3a439cd0e275475b3dfb4626ba3481fc9784a2ece4e8092543bbbca73b6e1e7"
+    },
+    {
+      "path": "workflow/RedCoreProbe.hs",
+      "bytes": 1112,
+      "sha256": "b3f588803ad4f462f9025d675d66d912ea8a1693fb385837d6e7d7a9909951e4"
+    },
+    {
+      "path": "workflow/build.sh",
+      "bytes": 890,
+      "sha256": "89f58f5b50c8013dfc659e2e24ec9be1f3683346c4c95a1284b1735e2049b2b8"
+    },
+    {
+      "path": "workflow/cabal-config",
+      "bytes": 381,
+      "sha256": "e40ac6eab698c246b1c5056aa07b7370925f0ae1a09468090e3b8813bb1ae018"
+    },
+    {
+      "path": "workflow/cabal.project.local",
+      "bytes": 34,
+      "sha256": "660324e5ea329084711dd5e7f5f5c6e3a0a675539e95becc64699732a2bdd5db"
+    },
+    {
+      "path": "workflow/cleanup.py",
+      "bytes": 972,
+      "sha256": "87873c4cf4569c404e59684e50967cbc8c8ce2eccc59840228f80d6a296e1d36"
+    },
+    {
+      "path": "workflow/collect.py",
+      "bytes": 3519,
+      "sha256": "9fe41deee002177fc79ca64868e83667df39f24e32c7164d5cf0be41d7122af2"
+    },
+    {
+      "path": "workflow/configure.py",
+      "bytes": 530,
+      "sha256": "ca28e3d904b181a14c7fb6653b204d0ef7ff82d3c205c1daa46cc697c65db32a"
+    },
+    {
+      "path": "workflow/curl-wrapper.py",
+      "bytes": 307,
+      "sha256": "640e12bfc4a875d64048d0e823e69eb4df09da18b338506774fc00a3e0fa5456"
+    },
+    {
+      "path": "workflow/diagnose.py",
+      "bytes": 540,
+      "sha256": "786aeeb8aa5dd9f2b00ca35d97fdd2dde85046bf1bc0d98ff7c93013a0d98cf9"
+    },
+    {
+      "path": "workflow/final-metadata.py",
+      "bytes": 2015,
+      "sha256": "61b2ae0bf7773e2d15733f4d183f68692d1856d50d61b14aad9c93a3573f8dc0"
+    },
+    {
+      "path": "workflow/haskell-download.sh",
+      "bytes": 1134,
+      "sha256": "d9ddb62cd5d98b23b6f1d9e22804f06b58251ccc9da2b51036a14b40db28d1d6"
+    },
+    {
+      "path": "workflow/haskell-ghc-install.sh",
+      "bytes": 629,
+      "sha256": "a97cd11750b4bf3365d37c5f27cacbc2a096ad1b131c8326a7f5e697d20cc6e7"
+    },
+    {
+      "path": "workflow/haskell-segmented.py",
+      "bytes": 2222,
+      "sha256": "935b59503f847761c2ab7cd7c8069eb2f4b8244d8cc67ef2613af7261c6a9062"
+    },
+    {
+      "path": "workflow/haskell-setup.py",
+      "bytes": 706,
+      "sha256": "2b09e111c2c55369b21b5a415218a986d2caba0cecf9eebd9efd3282ae75af04"
+    },
+    {
+      "path": "workflow/index-setup.py",
+      "bytes": 812,
+      "sha256": "5b3b43aba30586dd732a6e2fbe3d01aaaf025b82c7acb7cfb244bb87f22df41b"
+    },
+    {
+      "path": "workflow/prefetch.sh",
+      "bytes": 429,
+      "sha256": "fb16f3c4a85004fcacc3520f3ae2bfcf876768130a5db4910646e3085e7efdeb"
+    },
+    {
+      "path": "workflow/preserve-first.py",
+      "bytes": 324,
+      "sha256": "cbfda74c0c2956889640d95b3647601c71dc1d22138c9409e7ea76f98f24a10f"
+    },
+    {
+      "path": "workflow/retry.sh",
+      "bytes": 417,
+      "sha256": "c71d1eb5c1da05ece0aeef179c61543fe4fe09311020eca773a5ef5e3dec5e39"
+    },
+    {
+      "path": "workflow/run-phases.py",
+      "bytes": 2899,
+      "sha256": "534c8361f24bd74340d8e78b1dc7baadd8c366ae8b998ea585ea1d0e07b6e8ac"
+    },
+    {
+      "path": "workflow/secure-index.py",
+      "bytes": 553,
+      "sha256": "f0dc9496a3f8946313ae507fe40902b2d3a5e911252d4861b6c1939014261101"
+    },
+    {
+      "path": "workflow/solve.sh",
+      "bytes": 437,
+      "sha256": "af3b1ab7cd860cbf9c1e66c74ef902bded6793cf78ca7c0d6730f175027661a8"
+    },
+    {
+      "path": "workflow/stop-download.py",
+      "bytes": 582,
+      "sha256": "23ac844b522b44cf09582dfa4c52beda3f5e4aac966af45ac3e0e8fd6134940a"
+    },
+    {
+      "path": "workflow/switch-mirror.py",
+      "bytes": 238,
+      "sha256": "1487739419313c56143ccd1e50431e6ab89c53720ba68e7eeaaacc9ef26db76e"
+    },
+    {
+      "path": "workflow/update.sh",
+      "bytes": 274,
+      "sha256": "25c08bbd44c71405b002b89ab185599eedeb14a074c6e334861174d293a604d5"
+    }
+  ]
+}

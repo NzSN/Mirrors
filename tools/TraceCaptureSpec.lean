@@ -85,6 +85,61 @@ private def sharedTests : IO Unit := do
   finally IO.FS.removeDirAll root
   IO.println "SHARED TRACE SPEC GREEN"
 
+private def asyncStopTests : IO Unit := do
+  let cfg : Codec.ApalacheConfig := {
+    constInit := none, initPredicate := none, invariant := "Inv", lengthBound := 3,
+    nextPredicate := none, paramVars := "parameters", specPath := "M.tla" }
+  let spec : Codec.SpecConfig := { sources := ["---- MODULE M ----\n====\n"] }
+  let tc : Codec.TraceConfig := { numTraces := 1, view := none }
+  let encoded (message : Codec.MirrorMessage) := (Codec.encodeMirror message).compress
+  let runCase (name : String) (reply : Option String) (want : String)
+      (budget : Nat := 1) (cancel : Bool := false)
+      (throwRecv : Bool := false) (throwCancel : Bool := false) : IO Unit := do
+    let sent ← IO.mkRef ([] : List String)
+    let received ← IO.mkRef (0 : Nat)
+    let transport : Shell.Transport.Transport := {
+      send := fun line => do
+        sent.modify (· ++ [line])
+        if throwCancel && line == (Codec.encodeClient (.cancelJob "owned")).compress then
+          throw (IO.userError "secondary cancellation failure")
+      recv := do
+        let index ← received.get
+        received.set (index + 1)
+        if index == 0 then return some (encoded (.jobAccepted "owned" .genTraces))
+        if throwRecv then throw (IO.userError "scripted receive failure")
+        return if index == 1 then reply else none }
+    let result ← Shell.TraceCapture.run transport cfg spec tc true budget
+    match result with
+    | .ok _ => throw (IO.userError s!"{name}: terminal failure accepted")
+    | .error error =>
+        unless error.contains want do throw (IO.userError s!"{name}: wrong diagnostic: {error}")
+        if error.contains "secondary cancellation failure" then
+          throw (IO.userError s!"{name}: cancellation replaced the primary diagnostic")
+    let expected := [Codec.ClientMessage.registerGenTracesAsync cfg none (some spec) tc] ++
+      (if budget == 0 then [] else [.awaitJob "owned" (some 30)]) ++
+      (if cancel then [.cancelJob "owned"] else [])
+    unless (← sent.get) == expected.map (fun message => (Codec.encodeClient message).compress) do
+      throw (IO.userError s!"{name}: unexpected follow-up writes: {← sent.get}")
+  let cases : List (String × Option String × String) := [
+    ("wrong job", some (encoded (.jobStatus "other" .running)), "job id mismatch"),
+    ("wrong result", some (encoded (.jobResult "owned" (.validate .valid))), "validation result"),
+    ("protocol error", some (encoded (.protocolError "peer terminal")), "peer terminal"),
+    ("register error", some (encoded (.registerError "peer rejected")), "peer rejected"),
+    ("malformed JSON", some "{", "bad json"),
+    ("malformed reply", some "{}", "bad mirror message"),
+    ("EOF", none, "connection closed"),
+    ("cancelled", some (encoded (.jobStatus "owned" .cancelled)), "cancelled"),
+    ("unknown", some (encoded (.jobStatus "owned" .unknown)), "unknown or evicted"),
+    ("done without result", some (encoded (.jobStatus "owned" .done)), "ended without a result"),
+    ("failed without result", some (encoded (.jobStatus "owned" .failed)), "ended without a result"),
+    ("infrastructure error", some (encoded (.jobResult "owned" (.infraError "backend failed"))), "backend failed")]
+  for (name, reply, want) in cases do runCase name reply want
+  runCase "throwing receive" none "scripted receive failure" 1 false true
+  runCase "local poll budget" (some (encoded (.jobStatus "owned" .running))) "poll budget" 1 true
+  runCase "zero poll budget" none "poll budget" 0 true
+  runCase "cancel failure is secondary" (some (encoded (.jobStatus "owned" .pending)))
+    "poll budget" 1 true false true
+
 /-! Pure option admission and owned-job correlation regressions. The Python
 CLI suite separately exercises sockets, source capture, and publication. -/
 def main : IO UInt32 := do
@@ -108,30 +163,7 @@ def main : IO UInt32 := do
   unless (parseTraceGenOpts secure).isOk do IO.eprintln "valid shared options rejected"; return 1
   if (parseTraceGenOpts (secure ++ ["--async"])).isOk then
     IO.eprintln "async shared mode admitted"; return 1
-  let sent ← IO.mkRef ([] : List String)
-  let replies ← IO.mkRef [
-    "{\"proto_step\":\"job_accepted\",\"jobId\":\"owned\",\"kind\":\"gen_traces\"}",
-    "{\"proto_step\":\"job_status\",\"jobId\":\"other\",\"phase\":\"running\"}"]
-  let transport : Shell.Transport.Transport := {
-    send := fun line => sent.modify (· ++ [line])
-    recv := do
-      let queue ← replies.get
-      match queue with
-      | [] => pure none
-      | head :: tail => replies.set tail; pure (some head) }
-  let cfg : Codec.ApalacheConfig := {
-    constInit := none, initPredicate := none, invariant := "Inv", lengthBound := 3,
-    nextPredicate := none, paramVars := "parameters", specPath := "M.tla" }
-  let result ← Shell.TraceCapture.run transport cfg { sources := ["---- MODULE M ----\n====\n"] }
-    { numTraces := 1, view := none } true 2
-  match result with
-  | .ok _ => IO.eprintln "wrong job correlation accepted"; return 1
-  | .error error =>
-    if error != "async trace-generation job id mismatch" then IO.eprintln error; return 1
-  let messages := (← sent.get).filterMap fun line =>
-    (Lean.Json.parse line).toOption.bind fun json => (json.getObjValAs? String "proto_step").toOption
-  if messages != ["register_trace_gen_async", "await_job", "cancel_job"] then
-    IO.eprintln s!"owned-job cleanup messages differ: {messages}"; return 1
+  asyncStopTests
   IO.println "TRACE CAPTURE SPEC GREEN"
   sharedTests
   return 0

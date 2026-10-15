@@ -1,0 +1,935 @@
+{
+  "repo": "MirrorLean",
+  "head": "b8b9491bd96e3126da55d34a7ba3a4493766dcf3",
+  "profiles": [
+    "legacy synchronous stdio/TCP replay, validate, trace generation and explorer",
+    "network asynchronous job Connection",
+    "opt-in TLS1.3 mTLS and optional registry pins",
+    "mirrorlean-v1 required compiled verification"
+  ],
+  "rules": [
+    {
+      "id": "C1",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Transport.lean",
+          "line": 48
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Transport.lean",
+          "line": 70
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Protocol.lean",
+          "line": 401
+        }
+      ],
+      "note": "All built-in transports delimit lines with LF, reject empty/unterminated input and strict-decode UTF-8; replay codec requires object proto_step."
+    },
+    {
+      "id": "C2",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Transport.lean",
+          "line": 48
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Transport.lean",
+          "line": 81
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Transport.lean",
+          "line": 150
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ServerMode.lean",
+          "line": 136
+        }
+      ],
+      "note": "Outbound raw UTF-8 payload checked at 65535; stdio bounded byte reads; TCP/TLS shared accumulator bounded plus at most fixed 4096-byte read."
+    },
+    {
+      "id": "C3",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Protocol.lean",
+          "line": 401
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 32
+        }
+      ],
+      "note": "Dispatch on string proto_step and read selected keys, ignoring unknown outer keys; stricter MI objects handled separately."
+    },
+    {
+      "id": "C4",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Client.lean",
+          "line": 176
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Client.lean",
+          "line": 254
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 115
+        }
+      ],
+      "note": "Replay/explorer/validate start with register; jobs query without registration on network-only Connection. Stdio refuses Connection adoption."
+    },
+    {
+      "id": "C5",
+      "status": "source-supported-with-contract-interpretation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Client.lean",
+          "line": 85
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Client.lean",
+          "line": 254
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Client.lean",
+          "line": 316
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 134
+        }
+      ],
+      "note": "Replay/explorer/validate terminal paths close; job submission register_error ends its attempt while retaining Connection. Guide section 10 and server dispatchAsync permit that async attempt interpretation, despite broad C5 wording."
+    },
+    {
+      "id": "C6",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Client.lean",
+          "line": 162
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 120
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/test/AsyncSupport.lean",
+          "line": 91
+        }
+      ],
+      "note": "Owned replay transports close on success/failure; persistent Connection has serialized idempotent close; EOF poisons async connections. Job eviction is server behavior; source tests cover cross-owner lifetime."
+    },
+    {
+      "id": "C7",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/server-mode/native/mirrorlean_tls.c",
+          "line": 299
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 153
+        }
+      ],
+      "note": "No protocol heartbeat or idle timer. TLS timeout cleared after handshake. queryJob available for polling."
+    },
+    {
+      "id": "C8",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Client.lean",
+          "line": 98
+        }
+      ],
+      "note": "Shared replay invokes computer once then sends one report_state for initial_state and next_step."
+    },
+    {
+      "id": "C9",
+      "status": "source-supported-with-application-obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Value.lean",
+          "line": 218
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Client.lean",
+          "line": 98
+        }
+      ],
+      "note": "State.toJson encodes every supplied field as ITF; full observable-state honesty/completeness remains caller binding obligation."
+    },
+    {
+      "id": "C10",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Client.lean",
+          "line": 113
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/test/Main.lean",
+          "line": 479
+        }
+      ],
+      "note": "step_mismatch returns error immediately; main owner closes, without expecting all_steps_done."
+    },
+    {
+      "id": "C11",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Value.lean",
+          "line": 87
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Value.lean",
+          "line": 129
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/test/ModelInterface.lean",
+          "line": 311
+        }
+      ],
+      "note": "Arbitrary precision Int encodes as decimal #bigint and integral bare JSON is accepted."
+    },
+    {
+      "id": "C12",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Client.lean",
+          "line": 85
+        }
+      ],
+      "note": "Replay loops until actual terminal reply, no assumed trace length."
+    },
+    {
+      "id": "C13",
+      "status": "confirmed-source-defect",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Spec.lean",
+          "line": 48
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Spec.lean",
+          "line": 99
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Spec.lean",
+          "line": 126
+        }
+      ],
+      "note": "Closure resolver recursively handles EXTENDS/INSTANCE and errors on ambiguity, but comment stripping ignores quoted strings: a string containing (* before a later INSTANCE can hide required dependency."
+    },
+    {
+      "id": "C14",
+      "status": "outbound-supported-decoder-drift",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Protocol.lean",
+          "line": 47
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Protocol.lean",
+          "line": 114
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Protocol.lean",
+          "line": 128
+        }
+      ],
+      "note": "Typed outbound config omits absent optionals and is conforming. Public ApalacheConfig.ofJson? rejects explicit null optional fields; this affects convenience request decoding, not normal typed runner emission."
+    },
+    {
+      "id": "C15",
+      "status": "source-supported-with-application-obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Protocol.lean",
+          "line": 114
+        }
+      ],
+      "note": "constInit and paramVars encode unchanged when supplied; applications must set constInit for CONSTANTS specs."
+    },
+    {
+      "id": "C16",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Client.lean",
+          "line": 254
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 143
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/test/AsyncSupport.lean",
+          "line": 77
+        }
+      ],
+      "note": "Sync and async helpers reject bounds outside [1,100] before writes."
+    },
+    {
+      "id": "C17",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 153
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/test/AsyncSupport.lean",
+          "line": 91
+        }
+      ],
+      "note": "Job IDs are plain opaque strings queryable on independent Connections; source live test reverse-awaits different submitter jobs."
+    },
+    {
+      "id": "C18",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 90
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 156
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/test/AsyncSupport.lean",
+          "line": 102
+        }
+      ],
+      "note": "await sends optional timeout unchanged and returns status/result, including terminal replies; no hidden timeout/error conversion."
+    },
+    {
+      "id": "C19",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 159
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/test/AsyncSupport.lean",
+          "line": 125
+        }
+      ],
+      "note": "cancelJob explicitly issues cancel_job and returns server result; process termination is server responsibility."
+    },
+    {
+      "id": "C20",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 63
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Protocol.lean",
+          "line": 405
+        }
+      ],
+      "note": "Async validate outcome decodes through same ValidateResult.ofJson? as sync registration."
+    },
+    {
+      "id": "C21",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 52
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/test/fixtures/client-conformance/async-replies.json",
+          "line": 1
+        }
+      ],
+      "note": "unknown phase is returned directly to caller; library contains no automatic retry loop."
+    },
+    {
+      "id": "C22",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 134
+        }
+      ],
+      "note": "No implicit pool; caller sizes connection use. queue-full register_error surfaced as registerFailed, no retry."
+    },
+    {
+      "id": "C23",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Async.lean",
+          "line": 101
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/test/AsyncSupport.lean",
+          "line": 102
+        }
+      ],
+      "note": "No cross-connection ordering assumption; jobs correlated exactly by requested jobId and submission kind."
+    },
+    {
+      "id": "C24",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/server-mode/native/mirrorlean_tls.c",
+          "line": 183
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/server-mode/native/mirrorlean_tls.c",
+          "line": 201
+        }
+      ],
+      "note": "Opt-in native shim fixes min/max TLS1.3, loads client chain/key, checks key pairing and verifies CA."
+    },
+    {
+      "id": "C25",
+      "status": "confirmed-source-defect",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ServerMode.lean",
+          "line": 111
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/server-mode/native/mirrorlean_tls.c",
+          "line": 246
+        }
+      ],
+      "note": "Normal nonempty hostname/IP selects SAN-only validation, but public serverName=some empty string reaches C branch that entirely skips SAN identity setup."
+    },
+    {
+      "id": "C26",
+      "status": "source-supported-with-deployment-obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ServerMode.lean",
+          "line": 120
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ServerMode.lean",
+          "line": 212
+        }
+      ],
+      "note": "Configured direct/registry pin compared case-insensitively before returning Transport; mismatches close. Registry pin is optional in ServiceInfo, so deployments requiring pins must supply them."
+    },
+    {
+      "id": "C27",
+      "status": "source-supported-security-policy",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/server-mode/native/mirrorlean_tls.c",
+          "line": 77
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/server-mode/Test/ServerMode.lean",
+          "line": 377
+        }
+      ],
+      "note": "POSIX group/other permissions fail before network; owner-only modes such as 0400 are accepted (safe but literal exact-0600 wording is broader than actual policy). OpenSSL supplies wildcard matching."
+    },
+    {
+      "id": "MI1",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Client.lean",
+          "line": 176
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 162
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 250
+        }
+      ],
+      "note": "Legacy StateComputer/MirrorError remain separate; only additive negotiated register/register_traces encode extension."
+    },
+    {
+      "id": "MI2",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface/Native.lean",
+          "line": 134
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 162
+        }
+      ],
+      "note": "Metadata inert; no descriptor interpreter/load/retrieve APIs. Trusted compiled binding receives model state, app port projection belongs generated binding."
+    },
+    {
+      "id": "MI3",
+      "status": "source-supported-with-build-obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface/Native.lean",
+          "line": 134
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 171
+        }
+      ],
+      "note": "GeneratedMetadata embeds digest and normalized contract; runtime validates static metadata and exact-key factory. Compiler-owned generated sources must remain unedited in consumer builds."
+    },
+    {
+      "id": "MI4",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 167
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 211
+        }
+      ],
+      "note": "Target/computer contract validated before transport; returned binding assertCompatibleConfig checked before replay callbacks."
+    },
+    {
+      "id": "MI5",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface/StrictJson.lean",
+          "line": 53
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface/Validation.lean",
+          "line": 6
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 48
+        }
+      ],
+      "note": "Bounded duplicate-aware parser, canonical digest parser, strict allowed/required keys and bounded closed companion contracts."
+    },
+    {
+      "id": "MI6",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 180
+        }
+      ],
+      "note": "Registration sends complete contract under inline, no path inference or digest reference."
+    },
+    {
+      "id": "MI7",
+      "status": "source-supported-with-build-obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 171
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 154
+        }
+      ],
+      "note": "Contract and digest drawn from single generated metadata selection; returned exact digest rechecked. Provenance/model name cannot substitute identity."
+    },
+    {
+      "id": "MI8",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 226
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/test/ModelInterface.lean",
+          "line": 128
+        }
+      ],
+      "note": "Pure preparation before transport; admitMatched precedes sole withBinding factory path; malformed/missing/denied/wrong digest constructs nothing."
+    },
+    {
+      "id": "MI9",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 146
+        }
+      ],
+      "note": "Only matched with supported schema and exact canonical digest; non-null descriptor/descriptorBytes forbidden."
+    },
+    {
+      "id": "MI10",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 180
+        }
+      ],
+      "note": "Lean advertises required verification only; no prefer or fallback API and no silent downgrade."
+    },
+    {
+      "id": "MI11",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 61
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 87
+        }
+      ],
+      "note": "Immutable array exact four-part BEq key, ambiguity rejects; no range/latest/closest matching."
+    },
+    {
+      "id": "MI12",
+      "status": "source-supported-with-application-freshness-obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 202
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 244
+        }
+      ],
+      "note": "Factory called once after matched; runner rechecks digest/config before replay. Returning truly fresh application resources remains factory contract."
+    },
+    {
+      "id": "MI13",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 194
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 219
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/test/ModelInterface.lean",
+          "line": 162
+        }
+      ],
+      "note": "Legacy and negotiated share Internal.replay; successful acquisition always scopes single dispose; primary failure wins over disposal/close errors."
+    },
+    {
+      "id": "MI14",
+      "status": "source-supported",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 15
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 119
+        }
+      ],
+      "note": "Separate NegotiatedError server registration, local model-interface and legacy carriers; stable local codes preserved."
+    },
+    {
+      "id": "MI15",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 158
+        }
+      ],
+      "note": "No dynamic descriptor interpreter/cache profile advertised; strict verify rejects descriptor payload."
+    },
+    {
+      "id": "MI16",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 158
+        }
+      ],
+      "note": "No dynamic descriptor interpreter/cache profile advertised; strict verify rejects descriptor payload."
+    },
+    {
+      "id": "MI17",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 158
+        }
+      ],
+      "note": "No dynamic descriptor interpreter/cache profile advertised; strict verify rejects descriptor payload."
+    },
+    {
+      "id": "MI18",
+      "status": "source-supported-with-C25-defect",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ModelInterface.lean",
+          "line": 119
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/test/ModelInterface.lean",
+          "line": 155
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ServerMode.lean",
+          "line": 111
+        }
+      ],
+      "note": "Authorization denial terminal with zero factory; no retry dropping negotiation. SAN protection still inherits empty-serverName defect C25."
+    },
+    {
+      "id": "SO1",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/README.md",
+          "line": 9
+        }
+      ],
+      "note": "No native Lean Gate facade advertised; source README explicitly calls Gate evaluation future profile. No sandbox conformance credit claimed."
+    },
+    {
+      "id": "SO2",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/README.md",
+          "line": 9
+        }
+      ],
+      "note": "No native Lean Gate facade advertised; source README explicitly calls Gate evaluation future profile. No sandbox conformance credit claimed."
+    },
+    {
+      "id": "SO3",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/README.md",
+          "line": 9
+        }
+      ],
+      "note": "No native Lean Gate facade advertised; source README explicitly calls Gate evaluation future profile. No sandbox conformance credit claimed."
+    },
+    {
+      "id": "SO4",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/README.md",
+          "line": 9
+        }
+      ],
+      "note": "No native Lean Gate facade advertised; source README explicitly calls Gate evaluation future profile. No sandbox conformance credit claimed."
+    },
+    {
+      "id": "SO5",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/README.md",
+          "line": 9
+        }
+      ],
+      "note": "No native Lean Gate facade advertised; source README explicitly calls Gate evaluation future profile. No sandbox conformance credit claimed."
+    },
+    {
+      "id": "SO6",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/README.md",
+          "line": 9
+        }
+      ],
+      "note": "No native Lean Gate facade advertised; source README explicitly calls Gate evaluation future profile. No sandbox conformance credit claimed."
+    },
+    {
+      "id": "SO7",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/README.md",
+          "line": 9
+        }
+      ],
+      "note": "No native Lean Gate facade advertised; source README explicitly calls Gate evaluation future profile. No sandbox conformance credit claimed."
+    },
+    {
+      "id": "SO8",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/README.md",
+          "line": 9
+        }
+      ],
+      "note": "No native Lean Gate facade advertised; source README explicitly calls Gate evaluation future profile. No sandbox conformance credit claimed."
+    },
+    {
+      "id": "SO9",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/README.md",
+          "line": 9
+        }
+      ],
+      "note": "No native Lean Gate facade advertised; source README explicitly calls Gate evaluation future profile. No sandbox conformance credit claimed."
+    },
+    {
+      "id": "SO10",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/README.md",
+          "line": 9
+        }
+      ],
+      "note": "No native Lean Gate facade advertised; source README explicitly calls Gate evaluation future profile. No sandbox conformance credit claimed."
+    },
+    {
+      "id": "SO11",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/README.md",
+          "line": 9
+        }
+      ],
+      "note": "No native Lean Gate facade advertised; source README explicitly calls Gate evaluation future profile. No sandbox conformance credit claimed."
+    },
+    {
+      "id": "SO12",
+      "status": "not-applicable-profile",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/README.md",
+          "line": 9
+        }
+      ],
+      "note": "No native Lean Gate facade advertised; source README explicitly calls Gate evaluation future profile. No sandbox conformance credit claimed."
+    }
+  ],
+  "findings": [
+    {
+      "priority": "P2",
+      "rule": "C25, MI18",
+      "path": "/home/nzsn/Repos/MirrorLean/server-mode/native/mirrorlean_tls.c",
+      "line": 246,
+      "trigger": "Call connectMirrorTls with cfg.serverName := some \"\" against a CA-valid peer whose SAN does not match the intended host.",
+      "impact": "Client skips server hostname/IP authentication and trusts any CA-valid server certificate unless an independent matching pin is also configured.",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/ServerMode.lean",
+          "line": 111
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/server-mode/native/mirrorlean_tls.c",
+          "line": 199
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/server-mode/native/mirrorlean_tls.c",
+          "line": 246
+        }
+      ],
+      "confidence": "high source-confirmed; live probe pending",
+      "fix": "Reject an empty effective server name in Lean before native connect and defensively reject it in the C shim. Add wrong-SAN peer + empty override regression."
+    },
+    {
+      "priority": "P2",
+      "rule": "C13",
+      "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Spec.lean",
+      "line": 50,
+      "trigger": "Valid TLA+ source contains a string literal \"(*\" before a subsequent Helper == INSTANCE Dep statement.",
+      "impact": "stripComments enters block-comment depth inside the quoted string and discards later dependency tokens; inline registration omits Dep source and fails remotely.",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Spec.lean",
+          "line": 48
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Spec.lean",
+          "line": 99
+        },
+        {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Spec.lean",
+          "line": 153
+        }
+      ],
+      "confidence": "high source-confirmed; actual Lean runtime probe pending",
+      "fix": "Lex and preserve/skip quoted strings while stripping comments; add fixture with comment delimiters inside strings before an INSTANCE reference."
+    }
+  ],
+  "additionalObservations": [
+    {
+      "priority": "P3",
+      "rule": "C14",
+      "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Protocol.lean",
+      "line": 47,
+      "trigger": "Public ApalacheConfig.ofJson? receives explicit null optionals such as constInit:null.",
+      "impact": "Convenience decoder rejects a valid Haskell-style request config; typed outgoing runners omit keys and remain conforming.",
+      "confidence": "high source-confirmed, peripheral to advertised client receive path",
+      "fix": "Make optional/default accessors treat explicit null as absent; test null and absent equivalence."
+    }
+  ],
+  "testEvidence": [
+    {
+      "path": "/home/nzsn/Repos/MirrorLean/test/Main.lean",
+      "line": 372,
+      "scope": "framing UTF-8 boundary, normal/mismatch replay, recursive closure, TCP loopback; inspected, not run"
+    },
+    {
+      "path": "/home/nzsn/Repos/MirrorLean/test/AsyncSupport.lean",
+      "line": 22,
+      "scope": "shared async vectors, wrong IDs/kind, framing failure, EOF/close, optional live cross-owner/cancel; inspected, not run"
+    },
+    {
+      "path": "/home/nzsn/Repos/MirrorLean/test/ModelInterface.lean",
+      "line": 128,
+      "scope": "admission negatives zero factories, lifecycle primary/disposal failure, registry and bounds, native codecs; inspected, not run"
+    },
+    {
+      "path": "/home/nzsn/Repos/MirrorLean/server-mode/Test/ServerMode.lean",
+      "line": 320,
+      "scope": "TLS normal, CA/pin/SAN/CN/permissions/TLS1.2 failures and close; inspected, not run"
+    }
+  ],
+  "limits": [
+    "No local compilation, tests, modelchecker or source edits performed.",
+    "No current-revision runtime qualification inferred from old acceptance records.",
+    "C25 and C13 findings are source-confirmed; bounded remote WSL probes are recommended before describing them as runtime reproduced.",
+    "Application-observer fidelity, CONSTANTS constInit selection, pool sizing, build-generated identity provenance and truly fresh factories require consumer/application evidence.",
+    "Async register_error is interpreted as terminal for the submit attempt per guide section10 and actual Mirrors dispatchAsync; broad C5 wording should be clarified if strict connection-terminal semantics are intended.",
+    "SO12 exists in current guide and was also classified N/A."
+  ]
+}

@@ -1,0 +1,133 @@
+[
+  {
+    "name": "build",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "build",
+      "ModelMirrors-test",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/dist",
+      "-j2"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros",
+    "exit": 0,
+    "seconds": 0.165
+  },
+  {
+    "name": "test-list",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "test",
+      "ModelMirrors-test",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/dist",
+      "--test-show-details=direct",
+      "--test-options=--list-tests --pattern NonModel"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros",
+    "exit": 0,
+    "seconds": 8.133
+  },
+  {
+    "name": "test-non-model",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "test",
+      "ModelMirrors-test",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/dist",
+      "--test-show-details=direct",
+      "--test-options=--pattern NonModel --num-threads=1"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros",
+    "exit": 0,
+    "seconds": 10.941
+  },
+  {
+    "name": "incremental",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "build",
+      "ModelMirrors-test",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/dist",
+      "-j2"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros",
+    "exit": 0,
+    "seconds": 6.477
+  },
+  {
+    "name": "probe-compile-baseline",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "exec",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/dist",
+      "--",
+      "ghc",
+      "-XGHC2024",
+      "-i/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros-baseline/src",
+      "-odir",
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/red-baseline",
+      "-hidir",
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/red-baseline",
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/RedCoreProbe.hs",
+      "-o",
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/red-baseline/probe"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros",
+    "exit": 0,
+    "seconds": 0.967
+  },
+  {
+    "name": "probe-run-baseline",
+    "command": [
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/red-baseline/probe"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros",
+    "exit": 0,
+    "seconds": 0.017
+  },
+  {
+    "name": "probe-compile-fixed",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "exec",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/dist",
+      "--",
+      "ghc",
+      "-XGHC2024",
+      "-i/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros/src",
+      "-odir",
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/red-fixed",
+      "-hidir",
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/red-fixed",
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/RedCoreProbe.hs",
+      "-o",
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/red-fixed/probe"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros",
+    "exit": 0,
+    "seconds": 1.017
+  },
+  {
+    "name": "probe-run-fixed",
+    "command": [
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/red-fixed/probe"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros",
+    "exit": 0,
+    "seconds": 0.017
+  },
+  {
+    "name": "probe-run-fixed-repeat",
+    "command": [
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/red-fixed/probe"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros",
+    "exit": 0,
+    "seconds": 0.017
+  }
+]

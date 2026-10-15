@@ -1,0 +1,31 @@
+generated new CA
+generated server.crt/server.key (CN=127.0.0.1, expires in 1 days)
+generated client.crt/client.key (CN=modelmirrors-client, expires in 1 days)
+
+Done. Start the server:
+
+  ModelMirrors --server <port> --tls \
+      --cert /tmp/fix-tests/modelmirrors-framing-8fbeeb057d666853/server.crt --key /tmp/fix-tests/modelmirrors-framing-8fbeeb057d666853/server.key --ca /tmp/fix-tests/modelmirrors-framing-8fbeeb057d666853/ca.crt
+
+Connect a client with ca.crt + client.crt + client.key.
+Keep ca.key offline; re-run this script to renew before expiry.
+warning: server certificate /tmp/fix-tests/modelmirrors-framing-8fbeeb057d666853/server.crt expires in 0 day(s)
+....+.+............+..+.+..+...+.......+...+..............+.+...+..+............+..........+........+...+....+..+....+.....+......+.+........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..............+......+......+...+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.......+...+.+.........+...........+.........+..........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+...+.....+.+.....+...+......+.............+...+........+......+...+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+.....+.+.....+.......+.................+.+.....+.+.....+...+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+....+...........+....+..+.+........+.........+.+...........+...+.......+......+..+.+.....+.+.........+......+......+..+......+....+..+...+.............+............+..+.+.........+...........+............+...+...+..........+......+.........+.........+..+.+........+....+..+....+............+.....+.......+..+.........+.+...+.....+.+..+...+......+...............+...+...+....+..............+.......+.....+.............+..+.........+...+...+...+....+...........+.+..............+............+........................+.........+......+.+..+...............+...+...................+...+..+...............+.+...............+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+ModelMirrors
+  TlsPolicyNonModel
+    SAN-only accepts correct IP SAN with a different CN: Certificate request self-signature ok
+subject=CN = wrong.example.test
+warning: client certificate /tmp/fix-tests/modelmirrors-framing-8fbeeb057d666853/client.crt expires in 1 day(s)
+FAIL
+      Exception: tls-2.4.3-dd49c8c313267d0c6f402d8fefd0f408fdcfe6a99ad86d7a18f3768901230416:Network.TLS.Error.TLSException:
+      
+      HandshakeFailed (Error_Protocol "certificate rejected: [NameMismatch \"127.0.0.1\"]" CertificateUnknown)
+      
+      While handling Uncontextualized (Error_Protocol "certificate rejected: [NameMismatch \"127.0.0.1\"]" CertificateUnknown)
+      
+      HasCallStack backtrace:
+        throwIO, called at ./Network/TLS/Handshake/Common.hs:72:23 in tls-2.4.3-dd49c8c313267d0c6f402d8fefd0f408fdcfe6a99ad86d7a18f3768901230416:Network.TLS.Handshake.Common
+
+1 out of 1 tests failed (0.65s)

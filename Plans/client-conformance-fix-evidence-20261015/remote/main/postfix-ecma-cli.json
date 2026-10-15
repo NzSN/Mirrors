@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "ecmaCommand": [
+    "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/node/bin/node",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/postfix-probes/ecma-probes/invalid-pair.mjs",
+    "/home/jlc/Tools/mirrors-client-fixes-20261015/source/MirrorECMA"
+  ],
+  "ecmaOriginalInvalidPairNowRefused": true,
+  "cliCommand": [
+    "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/bin/python3",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/postfix-probes/cli-probes/probe.py",
+    "--mirror",
+    "/home/jlc/Tools/mirrors-client-fixes-20261015/source/Mirrors/.lake/build/bin/mirror",
+    "--source-root",
+    "/home/jlc/Tools/mirrors-client-fixes-20261015/source/Mirrors",
+    "--work-root",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/postfix-cli-work"
+  ],
+  "cliOriginalMissingLfNowRefused": true,
+  "cliOriginalTerminalErrorNoCancel": true,
+  "cliProbeSourceUnchanged": "425b57836a1c3f7843e9a16e6793458a67a2adadbfd7762d9c334cffac5de281",
+  "cliReferenceOverlaySha256": "d0484e40af9aad38a3467b8482f2bd7729836a29765ebbc794829ba3b517d504",
+  "cliWorkRoot": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/postfix-cli-work/client-cli-probe-txemyiks",
+  "newSourceInterfaceNotOldHead": true
+}

@@ -80,7 +80,10 @@ def tcpTransport (t : TcpTransport) : Transport :=
           found := false
         else
           let n ← Ffi.recvSome t.fd t.rbuf 65536
-          if n == 0 || n == Ffi.fdError then
+          if n == Ffi.fdError then
+            t.buf.set ByteArray.empty
+            throw (IO.userError "TCP read failed")
+          else if n == 0 then
             eof := true
           else
             acc := acc.append (t.rbuf.extract 0 n.toNat)
@@ -90,9 +93,8 @@ def tcpTransport (t : TcpTransport) : Transport :=
       else
         match findLf acc 0 with
         | none =>
-            t.buf.set (ByteArray.mk (#[] : Array UInt8))
-            let payload := stripTrailingCrBytes acc
-            return some (← decodeProtocolUtf8 payload)
+            t.buf.set ByteArray.empty
+            throw (IO.userError "TCP connection closed with an unterminated protocol line")
         | some i =>
             let line := stripTrailingCrBytes (acc.extract 0 i)
             t.buf.set (acc.extract (i + 1) acc.size)

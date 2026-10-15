@@ -1,0 +1,289 @@
+Build profile: -w ghc-9.14.1 -O1
+In order, the following will be built (use -v for more details):
+ - OneTuple-0.4.3 (lib) (requires download & build)
+ - StateVar-1.2.2 (lib) (requires download & build)
+ - appar-0.1.8 (lib:appar) (requires download & build)
+ - assoc-1.1.1 (lib) (requires download & build)
+ - base-orphans-0.9.4 (lib) (requires download & build)
+ - base16-bytestring-1.0.2.0 (lib) (requires download & build)
+ - base64-bytestring-1.2.1.0 (lib) (requires download & build)
+ - blaze-builder-0.4.4.1 (lib) (requires download & build)
+ - byteorder-1.0.4 (lib:byteorder) (requires download & build)
+ - call-stack-0.4.0 (lib) (requires download & build)
+ - cereal-0.5.8.3 (lib) (requires download & build)
+ - character-ps-0.1 (lib) (requires download & build)
+ - colour-2.3.7 (lib) (requires download & build)
+ - data-default-0.8.0.2 (lib) (requires download & build)
+ - dlist-1.0 (lib) (requires download & build)
+ - half-0.3.3 (lib) (requires download & build)
+ - hashable-1.5.1.0 (lib) (requires download & build)
+ - indexed-traversable-0.1.5 (lib) (requires download & build)
+ - integer-logarithms-1.0.5 (lib) (requires download & build)
+ - mime-types-0.1.2.2 (lib) (requires download & build)
+ - network-byte-order-0.1.8 (lib) (requires download & build)
+ - prettyprinter-1.7.2 (lib) (requires download & build)
+ - primitive-0.9.1.0 (lib) (requires download & build)
+ - ram-0.22.1 (lib) (requires download & build)
+ - splitmix-0.1.3.2 (lib) (requires download & build)
+ - tagged-0.8.10 (lib) (requires download & build)
+ - th-abstraction-0.7.2.0 (lib) (requires download & build)
+ - th-compat-0.1.7 (lib) (requires download & build)
+ - time-1.14 (lib) (requires download & build)
+ - time-hourglass-0.3.0 (lib) (requires download & build)
+ - transformers-compat-0.8 (lib) (requires download & build)
+ - vector-stream-0.1.0.1 (lib) (requires download & build)
+ - contravariant-1.5.6 (lib) (requires download & build)
+ - ansi-terminal-types-1.1.3 (lib) (requires download & build)
+ - data-default-class-0.2.0.0 (lib) (requires download & build)
+ - unordered-containers-0.2.21 (lib) (requires download & build)
+ - these-1.2.1 (lib) (requires download & build)
+ - text-short-0.1.6.1 (lib) (requires download & build)
+ - data-fix-0.3.4 (lib) (requires download & build)
+ - case-insensitive-1.2.1.0 (lib) (requires download & build)
+ - ech-config-0.0.1 (lib) (requires download & build)
+ - scientific-0.3.8.1 (lib) (requires download & build)
+ - integer-conversion-0.1.1 (lib) (requires download & build)
+ - cborg-0.2.10.0 (lib) (requires download & build)
+ - random-1.3.1 (lib) (requires download & build)
+ - distributive-0.6.3 (lib) (requires download & build)
+ - network-uri-2.6.4.2 (lib) (requires download & build)
+ - unix-2.8.8.0 (lib) (requires download & build)
+ - time-compat-1.9.9 (lib) (requires download & build)
+ - vector-0.13.2.0 (lib) (requires download & build)
+ - ansi-terminal-1.1.5 (lib) (requires download & build)
+ - cookie-0.5.1 (lib) (requires download & build)
+ - async-2.2.6 (lib) (requires download & build)
+ - strict-0.5.1 (lib) (requires download & build)
+ - base64-1.0 (lib) (requires download & build)
+ - base16-1.0 (lib) (requires download & build)
+ - http-types-0.12.6 (lib) (requires download & build)
+ - uuid-types-1.0.6.1 (lib) (requires download & build)
+ - QuickCheck-2.18.0.0 (lib) (requires download & build)
+ - comonad-5.0.10 (lib) (requires download & build)
+ - file-io-0.2.0 (lib) (requires download & build)
+ - text-iso8601-0.2.0.0 (lib) (requires download & build)
+ - indexed-traversable-instances-0.1.2.1 (lib) (requires download & build)
+ - prettyprinter-ansi-terminal-1.1.4 (lib) (requires download & build)
+ - serialise-0.2.6.1 (lib) (requires download & build)
+ - crypton-pem-0.3.0 (lib) (requires download & build)
+ - crypton-asn1-types-0.4.1 (lib) (requires download & build)
+ - crypton-1.1.4 (lib) (requires download & build)
+ - bifunctors-5.6.3 (lib) (requires download & build)
+ - directory-1.3.11.0 (lib) (requires download & build)
+ - witherable-0.5 (lib) (requires download & build)
+ - crypton-asn1-parse-0.10.0 (lib) (requires download & build)
+ - crypton-asn1-encoding-0.10.0 (lib) (requires download & build)
+ - mlkem-0.2.3.0 (lib) (requires download & build)
+ - hpke-0.1.0 (lib) (requires download & build)
+ - semigroupoids-6.0.2 (lib) (requires download & build)
+ - temporary-1.3 (lib) (requires download & build)
+ - process-1.6.30.0 (lib) (requires download & build)
+ - crypton-x509-1.9.1 (lib) (requires download & build)
+ - semialign-1.4 (lib) (requires download & build)
+ - optparse-applicative-0.19.0.0 (lib) (requires download & build)
+ - hsc2hs-0.68.10 (exe:hsc2hs) (requires download & build)
+ - crypton-x509-store-1.9.0 (lib) (requires download & build)
+ - aeson-2.3.1.0 (lib) (requires download & build)
+ - tasty-1.5.4 (lib) (requires download & build)
+ - zlib-0.7.1.1 (lib) (requires download & build)
+ - unix-time-0.5.0 (lib) (requires download & build)
+ - network-3.2.9.0 (lib) (requires download & build)
+ - tasty-quickcheck-0.11.1 (lib) (requires download & build)
+ - tasty-hunit-0.10.2 (lib) (requires download & build)
+ - streaming-commons-0.2.3.1 (lib) (requires download & build)
+ - iproute-1.7.15 (lib) (requires download & build)
+ - http-client-0.7.19 (lib) (requires download & build)
+ - crypton-x509-validation-1.9.1 (lib) (requires download & build)
+ - tls-2.4.3 (lib) (requires download & build)
+ - ModelMirrors-0.1.1.0 (lib) (first run)
+ - ModelMirrors-0.1.1.0 (test:ModelMirrors-test) (first run)
+Downloading  base-orphans-0.9.4
+Downloaded   base-orphans-0.9.4
+Downloading  byteorder-1.0.4
+Downloaded   byteorder-1.0.4
+Downloading  call-stack-0.4.0
+Downloaded   call-stack-0.4.0
+Downloading  character-ps-0.1
+Downloaded   character-ps-0.1
+Downloading  colour-2.3.7
+Downloaded   colour-2.3.7
+Downloading  dlist-1.0
+Downloaded   dlist-1.0
+Downloading  splitmix-0.1.3.2
+Downloaded   splitmix-0.1.3.2
+Downloading  base16-bytestring-1.0.2.0
+Downloaded   base16-bytestring-1.0.2.0
+Downloading  base64-bytestring-1.2.1.0
+Downloaded   base64-bytestring-1.2.1.0
+Downloading  network-byte-order-0.1.8
+Downloaded   network-byte-order-0.1.8
+Downloading  ram-0.22.1
+Downloaded   ram-0.22.1
+Downloading  tagged-0.8.10
+Downloaded   tagged-0.8.10
+Downloading  th-compat-0.1.7
+Downloaded   th-compat-0.1.7
+Downloading  time-1.14
+Downloaded   time-1.14
+Downloading  time-hourglass-0.3.0
+Downloaded   time-hourglass-0.3.0
+Downloading  distributive-0.6.3
+Downloaded   distributive-0.6.3
+Downloading  primitive-0.9.1.0
+Downloaded   primitive-0.9.1.0
+Downloading  random-1.3.1
+Downloaded   random-1.3.1
+Downloading  transformers-compat-0.8
+Downloaded   transformers-compat-0.8
+Downloading  vector-stream-0.1.0.1
+Downloaded   vector-stream-0.1.0.1
+Downloading  vector-0.13.2.0
+Downloaded   vector-0.13.2.0
+Downloading  assoc-1.1.1
+Downloaded   assoc-1.1.1
+Downloading  half-0.3.3
+Downloaded   half-0.3.3
+Downloading  cereal-0.5.8.3
+Downloaded   cereal-0.5.8.3
+Downloading  data-default-0.8.0.2
+Downloaded   data-default-0.8.0.2
+Downloading  data-default-class-0.2.0.0
+Downloaded   data-default-class-0.2.0.0
+Downloading  th-abstraction-0.7.2.0
+Downloaded   th-abstraction-0.7.2.0
+Downloading  indexed-traversable-0.1.5
+Downloaded   indexed-traversable-0.1.5
+Downloading  comonad-5.0.10
+Downloaded   comonad-5.0.10
+Downloading  bifunctors-5.6.3
+Downloaded   bifunctors-5.6.3
+Downloading  integer-logarithms-1.0.5
+Downloaded   integer-logarithms-1.0.5
+Downloading  ech-config-0.0.1
+Downloaded   ech-config-0.0.1
+Downloading  unix-2.8.8.0
+Downloaded   unix-2.8.8.0
+Downloading  file-io-0.2.0
+Downloaded   file-io-0.2.0
+Downloading  directory-1.3.11.0
+Downloaded   directory-1.3.11.0
+Downloading  process-1.6.30.0
+Downloaded   process-1.6.30.0
+Downloading  hsc2hs-0.68.10
+Downloaded   hsc2hs-0.68.10
+Downloading  unix-time-0.5.0
+Downloaded   unix-time-0.5.0
+Downloading  zlib-0.7.1.1
+Downloaded   zlib-0.7.1.1
+Downloading  temporary-1.3
+Downloaded   temporary-1.3
+Downloading  network-3.2.9.0
+Downloaded   network-3.2.9.0
+Downloading  blaze-builder-0.4.4.1
+Downloaded   blaze-builder-0.4.4.1
+Downloading  cborg-0.2.10.0
+Downloaded   cborg-0.2.10.0
+Downloading  cookie-0.5.1
+Downloaded   cookie-0.5.1
+Downloading  hashable-1.5.1.0
+Downloaded   hashable-1.5.1.0
+Downloading  case-insensitive-1.2.1.0
+Downloaded   case-insensitive-1.2.1.0
+Downloading  data-fix-0.3.4
+Downloaded   data-fix-0.3.4
+Downloading  these-1.2.1
+Downloaded   these-1.2.1
+Downloading  time-compat-1.9.9
+Downloaded   time-compat-1.9.9
+Downloading  unordered-containers-0.2.21
+Downloaded   unordered-containers-0.2.21
+Downloading  async-2.2.6
+Downloaded   async-2.2.6
+Downloading  http-types-0.12.6
+Downloaded   http-types-0.12.6
+Downloading  integer-conversion-0.1.1
+Downloaded   integer-conversion-0.1.1
+Downloading  mime-types-0.1.2.2
+Downloaded   mime-types-0.1.2.2
+Downloading  network-uri-2.6.4.2
+Downloaded   network-uri-2.6.4.2
+Downloading  prettyprinter-1.7.2
+Downloaded   prettyprinter-1.7.2
+Downloading  scientific-0.3.8.1
+Downloaded   scientific-0.3.8.1
+Downloading  streaming-commons-0.2.3.1
+Downloaded   streaming-commons-0.2.3.1
+Downloading  strict-0.5.1
+Downloaded   strict-0.5.1
+Downloading  serialise-0.2.6.1
+Downloaded   serialise-0.2.6.1
+Downloading  text-iso8601-0.2.0.0
+Downloaded   text-iso8601-0.2.0.0
+Downloading  text-short-0.1.6.1
+Downloaded   text-short-0.1.6.1
+Downloading  base16-1.0
+Downloaded   base16-1.0
+Downloading  crypton-1.1.4
+Downloaded   crypton-1.1.4
+Downloading  hpke-0.1.0
+Downloaded   hpke-0.1.0
+Downloading  mlkem-0.2.3.0
+Downloaded   mlkem-0.2.3.0
+Downloading  crypton-asn1-types-0.4.1
+Downloaded   crypton-asn1-types-0.4.1
+Downloading  crypton-asn1-encoding-0.10.0
+Downloaded   crypton-asn1-encoding-0.10.0
+Downloading  crypton-asn1-parse-0.10.0
+Downloaded   crypton-asn1-parse-0.10.0
+Downloading  base64-1.0
+Downloaded   base64-1.0
+Downloading  crypton-pem-0.3.0
+Downloaded   crypton-pem-0.3.0
+Downloading  crypton-x509-1.9.1
+Downloaded   crypton-x509-1.9.1
+Downloading  crypton-x509-store-1.9.0
+Downloaded   crypton-x509-store-1.9.0
+Downloading  uuid-types-1.0.6.1
+Downloaded   uuid-types-1.0.6.1
+Downloading  appar-0.1.8
+Downloaded   appar-0.1.8
+Downloading  iproute-1.7.15
+Downloaded   iproute-1.7.15
+Downloading  crypton-x509-validation-1.9.1
+Downloaded   crypton-x509-validation-1.9.1
+Downloading  tls-2.4.3
+Downloaded   tls-2.4.3
+Downloading  http-client-0.7.19
+Downloaded   http-client-0.7.19
+Downloading  ansi-terminal-types-1.1.3
+Downloaded   ansi-terminal-types-1.1.3
+Downloading  ansi-terminal-1.1.5
+Downloaded   ansi-terminal-1.1.5
+Downloading  prettyprinter-ansi-terminal-1.1.4
+Downloaded   prettyprinter-ansi-terminal-1.1.4
+Downloading  optparse-applicative-0.19.0.0
+Downloaded   optparse-applicative-0.19.0.0
+Downloading  tasty-1.5.4
+Downloaded   tasty-1.5.4
+Downloading  tasty-hunit-0.10.2
+Downloaded   tasty-hunit-0.10.2
+Downloading  StateVar-1.2.2
+Downloaded   StateVar-1.2.2
+Downloading  contravariant-1.5.6
+Downloaded   contravariant-1.5.6
+Downloading  semigroupoids-6.0.2
+Downloaded   semigroupoids-6.0.2
+Downloading  QuickCheck-2.18.0.0
+Downloaded   QuickCheck-2.18.0.0
+Downloading  tasty-quickcheck-0.11.1
+Downloaded   tasty-quickcheck-0.11.1
+Downloading  OneTuple-0.4.3
+Downloaded   OneTuple-0.4.3
+Downloading  indexed-traversable-instances-0.1.2.1
+Downloaded   indexed-traversable-instances-0.1.2.1
+Downloading  semialign-1.4
+Downloaded   semialign-1.4
+Downloading  witherable-0.5
+Downloaded   witherable-0.5
+Downloading  aeson-2.3.1.0
+Downloaded   aeson-2.3.1.0

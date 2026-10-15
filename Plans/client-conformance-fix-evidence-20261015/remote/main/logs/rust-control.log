@@ -1,0 +1,58 @@
+   Compiling proc-macro2 v1.0.106
+   Compiling libc v0.2.186
+   Compiling cfg-if v1.0.4
+   Compiling find-msvc-tools v0.1.11
+   Compiling shlex v2.0.1
+   Compiling quote v1.0.46
+   Compiling version_check v0.9.5
+   Compiling unicode-ident v1.0.24
+   Compiling generic-array v0.14.7
+   Compiling cc v1.4.4
+   Compiling ring v0.17.14
+   Compiling typenum v1.20.1
+   Compiling autocfg v1.5.1
+   Compiling num-traits v0.2.19
+   Compiling syn v2.0.118
+   Compiling serde_core v1.0.228
+   Compiling zeroize v1.9.0
+   Compiling rustls-pki-types v1.15.1
+   Compiling getrandom v0.2.17
+   Compiling untrusted v0.9.0
+   Compiling zmij v1.0.21
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling serde_json v1.0.150
+   Compiling thiserror v1.0.69
+   Compiling rustix v1.1.4
+   Compiling getrandom v0.4.3
+   Compiling serde v1.0.228
+   Compiling once_cell v1.21.4
+   Compiling rustls v0.23.43
+   Compiling digest v0.10.7
+   Compiling num-integer v0.1.46
+   Compiling thiserror-impl v1.0.69
+   Compiling serde_derive v1.0.228
+   Compiling subtle v2.6.1
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.2
+   Compiling linux-raw-sys v0.12.1
+   Compiling cpufeatures v0.2.17
+   Compiling bitflags v2.13.0
+   Compiling rustls-webpki v0.103.15
+   Compiling sha2 v0.10.9
+   Compiling num-bigint v0.4.6
+   Compiling rustls-pemfile v2.2.0
+   Compiling fastrand v2.4.1
+   Compiling tempfile v3.27.0
+   Compiling mirrorrust v1.0.0 (/home/jlc/Tools/mirrors-client-fixes-20261015/source/MirrorRust)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 19.03s
+     Running tests/transport.rs (/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/rust-control-target/debug/deps/transport-0387ffe4168db782)
+
+running 4 tests
+test client_key_requires_exact_0600_before_loading_credentials ... ok
+test protocol_line_validation_uses_utf8_bytes_and_exact_boundary ... ok
+test rejected_lines_write_nothing_to_stdio_transport ... ok
+test tcp_transport_round_trips_one_framed_session ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+

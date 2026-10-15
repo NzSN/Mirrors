@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Client conformance remediation plan</title>
+<style>
+:root{color-scheme:light;--ink:#1c2a31;--muted:#52666d;--line:#d4dfe0;--accent:#145a67}*{box-sizing:border-box}body{margin:0;background:#f4f7f6;color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--accent);text-underline-offset:3px}a:hover{color:#073c47}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #ad8122;outline-offset:3px}.shell{max-width:1510px;margin:auto;display:grid;grid-template-columns:260px minmax(0,1fr);gap:34px;padding:28px}aside{position:sticky;top:24px;max-height:calc(100vh - 48px);overflow:auto;align-self:start;padding:16px 12px 16px 0;border-right:1px solid var(--line)}aside p{font-size:12px;letter-spacing:.04em;color:var(--muted);margin:0 0 15px}aside nav a{display:block;padding:4px 10px 4px 0;font-size:13px;text-decoration:none;line-height:1.45}.nested{margin-left:12px}main{min-width:0;background:white;border:1px solid var(--line);padding:34px 38px 45px}.review-status{border-left:4px solid #277967;background:#edf7f1;padding:15px 20px;margin:0 0 24px}.review-status strong{font-size:18px}.review-status p{font-size:14px;margin:6px 0}.toplinks{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;font-size:13px;margin-bottom:22px}.toplinks button{background:white;color:var(--ink);border:1px solid #9eb2b6;padding:5px 12px;border-radius:3px;cursor:pointer;font:inherit}.metrics{display:flex;flex-wrap:wrap;gap:10px 22px;margin:12px 0 0;font-size:13px}.metrics b{font-size:20px;margin-right:4px}h1{font-size:34px;line-height:1.2;letter-spacing:-.025em;margin:0 0 16px}h2{font-size:25px;line-height:1.3;margin:37px 0 17px;border-top:1px solid var(--line);padding-top:24px}h3{font-size:20px;line-height:1.35;margin:28px 0 14px}h1,h2,h3{scroll-margin-top:20px}p{margin:12px 0}code,pre{font-family:ui-monospace,Consolas,monospace;font-size:.87em}code{background:#f0f4f4;border-radius:3px;padding:2px 4px;overflow-wrap:anywhere}pre{padding:16px;background:#eef3f2;overflow:auto}pre code{padding:0}.table-wrap{overflow:auto;border:1px solid var(--line);margin:18px 0}table{border-collapse:collapse;width:100%;min-width:680px;text-align:left;font-size:13px;line-height:1.55}th,td{vertical-align:top;padding:12px 13px;border-bottom:1px solid var(--line)}th{background:#eaf1ef;font-weight:650}tr:last-child td{border-bottom:0}td:first-child{font-weight:600}table code{font-size:12px}ol,ul{padding-left:24px}li{padding-left:3px;margin:8px 0}.review-record{border-top:1px solid var(--line);margin-top:36px;padding-top:18px}.review-record>summary{cursor:pointer;font-size:20px;font-weight:650}.review-record article{margin-top:20px;font-size:14px}.review-record article h1{font-size:25px}.review-record article h2{font-size:20px}footer{border-top:1px solid var(--line);margin-top:30px;padding-top:18px;font-size:12px;color:var(--muted);overflow-wrap:anywhere}@media(max-width:1000px){.shell{display:block;padding:18px}aside{position:static;max-height:none;border:0;margin-bottom:20px;padding:0}aside nav{display:flex;flex-wrap:wrap;gap:6px 15px}aside nav .nested{display:none}main{padding:26px 22px}}@media(max-width:600px){.shell{padding:10px}main{padding:20px 15px}h1{font-size:28px}h2{font-size:22px}.metrics{gap:8px 15px}table{font-size:12px}}@media print{body{background:white}.shell{display:block;padding:0}aside,.toplinks{display:none}main{padding:0;border:0}.review-status{break-inside:avoid}.table-wrap{overflow:visible}table{min-width:0;font-size:10px}th,td{padding:6px}h2,h3{break-after:avoid}a{color:inherit}}
+</style></head><body><div class="shell"><aside><p>PLAN CONTENTS</p><nav aria-label="Plan contents"><a class="" href="#scope-and-source-baseline">Scope and source baseline</a><a class="" href="#contract-decisions">Contract decisions</a><a class="nested" href="#d1-make-terminal-behavior-depend-on-the-operation">D1 Make terminal behavior depend on the operation</a><a class="nested" href="#d2-keep-the-exact-posix-key-permission-rule">D2 Keep the exact POSIX key permission rule</a><a class="" href="#implementation-tasks-and-ownership">Implementation tasks and ownership</a><a class="nested" href="#l1-reject-empty-tls-identity-before-connection">L1 Reject empty TLS identity before connection</a><a class="nested" href="#l2-make-dependency-discovery-respect-string-literals">L2 Make dependency discovery respect string literals</a><a class="nested" href="#e1-admit-compiled-computer-pairings-consistently">E1 Admit compiled computer pairings consistently</a><a class="nested" href="#c1-retain-trusted-gate-failure-provenance-in-the-c-facade">C1 Retain trusted Gate failure provenance in the C++ facade</a><a class="nested" href="#m1-reject-incomplete-jsonl-frames-on-every-built-in-transport">M1 Reject incomplete JSONL frames on every built-in transport</a><a class="nested" href="#m2-cancel-only-after-local-poll-budget-exhaustion">M2 Cancel only after local poll-budget exhaustion</a><a class="nested" href="#h1-bound-final-encoded-output-and-raw-receive-accumulation">H1 Bound final encoded output and raw receive accumulation</a><a class="" href="#additional-observations-and-follow-up-decisions">Additional observations and follow-up decisions</a><a class="" href="#execution-and-validation-sequence">Execution and validation sequence</a><a class="nested" href="#remote-build-and-gate-boundaries">Remote build and gate boundaries</a><a class="nested" href="#integration-and-remaining-environment-checks">Integration and remaining environment checks</a><a class="" href="#acceptance-and-rollback">Acceptance and rollback</a><a class="" href="#plan-review">Plan review</a><a href="#independent-review">Independent review record</a></nav></aside><main>
+<div class="review-status"><strong>Proposed plan · independently reviewed</strong><p>All four review findings are resolved. Implementation and new runtime acceptance remain pending.</p><div class="metrics"><span><b>7</b> implementation gaps</span><span><b>2</b> contract choices</span><span><b>4</b> follow-up observations</span></div></div>
+<div class="toplinks"><a href="../../../../Plans/client-conformance-fix-plan-2026-10-15.md">Canonical Markdown</a><a href="../index.html">Original audit and evidence</a><a href="#contract-decisions">Recommended contract choices</a><a href="#implementation-tasks-and-ownership">Tasks and acceptance</a><button type="button" onclick="window.print()">Print plan</button></div>
+<h1 id="client-conformance-remediation-plan">Client conformance remediation plan</h1>
+<p>Date: 2026-10-15. Status: proposed for review; implementation has not started.</p>
+<p>Repair the seven implementation gaps from the <a href="../index.html">client audit</a>, reconcile its two shared contract discrepancies, and retain explicit follow-up coverage for the additional observations. Six gaps have remote reproductions; the Haskell framing gap is confirmed from source. Each repair must pass a normal case, the original failure case, and an integration edge before receiving acceptance.</p>
+<p>The recommended contract choices are to preserve a server-mode connection after a rejected async submission, and to enforce the existing exact POSIX <code>0600</code> key rule consistently. All build and runtime validation belongs on remote Windows-dev Ubuntu WSL. This request produces the plan and its review; implementation, commits, publication and deployment are subsequent work.</p>
+<h2 id="scope-and-source-baseline">Scope and source baseline</h2>
+<p>Current heads match the audit and all seven tracked working trees were clean when this plan was prepared. The two unrelated Mirrors untracked paths, <code>.projectile-cache.eld</code> and <code>Plans/dpm-review-remediation-evidence-20261013/</code>, must remain intact.</p>
+<table>
+<thead>
+<tr>
+<th>Repository</th>
+<th>Exact starting revision</th>
+<th>Planned responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mirrors</td>
+<td><code>c17bae951c4d5bbc5818c2a4f82e2d93d07abc52</code></td>
+<td>Contracts, built-in transports, trace capture, async dispatch and maintained gates</td>
+</tr>
+<tr>
+<td>MirrorLean</td>
+<td><code>b8b9491bd96e3126da55d34a7ba3a4493766dcf3</code></td>
+<td>TLS identity, dependency discovery and key modes</td>
+</tr>
+<tr>
+<td>MirrorECMA</td>
+<td><code>19f6ae6ce8d9b073bef888fc66efc4c49f2a07ab</code></td>
+<td>Compiled selection admission and key modes</td>
+</tr>
+<tr>
+<td>MirrorCPP</td>
+<td><code>410c58a175c3135d9cd76c85e33a718f63761855</code></td>
+<td>Public runner regression controls and key modes</td>
+</tr>
+<tr>
+<td>MirrorGate</td>
+<td><code>4a8d0d361589059ad72fe52e05789f302b4b65c8</code></td>
+<td>Trusted C++ error capture and facade integration</td>
+</tr>
+<tr>
+<td>ModelMirros</td>
+<td><code>5ee414ee16b8aba50ceb480ac8013a56165272bb</code></td>
+<td>Haskell bounded framing and key modes</td>
+</tr>
+<tr>
+<td>MirrorRust</td>
+<td><code>5049e99886a3d1f775e60190478c26e39c9aefc9</code></td>
+<td>Regression control for existing strict key-mode and framing behavior</td>
+</tr>
+</tbody>
+</table>
+<p>Guide SHA-256: <code>8017baebdb0a73473107a88b16422311afe84a1e3afa754f58887190fc73c7b4</code>. Audit evidence manifest SHA-256: <code>fc2230e541a07c3294b5c6b720674f8600a36570f687aa31255550e0b7d16670</code>.</p>
+<p>Before implementation, record fresh heads, tracked diffs, toolchains and affected file hashes. Rebase the task mapping if they changed. Preserve the audit's dated evidence and the October framework qualification records; new sources receive a new acceptance record.</p>
+<h2 id="contract-decisions">Contract decisions</h2>
+<h3 id="d1-make-terminal-behavior-depend-on-the-operation">D1 Make terminal behavior depend on the operation</h3>
+<p>Recommend the following clarification to C5, section 10, the <a href="https://github.com/NzSN/Mirrors/blob/c17bae951c4d5bbc5818c2a4f82e2d93d07abc52/Docs/interface-reference.md">interface reference</a>, and <a href="https://github.com/NzSN/Mirrors/blob/c17bae951c4d5bbc5818c2a4f82e2d93d07abc52/Docs/async-enablement-design.md">async design</a>. No wire tags or job-ID formats change.</p>
+<table>
+<thead>
+<tr>
+<th>Context and result</th>
+<th>Required continuation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Async submission returns <code>register_error</code></td>
+<td>End that attempt. It owns no new job. Preserve the connection and its earlier accepted jobs; allow an explicit new attempt or operations on existing jobs.</td>
+</tr>
+<tr>
+<td>Accepted async job returns its terminal result/status</td>
+<td>End that job or lookup. Other jobs may still use the connection. Do not keep polling an unknown/evicted job.</td>
+</tr>
+<tr>
+<td>A synchronous replay, validate, generation or exploration flow terminates</td>
+<td>Stop that flow and use a fresh connection for a new synchronous flow. Required negotiation failure never authorizes a fallback.</td>
+</tr>
+<tr>
+<td><code>protocol_error</code>, malformed framing/JSON, or transport failure</td>
+<td>Treat the connection as unusable. Send no cancellation or further flow messages on it; server owner cleanup applies.</td>
+</tr>
+</tbody>
+</table>
+<p>This matches the existing async rejection behavior in <code>Shell/Mirror/Session.lean:900–912</code> and avoids disconnecting jobs that C6 assigns to that connection. Classification uses operation/phase, never human error text.</p>
+<p>The server also needs a small consistency correction: its unexpected async-command path at <code>Session.lean:942–944</code> can send <code>protocol_error</code> and continue while the phase is idle. Review every <code>sendError</code> path reached from async dispatch, including synchronous dispatch on that connection. Make each <code>dispatchAsync</code> continuation explicit: accepted/rejected async submissions and job controls continue; unexpected commands end; a synchronous flow ends the connection when delegated dispatch returns, regardless of its retained phase. The existing Bool return can express this without changing Core transitions or proofs. Do not infer usability from an unchanged phase or parse the server's own outgoing messages.</p>
+<p>Document the compatibility effect: a synchronous one-shot registration mixed into a connection holding async jobs ends that connection and triggers C6 cleanup. Applications retaining those jobs should use a separate connection for synchronous work. This coordinated D1 task has its own acceptance evidence and is not required to justify the independently scoped M2 client cancellation fix.</p>
+<p>Acceptance must prove that accepted job A survives rejected submission B, A remains awaitable/cancellable, B acquires no job, and fatal input cleans only the owner's jobs. Cover the unexpected-command path, a protocol error returned through synchronous dispatch, and successful synchronous completion on a mixed connection. The latter must end the owner connection and clean its earlier jobs while another session's jobs remain usable. Extend the existing fake-runner <code>tools/JobStoreSpec.lean</code>; live model checking is unnecessary.</p>
+<h3 id="d2-keep-the-exact-posix-key-permission-rule">D2 Keep the exact POSIX key permission rule</h3>
+<p>Recommend retaining C27 and the interface reference's exact <code>0600</code> requirement. Update ECMA, C++, Lean, the built-in CLI and Haskell checks to compare all permission/special bits against <code>0600</code>; Rust already does so. Preserve Windows ACL behavior.</p>
+<p>The tradeoff is deliberate rejection of owner-only <code>0400</code>, <code>0700</code> and special-bit modes that five clients currently accept. This is contract alignment; those modes alone do not prove secret disclosure. Return an actionable diagnostic showing that exact <code>0600</code> is required. Never chmod a caller's key automatically. Document the changed admission behavior in each affected client's release notes.</p>
+<p>Use a common case list across client tests: <code>0600</code> succeeds; <code>0400</code>, <code>0700</code>, group/other-readable modes, and supported special-bit variants fail before protocol bytes. Run POSIX mode tests on an actual POSIX filesystem in remote WSL; DrvFS permission emulation cannot establish this rule. Native Windows ACL validation remains a separately declared platform check.</p>
+<table>
+<thead>
+<tr>
+<th>Client</th>
+<th>Key check</th>
+<th>Regression location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MirrorECMA</td>
+<td><code>src/transport.ts</code></td>
+<td>Focused transport tests and existing private-key smoke checks</td>
+</tr>
+<tr>
+<td>MirrorCPP</td>
+<td><code>src/detail/tls.cpp</code></td>
+<td><code>test/unit/tls_test.cpp</code></td>
+</tr>
+<tr>
+<td>MirrorLean</td>
+<td><code>server-mode/native/mirrorlean_tls.c</code></td>
+<td><code>server-mode/Test/ServerMode.lean</code></td>
+</tr>
+<tr>
+<td>Mirrors</td>
+<td><code>Ffi/tls_shim.c</code> shared client/server helper</td>
+<td><code>tools/TransportSpec.lean</code> and native rebuild gate</td>
+</tr>
+<tr>
+<td>ModelMirros</td>
+<td><code>src-tls/Protocol/Transport/Tls.hs</code> client/server predicates</td>
+<td><code>test/TlsTransportSpec.hs</code></td>
+</tr>
+<tr>
+<td>MirrorRust control</td>
+<td>Existing exact check in <code>src/transport.rs</code></td>
+<td><code>tests/transport.rs</code></td>
+</tr>
+</tbody>
+</table>
+<p>For shared client/server key helpers, align both roles with their documented rule and include a server credential-load control. Assert mode and key bytes are unchanged after acceptance and rejection; verify each special-bit test actually established its requested mode. Record unsupported filesystem cases explicitly.</p>
+<p>An alternative would relax the guide to an owner-only policy and change Rust. That would change the published policy; it is not the proposed default.</p>
+<h2 id="implementation-tasks-and-ownership">Implementation tasks and ownership</h2>
+<p>One owner keeps each repository's overlapping changes together. The coordinator owns shared contracts, evidence integration and final review. The five implementation owners may run in batches within available agent slots; heavy builds share a bounded resource budget.</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Owner and exclusive edit scope</th>
+<th>Depends on</th>
+<th>Acceptance result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P0</td>
+<td>Coordinator: identity manifest and this plan</td>
+<td>None</td>
+<td>Current sources/toolchains, writable remote storage and evidence locations recorded</td>
+</tr>
+<tr>
+<td>D1</td>
+<td>Coordinator with Mirrors owner: guide/reference/async docs; <code>Shell/Mirror/Session.lean</code>; <code>tools/JobStoreSpec.lean</code></td>
+<td>P0</td>
+<td>Rejected async attempt preserves earlier jobs; every terminal protocol error exits and cleans only owned jobs</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>Coordinator: shared key-policy text, common mode case list and compatibility decision</td>
+<td>P0</td>
+<td>Exact <code>0600</code> predicate and POSIX/Windows scope agreed before K1 edits</td>
+</tr>
+<tr>
+<td>L1</td>
+<td>Lean owner: <code>MirrorLean/ServerMode.lean</code>, native TLS shim and server-mode tests</td>
+<td>P0</td>
+<td>Empty identity rejected; SAN, pin and mTLS controls remain correct</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>Lean owner: <code>MirrorLean/Spec.lean</code>, root source-resolution tests</td>
+<td>P0</td>
+<td>Correct dependency closure despite quoted comment/dependency tokens</td>
+</tr>
+<tr>
+<td>E1</td>
+<td>ECMA owner: <code>src/negotiated.ts</code>, runner admission/tests and replay guide as needed</td>
+<td>P0</td>
+<td>Invalid compiled pairing rejected before I/O/construction; valid callback and descriptor modes preserved</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>C++ integration owner: MirrorGate managed-worker SDK, <code>integrations/mirrorcpp/</code> and their tests</td>
+<td>P0</td>
+<td>Trusted original failure family/stage survives facade normalization; mismatch and cleanup precedence preserved</td>
+</tr>
+<tr>
+<td>M1</td>
+<td>Mirrors owner: <code>Shell/Transport/{Stdio,Tcp,Tls}.lean</code>, <code>tools/TransportSpec.lean</code>, new CLI framing gate</td>
+<td>P0</td>
+<td>Unterminated EOF/read-error fragments cannot become accepted frames</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>Mirrors owner: <code>Shell/TraceCapture.lean</code>, capture Lean/Python tests</td>
+<td>P0; D1 for final contract assertions</td>
+<td>Only local budget exhaustion on a healthy owned pending job sends one cancellation</td>
+</tr>
+<tr>
+<td>H1</td>
+<td>Haskell owner: transport core/adapters, transport tests and Cabal registration</td>
+<td>P0</td>
+<td>All three transports enforce byte bounds before parsing/after encoding</td>
+</tr>
+<tr>
+<td>K1</td>
+<td>Each repository owner: its existing key check and tests; coordinator owns shared case list/docs</td>
+<td>P0, D2</td>
+<td>Five clients align with exact <code>0600</code>; Rust remains a passing control</td>
+</tr>
+<tr>
+<td>V1</td>
+<td>Coordinator and remote executor: fresh builds, focused gates and applicable non-model suites</td>
+<td>D1, L1, L2, E1, C1, M1, M2, H1, K1</td>
+<td>All required acceptance cells have retained results and source/binary identities</td>
+</tr>
+<tr>
+<td>R1</td>
+<td>Independent reviewer; coordinator writes new acceptance record</td>
+<td>V1</td>
+<td>Reproductions reject, positive controls pass, ownership and evidence claims reviewed</td>
+</tr>
+</tbody>
+</table>
+<p>The Mirrors owner alone edits <code>lakefile.lean</code> and <code>tools/run-local-no-model-check.sh</code>. Lean and ECMA owners combine their main fixes with their K1 edits to avoid file conflicts. The Mirrors and Haskell owners likewise combine K1 with their overlapping transport/native tests. The C++ integration owner also owns MirrorCPP's K1 TLS check, while keeping the generic MirrorCPP error type and generated adapters unchanged if the integration design below suffices.</p>
+<p>Audit traceability: F1 → L1; F2 → L2; F3 → E1; F4 → C1; F5 → M1; F6 → M2; F7 → H1. D1 and D2/K1 reconcile the two contract discrepancies. Start L1 first because it affects peer authentication; the other independent repair tracks can then proceed in parallel within their file ownership.</p>
+<h3 id="l1-reject-empty-tls-identity-before-connection">L1 Reject empty TLS identity before connection</h3>
+<p>Cause: <code>MirrorLean/ServerMode.lean:111</code> uses <code>cfg.serverName.getD host</code>, so <code>some &quot;&quot;</code> bypasses the host default; <code>server-mode/native/mirrorlean_tls.c:246</code> skips identity configuration for an empty name.</p>
+<p>Validate the effective name in Lean before socket acquisition. Retain a defensive nonempty check in the C entry point, then configure DNS/IP SAN validation unconditionally for valid input. Do not silently replace an explicit empty override with the host. Keep CN fallback disabled, TLS 1.3/mutual authentication intact, and pins additive to CA/SAN verification.</p>
+<p>Extend <code>server-mode/Test/ServerMode.lean</code> and its temporary certificate generator. Check a matching DNS/IP SAN, default host, explicit valid name, wrong name, CA-valid CN-only peer, and empty override. Cover both no-pin and pinned configurations so a matching pin cannot replace SAN checks. Test the public Lean wrapper and direct exported native entry separately; empty identity must precede deliberately missing credential-path errors, and a bounded listener must observe no acquired socket. Rebuild the actual native target and linked test, not only root Lean modules.</p>
+<h3 id="l2-make-dependency-discovery-respect-string-literals">L2 Make dependency discovery respect string literals</h3>
+<p>Cause: <code>MirrorLean/Spec.lean:50</code> strips <code>(*</code> inside a quoted TLA+ string as a comment, hiding a later <code>INSTANCE</code> dependency.</p>
+<p>Keep the existing two-step pipeline: make the comment stripper track ordinary text, quoted string/escape, line comment and nested block-comment states; preserve string text and token separators/newlines, then let the existing dependency tokenizer skip strings. Fixing comment stripping must not introduce false dependencies from words inside strings. Preserve module discovery order, deduplication, standard-module handling, cycle behavior and existing errors. This task does not add a new TLA+ parser or change the wire format.</p>
+<p>Extend the root <code>test/Main.lean</code> source-resolution cases for the original marker-before-INSTANCE input, real nested comments, escaped quotes/backslashes, <code>\\*</code> markers, multiple dependencies and quoted fake <code>INSTANCE</code>/<code>EXTENDS</code> tokens. Assert exact source ordering/content, missing-real-module failure, and shared/cyclic closure termination. Test inline registration's final byte bound separately from source discovery.</p>
+<h3 id="e1-admit-compiled-computer-pairings-consistently">E1 Admit compiled computer pairings consistently</h3>
+<p>Cause: callback selection without an explicit <code>execution</code> skips the pairing check in <code>MirrorECMA/src/negotiated.ts:226–229</code>. A current test in <code>test/model-interface-runner.test.ts:367–394</code> explicitly expects the invalid sync-target/async-contract pairing to succeed.</p>
+<p>Centralize local compiled-selection admission and invoke it from every public compiled callback/explicit-execution overload before transport resolution/spawn/readiness, writes, registry lookup or factory acquisition. Accept exactly <code>mirrorecma-v1</code> with <code>mirrors.state-computer/v1</code>, and <code>mirrorecma-async-v1</code> or <code>mirrorecma-async-v2</code> with <code>mirrors.async-state-computer/v1</code>. Keep <code>state_computer_contract_mismatch</code> for a supported target with an incompatible computer contract, and the existing <code>target_profile_mismatch</code> for an unsupported target or explicit execution/target mismatch. Explicit sync/async execution retains its corresponding pair and current policy restriction. Split the contradictory test and record the corrected admission behavior as a compatibility change. Migration uses a binding generated for the proper async target; relabeling old generated metadata is insufficient.</p>
+<p>Descriptor factories are target-neutral and do not carry compiled target/contract keys. Preserve their authenticated-descriptor ordering and validate dynamic scope constraints at the existing acquisition point after the factory returns the needed scope. Do not add target fields to descriptor selections or force checks before the data exists.</p>
+<p>Controls cover implicit and explicit execution, valid sync and async versions, invalid pairs, and zero sends/factory/computer/dispose calls on local rejection. Preserve transport ownership on pre-acquisition rejection, exactly-once cleanup after acquired resources, descriptor sync/async success, and unauthorized/wrong-digest zero-worker behavior. Keep synchronous generated output byte-stable.</p>
+<h3 id="c1-retain-trusted-gate-failure-provenance-in-the-c-facade">C1 Retain trusted Gate failure provenance in the C++ facade</h3>
+<p>Cause: the public MirrorCPP runner replaces a factory's code with <code>adapter_factory_failed</code>; generated callback catches can replace invoke/observe errors with generic binding errors. Gate's existing conversion also drops stage. The audit runtime probe covered the actual runner with a fake transport; actual backend/worker failure injection remains required.</p>
+<p>Prefer capture owned by the Gate integration rather than expanding the generic MirrorCPP <code>Error</code> layout or rewriting generated adapters. Add an immutable value snapshot of the managed worker's recorded primary failure, carrying SDK-owned origin/family, code, stage and optional operation ID plus a bounded diagnostic. Preserve the original stage even when empty; keep any local operation context in a separate field. Capture factory/control/attach failures before normalization, and snapshot worker failures before runner-owned dispose can add cleanup failures or release the worker.</p>
+<p>The facade uses this trusted record to restore the stable Gate failure code on the public result and expose stage/origin in structured <code>SandboxEvidence</code>. Preserve the first primary failure; cleanup/control-shutdown errors remain separately visible and make otherwise successful execution fail. A normal Mirrors <code>step_mismatch</code> remains an ordinary mismatch.</p>
+<p><code>SdkError</code> alone does not prove origin: worker replies can supply code strings. The SDK must distinguish locally/control-classified admission, protocol and deadline failures from worker application diagnostics. A worker that writes <code>DEADLINE_EXCEEDED</code> or a backend-looking code must not gain that trusted family. Cover exception paths and lifecycle/precondition failures that currently bypass <code>remember_primary</code>, not just the existing stored-error path.</p>
+<p>Test normal replay, wrong digest with zero worker acquisition, real backend admission rejection, malformed worker response, invoke/observe failures, actual SDK deadline expiry, spoofed worker codes, and secondary cleanup failure. Assert public stable code, structured stage/origin, primary precedence and physical cleanup. Rebuild the Gate SDK, facade and downstream C++ consumers together; an additive snapshot/evidence surface does not establish binary compatibility with an old SDK build. If this design cannot cover all callback paths, review a targeted alternative before expanding the generic error interface.</p>
+<p>Retain a family matrix for control compatibility, preparation/build/admission, model negotiation, worker transport/protocol, application failure, timeout/cancellation and ordinary Mirrors mismatch. Add an attached-daemon case with a second live session to prove cleanup does not stop the daemon or the other session. Credit SO7 only for the families actually injected through the corrected facade.</p>
+<h3 id="m1-reject-incomplete-jsonl-frames-on-every-built-in-transport">M1 Reject incomplete JSONL frames on every built-in transport</h3>
+<p>Cause: TCP and TLS receive loops combine clean EOF with read failure, then accept a nonempty buffer without LF. Stdio has the same partial-EOF pattern and belongs in the narrow framing correction.</p>
+<p>Return <code>none</code> only for clean EOF with an empty accumulator. Distinguish read-error sentinels and fail with an infrastructure diagnostic. A nonempty EOF fragment is an unterminated-frame error even when it is valid JSON. Mark/discard unusable partial state. Preserve complete buffered LF frames, current CRLF handling, split/coalesced input, strict UTF-8 and the 65,535-byte payload bound. Keep the FFI interface unchanged.</p>
+<p>Extend <code>tools/TransportSpec.lean</code> and add proposed <code>tools/check-client-framing.py</code> for actual <code>mirror validate</code>/trace-generation behavior. Cover normal LF, split LF, multiple frames, empty EOF, valid JSON without LF, partial JSON, read failure and byte boundaries. Exercise real TLS close-notify EOF and abrupt socket termination separately; the original audit only exercised plain TCP. Invalid frames must print no <code>VALID</code>, exit with failure, and publish no capture. Bound all peers/children and reap them in <code>finally</code>.</p>
+<h3 id="m2-cancel-only-after-local-poll-budget-exhaustion">M2 Cancel only after local poll-budget exhaustion</h3>
+<p>Cause: <code>Shell/TraceCapture.lean:95</code> cancels after every <code>awaitTraceJob</code> error, including terminal <code>protocol_error</code> and job outcomes.</p>
+<p>Give the private await helper typed stop reasons: local poll-budget exhaustion, terminal job outcome, and peer/protocol/transport failure. Preserve the public <code>Except String Capture</code> interface and diagnostics. Send best-effort <code>cancel_job</code> only for an accepted owned job still believed pending/running on a healthy connection when the local budget expires, including the helper's explicit zero-budget case after acceptance.</p>
+<p>After protocol error, malformed reply, wrong correlation/result kind, EOF/read failure, cancelled/unknown status or terminal job failure, return without further wire writes. Failure before acceptance owns no job. A failed cancellation must not overwrite the original budget diagnostic, and cancellation acceptance alone is not proof of worker termination.</p>
+<p>Update existing tests that currently expect cancellation after wrong-job/wrong-result/cancelled replies. Extend <code>tools/TraceCaptureSpec.lean</code> and <code>tools/check-trace-capture.py</code>: exact write sequences, success, pending/running budget exhaustion, protocol error, malformed reply, throwing receive, infra error and cancellation-send failure. Check that failure publishes no output and that the CLI closes its owned connection.</p>
+<h3 id="h1-bound-final-encoded-output-and-raw-receive-accumulation">H1 Bound final encoded output and raw receive accumulation</h3>
+<p>Cause: Haskell <code>Protocol.Transport.Core.sendMsg</code> encodes without a final size check, while TCP/stdio line reads and TLS buffer growth are unbounded.</p>
+<p>Place final encoded UTF-8 payload validation in transport core and enforce the same predicate in built-in <code>send</code> methods so direct transport callers cannot bypass it. Add reusable bounded LF framing behind the existing transport interface. Adapt stdio, TCP and TLS to feed bounded raw chunks or bounded buffered-handle reads without changing exported constructors unnecessarily. Count at most 65,535 bytes before LF, reject oversized input before JSON parsing, distinguish clean empty EOF from an incomplete frame, and preserve bytes after an LF for the next frame. Inspect each LF-delimited frame before treating a coalesced chunk as oversized. An oversized/incomplete frame must poison or close that transport rather than leave its tail eligible for another request. An oversized send must emit zero bytes. Define and test the bounded retained payload plus fixed input-chunk/suffix allowance; do not decode partial UTF-8 chunks independently.</p>
+<p>Do not alter ordinary JSON encoding, record keys, optional fields, ITF integers or frozen Haskell corpus files. Shared transport-core changes affect server use too: include a normal server-side request/reply round trip and an oversized inbound request refusal with owned resource cleanup.</p>
+<p>Extend <code>test/TcpTransportSpec.hs</code>, <code>test/TlsTransportSpec.hs</code>, and add focused stdio/framing cases registered in <code>test/Main.hs</code> and <code>ModelMirrors.cabal</code>. Cover final encoded lengths 65,534/65,535/65,536, multibyte UTF-8 boundaries, escaped JSON, fragmented/coalesced lines, strict LF/EOF behavior, long unterminated input with bounded retained memory, and zero-write send rejection. Test actual adapters rather than only a byte helper. Establish Haskell toolchain/package availability on remote WSL before scheduling its build.</p>
+<h2 id="additional-observations-and-follow-up-decisions">Additional observations and follow-up decisions</h2>
+<p>Keep these visible without treating them as seven already-proven runtime defects.</p>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Proposed follow-up and acceptance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Haskell discards echoed job IDs/accepted kind</td>
+<td>After H1, add local correlation checks for accepted/status/result replies. A wrong ID or kind must fail without returning another job's result or cancelling that ID. Preserve valid replies. State the stronger expectation in the guide before counting it as a numbered conformance gate.</td>
+</tr>
+<tr>
+<td>Haskell <code>cancelJob</code> accepts only <code>job_status</code></td>
+<td>Accept both legal response shapes in section 6 using the existing decoder, validate correlation, and test terminal <code>job_result</code> as well as current-server status replies. This closes a source-only compatibility gap.</td>
+</tr>
+<tr>
+<td>Lean config decoder rejects explicit <code>constInit: null</code></td>
+<td>Align optional string decoding with absent-equals-null semantics, preserve type errors for nonstrings, and add absent/null/string/wrong-type round-trip cases. Normal typed outbound omission remains stable.</td>
+</tr>
+<tr>
+<td>Haskell SAN behavior and fingerprint exception</td>
+<td>Run CA-valid SAN/CN/wildcard/IP and pin cases against the actual installed TLS dependency on remote WSL. Record the documented case-sensitive-pin exception explicitly. A policy change or proven new defect gets a separate reviewed task; no CN-fallback defect has yet been established.</td>
+</tr>
+</tbody>
+</table>
+<p>These tasks can follow the main repair gate. Haskell cancellation grammar and reply correlation should share one owner to avoid overlapping <code>Protocol/Client.hs</code> edits. Full client conformance cannot be claimed while applicable TLS policy remains unverified or an accepted exception is omitted from the scope statement.</p>
+<h2 id="execution-and-validation-sequence">Execution and validation sequence</h2>
+<ol>
+<li><strong>Freeze and settle contracts.</strong> Review D1/D2, record fresh source/toolchain identities, establish remote disk and dependency capacity, and retain the baseline reproductions unchanged.</li>
+<li><strong>Implement focused repairs.</strong> Owners add the regression at the public interface, confirm the original behavior fails that expectation remotely, apply the smallest change, then run the normal/failure/integration controls. Keep deterministic case IDs and exact transport write assertions.</li>
+<li><strong>Integrate once.</strong> Build changed targets from the corrected sources and run affected offline suites. Use a fresh remote source/build/install namespace and immutable dependency caches where compatible; old audit binaries are controls, not repaired artifacts. Avoid concurrent clean/build operations on one output tree.</li>
+<li><strong>Review acceptance evidence.</strong> Bind heads plus working diffs/file hashes, compiler/library versions, build commands, binary hashes, case results and cleanup receipts. Independently review C++ trust/cleanup, TLS identity, bounds and session ownership. Update all 342 audit cells only where new evidence supports it.</li>
+<li><strong>Record scoped completion.</strong> Save a new dated remediation record and remaining platform/live tiers. Commit/push or a new release qualification remains a separate requested action.</li>
+</ol>
+<h3 id="remote-build-and-gate-boundaries">Remote build and gate boundaries</h3>
+<p>All commands below are proposed remote commands. No compilation, runtime probe or model checker runs on this coordinator for this plan.</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Focused gate and build requirements</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mirrors</td>
+<td><code>lake build mirror transport_spec trace_capture_spec jobstore_spec</code>; run those three spec executables, the new <code>python3 tools/check-client-framing.py</code>, existing trace-capture/validate-async scripts, then <code>bash tools/run-local-no-model-check.sh</code> once after integration. Wire the new gate into both maintained drivers.</td>
+</tr>
+<tr>
+<td>MirrorLean root</td>
+<td><code>lake build test async-test model-interface-test</code>; run <code>.lake/build/bin/test</code>, <code>env -u MIRROR_BIN .lake/build/bin/async-test</code>, and <code>.lake/build/bin/model-interface-test</code>. Removing <code>MIRROR_BIN</code> avoids the async test's live-server branch. Root uses its own <code>lean-toolchain</code>.</td>
+</tr>
+<tr>
+<td>MirrorLean native TLS</td>
+<td>In <code>server-mode/</code>, <code>lake build server-mode-test</code>; run <code>.lake/build/bin/server-mode-test</code>. Its package/toolchain and native TLS object are separate from the root package. Verify a C/header change relinks the executable and a no-change rebuild does no native work.</td>
+</tr>
+<tr>
+<td>MirrorECMA</td>
+<td>Frozen dependency install; <code>pnpm run check</code>, <code>pnpm run check:model-interface</code>, <code>pnpm run check:examples</code>; <code>pnpm run test --runInBand --no-watchman</code> with runner/report/dynamic/spawn-allocation test files. Build fresh <code>dist</code> before the actual public-overload probe. Then run <code>MIRRORS_ROOT=&lt;owned-remote-root&gt; MIRRORS_REF=&lt;full-new-SHA&gt; pnpm run ci</code> without <code>--live</code>. Use its own published compiler baseline.</td>
+</tr>
+<tr>
+<td>MirrorCPP and Gate C++</td>
+<td>Use a separate Debug MirrorCPP TLS/unit-test build for K1, and Gate's <code>bash scripts/test-control-cpp.sh</code> for its SDK tests with a bounded <code>CMAKE_BUILD_PARALLEL_LEVEL</code>. Configure <code>integrations/mirrorcpp</code> against the exact corrected <code>MIRRORCPP_ROOT</code>; build <code>mirrorgate_mirrorcpp_counter</code> and <code>mirrorgate_mirrorcpp_receipt_tests</code>. That integration intentionally disables MirrorCPP TLS/tests; it cannot replace the separate K1 build. Run actual Gate controls with finite timeouts, plus existing packaging smoke for a fresh consumer.</td>
+</tr>
+<tr>
+<td>Haskell</td>
+<td>Build the existing <code>ModelMirrors-test</code> suite and run selected Tasty transport/client cases with <code>cabal test ModelMirrors-test --test-options=...</code> after retaining the selected test list. Existing whole TCP/TLS groups include model-backed tests; select explicit non-model cases or split those groups. Run the new framing cases and changed server use paths with <code>LC_ALL=C.UTF-8</code>.</td>
+</tr>
+<tr>
+<td>Rust control</td>
+<td>Run <code>cargo test --test transport</code> from a fresh source-matched build; it includes exact-mode, byte-boundary, stdio and loopback TCP controls. No Rust behavior change is planned under the recommended D2 choice.</td>
+</tr>
+</tbody>
+</table>
+<p>Record observed tool versions against repository manifests/pins. The audit observed remote Node 24.19.0 whereas <code>tools/ci/versions.env</code> names 24.15.0, and different Lean packages have independent toolchains. Resolve each target's supported pin and record an override if required; an installed tool being newer is not parity proof. The CI Apalache pin is historical and differs from the selected live-service record; these non-model fixes do not require an oracle version migration.</p>
+<p>Remote preflight must recheck capacity: the audit recorded only about 722 MiB free on the WSL root while D: had space. Use a new owned D:-backed workspace for large outputs, with a POSIX-backed location for key-mode tests. Do not delete or remount earlier evidence/install images to make room. Limit build concurrency from measured capacity, and reuse dependency caches read-only where toolchain-compatible.</p>
+<p>After a normal rebuild, repeat the no-change incremental build and deterministic protocol/corpus checks. Confirm expected native targets relink after C/header edits and remain untouched on no-change runs. K1 changes the Mirrors TLS C shim: run <code>bash tools/check-native-rebuild.sh</code> on remote WSL to verify that affected native path; do not expand into a build-graph redesign. Bit-identical whole binaries are not an assumed build-system guarantee; retain hashes and compare reproducible wire/generated outputs instead. No build-system migration is needed.</p>
+<h3 id="integration-and-remaining-environment-checks">Integration and remaining environment checks</h3>
+<p>The main fixes can be accepted with scripted protocol peers, real TLS peers, fake model runners and actual Gate control/worker processes, all on remote WSL. No new model run is necessary to prove these error paths. Actual Gate admission/protocol/deadline controls are required for C1; the previous fake-transport test alone is insufficient. Gate's broad control conformance runner starts local Apalache: use the supplied-trace/focused control path for this repair, rather than inheriting that runner's live tiers.</p>
+<p>A later full cross-client/live qualification must follow <a href="https://github.com/NzSN/Mirrors/blob/c17bae951c4d5bbc5818c2a4f82e2d93d07abc52/tools/interop/INTEROP.md">interop instructions</a> with an owned remote service and explicit full Mirrors SHA. Reobserve its endpoint, binary, runtime, current certificate validity and pins first. The old October 7 certificate identity expired and cannot authorize a current connection. Never invoke <code>tools/interop/run.sh</code> or <code>lake test</code> blindly here: both can lead into local model-checker tiers.</p>
+<p>Hosted CI must still confirm the selected compiler/tool pins and all required gates. Native Windows/macOS TLS/ACL behavior, broader Gate backends, and any full-current-source qualification remain separate from WSL acceptance. Unsupported tiers are recorded as unverified, not successful skips.</p>
+<h2 id="acceptance-and-rollback">Acceptance and rollback</h2>
+<p>The repair gate is complete only when every main task has its stated normal, original-failure and integration result, all owned peers/processes are gone, generated sync/wire output remains stable, and an independent review finds no unresolved defect in the changed scope. Report main repair completion separately from follow-up observations and full guide conformance.</p>
+<p>Keep changes in cohesive per-repository units: contracts/session semantics; TLS/key modes; dependency discovery; ECMA admission; C++ Gate provenance; bounded Haskell framing; CLI framing/cancellation. Review and revert a unit with its tests/docs if needed. The C++ SDK/facade/consumer build must move or roll back together. Any future strict-key rollout needs release notes and a diagnostic rather than automatic key mutation. No production service, certificate, registry or persisted data migration is part of these repairs.</p>
+<h2 id="plan-review">Plan review</h2>
+<p>Independent review completed with no remaining material findings in the reviewed plan. Four corrections were incorporated: isolate Lean's live-test trigger, use the repository's Jest invocation, make synchronous dispatch termination and owner cleanup explicit, and complete D2/K1 dependencies and ownership. The <a href="#independent-review">review record</a> retains the findings and their resolution.</p>
+<p>This verdict covers the proposed repair design, task boundaries and source-backed validation commands. Implementation and all new build/runtime acceptance results remain pending.</p>
+
+<details class="review-record" id="independent-review"><summary>Independent review record and resolved findings</summary><article><h1 id="review-independent-review-of-the-client-conformance-fix-plan">Independent review of the client conformance fix plan</h1>
+<p>Reviewed 2026-10-15. Scope: <code>Plans/client-conformance-fix-plan-2026-10-15.md</code>, the aggregate audit, the three contributor planning notes and selected current source/manifest paths. Read-only source review; no implementation, compilation, runtime probes, model operations, commits or deployment performed.</p>
+<p>Initial verdict: <strong>corrections required before treating the plan as execution-ready</strong>. The seven main fixes are supported by the audit. The C++ trusted-provenance design correctly distinguishes worker-authored diagnostics from SDK/control classifications, preserves primary-over-cleanup precedence and requires real Gate failure injection. The plan appropriately separates source confirmation, scoped future acceptance and full conformance.</p>
+<h2 id="review-findings">Findings</h2>
+<ol>
+<li>
+<p><strong>P2 — Pin the MirrorLean async gate to its non-live mode.</strong> The remote-command table (initial line 171) says to run all three root executables without an environment guard. <code>MirrorLean/test/Async.lean:8–16</code> starts a Mirrors server and invokes live job checks whenever inherited <code>MIRROR_BIN</code> is present. Remote placement alone does not make that a non-model gate. Use <code>env -u MIRROR_BIN .lake/build/bin/async-test</code>, explicitly record its omitted live tier and preserve the already documented separate live-qualification procedure. The contributor note already supplies this exact safe command.</p>
+</li>
+<li>
+<p><strong>P2 — Correct the ECMA Jest command.</strong> The table (initial line 173) uses <code>pnpm test -- --runInBand ...</code>. The package script is Jest; the extra separator can turn the intended option into a positional pattern. Use the repository's existing <code>pnpm run test --runInBand --no-watchman test/model-interface-runner.test.ts</code> form, as in <code>scripts/ci/check.sh:56</code>, and list the selected tests/results in later evidence. No test execution is needed to fix this planning command.</p>
+</li>
+<li>
+<p><strong>P2 — Make the chosen synchronous-session policy explicit in D1.</strong> The current prose (initial lines 42–44) calls for explicit continuation where needed and tests protocol-error exits, but does not completely specify what happens when delegated synchronous dispatch returns successfully with an idle phase. Under the selected fresh-synchronous-session policy, make each <code>dispatchAsync</code> arm explicit: async accepted/rejected submissions and successful job controls continue; unexpected messages end; a delegated complete synchronous dispatch ends on every return, including success and registration failure. The existing <code>Bool</code> result can express this; an enum/refactor is unnecessary unless implementation evidence warrants it. State the compatibility effect: mixing synchronous work onto a connection with earlier accepted async jobs ends that connection and cancels/evicts its owned jobs under C6. Add successful synchronous return and failed synchronous registration cases asserting no next queued request is dispatched, owner jobs are cleaned, and another session remains usable. Preserve rejected <strong>async</strong> submissions as recoverable.</p>
+</li>
+<li>
+<p><strong>P3 — Give D2 an explicit task identity and finish file ownership.</strong> K1 depends on D2, which currently has no row in the task table. Add a coordinator-owned D2 decision/shared-case-list task dependent on P0, or state clearly that D1/D2 decisions are P0 outputs and make K1 depend on that output. Also explicitly assign Mirrors K1 <code>Ffi/tls_shim.c</code>/<code>tools/TransportSpec.lean</code> to the Mirrors owner and Haskell K1 transport/TLS tests to the Haskell owner; both overlap their main tasks. Shared contract edits should remain with the coordinator; only the Mirrors owner should edit the session and maintained drivers. This keeps implementation batches free of avoidable file conflicts.</p>
+</li>
+</ol>
+<h2 id="review-acceptance-assessment">Acceptance assessment</h2>
+<ul>
+<li>L1 covers default/nonempty/empty identity, CA-valid CN-only peers, pin independence, direct native entry and acquisition ordering.</li>
+<li>L2 addresses strings, escapes, nested comments and token separators while preserving original emitted sources and closure order.</li>
+<li>E1 preserves target-neutral descriptor scopes and validates compiled pairs before side effects; compatibility tightening is declared.</li>
+<li>C1 handles trusted origin, worker-code spoofing, failures bypassing the stored-error path, pre-disposal capture and primary/secondary cleanup. Keep the existing real-backend, malformed-worker, deadline/cancellation, application and mismatch controls; do not replace them with the earlier fake-transport result.</li>
+<li>M1/M2 cover stdio/TCP/TLS fragments, clean/abrupt TLS closure, exact writes, terminal failures and local budget-only cancellation.</li>
+<li>H1 covers all real adapters, final encoded bytes, bounded raw accumulation, poisoned input and shared reference-server effects. Selected Tasty patterns must remain explicitly non-model.</li>
+<li>D2 explicitly requires actual POSIX filesystem modes, observed chmod results, unchanged caller keys, exact special-bit handling and separate Windows limits.</li>
+</ul>
+<p>The plan remains a proposal. None of these assessments grants implementation acceptance or full client conformance. Recheck the four corrections in the canonical plan, then append the final review verdict here.</p>
+<h2 id="review-correction-recheck">Correction recheck</h2>
+<p>The revised canonical plan resolves findings 1–3: it removes inherited <code>MIRROR_BIN</code> for the Lean async gate, uses the repository's direct Jest argument form, and explicitly ends every delegated synchronous dispatch with mixed-session ownership acceptance coverage. It also strengthens C++ failure-family/second-session controls, keeps Gate's model-generating runner out of this gate, and requires the native rebuild gate for K1.</p>
+<p>Finding 4 is also resolved: D2 now has a coordinator-owned task row dependent on P0; K1 explicitly depends on that decision, and Mirrors/Haskell K1 work belongs to their respective main owners alongside overlapping tests.</p>
+<p><strong>Final verdict: no remaining material findings in the reviewed plan.</strong> The proposal is coherent and ready for user review. This verdict covers planning scope, compatibility choices, ownership, task dependencies and proposed acceptance gates. Implementation has not started; no build/runtime/model result or full client conformance is implied. Source/tool/dependency identities, actual Gate failure injection, repaired framing/TLS behavior and platform limits still require the future acceptance work described in the plan.</p>
+</article></details>
+<footer>Plan date: 15 October 2026. Source SHA-256: <code>5a25545759f66a3425754bb898c67e8b779e648338c0d38256d553fd4cb5522e</code><br>Build and runtime validation are planned for remote WSL. This browser artifact was generated from the canonical Markdown; no client implementation was changed.</footer>
+</main></div><script>document.querySelectorAll('table').forEach(table=>{const wrap=document.createElement('div');wrap.className='table-wrap';table.parentNode.insertBefore(wrap,table);wrap.appendChild(table);});</script></body></html>

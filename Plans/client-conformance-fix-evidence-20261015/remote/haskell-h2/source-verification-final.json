@@ -1,0 +1,488 @@
+{
+  "verifiedFiles": 120,
+  "files": [
+    {
+      "path": ".github/workflows/witness-traces.yml",
+      "sha256": "7830bb252319fed2ef9218c4568f2deb67e174b05107d9e0fb2ff3d8eeaeafa7"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "fda387e28d2421190cd74b372c954bfc4cca192c83c8d43c2489d2fab7b8dfb2"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "cddca927a0b18d00bae684b589a1ab2d48abeb3d3344d43567813cec1bdba892"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "c81d358cc2fc2ff8c96ba26a0a4edc3a17f97eac5702f0f601578a04bbd4fb15"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "57c8ff33c9c0cfc3ef00e650a1cc910d7ee479a8bc509f6c9209a7c2a11399d6"
+    },
+    {
+      "path": "ModelMirrors.cabal",
+      "sha256": "e142d77c74aef4aa82298f1320c4d6b6768765d78fd79a83b22c20f250500b49"
+    },
+    {
+      "path": "README.md",
+      "sha256": "d3f8f1d02c6f94c996b83bbd99e7c95232a9ea5bf0f3df5f2a784cf79ddfcda5"
+    },
+    {
+      "path": "app/Main.hs",
+      "sha256": "490d76d09e909bfdc9ebfd6e11af8a58a30ce75e10a67844f2c8238c104879fd"
+    },
+    {
+      "path": "cabal.project",
+      "sha256": "d70d6ccd77e76aaa5226c7c46cdb2883348d36eee4ac2d2ac27a1a75785b52fe"
+    },
+    {
+      "path": "docs/apalache/design.md",
+      "sha256": "a0231e92ffa171c777b536fdddc05b354557d397930a01e2aa12cf5c1c063fcb"
+    },
+    {
+      "path": "docs/apalache/interactive.md",
+      "sha256": "3c4a4471d60a6aef8ac8b17abb86bffdbd469f7e499d7365268ca87c786fed10"
+    },
+    {
+      "path": "docs/async-operations-design.md",
+      "sha256": "f67ba5731e7b9ca6a6b1b47f642001fa1178a17afde25bde18a97a92d209c050"
+    },
+    {
+      "path": "docs/deploy-r-windev.md",
+      "sha256": "a1a6897aef08be07712cfad3244ee1dfb95617e00a3a286b1ce15183efda708b"
+    },
+    {
+      "path": "docs/deploy-server-mode.md",
+      "sha256": "bc21c594214d91d540114fa438621ab9cf11e81dd1234af46afd5e54064d5e43"
+    },
+    {
+      "path": "docs/lean4-refactor-design.md",
+      "sha256": "98357c93f88505e7494c3adc296c52b994127b130678338749873e47b2b3cabc"
+    },
+    {
+      "path": "docs/mbt-remaining-work.md",
+      "sha256": "1fc7b09af5c5a72efbffdfa82076e22d3d9a39dad7076571c68af59f0d56826c"
+    },
+    {
+      "path": "docs/mirror-protocol-state-machine.dot",
+      "sha256": "9f8d3cd5e81261b22c035758d996abb1135f10a104ee7f5a07a688a81c679b9f"
+    },
+    {
+      "path": "docs/mirror-protocol-state-machine.svg",
+      "sha256": "cfc06e8e140853ce31544899b069061c76cffe34f7a11edcac74bc862aa0b931"
+    },
+    {
+      "path": "docs/protocol-spec.md",
+      "sha256": "37b47ab94b613efc709d287fbb4654e4f37df24ae6d56355a3c264df0bdcf48d"
+    },
+    {
+      "path": "docs/remote-validation.md",
+      "sha256": "801582fcc718d59ec204e924d9b761a4aedec671c342dc98f3647aafee1f8686"
+    },
+    {
+      "path": "docs/resource-model-design.md",
+      "sha256": "3b32ccb95c5e0d9a2d3f91e979e0b873bc47312cedb8ef9bb0f9d9a3c902c5e0"
+    },
+    {
+      "path": "docs/server-mode-design.md",
+      "sha256": "4ab177d3f4653d072972c0af8c80ab8facdbee73def4c4ba59edff78f2ef4a5a"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-05-29-engine-handle.md",
+      "sha256": "68168da620dfc812b6ca62ee6d630d912cbe92fd5123cfc83b0c98a099db5ca2"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-05-29-trace-engine.md",
+      "sha256": "eb9ed1bd6111fe1624190159d12deb071a1b1a3aea7ce5432669e25f7ad878ad"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-06-05-structured-logging.md",
+      "sha256": "3e8976c7acf0264867b5cfdc01863d0714221e73f4ba402e693db69b12452942"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-06-09-interactive-symbolic-testing.md",
+      "sha256": "e3ead71990daf1f058df6bc508c6d34d88d35e68953f1b5599246eade407d859"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-06-09-minimal-trace-check.md",
+      "sha256": "6b4b5f017a838010b30719010254c95d84aef57b58d2a1dc843a1226a0e98fdb"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-06-10-server-behavior.md",
+      "sha256": "81e0a9a835ef967358dc7ebca196df8cd4ffc27f7f594f7817a14f8e7c81ecd7"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-05-28-protocol-design.md",
+      "sha256": "93bf5398eb8d1eee9e74d0f9c16b286cbfdd5f91b004378430ac80f42ab06e30"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-05-29-engine-handle-design.md",
+      "sha256": "e454ecc47c94450b2d0fc1437fba4412edf07c165397ce15739065c4c49a5078"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-05-29-trace-engine-design.md",
+      "sha256": "5226ba9d520452480e90ebbba2ac5dea9163a114bcd88a09ef5381fe1f2e2915"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-05-29-transport-design.md",
+      "sha256": "590277a2c9d7edffd69f2522d9ea89dc6df2ed72e91d7c2def5932128ca26740"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-06-05-structured-logging-design.md",
+      "sha256": "a00f7ff3052dc522c99b0af0232a12600dd5209a3cb6b2a8efb8f7b6500132a7"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-06-10-server-behavior-design.md",
+      "sha256": "e1abe951735fd5066df3fe5845f0cb92be13c73f394a835021d856eda981e543"
+    },
+    {
+      "path": "docs/transport-framing.md",
+      "sha256": "4a86e4da9f7a31d4f003fcca81896ae073225bcbd50fca0203a16a3f2ae0e318"
+    },
+    {
+      "path": "docs/validate-only-design.md",
+      "sha256": "84627432bd486f7ab2b9ec052af7072c7fd1b9c86892fd22765a47dd94766768"
+    },
+    {
+      "path": "hie.yaml",
+      "sha256": "25e03d4425e325320338b0a921a61d541a5f1ab5404d0cb220cc2a17af28eb31"
+    },
+    {
+      "path": "plans/deploy-r-windev.md",
+      "sha256": "fc032a20717987e7a30e626124c5bc96a88d3ca084cbd8dcb6fbaa7262af5441"
+    },
+    {
+      "path": "scripts/apalache-mc-shim.c",
+      "sha256": "e82783744a9aa6a4db61e8aad43bef89ef7052315298973bb95cf6c4cb9951d2"
+    },
+    {
+      "path": "scripts/gen-certs.sh",
+      "sha256": "221270daa7fa02910769de36f7ac7ab489ce8058f17968dc4aa4c83d811af145"
+    },
+    {
+      "path": "scripts/gen-witness-traces.sh",
+      "sha256": "401e028fd56025376ef31c68d7007518752ca8d2d24e0370cc014eea886f6808"
+    },
+    {
+      "path": "scripts/set-acls.cmd",
+      "sha256": "aabc345b5e436af701c2084b1ffaf80727a19b95497615b4ffefa141d32be265"
+    },
+    {
+      "path": "scripts/setup-service.cmd",
+      "sha256": "88a5f5e901ffef5112e62166606df9e3b06f8e95e0207955c3abae3d76ce0c30"
+    },
+    {
+      "path": "specs/AapalacheRPCProtocol.tla",
+      "sha256": "ded1d71ebe0398abae25b089c2fabeb02a65e36c228d9fbe5c01735bcc7dc7d0"
+    },
+    {
+      "path": "specs/ApalacheRPCClient.tla",
+      "sha256": "775213cb19a7776a36be79f4c8f46d6ce544d42239b14bac3985ec4b1adcc8f5"
+    },
+    {
+      "path": "specs/Counter.tla",
+      "sha256": "405b4ffb80464cdf919d986e142b180e044c41caf8e6aabe978db0e8e7aa0340"
+    },
+    {
+      "path": "specs/MinimalTraceCheck.cfg",
+      "sha256": "70021a06d23a4da90bd77e82d9fee521a93ca6f40ede4f3f1b4d827e685882ce"
+    },
+    {
+      "path": "specs/MinimalTraceCheck.tla",
+      "sha256": "bf28a839da582f7323fbec54ccb02e3b32874d9fd7542a1026fee7a1acecf8a6"
+    },
+    {
+      "path": "specs/MirrorProtocol.tla",
+      "sha256": "83311980ebeda98dd1083c4d06ded014e456ccdda56d6c7c9e7fdf0dca73232d"
+    },
+    {
+      "path": "specs/MirrorProtocolFaults.tla",
+      "sha256": "f87c3c6532bb4e223d083bbbd41d9240215ab22f1ba08247a71073099236a8ad"
+    },
+    {
+      "path": "specs/MirrorProtocolWitness.tla",
+      "sha256": "320fb1eb86a8c052d52837aeead46222f2cdfb50f6e33d782f36a6ba613f1626"
+    },
+    {
+      "path": "specs/traces/all_steps_done.itf.json",
+      "sha256": "47a64f4398e9bea04e56c199f3fd9e30db98b26c8d8d88727c4fedc889f31899"
+    },
+    {
+      "path": "specs/traces/explore_cmd.itf.json",
+      "sha256": "f0969d94ac6e87144f87769246f387693c6cbe0380dc76f92376964ee780224c"
+    },
+    {
+      "path": "specs/traces/explore_session.itf.json",
+      "sha256": "679b225c8ac35253faa281cad0e97a3a4ddb986e9813973055815e83b3bd379c"
+    },
+    {
+      "path": "specs/traces/fault_close.itf.json",
+      "sha256": "82484824776f8ec85b9e08a72ca8907b718f0072adcfec1233cbea33169101e5"
+    },
+    {
+      "path": "specs/traces/register_error.itf.json",
+      "sha256": "321a260265bea8dca508f1b18f4d0f822f1d3749d82b1c68e848dfca026fa346"
+    },
+    {
+      "path": "specs/traces/step_mismatch.itf.json",
+      "sha256": "59959397917c7a6bf872bfc71ae171c4229c95b75abfbf080c195e47db102436"
+    },
+    {
+      "path": "src/Apalache/Command.hs",
+      "sha256": "9ff04067a6089b81af776e3a65195b79a742c307eb510570d5ece5f6ab85a5da"
+    },
+    {
+      "path": "src/Apalache/Core.hs",
+      "sha256": "efc00d15d490c731e024af4458e3ed54799b9b1e1428b10ba229e09a41d289e9"
+    },
+    {
+      "path": "src/Apalache/Explorer.hs",
+      "sha256": "eb2d54adb56aef082d3eda62734c9825d4f193b79c956ba84cce639b17e506dd"
+    },
+    {
+      "path": "src/Apalache/HttpManager.hs",
+      "sha256": "424c0104150954b8080274605b42c8a7d83c1e77232d02ed5c8e1958822c3b62"
+    },
+    {
+      "path": "src/Apalache/Rpc/Client.hs",
+      "sha256": "14a07283b4da656e121efbd4a880d5e284ee6c5a0ab7aac99c4a2631953681cf"
+    },
+    {
+      "path": "src/Apalache/Rpc/ServerBehavior.hs",
+      "sha256": "b8b03fd626353469ba1beec5d8eb3adfb53b29cacf9ac4c058818d55c4f7e996"
+    },
+    {
+      "path": "src/Apalache/Rpc/Types.hs",
+      "sha256": "5aa869878460b1fdc36a6ad2c980591a2a8847f8beeb6eaf4fbec6f8c229ff83"
+    },
+    {
+      "path": "src/Apalache/SpecSource.hs",
+      "sha256": "56d4bc9a8a71e36e027a488975d84284e28569f1d92526a3c818e964b3df869b"
+    },
+    {
+      "path": "src/Apalache/Trace.hs",
+      "sha256": "102dd9e560110d9ab0ea87b2e23ed432bd41465a0d2e6db6a326f039cd0144d4"
+    },
+    {
+      "path": "src/Apalache/Types.hs",
+      "sha256": "ba30583a2eb1323c1a2e81ace526501a38bb18f2c6daeda1db7904ccf788e01b"
+    },
+    {
+      "path": "src/Engine/Core.hs",
+      "sha256": "169851c91ae8bd380d4e58b47ff858b000102c49a4953eb981dbb688ae98842f"
+    },
+    {
+      "path": "src/Engine/Interactive.hs",
+      "sha256": "30c4030aca36cda29c7d6ed84f12c728b785ff95dea3ba437ff3f32123a2440f"
+    },
+    {
+      "path": "src/Engine/Replay.hs",
+      "sha256": "cf2fd0e97032ea3ded91ff2fc4315572c1f264278d340a60307cea3b8b6c2770"
+    },
+    {
+      "path": "src/Engine/Types.hs",
+      "sha256": "8edf2c14dbc435a7c00d82a9618643d44d427c8708489cc703e0ad61cbe61d37"
+    },
+    {
+      "path": "src/Engine.hs",
+      "sha256": "b5a2b2e4a357a664be6cfc12a2085dfa80ea4d039a4e8b9ae0240b71021deaa7"
+    },
+    {
+      "path": "src/MinimalTraceCheck.hs",
+      "sha256": "4c193fcc0e04d7115244f9af320989530994d6bb7dc1814b6d6dbbe219f58afc"
+    },
+    {
+      "path": "src/Protocol/AsyncJobs.hs",
+      "sha256": "174c3cb64d8f6cf67822d24b0433c502474e2da63ae13b838922235083b46edd"
+    },
+    {
+      "path": "src/Protocol/Client.hs",
+      "sha256": "2ec95a91223dc12fd0cfc4943ce1893b4fa47cacb29d34ddf97c962a5a4aa4f6"
+    },
+    {
+      "path": "src/Protocol/Core.hs",
+      "sha256": "c5a7247cefb094c6d045b80d97befa969fc386751785922f9c190957afcb8966"
+    },
+    {
+      "path": "src/Protocol/Discover.hs",
+      "sha256": "47ffc7dd43e5c7530f51925c4bbe8e33badb403c6ae69ed4893b4bd7b69f2569"
+    },
+    {
+      "path": "src/Protocol/Format/Json.hs",
+      "sha256": "d67e2a5c4273f7df4d17d7545a61ce27c77640a7e74a8a614a88380a430f58d0"
+    },
+    {
+      "path": "src/Protocol/Mirror.hs",
+      "sha256": "d282f6bfa5aaaf936532837221664e91a4793b8efd913fe0806941ee5fda23aa"
+    },
+    {
+      "path": "src/Protocol/Registry.hs",
+      "sha256": "2ff752bce39401d4961198642e9ea52bf8becbb6c9d6ee9ca923849542fa5b7b"
+    },
+    {
+      "path": "src/Protocol/ServerOpts.hs",
+      "sha256": "1a8558fecad2eecad1fd1f1606076c363e0156d3fe6b2967aa7083f12113fe82"
+    },
+    {
+      "path": "src/Protocol/Transport/Core.hs",
+      "sha256": "3d150ebc85a2521cba61fb9c54877d85dbc35b858537e417c1963647aac00ac6"
+    },
+    {
+      "path": "src/Protocol/Transport/Framing.hs",
+      "sha256": "0ecc631076c395f9497570b4a82def9651156401e9d0637dc2280ee4d32993e5"
+    },
+    {
+      "path": "src/Protocol/Transport/Mock.hs",
+      "sha256": "ac4ca8792fcda3b79ce087d072a58c9da58ee2c73604d4408cdf0fb2b8a12968"
+    },
+    {
+      "path": "src/Protocol/Transport/Stdio.hs",
+      "sha256": "92ef4b74cf9fca2ff7b70f36c211f7cd8609cda180672c3d49766ec9c0e45120"
+    },
+    {
+      "path": "src/Protocol/Transport/Tcp.hs",
+      "sha256": "d3637a7d0e8c0ce338c45b2cdbc05f9cd559eb05b563498a018294cbe0194c43"
+    },
+    {
+      "path": "src/Protocol/ValidateOpts.hs",
+      "sha256": "1d7f8b21bad6548459de6ad0217bb3c68425f28fb163e78d779c14197ec885a9"
+    },
+    {
+      "path": "src/Resource.hs",
+      "sha256": "ea32f9c2c4e43d3c213a84fcb8dd5224e04af106e725d81b9415fc9fa681369a"
+    },
+    {
+      "path": "src-tls/Protocol/Transport/Tls.hs",
+      "sha256": "afc5618b129a0cebc6ee4d5237f40f6fb55e6b79e8832d788fdeeb3ff3ecaba0"
+    },
+    {
+      "path": "test/Apalache/CommandSpec.hs",
+      "sha256": "d404178e3b666d731ef62627ebd8d342360c940dfeef4ae3ae75682d1fc9ca1b"
+    },
+    {
+      "path": "test/Apalache/ServerBehaviorSpec.hs",
+      "sha256": "3d612a60cfc630f2c84f34db32a82e2c46dd184deff721665dfe55ba6c948ec8"
+    },
+    {
+      "path": "test/Apalache/SpecSourceSpec.hs",
+      "sha256": "26c3b1a99077fc81ac55abfde52f88dd798bf2bd6bca562f0c11abf0b0754b5c"
+    },
+    {
+      "path": "test/Apalache/TraceSpec.hs",
+      "sha256": "743b8b6ff191a60a43d8e2717d37abb0d72779cd5fe98b27752514f848406061"
+    },
+    {
+      "path": "test/Apalache/TypesSpec.hs",
+      "sha256": "ff706a091a1ee9aae1d00c0b33408f4b811646970bb77d2c8806148ca0edcd86"
+    },
+    {
+      "path": "test/ClientReplySpec.hs",
+      "sha256": "7e07aafd36e607c86709ffbbd28bb9f876cf8e7931644a5e5dc4fd4a3f960e87"
+    },
+    {
+      "path": "test/ClientSpec.hs",
+      "sha256": "8e19fbff86bef95eb148e1ca9926d2b08d880c459bf62bc4f09dc3d027634e98"
+    },
+    {
+      "path": "test/DiffHintSpec.hs",
+      "sha256": "760a34963916802a1c74794c02c39d62634eb3f2ff660e5ffab330f50710f85d"
+    },
+    {
+      "path": "test/EngineSpec.hs",
+      "sha256": "77451676c216935a777cc354c41e8accd8679f068f11f6860c5e065f781bfdfd"
+    },
+    {
+      "path": "test/ExploreMirrorSpec.hs",
+      "sha256": "d69f1ad7b95c9e4056383c3cd207e55806b70f0df27b1c2ea4a638cc57b90211"
+    },
+    {
+      "path": "test/Main.hs",
+      "sha256": "f16788e67564880e57d38f4da1e4037ec1a3cf0c05650b5579d180ff8868a945"
+    },
+    {
+      "path": "test/MainSpec.hs",
+      "sha256": "3f21d078f0b548d585e8fbcfb7280beebd50534e953d52a3953196b2de8d1a8e"
+    },
+    {
+      "path": "test/MinimalTraceCheckSpec.hs",
+      "sha256": "fcff985cc26fae735834f9433944191f3aef4e21b5630f5c2fa6e5743a71f20a"
+    },
+    {
+      "path": "test/MirrorE2ESpec.hs",
+      "sha256": "d8b6be1df54ee0ad062546078926af947089bdb81a307a0d7e773f52b5536b3e"
+    },
+    {
+      "path": "test/MirrorProtocolSpec.hs",
+      "sha256": "cdaf7bfea1d65d3b574c940d232e9bffa58a067b64a873134db7a82d5847e9fe"
+    },
+    {
+      "path": "test/MirrorStepSpec.hs",
+      "sha256": "f978c46e4fd2581d39c4e82cb6b7a0385319129354d7363e1a1b06e74ffaaabb"
+    },
+    {
+      "path": "test/Protocol/AsyncJobsSpec.hs",
+      "sha256": "dee14c15857bf70577a37ec897c5c316b80b6b9330f39ce5ed8dd2016fa1189e"
+    },
+    {
+      "path": "test/RegistrySpec.hs",
+      "sha256": "0fee38d8fa1e3f68399f49b0419b6d7723f602b7a557c6465a2deaeb443986e7"
+    },
+    {
+      "path": "test/ResourceSpec.hs",
+      "sha256": "492134c4b002a981f711bc6c1ef8f6ff67aff85a4e2d6255232133c411c8aeb9"
+    },
+    {
+      "path": "test/ServerFramingSpec.hs",
+      "sha256": "d6d735c19bfcd1b82c823cf61532a7757b0d436d3723a4fa3126ef72883df7ca"
+    },
+    {
+      "path": "test/StdioTransportSpec.hs",
+      "sha256": "caba6c48b6b6857d0de372ba9d62ada00e6b4e27e3ff93010270396cd00f2a5f"
+    },
+    {
+      "path": "test/TcpTransportSpec.hs",
+      "sha256": "af98dee1959f5410ac348e4b07ec5e0bed799f64e525f148c035c32b762f9a87"
+    },
+    {
+      "path": "test/TlsPolicySpec.hs",
+      "sha256": "311c6d171ca50eee9aee8fe0192a91432427c2883fe6ec5c90403cc69e96f85a"
+    },
+    {
+      "path": "test/TlsTransportSpec.hs",
+      "sha256": "555bc611a30c73416430a7c2826173446982c9028c7a3975b6a9d803d9ae4ff3"
+    },
+    {
+      "path": "test/TransportFramingSpec.hs",
+      "sha256": "e1c71d60cd8392b037dae4481fa7a7d0b8c73b8f9d9407e304f13599ed58e6f1"
+    },
+    {
+      "path": "test/TransportTestSupport.hs",
+      "sha256": "52acf084ba033f25bf6476e7dc2b748f19c8a5ddb0c0be2b4af83b0a25b85dd8"
+    },
+    {
+      "path": "test/specs/Counter.tla",
+      "sha256": "7f0bfa320ed7fe7f8021158e1f7936ea8fe5db277f1c97d25dabc2700ef40f02"
+    },
+    {
+      "path": "test/specs/DeterministicCounter.tla",
+      "sha256": "6d7b5ce130f9d2c6e30011cc7279adf5930d8b9d4da73e6a5affbe37cbb333de"
+    },
+    {
+      "path": "test/specs/ExtDep.tla",
+      "sha256": "595092b8a45d9e591886cc91c98fb2da7e50894122b25149cd297cb8b0e191e0"
+    },
+    {
+      "path": "test/specs/ExtMain.tla",
+      "sha256": "29240377c9094a5cc3ab4ae3dec60ee315270183877bbc5a27b761d729282315"
+    },
+    {
+      "path": "test/specs/HourClock.tla",
+      "sha256": "3c88f0816b38fc188e1678e26ab15f2d9202ae162c4b427f611209607c67f6e4"
+    }
+  ],
+  "validationOverlay": [
+    "cabal.project.local"
+  ]
+}

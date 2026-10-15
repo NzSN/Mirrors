@@ -411,6 +411,12 @@ script test do
   if traceCaptureCli.exitCode != 0 then
     IO.eprintln traceCaptureCli.stderr
     return traceCaptureCli.exitCode
+  let clientFraming ← IO.Process.output
+    ({ cmd := "python3", args := #["tools/check-client-framing.py"] } : IO.Process.SpawnArgs)
+  IO.println clientFraming.stdout
+  if clientFraming.exitCode != 0 then
+    IO.eprintln clientFraming.stderr
+    return clientFraming.exitCode
   let validateAsync ← IO.Process.output
     ({ cmd := "python3", args := #["tools/check-validate-async.py"] } : IO.Process.SpawnArgs)
   IO.println validateAsync.stdout

@@ -1,0 +1,12 @@
+{
+  "verifiedCandidateFiles": 120,
+  "candidateArchiveSha256": "abd8cb77c68a19a56779c3698a95f2bbd67fc7835fbf894684c8ff35518c940e",
+  "baseline": "H1 qualified source with only new Cabal and test overlays; actual pre-H2 TLS implementation retained",
+  "baselineTlsSha256": "23d6b57db6d8f0b212e7aeaf3fffcf9028d5cba565d92e5ae5085fb5db6b703b",
+  "candidateTlsSha256": "afc5618b129a0cebc6ee4d5237f40f6fb55e6b79e8832d788fdeeb3ff3ecaba0",
+  "baselineOverlays": [
+    "ModelMirrors.cabal",
+    "test/TlsPolicySpec.hs",
+    "test/TransportTestSupport.hs"
+  ]
+}

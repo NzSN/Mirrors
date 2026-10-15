@@ -33,8 +33,9 @@ effectful implementation and runtime tests:
 - **`Shell.Mirror.runAsync`** — the async session loop: submit →
   `job_accepted`, `query_job`/`await_job` → `job_status` or
   `job_result`, `cancel_job` → `job_status` with the resulting phase
-  (`cancelled` for a live job that was cancelled). A sync registration still
-  runs inline. EOF/decode-failure cancels and evicts only that connection's
+  (`cancelled` for a live job that was cancelled). A sync registration runs
+  inline and ends the connection when it returns. EOF, decode/protocol failure
+  and completed synchronous flows cancel and evict only that connection's
   jobs; the process-shared store and other connections' jobs remain available.
 - **`Shell.Apalache.Runner`** — the real runner (per-job session dir,
   owned-spec release, cancel-kill) already plugs into the store.
@@ -78,6 +79,15 @@ execution slots.
   against capacity. A submission beyond it is rejected synchronously with
   `register_error` / `job queue full`; it is not admitted to an extra job
   queue. The connection queue's separate bound is 128.
+- **Async submission rejection preserves ownership.** Its `register_error`
+  ends that attempt without creating a job. The connection and earlier jobs
+  remain usable, including another explicit submission or job operation.
+- **Connection termination is explicit.** Protocol/decode/transport failure,
+  an unexpected command, or return from a synchronous flow ends the connection.
+  A client sends no cancellation after a terminal protocol failure. Mixing
+  synchronous work into a connection with accepted async jobs triggers owner
+  cleanup; use a separate connection to retain those jobs. A terminal async
+  job result/status ends only that job or lookup.
 
 ## 3. Semantics preserved by construction
 

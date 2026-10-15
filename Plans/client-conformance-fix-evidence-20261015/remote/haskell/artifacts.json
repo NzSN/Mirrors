@@ -1,0 +1,38 @@
+{
+  "tools": [
+    {
+      "path": "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/bin/ghc-9.14.1",
+      "bytes": 2314624,
+      "sha256": "88627763ae458b6faef3251215d83d5d47a4a8c246c46e8375aab96dbf00e56d"
+    },
+    {
+      "path": "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "bytes": 37860016,
+      "sha256": "e0b6e6a891fe4c9ac648768be5f7c7719ad34999ec607479da6a7baf04bc39cf"
+    },
+    {
+      "path": "/usr/bin/openssl",
+      "bytes": 1001272,
+      "sha256": "237c1db70a7d0cf34130a467d82823ab0e6d9d77ad5cf24358af6b7d7adef2de"
+    }
+  ],
+  "binaries": [
+    {
+      "path": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/dist/build/x86_64-linux/ghc-9.14.1/ModelMirrors-0.1.1.0/t/ModelMirrors-test/build/ModelMirrors-test/ModelMirrors-test",
+      "bytes": 49334432,
+      "sha256": "3381ce1468ad503135ef3fdd412dfecd162cd0c22d4a4c213c1cc29d6c249031"
+    },
+    {
+      "path": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/red-baseline/probe",
+      "bytes": 20503776,
+      "sha256": "edf2d3ae0af5be978ead2cf288667e0ea280e31a05b28c11bc2db974c5fdffef"
+    },
+    {
+      "path": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/red-fixed/probe",
+      "bytes": 20537448,
+      "sha256": "955722f54b11ea1f0b9ebe0e0f19d87d2c5ec31cfa492f16bda61d8f32cf4e29"
+    }
+  ],
+  "baselineArchiveSha256": "e9a1f6c7f250ce24e9e68bff485980e095bab1bdcbf5c0cd401365e683d39532",
+  "baselineCoreSha256": "d7a0e1eea90b0ac5f3d4425c6b8807c686fda6bd66b9b2b6082aceb6679c412f"
+}

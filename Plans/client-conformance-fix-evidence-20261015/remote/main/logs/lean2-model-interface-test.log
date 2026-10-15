@@ -1,0 +1,137 @@
+PASS: missing extension
+PASS: null extension
+PASS: wrong digest
+PASS: uppercase digest
+PASS: missing wire prefix
+PASS: wrong schema
+PASS: wrong descriptor schema
+PASS: wrong status
+PASS: unsupported cannot fallback
+PASS: unknown extension field
+PASS: descriptor forbidden
+PASS: descriptor bytes forbidden
+PASS: duplicate reply key
+PASS: escaped duplicate reply key
+PASS: premature initial state
+PASS: unbounded exponent
+PASS: optional nulls treated as absent
+PASS: structured server failure preserved
+PASS: server denial constructs nothing
+PASS: factory context has exact digest and config
+PASS: initializer previous state is empty
+PASS: success
+PASS: matched-before-factory order
+PASS: required registration wire contract
+PASS: report_state uses public ITF encoding
+PASS: factory context has exact digest and config
+PASS: factory failure
+PASS: factory context has exact digest and config
+PASS: factory exception
+PASS: factory context has exact digest and config
+PASS: wrong binding digest
+PASS: factory context has exact digest and config
+PASS: malformed binding digest
+PASS: factory context has exact digest and config
+PASS: binding config mismatch
+PASS: factory context has exact digest and config
+PASS: initializer previous state is empty
+PASS: callback typed failure
+PASS: factory context has exact digest and config
+PASS: initializer previous state is empty
+PASS: callback exception
+PASS: factory context has exact digest and config
+PASS: initializer previous state is empty
+PASS: observation failure
+PASS: factory context has exact digest and config
+PASS: initializer previous state is empty
+PASS: step mismatch
+PASS: factory context has exact digest and config
+PASS: decode failure
+PASS: factory context has exact digest and config
+PASS: duplicate replay field
+PASS: factory context has exact digest and config
+PASS: deep replay frame
+PASS: factory context has exact digest and config
+PASS: oversized replay frame
+PASS: factory context has exact digest and config
+PASS: transport EOF
+PASS: factory context has exact digest and config
+PASS: receive exception
+PASS: factory context has exact digest and config
+PASS: initializer previous state is empty
+PASS: send exception
+PASS: factory context has exact digest and config
+PASS: initializer previous state is empty
+PASS: dispose failure
+PASS: factory context has exact digest and config
+PASS: initializer previous state is empty
+PASS: dispose exception
+PASS: factory context has exact digest and config
+PASS: initializer previous state is empty
+PASS: primary survives disposal failure
+PASS: factory context has exact digest and config
+PASS: initializer previous state is empty
+PASS: primary survives close failure
+PASS: factory context has exact digest and config
+PASS: initializer previous state is empty
+PASS: close failure on success
+PASS: registry/metadata absent is inert
+PASS: registry/metadata absent precedes binary spawn
+PASS: registry/metadata ambiguous is inert
+PASS: registry/metadata ambiguous precedes binary spawn
+PASS: registry/metadata adapter is inert
+PASS: registry/metadata adapter precedes binary spawn
+PASS: registry/metadata profile is inert
+PASS: registry/metadata profile precedes binary spawn
+PASS: registry/metadata computer is inert
+PASS: registry/metadata computer precedes binary spawn
+PASS: registry/metadata metadata is inert
+PASS: registry/metadata metadata precedes binary spawn
+PASS: registry/metadata contract is inert
+PASS: registry/metadata contract precedes binary spawn
+PASS: strict nested contract fields
+PASS: empty closed variant is a valid uninhabited type
+PASS: sequence of empty variant is a valid container type
+PASS: logical source path is not a stable-name field
+PASS: interface version is not a stable-name field
+PASS: strict JSON byte limit
+PASS: strict JSON depth limit
+PASS: strict JSON nested escaped duplicate
+PASS: strict JSON trailing bytes
+PASS: model type depth limit
+PASS: aggregate model type node limit
+PASS: closed type shape
+PASS: UTF-8 name bound
+PASS: initializer count bound
+PASS: factory context has exact digest and config
+PASS: initializer previous state is empty
+PASS: generated-trace registration runner
+PASS: register preserves trace config and inline spec
+PASS: factory context has exact digest and config
+PASS: shared replay preserves terminal error details
+PASS: shared replay preserves mismatch action and parameters across reinitialization
+PASS: shared replay preserves report wire bytes
+PASS: shared replay scopes transport and binding cleanup
+PASS: factory context has exact digest and config
+PASS: shared replay preserves terminal error details
+PASS: shared replay preserves report wire bytes
+PASS: shared replay scopes transport and binding cleanup
+PASS: unbounded native integers
+PASS: constructor separation null/tuple/record
+PASS: nested semantic equality
+PASS: set input semantic duplicate rejected
+PASS: set output semantic duplicate rejected
+PASS: duplicate map input rejected
+PASS: duplicate map output rejected
+PASS: non-string map input rejected
+PASS: closed record rejects duplicate keys
+PASS: closed record rejects extra fields
+PASS: ordinary record preserves #set
+PASS: ordinary record preserves #bigint
+PASS: ordinary record preserves #map
+PASS: ordinary record preserves #tup
+PASS: ordinary record preserves #unserializable
+PASS: path field/index/variant
+PASS: path missing index rejects
+PASS: path wrong variant rejects
+MODEL INTERFACE SDK TESTS PASSED

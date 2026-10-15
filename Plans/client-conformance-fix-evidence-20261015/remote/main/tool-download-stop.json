@@ -1,0 +1,23 @@
+﻿{
+    "previousVerifiedParents":  [
+                                    46680,
+                                    52548,
+                                    38480,
+                                    54880
+                                ],
+    "preservePartial":  true,
+    "remainingParents":  [
+                             {
+                                 "ProcessId":  54880,
+                                 "ParentProcessId":  38480,
+                                 "CommandLine":  "\"C:\\Program Files\\Git\\usr\\bin\\bash.exe\" /d/Desktop/Workspaces/Mirrors-client-fixes-20261015/download-toolchains.sh"
+                             }
+                         ],
+    "children":  [
+                     {
+                         "ProcessId":  16596,
+                         "ParentProcessId":  54880,
+                         "CommandLine":  "\"C:\\Program Files\\Git\\mingw64\\bin\\curl.exe\" --fail --location --retry 2 --connect-timeout 20 --max-time 1800 --silent --show-error https://downloads.haskell.org/~ghc/9.14.1/ghc-9.14.1-x86_64-deb11-linux.tar.xz -o downloads/ghc-9.14.1-x86_64-deb11-linux.tar.xz"
+                     }
+                 ]
+}

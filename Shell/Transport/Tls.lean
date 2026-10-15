@@ -18,7 +18,7 @@ target — lives in the shim and mirrors the Haskell rules exactly:
   expected hostname (SAN DNS/IP) via @SSL_set1_host@;
 * the server certificate must carry a non-empty SAN and its chain must
   validate against the CA file before the listener binds;
-* key files readable by group/other are rejected (chmod 0600);
+* POSIX key files must have exactly mode 0600;
 * certificates expiring within 7 days (or expired) log a warning.
 
 @serveTlsOn@ / @connectTlsPinned@ keep the Haskell shapes: one session
@@ -166,7 +166,10 @@ def tlsTransport (t : TlsSession) : Transport :=
           found := false
         else
           let n ← Ffi.tlsRead t.ssl recvBuf 65536
-          if n == 0 || n == Ffi.tlsError then
+          if n == Ffi.tlsError then
+            t.buf.set ByteArray.empty
+            throw (IO.userError s!"TLS read failed: {← Ffi.tlsErrmsg}")
+          else if n == 0 then
             eof := true
           else
             acc := acc.append (recvBuf.extract 0 n.toNat)
@@ -176,9 +179,8 @@ def tlsTransport (t : TlsSession) : Transport :=
       else
         match findLf acc 0 with
         | none =>
-            t.buf.set (ByteArray.mk (#[] : Array UInt8))
-            let payload := stripTrailingCrBytes acc
-            return some (← decodeProtocolUtf8 payload)
+            t.buf.set ByteArray.empty
+            throw (IO.userError "TLS connection closed with an unterminated protocol line")
         | some i =>
             let line := stripTrailingCrBytes (acc.extract 0 i)
             t.buf.set (acc.extract (i + 1) acc.size)

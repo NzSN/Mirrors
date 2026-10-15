@@ -1,0 +1,36 @@
+ok: tcp-lf
+ok: tcp-split-lf
+ok: tcp-crlf
+ok: tcp-coalesced-next-fragment
+ok: tcp-empty-eof
+ok: tcp-complete-json-eof
+ok: tcp-partial-json-eof
+ok: tcp-bare-cr-eof
+ok: tcp-boundary-65534
+ok: tcp-boundary-65535
+ok: tcp-split-multibyte-boundary
+ok: tcp-oversize
+ok: tcp-invalid-utf8
+ok: tcp-trace-lf
+ok: tcp-trace-eof
+ok: tcp-read-failure-fragment
+ok: tls-lf
+ok: tls-split-lf
+ok: tls-crlf
+ok: tls-coalesced-next-fragment
+ok: tls-empty-eof
+ok: tls-complete-json-eof
+ok: tls-partial-json-eof
+ok: tls-bare-cr-eof
+ok: tls-boundary-65534
+ok: tls-boundary-65535
+ok: tls-split-multibyte-boundary
+ok: tls-oversize
+ok: tls-invalid-utf8
+ok: tls-trace-lf
+ok: tls-trace-eof
+ok: tls-read-failure-fragment
+ok: tls-read-failure-empty
+ok: tls-san-mismatch
+ok: stdio LF/CRLF, partial EOF, bare CR and empty EOF
+CLIENT FRAMING CLI GREEN (TCP, authenticated TLS 1.3 and stdio; owned peers stopped)

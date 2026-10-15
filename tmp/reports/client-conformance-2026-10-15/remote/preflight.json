@@ -1,0 +1,71 @@
+{
+  "status": "lean-source-verified",
+  "sourceHead": "b8b9491bd96e3126da55d34a7ba3a4493766dcf3",
+  "sourceFilesVerified": 66,
+  "sourceRoot": "/mnt/d/Desktop/Workspaces/Mirrors-client-conformance-20261015/MirrorLean",
+  "versions": {
+    "kernel": {
+      "command": [
+        "uname",
+        "-a"
+      ],
+      "stdout": "Linux DESKTOP-6DKB5JD 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux\n",
+      "stderr": ""
+    },
+    "disk": {
+      "command": [
+        "df",
+        "-h",
+        "/",
+        "/mnt/d"
+      ],
+      "stdout": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd       1007G  955G  722M 100% /\nD:\\             3.7T  3.5T  214G  95% /mnt/d\n",
+      "stderr": ""
+    },
+    "memory": {
+      "command": [
+        "free",
+        "-h"
+      ],
+      "stdout": "               total        used        free      shared  buff/cache   available\nMem:            58Gi       778Mi        57Gi       3.0Mi       574Mi        57Gi\nSwap:           15Gi          0B        15Gi\n",
+      "stderr": ""
+    },
+    "lean": {
+      "command": [
+        "/home/jlc/.elan/bin/lean",
+        "--version"
+      ],
+      "stdout": "Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\n",
+      "stderr": ""
+    },
+    "cc": {
+      "command": [
+        "cc",
+        "--version"
+      ],
+      "stdout": "cc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0\nCopyright (C) 2021 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+      "stderr": ""
+    },
+    "openssl": {
+      "command": [
+        "openssl",
+        "version"
+      ],
+      "stdout": "OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)\n",
+      "stderr": ""
+    },
+    "node": {
+      "command": [
+        "/home/jlc/Tools/mirrors-dpm-remediation-toolchain-20261013/node/bin/node",
+        "--version"
+      ],
+      "stdout": "v24.19.0\n",
+      "stderr": ""
+    }
+  },
+  "ecmaSourceFilesCompared": 42,
+  "ecmaSourceMismatches": [],
+  "ecmaPreparedRoot": "/home/jlc/Tools/mirrors-dpm-remediation-20261013/ecma/node_modules/mirrorecma",
+  "oldSourcesOrInstallsMutated": false,
+  "modelCheckerExecuted": false
+}

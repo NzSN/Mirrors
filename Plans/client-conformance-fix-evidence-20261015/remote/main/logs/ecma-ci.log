@@ -1,0 +1,16 @@
+[ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY] Aborted removal of modules directory due to no TTY
+
+If you are running pnpm in CI, set the CI environment variable to "true", or set "confirmModulesPurge" to "false".
+[ERROR] Command failed with exit code 1: /home/jlc/Tools/mirrors-client-fixes-20261015/tools/node/bin/node /home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-11.22.0/package/bin/pnpm.mjs install
+
+pnpm: Command failed with exit code 1: /home/jlc/Tools/mirrors-client-fixes-20261015/tools/node/bin/node /home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-11.22.0/package/bin/pnpm.mjs install
+    at getFinalError (file:///home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-11.22.0/package/dist/pnpm.mjs:89203:14)
+    at makeError (file:///home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-11.22.0/package/dist/pnpm.mjs:91510:21)
+    at getSyncResult (file:///home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-11.22.0/package/dist/pnpm.mjs:93354:10)
+    at spawnSubprocessSync (file:///home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-11.22.0/package/dist/pnpm.mjs:93314:14)
+    at execaCoreSync (file:///home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-11.22.0/package/dist/pnpm.mjs:93244:23)
+    at callBoundExeca (file:///home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-11.22.0/package/dist/pnpm.mjs:95772:23)
+    at boundExeca (file:///home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-11.22.0/package/dist/pnpm.mjs:95749:49)
+    at sync2 (file:///home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-11.22.0/package/dist/pnpm.mjs:95908:10)
+    at runPnpmCli (file:///home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-11.22.0/package/dist/pnpm.mjs:271523:5)
+    at runDepsStatusCheck (file:///home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-11.22.0/package/dist/pnpm.mjs:273323:7)

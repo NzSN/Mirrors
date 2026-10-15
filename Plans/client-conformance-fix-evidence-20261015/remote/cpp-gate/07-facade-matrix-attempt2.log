@@ -1,0 +1,56 @@
+2026-10-15T07:59:49Z
+uid=1000(jlc) gid=1000(jlc) groups=1000(jlc),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev),116(netdev),119(libvirt),1001(docker)
+CapEff:	0000000000000000
+CapAmb:	0000000000000000
+/home/jlc/Tools/mirrors-client-fixes-20261015/source/Mirrors/.lake/build/bin/mirror: OK
+-- The CXX compiler identification is GNU 12.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/g++-12 - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- mirrorcpp: nlohmann_json not found, fetching v3.11.3 into build tree
+-- Using the multi-header code from /home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/nlohmann_json-src/include/
+-- mirrorcpp: system Boost.Multiprecision not found; fetching boostorg headers (boost-1.85.0)
+-- Configuring done (0.7s)
+-- Generating done (0.2s)
+-- Build files have been written to: /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/cpp-gate/matrix-build
+[1/27] Building CXX object CMakeFiles/mirrorgate_mirrorcpp_orchestration.dir/orchestration.cpp.o
+[2/27] Building CXX object CMakeFiles/mirrorgate_mirrorcpp_counter.dir/counter_driver.cpp.o
+[3/27] Building CXX object CMakeFiles/mirrorgate_mirrorcpp_receipt_tests.dir/home/jlc/Tools/mirrors-client-fixes-20261015/source/MirrorGate/tests/cpp/orchestration_receipt_test.cpp.o
+[4/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/value.cpp.o
+[5/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/protocol.cpp.o
+[6/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/model_interface.cpp.o
+[7/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/schedule.cpp.o
+[8/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/detail/process.cpp.o
+[9/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/schedule_binding.cpp.o
+[10/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/schedule_exploration.cpp.o
+[11/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/schedule_sync.cpp.o
+[12/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/client.cpp.o
+[13/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/registry.cpp.o
+[14/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/spec.cpp.o
+[15/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/transport.cpp.o
+[16/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/detail/net.cpp.o
+[17/27] Building CXX object mirrorgate-sdk-build/CMakeFiles/mirrorgate_cpp.dir/src/json.cpp.o
+[18/27] Building CXX object mirrorgate-sdk-build/CMakeFiles/mirrorgate_cpp.dir/src/transport.cpp.o
+[19/27] Building CXX object mirrorcpp-build/CMakeFiles/mirrorcpp.dir/src/detail/http.cpp.o
+[20/27] Building CXX object mirrorgate-sdk-build/CMakeFiles/mirrorgate_cpp.dir/src/control.cpp.o
+[21/27] Building CXX object mirrorgate-sdk-build/CMakeFiles/mirrorgate_cpp.dir/src/control_v2.cpp.o
+[22/27] Linking CXX static library mirrorcpp-build/libmirrorcpp.a
+[23/27] Building CXX object mirrorgate-sdk-build/CMakeFiles/mirrorgate_cpp.dir/src/managed_worker.cpp.o
+[24/27] Linking CXX static library mirrorgate-sdk-build/libmirrorgate_cpp.a
+[25/27] Linking CXX static library libmirrorgate_mirrorcpp_orchestration.a
+[26/27] Linking CXX executable mirrorgate_mirrorcpp_counter
+[27/27] Linking CXX executable mirrorgate_mirrorcpp_receipt_tests
+MirrorCPP orchestration close receipt tests passed
+{"backend":"linux-bubblewrap-v1","bindingFactoryCalls":1,"cleanup":"succeeded","cleanupConfirmed":true,"cleanupFailure":null,"controlMode":"owned","controlProcessState":"exited","controlShutdown":"confirmed","facade":"mirrorcpp","mirrorEcmaDependency":false,"nodeEvaluator":false,"primaryFailure":null,"replay":"traces","resultStatus":"passed","schema":"mirrors.shared-orchestration-evidence/v1","secondSessionSurvived":false,"sut":"correct","workerAcquisitions":1,"workerRuntime":"node-v1","workerStartedEvents":1}
+{"backend":"linux-bubblewrap-v1","bindingFactoryCalls":1,"cleanup":"succeeded","cleanupConfirmed":true,"cleanupFailure":null,"controlMode":"owned","controlProcessState":"exited","controlShutdown":"confirmed","facade":"mirrorcpp","mirrorEcmaDependency":false,"nodeEvaluator":false,"primaryFailure":null,"publicErrorCode":"","replay":"traces","resultStatus":"mismatch","schema":"mirrors.shared-orchestration-evidence/v1","secondSessionSurvived":false,"sut":"faulty","workerAcquisitions":1,"workerRuntime":"node-v1","workerStartedEvents":1}
+{"backend":"linux-bubblewrap-v1","bindingFactoryCalls":0,"cleanup":"succeeded","cleanupConfirmed":true,"cleanupFailure":null,"controlMode":"owned","controlProcessState":"exited","controlShutdown":"confirmed","facade":"mirrorcpp","mirrorEcmaDependency":false,"nodeEvaluator":false,"primaryFailure":null,"publicErrorCode":"interface_digest_mismatch","replay":"traces","resultStatus":"negotiation-rejected","schema":"mirrors.shared-orchestration-evidence/v1","secondSessionSurvived":false,"sut":"wrong-digest","workerAcquisitions":0,"workerRuntime":"node-v1","workerStartedEvents":0}
+{"backend":"linux-bubblewrap-v1","bindingFactoryCalls":1,"cleanup":"succeeded","cleanupConfirmed":true,"cleanupFailure":null,"controlMode":"owned","controlProcessState":"exited","controlShutdown":"confirmed","facade":"mirrorcpp","mirrorEcmaDependency":false,"nodeEvaluator":false,"primaryFailure":null,"publicErrorCode":"adapter_failure","replay":"traces","resultStatus":"failed","schema":"mirrors.shared-orchestration-evidence/v1","secondSessionSurvived":false,"sut":"error-adapter","workerAcquisitions":1,"workerRuntime":"node-v1","workerStartedEvents":1}
+{"backend":"linux-bubblewrap-v1","bindingFactoryCalls":1,"cleanup":"failed","cleanupConfirmed":false,"cleanupFailure":{"code":"APPLICATION","family":"worker_application","message":"same human text","operation":"dispose","operationId":0,"origin":"worker_application","stage":""},"controlMode":"owned","controlProcessState":"exited","controlShutdown":"confirmed","facade":"mirrorcpp","mirrorEcmaDependency":false,"nodeEvaluator":false,"primaryFailure":null,"publicErrorCode":"mirrorgate.worker_application","replay":"traces","resultStatus":"failed","schema":"mirrors.shared-orchestration-evidence/v1","secondSessionSurvived":false,"sut":"error-cleanup","workerAcquisitions":1,"workerRuntime":"node-v1","workerStartedEvents":1}
+{"backend":"linux-bubblewrap-v1","bindingFactoryCalls":0,"cleanup":"succeeded","cleanupConfirmed":true,"cleanupFailure":null,"controlMode":"owned","controlProcessState":"exited","controlShutdown":"confirmed","facade":"mirrorcpp","mirrorEcmaDependency":false,"nodeEvaluator":false,"primaryFailure":{"code":"BUILD_FAILED","family":"build","message":"approved build plan failed","operation":"prepare","operationId":1,"origin":"control_reply","stage":"build"},"publicErrorCode":"mirrorgate.BUILD_FAILED","replay":"traces","resultStatus":"failed","schema":"mirrors.shared-orchestration-evidence/v1","secondSessionSurvived":false,"sut":"error-build","workerAcquisitions":0,"workerRuntime":"node-v1","workerStartedEvents":0}
+failure family changed: worker_transport
+{"remainingGateProcesses": []}

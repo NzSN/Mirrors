@@ -1,0 +1,16 @@
+$ NODE_OPTIONS="--experimental-vm-modules" jest --runInBand --no-watchman test/model-interface-runner.test.ts test/async-replay-report.test.ts test/model-interface-dynamic.test.ts test/async-dynamic-binding.test.ts test/client-spawn-allocation.test.ts test/transport.test.ts test/tls-key-mode.test.ts
+(node:122185) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/model-interface-runner.test.ts
+PASS test/model-interface-dynamic.test.ts
+PASS test/async-replay-report.test.ts
+PASS test/async-dynamic-binding.test.ts
+PASS test/transport.test.ts
+PASS test/client-spawn-allocation.test.ts
+PASS test/tls-key-mode.test.ts
+
+Test Suites: 7 passed, 7 total
+Tests:       170 passed, 170 total
+Snapshots:   0 total
+Time:        1.936 s
+Ran all test suites matching test/model-interface-runner.test.ts|test/async-replay-report.test.ts|test/model-interface-dynamic.test.ts|test/async-dynamic-binding.test.ts|test/client-spawn-allocation.test.ts|test/transport.test.ts|test/tls-key-mode.test.ts.

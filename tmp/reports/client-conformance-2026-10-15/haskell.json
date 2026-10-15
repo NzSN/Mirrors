@@ -1,0 +1,468 @@
+{
+  "repo": "ModelMirros (historical Haskell ModelMirrors reference)",
+  "head": "5ee414ee16b8aba50ceb480ac8013a56165272bb",
+  "profiles": [
+    "validateCLI directTCP/TLS or registryTLS",
+    "Protocol.Client legacy replay/generation/validation/explore",
+    "publicasyncsubmit/query/await/cancel helpers",
+    "Stdio/TCP/mTLS transport instances"
+  ],
+  "rules": [
+    {
+      "id": "C1",
+      "status": "partial-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Transport/Core.hs",
+          "line": 15
+        }
+      ],
+      "note": "Aeson encodes JSON objects and transports append LF. TLS splits on LF; Handle getLine APIs hide terminator status, so explicit rejection of partial final EOF frames is not established. Aeson validates UTF-8 while decoding."
+    },
+    {
+      "id": "C2",
+      "status": "confirmed-gap",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Transport/Core.hs",
+          "line": 15
+        }
+      ],
+      "note": "No 65,535-byte final send checks. TCP/Stdio hGetLine/getLine are unbounded; TLS concatenates its IORef buffer without a cap until LF. Applies to CLI and public library."
+    },
+    {
+      "id": "C3",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Format/Json.hs",
+          "line": 255
+        }
+      ],
+      "note": "FromJSON dispatches proto_step and required fields while ignoring additive outer object keys."
+    },
+    {
+      "id": "C4",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 53
+        }
+      ],
+      "note": "Each replay, validation, generation and exploration helper sends registration first. Existing-job controls do not register."
+    },
+    {
+      "id": "C5",
+      "status": "implemented-with-shared-contract-discrepancy",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 279
+        }
+      ],
+      "note": "Stepping returns immediately on mismatch and terminal errors; no further internal flow writes. Reusing caller-owned transport is caller responsibility. Shared C5 async registration wording conflicts with guide section 10 and server behavior."
+    },
+    {
+      "id": "C6",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/app/Main.hs",
+          "line": 155
+        }
+      ],
+      "note": "The validate CLI brackets transport with tcpClose/tlsClose and maps EOF/errors to exit 2. Library ownership remains caller-managed. tlsClose sends best-effort bye; underlying socket release is documented at process exit."
+    },
+    {
+      "id": "C7",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src-tls/Protocol/Transport/Tls.hs",
+          "line": 263
+        }
+      ],
+      "note": "No protocol heartbeat or idle deadline assumed by the client library; blocking await supports indefinite waits."
+    },
+    {
+      "id": "C8",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 279
+        }
+      ],
+      "note": "InitialState/NextStep dispatches the handler, sends exactly one ReportState, then waits for StepOk or mismatch."
+    },
+    {
+      "id": "C9",
+      "status": "application-obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 39
+        }
+      ],
+      "note": "Application clientHandler returns the full observable Map. Arbitrary observation fidelity remains application responsibility."
+    },
+    {
+      "id": "C10",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 292
+        }
+      ],
+      "note": "handleStep returns Left on StepMismatch immediately without waiting for AllStepsDone. Historical Haskell SERVER trailing-done behavior is not a client defect."
+    },
+    {
+      "id": "C11",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Apalache/Types.hs",
+          "line": 230
+        }
+      ],
+      "note": "Unbounded Integer is emitted as #bigint decimal; integral JSON numbers are accepted. Malformed ITF defense was not freshly verified."
+    },
+    {
+      "id": "C12",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 279
+        }
+      ],
+      "note": "stepLoop is message-driven, without hardcoded step counts."
+    },
+    {
+      "id": "C13",
+      "status": "caller-supplied-closure",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/app/Main.hs",
+          "line": 139
+        }
+      ],
+      "note": "CLI reads root spec plus explicit --dep files only. It does not advertise automatic recursive resolution. Caller must include the full EXTENDS/INSTANCE closure. The complete send still lacks C2 bounds."
+    },
+    {
+      "id": "C14",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Format/Json.hs",
+          "line": 15
+        }
+      ],
+      "note": "Existing Haskell optional encoders send null or omit by message, per the documented oracle asymmetry."
+    },
+    {
+      "id": "C15",
+      "status": "application-obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/app/Main.hs",
+          "line": 146
+        }
+      ],
+      "note": "--cinit propagates constInit; caller selects a valid initializer for CONSTANTS."
+    },
+    {
+      "id": "C16",
+      "status": "implemented-server-rejected",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 102
+        }
+      ],
+      "note": "Bound is passed to registration with no local cap. Server rejects out-of-range values synchronously; this rule does not require local validation."
+    },
+    {
+      "id": "C17",
+      "status": "confirmed-correlation-gap",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 142
+        }
+      ],
+      "note": "IDs can cross connections, but poll/await/cancel discard returned IDs. Submission also ignores accepted kind. A foreign outcome can be associated with the requested job."
+    },
+    {
+      "id": "C18",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 153
+        }
+      ],
+      "note": "awaitJob preserves optional timeout and re-awaits nonterminal status. A terminal status without result makes one final poll, then errors."
+    },
+    {
+      "id": "C19",
+      "status": "partial-compatibility-gap",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 178
+        }
+      ],
+      "note": "Explicit cancel helper accepts only JobStatus, whereas guide reply grammar also permits JobResult. Both current Haskell and Lean servers return status on cancel; no current-server failure is asserted."
+    },
+    {
+      "id": "C20",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 199
+        }
+      ],
+      "note": "runClientValidateAsync unwraps JobValidateDone into the same ValidateResult as sync. Infrastructure errors remain errors."
+    },
+    {
+      "id": "C21",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 167
+        }
+      ],
+      "note": "Unknown causes one extra query and then terminal error. There is no indefinite unknown retry loop expecting the job to appear."
+    },
+    {
+      "id": "C22",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 116
+        }
+      ],
+      "note": "No automatic pool. register_error maps to Left, including a full queue. Applications own connection limits."
+    },
+    {
+      "id": "C23",
+      "status": "confirmed-correlation-gap",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 157
+        }
+      ],
+      "note": "No explicit completion ordering assumption, but dropping returned IDs fails to correlate independent jobs. See C17 finding."
+    },
+    {
+      "id": "C24",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src-tls/Protocol/Transport/Tls.hs",
+          "line": 252
+        }
+      ],
+      "note": "TLS13 is the only supported version; client credentials and CA are loaded; certificate-request hook returns the credential."
+    },
+    {
+      "id": "C25",
+      "status": "dependency-runtime-unverified",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src-tls/Protocol/Transport/Tls.hs",
+          "line": 247
+        }
+      ],
+      "note": "Uses defaultParamsClient host with CA. No explicit SAN-only policy hook is present. Dependency implementation is unavailable locally; CN-only rejection is not established. Wildcard differences are documented."
+    },
+    {
+      "id": "C26",
+      "status": "documented-reference-exception",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src-tls/Protocol/Transport/Tls.hs",
+          "line": 356
+        }
+      ],
+      "note": "Peer SHA256 pin is checked before protocol but compared as case-sensitive Text. Uppercase valid pins fail. Guide section 10 explicitly records this Haskell difference. Explicit registry pin precedence is correct."
+    },
+    {
+      "id": "C27",
+      "status": "confirmed-literal-conformance-gap",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src-tls/Protocol/Transport/Tls.hs",
+          "line": 239
+        }
+      ],
+      "note": "POSIX check forbids only group/other access (077). It accepts 0400, 0700 and special bits rather than literal 0600. Windows ACL exception is explicit."
+    },
+    {
+      "id": "MI1-MI18",
+      "status": "not-applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 1
+        }
+      ],
+      "note": "Historical reference client advertises legacy protocol only; no compiled verification or descriptor API."
+    },
+    {
+      "id": "SO1-SO12",
+      "status": "not-applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/README.md",
+          "line": 39
+        }
+      ],
+      "note": "No native Haskell Gate control facade is advertised."
+    }
+  ],
+  "findings": [
+    {
+      "priority": "P2",
+      "rule": "C2",
+      "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Transport/Core.hs",
+      "line": 15,
+      "trigger": "Send an encoded registration/state above 65,535 bytes, or receive an unterminated peer line growing beyond the limit.",
+      "impact": "Oversized output reaches the Lean server and fails; malicious or misconfigured peers can grow receive memory without bound before JSON parsing.",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Transport/Core.hs",
+          "line": 15
+        },
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Transport/Tcp.hs",
+          "line": 93
+        },
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Transport/Stdio.hs",
+          "line": 16
+        },
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src-tls/Protocol/Transport/Tls.hs",
+          "line": 138
+        },
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/app/Main.hs",
+          "line": 139
+        }
+      ],
+      "confidence": "high; source-confirmed, no fresh runtime probe",
+      "fix": "Centralize final encoded send validation and use bounded raw-byte JSONL readers before Aeson. Test exact ASCII/multibyte boundaries and oversized unterminated lines."
+    },
+    {
+      "priority": "P2",
+      "rule": "C17/C23",
+      "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+      "line": 142,
+      "trigger": "A query/await/cancel for job A receives JobStatus/JobResult for job B, or a validation submission receives a gen-traces acceptance.",
+      "impact": "Public helpers accept unrelated status/outcome; validation can report another job verdict. Conforming servers normally echo the ID, so this is a defensive protocol-failure path.",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 116
+        },
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 130
+        },
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 142
+        },
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 157
+        },
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 183
+        }
+      ],
+      "confidence": "high; source-confirmed, malformed-peer path not freshly probed",
+      "fix": "Compare every returned job ID with the requested ID and require the expected accepted kind. Return a protocol error without continuing on a mismatch."
+    },
+    {
+      "priority": "P3",
+      "rule": "C27",
+      "path": "/home/nzsn/Repos/ModelMirros/src-tls/Protocol/Transport/Tls.hs",
+      "line": 239,
+      "trigger": "A valid client key has mode 0400, 0700, or special bits with no group/other access.",
+      "impact": "Accepted modes violate the literal 0600 guide contract. No confidentiality exposure is claimed for owner-only access.",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src-tls/Protocol/Transport/Tls.hs",
+          "line": 239
+        }
+      ],
+      "confidence": "high; source-confirmed, no exact-context runtime probe",
+      "fix": "Choose exact 0600 enforcement or document the intended private-only policy. Exact enforcement should compare mode & 07777 with 0600."
+    },
+    {
+      "priority": "P3-compatibility",
+      "rule": "C19/section6replygrammar",
+      "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+      "line": 183,
+      "trigger": "A legal peer answers cancel_job with a matching terminal job_result.",
+      "impact": "cancelJob returns UnexpectedMessage instead of accepting the acknowledgement. Current Haskell and Lean servers return JobStatus, so this is a grammar compatibility gap rather than a current-server regression.",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/ModelMirros/src/Protocol/Client.hs",
+          "line": 183
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Docs/client-implementation-guide.md",
+          "line": 216
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Mirror/Session.lean",
+          "line": 929
+        }
+      ],
+      "confidence": "high; source-confirmed acceptance subset, current server path unaffected",
+      "fix": "Accept matching JobResult as a terminal acknowledgement, preserving ID correlation and malformed-reply failure."
+    }
+  ],
+  "testEvidence": [
+    {
+      "kind": "source-present-not-run",
+      "path": "/home/nzsn/Repos/ModelMirros/test/ClientSpec.hs",
+      "cases": "Mock correct replay, mismatch, canned/fixed and invalid spec. HourClock case invokes model operations and was not run."
+    },
+    {
+      "kind": "source-present-not-run",
+      "path": "/home/nzsn/Repos/ModelMirros/test/TcpTransportSpec.hs",
+      "cases": "Normal transport, bigint state and drop survival. No 65k boundary cases found."
+    },
+    {
+      "kind": "source-present-not-run",
+      "path": "/home/nzsn/Repos/ModelMirros/test/TlsTransportSpec.hs",
+      "cases": "Normal mTLS, wrong CA/pin and discovery. CN-only client rejection and uppercase pin acceptance not established."
+    },
+    {
+      "kind": "source-present-not-run",
+      "path": "/home/nzsn/Repos/ModelMirros/test/Protocol/AsyncJobsSpec.hs",
+      "cases": "Production store/server async lifecycle and unknown IDs. Not fresh malformed-reply acceptance of public client helpers."
+    }
+  ],
+  "limits": [
+    "Read-only source audit. No builds, tests, probes, live peers or model operations invoked.",
+    "Haskell reference is a historical oracle, not a newly qualified framework profile or current package acceptance.",
+    "Haskell SERVER trailing AllStepsDone after mismatch and stdio async error-tag differences are not client bugs.",
+    "Case-sensitive C26 pin comparison is an explicitly documented reference exception. Lowercase pins work and wrong pins fail before protocol.",
+    "C25 SAN-only behavior needs dependency-source inspection or a CN-only certificate fixture; no CN fallback defect is asserted.",
+    "Complete inline dependency closure, CONSTANTS initializer, observation fidelity and transport ownership remain caller responsibilities.",
+    "MI and Gate SO profiles are not advertised."
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "capture_published": false,
+  "child_reaped": true,
+  "command": [
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-build/bin/mirror",
+    "trace-gen",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "37449",
+    "--spec",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/postfix-cli-work/client-cli-probe-txemyiks/terminal-protocol-error-cancel/Main.tla",
+    "--async",
+    "--max-polls",
+    "1",
+    "--out",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/postfix-cli-work/client-cli-probe-txemyiks/terminal-protocol-error-cancel/capture"
+  ],
+  "elapsed_seconds": 0.221462,
+  "exit_code": 2,
+  "finding_reproduced": false,
+  "mode": "terminal-cancel",
+  "name": "terminal-protocol-error-cancel",
+  "peer_error": null,
+  "peer_events": [
+    {
+      "reply": {
+        "jobId": "probe-owned",
+        "kind": "gen_traces",
+        "proto_step": "job_accepted"
+      },
+      "terminated": true
+    },
+    {
+      "reply": {
+        "error": "deliberate scripted terminal protocol error",
+        "proto_step": "protocol_error"
+      },
+      "terminated": true
+    },
+    "client EOF"
+  ],
+  "peer_thread_stopped": true,
+  "requests": [
+    {
+      "bytes": 331,
+      "json": {
+        "apalacheConfig": {
+          "constInit": null,
+          "initPredicate": null,
+          "invariant": "",
+          "lengthBound": 10,
+          "nextPredicate": null,
+          "paramVars": "",
+          "specPath": "Main.tla"
+        },
+        "proto_step": "register_trace_gen_async",
+        "spec": {
+          "sources": [
+            "---- MODULE Main ----\nEXTENDS Child\n====\n",
+            "---- MODULE Child ----\n====\n"
+          ]
+        },
+        "traceConfig": {
+          "numTraces": 1,
+          "view": null
+        }
+      }
+    },
+    {
+      "bytes": 65,
+      "json": {
+        "jobId": "probe-owned",
+        "proto_step": "await_job",
+        "timeoutSecs": 30
+      }
+    }
+  ],
+  "required_behavior": "Return the original terminal protocol error without sending cancel_job.",
+  "stderr": "deliberate scripted terminal protocol error\n",
+  "stdout": "",
+  "timed_out": false
+}

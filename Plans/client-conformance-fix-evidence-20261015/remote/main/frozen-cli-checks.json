@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "mirrorPath": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/cpp-gate/immutable/mirror",
+  "mirrorSha256": "6e06ecd3d4d2975a42db2a1822b2d28d9e382f6d5b9bf48fa36c6c9ce27fa77d",
+  "framingGateCommand": [
+    "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/bin/python3",
+    "/home/jlc/Tools/mirrors-client-fixes-20261015/source/Mirrors/tools/check-client-framing.py",
+    "--mirror",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/cpp-gate/immutable/mirror"
+  ],
+  "framingGateSha256": "fe2b77b8e24bdff58f9b08dc1b594174ce2b0ece765fab76a382e4fbc7df0dca",
+  "framingGatePostCiTestOnlyPortabilityDelta": true,
+  "auditProbeCommand": [
+    "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/bin/python3",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/frozen-cli-original-probe/probe.py",
+    "--mirror",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/cpp-gate/immutable/mirror",
+    "--source-root",
+    "/home/jlc/Tools/mirrors-client-fixes-20261015/source/Mirrors",
+    "--work-root",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/frozen-cli-original-work"
+  ],
+  "sourceReferenceOverlaySha256": "d0484e40af9aad38a3467b8482f2bd7729836a29765ebbc794829ba3b517d504",
+  "auditWorkRoot": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/frozen-cli-original-work/client-cli-probe-dqk9ry8b",
+  "noFurtherWritesToProducer": true
+}

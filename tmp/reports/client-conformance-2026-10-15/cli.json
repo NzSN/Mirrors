@@ -1,0 +1,438 @@
+{
+  "repo": "Mirrors built-in CLI clients",
+  "head": "c17bae951c4d5bbc5818c2a4f82e2d93d07abc52",
+  "profiles": [
+    "mirror validate: sync/async TCP or TLS, direct or registry-discovered",
+    "mirror trace-gen: sync/async TCP or TLS, direct/discovered; inline or explicit pinned shared transfer",
+    "Shell.Client and Shell.TraceCapture helpers supporting those commands"
+  ],
+  "rules": [
+    {
+      "id": "C1",
+      "status": "confirmed-gap",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Transport/Tcp.lean",
+          "line": 92
+        }
+      ],
+      "note": "Outbound compact JSON+LF is correct. TCP/TLS receivers accept EOF/error buffered payload without LF as a complete message; mandatory receive framing gap."
+    },
+    {
+      "id": "C2",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Transport/Stdio.lean",
+          "line": 40
+        }
+      ],
+      "note": "Shared65535-byteUTF8 validation; TCP/TLS cap each raw prefix before decoding; max scratch65536 means bounded two-chunk temporary. validate/trace-gen registration preflight checks exact compact final bytes."
+    },
+    {
+      "id": "C3",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Client.lean",
+          "line": 25
+        }
+      ],
+      "note": "Codec.decodeMirror dispatches proto_step; additive outer fields ignored; TraceCapture separately retains raw ITF metadata."
+    },
+    {
+      "id": "C4",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Client.lean",
+          "line": 38
+        }
+      ],
+      "note": "Validation sends register_validate/async; TraceCapture sends register_trace_gen/async before awaiting its accepted job."
+    },
+    {
+      "id": "C5",
+      "status": "confirmed-gap",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/TraceCapture.lean",
+          "line": 95
+        }
+      ],
+      "note": "Validation exits terminally, but async trace capture sends cancel_job after any await error including received protocol_error. Shared async registration-attempt C5 wording discrepancy remains separate."
+    },
+    {
+      "id": "C6",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Cli.lean",
+          "line": 700
+        }
+      ],
+      "note": "One connection per CLI process; normal EOF/error becomes infrastructure failure and process exit closes descriptors. Transport record has no public explicitclose capability; reusable helpers are not advertised as independent long-lived SDK."
+    },
+    {
+      "id": "C7",
+      "status": "implemented-with-runtime-limit",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Transport/Tls.lean",
+          "line": 323
+        }
+      ],
+      "note": "No heartbeat or protocol liveness assumption. TLS client sets SO_RCVTIMEO5000 before handshake and leaves it set; shim retries WANT_READ/WANT_WRITE. Exact silent-established-peer timing behavior not freshly checked."
+    },
+    {
+      "id": "C8",
+      "status": "not-applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Main.lean",
+          "line": 26
+        }
+      ],
+      "note": "Built-in validate/trace-gen clients do not implement SUT replay. tools/CounterSpec is a test client, not production CLI replay."
+    },
+    {
+      "id": "C9",
+      "status": "not-applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Client.lean",
+          "line": 38
+        }
+      ],
+      "note": "No report_state/StateComputer flow in these built-in CLI commands."
+    },
+    {
+      "id": "C10",
+      "status": "not-applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Client.lean",
+          "line": 44
+        }
+      ],
+      "note": "No replay mismatch-producing flow advertised; unexpected reply returns failure, never waits for all_steps_done."
+    },
+    {
+      "id": "C11",
+      "status": "not-applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/TraceCapture.lean",
+          "line": 31
+        }
+      ],
+      "note": "No SUT report-state encoder; captured ITF is parsed/preserved by trace capture."
+    },
+    {
+      "id": "C12",
+      "status": "not-applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Cli.lean",
+          "line": 721
+        }
+      ],
+      "note": "numTraces and bound are requested generation controls; no SUT replay step counts assumed."
+    },
+    {
+      "id": "C13",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Apalache/SpecSource.lean",
+          "line": 269
+        }
+      ],
+      "note": "resolveClientSources uses captured parsed SourceUnits and recursive EXTENDS/INSTANCE closure, explicit deps/module identity and source limits. CLI final compact registration preflight obeys65k."
+    },
+    {
+      "id": "C14",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Cli.lean",
+          "line": 672
+        }
+      ],
+      "note": "ApalacheConfig uses options and Codec encoder; absent/null Haskell semantics handled server-side. CLI supplies default bound10/invariant empty."
+    },
+    {
+      "id": "C15",
+      "status": "application-obligation",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Cli.lean",
+          "line": 334
+        }
+      ],
+      "note": "--cinit propagates constInit. Arbitrary specs declaring CONSTANTS require caller to choose valid initializer; CLI cannot infer it."
+    },
+    {
+      "id": "C16",
+      "status": "implemented-server-rejected",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Cli.lean",
+          "line": 326
+        }
+      ],
+      "note": "validate bound is Nat but not locally capped; registration reaches server which rejects outside[1,100] synchronously. Client preflight bound check not required by this rule. trace-gen has separate profile bounds."
+    },
+    {
+      "id": "C17",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Client.lean",
+          "line": 86
+        }
+      ],
+      "note": "Async workflows retain submitting connection until terminal result; not detached submission and no crossconnection facade. Exact accepted job ID carried into waits."
+    },
+    {
+      "id": "C18",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Client.lean",
+          "line": 57
+        }
+      ],
+      "note": "await_job timeout30; pending/running statuses recurse, not treated as errors. Trace capture has explicit maxPolls budget."
+    },
+    {
+      "id": "C19",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/TraceCapture.lean",
+          "line": 43
+        }
+      ],
+      "note": "Trace capture cancels owned job on failure/budget exhaustion, but overbroad terminal-error cancellation has C5 finding. Validate has no separate cancellation command; CLIexit triggers ownerdisconnect semantics."
+    },
+    {
+      "id": "C20",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Client.lean",
+          "line": 64
+        }
+      ],
+      "note": "Async .validate result uses same Codec.ValidateResult/reportValidate as sync; infraError remains failure and genTraces kind rejected."
+    },
+    {
+      "id": "C21",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Client.lean",
+          "line": 71
+        }
+      ],
+      "note": "Unknown or evicted exits immediately, never retry-looped. Trace capture also errors immediately, though cancellation cleanup sends an unnecessary followup."
+    },
+    {
+      "id": "C22",
+      "status": "implemented-scoped-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Cli.lean",
+          "line": 689
+        }
+      ],
+      "note": "No connection pool: one selected transport; register_error returns infrastructure failure. No hidden retry of full queue."
+    },
+    {
+      "id": "C23",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Client.lean",
+          "line": 62
+        }
+      ],
+      "note": "Only one owned job polled per invocation; every status/result correlation checked, no assumption across jobs/connections."
+    },
+    {
+      "id": "C24",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Ffi/tls_shim.c",
+          "line": 307
+        }
+      ],
+      "note": "OpenSSL min=maxTLS1.3; client context loads cert/key and verifies CA; no-certificate server handshakes fail."
+    },
+    {
+      "id": "C25",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Ffi/tls_shim.c",
+          "line": 471
+        }
+      ],
+      "note": "X509_VERIFY_PARAM name or IP identity with NEVER_CHECK_SUBJECT prevents CN fallback."
+    },
+    {
+      "id": "C26",
+      "status": "implemented-static",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Transport/Tls.lean",
+          "line": 354
+        }
+      ],
+      "note": "PeerSHA256 checked case-insensitively before returning usable Transport; CLI explicit pin overrides registry advertised pin."
+    },
+    {
+      "id": "C27",
+      "status": "confirmed-literal-conformance-gap",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Ffi/tls_shim.c",
+          "line": 203
+        }
+      ],
+      "note": "POSIX key check only rejects group/other access; accepts0400,0700 and special ownerbits, while guide says exactly0600. Windows ACL exception explicit."
+    },
+    {
+      "id": "MI1-MI18",
+      "status": "not-applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Cli.lean",
+          "line": 677
+        }
+      ],
+      "note": "Built-in validate/trace-gen clients send no negotiation extension; guide explicitly limits modelInterface to register/register_traces. Server/compiler MI support does not imply a negotiating validation client."
+    },
+    {
+      "id": "SO1-SO12",
+      "status": "not-applicable",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Main.lean",
+          "line": 26
+        }
+      ],
+      "note": "No built-in CLI shared Gate evaluator advertised for validate/trace-gen/discovery. Gate support in optional language facades is reviewed separately."
+    }
+  ],
+  "findings": [
+    {
+      "priority": "P2",
+      "rule": "C5",
+      "path": "/home/nzsn/Repos/Mirrors/Shell/TraceCapture.lean",
+      "line": 95,
+      "trigger": "After async job_accepted, await_job receives protocol_error. awaitTraceJob returns .error; run unconditionally invokes cancelOwned.",
+      "impact": "Client writes cancel_job on a flow declared unusable by guide section10. This can add writes/errors after terminal protocol failure and obscures correct ownership cleanup. This is distinct from shared queue-full/register-attempt ambiguity.",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/TraceCapture.lean",
+          "line": 74
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/TraceCapture.lean",
+          "line": 95
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/TraceCapture.lean",
+          "line": 43
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Docs/client-implementation-guide.md",
+          "line": 717
+        }
+      ],
+      "confidence": "high-source-confirmed; not runtime reproduced",
+      "fix": "Keep a typed failure/connection-usability distinction and issue cancellation only for locally exhausted polling/caller cancellation while the connection is healthy; terminal protocol errors return directly."
+    },
+    {
+      "priority": "P2",
+      "rule": "C1",
+      "path": "/home/nzsn/Repos/Mirrors/Shell/Transport/Tcp.lean",
+      "line": 92,
+      "trigger": "Peer sends a syntactically complete response JSON without finalLF then closes (or read errors).",
+      "impact": "TCP/TLS transport treats incomplete frame as a complete response, so validation/trace-gen may accept a truncated protocol exchange as successful. Bounded payload/UTF8 checks still apply.",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Transport/Tcp.lean",
+          "line": 92
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Transport/Tls.lean",
+          "line": 178
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Shell/Client.lean",
+          "line": 25
+        }
+      ],
+      "confidence": "high-source-confirmed; not runtime reproduced",
+      "fix": "Reject nonempty buffered EOF/error without LF; retain clean EOF and validLF normal path. Add focused rawsocket transport regression and CLI completeJSON-withoutLF negative fixture."
+    },
+    {
+      "priority": "P3",
+      "rule": "C27",
+      "path": "/home/nzsn/Repos/Mirrors/Ffi/tls_shim.c",
+      "line": 203,
+      "trigger": "Readable valid client private key has POSIX0400/0700 or special bits with no group/other access.",
+      "impact": "Built-in mTLS client accepts permissions outside the literal0600 contract. This does not establish a confidentiality exposure;400 is narrower access.",
+      "evidence": [
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Ffi/tls_shim.c",
+          "line": 203
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Ffi/tls_shim.c",
+          "line": 391
+        },
+        {
+          "path": "/home/nzsn/Repos/Mirrors/Docs/client-implementation-guide.md",
+          "line": 274
+        }
+      ],
+      "confidence": "high-source-confirmed; exact-context probe not run",
+      "fix": "Either enforce exactmode&07777==0600 consistently or explicitly revise the guide if owner-only modes are intended; do not label broad group/other check as literal0600 enforcement."
+    }
+  ],
+  "testEvidence": [
+    {
+      "kind": "source-present-not-run",
+      "path": "/home/nzsn/Repos/Mirrors/tools/check-validate-async.py",
+      "cases": "scripted async normal, pending/running/timeout, invalid, unknown/cancelled/id errors"
+    },
+    {
+      "kind": "source-present-not-run",
+      "path": "/home/nzsn/Repos/Mirrors/tools/TraceCaptureSpec.lean",
+      "cases": "options, shared root admission, wrong job correlation and ownedjob cancellation"
+    },
+    {
+      "kind": "source-present-not-run",
+      "path": "/home/nzsn/Repos/Mirrors/tools/TransportSpec.lean",
+      "cases": "65535/65536 send size, malformed UTF8, TCP/TLS echo, SAN/IP/wrongpin/clientauth/TLS12; permission test covers640 notexact0400/0700"
+    },
+    {
+      "kind": "source-present-not-run",
+      "path": "/home/nzsn/Repos/Mirrors/Shell/TraceCapture.lean",
+      "cases": "network requires inlineITF; server paths refused unless explicitshared mapping; no directApalache fallback"
+    }
+  ],
+  "limits": [
+    "Read-only static review of shipped CLI/client helper paths; no local/remote builds/tests, model operations or service calls.",
+    "tools/CounterSpec.lean is test scaffolding, not a production full SUT replay SDK.",
+    "No current-source runtime acceptance is claimed from test presence or historical server/CLI gates.",
+    "TLSclient established socket timeout is retained and shim retries WANT_READ; platform timing behavior needs a targeted remote probe before asserting an idle timeout failure.",
+    "CLI process exit owns final descriptor teardown; reusable transport-close API and embedding semantics were not assessed as an independently advertised SDK.",
+    "Remote destPath capture uses explicit mapping with pinnedTLS admission; absent that mapping server paths remain receipt data."
+  ]
+}

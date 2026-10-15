@@ -1,0 +1,97 @@
+2026-10-15T07:36:13Z
+uid=1000(jlc) gid=1000(jlc) groups=1000(jlc),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev),116(netdev),119(libvirt),1001(docker)
+TARGET                                        SOURCE     FSTYPE OPTIONS
+/home/jlc/Tools/mirrors-client-fixes-20261015 /dev/loop0 ext4   rw,relatime
+TARGET         SOURCE           FSTYPE OPTIONS
+/tmp/fix-tests /dev/loop0[/tmp] ext4   rw,relatime
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/loop0       24G  822M   22G   4% /home/jlc/Tools/mirrors-client-fixes-20261015
+/dev/loop0       24G  822M   22G   4% /tmp/fix-tests
+D:\             3.7T  3.5T  182G  96% /mnt/d
+/usr/bin/g++-12
+/usr/bin/cc
+/usr/bin/meson
+/usr/bin/ninja
+/usr/bin/pkg-config
+/usr/bin/sha256sum
+/usr/bin/tar
+/usr/bin/xz
+/usr/bin/unshare
+/usr/bin/setpriv
+g++-12 (Ubuntu 12.3.0-1ubuntu1~22.04.3) 12.3.0
+Copyright (C) 2022 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+cmake version 3.28.4
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+Python 3.12.14
+bubblewrap 0.6.1
+0.61.2
+1.10.1
+0.29.2
+2.44
+-rwxr--r-- 1 jlc jlc 118984 Oct 15 15:28 /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/downloads/bubblewrap-0.9.0.tar.xz
+-rwxr--r-- 1 jlc jlc    384 Oct 15 15:28 /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/downloads/bubblewrap-tag.json
+c6347eaced49ac0141996f46bba3b089e5e6ea4408bc1c43bab9f2d05dd094e1  /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/downloads/bubblewrap-0.9.0.tar.xz
+ab14cbce21b986fb8dac991d93a3f45a18f219269823a1eb69dde73fc23609a6  /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/downloads/bubblewrap-tag.json
+{
+  "ref": "refs/tags/v0.9.0",
+  "node_id": "MDM6UmVmNTE4NjgwMTA6cmVmcy90YWdzL3YwLjkuMA==",
+  "url": "https://api.github.com/repos/containers/bubblewrap/git/refs/tags/v0.9.0",
+  "object": {
+    "sha": "5beb8d46d5edde6e53f6e7d4e6e37cbb645c5f4e",
+    "type": "tag",
+    "url": "https://api.github.com/repos/containers/bubblewrap/git/tags/5beb8d46d5edde6e53f6e7d4e6e37cbb645c5f4e"
+  }
+}
+total 0
+drwxr-xr-x 1 jlc jlc 4096 Oct 13 18:40 .
+drwxr-xr-x 1 jlc jlc 4096 Oct 13 18:40 ..
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:24 boost_assert-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:24 boost_config-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:24 boost_core-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:24 boost_exception-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:24 boost_integer-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:26 boost_io-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:25 boost_mpl-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:24 boost_multiprecision-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:25 boost_predef-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:25 boost_preprocessor-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:26 boost_rational-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:26 boost_smart_ptr-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:24 boost_static_assert-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:24 boost_throw_exception-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:26 boost_tuple-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:24 boost_type_traits-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:24 boost_utility-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:27 boost_winapi-src
+drwxrwxr-x 1 jlc jlc 4096 Aug 20 18:27 catch2-src
+drwxr-xr-x 1 jlc jlc 4096 Oct 13 18:40 nlohmann_json-src
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_assert-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_config-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_core-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_exception-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_integer-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_io-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_mpl-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_multiprecision-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_predef-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_preprocessor-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_rational-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_smart_ptr-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_static_assert-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_throw_exception-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_tuple-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_type_traits-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_utility-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/boost_winapi-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/catch2-src/CMakeLists.txt
+/home/jlc/Tools/mirrors-dpm-remediation-20261013/prerequisites/cpp-dependencies/nlohmann_json-src/CMakeLists.txt
+total 0
+drwxr-xr-x 1 jlc jlc 4096 Oct 14 11:01 .
+drwxr-xr-x 1 jlc jlc 4096 Oct 14 11:02 ..
+drwxr-xr-x 1 jlc jlc 4096 Oct 14 11:01 catch2-build
+drwxr-xr-x 1 jlc jlc 4096 Oct 14 11:01 nlohmann_json-build
+CPP_GATE_PREFLIGHT_COMPLETE

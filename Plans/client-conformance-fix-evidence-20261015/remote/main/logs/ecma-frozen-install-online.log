@@ -1,0 +1,84 @@
+? Verifying lockfile against supply-chain policies (329 entries)...
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +301
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+[WARN] GET https://registry.npmjs.org/@babel%2Fcompat-data error (ETIMEDOUT). Will retry in 10 seconds. 2 retries left.
+[WARN] GET https://registry.npmjs.org/@babel%2Fplugin-syntax-numeric-separator error (ETIMEDOUT). Will retry in 10 seconds. 2 retries left.
+[WARN] GET https://registry.npmjs.org/@babel%2Fplugin-syntax-top-level-await error (ETIMEDOUT). Will retry in 10 seconds. 2 retries left.
+[WARN] GET https://registry.npmjs.org/@babel%2Ftemplate error (ETIMEDOUT). Will retry in 10 seconds. 2 retries left.
+[WARN] GET https://registry.npmjs.org/@babel%2Ftraverse error (ETIMEDOUT). Will retry in 10 seconds. 2 retries left.
+Progress: resolved 301, reused 0, downloaded 0, added 0
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/jlc/Tools/mirrors-client-fixes-20261015/tools/pnpm-store/v11
+  Virtual store is at:             node_modules/.pnpm
+[WARN] GET https://registry.npmjs.org/@jridgewell%2Fgen-mapping error (ETIMEDOUT). Will retry in 10 seconds. 2 retries left.
+[WARN] GET https://registry.npmjs.org/@tsconfig%2Fnode10 error (ETIMEDOUT). Will retry in 10 seconds. 2 retries left.
+[WARN] GET https://registry.npmjs.org/@tsconfig%2Fnode16 error (ETIMEDOUT). Will retry in 10 seconds. 2 retries left.
+Progress: resolved 301, reused 0, downloaded 1, added 1
+Progress: resolved 301, reused 0, downloaded 5, added 5
+Progress: resolved 301, reused 0, downloaded 7, added 7
+[WARN] Tarball download average speed 13 KiB/s (size 30 KiB) is below 50 KiB/s: https://registry.npmjs.org/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz (GET)
+[WARN] Tarball download average speed 20 KiB/s (size 22 KiB) is below 50 KiB/s: https://registry.npmjs.org/expect/-/expect-30.4.1.tgz (GET)
+Progress: resolved 301, reused 0, downloaded 12, added 12
+Progress: resolved 301, reused 0, downloaded 20, added 20
+Progress: resolved 301, reused 0, downloaded 26, added 26
+[WARN] Tarball download average speed 3 KiB/s (size 14 KiB) is below 50 KiB/s: https://registry.npmjs.org/pretty-format/-/pretty-format-30.4.1.tgz (GET)
+Progress: resolved 301, reused 0, downloaded 33, added 33
+Progress: resolved 301, reused 0, downloaded 36, added 36
+[WARN] Tarball download average speed 47 KiB/s (size 95 KiB) is below 50 KiB/s: https://registry.npmjs.org/diff/-/diff-4.0.4.tgz (GET)
+Progress: resolved 301, reused 0, downloaded 47, added 47
+Progress: resolved 301, reused 0, downloaded 58, added 58
+[WARN] Request took 11083ms: https://registry.npmjs.org/@babel%2Fplugin-syntax-top-level-await
+[WARN] Request took 11169ms: https://registry.npmjs.org/@babel%2Fcompat-data
+[WARN] Request took 11374ms: https://registry.npmjs.org/@babel%2Ftemplate
+[WARN] Request took 11556ms: https://registry.npmjs.org/@babel%2Fplugin-syntax-numeric-separator
+[WARN] Request took 11761ms: https://registry.npmjs.org/@babel%2Ftraverse
+[WARN] Request took 11821ms: https://registry.npmjs.org/@jridgewell%2Fgen-mapping
+Progress: resolved 301, reused 0, downloaded 69, added 68
+[WARN] Request took 11156ms: https://registry.npmjs.org/@tsconfig%2Fnode10
+[WARN] Request took 11133ms: https://registry.npmjs.org/@tsconfig%2Fnode16
+Progress: resolved 301, reused 0, downloaded 72, added 72
+Progress: resolved 301, reused 0, downloaded 75, added 75
+Progress: resolved 301, reused 0, downloaded 78, added 78
+[WARN] Request took 11676ms: https://registry.npmjs.org/p-locate
+Progress: resolved 301, reused 0, downloaded 88, added 88
+Progress: resolved 301, reused 0, downloaded 99, added 99
+Progress: resolved 301, reused 0, downloaded 112, added 112
+Progress: resolved 301, reused 0, downloaded 120, added 120
+Progress: resolved 301, reused 0, downloaded 121, added 121
+Progress: resolved 301, reused 0, downloaded 127, added 127
+Progress: resolved 301, reused 0, downloaded 141, added 141
+[WARN] Request took 19908ms: https://registry.npmjs.org/is-stream
+✓ Lockfile passes supply-chain policies (329 entries in 22.7s)
+Progress: resolved 301, reused 0, downloaded 151, added 151
+Progress: resolved 301, reused 0, downloaded 167, added 167
+Progress: resolved 301, reused 0, downloaded 191, added 191
+Progress: resolved 301, reused 0, downloaded 195, added 195
+Progress: resolved 301, reused 0, downloaded 201, added 201
+Progress: resolved 301, reused 0, downloaded 210, added 210
+Progress: resolved 301, reused 0, downloaded 213, added 213
+Progress: resolved 301, reused 0, downloaded 222, added 222
+Progress: resolved 301, reused 0, downloaded 225, added 225
+Progress: resolved 301, reused 0, downloaded 227, added 227
+[WARN] Tarball download average speed 8 KiB/s (size 11 KiB) is below 50 KiB/s: https://registry.npmjs.org/chalk/-/chalk-4.1.2.tgz (GET)
+Progress: resolved 301, reused 0, downloaded 228, added 228
+Progress: resolved 301, reused 0, downloaded 229, added 229
+[WARN] Tarball download average speed 11 KiB/s (size 28 KiB) is below 50 KiB/s: https://registry.npmjs.org/@jest/core/-/core-30.4.2.tgz (GET)
+Progress: resolved 301, reused 0, downloaded 230, added 230
+Progress: resolved 301, reused 0, downloaded 236, added 236
+Progress: resolved 301, reused 0, downloaded 242, added 242
+Progress: resolved 301, reused 0, downloaded 248, added 248
+Progress: resolved 301, reused 0, downloaded 255, added 255
+Progress: resolved 301, reused 0, downloaded 264, added 264
+Progress: resolved 301, reused 0, downloaded 273, added 273
+Progress: resolved 301, reused 0, downloaded 279, added 279
+Progress: resolved 301, reused 0, downloaded 283, added 283
+Progress: resolved 301, reused 0, downloaded 296, added 296
+Progress: resolved 301, reused 0, downloaded 299, added 299
+Progress: resolved 301, reused 0, downloaded 300, added 299
+Progress: resolved 301, reused 0, downloaded 300, added 300
+Progress: resolved 301, reused 0, downloaded 301, added 300
+Progress: resolved 301, reused 0, downloaded 301, added 301, done
+
+Done in 1m 2.6s using pnpm v11.22.0

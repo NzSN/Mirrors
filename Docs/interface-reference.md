@@ -39,7 +39,10 @@ Protocol framing: **one JSON object per line** (valid UTF-8,
 The bound is enforced before JSON parsing and after final response encoding.
 mTLS policy: TLS 1.3 only, client certificate required, CA chain + SAN
 hostname/IP verification, optional SHA-256 fingerprint pin
-(`--pin`, case-insensitive), client key must be `0600` (POSIX).
+(`--pin`, case-insensitive), client key permissions must satisfy
+`(mode & 07777) == 0600` on POSIX. Owner-only `0400`/`0700` and special
+bits are rejected; key validation never changes the caller's file.
+Windows ACL behavior is separate from POSIX permission checks.
 
 `--jobs N` sizes connection workers and the async job store (live-job capacity
 and worker slots) in both server modes. It defaults to 4; the CLI clamps zero
@@ -255,6 +258,11 @@ mirror trace-gen --host HOST --port PORT --tls --cert CERT --key KEY --ca CA \
 Connection/model options follow remote validation, including captured local
 dependency closure and registry discovery. Optional `--async --max-polls N`
 uses the existing owned-job protocol with bounded correlation and cancellation.
+Only local poll-budget exhaustion on a healthy connection with an accepted
+pending/running job sends a best-effort cancellation. Terminal job outcomes,
+protocol errors, malformed/miscorrelated replies and transport failures return
+without another flow write; a cancellation-send failure preserves the original
+budget diagnostic. Closing the owner connection retains server cleanup duties.
 The output directory must be absent with an ordinary existing parent. The CLI
 retains inline ITF JSON, request/reply/source artifacts and hash receipts; raw
 ITF metadata is preserved. In the default mode server-side paths are never opened locally. Empty,
@@ -325,6 +333,14 @@ Immediate reply: `{"proto_step": "job_accepted", "jobId": "job-0",
 "kind": "validate" | "gen_traces"}`. Validation bounds outside [1,100] or a full
 queue → `register_error` synchronously at submit.
 
+A rejected async submission creates no job and ends only that attempt.
+The same connection may submit again or operate on its earlier accepted jobs;
+disconnecting it would cancel and evict those jobs. A terminal result/status
+for an accepted job does not end the connection. In contrast, a synchronous
+registration runs one flow and ends the connection when that flow returns,
+on success or failure. Use a separate connection for synchronous work when
+earlier async jobs must remain owned.
+
 The validation CLI selects this path with `validate --async`. It resolves and
 sends the same inline source closure, requires `job_accepted` of kind `validate`,
 then sends `await_job` with `timeoutSecs: 30` on the submitting connection until
@@ -369,6 +385,13 @@ outcome and do not rerun Apalache.
 | ------- | ---- |
 | `{"proto_step": "register_error", "error": "…"}` | registration/submit failures: bad spec source, categorized and bounded Apalache failure, `TRACE_RESULT_TOO_LARGE`, queue full, out-of-range bound, async message in stdio mode |
 | `{"proto_step": "protocol_error", "error": "…"}` | decode failures and out-of-phase messages |
+
+`protocol_error`, malformed framing/JSON and transport failure make the
+connection unusable. Clients send no cancellation or further flow messages
+after them; server end-session cleanup cancels and evicts only that owner's
+jobs. A `register_error` is recoverable only for an async submission attempt,
+as specified in section 4.1; it never authorizes negotiated fallback after a
+required-verification failure.
 
 Documented divergences from the Haskell implementation (details in
 `cutover.md`): mismatch tail is spec-faithful (no trailing

@@ -1,0 +1,121 @@
+[
+  {
+    "name": "baseline-build",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "build",
+      "ModelMirrors-test",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell-h2/baseline-dist",
+      "-j2"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros-h2-baseline",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 29.375
+  },
+  {
+    "name": "baseline-cn-red",
+    "command": [
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell-h2/baseline-dist/build/x86_64-linux/ghc-9.14.1/ModelMirrors-0.1.1.0/t/ModelMirrors-test/build/ModelMirrors-test/ModelMirrors-test",
+      "--pattern",
+      "/SAN-only rejects CN-only before protocol bytes/",
+      "--num-threads=1"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros-h2-baseline",
+    "exit": 1,
+    "expectedExit": 1,
+    "seconds": 0.818
+  },
+  {
+    "name": "baseline-ip-red",
+    "command": [
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell-h2/baseline-dist/build/x86_64-linux/ghc-9.14.1/ModelMirrors-0.1.1.0/t/ModelMirrors-test/build/ModelMirrors-test/ModelMirrors-test",
+      "--pattern",
+      "/SAN-only accepts correct IP SAN with a different CN/",
+      "--num-threads=1"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros-h2-baseline",
+    "exit": 1,
+    "expectedExit": 1,
+    "seconds": 0.718
+  },
+  {
+    "name": "candidate-build",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "build",
+      "ModelMirrors-test",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell-h2/dist",
+      "-j2"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros-h2",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 28.775
+  },
+  {
+    "name": "candidate-test-list",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "test",
+      "ModelMirrors-test",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell-h2/dist",
+      "--test-show-details=direct",
+      "--test-options=--list-tests --pattern NonModel"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros-h2",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 6.776
+  },
+  {
+    "name": "candidate-non-model",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "test",
+      "ModelMirrors-test",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell-h2/dist",
+      "--test-show-details=direct",
+      "--test-options=--pattern NonModel --num-threads=1"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros-h2",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 12.842
+  },
+  {
+    "name": "candidate-incremental",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "build",
+      "ModelMirrors-test",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell-h2/dist",
+      "-j2"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros-h2",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 6.427
+  },
+  {
+    "name": "candidate-non-model-repeat",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "test",
+      "ModelMirrors-test",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell-h2/dist",
+      "--test-show-details=direct",
+      "--test-options=--pattern NonModel --num-threads=1"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros-h2",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 12.994
+  }
+]

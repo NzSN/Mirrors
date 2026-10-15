@@ -1,0 +1,563 @@
+gcc: error: unrecognized command-line option '--target=x86_64-unknown-linux'
+gcc: error: unrecognized command-line option '--target=x86_64-unknown-linux'
+ar: conftest.a: No such file or directory
+configure: WARNING: m4/prep_target_file.m4: Expecting YES/NO but got  in ArSupportsAtFile_STAGE0. Defaulting to False.
+configure: WARNING: m4/prep_target_file.m4: Expecting YES/NO but got  in ArSupportsDashL_STAGE0. Defaulting to False.
+Execute: sh config.sub x86_64-unknown-linux
+Normalised triple: x86_64-unknown-linux ~> x86_64-unknown-linux-gnu
+checking for C compiler...
+Entering: checking for C compiler
+  x86_64-unknown-linux-gcc not found in search path
+  x86_64-unknown-linux-clang not found in search path
+  x86_64-unknown-linux-cc not found in search path
+found for C compiler: Cc {ccProgram = Program { prgPath =  "gcc" , prgFlags = [] }}
+checking for C compiler...
+Entering: checking for C compiler
+  x86_64-unknown-linux-gcc not found in search path
+  x86_64-unknown-linux-clang not found in search path
+  x86_64-unknown-linux-cc not found in search path
+found for C compiler: Cc {ccProgram = Program { prgPath =  "gcc" , prgFlags = [] }}
+checking for -Qunused-arguments support...
+Entering: checking for -Qunused-arguments support
+  Execute: gcc -Qunused-arguments -c -o /tmp/fix-tests/tmp0/test.o /tmp/fix-tests/tmp0/test.o.c
+  Command failed: gcc -Qunused-arguments -c -o /tmp/fix-tests/tmp0/test.o /tmp/fix-tests/tmp0/test.o.c
+  Exited with code 1
+found for -Qunused-arguments support: Cc {ccProgram = Program { prgPath =  "gcc" , prgFlags = [] }}
+checking whether Cc supports --target...
+Entering: checking whether Cc supports --target
+  Execute: gcc -Werror --target=x86_64-unknown-linux-gnu -c -o /tmp/fix-tests/tmp0/test.o /tmp/fix-tests/tmp0/test.o.c
+  Command failed: gcc -Werror --target=x86_64-unknown-linux-gnu -c -o /tmp/fix-tests/tmp0/test.o /tmp/fix-tests/tmp0/test.o.c
+  Exited with code 1
+found whether Cc supports --target: Cc {ccProgram = Program { prgPath =  "gcc" , prgFlags = [] }}
+checking whether Cc works...
+Entering: checking whether Cc works
+  Execute: gcc -c -o /tmp/fix-tests/tmp0/test.o /tmp/fix-tests/tmp0/test.o.c
+found whether Cc works: ()
+checking for C99 support...
+Entering: checking for C99 support
+  Execute: gcc -c -o /tmp/fix-tests/tmp0/test.o /tmp/fix-tests/tmp0/test.o.c
+found for C99 support: Cc {ccProgram = Program { prgPath =  "gcc" , prgFlags = [] }}
+checking whether cc supports extra via-c flags...
+Entering: checking whether cc supports extra via-c flags
+  Execute: gcc -c -fwrapv -fno-builtin -Werror -x c -o /tmp/fix-tests/tmp0/test.o /tmp/fix-tests/tmp0/test.c
+found whether cc supports extra via-c flags: ()
+checking for C++ compiler...
+Entering: checking for C++ compiler
+  x86_64-unknown-linux-g++ not found in search path
+  x86_64-unknown-linux-clang++ not found in search path
+  x86_64-unknown-linux-c++ not found in search path
+  checking whether C++ supports --target...
+  Entering: checking whether C++ supports --target
+    Execute: g++ -Werror --target=x86_64-unknown-linux-gnu -c -o /tmp/fix-tests/tmp0/test.o /tmp/fix-tests/tmp0/test.o.cpp
+    Command failed: g++ -Werror --target=x86_64-unknown-linux-gnu -c -o /tmp/fix-tests/tmp0/test.o /tmp/fix-tests/tmp0/test.o.cpp
+    Exited with code 1
+  found whether C++ supports --target: Cxx {cxxProgram = Program { prgPath =  "g++" , prgFlags = [] }}
+  Execute: g++ -c -o /tmp/fix-tests/tmp0/test.o /tmp/fix-tests/tmp0/test.o.cpp
+found for C++ compiler: Cxx {cxxProgram = Program { prgPath =  "g++" , prgFlags = [] }}
+checking for C preprocessor...
+Entering: checking for C preprocessor
+  Failed to find C preprocessor.
+  Looked for one of [] in the system search path.
+  Failed to find C preprocessor.
+  Looked for one of [] in the system search path.
+  checking for C99 support...
+  Entering: checking for C99 support
+    Execute: gcc -c -o /tmp/fix-tests/tmp0/test.o /tmp/fix-tests/tmp0/test.o.c
+  found for C99 support: Cc {ccProgram = Program { prgPath =  "gcc" , prgFlags = [] }}
+found for C preprocessor: Cpp {cppProgram = Program { prgPath =  "gcc" , prgFlags = ["-E"] }}
+checking for Haskell C preprocessor...
+Entering: checking for Haskell C preprocessor
+  Failed to find Haskell C preprocessor.
+  Looked for one of [] in the system search path.
+  Failed to find Haskell C preprocessor.
+  Looked for one of [] in the system search path.
+  Execute: gcc -E -x c /tmp/fix-tests/tmp0/tmp.c -dM -E
+  Execute: gcc -E -v
+found for Haskell C preprocessor: HsCpp {hsCppProgram = Program { prgPath =  "gcc" , prgFlags = ["-E","-undef","-traditional"] }}
+checking for JavaScript C preprocessor...
+Entering: checking for JavaScript C preprocessor
+  x86_64-unknown-linux-emcc not found in search path
+  emcc not found in search path
+  Failed to find JavaScript C preprocessor.
+  Looked for one of ["x86_64-unknown-linux-emcc","emcc"] in the system search path.
+  Failed to find JavaScript C preprocessor.
+  Looked for one of ["x86_64-unknown-linux-emcc","emcc"] in the system search path.
+  Execute: gcc -E -CC -Wno-unicode -nostdinc -P -x assembler-with-cpp -o /tmp/fix-tests/tmp0/conftest.pp.js /tmp/fix-tests/tmp0/conftest.js
+found for JavaScript C preprocessor: JsCpp {jsCppProgram = Program { prgPath =  "gcc" , prgFlags = ["-E","-CC","-Wno-unicode","-nostdinc"] }}
+checking for a Cmm preprocessor...
+Entering: checking for a Cmm preprocessor
+  Failed to find Cmm preprocessor.
+  Looked for one of [] in the system search path.
+  Failed to find Cmm preprocessor.
+  Looked for one of [] in the system search path.
+  checking for C99 support...
+  Entering: checking for C99 support
+    Execute: gcc -c -o /tmp/fix-tests/tmp0/test.o /tmp/fix-tests/tmp0/test.o.c
+  found for C99 support: Cc {ccProgram = Program { prgPath =  "gcc" , prgFlags = [] }}
+  checking for -g0 support...
+  Entering: checking for -g0 support
+    Execute: gcc -Werror -g0 /tmp/fix-tests/tmp0/conftest.c -o /tmp/fix-tests/tmp0/conftest
+  found for -g0 support: ()
+found for a Cmm preprocessor: CmmCpp {cmmCppProgram = Program { prgPath =  "gcc" , prgFlags = ["-E"] }, cmmCppSupportsG0 = True}
+checking for 'readelf'...
+Entering: checking for 'readelf'
+  x86_64-unknown-linux-readelf not found in search path
+found for 'readelf': Readelf {readelfProgram = Program { prgPath =  "readelf" , prgFlags = [] }}
+checking for C compiler for linking command...
+Entering: checking for C compiler for linking command
+  Failed to find C compiler for linking.
+  Looked for one of [] in the system search pathconfigure: creating ./config.status
+config.status: creating mk/system-cxx-std-lib-1.0.conf
+config.status: creating config.mk
+config.status: creating default.host.target
+config.status: creating default.target
+config.status: creating mk/hsc2hs
+****************************************************
+Configuration done, ready to 'make install'
+(see README and INSTALL files for more info.)
+****************************************************
+Copying binaries to /home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/bin
+Copying hsc2hs wrapper
+/usr/bin/install -c -m 755 -d "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/bin"
+cp mk/hsc2hs wrappers/hsc2hs-ghc-9.14.1
+for i in ./bin/ghc ./bin/ghc-9.14.1 ./bin/ghc-iserv ./bin/ghc-iserv-dyn ./bin/ghc-iserv-dyn-ghc-9.14.1 ./bin/ghc-iserv-ghc-9.14.1 ./bin/ghc-iserv-prof ./bin/ghc-iserv-prof-ghc-9.14.1 ./bin/ghc-pkg ./bin/ghc-pkg-9.14.1 ./bin/ghc-toolchain-bin ./bin/ghc-toolchain-bin-ghc-9.14.1 ./bin/haddock ./bin/haddock-ghc-9.14.1 ./bin/hp2ps ./bin/hp2ps-ghc-9.14.1 ./bin/hpc ./bin/hpc-ghc-9.14.1 ./bin/hsc2hs ./bin/hsc2hs-ghc-9.14.1 ./bin/runghc ./bin/runghc-9.14.1 ./bin/runhaskell ./bin/runhaskell-9.14.1 ./bin/unlit ./bin/unlit-ghc-9.14.1; do \
+	if test -L "$i"; then \
+		cp -RP "$i" "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/bin"; \
+	else \
+		/usr/bin/install -c -m 755 "$i" "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/bin"; \
+	fi; \
+done
+
+if [ -f manpage/ghc.1 ]; then \
+	/usr/bin/install -c -m 755 -d "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/man"; \
+	/usr/bin/install -c -m 755 -d "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/man/man1"; \
+	/usr/bin/install -c -m 644  manpage/ghc.1 "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/man/man1"; \
+fi
+Copying docs to /home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/doc/ghc-9.14.1
+/usr/bin/install -c -m 755 -d "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/doc/ghc-9.14.1"
+if [ -d doc ]; then \
+	cd ./doc; /usr/bin/find . -type f -exec sh -c \
+		'/usr/bin/install -c -m 755 -d "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/doc/ghc-9.14.1/`dirname $1`" && /usr/bin/install -c -m 644 "$1" "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/doc/ghc-9.14.1/`dirname $1`"' \
+		sh '{}' ';'; \
+fi
+Copying data to share
+/usr/bin/install -c -m 755 -d "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share"
+if [ -d share ]; then \
+	cd ./share; /usr/bin/find . -type f -exec sh -c \
+		'/usr/bin/install -c -m 755 -d "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/`dirname $1`" && \
+		/usr/bin/install -c -m 644 "$1" "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/`dirname $1`"' \
+		sh '{}' ';'; \
+fi
+Installing wrapper scripts
+/usr/bin/install -c -m 755 -d "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin"
+for p in `cd ./wrappers; /usr/bin/find . ! -type d`; do \
+    mk/install_script.sh "$p" "//home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/$p" "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin" "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/bin" "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/bin/$p" "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib" "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/doc/ghc-9.14.1" "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/include"; \
+done
+Installing ./runghc -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./runghc
+Installing ./hp2ps-ghc-9.14.1 -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./hp2ps-ghc-9.14.1
+Installing ./haddock -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./haddock
+Installing ./hsc2hs-ghc-9.14.1 -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./hsc2hs-ghc-9.14.1
+Installing ./ghci-9.14.1 -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./ghci-9.14.1
+Installing ./runghc-9.14.1 -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./runghc-9.14.1
+Installing ./ghc -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./ghc
+Installing ./ghci -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./ghci
+Installing ./ghc-9.14.1 -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./ghc-9.14.1
+Installing ./haddock-ghc-9.14.1 -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./haddock-ghc-9.14.1
+Installing ./hpc-ghc-9.14.1 -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./hpc-ghc-9.14.1
+Installing ./ghc-pkg -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./ghc-pkg
+Installing ./ghc-pkg-9.14.1 -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./ghc-pkg-9.14.1
+Installing ./runhaskell-9.14.1 -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./runhaskell-9.14.1
+Installing ./hsc2hs -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./hsc2hs
+Installing ./hp2ps -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./hp2ps
+Installing ./hpc -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./hpc
+Installing ./runhaskell -> //home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/bin/./runhaskell
+Copying libraries to /home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib
+/usr/bin/install -c -m 755 -d "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib"
+if [ -d docs-utils ]; then \
+	/usr/bin/install -c -m 755 -d "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/doc/ghc-9.14.1/html/libraries/"; \
+	/usr/bin/install -c -m 644 docs-utils/prologue.txt "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/doc/ghc-9.14.1/html/libraries/"; \
+	/usr/bin/install -c -m 755 docs-utils/gen_contents_index "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/share/doc/ghc-9.14.1/html/libraries/"; \
+fi
+Installing C++ standard library virtual package
+/usr/bin/install -c -m 644 mk/system-cxx-std-lib-1.0.conf "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d"
+Updating the package DB
+# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/containers-0.8-c32a.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/containers-0.8-c32a/containers.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/containers-0.8-c32a"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/containers-0.8-c32a.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "containers" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/containers-0.8-c32a.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/containers-0.8-c32a.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/containers-0.8-c32a.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/containers-0.8-c32a.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/containers-0.8-c32a.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/containers-0.8-c32a.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/containers-0.8-c32a.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/pretty-1.1.3.6-8733.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/pretty-1.1.3.6-8733/pretty.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/pretty-1.1.3.6-8733"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/pretty-1.1.3.6-8733.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "pretty" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/pretty-1.1.3.6-8733.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/pretty-1.1.3.6-8733.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/pretty-1.1.3.6-8733.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/pretty-1.1.3.6-8733.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/pretty-1.1.3.6-8733.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/pretty-1.1.3.6-8733.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/pretty-1.1.3.6-8733.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-heap-9.14.1-4476.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-heap-9.14.1-4476/ghc-heap.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-heap-9.14.1-4476"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-heap-9.14.1-4476.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "ghc-heap" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-heap-9.14.1-4476.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-heap-9.14.1-4476.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-heap-9.14.1-4476.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-heap-9.14.1-4476.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-heap-9.14.1-4476.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-heap-9.14.1-4476.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-heap-9.14.1-4476.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/array-0.5.8.0-aca2.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/array-0.5.8.0-aca2/array.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/array-0.5.8.0-aca2"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/array-0.5.8.0-aca2.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "array" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/array-0.5.8.0-aca2.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/array-0.5.8.0-aca2.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/array-0.5.8.0-aca2.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/array-0.5.8.0-aca2.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/array-0.5.8.0-aca2.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/array-0.5.8.0-aca2.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/array-0.5.8.0-aca2.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/system-cxx-std-lib-1.0.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/system-cxx-std-lib-1.0/system-cxx-std-lib-1.0.conf.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/system-cxx-std-lib-1.0"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/system-cxx-std-lib-1.0.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "system-cxx-std-lib-1.0.conf" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/system-cxx-std-lib-1.0.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/system-cxx-std-lib-1.0.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/system-cxx-std-lib-1.0.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/system-cxx-std-lib-1.0.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/system-cxx-std-lib-1.0.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/system-cxx-std-lib-1.0.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/system-cxx-std-lib-1.0.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/semaphore-compat-1.0.0-53be.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/semaphore-compat-1.0.0-53be/semaphore-compat.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/semaphore-compat-1.0.0-53be"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/semaphore-compat-1.0.0-53be.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "semaphore-compat" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/semaphore-compat-1.0.0-53be.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/semaphore-compat-1.0.0-53be.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/semaphore-compat-1.0.0-53be.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/semaphore-compat-1.0.0-53be.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/semaphore-compat-1.0.0-53be.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/semaphore-compat-1.0.0-53be.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/semaphore-compat-1.0.0-53be.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/integer-gmp-1.1-2b77.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/integer-gmp-1.1-2b77/integer-gmp.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/integer-gmp-1.1-2b77"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/integer-gmp-1.1-2b77.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "integer-gmp" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/integer-gmp-1.1-2b77.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/integer-gmp-1.1-2b77.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/integer-gmp-1.1-2b77.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/integer-gmp-1.1-2b77.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/integer-gmp-1.1-2b77.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/integer-gmp-1.1-2b77.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/integer-gmp-1.1-2b77.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/transformers-0.6.1.2-7f9d.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/transformers-0.6.1.2-7f9d/transformers.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/transformers-0.6.1.2-7f9d"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/transformers-0.6.1.2-7f9d.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "transformers" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/transformers-0.6.1.2-7f9d.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/transformers-0.6.1.2-7f9d.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/transformers-0.6.1.2-7f9d.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/transformers-0.6.1.2-7f9d.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/transformers-0.6.1.2-7f9d.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/transformers-0.6.1.2-7f9d.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/transformers-0.6.1.2-7f9d.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/process-1.6.26.1-9097.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/process-1.6.26.1-9097/process.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/process-1.6.26.1-9097"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/process-1.6.26.1-9097.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "process" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/process-1.6.26.1-9097.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/process-1.6.26.1-9097.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/process-1.6.26.1-9097.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/process-1.6.26.1-9097.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/process-1.6.26.1-9097.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/process-1.6.26.1-9097.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/process-1.6.26.1-9097.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-library-1.11.0-76e7.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/haddock-library-1.11.0-76e7/haddock-library.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/haddock-library-1.11.0-76e7"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-library-1.11.0-76e7.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "haddock-library" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-library-1.11.0-76e7.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-library-1.11.0-76e7.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-library-1.11.0-76e7.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-library-1.11.0-76e7.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-library-1.11.0-76e7.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-library-1.11.0-76e7.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-library-1.11.0-76e7.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-bignum-1.4-6780.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-bignum-1.4-6780/ghc-bignum.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-bignum-1.4-6780"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-bignum-1.4-6780.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "ghc-bignum" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-bignum-1.4-6780.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-bignum-1.4-6780.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-bignum-1.4-6780.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-bignum-1.4-6780.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-bignum-1.4-6780.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-bignum-1.4-6780.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-bignum-1.4-6780.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/rts-1.0.3.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/rts-1.0.3/rts-1.0.3.conf.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/rts-1.0.3"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/rts-1.0.3.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "rts-1.0.3.conf" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/rts-1.0.3.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/rts-1.0.3.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/rts-1.0.3.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/rts-1.0.3.conf.copy.copy')
+rts-1.0.3.conf
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/rts-1.0.3.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/rts-1.0.3.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/rts-1.0.3.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/hpc-0.7.0.2-f5df.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/hpc-0.7.0.2-f5df/hpc.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/hpc-0.7.0.2-f5df"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/hpc-0.7.0.2-f5df.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "hpc" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/hpc-0.7.0.2-f5df.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/hpc-0.7.0.2-f5df.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/hpc-0.7.0.2-f5df.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/hpc-0.7.0.2-f5df.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/hpc-0.7.0.2-f5df.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/hpc-0.7.0.2-f5df.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/hpc-0.7.0.2-f5df.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-api-2.33.0-8817.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/haddock-api-2.33.0-8817/haddock-api.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/haddock-api-2.33.0-8817"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-api-2.33.0-8817.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "haddock-api" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-api-2.33.0-8817.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-api-2.33.0-8817.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-api-2.33.0-8817.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-api-2.33.0-8817.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-api-2.33.0-8817.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-api-2.33.0-8817.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haddock-api-2.33.0-8817.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/filepath-1.5.4.0-a75a.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/filepath-1.5.4.0-a75a/filepath.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/filepath-1.5.4.0-a75a"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/filepath-1.5.4.0-a75a.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "filepath" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/filepath-1.5.4.0-a75a.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/filepath-1.5.4.0-a75a.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/filepath-1.5.4.0-a75a.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/filepath-1.5.4.0-a75a.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/filepath-1.5.4.0-a75a.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/filepath-1.5.4.0-a75a.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/filepath-1.5.4.0-a75a.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-2.24.0.0-e4a8.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/template-haskell-2.24.0.0-e4a8/template-haskell.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/template-haskell-2.24.0.0-e4a8"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-2.24.0.0-e4a8.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "template-haskell" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-2.24.0.0-e4a8.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-2.24.0.0-e4a8.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-2.24.0.0-e4a8.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-2.24.0.0-e4a8.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-2.24.0.0-e4a8.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-2.24.0.0-e4a8.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-2.24.0.0-e4a8.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-experimental-9.1401.0-2b59.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-experimental-9.1401.0-2b59/ghc-experimental.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-experimental-9.1401.0-2b59"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-experimental-9.1401.0-2b59.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "ghc-experimental" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-experimental-9.1401.0-2b59.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-experimental-9.1401.0-2b59.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-experimental-9.1401.0-2b59.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-experimental-9.1401.0-2b59.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-experimental-9.1401.0-2b59.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-experimental-9.1401.0-2b59.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-experimental-9.1401.0-2b59.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/directory-1.3.10.0-36de.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/directory-1.3.10.0-36de/directory.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/directory-1.3.10.0-36de"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/directory-1.3.10.0-36de.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "directory" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/directory-1.3.10.0-36de.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/directory-1.3.10.0-36de.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/directory-1.3.10.0-36de.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/directory-1.3.10.0-36de.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/directory-1.3.10.0-36de.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/directory-1.3.10.0-36de.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/directory-1.3.10.0-36de.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-th-9.14.1-f2a2.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-boot-th-9.14.1-f2a2/ghc-boot-th.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-boot-th-9.14.1-f2a2"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-th-9.14.1-f2a2.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "ghc-boot-th" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-th-9.14.1-f2a2.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-th-9.14.1-f2a2.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-th-9.14.1-f2a2.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-th-9.14.1-f2a2.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-th-9.14.1-f2a2.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-th-9.14.1-f2a2.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-th-9.14.1-f2a2.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghci-9.14.1-d09f.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghci-9.14.1-d09f/ghci.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghci-9.14.1-d09f"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghci-9.14.1-d09f.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "ghci" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghci-9.14.1-d09f.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghci-9.14.1-d09f.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghci-9.14.1-d09f.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghci-9.14.1-d09f.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghci-9.14.1-d09f.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghci-9.14.1-d09f.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghci-9.14.1-d09f.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-platform-0.1.0.0-c58e.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-platform-0.1.0.0-c58e/ghc-platform.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-platform-0.1.0.0-c58e"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-platform-0.1.0.0-c58e.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "ghc-platform" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-platform-0.1.0.0-c58e.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-platform-0.1.0.0-c58e.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-platform-0.1.0.0-c58e.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-platform-0.1.0.0-c58e.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-platform-0.1.0.0-c58e.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-platform-0.1.0.0-c58e.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-platform-0.1.0.0-c58e.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/exceptions-0.10.11-a3d3.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/exceptions-0.10.11-a3d3/exceptions.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/exceptions-0.10.11-a3d3"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/exceptions-0.10.11-a3d3.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "exceptions" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/exceptions-0.10.11-a3d3.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/exceptions-0.10.11-a3d3.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/exceptions-0.10.11-a3d3.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/exceptions-0.10.11-a3d3.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/exceptions-0.10.11-a3d3.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/exceptions-0.10.11-a3d3.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/exceptions-0.10.11-a3d3.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/stm-2.5.3.1-9c8b.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/stm-2.5.3.1-9c8b/stm.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/stm-2.5.3.1-9c8b"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/stm-2.5.3.1-9c8b.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "stm" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/stm-2.5.3.1-9c8b.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/stm-2.5.3.1-9c8b.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/stm-2.5.3.1-9c8b.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/stm-2.5.3.1-9c8b.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/stm-2.5.3.1-9c8b.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/stm-2.5.3.1-9c8b.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/stm-2.5.3.1-9c8b.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/deepseq-1.5.1.0-e6fc.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/deepseq-1.5.1.0-e6fc/deepseq.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/deepseq-1.5.1.0-e6fc"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/deepseq-1.5.1.0-e6fc.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "deepseq" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/deepseq-1.5.1.0-e6fc.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/deepseq-1.5.1.0-e6fc.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/deepseq-1.5.1.0-e6fc.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/deepseq-1.5.1.0-e6fc.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/deepseq-1.5.1.0-e6fc.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/deepseq-1.5.1.0-e6fc.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/deepseq-1.5.1.0-e6fc.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/bytestring-0.12.2.0-0e3e.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/bytestring-0.12.2.0-0e3e/bytestring.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/bytestring-0.12.2.0-0e3e"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/bytestring-0.12.2.0-0e3e.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "bytestring" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/bytestring-0.12.2.0-0e3e.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/bytestring-0.12.2.0-0e3e.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/bytestring-0.12.2.0-0e3e.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/bytestring-0.12.2.0-0e3e.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/bytestring-0.12.2.0-0e3e.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/bytestring-0.12.2.0-0e3e.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/bytestring-0.12.2.0-0e3e.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-toolchain-0.1.0.0-d571.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-toolchain-0.1.0.0-d571/ghc-toolchain.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-toolchain-0.1.0.0-d571"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-toolchain-0.1.0.0-d571.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "ghc-toolchain" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-toolchain-0.1.0.0-d571.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-toolchain-0.1.0.0-d571.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-toolchain-0.1.0.0-d571.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-toolchain-0.1.0.0-d571.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-toolchain-0.1.0.0-d571.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-toolchain-0.1.0.0-d571.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-toolchain-0.1.0.0-d571.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/xhtml-3000.2.2.1-a12a.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/xhtml-3000.2.2.1-a12a/xhtml.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/xhtml-3000.2.2.1-a12a"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/xhtml-3000.2.2.1-a12a.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "xhtml" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/xhtml-3000.2.2.1-a12a.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/xhtml-3000.2.2.1-a12a.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/xhtml-3000.2.2.1-a12a.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/xhtml-3000.2.2.1-a12a.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/xhtml-3000.2.2.1-a12a.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/xhtml-3000.2.2.1-a12a.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/xhtml-3000.2.2.1-a12a.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-9.14.1-e4ac.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-9.14.1-e4ac/ghc.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-9.14.1-e4ac"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-9.14.1-e4ac.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "ghc" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-9.14.1-e4ac.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-9.14.1-e4ac.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-9.14.1-e4ac.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-9.14.1-e4ac.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-9.14.1-e4ac.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-9.14.1-e4ac.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-9.14.1-e4ac.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-9.14.1-cc9e.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-boot-9.14.1-cc9e/ghc-boot.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-boot-9.14.1-cc9e"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-9.14.1-cc9e.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "ghc-boot" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-9.14.1-cc9e.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-9.14.1-cc9e.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-9.14.1-cc9e.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-9.14.1-cc9e.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-9.14.1-cc9e.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-9.14.1-cc9e.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-boot-9.14.1-cc9e.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/mtl-2.3.1-ae06.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/mtl-2.3.1-ae06/mtl.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/mtl-2.3.1-ae06"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/mtl-2.3.1-ae06.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "mtl" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/mtl-2.3.1-ae06.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/mtl-2.3.1-ae06.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/mtl-2.3.1-ae06.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/mtl-2.3.1-ae06.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/mtl-2.3.1-ae06.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/mtl-2.3.1-ae06.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/mtl-2.3.1-ae06.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-quasiquoter-0.1.0.0-17c1.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/template-haskell-quasiquoter-0.1.0.0-17c1/template-haskell-quasiquoter.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/template-haskell-quasiquoter-0.1.0.0-17c1"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-quasiquoter-0.1.0.0-17c1.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "template-haskell-quasiquoter" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-quasiquoter-0.1.0.0-17c1.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-quasiquoter-0.1.0.0-17c1.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-quasiquoter-0.1.0.0-17c1.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-quasiquoter-0.1.0.0-17c1.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-quasiquoter-0.1.0.0-17c1.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-quasiquoter-0.1.0.0-17c1.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-quasiquoter-0.1.0.0-17c1.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-3.16.0.0-8910.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/Cabal-3.16.0.0-8910/Cabal.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/Cabal-3.16.0.0-8910"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-3.16.0.0-8910.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "Cabal" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-3.16.0.0-8910.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-3.16.0.0-8910.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-3.16.0.0-8910.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-3.16.0.0-8910.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-3.16.0.0-8910.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-3.16.0.0-8910.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-3.16.0.0-8910.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/parsec-3.1.18.0-be9f.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/parsec-3.1.18.0-be9f/parsec.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/parsec-3.1.18.0-be9f"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/parsec-3.1.18.0-be9f.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "parsec" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/parsec-3.1.18.0-be9f.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/parsec-3.1.18.0-be9f.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/parsec-3.1.18.0-be9f.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/parsec-3.1.18.0-be9f.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/parsec-3.1.18.0-be9f.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/parsec-3.1.18.0-be9f.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/parsec-3.1.18.0-be9f.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haskeline-0.8.3.0-516c.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/haskeline-0.8.3.0-516c/haskeline.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/haskeline-0.8.3.0-516c"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haskeline-0.8.3.0-516c.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "haskeline" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haskeline-0.8.3.0-516c.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haskeline-0.8.3.0-516c.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haskeline-0.8.3.0-516c.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haskeline-0.8.3.0-516c.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haskeline-0.8.3.0-516c.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haskeline-0.8.3.0-516c.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/haskeline-0.8.3.0-516c.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-lift-0.1.0.0-aa2f.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/template-haskell-lift-0.1.0.0-aa2f/template-haskell-lift.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/template-haskell-lift-0.1.0.0-aa2f"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-lift-0.1.0.0-aa2f.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "template-haskell-lift" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-lift-0.1.0.0-aa2f.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-lift-0.1.0.0-aa2f.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-lift-0.1.0.0-aa2f.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-lift-0.1.0.0-aa2f.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-lift-0.1.0.0-aa2f.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-lift-0.1.0.0-aa2f.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/template-haskell-lift-0.1.0.0-aa2f.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/unix-2.8.8.0-ecad.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/unix-2.8.8.0-ecad/unix.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/unix-2.8.8.0-ecad"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/unix-2.8.8.0-ecad.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "unix" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/unix-2.8.8.0-ecad.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/unix-2.8.8.0-ecad.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/unix-2.8.8.0-ecad.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/unix-2.8.8.0-ecad.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/unix-2.8.8.0-ecad.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/unix-2.8.8.0-ecad.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/unix-2.8.8.0-ecad.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/terminfo-0.4.1.7-32ca.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/terminfo-0.4.1.7-32ca/terminfo.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/terminfo-0.4.1.7-32ca"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/terminfo-0.4.1.7-32ca.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "terminfo" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/terminfo-0.4.1.7-32ca.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/terminfo-0.4.1.7-32ca.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/terminfo-0.4.1.7-32ca.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/terminfo-0.4.1.7-32ca.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/terminfo-0.4.1.7-32ca.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/terminfo-0.4.1.7-32ca.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/terminfo-0.4.1.7-32ca.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/binary-0.8.9.3-1528.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/binary-0.8.9.3-1528/binary.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/binary-0.8.9.3-1528"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/binary-0.8.9.3-1528.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "binary" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/binary-0.8.9.3-1528.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/binary-0.8.9.3-1528.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/binary-0.8.9.3-1528.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/binary-0.8.9.3-1528.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/binary-0.8.9.3-1528.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/binary-0.8.9.3-1528.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/binary-0.8.9.3-1528.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-prim-0.13.1-3eab.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-prim-0.13.1-3eab/ghc-prim.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-prim-0.13.1-3eab"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-prim-0.13.1-3eab.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "ghc-prim" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-prim-0.13.1-3eab.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-prim-0.13.1-3eab.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-prim-0.13.1-3eab.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-prim-0.13.1-3eab.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-prim-0.13.1-3eab.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-prim-0.13.1-3eab.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-prim-0.13.1-3eab.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-internal-9.1401.0-5ecd.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-internal-9.1401.0-5ecd/ghc-internal.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-internal-9.1401.0-5ecd"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-internal-9.1401.0-5ecd.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "ghc-internal" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-internal-9.1401.0-5ecd.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-internal-9.1401.0-5ecd.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-internal-9.1401.0-5ecd.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-internal-9.1401.0-5ecd.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-internal-9.1401.0-5ecd.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-internal-9.1401.0-5ecd.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-internal-9.1401.0-5ecd.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/text-2.1.3-769a.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/text-2.1.3-769a/text.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/text-2.1.3-769a"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/text-2.1.3-769a.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "text" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/text-2.1.3-769a.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/text-2.1.3-769a.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/text-2.1.3-769a.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/text-2.1.3-769a.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/text-2.1.3-769a.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/text-2.1.3-769a.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/text-2.1.3-769a.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/time-1.15-bd44.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/time-1.15-bd44/time.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/time-1.15-bd44"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/time-1.15-bd44.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "time" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/time-1.15-bd44.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/time-1.15-bd44.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/time-1.15-bd44.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/time-1.15-bd44.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/time-1.15-bd44.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/time-1.15-bd44.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/time-1.15-bd44.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/base-4.22.0.0-3821.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/base-4.22.0.0-3821/base.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/base-4.22.0.0-3821"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/base-4.22.0.0-3821.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "base" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/base-4.22.0.0-3821.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/base-4.22.0.0-3821.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/base-4.22.0.0-3821.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/base-4.22.0.0-3821.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/base-4.22.0.0-3821.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/base-4.22.0.0-3821.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/base-4.22.0.0-3821.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-compact-0.1.0.0-c001.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-compact-0.1.0.0-c001/ghc-compact.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/ghc-compact-0.1.0.0-c001"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-compact-0.1.0.0-c001.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "ghc-compact" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-compact-0.1.0.0-c001.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-compact-0.1.0.0-c001.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-compact-0.1.0.0-c001.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-compact-0.1.0.0-c001.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-compact-0.1.0.0-c001.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-compact-0.1.0.0-c001.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/ghc-compact-0.1.0.0-c001.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/os-string-2.0.8-9722.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/os-string-2.0.8-9722/os-string.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/os-string-2.0.8-9722"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/os-string-2.0.8-9722.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "os-string" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/os-string-2.0.8-9722.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/os-string-2.0.8-9722.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/os-string-2.0.8-9722.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/os-string-2.0.8-9722.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/os-string-2.0.8-9722.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/os-string-2.0.8-9722.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/os-string-2.0.8-9722.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-syntax-3.16.0.0-2049.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/Cabal-syntax-3.16.0.0-2049/Cabal-syntax.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/Cabal-syntax-3.16.0.0-2049"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-syntax-3.16.0.0-2049.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "Cabal-syntax" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-syntax-3.16.0.0-2049.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-syntax-3.16.0.0-2049.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-syntax-3.16.0.0-2049.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-syntax-3.16.0.0-2049.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-syntax-3.16.0.0-2049.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-syntax-3.16.0.0-2049.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/Cabal-syntax-3.16.0.0-2049.conf'  	# to the doc files.
+cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/file-io-0.1.5-a521.conf' | sed 's|haddock-interfaces.*|haddock-interfaces: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/file-io-0.1.5-a521/file-io.haddock"|' | sed 's|haddock-html.*|haddock-html: "${pkgroot}/../../../share/doc/ghc-9.14.1/html/libraries/file-io-0.1.5-a521"|' | sed 's|    ${pkgroot}/../../doc/html/.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/file-io-0.1.5-a521.conf.copy'
+# The rts package doesn't actually supply haddocks, so we stop advertising them
+# altogether.
+((echo "file-io" | grep rts) && (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/file-io-0.1.5-a521.conf.copy' | sed 's|haddock-.*||' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/file-io-0.1.5-a521.conf.copy.copy')) || (cat '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/file-io-0.1.5-a521.conf.copy' > '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/file-io-0.1.5-a521.conf.copy.copy')
+# We finally replace the original file.
+mv '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/file-io-0.1.5-a521.conf.copy.copy' '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/file-io-0.1.5-a521.conf'
+# Fix the mode, in case umask is set
+chmod 644 '/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d/file-io-0.1.5-a521.conf'
+'/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/bin/ghc-pkg' --global-package-db "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/ghc/lib/ghc-9.14.1/lib/package.conf.d" recache
+The Glorious Glasgow Haskell Compilation System, version 9.14.1

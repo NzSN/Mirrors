@@ -1,0 +1,99 @@
+{
+  "scope": "C1 LF-at-EOF and C27 exact key modes across4SDKs",
+  "rows": [
+    {
+      "repo": "MirrorECMA",
+      "head": "19f6ae6ce8d9b073bef888fc66efc4c49f2a07ab",
+      "C1": {
+        "status": "source_supported_strict_LF_before_EOF",
+        "evidence": {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/transport.ts",
+          "line": 201
+        }
+      },
+      "C27": {
+        "status": "literal_contract_inconsistency_private_only_access_enforced",
+        "evidence": {
+          "path": "/home/nzsn/Repos/MirrorECMA/src/transport.ts",
+          "line": 371
+        },
+        "testEvidence": {
+          "path": "/home/nzsn/Repos/MirrorECMA/test/smoke.test.ts",
+          "line": 773
+        }
+      }
+    },
+    {
+      "repo": "MirrorCPP",
+      "head": "410c58a175c3135d9cd76c85e33a718f63761855",
+      "C1": {
+        "status": "source_supported_strict_LF_before_EOF",
+        "evidence": {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/line.hpp",
+          "line": 67
+        }
+      },
+      "C27": {
+        "status": "literal_contract_inconsistency_private_only_access_enforced",
+        "evidence": {
+          "path": "/home/nzsn/Repos/MirrorCPP/src/detail/tls.cpp",
+          "line": 67
+        },
+        "testEvidence": {
+          "path": "/home/nzsn/Repos/MirrorCPP/test/unit/tls_test.cpp",
+          "line": 128
+        }
+      }
+    },
+    {
+      "repo": "MirrorRust",
+      "head": "5049e99886a3d1f775e60190478c26e39c9aefc9",
+      "C1": {
+        "status": "source_supported_strict_LF_before_EOF",
+        "evidence": {
+          "path": "/home/nzsn/Repos/MirrorRust/src/transport.rs",
+          "line": 307
+        }
+      },
+      "C27": {
+        "status": "exact_0600_source_supported",
+        "evidence": {
+          "path": "/home/nzsn/Repos/MirrorRust/src/transport.rs",
+          "line": 348
+        },
+        "testEvidence": {
+          "path": "/home/nzsn/Repos/MirrorRust/tests/transport.rs",
+          "line": 7
+        }
+      }
+    },
+    {
+      "repo": "MirrorLean",
+      "head": "b8b9491bd96e3126da55d34a7ba3a4493766dcf3",
+      "C1": {
+        "status": "source_supported_strict_LF_before_EOF",
+        "evidence": {
+          "path": "/home/nzsn/Repos/MirrorLean/MirrorLean/Transport.lean",
+          "line": 164
+        }
+      },
+      "C27": {
+        "status": "literal_contract_inconsistency_private_only_access_enforced",
+        "evidence": {
+          "path": "/home/nzsn/Repos/MirrorLean/server-mode/native/mirrorlean_tls.c",
+          "line": 86
+        },
+        "testEvidence": {
+          "path": "/home/nzsn/Repos/MirrorLean/server-mode/Test/ServerMode.lean",
+          "line": 377
+        }
+      }
+    }
+  ],
+  "limits": [
+    "Static source/test assertion inspection only; no local builds/tests.",
+    "C27private-only modes0400/0700 do not by themselves expose secret material.",
+    "SDK receiver conclusion does not cover built-in Mirrors CLI.",
+    "No source edits or other owner report edits."
+  ]
+}

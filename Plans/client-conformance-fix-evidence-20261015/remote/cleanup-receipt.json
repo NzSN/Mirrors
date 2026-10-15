@@ -1,0 +1,91 @@
+{
+  "schema": "client-fixes-cleanup/v1",
+  "ownedProcessesBeforeExceptKeeper": [],
+  "keeperBefore": {
+    "pid": 814,
+    "command": "bash /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/setup-mount.sh",
+    "sleepPid": 1029
+  },
+  "image": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/fix-workspace.ext4",
+  "imageBytes": 25769803776,
+  "sourceRoot": "/home/jlc/Tools/mirrors-client-fixes-20261015",
+  "oldImagesTouched": false,
+  "commands": [
+    {
+      "args": [
+        "sync",
+        "-f",
+        "/home/jlc/Tools/mirrors-client-fixes-20261015"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "umount",
+        "/tmp/fix-tests"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "umount",
+        "/home/jlc/Tools/mirrors-client-fixes-20261015"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "sync",
+        "-f",
+        "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/fix-workspace.ext4"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "loopDeviceBefore": "/dev/loop0",
+  "keeperAfter": null,
+  "sleepAfter": null,
+  "mountAfter": {
+    "args": [
+      "findmnt",
+      "-rn",
+      "--mountpoint",
+      "/home/jlc/Tools/mirrors-client-fixes-20261015"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "testBindAfter": {
+    "args": [
+      "findmnt",
+      "-rn",
+      "--mountpoint",
+      "/tmp/fix-tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "loopAfter": {
+    "args": [
+      "losetup",
+      "-j",
+      "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/fix-workspace.ext4"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "preservedImage": true,
+  "recoveryWorkflow": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/recover-new-image.sh",
+  "status": "closed-cleanly-image-preserved"
+}

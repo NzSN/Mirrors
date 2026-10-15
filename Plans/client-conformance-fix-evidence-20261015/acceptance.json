@@ -1,0 +1,291 @@
+{
+  "schema": "mirrors.client-remediation-acceptance/v1",
+  "date": "2026-10-15",
+  "status": "accepted_in_declared_remote_wsl_scope",
+  "approvedPlan": "../client-conformance-fix-plan-2026-10-15.md",
+  "approvedPlanSha256": "5a25545759f66a3425754bb898c67e8b779e648338c0d38256d553fd4cb5522e",
+  "originalAudit": {
+    "path": "../../tmp/reports/client-conformance-2026-10-15/audit.json",
+    "sha256": "271eec72ca6d23062c517c03a59e6dfd56da120c15e944671904ef3fca16e3db",
+    "guideSha256AtAudit": "8017baebdb0a73473107a88b16422311afe84a1e3afa754f58887190fc73c7b4",
+    "unchangedEvidenceManifestSha256": "fc2230e541a07c3294b5c6b720674f8600a36570f687aa31255550e0b7d16670"
+  },
+  "currentGuideSha256": "cb32f1262a5e5b7d351f3a137dc9228d435d0bc3a4f4135b68ff283aa0850b66",
+  "tasks": [
+    {
+      "id": "L1",
+      "auditFindings": [
+        "F1"
+      ],
+      "boundary": "Lean TLS empty identity",
+      "status": "accepted_in_declared_remote_wsl_scope",
+      "normalFailureIntegrationControls": "recorded in README and linked final remote receipts"
+    },
+    {
+      "id": "L2",
+      "auditFindings": [
+        "F2"
+      ],
+      "boundary": "Lean lexical source closure",
+      "status": "accepted_in_declared_remote_wsl_scope",
+      "normalFailureIntegrationControls": "recorded in README and linked final remote receipts"
+    },
+    {
+      "id": "E1",
+      "auditFindings": [
+        "F3"
+      ],
+      "boundary": "ECMA compiled-pair admission",
+      "status": "accepted_in_declared_remote_wsl_scope",
+      "normalFailureIntegrationControls": "recorded in README and linked final remote receipts"
+    },
+    {
+      "id": "C1",
+      "auditFindings": [
+        "F4"
+      ],
+      "boundary": "C++ Gate trusted failure evidence",
+      "status": "accepted_in_declared_remote_wsl_scope",
+      "normalFailureIntegrationControls": "recorded in README and linked final remote receipts"
+    },
+    {
+      "id": "M1",
+      "auditFindings": [
+        "F5"
+      ],
+      "boundary": "CLI strict framing",
+      "status": "accepted_in_declared_remote_wsl_scope",
+      "normalFailureIntegrationControls": "recorded in README and linked final remote receipts"
+    },
+    {
+      "id": "M2",
+      "auditFindings": [
+        "F6"
+      ],
+      "boundary": "Trace cancellation boundary",
+      "status": "accepted_in_declared_remote_wsl_scope",
+      "normalFailureIntegrationControls": "recorded in README and linked final remote receipts"
+    },
+    {
+      "id": "H1",
+      "auditFindings": [
+        "F7"
+      ],
+      "boundary": "Haskell final-byte transport bounds",
+      "status": "accepted_in_declared_remote_wsl_scope",
+      "normalFailureIntegrationControls": "recorded in README and linked final remote receipts"
+    },
+    {
+      "id": "D1",
+      "auditFindings": [],
+      "boundary": "Operation-specific connection continuation",
+      "status": "accepted_in_declared_remote_wsl_scope",
+      "normalFailureIntegrationControls": "recorded in README and linked final remote receipts"
+    },
+    {
+      "id": "D2/K1",
+      "auditFindings": [],
+      "boundary": "Exact POSIX 0600 across six clients",
+      "status": "accepted_in_declared_remote_wsl_scope",
+      "normalFailureIntegrationControls": "recorded in README and linked final remote receipts"
+    },
+    {
+      "id": "H2",
+      "auditFindings": [],
+      "boundary": "Haskell SAN-only TLS follow-up",
+      "status": "accepted_in_declared_remote_wsl_scope",
+      "normalFailureIntegrationControls": "recorded in README and linked final remote receipts"
+    },
+    {
+      "id": "HASKELL_REPLY_FOLLOWUPS",
+      "auditFindings": [],
+      "boundary": "Defensive correlation and legal cancellation replies",
+      "status": "accepted_in_declared_remote_wsl_scope",
+      "normalFailureIntegrationControls": "recorded in README and linked final remote receipts"
+    },
+    {
+      "id": "LEAN_NULL_FOLLOWUP",
+      "auditFindings": [],
+      "boundary": "Nullable convenience decoder",
+      "status": "accepted_in_declared_remote_wsl_scope",
+      "normalFailureIntegrationControls": "recorded in README and linked final remote receipts"
+    }
+  ],
+  "repositoryHeads": {
+    "Mirrors": "c17bae951c4d5bbc5818c2a4f82e2d93d07abc52",
+    "MirrorLean": "b8b9491bd96e3126da55d34a7ba3a4493766dcf3",
+    "MirrorECMA": "19f6ae6ce8d9b073bef888fc66efc4c49f2a07ab",
+    "MirrorCPP": "410c58a175c3135d9cd76c85e33a718f63761855",
+    "MirrorGate": "4a8d0d361589059ad72fe52e05789f302b4b65c8",
+    "ModelMirros": "5ee414ee16b8aba50ceb480ac8013a56165272bb",
+    "MirrorRust": "5049e99886a3d1f775e60190478c26e39c9aefc9"
+  },
+  "repositoryHeadsUnchanged": true,
+  "selectedSourceFilesVerified": 9224,
+  "changedSourceDocTestFiles": 76,
+  "leafArtifactsVerified": 281,
+  "productCommitPushDeployment": false,
+  "remoteEphemeralCiSnapshotCommits": {
+    "Mirrors": "0a65f7ff7804ddafaa520eaeb5af7624e7852ed1",
+    "MirrorECMA": "4cf1ea5a5cc4cef64fb2f4b6dbc142cbb3ca72af"
+  },
+  "postCiDelta": {
+    "path": "tools/check-client-framing.py",
+    "sha256": "fe2b77b8e24bdff58f9b08dc1b594174ce2b0ece765fab76a382e4fbc7df0dca",
+    "scope": "test-only portable detached socket close and linger packing",
+    "compiledInputsChanged": false,
+    "fullFocusedGateRerunAgainstImmutableProducer": true
+  },
+  "finalImmutableMirrorSha256": "6e06ecd3d4d2975a42db2a1822b2d28d9e382f6d5b9bf48fa36c6c9ce27fa77d",
+  "sourceReviewRecords": [
+    "reviews/source-review-1.md",
+    "reviews/source-review-2.md",
+    "remote/haskell-h2/source-review-h2.md",
+    "reviews/final-source-review.md"
+  ],
+  "runtimeSummary": {
+    "leanRoot": {
+      "passed": 125,
+      "failed": 0
+    },
+    "ecmaFocused": {
+      "suitesPassed": 7,
+      "testsPassed": 170
+    },
+    "ecmaFullNonLiveCi": {
+      "suitesPassed": 43,
+      "testsPassed": 708,
+      "suitesSkipped": 1,
+      "testsSkipped": 13
+    },
+    "cppSdkCTest": {
+      "suitesPassed": 3
+    },
+    "cppStrictModes": {
+      "assertionsPassed": 103
+    },
+    "cppTlsGroup": {
+      "assertionsPassed": 167,
+      "casesPassed": 10
+    },
+    "gateActualFacade": {
+      "rowsPassed": 37,
+      "ownedRows": 18,
+      "attachedRows": 19,
+      "attachedSiblingSessionSurvived": 19,
+      "intentionalCleanupFailureRows": 2
+    },
+    "haskellH1": {
+      "nonModelTestsPassed": 16
+    },
+    "haskellH2": {
+      "nonModelTestsPassedPerRun": 18,
+      "runs": 2,
+      "zeroWriteTlsDenialsPerRun": 17
+    },
+    "rustTransportControls": {
+      "passed": 4,
+      "failed": 0
+    },
+    "mirrorsFullNoModel": "ALL LOCAL NON-MODEL GATES GREEN",
+    "nativeRebuildGraph": "passed"
+  },
+  "scope": {
+    "host": "windows-dev Ubuntu WSL",
+    "modelCheckersExecuted": false,
+    "localBuildsOrTestsExecuted": false,
+    "cleanup": "closed-cleanly-image-preserved",
+    "historicalImagesModified": false,
+    "newFullGuideQualification": false,
+    "newM5Qualification": false
+  },
+  "remainingChecks": [
+    "Hosted CI with pinned toolchains and GCC13 baseline parity",
+    "Native Windows/macOS TLS and ACL runtime",
+    "Broader Gate backends and current-source Rust-worker replay",
+    "Fresh full cross-client/live qualification using reobserved owned remote service identity"
+  ],
+  "retainedExceptions": [
+    "Haskell fingerprint comparison remains case sensitive as documented"
+  ],
+  "evidence": {
+    "remote/main/artifact-manifest.json": {
+      "sha256": "c347e0091349488a05c586f34a4354eb689dea95ac19d4873eb43f43f608a4aa"
+    },
+    "remote/main/final-main-source-manifest.json": {
+      "sha256": "373b990bbca98dbda79f73c260412afb0aec776c3efbd92347119eaed852bb6a"
+    },
+    "remote/main/compiled-artifact-identities.json": {
+      "sha256": "2941926bc469d43f65178b5bfe3e07db5744b504301113b7447c3840a1a0313f"
+    },
+    "remote/main/final-phase-results.json": {
+      "sha256": "1b2c9311995a024598da72f1cf2f29d8657bed517f6cbcd52e11efd4353970e7"
+    },
+    "remote/main/frozen-cli-checks.json": {
+      "sha256": "b3e26eb9b2f5086a1bb0e21a40a9d614849bea7d20e0fbaee20f224342853e70"
+    },
+    "remote/cpp-gate/matrix-final-summary.json": {
+      "sha256": "aa21ff969b659acf367582f89276afbc3511b2fd54db8aa7db758fb0d5999b8f"
+    },
+    "remote/cpp-gate/cpp-failure-matrix-attempt4.jsonl": {
+      "sha256": "031326f2e5626dd47ef3efe64f001a806bc404921e3fe1fc2b0c0b38d3536ed0"
+    },
+    "remote/cpp-gate/manifests/source-files.sha256": {
+      "sha256": "5d2cb565c8d9dc51681171ae768a01d8e7cf2607402bfaaa1342cbd478e47d71"
+    },
+    "remote/haskell/evidence-manifest.json": {
+      "sha256": "005eaff0be2d1cda40977b3ce97ec4c239dbd7f160e2c99b5066e5897496817b"
+    },
+    "remote/haskell-h2/evidence-manifest.json": {
+      "sha256": "c19d799201cebffc08917d56c64b4d91600ef4658de6216c5b9f037babe246b3"
+    },
+    "remote/haskell-h2/h2-source-manifest.json": {
+      "sha256": "24f70e4f397574e8c8c936e42cc7f5f919f00bae785ebf593deac004b3089db6"
+    },
+    "remote/cleanup-receipt.json": {
+      "sha256": "e55c51cb47f57b6a938fc6690a59ffa6b4fdb5b4e62207aad2595abfea823e01"
+    },
+    "final-source-verification.json": {
+      "sha256": "68df4c46452c1b060217af184f4ce629638a1b14cc1c6f2bd7f80c9934b50bf9"
+    },
+    "conformance-matrix.json": {
+      "sha256": "eb73fa68e8cddf099de410ec9d0f5c5e0f212c78ec1a7f4b3f48743b60604826"
+    },
+    "reviews/source-review-1.md": {
+      "sha256": "9647c9e371b636a9264a29d7386ce58ed10e5f211eb0626257e7b11378b2ccfd"
+    },
+    "reviews/source-review-2.md": {
+      "sha256": "0060e638c099a427dcab221dc5855a82c4c51fe23c4dffc8b081cc7995753cd8"
+    },
+    "reviews/final-source-review.md": {
+      "sha256": "4c49bd6e41d3c40b468d7d743d372421240162cf67f89ee0109bec1ae0235da4"
+    },
+    "remote/haskell-h2/source-review-h2.md": {
+      "sha256": "cc73c25544550f1e40c1144a20adec2c73199f6a7d4016d4209bdde44ad388fc"
+    }
+  },
+  "conformanceAssessment": {
+    "clients": 6,
+    "numberedRules": 57,
+    "numberedCells": 342,
+    "baselineCellsPreserved": 342,
+    "numberedCellsWithRemediation": 24,
+    "numberedCellsWithoutNewAssessment": 318,
+    "optionalSectionsWithRemediation": 1,
+    "remediationStatusCounts": {
+      "source_supported_after_contract_clarification": 5,
+      "runtime_supported_in_declared_scope": 15,
+      "runtime_supported_convenience_decoder_followup": 1,
+      "runtime_supported_defensive_followup": 2,
+      "runtime_supported_reply_grammar_followup": 1
+    },
+    "perClientNumberedRemediationCounts": {
+      "ecma": 3,
+      "cpp": 3,
+      "rust": 2,
+      "lean": 6,
+      "cli": 3,
+      "haskell": 7
+    }
+  }
+}

@@ -4,7 +4,7 @@
  *   - server/client SSL_CTX creation with the locked-down policy:
  *     TLS 1.3 ONLY, client certificates REQUIRED (server side),
  *     CA-anchored chain verification, SAN required on the server cert,
- *     key file must not be group/other readable;
+ *     POSIX key files must have exactly mode 0600;
  *   - accept/connect (handshake), read/write, graceful shutdown;
  *   - fingerprint + expiry helpers (SHA-256 hex, days remaining).
  *
@@ -200,9 +200,9 @@ static int key_perms_ok(const char *key_file) {
      * the OpenSSL key load that follows) is the effective gate. */
     return 1;
 #endif
-    if (st.st_mode & (S_IRGRP|S_IWGRP|S_IXGRP|S_IROTH|S_IWOTH|S_IXOTH)) {
+    if ((st.st_mode & 07777) != 0600) {
         snprintf(g_err, sizeof(g_err),
-                 "key file %s must not be accessible by group/other (chmod 0600)",
+                 "key file %s must have exactly POSIX mode 0600 (chmod 0600)",
                  key_file);
         return 0;
     }

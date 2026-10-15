@@ -1,0 +1,29 @@
+{
+  "status": "source-verified-immutable-producer",
+  "mirrorPath": "/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/cpp-gate/immutable/mirror",
+  "mirrorSha256": "6e06ecd3d4d2975a42db2a1822b2d28d9e382f6d5b9bf48fa36c6c9ce27fa77d",
+  "sourceMirrorBinary": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/Mirrors/.lake/build/bin/mirror",
+  "sourceSnapshots": {
+    "Mirrors": {
+      "validationSnapshotCommit": "0a65f7ff7804ddafaa520eaeb5af7624e7852ed1",
+      "sourceFilesVerified": 8067
+    },
+    "MirrorECMA": {
+      "validationSnapshotCommit": "4cf1ea5a5cc4cef64fb2f4b6dbc142cbb3ca72af",
+      "sourceFilesVerified": 392
+    }
+  },
+  "nativeInputs": {
+    "Ffi/socket_shim.c": "a17b151c24f108314a58a8dee2ad50c660115d6aa8918c8393e4086f00867673",
+    "Ffi/tls_shim.c": "c322aa6a2252dbac200f33828b03d5ca5ff3bf8017ecca684dd7b625f620c53d",
+    "lakefile.lean": "f8bb7da8f5136667be5720a1bb1a126fa5b83ddedc963d4e6410faaf26b4bced"
+  },
+  "nativeObjects": {
+    "socket_shim.o": "e14ce346c419b6c60866af934693322bc905f6c48edf3fcf07090c2b1aa3cfb2",
+    "tls_shim.o": "cf5488abef3c424f48dd33b9faa3b1f4cae629bcdc913bd05871af01ec56014d"
+  },
+  "compiler": "gcc-12 (Ubuntu 12.3.0-1ubuntu1~22.04.3) 12.3.0\nCopyright (C) 2022 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "mode": "0555",
+  "noFurtherWritesToProducer": true,
+  "actualOriginalCheckoutsCommitted": false
+}

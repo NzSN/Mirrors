@@ -1,0 +1,175 @@
+{
+  "status": "passed",
+  "requiredRows": 37,
+  "actualRows": 37,
+  "controlModes": {
+    "owned": 18,
+    "attached": 19
+  },
+  "attachedSecondSessionSurvivalRows": 19,
+  "intentionalCleanupFailureRows": 2,
+  "brokerWrongIdRows": 4,
+  "requiredFailureFamily": "SO7 worker transport/protocol combined family; exact observed SDK class retained",
+  "sourceManifestSha256": "5d2cb565c8d9dc51681171ae768a01d8e7cf2607402bfaaa1342cbd478e47d71",
+  "mirrorBinarySha256": "6e06ecd3d4d2975a42db2a1822b2d28d9e382f6d5b9bf48fa36c6c9ce27fa77d",
+  "evidenceSha256": "031326f2e5626dd47ef3efe64f001a806bc404921e3fe1fc2b0c0b38d3536ed0",
+  "remainingOwnedGateProcesses": [],
+  "modelCheckerLaunched": false,
+  "newProtocolChannelAdded": false,
+  "supersededAttempts": [
+    "attempt1 cleanup expectation",
+    "attempt2 subfamily overprecision",
+    "attempt3 mutable producer identity rejection"
+  ],
+  "partialDiagnosticSelection": "attempt2-unaffected; 33 rows; not full acceptance",
+  "caseInventory": [
+    {
+      "mode": "attached",
+      "scenario": "correct"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-adapter"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-admission"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-build"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-cleanup"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-invoke-application"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-invoke-cancel"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-invoke-protocol"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-invoke-timeout"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-invoke-transport"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-observe-application"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-observe-cancel"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-observe-protocol"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-observe-timeout"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-observe-transport"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-spoof-admission"
+    },
+    {
+      "mode": "attached",
+      "scenario": "error-spoof-deadline"
+    },
+    {
+      "mode": "attached",
+      "scenario": "faulty"
+    },
+    {
+      "mode": "attached",
+      "scenario": "wrong-digest"
+    },
+    {
+      "mode": "owned",
+      "scenario": "correct"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-adapter"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-build"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-cleanup"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-invoke-application"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-invoke-cancel"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-invoke-protocol"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-invoke-timeout"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-invoke-transport"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-observe-application"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-observe-cancel"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-observe-protocol"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-observe-timeout"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-observe-transport"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-spoof-admission"
+    },
+    {
+      "mode": "owned",
+      "scenario": "error-spoof-deadline"
+    },
+    {
+      "mode": "owned",
+      "scenario": "faulty"
+    },
+    {
+      "mode": "owned",
+      "scenario": "wrong-digest"
+    }
+  ]
+}

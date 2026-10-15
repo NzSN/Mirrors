@@ -1,0 +1,58 @@
+{
+  "capture_published": false,
+  "child_reaped": true,
+  "command": [
+    "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/lean-build/bin/mirror",
+    "validate",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "41721",
+    "--spec",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-conformance-20261015/cli-work/client-cli-probe-yr2dujno/valid-lf-control/Main.tla"
+  ],
+  "control_passed": true,
+  "elapsed_seconds": 0.225599,
+  "exit_code": 0,
+  "mode": "valid-lf",
+  "name": "valid-lf-control",
+  "peer_error": null,
+  "peer_events": [
+    {
+      "reply": {
+        "proto_step": "spec_validated",
+        "result": "valid"
+      },
+      "terminated": true
+    },
+    "client EOF"
+  ],
+  "peer_thread_stopped": true,
+  "requests": [
+    {
+      "bytes": 293,
+      "json": {
+        "apalacheConfig": {
+          "constInit": null,
+          "initPredicate": null,
+          "invariant": "",
+          "lengthBound": 10,
+          "nextPredicate": null,
+          "paramVars": "",
+          "specPath": "Main.tla"
+        },
+        "bound": 10,
+        "proto_step": "register_validate",
+        "spec": {
+          "sources": [
+            "---- MODULE Main ----\nEXTENDS Child\n====\n",
+            "---- MODULE Child ----\n====\n"
+          ]
+        }
+      }
+    }
+  ],
+  "stderr": "",
+  "stdout": "VALID\n",
+  "timed_out": false
+}

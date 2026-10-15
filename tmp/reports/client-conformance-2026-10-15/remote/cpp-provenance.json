@@ -1,0 +1,198 @@
+{
+  "head": "410c58a175c3135d9cd76c85e33a718f63761855",
+  "sourceVerification": {
+    "include/mirrorcpp/mirrorcpp.hpp": {
+      "sha256": "2e1730f96369ab105db45ceba8b37bfe715dc3645bb3669e35a7a69b85419911",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "include/mirrorcpp/schedule_binding.hpp": {
+      "sha256": "009c8e190ab1f568c5bb6b792934af4118a8d9319e05fed715c7fb977b1d8c58",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "include/mirrorcpp/transport.hpp": {
+      "sha256": "039b61b5c8560b4aedb8d9ee13a2683fe77e328110ebd5301497f47de0900103",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "include/mirrorcpp/schedule.hpp": {
+      "sha256": "43785b8edc8ce895d5620388636a57b6168279285ca3c5995102e138a5cabcd3",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "include/mirrorcpp/schedule_sync.hpp": {
+      "sha256": "86be9c086a8dc1f5579ad1445cb5f666a3a1d4ca8cdba11a22c679b612f086dc",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "include/mirrorcpp/registry.hpp": {
+      "sha256": "84314aa42ce1561430040da0f47c409544f8075a5305ea0568dbcf48cacff15b",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "include/mirrorcpp/protocol.hpp": {
+      "sha256": "8b0ceec4e91091ef8ccf84488e0c886f5c91b5dbc2746d98eb761e9c7e7e85fc",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "include/mirrorcpp/schedule_exploration.hpp": {
+      "sha256": "3688234ff2aa613380b56aedaa77135dbe38d41ef03bbb96406bfcbebf095982",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "include/mirrorcpp/client.hpp": {
+      "sha256": "cf77f0c95e3afebd4d1fef6ac8fc433d7841f416d56a40aa343d345e16507685",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "include/mirrorcpp/error.hpp": {
+      "sha256": "7025b908b7fd2a0b4dce2e305680f79f7b680ce867d9cacb006ed5556b704115",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "include/mirrorcpp/spec.hpp": {
+      "sha256": "9b492dad356f12d806acbf38e90b223b6c7ffae46d131a8697c751cd5135e367",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "include/mirrorcpp/model_interface.hpp": {
+      "sha256": "aa1a6500b48fd90f59b2e0b5e4622a5bcc16706842f307608a3bde4cbd8d059d",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "include/mirrorcpp/value.hpp": {
+      "sha256": "952ed8fbcbdbf19101de25ccc666d61f083e9160b93333df9e5ee9fce9ae8b1d",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/spec.cpp": {
+      "sha256": "aea31cb7d75b10fdbf26d01d26d9d2cda84df1e69957804f8f0485dd2a1ce541",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/transport.cpp": {
+      "sha256": "7d91a9855e95532d1dff62ca4b0379910117ace2d179f2f0e98104407203a6bb",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/schedule_exploration.cpp": {
+      "sha256": "db72e5a8b5ab4f988a76a83439fc98c868689c6fdea442518c0a1cb03707104d",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/schedule_binding.cpp": {
+      "sha256": "957f87e6f3b4f3f540904c35c2604c9300394bb380f18f0eb1ab6c3ab9cd66a0",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/model_interface.cpp": {
+      "sha256": "8e37cac065b16cff5e83c8a08fb7a8edc64d9191615146665dc4bafe8bb58056",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/protocol.cpp": {
+      "sha256": "b3814f8a1b884160c2abf21efd17f2d8536619f0ed4f7285f65c71d1a8cfae5d",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/schedule.cpp": {
+      "sha256": "a0e1c41ce6e9ba3a8f56fa130fc0b179ef59d7c95ad16f4de98036a07243842b",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/registry.cpp": {
+      "sha256": "1e350adc58524940d4a2b942d1a3d855ff1085f5e4483a1f95b1da8df3a3b2fe",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/schedule_sync.cpp": {
+      "sha256": "f11a9e02b6c1fcc7d45b55406429d3aee29457e15f608b4adb5901c53d09cb50",
+      "matchesOriginalQualifiedSource": false,
+      "matchesFixedSourceInput": true
+    },
+    "src/client.cpp": {
+      "sha256": "9255796f64cdb77e77ed7230fa6a929a56d88514fe9517345610c827624290cc",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/value.cpp": {
+      "sha256": "ee0e29e6ebe5422e1149e538af6affa25cae6ea6f20b382b697ff7afdbf09e92",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/detail/http.hpp": {
+      "sha256": "1931bb8aecc7af74b0cd9b2f2d937447855bea5162583e422f4acc5da1fd5aea",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/detail/net.hpp": {
+      "sha256": "1aad4fbdd263f647596d99fbfa45bd9a1d124007ddec4a6601963f7d6c0aad91",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/detail/http.cpp": {
+      "sha256": "96e14839c30301273e8dda910c316f000fef19c29a0df3ab9e3c7fb2126fda17",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/detail/net.cpp": {
+      "sha256": "1a55fd563b34d124dea419d2b8225c0edd6025d3732569146aa6f8feb8de5a78",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/detail/tls.cpp": {
+      "sha256": "504f9b681ba43acd46628c947f85c674f133d8c794acfb5e1468f8da6a0a6a5d",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/detail/line.hpp": {
+      "sha256": "a5bd820151afab1cb57b7c4052b35f9f4d7adc7ee7f5bb55cf34a74a63c9733e",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/detail/process.hpp": {
+      "sha256": "9b2ba8652c1e8aa5965f48153570f367e5c43636e56eb52c912c9de339abe2e5",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/detail/tls.hpp": {
+      "sha256": "771c5689a183865e123a9795602ae50e43ccfb971db09f8d539fcd2491e9ba6e",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    },
+    "src/detail/process.cpp": {
+      "sha256": "684192fcbfb7643ed292bf95cd9d1f4dd703b1e6b40bc0e7b4778180cf35f9c7",
+      "matchesOriginalQualifiedSource": true,
+      "matchesFixedSourceInput": false
+    }
+  },
+  "command": [
+    "/usr/bin/g++-12",
+    "-std=c++23",
+    "-O0",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-I/home/jlc/Tools/mirrors-dpm-remediation-20261013/source/MirrorCPP/include",
+    "-I/home/jlc/Tools/mirrors-dpm-remediation-20261013/cpp-prefix/include",
+    "-I/mnt/d/Desktop/Workspaces/Mirrors-client-conformance-20261015/cpp-probes",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-conformance-20261015/cpp-probes/probe.cpp",
+    "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/libmirrorcpp.a",
+    "-lssl",
+    "-lcrypto",
+    "-pthread",
+    "-o",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-conformance-20261015/cpp-probes/probe"
+  ],
+  "compiler": "g++-12 (Ubuntu 12.3.0-1ubuntu1~22.04.3) 12.3.0\nCopyright (C) 2022 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "library": {
+    "path": "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/followup-20261014/sdk-cpp/libmirrorcpp.a",
+    "sha256": "a913df8ada9e935b5fd896129b2665c4601aaf2e52c83c2455147acefb3e9b6c"
+  },
+  "fixtureSha256": "47ae61359be7875e580817a5d8436acaba00a59b7cae44f7ded1e2e7efaaa5d0",
+  "probeSourceSha256": "c0ab7c3d9854d4e08a68945c2925cf13fb61a0d2ee2659b444028e718b72975e",
+  "compileExit": 0,
+  "runExit": 0,
+  "probeBinarySha256": "880c09057a0e54e6ddd35361849079afea2451f99ecc1d68639d806ec7b32297"
+}

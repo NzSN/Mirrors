@@ -1,0 +1,24 @@
+✔ [3/16] Built «mirrorlean-server-mode»/native_tls (204ms)
+✔ [4/16] Built MirrorLean.Transport (1.6s)
+✔ [5/16] Built MirrorLean.Value (1.7s)
+✔ [6/16] Built MirrorLean.ServerMode.Discovery (1.8s)
+✔ [7/16] Built MirrorLean.Transport:c.o (428ms)
+✔ [8/16] Built MirrorLean.Value:c.o (417ms)
+✔ [9/16] Built MirrorLean.ServerMode.Discovery:c.o (500ms)
+✔ [10/16] Built MirrorLean.Error (2.3s)
+✔ [11/16] Built MirrorLean.Error:c.o (266ms)
+✔ [12/16] Built MirrorLean.ServerMode (2.5s)
+✔ [13/16] Built MirrorLean.ServerMode:c.o (200ms)
+✖ [14/16] Building Test.ServerMode (3.5s)
+trace: .> LEAN_PATH=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-first/MirrorLean/.lake/build/lib/lean:/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-first/MirrorLean/server-mode/.lake/build/lib/lean /home/jlc/.elan/toolchains/leanprover--lean4---v4.33.0/bin/lean /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-first/MirrorLean/server-mode/Test/ServerMode.lean -o /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-first/MirrorLean/server-mode/.lake/build/lib/lean/Test/ServerMode.olean -i /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-first/MirrorLean/server-mode/.lake/build/lib/lean/Test/ServerMode.ilean -c /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-first/MirrorLean/server-mode/.lake/build/ir/Test/ServerMode.c --setup /mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/lean-first/MirrorLean/server-mode/.lake/build/ir/Test/ServerMode.setup.json --json
+error: Test/ServerMode.lean:191:66: unexpected identifier; expected '}'
+warning: Test/ServerMode.lean:296:15: Variable name `port` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _port
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+error: Lean exited with code 1
+Some required targets logged failures:
+- Test.ServerMode
+error: build failed

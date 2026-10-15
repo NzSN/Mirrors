@@ -1,0 +1,104 @@
+{
+  "capture_published": false,
+  "child_reaped": true,
+  "command": [
+    "/mnt/d/Desktop/Workspaces/Mirrors-DPM-remediation-20261013/build/lean-build/bin/mirror",
+    "trace-gen",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "37799",
+    "--spec",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-conformance-20261015/cli-work/client-cli-probe-yr2dujno/terminal-protocol-error-cancel/Main.tla",
+    "--async",
+    "--max-polls",
+    "1",
+    "--out",
+    "/mnt/d/Desktop/Workspaces/Mirrors-client-conformance-20261015/cli-work/client-cli-probe-yr2dujno/terminal-protocol-error-cancel/capture"
+  ],
+  "elapsed_seconds": 0.172481,
+  "exit_code": 2,
+  "finding_reproduced": true,
+  "mode": "terminal-cancel",
+  "name": "terminal-protocol-error-cancel",
+  "peer_error": null,
+  "peer_events": [
+    {
+      "reply": {
+        "jobId": "probe-owned",
+        "kind": "gen_traces",
+        "proto_step": "job_accepted"
+      },
+      "terminated": true
+    },
+    {
+      "reply": {
+        "error": "deliberate scripted terminal protocol error",
+        "proto_step": "protocol_error"
+      },
+      "terminated": true
+    },
+    {
+      "is_expected_cancel": true,
+      "unwanted_followup": {
+        "jobId": "probe-owned",
+        "proto_step": "cancel_job"
+      }
+    },
+    {
+      "reply": {
+        "jobId": "probe-owned",
+        "phase": "cancelled",
+        "proto_step": "job_status"
+      },
+      "terminated": true
+    }
+  ],
+  "peer_thread_stopped": true,
+  "requests": [
+    {
+      "bytes": 331,
+      "json": {
+        "apalacheConfig": {
+          "constInit": null,
+          "initPredicate": null,
+          "invariant": "",
+          "lengthBound": 10,
+          "nextPredicate": null,
+          "paramVars": "",
+          "specPath": "Main.tla"
+        },
+        "proto_step": "register_trace_gen_async",
+        "spec": {
+          "sources": [
+            "---- MODULE Main ----\nEXTENDS Child\n====\n",
+            "---- MODULE Child ----\n====\n"
+          ]
+        },
+        "traceConfig": {
+          "numTraces": 1,
+          "view": null
+        }
+      }
+    },
+    {
+      "bytes": 65,
+      "json": {
+        "jobId": "probe-owned",
+        "proto_step": "await_job",
+        "timeoutSecs": 30
+      }
+    },
+    {
+      "bytes": 49,
+      "json": {
+        "jobId": "probe-owned",
+        "proto_step": "cancel_job"
+      }
+    }
+  ],
+  "required_behavior": "Return the original terminal protocol error without sending cancel_job.",
+  "stderr": "deliberate scripted terminal protocol error\n",
+  "stdout": "",
+  "timed_out": false
+}

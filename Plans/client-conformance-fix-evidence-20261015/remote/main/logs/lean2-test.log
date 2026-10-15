@@ -1,0 +1,335 @@
+MirrorLean M1 tests
+[bigint positive]   ok   - bigint positive
+PASS
+[bigint negative]   ok   - bigint negative
+PASS
+[bigint empty -> null]   ok   - bigint empty
+PASS
+[bigint huge]   ok   - bigint huge
+PASS
+[bigint invalid]   ok   - bigint invalid (error: Invalid bigint: abc)
+PASS
+[bool true]   ok   - bool true
+PASS
+[bool false]   ok   - bool false
+PASS
+[string]   ok   - string
+PASS
+[null]   ok   - null
+PASS
+[bare number -> int (asymmetry)]   ok   - bare number
+PASS
+[bare array -> seq]   ok   - bare array
+PASS
+[set]   ok   - set
+PASS
+[tuple]   ok   - tuple
+PASS
+[map]   ok   - map
+PASS
+[variant]   ok   - variant
+PASS
+[unserializable]   ok   - unserializable
+PASS
+[record sorted keys]   ok   - record sorted
+PASS
+[nested record]   ok   - nested record
+PASS
+[empty record]   ok   - empty record
+PASS
+[empty seq]   ok   - empty seq
+PASS
+[decode bigint]   ok   - decode bigint
+PASS
+[decode bool]   ok   - decode bool
+PASS
+[decode str]   ok   - decode str
+PASS
+[decode seq]   ok   - decode seq
+PASS
+[decode tuple]   ok   - decode tuple
+PASS
+[decode set]   ok   - decode set
+PASS
+[decode map]   ok   - decode map
+PASS
+[decode variant]   ok   - decode variant
+PASS
+[decode unserializable]   ok   - decode unserializable
+PASS
+[decode null]   ok   - decode null
+PASS
+[decode empty bigint -> null]   ok   - empty bigint null
+PASS
+[decode record]   ok   - decode record
+PASS
+[decode bigint empty not error]   ok   - empty bigint ok
+PASS
+[state encode]   ok   - state encode
+PASS
+[state sorted keys]   ok   - state sorted
+PASS
+[state round trip]   ok   - state roundtrip
+PASS
+[state empty]   ok   - state empty
+PASS
+[getParamInt basic]   ok   - getParamInt
+PASS
+[getParamInt missing var -> 0]   ok   - getParamInt missing
+PASS
+[getParam? present]   ok   - getParam?
+PASS
+[getParam? missing -> none]   ok   - getParam? none
+PASS
+[config nullable optional strings]   ok   - config absent optionals decode with outbound omission
+  ok   - config initPredicate: null equals absent
+  ok   - config initPredicate: string retained ("Configured")
+  ok   - config initPredicate: string retained ("")
+  ok   - config initPredicate: nonstring rejected (true) (error: String expected)
+  ok   - config initPredicate: nonstring rejected (1) (error: String expected)
+  ok   - config initPredicate: nonstring rejected ([]) (error: String expected)
+  ok   - config initPredicate: nonstring rejected ({}) (error: String expected)
+  ok   - config nextPredicate: null equals absent
+  ok   - config nextPredicate: string retained ("Configured")
+  ok   - config nextPredicate: string retained ("")
+  ok   - config nextPredicate: nonstring rejected (true) (error: String expected)
+  ok   - config nextPredicate: nonstring rejected (1) (error: String expected)
+  ok   - config nextPredicate: nonstring rejected ([]) (error: String expected)
+  ok   - config nextPredicate: nonstring rejected ({}) (error: String expected)
+  ok   - config constInit: null equals absent
+  ok   - config constInit: string retained ("Configured")
+  ok   - config constInit: string retained ("")
+  ok   - config constInit: nonstring rejected (true) (error: String expected)
+  ok   - config constInit: nonstring rejected (1) (error: String expected)
+  ok   - config constInit: nonstring rejected ([]) (error: String expected)
+  ok   - config constInit: nonstring rejected ({}) (error: String expected)
+  ok   - config paramVars: null equals absent
+  ok   - config paramVars: string retained ("Configured")
+  ok   - config paramVars: string retained ("")
+  ok   - config paramVars: nonstring rejected (true) (error: String expected)
+  ok   - config paramVars: nonstring rejected (1) (error: String expected)
+  ok   - config paramVars: nonstring rejected ([]) (error: String expected)
+  ok   - config paramVars: nonstring rejected ({}) (error: String expected)
+  ok   - null config register re-encodes with original typed omission
+PASS
+[shared nullable optional strings]   ok   - trace view optional string: absent
+  ok   - trace view optional string: null
+  ok   - trace view optional string: string
+  ok   - trace view nonstring rejected (error: String expected)
+  ok   - mismatch action optional string: absent
+  ok   - mismatch action optional string: null
+  ok   - mismatch action optional string: string
+  ok   - mismatch action nonstring rejected (error: String expected)
+PASS
+[register no spec]   ok   - register
+PASS
+[register with spec]   ok   - register+spec
+PASS
+[register_traces]   ok   - register_traces
+PASS
+[register_trace_gen no spec]   ok   - register_trace_gen
+PASS
+[register_trace_gen with spec]   ok   - register_trace_gen+spec
+PASS
+[register_explore]   ok   - register_explore
+PASS
+[register_explore_session]   ok   - register_explore_session
+PASS
+[register_validate]   ok   - register_validate
+PASS
+[explore_assume_transition]   ok   - explore_assume_transition
+PASS
+[explore_next_step]   ok   - explore_next_step
+PASS
+[explore_query_state]   ok   - explore_query_state
+PASS
+[explore_check_invariant]   ok   - explore_check_invariant
+PASS
+[explore_assume_state]   ok   - explore_assume_state
+PASS
+[explore_rollback]   ok   - explore_rollback
+PASS
+[explore_done]   ok   - explore_done
+PASS
+[report_state]   ok   - report_state
+PASS
+[register omits absent optional fields]   ok   - register omits optionals
+PASS
+[register includes present optional fields]   ok   - register includes optionals
+PASS
+[initial_state]   ok   - initial_state
+PASS
+[spec_validated valid]   ok   - spec_validated
+PASS
+[spec_validated invalid]   ok   - spec_validated invalid
+PASS
+[next_step]   ok   - next_step
+PASS
+[step_ok]   ok   - step_ok
+PASS
+[all_steps_done]   ok   - all_steps_done
+PASS
+[step_mismatch empty]   ok   - step_mismatch empty
+PASS
+[step_mismatch hints]   ok   - step_mismatch hints
+PASS
+[gen_traces_done]   ok   - gen_traces_done
+PASS
+[gen_traces_done defaults]   ok   - gen_traces_done defaults
+PASS
+[explorer_ready]   ok   - explorer_ready
+PASS
+[explore_transition_status]   ok   - explore_transition_status
+PASS
+[explore_step_done]   ok   - explore_step_done
+PASS
+[explore_state]   ok   - explore_state
+PASS
+[explore_invariant_status]   ok   - explore_invariant_status
+PASS
+[explore_assume_status]   ok   - explore_assume_status
+PASS
+[explore_rollback_done]   ok   - explore_rollback_done
+PASS
+[explore_session_done]   ok   - explore_session_done
+PASS
+[protocol_error]   ok   - protocol_error
+PASS
+[register_error]   ok   - register_error
+PASS
+[unknown proto_step -> protocol_error]   ok   - unknown step
+PASS
+[malformed json -> json error]   ok   - malformed json
+PASS
+[decode empty hints default]   ok   - decode empty hints default
+PASS
+[renderPath field]   ok   - renderPath field
+PASS
+[renderPath index]   ok   - renderPath index
+PASS
+[renderPath mixed]   ok   - renderPath mixed
+PASS
+[renderPath empty]   ok   - renderPath empty
+PASS
+[renderDiffHint valueMismatch]   ok   - renderDiffHint
+PASS
+[renderDiffHint missing]   ok   - renderDiffHint missing
+PASS
+[renderDiffHint extra]   ok   - renderDiffHint extra
+PASS
+[renderDiffHints empty]   ok   - renderDiffHints empty
+PASS
+[renderDiffHints joined]   ok   - renderDiffHints joined
+PASS
+[invariant violation]   ok   - invariant violation
+PASS
+[step mismatch with hints]   ok   - step mismatch hints
+PASS
+[json error]   ok   - json error
+PASS
+[protocol error]   ok   - protocol error
+PASS
+[transport closed]   ok   - transport closed
+PASS
+[transport round-trip]   ok   - transport recv #1
+  ok   - transport recv #2
+  ok   - transport close code
+PASS
+[transport eof empty-line]   ok   - transport rejects empty frame
+  ok   - transport line #2
+  ok   - transport EOF -> none
+  ok   - transport eof close code
+PASS
+[transport protocol line validation]   ok   - framing: 65535 ASCII bytes accepted
+  ok   - framing: 65536 ASCII bytes rejected
+  ok   - framing: UTF-8 byte boundary accepted
+  ok   - framing: UTF-8 byte overflow rejected
+  ok   - framing: empty line rejected
+  ok   - framing: embedded newline rejected
+PASS
+[client happy replay]   ok   - client happy: result ok
+  ok   - client happy: sent messages
+  ok   - client happy: compute calls
+PASS
+[client step mismatch]   ok   - client mismatch: action
+  ok   - client mismatch: params
+  ok   - client mismatch: expected
+  ok   - client mismatch: actual
+  ok   - client mismatch: hints
+  ok   - client mismatch: renders
+PASS
+[client gen traces]   ok   - client gen: paths
+  ok   - client gen: inline traces
+  ok   - client gen: register_trace_gen sent
+PASS
+[client preset exhausted]   ok   - client preset exhausted -> io error
+PASS
+[client validate specInvalid]   ok   - validate specInvalid: detail
+  ok   - validate specInvalid: register_validate sent
+PASS
+[client validate registerFailed]   ok   - validate registerFailed: detail
+  ok   - validate registerFailed: register_validate sent
+PASS
+[client validate valid]   ok   - validate valid: register_validate sent
+PASS
+[explorer protocol_error poisons]   ok   - explore poison: protocol_error surfaced
+  ok   - explore poison: later command reports closed
+  ok   - explore poison: no command written after poison
+  ok   - explore poison: transport closed once
+PASS
+[spec root closure]   ok   - spec root: 3 sources
+  ok   - spec root: root first
+  ok   - spec root: DepA second
+  ok   - spec root: DepB third
+PASS
+[spec commented stripped]   ok   - spec commented: only root
+PASS
+[spec builtin-only]   ok   - spec builtin: only root
+PASS
+[spec INSTANCE WITH]   ok   - spec inst: 3 sources
+  ok   - spec inst: root first
+  ok   - spec inst: DepA second
+  ok   - spec inst: DepB third
+PASS
+[spec INSTANCE WITH comma]   ok   - spec inst comma: 3 sources
+  ok   - spec inst comma: root first
+  ok   - spec inst comma: DepA second
+  ok   - spec inst comma: DepB third
+PASS
+[spec continued and embedded forms]   ok   - spec advanced: 4 sources
+  ok   - spec advanced: root first
+  ok   - spec advanced: multiline EXTENDS
+  ok   - spec advanced: second EXTENDS module
+  ok   - spec advanced: expression INSTANCE
+PASS
+[spec searchDirs lookup]   ok   - spec libdir: 2 sources
+  ok   - spec libdir: Extra resolved
+PASS
+[spec TLA_LIBRARY_PATH lookup]   skp - TLA_LIBRARY_PATH unset; skipping
+PASS
+[spec ambiguity error]   ok   - spec ambiguity: errors
+PASS
+[spec missing module error]   ok   - spec missing: errors
+PASS
+[spec string-aware comment stripping]   ok   - comment scanner preserves quoted markers and escapes
+  ok   - comment scanner separates nested block comments
+  ok   - comment scanner preserves line-comment newline
+PASS
+[spec quoted marker closure]   ok   - quoted closure: exact original sources in BFS order
+  ok   - quoted closure: final inline registration accepted
+PASS
+[spec comment token boundary]   ok   - comment boundary: exact source closure
+PASS
+[spec missing real module after marker]   ok   - marker string cannot hide a missing real dependency
+PASS
+[spec inline registration byte bound]   ok   - large source discovery retains original text
+  ok   - final inline registration byte overflow rejected
+PASS
+[tcp loopback]   ok   - tcp recv #1
+  ok   - tcp recv #2
+  ok   - tcp recv #3
+  ok   - tcp send received
+  ok   - tcp close code
+PASS
+
+125 tests, 0 failures

@@ -1,0 +1,49 @@
+✔ [1/28] Built MirrorLean.Transport (1.8s)
+✔ [2/28] Built MirrorLean.Value (2.1s)
+✔ [3/28] Built MirrorLean.Transport:c.o (414ms)
+✔ [4/33] Built MirrorLean.ModelInterface.StrictJson (265ms)
+✔ [5/33] Built MirrorLean.ModelInterface.StrictJson:c.o (181ms)
+✔ [7/36] Built MirrorLean.Value:c.o (393ms)
+✔ [8/36] Built MirrorLean.Error (330ms)
+✔ [9/36] Built MirrorLean.ModelInterface.Validation (352ms)
+✔ [10/36] Built MirrorLean.Error:c.o (241ms)
+✔ [11/36] Built MirrorLean.ModelInterface.Validation:c.o (466ms)
+✔ [12/36] Built MirrorLean.Protocol (486ms)
+✔ [13/36] Built MirrorLean.Client (399ms)
+✔ [14/36] Built MirrorLean.Spec (311ms)
+✔ [15/36] Built MirrorLean.Protocol:c.o (655ms)
+✔ [16/36] Built MirrorLean.Async (384ms)
+✔ [17/36] Built MirrorLean.Client:c.o (384ms)
+✔ [18/36] Built MirrorLean.Spec:c.o (225ms)
+✔ [19/36] Built MirrorLean.Async:c.o (271ms)
+✔ [20/36] Built MirrorLean.ModelInterface.Native (408ms)
+✔ [21/36] Built MirrorLean.ModelInterface.Native:c.o (342ms)
+✔ [22/36] Built MirrorLean.ModelInterface (437ms)
+✔ [23/36] Built MirrorLean (189ms)
+✔ [24/36] Built MirrorLean.ModelInterface:c.o (372ms)
+✔ [25/36] Built MirrorLean:c.o (38ms)
+✔ [26/36] Built test.AsyncSupport (339ms)
+✔ [27/36] Built test.ModelInterface (878ms)
+✖ [28/36] Building test.Main (665ms)
+trace: .> LEAN_PATH=/home/jlc/Tools/mirrors-client-fixes-20261015/source/MirrorLean/.lake/build/lib/lean /home/jlc/.elan/toolchains/leanprover--lean4---v4.33.0/bin/lean /home/jlc/Tools/mirrors-client-fixes-20261015/source/MirrorLean/test/Main.lean -o /home/jlc/Tools/mirrors-client-fixes-20261015/source/MirrorLean/.lake/build/lib/lean/test/Main.olean -i /home/jlc/Tools/mirrors-client-fixes-20261015/source/MirrorLean/.lake/build/lib/lean/test/Main.ilean -c /home/jlc/Tools/mirrors-client-fixes-20261015/source/MirrorLean/.lake/build/ir/test/Main.c --setup /home/jlc/Tools/mirrors-client-fixes-20261015/source/MirrorLean/.lake/build/ir/test/Main.setup.json --json
+error: test/Main.lean:832:16: Type mismatch
+  check "marker string cannot hide a missing real dependency"
+has type
+  Bool → IO Bool
+but is expected to have type
+  IO Unit
+error: test/Main.lean:831:2: Missing cases:
+(Except.ok (ApalacheSpec.mk (Array.mk _)))
+error: test/Main.lean:833:7: Unknown identifier `e.msg.contains`
+error: test/Main.lean:833:39: Unknown identifier `e.msg.contains`
+error: test/Main.lean:834:2: unexpected token '|'; expected command
+error: Lean exited with code 1
+✔ [30/36] Built test.AsyncSupport:c.o (353ms)
+✔ [32/36] Built test.Async (210ms)
+✔ [33/36] Built test.Async:c.o (64ms)
+✔ [34/36] Built test.ModelInterface:c.o (768ms)
+✔ [35/36] Built «model-interface-test»:exe (819ms)
+✔ [36/36] Built «async-test»:exe (1.4s)
+Some required targets logged failures:
+- test.Main
+error: build failed

@@ -1,0 +1,16 @@
+[
+  {
+    "name": "build",
+    "command": [
+      "/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/bin/cabal",
+      "--config-file=/home/jlc/Tools/mirrors-client-fixes-20261015/tools/haskell/cabal/config",
+      "build",
+      "ModelMirrors-test",
+      "--builddir=/mnt/d/Desktop/Workspaces/Mirrors-client-fixes-20261015/haskell/dist",
+      "-j2"
+    ],
+    "cwd": "/home/jlc/Tools/mirrors-client-fixes-20261015/source/ModelMirros",
+    "exit": 1,
+    "seconds": 35.296
+  }
+]
