@@ -1,14 +1,21 @@
 # Product versions and local installation
 
 The current cross-repository policy is
-[ecosystem versioning](ecosystem-versioning.md). Mirrors `v0.1.0` identifies
-the updated source with product version `0.1.0`, so `mirror --version` and the
-release tag agree. The user explicitly requested retagging after the initial
-alias publication. The [retag inventory](../Plans/version-migration-2026-10-22/retag.json)
-preserves the previous tag and release identities; the original
+[ecosystem versioning](ecosystem-versioning.md). Current source declares Mirrors
+`v0.1.1`, a compatible patch for DPM build preparation and maintained status
+documentation. The build fix landed in `03510b4`; its
+[bounded validation record](../Plans/dpm-build-preparation-evidence-20261022/README.md)
+retains the exact tested source/artifact hashes. The newest
+[checkpoint](../CHECKPOINTS.md) records the separate patch-release validation
+and publication boundary.
+
+The corrected `v0.1.0` baseline at `b243b37` remains unchanged. Its
+[retag inventory](../Plans/version-migration-2026-10-22/retag.json) preserves the
+superseded alias and release identities; the original
 [migration evidence](../Plans/version-migration-2026-10-22/README.md) remains
-bound to its original server commit and binaries. The old alias exception has
-been removed from the release builder.
+bound to its original server commit and binaries. That explicitly requested
+retag was a migration exception. Ordinary patch releases use new immutable tags;
+the release builder has no alias exception.
 
 For operating an installed executable as a remote service, see the [remote server guide](remote-server-guide.md)
 and [dated Windows deployment record](windows-deployment-20260918.md).
@@ -68,9 +75,9 @@ and is compiled into the executable:
 
 ```console
 $ .lake/build/bin/mirror --version
-v0.1.0
+v0.1.1
 $ ModelMirrors --version
-v0.1.0
+v0.1.1
 ```
 
 The second command requires installation under that name on `PATH`.
@@ -113,14 +120,16 @@ the archive, and add its `bin` directory to `PATH`. Lean is not required at
 runtime. Live model work separately needs Apalache and a compatible JVM.
 The workflow checks the extracted archive in a fresh Ubuntu container without
 Lean or the source checkout before publication. Native Windows/macOS packages
-are not produced by this workflow.
+are not produced by this workflow. The hosted archive contains only `mirror`
+and `model_interface_gen`; it does not package the DPM CLI. Build and install
+DPM separately through the [DPM guide](dpm-cli-guide.md).
 
 To build an existing tag, open **Actions → release → Run workflow**, select
 the `main` branch, and enter the existing tag in the `tag` input. With GitHub
 CLI, for example:
 
 ```sh
-gh workflow run release.yml --ref main -f tag=v0.1.0
+gh workflow run release.yml --ref main -f tag=v0.1.1
 ```
 
 Adding the workflow does not retroactively run existing tag pushes. Backfill
@@ -152,9 +161,11 @@ again before publishing the draft.
 Existing releases and drafts are refused rather than overwritten. If an upload
 fails and leaves a draft, inspect that draft and remove it before retrying.
 
-Relevant pull requests run the tooling checks and the current `v0.1.0` tagged
-source through the isolated runtime smoke, with publication disabled. Tooling
-checks also run before every release and can be run locally:
+Relevant pull requests run the tooling checks and the fixed `v0.1.0` packaging
+baseline through the isolated runtime smoke, with publication disabled. This
+baseline is independent of the latest product version. A tag push selects its
+own `github.ref_name`; manual runs select the supplied tag. Tooling checks also
+run before every release and can be run locally:
 
 ```sh
 python3 -m unittest discover -s tools/release -p 'test_*.py' -v

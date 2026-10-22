@@ -35,8 +35,10 @@ design document's implementation-status section and current code.
 
 ## Current framework checkpoint
 
-Implementation checkpoint updated 2026-10-22 against base Mirrors `b243b37`
-(`v0.1.0`) and the current DPM build-preparation changes. For status or
+Implementation checkpoint updated 2026-10-22 against committed DPM build fix
+`03510b4` and the `v0.1.1` patch release. The exact earlier build/launcher
+validation remains in `Plans/dpm-build-preparation-evidence-20261022/README.md`;
+release validation and publication are separate. For status or
 continuation work, read `Docs/current-status.md`, the newest `CHECKPOINTS.md`
 entry, and `Plans/execution-decisions.md` before selecting work. September stop
 instructions and original queued task cards are historical; their frozen
@@ -62,8 +64,9 @@ repairs are in `d1c5e74`, with scoped acceptance in
 compatibility matrices bind the earlier server `ea8091c`; the `b243b37` retag
 has focused release validation only, as recorded in
 `Plans/version-migration-2026-10-22/retag.json`. It receives no new cross-client,
-live-model or full-framework qualification. Broader M4 aggregate enforcement
-and active-process post-restart recovery stay separate; follow
+live-model or full-framework qualification. The compatible `v0.1.1` patch uses
+a new immutable tag; `v0.1.0` and dated evidence remain unchanged. Broader M4
+aggregate enforcement and active-process post-restart recovery stay separate; follow
 `Plans/m4-native-host-and-platform-plan-2026-10-07.md` for their prerequisites.
 
 Run live model operations through the Mirrors CLI against the selected owned

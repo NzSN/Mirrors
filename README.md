@@ -1,7 +1,9 @@
 # Mirrors
 
-For component release semantics and the Mirrors `v0.1.0` compatibility baseline,
-see the [ecosystem versioning policy](Docs/ecosystem-versioning.md).
+Current source declares Mirrors `v0.1.1`, a compatible DPM build-preparation
+patch. For component release semantics and the retained `v0.1.0` baseline,
+see the [ecosystem versioning policy](Docs/ecosystem-versioning.md). Exact
+validation and release status are in [current status](Docs/current-status.md).
 
 For repository ownership and language/profile selection, see the
 [framework map](Docs/framework-map.md).

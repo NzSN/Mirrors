@@ -1,8 +1,8 @@
 # Current framework status and navigation
 
-Source status refreshed 2026-10-22 against Mirrors `b243b37` (`v0.1.0`) and
-the current DPM build-preparation changes. The DPM implementation landed in
-`c17bae9`; the October 15 client-conformance repairs landed in `d1c5e74`.
+Source status refreshed 2026-10-22 against the committed DPM build-preparation
+fix `03510b4` and the `v0.1.1` patch release. Mirrors reducer/CLI tooling
+landed in `c17bae9`; the October 15 client-conformance repairs landed in `d1c5e74`.
 These source identities do not replace the exact runtime and source hashes in
 [October 14 DPM acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md)
 or [October 15 conformance acceptance](../Plans/client-conformance-fix-evidence-20261015/README.md).
@@ -14,12 +14,16 @@ DPM launcher builds now prepare the local interpreter/helper identity before
 compilation; an explicit build-time interpreter can be selected with
 `MIRRORS_DPM_PYTHON`. Runtime hash checks remain enforced. See the
 [build and runtime prerequisites](dpm-cli-guide.md#build-and-runtime-prerequisites)
-and newest [checkpoint](../CHECKPOINTS.md) for current working-tree validation
-and its temporary-directory-path limitation. The
-[October 22 build evidence](../Plans/dpm-build-preparation-evidence-20261022/README.md)
-records the complete non-model pass with `TMPDIR=/tmp`, 79 DPM Python tests and
-bounded installed-launcher checks. The inherited `TMPDIR=/tmp/` aggregate
-failure is also reproduced at the baseline and remains an open sanitizer issue.
+and newest [checkpoint](../CHECKPOINTS.md) for the separate patch-release
+validation/publication boundary and the temporary-directory-path limitation.
+The [October 22 build evidence](../Plans/dpm-build-preparation-evidence-20261022/README.md)
+retains exact source/artifact hashes for the changes committed in `03510b4`:
+the complete non-model pass with `TMPDIR=/tmp`, 79 DPM Python tests and bounded
+installed-launcher checks. The `v0.1.1` version/documentation changes passed
+focused local release gates; their separate validation is recorded in the newest
+checkpoint, with hosted publication tracked independently. They do not rewrite
+the earlier build evidence. The inherited `TMPDIR=/tmp/` aggregate failure is
+also reproduced at the baseline and remains an open sanitizer issue.
 This source/build change does not renew full DPM installed-package or framework
 acceptance.
 The [October 9 documentation audit](../Plans/documentation-sync-2026-10-09.md)
@@ -45,7 +49,11 @@ earlier server `ea8091c` and its recorded binaries. The replacement `v0.1.0`
 tag at `b243b37` has [focused release validation](../Plans/version-migration-2026-10-22/retag.json)
 only. The retag grants no new cross-client, live-model or full-framework
 qualification; the original compatibility and publication records remain
-observations of their original commits and binary hashes.
+observations of their original commits and binary hashes. The compatible
+`v0.1.1` patch uses a new immutable tag and leaves `v0.1.0` unchanged. Its release
+validation is separate from full cross-client, live-model and framework
+qualification. The hosted release archive includes `mirror` and
+`model_interface_gen`; DPM uses its separate build/install procedure.
 
 M6 reviewed scaffolds/corpora, compiler/client follow-ups and the read-only
 [lock migration helper](model-interface-compiler/lock-migration.md) are implemented.

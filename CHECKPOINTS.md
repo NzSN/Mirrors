@@ -5,6 +5,32 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-22 — v0.1.1 patch release prepared
+
+The user requested a semantic-version advance while publishing the DPM changes.
+Mirrors `03510b4` commits the accepted DPM build preparation and documentation
+reconciliation. The next release is `v0.1.1`: a compatible build fix under the
+[ecosystem policy](Docs/ecosystem-versioning.md), with no wire/schema change.
+`Shell.Version.version` and the stdio version regression now require `0.1.1` /
+`v0.1.1\n`. The existing annotated `v0.1.0` object
+`57883d5e0fc5af41b5198ac75e715efec574df41`, pointing to `b243b37`, is preserved;
+the new release uses a separate annotated tag.
+
+Local release preparation passed 589 build jobs, 11 release-tooling tests,
+`fixtures_replay`, `diff_cross`, `model_interface_spec`, `stdio_smoke`,
+`transport_spec` and `check-client-framing.py`. The rebuilt mirror prints exactly
+`v0.1.1`. The earlier full non-model run remains bound to its recorded DPM
+source identities and explicit `TMPDIR=/tmp` condition; its inherited-environment
+sanitizer failure remains open and is not repaired by the version bump.
+
+Tag publication invokes the ordinary release workflow for the exact tag. Its
+archive contains `mirror` and `model_interface_gen`; the DPM launcher retains
+its separate build/install path. The PR packaging-tooling regression keeps the
+fixed `v0.1.0` baseline. Hosted artifact publication is not claimed by these
+local checks. No new live-model, cross-client, full DPM-package or framework
+qualification is granted by this patch version. Historical acceptance records
+and the original compatibility/retag inventories remain unchanged.
+
 ## 2026-10-22 — DPM build preparation and current status reconciled
 
 Working changes against Mirrors `b243b37` (`v0.1.0`) replace the checked-in

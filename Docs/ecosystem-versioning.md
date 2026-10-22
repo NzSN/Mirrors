@@ -44,8 +44,8 @@ The initial migration assigned Mirrors `v0.1.0` to unchanged commit
 `ea8091c0c723f3f561044a5c1efb91d12e7aaf5f`, originally named `v0.0.3.3`,
 whose executable prints `v0.0.3.2`. The user subsequently explicitly requested
 retagging `v0.1.0` to the updated source and rebuilding its GitHub release.
-The current tag uses embedded product version `0.1.0`, with no release-builder
-alias exception. The [retag inventory](../Plans/version-migration-2026-10-22/retag.json)
+The corrected `v0.1.0` baseline at `b243b37` uses embedded product version
+`0.1.0`, with no release-builder alias exception. The [retag inventory](../Plans/version-migration-2026-10-22/retag.json)
 preserves the superseded identities. Earlier compatibility and qualification
 evidence remains bound to the original source, binaries and profiles; changing
 the tag does not extend that evidence to the new source.
@@ -54,7 +54,12 @@ Existing tag identities are retained in the dated migration inventory before
 any authorized removal. Historical evidence keeps its original labels and
 commit identities. This reset and its explicitly requested retag correction
 are migration exceptions; subsequent released tags are immutable and
-corrections require a new release.
+corrections require a new release. The compatible DPM build-preparation fix
+uses the next Mirrors patch version, `v0.1.1`; it does not move `v0.1.0` or
+change companion repositories' versions. Its
+[validation record](../Plans/dpm-build-preparation-evidence-20261022/README.md)
+retains its bounded build/launcher scope, separate from full compatibility or
+framework qualification.
 
 For subsequent ordinary releases, the product manifest, executable version
 (when available), and Git tag must agree. Package-registry publication is a
@@ -74,7 +79,8 @@ which operations and transports were exercised and which were unavailable.
 Codec tests, actual supplied-trace replay, generated-source compilation,
 Gate isolation, and live model operations are distinct claims.
 
-The 0.1 baseline compiler advertises `mirrorecma-v1`, `mirrorecma-async-v1`,
+The original `ea8091c` compatibility baseline compiler advertises
+`mirrorecma-v1`, `mirrorecma-async-v1`,
 `mirrorcpp-v1`, `mirrorcpp-v2`, and `mirrorrust-v1`. It does not emit
 `mirrorlean-v1` or the later async-ECMA/Rust v2 targets. A Lean JSONL client may
 interoperate with the server without receiving a compiler-target claim. Gate

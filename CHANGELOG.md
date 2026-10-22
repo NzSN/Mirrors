@@ -4,6 +4,27 @@ All notable changes to the Lean 4 port of ModelMirrors. The port target is
 byte-for-byte JSON-lines wire compatibility with ModelMirros@3496251
 (Haskell); divergences are listed as ACCEPTED with rationale.
 
+## 0.1.1 — DPM build preparation (2026-10-22)
+
+- Lake now generates the DPM launcher identity from the selected local Python
+  interpreter and packaged helper bytes before compilation. Use
+  `MIRRORS_DPM_PYTHON` for explicit build-time selection. Unchanged builds retain
+  their outputs; changed inputs rebuild the launcher. Runtime integrity checks
+  and reviewed installer-helper pins remain enforced.
+- Reconciled maintained status and architecture ownership with committed DPM
+  tooling, conformance repairs and exact historical qualification boundaries.
+  README now selects the explicit non-model runner on this coordinator.
+- [Build and launcher validation](Plans/dpm-build-preparation-evidence-20261022/README.md)
+  binds the changes committed in `03510b4`. Its installed fixture covers launcher,
+  relocation, doctor/report and tamper behavior; it does not renew full DPM,
+  cross-client, live-model or framework qualification. The hosted release archive
+  contains `mirror` and `model_interface_gen`; DPM installation remains separate.
+- Known existing limitation: the trace-error sanitizer fails its synthetic
+  fixture with `TMPDIR=/tmp/`. The retained baseline reproduction fails too;
+  the complete non-model suite passed with explicit `TMPDIR=/tmp`. Normalizing
+  the validation environment is not a sanitizer fix. Patch-release validation
+  and publication are recorded separately in [CHECKPOINTS.md](CHECKPOINTS.md).
+
 ## Client conformance corrections (unreleased)
 
 - Rejected async submissions end only that attempt and preserve earlier jobs
