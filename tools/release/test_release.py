@@ -58,7 +58,7 @@ class ReleaseTests(unittest.TestCase):
             release.identity(self.source, "v1.2.3")
 
     def test_historical_exceptions_are_full_sha_bound(self) -> None:
-        for tag, (commit, embedded, output) in release.HISTORICAL.items():
+        for tag, (commit, embedded, output) in (release.HISTORICAL | release.BASELINE_ALIASES).items():
             with self.subTest(tag=tag):
                 self.assertRegex(commit, r"^[0-9a-f]{40}$")
                 version = self.source / "Shell/Version.lean"
@@ -69,7 +69,8 @@ class ReleaseTests(unittest.TestCase):
                 with patch.object(release, "git", side_effect=[commit, commit, ""]):
                     metadata = release.identity(self.source, tag)
                 self.assertEqual(metadata["expectedVersionOutput"], output)
-                self.assertTrue(metadata["historical"])
+                self.assertEqual(metadata["historical"], tag in release.HISTORICAL)
+                self.assertEqual(metadata["baselineAlias"], tag in release.BASELINE_ALIASES)
                 changed = "0" * 40
                 with patch.object(release, "git", side_effect=[changed, changed, ""]):
                     with self.assertRaisesRegex(ValueError, "source identity changed"):

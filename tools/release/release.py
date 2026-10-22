@@ -25,6 +25,11 @@ HISTORICAL = {
     "v0.0.3.2": ("c674ead1164bf9d0d9dcb932e8a95a73cfeaebee", "0.0.3", "Mirrors 0.0.3\n"),
     "v0.0.3.3": ("ea8091c0c723f3f561044a5c1efb91d12e7aaf5f", "0.0.3.2", "v0.0.3.2\n"),
 }
+# Explicit user-requested release-line reset. The target commit and executable
+# bytes must stay unchanged even though the new tag is normal three-part SemVer.
+BASELINE_ALIASES = {
+    "v0.1.0": ("ea8091c0c723f3f561044a5c1efb91d12e7aaf5f", "0.0.3.2", "v0.0.3.2\n"),
+}
 TAG_PATTERN = r"v(?:0|[1-9][0-9]*)(?:\.(?:0|[1-9][0-9]*)){2}(?:-[0-9A-Za-z]+(?:[.-][0-9A-Za-z]+)*)?"
 GATES = ("fixtures_replay", "diff_cross", "model_interface_spec", "stdio_smoke", "transport_spec")
 BINARIES = ("mirror", "model_interface_gen")
@@ -80,17 +85,18 @@ def identity(source: Path, tag: str) -> dict:
             raise ValueError("cannot read the embedded product version")
         embedded = match[1]
     historical = tag in HISTORICAL
-    if historical:
-        expected_commit, expected_version, version_output = HISTORICAL[tag]
+    baseline_alias = tag in BASELINE_ALIASES
+    if historical or baseline_alias:
+        expected_commit, expected_version, version_output = (HISTORICAL | BASELINE_ALIASES)[tag]
         if commit != expected_commit or embedded != expected_version:
-            raise ValueError("historical tag source identity changed")
+            raise ValueError("recorded tag source identity changed")
     else:
         if embedded != tag[1:]:
             raise ValueError(f"tag {tag} does not match embedded product version {embedded!r}")
         version_output = tag + "\n"
     return {"schema": "mirrors.github-release/v1", "tag": tag, "commit": commit,
             "embeddedVersion": embedded, "expectedVersionOutput": version_output,
-            "historical": historical, "prerelease": "-" in tag,
+            "historical": historical, "baselineAlias": baseline_alias, "prerelease": "-" in tag,
             "leanToolchain": (source / "lean-toolchain").read_text().strip(),
             "lakeManifestSha256": digest(source / "lake-manifest.json")}
 
@@ -207,6 +213,11 @@ def build(source: Path, tag: str, output: Path) -> dict:
 
 
 def historical_notice(metadata: dict) -> str:
+    if metadata.get("baselineAlias"):
+        return ("User-requested 0.1 baseline alias: this tag identifies the unchanged original "
+                f"source commit {metadata['commit']}. The executable still prints "
+                f"{metadata['expectedVersionOutput'].strip()!r}; no executable bytes were rewritten. "
+                "Compatibility and qualification remain bound to their explicit profiles and evidence.")
     if not metadata["historical"]:
         return "The executable product version matches the release tag."
     if metadata["embeddedVersion"] is None:
