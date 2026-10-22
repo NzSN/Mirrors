@@ -19,9 +19,9 @@ No server source, generated fixture or executable version bytes were rewritten.
 The exact component commits and review links are in
 [compatibility.json](compatibility.json). They contain aligned product metadata,
 version policy, compatibility manifests and required build/CI setup corrections.
-Tag publication and retired-ref observations are recorded separately in
-`publication.json` after completion; a source target is not itself a claim that
-a tag was published.
+[publication.json](publication.json) records the completed tag publication,
+atomic Mirrors ref retirement, merged changes, successful hosted checks and
+published release. Its binary hashes match the baseline used by the matrices.
 
 ## Executed compatibility gates
 
@@ -91,8 +91,8 @@ C++/Lean workers are not implied by these tags.
 tag object bytes and SHA-256 identities of local recovery bundles. The bundles
 remain under `.golden-build/version-0.1/tag-backups/`.
 
-Tag removal is limited to the six original Mirrors refs unless the user selects
-broader removal for the other five repositories. New `v0.1.0` refs are never
-part of the retired-ref set. Existing evidence/checkpoint files retain their
-recorded labels and source identities. Package registries are not published,
-reset, or overwritten by this migration.
+The six original Mirrors refs were retired atomically with exact leases after
+the recovery inventory was published. Mirrors now has only `v0.1.0`. Legacy
+Gate/client tags remain alongside their new `v0.1.0` tags. Existing evidence and
+checkpoint files retain recorded labels and source identities. Package
+registries were not published, reset, or overwritten.

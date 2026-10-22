@@ -1,0 +1,345 @@
+{
+  "schema": "mirrors.v01-publication/v1",
+  "completedAt": "2026-10-22T06:41:34.313963+00:00",
+  "observedRefs": [
+    {
+      "repository": "NzSN/Mirrors",
+      "tag": "v0.1.0",
+      "object": "156196d48dcfd8c0c4cb25d7adc6ce3bd27428fe",
+      "commit": "ea8091c0c723f3f561044a5c1efb91d12e7aaf5f",
+      "allCurrentTags": [
+        "v0.1.0"
+      ]
+    },
+    {
+      "repository": "NzSN/MirrorECMA",
+      "tag": "v0.1.0",
+      "object": "c35123f9342fdc33e599d3c7a5007cb4212c48a9",
+      "commit": "cc1d8ae70318e40a2db56c9e3056975188e1b354",
+      "allCurrentTags": [
+        "v0.0.1",
+        "v0.0.2",
+        "v0.0.3",
+        "v0.0.3.1",
+        "v0.1.0"
+      ]
+    },
+    {
+      "repository": "NzSN/MirrorCPP",
+      "tag": "v0.1.0",
+      "object": "5a5eef136d9bbe434467962b82123a1a6a2049a5",
+      "commit": "877cc0647b326d1530173015c2e945f933e0ff0b",
+      "allCurrentTags": [
+        "0.0.3",
+        "v0.1.0"
+      ]
+    },
+    {
+      "repository": "NzSN/MirrorRust",
+      "tag": "v0.1.0",
+      "object": "d409c917488d98a56ebb4da0cf2f8fb3eb126c42",
+      "commit": "80afafb4cf61152c991e8f7a0b72f9f41e3d79ed",
+      "allCurrentTags": [
+        "v0.0.1.0",
+        "v0.1.0"
+      ]
+    },
+    {
+      "repository": "NzSN/MirrorLean",
+      "tag": "v0.1.0",
+      "object": "5830a159a3dd9fc3890b1dde3d06dbe2589f4b67",
+      "commit": "106fb5201fb2a59149be7067a6deebec9ab3c762",
+      "allCurrentTags": [
+        "v0.1.0"
+      ]
+    },
+    {
+      "repository": "NzSN/MirrorGate",
+      "tag": "v0.1.0",
+      "object": "e703cb722cb034477bed7b715154cee2f08981f0",
+      "commit": "4d784c75296a2a28e8f1408e47b541ad27fdf3d0",
+      "allCurrentTags": [
+        "v0.0.1",
+        "v0.0.2",
+        "v0.0.3",
+        "v0.0.3.1",
+        "v0.1.0"
+      ]
+    }
+  ],
+  "release": {
+    "id": 420379706,
+    "url": "https://github.com/NzSN/Mirrors/releases/tag/v0.1.0",
+    "tag": "v0.1.0",
+    "publishedAt": "2026-10-22T06:34:48Z",
+    "latest": true,
+    "assets": [
+      {
+        "name": "mirrors-v0.1.0-linux-x86_64.build.json",
+        "sha256": "sha256:93fb59fa10e48122fc583acbf56a7732816fd2a2efc2cc7d6424fbdc860029ce",
+        "size": 2858,
+        "browserDownloadUrl": "https://github.com/NzSN/Mirrors/releases/download/v0.1.0/mirrors-v0.1.0-linux-x86_64.build.json"
+      },
+      {
+        "name": "mirrors-v0.1.0-linux-x86_64.tar.gz",
+        "sha256": "sha256:d76e77764280a0497575ba1e0706ff891e54afdaf6909e86c780fa5c76310a2a",
+        "size": 71961914,
+        "browserDownloadUrl": "https://github.com/NzSN/Mirrors/releases/download/v0.1.0/mirrors-v0.1.0-linux-x86_64.tar.gz"
+      },
+      {
+        "name": "SHA256SUMS",
+        "sha256": "sha256:7d9a79844e7957127d0deaffaee5e659f04d2e35b4240b57cc89e088df195c2e",
+        "size": 206,
+        "browserDownloadUrl": "https://github.com/NzSN/Mirrors/releases/download/v0.1.0/SHA256SUMS"
+      }
+    ]
+  },
+  "policyPullRequest": "https://github.com/NzSN/Mirrors/pull/2",
+  "policyMerge": "4c4747a947996d85d8b59c8f64ce8364a6f0444a",
+  "hostedCI": [
+    {
+      "repository": "NzSN/Mirrors",
+      "runId": 39732751888,
+      "url": "https://github.com/NzSN/Mirrors/actions/runs/39732751888",
+      "scope": "unchanged baseline alias build, regression/runtime checks and artifacts; PR publication skipped",
+      "conclusion": "success"
+    },
+    {
+      "repository": "NzSN/Mirrors",
+      "runId": 39734190213,
+      "url": "https://github.com/NzSN/Mirrors/actions/runs/39734190213",
+      "scope": "merged release build, runtime check, asset upload and publication",
+      "conclusion": "success"
+    },
+    {
+      "repository": "NzSN/MirrorECMA",
+      "runId": 39731711803,
+      "url": "https://github.com/NzSN/MirrorECMA/actions/runs/39731711803",
+      "head": "cc1d8ae70318e40a2db56c9e3056975188e1b354",
+      "scope": "component CI",
+      "conclusion": "success"
+    },
+    {
+      "repository": "NzSN/MirrorLean",
+      "runId": 39731769039,
+      "url": "https://github.com/NzSN/MirrorLean/actions/runs/39731769039",
+      "head": "106fb5201fb2a59149be7067a6deebec9ab3c762",
+      "scope": "component CI",
+      "conclusion": "success"
+    },
+    {
+      "repository": "NzSN/MirrorGate",
+      "runId": 39731787859,
+      "url": "https://github.com/NzSN/MirrorGate/actions/runs/39731787859",
+      "head": "4d784c75296a2a28e8f1408e47b541ad27fdf3d0",
+      "scope": "standalone required real protocol/isolation gate; optional evaluator jobs skipped",
+      "conclusion": "success"
+    }
+  ],
+  "componentChanges": [
+    {
+      "repository": "MirrorECMA",
+      "parent": "13847be5d63d93437c551fad8c5e98f2afd884b0",
+      "commit": "cc1d8ae70318e40a2db56c9e3056975188e1b354",
+      "tree": "e9fdf0e513a998fb72faa47c8501cdab9c34f782",
+      "branch": "release/v0.1.0-compatibility-20261022",
+      "pr": "https://github.com/NzSN/MirrorECMA/pull/1",
+      "prNumber": 1,
+      "merge": {
+        "sha": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "runs": [
+        {
+          "id": 39731711803,
+          "url": "https://github.com/NzSN/MirrorECMA/actions/runs/39731711803",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request"
+        },
+        {
+          "id": 39731708327,
+          "url": "https://github.com/NzSN/MirrorECMA/actions/runs/39731708327",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "push"
+        }
+      ],
+      "previousCommits": [
+        "f1c6bcc291177954f3a0c0383ecdd7806c5effe3"
+      ],
+      "tag": {
+        "name": "v0.1.0",
+        "object": "c35123f9342fdc33e599d3c7a5007cb4212c48a9",
+        "commit": "cc1d8ae70318e40a2db56c9e3056975188e1b354"
+      }
+    },
+    {
+      "repository": "MirrorCPP",
+      "parent": "ec2ccc94547fd787296d5cd4158094b03831738d",
+      "commit": "877cc0647b326d1530173015c2e945f933e0ff0b",
+      "tree": "f8700c53f49ff5c0e7200019845596b99c80f6ac",
+      "branch": "release/v0.1.0-compatibility-20261022",
+      "pr": "https://github.com/NzSN/MirrorCPP/pull/1",
+      "prNumber": 1,
+      "merge": {
+        "sha": "8c542a6b1339cc0b6176465ff7f17a32e614553d",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "runs": [],
+      "previousCommits": [
+        "718f80b062a8926bc7248bfb6dbe5ec7d2243218"
+      ],
+      "tag": {
+        "name": "v0.1.0",
+        "object": "5a5eef136d9bbe434467962b82123a1a6a2049a5",
+        "commit": "877cc0647b326d1530173015c2e945f933e0ff0b"
+      }
+    },
+    {
+      "repository": "MirrorRust",
+      "parent": "5049e99886a3d1f775e60190478c26e39c9aefc9",
+      "commit": "80afafb4cf61152c991e8f7a0b72f9f41e3d79ed",
+      "tree": "8e85af41e8eb1cd1a53d8037d76ffc52a0a02599",
+      "branch": "release/v0.1.0-compatibility-20261022",
+      "pr": "https://github.com/NzSN/MirrorRust/pull/1",
+      "prNumber": 1,
+      "merge": {
+        "sha": "6b9480ab81717b76ca7f74b41fc554578b70c890",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "runs": [],
+      "previousCommits": [
+        "c5f3c876ac56fc2dba25428a0892cfefbc954d24"
+      ],
+      "tag": {
+        "name": "v0.1.0",
+        "object": "d409c917488d98a56ebb4da0cf2f8fb3eb126c42",
+        "commit": "80afafb4cf61152c991e8f7a0b72f9f41e3d79ed"
+      }
+    },
+    {
+      "repository": "MirrorLean",
+      "parent": "196a58702ffc6b3f400d02431b98a66967260a15",
+      "commit": "106fb5201fb2a59149be7067a6deebec9ab3c762",
+      "tree": "ff01f8a2a91b1e1485c14c88a7604a37810b99f2",
+      "branch": "release/v0.1.0-compatibility-20261022",
+      "pr": "https://github.com/NzSN/MirrorLean/pull/1",
+      "prNumber": 1,
+      "merge": {
+        "sha": "a8634ebe2455f97d15b55bec3c810d945cb6e3d3",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "runs": [
+        {
+          "id": 39731769039,
+          "url": "https://github.com/NzSN/MirrorLean/actions/runs/39731769039",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request"
+        },
+        {
+          "id": 39731764212,
+          "url": "https://github.com/NzSN/MirrorLean/actions/runs/39731764212",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "push"
+        }
+      ],
+      "previousCommits": [
+        "fb5318a8c25263be1783835827b069550ae5a0ad"
+      ],
+      "tag": {
+        "name": "v0.1.0",
+        "object": "5830a159a3dd9fc3890b1dde3d06dbe2589f4b67",
+        "commit": "106fb5201fb2a59149be7067a6deebec9ab3c762"
+      }
+    },
+    {
+      "repository": "MirrorGate",
+      "parent": "5055d91757a071467b96d38a16ffece1265c3138",
+      "commit": "4d784c75296a2a28e8f1408e47b541ad27fdf3d0",
+      "tree": "e2dcc7632cbcead146d3173174817c4aefc7c4c3",
+      "branch": "release/v0.1.0-compatibility-20261022",
+      "pr": "https://github.com/NzSN/MirrorGate/pull/1",
+      "prNumber": 1,
+      "merge": {
+        "sha": "4ef786b30ac6be45e471fb02610484581f5da3b0",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "runs": [
+        {
+          "id": 39731787859,
+          "url": "https://github.com/NzSN/MirrorGate/actions/runs/39731787859",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request"
+        },
+        {
+          "id": 39731783867,
+          "url": "https://github.com/NzSN/MirrorGate/actions/runs/39731783867",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "push"
+        }
+      ],
+      "previousCommits": [
+        "65ab8aa0f3393c30337f80d3d16ca818257171b7"
+      ],
+      "tag": {
+        "name": "v0.1.0",
+        "object": "e703cb722cb034477bed7b715154cee2f08981f0",
+        "commit": "4d784c75296a2a28e8f1408e47b541ad27fdf3d0"
+      }
+    }
+  ],
+  "retiredMirrorsTags": {
+    "repository": "NzSN/Mirrors",
+    "removedAt": "2026-10-22T06:26:06.991853+00:00",
+    "removedRefs": {
+      "refs/tags/v0.0.1": "14108075fe8116252422b259c6bac14c20765859",
+      "refs/tags/v0.0.2": "263beecf09b2b76f18d617b4a6fa93ef0485ddba",
+      "refs/tags/v0.0.3": "07c5f6b1bb47ece5d2e6d41272f6dca0b3cc11ca",
+      "refs/tags/v0.0.3.1": "527f5b91bfba13691bdc7e8fa8502429287c6d13",
+      "refs/tags/v0.0.3.2": "9056fcad430245de49fe0c67ea5e96905c1ff26b",
+      "refs/tags/v0.0.3.3": "ea13f0dabe1924cff810f03f185217bb24ca4cea"
+    },
+    "retainedRef": {
+      "name": "refs/tags/v0.1.0",
+      "object": "156196d48dcfd8c0c4cb25d7adc6ce3bd27428fe",
+      "commit": "ea8091c0c723f3f561044a5c1efb91d12e7aaf5f"
+    },
+    "atomic": true,
+    "leasesVerified": true,
+    "inventoryPublishedBeforeRemoval": true
+  },
+  "otherLegacyTagsPreserved": true,
+  "packageRegistryPublication": false,
+  "sourceVersionException": {
+    "requestedTag": "v0.1.0",
+    "unchangedCommit": "ea8091c0c723f3f561044a5c1efb91d12e7aaf5f",
+    "embeddedVersion": "v0.0.3.2",
+    "explicitlyRequestedBaselineAlias": true
+  },
+  "publishedBinariesMatchValidatedBaseline": {
+    "mirror": {
+      "sha256": "53bd92420e101567a6a76b0e80fc9786b6496e3af98a32f2ee2f5ea35de65082",
+      "identical": true
+    },
+    "model_interface_gen": {
+      "sha256": "55bf151eae973a0c83f2827f38ee4dafa5558fb12770b15b3d3837bdafcc2257",
+      "identical": true
+    }
+  },
+  "qualification": {
+    "liveModelChecking": false,
+    "fullFrameworkQualification": false,
+    "nativeWindowsOrMacOS": false,
+    "realDelegatedAggregateCgroups": false
+  }
+}
