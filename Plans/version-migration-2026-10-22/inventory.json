@@ -1,0 +1,191 @@
+{
+  "schema": "mirrors.version-migration-inventory/v1",
+  "baseline": {
+    "sourceTag": "v0.0.3.3",
+    "commit": "ea8091c0c723f3f561044a5c1efb91d12e7aaf5f",
+    "proposedTag": "v0.1.0"
+  },
+  "repositories": [
+    {
+      "repository": "NzSN/Mirrors",
+      "observedLocalHead": "545ed2166c5817eb7cbec3bc1ec5b1b2f7051b6f",
+      "observedRemoteMain": "545ed2166c5817eb7cbec3bc1ec5b1b2f7051b6f",
+      "tags": [
+        {
+          "name": "v0.0.1",
+          "object": "14108075fe8116252422b259c6bac14c20765859",
+          "type": "tag",
+          "commit": "df2f91aa052fedbbe7d544fb0e3d28565e04114f",
+          "annotation": "object df2f91aa052fedbbe7d544fb0e3d28565e04114f\ntype commit\ntag v0.0.1\ntagger NzSN <nzsn0101@gmail.com> 1788857950 +0800\n\nMirrors 0.0.1: initial Semantic Versioning baseline",
+          "objectContentBase64": "b2JqZWN0IGRmMmY5MWFhMDUyZmVkYmJlN2Q1NDRmYjBlM2QyODU2NWUwNDExNGYKdHlwZSBjb21taXQKdGFnIHYwLjAuMQp0YWdnZXIgTnpTTiA8bnpzbjAxMDFAZ21haWwuY29tPiAxNzg4ODU3OTUwICswODAwCgpNaXJyb3JzIDAuMC4xOiBpbml0aWFsIFNlbWFudGljIFZlcnNpb25pbmcgYmFzZWxpbmUK"
+        },
+        {
+          "name": "v0.0.2",
+          "object": "263beecf09b2b76f18d617b4a6fa93ef0485ddba",
+          "type": "tag",
+          "commit": "eb5cd001b990e6ac5e9b1e9b1c5a17ffb85e25fc",
+          "annotation": "object eb5cd001b990e6ac5e9b1e9b1c5a17ffb85e25fc\ntype commit\ntag v0.0.2\ntagger NzSN <nzsn0101@gmail.com> 1790664347 +0800\n\nMirrors 0.0.2",
+          "objectContentBase64": "b2JqZWN0IGViNWNkMDAxYjk5MGU2YWM1ZTliMWU5YjFjNWExN2ZmYjg1ZTI1ZmMKdHlwZSBjb21taXQKdGFnIHYwLjAuMgp0YWdnZXIgTnpTTiA8bnpzbjAxMDFAZ21haWwuY29tPiAxNzkwNjY0MzQ3ICswODAwCgpNaXJyb3JzIDAuMC4yCg=="
+        },
+        {
+          "name": "v0.0.3",
+          "object": "07c5f6b1bb47ece5d2e6d41272f6dca0b3cc11ca",
+          "type": "tag",
+          "commit": "81cfa3e7db6905b2c5d0aa9c05ae2659560828ef",
+          "annotation": "object 81cfa3e7db6905b2c5d0aa9c05ae2659560828ef\ntype commit\ntag 0.0.3\ntagger NzSN <nzsn0101@gmail.com> 1790741842 +0800\n\nMirrors 0.0.3 source checkpoint",
+          "objectContentBase64": "b2JqZWN0IDgxY2ZhM2U3ZGI2OTA1YjJjNWQwYWE5YzA1YWUyNjU5NTYwODI4ZWYKdHlwZSBjb21taXQKdGFnIDAuMC4zCnRhZ2dlciBOelNOIDxuenNuMDEwMUBnbWFpbC5jb20+IDE3OTA3NDE4NDIgKzA4MDAKCk1pcnJvcnMgMC4wLjMgc291cmNlIGNoZWNrcG9pbnQK"
+        },
+        {
+          "name": "v0.0.3.1",
+          "object": "527f5b91bfba13691bdc7e8fa8502429287c6d13",
+          "type": "tag",
+          "commit": "1a069cd3e34d7bfea272e3ee7e10f51acedcc7cb",
+          "annotation": "object 1a069cd3e34d7bfea272e3ee7e10f51acedcc7cb\ntype commit\ntag v0.0.3.1\ntagger NzSN <nzsn0101@gmail.com> 1790813055 +0800\n\nMirrors 0.0.3.1: coordinated Rust client conformance source milestone",
+          "objectContentBase64": "b2JqZWN0IDFhMDY5Y2QzZTM0ZDdiZmVhMjcyZTNlZTdlMTBmNTFhY2VkY2M3Y2IKdHlwZSBjb21taXQKdGFnIHYwLjAuMy4xCnRhZ2dlciBOelNOIDxuenNuMDEwMUBnbWFpbC5jb20+IDE3OTA4MTMwNTUgKzA4MDAKCk1pcnJvcnMgMC4wLjMuMTogY29vcmRpbmF0ZWQgUnVzdCBjbGllbnQgY29uZm9ybWFuY2Ugc291cmNlIG1pbGVzdG9uZQo="
+        },
+        {
+          "name": "v0.0.3.2",
+          "object": "9056fcad430245de49fe0c67ea5e96905c1ff26b",
+          "type": "tag",
+          "commit": "c674ead1164bf9d0d9dcb932e8a95a73cfeaebee",
+          "annotation": "object c674ead1164bf9d0d9dcb932e8a95a73cfeaebee\ntype commit\ntag v0.0.3.2\ntagger NzSN <nzsn0101@gmail.com> 1790836257 +0800\n\nMirrors 0.0.3.2: WriteSentry compiler and fresh oracle qualification source milestone",
+          "objectContentBase64": "b2JqZWN0IGM2NzRlYWQxMTY0YmY5ZDBkOWRjYjkzMmU4YTk1YTczY2ZlYWViZWUKdHlwZSBjb21taXQKdGFnIHYwLjAuMy4yCnRhZ2dlciBOelNOIDxuenNuMDEwMUBnbWFpbC5jb20+IDE3OTA4MzYyNTcgKzA4MDAKCk1pcnJvcnMgMC4wLjMuMjogV3JpdGVTZW50cnkgY29tcGlsZXIgYW5kIGZyZXNoIG9yYWNsZSBxdWFsaWZpY2F0aW9uIHNvdXJjZSBtaWxlc3RvbmUK"
+        },
+        {
+          "name": "v0.0.3.3",
+          "object": "ea13f0dabe1924cff810f03f185217bb24ca4cea",
+          "type": "tag",
+          "commit": "ea8091c0c723f3f561044a5c1efb91d12e7aaf5f",
+          "annotation": "object ea8091c0c723f3f561044a5c1efb91d12e7aaf5f\ntype commit\ntag v0.0.3.3\ntagger NzSN <nzsn0101@gmail.com> 1790905111 +0800\n\nMirrors v0.0.3.3",
+          "objectContentBase64": "b2JqZWN0IGVhODA5MWMwYzcyM2YzZjU2MTA0NGE1YzFlZmI5MWQxMmU3YWFmNWYKdHlwZSBjb21taXQKdGFnIHYwLjAuMy4zCnRhZ2dlciBOelNOIDxuenNuMDEwMUBnbWFpbC5jb20+IDE3OTA5MDUxMTEgKzA4MDAKCk1pcnJvcnMgdjAuMC4zLjMK"
+        }
+      ],
+      "backupBundle": "/home/lsz/Codebase/Mirrors/.golden-build/version-0.1/tag-backups/Mirrors.bundle",
+      "backupBundleSha256": "185b737f55c6ef8492e03c6276e6b778f3d6202c84c7bcab7095c9b3608f7c7f"
+    },
+    {
+      "repository": "NzSN/MirrorGate",
+      "observedLocalHead": "5055d91757a071467b96d38a16ffece1265c3138",
+      "observedRemoteMain": "5055d91757a071467b96d38a16ffece1265c3138",
+      "tags": [
+        {
+          "name": "v0.0.1",
+          "object": "82655955fb8bc27650d26610ebc489309207dd03",
+          "type": "tag",
+          "commit": "15608a0a533418b243bc799513a2ca1292cbf68c",
+          "annotation": "object 15608a0a533418b243bc799513a2ca1292cbf68c\ntype commit\ntag v0.0.1\ntagger NzSN <nzsn0101@gmail.com> 1788857959 +0800\n\nMirrorGate 0.0.1: initial Semantic Versioning baseline",
+          "objectContentBase64": "b2JqZWN0IDE1NjA4YTBhNTMzNDE4YjI0M2JjNzk5NTEzYTJjYTEyOTJjYmY2OGMKdHlwZSBjb21taXQKdGFnIHYwLjAuMQp0YWdnZXIgTnpTTiA8bnpzbjAxMDFAZ21haWwuY29tPiAxNzg4ODU3OTU5ICswODAwCgpNaXJyb3JHYXRlIDAuMC4xOiBpbml0aWFsIFNlbWFudGljIFZlcnNpb25pbmcgYmFzZWxpbmUK"
+        },
+        {
+          "name": "v0.0.2",
+          "object": "d47036cde72d9ddd0f1b9d37c8078ca4a99ac20b",
+          "type": "tag",
+          "commit": "173075d318e4be926570a1378fc0aa36a1294f89",
+          "annotation": "object 173075d318e4be926570a1378fc0aa36a1294f89\ntype commit\ntag v0.0.2\ntagger NzSN <nzsn0101@gmail.com> 1790674636 +0800\n\nMirrorGate 0.0.2",
+          "objectContentBase64": "b2JqZWN0IDE3MzA3NWQzMThlNGJlOTI2NTcwYTEzNzhmYzBhYTM2YTEyOTRmODkKdHlwZSBjb21taXQKdGFnIHYwLjAuMgp0YWdnZXIgTnpTTiA8bnpzbjAxMDFAZ21haWwuY29tPiAxNzkwNjc0NjM2ICswODAwCgpNaXJyb3JHYXRlIDAuMC4yCg=="
+        },
+        {
+          "name": "v0.0.3",
+          "object": "aa618f901d6469f45e5f22d50db913525d1f4ae7",
+          "type": "tag",
+          "commit": "0fa8a311018db9cbfdf2bb516235c1ec09e1ddbd",
+          "annotation": "object 0fa8a311018db9cbfdf2bb516235c1ec09e1ddbd\ntype commit\ntag 0.0.3\ntagger NzSN <nzsn0101@gmail.com> 1790741846 +0800\n\nMirrorGate 0.0.3 source checkpoint",
+          "objectContentBase64": "b2JqZWN0IDBmYThhMzExMDE4ZGI5Y2JmZGYyYmI1MTYyMzVjMWVjMDllMWRkYmQKdHlwZSBjb21taXQKdGFnIDAuMC4zCnRhZ2dlciBOelNOIDxuenNuMDEwMUBnbWFpbC5jb20+IDE3OTA3NDE4NDYgKzA4MDAKCk1pcnJvckdhdGUgMC4wLjMgc291cmNlIGNoZWNrcG9pbnQK"
+        },
+        {
+          "name": "v0.0.3.1",
+          "object": "af65b77819b583fad3c3de99433d7113958944a0",
+          "type": "tag",
+          "commit": "9d88ead482f0e53285b1bacd2e29dd23b81440ac",
+          "annotation": "object 9d88ead482f0e53285b1bacd2e29dd23b81440ac\ntype commit\ntag v0.0.3.1\ntagger NzSN <nzsn0101@gmail.com> 1790813060 +0800\n\nMirrorGate 0.0.3.1: coordinated Rust evaluator source milestone",
+          "objectContentBase64": "b2JqZWN0IDlkODhlYWQ0ODJmMGU1MzI4NWIxYmFjZDJlMjlkZDIzYjgxNDQwYWMKdHlwZSBjb21taXQKdGFnIHYwLjAuMy4xCnRhZ2dlciBOelNOIDxuenNuMDEwMUBnbWFpbC5jb20+IDE3OTA4MTMwNjAgKzA4MDAKCk1pcnJvckdhdGUgMC4wLjMuMTogY29vcmRpbmF0ZWQgUnVzdCBldmFsdWF0b3Igc291cmNlIG1pbGVzdG9uZQo="
+        }
+      ],
+      "backupBundle": "/home/lsz/Codebase/Mirrors/.golden-build/version-0.1/tag-backups/MirrorGate.bundle",
+      "backupBundleSha256": "0568fcd67cb06621700e0c51410bcc6645a9bf91821fee645fc94a2d7f705c87"
+    },
+    {
+      "repository": "NzSN/MirrorECMA",
+      "observedLocalHead": "13847be5d63d93437c551fad8c5e98f2afd884b0",
+      "observedRemoteMain": "13847be5d63d93437c551fad8c5e98f2afd884b0",
+      "tags": [
+        {
+          "name": "v0.0.1",
+          "object": "e82a0819269578e0408a3ffb81f6cd34a8401a94",
+          "type": "tag",
+          "commit": "1d02dc02e223c52674a479e73d35d9e80e16be61",
+          "annotation": "object 1d02dc02e223c52674a479e73d35d9e80e16be61\ntype commit\ntag v0.0.1\ntagger NzSN <nzsn0101@gmail.com> 1788857955 +0800\n\nMirrorECMA 0.0.1: initial Semantic Versioning baseline",
+          "objectContentBase64": "b2JqZWN0IDFkMDJkYzAyZTIyM2M1MjY3NGE0NzllNzNkMzVkOWU4MGUxNmJlNjEKdHlwZSBjb21taXQKdGFnIHYwLjAuMQp0YWdnZXIgTnpTTiA8bnpzbjAxMDFAZ21haWwuY29tPiAxNzg4ODU3OTU1ICswODAwCgpNaXJyb3JFQ01BIDAuMC4xOiBpbml0aWFsIFNlbWFudGljIFZlcnNpb25pbmcgYmFzZWxpbmUK"
+        },
+        {
+          "name": "v0.0.2",
+          "object": "a464afee8734a3b574dc00e498c81cfdd0e2a25a",
+          "type": "tag",
+          "commit": "a50710c7eb5e4d42631641a97749f6920e67b607",
+          "annotation": "object a50710c7eb5e4d42631641a97749f6920e67b607\ntype commit\ntag v0.0.2\ntagger NzSN <nzsn0101@gmail.com> 1790674614 +0800\n\nMirrorECMA 0.0.2",
+          "objectContentBase64": "b2JqZWN0IGE1MDcxMGM3ZWI1ZTRkNDI2MzE2NDFhOTc3NDlmNjkyMGU2N2I2MDcKdHlwZSBjb21taXQKdGFnIHYwLjAuMgp0YWdnZXIgTnpTTiA8bnpzbjAxMDFAZ21haWwuY29tPiAxNzkwNjc0NjE0ICswODAwCgpNaXJyb3JFQ01BIDAuMC4yCg=="
+        },
+        {
+          "name": "v0.0.3",
+          "object": "7834619a1d8626a549469d6518254aff8bc41c32",
+          "type": "tag",
+          "commit": "61890cf14d8465df31ba6c95e72eade0a5716a66",
+          "annotation": "object 61890cf14d8465df31ba6c95e72eade0a5716a66\ntype commit\ntag 0.0.3\ntagger NzSN <nzsn0101@gmail.com> 1790741845 +0800\n\nMirrorECMA 0.0.3 source checkpoint",
+          "objectContentBase64": "b2JqZWN0IDYxODkwY2YxNGQ4NDY1ZGYzMWJhNmM5NWU3MmVhZGUwYTU3MTZhNjYKdHlwZSBjb21taXQKdGFnIDAuMC4zCnRhZ2dlciBOelNOIDxuenNuMDEwMUBnbWFpbC5jb20+IDE3OTA3NDE4NDUgKzA4MDAKCk1pcnJvckVDTUEgMC4wLjMgc291cmNlIGNoZWNrcG9pbnQK"
+        },
+        {
+          "name": "v0.0.3.1",
+          "object": "214613fe71c019e93e7a9fe5e1318682a7de19a9",
+          "type": "tag",
+          "commit": "3e7277b1a2812ef03e73a991c14bf9e5d8510c54",
+          "annotation": "object 3e7277b1a2812ef03e73a991c14bf9e5d8510c54\ntype commit\ntag v0.0.3.1\ntagger NzSN <nzsn0101@gmail.com> 1790905111 +0800\n\nMirrorECMA v0.0.3.1",
+          "objectContentBase64": "b2JqZWN0IDNlNzI3N2IxYTI4MTJlZjAzZTczYTk5MWMxNGJmOWU1ZDg1MTBjNTQKdHlwZSBjb21taXQKdGFnIHYwLjAuMy4xCnRhZ2dlciBOelNOIDxuenNuMDEwMUBnbWFpbC5jb20+IDE3OTA5MDUxMTEgKzA4MDAKCk1pcnJvckVDTUEgdjAuMC4zLjEK"
+        }
+      ],
+      "backupBundle": "/home/lsz/Codebase/Mirrors/.golden-build/version-0.1/tag-backups/MirrorECMA.bundle",
+      "backupBundleSha256": "41a615976e1549ff2bf1ae0559bf78e4c77a060147f31819e617aa5bb48199e2"
+    },
+    {
+      "repository": "NzSN/MirrorCPP",
+      "observedLocalHead": "ec2ccc94547fd787296d5cd4158094b03831738d",
+      "observedRemoteMain": "ec2ccc94547fd787296d5cd4158094b03831738d",
+      "tags": [
+        {
+          "name": "0.0.3",
+          "object": "a1259aa5b15fde5dc013235fdb931a1122938098",
+          "type": "tag",
+          "commit": "d8ed4455e8f73a9144215f62f1dc6963d6d792e7",
+          "annotation": "object d8ed4455e8f73a9144215f62f1dc6963d6d792e7\ntype commit\ntag 0.0.3\ntagger NzSN <nzsn0101@gmail.com> 1790741845 +0800\n\nMirrorCPP 0.0.3 source checkpoint",
+          "objectContentBase64": "b2JqZWN0IGQ4ZWQ0NDU1ZThmNzNhOTE0NDIxNWY2MmYxZGM2OTYzZDZkNzkyZTcKdHlwZSBjb21taXQKdGFnIDAuMC4zCnRhZ2dlciBOelNOIDxuenNuMDEwMUBnbWFpbC5jb20+IDE3OTA3NDE4NDUgKzA4MDAKCk1pcnJvckNQUCAwLjAuMyBzb3VyY2UgY2hlY2twb2ludAo="
+        }
+      ],
+      "backupBundle": "/home/lsz/Codebase/Mirrors/.golden-build/version-0.1/tag-backups/MirrorCPP.bundle",
+      "backupBundleSha256": "afb971a03865ee6de757fdd1f667dbee6ce6371e3481e66e16dd4c31833577c6"
+    },
+    {
+      "repository": "NzSN/MirrorRust",
+      "observedLocalHead": "a3f826f6590bea1bbbffe095353bf9a104c4c1d1",
+      "observedRemoteMain": "5049e99886a3d1f775e60190478c26e39c9aefc9",
+      "tags": [
+        {
+          "name": "v0.0.1.0",
+          "object": "e74c5e51b24e21df77c6c0b14995c743df22e899",
+          "type": "tag",
+          "commit": "a51149e6832d9fa2ead232c1f7157294a72557af",
+          "annotation": "object a51149e6832d9fa2ead232c1f7157294a72557af\ntype commit\ntag v0.0.1.0\ntagger NzSN <nzsn0101@gmail.com> 1790813050 +0800\n\nMirrorRust 0.0.1.0: client guide conformance source milestone",
+          "objectContentBase64": "b2JqZWN0IGE1MTE0OWU2ODMyZDlmYTJlYWQyMzJjMWY3MTU3Mjk0YTcyNTU3YWYKdHlwZSBjb21taXQKdGFnIHYwLjAuMS4wCnRhZ2dlciBOelNOIDxuenNuMDEwMUBnbWFpbC5jb20+IDE3OTA4MTMwNTAgKzA4MDAKCk1pcnJvclJ1c3QgMC4wLjEuMDogY2xpZW50IGd1aWRlIGNvbmZvcm1hbmNlIHNvdXJjZSBtaWxlc3RvbmUK"
+        }
+      ],
+      "backupBundle": "/home/lsz/Codebase/Mirrors/.golden-build/version-0.1/tag-backups/MirrorRust.bundle",
+      "backupBundleSha256": "f6e043ff537a1632a2b3e665f5d37b755b6e839c17674e5df088cb7f9354b575"
+    },
+    {
+      "repository": "NzSN/MirrorLean",
+      "observedLocalHead": "196a58702ffc6b3f400d02431b98a66967260a15",
+      "observedRemoteMain": "196a58702ffc6b3f400d02431b98a66967260a15",
+      "tags": [],
+      "backupBundle": null
+    }
+  ],
+  "observedAt": "2026-10-22T05:33:32.891984+00:00"
+}

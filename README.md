@@ -1,5 +1,8 @@
 # Mirrors
 
+For component release semantics and the Mirrors `v0.1.0` compatibility baseline,
+see the [ecosystem versioning policy](Docs/ecosystem-versioning.md).
+
 For repository ownership and language/profile selection, see the
 [framework map](Docs/framework-map.md).
 

@@ -1,9 +1,19 @@
 # Product versions and local installation
 
+The current cross-repository policy is
+[ecosystem versioning](ecosystem-versioning.md). The user-requested 0.1 reset
+assigns Mirrors `v0.1.0` to unchanged commit
+`ea8091c0c723f3f561044a5c1efb91d12e7aaf5f`, originally `v0.0.3.3`.
+Its executable still prints `v0.0.3.2`; the release builder admits only this
+exact SHA-bound alias. This stable baseline alias can become Latest after the
+normal build/runtime gates; it is distinct from retired historical tags.
+The dated migration inventory preserves the targets of removed tags.
+
 For operating an installed executable as a remote service, see the [remote server guide](remote-server-guide.md)
 and [dated Windows deployment record](windows-deployment-20260918.md).
 
-Mirrors, MirrorECMA, and MirrorGate use [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
+Mirrors, MirrorECMA, MirrorCPP, MirrorRust, MirrorLean, and MirrorGate use
+[Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 Each repository has its own release sequence, starting from the `0.0.1`
 baseline. Version numbers use `MAJOR.MINOR.PATCH`; annotated Git tags use
 the prefix `v`, for example `v0.0.1`.
@@ -141,7 +151,7 @@ again before publishing the draft.
 Existing releases and drafts are refused rather than overwritten. If an upload
 fails and leaves a draft, inspect that draft and remove it before retrying.
 
-Relevant pull requests run the tooling checks and a representative `v0.0.3.3`
+Relevant pull requests run the tooling checks and the unchanged `v0.1.0` baseline
 build through the isolated runtime smoke, with publication disabled. Tooling
 checks also run before every release and can be run locally:
 

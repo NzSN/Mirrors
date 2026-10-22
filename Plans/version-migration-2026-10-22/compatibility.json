@@ -1,0 +1,200 @@
+{
+  "schema": "mirrors.v01-compatibility-summary/v1",
+  "recordedAt": "2026-10-22T05:44:41.454868+00:00",
+  "server": {
+    "repository": "NzSN/Mirrors",
+    "tag": "v0.1.0",
+    "revision": "ea8091c0c723f3f561044a5c1efb91d12e7aaf5f",
+    "formerTag": "v0.0.3.3",
+    "embeddedVersion": "v0.0.3.2",
+    "binarySha256": "53bd92420e101567a6a76b0e80fc9786b6496e3af98a32f2ee2f5ea35de65082"
+  },
+  "clients": {
+    "MirrorECMA": {
+      "plannedTag": "v0.1.0",
+      "sourceParent": "13847be5d63d93437c551fad8c5e98f2afd884b0",
+      "sourceTreeSha256": "90edf4232bfda7b2e915b7e740ba4fb50b8ae22ba2262502b4ae530aad60e23f",
+      "transportRows": 7,
+      "manifestSha256": "b0d89fc0ac5cf8779fe7eaab4c33f0023b6e9944c08dc8dc3444a3e5c002233f",
+      "revision": "cc1d8ae70318e40a2db56c9e3056975188e1b354",
+      "pullRequest": "https://github.com/NzSN/MirrorECMA/pull/1"
+    },
+    "MirrorRust": {
+      "plannedTag": "v0.1.0",
+      "sourceParent": "5049e99886a3d1f775e60190478c26e39c9aefc9",
+      "sourceTreeSha256": "373df8c1a15e7f09ca095687cd1a5c195691b0a282e6c4d94b67f88ba33f9aa7",
+      "transportRows": 7,
+      "manifestSha256": "0d3b0b522552ad1fb6bd59bb9f20244f385505b4f4b3d140be6db3590c120ee9",
+      "revision": "80afafb4cf61152c991e8f7a0b72f9f41e3d79ed",
+      "pullRequest": "https://github.com/NzSN/MirrorRust/pull/1"
+    },
+    "MirrorCPP": {
+      "plannedTag": "v0.1.0",
+      "sourceParent": "ec2ccc94547fd787296d5cd4158094b03831738d",
+      "sourceTreeSha256": "fbc8c76c2267edc4737874354a9f19deafeb221389831da7f868904f051dcd7b",
+      "transportRows": 7,
+      "manifestSha256": "8e48e86fa4fa130bed3064c5538053f1dc84d8eaf15d94ef64f3f882d6a168aa",
+      "revision": "877cc0647b326d1530173015c2e945f933e0ff0b",
+      "pullRequest": "https://github.com/NzSN/MirrorCPP/pull/1"
+    },
+    "MirrorLean": {
+      "plannedTag": "v0.1.0",
+      "sourceParent": "196a58702ffc6b3f400d02431b98a66967260a15",
+      "sourceTreeSha256": "c25d284119d1956d25fd259bfe3498772f4cf426b93fdd5a7941dcc04d5af082",
+      "transportRows": 7,
+      "manifestSha256": "bf6fa11f0ee9e51fcd8aa0f6fe8aec591526225b54a11eb5cb1653d1ee3df669",
+      "revision": "106fb5201fb2a59149be7067a6deebec9ab3c762",
+      "pullRequest": "https://github.com/NzSN/MirrorLean/pull/1"
+    }
+  },
+  "gate": {
+    "repository": "NzSN/MirrorGate",
+    "plannedTag": "v0.1.0",
+    "parentRevision": "5055d91757a071467b96d38a16ffece1265c3138",
+    "standaloneGate": "passed",
+    "pythonTests": {
+      "total": 297,
+      "skipped": 3,
+      "skipReason": "real operator-delegated aggregate cgroups not selected"
+    },
+    "nodeTests": {
+      "total": 231,
+      "passed": 231
+    },
+    "installedEcmaSuite": "passed twice with packed/relocated source-hidden actual workers",
+    "nativeCompositionRows": 24,
+    "manifestSha256": "4747125f6460104eddfc58d5133372597545dc831e493eca06d1fe9f899bd7c7",
+    "sourceTreeSha256": "01190e27e905dd9f12779f34327fc0b0c2b3b75f92bc4f264d9251e8e40ff9d9",
+    "revision": "4d784c75296a2a28e8f1408e47b541ad27fdf3d0",
+    "pullRequest": "https://github.com/NzSN/MirrorGate/pull/1"
+  },
+  "transportRows": 28,
+  "evidence": {
+    "transport": {
+      "path": "evidence/transport-compatibility.json",
+      "sha256": "40c2dafdc9afb061738e70e26d38baf42dee0ebbb143bac810587c258314fa0b"
+    },
+    "gateComposition": {
+      "path": "evidence/gate-composition.json",
+      "sha256": "5df0e1b902c935a9712517d828f616ca28533f04b7dd31a4e2ecd76bfedec36d"
+    },
+    "logs": {
+      "path": "evidence/validation-logs.tar.gz",
+      "sha256": "daf63acea5327a11e08684bd762f32e25c78ae9fc7138c2176a896cd1b4a9567",
+      "entries": [
+        {
+          "name": "rust-unit.log",
+          "bytes": 10128,
+          "sha256": "142f323a2b8ccb3728feb63ed3744fdf0a1b71083d0f8b79c0b1ada47de322e0"
+        },
+        {
+          "name": "ecma-unit-final.log",
+          "bytes": 3402,
+          "sha256": "73dea4b23ea7aef6933c6c7ef2bfc10fcbd41a01afdd9c960a2dc08fb020e714"
+        },
+        {
+          "name": "ecma-focused-final.log",
+          "bytes": 78687,
+          "sha256": "722491d010ce03fae84d84eb9bfdec9a3ff3a8deb3a9846da885fd040488b626"
+        },
+        {
+          "name": "ecma-generated-replay.log",
+          "bytes": 66,
+          "sha256": "198a404837eceafccca46e54e39830b0041cde433f2a6adfd6e1d32ff1f704b8"
+        },
+        {
+          "name": "ecma-generated-mismatch.log",
+          "bytes": 113,
+          "sha256": "bd207ee07376e4c7d0bef89c7a8d110c6452c79a7fd510dd40c9dbfa8d443d44"
+        },
+        {
+          "name": "cpp-unit.log",
+          "bytes": 59957,
+          "sha256": "a5a892200bf9ed4d282b387ace25a448e673ba062c458a9bfca6522d9133cb22"
+        },
+        {
+          "name": "cpp-build.log",
+          "bytes": 24408,
+          "sha256": "bae6a65249fbb9c8585457322b1ade3c5abe4bab141e27b6c3e0901a4ded8f32"
+        },
+        {
+          "name": "cpp-install.log",
+          "bytes": 2557,
+          "sha256": "ba5ad26f6886bade4e56b27b85c752ad054af7ad0fcad64cccc1127c7d285552"
+        },
+        {
+          "name": "lean-build.log",
+          "bytes": 1696,
+          "sha256": "103161db846654417f9461f36723f432f2f5303915ab4d833fe731a42c699894"
+        },
+        {
+          "name": "lean-test.log",
+          "bytes": 11112,
+          "sha256": "782b0c9d2c8447bd3a7840f800bca423d51a534b025ed5c745413408ecc68e3a"
+        },
+        {
+          "name": "lean-async-test.log",
+          "bytes": 31,
+          "sha256": "7e5da25adfc9875b8d02d2c393dbf552b3c7f00f8607fb82959498ef52bffb16"
+        },
+        {
+          "name": "lean-model-interface-test.log",
+          "bytes": 5406,
+          "sha256": "c6948ff5d9105ad28018850924886b2586aa0e6a18ec3ffafdd87be1900b3fef"
+        },
+        {
+          "name": "lean-server-mode-build.log",
+          "bytes": 241,
+          "sha256": "b80fb6cb4687f507067dd66ba292d1f3a1896bfb71196e78e972358f1e5ea046"
+        },
+        {
+          "name": "lean-server-mode-test.log",
+          "bytes": 15880,
+          "sha256": "cdb629b5395d3da29e1830b55c2016e236b7ef9bde0184b89c21a22947bb9782"
+        },
+        {
+          "name": "gate-full-final.log",
+          "bytes": 78274,
+          "sha256": "bad0aff2c86c7869c789450a4e92b687708563c8ffca4fc168048ddd1d00cd5d"
+        },
+        {
+          "name": "gate-baseline-installed-suite.log",
+          "bytes": 1416,
+          "sha256": "efb152092e223254af548e1b842fc7eb47d7152ae23fac8e1036f19131f89438"
+        },
+        {
+          "name": "gate-cpp-receipts.log",
+          "bytes": 51,
+          "sha256": "922a7c5959643c60e5057553744917cda8213f126392e9182dfc4f90e1851a96"
+        },
+        {
+          "name": "gate-rust-integration-tests.log",
+          "bytes": 1103,
+          "sha256": "fda4f36a54100aace83000c3783f615acd9dda96ed2e34372369df5def483c1d"
+        },
+        {
+          "name": "transport-compatibility.log",
+          "bytes": 907,
+          "sha256": "9a128be48166aeb5142187eeca7235c11a2d3cfe5e695188d203cfe6014f7ddd"
+        },
+        {
+          "name": "gate-composition.log",
+          "bytes": 1076,
+          "sha256": "b18a40ff4057427c7f1f95264b8463d2f82348d926f364898acbae7c77bec431"
+        }
+      ]
+    }
+  },
+  "qualification": {
+    "liveModelChecking": false,
+    "fullFrameworkQualification": false,
+    "nativeWindowsOrMacOS": false,
+    "realAggregateCgroups": false
+  },
+  "scopeExclusions": [
+    "MirrorRegistry",
+    "MirrorExamples",
+    "ModelMirrors"
+  ],
+  "tagRemovalScope": "Mirrors; other repositories retain legacy tags unless the user selects the broader scope"
+}
