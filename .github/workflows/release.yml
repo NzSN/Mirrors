@@ -24,6 +24,8 @@ concurrency:
 
 jobs:
   tooling:
+    # Retiring a tag must not build or publish a release for the deleted ref.
+    if: github.event_name != 'push' || github.event.deleted != true
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
