@@ -65,6 +65,10 @@ when needed.
 
 ## Build and test
 
+For tagged Linux binary builds and automatic GitHub Releases, see
+[GitHub release builds](Docs/versioning.md#github-release-builds), including
+manual builds of existing tags and runtime prerequisites.
+
 The first build fetches the pinned `batteries` dependency from GitHub.
 
 ```bash
