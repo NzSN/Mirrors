@@ -40,16 +40,21 @@ supported capability is breaking.
 
 ## Baseline migration
 
-At the user's explicit request, Mirrors `v0.1.0` identifies the unchanged commit
-`ea8091c0c723f3f561044a5c1efb91d12e7aaf5f`, originally named `v0.0.3.3`.
-Its executable still prints `v0.0.3.2`. This is a documented source-version
-exception, not a rewritten executable or a claim that current main is 0.1.0.
-The new release manifest and checksums identify the exact source and binaries.
+The initial migration assigned Mirrors `v0.1.0` to unchanged commit
+`ea8091c0c723f3f561044a5c1efb91d12e7aaf5f`, originally named `v0.0.3.3`,
+whose executable prints `v0.0.3.2`. The user subsequently explicitly requested
+retagging `v0.1.0` to the updated source and rebuilding its GitHub release.
+The current tag uses embedded product version `0.1.0`, with no release-builder
+alias exception. The [retag inventory](../Plans/version-migration-2026-10-22/retag.json)
+preserves the superseded identities. Earlier compatibility and qualification
+evidence remains bound to the original source, binaries and profiles; changing
+the tag does not extend that evidence to the new source.
 
 Existing tag identities are retained in the dated migration inventory before
 any authorized removal. Historical evidence keeps its original labels and
-commit identities. This requested reset is a one-time migration; subsequent
-released tags are immutable and corrections require a new release.
+commit identities. This reset and its explicitly requested retag correction
+are migration exceptions; subsequent released tags are immutable and
+corrections require a new release.
 
 For subsequent ordinary releases, the product manifest, executable version
 (when available), and Git tag must agree. Package-registry publication is a

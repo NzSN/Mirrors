@@ -58,7 +58,7 @@ class ReleaseTests(unittest.TestCase):
             release.identity(self.source, "v1.2.3")
 
     def test_historical_exceptions_are_full_sha_bound(self) -> None:
-        for tag, (commit, embedded, output) in (release.HISTORICAL | release.BASELINE_ALIASES).items():
+        for tag, (commit, embedded, output) in release.HISTORICAL.items():
             with self.subTest(tag=tag):
                 self.assertRegex(commit, r"^[0-9a-f]{40}$")
                 version = self.source / "Shell/Version.lean"
@@ -69,12 +69,33 @@ class ReleaseTests(unittest.TestCase):
                 with patch.object(release, "git", side_effect=[commit, commit, ""]):
                     metadata = release.identity(self.source, tag)
                 self.assertEqual(metadata["expectedVersionOutput"], output)
-                self.assertEqual(metadata["historical"], tag in release.HISTORICAL)
-                self.assertEqual(metadata["baselineAlias"], tag in release.BASELINE_ALIASES)
+                self.assertTrue(metadata["historical"])
+                self.assertFalse(metadata["baselineAlias"])
                 changed = "0" * 40
                 with patch.object(release, "git", side_effect=[changed, changed, ""]):
                     with self.assertRaisesRegex(ValueError, "source identity changed"):
                         release.identity(self.source, tag)
+
+    def test_v010_requires_matching_product_version_after_retag(self) -> None:
+        version = self.source / "Shell/Version.lean"
+        version.write_text('def version : String := "0.1.0"\n')
+        self.git("add", ".")
+        self.commit()
+        self.git("tag", "v0.1.0")
+        metadata = release.identity(self.source, "v0.1.0")
+        self.assertEqual(metadata["expectedVersionOutput"], "v0.1.0\n")
+        self.assertFalse(metadata["historical"])
+        self.assertFalse(metadata["baselineAlias"])
+        self.assertEqual(release.historical_notice(metadata),
+                         "The executable product version matches the release tag.")
+
+        # The retired alias must no longer admit the old embedded version,
+        # including when presented at its exact former source commit.
+        version.write_text('def version : String := "0.0.3.2"\n')
+        old_commit = "ea8091c0c723f3f561044a5c1efb91d12e7aaf5f"
+        with patch.object(release, "git", side_effect=[old_commit, old_commit, ""]):
+            with self.assertRaisesRegex(ValueError, "embedded product version"):
+                release.identity(self.source, "v0.1.0")
 
     def test_tag_validation_blocks_injection_and_nonrelease_names(self) -> None:
         for tag in ("main", "refs/tags/v1.2.3", "v1.2.3\ntag=main", "v1.2.3;id",

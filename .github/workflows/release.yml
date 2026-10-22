@@ -56,7 +56,7 @@ jobs:
       - name: Validate requested tag
         id: select
         env:
-          # Pull requests exercise one real historical build without publishing.
+          # Pull requests exercise the current v0.1.0 source without publishing.
           REQUESTED_TAG: ${{ inputs.tag || (github.event_name == 'pull_request' && 'v0.1.0') || github.ref_name }}
         run: python3 release-tools/tools/release/release.py select --tag "$REQUESTED_TAG" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4

@@ -1,13 +1,14 @@
 # Product versions and local installation
 
 The current cross-repository policy is
-[ecosystem versioning](ecosystem-versioning.md). The user-requested 0.1 reset
-assigns Mirrors `v0.1.0` to unchanged commit
-`ea8091c0c723f3f561044a5c1efb91d12e7aaf5f`, originally `v0.0.3.3`.
-Its executable still prints `v0.0.3.2`; the release builder admits only this
-exact SHA-bound alias. This stable baseline alias can become Latest after the
-normal build/runtime gates; it is distinct from retired historical tags.
-The dated migration inventory preserves the targets of removed tags.
+[ecosystem versioning](ecosystem-versioning.md). Mirrors `v0.1.0` identifies
+the updated source with product version `0.1.0`, so `mirror --version` and the
+release tag agree. The user explicitly requested retagging after the initial
+alias publication. The [retag inventory](../Plans/version-migration-2026-10-22/retag.json)
+preserves the previous tag and release identities; the original
+[migration evidence](../Plans/version-migration-2026-10-22/README.md) remains
+bound to its original server commit and binaries. The old alias exception has
+been removed from the release builder.
 
 For operating an installed executable as a remote service, see the [remote server guide](remote-server-guide.md)
 and [dated Windows deployment record](windows-deployment-20260918.md).
@@ -67,20 +68,20 @@ and is compiled into the executable:
 
 ```console
 $ .lake/build/bin/mirror --version
-v0.0.3.2
+v0.1.0
 $ ModelMirrors --version
-v0.0.3.2
+v0.1.0
 ```
 
 The second command requires installation under that name on `PATH`.
 See the [CLI reference](interface-reference.md) for exit codes and argument
-validation. The `--version` implementation was added after the baseline tag;
-checking out `v0.0.1` itself does not provide the flag. The original tag remains
-unchanged. The current Mirrors checkpoint label is `v0.0.3.2`; the standalone
-CLI prints that exact label. Its already-published source tag remains on its
-original commit. Version output reports the declared version, not a Git SHA or a
-clean-tree guarantee. Record `git rev-parse HEAD`, `git status --short`, and
-the executable's SHA-256 when exact build provenance is needed.
+validation. The examples require rebuilding and, for `ModelMirrors`, reinstalling
+that build. Binaries from the superseded `v0.1.0` alias still print `v0.0.3.2`;
+retagging does not update an installed binary. The `--version` implementation
+was added after the original `v0.0.1` baseline, which does not provide the flag.
+Version output reports the declared version, not a Git SHA or a clean-tree
+guarantee. Record `git rev-parse HEAD`, `git status --short`, and the executable's
+SHA-256 when exact build provenance is needed.
 
 ## GitHub release builds
 
@@ -119,7 +120,7 @@ the `main` branch, and enter the existing tag in the `tag` input. With GitHub
 CLI, for example:
 
 ```sh
-gh workflow run release.yml --ref main -f tag=v0.0.3.3
+gh workflow run release.yml --ref main -f tag=v0.1.0
 ```
 
 Adding the workflow does not retroactively run existing tag pushes. Backfill
@@ -151,8 +152,8 @@ again before publishing the draft.
 Existing releases and drafts are refused rather than overwritten. If an upload
 fails and leaves a draft, inspect that draft and remove it before retrying.
 
-Relevant pull requests run the tooling checks and the unchanged `v0.1.0` baseline
-build through the isolated runtime smoke, with publication disabled. Tooling
+Relevant pull requests run the tooling checks and the current `v0.1.0` tagged
+source through the isolated runtime smoke, with publication disabled. Tooling
 checks also run before every release and can be run locally:
 
 ```sh
