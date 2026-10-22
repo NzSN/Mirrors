@@ -72,6 +72,83 @@ original commit. Version output reports the declared version, not a Git SHA or a
 clean-tree guarantee. Record `git rev-parse HEAD`, `git status --short`, and
 the executable's SHA-256 when exact build provenance is needed.
 
+## GitHub release builds
+
+The [release workflow](../.github/workflows/release.yml) builds Linux x86-64
+archives on Ubuntu 24.04. After this workflow is merged, pushing a new `v*`
+tag whose commit contains the workflow starts a build automatically. New tags
+must follow `vMAJOR.MINOR.PATCH[-prerelease]` and match `Shell.Version.version`;
+the built executable must print that tag from `--version`. The source checkout
+must be clean and its HEAD must equal the requested tag's commit.
+
+The workflow builds `mirror` and `model_interface_gen`, then runs the tagged
+source's `fixtures_replay`, `diff_cross`, `model_interface_spec`, `stdio_smoke`,
+and `transport_spec` executables. It also runs `check-client-framing.py` when
+that script exists in the tagged source. These are focused non-model release
+gates; full cross-client interoperability, live Apalache/TLC work and framework
+qualification remain separate obligations. No model checker is installed or
+started by this workflow.
+
+Each release contains:
+
+- `mirrors-TAG-linux-x86_64.tar.gz`: the two executables, `README.txt`, and
+  `BUILD.json`, with exact source, toolchain, regression and library identities.
+- `mirrors-TAG-linux-x86_64.build.json`: the same build manifest beside the archive.
+- `SHA256SUMS`: SHA-256 checksums for the archive and external manifest.
+
+The runtime profile is Ubuntu 24.04 x86-64 (glibc 2.39), OpenSSL 3 and GMP.
+Install `libssl3t64` and `libgmp10` on Ubuntu 24.04, verify `SHA256SUMS`, extract
+the archive, and add its `bin` directory to `PATH`. Lean is not required at
+runtime. Live model work separately needs Apalache and a compatible JVM.
+The workflow checks the extracted archive in a fresh Ubuntu container without
+Lean or the source checkout before publication. Native Windows/macOS packages
+are not produced by this workflow.
+
+To build an existing tag, open **Actions → release → Run workflow**, select
+the `main` branch, and enter the existing tag in the `tag` input. With GitHub
+CLI, for example:
+
+```sh
+gh workflow run release.yml --ref main -f tag=v0.0.3.3
+```
+
+Adding the workflow does not retroactively run existing tag pushes. Backfill
+tags individually with that manual input. Release tooling comes from the
+workflow revision and builds a separate checkout of the exact original tag;
+no historical source edits or tag moves are needed.
+
+The six recorded historical tags have narrowly scoped exceptions bound to
+their full source commit SHAs in [release.py](../tools/release/release.py):
+
+| Tag | Embedded product version | Original `--version` output |
+| --- | --- | --- |
+| `v0.0.1` | absent | flag unavailable |
+| `v0.0.2` | `0.0.2` | `Mirrors 0.0.2` |
+| `v0.0.3` | `0.0.2` | `Mirrors 0.0.2` |
+| `v0.0.3.1` | `0.0.3` | `Mirrors 0.0.3` |
+| `v0.0.3.2` | `0.0.3` | `Mirrors 0.0.3` |
+| `v0.0.3.3` | `0.0.3.2` | `v0.0.3.2` |
+
+Historical releases disclose these differences and preserve original bytes.
+They are not marked Latest. Prerelease tags produce GitHub prereleases and
+also leave Latest unchanged. A future stable release becomes Latest only
+after all release gates and runtime smoke checks pass.
+
+The publication job alone receives `contents: write`. It verifies asset
+checksums and reobserves the remote tag's peeled source commit before creating
+a draft with all assets and generated release notes. It checks the remote tag
+again before publishing the draft.
+Existing releases and drafts are refused rather than overwritten. If an upload
+fails and leaves a draft, inspect that draft and remove it before retrying.
+
+Relevant pull requests run the tooling checks and a representative `v0.0.3.3`
+build through the isolated runtime smoke, with publication disabled. Tooling
+checks also run before every release and can be run locally:
+
+```sh
+python3 -m unittest discover -s tools/release -p 'test_*.py' -v
+```
+
 ## Build and install on Linux or WSL
 
 From the Mirrors checkout, run `lake build`. The executable is
