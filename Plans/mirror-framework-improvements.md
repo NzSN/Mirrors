@@ -11,12 +11,19 @@ published revisions and boundaries. Broader M4 acceptance remains partial;
 later commits never inherit qualification automatically. The earlier October 3
 qualified candidate and October 7 incomplete working-tree candidate are history.
 
-Continuation updated 2026-10-13 against base Mirrors `66f9418`: F1 generated DPM kits
-and F2 receipt timelines are source accepted. F3 finite-catalog reduction,
-F4 installed CLI and the F5 C++ controlled mutex/FIFO prototype are implemented
-with separate [October 13 evidence](dpm-f3-f5-evidence-20261013/README.md);
-follow [their feature plan](dpm-usability-features-2026-10-07.md). These newer
-source/tool changes need their own freeze and gates for installed/current-source
+Continuation refreshed 2026-10-22 against base Mirrors `b243b37` (`v0.1.0`):
+F1 generated DPM kits and F2 receipt timelines are source accepted. Mirrors
+reducer/CLI tooling landed in `c17bae9`. F3 finite-catalog reduction, F4 installed
+CLI and the separate experimental MirrorCPP F5 controlled mutex/FIFO prototype
+have [October 14 follow-up acceptance](dpm-review-followup-evidence-20261014/README.md).
+F5 has no model comparison. Follow [their feature plan](dpm-usability-features-2026-10-07.md)
+and [current build prerequisites](../Docs/dpm-cli-guide.md#build-and-runtime-prerequisites);
+local build-preparation changes require their own artifact acceptance.
+
+The October 15 [conformance repairs](client-conformance-fix-evidence-20261015/README.md)
+landed in `d1c5e74`. October 22 compatibility matrices bind the earlier `ea8091c`
+server; the `b243b37` [retag](version-migration-2026-10-22/retag.json) has focused
+release validation only and grants no new cross-client, live-model or framework
 qualification. Broader M4 remains a separate track.
 
 Planning baseline: Mirrors `eb5cd00`, MirrorGate `173075d`

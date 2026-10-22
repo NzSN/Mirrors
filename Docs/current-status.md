@@ -1,19 +1,30 @@
 # Current framework status and navigation
 
-Implementation checked 2026-10-14 against working trees based on Mirrors `6e0cbce`,
-MirrorCPP `75a63db`, MirrorECMA `fe9a648` and MirrorRust `7606173`.
-The corrected F3–F5 changes remain uncommitted and have a separate
-[October 14 review follow-up acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md).
+Source status refreshed 2026-10-22 against Mirrors `b243b37` (`v0.1.0`) and
+the current DPM build-preparation changes. The DPM implementation landed in
+`c17bae9`; the October 15 client-conformance repairs landed in `d1c5e74`.
+These source identities do not replace the exact runtime and source hashes in
+[October 14 DPM acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md)
+or [October 15 conformance acceptance](../Plans/client-conformance-fix-evidence-20261015/README.md).
 The [preceding remediation record](../Plans/dpm-review-remediation-evidence-20261014/README.md)
-retains its earlier source/runtime identities.
-The [original October 13 evidence](../Plans/dpm-f3-f5-evidence-20261013/README.md)
-remains historical and unchanged.
-The [review follow-up plan](../Plans/dpm-review-followup-2026-10-14.md) completed
-cancellation ownership, retained C++ evidence admission and empty literal argv
-corrections, plus bounded CTest isolation. New remote installed/non-model gates
-and independent review qualify their declared WSL scope.
+and [original October 13 evidence](../Plans/dpm-f3-f5-evidence-20261013/README.md)
+remain unchanged history.
+
+DPM launcher builds now prepare the local interpreter/helper identity before
+compilation; an explicit build-time interpreter can be selected with
+`MIRRORS_DPM_PYTHON`. Runtime hash checks remain enforced. See the
+[build and runtime prerequisites](dpm-cli-guide.md#build-and-runtime-prerequisites)
+and newest [checkpoint](../CHECKPOINTS.md) for current working-tree validation
+and its temporary-directory-path limitation. The
+[October 22 build evidence](../Plans/dpm-build-preparation-evidence-20261022/README.md)
+records the complete non-model pass with `TMPDIR=/tmp`, 79 DPM Python tests and
+bounded installed-launcher checks. The inherited `TMPDIR=/tmp/` aggregate
+failure is also reproduced at the baseline and remains an open sanitizer issue.
+This source/build change does not renew full DPM installed-package or framework
+acceptance.
 The [October 9 documentation audit](../Plans/documentation-sync-2026-10-09.md)
-remains a historical documentation review, separate from this implementation.
+remains a historical full source-navigation audit across linked repositories; this
+refresh reconciles maintained status and the affected DPM ownership paths.
 
 ## Qualified scope and evidence
 
@@ -27,6 +38,14 @@ installed replay, real mismatch/mutation, both R1 branches, prefix/domain
 reduction, prepared-filesystem recovery and the remote model/client matrix are
 bound to that record. Subsequent documentation/catalog publication does not
 extend it to a new implementation or release automatically.
+
+The October 22 [release-line compatibility record](../Plans/version-migration-2026-10-22/compatibility.json)
+contains 28 actual SDK transport rows and 24 Gate composition rows against the
+earlier server `ea8091c` and its recorded binaries. The replacement `v0.1.0`
+tag at `b243b37` has [focused release validation](../Plans/version-migration-2026-10-22/retag.json)
+only. The retag grants no new cross-client, live-model or full-framework
+qualification; the original compatibility and publication records remain
+observations of their original commits and binary hashes.
 
 M6 reviewed scaffolds/corpora, compiler/client follow-ups and the read-only
 [lock migration helper](model-interface-compiler/lock-migration.md) are implemented.
@@ -56,9 +75,9 @@ bounded FIFO profile; its local execution receipts do not establish model compar
 See the [runner contract](dpm-runner-contract.md),
 [feature plan](../Plans/dpm-usability-features-2026-10-07.md) and
 [October 14 follow-up evidence](../Plans/dpm-review-followup-evidence-20261014/README.md)
-for current source/runtime identities, actual gate results and limits. Both remote
-installed acceptance and the full non-model suite passed. Independent review
-confirmed all three fresh profiles and found no remaining confirmed findings in
+for the accepted source/runtime identities, actual gate results and limits. Both
+remote installed acceptance and the full non-model suite passed in that campaign.
+Independent review confirmed all three fresh profiles and found no remaining confirmed findings in
 its reviewed scope. Current projects use v2 typed commands; receipt/oracle checks,
 retained-output accounting and C++ callback/join deadlines include the review
 corrections. Cancellation preserves ownership through the first cleanup
@@ -89,11 +108,11 @@ qualify a new framework release. Broader M4 stays independent.
 | Explore component/source relationships | [Architecture overview](architecture-overview.md), [interactive view](architecture-overview.html), [module details](architecture-details.md) |
 | Locate client, evaluator and worker owners | [Framework map](framework-map.md) |
 | Integrate an application | [Role guide](application-integration-guide.md), [usage guide](usage-of-mirror-framework.md) |
-| Control participating threads under MBT | [DPM guide](deterministic-scheduling.md) |
+| Control participating threads under MBT | [DPM guide](deterministic-scheduling.md), [build/install/replay CLI](dpm-cli-guide.md) |
 | Review compiler/profile/migration contracts | [Compiler index](model-interface-compiler/README.md), [generated specification](generated-model-interface-spec.md) |
 | Operate model checking remotely | [Remote guide](remote-server-guide.md), [qualification harness](qualification-harness-design.md) |
 | Inspect completion and planned extensions | [Framework roadmap](../Plans/mirror-framework-improvements.md), [execution decisions](../Plans/execution-decisions.md) |
-| Inspect exact accepted identities | [October 7 readiness](../Plans/q3-published-roadmap-2026-10-07.md), [checkpoint history](../CHECKPOINTS.md) |
+| Inspect exact accepted identities | [October 7 readiness](../Plans/q3-published-roadmap-2026-10-07.md), [DPM acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md), [conformance acceptance](../Plans/client-conformance-fix-evidence-20261015/README.md), [release retag scope](../Plans/version-migration-2026-10-22/retag.json), [checkpoint history](../CHECKPOINTS.md) |
 
 Dated baselines, proof statements, frozen fixtures and machine-readable acceptance
 files retain their original bytes/counts. A historical “pending” stage is not a

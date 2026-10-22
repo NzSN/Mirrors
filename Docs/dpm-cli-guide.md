@@ -7,16 +7,46 @@ ownership, schema, oracle authority, process lifetime and exact acceptance scope
 
 ## Build and runtime prerequisites
 
-Build the Lean launcher with `lake build mirrors_dpm`. If changing packaged host
-Python files, first run `python3 -I -S -B tools/deterministic-scheduling/refresh_host_identity.py`.
-The launcher embeds their hashes and the selected Python interpreter hash;
-`--check` detects stale identities. Changed host code cannot execute through an
-old launcher. Python runtime pinning is specific to the built distribution. Refresh also pins
-the installer and installed-gate helper source bytes. Run preparation, installer,
-identity refresh and installed-gate scripts with `python3 -I -S -B`; their verified
-helper loading does not search adjacent modules or bytecode. The OS standard
-library, extension modules and loader remain trusted platform prerequisites;
-the interpreter executable hash is not a hermetic Python installation.
+Build the Lean launcher with `lake build mirrors_dpm`. Before compiling its
+modules, Lake runs the identity generator with `python3` from the build's `PATH`.
+Set `MIRRORS_DPM_PYTHON` to select another interpreter explicitly:
+
+```sh
+MIRRORS_DPM_PYTHON=/path/to/python3 lake build mirrors_dpm
+.lake/build/bin/mirrors_dpm --help
+```
+
+The generator resolves the selected interpreter's actual executable path and
+hashes its bytes and the three packaged host files. It writes
+`.lake/build/dpm-generated/Shell/Dpm/HostIdentity.lean`; the launcher compiles
+those constants. `lake build`, `lake build Shell` and direct launcher builds
+prepare this dependency automatically. An unchanged build preserves the generated
+file and compiled outputs; a changed interpreter path, interpreter bytes or host
+file rebuilds the launcher. Ordinary `lake build mirror` does not require this
+DPM dependency. Builds do not rewrite tracked source identities.
+
+`MIRRORS_DPM_PYTHON` selects a build input, not a runtime override. Keep it set
+for builds that should retain a nondefault interpreter. An installed launcher
+requires the exact compiled interpreter path and hash, even after relocating the
+package. After an interpreter upgrade or a move to another host, rebuild and
+prepare a new package with its own identities and acceptance evidence. Existing
+installation and historical acceptance records remain unchanged.
+
+The installer and installed-gate scripts also contain reviewed helper pins.
+After changing their helper sources, explicitly refresh these tracked pins with
+`python3 -I -S -B tools/deterministic-scheduling/refresh_host_identity.py --helpers-only`
+and review the diff before rebuilding. The build checks them and refuses stale
+pins. To check the generated identity without writing, run the same selected
+interpreter with `-I -S -B tools/deterministic-scheduling/refresh_host_identity.py --check`.
+`python3 tools/check-dpm-build.py` exercises regeneration, incremental builds,
+runtime refusals and interpreter selection in a disposable checkout.
+
+Changed host code or interpreter bytes cannot execute through an old launcher.
+Run preparation, installer, identity refresh and installed-gate scripts with
+Python's `-I -S -B` flags; their verified helper loading does not search adjacent
+modules or bytecode. The OS standard library, extension modules and loader remain
+trusted platform prerequisites; the interpreter executable hash is not a hermetic
+Python installation.
 Node is required only for Node application runners. Replay/report do not compile
 applications, download packages or start a model checker.
 

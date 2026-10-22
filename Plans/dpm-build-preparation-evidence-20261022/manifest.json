@@ -1,0 +1,235 @@
+{
+  "date": "2026-10-22",
+  "baseCommit": "b243b37774a34fa1bb5b1174b519d2fed98c162b",
+  "workingTreeChanges": true,
+  "scope": {
+    "localSourceAcceptance": true,
+    "installedLauncherRegression": true,
+    "freshSdkReplay": false,
+    "sourceHiddenExecution": false,
+    "fullInstalledDpmQualification": false,
+    "freshModelChecking": false,
+    "newFrameworkQualification": false,
+    "defaultTemporaryEnvironmentPass": false
+  },
+  "environment": {
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "pythonExecutable": "/usr/bin/python3.12",
+    "pythonSha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+    "pythonVersion": "3.12.3",
+    "toolchain": "leanprover/lean4:v4.33.0",
+    "inheritedTMPDIR": "/tmp/",
+    "passingAggregateTMPDIR": "/tmp"
+  },
+  "runs": [
+    {
+      "command": "bash tools/run-local-no-model-check.sh",
+      "TMPDIR": "/tmp/",
+      "exitCode": 1,
+      "passed": false,
+      "log": "non-model-inherited.txt"
+    },
+    {
+      "command": "TMPDIR=/tmp bash tools/run-local-no-model-check.sh",
+      "TMPDIR": "/tmp",
+      "exitCode": 0,
+      "passed": true,
+      "log": "non-model-normalized.txt"
+    },
+    {
+      "command": "baseline trace_generation_transport_repro_spec with synthetic fixture",
+      "baseCommit": "b243b37774a34fa1bb5b1174b519d2fed98c162b",
+      "TMPDIR": "/tmp/",
+      "exitCode": 1,
+      "passed": false,
+      "log": "baseline-trace-path.txt"
+    },
+    {
+      "command": "baseline trace_generation_transport_repro_spec with synthetic fixture",
+      "baseCommit": "b243b37774a34fa1bb5b1174b519d2fed98c162b",
+      "TMPDIR": "/tmp",
+      "exitCode": 0,
+      "passed": true,
+      "log": "baseline-trace-path.txt"
+    }
+  ],
+  "validation": {
+    "buildJobs": 728,
+    "dpmPythonTests": 79,
+    "dpmPolicyGates": 25,
+    "dpmTypedEvidenceGates": 11,
+    "distributionTests": 39,
+    "evidenceTests": 142,
+    "offlineDifferentialTests": 63,
+    "offlineDifferentialSkipped": 4,
+    "workflowYamlAndDpmFilters": "passed",
+    "actionlint": "unavailable"
+  },
+  "skipped": [
+    "native integer maps (MIRRORCPP_PREFIX unset)",
+    "live Apalache/explorer/Counter/async tiers",
+    "TLC excluded"
+  ],
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/interop.yml",
+      "sha256": "d56d7494f14583c6033da5f0d97628c4d0679267a2ee75209a183645e65e94c7"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "6da523fd58995087a428541cec24b34f01feacd1f368d93e9fd82613368b67ee"
+    },
+    {
+      "path": "CHECKPOINTS.md",
+      "sha256": "c768ba5f5d0043f045a04984338817e3c879ec57b1b877e66eabba3cbe69c795"
+    },
+    {
+      "path": "Docs/README.md",
+      "sha256": "d00e2140259b98e0e362338b377c4595f3f1cd330decd71845cc075588ba2e06"
+    },
+    {
+      "path": "Docs/architecture-details.md",
+      "sha256": "27b34384dfc8486b60d7e505143a9adae0c6b691c9eb54b6f8bec80256056688"
+    },
+    {
+      "path": "Docs/architecture-overview.html",
+      "sha256": "884a4aa2482a8f3a677c7b5c21cb70e692a9dcc9d71283ab3c989df8606b2fd4"
+    },
+    {
+      "path": "Docs/architecture-overview.json",
+      "sha256": "8b8533d35639483e013263c22a9480a6ec6bb120c2ecc8c4fe134f08fa6dc60d"
+    },
+    {
+      "path": "Docs/architecture-overview.md",
+      "sha256": "614f2c1faf95b1f5c389b9cee83ba1916fe3922f8327f3980d59103b58106929"
+    },
+    {
+      "path": "Docs/architecture-overview.txt",
+      "sha256": "aa50c4876b0ec44802e2c6a76d651f82978612239bb16bdeb99081f197ef719f"
+    },
+    {
+      "path": "Docs/current-status.md",
+      "sha256": "fddc24b184b76903956bee290a256f317985ab6b8a74f38ad3c82331df699d5b"
+    },
+    {
+      "path": "Docs/dpm-cli-guide.md",
+      "sha256": "5d6aa4e8318897b8df0aac4f712ac64e3cdfcb1aa42d1177ae74fd028afd3871"
+    },
+    {
+      "path": "Docs/dpm-usability-design.md",
+      "sha256": "152675d8179b7bc9903a8a7d73fe4eea332f657946b37ec991ea1691c1353001"
+    },
+    {
+      "path": "Docs/framework-map.md",
+      "sha256": "7b7432bc7c933f58cf4964b65de726559746c4c5268b44d2b348e3da371c8020"
+    },
+    {
+      "path": "Plans/execution-decisions.md",
+      "sha256": "36ff22d24d30add830d286f691667ed9f40d5859855e005e151844bf57393e36"
+    },
+    {
+      "path": "Plans/mirror-framework-improvements.md",
+      "sha256": "b4f6a807460ca81e5cbd735d972df6c7a0676d7111e8f887010a0a9894f4c374"
+    },
+    {
+      "path": "README.md",
+      "sha256": "c90c3cc1a688e611008a4a1a66397d75a3c5846ae307025554fa54e954d9b5d7"
+    },
+    {
+      "path": "Shell/Dpm/Cli.lean",
+      "sha256": "5e11ea335ce12ad10c4935435234293d5158941969483951dc9883417d7753c4"
+    },
+    {
+      "path": "Shell/Dpm/HostIdentity.lean",
+      "deleted": true,
+      "baseSha256": "49ab9c56beb6cb72f9f9e1509b2b4e023f184d41505684c655497504d0a66c25"
+    },
+    {
+      "path": "lakefile.lean",
+      "sha256": "b9422ceb43695c56b577100f0816940f98269b396ab5aefb7cc733fe4206da62"
+    },
+    {
+      "path": "tools/MirrorsDpm.lean",
+      "sha256": "97cac2d0b947389bf0fa0064f74bd8eab9f70c6b81edfafd4a26351073152238"
+    },
+    {
+      "path": "tools/check-dpm-build.py",
+      "sha256": "f0490a89bbac3522959dd4fa612ddef1ba3f606999901e267d60bde95a5655f1"
+    },
+    {
+      "path": "tools/deterministic-scheduling/check_cli_installed.py",
+      "sha256": "4ecdb762c17f175293e3a90e193e3b6da5eb06f08e6b31cebce391f323aeceda"
+    },
+    {
+      "path": "tools/deterministic-scheduling/cli.py",
+      "sha256": "2ee2d285bfe4dc48e06e13fd09855cb8dde39a06949419f3f1f010f31a5ff26f"
+    },
+    {
+      "path": "tools/deterministic-scheduling/dpm_host.py",
+      "sha256": "79261eb8bc4d1b4a823bf5324427ef22a549b821cb115c625840bb44da23dea1"
+    },
+    {
+      "path": "tools/deterministic-scheduling/install_cli.py",
+      "sha256": "8d780c7de072bce66deb0425935565f3858268725844a61235b098e658bb3166"
+    },
+    {
+      "path": "tools/deterministic-scheduling/refresh_host_identity.py",
+      "sha256": "d12f8c939c0c4327a686bf12fe1c10021637b6d544a784395f88a2b8c504a67a"
+    },
+    {
+      "path": "tools/deterministic-scheduling/tests/test_dpm_launcher_install.py",
+      "sha256": "674b880deb95a87cc5c27398e0a58a46e0340871b3fa23f728c7a01829baef6f"
+    },
+    {
+      "path": "tools/deterministic-scheduling/tests/test_host_identity.py",
+      "sha256": "85ece73db419c98928ee7a3ede5ff0ccf226bc12100663cc8aef347b5d9350eb"
+    },
+    {
+      "path": "tools/deterministic-scheduling/timeline.py",
+      "sha256": "7de0734db5aef34e841761a4bd3ebd85349ff906d4f39f2e4e5560fdbf1daa44"
+    },
+    {
+      "path": "tools/run-local-no-model-check.sh",
+      "sha256": "6bb3ac817319f84ee1260437260db0f58439c2db9eb1179289fa0d770fd6d6d9"
+    }
+  ],
+  "builtArtifactObservations": [
+    {
+      "path": ".lake/build/bin/mirrors_dpm",
+      "sha256": "3e43de978b9b831b056894ace7e087cd86c90794dec0652fd5ba026a9e73be28",
+      "retained": false
+    },
+    {
+      "path": ".lake/build/dpm-generated/Shell/Dpm/HostIdentity.lean",
+      "sha256": "4ee19f63a677600d016d6970fad064fa0d851ed582c033b178061f53dd91010e",
+      "retained": false
+    }
+  ],
+  "retainedArtifacts": [
+    {
+      "path": "README.md",
+      "sha256": "0642747cca5f762c48602f978ae8d9afe032402a65de3954fad5f352436df26e",
+      "bytes": 5534
+    },
+    {
+      "path": "baseline-trace-path.txt",
+      "sha256": "f0da68206f563901fce66e6ee5eb1770a07dc8cf9d64f7c49ccd94bb94169f54",
+      "bytes": 76549
+    },
+    {
+      "path": "documentation-validation.json",
+      "sha256": "217d9b99722201d211e60184f547d0cf453b1578af1bc14873200000ef66a979",
+      "bytes": 330
+    },
+    {
+      "path": "non-model-inherited.txt",
+      "sha256": "ad391f186f7e28177af8fb6cea47de761d1e754650f6dd0fc514690fdc98f91b",
+      "bytes": 112575
+    },
+    {
+      "path": "non-model-normalized.txt",
+      "sha256": "bdd4d4104fa2e42b5ffdcbe8daea60452737a67d70e5ee21ef835faab5fe2a94",
+      "bytes": 110391
+    }
+  ]
+}

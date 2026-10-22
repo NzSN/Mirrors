@@ -4,9 +4,11 @@ Start with [current status and roadmap boundaries](current-status.md), the
 [plain-text block diagram](architecture-overview.txt),
 [architecture overview](architecture-overview.md),
 [interactive diagram](architecture-overview.html), and
-[module details](architecture-details.md). Source navigation was synchronized on
-2026-10-09 at Mirrors `548ba71`; qualification belongs to the separately frozen
-implementation revisions recorded in the current status page. These references
+[module details](architecture-details.md). The full source-navigation audit dates
+to 2026-10-09 at Mirrors `548ba71`. Status and affected DPM ownership paths were
+refreshed 2026-10-22 against base Mirrors `b243b37` and the current build-preparation
+changes; no new cross-repository audit is claimed. Qualification belongs to the
+separately frozen implementation revisions recorded in the current status page. These references
 cover runtime, compiler, DPM, distribution/evidence and the proof/effect boundary.
 The [framework map](framework-map.md) covers the related repositories and
 distinguishes model clients, generated bindings, Gate evaluators and workers.
@@ -40,6 +42,7 @@ an installed Windows service, a hosted CI run, or a published package.
 | Inspect a TLA+ model with the frontend CLI | [`tla_frontend` guide](model-interface-compiler/tla-frontend-cli.md) |
 | Generate DPM wiring or inspect a counterexample timeline | [Kit/timeline design](dpm-usability-design.md) |
 | Schedule real application workers under MBT | [Deterministic scheduling guide](deterministic-scheduling.md) |
+| Build/install DPM and replay, explore or reduce schedules | [DPM CLI guide](dpm-cli-guide.md), [runner contract](dpm-runner-contract.md) |
 | Compare interface locks before migration | [Read-only migration comparison](model-interface-compiler/lock-migration.md) |
 | Understand architecture and ownership | [Architecture overview](architecture-overview.md), [interactive diagram](architecture-overview.html), [module details](architecture-details.md) |
 | Follow source identity, installation, and retained qualification | [Catalog contract](framework-catalog-contract.md), [distribution tooling](architecture-details.md#5-framework-catalog-distribution-and-evidence), [evidence design](durable-evidence-design.md) |
@@ -73,6 +76,14 @@ an installed Windows service, a hosted CI run, or a published package.
   The eight implemented emitters are `mirrorecma-v1`, `mirrorecma-async-v1/v2`,
   `mirrorcpp-v1/v2`, `mirrorrust-v1/v2`, and `mirrorlean-v1`. The newer kit/timeline
   slice has source acceptance only; the common portable corpus still has six profiles.
+- `mirrors_dpm` supplies the installed replay/explore/reduce/report launcher.
+  Pure catalog admission and ordering live in `Core/Dpm.lean`; project/evidence
+  codecs live in `Codec/Dpm.lean` and `Codec/DpmEvidence.lean`; `Shell/Dpm/Cli.lean`
+  verifies runtime/helper identities before the Python host runs applications.
+  F3/F4 and the separate experimental F5 C++ controlled mutex/FIFO profile have
+  [October 14 remote WSL acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md);
+  F5 retains `modelComparison: false`. Current build preparation and release
+  changes do not renew that installation or the frozen framework qualification.
 - The first bounded [model-validated reduction profile](model-interface-reduction.md)
   accepts only LeaseService input shrink requests; the evaluator still owns live
   model materialization before any SUT construction.

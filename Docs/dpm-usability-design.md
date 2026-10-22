@@ -1,13 +1,19 @@
 # DPM integration kit and counterexample timeline
 
 Date: 2026-10-07
-Status: first approved slice implemented and source accepted. The
+Status refreshed 2026-10-22 against base Mirrors `b243b37`: F1 generated kits
+and F2 receipt timelines are implemented and source accepted. Mirrors reducer/CLI
+tooling landed in `c17bae9`. F3 finite-catalog reduction, F4 installed CLI and the
+separate experimental MirrorCPP F5 controlled mutex/FIFO prototype have
+[October 14 remote WSL follow-up acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md).
+F5 retains `modelComparison: false`. The
 [approved feature plan](../Plans/dpm-usability-features-2026-10-07.md) keeps the
-original feature contracts. Their October 13 implementation and bounded
-acceptance are in the [CLI guide](dpm-cli-guide.md),
-[runner contract](dpm-runner-contract.md) and
-[execution evidence](../Plans/dpm-f3-f5-evidence-20261013/README.md). Broader M4 remains separate; no new framework/package release
-qualification is inferred from these source gates.
+original feature contracts. The [CLI guide](dpm-cli-guide.md) and
+[runner contract](dpm-runner-contract.md) describe current implementation;
+[October 13 evidence](../Plans/dpm-f3-f5-evidence-20261013/README.md) is historical.
+The current local build-preparation change needs its own artifact acceptance;
+it does not renew earlier installed or framework qualification. Broader M4
+remains separate.
 
 ## Generated integration kit
 
@@ -91,10 +97,14 @@ Mirrors supplied-trace comparison: normal replay matches, a real mutation causes
 no new model check is credited. Generated binding/kit ownership checks and ordinary
 v1 outputs pass without editing any frozen source/evidence record.
 
-The October 13 execution implements finite-catalog schedule reduction, an
+The October 13 execution introduced finite-catalog schedule reduction, an
 installed cross-language replay/explore/reduce/report CLI and a separate C++
-controlled mutex/FIFO prototype. Their exact installed/source acceptance is in
-[the execution record](../Plans/dpm-f3-f5-evidence-20261013/README.md).
+controlled mutex/FIFO prototype. The corrections and accepted source/install
+identities are in
+[October 14 follow-up evidence](../Plans/dpm-review-followup-evidence-20261014/README.md).
+The [CLI build prerequisites](dpm-cli-guide.md#build-and-runtime-prerequisites)
+explain local interpreter selection, generated launcher identities and rebuilds
+when the selected interpreter or helpers change.
 Source/tool changes mean a future full current-candidate qualification needs a
 new freeze and actual gates; the earlier accepted C0 94271a54… remains its
 immutable profile record.

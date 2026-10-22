@@ -1,9 +1,11 @@
 # Mirrors — Architecture Overview
 
-Source architecture synchronized 2026-10-09 at Mirrors `548ba71`, with linked
-client/runtime source checked at their current repository heads. This describes
-implemented responsibilities; [current acceptance](current-status.md) remains
-attached to frozen implementation, distribution and evidence identities.
+The full source-navigation audit dates to 2026-10-09 at Mirrors `548ba71` and
+the linked client/runtime revisions recorded then. Status and affected DPM
+ownership paths were refreshed 2026-10-22 against base Mirrors `b243b37` and the
+current build-preparation changes; this is not a new cross-repository audit.
+[Current acceptance](current-status.md) remains attached to frozen implementation,
+distribution and evidence identities.
 
 Use the [plain-text block diagram](architecture-overview.txt) in terminal clients
 and the [interactive diagram](architecture-overview.html) for focused views
@@ -79,8 +81,23 @@ mapping helpers, metadata and application seeds for six C++/async-ECMA/Rust
 target modes. The application connects those helpers to its real binding
 session and workers. The read-only [timeline](../tools/deterministic-scheduling/timeline.py)
 renders actual receipts and keeps model failure distinct from cleanup. These
-new compiler/tooling paths have source acceptance only; the frozen M5 record
-and earlier DPM package acceptance remain tied to their original identities.
+kit/timeline paths have source acceptance only. The implemented finite-catalog
+reducer and installed [DPM CLI](dpm-cli-guide.md), plus the separate experimental
+C++ controlled mutex/FIFO prototype, have
+[October 14 remote WSL follow-up acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md).
+The prototype retains `modelComparison: false`. Current builds prepare local
+interpreter/helper identities before compiling the launcher; runtime checks
+remain enforced and rebuilt artifacts need their own acceptance.
+
+[Core.Dpm](../Core/Dpm.lean) owns finite-catalog admission and search ordering;
+[Codec.Dpm](../Codec/Dpm.lean) and [DpmEvidence](../Codec/DpmEvidence.lean) validate
+projects and typed receipts. [tools/MirrorsDpm](../tools/MirrorsDpm.lean) enters
+[Shell.Dpm.Cli](../Shell/Dpm/Cli.lean), which runs pure-policy commands and verifies
+the selected interpreter/helpers before the
+[Python host](../tools/deterministic-scheduling/dpm_host.py) manages application
+execution. The [installer](../tools/deterministic-scheduling/install_cli.py)
+installs the prepared launcher and verified host files. These are separate from the
+server wire protocol and job pool.
 
 The qualified deployment uses WSL2 clients, supplied-trace local replay and
 Linux/Bubblewrap Gate, with live model operations through the owned Windows
@@ -117,8 +134,9 @@ live-job capacity. One process-shared [job store](../Shell/Jobs/Store.lean) reta
 job IDs, phases, results, promises, and cancellation tokens. Connections track the
 jobs they submitted for cancellation/eviction when the connection ends; job lookup
 itself uses the shared store. Async requests return `job_accepted`, with separate
-query, await, and cancellation operations. Synchronous registrations may run
-inline on an async-capable connection.
+query, await, and cancellation operations. A rejected async submission preserves the connection and earlier jobs. A
+synchronous registration runs inline, then ends that connection and cleans its
+owned jobs; fatal protocol/framing/transport errors also end the connection.
 
 Logical terminal status is distinct from physical cleanup: a worker keeps its
 permit until its body unwinds. The concurrency limit does not establish a global
@@ -170,9 +188,9 @@ negotiation, and publication contracts are linked from the
 
 | Area | Owns | Boundary |
 | --- | --- | --- |
-| `Core/` | Values, traces, diffs, protocol/jobs/resources, frontend, interface resolution and catalog rules | Pure definitions with theorem-specific premises and coverage |
-| `Codec/` | Wire, ITF, RPC, descriptor, and catalog representations | Pure serialization/validation; proof coverage is stated per codec |
-| `Shell/` | CLI, transports, sessions, jobs, external tools, file access, authorization/cache and publication | Trusted orchestration; some emitters here are pure functions |
+| `Core/` | Values, traces, diffs, protocol/jobs/resources, frontend, interface resolution, DPM admission/order and catalog rules | Pure definitions with theorem-specific premises and coverage |
+| `Codec/` | Wire, ITF, RPC, descriptor, DPM project/evidence and catalog representations | Pure serialization/validation; proof coverage is stated per codec |
+| `Shell/` | CLI including DPM identity-checked launch, transports, sessions, jobs, external tools, file access, authorization/cache and publication | Trusted orchestration; some emitters here are pure functions |
 | `Ffi/` | OpenSSL TLS, sockets, signals, polling, and native ownership | Native trusted boundary; testing/review is not a Lean proof |
 | MirrorECMA and other clients | Protocol participation; supported bindings, replay, reports and application lifecycle | Client-specific contracts and acceptance |
 | MirrorGate | Optional policy, worker isolation, snapshots and physical cleanup | Separate repository and backend qualification |
@@ -219,7 +237,8 @@ The current gate definitions are [lakefile.lean](../lakefile.lean),
 They cover pure/domain behavior, codecs, compiler freshness, frontend behavior,
 transport/resource integration, distribution, and evidence contracts.
 
-`lake test` can probe a developer-local model checker when `APALACHE_MC` is unset.
+`lake test` can probe a developer-local Apalache and invokes TLC independently
+of `APALACHE_MC`; leaving that variable unset is not an offline gate.
 Use the explicit non-model runner on the current coordinator and run model
 operations separately through the designated oracle. The [interop guide](../tools/interop/INTEROP.md)
 distinguishes the selected remote profile from the legacy full transport matrix.

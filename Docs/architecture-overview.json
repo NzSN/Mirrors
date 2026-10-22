@@ -10,7 +10,7 @@
       1600,
       1440
     ],
-    "updated": "2026-10-09",
+    "updated": "2026-10-22",
     "maintenance": "Companion JSON and the HTML embedded mirrors-architecture-data must match. The HTML renders the embedded data before initializing its retained Archify viewer; no external generator or fetch is required.",
     "links": [
       {
@@ -65,7 +65,7 @@
           "generated",
           "clients"
         ],
-        "note": "Captured sources, reviewed contract and ITF evidence produce semantic locks, typed bindings and corpora. Eight emitters cover TS sync/async v1/v2, C++ v1/v2, Rust v1/v2 and Lean v1. Node suite/project bundle publication stays async v1. Read-only lock comparison reports migration requirements. Reviewed DPM mappings generate native helpers, metadata and application seeds for six C++/async-ECMA/Rust modes; source acceptance only."
+        "note": "Captured sources, reviewed contract and ITF evidence produce semantic locks, typed bindings and corpora. Eight emitters cover TS sync v1 / async v1/v2, C++ v1/v2, Rust v1/v2 and Lean v1. Node suite/project bundle publication stays async v1. Read-only lock comparison reports migration requirements. Reviewed DPM mappings generate native helpers, metadata and application seeds for six C++/async-ECMA/Rust modes; source acceptance only."
       },
       {
         "id": "application",
@@ -119,7 +119,7 @@
           "evidence",
           "clients"
         ],
-        "note": "Frozen source/dependency identities feed snapshots, verified caches and transactional installs. The October 7 named profile passed 18 commands/16 tiers, two D bindings, 19 scope nodes, 20 bundles and six controls. Unknown publication/hosted-CI and broader M4 claims remain separate."
+        "note": "Frozen source/dependency identities feed snapshots, verified caches and transactional installs. The October 7 M5 profile passed 18 commands/16 tiers, two D bindings, 19 scope nodes, 20 bundles and six controls. October 14 DPM acceptance is separate; October 22 compatibility binds the earlier ea8091c server. The b243b37 retag grants no new cross-client/live/framework qualification. Broader M4 remains separate."
       },
       {
         "id": "dpm",
@@ -128,14 +128,15 @@
           "generated",
           "clients",
           "application",
-          "session",
-          "core"
+          "cli",
+          "core",
+          "codec"
         ],
-        "note": "An application-owned port uses optional generated action/actor/checkpoint helpers to map model actions to binding-session intervals. The coordinator permits one actor, verifies actual arrival and observes real quiescent SUT state. Read-only timelines render actual receipts. Kit/timeline have source acceptance only; hooks remain application-owned and F3/F4/F5 stay queued."
+        "note": "Applications map model actions to safe checkpoint intervals and report actual quiescent state. Core.Dpm and Codec.Dpm/DpmEvidence admit catalogs and typed receipts; Shell.Dpm.Cli verifies runtime/helpers before the Python host runs replay, exploration or reduction. Builds prepare local interpreter identities. F1/F2 are source accepted; F3/F4 and the separate F5 C++ mutex/FIFO prototype have exact October 14 WSL acceptance. F5 has no model comparison; rebuilt artifacts need their own acceptance."
       }
     ],
-    "source_base_revision": "548ba71",
-    "source_state": "Inspected source navigation at 548ba71; F1/F2 source accepted only; frozen qualification remains tied to f0894d2/eef6f71/455e196"
+    "source_base_revision": "b243b37",
+    "source_state": "Full source-navigation audit: 2026-10-09 at 548ba71 and linked clients. Status/DPM ownership refreshed 2026-10-22 at base b243b37 plus local build-preparation changes; no new cross-repository audit. F1/F2 source accepted; F3/F4/F5 have exact October 14 WSL acceptance, F5 without model comparison. Frozen M5 remains f0894d2/eef6f71/455e196; retag grants no new qualification."
   },
   "components": [
     {
@@ -201,7 +202,7 @@
       "id": "generated",
       "type": "database",
       "label": "Semantic lock and generated artifacts",
-      "sublabel": "TS sync/async v1/v2 · C++ v1/v2 · Rust v1/v2 · Lean",
+      "sublabel": "TS sync v1 / async v1/v2 · C++ v1/v2 · Rust v1/v2 · Lean",
       "pos": [
         1080,
         100
@@ -255,12 +256,14 @@
         270,
         100
       ],
-      "context": "Application-owned behavior and observations; SDK binding sessions/coordinators control declared participating workers. Native phase bridges and Gate isolation have separate scopes.",
+      "context": "Application-owned behavior and observations; SDK binding sessions/coordinators control declared participating workers. Native phase bridges and Gate isolation have separate scopes. F3/F4 application runners and the separate experimental F5 C++ mutex/FIFO profile have October 14 WSL acceptance at recorded identities; F5 has no model comparison.",
       "tag": "C++ / Node workers / Rust threads",
       "sources": [
         "application-integration-guide.md",
         "deterministic-scheduling.md",
-        "../tools/deterministic-scheduling/counter_support.hpp"
+        "../tools/deterministic-scheduling/counter_support.hpp",
+        "dpm-runner-contract.md",
+        "../Plans/dpm-review-followup-evidence-20261014/README.md"
       ]
     },
     {
@@ -325,7 +328,7 @@
       "id": "core",
       "type": "frontend",
       "label": "Core domain models",
-      "sublabel": "Value · Trace · Diff · Protocol · Jobs",
+      "sublabel": "Value · Trace · Diff · Protocol · Jobs · DPM",
       "pos": [
         1120,
         425
@@ -334,18 +337,19 @@
         420,
         100
       ],
-      "context": "Pure logic; selected properties proved",
+      "context": "Pure logic and selected proved properties; DPM catalog admission preserves full actor-local chains and orders bounded candidates.",
       "tag": "Resources · interfaces · selected proved laws",
       "sources": [
         "../Core/Protocol.lean",
-        "async-resource-lean-proofs.md"
+        "async-resource-lean-proofs.md",
+        "../Core/Dpm.lean"
       ]
     },
     {
       "id": "codec",
       "type": "frontend",
       "label": "Codec representations",
-      "sublabel": "JSONL · ITF · RPC · descriptor/catalog",
+      "sublabel": "JSONL · ITF · RPC · descriptors · DPM evidence",
       "pos": [
         1120,
         580
@@ -358,14 +362,16 @@
       "tag": "Pure codecs and selected round-trip laws",
       "sources": [
         "../Codec/Json.lean",
-        "../Codec/ModelInterfaceDistributionJson.lean"
+        "../Codec/ModelInterfaceDistributionJson.lean",
+        "../Codec/Dpm.lean",
+        "../Codec/DpmEvidence.lean"
       ]
     },
     {
       "id": "cli",
       "type": "backend",
-      "label": "Main + Shell.Cli",
-      "sublabel": "Servers, validate, capture and clients",
+      "label": "Main + Shell.Cli / DPM CLI",
+      "sublabel": "Servers, capture and separate DPM launcher",
       "pos": [
         390,
         580
@@ -374,11 +380,17 @@
         270,
         100
       ],
-      "context": "CLI entry and process wiring",
+      "context": "Mirror process wiring and the separate tools/MirrorsDpm → Shell/Dpm/Cli entry. DPM verifies interpreter/helpers before Python host execution; Lake prepares the selected local interpreter identity before compilation.",
       "tag": "Connection / service setup",
       "sources": [
         "../Main.lean",
-        "../Shell/Cli.lean"
+        "../Shell/Cli.lean",
+        "../tools/MirrorsDpm.lean",
+        "../Shell/Dpm/Cli.lean",
+        "../tools/deterministic-scheduling/dpm_host.py",
+        "../tools/deterministic-scheduling/install_cli.py",
+        "../tools/deterministic-scheduling/refresh_host_identity.py",
+        "dpm-cli-guide.md"
       ]
     },
     {
@@ -596,7 +608,8 @@
       "sources": [
         "qualification-harness-design.md",
         "../tools/evidence/command_registry.py",
-        "../Plans/q3-published-roadmap-2026-10-07.md"
+        "../Plans/q3-published-roadmap-2026-10-07.md",
+        "../Plans/version-migration-2026-10-22/retag.json"
       ]
     },
     {
@@ -1432,8 +1445,8 @@
         "Local application replay does not require MirrorGate.",
         "Recorded WSL2 ↔ mTLS ↔ Windows is one deployment example.",
         "Acceptance belongs to exact identities, scope and retained evidence.",
-        "The current named profile is qualified; broader M4 remains separate.",
-        "Newer DPM kits/timelines have source acceptance only; current HEAD needs fresh qualification gates."
+        "The October 7 named M5 profile is qualified at its frozen identities; broader M4 remains separate.",
+        "DPM kits/timelines are source accepted; F3/F4/F5 have separate October 14 WSL acceptance, with no F5 model comparison. Rebuilt/current artifacts need their own acceptance."
       ]
     }
   ]

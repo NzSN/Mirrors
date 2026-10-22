@@ -5,6 +5,42 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-22 — DPM build preparation and current status reconciled
+
+Working changes against Mirrors `b243b37` (`v0.1.0`) replace the checked-in
+Python 3.10 identity with a generated Lake dependency under `.lake/build`.
+`MIRRORS_DPM_PYTHON` selects the build interpreter; actual interpreter and helper
+bytes are pinned before compilation. Unchanged builds preserve outputs, changed
+inputs rebuild the launcher, and ordinary mirror builds do not require DPM
+Python. Runtime integrity refusals and explicit reviewed installer-helper pins
+remain enforced. [Evidence and exact source/artifact identities](Plans/dpm-build-preparation-evidence-20261022/README.md)
+record the new acceptance boundary.
+
+The local build passed 728 jobs. DPM pure-policy 25 gates, typed-evidence 11
+gates and 79 Python tests passed, including identity preparation and actual
+temporary installation/relocation, doctor, retained-report and tamper controls.
+The dedicated build regression passed generation from absence, no-op behavior,
+runtime selection through cached Lake configuration, interpreter/helper changes,
+and failure preservation. The installed fixture does not acquire an SDK runner
+or establish fresh model comparison, source-hidden replay or full F4 acceptance.
+
+The complete non-model suite passed with explicit `TMPDIR=/tmp`. The first
+aggregate with inherited `TMPDIR=/tmp/` failed the trace-generation error-path
+sanitizer. A separately archived/rebuilt `b243b37` reproduces that failure with
+`/tmp/` and passes with `/tmp`; the unchanged sanitizer misses the canonical
+spelling of a double-slash temporary directory. Both failed receipts remain
+failed. Sanitizer normalization is separate open runtime work. Native integer-map
+coverage and live model tiers remain explicitly skipped; no local or remote
+model checker ran.
+
+Maintained documentation now records the committed Mirrors DPM tooling and
+October 15 conformance repairs, October 14 scoped acceptance, and the distinction
+between the original `ea8091c` compatibility matrix and the `b243b37` retag.
+Architecture JSON and HTML, source ownership and local links were checked.
+Earlier checkpoint/evidence entries and the generated catalog retain their bytes.
+The changes are uncommitted. No publication, production install, new full DPM
+package qualification or new framework qualification is claimed.
+
 ## 2026-10-14 — DPM review follow-up fixes accepted on remote WSL
 
 The [fix plan](Plans/dpm-review-followup-2026-10-14.md) and

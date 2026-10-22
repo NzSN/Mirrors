@@ -86,6 +86,34 @@ lean_lib Codec where
 lean_lib Shell where
   globs := #[.submodules `Shell]
 
+/-- Select and hash the DPM host at build time. The generator only updates the
+build-local module when its contents change; ordinary mirror builds do not
+fetch this dependency. Read the selection here, not during lakefile elaboration. -/
+target dpm_host_identity pkg : System.FilePath := do
+  let python := (← IO.getEnv "MIRRORS_DPM_PYTHON").getD "python3"
+  let generator := pkg.dir / "tools" / "deterministic-scheduling" / "refresh_host_identity.py"
+  let output := pkg.buildDir / "dpm-generated" / "Shell" / "Dpm" / "HostIdentity.lean"
+  Job.async do
+    let prepare : IO IO.Process.Output := do
+      try
+        IO.Process.output { cmd := python, args := #["-I", "-S", "-B", generator.toString,
+          "--check-helpers", "--output", output.toString] }
+      catch e => throw <| IO.userError s!"DPM host identity: cannot run '{python}': {e}"
+    let result ← prepare
+    if result.exitCode != 0 then
+      error s!"DPM host identity preparation failed ({result.exitCode}):\n{result.stderr}{result.stdout}"
+    setTrace (← computeTrace output)
+    addTrace (← computeTrace generator)
+    return output
+
+/-- This narrow library owns the generated module, ahead of Shell's general
+namespace match. Its dependency runs before imported module source is read. -/
+lean_lib DpmHostIdentity where
+  srcDir := ".lake/build/dpm-generated"
+  roots := #[`Shell.Dpm.HostIdentity]
+  globs := #[.one `Shell.Dpm.HostIdentity]
+  needs := #[`@/dpm_host_identity]
+
 /-- Phase 0/2: golden wire corpus byte-identity replay (tools/ReplayFixtures.lean). -/
 @[default_target]
 lean_exe fixtures_replay where
@@ -445,6 +473,12 @@ script test do
   if outMi.exitCode != 0 then
     IO.println s!"model_interface_spec FAILED ({outMi.exitCode})"
     return outMi.exitCode
+  let dpmBuild ← IO.Process.output
+    ({ cmd := "python3", args := #["tools/check-dpm-build.py"] } : IO.Process.SpawnArgs)
+  IO.println dpmBuild.stdout
+  if dpmBuild.exitCode != 0 then
+    IO.eprintln dpmBuild.stderr
+    return dpmBuild.exitCode
   let dpmUsability ← IO.Process.output
     ({ cmd := "python3", args := #["-m", "unittest", "discover", "-s",
       "tools/deterministic-scheduling/tests"] } : IO.Process.SpawnArgs)

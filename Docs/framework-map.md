@@ -2,9 +2,12 @@
 
 The [current architecture overview](architecture-overview.md),
 [interactive diagram](architecture-overview.html), and
-[module map](architecture-details.md) were synchronized against Mirrors `548ba71`
-and current linked client sources on 2026-10-09. [Current status](current-status.md)
-records exact frozen qualification; the generated catalog block retains its own
+[module map](architecture-details.md) retain the full source-navigation audit at
+Mirrors `548ba71` and linked client sources on 2026-10-09. Status and affected DPM
+ownership paths were refreshed on 2026-10-22 against base Mirrors `b243b37` and
+the current build-preparation changes; this is not a new cross-repository audit.
+[Current status](current-status.md) records exact frozen qualification; the
+generated catalog block retains its own
 selection and observation vocabulary. Older source-review baselines are history.
 Start application onboarding with
 [the integration guide](application-integration-guide.md); use the
@@ -34,15 +37,25 @@ Lean Gate facade is implied.
 The newer [DPM integration kit and receipt timeline](dpm-usability-design.md)
 are source accepted for six C++/async-ECMA/Rust kit modes. Their generated
 mapping helpers reduce adapter setup; applications retain hooks, observations
-and execution ownership. F3 schedule reduction, F4 installed CLI and F5
-synchronization wrappers remain approved follow-ons. Current tool revisions
-do not inherit the frozen M5 or earlier DPM installed-package qualification.
+and execution ownership. Mirrors reducer/CLI tooling landed in `c17bae9`.
+F3 finite-catalog reduction, F4 installed CLI and the separate experimental
+MirrorCPP F5 controlled mutex/FIFO prototype have
+[October 14 remote WSL follow-up acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md).
+F5 has no model comparison. [Build preparation](dpm-cli-guide.md#build-and-runtime-prerequisites)
+now binds the launcher to the selected local Python and helper identities;
+rebuilt artifacts do not inherit prior installed-package qualification.
+
+The October 15 [client-conformance repairs](../Plans/client-conformance-fix-evidence-20261015/README.md)
+landed in Mirrors `d1c5e74`. October 22 compatibility matrices bind the older
+server `ea8091c`; the current `b243b37` [release retag](../Plans/version-migration-2026-10-22/retag.json)
+receives focused release validation only, with no new cross-client, live-model
+or full-framework qualification.
 
 ## Repository ownership
 
 | Repository | Responsibility | Entry point |
 | --- | --- | --- |
-| Mirrors | Lean checker, bounded TLA+ frontend, model-interface compiler, selected pure proofs, catalog/distribution and qualification tooling | [README](../README.md), [documentation index](README.md) |
+| Mirrors | Lean checker, bounded TLA+ frontend, model-interface compiler, DPM policy/CLI, selected pure proofs, catalog/distribution and qualification tooling | [README](../README.md), [documentation index](README.md) |
 | MirrorECMA | TypeScript client, generated application suites, project CLI, negotiated replay and reports | [README](../../MirrorECMA/README.md), [suite API](../../MirrorECMA/docs/application-suites.md) |
 | MirrorCPP | C++23 client and compiled generated bindings | [README](../../MirrorCPP/README.md) |
 | MirrorRust | Rust client, async jobs, strict compiled verification and deferred binding registry | [README](../../MirrorRust/README.md) |

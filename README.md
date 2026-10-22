@@ -29,8 +29,12 @@ with the Haskell reference implementation, as checked by golden fixtures,
 differential tests, and client interop tests.
 
 For current completion and remaining work, see [framework status](Docs/current-status.md).
-The latest source slice adds [generated DPM kits and receipt timelines](Docs/dpm-usability-design.md);
-it has source acceptance only, separate from the frozen October 7 M5 qualification.
+DPM includes [generated kits and receipt timelines](Docs/dpm-usability-design.md),
+finite-catalog reduction and the [installed replay/explore/reduce CLI](Docs/dpm-cli-guide.md).
+Kits/timelines have source acceptance; the reducer, CLI and separate experimental
+C++ synchronization prototype have October 14 remote WSL acceptance. Current
+source and release identities retain their own validation boundaries; none of
+these changes extends the frozen October 7 M5 qualification.
 
 ## Features
 
@@ -43,8 +47,11 @@ it has source acceptance only, separate from the frozen October 7 M5 qualificati
   fingerprint pinning.
 - A built-in client for validating a TLA+ specification against a running
   mirror.
-- Deterministic generated TypeScript interfaces for synchronous and asynchronous
-  implementation adapters, with exact semantic-digest negotiation.
+- Deterministic generated interfaces across four language families and eight
+  emitter profiles: TypeScript sync v1 and async v1/v2, C++ v1/v2, Rust v1/v2 and
+  Lean v1, with exact semantic-digest negotiation.
+- Cooperative DPM scheduling for C++ threads, Node workers and Rust threads,
+  with finite-catalog reduction and an artifact-bound installed CLI.
 - A phase-indexed protocol machine that refines the TLA+ protocol model, plus
   round-trip and behavioral proofs across the pure core and codecs.
 
@@ -57,9 +64,10 @@ For exact client messages and behavior, see the
 - [elan](https://github.com/leanprover/elan). The repository pins Lean
   `v4.33.0` in [`lean-toolchain`](https://github.com/NzSN/Mirrors/blob/main/lean-toolchain).
 - A C compiler, OpenSSL 3 development files, and `pkg-config` on Linux.
-- `apalache-mc` for actual model-checking operations and the live integration
-  tests. Put it on `PATH` or set `APALACHE_MC` to its executable.
-- Python 3 and the `openssl` CLI for all test tiers.
+- `apalache-mc` on the selected model-checking host for actual model operations
+  and live integration tests. This coordinator uses the owned remote service.
+- Python 3 for DPM launcher build preparation and the Python test tiers;
+  the `openssl` CLI for transport integration tests.
 
 Windows builds use the MSYS2 UCRT64 toolchain. The default OpenSSL include and
 library directories are `/d/Programs/msys2/ucrt64/include` and
@@ -76,16 +84,30 @@ The first build fetches the pinned `batteries` dependency from GitHub.
 
 ```bash
 lake build
-lake test
+TMPDIR=/tmp bash tools/run-local-no-model-check.sh
 ```
 
 The main executable is written to `.lake/build/bin/mirror` (or
-`mirror.exe` on Windows). `lake test` rebuilds the project and runs the gates
-defined in `lakefile.lean`, including fixture replay, state diffs, model-interface
-checks, stdio, jobs, Apalache/explorer, transport, registry, and Counter flows.
+`mirror.exe` on Windows). DPM builds prepare a local interpreter/helper identity
+before compiling `.lake/build/bin/mirrors_dpm`. Set `MIRRORS_DPM_PYTHON` to
+select a build-time interpreter explicitly; see the
+[DPM build prerequisites](Docs/dpm-cli-guide.md#build-and-runtime-prerequisites).
+Runtime identity checks remain enforced after building or installing.
 
-Tests that require a real Apalache installation self-skip unless
-`APALACHE_MC` is set. For example:
+On this coordinator, use the explicit non-model runner above. `lake test`
+rebuilds and runs the broader inventory in `lakefile.lean`, including live
+Apalache/explorer, Counter and TLC tiers. It probes developer-local Apalache
+fallbacks and invokes TLC independently of `APALACHE_MC`; leaving that variable
+unset is not an offline gate. Run live model operations through the Mirrors CLI
+against the reobserved owned remote service, following the
+[remote guide](Docs/remote-server-guide.md).
+
+The explicit temporary root avoids a known baseline trace-error sanitization
+failure with `TMPDIR=/tmp/`. The [October 22 checkpoint](CHECKPOINTS.md) retains
+that failed result and the separately passing normalized-environment run;
+temporary-path sanitization remains open runtime work.
+
+On a separately admitted live-check host, the full test entry point is:
 
 ```bash
 APALACHE_MC=/path/to/apalache-mc lake test

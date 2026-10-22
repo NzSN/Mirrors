@@ -6,7 +6,33 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
-## Current continuation — 2026-10-09
+## Current continuation — 2026-10-22
+
+Mirrors `b243b37` declares `v0.1.0`. The DPM implementation is committed in
+`c17bae9`; client-conformance repairs are committed in `d1c5e74` with
+[October 15 scoped acceptance](client-conformance-fix-evidence-20261015/README.md).
+F1 generated kits and F2 receipt timelines retain source acceptance. F3
+finite-catalog reduction, F4 installed CLI and the separate experimental F5 C++
+controlled mutex/FIFO profile are implemented, with
+[October 14 remote WSL follow-up acceptance](dpm-review-followup-evidence-20261014/README.md).
+F5 retains `modelComparison: false`.
+
+The current build-preparation change binds DPM launcher compilation to the
+selected local interpreter and verified helper identities. See the
+[CLI prerequisites](../Docs/dpm-cli-guide.md#build-and-runtime-prerequisites) and
+newest [checkpoint](../CHECKPOINTS.md) for the working-tree validation boundary.
+Rebuilt artifacts need their own acceptance; these changes do not inherit the
+October 14 installation or the frozen M5 qualification below.
+
+The October 22 [compatibility matrices](version-migration-2026-10-22/compatibility.json)
+bind the earlier server `ea8091c` and recorded binaries. The `b243b37`
+[retag record](version-migration-2026-10-22/retag.json) supplies focused release
+validation and explicitly grants no new cross-client, live-model or framework
+qualification. Broader M4 stays separate. Future live work must reobserve
+endpoint, runtime and certificate identities through the
+[remote guide](../Docs/remote-server-guide.md); no local Apalache/TLC runs here.
+
+## Historical continuation — 2026-10-09
 
 Mirrors `548ba71` includes source-accepted F1 generated DPM kits and F2
 counterexample timelines. [Latest checkpoint](../CHECKPOINTS.md) and

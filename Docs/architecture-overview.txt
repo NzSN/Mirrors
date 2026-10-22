@@ -1,4 +1,7 @@
-MIRRORS FRAMEWORK — current source architecture (2026-10-09, Mirrors 548ba71)
+MIRRORS FRAMEWORK — source architecture
+Full source-navigation audit: 2026-10-09, Mirrors 548ba71 and linked clients.
+Status/DPM ownership refresh: 2026-10-22, base b243b37 + build-preparation changes.
+This refresh is not a new cross-repository audit.
 Acceptance: Docs/current-status.md; frozen qualification is revision-specific.
 
                   MODEL PREPARATION
@@ -56,14 +59,25 @@ Application hooks, safe checkpoint placement and observation remain handwritten.
 Native phase bridges are application-specific. Gate isolation is a separate seam.
 
 Timeline: actual SDK receipt -> read-only text/JSON -> verdict + cleanup.
-Kit/timeline have source acceptance only; F3/F4/F5 remain follow-ons.
+Kit/timeline have source acceptance only. F3 finite-catalog reducer, F4 installed
+CLI and F5 experimental C++ mutex/FIFO have October 14 remote WSL acceptance.
+F5 has no model comparison. Rebuilt artifacts need their own acceptance.
+
+DPM ownership inside Mirrors:
+  Core/Dpm.lean                 finite-catalog admission and ordering
+  Codec/Dpm.lean, DpmEvidence   project and typed receipt validation
+  tools/MirrorsDpm.lean         -> Shell/Dpm/Cli.lean (verified launcher)
+  dpm_host.py                  application processes, reduction, retained evidence
+  refresh_host_identity.py     local interpreter/helper build identity
+  install_cli.py               verify and activate prepared packages
+Python helpers above live in tools/deterministic-scheduling/.
 
 INSIDE MIRRORS
 +------------------------------------------------------+
 | Main + Shell: CLI, transport/session, jobs, processes  |
 |                                                      |
-|  Core: protocol/value/diff/jobs/compiler pure domains  |
-|  Codec: wire/ITF/canonical representations             |
+|  Core: protocol/value/diff/jobs/compiler/DPM domains   |
+|  Codec: wire/ITF/canonical/DPM evidence representations|
 |  Selected Lean laws; no whole-executable proof claim   |
 |                                                      |
 | Ffi: native socket/TLS/signal/platform implementations |

@@ -46,7 +46,8 @@ run "model-interface spec" .lake/build/bin/model_interface_spec
 run "model-interface language judgments" .lake/build/bin/model_interface_language_spec
 run "model-interface Lean target" .lake/build/bin/model_interface_lean_spec
 run "model-interface lock migration" .lake/build/bin/model_interface_migration_spec
-run "DPM launcher identities" python3 -I -S -B tools/deterministic-scheduling/refresh_host_identity.py --check
+run "DPM launcher identities" "${MIRRORS_DPM_PYTHON:-python3}" -I -S -B tools/deterministic-scheduling/refresh_host_identity.py --check
+run "DPM build dependencies" python3 tools/check-dpm-build.py
 run "DPM pure policy" .lake/build/bin/dpm_spec
 run "DPM typed evidence" .lake/build/bin/dpm_evidence_spec
 run "DPM kit and timeline" python3 -m unittest discover -s tools/deterministic-scheduling/tests

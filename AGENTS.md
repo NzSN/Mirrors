@@ -35,7 +35,8 @@ design document's implementation-status section and current code.
 
 ## Current framework checkpoint
 
-Implementation checkpoint updated 2026-10-14 against base Mirrors `6e0cbce`. For status or
+Implementation checkpoint updated 2026-10-22 against base Mirrors `b243b37`
+(`v0.1.0`) and the current DPM build-preparation changes. For status or
 continuation work, read `Docs/current-status.md`, the newest `CHECKPOINTS.md`
 entry, and `Plans/execution-decisions.md` before selecting work. September stop
 instructions and original queued task cards are historical; their frozen
@@ -54,8 +55,15 @@ mutex/FIFO prototype have October 14 remote WSL review follow-up acceptance. F5
 still has no model comparison. For v2 runner admission, receipt validation,
 evidence limits or callback/join deadlines, read
 `Plans/dpm-review-followup-evidence-20261014/README.md` for exact identities,
-remote workflows and scope. The original October 13 evidence remains historical. Broader M4 aggregate enforcement and active-
-process post-restart recovery stay separate; follow
+remote workflows and scope. The original October 13 evidence remains historical.
+The DPM implementation is committed in `c17bae9`; October 15 client-conformance
+repairs are in `d1c5e74`, with scoped acceptance in
+`Plans/client-conformance-fix-evidence-20261015/README.md`. The October 22
+compatibility matrices bind the earlier server `ea8091c`; the `b243b37` retag
+has focused release validation only, as recorded in
+`Plans/version-migration-2026-10-22/retag.json`. It receives no new cross-client,
+live-model or full-framework qualification. Broader M4 aggregate enforcement
+and active-process post-restart recovery stay separate; follow
 `Plans/m4-native-host-and-platform-plan-2026-10-07.md` for their prerequisites.
 
 Run live model operations through the Mirrors CLI against the selected owned
@@ -74,6 +82,10 @@ Run commands from the repository root. Use elan with `lean-toolchain`; Linux
 builds need a C compiler, OpenSSL 3 development files, and `pkg-config`.
 
 - `lake build` builds libraries, the mirror, and default test executables.
+- DPM builds prepare the launcher identity from the selected local Python
+  interpreter and packaged helpers. Use `MIRRORS_DPM_PYTHON` for an explicit
+  build-time interpreter selection; see `Docs/dpm-cli-guide.md`. Runtime identity
+  refusal remains enforced, and a rebuilt launcher needs its own acceptance.
 - `.lake/build/bin/mirror` runs synchronous stdio mode.
 - `lake test` rebuilds before running the gates defined in `lakefile.lean`,
   including model-interface golden checks and preflight.

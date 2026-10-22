@@ -1,8 +1,10 @@
 # Mirrors — Architecture Details
 
-> Source map synchronized 2026-10-09 at Mirrors `548ba71` and current linked
-> client sources. [Current status](current-status.md) records frozen acceptance;
-> documentation synchronization does not execute or renew qualification.
+> Full source map audited 2026-10-09 at Mirrors `548ba71` and the linked client
+> revisions recorded then. Status and affected DPM ownership paths refreshed
+> 2026-10-22 against base Mirrors `b243b37` and current build-preparation changes;
+> this is not a new cross-repository audit. [Current status](current-status.md)
+> records frozen acceptance; documentation updates do not renew qualification.
 > This describes implemented source paths and proof scope, not a new build,
 > installed-service acceptance run, or release qualification.
 > Read the [overview](architecture-overview.md) first; the
@@ -13,9 +15,9 @@
 
 | Location | Responsibility | Assurance boundary |
 | --- | --- | --- |
-| [`Core/`](../Core/) | Values, traces, comparison, protocol/job/resource machines, model-interface resolution, TLA+ syntax and elaboration, framework catalog rules | Pure definitions with module-specific theorems and executable checks; location alone does not mean every property is proved |
-| [`Codec/`](../Codec/) | JSON, ITF/wire, explorer, Consul, model-interface and catalog representations | Pure codecs, canonicalization and specific round-trip/tag laws |
-| [`Shell/`](../Shell/) | CLI, sessions, transports, processes, source capture, compiler publication, runtime authorization/cache | Trusted orchestration; some helpers and emitters are pure, but no whole-shell refinement is claimed |
+| [`Core/`](../Core/) | Values, traces, comparison, protocol/job/resource machines, model-interface resolution, TLA+ syntax and elaboration, DPM admission/order and framework catalog rules | Pure definitions with module-specific theorems and executable checks; location alone does not mean every property is proved |
+| [`Codec/`](../Codec/) | JSON, ITF/wire, explorer, Consul, model-interface, DPM project/evidence and catalog representations | Pure codecs, canonicalization and specific round-trip/tag laws |
+| [`Shell/`](../Shell/) | CLI including DPM identity-checked launch, sessions, transports, processes, source capture, compiler publication, runtime authorization/cache | Trusted orchestration; some helpers and emitters are pure, but no whole-shell refinement is claimed |
 | [`Ffi/`](../Ffi/) | Native sockets, TLS, signals, timeouts and platform helpers | Trusted Lean declarations and C implementations |
 | [`Main.lean`](../Main.lean) | `mirror` executable dispatch | Effectful entry point |
 | [`specs/`](../specs/) | Protocol/resource models and example TLA+ models | Specifications and model-check inputs, with separately scoped correspondence claims |
@@ -49,8 +51,9 @@ instead of treating a version copied into architecture prose as a live pin.
 `validate` and `trace-gen` are Mirror client modes. The selected Mirror server
 executes Apalache behind its oracle boundary. The separate
 `model_interface_gen`, `tla_frontend`, `framework_catalog`, and
-`model_interface_reduction` executables are development/contract tools, not
-additional `mirror` wire modes.
+`model_interface_reduction` executables are development/contract tools. The
+`mirrors_dpm` executable has its own application-runner CLI and installation.
+None is an additional `mirror` wire mode.
 
 The shared [`Transport`](../Shell/Transport/Stdio.lean) record supplies
 `recv`, `send`, and a trace-delivery scope. Stdio, TCP and TLS frame one JSON
@@ -82,11 +85,14 @@ list. The tag-level protocol theorem does not establish end-to-end refinement
 of all session paths.
 
 `run` receives one registration and completes its flow. `runAsync` loops over
-registrations and job operations; synchronous requests run inline on that
-connection. Async jobs return `job_accepted` promptly. Terminal query/await
-operations return the retained `job_result`; pending jobs or timed-out awaits
-return status. EOF, decode failure, transport exceptions, or a completed flow
-that sets the session phase to `done` lead to session cleanup.
+async registrations and job operations. A rejected async submission ends that
+attempt and preserves earlier jobs on the connection. Async jobs return
+`job_accepted` promptly. Terminal query/await operations return the retained
+`job_result`; pending jobs or timed-out awaits return status. Synchronous requests
+run inline and then end the connection, including its owned jobs. Fatal protocol
+errors, EOF, decode failure and transport exceptions also lead to session cleanup.
+The explicit continuation decision implements the
+[October 15 terminal-operation contract](../Plans/client-conformance-fix-evidence-20261015/README.md).
 
 ### Replay and the comparison boundary
 
@@ -369,9 +375,10 @@ See the [runtime distribution contract](model-interface-runtime-distribution-des
 
 ### Application-owned deterministic scheduling
 
-The [DPM module](deterministic-scheduling.md) belongs to client SDKs and application
-adapters, not `Core.Protocol` or the server's job pool. C++ and Rust retain real
-thread stacks behind mutex/condition-variable checkpoints; Node uses owned
+The [DPM execution coordinators](deterministic-scheduling.md) belong to client SDKs
+and application adapters. Mirrors owns the separate admission, reduction and CLI
+layers below; DPM execution is separate from `Core.Protocol` and the server job
+pool. C++ and Rust retain real thread stacks behind mutex/condition-variable checkpoints; Node uses owned
 workers and private permit/arrival channels. Binding sessions expose incremental
 initialize/advance/observe/dispose to generated ports. Finite exploration retains
 bounds, denominators and comparison/cleanup separately. The native bridge maps
@@ -379,6 +386,21 @@ commands to actual application phases; it never substitutes model state for SUT
 initialization or observation. Application locks are not released by parking on
 the scheduler lock, so hooks must be placed at safe points. Generic arbitrary
 preemption, weak-memory completeness and browser/async-Rust profiles are separate.
+
+| DPM concern | Implemented owner |
+| --- | --- |
+| Finite catalog admission and deterministic ordering | [`Core.Dpm`](../Core/Dpm.lean), including complete actor-local chain validation and cost ordering |
+| Project and typed receipt validation | [`Codec.Dpm`](../Codec/Dpm.lean) and [`Codec.DpmEvidence`](../Codec/DpmEvidence.lean) |
+| Launcher and pure-policy entry | [`tools/MirrorsDpm.lean`](../tools/MirrorsDpm.lean) → [`Shell.Dpm.Cli`](../Shell/Dpm/Cli.lean); verifies interpreter/helper hashes before launching the host |
+| Application processes, reduction and evidence retention | [`dpm_host.py`](../tools/deterministic-scheduling/dpm_host.py), with baseline reproduction, bounded catalog trials, fresh best replay and cleanup/accounting |
+| Local build preparation and installation | [`refresh_host_identity.py`](../tools/deterministic-scheduling/refresh_host_identity.py), the Lake DPM dependency and [`install_cli.py`](../tools/deterministic-scheduling/install_cli.py); selected interpreter and helper identities bind the built launcher |
+
+F3 finite-catalog reduction and F4 installed CLI are implemented. F5 is a separate
+experimental C++ controlled mutex/bounded FIFO profile with no model comparison.
+Their [October 14 remote WSL acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md)
+retains exact source/install identities. Current local build preparation does not
+renew that acceptance. See the [CLI guide](dpm-cli-guide.md) and
+[runner contract](dpm-runner-contract.md) for current build and execution bounds.
 
 ## 5. Framework catalog, distribution and evidence
 
