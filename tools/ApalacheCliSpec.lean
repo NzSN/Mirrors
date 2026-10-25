@@ -93,6 +93,8 @@ def unitMaterialize (fails : Failures) : IO Unit := do
   match ← materializeSpec { sources := [hcSrc, ext] } with
   | .error e => check fails "materialize: two sources" false e
   | .ok (dir, root) =>
+      check fails "materialize: canonical owned directory"
+        (dir == (← IO.FS.realPath dir).toString) dir
       let rootOk ← (root : System.FilePath).pathExists
       let extOk ← (dir ++ "/Ext.tla" : System.FilePath).pathExists
       check fails "materialize: root exists" rootOk root

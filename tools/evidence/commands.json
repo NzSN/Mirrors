@@ -94,8 +94,8 @@
       "requiredEnvironmentFileSha256": {
         "HS_BIN": "cc3c378e31f2632bf96fcdcb127f902b7cdee0cead40e51d7911976e8a6e3e9d",
         "CPP_BIN": "5db2b6a3fd992d894d305dafbea93d8795af4137b769d7e7b22ea4de31853480",
-        "RUST_BIN": "bb0547927f1868c6dcc17b80c8e01f5c4717bbe2fea32118ed60183998b666f6",
-        "LEAN_CLIENT_BIN": "2ade6dd2f61383c79d1a3e8645179361deefd4bad82b7e3496899ddd7a724781",
+        "RUST_BIN": "d7af87983f4600121d01b4f4b2e780cf5e66e0f6b79d57e3ba234d2d980f20be",
+        "LEAN_CLIENT_BIN": "b02fa982ac20e7a245bde59e9e5eb060609809349fe4634bc914b8a5d36a523c",
         "ECMA_NODE_BIN": "d1de76d8edf2fededf6f8b30d244e2c0529ac607923a018283b77e9c74bd932c"
       },
       "attachmentsAllowed": true,
@@ -320,7 +320,7 @@
         "/usr/bin/python3",
         "verification/bundle/tools/distribution/qualification.py",
         "--prefix",
-        "/tmp/mirrors-candidate-install-local-final",
+        "/tmp/mirrors-candidate-install-local-20261025",
         "--framework-catalog-bin",
         "/home/nzsn/Repos/Mirrors/.lake/build/bin/framework_catalog",
         "--framework-catalog-sha256",
@@ -402,7 +402,7 @@
         "/usr/bin/python3",
         "verification/bundle/tools/distribution/qualification.py",
         "--prefix",
-        "/tmp/mirrors-candidate-install-gate-final",
+        "/tmp/mirrors-candidate-install-gate-20261025",
         "--framework-catalog-bin",
         "/home/nzsn/Repos/Mirrors/.lake/build/bin/framework_catalog",
         "--framework-catalog-sha256",

@@ -128,7 +128,8 @@ local behaviors only and cannot receive model-check credit.
 
 The required model-check observation is the separate private command
 `mirrors.remote-model-check`. Its wrapper fixes the deployed endpoint to
-`172.20.208.1:8999`, the deployment to `workspace-native-console`, and the
+`172.28.144.1:8999` for the October 25 renewal (the frozen October 7 campaign
+used `172.20.208.1:8999`), the deployment to `workspace-native-console`, and the
 HourClock predicates and bound. It accepts only these private environment
 inputs:
 

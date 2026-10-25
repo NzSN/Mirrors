@@ -5,6 +5,177 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-25 — Publication boundary recorded
+
+The user authorized commit and push of the temporary-root sanitizer repair,
+qualification tooling/catalog updates and retained October 25 evidence. Mirrors
+and the related MirrorECMA generated catalog record are the only repositories
+with tracked changes; editor caches and ignored qualification/credential scratch
+remain excluded. Dated evidence and the accepted C0
+`ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421`
+retain their original identities and qualification bounds.
+
+Origin inspection found Mirrors current and MirrorECMA three commits behind.
+The latter was fast-forwarded to `f943588`, preserving the catalog bytes/local
+diff and all upstream release/CI changes. Publication checks cover that incoming
+source separately; the prior M5 receipts still bind MirrorECMA `13847be` and
+Mirrors `81b1f76` plus their recorded working-tree content. New published refs
+receive no automatic M5/DPM/native-platform qualification. A fresh freeze and
+corresponding gates are required before crediting those refs.
+
+This is branch publication only; existing release tags and historical receipts
+are preserved. Exact staged-file hashes, credential-scan results and verified
+remote commit refs are recorded separately in the local publication audit under
+`/tmp/mirrors-publish-20261025/`. No qualification producer is rerun or relabeled
+as part of this publication step.
+
+## 2026-10-25 — Current-source M5 profile qualification renewed
+
+The exact working-tree selection
+`ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421`
+qualifies for `m5-wsl-windows-remote/v1`, class `local-candidate`, at Mirrors
+81b1f76 / MirrorECMA 13847be / MirrorGate 5055d91 with their recorded dirty
+identities. [Current readiness](Plans/current-source-qualification-2026-10-25.md)
+and its byte-identical result receipts own the exact scope, source/package/run
+identities, preserved diagnostics and exclusions. Catalog/component-lock product
+declarations now match Mirrors `0.1.1`; the temporary-root repair is included.
+
+Both rebuilt caches verified and both dated installs committed, preserving
+previous versions. Both fresh D audits ran first: `run-c6640359…` and
+`run-33a1216d…`. All 18 required commands/16 tiers passed. Fresh correct/faulty
+replay, both reproduction branches, 17-case local/Gate mutation aggregates,
+shortest-prefix reduction (2/16, complete minimality), four-resource prepared-
+filesystem recovery, remote HourClock validation, all 22 client rows and actual
+model-valid LeaseService reduction passed. The reduction preserved the original
+failure signature and confirmed `explore_done` cleanup.
+
+Q1 `run-aa8c2197…` verified the full 19-node/two-D scope. Independent offline Q2
+verified all 20 selected finalized bundles, accepted catalog B and both D
+bindings, and rejected six actual controls: missing artifact, changed byte,
+wrong D component binding, wrong R0/R1 origin, wrong R1/R5 input linkage and
+incomplete profile. Source/scratch were hidden, network unshared, archive
+read-only and the verifier/schema/registry/wheels were the exact installed
+inputs. The supporting recovery R0 receives no qualification credit. Failed and
+incomplete attempts remain unqualified; no historical producer credit transferred.
+
+The installed sanitizer regression passed through both packaged servers with
+`TMPDIR=/tmp/`, bounded 4,147-byte replies and owned paths redacted. Final
+source/catalog/lock identities and both installed inventories reverified without
+drift. The isolated Windows oracle used freshly observed mTLS credentials and
+endpoint with the original pinned native oracle binary/runtime; it is not a
+current-source native Windows release. Before/after observations matched. No
+native model images remained, then only the exact owned temporary server was
+stopped. The original deployment state and credentials were preserved. No live
+service health is claimed after cleanup and no local Apalache/TLC ran.
+
+Private proof and the exact installed verifier runtime are retained under
+`~/.local/state/mirrors/m5-current-20261025/final/`. A second isolated Q2 run
+using that durable verifier after oracle shutdown produced a byte-identical
+accepted result. Retention indexed 9,887 files / 3,525,340,683 bytes,
+owner-only, excluding actual credential carriers. Index SHA-256:
+`121e7585ca6e6450e90857e7fb71643d7727b4e9d1d4eb2fafe0c7bcee33ea52`.
+
+Broader M4, aggregate cgroups, active-process restart recovery, native Ubuntu,
+additional Gate platforms, legacy all-transport acceptance, full DPM-package
+renewal and production/publication stay separate. No commit, tag or push was
+requested or performed. A source/commit or selected-identity change requires a
+new freeze and corresponding gates. Earlier entries retain their dated scope.
+
+## 2026-10-25 — Corrected v0.1.1 qualification candidate frozen
+
+The active renewal now selects
+`ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421`.
+A final declaration audit found that the catalog and component lock still
+identified Mirrors as `0.0.2`; they now match source/executable `0.1.1`.
+The strict validator refused the first incomplete declaration update. After
+synchronizing the component lock, three refreshes reached byte stability and
+produced a new immutable snapshot. Both packages rebuilt, verified and committed
+to the dated prefixes, retaining their prior versions. Earlier `772f36d9…`
+packages and passed D runs are preserved without credit for the new candidate.
+
+The corrected local D audit passed; the Gate D audit is active. The installed
+sanitizer check and remaining source/installed/remote producers are queued behind
+both successful D bindings. Full Q1/Q2 is pending. The [campaign report](Plans/current-source-qualification-2026-10-25.md)
+records exact manifest identities, diagnostic attempts, scope and exclusions.
+The final source/cache/store namespace is
+`~/.local/state/mirrors/m5-current-20261025/final/`; operational drivers remain in
+`tmp/qualification-20261025/`. Historical entries retain their original meaning.
+
+## 2026-10-25 — Current-source qualification renewal started
+
+The user requested the second outstanding status item: renew qualification for
+current source and rebuilt packages. The selected scope remains the named
+`m5-wsl-windows-remote/v1` local-candidate profile: 18 required commands, 16
+tiers, both installed D bindings, fresh origin/reproduction/reduction linkage,
+independent Q2 and six refusal controls. Broader M4 remains separate.
+
+A new working-tree freeze includes the temporary-root repair and current
+Mirrors/MirrorECMA/MirrorGate identities. The final selection is
+`772f36d9335e629b7476c36dfe5dd77082d60e3b5ca6e209364befbc44d35540`.
+Three identity refreshes reached final byte stability before the immutable
+snapshot. The first snapshot, taken before maintained remote-document updates,
+is preserved separately and receives no producer credit. Editor caches remain
+on disk and outside the source snapshot. No commit, tag or push is included.
+
+Fresh native inspection found the October 7 process and endpoint absent and
+its CA/server/client certificates expired. A separate owned qualification
+fixture now binds `172.28.144.1:8999`, using fresh seven-day mTLS credentials,
+two workers and separate temporary data/logs. The pinned oracle binary remains
+`5949af30735cd1bf515e64fb9d2299023e13b2c36245ce9be696d65944b32dec`
+at source base `1a069cd3e34d7bfea272e3ee7e10f51acedcc7cb`, with the pinned
+Apalache 0.62.2 / Java 25.0.4+7-LTS bytes. The old deployment, credentials and
+dated evidence remain unchanged. This is a model-oracle fixture, not acceptance
+of a rebuilt current-source native Windows server. The startup caller reached
+its 45-second capture timeout after readiness; a separate observation confirmed
+the owned listener. The failed caller is not a qualification pass.
+
+Rust and Lean interop harnesses were rebuilt from the current harness sources
+against their selected client-library revisions; their new binary hashes and
+the new endpoint are bound by the refreshed registry/source identity. Eleven
+remote-admission/interoperability-policy tests pass. Both distribution caches
+are being rebuilt and verified from the final snapshot, with new dated install
+prefixes. Both D audits must finalize before any remaining producer receives
+credit. Full Q1/Q2 and renewed package/framework acceptance are pending.
+
+Campaign drivers and progress: `tmp/qualification-20261025/`; new immutable
+snapshot/caches and durable store: `~/.local/state/mirrors/m5-current-20261025/`.
+No historical producer result is transferred to the new selection. No local
+Apalache/TLC process is permitted or has been started.
+
+## 2026-10-25 — Temporary-root path redaction repaired
+
+Working changes based on `81b1f76` (`v0.1.1`) repair the inherited trace-error
+sanitizer failure with `TMPDIR=/tmp/`. Before the fix, the focused synthetic
+failure fixture exited 1 because the owned path contained `/tmp//` while the
+child reported `/tmp/`; its private `modelmirrors-session-…` path escaped literal
+redaction. The October 22 failed receipts remain unchanged.
+
+`Shell/Apalache/SpecSource.lean` resolves the selected temporary root through
+`IO.FS.realPath` before creating owned spec/session directories and avoids adding
+another separator to a filesystem root. The recorded directory and the child's
+physical cwd now share a spelling. The diagnostic formatter and its UTF-8
+budget/category/exit-status behavior retain their existing contracts.
+
+The existing trace-generation transport suite now launches diagnostic children
+with temporary-root suffixes `""`, `/`, `///` and `/./`; every case checks path
+redaction, category/exit retention, stdout/stderr, multibyte text and truncation.
+The existing Apalache CLI suite also checks canonical owned spec directories.
+These regressions run through their existing Lake and non-model gates.
+
+Validation: the focused build passed 489 jobs; both focused suites pass
+with `TMPDIR=/tmp/` (real Apalache integration explicitly skipped). Separate
+synthetic diagnostic checks pass for a physical root containing spaces/Unicode,
+a symlinked root and a relative symlinked root. The first non-model aggregate
+stopped at a sandbox-denied loopback socket in `check-validate-closure.py`; it is
+retained as a failed attempt, not a pass. The complete aggregate with local socket
+access, `TMPDIR=/tmp/ bash tools/run-local-no-model-check.sh`, exited 0 and
+reported `ALL LOCAL NON-MODEL GATES GREEN`, including the synthetic trace-error
+fixture that previously failed. Its build passed 728 jobs and its DPM Python
+suite passed 79 tests. Native integer-map coverage, four live TLA reference
+tests and the live Apalache/explorer/Counter/async tiers remain explicitly
+skipped. No local or remote model checker ran; no release or new framework,
+installed-package or native Windows/macOS qualification is claimed.
+
 ## 2026-10-22 — v0.1.1 patch release prepared
 
 The user requested a semantic-version advance while publishing the DPM changes.

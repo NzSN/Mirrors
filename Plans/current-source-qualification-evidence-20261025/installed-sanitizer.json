@@ -1,0 +1,21 @@
+{
+  "schema": "mirrors.installed-temp-path-sanitizer/v1",
+  "modelCheckerInvoked": false,
+  "fixtureSha256": "7adc996d6ea98ff34ffee39ea0f744d4d91dfa0c75ad5708794e454e24250e66",
+  "rows": [
+    {
+      "profile": "local",
+      "binarySha256": "b8cb63bc7b98af18f5330a0a5896d88389155ef09c5b1efa9cdd4b45609c766e",
+      "TMPDIR": "/tmp/",
+      "replyBytes": 4147,
+      "redacted": true
+    },
+    {
+      "profile": "gate",
+      "binarySha256": "b8cb63bc7b98af18f5330a0a5896d88389155ef09c5b1efa9cdd4b45609c766e",
+      "TMPDIR": "/tmp/",
+      "replyBytes": 4147,
+      "redacted": true
+    }
+  ]
+}

@@ -7,11 +7,11 @@
       "componentRef": {
         "componentId": "mirrorecma",
         "repository": "https://github.com/NzSN/MirrorECMA.git",
-        "revision": "eef6f71f2ff2d22c6e3a83274d150638a010b663",
+        "revision": "13847be5d63d93437c551fad8c5e98f2afd884b0",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "67ac802f10ef5ca421425b6e20a487b9874a7ce076ccb281b01bcdd8eba7a8ca",
+          "digest": "a11675b6e8b93192f9588238ba75a914e4bcfd70df419b936085b6a6d92e9e03",
           "method": "git-diff-and-untracked-manifest-v1",
           "includedPaths": [],
           "excludedPaths": [
@@ -52,11 +52,11 @@
       "componentRef": {
         "componentId": "mirrorgate",
         "repository": "https://github.com/NzSN/MirrorGate.git",
-        "revision": "455e196c73332a1b0d85b1d822dfc4aa3542bbd9",
+        "revision": "5055d91757a071467b96d38a16ffece1265c3138",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "92067840f5f75c4590abe23c1ad9cc6ff7aab859323cda796f1a094c8643909b",
+          "digest": "48c18ea917cdaf2a2999db28ef887768ee8926c7cd6bed378d69acaa7742e2e1",
           "method": "git-diff-and-untracked-manifest-v1",
           "includedPaths": [],
           "excludedPaths": [
@@ -83,13 +83,28 @@
       "componentRef": {
         "componentId": "mirrors",
         "repository": "https://github.com/NzSN/Mirrors.git",
-        "revision": "f0894d2c89426278900ba79f2b7a1b9b9c5d6620",
+        "revision": "81b1f769f84372410a4bee787549d4f484bbcf45",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "77778d6a7d451b1114d69a13481968f9ba8922123cfe38763c3f77a591088ff7",
+          "digest": "aaddfd6619878e7a3ded32f13dcaa7c6f5cf00cca4460929646dfebb762b780b",
           "method": "git-diff-and-untracked-manifest-v1",
-          "includedPaths": [],
+          "includedPaths": [
+            "Docs/current-status.md",
+            "Docs/qualification-harness-design.md",
+            "Docs/remote-server-guide.md",
+            "README.md",
+            "Shell/Apalache/SpecSource.lean",
+            "tools/ApalacheCliSpec.lean",
+            "tools/TraceGenerationTransportReproSpec.lean",
+            "tools/evidence/README.md",
+            "tools/evidence/commands.json",
+            "tools/evidence/run_remote_model_check.py",
+            "tools/interop/remote-clients/RemoteM5.lean",
+            "tools/interop/remote-clients/ecma-protocol.mjs",
+            "tools/interop/remote-clients/ecma.mjs",
+            "tools/interop/remote-clients/rust/main.rs"
+          ],
           "excludedPaths": [
             {
               "path": ".projectile-cache.eld",
@@ -140,7 +155,7 @@
       },
       "product": {
         "name": "Mirrors",
-        "version": "0.0.2"
+        "version": "0.1.1"
       },
       "records": [
         {
@@ -1120,7 +1135,7 @@
   ],
   "extensions": {
     "org.nzsn.snapshot": {
-      "capturedAt": "2026-10-07T12:13:38Z",
+      "capturedAt": "2026-10-25T00:48:26Z",
       "provisional": true,
       "reason": "working-tree candidate; no retained run evidence or publication claim"
     }

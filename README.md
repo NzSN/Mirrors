@@ -86,7 +86,7 @@ The first build fetches the pinned `batteries` dependency from GitHub.
 
 ```bash
 lake build
-TMPDIR=/tmp bash tools/run-local-no-model-check.sh
+bash tools/run-local-no-model-check.sh
 ```
 
 The main executable is written to `.lake/build/bin/mirror` (or
@@ -104,10 +104,10 @@ unset is not an offline gate. Run live model operations through the Mirrors CLI
 against the reobserved owned remote service, following the
 [remote guide](Docs/remote-server-guide.md).
 
-The explicit temporary root avoids a known baseline trace-error sanitization
-failure with `TMPDIR=/tmp/`. The [October 22 checkpoint](CHECKPOINTS.md) retains
-that failed result and the separately passing normalized-environment run;
-temporary-path sanitization remains open runtime work.
+Temporary roots are resolved to their physical paths before owned directories
+are created, so trailing separators in `TMPDIR` do not bypass trace-error path
+redaction. The [checkpoint history](CHECKPOINTS.md) retains the original October
+22 failure and records the separate repair and its validation.
 
 On a separately admitted live-check host, the full test entry point is:
 

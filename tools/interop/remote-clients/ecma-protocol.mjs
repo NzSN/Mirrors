@@ -7,7 +7,7 @@ const sdk=await import(pathToFileURL(resolve(env.ECMA_RUNTIME_ROOT,'dist/index.j
 const {connectTlsMirror,runClient,runClientWithTraces,runClientGenTraces,
   runClientExplore,startExploreSession,specFromFile,specFromFiles,presetClient,
   asInt,getParam}=sdk;
-const connect=()=>connectTlsMirror('172.20.208.1',8999,{
+const connect=()=>connectTlsMirror('172.28.144.1',8999,{
   caPath:env.MIRRORS_REMOTE_CA,certPath:env.MIRRORS_REMOTE_CLIENT_CERT,
   keyPath:env.MIRRORS_REMOTE_CLIENT_KEY,pin:env.MIRRORS_REMOTE_SERVER_PIN});
 const winRoot='C:\\Users\\ayden\\Desktop\\Workspace\\MirrorsRemote\\interop';

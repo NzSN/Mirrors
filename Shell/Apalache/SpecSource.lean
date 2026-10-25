@@ -330,8 +330,12 @@ private def tempBase : IO String := do
   let cands := envCands.filterMap id ++
     (if System.Platform.isWindows then ["C:/Windows/Temp", "."] else ["/tmp", "."])
   for c in cands do
-    if ← (c : System.FilePath).pathExists then return c
-  return "."
+    if ← (c : System.FilePath).pathExists then
+      -- Child diagnostics use the physical cwd. Keep the owned path in the
+      -- same spelling, including for trailing separators and symlinked roots,
+      -- so literal run-directory redaction cannot miss it.
+      return (← IO.FS.realPath c).toString
+  return (← IO.currentDir).toString
 
 /-- A fresh spec temp dir (Haskell @freshSpecDir@): retry with a new
 counter on collision. -/
@@ -340,7 +344,8 @@ private def pathSep : String := if System.Platform.isWindows then "\\" else "/"
 private partial def freshSpecDir : IO String := do
   let tmp ← tempBase
   let n ← dirCounter.modifyGet (fun m => (m, m + 1))
-  let dir := tmp ++ pathSep ++ "modelmirrors-spec-" ++ toString n
+  let dir := tmp ++ (if tmp.endsWith pathSep then "" else pathSep) ++
+    "modelmirrors-spec-" ++ toString n
   try
     IO.FS.createDir dir
     return dir
@@ -465,7 +470,8 @@ def freshSessionDir : IO String := do
   let tmp ← tempBase
   let n ← dirCounter.modifyGet (fun m => (m, m + 1))
   let ms ← IO.monoMsNow
-  let dir := tmp ++ pathSep ++ "modelmirrors-session-" ++ toString n ++ "-" ++ toString ms
+  let dir := tmp ++ (if tmp.endsWith pathSep then "" else pathSep) ++
+    "modelmirrors-session-" ++ toString n ++ "-" ++ toString ms
   try IO.FS.createDir dir
   catch _ => IO.FS.createDir (dir ++ "-x")
   return dir

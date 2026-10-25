@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-HOST = "172.20.208.1"
+HOST = "172.28.144.1"
 PORT = "8999"
 SERVICE = "workspace-native-console"
 MIRROR = Path(".lake/build/bin/mirror")

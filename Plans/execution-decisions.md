@@ -6,7 +6,29 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
-## Current continuation — 2026-10-22
+## Current continuation — 2026-10-25
+
+The pre-publication working-tree candidate qualifies for `m5-wsl-windows-remote/v1`,
+class `local-candidate`, at C0
+`ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421`.
+[Current readiness](current-source-qualification-2026-10-25.md) and its exact
+receipts bind Mirrors 81b1f76, MirrorECMA 13847be and MirrorGate 5055d91 with
+their full working-tree identities. The sanitizer repair, corrected `0.1.1`
+catalog/lock declaration and rebuilt packages are included. Both D audits ran
+first; all 18 required commands/16 tiers, 19 linked scope nodes and 20 selected
+bundles passed Q1/independent offline Q2, with six actual refusal controls.
+
+The separate Windows oracle fixture used a freshly observed endpoint and new
+mTLS credentials with the original pinned oracle binary/runtime. All 22 client
+rows and actual model-valid LeaseService reduction passed. The temporary fixture
+was stopped after checks and confirmed model cleanup; the old deployment state,
+credentials and dated evidence remain preserved. There is no current live-health
+claim, new native Windows release, full DPM-package renewal or publication.
+Broader M4 stays separate. Any source/commit or other selected-identity change
+requires a fresh freeze and the corresponding gates. Commit/push was subsequently
+authorized; the newest checkpoint records its separate publication boundary.
+
+## Historical continuation — 2026-10-22
 
 Mirrors `b243b37` declares `v0.1.0`. The DPM implementation is committed in
 `c17bae9`; client-conformance repairs are committed in `d1c5e74` with

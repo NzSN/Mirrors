@@ -238,11 +238,31 @@ def diagnosticRepro (fails : Failures) : IO Unit := do
       check fails "Apalache error sanitizes owned run directory"
         (error.contains "<run>" && !error.contains "modelmirrors-session-") error
 
-def main : IO Unit := do
+def diagnosticTempRootsRepro (fails : Failures) : IO Unit := do
+  let root ← Shell.Apalache.SpecSource.freshSessionDir
+  try
+    let executable ← IO.appPath
+    -- Each child selects its own root before creating the owned run directory.
+    -- Exercise the shell's physical cwd spelling with the real failure fixture.
+    for suffix in ["", "/", "///", "/./"] do
+      let tmp := root ++ suffix
+      let result ← IO.Process.output {
+        cmd := executable.toString
+        args := #["--diagnostic"]
+        env := #[("TMPDIR", some tmp), ("TEMP", some tmp), ("TMP", some tmp)]
+      }
+      check fails s!"Apalache diagnostic with temporary-root suffix '{suffix}'"
+        (result.exitCode == 0) (result.stdout ++ result.stderr)
+  finally
+    Shell.Apalache.SpecSource.removeSessionDir root
+
+def main (args : List String) : IO Unit := do
   let fails ← IO.mkRef ([] : List String)
-  exactBoundaryControls fails
-  syncDeliveryRepros fails
-  asyncDeliveryRepro fails
+  if args != ["--diagnostic"] then
+    exactBoundaryControls fails
+    syncDeliveryRepros fails
+    asyncDeliveryRepro fails
+    diagnosticTempRootsRepro fails
   diagnosticRepro fails
   let failures ← fails.get
   if failures.isEmpty then

@@ -6,6 +6,15 @@ explains which path your application needs; validation alone does not test a SUT
 
 ## Current qualified topology
 
+The October 25 renewal campaign uses a separate owned Windows qualification
+fixture at `172.28.144.1:8999`, with fresh seven-day mTLS certificates and the
+previously pinned oracle executable/Apalache/Java bytes. The original deployment
+and expired credentials are preserved. Current qualification scripts select this
+new endpoint; the newest [checkpoint](../CHECKPOINTS.md) owns campaign progress
+and acceptance. Starting this fixture does not qualify a new native Windows
+release. Reobserve process, listener, binary/runtime hashes and certificate
+validity before each campaign; historical observations cannot admit a new run.
+
 The [October 7 record](../Plans/q3-published-roadmap-2026-10-07.md) qualifies WSL2
 clients/tooling with an owned native Windows console oracle at the observed
 172.20.208.1:8999, Apalache 0.62.2 and Java 25.0.4+7-LTS. Reobserve address,

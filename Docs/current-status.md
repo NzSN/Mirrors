@@ -1,7 +1,8 @@
 # Current framework status and navigation
 
-Source status refreshed 2026-10-22 against the committed DPM build-preparation
-fix `03510b4` and the `v0.1.1` patch release. Mirrors reducer/CLI tooling
+Source status refreshed 2026-10-25 against `v0.1.1` (`81b1f76`) plus the
+temporary-root canonicalization repair in the working tree. The DPM
+build-preparation fix is committed in `03510b4`. Mirrors reducer/CLI tooling
 landed in `c17bae9`; the October 15 client-conformance repairs landed in `d1c5e74`.
 These source identities do not replace the exact runtime and source hashes in
 [October 14 DPM acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md)
@@ -15,15 +16,18 @@ compilation; an explicit build-time interpreter can be selected with
 `MIRRORS_DPM_PYTHON`. Runtime hash checks remain enforced. See the
 [build and runtime prerequisites](dpm-cli-guide.md#build-and-runtime-prerequisites)
 and newest [checkpoint](../CHECKPOINTS.md) for the separate patch-release
-validation/publication boundary and the temporary-directory-path limitation.
+validation/publication boundary and the temporary-path repair.
 The [October 22 build evidence](../Plans/dpm-build-preparation-evidence-20261022/README.md)
 retains exact source/artifact hashes for the changes committed in `03510b4`:
 the complete non-model pass with `TMPDIR=/tmp`, 79 DPM Python tests and bounded
 installed-launcher checks. The `v0.1.1` version/documentation changes passed
 focused local release gates; their separate validation is recorded in the newest
 checkpoint, with hosted publication tracked independently. They do not rewrite
-the earlier build evidence. The inherited `TMPDIR=/tmp/` aggregate failure is
-also reproduced at the baseline and remains an open sanitizer issue.
+the earlier build evidence. The inherited `TMPDIR=/tmp/` aggregate failure was
+also reproduced at the baseline. The current repair resolves temporary roots
+to physical paths before creating owned spec/session directories, keeping the
+recorded run path aligned with child diagnostics for redaction. New validation
+is recorded in the newest checkpoint; the original failed receipts are unchanged.
 This source/build change does not renew full DPM installed-package or framework
 acceptance.
 The [October 9 documentation audit](../Plans/documentation-sync-2026-10-09.md)
@@ -66,10 +70,15 @@ Linux/Bubblewrap Gate; live model operations use an owned native Windows mTLS
 Mirrors service with Apalache 0.62.2 / Java 25.0.4+7-LTS. The service was started and
 observed as PID 35888 during that campaign; reobserve before use. Its original
 certificates were recorded as valid through 2026-10-08T02:47:53Z; that validity
-window has ended as of this documentation review. No live service or replacement
-certificate was inspected. Reconcile any renewed credential and pin identities
-before remote work. Neither static documentation nor an old PID/certificate
-record establishes current health or permission to re-pin.
+window has ended. The October 25 renewal campaign separately observed that the
+old process and address were absent, then prepared an isolated owned Windows
+fixture at `172.28.144.1:8999` with fresh seven-day mTLS credentials. It retains
+the pinned oracle binary/runtime and preserves the original deployment records
+and credentials. The new endpoint and rebuilt interop harness identities are
+selected explicitly by the current qualification tooling. The newest checkpoint
+records campaign progress and acceptance; fixture startup alone grants no new
+framework or current native-Windows release qualification. Reobserve the fixture
+before use; a recorded PID or certificate does not establish current health.
 No local Apalache/TLC runs on this coordinator.
 
 ## Approved usability features after the frozen candidate
