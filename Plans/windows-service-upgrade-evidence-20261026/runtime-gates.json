@@ -1,0 +1,36 @@
+{
+    "checks":  [
+                   {
+                       "name":  "fixtures_replay",
+                       "passed":  true,
+                       "log":  "gate-fixtures_replay.log"
+                   },
+                   {
+                       "name":  "async_resource_spec",
+                       "passed":  true,
+                       "log":  "gate-async_resource_spec.log"
+                   },
+                   {
+                       "name":  "transport_spec",
+                       "passed":  true,
+                       "log":  "gate-transport_spec.log"
+                   },
+                   {
+                       "name":  "diff_cross",
+                       "passed":  true,
+                       "log":  "gate-diff_cross.log"
+                   },
+                   {
+                       "name":  "stdio_smoke",
+                       "passed":  true,
+                       "log":  "gate-stdio_smoke.log"
+                   },
+                   {
+                       "name":  "jobstore_spec",
+                       "passed":  true,
+                       "log":  "gate-jobstore_spec.log"
+                   }
+               ],
+    "compilerSuite":  "Exit 1: eight Windows assertions failing; see deployment.json and gate-model_interface_spec.log. Not counted as passing.",
+    "runtimeVersionProbe":  "Unsupported --version metadata flag; diagnostic retained separately"
+}

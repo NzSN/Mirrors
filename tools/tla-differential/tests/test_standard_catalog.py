@@ -30,7 +30,7 @@ class StandardCatalogTests(unittest.TestCase):
 
     def test_public_and_local_import_facts(self) -> None:
         edges = re.findall(r'owner := ⟨"([A-Za-z]+)"⟩, dependency := ⟨"([A-Za-z]+)"⟩(?:, localOnly := (true))?', self.catalog)
-        self.assertEqual(len(edges), 18)
+        self.assertEqual(len(edges), 17)
         with zipfile.ZipFile(self.jar) as archive:
             for owner, dependency, local in edges:
                 content = archive.read(f"tla2sany/StandardModules/{owner}.tla").decode()

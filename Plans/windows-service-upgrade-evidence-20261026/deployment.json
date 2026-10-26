@@ -1,0 +1,80 @@
+{
+    "schema":  "mirrors.windows-service-upgrade/v1",
+    "completedAt":  "2026-10-26T04:21:11.2478311Z",
+    "host":  "DESKTOP-6DKB5JD",
+    "service":  "ModelMirrors",
+    "status":  "Running",
+    "version":  "v0.1.0",
+    "sourceCommit":  "b243b37774a34fa1bb5b1174b519d2fed98c162b",
+    "sourceArchiveSha256":  "82026fdc1547e64ef8e31099750426a86f4a3293cc69d90018246e57a2d7ff4f",
+    "binarySha256":  "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+    "previousSha256":  "194fc1ca8b66f8ab559644eff832e722839d6aaabb2d76d1e20d20b7f25a74ed",
+    "backup":  "D:\\ModelMirrors\\releases\\20261026-v0.1.0-b243b37\\previous-ModelMirrors.exe",
+    "pid":  9920,
+    "executable":  "D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+    "commandLine":  "\"D:\\ModelMirrors\\bin\\ModelMirrors.exe\" --server 8999 --tls --cert D:\\ModelMirrors\\certs\\server.crt --key D:\\ModelMirrors\\certs\\server.key --ca D:\\ModelMirrors\\certs\\ca.crt --jobs 4",
+    "serviceConfigurationPreserved":  true,
+    "runtimeDependenciesPreserved":  true,
+    "validationLimitations":  [
+                                  "model_interface_spec completed with exit 1 and eight Windows assertions failing: stale-path spelling and generated-output filesystem race/rollback cases. It is not counted as passing.",
+                                  "Full lake test, full cross-client matrix and reboot testing were not performed; this is a scoped service upgrade, not full-framework qualification."
+                              ],
+    "productionChecks":  {
+                             "endpoint":  "192.168.150.219:8999",
+                             "tls":  "TLSv1.3",
+                             "serverLeafSha256":  "b2fc7265145cf2b89a1a248b0932885df8d300121b47f7854317ece4bac9ce67",
+                             "checks":  [
+                                            {
+                                                "async":  false,
+                                                "step":  1,
+                                                "exit":  0,
+                                                "verdict":  "valid",
+                                                "log":  "production-sync-valid.log"
+                                            },
+                                            {
+                                                "async":  false,
+                                                "step":  -1,
+                                                "exit":  1,
+                                                "verdict":  "invalid",
+                                                "log":  "production-sync-invalid.log"
+                                            },
+                                            {
+                                                "async":  true,
+                                                "step":  1,
+                                                "exit":  0,
+                                                "verdict":  "valid",
+                                                "log":  "production-async-valid.log"
+                                            },
+                                            {
+                                                "async":  true,
+                                                "step":  -1,
+                                                "exit":  1,
+                                                "verdict":  "invalid",
+                                                "log":  "production-async-invalid.log"
+                                            }
+                                        ]
+                         },
+    "compilerRegression":  {
+                               "exit":  1,
+                               "failureCount":  8,
+                               "log":  "gate-model_interface_spec.log",
+                               "failures":  [
+                                                "CLI diagnostics stale summary exact stdout",
+                                                "concurrent target injected",
+                                                "concurrent unowned target rejected",
+                                                "concurrent unowned target preserved",
+                                                "failed tree rolled back new files",
+                                                "rollback target injected",
+                                                "rollback failure rejected",
+                                                "previous generated tree restored"
+                                            ]
+                           },
+    "runtime":  {
+                    "apalacheJar":  "D:\\Programs\\apalache\\lib\\apalache.jar",
+                    "apalacheVersion":  "0.62.2",
+                    "apalacheJarSha256":  "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8",
+                    "java":  "D:\\Programs\\java\\bin\\java.exe",
+                    "javaVersion":  "21.0.11+9-LTS-211",
+                    "javaSha256":  "5d0fb7c0461414c668979c4e53bdffb13cc12ec39002fd4a464736bde2caa3a6"
+                }
+}

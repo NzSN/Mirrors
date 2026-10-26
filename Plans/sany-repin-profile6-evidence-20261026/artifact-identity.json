@@ -1,0 +1,44 @@
+{
+  "schema": "mirrors.sany-repin-profile6/v1",
+  "baseCommit": "81b1f769f84372410a4bee787549d4f484bbcf45",
+  "state": "uncommitted working-tree migration",
+  "sany": {
+    "url": "https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar",
+    "versionProbe": "SANY2 Version 2.2 created 08 July 2020",
+    "previousSha256": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1",
+    "sha256": "d15655eeaff4b3f7b3d65c46b838bc0f35d131b2ef4b1e473689b62c98d4726f",
+    "sha1": "b76c04087ac0d60d24d48f4577adec024a9c6a20",
+    "buildRevision": "2ef2af8c767b76e5db5cba2878f027ac07aad36c",
+    "buildTimestamp": "2026-10-24T01:36:19.357Z",
+    "standardLibrarySha256": "fc1e01131317e322a90eb5534fc217f6a1b64df8de540d949255eaa7d8ff88ad",
+    "bagsSha256": "a2b668a8cf375b9ef9f2c14fdba742137ab8722ade0f41f11965c67acba76c39"
+  },
+  "apalache": {
+    "version": "0.61.0",
+    "archiveSha256": "68fb56dd9d053cf21d692fd7ec3fbaaeba1395661ec7434fa2b4c47e6fc432b8",
+    "pinChanged": false
+  },
+  "profile": {
+    "id": "mirrors-tla-frontend-profile-6",
+    "catalog": "mirrors-standard-modules/v3",
+    "removedPublicEdge": "Bags -> TLC",
+    "fixtures": 61,
+    "accepted": 34,
+    "rejected": 27,
+    "branches": 76,
+    "liveDifferentialQualified": false
+  },
+  "hashes": {
+    "toolchainLock": "5df89987f8deab0de03069cf5ad61374d58f7454eaee97236aa4486b15471b04",
+    "standardCatalog": "954dac316c6f528b2eff72d42e6bf599d4ed7d456f8659afb25fb10cdcee71e3",
+    "manifest": "aa4a7bdf2a62877f0de369146d02b6d6af21d4f0f627881549195f9dbcc24be3",
+    "activeDifferenceRegistry": "f212abb40d9a4bfe1b427056a41324edeb4974e5674534080f6eb2ec47c1e21e",
+    "archivedProfile5DifferenceRegistry": "79f940ccff8c34c5cc01c7ade47e91faeda07fa13bb491b75d6da7ef78219e22"
+  },
+  "runtime": {
+    "requiredJava": "25.0.4+7",
+    "coordinatorJava": "21.0.12.1+1-LTS",
+    "standaloneVerificationPassed": false,
+    "reason": "The coordinator runtime does not meet the unchanged Java pin; offline acquisition tests inject their documented selected-runtime probe."
+  }
+}

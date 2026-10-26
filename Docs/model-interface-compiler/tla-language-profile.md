@@ -1,6 +1,12 @@
-# Mirrors TLA+ frontend language profile (revision 5)
+# Mirrors TLA+ frontend language profile (revision 6)
 
-> Active revision 5 (2026-10-01): transitive public standard imports and exact
+> Active revision 6 (2026-10-26): the re-pinned standalone SANY artifact at
+> revision `2ef2af8` updates `Bags.tla` and removes its public `Bags -> TLC`
+> import. Catalog `mirrors-standard-modules/v3` binds the new module bytes and
+> export graph; syntax tables are unchanged. Profile-5 differential approvals
+> are archived, not renewed. Live differential requalification remains pending.
+
+> Historical revision 5 (2026-10-01): transitive public standard imports and exact
 > standalone-module content identities; syntax tables remain unchanged.
 > See [the extension contract](writesentry-extensions.md). Profile-5 differential
 > qualification passed on the selected JDK/SANY/Apalache pins; the fourteen
@@ -94,9 +100,9 @@ Compatibility rules inherited from the design:
 
 ## 2. Profile identity and revision rules
 
-| Item | Revision-4 value |
+| Item | Revision-6 value |
 | --- | --- |
-| Profile id | `mirrors-tla-frontend-profile-5` |
+| Profile id | `mirrors-tla-frontend-profile-6` |
 | Corpus manifest schema | `mirrors.tla-frontend-corpus/1` |
 | Structural summary schema | `mirrors.tla-frontend-summary/1` |
 | Source identity | normalized UTF-8 bytes, CRLF and CR normalized to LF, SHA-256 |
@@ -571,12 +577,13 @@ Single-module fixtures are one file. Multi-module fixtures are a directory
 bundle with sibling modules; the manifest names the root and the pinned
 provider root.
 
-The manifest `status` is `provisional` while the SANY and Apalache pins are
-unset: fixture ids, outcomes, stages, reasons, and structural summaries are
-frozen for the active profile revision, and only the differential slots and
-pinned tool versions remain for the coordinating agent. The manifest and every
-live expected summary carry `mirrors-tla-frontend-profile-5`; archived
-revision-1, revision-2, and revision-3 evidence is unchanged.
+The manifest `status` is `provisional` while the active profile awaits live
+differential qualification: fixture ids, outcomes, stages, reasons, and
+structural summaries are frozen for the active profile revision, and actual
+differential observations and their reviews are retained separately. The
+manifest and every live expected summary carry
+`mirrors-tla-frontend-profile-6`; archived earlier-profile evidence is
+unchanged.
 
 ### 10.2 Fixture semantics
 

@@ -69,33 +69,29 @@ authorization denial before application code; and rejection of incompatible
 TypeScript/Rust target profiles before output publication. They do not establish
 fresh deployed-service or every-platform qualification.
 
-## Standard imports: frontend profile 5
+## Standard imports: frontend profile 6
 
-The active language profile is `mirrors-tla-frontend-profile-5`, with catalog
-`mirrors-standard-modules/v2`. Public edges re-export reviewed declarations:
-`Integers -> Naturals`, `Reals -> Integers`, `RealTime -> Reals`, and
-`Bags -> TLC`. Local `INSTANCE` edges stay private. Named instances retain
+The active language profile is `mirrors-tla-frontend-profile-6`, with catalog
+`mirrors-standard-modules/v3`. Public edges re-export reviewed declarations:
+`Integers -> Naturals`, `Reals -> Integers`, and `RealTime -> Reals`.
+The re-pinned SANY build removes the former `Bags -> TLC` public edge. Local
+`INSTANCE` edges stay private. Named instances retain
 the original declaration module, arity, and level. Captured local sources take
 precedence over catalog fallback and do not receive invented catalog facts.
 
 The eleven language-module content hashes identify exact module bytes from the
 standalone TLA+ Tools 1.8.0 jar pinned in the differential lock. Apalache
 extension modules without reviewed source facts have no content identity.
-The active 61-fixture corpus has profile-5 summaries; the standard-module
-fixture now uses `Nat` through `Integers` without explicitly extending
+The active 61-fixture corpus has profile-6 summaries; the standard-module
+fixture uses `Nat` through `Integers` without explicitly extending
 `Naturals`. Syntax tables remain unchanged.
 
-Profile-4 differential approvals are preserved in
-`test/fixtures/tla-frontend/differential/archive/profile4-differences.json`.
-The active registry now renews fourteen outcome-only entries against actual
-profile-5 observations, unchanged source hashes, and verified reference pins.
-The seven strict/resource policies remain exactly those in language-profile
-section 9. Review:
-`Drafts/tla-profile5-policy-renewals.md`. The required retained final run passes
-all 183 observations, with 564 matches, fourteen reviewed policy differences,
-and 292 explicitly unsupported reference projections. It used the selected
-Microsoft JDK 25.0.4+7-LTS; its archive and executable hashes match the local
-qualification pins. Historical profile-4 results did not qualify this run.
+Profile-5 differential approvals are preserved in
+`test/fixtures/tla-frontend/differential/archive/profile5-differences.json`.
+They are not renewed by the artifact or catalog change. The active profile-6
+registry starts without reviewed differences; fresh required differential runs
+must review actual findings before qualification. Historical profile-5 results
+remain valid only for their recorded profile, sources and tool identities.
 
 ## Optional generated CMake consumers
 

@@ -12,12 +12,14 @@
       "version": "SANY2 Version 2.2 created 08 July 2020",
       "url": "https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar",
       "path": "downloads/tla2tools-1.8.0.jar",
-      "sha256": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1",
-      "sha1_release": "8400956fa42711bcae3cf319cf6aa47341e7c2f6",
+      "sha256": "d15655eeaff4b3f7b3d65c46b838bc0f35d131b2ef4b1e473689b62c98d4726f",
+      "sha1_release": "b76c04087ac0d60d24d48f4577adec024a9c6a20",
+      "buildRevision": "2ef2af8c767b76e5db5cba2878f027ac07aad36c",
+      "buildTimestamp": "2026-10-24T01:36:19.357Z",
       "entrypoint": ["java", "-cp", "{path}", "tla2sany.SANY"],
       "standardLibraryPrefix": "tla2sany/StandardModules/",
       "parserLineage": "standalone tla2tools distribution"
-      ,"standardLibrarySha256": "eb509abc1987245b854582f94e32b6407fd9cce6aa625b2b546c7524b95a71bb"
+      ,"standardLibrarySha256": "fc1e01131317e322a90eb5534fc217f6a1b64df8de540d949255eaa7d8ff88ad"
     },
     "apalache": {
       "distribution": "Apalache 0.61.0",

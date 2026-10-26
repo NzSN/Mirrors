@@ -7,9 +7,12 @@
 > failed on 2026-09-13; DC0–DC4 closed its eleven findings under profile 3 on
 > 2026-09-14. Profile 4 adds the reviewed `Sequences.Head` and
 > `Sequences.Tail` catalog facts and closes the MirrorECMA WorkQueue blocker on
-> 2026-09-15. Active profile 5 adds reviewed standard-import identities;
+> 2026-09-15. Profile 5 added reviewed standard-import identities;
 > its [October 1 final report](../../test/fixtures/tla-frontend/differential/evidence/profile5-20261001-final/summary.md)
-> passes for captured inputs/tools, with unsupported surfaces explicit.
+> passed for captured inputs/tools, with unsupported surfaces explicit.
+> Active profile 6 follows the 2026-10-24 SANY build and removes the public
+> `Bags -> TLC` import; its local migration is provisional pending fresh live
+> differential qualification. Profile-5 approvals are archived separately.
 > Sections 17.7–17.8 and 18.8–18.11 retain earlier profile history.**
 >
 > Design authority: [general TLA+ frontend](tla-frontend-design.md)

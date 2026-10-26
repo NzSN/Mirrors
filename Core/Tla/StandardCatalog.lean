@@ -6,7 +6,7 @@ invented operator declarations; the elaborator retains its reviewed facts.
 -/
 namespace Core.Tla
 
-def standardCatalogIdentity : String := "mirrors-standard-modules/v2"
+def standardCatalogIdentity : String := "mirrors-standard-modules/v3"
 def standardCatalogBaseline : String := "TLA+ Tools 1.8.0"
 
 /-- SHA-256 of the exact module bytes in the verified standalone 1.8.0 jar.
@@ -18,7 +18,7 @@ def standardModuleContentSha256? (name : String) : Option String :=
     ("Reals", "33cc699c0139b39fcee903d4dde255b64a0b430291630aa4825c6dd32b2f2fa2"),
     ("Sequences", "f613cffe14133769f0972b6f6e0139aaf0773004a51bac88ada382426e3eb7f4"),
     ("FiniteSets", "d94cb545256539bf782fc1914842dfe8c19c1d3d4e48b8327dd0c47b74922e1e"),
-    ("Bags", "da36710bc779e289887d95c1f208214daf0c9a0ab0b0e2636086a8c17737e670"),
+    ("Bags", "a2b668a8cf375b9ef9f2c14fdba742137ab8722ade0f41f11965c67acba76c39"),
     ("TLC", "944ece590eec81ace059881c2a62064c06041efa81539a788cd40fa7d1da41ce"),
     ("TLCExt", "6c3e7e54cf1b8a4d2d1c7a5fd088f06452edce68ec28d8be99392cc0037a5399"),
     ("Toolbox", "9deac1facb0b71809714229dace116da75f80bf4c65b707ff40026f380c7804a"),
@@ -34,7 +34,6 @@ structure StandardDependency where
 def standardDependencies : Array StandardDependency := #[
   { owner := ⟨"Integers"⟩, dependency := ⟨"Naturals"⟩ },
   { owner := ⟨"Reals"⟩, dependency := ⟨"Integers"⟩ },
-  { owner := ⟨"Bags"⟩, dependency := ⟨"TLC"⟩ },
   { owner := ⟨"RealTime"⟩, dependency := ⟨"Reals"⟩ },
   { owner := ⟨"Sequences"⟩, dependency := ⟨"Naturals"⟩, localOnly := true },
   { owner := ⟨"FiniteSets"⟩, dependency := ⟨"Naturals"⟩, localOnly := true },

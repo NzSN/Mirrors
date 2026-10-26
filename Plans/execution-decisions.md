@@ -6,7 +6,28 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
-## Current continuation — 2026-10-25
+## Current continuation — 2026-10-26
+
+Committed `658b9ef` supplies temporary-root canonicalization and the October 25
+qualification record. This change repairs the Windows model-interface
+stale-path/race regressions and, at the user's explicit request, advances the
+frontend to provisional profile 6 for the new SANY artifact. See the
+[Windows repair](windows-compiler-temp-path-fix-evidence-20261026/README.md) and
+[SANY re-pin](sany-repin-profile6-evidence-20261026/README.md) records.
+Profile-5 approvals are archived unchanged. The complete no-model aggregate
+passes with ext4 `TMPDIR`, including 63 offline differential tests with four
+documented skips. No live model or production deployment occurred.
+
+The separate [October 26 service record](windows-service-upgrade-evidence-20261026/README.md)
+curates the earlier `v0.1.0` upgrade without extending it to current health,
+reboot/service-manager acceptance or full-framework qualification.
+
+Remaining qualification is fresh Java 25 required differential execution and
+actual difference review before profile-6 acceptance. Release and
+current-candidate qualification require a fresh identity freeze; they do not
+inherit this working-tree evidence or the October 25 M5 result.
+
+## Previous continuation — 2026-10-25
 
 The pre-publication working-tree candidate qualifies for `m5-wsl-windows-remote/v1`,
 class `local-candidate`, at C0

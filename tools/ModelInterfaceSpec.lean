@@ -1194,8 +1194,8 @@ def scenarioCliDiagnostics (fails : Failures) : IO Unit := do
     check fails "cli diagnostics json: stale check exit code"
       (checkOutput.exitCode == 1) (toString checkOutput.exitCode)
     let expectedStaleSummary :=
-      s!"stale: {(staleOutput / ".model-interface-generated.json").toString}\n" ++
-      s!"stale: {(staleOutput / "CounterMirror.generated.ts").toString}\n"
+      s!"stale: {staleOutput.toString}/.model-interface-generated.json\n" ++
+      s!"stale: {staleOutput.toString}/CounterMirror.generated.ts\n"
     check fails "cli diagnostics json: stale summary remains exact stdout"
       (checkOutput.stdout == expectedStaleSummary)
       (s!"stdout={checkOutput.stdout}, stderr={checkOutput.stderr}")
@@ -1834,8 +1834,8 @@ private def makeSymlink (target link : System.FilePath) : IO (Except String Unit
   return .error output.stderr
 
 private partial def injectUnownedWhenStaged (directory target : System.FilePath)
-    (remaining : Nat) : IO Bool := do
-  if remaining == 0 then return false
+    (deadlineMs : Nat) : IO Bool := do
+  if (← IO.monoMsNow) ≥ deadlineMs then return false
   try
     if ← directory.pathExists then
       let entries ← directory.readDir
@@ -1846,8 +1846,19 @@ private partial def injectUnownedWhenStaged (directory target : System.FilePath)
         handle.flush
         return true
   catch _ => pure ()
-  IO.sleep 1
-  injectUnownedWhenStaged directory target (remaining - 1)
+  IO.sleep 0
+  injectUnownedWhenStaged directory target deadlineMs
+
+private def startUnownedInjection (directory target : System.FilePath)
+    (timeoutMs : Nat) : IO (Task (Except IO.Error Bool)) := do
+  let started ← IO.mkRef false
+  let injection ← IO.asTask (prio := Task.Priority.dedicated) (do
+    started.set true
+    let deadlineMs := (← IO.monoMsNow) + timeoutMs
+    injectUnownedWhenStaged directory target deadlineMs)
+  while !(← started.get) do
+    IO.sleep 1
+  return injection
 
 def scenarioFilesystemHardening (fails : Failures)
     (resolved : ResolvedModelInterface) : IO Unit := do
@@ -2025,8 +2036,7 @@ def scenarioFilesystemHardening (fails : Failures)
           let lockRaceDir := temporaryRoot / "lock-race"
           let lockRaceTarget := lockRaceDir / "Counter.lock.json"
           IO.FS.createDir lockRaceDir
-          let lockInjection ← IO.asTask (prio := Task.Priority.dedicated)
-            (injectUnownedWhenStaged lockRaceDir lockRaceTarget 5000)
+          let lockInjection ← startUnownedInjection lockRaceDir lockRaceTarget 5000
           let lockRaceCompilation := {
             compilation with
               lockBytes := ByteArray.mk
@@ -2167,8 +2177,7 @@ def scenarioFilesystemHardening (fails : Failures)
               Shell.ModelInterface.Compiler.generatedManifestPath]).toUTF8 }
       ]
     }
-    let injection ← IO.asTask (prio := Task.Priority.dedicated)
-      (injectUnownedWhenStaged raceOut raceTarget 5000)
+    let injection ← startUnownedInjection raceOut raceTarget 5000
     let raceResult ← Shell.ModelInterface.Compiler.writeGeneratedTree
       raceOut.toString raceTree
     let injectionResult : Except IO.Error Bool := injection.get
@@ -2209,8 +2218,7 @@ def scenarioFilesystemHardening (fails : Failures)
               bytes := originalManifest }
           ]
         }
-        let rollbackInjection ← IO.asTask (prio := Task.Priority.dedicated)
-          (injectUnownedWhenStaged rollbackOut rollbackVictim 5000)
+        let rollbackInjection ← startUnownedInjection rollbackOut rollbackVictim 5000
         let rollbackResult ← Shell.ModelInterface.Compiler.writeGeneratedTree
           rollbackOut.toString rollbackTree
         let rollbackInjectionResult : Except IO.Error Bool :=

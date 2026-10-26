@@ -301,7 +301,7 @@ units by normalized source bytes, rather than a reprinted syntax tree.
 `Frontend.analyze` resolves one captured graph, then elaborates
 declarations, `EXTENDS` visibility, `INSTANCE` substitutions, arities and
 expression levels. The active language/parser identity is
-`mirrors-tla-frontend-profile-5`; use the
+`mirrors-tla-frontend-profile-6`; use the
 [language profile](model-interface-compiler/tla-language-profile.md) for its
 accepted subset. This is not an evaluator, model checker, arbitrary type
 inference engine, PlusCal translator, or TLAPS proof checker.

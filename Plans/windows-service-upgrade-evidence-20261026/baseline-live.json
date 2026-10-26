@@ -1,0 +1,35 @@
+{
+  "endpoint": "192.168.150.219:8999",
+  "tls": "TLSv1.3",
+  "serverLeafSha256": "b2fc7265145cf2b89a1a248b0932885df8d300121b47f7854317ece4bac9ce67",
+  "checks": [
+    {
+      "async": false,
+      "step": 1,
+      "exit": 0,
+      "verdict": "valid",
+      "log": "baseline-sync-valid.log"
+    },
+    {
+      "async": false,
+      "step": -1,
+      "exit": 1,
+      "verdict": "invalid",
+      "log": "baseline-sync-invalid.log"
+    },
+    {
+      "async": true,
+      "step": 1,
+      "exit": 0,
+      "verdict": "valid",
+      "log": "baseline-async-valid.log"
+    },
+    {
+      "async": true,
+      "step": -1,
+      "exit": 1,
+      "verdict": "invalid",
+      "log": "baseline-async-invalid.log"
+    }
+  ]
+}

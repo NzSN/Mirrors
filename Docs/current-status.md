@@ -1,7 +1,7 @@
 # Current framework status and navigation
 
-Source status refreshed 2026-10-25 against `v0.1.1` (`81b1f76`) plus the
-temporary-root canonicalization repair in the working tree. The DPM
+Source status refreshed 2026-10-26 against committed temporary-root
+canonicalization in `658b9ef` and the scoped October 26 changes below. The DPM
 build-preparation fix is committed in `03510b4`. Mirrors reducer/CLI tooling
 landed in `c17bae9`; the October 15 client-conformance repairs landed in `d1c5e74`.
 These source identities do not replace the exact runtime and source hashes in
@@ -33,6 +33,31 @@ acceptance.
 The [October 9 documentation audit](../Plans/documentation-sync-2026-10-09.md)
 remains a historical full source-navigation audit across linked repositories; this
 refresh reconciles maintained status and the affected DPM ownership paths.
+
+## October 26 scoped continuation
+
+The [Windows model-interface repair](../Plans/windows-compiler-temp-path-fix-evidence-20261026/README.md)
+resolves the eight stale-path/race assertions; the initial Windows pass was
+followed by three consecutive repeats. Production publication/rollback code is
+unchanged. The upstream `658b9ef` temporary-root implementation and its broader
+regressions are retained instead of the independently developed local duplicate.
+
+The explicitly requested [SANY re-pin and profile-6 migration](../Plans/sany-repin-profile6-evidence-20261026/README.md)
+binds the new jar and its changed standard-library identity. Because `Bags`
+no longer publicly extends `TLC`, the migration advances to
+`mirrors-tla-frontend-profile-6` and `mirrors-standard-modules/v3`, preserves
+profile-5 approvals in a byte-identical archive, and starts a new unreviewed
+difference registry. The complete no-model aggregate passes with ext4 `TMPDIR`:
+728 build jobs and all configured gates are green. Profile 6 remains provisional
+pending fresh Java 25 live differential qualification; the coordinator's Java
+21 does not satisfy that unchanged runtime pin.
+
+A separate [October 26 Windows service record](../Plans/windows-service-upgrade-evidence-20261026/README.md)
+observes a scoped upgrade to `v0.1.0` (`b243b37`) on the native Windows
+`ModelMirrors` service. Six focused runtime suites and the live positive/
+negative controls passed; full `lake test`, complete cross-client qualification
+and reboot/service-lifecycle acceptance did not run. This retained observation
+does not establish current service health or v0.1.1 deployment.
 
 ## Qualified scope and evidence
 

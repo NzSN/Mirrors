@@ -5,6 +5,62 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-26 — SANY re-pin advances provisional frontend profile 6
+
+At the user's explicit request, the standalone SANY pin now binds the newly
+served jar at build revision `2ef2af8`, SHA-256 `d15655ee…`, and its changed
+standard-library identity. The new `Bags.tla` removes public `Bags -> TLC`, so
+this is a catalog/profile migration rather than a hash-only refresh:
+`mirrors-standard-modules/v3` and `mirrors-tla-frontend-profile-6` are active.
+Profile-5 approvals are archived byte-identically and are not renewed. Exact
+identities and limits are in [the re-pin evidence](Plans/sany-repin-profile6-evidence-20261026/README.md).
+
+All 61 corpus fixtures match through the real frontend. Offline differential
+tests pass 59 with four documented skips, and the complete no-model aggregate
+passes with ext4 `TMPDIR`: 728 build jobs and `ALL LOCAL NON-MODEL GATES GREEN`.
+The coordinator's Java 21 fails the unchanged Java 25.0.4+7 runtime pin.
+Fresh required live differential runs and actual difference review remain
+pending; profile 6 receives no historical profile-5 or framework qualification.
+
+## 2026-10-26 — Windows compiler and temporary-path repairs validated
+
+Against Mirrors `81b1f76`, an uncommitted repair canonicalizes existing
+temporary-directory bases before constructing owned Apalache session paths.
+The model-interface Windows tests now use the compiler's actual stale-path
+separator spelling and a started, wall-clock-bounded concurrent injector;
+production publication/rollback code is unchanged. The local no-model runner
+adds a permanent trailing-`TMPDIR` trace-diagnostic regression. Exact source,
+archive, binary and result identities are in
+[the repair evidence](Plans/windows-compiler-temp-path-fix-evidence-20261026/README.md).
+
+The original eight Windows `model_interface_spec` assertions now pass, followed
+by three additional consecutive Windows passes. Windows Apalache pure/unit
+checks pass with trailing temporary-path variables; live integration remains
+skipped. Local trace failure fixtures pass with `/tmp`, `/tmp/` and `/tmp//`.
+The full local aggregate built 728 jobs but is not green: the ext4 run reached
+three offline acquisition failures/errors caused by missing original pinned
+artifacts, and the currently served SANY jar failed the existing hash pin.
+All commands after that aggregate step passed separately. Live models, full
+cross-client qualification, service reboot, production deployment, commit,
+push, tagging and publication remain outside this scoped result.
+
+During publication rebase, upstream `658b9ef` independently supplied the
+temporary-root implementation and broader suffix regressions. That upstream
+implementation is retained and the duplicate local runner change is dropped;
+the pre-rebase evidence above remains unchanged history. The Windows
+model-interface stale-path/race repair remains in the delivered change.
+
+## 2026-10-26 — Scoped Windows v0.1.0 service upgrade retained
+
+[The retained service record](Plans/windows-service-upgrade-evidence-20261026/README.md)
+observes `ModelMirrors` upgraded from 0.0.2 to `v0.1.0` at source `b243b37`,
+running in automatic-start mode on port 8999. Six focused runtime suites pass;
+synchronous/asynchronous positive and negative live controls behave as
+expected. The original eight compiler failures remain recorded as failures.
+Full `lake test`, the complete cross-client matrix and reboot testing did not
+run. This is neither current health evidence nor full service-manager,
+framework or v0.1.1 qualification.
+
 ## 2026-10-25 — Publication boundary recorded
 
 The user authorized commit and push of the temporary-root sanitizer repair,

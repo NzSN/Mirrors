@@ -1,0 +1,44 @@
+{
+    "observedAt":  "2026-10-26T04:15:02.9611151Z",
+    "host":  "DESKTOP-6DKB5JD",
+    "service":  "ModelMirrors",
+    "serviceStatus":  "Running",
+    "oldVersion":  "Mirrors 0.0.2",
+    "files":  [
+                  {
+                      "name":  "ModelMirrors.exe",
+                      "sha256":  "194fc1ca8b66f8ab559644eff832e722839d6aaabb2d76d1e20d20b7f25a74ed"
+                  },
+                  {
+                      "name":  "apalache-mc.exe",
+                      "sha256":  "647d5a4924571f7fc605bf08f20dbb8f5abf956b993d151e737e5928aaa2cc94"
+                  },
+                  {
+                      "name":  "libssl-3-x64.dll",
+                      "sha256":  "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c"
+                  },
+                  {
+                      "name":  "libcrypto-3-x64.dll",
+                      "sha256":  "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7"
+                  },
+                  {
+                      "name":  "zlib1.dll",
+                      "sha256":  "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5"
+                  }
+              ],
+    "application":  "D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+    "directory":  "D:\\ModelMirrors",
+    "arguments":  "--server 8999 --tls --cert D:\\ModelMirrors\\certs\\server.crt --key D:\\ModelMirrors\\certs\\server.key --ca D:\\ModelMirrors\\certs\\ca.crt --jobs 4",
+    "environment":  [
+                        "APALACHE_MC=D:\\ModelMirrors\\bin\\apalache-mc.exe",
+                        "TEMP=D:\\ModelMirrors\\tmp",
+                        "TMP=D:\\ModelMirrors\\tmp",
+                        "LC_ALL=C.UTF-8",
+                        "LANG=C.UTF-8",
+                        "PATH=C:\\Windows\\System32;C:\\Windows;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath",
+                        ""
+                    ],
+    "stdout":  "D:\\ModelMirrors\\logs\\service.out.log",
+    "stderr":  "D:\\ModelMirrors\\logs\\service.err.log",
+    "rollback":  "D:\\ModelMirrors\\releases\\20261026-v0.1.0-b243b37\\previous-ModelMirrors.exe"
+}

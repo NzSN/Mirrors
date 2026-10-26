@@ -1,0 +1,35 @@
+{
+  "endpoint": "192.168.150.219:19099",
+  "tls": "TLSv1.3",
+  "serverLeafSha256": "b2fc7265145cf2b89a1a248b0932885df8d300121b47f7854317ece4bac9ce67",
+  "checks": [
+    {
+      "async": false,
+      "step": 1,
+      "exit": 0,
+      "verdict": "valid",
+      "log": "candidate-sync-valid.log"
+    },
+    {
+      "async": false,
+      "step": -1,
+      "exit": 1,
+      "verdict": "invalid",
+      "log": "candidate-sync-invalid.log"
+    },
+    {
+      "async": true,
+      "step": 1,
+      "exit": 0,
+      "verdict": "valid",
+      "log": "candidate-async-valid.log"
+    },
+    {
+      "async": true,
+      "step": -1,
+      "exit": 1,
+      "verdict": "invalid",
+      "log": "candidate-async-invalid.log"
+    }
+  ]
+}

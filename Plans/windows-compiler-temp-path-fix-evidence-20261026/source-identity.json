@@ -1,0 +1,31 @@
+{
+  "schema": "mirrors.windows-compiler-temp-path-fix/v1",
+  "baseCommit": "81b1f769f84372410a4bee787549d4f484bbcf45",
+  "state": "uncommitted working-tree repair",
+  "changedFiles": [
+    {
+      "path": "Shell/Apalache/SpecSource.lean",
+      "sha256": "34af6065b4761f71c5f658b26f8566eb48174f85d36382cc468a7b597c5c5302"
+    },
+    {
+      "path": "tools/ModelInterfaceSpec.lean",
+      "sha256": "523c5aced4db25a313d3ee2487eddbf26f8d822a0eea3681e6c0b45be9728d75"
+    },
+    {
+      "path": "tools/run-local-no-model-check.sh",
+      "sha256": "60819b64eb4f54805ce547025a6aeb29876603d393b838081fa35314200cd8b4"
+    }
+  ],
+  "codeDiffSha256": "efa2bab041ff3c0daadcafbb83f8265d28675f92bb23e55293e51db594edae4f",
+  "windowsSourceArchiveSha256": "c106bdb33e7853856040ae5fd0e21fcae4e0293cc2424b6272d0b10bc02e1f4c",
+  "windowsRoot": "D:\\ModelMirrors\\staging\\windows-fix-20261026-81b1f76",
+  "localBinaries": {
+    "model_interface_spec": "6421f2f5e0a1fb1d13df31dec6ea248de197f03b1ebae9af779f1d227fd04e15",
+    "apalache_cli_spec": "4507491562af0a4c70da9971c1e6436f48f3f27a5770213fe48c1db5a29bd790",
+    "trace_generation_transport_repro_spec": "4614e64366c434ed7d3ef247a4adfb153bccb6ffbf4a69ae22424cb44df3e483"
+  },
+  "windowsBinaries": {
+    "model_interface_spec.exe": "2979e5c283473c2823c5be1926f1596b285eaecdc8f559a2ca13869902544920",
+    "apalache_cli_spec.exe": "35b5688bc514012dfa84c0cf071973fc846211341865bc0c72fc18acb3a31ade"
+  }
+}
