@@ -9,7 +9,7 @@ publication remain separate delivery slices.
 
 ## Refreshed baseline
 
-The September 30 [proposal](../Proposals/deterministic-production-mbt.md) is
+The September 30 [proposal](../../Proposals/deterministic-production-mbt.md) is
 historical. MirrorCPP now includes the earlier codec changes at `aa906a5`.
 WriteSentry `62b62298c5c764dc63cde10968c2555a79df1d3c` already has a native phase
 worker, `WRITESENTRY_MBT_PHASES` hooks and a recorded `native-runtime-phase/v3`
@@ -148,7 +148,7 @@ No new hooks or production mutations are introduced in this slice.
 MirrorCPP adds `include/mirrorcpp/schedule.hpp` and `src/schedule.cpp`, the
 `scheduled_counter` fixture, strict schedule serialization, receipts and public
 regression tests. CMake exports the thread dependency; the installed consumer
-smoke runs the public scheduler. [Usage and lifecycle contract](../../MirrorCPP/docs/deterministic-scheduling.md).
+smoke runs the public scheduler. [Usage and lifecycle contract](../../../MirrorCPP/docs/deterministic-scheduling.md).
 
 - Warning-as-error full MirrorCPP build passed with the cached dependencies.
 - **615 assertions / 18 focused scheduler cases** passed. These include 80 fresh
@@ -172,7 +172,7 @@ smoke runs the public scheduler. [Usage and lifecycle contract](../../MirrorCPP/
 - The observer-hook reentry regression was observed timing out before the guard,
   then passed with an explicit observation failure and confirmed actor cleanup.
 
-[Retained local acceptance](dpm1-evidence-20261004/acceptance.json) records exact
+[Retained local acceptance](../dpm1-evidence-20261004/acceptance.json) records exact
 source and executable hashes, replay receipts, test logs and the exercised scope.
 No model checker ran, no production WriteSentry source changed, and no commit,
 package publication or new M5 qualification is claimed for this work.

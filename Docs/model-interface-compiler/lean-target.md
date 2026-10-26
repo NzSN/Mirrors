@@ -75,7 +75,7 @@ exposes a separately observed peer-fingerprint value.
   compiles generated Counter and structural types against a fresh SDK source
   copy, runs binding/lifecycle tests, and requires invalid native examples to
   fail compilation.
-- [`tools/model-interface-conformance/`](../../tools/model-interface-conformance/)
+- [`tools/model-interface-conformance/`](../../tools/model-interface-conformance)
   runs shared judgment, value, equivalence, projection and recording vectors
   through real generated language consumers.
 - The sibling [SDK tests](../../../MirrorLean/test/ModelInterface.lean) cover

@@ -208,12 +208,12 @@ evaluator obligation. [Detailed proof boundary](architecture-details.md).
 
 The [framework catalog](framework-catalog-contract.md) records component identities,
 capabilities, combinations and evidence references. The
-[distribution tools](../tools/distribution/) freeze source inputs, build locked
+[distribution tools](../tools/distribution) freeze source inputs, build locked
 caches, verify bytes and runtime trees, and activate versioned installations.
 Checked-replay profiles use prepared corpora; fresh model generation is an
 explicit separate dependency path.
 
-[Evidence tooling](../tools/evidence/) collects registered commands and required
+[Evidence tooling](../tools/evidence) collects registered commands and required
 artifacts, finalizes immutable bundles, and verifies hashes and qualification
 relationships offline. Installed runs bind to the matching distribution audit;
 reproduction and reduction retain their origin/dependency links. Behavior,
@@ -224,7 +224,7 @@ pins the actual ECMA SDK and Node bytes before and after execution.
 
 See [durable evidence](durable-evidence-design.md) and the
 [qualification harness](qualification-harness-design.md). The
-[2026-10-03 readiness record](../Plans/q3-integrity-fixes-2026-10-03.md) describes
+[2026-10-03 readiness record](../Plans/completed/q3-integrity-fixes-2026-10-03.md) describes
 one exercised WSL2/client and native-Windows/oracle deployment. Its acceptance
 is tied to the recorded C0 and profile, not automatically to later commits or
 documentation edits. That topology is not a requirement of the general runtime.

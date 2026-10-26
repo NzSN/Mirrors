@@ -1,7 +1,7 @@
 # DPM-2 through DPM-5 local acceptance — 2026-10-04
 
 Overall status: **Partial**. The detailed execution plan is
-[here](../deterministic-production-mbt-dpm2-dpm5.md). The
+[here](../completed/deterministic-production-mbt-dpm2-dpm5.md). The
 [acceptance manifest](acceptance.json) binds retained files, current source inputs
 and exercised binary hashes. No remote model checker or native Windows pilot was
 run for this acceptance.

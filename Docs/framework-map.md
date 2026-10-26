@@ -18,7 +18,7 @@ revisions, even when a repository advances.
 
 ## Current acceptance and scheduling
 
-[Current status](current-status.md) and [published readiness](../Plans/q3-published-roadmap-2026-10-07.md)
+[Current status](current-status.md) and [published readiness](../Plans/completed/q3-published-roadmap-2026-10-07.md)
 record the qualified `m5-wsl-windows-remote/v1` candidate: 18 commands/16 tiers,
 19 linked nodes, 20 independently verified bundles and six rejected controls.
 Broader M4, new platform backends and package-publication remain separate.
@@ -62,7 +62,7 @@ or full-framework qualification.
 | MirrorLean | Lean client, recursive model sources, synchronous replay, required compiled verification and typed server async jobs | [README](../../MirrorLean/README.md), [generated target](model-interface-compiler/lean-target.md) |
 | MirrorGate | Shared controller, policy, isolation, snapshots, worker lifecycle, native SDKs and optional evaluator integrations | [README](../../MirrorGate/README.md), [SDK/facade selection](../../MirrorGate/docs/client-language-support.md) |
 | MirrorRegistry | Optional Consul-compatible discovery library/CLI; not a checker or worker supervisor | Optional checkout; see [discovery](#sources-traces-and-discovery) |
-| MirrorExamples | Counter/RBT examples and retained model/trace corpora | Optional checkout; this repository also retains [fixtures](../test/fixtures/) |
+| MirrorExamples | Counter/RBT examples and retained model/trace corpora | Optional checkout; this repository also retains [fixtures](../test/fixtures) |
 | ModelMirrors | Haskell reference implementation and historical protocol/deployment material | [README](../../ModelMirrors/README.md) |
 
 The executable name `ModelMirrors` can identify different implementations.

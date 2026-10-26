@@ -7,7 +7,7 @@ strict catalog, distribution and evidence tooling. It is not itself a support
 catalog. [Current status](current-status.md) links the October 7 qualification;
 the C1 baseline below remains a dated inventory. Repository
 identities and dirty state are recorded in
-[the implementation baseline](../Plans/implementation-baseline.md).
+[the implementation baseline](../Plans/completed/implementation-baseline.md).
 
 ## Fact ownership
 

@@ -5,22 +5,22 @@ Date: 2026-09-30
 Current summary (2026-10-07): DPM-0–DPM-5 are accepted for declared C++, Node-worker
 and Rust-thread profiles. See [current scheduling](../Docs/deterministic-scheduling.md)
 and the exact retained pilot/package records linked below. The framework's
-[October 7 M5 profile](../Plans/q3-published-roadmap-2026-10-07.md) has its own frozen
+[October 7 M5 profile](../Plans/completed/q3-published-roadmap-2026-10-07.md) has its own frozen
 scope; neither result implies full WriteSentry, new Gate backends or unrestricted
 thread preemption. The decision-request/interface sketches are proposal history.
 
 Historical status (2026-10-04): DPM-0 design and the DPM-1 portable MirrorCPP coordinator
 and concurrent fixture are implemented and locally accepted. See the
-[DPM-0/DPM-1 design and acceptance record](../Plans/deterministic-production-mbt-dpm0-dpm1.md).
+[DPM-0/DPM-1 design and acceptance record](../Plans/completed/deterministic-production-mbt-dpm0-dpm1.md).
 DPM-2 generated replay, the bounded DPM-3 native pilot, DPM-4 finite local
 exploration and DPM-5 installed acceptance now pass for their declared profiles.
-See the [detailed execution plan](../Plans/deterministic-production-mbt-dpm2-dpm5.md)
+See the [detailed execution plan](../Plans/completed/deterministic-production-mbt-dpm2-dpm5.md)
 and [final scoped acceptance](../Plans/dpm2-dpm5-qualified-20261004/README.md).
 These results do not extend full WriteSentry qualification or the selected M5 candidate.
 
 Update (2026-10-05): DPM-0–DPM-5 also pass for MirrorECMA's Node-worker and
 MirrorRust's cooperative-thread profiles. See the
-[language plan](../Plans/dpm-mirrorecma-mirrorrust.md) and
+[language plan](../Plans/completed/dpm-mirrorecma-mirrorrust.md) and
 [retained installed acceptance](../Plans/dpm-languages-evidence-20261005/README.md).
 These are additional experimental client profiles with the same explicit limits.
 

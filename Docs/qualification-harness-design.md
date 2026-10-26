@@ -5,7 +5,7 @@ Date: 2026-09-22
 Status: source commands, installed adapters, linked Q1 and independent offline
 Q2 are implemented. The current named profile `m5-wsl-windows-remote/v1`
 qualifies at the exact published revisions in
-[October 7 readiness](../Plans/q3-published-roadmap-2026-10-07.md): 18 commands/16
+[October 7 readiness](../Plans/completed/q3-published-roadmap-2026-10-07.md): 18 commands/16
 tiers, two D bindings, 19 nodes, 20 bundles and six rejected controls. This design
 describes mechanisms; source or documentation changes do not renew that evidence.
 

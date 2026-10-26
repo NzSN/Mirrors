@@ -13,7 +13,7 @@ housekeeping](compiler-client-followups-2026-10-03.md), which are complete.
 ## Scope and sequence
 
 This implements the five M6 clauses in
-[the compiler design](../Docs/model-interface-compiler/design.md#m6-reviewed-scaffolds-and-evidence-corpora).
+[the compiler design](../../Docs/model-interface-compiler/design.md#m6-reviewed-scaffolds-and-evidence-corpora).
 
 1. **Merge evidence and bind inputs.** Accept repeated scaffold evidence inputs;
    canonicalize compatible structural facts and observed phase labels; reject
@@ -175,9 +175,9 @@ remain outside this plan. No commit, push or package publication is included.
 | Workflow lock file | `1e9935df6e1463572098a83db89399c07b1ad36abf5772e985c9e2d1953f0c9a` |
 
 All five M6 clauses are satisfied at this scope. The
-[workflow reference](../Docs/model-interface-compiler/reviewed-corpora.md),
-[public fixture](../test/fixtures/model-interface/projected-cells/README.md) and
-[interop gate](../tools/model-interface-projected-corpus/README.md) describe the
+[workflow reference](../../Docs/model-interface-compiler/reviewed-corpora.md),
+[public fixture](../../test/fixtures/model-interface/projected-cells/README.md) and
+[interop gate](../../tools/model-interface-projected-corpus/README.md) describe the
 maintained interfaces and reproduction command. Publication commits are recorded
-in [CHECKPOINTS.md](../CHECKPOINTS.md). The published component revisions passed the
+in [CHECKPOINTS.md](../../CHECKPOINTS.md). The published component revisions passed the
 [named M5 profile](q3-published-2026-10-03.md), including independent Q2.

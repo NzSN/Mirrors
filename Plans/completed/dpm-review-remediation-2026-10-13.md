@@ -3,7 +3,7 @@
 Date: 2026-10-13
 Status: completed 2026-10-14 for the declared remote WSL scope.
 
-[Final evidence](dpm-review-remediation-evidence-20261014/README.md) records both
+[Final evidence](../dpm-review-remediation-evidence-20261014/README.md) records both
 remote gate exits 0, exact source/runtime/installation identities, independent
 review and preserved superseded diagnostics. All final heavy qualification ran
 on the owned remote WSL host; no fresh model checker, commit, push or production

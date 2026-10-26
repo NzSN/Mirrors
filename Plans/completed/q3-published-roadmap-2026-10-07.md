@@ -39,8 +39,8 @@ The selected compatibility ECMA runtime and Node carrier are independently
 hash-verified. Current generated-client/DPM feature scope remains separately
 qualified; this compatibility matrix retains its declared client pins.
 
-The [acceptance](m5-published-roadmap-evidence-20261007/acceptance.json) and
-[independent result](m5-published-roadmap-evidence-20261007/independent-verification.json)
+The [acceptance](../m5-published-roadmap-evidence-20261007/acceptance.json) and
+[independent result](../m5-published-roadmap-evidence-20261007/independent-verification.json)
 retain exact bindings. The six controls reject missing artifacts, changed bytes,
 wrong D component binding, wrong R0→R1 linkage, wrong R1→R5 linkage and incomplete
 required-command profile. The Q2 result SHA-256 is

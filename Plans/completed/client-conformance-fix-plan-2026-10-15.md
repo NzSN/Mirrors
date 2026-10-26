@@ -2,7 +2,7 @@
 
 Date: 2026-10-15. Status: proposed for review; implementation has not started.
 
-Repair the seven implementation gaps from the [client audit](../tmp/reports/client-conformance-2026-10-15/index.html), reconcile its two shared contract discrepancies, and retain explicit follow-up coverage for the additional observations. Six gaps have remote reproductions; the Haskell framing gap is confirmed from source. Each repair must pass a normal case, the original failure case, and an integration edge before receiving acceptance.
+Repair the seven implementation gaps from the [client audit](../../tmp/reports/client-conformance-2026-10-15/index.html), reconcile its two shared contract discrepancies, and retain explicit follow-up coverage for the additional observations. Six gaps have remote reproductions; the Haskell framing gap is confirmed from source. Each repair must pass a normal case, the original failure case, and an integration edge before receiving acceptance.
 
 The recommended contract choices are to preserve a server-mode connection after a rejected async submission, and to enforce the existing exact POSIX `0600` key rule consistently. All build and runtime validation belongs on remote Windows-dev Ubuntu WSL. This request produces the plan and its review; implementation, commits, publication and deployment are subsequent work.
 
@@ -28,7 +28,7 @@ Before implementation, record fresh heads, tracked diffs, toolchains and affecte
 
 ### D1 Make terminal behavior depend on the operation
 
-Recommend the following clarification to C5, section 10, the [interface reference](../Docs/interface-reference.md), and [async design](../Docs/async-enablement-design.md). No wire tags or job-ID formats change.
+Recommend the following clarification to C5, section 10, the [interface reference](../../Docs/interface-reference.md), and [async design](../../Docs/async-enablement-design.md). No wire tags or job-ID formats change.
 
 | Context and result | Required continuation |
 | --- | --- |
@@ -203,7 +203,7 @@ After a normal rebuild, repeat the no-change incremental build and deterministic
 
 The main fixes can be accepted with scripted protocol peers, real TLS peers, fake model runners and actual Gate control/worker processes, all on remote WSL. No new model run is necessary to prove these error paths. Actual Gate admission/protocol/deadline controls are required for C1; the previous fake-transport test alone is insufficient. Gate's broad control conformance runner starts local Apalache: use the supplied-trace/focused control path for this repair, rather than inheriting that runner's live tiers.
 
-A later full cross-client/live qualification must follow [interop instructions](../tools/interop/INTEROP.md) with an owned remote service and explicit full Mirrors SHA. Reobserve its endpoint, binary, runtime, current certificate validity and pins first. The old October 7 certificate identity expired and cannot authorize a current connection. Never invoke `tools/interop/run.sh` or `lake test` blindly here: both can lead into local model-checker tiers.
+A later full cross-client/live qualification must follow [interop instructions](../../tools/interop/INTEROP.md) with an owned remote service and explicit full Mirrors SHA. Reobserve its endpoint, binary, runtime, current certificate validity and pins first. The old October 7 certificate identity expired and cannot authorize a current connection. Never invoke `tools/interop/run.sh` or `lake test` blindly here: both can lead into local model-checker tiers.
 
 Hosted CI must still confirm the selected compiler/tool pins and all required gates. Native Windows/macOS TLS/ACL behavior, broader Gate backends, and any full-current-source qualification remain separate from WSL acceptance. Unsupported tiers are recorded as unverified, not successful skips.
 
@@ -215,6 +215,6 @@ Keep changes in cohesive per-repository units: contracts/session semantics; TLS/
 
 ## Plan review
 
-Independent review completed with no remaining material findings in the reviewed plan. Four corrections were incorporated: isolate Lean's live-test trigger, use the repository's Jest invocation, make synchronous dispatch termination and owner cleanup explicit, and complete D2/K1 dependencies and ownership. The [review record](../tmp/reports/client-conformance-2026-10-15/fix-plan/independent-review.md) retains the findings and their resolution.
+Independent review completed with no remaining material findings in the reviewed plan. Four corrections were incorporated: isolate Lean's live-test trigger, use the repository's Jest invocation, make synchronous dispatch termination and owner cleanup explicit, and complete D2/K1 dependencies and ownership. The [review record](../../tmp/reports/client-conformance-2026-10-15/fix-plan/independent-review.md) retains the findings and their resolution.
 
 This verdict covers the proposed repair design, task boundaries and source-backed validation commands. Implementation and all new build/runtime acceptance results remain pending.

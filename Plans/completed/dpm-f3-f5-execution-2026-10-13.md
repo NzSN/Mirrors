@@ -23,7 +23,7 @@ The immutable earlier M5 record never qualifies these new source changes.
 ## Completion
 
 All six stages are accepted within their recorded scope.
-[October 13 evidence](dpm-f3-f5-evidence-20261013/README.md) binds the exact
+[October 13 evidence](../dpm-f3-f5-evidence-20261013/README.md) binds the exact
 source files, installed selection, fresh consumers, commands and raw receipts.
 F3 is finite-catalog reduction; F4 is current Linux/WSL2 installed acceptance;
 F5 is a C++ local controlled-resource prototype with no model comparison.

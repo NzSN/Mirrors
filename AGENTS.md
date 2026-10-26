@@ -43,11 +43,11 @@ continuation work, read `Docs/current-status.md`, the newest `CHECKPOINTS.md`
 entry, and `Plans/execution-decisions.md` before selecting work. September stop
 instructions and original queued task cards are historical; their frozen
 identities remain in dated readiness reports and the archived
-`Plans/framework-checkpoint-reference-2026-09-22.md`.
+`Plans/completed/framework-checkpoint-reference-2026-09-22.md`.
 
 The October 7 C0 `94271a54…` qualifies `m5-wsl-windows-remote/v1` at Mirrors
 `f0894d2`, MirrorECMA `eef6f71`, and MirrorGate `455e196`; the exact record is
-`Plans/q3-published-roadmap-2026-10-07.md`. Later source changes require a new
+`Plans/completed/q3-published-roadmap-2026-10-07.md`. Later source changes require a new
 identity freeze and corresponding gates before qualification credit.
 
 DPM-0–DPM-5 are accepted for declared C++/Node-worker/Rust-thread profiles.

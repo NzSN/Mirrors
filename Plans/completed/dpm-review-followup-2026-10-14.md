@@ -2,7 +2,7 @@
 
 Date: 2026-10-14. Status: completed for the declared remote WSL scope.
 
-[Final acceptance](dpm-review-followup-evidence-20261014/README.md) records all
+[Final acceptance](../dpm-review-followup-evidence-20261014/README.md) records all
 required gates, independent source/evidence review and separately frozen inputs.
 The fresh installed and full non-model gates both exited 0. Earlier dossiers
 remain unchanged; no fresh model checking, commit or push was performed.
@@ -17,7 +17,7 @@ The working trees start from Mirrors `6e0cbce8649b818d28431774e27731267598180e`,
 MirrorCPP `75a63dba6b55a4514b8f0d75687066a2c55c8ef7`, MirrorECMA
 `fe9a648136a63a5b348892e69033f44487f641f0`, and MirrorRust
 `76061732f9ad46e063941dd48b10d1d9fb56dcb2`. The preceding
-[qualification](dpm-review-remediation-evidence-20261014/README.md) binds the
+[qualification](../dpm-review-remediation-evidence-20261014/README.md) binds the
 reviewed sources. A subsequent review reproduced three additional findings:
 
 | Finding | Observed failure | Required result |

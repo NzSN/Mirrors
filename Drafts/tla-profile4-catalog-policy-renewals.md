@@ -11,7 +11,7 @@ expected Mirrors outcomes, or the pinned SANY/Apalache behavior previously
 independently reviewed under profile 3.
 
 The fresh required baseline is
-[`checkpoint-s-profile4-catalog-baseline`](../test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline/).
+[`checkpoint-s-profile4-catalog-baseline`](../test/fixtures/tla-frontend/differential/evidence/checkpoint-s-profile4-catalog-baseline).
 It completed 183/183 observations with no unavailable, timeout, crash, or
 incomplete row. Its only findings are fourteen stale profile-3 registry entries
 and the corresponding fourteen outcome differences:

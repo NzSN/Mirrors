@@ -1,6 +1,6 @@
 # Client conformance repairs — accepted in the declared WSL scope
 
-Date: 2026-10-15. The approved [remediation plan](../client-conformance-fix-plan-2026-10-15.md) is implemented. All seven original defects, both contract decisions and the planned compatibility follow-ups have scoped remote acceptance. The TLS dependency probe also established a Haskell SAN defect; its separately reviewed H2 repair passed before acceptance.
+Date: 2026-10-15. The approved [remediation plan](../completed/client-conformance-fix-plan-2026-10-15.md) is implemented. All seven original defects, both contract decisions and the planned compatibility follow-ups have scoped remote acceptance. The TLS dependency probe also established a Haskell SAN defect; its separately reviewed H2 repair passed before acceptance.
 
 The fixes are applied to the actual working trees of Mirrors, MirrorLean, MirrorECMA, MirrorCPP, MirrorGate and ModelMirros. MirrorRust is unchanged and passed fresh transport controls. No product commit, push or deployment was performed. The original plan and audit retain their historical status text; this record supplies the implementation result.
 

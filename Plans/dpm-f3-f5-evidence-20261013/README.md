@@ -114,7 +114,7 @@ ran inside the isolated installed gate.
 | ECMA scheduling/binding/exploration | 23 tests passed |
 | Source-hidden offline fresh consumers | C++, ECMA and Rust passed |
 
-Logs are under [logs](logs/) and [installed/logs](installed/logs/);
+Logs are under [logs](logs) and [installed/logs](installed/logs);
 [toolchains.json](toolchains.json) records the actual compiler/runtime versions.
 C++ SDK unit suites used Debug with warnings as errors. The initial Release unit
 build hit GCC's `maybe-uninitialized` warning in the unchanged
@@ -129,7 +129,7 @@ delivery-delay reproduction failed 10/10 before the fix and passed 10/10 after
 it. MirrorECMA now acknowledges completion before the worker releases the
 bootstrap channel reference. The controller still waits for real exit, and
 late-hook, timeout and cleanup semantics remain covered by the 23-test suite.
-Before/after diagnostics are retained under [diagnostic](diagnostic/).
+Before/after diagnostics are retained under [diagnostic](diagnostic).
 
 ## Qualification limits
 

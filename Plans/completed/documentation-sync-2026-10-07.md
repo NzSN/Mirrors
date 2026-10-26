@@ -116,8 +116,8 @@ pass syntax checks. The exact document inventory is listed below.
 | Mirrors | Docs/remote-server-guide.md |
 | Mirrors | Docs/usage-of-mirror-framework.md |
 | Mirrors | Docs/wsl2-validation.md |
-| Mirrors | Plans/documentation-sync-2026-10-07.md |
-| Mirrors | Plans/roadmap-next-execution-2026-10-07.md |
+| Mirrors | Plans/completed/documentation-sync-2026-10-07.md |
+| Mirrors | Plans/completed/roadmap-next-execution-2026-10-07.md |
 | Mirrors | Proposals/README.md |
 | Mirrors | Proposals/deterministic-production-mbt.md |
 | Mirrors | README.md |

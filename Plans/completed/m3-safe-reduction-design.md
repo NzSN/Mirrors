@@ -31,12 +31,12 @@ This document re-stages, in tracked form, the work-package spec previously held
 at `/tmp/m3-reduction-plan.md` (lost with the 2026-09-27 `/tmp` cleanup) and
 records the design against current source.
 
-Roadmap: [failure capture, replay, and minimization](mirror-framework-improvements.md#3-failure-capture-replay-and-minimization).
-Task cards: [R4/R5](tasks/reproduction-and-fidelity.md#r4---add-safe-deterministic-prefix-reduction).
-Existing contracts: [model-interface reduction](../Docs/model-interface-reduction.md),
-[MirrorECMA reproduction bundles](../../MirrorECMA/docs/reproduction-bundles.md),
+Roadmap: [failure capture, replay, and minimization](../mirror-framework-improvements.md#3-failure-capture-replay-and-minimization).
+Task cards: [R4/R5](../tasks/reproduction-and-fidelity.md#r4---add-safe-deterministic-prefix-reduction).
+Existing contracts: [model-interface reduction](../../Docs/model-interface-reduction.md),
+[MirrorECMA reproduction bundles](../../../MirrorECMA/docs/reproduction-bundles.md),
 [reproduction adapter handoff](../tmp/m5-reproduction-adapter.md).
-Position record: [CHECKPOINTS.md](../CHECKPOINTS.md) (dated execution history).
+Position record: [CHECKPOINTS.md](../../CHECKPOINTS.md) (dated execution history).
 Implementation plan: [m3-safe-reduction-implementation-plan.md](m3-safe-reduction-implementation-plan.md)
 (sequencing, owners, validation commands, re-freeze rules).
 
@@ -143,7 +143,7 @@ claim at all.
 ### 5.1 Historical local-only execution blocker
 
 This subsection records the pre-implementation blocker. The endpoint and
-versions below are historical; the October 1 [Windows oracle decision](execution-decisions.md#2026-10-01--current-windows-host-is-the-designated-remote-oracle)
+versions below are historical; the October 1 [Windows oracle decision](../execution-decisions.md#2026-10-01--current-windows-host-is-the-designated-remote-oracle)
 and current readiness record supersede them.
 
 The local-only `materialize-lease-reduction.mjs` set `process.env.APALACHE_MC`
@@ -228,7 +228,7 @@ the re-freeze rules. The items below are the design-level summary.
    is no longer its prerequisite.
 4. Re-freeze the selection; rerun the reduction tier(s) and every tier the
    change touches; update Q3. **Executed** — rounds m3r1–m3r5; Q3 readiness
-   updated in [q3-readiness-2026-09-30.md](q3-readiness-2026-09-30.md). Later
+   updated in [q3-readiness-2026-09-30.md](../q3-readiness-2026-09-30.md). Later
    full reruns qualified both tiers; [current readiness](q3-published-roadmap-2026-10-07.md)
    records the latest exact candidate.
 

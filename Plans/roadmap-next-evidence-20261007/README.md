@@ -3,7 +3,7 @@
 Date: 2026-10-07
 Status: compiler migration source accepted; full M5 refresh incomplete.
 
-The [execution plan](../roadmap-next-execution-2026-10-07.md) separates source
+The [execution plan](../completed/roadmap-next-execution-2026-10-07.md) separates source
 implementation from full installed/runtime qualification. The `compare-locks`
 command passes 23 controls: identical/provenance-only/semantic differences,
 v1-to-reviewed-v2 provenance, canonical ordering, exact semantic section deltas,

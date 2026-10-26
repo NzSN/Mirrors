@@ -1,6 +1,6 @@
 # Independent review of the client conformance fix plan
 
-Reviewed 2026-10-15. Scope: `Plans/client-conformance-fix-plan-2026-10-15.md`, the aggregate audit, the three contributor planning notes and selected current source/manifest paths. Read-only source review; no implementation, compilation, runtime probes, model operations, commits or deployment performed.
+Reviewed 2026-10-15. Scope: `Plans/completed/client-conformance-fix-plan-2026-10-15.md`, the aggregate audit, the three contributor planning notes and selected current source/manifest paths. Read-only source review; no implementation, compilation, runtime probes, model operations, commits or deployment performed.
 
 Initial verdict: **corrections required before treating the plan as execution-ready**. The seven main fixes are supported by the audit. The C++ trusted-provenance design correctly distinguishes worker-authored diagnostics from SDK/control classifications, preserves primary-over-cleanup precedence and requires real Gate failure injection. The plan appropriately separates source confirmation, scoped future acceptance and full conformance.
 

@@ -2,7 +2,7 @@
 
 Date: 2026-10-04
 Status (2026-10-05): DPM-0–DPM-5 accepted for both declared profiles.
-See [retained acceptance](dpm-languages-evidence-20261005/README.md).
+See [retained acceptance](../dpm-languages-evidence-20261005/README.md).
 The plan below was frozen before implementation.
 
 The user requested complete DPM for both clients. Complete means all six DPM

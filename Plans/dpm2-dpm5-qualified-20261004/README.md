@@ -6,8 +6,8 @@ native acceptance gaps in the earlier
 approved selected model/trace transfers to the existing Windows oracle and native
 source staging under `C:\Users\ayden\Desktop\Workspace\MirrorsRemote`.
 
-[Detailed plan](../deterministic-production-mbt-dpm2-dpm5.md) ·
-[Native pilot and exclusions](../deterministic-production-mbt-dpm3-pilot.md) ·
+[Detailed plan](../completed/deterministic-production-mbt-dpm2-dpm5.md) ·
+[Native pilot and exclusions](../completed/deterministic-production-mbt-dpm3-pilot.md) ·
 [Acceptance manifest](acceptance.json) ·
 [Capability observation](capability-observation.json)
 

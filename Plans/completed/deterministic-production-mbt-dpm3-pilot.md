@@ -4,7 +4,7 @@ Date: 2026-10-04
 
 Status: **accepted for this four-case pilot** after explicit transfer/staging
 approval. The [master plan](deterministic-production-mbt-dpm2-dpm5.md) remains the
-stage authority. [Final retained acceptance](dpm2-dpm5-qualified-20261004/README.md)
+stage authority. [Final retained acceptance](../dpm2-dpm5-qualified-20261004/README.md)
 contains eight matched native replays, two production mutation mismatches, four
 native failure controls, three pre-acquisition mapping refusals and four bounded
 `MBTSafety` validations. The installed controller repeated these checks with

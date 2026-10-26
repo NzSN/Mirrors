@@ -35,7 +35,7 @@ The October 25 renewal selects a separate owned Windows qualification console at
 `172.28.144.1:8999`, TLS 1.3 mTLS, Apalache 0.62.2 and Java 25.0.4+7-LTS,
 with fresh credentials and the original pinned oracle executable/runtime bytes.
 Its startup is not new framework acceptance; see the newest checkpoint.
-[October 7 qualification](../../Plans/q3-published-roadmap-2026-10-07.md) records
+[October 7 qualification](../../Plans/completed/q3-published-roadmap-2026-10-07.md) records
 fresh exact identities and completed Q1/Q2; earlier deployment/tool observations
 remain historical. Revalidate endpoint, certificate validity and process/binary/
 runtime identity before a new collection. Static PID or product versions alone

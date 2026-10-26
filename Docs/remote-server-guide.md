@@ -15,7 +15,7 @@ and acceptance. Starting this fixture does not qualify a new native Windows
 release. Reobserve process, listener, binary/runtime hashes and certificate
 validity before each campaign; historical observations cannot admit a new run.
 
-The [October 7 record](../Plans/q3-published-roadmap-2026-10-07.md) qualifies WSL2
+The [October 7 record](../Plans/completed/q3-published-roadmap-2026-10-07.md) qualifies WSL2
 clients/tooling with an owned native Windows console oracle at the observed
 172.20.208.1:8999, Apalache 0.62.2 and Java 25.0.4+7-LTS. Reobserve address,
 process/binary/runtime/certificate identities before use; the record is not a

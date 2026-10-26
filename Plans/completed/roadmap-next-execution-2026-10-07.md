@@ -77,7 +77,7 @@ explicitly updated byte/hash pin before freeze. Historical records are unchanged
 The original owned Windows oracle PID is absent and port 8999 has no listener.
 An unchanged-binary/identity startup action is prepared; the user's operational
 approval is pending. Remote tiers cannot run before that answer. Current source
-and preflight evidence is retained in [the preparation record](roadmap-next-evidence-20261007/README.md).
+and preflight evidence is retained in [the preparation record](../roadmap-next-evidence-20261007/README.md).
 
 Three refreshes reached BYTE_STABLE at
 `d5358150e9fe041c930a066b6f2f0f88b2f617e782692dd7ad0e9c5b2bfe7109`.
@@ -96,7 +96,7 @@ There are 15 qualified selected runs (including extra Gate D) and one supporting
 unqualified recovery origin. Independent installed/source-hidden/offline integrity
 verification accepts 16 bundles but explicitly refuses full-profile completion.
 Four required commands remain: three remote producers and final full Q.
-[Current Q3 readiness](q3-roadmap-refresh-2026-10-07.md) owns exact results.
+[Current Q3 readiness](../q3-roadmap-refresh-2026-10-07.md) owns exact results.
 
 This completes the executable first slice and available acceptance work. The
 remaining operational approval, native delegated runner and durable process/group

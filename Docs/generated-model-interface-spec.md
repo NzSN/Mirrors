@@ -79,7 +79,7 @@ The additive [reviewed workflow](model-interface-compiler/reviewed-corpora.md)
 accepts repeated evidence, explicit review and immutable seal publication,
 workflow-bearing v2 locks, and content-addressed projected corpora. Ordinary
 single-input scaffolds and v1 locks retain their existing format. The
-[M6 execution record](../Plans/m6-reviewed-scaffolds-and-corpora.md) separates
+[M6 execution record](../Plans/completed/m6-reviewed-scaffolds-and-corpora.md) separates
 compiler/source checks from the public local/Gate integration gate.
 Implementation-specific adapter logic still has to be written against the
 generated port.

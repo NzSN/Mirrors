@@ -12,12 +12,12 @@ separately frozen implementation revisions recorded in the current status page. 
 cover runtime, compiler, DPM, distribution/evidence and the proof/effect boundary.
 The [framework map](framework-map.md) covers the related repositories and
 distinguishes model clients, generated bindings, Gate evaluators and workers.
-The [October 9 synchronization audit](../Plans/documentation-sync-2026-10-09.md)
+The [October 9 synchronization audit](../Plans/completed/documentation-sync-2026-10-09.md)
 records the inspected revisions, updates and validation scope. The
 [September 18 audit](related-documentation-audit-20260918.md) remains historical.
 
 Remote deployment and client operation: [remote server guide](remote-server-guide.md).
-Latest recorded qualification topology: [2026-10-07 published readiness](../Plans/q3-published-roadmap-2026-10-07.md)
+Latest recorded qualification topology: [2026-10-07 published readiness](../Plans/completed/q3-published-roadmap-2026-10-07.md)
 (WSL2 clients/tooling and a native Windows oracle, scoped to its recorded C0).
 The [2026-09-18 deployment](windows-deployment-20260918.md) remains historical.
 

@@ -11,7 +11,7 @@ hosted-CI or service check.
 
 ## Current scope and remaining decisions
 
-The [October 7 profile](../Plans/q3-published-roadmap-2026-10-07.md) passed its
+The [October 7 profile](../Plans/completed/q3-published-roadmap-2026-10-07.md) passed its
 22-case five-client remote mTLS matrix; the legacy all-transport/release-cycle
 matrix below remains a separate qualification scope. The runner includes Lean,
 Rust, C++, ECMA and Haskell; top-level runner integration is implemented.

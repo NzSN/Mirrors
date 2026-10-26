@@ -2,7 +2,7 @@
 
 Status: locked-input contracts, bounded cache build/verification, transactional
 installation and installed audits are implemented. Checked local and Gate
-profiles passed [October 7 qualification](../../Plans/q3-published-roadmap-2026-10-07.md)
+profiles passed [October 7 qualification](../../Plans/completed/q3-published-roadmap-2026-10-07.md)
 from the same immutable snapshot. This is the named WSL2/Windows-oracle profile,
 not native Ubuntu acceptance, package-registry publication or an automatic user install.
 

@@ -2,8 +2,8 @@
 
 Date: 2026-10-14. Status: accepted for the declared remote WSL scope.
 
-The [fix plan](../dpm-review-followup-2026-10-14.md) and
-[task breakdown](../dpm-review-followup-tasks-2026-10-14.md) are complete.
+The [fix plan](../completed/dpm-review-followup-2026-10-14.md) and
+[task breakdown](../completed/dpm-review-followup-tasks-2026-10-14.md) are complete.
 [Independent review](independent-review.json) found no remaining confirmed
 finding in the corrected scope. The previous [October 14 remediation record](../dpm-review-remediation-evidence-20261014/README.md)
 and [October 13 F3–F5 record](../dpm-f3-f5-evidence-20261013/README.md) retain
@@ -66,7 +66,7 @@ overrun control also pass their declared gates, with `modelComparison:false`.
 
 [Baseline](baseline.json) freezes the starting working trees and historical
 manifests. [Frozen changes](frozen-inputs.json), [source manifest](source-manifest.json),
-[identity refresh](identity-refresh.json), raw logs/receipts and [workflow](workflow/)
+[identity refresh](identity-refresh.json), raw logs/receipts and [workflow](workflow)
 bind this corrected implementation. All 36 selected implementation files match
 the qualified remote source. Final documentation is recorded separately from
 compiled inputs. The [evidence manifest](evidence-manifest.json) inventories the

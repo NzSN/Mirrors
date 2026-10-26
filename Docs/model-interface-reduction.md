@@ -2,11 +2,11 @@
 
 Current status (2026-10-09): prefix and domain reduction are qualified for the
 frozen October 7 `m5-wsl-windows-remote/v1` candidate, C0 `94271a54…`.
-[Published readiness](../Plans/q3-published-roadmap-2026-10-07.md) binds exact
+[Published readiness](../Plans/completed/q3-published-roadmap-2026-10-07.md) binds exact
 installed runs, remote oracle identities and independent Q1/Q2 verification.
 The former remote-activation blocker is superseded. Later tool/source changes
 require a new freeze; broader M4 stays separate. The
-[reducer design](../Plans/m3-safe-reduction-design.md) defines the remote
+[reducer design](../Plans/completed/m3-safe-reduction-design.md) defines the remote
 explore-session oracle contract. The development observations below remain
 historical, not qualification of current HEAD.
 

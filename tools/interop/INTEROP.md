@@ -1,6 +1,6 @@
 # Client interop validation (Phase 6)
 
-Documentation synchronized 2026-10-07. The [current named profile](../../Plans/q3-published-roadmap-2026-10-07.md)
+Documentation synchronized 2026-10-07. The [current named profile](../../Plans/completed/q3-published-roadmap-2026-10-07.md)
 passed all 22 declared remote rows at its frozen compatibility pins. Generated
 client source/transport gates, DPM profiles and legacy all-transport acceptance
 retain their separate scopes. No local model checker runs on the current
@@ -319,7 +319,7 @@ Node 24, npm, Python, tar, Bubblewrap permissions and prepared Gate prerequisite
 It remains separate from generic `lake test`, which does not require those
 external checkouts.
 
-The [public projected-cells fixture](../../test/fixtures/model-interface/projected-cells/)
+The [public projected-cells fixture](../../test/fixtures/model-interface/projected-cells)
 uses a fixed synthetic review record. The gate regenerates its proposal, seal,
 corpus, workflow lock and async bundle through the CLI, performs read-only checks
 and trace-member preflight, and type-checks the generated consumer against the
@@ -338,7 +338,7 @@ All replay uses supplied traces. A forbidden model-check sentinel must remain
 untouched. `receipt.json` retains input, package, executable and artifact hashes
 plus runtime results and log identities. This is bounded source and relocated
 package integration evidence; it does not establish fresh M5 release
-qualification. The [M6 execution record](../../Plans/m6-reviewed-scaffolds-and-corpora.md)
+qualification. The [M6 execution record](../../Plans/completed/m6-reviewed-scaffolds-and-corpora.md)
 records the accepted run and limits.
 
 ## Focused C++ / Lean / Rust conformance

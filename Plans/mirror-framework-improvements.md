@@ -6,12 +6,12 @@ Status (2026-10-25): pre-publication working-tree C0
 `ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421`
 is qualified for `m5-wsl-windows-remote/v1`, class `local-candidate`: all 18
 required commands/16 tiers, both D bindings, 19 linked nodes, 20 independently
-verified bundles and six rejected controls. [Current readiness](current-source-qualification-2026-10-25.md)
+verified bundles and six rejected controls. [Current readiness](completed/current-source-qualification-2026-10-25.md)
 binds Mirrors 81b1f76 / MirrorECMA 13847be / MirrorGate 5055d91 and their exact
 working-tree identities. This includes the temporary-root repair and rebuilt
 packages, not a new published release or native Windows server qualification.
 Broader M4 remains partial. Source/commit changes require a new freeze and gates.
-The [October 7 published-candidate qualification](q3-published-roadmap-2026-10-07.md)
+The [October 7 published-candidate qualification](completed/q3-published-roadmap-2026-10-07.md)
 and all earlier evidence retain their original identities and boundaries.
 
 Historical continuation recorded 2026-10-22 against base Mirrors `b243b37` (`v0.1.0`):
@@ -50,7 +50,7 @@ enforcement are removed from M5 requirements. M4's ownership-safe recovery
 remains a dependency; its aggregate-limit clause belongs to the separate Linux
 scope. WSL-supported installation, isolation/recovery and retained-evidence
 checks keep their stated requirements. No excluded capability is counted as
-qualified. [Execution plan](m5-wsl-windows-remote.md).
+qualified. [Execution plan](completed/m5-wsl-windows-remote.md).
 
 ## Objective and scope
 
@@ -111,7 +111,7 @@ Preserve these boundaries throughout:
 | M2 | Installable reference distribution | Component packaging owners; framework integration in Mirrors | M1 | Fresh isolated consumer completes local and Gate flows | Done for selected WSL2 profile, renewed 2026-10-25: both corrected package installs committed and source-hidden D audits (`run-c6640359…`, `run-33a1216d…`) qualify exact C0 `ecd80f70…`; native Ubuntu acceptance excluded |
 | M3 | Failure reproduction and fidelity acceptance | MirrorECMA, Mirrors compiler, Gate integration | M1; use M2 distribution for final acceptance | Reproduction, safe reduction, and mutation controls pass | Done for selected profile: both installed R1 branches reproduced; prefix best 2/16 with complete minimality; LeaseService R5 model-valid and actual reduced-corpus baseline/fault preserves the same signature; local/Gate mutation aggregates 17/17; exact R0/R1/R5 linkage independently verified |
 | M4 | Gate interruption recovery | MirrorGate | M1 evidence format | Ownership-safe recovery and aggregate-limit gates pass | Partial overall: recorded-candidate recovery reclaims four owned prepared filesystem resources with confirmed cleanup and exact fresh-origin linkage; this required M5 clause qualifies. Aggregate cgroups and active-process post-restart recovery remain separately unqualified |
-| M5 | Release-candidate qualification: `m5-wsl-windows-remote/v1` | All affected owners | M2, M3, M4 ownership-safe recovery | Exact candidate passes this profile's installed/runtime/evidence gates; native Ubuntu and aggregate-cgroup acceptance excluded | Done for `m5-wsl-windows-remote/v1`, renewed 2026-10-25: working-tree C0 `ecd80f70…`, Mirrors 81b1f76/ECMA 13847be/Gate 5055d91 with exact dirty identities; all 18 commands/16 tiers, 19-node/two-D scope and 20 bundles independently verified; six controls rejected; [current readiness](current-source-qualification-2026-10-25.md). Publication and native Windows acceptance remain separate |
+| M5 | Release-candidate qualification: `m5-wsl-windows-remote/v1` | All affected owners | M2, M3, M4 ownership-safe recovery | Exact candidate passes this profile's installed/runtime/evidence gates; native Ubuntu and aggregate-cgroup acceptance excluded | Done for `m5-wsl-windows-remote/v1`, renewed 2026-10-25: working-tree C0 `ecd80f70…`, Mirrors 81b1f76/ECMA 13847be/Gate 5055d91 with exact dirty identities; all 18 commands/16 tiers, 19-node/two-D scope and 20 bundles independently verified; six controls rejected; [current readiness](completed/current-source-qualification-2026-10-25.md). Publication and native Windows acceptance remain separate |
 
 ### Historical milestone updates
 
@@ -153,7 +153,7 @@ Updated 2026-10-01 after complete rerun: all five completion items qualify
 the exact named WSL2/Windows profile on C0 `f2080fd722ed097eb1d5e4b4fd8cd4e8d7a1d1092b91530d48a51ca3bf141670`.
 Both reproduction/reduction branches, fixed mutation aggregates, prepared-snapshot
 recovery, source/remote gates and the full independently verified Q1/Q2 graph
-pass. Current acceptance is in [completion readiness](q3-m5-complete-2026-10-01.md).
+pass. Current acceptance is in [completion readiness](completed/q3-m5-complete-2026-10-01.md).
 M4's separate aggregate/process claims remain unqualified; only its exercised
 ownership-safe filesystem clause is required and credited by this M5 profile.
 

@@ -32,7 +32,7 @@ inherit this working-tree evidence or the October 25 M5 result.
 The pre-publication working-tree candidate qualifies for `m5-wsl-windows-remote/v1`,
 class `local-candidate`, at C0
 `ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421`.
-[Current readiness](current-source-qualification-2026-10-25.md) and its exact
+[Current readiness](completed/current-source-qualification-2026-10-25.md) and its exact
 receipts bind Mirrors 81b1f76, MirrorECMA 13847be and MirrorGate 5055d91 with
 their full working-tree identities. The sanitizer repair, corrected `0.1.1`
 catalog/lock declaration and rebuilt packages are included. Both D audits ran
@@ -94,7 +94,7 @@ The published roadmap candidate C0
 `94271a543085118e47c7fd540ee8d34d3f427fa5f45fedaeba0c852534f4f34a`
 qualifies for `m5-wsl-windows-remote/v1`: all 18 commands/16 tiers, two D bindings,
 19 linked nodes, 20 independently verified bundles and six rejected controls.
-[Published readiness](q3-published-roadmap-2026-10-07.md) records exact component
+[Published readiness](completed/q3-published-roadmap-2026-10-07.md) records exact component
 revisions (Mirrors f0894d2, MirrorECMA eef6f71, MirrorGate 455e196), installed runs,
 fresh native oracle observations and scope limits. The earlier incomplete
 working-tree selection and October 3 qualification remain unchanged history.
@@ -119,12 +119,12 @@ selects native Linux acceptance first and specifies the missing durable
 process-to-cgroup resource binding. Native Ubuntu, Windows service-manager,
 new platform Gate backends and legacy all-transport acceptance remain separate.
 
-[Compiler/client follow-ups](compiler-client-followups-2026-10-03.md) and
-[M6](m6-reviewed-scaffolds-and-corpora.md) are complete for their declared scope.
+[Compiler/client follow-ups](completed/compiler-client-followups-2026-10-03.md) and
+[M6](completed/m6-reviewed-scaffolds-and-corpora.md) are complete for their declared scope.
 The read-only lock migration helper passes 23 controls and installed consumers;
 its published implementation is included in this fresh qualification candidate.
-[Current roadmap execution](roadmap-next-execution-2026-10-07.md) records its
-first slice; [published-candidate execution](m5-published-roadmap-qualification-2026-10-07.md)
+[Current roadmap execution](completed/roadmap-next-execution-2026-10-07.md) records its
+first slice; [published-candidate execution](completed/m5-published-roadmap-qualification-2026-10-07.md)
 closes the earlier remote/full-Q prerequisites.
 
 DPM-0–DPM-5 pass for MirrorCPP, MirrorECMA's real Node workers and MirrorRust's
@@ -146,7 +146,7 @@ The five-item completion plan passes for `m5-wsl-windows-remote/v1`, exact C0
 installed/source/remote producers, the complete linked graph and named catalog
 qualification pass; 20 bundles verify independently offline and six controls
 reject. Current acceptance and exact boundaries are in
-[completion readiness](q3-m5-complete-2026-10-01.md). The broader Linux/backend
+[completion readiness](completed/q3-m5-complete-2026-10-01.md). The broader Linux/backend
 claims and earlier review/task assignments below remain historical or outside
 this selected qualification scope. Changes are uncommitted.
 
@@ -168,7 +168,7 @@ No excluded Linux capability receives credit.
 The user authorizes removing native Ubuntu host acceptance and real aggregate
 cgroup enforcement from M5, then executing the remaining remote work. The
 selected scope is `m5-wsl-windows-remote/v1`; its concrete plan is
-[M5 Windows remote execution](m5-wsl-windows-remote.md). WSL-supported Gate
+[M5 Windows remote execution](completed/m5-wsl-windows-remote.md). WSL-supported Gate
 isolation, recovery and installed-evidence checks retain their own requirements.
 M5's M4 dependency now covers ownership-safe recovery only. Excluded Linux
 capabilities remain unqualified, rather than recorded as skipped successful
@@ -238,7 +238,7 @@ that pin migration or the remaining framework campaign has already run.
 
 | Agent | Initial tasks | Exclusive files |
 | --- | --- | --- |
-| `baseline_catalog` | B1, C1, I1 | `Plans/implementation-baseline.md`, `Docs/framework-catalog-inventory.md`, `Docs/reference-distribution-profile.md` |
+| `baseline_catalog` | B1, C1, I1 | `Plans/completed/implementation-baseline.md`, `Docs/framework-catalog-inventory.md`, `Docs/reference-distribution-profile.md` |
 | `evidence_contract` | E1 draft | `Docs/durable-evidence-design.md`, `tools/evidence/schema/`, `tools/evidence/fixtures/`, contract validator/tests |
 | `recovery_design` | G1 | MirrorGate recovery design/model/model gate and scoped documentation links |
 | `reproduction_contracts` | R1, F1 | MirrorECMA reproduction/mutation contracts and inert fixtures |

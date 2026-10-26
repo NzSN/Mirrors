@@ -2,7 +2,7 @@
 
 Date: 2026-10-14. Status: accepted for the declared remote WSL scope.
 
-The [approved remediation plan](../dpm-review-remediation-2026-10-13.md) is
+The [approved remediation plan](../completed/dpm-review-remediation-2026-10-13.md) is
 complete. [Acceptance](acceptance.json) records the actual final gates;
 [independent review](independent-review.json) found no remaining confirmed
 findings in its reviewed scope. The original
@@ -77,12 +77,12 @@ confirmed. Both controlled-resource receipts retain `modelComparison: false`.
   checked. The two recorded post-transfer changes are the generated remote
   interpreter identity and the host regression's partial-write assertion.
 - [Installation manifest](installation-manifest.json): exact activated tree.
-  [Input projects](input-projects/) distinguish prepared, installed and freshly
+  [Input projects](input-projects) distinguish prepared, installed and freshly
   rebuilt consumer identities.
 - [Binary identities](binary-identities.json): 200 executable/native archive
   hashes and durable remote paths. Binaries and development-kit trees stay on
   the remote host; this dossier retains receipts, inputs and logs.
-- [Workflow](workflow/), [raw installed evidence](installed/) and [logs](logs/)
+- [Workflow](workflow), [raw installed evidence](installed) and [logs](logs)
   retain exact commands, request/response bindings, SDK receipts, reductions,
   controls and diagnostics. [Curation](remote-curation.json) binds the transferred
   receipt/log archive. [Evidence manifest](evidence-manifest.json) inventories the

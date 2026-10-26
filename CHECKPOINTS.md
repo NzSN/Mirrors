@@ -91,7 +91,7 @@ The exact working-tree selection
 `ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421`
 qualifies for `m5-wsl-windows-remote/v1`, class `local-candidate`, at Mirrors
 81b1f76 / MirrorECMA 13847be / MirrorGate 5055d91 with their recorded dirty
-identities. [Current readiness](Plans/current-source-qualification-2026-10-25.md)
+identities. [Current readiness](Plans/completed/current-source-qualification-2026-10-25.md)
 and its byte-identical result receipts own the exact scope, source/package/run
 identities, preserved diagnostics and exclusions. Catalog/component-lock product
 declarations now match Mirrors `0.1.1`; the temporary-root repair is included.
@@ -151,7 +151,7 @@ packages and passed D runs are preserved without credit for the new candidate.
 
 The corrected local D audit passed; the Gate D audit is active. The installed
 sanitizer check and remaining source/installed/remote producers are queued behind
-both successful D bindings. Full Q1/Q2 is pending. The [campaign report](Plans/current-source-qualification-2026-10-25.md)
+both successful D bindings. Full Q1/Q2 is pending. The [campaign report](Plans/completed/current-source-qualification-2026-10-25.md)
 records exact manifest identities, diagnostic attempts, scope and exclusions.
 The final source/cache/store namespace is
 `~/.local/state/mirrors/m5-current-20261025/final/`; operational drivers remain in
@@ -296,8 +296,8 @@ package qualification or new framework qualification is claimed.
 
 ## 2026-10-14 — DPM review follow-up fixes accepted on remote WSL
 
-The [fix plan](Plans/dpm-review-followup-2026-10-14.md) and
-[tasks](Plans/dpm-review-followup-tasks-2026-10-14.md) completed against working
+The [fix plan](Plans/completed/dpm-review-followup-2026-10-14.md) and
+[tasks](Plans/completed/dpm-review-followup-tasks-2026-10-14.md) completed against working
 trees based on Mirrors 6e0cbce, MirrorCPP 75a63db, MirrorECMA fe9a648 and
 MirrorRust 7606173. [New acceptance evidence](Plans/dpm-review-followup-evidence-20261014/README.md)
 binds the corrected sources and fresh installation. Earlier checkpoint entries
@@ -339,7 +339,7 @@ false; broader M4, hard quotas and uninterruptible-wait termination stay separat
 
 ## 2026-10-14 — DPM review remediation accepted on remote WSL
 
-The [approved remediation plan](Plans/dpm-review-remediation-2026-10-13.md)
+The [approved remediation plan](Plans/completed/dpm-review-remediation-2026-10-13.md)
 completed R1–R5 against working trees based on Mirrors 6e0cbce, MirrorCPP
 75a63db, MirrorECMA fe9a648 and MirrorRust 7606173. The
 [new evidence record](Plans/dpm-review-remediation-evidence-20261014/README.md)
@@ -425,7 +425,7 @@ unrelated editor caches/ECMA .work/ remain preserved.
 The user requested synchronization of outdated documentation. The review starts
 at Mirrors 548ba71, MirrorECMA 1e87f3e, MirrorCPP 25a44b5, MirrorRust 0f77fdf,
 MirrorGate 8afae26 and MirrorLean b8b9491; these are source-navigation identities,
-not a new qualification freeze. [Synchronization audit](Plans/documentation-sync-2026-10-09.md)
+not a new qualification freeze. [Synchronization audit](Plans/completed/documentation-sync-2026-10-09.md)
 records the exact changed-document inventory and validation results.
 
 Current status, architecture Markdown/text/JSON/HTML, compiler/target guides,
@@ -439,7 +439,7 @@ or full-current-source qualification.
 Reduction and frontend guides now distinguish completed October 7 domain
 qualification and retained profile-5 differential acceptance from earlier
 pending/failed records. The old AGENTS September sections are archived verbatim
-in [the checkpoint reference](Plans/framework-checkpoint-reference-2026-09-22.md).
+in [the checkpoint reference](Plans/completed/framework-checkpoint-reference-2026-09-22.md).
 Remote guides record that the old certificate validity ended October 8, while
 leaving live service/replacement identities unobserved. No service or credential
 was changed and no model-check/qualification campaign ran.
@@ -518,7 +518,7 @@ edit and editor caches remain preserved. No commit/push is included.
 ## 2026-10-07 — Maintained documentation synchronized
 
 The user requested all docs synchronized after published qualification and the
-plain-text architecture explanation. [Documentation audit](Plans/documentation-sync-2026-10-07.md)
+plain-text architecture explanation. [Documentation audit](Plans/completed/documentation-sync-2026-10-07.md)
 updates maintained Mirrors/client entry points, current status, architecture
 Markdown/plain text/JSON/HTML, compiler/migration/profile scope, operator commands
 and SDK DPM/Lean/Gate guides. Broader M4 remains explicitly separate.
@@ -552,7 +552,7 @@ accepts 20 selected bundles with source/scratch hidden, networking unshared and
 read-only archived inputs; all six negative controls reject. Final source/catalog/
 lock and installed inventories are unchanged.
 
-[Published readiness](Plans/q3-published-roadmap-2026-10-07.md) records identities,
+[Published readiness](Plans/completed/q3-published-roadmap-2026-10-07.md) records identities,
 fresh public run references, diagnostics and exact scope. Native before/after
 observations preserve PID 35888, binary 5949af… and original Apalache 0.62.2,
 Java 25.0.4+7-LTS and TLS identities. Only the intended resident server remains;
@@ -597,7 +597,7 @@ edit remain untouched.
 ## 2026-10-07 — Roadmap continuation: migration helper accepted, refresh active
 
 The user authorized applying the recommended roadmap sequence. The
-[execution plan](Plans/roadmap-next-execution-2026-10-07.md) batches source changes
+[execution plan](Plans/completed/roadmap-next-execution-2026-10-07.md) batches source changes
 before a fresh M5 freeze. `compare-locks` now reads and validates both locks,
 reports canonical semantic/provenance differences and explicit regeneration
 requirements, and performs no output-file writes. All 23 migration controls,
@@ -627,7 +627,7 @@ checkpoint: Mirrors 05a9ce1, MirrorECMA 18735bd, MirrorRust 08d189f. Earlier
 
 ## 2026-10-05 — MirrorECMA and MirrorRust DPM-0–DPM-5 accepted
 
-Both declared language profiles now pass the [stage plan](Plans/dpm-mirrorecma-mirrorrust.md).
+Both declared language profiles now pass the [stage plan](Plans/completed/dpm-mirrorecma-mirrorrust.md).
 [Retained acceptance](Plans/dpm-languages-evidence-20261005/README.md) binds source,
 packages, generated consumers, fresh oracles and installed receipts. Each client
 passes 60 counter replay cases, 11 finite-exploration checks, 14 actual Windows
@@ -675,7 +675,7 @@ universal concurrency correctness and a new M5 release candidate.
 ## 2026-10-04 — DPM-2–DPM-5 local work retained; native acceptance pending
 
 The authorized stage plans and step-by-step local execution are retained in
-[the DPM-2–DPM-5 plan](Plans/deterministic-production-mbt-dpm2-dpm5.md) and
+[the DPM-2–DPM-5 plan](Plans/completed/deterministic-production-mbt-dpm2-dpm5.md) and
 [acceptance evidence](Plans/dpm2-dpm5-evidence-20261004/README.md). Incremental
 MirrorCPP binding/replay and finite exploration are implemented. All 220 SDK
 unit cases pass; generated output checks clean. A fresh installed consumer with
@@ -714,7 +714,7 @@ CMake consumer; Address/Leak/UndefinedBehavior fixture checks; ThreadSanitizer
 a runtime mapping collision; diagnostic sanitizer startup failures receive no
 credit. No model checker ran.
 
-[Design and execution plan](Plans/deterministic-production-mbt-dpm0-dpm1.md)
+[Design and execution plan](Plans/completed/deterministic-production-mbt-dpm0-dpm1.md)
 and [retained acceptance](Plans/dpm1-evidence-20261004/acceptance.json) record
 source/binary hashes, replay receipts, cleanup outcomes and limits. DPM-2
 comparison integration, DPM-3 native adapter, DPM-4 exploration and DPM-5
@@ -741,7 +741,7 @@ close. No local model checker ran. Native Ubuntu, aggregate cgroups,
 active-process recovery, service-manager acceptance and legacy all-transport
 interop remain unqualified. No commit or push was performed for this batch.
 
-[Current Q3 readiness](Plans/q3-published-2026-10-03.md) records exact
+[Current Q3 readiness](Plans/completed/q3-published-2026-10-03.md) records exact
 identities, run references and limits. Owner-only retained evidence lives at
 `~/.local/state/mirrors/m5-published-20261003`; credentials are excluded.
 
@@ -783,7 +783,7 @@ close. No local model checker ran. Native Ubuntu, aggregate cgroups,
 active-process recovery, service-manager acceptance and legacy all-transport
 interop remain unqualified. No commit or push was performed for this batch.
 
-[Current Q3 readiness](Plans/q3-post-m6-2026-10-03.md) records exact
+[Current Q3 readiness](Plans/completed/q3-post-m6-2026-10-03.md) records exact
 identities, run references and limits. Owner-only retained evidence lives at
 `~/.local/state/mirrors/m5-post-m6-final-20261003`; credentials are excluded.
 
@@ -814,7 +814,7 @@ Final relocated, source-hidden, network-isolated receipt:
 `4cf4202297c0c0439a009eec1f9c21347e420496ac0c7a33e78551015198eda1`.
 The final run used `PYTHONOPTIMIZE=1`; the model-check sentinel records zero
 invocations. Receipt input, compiler, package, corpus and log hashes were
-independently rechecked. The [M6 execution record](Plans/m6-reviewed-scaffolds-and-corpora.md)
+independently rechecked. The [M6 execution record](Plans/completed/m6-reviewed-scaffolds-and-corpora.md)
 and [workflow reference](Docs/model-interface-compiler/reviewed-corpora.md) retain
 the exact contracts, evidence and publication limits.
 
@@ -839,7 +839,7 @@ the supplemental C++ v2 receipt is
 `d212c1f7986db6a8d5d53e89ff2e18219e57dcf9b054e6f990b34eda9947b264`.
 Mirrors non-model gates, SDK checks and regenerated Counter golden checks pass.
 Architecture references and stale plan headers were reconciled while retaining
-historical records. [The follow-up report](Plans/compiler-client-followups-2026-10-03.md)
+historical records. [The follow-up report](Plans/completed/compiler-client-followups-2026-10-03.md)
 records exact scope, results and receipt paths.
 
 These working-tree changes do not inherit the frozen M5 qualification below.
@@ -871,7 +871,7 @@ collection. No local model checker ran. Native Ubuntu, aggregate cgroups,
 active-process recovery, service-manager acceptance and legacy all-transport
 interop remain unqualified. No commit or push was performed for this batch.
 
-[Current Q3 readiness](Plans/q3-integrity-fixes-2026-10-03.md) records exact
+[Current Q3 readiness](Plans/completed/q3-integrity-fixes-2026-10-03.md) records exact
 identities, run references and limits. Owner-only retained evidence lives at
 `~/.local/state/mirrors/m5-integrity-20261003`; credentials are excluded.
 
@@ -902,7 +902,7 @@ and network unshared. All six tamper, binding, linkage and incomplete-profile
 controls reject. Final installed trees remain unchanged; native identity is
 stable before/after. No local model checker ran.
 
-Current [published-commit readiness](Plans/q3-published-commits-2026-10-02.md)
+Current [published-commit readiness](Plans/completed/q3-published-commits-2026-10-02.md)
 records exact public references, acceptance and limits. Authoritative private
 evidence is owner-only under `~/.local/state/mirrors/m5-published-commits-20261002`;
 credential bytes are excluded. Native Ubuntu, aggregate cgroups, active-process
@@ -918,7 +918,7 @@ Mirrors `29d50ab…`, MirrorECMA `f2a6a5a…` and MirrorGate `455e196…`.
 The selected profile remains `m5-wsl-windows-remote/v1`; native Ubuntu and
 aggregate cgroups remain excluded. Windows work stays under
 `C:\Users\ayden\Desktop\Workspace\MirrorsRemote`; no local model checker.
-The new [readiness record](Plans/q3-published-commits-2026-10-02.md) is pending
+The new [readiness record](Plans/completed/q3-published-commits-2026-10-02.md) is pending
 fresh freeze, dual builds/installs and D audits, every Q1 producer, independent
 Q2 and final Q3. Previous qualified snapshots and evidence remain unchanged.
 
@@ -991,7 +991,7 @@ gate passes (129 evidence, 36 distribution, 63 capture tests); MirrorECMA check
 and 626 tests pass with 13 optional skips; required supported Gate gates pass.
 No local model checker ran.
 
-The [completion readiness report](Plans/q3-m5-complete-2026-10-01.md) records
+The [completion readiness report](Plans/completed/q3-m5-complete-2026-10-01.md) records
 exact public references, boundaries and clause acceptance. Authoritative private
 evidence, native observations, raw receipts, exact caches/snapshot, independent
 results and failed attempts are owner-only under
@@ -1005,7 +1005,7 @@ Changes are uncommitted; historical entries/reports remain unchanged.
 
 The user authorized execution of `/tmp/m5-remaining-five-items-plan-2026-10-01.md`.
 Implementation and qualification are in progress; current report:
-[completion campaign](Plans/q3-m5-complete-2026-10-01.md).
+[completion campaign](Plans/completed/q3-m5-complete-2026-10-01.md).
 
 ## 2026-10-01 — M5 Linux requirements removed; Windows remote work passed
 
@@ -1507,8 +1507,8 @@ after round close.
   `mirrorecma.lease-reduction-oracle/v2`; new R4 driver
   `scripts/reduce-reproduction-prefix.mjs`. Validation: jest 38/38 new +
   23/23 regression, `tsc --noEmit` clean.
-- Mirrors `abbf70b` (design + impl plan: `Plans/m3-safe-reduction-design.md`,
-  `Plans/m3-safe-reduction-implementation-plan.md`) and `b19e090`
+- Mirrors `abbf70b` (design + impl plan: `Plans/completed/m3-safe-reduction-design.md`,
+  `Plans/completed/m3-safe-reduction-implementation-plan.md`) and `b19e090`
   (`framework: split reduction tier with remote oracle wiring`): tiers
   `qualification.reduction-prefix` + `qualification.reduction-domain`,
   collector v2 receipt reader and prefix adapter, profiles/scope registration.

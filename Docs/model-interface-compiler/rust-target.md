@@ -126,4 +126,4 @@ The additive `mirrorrust-v2` target supports `MirrorIntMap<T>` with `BigInt` key
 and typed string/integer `mapKey` projections. V1 output and its exclusions above
 remain unchanged. Duplicate, missing and mixed-domain map keys fail closed.
 The coordinated DPM plan and qualification are in
-[the language extension plan](../../Plans/dpm-mirrorecma-mirrorrust.md).
+[the language extension plan](../../Plans/completed/dpm-mirrorecma-mirrorrust.md).

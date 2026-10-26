@@ -3,7 +3,7 @@
 Date: 2026-10-04
 
 Status: **DPM-2 through DPM-5 accepted for the declared profiles**.
-Final [approved acceptance](dpm2-dpm5-qualified-20261004/README.md) closes the earlier remote/native gaps.
+Final [approved acceptance](../dpm2-dpm5-qualified-20261004/README.md) closes the earlier remote/native gaps.
 The user requested detailed plans and step-by-step execution for all remaining
 DPM stages. This document defines their dependencies, implementation seams and
 acceptance gates before implementation starts. Progress and retained evidence
@@ -302,7 +302,7 @@ below closes the dependent native capability claim in DPM-5.
 
 ## Historical local-only acceptance — 2026-10-04
 
-[Evidence and precise scope](dpm2-dpm5-evidence-20261004/README.md), including
+[Evidence and precise scope](../dpm2-dpm5-evidence-20261004/README.md), including
 source/binary identities, 220/220 SDK units, clean generated output, 15 actual
 installed replay cases and 11 finite-exploration cases. At that checkpoint, all locally independent
 steps had been executed. Overall DPM-2–DPM-5 acceptance was **Partial**:
@@ -320,7 +320,7 @@ controls; three mapping refusals before acquisition; and source-hidden installed
 consumer build/runtime acceptance. Final host observation found no remaining
 owned worker. The server retained its original PID/binary identity.
 
-[Final acceptance and capability observation](dpm2-dpm5-qualified-20261004/README.md)
+[Final acceptance and capability observation](../dpm2-dpm5-qualified-20261004/README.md)
 bind the corrected counter model, freshly generated raw-ITF native binding,
 source/build/compiler identities and receipts. The previous Partial entry above
 is historical. No commit, push, server reconfiguration or external package

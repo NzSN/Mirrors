@@ -6,7 +6,7 @@ DPM acceptance. This document retains its own normative profile and dated
 results; broader M4/platform and package-release claims remain separate.
 
 Status: **implemented; public local/Gate integration accepted 2026-10-03**.
-The [M6 execution record](../../Plans/m6-reviewed-scaffolds-and-corpora.md)
+The [M6 execution record](../../Plans/completed/m6-reviewed-scaffolds-and-corpora.md)
 records the exact source gates, retained artifacts and qualification limits.
 
 The reviewed workflow binds a human-reviewed companion contract to the exact
@@ -203,7 +203,7 @@ preflight failure prevents model transport and implementation binding; Gate can
 already have a control session at that point, and its cleanup is checked
 separately.
 
-The [execution record](../../Plans/m6-reviewed-scaffolds-and-corpora.md#execution-record)
+The [execution record](../../Plans/completed/m6-reviewed-scaffolds-and-corpora.md#execution-record)
 owns the measured results and remaining gaps. This source and integration
 workflow does not requalify an earlier frozen framework candidate, establish
 native Ubuntu/cgroup acceptance, or certify Windows service management.

@@ -109,5 +109,5 @@ output remains stable; the Node suite/project bundle path stays async v1. See
 [lock migration comparison](model-interface-compiler/lock-migration.md).
 
 Application integration examples are in
-[the executable consumer kit](../tools/deterministic-scheduling/languages/) and
+[the executable consumer kit](../tools/deterministic-scheduling/languages) and
 [the C++ fixture](../tools/deterministic-scheduling/counter_support.hpp).

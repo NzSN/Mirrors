@@ -33,13 +33,13 @@ Mirrors f0894d2, ECMA eef6f71 and Gate 455e196. It retains 18 required commands,
 bundles and six rejected controls. Later source/docs publication never transfers
 that qualification to current HEAD automatically.
 
-The [DPM first-slice record](dpm-usability-evidence-20261007/README.md) accepts
+The [DPM first-slice record](../dpm-usability-evidence-20261007/README.md) accepts
 F1 kit generation/checking and F2 actual-receipt timelines in source only: six
 C++/async-ECMA/Rust kit modes, 21 focused tests, actual helper/seed compilation
 in three languages and real Node-worker match/mismatch replay with cleanup.
 The common portable corpus retains six profiles; the compiler implements eight
-emitters. [F3/F4/F5](dpm-usability-features-2026-10-07.md) remain approved,
-unimplemented follow-ons. Broader [M4](m4-native-host-and-platform-plan-2026-10-07.md)
+emitters. [F3/F4/F5](../dpm-usability-features-2026-10-07.md) remain approved,
+unimplemented follow-ons. Broader [M4](../m4-native-host-and-platform-plan-2026-10-07.md)
 requires both native host delegation and durable process-to-cgroup linkage.
 
 ## Corrections
@@ -90,51 +90,51 @@ was inspected and required no edit. Only documentation files changed during this
 
 | Repository | Maintained document |
 | --- | --- |
-| Mirrors | [AGENTS.md](../AGENTS.md) |
-| Mirrors | [CHANGELOG.md](../CHANGELOG.md) |
-| Mirrors | [CHECKPOINTS.md](../CHECKPOINTS.md) |
-| Mirrors | [Docs/README.md](../Docs/README.md) |
-| Mirrors | [Docs/architecture-details.md](../Docs/architecture-details.md) |
-| Mirrors | [Docs/architecture-overview.html](../Docs/architecture-overview.html) |
-| Mirrors | [Docs/architecture-overview.json](../Docs/architecture-overview.json) |
-| Mirrors | [Docs/architecture-overview.md](../Docs/architecture-overview.md) |
-| Mirrors | [Docs/architecture-overview.txt](../Docs/architecture-overview.txt) |
-| Mirrors | [Docs/client-implementation-guide.md](../Docs/client-implementation-guide.md) |
-| Mirrors | [Docs/current-status.md](../Docs/current-status.md) |
-| Mirrors | [Docs/cutover.md](../Docs/cutover.md) |
-| Mirrors | [Docs/deterministic-scheduling.md](../Docs/deterministic-scheduling.md) |
-| Mirrors | [Docs/framework-map.md](../Docs/framework-map.md) |
-| Mirrors | [Docs/generated-model-interface-spec.md](../Docs/generated-model-interface-spec.md) |
-| Mirrors | [Docs/model-interface-compiler/design.md](../Docs/model-interface-compiler/design.md) |
-| Mirrors | [Docs/model-interface-compiler/tla-differential-validation-design.md](../Docs/model-interface-compiler/tla-differential-validation-design.md) |
-| Mirrors | [Docs/model-interface-compiler/tla-frontend-design.md](../Docs/model-interface-compiler/tla-frontend-design.md) |
-| Mirrors | [Docs/model-interface-compiler/tla-frontend-tasks.md](../Docs/model-interface-compiler/tla-frontend-tasks.md) |
-| Mirrors | [Docs/model-interface-compiler/tla-language-profile.md](../Docs/model-interface-compiler/tla-language-profile.md) |
-| Mirrors | [Docs/model-interface-generation-design.md](../Docs/model-interface-generation-design.md) |
-| Mirrors | [Docs/model-interface-reduction.md](../Docs/model-interface-reduction.md) |
-| Mirrors | [Docs/model-interface-runtime-distribution-design.md](../Docs/model-interface-runtime-distribution-design.md) |
-| Mirrors | [Docs/native-build-design.md](../Docs/native-build-design.md) |
-| Mirrors | [Docs/remote-server-guide.md](../Docs/remote-server-guide.md) |
-| Mirrors | [Plans/documentation-sync-2026-10-09.md](documentation-sync-2026-10-09.md) |
-| Mirrors | [Plans/execution-decisions.md](execution-decisions.md) |
-| Mirrors | [Plans/framework-checkpoint-reference-2026-09-22.md](framework-checkpoint-reference-2026-09-22.md) |
-| Mirrors | [Plans/m3-safe-reduction-design.md](m3-safe-reduction-design.md) |
-| Mirrors | [Plans/m3-safe-reduction-implementation-plan.md](m3-safe-reduction-implementation-plan.md) |
-| Mirrors | [Plans/m5-wsl-windows-remote.md](m5-wsl-windows-remote.md) |
-| Mirrors | [Plans/mirror-framework-improvements.md](mirror-framework-improvements.md) |
-| Mirrors | [Plans/mirror-framework-tasks.md](mirror-framework-tasks.md) |
-| Mirrors | [Plans/roadmap-next-execution-2026-10-07.md](roadmap-next-execution-2026-10-07.md) |
-| Mirrors | [Plans/tasks/compatibility-and-installation.md](tasks/compatibility-and-installation.md) |
-| Mirrors | [Plans/tasks/durable-evidence.md](tasks/durable-evidence.md) |
-| Mirrors | [Plans/tasks/gate-recovery.md](tasks/gate-recovery.md) |
-| Mirrors | [Plans/tasks/reproduction-and-fidelity.md](tasks/reproduction-and-fidelity.md) |
-| Mirrors | [README.md](../README.md) |
-| Mirrors | [tools/deterministic-scheduling/README.md](../tools/deterministic-scheduling/README.md) |
-| MirrorECMA | [README.md](../../MirrorECMA/README.md) |
-| MirrorECMA | [docs/deterministic-scheduling.md](../../MirrorECMA/docs/deterministic-scheduling.md) |
-| MirrorECMA | [docs/remote-server.md](../../MirrorECMA/docs/remote-server.md) |
-| MirrorCPP | [README.md](../../MirrorCPP/README.md) |
-| MirrorCPP | [docs/deterministic-scheduling.md](../../MirrorCPP/docs/deterministic-scheduling.md) |
-| MirrorRust | [README.md](../../MirrorRust/README.md) |
-| MirrorRust | [docs/deterministic-scheduling.md](../../MirrorRust/docs/deterministic-scheduling.md) |
-| MirrorGate | [docs/remote-mirrors.md](../../MirrorGate/docs/remote-mirrors.md) |
+| Mirrors | [AGENTS.md](../../AGENTS.md) |
+| Mirrors | [CHANGELOG.md](../../CHANGELOG.md) |
+| Mirrors | [CHECKPOINTS.md](../../CHECKPOINTS.md) |
+| Mirrors | [Docs/README.md](../../Docs/README.md) |
+| Mirrors | [Docs/architecture-details.md](../../Docs/architecture-details.md) |
+| Mirrors | [Docs/architecture-overview.html](../../Docs/architecture-overview.html) |
+| Mirrors | [Docs/architecture-overview.json](../../Docs/architecture-overview.json) |
+| Mirrors | [Docs/architecture-overview.md](../../Docs/architecture-overview.md) |
+| Mirrors | [Docs/architecture-overview.txt](../../Docs/architecture-overview.txt) |
+| Mirrors | [Docs/client-implementation-guide.md](../../Docs/client-implementation-guide.md) |
+| Mirrors | [Docs/current-status.md](../../Docs/current-status.md) |
+| Mirrors | [Docs/cutover.md](../../Docs/cutover.md) |
+| Mirrors | [Docs/deterministic-scheduling.md](../../Docs/deterministic-scheduling.md) |
+| Mirrors | [Docs/framework-map.md](../../Docs/framework-map.md) |
+| Mirrors | [Docs/generated-model-interface-spec.md](../../Docs/generated-model-interface-spec.md) |
+| Mirrors | [Docs/model-interface-compiler/design.md](../../Docs/model-interface-compiler/design.md) |
+| Mirrors | [Docs/model-interface-compiler/tla-differential-validation-design.md](../../Docs/model-interface-compiler/tla-differential-validation-design.md) |
+| Mirrors | [Docs/model-interface-compiler/tla-frontend-design.md](../../Docs/model-interface-compiler/tla-frontend-design.md) |
+| Mirrors | [Docs/model-interface-compiler/tla-frontend-tasks.md](../../Docs/model-interface-compiler/tla-frontend-tasks.md) |
+| Mirrors | [Docs/model-interface-compiler/tla-language-profile.md](../../Docs/model-interface-compiler/tla-language-profile.md) |
+| Mirrors | [Docs/model-interface-generation-design.md](../../Docs/model-interface-generation-design.md) |
+| Mirrors | [Docs/model-interface-reduction.md](../../Docs/model-interface-reduction.md) |
+| Mirrors | [Docs/model-interface-runtime-distribution-design.md](../../Docs/model-interface-runtime-distribution-design.md) |
+| Mirrors | [Docs/native-build-design.md](../../Docs/native-build-design.md) |
+| Mirrors | [Docs/remote-server-guide.md](../../Docs/remote-server-guide.md) |
+| Mirrors | [Plans/completed/documentation-sync-2026-10-09.md](documentation-sync-2026-10-09.md) |
+| Mirrors | [Plans/execution-decisions.md](../execution-decisions.md) |
+| Mirrors | [Plans/completed/framework-checkpoint-reference-2026-09-22.md](framework-checkpoint-reference-2026-09-22.md) |
+| Mirrors | [Plans/completed/m3-safe-reduction-design.md](m3-safe-reduction-design.md) |
+| Mirrors | [Plans/completed/m3-safe-reduction-implementation-plan.md](m3-safe-reduction-implementation-plan.md) |
+| Mirrors | [Plans/completed/m5-wsl-windows-remote.md](m5-wsl-windows-remote.md) |
+| Mirrors | [Plans/mirror-framework-improvements.md](../mirror-framework-improvements.md) |
+| Mirrors | [Plans/mirror-framework-tasks.md](../mirror-framework-tasks.md) |
+| Mirrors | [Plans/completed/roadmap-next-execution-2026-10-07.md](roadmap-next-execution-2026-10-07.md) |
+| Mirrors | [Plans/tasks/compatibility-and-installation.md](../tasks/compatibility-and-installation.md) |
+| Mirrors | [Plans/tasks/durable-evidence.md](../tasks/durable-evidence.md) |
+| Mirrors | [Plans/tasks/gate-recovery.md](../tasks/gate-recovery.md) |
+| Mirrors | [Plans/tasks/reproduction-and-fidelity.md](../tasks/reproduction-and-fidelity.md) |
+| Mirrors | [README.md](../../README.md) |
+| Mirrors | [tools/deterministic-scheduling/README.md](../../tools/deterministic-scheduling/README.md) |
+| MirrorECMA | [README.md](../../../MirrorECMA/README.md) |
+| MirrorECMA | [docs/deterministic-scheduling.md](../../../MirrorECMA/docs/deterministic-scheduling.md) |
+| MirrorECMA | [docs/remote-server.md](../../../MirrorECMA/docs/remote-server.md) |
+| MirrorCPP | [README.md](../../../MirrorCPP/README.md) |
+| MirrorCPP | [docs/deterministic-scheduling.md](../../../MirrorCPP/docs/deterministic-scheduling.md) |
+| MirrorRust | [README.md](../../../MirrorRust/README.md) |
+| MirrorRust | [docs/deterministic-scheduling.md](../../../MirrorRust/docs/deterministic-scheduling.md) |
+| MirrorGate | [docs/remote-mirrors.md](../../../MirrorGate/docs/remote-mirrors.md) |

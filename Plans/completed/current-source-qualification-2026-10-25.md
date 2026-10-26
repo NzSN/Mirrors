@@ -82,9 +82,9 @@ R1/R5 input linkage and incomplete command profile. The supporting recovery R0
 has no qualification credit. The deliberately incomplete-profile control bundle
 is retained separately and does not receive full-profile credit.
 
-[Acceptance and exact run references](current-source-qualification-evidence-20261025/acceptance.json)
-and the byte-identical [independent result](current-source-qualification-evidence-20261025/independent-verification.json)
-record the outcome. The [installed sanitizer regression](current-source-qualification-evidence-20261025/installed-sanitizer.json)
+[Acceptance and exact run references](../current-source-qualification-evidence-20261025/acceptance.json)
+and the byte-identical [independent result](../current-source-qualification-evidence-20261025/independent-verification.json)
+record the outcome. The [installed sanitizer regression](../current-source-qualification-evidence-20261025/installed-sanitizer.json)
 confirms that both installed server binaries redact the owned path with
 `TMPDIR=/tmp/` and return a bounded 4,147-byte JSON reply. Final source/catalog/
 lock identities and both installed inventories reverified without drift.
@@ -100,7 +100,7 @@ weakened and no failed result was relabeled. Native integer maps and the local
 live Apalache/explorer/Counter/async and four TLA reference tiers remain explicit
 source-suite skips; the separate required remote profile actually ran.
 
-The [owned fixture cleanup](current-source-qualification-evidence-20261025/oracle-cleanup.json)
+The [owned fixture cleanup](../current-source-qualification-evidence-20261025/oracle-cleanup.json)
 confirmed no native model images remained, then stopped only the exact owned
 qualification server process after its before/after observations and all checks.
 The original deployment state was preserved. No current live-service health is
@@ -109,7 +109,7 @@ separate from this dirty working-tree local-candidate qualification.
 
 The exact installed verifier runtime is retained with the proof. Repeating Q2
 from that durable copy after stopping the oracle produced a byte-identical
-accepted result. [Retention receipt](current-source-qualification-evidence-20261025/retention.json):
+accepted result. [Retention receipt](../current-source-qualification-evidence-20261025/retention.json):
 9,887 indexed files, 3,525,340,683 bytes, owner-only, actual credential
 carriers excluded. Final index SHA-256:
 `121e7585ca6e6450e90857e7fb71643d7727b4e9d1d4eb2fafe0c7bcee33ea52`.

@@ -2,7 +2,7 @@
 
 Status: the I1 proposal baseline below is historical (2026-09-22). Checked local
 and Gate profiles are implemented, built, installed and accepted in
-[October 7 qualification](../Plans/q3-published-roadmap-2026-10-07.md). The
+[October 7 qualification](../Plans/completed/q3-published-roadmap-2026-10-07.md). The
 separate fresh-trace distribution still lacks its locked Java artifact; do not
 confuse the owned Windows oracle with a packaged local toolchain. Native Ubuntu
 acceptance remains separate from the selected WSL2 profile.

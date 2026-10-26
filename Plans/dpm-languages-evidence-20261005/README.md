@@ -2,7 +2,7 @@
 
 Accepted 2026-10-05 (Asia/Shanghai; capture timestamps use UTC). DPM-0 through
 DPM-5 pass for the two experimental profiles in the
-[execution plan](../dpm-mirrorecma-mirrorrust.md):
+[execution plan](../completed/dpm-mirrorecma-mirrorrust.md):
 `mirrorecma.worker-checkpoints/v1` and
 `mirrorrust.cooperative-checkpoints/v1`. Node workers retain async stacks;
 Rust owns real OS threads. Both expose incremental generated replay, separate

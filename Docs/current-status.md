@@ -30,7 +30,7 @@ recorded run path aligned with child diagnostics for redaction. New validation
 is recorded in the newest checkpoint; the original failed receipts are unchanged.
 This source/build change does not renew full DPM installed-package or framework
 acceptance.
-The [October 9 documentation audit](../Plans/documentation-sync-2026-10-09.md)
+The [October 9 documentation audit](../Plans/completed/documentation-sync-2026-10-09.md)
 remains a historical full source-navigation audit across linked repositories; this
 refresh reconciles maintained status and the affected DPM ownership paths.
 
@@ -61,7 +61,7 @@ does not establish current service health or v0.1.1 deployment.
 
 ## Qualified scope and evidence
 
-The [published roadmap candidate](../Plans/q3-published-roadmap-2026-10-07.md)
+The [published roadmap candidate](../Plans/completed/q3-published-roadmap-2026-10-07.md)
 qualifies for `m5-wsl-windows-remote/v1`, qualification class `local-candidate`,
 at Mirrors `f0894d2`, MirrorECMA `eef6f71` and MirrorGate `455e196` under C0
 `94271a543085118e47c7fd540ee8d34d3f427fa5f45fedaeba0c852534f4f34a`.
@@ -154,7 +154,7 @@ qualify a new framework release. Broader M4 stays independent.
 | Review compiler/profile/migration contracts | [Compiler index](model-interface-compiler/README.md), [generated specification](generated-model-interface-spec.md) |
 | Operate model checking remotely | [Remote guide](remote-server-guide.md), [qualification harness](qualification-harness-design.md) |
 | Inspect completion and planned extensions | [Framework roadmap](../Plans/mirror-framework-improvements.md), [execution decisions](../Plans/execution-decisions.md) |
-| Inspect exact accepted identities | [October 7 readiness](../Plans/q3-published-roadmap-2026-10-07.md), [DPM acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md), [conformance acceptance](../Plans/client-conformance-fix-evidence-20261015/README.md), [release retag scope](../Plans/version-migration-2026-10-22/retag.json), [checkpoint history](../CHECKPOINTS.md) |
+| Inspect exact accepted identities | [October 7 readiness](../Plans/completed/q3-published-roadmap-2026-10-07.md), [DPM acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md), [conformance acceptance](../Plans/client-conformance-fix-evidence-20261015/README.md), [release retag scope](../Plans/version-migration-2026-10-22/retag.json), [checkpoint history](../CHECKPOINTS.md) |
 
 Dated baselines, proof statements, frozen fixtures and machine-readable acceptance
 files retain their original bytes/counts. A historical “pending” stage is not a

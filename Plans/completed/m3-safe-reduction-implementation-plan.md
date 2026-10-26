@@ -12,15 +12,15 @@ broader M4 aggregate/process recovery and native Ubuntu acceptance remain
 unqualified. Source tests alone never qualify a tier.
 
 The phase cards and September 30 execution record below preserve the original
-plan and its historical checkpoint. The October 1 [Windows oracle decision](execution-decisions.md#2026-10-01--current-windows-host-is-the-designated-remote-oracle)
+plan and its historical checkpoint. The October 1 [Windows oracle decision](../execution-decisions.md#2026-10-01--current-windows-host-is-the-designated-remote-oracle)
 replaced their former endpoint/toolchain activation prerequisite; use the current
 readiness record for the exercised oracle identity and profile scope.
 
 Design: [m3-safe-reduction-design.md](m3-safe-reduction-design.md) (architecture,
 safety contract S1–S6, remote oracle mode). Roadmap:
-[mirror-framework-improvements.md](mirror-framework-improvements.md) §3. Task
-cards: [R4/R5](tasks/reproduction-and-fidelity.md#r4---add-safe-deterministic-prefix-reduction).
-Position record: [CHECKPOINTS.md](../CHECKPOINTS.md) (dated execution history).
+[mirror-framework-improvements.md](../mirror-framework-improvements.md) §3. Task
+cards: [R4/R5](../tasks/reproduction-and-fidelity.md#r4---add-safe-deterministic-prefix-reduction).
+Position record: [CHECKPOINTS.md](../../CHECKPOINTS.md) (dated execution history).
 
 ## 0. Original execution rules (2026-09-28)
 
@@ -186,7 +186,7 @@ recovery, the source gates, and the local non-model gate.
 
 SR-6: executed — the parent wrote the `CHECKPOINTS.md` records ("SR-5a credited"
 and "Closing sweep complete") and the M3/M5 status rows, and
-[q3-readiness-2026-09-30.md](q3-readiness-2026-09-30.md) is the Q3 readiness
+[q3-readiness-2026-09-30.md](../q3-readiness-2026-09-30.md) is the Q3 readiness
 report for this selection.
 
 Remaining gate at that checkpoint: SR-5b (`qualification.reduction-domain`) — operator activation

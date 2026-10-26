@@ -10,7 +10,7 @@ was queued at that planning checkpoint.
 Current status (2026-10-13): the selected `m5-wsl-windows-remote/v1` profile is
 qualified for published-revision C0
 `94271a543085118e47c7fd540ee8d34d3f427fa5f45fedaeba0c852534f4f34a`.
-See [current readiness](q3-published-roadmap-2026-10-07.md) for the exact installed
+See [current readiness](completed/q3-published-roadmap-2026-10-07.md) for the exact installed
 runs, independent Q2 verification and limits, and [milestone status](mirror-framework-improvements.md#delivery-order-and-ownership)
 for the remaining broader M4 scope. Later commits and documentation changes
 do not inherit that qualification. The assignments and checkpoints below are

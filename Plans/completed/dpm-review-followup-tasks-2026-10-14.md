@@ -2,7 +2,7 @@
 
 Date: 2026-10-14. Source: [fix plan](dpm-review-followup-2026-10-14.md).
 Status: complete for the declared remote WSL scope. See
-[acceptance evidence](dpm-review-followup-evidence-20261014/README.md).
+[acceptance evidence](../dpm-review-followup-evidence-20261014/README.md).
 Owners are not alone in the workspace;
 each preserves other owners' edits and stays within the files assigned below.
 

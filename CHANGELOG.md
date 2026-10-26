@@ -60,7 +60,7 @@ byte-for-byte JSON-lines wire compatibility with ModelMirros@3496251
   artifact-refresh requirements. No lock or application code is rewritten.
 - The named `m5-wsl-windows-remote/v1` published candidate passed all 18 commands,
   16 tiers, two D bindings, 19 linked nodes, 20 independent bundles and six
-  rejection controls. [Readiness](Plans/q3-published-roadmap-2026-10-07.md) binds
+  rejection controls. [Readiness](Plans/completed/q3-published-roadmap-2026-10-07.md) binds
   exact implementation/runtime identities; later documentation is not new proof.
 - Broader M4 process recovery/enforcement stays separate. Added read-only native-
   host eligibility facts and a concrete platform/process-ownership plan.
@@ -83,8 +83,8 @@ byte-for-byte JSON-lines wire compatibility with ModelMirros@3496251
   immutable corpus projection and public local/Gate integration.
 - Generated Lean required-verification replay and shared language fixtures passed
   their separately declared source/native/transport gates. See
-  [M6](Plans/m6-reviewed-scaffolds-and-corpora.md) and
-  [compiler/client follow-ups](Plans/compiler-client-followups-2026-10-03.md).
+  [M6](Plans/completed/m6-reviewed-scaffolds-and-corpora.md) and
+  [compiler/client follow-ups](Plans/completed/compiler-client-followups-2026-10-03.md).
 
 ## Remote validation and async resource safety (2026-09-18)
 

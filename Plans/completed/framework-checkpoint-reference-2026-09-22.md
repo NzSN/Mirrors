@@ -4,8 +4,8 @@ Archived during the 2026-10-09 documentation synchronization from `AGENTS.md`
 at Mirrors `548ba71`. The original September checkpoint sections below are
 retained verbatim, including v5 hashes and historical tool/service observations.
 Their stop/resume instructions are superseded. For current work, read
-[current status](../Docs/current-status.md), the newest
-[checkpoint](../CHECKPOINTS.md), and [execution decisions](execution-decisions.md).
+[current status](../../Docs/current-status.md), the newest
+[checkpoint](../../CHECKPOINTS.md), and [execution decisions](../execution-decisions.md).
 
 ## 2026-09-25 candidate
 

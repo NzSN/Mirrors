@@ -45,7 +45,7 @@ The default checked-in traces are authored test evidence, not fresh model checks
 ## Native pilot
 
 The reviewed scope is in
-[the DPM-3 pilot](../../Plans/deterministic-production-mbt-dpm3-pilot.md).
+[the DPM-3 pilot](../../Plans/completed/deterministic-production-mbt-dpm3-pilot.md).
 `native/freeze.py` freezes selected inputs without changing WriteSentry.
 `native/build.ps1` admits only a new output directory beneath the owned
 `MirrorsRemote` root, builds the normal worker or one of two isolated production

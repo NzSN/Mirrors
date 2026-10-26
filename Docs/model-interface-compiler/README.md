@@ -35,7 +35,7 @@ The [interop guide](../../tools/interop/INTEROP.md) distinguishes their bounded
 generated-Counter transport acceptance from the legacy all-transport matrix and
 framework qualification. Reviewed scaffold sealing and corpus workflows passed
 their declared source and public local/Gate integration gates; the
-[M6 execution record](../../Plans/m6-reviewed-scaffolds-and-corpora.md) retains
+[M6 execution record](../../Plans/completed/m6-reviewed-scaffolds-and-corpora.md) retains
 the exact results and limits.
 
 The active frontend profile and catalog changes are recorded in the

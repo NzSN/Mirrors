@@ -3,7 +3,7 @@
 Status: **independently reviewed and approved for the fourteen exact bindings below.**
 
 This proposal is bound to the fresh, portable default-limit checkpoint
-[`checkpoint-n-profile3-phase1-proposal-default60`](../test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60/).
+[`checkpoint-n-profile3-phase1-proposal-default60`](../test/fixtures/tla-frontend/differential/evidence/checkpoint-n-profile3-phase1-proposal-default60).
 Its archived report SHA-256 is
 `391225623e8a752dab9727df73beb7f30a46dd08176a32e93dbc5ef51298325c` and
 its normalized semantic SHA-256 is

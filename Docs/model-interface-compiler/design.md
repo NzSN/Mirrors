@@ -4,7 +4,7 @@
 > partitioning, frontend profile 5, and optional generated CMake consumers are
 > specified in [WriteSentry compiler extensions](writesentry-extensions.md).
 > Current declared acceptance is indexed in [framework status](../current-status.md)
-> and [October 7 readiness](../../Plans/q3-published-roadmap-2026-10-07.md).
+> and [October 7 readiness](../../Plans/completed/q3-published-roadmap-2026-10-07.md).
 > Eight emitters include explicit async-ECMA/Rust v2 typed maps; common portable
 > vectors and DPM/native profiles retain their separately declared scopes.
 
@@ -76,7 +76,7 @@ The additive [reviewed workflow](reviewed-corpora.md) accepts multiple evidence
 inputs, validates an explicit review, seals a companion contract and publishes
 projected corpora. Workflow-bearing v2 locks retain that chain in provenance;
 ordinary v1 artifacts retain their existing bytes. Source and cross-repository
-acceptance are recorded separately in the [M6 plan](../../Plans/m6-reviewed-scaffolds-and-corpora.md).
+acceptance are recorded separately in the [M6 plan](../../Plans/completed/m6-reviewed-scaffolds-and-corpora.md).
 
 ## 1. Purpose
 
@@ -1766,7 +1766,7 @@ compiler milestone is separate from the framework's M5 qualification profile.
 
 Status: **implemented; source and public local/Gate integration accepted
 2026-10-03**. See the
-[execution plan](../../Plans/m6-reviewed-scaffolds-and-corpora.md) and
+[execution plan](../../Plans/completed/m6-reviewed-scaffolds-and-corpora.md) and
 [workflow contract](reviewed-corpora.md).
 
 The first non-Counter restricted implementation exposed three remaining manual
@@ -1910,4 +1910,4 @@ compound map keys and opaque ITF remain unsupported.
 
 The DPM client/application acceptance is separate from general Gate, browser,
 async-Rust-executor or full-platform qualification. See
-[the coordinated plan](../../Plans/dpm-mirrorecma-mirrorrust.md).
+[the coordinated plan](../../Plans/completed/dpm-mirrorecma-mirrorrust.md).

@@ -11,7 +11,7 @@ client matrix retains its separate scope from M5's pinned compatibility matrix.
 - `mirrorlean-v1` emits typed, fallible Lean ports, codecs and mechanical
   bindings. MirrorLean supplies strict negotiated admission, an exact binding
   registry, deferred construction and classified replay/cleanup errors while
-  preserving its legacy client API. See [the target contract](../Docs/model-interface-compiler/lean-target.md).
+  preserving its legacy client API. See [the target contract](../../Docs/model-interface-compiler/lean-target.md).
 - The pure Core conformance implementation and six shared fixture families
   exercise generated synchronous/async TypeScript, C++, Rust and Lean bindings.
   The consumers compare actual SDK `report_state` payloads as well as recording
@@ -48,7 +48,7 @@ client matrix retains its separate scope from M5's pinned compatibility matrix.
   its explicit `leanprover/lean4:v4.33.0` pin.
 
 The combined entry point is `tools/interop/run.sh --generated-clients`;
-[INTEROP.md](../tools/interop/INTEROP.md) records its arguments and boundaries.
+[INTEROP.md](../../tools/interop/INTEROP.md) records its arguments and boundaries.
 Its default shared gate now requires all six profiles. The retained acceptance
 was collected as the five-base-profile aggregate followed by the C++ v2
 supplement; the supplemental run preserves the fixture and canonical frame
@@ -74,6 +74,6 @@ closures and source hiding; it is not a package release qualification. Local
 Apalache and TLC are prohibited on this coordinator. Live model generation
 uses the owned native Windows oracle, Apalache 0.62.2 with Java 25.0.4+7-LTS.
 
-Publication commits are recorded in [CHECKPOINTS.md](../CHECKPOINTS.md).
+Publication commits are recorded in [CHECKPOINTS.md](../../CHECKPOINTS.md).
 Native Ubuntu, aggregate cgroups, active-process
 recovery and Windows service-manager acceptance remain outside this work.
