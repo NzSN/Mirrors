@@ -1,0 +1,79 @@
+ok: framing accepts exactly 65535 UTF-8 bytes
+ok: framing rejects 65536 UTF-8 bytes
+ok: framing rejects embedded newline
+ok: framing rejects invalid UTF-8
+ok: TCP coalesced first LF frame survives later read failure
+ok: TCP coalesced CRLF suffix is preserved
+ok: TCP empty read error is not clean EOF
+ok: TCP read error cannot complete an unterminated JSON fragment
+ok: TCP read error discards retained fragment
+ok: delivery: sync boundary is exactly 65535 bytes
+ok: delivery: 65535 shared stays full
+ok: delivery: 65535 remote stays full
+ok: delivery: sync overflow is exactly 65536 bytes
+ok: delivery: 65536 durable shared uses paths only
+ok: delivery: 65536 ephemeral shared is a bounded failure
+ok: delivery: 65536 remote is a bounded failure
+ok: delivery: path-only overflow is a bounded failure
+ok: delivery: async boundary is exactly 65535 bytes
+ok: delivery: async 65535 stays full
+ok: delivery: async overflow is exactly 65536 bytes
+ok: delivery: async 65536 is a terminal error for the same job
+ok: delivery: stdio transport is shared-filesystem
+ok: delivery: TCP transport is remote
+ok: pki: server cert signed
+ok: pki: client cert signed
+ok: pki: nosan cert signed
+ok: pki: rogue cert signed
+ok: pki: soon-expiry cert signed
+ok: pki: other-san cert signed
+ok: pki: stray (unchainable) cert signed
+ok: pki: expired cert signed
+ok: server ctx (good PKI)
+ok: server ctx rejected: no SAN
+ok: server ctx rejected: unchainable cert
+ok: server ctx rejected: cert/key mismatch
+ok: server ctx rejected: garbage cert file
+ok: server ctx rejected: empty cert file
+ok: fingerprint of garbage cert is none
+ok: expired cert: ctx still created (warn-only)
+ok: expired cert days <= 0 (M2)
+ok: client ctx (good PKI)
+ok: fingerprint matches openssl CLI
+ok: sequential certificate fingerprints keep distinct output
+ok: mTLS leaf fingerprint grants exact allowlisted verify scope
+ok: mTLS leaf fingerprint denies a non-allowlisted principal
+ok: soon cert days in [1,2]
+ok: long cert days > 300
+ok: listenTcp binds 127.0.0.1
+ok: listenTcp rejects unresolvable bind name
+ok: listenTcp rejects invalid bind literal
+ok: tcp echo round trip
+ok: tcp server survived peer drop
+ok: bind 127.0.0.1 reachable via loopback
+ok: bind 127.0.0.1 NOT reachable via non-loopback addr
+ok: delivery: TLS transport is remote
+ok: mtls echo round trip (TLS 1.3, pinned fp)
+ok: ip-literal connect (M3)
+ok: mixed-case pin connect (t29)
+ok: oversized line rejected (m6)
+ok: server alive after oversized line
+ok: mtls wrong fingerprint rejected
+ok: client with wrong CA rejected by handshake
+ok: other-san ctx (locally valid)
+ok: client hostname SAN mismatch rejected
+ok: rogue client ctx (locally valid)
+ok: mtls untrusted client cert rejected by server
+ok: tls1.2-only peer rejected (no echo)
+ok: certificate-less client rejected (no echo)
+dbg before ip: pid 18736
+TRANSPORT SPEC: all green
+
+STDERR:
+warning: server certificate .lake/build/tmp-pki/expired.crt expires in 0 day(s)
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+connection skipped
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+connection skipped
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+connection skipped

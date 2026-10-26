@@ -1,0 +1,6 @@
+version CLI: output and argument validation passed
+clean session: #[spec_validated, initial_state, step_ok, next_step, step_ok, initial_state, step_ok, next_step, step_ok, next_step, step_ok, all_steps_done]
+mismatch session: #[spec_validated, initial_state, step_ok, next_step, step_mismatch]
+STDIO SMOKE GREEN
+
+STDERR:

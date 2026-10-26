@@ -1,0 +1,35 @@
+
+STDERR:
+[scenario sha-strict-json]
+[scenario lease-reduction]
+[scenario canonical-diagnostics]
+[scenario replay-partition]
+[scenario integer-map-values]
+[scenario counter-resolution]
+[scenario resource-limits]
+[scenario negotiation]
+[scenario runtime-negotiation-matrix]
+[scenario negotiation-codec]
+[scenario cache]
+[scenario runtime-cache]
+[scenario preflight]
+[scenario cli-diagnostics]
+[scenario typescript-emitter]
+[scenario typescript-async-emitter]
+[scenario suite-bundle]
+[scenario cpp-emitter]
+[scenario rust-emitter]
+[scenario semantic-identity-and-large-lock]
+[scenario filesystem-hardening]
+FAIL cli diagnostics json: stale summary remains exact stdout: stdout=stale: D:\.local\TMP\tmp.XXaYJlk2\stale-output/.model-interface-generated.json
+stale: D:\.local\TMP\tmp.XXaYJlk2\stale-output/CounterMirror.generated.ts
+, stderr=[{"arguments":[{"name":"reason","value":"generated output is stale"}],"code":"MIC-C-STALE-001","primary":{"source":"<compiler>"},"related":[],"severity":"error","stage":"cli","subject":{"kind":"generatedOutput"}}]
+
+FAIL filesystem hardening: concurrent target injected
+FAIL filesystem hardening: concurrent unowned target rejected
+FAIL filesystem hardening: concurrent unowned target preserved
+FAIL filesystem hardening: failed tree rolled back new files
+FAIL filesystem hardening: rollback target injected
+FAIL filesystem hardening: rollback failure rejected
+FAIL filesystem hardening: previous generated tree restored
+8 FAILURES

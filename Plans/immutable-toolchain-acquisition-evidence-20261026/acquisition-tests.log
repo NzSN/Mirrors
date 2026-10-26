@@ -1,0 +1,26 @@
+test_corrupt_extracted_jar_is_rejected_without_replacing_it (tools.tla-differential.tests.test_acquire.AcquireTests.test_corrupt_extracted_jar_is_rejected_without_replacing_it) ... ok
+test_corrupt_extracted_launcher_is_rejected_without_replacing_it (tools.tla-differential.tests.test_acquire.AcquireTests.test_corrupt_extracted_launcher_is_rejected_without_replacing_it) ... ok
+test_corrupt_store_object_never_falls_back_to_network (tools.tla-differential.tests.test_acquire.AcquireTests.test_corrupt_store_object_never_falls_back_to_network) ... ok
+test_different_jdk_cannot_qualify_selected_tools (tools.tla-differential.tests.test_acquire.AcquireTests.test_different_jdk_cannot_qualify_selected_tools) ... ok
+test_existing_local_artifact_is_never_overwritten (tools.tla-differential.tests.test_acquire.AcquireTests.test_existing_local_artifact_is_never_overwritten) ... ok
+test_fresh_toolchain_restores_from_store_without_network (tools.tla-differential.tests.test_acquire.AcquireTests.test_fresh_toolchain_restores_from_store_without_network) ... ok
+test_hash_mismatched_store_object_is_refused (tools.tla-differential.tests.test_acquire.AcquireTests.test_hash_mismatched_store_object_is_refused) ... ok
+test_identical_existing_store_object_is_accepted (tools.tla-differential.tests.test_acquire.AcquireTests.test_identical_existing_store_object_is_accepted) ... ok
+test_jdk_identity_requires_exact_version_and_build (tools.tla-differential.tests.test_acquire.AcquireTests.test_jdk_identity_requires_exact_version_and_build) ... ok
+test_missing_extracted_distribution_is_rejected (tools.tla-differential.tests.test_acquire.AcquireTests.test_missing_extracted_distribution_is_rejected) ... ok
+test_missing_offline_store_entry_fails_without_creating_toolchain (tools.tla-differential.tests.test_acquire.AcquireTests.test_missing_offline_store_entry_fails_without_creating_toolchain) ... ok
+test_partial_download_leaves_no_target_or_store_object (tools.tla-differential.tests.test_acquire.AcquireTests.test_partial_download_leaves_no_target_or_store_object) ... ok
+test_store_paths_are_digest_only (tools.tla-differential.tests.test_acquire.AcquireTests.test_store_paths_are_digest_only) ... ok
+test_store_refuses_conflicting_existing_object (tools.tla-differential.tests.test_acquire.AcquireTests.test_store_refuses_conflicting_existing_object) ... ok
+test_truncated_store_object_is_refused (tools.tla-differential.tests.test_acquire.AcquireTests.test_truncated_store_object_is_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.050s
+
+OK
+verified Apalache archive: /home/lsz/Codebase/Mirrors/.lake/tmp-no-model/tmpdtf_tv4p/toolchain/downloads/apalache-0.61.0.tgz
+verified standalone SANY jar: /home/lsz/Codebase/Mirrors/.lake/tmp-no-model/tmpdtf_tv4p/toolchain/downloads/tla2tools-1.8.0.jar
+SANY2 Version 2.2 created 08 July 2020
+verified Apalache archive: /home/lsz/Codebase/Mirrors/.lake/tmp-no-model/tmpdtf_tv4p/toolchain/downloads/apalache-0.61.0.tgz
+verified standalone SANY jar: /home/lsz/Codebase/Mirrors/.lake/tmp-no-model/tmpdtf_tv4p/toolchain/downloads/tla2tools-1.8.0.jar
+SANY2 Version 2.2 created 08 July 2020
