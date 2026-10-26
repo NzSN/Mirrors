@@ -5,14 +5,39 @@ It does not claim corpus conformance or independent parser implementations.
 
 ## Artifacts
 
-`toolchain.lock.json` records the release URLs and hashes. Acquisition is
-explicit (`python3 tools/tla-differential/acquire.py --download`) and writes
-only under the ignored `.golden-build/tla-differential/toolchain/` directory.
-Normal verification (`python3 tools/tla-differential/acquire.py`) performs no
-network access. The Apalache archive hash matches the repository pin in
+`toolchain.lock.json` records the release URLs, archive sizes and SHA-256
+identities, Apalache build revision and extracted JAR/launcher identities, the
+derived standard-library digests, and the required JDK version/build.
+Acquisition is explicit. Local installation writes only under the ignored
+`.golden-build/tla-differential/toolchain/` directory; an explicitly selected
+artifact store is written only at that operator-chosen path. Pinned release
+URLs are used only with `--download`:
+
+```sh
+python3 tools/tla-differential/acquire.py --download
+```
+
+An operator may instead select an explicit content-addressed SHA-256 store,
+populating it during download or restoring from it with no network access:
+
+```sh
+python3 tools/tla-differential/acquire.py --download --artifact-store /approved/store
+python3 tools/tla-differential/acquire.py --offline --artifact-store /approved/store
+```
+
+Store objects live at `<store>/sha256/<lower-case-sha256>`; the tool never
+discovers a store from an environment variable, repository sibling, package
+cache, or `PATH`. Normal verification
+(`python3 tools/tla-differential/acquire.py`) uses only the installed
+toolchain, performs no network access, and does not discover ambient SANY or
+Apalache installations. See [`README.md`](README.md) for the no-overwrite and
+fail-closed acquisition contract.
+
+The Apalache archive hash matches the repository pin in
 `tools/ci/versions.env`. The standalone TLA+ Tools 1.8.0 jar was downloaded
 from the v1.8.0 release asset and has the recorded SHA-256 (and release-page
-SHA-1). Java is OpenJDK 25.0.4+7.
+SHA-1). Java is operator-supplied OpenJDK 25.0.4+7 and is admitted by the exact
+version/build in the lock; it is not downloaded or installed by this tool.
 
 The SANY jar contains `tla2sany/StandardModules/*.tla`; the Apalache jar also
 contains that prefix plus Apalache extension/internal modules. Standard-module

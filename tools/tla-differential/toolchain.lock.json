@@ -13,26 +13,36 @@
       "url": "https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar",
       "path": "downloads/tla2tools-1.8.0.jar",
       "sha256": "d15655eeaff4b3f7b3d65c46b838bc0f35d131b2ef4b1e473689b62c98d4726f",
+      "size": 4502259,
       "sha1_release": "b76c04087ac0d60d24d48f4577adec024a9c6a20",
       "buildRevision": "2ef2af8c767b76e5db5cba2878f027ac07aad36c",
       "buildTimestamp": "2026-10-24T01:36:19.357Z",
       "entrypoint": ["java", "-cp", "{path}", "tla2sany.SANY"],
       "standardLibraryPrefix": "tla2sany/StandardModules/",
-      "parserLineage": "standalone tla2tools distribution"
-      ,"standardLibrarySha256": "fc1e01131317e322a90eb5534fc217f6a1b64df8de540d949255eaa7d8ff88ad"
+      "parserLineage": "standalone tla2tools distribution",
+      "standardLibrarySha256": "fc1e01131317e322a90eb5534fc217f6a1b64df8de540d949255eaa7d8ff88ad"
     },
     "apalache": {
       "distribution": "Apalache 0.61.0",
       "version": "0.61.0",
       "build": "831d473",
+      "buildRevision": "831d473",
       "url": "https://github.com/apalache-mc/apalache/releases/download/v0.61.0/apalache-0.61.0.tgz",
       "path": "downloads/apalache-0.61.0.tgz",
       "sha256": "68fb56dd9d053cf21d692fd7ec3fbaaeba1395661ec7434fa2b4c47e6fc432b8",
+      "size": 191998425,
+      "archiveRoot": "apalache-0.61.0",
+      "installPath": "apalache-0.61.0",
+      "jarPath": "lib/apalache.jar",
       "jarSha256": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346",
+      "jarSize": 196973995,
+      "launcherPath": "bin/apalache-mc",
+      "launcherSha256": "71e0733e2a88b185ed073c3e8dd3044a320cbcabfbaa043a196692d49ed2b03a",
+      "launcherSize": 3388,
       "frontendCommand": ["apalache-mc", "parse", "--output={output}", "{file}"],
       "standardLibraryPrefix": "tla2sany/StandardModules/",
-      "parserLineage": "bundles tla2sany classes; shared with its SanyParser pass"
-      ,"standardLibrarySha256": "b8e3930442b5eb78940e44996c1cf577c1c1d152a49fbeec001e1f8aa927e094"
+      "parserLineage": "bundles tla2sany classes; shared with its SanyParser pass",
+      "standardLibrarySha256": "b8e3930442b5eb78940e44996c1cf577c1c1d152a49fbeec001e1f8aa927e094"
     }
   }
 }

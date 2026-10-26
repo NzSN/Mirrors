@@ -12,13 +12,49 @@ From the repository root, acquire the pinned artifacts once:
 python3 tools/tla-differential/acquire.py --download
 ```
 
-The command verifies both release hashes before installing under the ignored
-`.golden-build/tla-differential/toolchain/` directory. To verify an existing
-installation without network access:
+The command verifies both release sizes and SHA-256 hashes before installing
+under the ignored `.golden-build/tla-differential/toolchain/` directory. To
+verify an existing installation without network access:
 
 ```sh
 python3 tools/tla-differential/acquire.py
 ```
+
+### Immutable artifact store
+
+A release URL is mutable provenance, not an identity. The lock pins the archive
+SHA-256, size, build revision, extracted JAR and launcher identities, and the
+derived standard-library digest. An operator can retain the reviewed archives in
+an explicit content-addressed store. Object paths are
+`<store>/sha256/<lower-case-sha256>`; names from release URLs are not identities.
+The tool never discovers a store from an environment variable, repository
+sibling, package cache, or `PATH`.
+
+Populate the store while acquiring, or restore a fresh local toolchain from the
+store without any network access:
+
+```sh
+python3 tools/tla-differential/acquire.py --download --artifact-store /approved/store
+python3 tools/tla-differential/acquire.py --offline --artifact-store /approved/store
+```
+
+`--artifact-store` without `--download` is also offline restoration; `--offline`
+makes the no-network intent explicit. `--download` and `--offline` are mutually
+exclusive. In download mode an existing valid store object is used before the
+network; a missing object may be fetched from its locked URL, verified, and
+published. In offline mode a missing object fails closed.
+
+Downloads and store publications are staged beside their destination, checked
+for exact size and SHA-256, and installed without overwriting existing bytes.
+Apalache extraction is staged and verified before it is renamed into place.
+Truncated, mismatched, partial, or unavailable content is rejected; a bad store
+object never triggers a network fallback. Keep the store outside Git or in an
+ignored location. Large tool archives are not committed by this repository.
+
+These checks establish byte identity only. They do not prove artifact security,
+JDK compatibility, differential completeness, or profile qualification. The JDK
+is operator-supplied and admitted by the exact version/build in the lock; it is
+not downloaded by this acquisition tool.
 
 The required gate command is:
 
