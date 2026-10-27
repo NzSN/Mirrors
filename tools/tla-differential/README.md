@@ -44,9 +44,13 @@ exclusive. In download mode an existing valid store object is used before the
 network; a missing object may be fetched from its locked URL, verified, and
 published. In offline mode a missing object fails closed.
 
-Downloads and store publications are staged beside their destination, checked
-for exact size and SHA-256, and installed without overwriting existing bytes.
-Apalache extraction is staged and verified before it is renamed into place.
+Downloads stop and fail as soon as they exceed the pinned size, before the
+excess bytes are written. Downloads and store publications are staged beside
+their destination, checked for exact size and SHA-256, and installed without
+overwriting existing bytes. Apalache extraction is staged and verified before
+atomic no-replace publication; a concurrently published valid distribution is
+verified and accepted, while an invalid destination is preserved and rejected.
+Platforms without an atomic no-replace directory primitive fail closed.
 Truncated, mismatched, partial, or unavailable content is rejected; a bad store
 object never triggers a network fallback. Keep the store outside Git or in an
 ignored location. Large tool archives are not committed by this repository.

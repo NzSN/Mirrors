@@ -8,6 +8,7 @@ back to the network, ambient tool installations, or a different artifact.
 from __future__ import annotations
 
 import argparse
+import ctypes
 import hashlib
 import http.client
 import json
@@ -54,10 +55,21 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def download(url: str, destination: Path) -> None:
+def download(url: str, destination: Path, *, expected_size: int | None = None) -> None:
+    if expected_size is not None and (
+        isinstance(expected_size, bool) or not isinstance(expected_size, int) or expected_size < 0
+    ):
+        raise SystemExit(f"toolchain lock has an invalid size for {destination}: {expected_size}")
     destination.parent.mkdir(parents=True, exist_ok=True)
     with urllib.request.urlopen(url, timeout=60) as response, destination.open("wb") as stream:
-        shutil.copyfileobj(response, stream)
+        total = 0
+        while chunk := response.read(1024 * 1024):
+            total += len(chunk)
+            if expected_size is not None and total > expected_size:
+                raise SystemExit(
+                    f"download exceeds pinned size of {expected_size} bytes for {destination}"
+                )
+            stream.write(chunk)
         stream.flush()
         os.fsync(stream.fileno())
 
@@ -152,7 +164,7 @@ def download_to_toolchain(pin: dict, target: Path) -> None:
     temporary = Path(temporary_name)
     try:
         try:
-            download(pin["url"], temporary)
+            download(pin["url"], temporary, expected_size=pin.get("size"))
         except (OSError, http.client.HTTPException) as error:
             raise SystemExit(f"download failed for {target.name}: {error}") from error
         checked(temporary, pin["sha256"], expected_size=pin.get("size"), label=f"downloaded {target.name}")
@@ -202,6 +214,43 @@ def verify_apalache_distribution(pin: dict, distribution: Path | None = None) ->
         raise SystemExit("Apalache standard-library identity does not match the lock")
 
 
+def rename_noreplace(source: Path, destination: Path) -> None:
+    """Rename a directory without replacing an existing destination."""
+    if os.name == "nt":
+        os.rename(source, destination)
+        return
+    try:
+        renameat2 = ctypes.CDLL(None, use_errno=True).renameat2
+    except AttributeError as error:
+        raise SystemExit(
+            "atomic no-clobber directory publication is unsupported on this platform"
+        ) from error
+    renameat2.argtypes = [
+        ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint
+    ]
+    renameat2.restype = ctypes.c_int
+    at_fdcwd = -100
+    rename_noreplace_flag = 1
+    result = renameat2(
+        at_fdcwd, os.fsencode(source), at_fdcwd, os.fsencode(destination),
+        rename_noreplace_flag,
+    )
+    if result != 0:
+        error = ctypes.get_errno()
+        raise OSError(error, os.strerror(error), destination)
+
+
+def publish_apalache_distribution(pin: dict, source: Path, destination: Path) -> bool:
+    try:
+        rename_noreplace(source, destination)
+        return True
+    except OSError:
+        if destination.exists() or destination.is_symlink():
+            verify_apalache_distribution(pin, destination)
+            return False
+        raise
+
+
 def extract_apalache(pin: dict, archive: Path) -> None:
     distribution = apalache_distribution(pin)
     if distribution.exists() or distribution.is_symlink():
@@ -235,8 +284,8 @@ def extract_apalache(pin: dict, archive: Path) -> None:
                 raise SystemExit("Apalache archive is empty")
             source.extractall(temporary, members=selected, filter="data")
         verify_apalache_distribution(pin, temporary)
-        os.rename(temporary, distribution)
-        temporary = None
+        if publish_apalache_distribution(pin, temporary, distribution):
+            temporary = None
     except (OSError, tarfile.TarError) as error:
         raise SystemExit(f"Apalache extraction failed: {error}") from error
     finally:

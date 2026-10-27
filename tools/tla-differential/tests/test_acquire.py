@@ -200,7 +200,7 @@ class AcquireTests(unittest.TestCase):
             with self.subTest(failure=type(failure).__name__), tempfile.TemporaryDirectory() as temporary:
                 fixture = SyntheticFixture(Path(temporary))
 
-                def interrupted(url: str, destination: Path, failure=failure) -> None:
+                def interrupted(url: str, destination: Path, *, expected_size=None, failure=failure) -> None:
                     destination.write_bytes(b"partial")
                     raise failure
 
@@ -212,6 +212,71 @@ class AcquireTests(unittest.TestCase):
                 self.assertFalse(fixture.target(fixture.sany_pin).exists())
                 self.assertFalse(acquire.store_object(fixture.store, fixture.sany_pin["sha256"]).exists())
                 self.assertEqual(list(fixture.target(fixture.sany_pin).parent.glob("*partial*")), [])
+
+    def test_download_enforces_pinned_size_before_excess_write(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = SyntheticFixture(Path(temporary))
+            target = fixture.target(fixture.sany_pin)
+            with patch.object(
+                acquire.urllib.request, "urlopen",
+                return_value=io.BytesIO(fixture.sany_content),
+            ):
+                acquire.download_to_toolchain(fixture.sany_pin, target)
+            self.assertEqual(target.read_bytes(), fixture.sany_content)
+
+            target.unlink()
+            undersized_pin = {**fixture.sany_pin, "size": len(fixture.sany_content) - 1}
+            with patch.object(
+                acquire.urllib.request, "urlopen",
+                return_value=io.BytesIO(fixture.sany_content),
+            ), self.assertRaisesRegex(SystemExit, "exceeds pinned size"):
+                acquire.download_to_toolchain(undersized_pin, target)
+            self.assertFalse(target.exists())
+            self.assertEqual(list(target.parent.glob("*download*")), [])
+
+    def test_publication_preserves_concurrent_empty_destination(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = SyntheticFixture(Path(temporary))
+            destination = fixture.toolchain / "apalache-0.61.0"
+            rename = acquire.rename_noreplace
+
+            def concurrent_create(source: Path, target: Path) -> None:
+                target.mkdir()
+                rename(source, target)
+
+            with patch.object(acquire, "TOOLCHAIN", fixture.toolchain), \
+                    patch.object(acquire, "rename_noreplace", side_effect=concurrent_create), \
+                    self.assertRaises(SystemExit):
+                acquire.extract_apalache(fixture.apalache_pin, fixture.apalache_path)
+            self.assertTrue(destination.is_dir())
+            self.assertEqual(list(destination.iterdir()), [])
+            self.assertEqual(list(fixture.toolchain.glob(".apalache-0.61.0.partial-*")), [])
+
+    def test_publication_accepts_concurrent_valid_distribution(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = SyntheticFixture(Path(temporary))
+            destination = fixture.toolchain / "apalache-0.61.0"
+            rename = acquire.rename_noreplace
+
+            def concurrent_publish(source: Path, target: Path) -> None:
+                (target / "lib").mkdir(parents=True)
+                (target / "bin").mkdir()
+                (target / "lib/apalache.jar").write_bytes(fixture.apalache_jar_content)
+                (target / "bin/apalache-mc").write_bytes(fixture.launcher_content)
+                rename(source, target)
+
+            with patch.object(acquire, "TOOLCHAIN", fixture.toolchain), \
+                    patch.object(acquire, "rename_noreplace", side_effect=concurrent_publish):
+                acquire.extract_apalache(fixture.apalache_pin, fixture.apalache_path)
+            self.assertEqual(
+                (destination / "lib/apalache.jar").read_bytes(),
+                fixture.apalache_jar_content,
+            )
+            self.assertEqual(
+                (destination / "bin/apalache-mc").read_bytes(),
+                fixture.launcher_content,
+            )
+            self.assertEqual(list(fixture.toolchain.glob(".apalache-0.61.0.partial-*")), [])
 
     def test_existing_local_artifact_is_never_overwritten(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
