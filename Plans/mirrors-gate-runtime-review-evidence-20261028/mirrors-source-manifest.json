@@ -1,0 +1,116 @@
+{
+  "schema": "mirrors.runtime-review-source/v1",
+  "baseCommit": "ed86c2c6f9a22148b0d01c7fc24f1b72352f59cf",
+  "files": [
+    {
+      "path": "CHECKPOINTS.md",
+      "sha256": "69825693af44c37863b4ad2c96cf4f9f1bf74d118b9ca5bb9252d8d1524852a4",
+      "bytes": 118984
+    },
+    {
+      "path": "Core/AsyncResources.lean",
+      "sha256": "2ca018dc4334ecd9898c6d54680499189507abc494e57dee097417600233b207",
+      "bytes": 26579
+    },
+    {
+      "path": "Docs/README.md",
+      "sha256": "5677e32a9de958e6277afa8b6cdfd2cc931e67a3100d69aa7f4476462a1274fa",
+      "bytes": 12022
+    },
+    {
+      "path": "Docs/application-integration-guide.md",
+      "sha256": "e333e6e494795ab2690756f9de32492bdca184929703611d575117bd60552077",
+      "bytes": 30899
+    },
+    {
+      "path": "Docs/architecture-details.md",
+      "sha256": "5a2d82fe0c4074370f43dc7f1a3459f34eb03e1f7abbc80673685b7de01c2f80",
+      "bytes": 33590
+    },
+    {
+      "path": "Docs/architecture-overview.html",
+      "sha256": "2064dee9ed477e8a2783042fe096af53c17f5110e8cb4e4974b9151a8d581866",
+      "bytes": 653122
+    },
+    {
+      "path": "Docs/architecture-overview.json",
+      "sha256": "69b650e7012b39035f6b19ff10221a822d1a3dee36a2933c98a88c7ad03dbf7b",
+      "bytes": 37057
+    },
+    {
+      "path": "Docs/architecture-overview.md",
+      "sha256": "a2f2f23e6a13e266187d2e108bb5b740da5423d11f45a2500999abd307c4e549",
+      "bytes": 16598
+    },
+    {
+      "path": "Docs/architecture-overview.txt",
+      "sha256": "b2cfa0fd9c49a190c38f62de4ee51737c6d03b0ad0e81646fb24104e02339f7b",
+      "bytes": 7244
+    },
+    {
+      "path": "Docs/async-protocol-resource-model.md",
+      "sha256": "825eefcbe308c084e646a82a5bb49b9a70cb91b204bece9b62b6278ca76dabbf",
+      "bytes": 9898
+    },
+    {
+      "path": "Docs/async-resource-lean-proofs.md",
+      "sha256": "67d22086a8f0ed630d12c30d70ec0af52ed8f461725acb470bdfbb5c43647f93",
+      "bytes": 9367
+    },
+    {
+      "path": "Docs/current-status.md",
+      "sha256": "7ccb6128f804851c47e0fccb6397c372c3eff9d0d6769aa647722247957ef5e0",
+      "bytes": 12608
+    },
+    {
+      "path": "Docs/durable-evidence-design.md",
+      "sha256": "17c8e25dde507aa3475eba35a8ef5ae49b1bb57ad6d1cbe1e83ed0777a8f059b",
+      "bytes": 16320
+    },
+    {
+      "path": "Docs/interface-reference.md",
+      "sha256": "95437f99984aa554ec9a3c7699023211dd07f76839f948280571f74c840c0dcd",
+      "bytes": 23008
+    },
+    {
+      "path": "Docs/mirrors-gate-boundary.md",
+      "sha256": "2f95b2c84d87d6669870d31aa65ff7b3f3ee915f8c93ff78ac90c21939384329",
+      "bytes": 12252
+    },
+    {
+      "path": "Docs/worker-pool-design.md",
+      "sha256": "46f10316f0fe68c9d2d04bae913e75337af0e22d369531dce9f17421cfbd8be7",
+      "bytes": 6699
+    },
+    {
+      "path": "Plans/execution-decisions.md",
+      "sha256": "ac0c89f2fe70780fd0f10b1bd043e7b5ab10d825dc3f50ad72c11c14ab39637d",
+      "bytes": 38483
+    },
+    {
+      "path": "Shell/Jobs/Store.lean",
+      "sha256": "d187808fb9bfdaf53933237d8fced8c04312e3e222f483527cb019c17c40b77f",
+      "bytes": 21035
+    },
+    {
+      "path": "tools/AsyncResourceProofSpec.lean",
+      "sha256": "524716c61f1cd0c997d97e7d857195dd9d6d16f0c048c862ecab09191140eaa8",
+      "bytes": 3186
+    },
+    {
+      "path": "tools/JobStoreSpec.lean",
+      "sha256": "05e86fbdd6f714fdc7c1f85c86065f4d52e70d2e96b444e253d2b67151f103fc",
+      "bytes": 31543
+    },
+    {
+      "path": "tools/evidence/collect.py",
+      "sha256": "982331e4cb77d46224a10b1f5d11f17b15c71b70954c7465c48f589fe6f6ab96",
+      "bytes": 139747
+    },
+    {
+      "path": "tools/evidence/tests/test_collect.py",
+      "sha256": "1fd5e1913e68bb40c11caea6818a9a04317a7afbee40945f99a185ce04cc5320",
+      "bytes": 91136
+    }
+  ]
+}

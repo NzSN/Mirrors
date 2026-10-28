@@ -1,0 +1,45 @@
+
+[1mNAME[0m
+
+	SANY - provides parsing, semantic analysis, and level-checking for a TLA+ spec - Version 2.2 created 08 July 2020
+
+
+[1mSYNOPSIS[0m
+
+	[1mSANY[0m [[1m-dls[0m] [[1m-error-codes[0m] [[1m-messagesAsErrors[0m [3mcodes[0m] [[1m-suppressMessages[0m [3mcodes[0m] FILE...
+
+[1mDESCRIPTION[0m
+
+	[1mSANY[0m is a parser and syntax checker for TLA+ specifications.
+	It catches parsing errors and some "semantic" errors such as
+	priming an expression containing primed variables.
+
+[1mOPTIONS[0m
+
+	[1m-d[0m
+		Opens the semantic graph explorer prompt. The prompt accepts the following commands:
+		'cst' Prints out the concrete syntax tree.
+		'dot' Emits the semantic graph to a ModuleName.dot file in the DOT graph description language.
+		'mt'  Prints the module table, a list of all imported modules and their top-level definitions.
+		'mt*' Prints the extended module table including built-in operator definitions.
+		
+		Optionally, skip the prompt and run a command directly by appending it like 'SANY -d ModuleName.tla cst'
+	[1m-error-codes[0m
+		Return a descriptive exit code in case of error.
+		
+		'2' Error during parsing.
+		'4' Error during semantic analysis or level-checking.
+	[1m-l[0m
+		Turns off level-checking.
+	[1m-messagesAsErrors[0m [3mcodes[0m
+		Treat specific message codes as errors; comma-separated list of message codes.
+		When triggered, SANY exits with failure.
+		Message codes can be found in https://github.com/tlaplus/tlaplus/blob/master/tlatools/org.lamport.tlatools/src/tla2sany/semantic/ErrorCode.java#L38
+	[1m-s[0m
+		Turns off semantic analysis and level-checking.
+	[1m-suppressMessages[0m [3mcodes[0m
+		Suppress specific messages; comma-separated list of message codes.
+		Suppressed messages are not printed and do not cause SANY to fail.
+		Errors cannot be suppressed.
+		 Message codes can be found in https://github.com/tlaplus/tlaplus/blob/master/tlatools/org.lamport.tlatools/src/tla2sany/semantic/ErrorCode.java#L38
+

@@ -1,0 +1,126 @@
+{
+  "schema": "mirrors.gate-runtime-remediation/v1",
+  "baseCommit": "5055d91757a071467b96d38a16ffece1265c3138",
+  "files": [
+    {
+      "path": "README.md",
+      "beforeSha256": "8f322a215fb1b074169f8723242779069337b82daf30d3e1048ae00ac35207ec",
+      "afterSha256": "66c4e48ff05ef678cd80df7fda2ca17a8d02332d6b5477365553e6d8d1561da5",
+      "new": false
+    },
+    {
+      "path": "docs/evaluation-service-contract-v1.md",
+      "beforeSha256": "04509f8d5f7a20f90c858558e93f32147b6f6f1a18bc81d94db39dba042f43dd",
+      "afterSha256": "482dc93c0767af92e217acf80416474aed131d5ccd26f452ea1f86d620518d4d",
+      "new": false
+    },
+    {
+      "path": "docs/sandbox/recovery-design.md",
+      "beforeSha256": "cb2e6428037bb13601e669fddc2e2e851d0499929dbf7a210a1dc80e945ee405",
+      "afterSha256": "fed863f28b0fda1e6ffc0b984addd4fd5c94a55979910b894c346e9a75db9b3a",
+      "new": false
+    },
+    {
+      "path": "docs/sandbox/supervisor-design.md",
+      "beforeSha256": "d1ccddcb26830bc01a61914629b7f172a35d9eab9f0684ae83bd035590c8f669",
+      "afterSha256": "4112b24b2338ce975bf76702501d4a4704eed591faa96464c87d9f08b92b3589",
+      "new": false
+    },
+    {
+      "path": "integrations/mirrorecma/WORKFLOW.md",
+      "beforeSha256": "d8470dc841591bfe317daaad180dcce2c14df8b59dd96ef58c7d538b652ee73d",
+      "afterSha256": "b107376f74440ea4c4cf07eb35af7e06d90503a350639461c84f06c0678e608a",
+      "new": false
+    },
+    {
+      "path": "integrations/mirrorecma/service/README.md",
+      "beforeSha256": "0b7db842a464b42df74006690a673dfa2bad3550a4a896902ebcfedbb8b6a766",
+      "afterSha256": "3463983024464091a6899e2d4e4f603c47189f1efe518a974999634b50b58391",
+      "new": false
+    },
+    {
+      "path": "integrations/mirrorecma/service/index.d.mts",
+      "beforeSha256": "b1670d2ad287ed85de91d26236c6c649d2198d9b973f8ce4338f2351a5367148",
+      "afterSha256": "f99b0baa347cb8632dd1f0926bf0f6c0560caf75847fc638d2ffe9dd56d493e8",
+      "new": false
+    },
+    {
+      "path": "integrations/mirrorecma/service/index.mjs",
+      "beforeSha256": "4f671f0231f17658741fb36570748484c67eb84ce3e233abc048ea00061329af",
+      "afterSha256": "39310437b58fd73b7ab33631c921ba67579436f8d379288fc87654174e2193b0",
+      "new": false
+    },
+    {
+      "path": "integrations/mirrorecma/test/campaign.test.ts",
+      "beforeSha256": "d8a722b37ce7871354a3e27e0b770524e93dffb00793ccbe0522e463a943e39c",
+      "afterSha256": "f8ac9ef7d302a6d3ef891c3fb1cdc72c82ddaab9a35bf42eafe43463041f21b0",
+      "new": false
+    },
+    {
+      "path": "sdk/compatibility.json",
+      "beforeSha256": "41bee160cb5208f939c014eb9c8ec9972e79abd3c4509683a000996d81c24934",
+      "afterSha256": "33b00fd1015968ea0055695a3e1b8ac608f05c23d9493be4a074251311a0159c",
+      "new": false
+    },
+    {
+      "path": "supervisor/mirrorgate/cgroup.py",
+      "beforeSha256": "2da4860ec6858a42a99e31a0fb2625d460427c0c0b8858d56ac2c4dfea7e9cc9",
+      "afterSha256": "adc4fc203c3eed3a303b7f88fdf2d8d3084b8fe23db1fcdaa742217454556cc8",
+      "new": false
+    },
+    {
+      "path": "supervisor/mirrorgate/preparation.py",
+      "beforeSha256": "3db4d5c2b20f9b5ecc64505e42cfb849fcc3a03c1dfc9d16f890503534622f8e",
+      "afterSha256": "31455a7f844fc98503e0443b8c419bf1b1da20f72591f11cd8073e2755fb06a7",
+      "new": false
+    },
+    {
+      "path": "supervisor/mirrorgate/recovery.py",
+      "beforeSha256": "4ac0dde8d03b551a53fffb2a7f8712aeecbc5d12d3f3f4bf9b09b4b00d9f3db8",
+      "afterSha256": "8f689993e345018d1e2d84aa546f656861e50b12941d9088e9059706faedb815",
+      "new": false
+    },
+    {
+      "path": "supervisor/mirrorgate/recovery_journal.py",
+      "beforeSha256": "25b2b49c5ff7a0e5cd6299829a140d415f46293be8d099ad035298cd99d7d615",
+      "afterSha256": "64eb32e8b329c2b4f44dfb47a2c0efaad42f69ed0f5bd58ae2ff42de03559969",
+      "new": false
+    },
+    {
+      "path": "supervisor/mirrorgate/recovery_receipt.py",
+      "beforeSha256": "81754ec6c2590682aabdcda68de7cb260459086c084f30bdca844d9e45047552",
+      "afterSha256": "55f3390b0c1f487056e72d205234f71862a59bd75a55c1699390717573d8868d",
+      "new": false
+    },
+    {
+      "path": "tests/test_cgroup_acceptance.py",
+      "beforeSha256": "9ccb2b03df39da7f352ab146a398ab4221ac823cf0e22536eeeb4a23de862558",
+      "afterSha256": "db6c72e70dca83bb8b0ab43e6241a17ac9b056794f2693f785791119c3d3e05f",
+      "new": false
+    },
+    {
+      "path": "tests/test_recovery_receipt.py",
+      "beforeSha256": "81b49ffcffbc388f6bc11776b0bd0cfdcd66bd5a141de352b3f3ad592656bec5",
+      "afterSha256": "9879fc9774b11850b35314491c87b7703517461315dc543be2cdd2a1e2c51862",
+      "new": false
+    },
+    {
+      "path": "integrations/mirrorecma/service/attempt-budget.mjs",
+      "beforeSha256": null,
+      "afterSha256": "d93b40e7f7645125a0d83d31344cfe496836d981154139c75b7c25ba705d0e14",
+      "new": true
+    },
+    {
+      "path": "tests/integration/evaluation-attempt-budget.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "9aff3d8a8c18d301167251a02831e7d7d0a29b34972af69461709cb9c923bad1",
+      "new": true
+    },
+    {
+      "path": "tests/test_group_process_recovery.py",
+      "beforeSha256": null,
+      "afterSha256": "16a8a986eccf0d38692c7ea24af2c2235ba1c4ec74f739386089f502e190c9c1",
+      "new": true
+    }
+  ]
+}

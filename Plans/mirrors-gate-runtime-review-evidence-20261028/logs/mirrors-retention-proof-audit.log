@@ -1,0 +1,16 @@
+ℹ [6/8] Built tools.AsyncResourceProofSpec (1.5s)
+info: tools/AsyncResourceProofSpec.lean:29:0: 'Core.AsyncResources.admission_bounded' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:30:0: 'Core.AsyncResources.retention_admission_bounded' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:31:0: 'Core.AsyncResources.eviction_preserves_other' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:32:0: 'Core.AsyncResources.lookup_dropped_absent' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:33:0: 'Core.AsyncResources.step_preserves' depends on axioms: [propext]
+info: tools/AsyncResourceProofSpec.lean:34:0: 'Core.AsyncResources.reachable_valid' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:35:0: 'Core.AsyncResources.released_has_no_further_release' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:36:0: 'Core.AsyncResources.Cancellation.reachable_ticket_unique' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:37:0: 'Core.AsyncResources.world_step_preserves' depends on axioms: [propext, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:38:0: 'Core.AsyncResources.world_reachable_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:39:0: 'Core.AsyncResources.active_jobs_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:40:0: 'Core.AsyncResources.world_terminal_stable' depends on axioms: [propext]
+info: tools/AsyncResourceProofSpec.lean:41:0: 'Core.AsyncResources.reachable_world_quiescence_leak_free' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: tools/AsyncResourceProofSpec.lean:42:0: 'Core.AsyncResources.quiescent_accounting_balanced' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (8 jobs).

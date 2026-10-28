@@ -60,6 +60,15 @@ JDK compatibility, differential completeness, or profile qualification. The JDK
 is operator-supplied and admitted by the exact version/build in the lock; it is
 not downloaded by this acquisition tool.
 
+The October 28 SANY re-pin is recorded in
+[the artifact evidence](../../Plans/sany-repin-evidence-20261028/README.md).
+The v1.8.0 asset URL currently identifies a manifest-labelled TLA+ Tools 2.0
+development build; the legacy local filename is not its identity. The complete
+standard-library digest is unchanged, so profile 6 and catalog v3 remain active.
+The reviewed jar is retained in the explicitly selected ignored store
+`.golden-build/tla-differential/artifact-store`; use that exact path with
+`--artifact-store` for future offline restoration. The old cache is preserved.
+
 The required gate command is:
 
 ```sh

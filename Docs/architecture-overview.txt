@@ -2,9 +2,10 @@ MIRRORS FRAMEWORK — source architecture
 Full source-navigation audit: 2026-10-09, Mirrors 548ba71 and linked clients.
 Status/DPM ownership refresh: 2026-10-22, base b243b37 + build-preparation changes.
 This refresh is not a new cross-repository audit.
+Gate trust/result/operating-limit review: 2026-10-28, source/contracts only.
 Acceptance: Docs/current-status.md; frozen qualification is revision-specific.
 
-                  MODEL PREPARATION
+                  TRUSTED MODEL PREPARATION
 +------------------------------------------------------+
 | TLA+ sources + reviewed contract + ITF evidence/corpus |
 +--------------------------+---------------------------+
@@ -33,7 +34,7 @@ Acceptance: Docs/current-status.md; frozen qualification is revision-specific.
               |                              | stdio/TCP/mTLS
               v                              v
 +---------------------------+    +---------------------------+
-| Application-owned port    |    | Mirrors runtime           |
+| Public application port   |    | Mirrors runtime           |
 | Actual operations/state   |    | Session/admission/diff    |
 +-------------+-------------+    | Shared async server jobs  |
               |                  +-------------+-------------+
@@ -45,10 +46,22 @@ Acceptance: Docs/current-status.md; frozen qualification is revision-specific.
 | + optional  | | Policy/freeze/   | +-------------+-------------+
 | DPM workers | | Linux/Bubblewrap |               |
 +-------------+ | Node/Rust SUT    |               v
-                | Physical cleanup| +---------------------------+
+                | Shim/adapter/SUT| +---------------------------+
                 +------------------+ | Apalache + JVM            |
                                      | Model checks/traces/explore|
                                      +---------------------------+
+
+Compiler, generated evaluator binding, client codecs, suite and configuration
+are trusted. Gate loads the submitted adapter inside the restricted worker.
+The evaluator uses distinct model, Gate-control and public-port RPC protocols.
+Gate retains the original owner until physical cleanup; permission profiles are
+not permanent machines. The model service may run on a different trusted host.
+
+RESULT PATHS
+Evaluator -> private conformance + acceptance + physical cleanup receipt
+          -> allowlisted projection -> approved recipient
+Expected states, private traces and detailed diagnostics remain private.
+Feedback policy names allowed fields, recipients, finite attempts and reset rules.
 
 DPM kit: reviewed mapping -> generated helper/metadata + application seed.
 DPM: generated action -> kit helper/application port -> binding session
@@ -93,3 +106,22 @@ WSL2: clients, supplied-trace local replay, Linux/Bubblewrap Gate.
 Windows: mTLS Mirrors service -> Apalache/JVM for live model operations.
 Gate workers receive public operations/inputs, not private expected model state.
 Broader M4 recovery/enforcement remains a separate roadmap track.
+
+ACCEPTANCE AND OPERATING LIMITS
+Reported-state matches do not prove observation fidelity. Protect the observer
+closure, probe real SUT facts independently, and require rejection of real SUT
+mutants and a shadow-observer control. Retain exact finite denominators.
+Normal cleanup is separate from offline filesystem and post-crash process
+recovery. Ambiguous owner loss never permits reconstruction of a pass.
+Per-process/UID limits and live-job capacity do not provide a whole-system
+memory, disk or retained-result budget. The optional service has finite epoch
+bounds; direct callers require their own admission and retention owner.
+Persistent per-author/corpus attempt budgets use synchronized spent markers;
+epoch-local start/rate limits alone do not survive restart.
+The job store separately reserves 256 outcomes of at most 262144 encoded bytes
+each (64 MiB), preserving the separate 65535-byte wire delivery limit.
+V2 process claims bind an exact cgroup; only durable observed-empty cleanup
+reclaims linked processes. Legacy/foreign/unpublished claims stay ambiguous.
+Shared unattended or cross-restart adaptive evaluation requires separately
+accepted aggregate, retention, process-recovery and disclosure-budget mechanisms.
+See Docs/mirrors-gate-boundary.md for profile admission and authoritative sources.

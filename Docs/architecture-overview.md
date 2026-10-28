@@ -12,6 +12,9 @@ and the [interactive diagram](architecture-overview.html) for focused views
 ([diagram data](architecture-overview.json)), and [architecture details](architecture-details.md)
 for the module map. Application ownership is defined in the
 [integration guide](application-integration-guide.md).
+The October 28 [Mirrors/Gate boundary review](mirrors-gate-boundary.md) makes
+compiler trust, observation controls, restart limits, aggregate budgets and
+private/public result paths explicit; it grants no new runtime qualification.
 
 ## System shape
 
@@ -47,12 +50,18 @@ TLA+ sources + reviewed contract + ITF evidence/corpus
                   |       Session / admission / diff / jobs
                   |                 |
                   v                 v
-          Application adapter   Apalache adapter -> Apalache/JVM
-              |       |
-              |       +-> Optional Gate -> isolated Node/Rust SUT
+          Public application port   Apalache adapter -> Apalache/JVM
+              |              |
+              v              +-> Optional Gate provider / public-port RPC
+          Local adapter                 |
+              |                         v
+              |                 Isolated shim -> adapter -> Node/Rust SUT
               v
           Local SUT / optional DPM checkpoint workers
           C++ threads | Node workers | Rust threads
+
+Trusted evaluator -> private verdict + acceptance + physical cleanup receipt
+                  -> allowlisted projection -> approved recipient
 
 Catalog + source/dependency locks -> snapshot -> cache -> install
                                              |
@@ -63,6 +72,11 @@ The result/evidence path describes qualification collection around the processes
 not automatic persistence of every wire session. Compiler products are inputs
 to the selected clients; equivalent suite/Gate capabilities are not implied for
 every client language.
+The compiler, generated evaluator binding, codecs and suite configuration belong
+to the trusted evaluation path. A submitted adapter is loaded inside the Gate
+worker. Observation fidelity requires separate real-SUT probe/mutation evidence;
+a matching reported state alone cannot establish it. Logical trust regions need
+not coincide with machine boundaries.
 
 ## Application scheduling and current topology
 
@@ -140,7 +154,11 @@ owned jobs; fatal protocol/framing/transport errors also end the connection.
 
 Logical terminal status is distinct from physical cleanup: a worker keeps its
 permit until its body unwinds. The concurrency limit does not establish a global
-bound on retained terminal-result bytes. See the [worker-pool design](worker-pool-design.md)
+bound by itself. The shared store separately reserves at most 256 job entries
+and caps each retained encoded outcome at 262,144 bytes; completion and cancellation
+do not free a reservation. Full retention rejects new admission; oversized
+outcomes become explicit bounded failures. This bounds stored outcome data,
+not whole-process RSS. See the [worker-pool design](worker-pool-design.md)
 and [async resource proof scope](async-resource-lean-proofs.md).
 
 ## Trace capture and delivery
@@ -196,6 +214,12 @@ negotiation, and publication contracts are linked from the
 | MirrorGate | Optional policy, worker isolation, snapshots and physical cleanup | Separate repository and backend qualification |
 | Apalache/JVM | Model validation, generated traces, exploration | External model-checking dependency |
 | Optional registry/Consul | Service registration and discovery | Separate discovery dependency |
+
+For Gate, normal physical cleanup, offline filesystem recovery and process
+reclamation after controller loss are separate guarantees. Default per-process
+limits and bounded live jobs also do not establish an aggregate memory, storage
+or retained-result envelope. Use the [profile admission table](mirrors-gate-boundary.md#profile-decision)
+before making unattended/shared-service or private adaptive-evaluation claims.
 
 The protocol refinement theorem relates successful pure transitions to a
 Lean-encoded tag-level relation, including marked extensions. It abstracts

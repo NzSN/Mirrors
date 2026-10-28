@@ -1,0 +1,24 @@
+{
+  "schema": "mirrors.m4-host-preflight/v1",
+  "host": {
+    "system": "Linux",
+    "release": "6.18.54.1-microsoft-standard-WSL2",
+    "uid": 1000,
+    "wsl": true
+  },
+  "backendSourceSha256": "adc4fc203c3eed3a303b7f88fdf2d8d3084b8fe23db1fcdaa742217454556cc8",
+  "recoverySourceSha256": "8f689993e345018d1e2d84aa546f656861e50b12941d9088e9059706faedb815",
+  "delegation": {
+    "requestedParent": null,
+    "readOnlyValidation": "not_requested",
+    "reason": "no_operator_delegation_supplied"
+  },
+  "nativeLinuxHost": false,
+  "kernelEnforcementTested": false,
+  "postRestartProcessRecoveryTested": false,
+  "sideEffects": "input reads only; no group creation, signals or journal changes",
+  "nextRequiredEvidence": [
+    "actual delegated-subtree quota and descendant enforcement",
+    "controller-death recovery with exact owned process/subtree identity"
+  ]
+}

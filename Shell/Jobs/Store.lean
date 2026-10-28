@@ -21,7 +21,9 @@ Port of the Haskell @Protocol.AsyncJobs@ per-session job store to Lean
   cancellation), so the §6.4 absorbing-terminal law is exactly the
   race-safety argument for double-cancel / cancel-vs-finish.
 * Terminal results are retained in the store and delivered idempotently
-  (a promise resolved at most once, under the store lock).
+  (a promise resolved at most once, under the store lock). Independent retention
+  admission reserves a bounded table entry and bounded encoded outcome until
+  eviction; completing or cancelling a job does not refund its reservation.
 * Unknown ids answer @jobUnknown@ in query / @unknown@ in await (Haskell
   semantics); session finalization cancels and evicts its own ids,
   after which their queries are unknown — the effectful image of
@@ -170,10 +172,16 @@ private def isTerm (e : JobEntry) : Bool := isTerminal e.phase
 private def liveCount (s : St) : Nat :=
   (s.jobs.filter (fun (_, jr) => !isTerm jr.entry)).length
 
-/-- Per-session async job store (Haskell @JobStore@). -/
+/-- Retention is separate from live-job permits. Every admitted job reserves
+one table entry until eviction, including after completion or cancellation.
+The outcome limit bounds encoded retained data, not total process RSS. -/
+abbrev RetentionLimits := Core.AsyncResources.RetentionLimits
+
+/-- Process-shared async job store; each session owns its submitted IDs. -/
 structure JobStore where
   /-- Bound on live (non-terminal) jobs; @job queue full@ beyond it. -/
   capacity : Nat
+  retention : RetentionLimits
   /-- Bound on concurrently running bodies (worker slots). -/
   slots : Std.Semaphore
   runner : Runner
@@ -181,8 +189,10 @@ structure JobStore where
 
 /-- New store with the given live-job capacity and injected runner
 (Haskell @newJobStoreWith@; worker slots = capacity, at least 1). -/
-def newJobStoreWith (capacity : Nat) (runner : Runner) : BaseIO JobStore := do
+def newJobStoreWith (capacity : Nat) (runner : Runner)
+    (retention : RetentionLimits := {}) : BaseIO JobStore := do
   return { capacity := capacity,
+           retention := { retention with maxOutcomeBytes := max 256 retention.maxOutcomeBytes },
            slots := ← Std.Semaphore.new (max 1 capacity),
            runner := runner,
            st := ← Std.Mutex.new { counter := 0, jobs := [] } }
@@ -301,6 +311,15 @@ private def toCoreOutcome : Codec.JobOutcome → JobOutcome
   | .genTraces r => .jobGenTracesDone r.itfTracePaths
   | .infraError m => .jobInfraError m
 
+/-- Oversized outcomes become an explicit bounded failure before they enter
+either the pure terminal state or its delivery promise. Never truncate a
+successful result into an apparently successful partial result. -/
+private def retainableOutcome (store : JobStore) (outcome : Codec.JobOutcome) : Codec.JobOutcome :=
+  if (Codec.jJobOutcome outcome).compress.utf8ByteSize ≤ store.retention.maxOutcomeBytes then
+    outcome
+  else
+    .infraError "job outcome exceeds retention byte limit"
+
 /-- The job thread (Haskell @jobThread@): acquire a worker slot, run the
 body, perform the terminal transition. A late body result after a
 cancel/close is discarded by the pure machine's absorbing law. -/
@@ -324,12 +343,16 @@ private def runJobBody (store : JobStore) (jid : JobId) (token : CancelToken)
           | .ok o => pure o
           | .error e => pure (.infraError e)
       catch e => pure (.infraError s!"job body crashed: {e}")
+    let outcome := retainableOutcome store outcome
     try
       match outcome with
       | .infraError msg => applyEvent store jid (.failInfra msg) (some outcome)
       | _ => applyEvent store jid (.complete (toCoreOutcome outcome)) (some outcome)
     catch error =>
-      let message := s!"job resource accounting failed: {error}"
+      let failure := retainableOutcome store (.infraError s!"job resource accounting failed: {error}")
+      let message := match failure with
+        | .infraError text => text
+        | _ => "job resource accounting failed"
       applyEvent store jid (.failInfra message) (some (.infraError message))
 
 private def jobThread (store : JobStore) (jid : JobId) (token : CancelToken)
@@ -356,6 +379,8 @@ private partial def submitJob (store : JobStore) (kind : JobKind) (ownedSpec : B
     let s ← get
     if !Core.AsyncResources.admissionAllowed (liveCount s) store.capacity then
       return (Except.error "job queue full")
+    else if !Core.AsyncResources.retentionAdmissionAllowed s.jobs.length store.retention then
+      return (Except.error "job result store full")
     else
       return (Except.ok (s.counter, ({ text := "job-" ++ toString s.counter } : JobId)))
   match alloc with
@@ -365,7 +390,8 @@ private partial def submitJob (store : JobStore) (kind : JobKind) (ownedSpec : B
     let token ← CancelToken.newTracked ownedSpec
     let inserted ← store.st.atomically do
       let s ← get
-      if !Core.AsyncResources.admissionAllowed (liveCount s) store.capacity || s.counter != n then
+      if !Core.AsyncResources.admissionAllowed (liveCount s) store.capacity ||
+          !Core.AsyncResources.retentionAdmissionAllowed s.jobs.length store.retention || s.counter != n then
         return false
       else
         let jr : JobRec := { kind := kind, entry := { kind := kind, phase := .pending, outcome := none }, result := prom, wire := none, token }

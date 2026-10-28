@@ -34,16 +34,24 @@ Apalache installations. See [`README.md`](README.md) for the no-overwrite and
 fail-closed acquisition contract.
 
 The Apalache archive hash matches the repository pin in
-`tools/ci/versions.env`. The standalone TLA+ Tools 1.8.0 jar was downloaded
-from the v1.8.0 release asset and has the recorded SHA-256 (and release-page
-SHA-1). Java is operator-supplied OpenJDK 25.0.4+7 and is admitted by the exact
+`tools/ci/versions.env`. The standalone jar is acquired from the v1.8.0 release
+asset URL, which has served different builds. The October 28 re-pin identifies
+TLA+ Tools `2.0 2026-10-28`, revision `56d37a9`, with SANY 2.2; the lock records
+the exact artifact hash, size, computed SHA-1, native help banner and manifest
+metadata. The legacy `tla2tools-1.8.0.jar` local filename is a locator, not a
+version assertion. All 20 standard-module entries retain the prior aggregate
+digest, so frontend profile 6 and catalog v3 stay unchanged. See
+[the re-pin evidence](../../Plans/sany-repin-evidence-20261028/README.md).
+The catalog's historical `TLA+ Tools 1.8.0` review label continues to name that
+byte-identical reviewed module set; the executable identity comes from the lock.
+Java is operator-supplied OpenJDK 25.0.4+7 and is admitted by the exact
 version/build in the lock; it is not downloaded or installed by this tool.
 
 The SANY jar contains `tla2sany/StandardModules/*.tla`; the Apalache jar also
 contains that prefix plus Apalache extension/internal modules. Standard-module
 entry hashes are available from the qualification command's jar inventory.
-The two Apalache/SANY parser paths share `tla2sany` code by design; SANY 1.8.0
-is the independent reference artifact, while Apalache is the compatibility
+The two Apalache/SANY parser paths share `tla2sany` code by design; the separately
+pinned standalone SANY jar is a distinct artifact, while Apalache is the compatibility
 oracle with correlated parser lineage.
 
 ## Frontend commands

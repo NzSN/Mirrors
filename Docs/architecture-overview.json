@@ -2,15 +2,15 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "Mirrors — Runtime, Compiler and Qualification Architecture",
-    "description": "Source architecture: client/application boundaries, cooperative DPM, conformance runtime, model-interface preparation and verified distribution/evidence. Broader M4 stays separate; selected pure laws do not prove all Shell/Ffi/external behavior.",
+    "title": "Mirrors \u2014 Runtime, Compiler and Qualification Architecture",
+    "description": "Source architecture with trusted compiler/binding ownership, separate Gate control and public-port RPC, private receipts/public feedback, observation-fidelity controls, and explicit restart/aggregate/adaptive-query limits. Selected pure laws do not prove the distributed application.",
     "output": "Docs/architecture-overview.html",
     "quality_profile": "showcase",
     "viewBox": [
       1600,
-      1440
+      1680
     ],
-    "updated": "2026-10-22",
+    "updated": "2026-10-28",
     "maintenance": "Companion JSON and the HTML embedded mirrors-architecture-data must match. The HTML renders the embedded data before initializing its retained Archify viewer; no external generator or fetch is required.",
     "links": [
       {
@@ -36,6 +36,10 @@
       {
         "label": "Diagram source JSON",
         "href": "architecture-overview.json"
+      },
+      {
+        "label": "Mirrors / Gate trust and operating limits",
+        "href": "mirrors-gate-boundary.md"
       }
     ],
     "views": [
@@ -133,6 +137,21 @@
           "codec"
         ],
         "note": "Applications map model actions to safe checkpoint intervals and report actual quiescent state. Core.Dpm and Codec.Dpm/DpmEvidence admit catalogs and typed receipts; Shell.Dpm.Cli verifies runtime/helpers before the Python host runs replay, exploration or reduction. Builds prepare local interpreter identities. F1/F2 are source accepted; F3/F4 and the separate F5 C++ mutex/FIFO prototype have exact October 14 WSL acceptance. F5 has no model comparison; rebuilt artifacts need their own acceptance."
+      },
+      {
+        "id": "gate-trust",
+        "label": "Gate trust and result paths",
+        "focus": [
+          "frontend",
+          "resolver",
+          "generated",
+          "clients",
+          "application",
+          "gate",
+          "private-results",
+          "public-feedback"
+        ],
+        "note": "Compiler, generated binding and evaluator are trusted. Require separate protected SUT probe/mutation evidence. Retain private receipts and project approved feedback. Source adds bounded outcome retention, exact group-covered recovery and persistent attempt budgets; native host/aggregate acceptance remains separate."
       }
     ],
     "source_base_revision": "b243b37",
@@ -171,7 +190,7 @@
         250,
         100
       ],
-      "context": "Compiler frontend",
+      "context": "Trusted preparation / Compiler frontend",
       "tag": "Pure analysis / source IO seam",
       "sources": [
         "../Core/Tla/Elaboration.lean",
@@ -191,7 +210,7 @@
         280,
         100
       ],
-      "context": "Compiler pipeline",
+      "context": "Trusted preparation / Compiler pipeline",
       "tag": "Pure resolution / publication effects",
       "sources": [
         "../Core/ModelInterface/Resolve.lean",
@@ -202,7 +221,7 @@
       "id": "generated",
       "type": "database",
       "label": "Semantic lock and generated artifacts",
-      "sublabel": "TS sync v1 / async v1/v2 · C++ v1/v2 · Rust v1/v2 · Lean",
+      "sublabel": "TS sync v1 / async v1/v2 \u00b7 C++ v1/v2 \u00b7 Rust v1/v2 \u00b7 Lean",
       "pos": [
         1080,
         100
@@ -211,7 +230,7 @@
         460,
         100
       ],
-      "context": "Compiler outputs: four language families / eight explicit emitter profiles; Node suite/project bundle path stays async v1",
+      "context": "Trusted preparation / Compiler outputs: four language families / eight explicit emitter profiles; Node suite/project bundle path stays async v1",
       "tag": "Node suite bundle + public worker interface",
       "sources": [
         "generated-model-interface-spec.md",
@@ -226,7 +245,7 @@
       "id": "clients",
       "type": "external",
       "label": "Client SDK / evaluator",
-      "sublabel": "MirrorECMA · C++ · Rust · Lean · Haskell",
+      "sublabel": "MirrorECMA \u00b7 C++ \u00b7 Rust \u00b7 Lean \u00b7 Haskell",
       "pos": [
         60,
         425
@@ -235,12 +254,13 @@
         270,
         100
       ],
-      "context": "External client and replay owner",
+      "context": "Trusted evaluator, generated binding, codecs and approved suite/configuration; logical trust is independent of machine placement.",
       "tag": "Protocol support varies by client",
       "sources": [
         "framework-map.md",
         "client-test-coverage.md",
-        "deterministic-scheduling.md"
+        "deterministic-scheduling.md",
+        "mirrors-gate-boundary.md"
       ]
     },
     {
@@ -256,7 +276,7 @@
         270,
         100
       ],
-      "context": "Application-owned behavior and observations; SDK binding sessions/coordinators control declared participating workers. Native phase bridges and Gate isolation have separate scopes. F3/F4 application runners and the separate experimental F5 C++ mutex/FIFO profile have October 14 WSL acceptance at recorded identities; F5 has no model comparison.",
+      "context": "Application-owned behavior and observations; SDK binding sessions/coordinators control declared participating workers. Native phase bridges and Gate isolation have separate scopes. F3/F4 application runners and the separate experimental F5 C++ mutex/FIFO profile have October 14 WSL acceptance at recorded identities; F5 has no model comparison. Observation fidelity is separate: retain protected real-SUT mutation/probe evidence, including rejection of a shadow observer even when replay matches.",
       "tag": "C++ / Node workers / Rust threads",
       "sources": [
         "application-integration-guide.md",
@@ -270,7 +290,7 @@
       "id": "gate",
       "type": "external",
       "label": "Optional MirrorGate",
-      "sublabel": "Restricted worker + physical cleanup",
+      "sublabel": "Control / worker RPC / physical cleanup",
       "pos": [
         60,
         825
@@ -279,10 +299,11 @@
         270,
         100
       ],
-      "context": "Optional Linux/Bubblewrap supervisor for Node/Rust workers. Broader M4 process recovery/quota acceptance and new OS backends remain a separate track.",
+      "context": "Gate-owned trusted integration and Linux/Bubblewrap supervisor; submitted adapter/SUT load inside the restricted worker. Original owner retained until cleanup. Journal v2 binds processes to exact owned groups and persists observed-empty counters before removal. Native crash/aggregate acceptance still needs the admitted host/delegation.",
       "tag": "Separate provider channel",
       "sources": [
-        "../../MirrorGate/docs/architecture.md"
+        "../../MirrorGate/docs/architecture.md",
+        "mirrors-gate-boundary.md"
       ]
     },
     {
@@ -328,7 +349,7 @@
       "id": "core",
       "type": "frontend",
       "label": "Core domain models",
-      "sublabel": "Value · Trace · Diff · Protocol · Jobs · DPM",
+      "sublabel": "Value \u00b7 Trace \u00b7 Diff \u00b7 Protocol \u00b7 Jobs \u00b7 DPM",
       "pos": [
         1120,
         425
@@ -338,7 +359,7 @@
         100
       ],
       "context": "Pure logic and selected proved properties; DPM catalog admission preserves full actor-local chains and orders bounded candidates.",
-      "tag": "Resources · interfaces · selected proved laws",
+      "tag": "Resources \u00b7 interfaces \u00b7 selected proved laws",
       "sources": [
         "../Core/Protocol.lean",
         "async-resource-lean-proofs.md",
@@ -349,7 +370,7 @@
       "id": "codec",
       "type": "frontend",
       "label": "Codec representations",
-      "sublabel": "JSONL · ITF · RPC · descriptors · DPM evidence",
+      "sublabel": "JSONL \u00b7 ITF \u00b7 RPC \u00b7 descriptors \u00b7 DPM evidence",
       "pos": [
         1120,
         580
@@ -380,7 +401,7 @@
         270,
         100
       ],
-      "context": "Mirror process wiring and the separate tools/MirrorsDpm → Shell/Dpm/Cli entry. DPM verifies interpreter/helpers before Python host execution; Lake prepares the selected local interpreter identity before compilation.",
+      "context": "Mirror process wiring and the separate tools/MirrorsDpm \u2192 Shell/Dpm/Cli entry. DPM verifies interpreter/helpers before Python host execution; Lake prepares the selected local interpreter identity before compilation.",
       "tag": "Connection / service setup",
       "sources": [
         "../Main.lean",
@@ -397,7 +418,7 @@
       "id": "interfaces",
       "type": "backend",
       "label": "Interface runtime service",
-      "sublabel": "Negotiation · authorization · cache",
+      "sublabel": "Negotiation \u00b7 authorization \u00b7 cache",
       "pos": [
         740,
         580
@@ -417,7 +438,7 @@
       "id": "ffi",
       "type": "security",
       "label": "Ffi native shims",
-      "sublabel": "OpenSSL · sockets · signals",
+      "sublabel": "OpenSSL \u00b7 sockets \u00b7 signals",
       "pos": [
         390,
         735
@@ -446,11 +467,12 @@
         300,
         100
       ],
-      "context": "Runtime scheduling and ownership",
+      "context": "Independent budgets: live-job permits plus 256 retained entries of at most 262144 encoded bytes each (64 MiB by default). Completion/cancellation retain reservations until eviction; storage overflow becomes a bounded failure. Final wire delivery remains separately limited to 65535 bytes. This is not an RSS bound.",
       "tag": "Live-job permits + checked transitions",
       "sources": [
         "../Shell/Jobs/Store.lean",
-        "async-resource-lean-proofs.md"
+        "async-resource-lean-proofs.md",
+        "interface-reference.md"
       ]
     },
     {
@@ -555,7 +577,7 @@
       "id": "catalog",
       "type": "database",
       "label": "Catalog + selected identities",
-      "sublabel": "Components · dependency locks · scope",
+      "sublabel": "Components \u00b7 dependency locks \u00b7 scope",
       "pos": [
         60,
         1180
@@ -573,7 +595,7 @@
     {
       "id": "distribution",
       "type": "backend",
-      "label": "Snapshot → cache → install",
+      "label": "Snapshot \u2192 cache \u2192 install",
       "sublabel": "Immutable sources / verified artifacts",
       "pos": [
         400,
@@ -615,7 +637,7 @@
     {
       "id": "evidence",
       "type": "database",
-      "label": "Retained bundles → verification",
+      "label": "Retained bundles \u2192 verification",
       "sublabel": "Independent offline identity + scope checks",
       "pos": [
         1220,
@@ -631,12 +653,53 @@
         "durable-evidence-design.md",
         "../tools/evidence/verify.py"
       ]
+    },
+    {
+      "id": "private-results",
+      "type": "database",
+      "label": "Private evaluation receipt",
+      "sublabel": "Conformance / acceptance / cleanup",
+      "pos": [
+        400,
+        1420
+      ],
+      "size": [
+        325,
+        100
+      ],
+      "context": "Trusted suite and Gate integration retain detailed results and optional persisted receipts. A match alone is not observer-fidelity evidence; unconfirmed cleanup prevents an overall pass.",
+      "tag": "Private model diagnostics and identities",
+      "sources": [
+        "mirrors-gate-boundary.md",
+        "../../MirrorGate/integrations/mirrorecma/src/receipt.ts",
+        "../../MirrorGate/integrations/mirrorecma/src/suite.ts"
+      ]
+    },
+    {
+      "id": "public-feedback",
+      "type": "external",
+      "label": "Approved public feedback",
+      "sublabel": "Allowlisted projection / finite attempts",
+      "pos": [
+        900,
+        1420
+      ],
+      "size": [
+        400,
+        100
+      ],
+      "context": "Trusted per-binding disclosure selects optional fields. Private service mode requires synchronized persistent per-author/corpus spent markers, shared across restarts/instances. Even a Boolean verdict leaks information; operator budget-directory custody stays trusted.",
+      "tag": "Full traces and expected states remain private",
+      "sources": [
+        "mirrors-gate-boundary.md",
+        "../../MirrorGate/integrations/mirrorecma/src/receipt.ts"
+      ]
     }
   ],
   "boundaries": [
     {
       "kind": "region",
-      "label": "1  MODEL-INTERFACE COMPILATION — analysis, resolution and generated publication",
+      "label": "1  TRUSTED MODEL PREPARATION \u2014 frontend, compiler and generated evaluator binding",
       "pos": [
         30,
         35
@@ -684,7 +747,7 @@
     },
     {
       "kind": "region",
-      "label": "Pure domain + codecs — selected proved laws",
+      "label": "Pure domain + codecs \u2014 selected proved laws",
       "pos": [
         1095,
         385
@@ -700,7 +763,7 @@
     },
     {
       "kind": "region",
-      "label": "3  DISTRIBUTION + QUALIFICATION — separate tooling and retained evidence",
+      "label": "3  DISTRIBUTION + QUALIFICATION \u2014 separate tooling and retained evidence",
       "pos": [
         30,
         1105
@@ -714,6 +777,22 @@
         "distribution",
         "qualification",
         "evidence"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "4  RESULT DISCLOSURE \u2014 trusted receipt and approved public projection",
+      "pos": [
+        30,
+        1360
+      ],
+      "size": [
+        1540,
+        210
+      ],
+      "wraps": [
+        "private-results",
+        "public-feedback"
       ]
     }
   ],
@@ -993,7 +1072,7 @@
     {
       "from": "clients",
       "to": "gate",
-      "label": "optional provider",
+      "label": "control + public-port RPC",
       "points": [
         [
           90,
@@ -1021,7 +1100,7 @@
     {
       "from": "gate",
       "to": "application",
-      "label": "worker binding",
+      "label": "isolated adapter / SUT",
       "points": [
         [
           195,
@@ -1413,6 +1492,54 @@
         1077
       ],
       "variant": "dashed"
+    },
+    {
+      "from": "clients",
+      "to": "private-results",
+      "label": "retain suite + cleanup evidence",
+      "points": [
+        [
+          60,
+          475
+        ],
+        [
+          10,
+          475
+        ],
+        [
+          10,
+          1470
+        ],
+        [
+          400,
+          1470
+        ]
+      ],
+      "labelAt": [
+        220,
+        1455
+      ],
+      "variant": "dashed"
+    },
+    {
+      "from": "private-results",
+      "to": "public-feedback",
+      "label": "allowlisted projection",
+      "points": [
+        [
+          725,
+          1470
+        ],
+        [
+          900,
+          1470
+        ]
+      ],
+      "labelAt": [
+        812,
+        1455
+      ],
+      "variant": "security"
     }
   ],
   "cards": [
@@ -1434,7 +1561,9 @@
         "Apalache/JVM executes model checking outside Lean proofs.",
         "Application adapters own the accuracy of reported state.",
         "Generated bindings do not prove application conformance.",
-        "DPM requires application hooks and accurate observations; it does not preempt arbitrary instructions."
+        "DPM requires application hooks and accurate observations; it does not preempt arbitrary instructions.",
+        "Compiler, generated binding, evaluator codecs and approved suite/configuration are trusted.",
+        "Require independent real-SUT probes and a shadow-observer negative control for fidelity claims."
       ]
     },
     {
@@ -1443,10 +1572,13 @@
       "items": [
         "Logical responsibilities can run across different machines.",
         "Local application replay does not require MirrorGate.",
-        "Recorded WSL2 ↔ mTLS ↔ Windows is one deployment example.",
+        "Recorded WSL2 \u2194 mTLS \u2194 Windows is one deployment example.",
         "Acceptance belongs to exact identities, scope and retained evidence.",
         "The October 7 named M5 profile is qualified at its frozen identities; broader M4 remains separate.",
-        "DPM kits/timelines are source accepted; F3/F4/F5 have separate October 14 WSL acceptance, with no F5 model comparison. Rebuilt/current artifacts need their own acceptance."
+        "DPM kits/timelines are source accepted; F3/F4/F5 have separate October 14 WSL acceptance, with no F5 model comparison. Rebuilt/current artifacts need their own acceptance.",
+        "Normal cleanup, offline filesystem recovery and controller-crash process reclamation have different scopes.",
+        "Live-job and per-process bounds do not establish aggregate memory/disk/result retention bounds.",
+        "Private service mode uses persistent author/corpus attempt budgets and minimal disclosure; epoch-local limits alone are insufficient."
       ]
     }
   ]

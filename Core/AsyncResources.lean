@@ -522,6 +522,22 @@ def CheckedJob.cancel (j : CheckedJob) : CheckedJob :=
 /-- The exact admission predicate executed by the shared job store. -/
 def admissionAllowed (live capacity : Nat) : Bool := decide (live < capacity)
 
+/-- Every stored job reserves one bounded outcome, including terminal jobs.
+This is a retained encoded-data bound, independent of live worker permits. -/
+structure RetentionLimits where
+  maxJobs : Nat := 256
+  maxOutcomeBytes : Nat := 262144
+  deriving Inhabited
+
+def retentionAdmissionAllowed (stored : Nat) (limits : RetentionLimits) : Bool :=
+  decide (stored < limits.maxJobs)
+
+theorem retention_admission_bounded (stored : Nat) (limits : RetentionLimits)
+    (accepted : retentionAdmissionAllowed stored limits = true) :
+    (stored + 1) * limits.maxOutcomeBytes ≤ limits.maxJobs * limits.maxOutcomeBytes := by
+  simp only [retentionAdmissionAllowed, decide_eq_true_eq] at accepted
+  exact Nat.mul_le_mul_right _ (by omega)
+
 theorem admission_bounded (live capacity : Nat) (accepted : admissionAllowed live capacity = true) :
     live + 1 ≤ capacity := by
   simp only [admissionAllowed, decide_eq_true_eq] at accepted

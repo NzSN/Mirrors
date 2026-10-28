@@ -1,0 +1,290 @@
+== model-interface scaffold ==
+MODEL INTERFACE SCAFFOLD SPEC GREEN
+== trace projection CLI ==
+MODEL INTERFACE TRACE PROJECTION CLI SPEC GREEN
+== trace projection ==
+MODEL INTERFACE TRACE PROJECTION SPEC GREEN
+== model-interface TypeScript golden ==
+model-interface check clean
+== model-interface async TypeScript golden ==
+model-interface check clean
+== model-interface C++ golden ==
+model-interface check clean
+== model-interface Rust golden ==
+model-interface check clean
+== model-interface Rust checks ==
+[scenario sha-strict-json]
+[scenario lease-reduction]
+[scenario canonical-diagnostics]
+[scenario replay-partition]
+[scenario integer-map-values]
+[scenario counter-resolution]
+[scenario resource-limits]
+[scenario negotiation]
+[scenario runtime-negotiation-matrix]
+[scenario negotiation-codec]
+[scenario cache]
+[scenario runtime-cache]
+[scenario preflight]
+[scenario cli-diagnostics]
+[scenario typescript-emitter]
+[scenario typescript-async-emitter]
+[scenario suite-bundle]
+[scenario cpp-emitter]
+[scenario rust-emitter]
+[scenario semantic-identity-and-large-lock]
+[scenario filesystem-hardening]
+MODEL INTERFACE SPEC GREEN
+   Compiling mirrors-generated-rust-tests v0.0.0 (/home/nzsn/Repos/Mirrors/.golden-build/model-interface-rust)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.23s
+     Running unittests /home/nzsn/Repos/Mirrors/tools/model-interface-rust/tests.rs (.golden-build/mirrorrust-target/debug/deps/mirrors_generated_rust_tests-a80fe0731e7b0c76)
+
+running 7 tests
+test tests::duplicate_sets_use_semantic_equality ... ok
+test tests::config_failure_has_no_effects ... ok
+test tests::aliases_paths_and_all_inputs_before_effects ... ok
+test tests::failures_poison_without_further_effects ... ok
+test tests::replay_and_coverage ... ok
+test tests::structural_codecs ... ok
+test tests::negotiated_stdio_replay ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+   Doc-tests mirrors_generated_rust_tests
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+{"actions":[{"count":1,"id":"Initialize"},{"count":2,"id":"Tick"}],"schema":"mirrors.model-interface-coverage/v1","semanticDigest":"193d6cc187d05c18f02ad483a44f8ad0c1634b02083df241df08b9281b045d1c","states":3,"traces":1,"unseenActions":[]}
+== stdio replay smoke ==
+version CLI: output and argument validation passed
+clean session: #[spec_validated, initial_state, step_ok, next_step, step_ok, initial_state, step_ok, next_step, step_ok, next_step, step_ok, all_steps_done]
+mismatch session: #[spec_validated, initial_state, step_ok, next_step, step_mismatch]
+STDIO SMOKE GREEN
+== async resource proofs ==
+ASYNC RESOURCE PROOFS GREEN
+== job store ==
+[scenario validateRoundTrip]
+[scenario genTracesRoundTrip]
+[scenario badBound]
+[scenario infraFailure]
+[scenario unknownJob]
+[scenario capacity]
+[scenario cancel]
+[scenario close]
+[scenario awaitTimeout]
+[scenario eviction]
+[scenario session-exit-cleanup]
+[scenario request-continuation]
+[scenario cancellation-ownership]
+[scenario cancelled-worker-slot]
+[scenario cancellation-failure-retirement]
+[scenario proved-resource-guard]
+[scenario retention]
+JOBSTORE PARITY GREEN
+== Apalache CLI pure/unit ==
+[scenario moduleName]
+[scenario materialize]
+[scenario acquire]
+[scenario borrowed-counter-closure]
+[scenario borrowed-recursive-closure]
+[scenario client-recursive-closure]
+[scenario async-acquisition-cleanup]
+[scenario borrowed-closure-failures]
+[scenario borrowed-closure-symlinks]
+[scenario borrowed-trace-snapshot]
+[scenario unified-capture-equivalence]
+[scenario args]
+[scenario disk-trace-limits]
+[scenario generated-trace-parse-failure]
+[scenario generated-trace-resource-fallback]
+[scenario trace-generation-failure-formatting]
+[scenario generated-trace-delivery]
+[scenario trace-generation-cleanup-precedence]
+[scenario integration]
+SKIP integration (APALACHE_MC not set)
+APALACHE CLI GREEN
+== explorer pure/unit ==
+explorer integration: skipped (APALACHE_MC not set)
+EXPLORER SPEC: all green
+== transport ==
+ok: framing accepts exactly 65535 UTF-8 bytes
+ok: framing rejects 65536 UTF-8 bytes
+ok: framing rejects embedded newline
+ok: framing rejects invalid UTF-8
+ok: TCP coalesced first LF frame survives later read failure
+ok: TCP coalesced CRLF suffix is preserved
+ok: TCP empty read error is not clean EOF
+ok: TCP read error cannot complete an unterminated JSON fragment
+ok: TCP read error discards retained fragment
+ok: delivery: sync boundary is exactly 65535 bytes
+ok: delivery: 65535 shared stays full
+ok: delivery: 65535 remote stays full
+ok: delivery: sync overflow is exactly 65536 bytes
+ok: delivery: 65536 durable shared uses paths only
+ok: delivery: 65536 ephemeral shared is a bounded failure
+ok: delivery: 65536 remote is a bounded failure
+ok: delivery: path-only overflow is a bounded failure
+ok: delivery: async boundary is exactly 65535 bytes
+ok: delivery: async 65535 stays full
+ok: delivery: async overflow is exactly 65536 bytes
+ok: delivery: async 65536 is a terminal error for the same job
+ok: delivery: stdio transport is shared-filesystem
+ok: delivery: TCP transport is remote
+ok: pki: server cert signed
+ok: pki: client cert signed
+ok: pki: nosan cert signed
+ok: pki: rogue cert signed
+ok: pki: soon-expiry cert signed
+ok: pki: other-san cert signed
+ok: pki: stray (unchainable) cert signed
+ok: pki: expired cert signed
+ok: server ctx (good PKI)
+ok: server ctx rejected: no SAN
+ok: server mode 600: fixture chmod succeeded
+ok: server mode 600: POSIX bits match the fixture
+ok: server exact 0600 accepted
+ok: server mode 600: loader preserves permissions
+ok: server mode 600: loader preserves key bytes
+ok: server mode 400: fixture chmod succeeded
+ok: server mode 400: POSIX bits match the fixture
+ok: server non-0600 mode 400 rejected
+ok: server mode 400: diagnostic names 0600
+ok: server mode 400: loader preserves permissions
+ok: server mode 400: loader preserves key bytes
+ok: server mode 700: fixture chmod succeeded
+ok: server mode 700: POSIX bits match the fixture
+ok: server non-0600 mode 700 rejected
+ok: server mode 700: diagnostic names 0600
+ok: server mode 700: loader preserves permissions
+ok: server mode 700: loader preserves key bytes
+ok: server mode 640: fixture chmod succeeded
+ok: server mode 640: POSIX bits match the fixture
+ok: server non-0600 mode 640 rejected
+ok: server mode 640: diagnostic names 0600
+ok: server mode 640: loader preserves permissions
+ok: server mode 640: loader preserves key bytes
+ok: server mode 000: fixture chmod succeeded
+ok: server mode 000: POSIX bits match the fixture
+ok: server non-0600 mode 000 rejected
+ok: server mode 000: diagnostic names 0600
+ok: server mode 000: loader preserves permissions
+ok: server mode 000: loader preserves key bytes
+ok: server mode 1600: fixture chmod succeeded
+ok: server mode 1600: POSIX bits match the fixture
+ok: server non-0600 mode 1600 rejected
+ok: server mode 1600: diagnostic names 0600
+ok: server mode 1600: loader preserves permissions
+ok: server mode 1600: loader preserves key bytes
+ok: server mode 2600: fixture chmod succeeded
+ok: server mode 2600: POSIX bits match the fixture
+ok: server non-0600 mode 2600 rejected
+ok: server mode 2600: diagnostic names 0600
+ok: server mode 2600: loader preserves permissions
+ok: server mode 2600: loader preserves key bytes
+ok: server mode 4600: fixture chmod succeeded
+ok: server mode 4600: POSIX bits match the fixture
+ok: server non-0600 mode 4600 rejected
+ok: server mode 4600: diagnostic names 0600
+ok: server mode 4600: loader preserves permissions
+ok: server mode 4600: loader preserves key bytes
+ok: client mode 600: fixture chmod succeeded
+ok: client mode 600: POSIX bits match the fixture
+ok: client exact 0600 accepted
+ok: client mode 600: loader preserves permissions
+ok: client mode 600: loader preserves key bytes
+ok: client mode 400: fixture chmod succeeded
+ok: client mode 400: POSIX bits match the fixture
+ok: client non-0600 mode 400 rejected
+ok: client mode 400: diagnostic names 0600
+ok: client mode 400: loader preserves permissions
+ok: client mode 400: loader preserves key bytes
+ok: client mode 700: fixture chmod succeedwarning: server certificate .lake/build/tmp-pki/expired.crt expires in 0 day(s)
+ed
+ok: client mode 700: POSIX bits match the fixture
+ok: client non-0600 mode 700 rejected
+ok: client mode 700: diagnostic names 0600
+ok: client mode 700: loader preserves permissions
+ok: client mode 700: loader preserves key bytes
+ok: client mode 640: fixture chmod succeeded
+ok: client mode 640: POSIX bits match the fixture
+ok: client non-0600 mode 640 rejected
+ok: client mode 640: diagnostic names 0600
+ok: client mode 640: loader preserves permissions
+ok: client mode 640: loader preserves key bytes
+ok: client mode 000: fixture chmod succeeded
+ok: client mode 000: POSIX bits match the fixture
+ok: client non-0600 mode 000 rejected
+ok: client mode 000: diagnostic names 0600
+ok: client mode 000: loader preserves permissions
+ok: client mode 000: loader preserves key bytes
+ok: client mode 1600: fixture chmod succeeded
+ok: client mode 1600: POSIX bits match the fixture
+ok: client non-0600 mode 1600 rejected
+ok: client mode 1600: diagnostic names 0600
+ok: client mode 1600: loader preserves permissions
+ok: client mode 1600: loader preserves key bytes
+ok: client mode 2600: fixture chmod succeeded
+ok: client mode 2600: POSIX bits match the fixture
+ok: client non-0600 mode 2600 rejected
+ok: client mode 2600: diagnostic names 0600
+ok: client mode 2600: loader preserves permissions
+ok: client mode 2600: loader preserves key bytes
+ok: client mode 4600: fixture chmod succeeded
+ok: client mode 4600: POSIX bits match the fixture
+ok: client non-0600 mode 4600 rejected
+ok: client mode 4600: diagnostic names 0600
+ok: client mode 4600: loader preserves permissions
+ok: client mode 4600: loader preserves key bytes
+ok: server ctx rejected: unchainable cert
+ok: server ctx rejected: cert/key mismatch
+ok: server ctx rejected: garbage cert file
+ok: server ctx rejected: empty cert file
+ok: fingerprint of garbage cert is none
+ok: expired cert: ctx still created (warn-only)
+ok: expired cert days <= 0 (M2)
+ok: client ctx (good PKI)
+ok: fingerprint matches openssl CLI
+ok: sequential certificate fingerprints keep distinct output
+ok: mTLS leaf fingerprint grants exact allowlisted verify scope
+ok: mTLS leaf fingerprint denies a non-allowlisted principal
+ok: soon cert days in [1,2]
+ok: long cert days > 300
+ok: listenTcp binds 127.0.0.1
+ok: listenTcp rejects unresolvable bind name
+ok: listenTcp rejects invalid bind literal
+ok: tcp echo round trip
+ok: tcp server survived peer drop
+ok: bind 127.0.0.1 reachable via loopback
+ok: bind 127.0.0.1 NOT reachable via non-loopback addr
+ok: delivery: TLS transport is remote
+ok: mtls echo round trip (TLS 1.3, pinned fp)
+ok: ip-literal connect (M3)
+ok: mixed-case pin connect (t29)
+ok: oversized line rejected (m6)
+ok: server alive after oversized line
+ok: mtls wrong fingerprint rejected
+ok: client with wrong CA rejected by handshake
+ok: other-san ctx (locally valid)
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+connection skipped
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+connection skipped
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+connection skipped
+ok: client hostname SAN mismatch rejected
+ok: rogue client ctx (locally valid)
+ok: mtls untrusted client cert rejected by server
+ok: tls1.2-only peer rejected (no echo)
+ok: certificate-less client rejected (no echo)
+dbg before ip: pid 37012
+TRANSPORT SPEC: all green
+== trace transport failure fixture ==
+FAIL: async path overflow is bounded terminal error: runs=1 replies=["{\"jobId\":\"job-0\",\"outcome\":{\"error\":\"job outcome exceeds retention byte limit\"},\"proto_step\":\"job_result\"}",
+ "{\"jobId\":\"job-0\",\"outcome\":{\"error\":\"job outcome exceeds retention byte limit\"},\"proto_step\":\"job_result\"}",
+ "{\"jobId\":\"job-0\",\"outcome\":{\"error\":\"job outcome exceeds retention byte limit\"},\"proto_step\":\"job_result\"}"]
+TG0 bytes: sync-boundary=65535/65536 async-boundary=65535/65536 counter-sync=101 counter-async=144
+TG0 bytes: sync-path-overflow=70073
+TG0 bytes: async-path-overflow=70110
+uncaught exception: 1 trace-generation hardening repro(s) remain red

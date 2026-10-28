@@ -27,6 +27,7 @@ example : ((Job.initial true).run [.start, .acquire .child, .cancel,
     .installHook]).map (·.stopRequested) = some true := by decide
 
 #print axioms admission_bounded
+#print axioms retention_admission_bounded
 #print axioms eviction_preserves_other
 #print axioms lookup_dropped_absent
 #print axioms step_preserves
@@ -43,6 +44,7 @@ example : ((Job.initial true).run [.start, .acquire .child, .cancel,
 run_cmd do
   let permitted := #[``propext, ``Classical.choice, ``Quot.sound]
   for declaration in #[``Core.AsyncResources.admission_bounded,
+      ``Core.AsyncResources.retention_admission_bounded,
       ``Core.AsyncResources.eviction_preserves_other,
       ``Core.AsyncResources.lookup_dropped_absent,
       ``Core.AsyncResources.step_preserves,

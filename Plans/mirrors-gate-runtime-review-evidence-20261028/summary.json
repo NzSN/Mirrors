@@ -1,0 +1,190 @@
+{
+  "schema": "mirrors.architecture-runtime-remediation/v1",
+  "date": "2026-10-28",
+  "state": "uncommitted-source-fixes-native-acceptance-blocked",
+  "mirrorsBase": "ed86c2c6f9a22148b0d01c7fc24f1b72352f59cf",
+  "gateBase": "5055d91757a071467b96d38a16ffece1265c3138",
+  "gateChangedFiles": 20,
+  "results": [
+    {
+      "id": "mirrors-aggregate-initial",
+      "command": "bash tools/run-local-no-model-check.sh",
+      "status": "failed",
+      "exitCode": 1,
+      "log": "logs/mirrors-aggregate-initial.log",
+      "bytes": 101750,
+      "sha256": "2bb20ad789b966b785d0a9756d6fa481a34a6bd54f7af4ce7ca4bcbbb72cdfe6"
+    },
+    {
+      "id": "sany-unchanged-head-baseline",
+      "command": "unchanged HEAD StandardCatalogTests replay",
+      "status": "failed",
+      "exitCode": 1,
+      "log": "logs/sany-unchanged-head-baseline.log",
+      "bytes": 1973,
+      "sha256": "d7dac2e5c2ea1cabd7d7fc59a9d5ac75705f61738db54a4fbf83845f1166bfc8"
+    },
+    {
+      "id": "mirrors-transport-initial",
+      "command": "post-differential gates with first wire-sized cap",
+      "status": "failed",
+      "exitCode": 1,
+      "log": "logs/mirrors-transport-initial.log",
+      "bytes": 12460,
+      "sha256": "a101846bb41957c3fdc3b52f24af8ee70c66f4e796809ae8ea39492b01a96b4f"
+    },
+    {
+      "id": "mirrors-post-differential-final",
+      "command": "bash /tmp/mirrors-local-post-differential.sh",
+      "status": "passed",
+      "exitCode": 0,
+      "log": "logs/mirrors-post-differential-final.log",
+      "bytes": 14162,
+      "sha256": "7fb5a2c0d990ba69636215fb284c7b217c4325fcfa4a448b56de5f9a650f7d0d"
+    },
+    {
+      "id": "mirrors-build-final",
+      "command": "lake build",
+      "status": "passed",
+      "exitCode": 0,
+      "log": "logs/mirrors-build-final.log",
+      "bytes": 86323,
+      "sha256": "4761a57bd4fee0600835f4bc79c1fc6f635f66c6b53a42801de299779c9c752a"
+    },
+    {
+      "id": "mirrors-retention-proof-audit",
+      "command": "lake build async_resource_spec",
+      "status": "passed",
+      "exitCode": 0,
+      "log": "logs/mirrors-retention-proof-audit.log",
+      "bytes": 2032,
+      "sha256": "c0b11e618332a80e32de38a10c63f6676ce1b80a57d733b5fb67afc0d411152f"
+    },
+    {
+      "id": "mirrors-retention-proof",
+      "command": "async_resource_spec",
+      "status": "passed",
+      "exitCode": 0,
+      "log": "logs/mirrors-retention-proof.log",
+      "bytes": 28,
+      "sha256": "e14caa75aaa0068084e7fd6deddd639a29ed223da67c4480ffca7e11ce6f7dd8"
+    },
+    {
+      "id": "mirrors-jobstore",
+      "command": "jobstore_spec",
+      "status": "passed",
+      "exitCode": 0,
+      "log": "logs/mirrors-jobstore.log",
+      "bytes": 474,
+      "sha256": "a3c83a14f73a6d7310ec76dce8b4c7bb60909c440a47780311ac7080cd0eefdd"
+    },
+    {
+      "id": "mirrors-evidence",
+      "command": "python3 -m unittest discover -s tools/evidence/tests -p test_*.py",
+      "status": "passed",
+      "exitCode": 0,
+      "log": "logs/mirrors-evidence.log",
+      "bytes": 243,
+      "sha256": "fe3c6557938b556669d5233bbfe5fa65eb6dc42d63f1c1f4e4760dd27fdbccd2"
+    },
+    {
+      "id": "gate-full-destination",
+      "command": "RUSTUP_TOOLCHAIN=1.96.0 MIRRORGATE_NODE_RUNTIME_ROOT=/usr/local MIRRORGATE_NLOHMANN_JSON_INCLUDE_DIR=<verified-3.11.3> bash scripts/test.sh",
+      "status": "passed_with_explicit_native_skips",
+      "exitCode": 0,
+      "log": "logs/gate-full-destination.log",
+      "bytes": 79598,
+      "sha256": "88d487a05db7813fa6580b03a5f7b7a32b287f867e55a6532c17f3299df2a871"
+    },
+    {
+      "id": "gate-integration-destination",
+      "command": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --watchman=false",
+      "status": "passed",
+      "exitCode": 0,
+      "log": "logs/gate-integration-destination.log",
+      "bytes": 305,
+      "sha256": "ea9baa08cb4f64e5f453f01bda1fde66febcba505e46ca1323049ca786e61a14"
+    },
+    {
+      "id": "gate-durable-budget",
+      "command": "node --test tests/integration/evaluation-attempt-budget.test.mjs",
+      "status": "passed",
+      "exitCode": 0,
+      "log": "logs/gate-durable-budget.log",
+      "bytes": 790,
+      "sha256": "a0d2a1feb2e4553534adfae829a5964dc38af875e5dcd37448225b1bd9a1a87d"
+    },
+    {
+      "id": "gate-group-process-contract",
+      "command": "PYTHONPATH=supervisor unittest test_group_process_recovery.py",
+      "status": "passed",
+      "exitCode": 0,
+      "log": "logs/gate-group-process-contract.log",
+      "bytes": 2301,
+      "sha256": "5f3c4f7915eaa367c9234614bb6500c6414e1c3bc1e1bb98e9b8d5544493ff7c"
+    },
+    {
+      "id": "observer-fidelity",
+      "command": "MirrorECMA jest --runInBand --watchman=false test/mutation-observer-fidelity.test.ts",
+      "status": "passed",
+      "exitCode": 0,
+      "log": "logs/observer-fidelity.log",
+      "bytes": 343,
+      "sha256": "8d1794aa8a046d18932736d0d7b8bfc45494479e038ac717585b68f52a642858"
+    },
+    {
+      "id": "packed-consumer",
+      "command": "node scripts/packed-consumer.mjs (no --sandbox/model execution)",
+      "status": "passed",
+      "exitCode": 0,
+      "log": "logs/packed-consumer.log",
+      "bytes": 31,
+      "sha256": "e409774c32b24259b07d23931a54912896efecbebf5e04ae35ad703c381f871c"
+    },
+    {
+      "id": "private-service-types",
+      "command": "TypeScript 6 noEmit private service consumer",
+      "status": "passed",
+      "exitCode": 0,
+      "log": "logs/private-service-types.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "counts": {
+    "gatePythonRun": 311,
+    "gatePythonSkippedNative": 5,
+    "gateNode": 227,
+    "gateIntegration": 11,
+    "gateCppCTest": 3,
+    "optionalGateIntegration": 171,
+    "budget": 7,
+    "newGroupProcessContract": 12,
+    "observerFidelity": 6,
+    "mirrorsEvidence": 142,
+    "finalBuildJobs": 728
+  },
+  "requiredNativeAcceptance": {
+    "status": "unavailable",
+    "nativeLinuxHost": false,
+    "operatorDelegationSupplied": false,
+    "requiredTests": 5,
+    "passed": 0,
+    "next": "Supply admitted native Linux runner and writable delegated cgroup-v2 parent; run required native acceptance and retain identities/receipts"
+  },
+  "sany": {
+    "status": "preexisting-pin-mismatch",
+    "expected": "d15655eeaff4b3f7b3d65c46b838bc0f35d131b2ef4b1e473689b62c98d4726f",
+    "cached": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1",
+    "downloadedAndRejected": "fc6878c603f0fdc18b9fe3e5bf51860cb90ab5b1154e3c371660c036d6bdd63e",
+    "pinChanged": false,
+    "cacheChanged": false
+  },
+  "scope": {
+    "localModelChecking": false,
+    "newFrameworkQualification": false,
+    "commitOrPush": false,
+    "wholeHostStorageAdmission": "not supplied",
+    "browserScreenshot": "unavailable; renderer VM smoke and structural checks used"
+  }
+}

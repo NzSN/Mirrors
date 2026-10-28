@@ -5,6 +5,87 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-29 — Audited branch publication authorized
+
+The user authorized commit and push of the Mirrors and MirrorGate runtime-review
+changes, architecture/contracts, retained evidence and SANY re-pin. Stage only
+the audited paths; retain ignored raw logs explicitly with their hash-bound bytes
+and preserve unrelated editor caches and tool/build artifacts.
+
+Mirrors started at `ed86c2c`, current with origin. MirrorGate's new runtime commit
+was rebased onto upstream `4ef786b`, preserving all three incoming compatibility/CI
+commits and the README link; candidate `4b379ac` retains every runtime/test byte
+from the previously reviewed payload. The full Gate gate passes again after
+rebase (311 Python cases with five native cgroup skips, 227 Node cases, 11
+integration cases, native SDK/worker gates), as do all 171 optional integration
+tests. Existing Mirrors/SANY receipts and their source bindings remain unchanged.
+
+This is branch publication only. Native acceptance remains excluded by the user,
+not a pass; no new live model, installed distribution, framework qualification,
+release tag, registry publication or production deployment is implied. Exact
+payload/staged-blob SHA-256 audits, credential scans and final remote-ref checks
+are retained locally under `/tmp/mirrors-publish-20261029/`. Earlier checkpoint
+and evidence entries keep their historical identities and outcomes.
+
+## 2026-10-28 — SANY re-pinned; local gates restored; native acceptance excluded
+
+The user explicitly requested ignoring the native-runner remainder and re-pinning
+SANY. The fresh artifact is `fc6878c6…`, manifest `2.0 2026-10-28`, build revision
+`56d37a9`. The lock now binds its exact size/hash, computed SHA-1, manifest and
+changed native SANY help banner. Its complete 20-module standard-library digest,
+11 catalog module hashes and 17 import facts match the previous reviewed set;
+profile 6, catalog v3 and corpus/difference data remain unchanged. Apalache and
+Java pins are unchanged.
+
+The old cached `db131ddb…` jar is preserved under a dated sibling name, and the
+new reviewed bytes are retained in an explicitly selected ignored SHA-256 store.
+Fresh SANY-only offline restoration passes. The two previously failing catalog
+checks pass; the differential suite passes 74 of 78 checks with four live skips.
+The complete local non-model aggregate exits 0 and reports
+`ALL LOCAL NON-MODEL GATES GREEN`, including the runtime-remediation regressions.
+
+The requested local remediation is complete with native/delegated-cgroup
+acceptance explicitly excluded by the user, not credited as a pass. Live
+differential and installed/framework/release qualification remain separate.
+The earlier failed receipts and checkpoint entries are unchanged. Exact
+identities, logs and limits are in [the October 28 re-pin evidence](Plans/sany-repin-evidence-20261028/README.md).
+No local Apalache/TLC, commit/push, publication or host provisioning occurred.
+
+## 2026-10-28 — Architecture runtime fixes delivered; native acceptance pending
+
+The user requested runtime remediation of the Mirrors/Gate architecture review
+and continuation through full resolution. At base Mirrors `ed86c2c` / MirrorGate
+`5055d91`, uncommitted changes now add bounded retained outcomes, exact v2
+process/group/delegation journal linkage with pre-removal empty-counter persistence,
+retryable recovery, and persistent per-author/corpus evaluation attempt budgets
+with service-level disclosure filtering. The existing fidelity campaign now has
+an additional Gate shadow-observer rejection regression. Architecture and
+integration contracts describe the actual trust/result and evidence boundaries.
+
+The destination Gate required gate passes: 311 Python tests with five native
+cgroup cases skipped, 227 Node tests, 11 integration tests, three C++ CTest cases,
+Rust SDK/worker gates and actual Bubblewrap conformance/lifecycle checks. All
+171 optional integration tests, packed JS/TS consumers, seven durable-budget
+tests, 12 new group-process contract tests, six observer-fidelity tests, 142
+Mirrors evidence tests, the final 728-job build, job-store regression and the
+retention theorem's axiom audit pass. The remaining local non-model gates also
+pass separately, with documented live tiers skipped.
+
+The complete Mirrors aggregate remains failed at two unchanged standard-catalog
+assertions: cached SANY `db131ddb…` differs from pinned `d15655ee…`. A baseline
+replay reproduces both. The release URL returned `fc6878c6…`, which was rejected;
+no pin/cache/profile was changed. The first wire-sized retention cap also failed
+the trace-overflow regression; the final separate 256 KiB storage budget preserves
+that regression. Initial failures are retained separately from final passes.
+
+Read-only native preflight still reports WSL2 and no operator-supplied delegation.
+Required real native quota/descendant/controller-death acceptance, whole-host
+storage/resource admission and any new framework qualification remain open.
+The admitted native Linux runner and writable cgroup-v2 parent have been requested
+and are not supplied. No local Apalache/TLC, commit/push, release publication or
+host configuration occurred. Exact commands, hashes and receipts are in
+[the October 28 evidence](Plans/mirrors-gate-runtime-review-evidence-20261028/README.md).
+
 ## 2026-10-26 — SANY re-pin advances provisional frontend profile 6
 
 At the user's explicit request, the standalone SANY pin now binds the newly

@@ -45,6 +45,7 @@ an installed Windows service, a hosted CI run, or a published package.
 | Build/install DPM and replay, explore or reduce schedules | [DPM CLI guide](dpm-cli-guide.md), [runner contract](dpm-runner-contract.md) |
 | Compare interface locks before migration | [Read-only migration comparison](model-interface-compiler/lock-migration.md) |
 | Understand architecture and ownership | [Architecture overview](architecture-overview.md), [interactive diagram](architecture-overview.html), [module details](architecture-details.md) |
+| Review Mirrors/Gate trust and operating limits | [Boundary and acceptance contract](mirrors-gate-boundary.md): observer/probe controls, recovery, budgets and public feedback |
 | Follow source identity, installation, and retained qualification | [Catalog contract](framework-catalog-contract.md), [distribution tooling](architecture-details.md#5-framework-catalog-distribution-and-evidence), [evidence design](durable-evidence-design.md) |
 | Use the CLI or wire protocol | [Interface reference](interface-reference.md) |
 | Implement a client library | [Client implementation guide](client-implementation-guide.md) |

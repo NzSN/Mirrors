@@ -34,7 +34,10 @@ run directory and are read before that directory is released.
 
 Completed results remain intentionally retained while their owner connection
 stays open. This is the existing result-retention policy, not a global memory
-bound. Job IDs are never reused within a model run. The finite job-ID domain
+bound. The implementation now independently caps retained entry count and encoded
+outcome bytes; those byte budgets are erased from this model. See the separate
+[retention admission theorem and scope](async-resource-lean-proofs.md#boundary-of-the-guarantee).
+Job IDs are never reused within a model run. The finite job-ID domain
 bounds explored histories, not the production counter.
 
 ## Safety and eventual release

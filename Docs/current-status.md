@@ -1,5 +1,42 @@
 # Current framework status and navigation
 
+## October 29 publication boundary
+
+The user authorized branch commit/push of the runtime review and SANY re-pin.
+The newest [checkpoint](../CHECKPOINTS.md) records audited scope and the separate
+MirrorGate upstream rebase and passing destination gates. Publication does not
+renew native, live differential, installed/framework or release qualification;
+the October 28 identities and outcomes remain attached to their original records.
+
+## October 28 SANY re-pin and local remediation closure
+
+At the user's explicit request, native-runner acceptance is excluded from this
+work and SANY is re-pinned to artifact `fc6878c6…`, manifest `2.0 2026-10-28`,
+revision `56d37a9`. Exact artifact/help metadata and a content-addressed retained
+copy replace the stale cache; the old bytes remain preserved. All standard-library
+and catalog facts match, so profile 6/catalog v3 and corpus approvals are unchanged.
+
+The complete local non-model aggregate is green, including the earlier runtime
+remediation and previously failing standard-catalog checks. This supersedes the
+same-day artifact blocker below. [Current re-pin evidence](../Plans/sany-repin-evidence-20261028/README.md)
+records 78 offline differential checks with four live skips, exact identities and
+scope. Native M4, live differential and installed/framework/release qualification
+are not granted by this local closure or by the user's scope exclusion.
+
+## October 28 architecture/runtime review follow-up
+
+Uncommitted remediation at base Mirrors `ed86c2c` / MirrorGate `5055d91` adds
+bounded retained outcomes, exact group-covered journal-v2 recovery with durable
+pre-removal quiescence evidence, and persistent private-evaluation attempt budgets
+with service-level disclosure. The [boundary contract](mirrors-gate-boundary.md)
+and [evidence record](../Plans/mirrors-gate-runtime-review-evidence-20261028/README.md)
+identify source changes, passing local destination checks, original failures and
+unexercised native tiers. Required native Linux/delegated-cgroup acceptance is
+still unavailable; the full Mirrors aggregate also retains its unrelated pinned-
+SANY cache failure. These changes grant no installed/framework qualification.
+
+## Previous source refresh
+
 Source status refreshed 2026-10-26 against committed temporary-root
 canonicalization in `658b9ef` and the scoped October 26 changes below. The DPM
 build-preparation fix is committed in `03510b4`. Mirrors reducer/CLI tooling

@@ -1,0 +1,71 @@
+{
+  "schema": "mirrors.sany-repin-validation/v1",
+  "status": "local-scope-complete",
+  "nativeAcceptance": "excluded-by-user-not-qualified",
+  "fullNonModelGate": {
+    "status": "passed",
+    "exitCode": 0,
+    "marker": "ALL LOCAL NON-MODEL GATES GREEN"
+  },
+  "offlineDifferential": {
+    "run": 78,
+    "passed": 74,
+    "skipped": 4,
+    "exitCode": 0
+  },
+  "standardCatalog": {
+    "tests": 2,
+    "passed": 2,
+    "catalogModules": 11,
+    "importFacts": 17,
+    "totalStandardModuleEntries": 20
+  },
+  "liveDifferentialQualification": false,
+  "sources": [
+    {
+      "path": "Core/Tla/StandardCatalog.lean",
+      "sha256": "954dac316c6f528b2eff72d42e6bf599d4ed7d456f8659afb25fb10cdcee71e3"
+    },
+    {
+      "path": "Core/Tla/Parser.lean",
+      "sha256": "22f1baa98a0d51e7248c882d229dc57507198a60a38ff8412de9cd7fd306e6a6"
+    },
+    {
+      "path": "Core/Tla/Lexer.lean",
+      "sha256": "9a656fd5e36896e65ee4cc5b946adf3fdb671f922658436e30f32a5cd211ad2a"
+    },
+    {
+      "path": "test/fixtures/tla-frontend/manifest.json",
+      "sha256": "aa4a7bdf2a62877f0de369146d02b6d6af21d4f0f627881549195f9dbcc24be3"
+    },
+    {
+      "path": "test/fixtures/tla-frontend/differential/differences.json",
+      "sha256": "f212abb40d9a4bfe1b427056a41324edeb4974e5674534080f6eb2ec47c1e21e"
+    },
+    {
+      "path": "tools/tla-differential/toolchain.lock.json",
+      "sha256": "1ef322c4949f6f17a041e20cc0234d3b6861962ab325198adde4ab48dcca579a",
+      "role": "current source"
+    },
+    {
+      "path": "tools/tla-differential/acquire.py",
+      "sha256": "e6f812a3c75c8d556bfe82792470cb97d2f7354d91cd5431ed30bfc5f037882f",
+      "role": "current source"
+    },
+    {
+      "path": "tools/tla-differential/README.md",
+      "sha256": "be664678aef7fb072f6601c8db98819863f5c5613a11064a8a76a0a45cb812c2",
+      "role": "current source"
+    },
+    {
+      "path": "tools/tla-differential/qualification.md",
+      "sha256": "a44f3a7b99b51e5e17a7420b1434bc0248ff55f7b6a6ad85d957d4ba047bd5dc",
+      "role": "current source"
+    },
+    {
+      "path": "Docs/model-interface-compiler/tla-language-profile.md",
+      "sha256": "9dae35cc22aadc2a00efa8cf2c8cc9392b0e8fa7a2b1dc3de1c39711542f289f",
+      "role": "current source"
+    }
+  ]
+}

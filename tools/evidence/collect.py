@@ -1774,7 +1774,8 @@ def _gate_recovery_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
         if type(receipt) is not dict or set(receipt) != required:
             raise ValueError("recovery receipt root is not closed")
         if (receipt["schema"] != "mirrorgate.recovery-receipt/v1"
-                or receipt["journalSchema"] != "mirrorgate.recovery-journal/v1"):
+                or receipt["journalSchema"] not in {
+                    "mirrorgate.recovery-journal/v1", "mirrorgate.recovery-journal/v2"}):
             raise ValueError("recovery receipt schema is unsupported")
         for field in ("attemptId", "trigger", "controllerInstance", "bootId"):
             _attachment_id(receipt[field], f"recovery {field}")
@@ -1849,6 +1850,8 @@ def _gate_recovery_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
                     or any(value is not None and type(value) is not str
                            for value in counters.values())
                     or (not counters and result["result"] == "reclaimed")
+                    or (result["result"] == "reclaimed" and "populated 0" not in
+                        (counters.get("cgroup.events") or "").splitlines())
                     or (not counters and result["reasonCode"] is None)):
                 raise ValueError("recovery cgroup counters are invalid")
         expected_cgroups = {resource_id for resource_id, item in result_by_resource.items()

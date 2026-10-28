@@ -1,0 +1,162 @@
+{
+  "schema": "mirrors.sany-repin/v1",
+  "observedAt": "2026-10-28T14:58:32.520427+00:00",
+  "url": "https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar",
+  "priorPin": {
+    "distribution": "TLA+ Tools 1.8.0 (Clarke)",
+    "version": "SANY2 Version 2.2 created 08 July 2020",
+    "url": "https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar",
+    "path": "downloads/tla2tools-1.8.0.jar",
+    "sha256": "d15655eeaff4b3f7b3d65c46b838bc0f35d131b2ef4b1e473689b62c98d4726f",
+    "size": 4502259,
+    "sha1_release": "b76c04087ac0d60d24d48f4577adec024a9c6a20",
+    "buildRevision": "2ef2af8c767b76e5db5cba2878f027ac07aad36c",
+    "buildTimestamp": "2026-10-24T01:36:19.357Z",
+    "entrypoint": [
+      "java",
+      "-cp",
+      "{path}",
+      "tla2sany.SANY"
+    ],
+    "standardLibraryPrefix": "tla2sany/StandardModules/",
+    "parserLineage": "standalone tla2tools distribution",
+    "standardLibrarySha256": "fc1e01131317e322a90eb5534fc217f6a1b64df8de540d949255eaa7d8ff88ad"
+  },
+  "reviewedArtifact": {
+    "sha256": "fc6878c603f0fdc18b9fe3e5bf51860cb90ab5b1154e3c371660c036d6bdd63e",
+    "sha1": "bdfd4b754eee174f0bcdeaaffb96fa4d04bfbda8",
+    "size": 4504421,
+    "manifest": {
+      "Manifest-Version": "1.0",
+      "Ant-Version": "Apache Ant 1.10.12",
+      "Created-By": "17.0.20.1+1 (Eclipse Adoptium)",
+      "Built-By": "runner",
+      "Build-Tag": "${env.BUILD_TAG}",
+      "Build-Rev": "${Build-Rev}",
+      "Build-TimeStamp": "2026-10-28T01:45:57.306Z",
+      "Implementation-Title": "TLA+ Tools",
+      "Implementation-Version": "2.0 2026-10-28",
+      "Implementation-Vendor": "Microsoft Corp.",
+      "Main-class": "tlc2.TLC",
+      "X-Git-Branch": "master",
+      "X-Git-Tag": "",
+      "X-Git-Revision": "56d37a9b7bf529086fd961160e0b8975e224eafc",
+      "X-Git-ShortRevision": "56d37a9",
+      "X-Git-BuildNumber": "master__56d37a9",
+      "X-Git-Commits-Count": "9069",
+      "Application-Name": "TLC",
+      "permissions": "all-permissions",
+      "Class-Path": "CommunityModules-deps.jar CommunityModules.jar"
+    },
+    "standardLibrarySha256": "fc1e01131317e322a90eb5534fc217f6a1b64df8de540d949255eaa7d8ff88ad",
+    "standardModules": {
+      "tla2sany/StandardModules/Bags.tla": "a2b668a8cf375b9ef9f2c14fdba742137ab8722ade0f41f11965c67acba76c39",
+      "tla2sany/StandardModules/FiniteSets.tla": "d94cb545256539bf782fc1914842dfe8c19c1d3d4e48b8327dd0c47b74922e1e",
+      "tla2sany/StandardModules/Integers.tla": "071da69e5eea383d361ef308ba12ecc931bf968fcea98175c3bca419bbd8cbf2",
+      "tla2sany/StandardModules/Json.tla": "52e38eeed89c35ef9d65ac7f6e884a8ae761c7302a52c35c0f0658035ddca0b8",
+      "tla2sany/StandardModules/Naturals.tla": "73f2a68412039aa86f37ad08f0d0fef50fa8327d0ad8806f515548c75e9d9d84",
+      "tla2sany/StandardModules/Randomization.tla": "998209fcb33bac3c9b4d6851dc5df5ca83d33722201cc5280b51a1f58fffaebf",
+      "tla2sany/StandardModules/RealTime.tla": "9052ccc8a150c93ae13a4d136da7b83dc68d1d8e9a0eee6f787db02b755f6682",
+      "tla2sany/StandardModules/Reals.tla": "33cc699c0139b39fcee903d4dde255b64a0b430291630aa4825c6dd32b2f2fa2",
+      "tla2sany/StandardModules/Sequences.tla": "f613cffe14133769f0972b6f6e0139aaf0773004a51bac88ada382426e3eb7f4",
+      "tla2sany/StandardModules/TLC.tla": "944ece590eec81ace059881c2a62064c06041efa81539a788cd40fa7d1da41ce",
+      "tla2sany/StandardModules/TLCExt.tla": "6c3e7e54cf1b8a4d2d1c7a5fd088f06452edce68ec28d8be99392cc0037a5399",
+      "tla2sany/StandardModules/Toolbox.tla": "9deac1facb0b71809714229dace116da75f80bf4c65b707ff40026f380c7804a",
+      "tla2sany/StandardModules/_DotTrace.tla": "c2f4b13446298c026decf0b3867134d2a176355344db05af7270e31981f0c8bc",
+      "tla2sany/StandardModules/_JsonTrace.tla": "4e93f1de053afb59cbeb5ae6f0d71685acf3530c840ac4811f54e86100195742",
+      "tla2sany/StandardModules/_Possible.tla": "3c360af74043d85a0399376aa2b1553ca9d230d06a34bd46cbae1f1e02109a13",
+      "tla2sany/StandardModules/_TLAPlusCounterExample.tla": "ebc408fd614b832d2f8eab1a4dae7ae67c6d5a7958e0233c7da702c1a0e29705",
+      "tla2sany/StandardModules/_TLCActionTrace.tla": "4cb2f1e02109cee0053f59e72bdfb59edab12a30cddf4bc1765927288db2d134",
+      "tla2sany/StandardModules/_TLCTESpec.tla": "ee5b74e29dcd8d64f2a8840c293018a2007371aab14ea0eaa7c542de8f97b4aa",
+      "tla2sany/StandardModules/_TLCTrace.tla": "864407a426e7e438af3652a5db92912bfdf682cf97912c6bdc91d87cb94a5007",
+      "tla2sany/StandardModules/_TLCTracePlain.tla": "4f05472f833eadec96a2ec8cb2f1331ce8902bf08c800b80407d2980809e6d09"
+    },
+    "catalogComparisons": [
+      {
+        "module": "Naturals",
+        "expected": "73f2a68412039aa86f37ad08f0d0fef50fa8327d0ad8806f515548c75e9d9d84",
+        "observed": "73f2a68412039aa86f37ad08f0d0fef50fa8327d0ad8806f515548c75e9d9d84"
+      },
+      {
+        "module": "Integers",
+        "expected": "071da69e5eea383d361ef308ba12ecc931bf968fcea98175c3bca419bbd8cbf2",
+        "observed": "071da69e5eea383d361ef308ba12ecc931bf968fcea98175c3bca419bbd8cbf2"
+      },
+      {
+        "module": "Reals",
+        "expected": "33cc699c0139b39fcee903d4dde255b64a0b430291630aa4825c6dd32b2f2fa2",
+        "observed": "33cc699c0139b39fcee903d4dde255b64a0b430291630aa4825c6dd32b2f2fa2"
+      },
+      {
+        "module": "Sequences",
+        "expected": "f613cffe14133769f0972b6f6e0139aaf0773004a51bac88ada382426e3eb7f4",
+        "observed": "f613cffe14133769f0972b6f6e0139aaf0773004a51bac88ada382426e3eb7f4"
+      },
+      {
+        "module": "FiniteSets",
+        "expected": "d94cb545256539bf782fc1914842dfe8c19c1d3d4e48b8327dd0c47b74922e1e",
+        "observed": "d94cb545256539bf782fc1914842dfe8c19c1d3d4e48b8327dd0c47b74922e1e"
+      },
+      {
+        "module": "Bags",
+        "expected": "a2b668a8cf375b9ef9f2c14fdba742137ab8722ade0f41f11965c67acba76c39",
+        "observed": "a2b668a8cf375b9ef9f2c14fdba742137ab8722ade0f41f11965c67acba76c39"
+      },
+      {
+        "module": "TLC",
+        "expected": "944ece590eec81ace059881c2a62064c06041efa81539a788cd40fa7d1da41ce",
+        "observed": "944ece590eec81ace059881c2a62064c06041efa81539a788cd40fa7d1da41ce"
+      },
+      {
+        "module": "TLCExt",
+        "expected": "6c3e7e54cf1b8a4d2d1c7a5fd088f06452edce68ec28d8be99392cc0037a5399",
+        "observed": "6c3e7e54cf1b8a4d2d1c7a5fd088f06452edce68ec28d8be99392cc0037a5399"
+      },
+      {
+        "module": "Toolbox",
+        "expected": "9deac1facb0b71809714229dace116da75f80bf4c65b707ff40026f380c7804a",
+        "observed": "9deac1facb0b71809714229dace116da75f80bf4c65b707ff40026f380c7804a"
+      },
+      {
+        "module": "Randomization",
+        "expected": "998209fcb33bac3c9b4d6851dc5df5ca83d33722201cc5280b51a1f58fffaebf",
+        "observed": "998209fcb33bac3c9b4d6851dc5df5ca83d33722201cc5280b51a1f58fffaebf"
+      },
+      {
+        "module": "RealTime",
+        "expected": "9052ccc8a150c93ae13a4d136da7b83dc68d1d8e9a0eee6f787db02b755f6682",
+        "observed": "9052ccc8a150c93ae13a4d136da7b83dc68d1d8e9a0eee6f787db02b755f6682"
+      }
+    ],
+    "catalogImportEdgesChecked": 17,
+    "catalogChanged": false,
+    "profileChanged": false
+  },
+  "localInstallation": {
+    "artifactStore": "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/artifact-store",
+    "storeObject": "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/artifact-store/sha256/fc6878c603f0fdc18b9fe3e5bf51860cb90ab5b1154e3c371660c036d6bdd63e",
+    "activeCache": "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar",
+    "priorCacheSha256": "db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1",
+    "priorCacheBackup": "/home/nzsn/Repos/Mirrors/.golden-build/tla-differential/toolchain/downloads/tla2tools-1.8.0.jar.before-repin-20261028-db131ddb48e7",
+    "newCacheSha256": "fc6878c603f0fdc18b9fe3e5bf51860cb90ab5b1154e3c371660c036d6bdd63e",
+    "standardLibrarySha256": "fc1e01131317e322a90eb5534fc217f6a1b64df8de540d949255eaa7d8ff88ad"
+  },
+  "nativeHelpBannerMatchesPin": true,
+  "nativeAcceptance": "excluded-by-explicit-user-instruction",
+  "profile": "mirrors-tla-frontend-profile-6",
+  "catalog": "mirrors-standard-modules/v3",
+  "liveDifferentialQualification": false,
+  "apalachePinChanged": false,
+  "runtimePinChanged": false,
+  "runtimeObservation": {
+    "versionOutput": "openjdk version \"25.0.4.1\" 2026-08-18\nOpenJDK Runtime Environment (build 25.0.4.1+1-1-24.04.4-Ubuntu)\nOpenJDK 64-Bit Server VM (build 25.0.4.1+1-1-24.04.4-Ubuntu, mixed mode, sharing)\n",
+    "required": {
+      "command": "java",
+      "version": "25.0.4",
+      "build": "25.0.4+7",
+      "vendor": "environment supplied; vendor is not part of the pin"
+    },
+    "matchesQualificationPin": false,
+    "scope": "native SANY help only; no live differential qualification"
+  }
+}

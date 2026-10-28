@@ -1,0 +1,29 @@
+test_module_content_identities (test_standard_catalog.StandardCatalogTests.test_module_content_identities) ... FAIL
+test_public_and_local_import_facts (test_standard_catalog.StandardCatalogTests.test_public_and_local_import_facts) ... FAIL
+
+======================================================================
+FAIL: test_module_content_identities (test_standard_catalog.StandardCatalogTests.test_module_content_identities)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/mirrors-standard-catalog-baseline/tools/tla-differential/tests/test_standard_catalog.py", line 20, in setUp
+    self.assertEqual(hashlib.sha256(self.jar.read_bytes()).hexdigest(), lock["tools"]["sany"]["sha256"])
+AssertionError: 'db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1' != 'd15655eeaff4b3f7b3d65c46b838bc0f35d131b2ef4b1e473689b62c98d4726f'
+- db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1
++ d15655eeaff4b3f7b3d65c46b838bc0f35d131b2ef4b1e473689b62c98d4726f
+
+
+======================================================================
+FAIL: test_public_and_local_import_facts (test_standard_catalog.StandardCatalogTests.test_public_and_local_import_facts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/mirrors-standard-catalog-baseline/tools/tla-differential/tests/test_standard_catalog.py", line 20, in setUp
+    self.assertEqual(hashlib.sha256(self.jar.read_bytes()).hexdigest(), lock["tools"]["sany"]["sha256"])
+AssertionError: 'db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1' != 'd15655eeaff4b3f7b3d65c46b838bc0f35d131b2ef4b1e473689b62c98d4726f'
+- db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1
++ d15655eeaff4b3f7b3d65c46b838bc0f35d131b2ef4b1e473689b62c98d4726f
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.012s
+
+FAILED (failures=2)

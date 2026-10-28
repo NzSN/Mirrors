@@ -121,6 +121,11 @@ Gate recovery support is a C2 capability. A recovery attempt is an E1
 observation. Gate session, boot, ownership, cgroup, control-handle, and private
 path details stay inside private producer artifacts; the public view contains
 only approved scope/outcome and public receipt identity.
+The existing `mirrorgate.recovery-receipt/v1` adapter accepts explicit journal
+provenance v1 and v2 and rejects unknown versions. V2 identifies Gate's exact
+group-covered process linkage and retained cleanup observations. This does not
+renew a C2 capability or native-host qualification; the retained receipt and
+its producing source/profile identities still require their own evidence.
 
 Each tier is independently required or optional and records `passed`, `failed`,
 `skipped`, `unavailable`, `blocked`, or `not_run`. A required non-pass prevents

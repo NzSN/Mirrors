@@ -1,0 +1,15 @@
+✔ private attempt budget survives service restart and duplicate starts spend once (104.056846ms)
+✔ rejected workflows spend attempts and policy changes cannot reset a directory (31.542117ms)
+✔ partial crash marker remains spent; concurrent services share the same ceiling (48.209103ms)
+✔ exclusive marker creation also bounds independent concurrent threads (127.633596ms)
+✔ private mode requires budgets and explicit disclosure only enables selected fields (26.506045ms)
+✔ failed durable marker sync never invokes or refunds an evaluation (18.177555ms)
+✔ symlinks, directory replacement, unsafe permissions and corrupted configuration fail closed (14.041606ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 471.773567

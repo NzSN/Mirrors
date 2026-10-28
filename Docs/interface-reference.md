@@ -49,6 +49,18 @@ and worker slots) in both server modes. It defaults to 4; the CLI clamps zero
 to 1. Pending and running jobs both consume capacity; an additional submission
 is rejected synchronously when that capacity is full.
 
+The process-shared store additionally reserves at most 256 retained job
+entries, including completed and cancelled jobs. A full retained store rejects
+new submissions with `register_error: "job result store full"`; it does not evict
+earlier results or close the connection. Owner teardown/explicit store eviction
+releases entries. Each retained encoded outcome is capped at 262,144 bytes,
+independently of the 65,535-byte final JSONL reply limit and delivery planning;
+oversized outcomes become the failed job outcome
+`{"error":"job outcome exceeds retention byte limit"}`. This is a bound on retained outcome
+data, not whole-process RSS or external tool buffers. Library callers of
+`newJobStoreWith` may select `RetentionLimits`; outcome budgets below 256 bytes
+are normalized to 256 so a bounded failure can always be retained.
+
 ### Validate CLI source delivery
 
 `mirror validate --host H --port P --spec ./Main.tla [--dep FILE]...`

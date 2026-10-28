@@ -108,6 +108,17 @@ for physical leak freedom. Lean liveness proofs have not been added; the existin
 TLC fairness checks remain separate. A permanently open owner may intentionally
 retain terminal results under the current protocol policy.
 
+Retention has a separate pure admission predicate,
+`Core.AsyncResources.retentionAdmissionAllowed`, and kernel-checked
+`retention_admission_bounded`. The shared store executes that predicate in both
+atomic admission passes. Default retention reserves 256 entries and caps each
+encoded outcome at 262,144 bytes before terminal publication and promise delivery.
+The resulting encoded-outcome envelope is 67,108,864 bytes; metadata, temporary
+encoding allocations, caller-held results and arbitrary injected runner memory
+are outside it. This arithmetic theorem does not prove OS RSS or eventual
+cleanup. The job-store suite exercises concurrent reservation, cancellation,
+retained delivery, eviction and multibyte oversized results.
+
 ## Validation and proof audit
 
 ```sh

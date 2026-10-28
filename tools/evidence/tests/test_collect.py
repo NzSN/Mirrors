@@ -974,6 +974,25 @@ class CollectorTests(unittest.TestCase):
         missing_observation["sha256"] = hashlib.sha256(json.dumps(unsigned,
             sort_keys=True,separators=(",", ":"),ensure_ascii=True).encode()).hexdigest()
         plan_stub = type("Plan", (), {"adapter_artifact_id":"recovery-receipt"})()
+        for version in ("v1", "v2", "v99"):
+            candidate = json.loads(json.dumps(payload))
+            candidate["journalSchema"] = "mirrorgate.recovery-journal/" + version
+            unsigned = {key:value for key,value in candidate.items() if key != "sha256"}
+            candidate["sha256"] = hashlib.sha256(json.dumps(unsigned, sort_keys=True,
+                separators=(",", ":"), ensure_ascii=True).encode()).hexdigest()
+            behavior, cleanups, tier = collect._gate_recovery_outcomes(plan_stub,
+                {"recovery-receipt":json.dumps(candidate).encode()}, [], "different-run")
+            self.assertEqual(tier, "failed" if version == "v99" else "passed")
+            self.assertEqual(next(item for item in cleanups if item["scope"] == "gate-recovery")["status"],
+                             "unconfirmed" if version == "v99" else "confirmed")
+        populated = json.loads(json.dumps(payload))
+        populated["cgroupObservations"][0]["counters"]["cgroup.events"] = "populated 1"
+        unsigned = {key:value for key,value in populated.items() if key != "sha256"}
+        populated["sha256"] = hashlib.sha256(json.dumps(unsigned, sort_keys=True,
+            separators=(",", ":"), ensure_ascii=True).encode()).hexdigest()
+        behavior, cleanups, tier = collect._gate_recovery_outcomes(plan_stub,
+            {"recovery-receipt":json.dumps(populated).encode()}, [], "different-run")
+        self.assertEqual(tier, "failed")
         behavior, cleanup, tier = collect._gate_recovery_outcomes(
             plan_stub, {"recovery-receipt":json.dumps(missing_observation).encode()},
             [], "different-run")

@@ -79,6 +79,15 @@ protocol or a claim of scheduler fairness.
 
 ## 3. Safety argument
 
+Retained job data has an independent admission bound: the shared store reserves
+up to 256 entries, including terminal jobs, with 262,144 encoded bytes per
+outcome. Exhaustion rejects a new submission; it never drops an existing result.
+Oversized outcomes become bounded failures before publication. Connection/job
+worker limits, result retention and external process quotas are distinct budgets.
+The [interface reference](interface-reference.md) records errors and library
+configuration; [proof scope](async-resource-lean-proofs.md#boundary-of-the-guarantee)
+distinguishes encoded data from RSS.
+
 The crash's necessary conditions (measured bisection matrix): fresh
 process + accept loop + a dedicated task that captures the connection
 record **and completes**. The pool removes task completion from normal

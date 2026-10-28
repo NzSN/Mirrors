@@ -61,6 +61,10 @@ These connections have different protocols and owners. `evaluateSuite` is a
 Gate-owned wrapper around the MirrorECMA runner; MirrorECMA core does not
 depend on Gate. Reviewed model and trace inputs must also be available to the
 Mirrors server under the selected local or remote path rules.
+The [Mirrors/Gate boundary contract](mirrors-gate-boundary.md) defines the trusted
+compiler/binding path, separate observation-fidelity acceptance, restart and
+aggregate-resource limits, and private feedback policy. Select the intended
+operating profile before treating a replay result as application acceptance.
 
 ## Choose an integration level
 
@@ -310,6 +314,12 @@ or protocols should additionally follow [interop prerequisites](../tools/interop
 and Gate's [required-backend checks](../../MirrorGate/AGENTS.md#build-and-verification).
 Those framework gates complement application tests; they do not replace them.
 
+For a fault-detection acceptance claim, also follow the
+[observer/probe campaign requirements](mirrors-gate-boundary.md#acceptance-requires-evidence-from-the-real-implementation).
+Use one observer for correct and faulty SUTs, independently probe real state, and
+reject a shadow observer even if its reported-state replay matches. Keep finite
+campaign coverage separate from general conformance and sandbox-isolation claims.
+
 ## Interpret the result and reproduce the evidence
 
 `passed` requires matched conformance, met acceptance and successful applicable
@@ -322,6 +332,12 @@ cannot preempt its own CPU-bound loop with a timer.
 Gate persists requested trusted receipts exclusively with mode `0600`, after
 cleanup. Receipt failure remains separate from model/cleanup outcomes and prevents
 overall success. Author-facing output remains the approved public projection.
+Private evaluations additionally need a finite attempt/disclosure policy. Use
+Gate service `requirePersistentBudget` and a shared operator-owned per-author/
+corpus budget directory across restarts; epoch-local limits alone are insufficient.
+An interrupted owner cannot be adopted or reconstructed into a pass.
+See [restart guarantees](mirrors-gate-boundary.md#cleanup-and-restart-are-different-guarantees)
+and [feedback policy](mirrors-gate-boundary.md#public-feedback-and-adaptive-attempts).
 The project CLI exits 0 for full success, 1 for a genuine model mismatch with
 satisfied cleanup, and 2 for other failures.
 

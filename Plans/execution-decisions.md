@@ -6,6 +6,57 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
+## Current continuation — 2026-10-29 (publication)
+
+The user now authorizes commit and push of the audited Mirrors and MirrorGate
+changes. Preserve ignored, hash-bound logs by explicit path selection and scoped
+raw-evidence attributes; leave editor caches and binaries outside the payload.
+MirrorGate's local commit is rebased onto the three existing upstream commits,
+with the full required gate and 171 optional integration tests passing again.
+
+Publish the branch commits and verify remote refs/divergence. Do not advance tags
+or publish packages. The previous native-acceptance exclusion and all historical
+qualification boundaries remain in force; publication does not renew acceptance.
+The newest checkpoint and `/tmp/mirrors-publish-20261029/` own the publication
+audit, separate from the immutable October 28 validation records.
+
+## Current continuation — 2026-10-28 (SANY re-pin)
+
+The user explicitly excluded the native-runner remainder from this work and
+authorized the SANY artifact re-pin. The fresh `fc6878c6…` jar is retained by
+SHA-256 and installed after preserving the old cache. Its manifest, size, native
+help banner and hashes are pinned; the complete standard library and catalog
+facts are unchanged, so profile 6/catalog v3 stay active without new approvals.
+
+The full local non-model aggregate is green, and the previously failing catalog
+checks pass. The local runtime-remediation task is complete under the user's
+explicit native-acceptance exclusion. Neither that exclusion nor the artifact
+refresh qualifies native M4, live differential behavior, an installed distribution
+or a new framework/release identity. Original failed receipts stay historical;
+[the re-pin record](sany-repin-evidence-20261028/README.md) owns the new evidence.
+No commit/push or publication authorization was given.
+
+## Current continuation — 2026-10-28
+
+The user authorized runtime remediation of the Mirrors/Gate architecture review
+and continuation until resolution. The source fixes and local destination gates
+are recorded in [the October 28 evidence](mirrors-gate-runtime-review-evidence-20261028/README.md)
+and newest checkpoint. The exact v2 journal binds processes to owned cgroups,
+persists observed-empty counters before removal and retains retry evidence;
+private service budgets survive restart and concurrent consumers. Mirrors now
+has independent retained-outcome admission/byte limits and a kernel-audited
+arithmetic bound. Existing model/worker/control wire versions remain unchanged.
+
+The remaining external boundary is an admitted native Linux runner with an
+operator-owned cgroup-v2 parent and whole-host storage/resource admission.
+The current coordinator is WSL2 without that delegation; required native
+quota/descendant/controller-death tests are not credited. A separate existing
+SANY artifact mismatch blocks the full Mirrors aggregate: baseline reproduces it
+and a newly downloaded different artifact was rejected without changing the pin.
+Do not relabel either limitation as fixed or renew historical qualification.
+The required host/parent information has been requested while source work
+continued. No publication or host-provisioning action is implied.
+
 ## Current continuation — 2026-10-26
 
 Committed `658b9ef` supplies temporary-root canonicalization and the October 25

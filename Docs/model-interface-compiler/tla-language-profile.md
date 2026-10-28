@@ -1,5 +1,11 @@
 # Mirrors TLA+ frontend language profile (revision 6)
 
+> October 28 artifact refresh: the standalone release URL now serves revision
+> `56d37a9` (manifest `2.0 2026-10-28`). All 20 standard-module entries retain
+> the profile-6 aggregate identity, and the 11 catalog module hashes and 17
+> import facts match. The profile/catalog and corpus are unchanged; the re-pin
+> renews no differential qualification. See [the current artifact evidence](../../Plans/sany-repin-evidence-20261028/README.md).
+
 > Active revision 6 (2026-10-26): the re-pinned standalone SANY artifact at
 > revision `2ef2af8` updates `Bags.tla` and removes its public `Bags -> TLC`
 > import. Catalog `mirrors-standard-modules/v3` binds the new module bytes and
@@ -106,7 +112,7 @@ Compatibility rules inherited from the design:
 | Corpus manifest schema | `mirrors.tla-frontend-corpus/1` |
 | Structural summary schema | `mirrors.tla-frontend-summary/1` |
 | Source identity | normalized UTF-8 bytes, CRLF and CR normalized to LF, SHA-256 |
-| Pinned SANY baseline | TLA+ Tools 1.8.0 / SANY 2.2; hashes in the differential toolchain lock |
+| Pinned SANY baseline | Standalone SANY 2.2, manifest TLA+ Tools `2.0 2026-10-28` from the v1.8.0 asset URL; exact identity in the differential toolchain lock |
 | Pinned Apalache baseline | Apalache 0.61.0; hashes in the differential toolchain lock |
 
 A profile revision is required to change any of the following, and each change

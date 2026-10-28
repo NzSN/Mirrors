@@ -9,6 +9,8 @@
 > installed-service acceptance run, or release qualification.
 > Read the [overview](architecture-overview.md) first; the
 > [framework map](framework-map.md) covers the related repositories.
+> For Mirrors/Gate trust, observation controls, recovery, resource admission and
+> result disclosure, read the [boundary contract](mirrors-gate-boundary.md).
 > Explanatory judgments use the [shared semantic notation](semantic-notation.md).
 
 ## 1. Repository and responsibility map

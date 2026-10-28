@@ -561,6 +561,64 @@ def scenarioProvedResourceGuard (fails : Failures) : IO Unit := do
        job.acquisitions .child == 2 && job.releases .child == 2)
   check fails "proved guard: settled worker cannot reacquire" (← rejects (.acquire .directory))
 
+def scenarioRetention (fails : Failures) : IO Unit := do
+  let release ← IO.mkRef false
+  let raced ← Shell.Jobs.newJobStoreWith 4 (fakeBlockingRunner release)
+    { maxJobs := 1, maxOutcomeBytes := 256 }
+  let firstSubmit ← IO.asTask (prio := Task.Priority.dedicated)
+    (Shell.Jobs.submitValidateJob raced hcCfg 1 none)
+  let secondSubmit ← IO.asTask (prio := Task.Priority.dedicated)
+    (Shell.Jobs.submitValidateJob raced hcCfg 1 none)
+  let mut racedResults := #[]
+  for task in [firstSubmit, secondSubmit] do
+    match ← IO.wait task with
+    | .ok result => racedResults := racedResults.push result
+    | .error error => throw error
+  check fails "retention: concurrent admissions reserve exactly one entry"
+    ((racedResults.filter (·.isOk)).size == 1 &&
+     (racedResults.filter (isJobErr "job result store full")).size == 1)
+  for result in racedResults do
+    if let .ok jid := result then
+      Shell.Jobs.cancelJob raced jid
+      check fails "retention: cancellation retains its reservation"
+        (isJobErr "job result store full" (← Shell.Jobs.submitValidateJob raced hcCfg 1 none))
+  release.set true
+  Shell.Jobs.closeJobStore raced
+  let store ← Shell.Jobs.newJobStoreWith 4 fakeOkRunner { maxJobs := 2, maxOutcomeBytes := 256 }
+  let .ok first ← Shell.Jobs.submitValidateJob store hcCfg 1 none
+    | check fails "retention: first admitted" false; return
+  let .ok second ← Shell.Jobs.submitValidateJob store hcCfg 1 none
+    | check fails "retention: second admitted" false; return
+  let _ ← Shell.Jobs.awaitJob store first none
+  let _ ← Shell.Jobs.awaitJob store second none
+  check fails "retention: terminal entries exhaust admission"
+    (isJobErr "job result store full" (← Shell.Jobs.submitValidateJob store hcCfg 1 none))
+  check fails "retention: retained outcome still delivered"
+    (isOkOutcome (.validate .valid) (← Shell.Jobs.awaitJob store first none))
+  Shell.Jobs.evictJob store first
+  let admitted ← Shell.Jobs.submitValidateJob store hcCfg 1 none
+  check fails "retention: eviction restores admission" admitted.isOk
+  Shell.Jobs.closeJobStore store
+  let longText := String.ofList (List.replicate 600 '界')
+  let runner : Runner := {
+    validate := fun _ _ _ _ => pure (.ok (.invalid longText))
+    genTraces := fun _ _ _ _ => pure (.ok { itfTracePaths := [longText], itfTraces := [] }) }
+  let bounded ← Shell.Jobs.newJobStoreWith 2 runner { maxJobs := 3, maxOutcomeBytes := 256 }
+  let .ok validation ← Shell.Jobs.submitValidateJob bounded hcCfg 1 none
+    | check fails "retention: oversize validation admitted" false; return
+  let .ok generation ← Shell.Jobs.submitGenTracesJob bounded hcCfg hcTc none none
+    | check fails "retention: oversize generation admitted" false; return
+  for jid in [validation, generation] do
+    let result ← Shell.Jobs.awaitJob bounded jid none
+    check fails "retention: oversized success replaced by bounded failure"
+      (isOkOutcome (.infraError "job outcome exceeds retention byte limit") result)
+    let (phase, outcome) ← Shell.Jobs.queryJob bounded jid
+    check fails "retention: oversized result failed" (phase == .jobFailed)
+    if let some actual := outcome then
+      check fails "retention: encoded retained bytes bounded"
+        ((Codec.jJobOutcome actual).compress.utf8ByteSize ≤ bounded.retention.maxOutcomeBytes)
+  Shell.Jobs.closeJobStore bounded
+
 def main : IO UInt32 := do
   let fails ← IO.mkRef ([] : List String)
   let run (name : String) (s : Failures → IO Unit) := do
@@ -582,6 +640,7 @@ def main : IO UInt32 := do
   run "cancelled-worker-slot" scenarioCancelledWorkerSlot
   run "cancellation-failure-retirement" scenarioCancellationFailureAndRetirement
   run "proved-resource-guard" scenarioProvedResourceGuard
+  run "retention" scenarioRetention
   let fs ← fails.get
   if fs.isEmpty then
     IO.println "JOBSTORE PARITY GREEN"
