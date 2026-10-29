@@ -1,4 +1,4 @@
-import Lean
+import Ffi.Buffer
 
 /-!
 # Ffi.Socket — minimal loopback TCP sockets (t14 spike, design 9.2)

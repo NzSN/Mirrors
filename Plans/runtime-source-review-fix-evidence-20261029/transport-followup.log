@@ -1,0 +1,417 @@
+[tls] server ctx created (cert=.lake/build/tmp-pki/server.crt, SAN ok, chain ok, client certs required)
+[tls] finalizer: SSL_CTX_free 0x71ce2c067990
+[tls] server ctx created (cert=.lake/build/tmp-pki/server.crt, SAN ok, chain ok, client certs required)
+[tls] finalizer: SSL_CTX_free 0x71ce2c067990
+[tls] client ctx created (cert=.lake/build/tmp-pki/client.crt)
+[tls] finalizer: SSL_CTX_free 0x71ce2c067990
+ok: framing accepts exactly 65535 UTF-8 bytes
+ok: framing rejects 65536 UTF-8 bytes
+ok: framing rejects embedded newline
+ok: framing rejects invalid UTF-8
+ok: TCP coalesced first LF frame survives later read failure
+ok: TCP coalesced CRLF suffix is preserved
+ok: TCP empty read error is not clean EOF
+ok: TCP read error cannot complete an unterminated JSON fragment
+ok: TCP read error discards retained fragment
+ok: delivery: sync boundary is exactly 65535 bytes
+ok: delivery: 65535 shared stays full
+ok: delivery: 65535 remote stays full
+ok: delivery: sync overflow is exactly 65536 bytes
+ok: delivery: 65536 durable shared uses paths only
+ok: delivery: 65536 ephemeral shared is a bounded failure
+ok: delivery: 65536 remote is a bounded failure
+ok: delivery: path-only overflow is a bounded failure
+ok: delivery: async boundary is exactly 65535 bytes
+ok: delivery: async 65535 stays full
+ok: delivery: async overflow is exactly 65536 bytes
+ok: delivery: async 65536 is a terminal error for the same job
+ok: delivery: stdio transport is shared-filesystem
+ok: delivery: TCP transport is remote
+ok: pki: server cert signed
+ok: pki: client cert signed
+ok: pki: nosan cert signed
+ok: pki: rogue cert signed
+ok: pki: soon-expiry cert signed
+ok: pki: other-san cert signed
+ok: pki: stray (unchainable) cert signed
+ok: pki: expired cert signed
+ok: server ctx (good PKI)
+ok: server ctx rejected: no SAN
+ok: server mode 600: fixture chmod succeeded
+ok: server mode 600: POSIX bits match the fixture
+ok: server exact 0600 accepted
+ok: server mode 600: loader preserves permissions
+ok: server mode 600: loader preserves key bytes
+ok: server mode 400: fixture chmod succeeded
+ok: server mode 400: POSIX bits match the fixture
+ok: server non-0600 mode 400 rejected
+ok: server mode 400: diagnostic names 0600
+ok: server mode 400: loader preserves permissions
+ok: server mode 400: loader preserves key bytes
+ok: server mode 700: fixture chmod succeeded
+ok: server mode 700: POSIX bits match the fixture
+ok: server non-0600 mode 700 rejected
+ok: server mode 700: diagnostic names 0600
+ok: server mode 700: loader preserves permissions
+ok: server mode 700: loader preserves key bytes
+ok: server mode 640: fixture chmod succeeded
+ok: server mode 640: POSIX bits match the fixture
+ok: server non-0600 mode 640 rejected
+ok: server mode 640: diagnostic names 0600
+ok: server mode 640: loader preserves permissions
+ok: server mode 640: loader preserves key bytes
+ok: server mode 000: fixture chmod succeeded
+ok: server mode 000: POSIX bits match the fixture
+ok: server non-0600 mode 000 rejected
+ok: server mode 000: diagnostic names 0600
+ok: server mode 000: loader preserves permissions
+ok: server mode 000: loader preserves key bytes
+ok: server mode 1600: fixture chmod succeeded
+ok: server mode 1600: POSIX bits match the fixture
+ok: server non-0600 mode 1600 rejected
+ok: server mode 1600: diagnostic names 0600
+ok: server mode 1600: loader preserves permissions
+ok: server mode 1600: loader preserves key bytes
+ok: server mode 2600: fixture chmod succeeded
+ok: server mode 2600: POSIX bits match the fixture
+ok: server non-0600 mode 2600 rejected
+ok: server mode 2600: diagnostic names 0600
+ok: server mode 2600: loader preserves permissions
+ok: server mode 2600: loader preserves key bytes
+ok: server mode 4600: fixture chmod succeeded
+ok: server mode 4600: POSIX bits match the fixture
+ok: server non-0600 mode 4600 rejected
+ok: server mode 4600: diagnostic names 0600
+ok: server mode 4600: loader preserves permissions
+ok: server mode 4600: loader preserves key bytes
+ok: client mode 600: fixture chmod succeeded
+ok: client mode 600: POSIX bits match the fixture
+ok: client exact 0600 accepted
+ok: client mode 600: loader preserves permissions
+ok: client mode 600: loader preserves key bytes
+ok: client mode 400: fixture chmod succeeded
+ok: client mode 400: POSIX bits match the fixture
+ok: client non-0600 mode 400 rejected
+ok: client mode 400: diagnostic names 0600
+ok: client mode 400: loader preserves permissions
+ok: client mode 400: loader preserves key bytes
+ok: client mode 700: fixture chmod succeedwarning: server certificate .lake/build/tmp-pki/expired.crt expires in 0 day(s)
+[tls] server ctx created (cert=.lake/build/tmp-pki/expired.crt, SAN ok, chain ok, client certs required)
+[tls] finalizer: SSL_CTX_free 0x71ce2c067990
+[tls] client ctx created (cert=.lake/build/tmp-pki/client.crt)
+ed
+ok: client mode 700: POSIX bits match the fixture
+ok: client non-0600 mode 700 rejected
+ok: client mode 700: diagnostic names 0600
+ok: client mode 700: loader preserves permissions
+ok: client mode 700: loader preserves key bytes
+ok: client mode 640: fixture chmod succeeded
+ok: client mode 640: POSIX bits match the fixture
+ok: client non-0600 mode 640 rejected
+ok: client mode 640: diagnostic names 0600
+ok: client mode 640: loader preserves permissions
+ok: client mode 640: loader preserves key bytes
+ok: client mode 000: fixture chmod succeeded
+ok: client mode 000: POSIX bits match the fixture
+ok: client non-0600 mode 000 rejected
+ok: client mode 000: diagnostic names 0600
+ok: client mode 000: loader preserves permissions
+ok: client mode 000: loader preserves key bytes
+ok: client mode 1600: fixture chmod succeeded
+ok: client mode 1600: POSIX bits match the fixture
+ok: client non-0600 mode 1600 rejected
+ok: client mode 1600: diagnostic names 0600
+ok: client mode 1600: loader preserves permissions
+ok: client mode 1600: loader preserves key bytes
+ok: client mode 2600: fixture chmod succeeded
+ok: client mode 2600: POSIX bits match the fixture
+ok: client non-0600 mode 2600 rejected
+ok: client mode 2600: diagnostic names 0600
+ok: client mode 2600: loader preserves permissions
+ok: client mode 2600: loader preserves key bytes
+ok: client mode 4600: fixture chmod succeeded
+ok: client mode 4600: POSIX bits match the fixture
+ok: client non-0600 mode 4600 rejected
+ok: client mode 4600: diagnostic names 0600
+ok: client mode 4600: loader preserves permissions
+ok: client mode 4600: loader preserves key bytes
+ok: server ctx rejected: unchainable cert
+ok: server ctx rejected: cert/key mismatch
+ok: server ctx rejected: garbage cert file
+ok: server ctx rejected: empty cert file
+ok: fingerprint of garbage cert is none
+ok: expired cert: ctx still created (warn-only)
+ok: expired cert days <= 0 (M2)
+ok: client ctx (good PKI)
+ok: fingerprint matches openssl CLI
+ok: sequential certificate fingerprints keep distinct output
+ok: mTLS leaf fingerprint grants exact allowlisted verify scope
+ok: mTLS leaf fingerprint denies a non-allowlisted principal
+ok: soon cert days in [1,2]
+ok: long cert days > 300
+ok: listenTcp binds 127.0.0.1
+ok: listenTcp rejects unresolvable bind name
+ok: listenTcp rejects invalid bind literal
+ok: tcp echo round trip
+ok: tcp server survived peer drop
+ok: bind 127.0.0.1 reachable via loopback
+ok: bind 127.0.0.1 NOT reachable via non-loopback addr
+[tls] server ctx created (cert=.lake/build/tmp-pki/server.crt, SAN ok, chain ok, client certs required)
+[tls] accept: handshake start fd=16[tls] connect: handshake start fd=16 host=localhost
+
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c0a5950
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x70746809e2d0
+[tls] connect: handshake start fd=17 host=127.0.0.1
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=127.0.0.1 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c0ad2c0
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074680a8540
+[tls] connect: handshake start fd=18 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c0cd330
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074680c6d30
+[tls] connect: handshake start fd=19 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c0e75c0
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074680d8560
+[tls] connect: handshake start fd=20 host=localhost[tls] accept: handshake start fd=16
+
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c0fb4e0
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074680f53b0
+[tls] connect: handshake start fd=21 host=localhost[tls] accept: handshake start fd=16
+
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c10b000
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c10b000
+[tls] connect: handshake start fd=22 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074680faf00
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c11ef20
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c11ef20
+[tls] connect: handshake start fd=23 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x70746810bea0
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c125750
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x70746811d230
+[tls] connect: handshake start fd=24 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c133350
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c133350
+[tls] connect: handshake start fd=25 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x70746812e5c0
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c14b230
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x70746813f950
+[tls] connect: handshake start fd=26 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c152f70
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c152f70
+[tls] connect: handshake start fd=27 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x707468150ce0
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c16aea0
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x707468162070
+[tls] connect: handshake start fd=28 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c172be0
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c172be0
+[tls] connect: handshake start fd=29 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x707468173400
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c18ab10
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x707468184100
+[tls] connect: handshake start fd=30 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c192850
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c192850
+[tls] connect: handshake start fd=31 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x707468195820
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c1aa780
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074681a6bb0
+[tls] connect: handshake start fd=32 host=localhost[tls] accept: handshake start fd=16
+
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c1b24c0
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c1b24c0
+[tls] connect: handshake start fd=33 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074681b7f40
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c1ca3f0
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074681c92d0
+[tls] accept: handshake start fd=16
+[tls] connect: handshake start fd=34 host=localhost
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c1d2130
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c1d2130
+[tls] connect: handshake start fd=35 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074681da660
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c1ea060
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074681eb360
+[tls] connect: handshake start fd=36 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c1f1da0
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c1f1da0
+[tls] connect: handshake start fd=37 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074681fca80
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c209cd0
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x70746820de10
+[tls] connect: handshake start fd=38 host=localhost[tls] accept: handshake start fd=16
+
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c211a10
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c211a10
+[tls] connect: handshake start fd=39 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x70746821f1a0
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c229940
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x707468230530
+[tls] connect: handshake start fd=40 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c231680
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c231680
+[tls] connect: handshake start fd=41 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074682418c0
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c2495b0
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x7074682525c0
+[tls] connect: handshake start fd=42 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c2512f0
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c2512f0
+[tls] connect: handshake start fd=43 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x707468263ce0
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c269220
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x707468275070
+[tls] connect: handshake start fd=44 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c270f60
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] close: unidirectional shutdown ssl=0x71ce2c270f60
+[tls] connect: handshake start fd=45 host=localhost
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x707468286400
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c288e90
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: ok fd=16 TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x707468297790
+[tls] client ctx created (cert=.lake/build/tmp-pki/client.crt)
+[tls] connect: handshake start fd=46 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: FAILED host=localhost (TLS connect (handshake) failed: error:0A000086:SSL routines::certificate verify failed)
+[tls] accept: FAILED fd=16 (TLS accept (handshake) failed: error:0A000418:SSL routines::tlsv1 alert unknown ca)
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000418:SSL routines::tlsv1 alert unknown ca)
+connection skipped
+[tls] connect: handshake start fd=46 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: FAILED host=localhost (TLS connect (handshake) failed: error:0A000086:SSL routines::certificate verify failed)
+[tls] accept: FAILED fd=16 (TLS accept (handshake) failed: error:0A000418:SSL routines::tlsv1 alert unknown ca)
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000418:SSL routines::tlsv1 alert unknown ca)
+connection skipped
+[tls] connect: handshake start fd=46 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: FAILED host=localhost (TLS connect (handshake) failed: error:0A000086:SSL routines::certificate verify failed)
+[tls] accept: FAILED fd=16 (TLS accept (handshake) failed: error:0A000418:SSL routines::tlsv1 alert unknown ca)
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000418:SSL routines::tlsv1 alert unknown ca)
+connection skipped
+[tls] client ctx created (cert=.lake/build/tmp-pki/other-san.crt)
+[tls] finalizer: SSL_CTX_free 0x71ce2c29cb60
+ok: delivery: TLS transport is remote
+ok: mtls echo round trip (TLS 1.3, pinned fp)
+ok: ip-literal connect (M3)
+ok: mixed-case pin connect (t29)
+ok: oversized line rejected (m6)
+ok: server alive after oversized line
+ok: mtls wrong fingerprint rejected
+ok: repeated TLS pin rejection reaches fingerprint check
+ok: TLS connection after pin rejection
+ok: repeated TLS pin rejection reaches fingerprint check
+ok: TLS connection after pin rejection
+ok: repeated TLS pin rejection reaches fingerprint check
+ok: TLS connection after pin rejection
+ok: repeated TLS pin rejection reaches fingerprint check
+ok: TLS connection after pin rejection
+ok: repeated TLS pin rejection reaches fingerprint check
+ok: TLS connection after pin rejection
+ok: repeated TLS pin rejection reaches fingerprint check
+ok: TLS connection after pin rejection
+ok: repeated TLS pin rejection reaches fingerprint check
+ok: TLS connection after pin rejection
+ok: repeated TLS pin rejection reaches fingerprint check
+ok: TLS connection after pin rejection
+ok: repeated TLS pin rejection reaches fingerprint check
+ok: TLS connection after pin rejection
+ok: repeated TLS pin rejection reaches fingerprint check
+ok: TLS connection after pin rejection
+ok: repeated TLS pin rejection reaches fingerprint check
+ok: TLS connection after pin rejection
+ok: repeated TLS pin rejection reaches fingerprint check
+ok: TLS connection after pin rejection
+FAIL: TLS pin rejection and success release descriptors
+ok: client with wrong CA rejected by handshake
+ok: other-san ctx (locally valid)
+[tls] server ctx created (cert=.lake/build/tmp-pki/other-san.crt, SAN ok, chain ok, client certs required)
+[tls] connect: handshake start fd=47 host=localhost
+[tls] accept: handshake start fd=46
+[tls] connect: FAILED host=localhost (TLS connect (handshake) failed: error:0A000086:SSL routines::certificate verify failed)
+[tls] accept: FAILED fd=46 (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+connection skipped
+[tls] connect: handshake start fd=47 host=localhost
+[tls] accept: handshake start fd=46
+[tls] connect: FAILED host=localhost (TLS connect (handshake) failed: error:0A000086:SSL routines::certificate verify failed)
+[tls] accept: FAILED fd=46 (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+connection skipped
+[tls] connect: handshake start fd=47 host=localhost[tls] accept: handshake start fd=46
+
+[tls] connect: FAILED host=localhost (TLS connect (handshake) failed: error:0A000086:SSL routines::certificate verify failed)
+[tls] accept: FAILED fd=46 (TLS accept (handshake) failed: error:0A000412:SSL routines::ssl/tls alert bad certificate)
+[tls] client ctx created (cert=.lake/build/tmp-pki/rogue.crt)
+[tls] connect: handshake start fd=46 host=localhost
+[tls] accept: handshake start fd=16
+[tls] connect: ok host=localhost TLSv1.3 TLS_AES_256_GCM_SHA384 ssl=0x71ce2c2ade10
+[tls] peer fingerprint: 3c2031a6a17123841dd62eff9e63b7bde6f2e9de9855c12a534e0afd726f9d2c
+[tls] accept: FAILED fd=16 (TLS accept (handshake) failed: error:0A000086:SSL routines::certificate verify failed)
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000086:SSL routines::certificate verify failed)
+connection skipped
+[tls] accept: handshake start fd=16
+[tls] accept: FAILED fd=16 (TLS accept (handshake) failed: error:0A000102:SSL routines::unsupported protocol)
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000102:SSL routines::unsupported protocol)
+connection skipped
+[tls] accept: handshake start fd=16
+[tls] accept: FAILED fd=16 (TLS accept (handshake) failed: error:0A0000C7:SSL routines::peer did not return a certificate)
+tls: handshake rejected (TLS accept (handshake) failed: error:0A0000C7:SSL routines::peer did not return a certificate)
+connection skipped
+ok: client hostname SAN mismatch rejected
+ok: rogue client ctx (locally valid)
+ok: mtls untrusted client cert rejected by server
+ok: tls1.2-only peer rejected (no echo)
+ok: certificate-less client rejected (no echo)
+dbg before ip: pid 46962
+TRANSPORT SPEC: 1 failure(s)

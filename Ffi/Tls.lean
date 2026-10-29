@@ -1,4 +1,4 @@
-import Lean
+import Ffi.Buffer
 
 /-!
 # Ffi.Tls — OpenSSL shim declarations (t15, design 5.4 / 9.1)
@@ -12,7 +12,8 @@ files rejected. This module only declares the surface.
 Ownership: @TlsCtx@ and @TlsSsl@ are external objects freed by GC
 finalizers registered in the shim — the only finalizer backstop in the
 code base (design 9.7). @tlsClose@ performs a best-effort close_notify;
-it never frees, so close-then-collect is safe.
+it never frees, so close-then-collect is safe. A successful client handshake
+transfers its socket to the SSL object; server sockets stay caller-owned.
 -/
 
 namespace Ffi
@@ -20,18 +21,21 @@ namespace Ffi
 /-- Sentinel error value for the UInt64-returning functions. -/
 def tlsError : UInt64 := 0xFFFFFFFFFFFFFFFF
 
+-- An enum-shaped stand-in makes native compilation treat external handles
+-- as scalar values and omit reference decrements in higher-order wrappers.
+-- Keep their representation opaque and boxed so SSL/CTX finalizers run.
+private opaque tlsCtxType : NonemptyType := ⟨NonScalar, ⟨⟨0⟩⟩⟩
+private opaque tlsSslType : NonemptyType := ⟨NonScalar, ⟨⟨0⟩⟩⟩
+
 /-- An OpenSSL @SSL_CTX@ (server or client policy), freed by GC.
-Values only ever come from the shim; the constructor exists only so
-the type is inhabited (required by @opaque@ extern declarations). -/
-inductive TlsCtx where
-  | mk
+Values only ever come from the shim. -/
+def TlsCtx : Type := tlsCtxType.type
 
 /-- An established TLS session over a connected socket, freed by GC. -/
-inductive TlsSsl where
-  | mk
+def TlsSsl : Type := tlsSslType.type
 
-instance : Nonempty TlsCtx := ⟨.mk⟩
-instance : Nonempty TlsSsl := ⟨.mk⟩
+instance : Nonempty TlsCtx := tlsCtxType.property
+instance : Nonempty TlsSsl := tlsSslType.property
 
 /-- On failure these return a NULL-payload sentinel external; check
 with @isNull@ and fetch the reason via @tlsErrmsg@. -/
@@ -52,6 +56,8 @@ opaque sslIsNull : @& TlsSsl → BaseIO UInt64
 @[extern "dsh_tls_accept"]
 opaque tlsAcceptRaw : @& TlsCtx → UInt64 → BaseIO TlsSsl
 
+/-- On success the returned SSL object owns the socket. On failure the caller
+must close the socket, just as for `tlsAcceptRaw`. -/
 @[extern "dsh_tls_connect"]
 opaque tlsConnectRaw : @& TlsCtx → @& String → UInt64 → BaseIO TlsSsl
 
@@ -88,7 +94,7 @@ def noCertDays : Int := -1000000
 
 /-- Human-readable reason for the last shim failure. -/
 def tlsErrmsg : IO String := do
-  let buf := ByteArray.mk ((List.replicate 1024 0).toArray)
+  let buf ← freshBuffer 1024
   let n ← tlsErrmsgRaw buf 1023
   let n := min n.toNat 1023
   return String.fromUTF8? (buf.extract 0 n) |>.getD ""

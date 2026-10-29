@@ -619,6 +619,49 @@ def scenarioRetention (fails : Failures) : IO Unit := do
         ((Codec.jJobOutcome actual).compress.utf8ByteSize ≤ bounded.retention.maxOutcomeBytes)
   Shell.Jobs.closeJobStore bounded
 
+def scenarioWireOutcomeLimits (fails : Failures) : IO Unit := do
+  for infra in [false, true] do
+    let wrap := if infra then Codec.JobOutcome.infraError
+      else fun text => Codec.JobOutcome.validate (.invalid text)
+    for target in [65535, 65536, 70000] do
+      let base := (Codec.encodeMirror (.jobResult "job-0" (wrap ""))).compress.utf8ByteSize
+      let diagnosticPrefix := "汉🙂\"\\"
+      let prefixBytes := (Codec.encodeMirror (.jobResult "job-0" (wrap diagnosticPrefix))).compress.utf8ByteSize - base
+      let outcome := wrap (diagnosticPrefix ++ String.ofList (List.replicate (target - base - prefixBytes) 'x'))
+      let runs ← IO.mkRef 0
+      let runner : Runner := {
+        validate := fun _ _ _ _ => do
+          runs.modify (· + 1)
+          match outcome with
+          | .infraError text => return .error text
+          | .validate verdict => return .ok verdict
+          | _ => return .error "unreachable"
+        genTraces := fun _ _ _ _ => pure (.error "unused") }
+      let store ← newJobStoreWith 1 runner
+      let pending ← IO.mkRef [
+        (Codec.encodeClient (.registerValidateAsync hcCfg 1 none)).compress,
+        (Codec.encodeClient (.awaitJob "job-0" (some 5))).compress,
+        (Codec.encodeClient (.queryJob "job-0")).compress,
+        (Codec.encodeClient (.awaitJob "job-0" (some 0))).compress]
+      let replies ← IO.mkRef ([] : List String)
+      let transport : Shell.Transport.Transport := {
+        recv := do
+          match ← pending.get with
+          | [] => return none
+          | line :: rest => pending.set rest; return some line
+        send := fun line => do
+          Shell.Transport.validateProtocolLine line
+          replies.modify (· ++ [line]) }
+      try runAsync transport stubOracles store
+      catch e => check fails s!"wire outcome: {infra}/{target} keeps session" false (toString e)
+      let terminals := (← replies.get).drop 1
+      let expected := if target ≤ 65535 then
+        (Codec.encodeMirror (.jobResult "job-0" outcome)).compress
+        else (Codec.encodeMirror (.jobResult "job-0" (.infraError
+          s!"JOB_RESULT_TOO_LARGE: job result needs {target} UTF-8 bytes (limit 65535)"))).compress
+      check fails s!"wire outcome: {infra}/{target} bounded idempotent delivery"
+        (terminals == [expected, expected, expected] && (← runs.get) == 1)
+
 def main : IO UInt32 := do
   let fails ← IO.mkRef ([] : List String)
   let run (name : String) (s : Failures → IO Unit) := do
@@ -641,6 +684,7 @@ def main : IO UInt32 := do
   run "cancellation-failure-retirement" scenarioCancellationFailureAndRetirement
   run "proved-resource-guard" scenarioProvedResourceGuard
   run "retention" scenarioRetention
+  run "wire-outcome-limits" scenarioWireOutcomeLimits
   let fs ← fails.get
   if fs.isEmpty then
     IO.println "JOBSTORE PARITY GREEN"

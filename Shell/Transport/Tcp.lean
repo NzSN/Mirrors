@@ -22,7 +22,7 @@ namespace Shell.Transport.Tcp
 open Shell.Transport
 
 private def peerDesc (fd : UInt64) : IO String := do
-  let buf := ByteArray.mk ((List.replicate 64 0).toArray)
+  let buf ← Ffi.freshBuffer 64
   let n ← Ffi.peerDescRaw fd buf 63
   if n == Ffi.fdError then return "?"
   return String.fromUTF8? (buf.extract 0 n.toNat) |>.getD "?"
@@ -117,7 +117,7 @@ def connectTcp (host : String) (port : Nat) : IO (Except String Transport) := do
     Ffi.closeFd fd
     return .error s!"connect to {host}:{port} failed"
   return .ok (tcpTransport ⟨fd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)),
-    ByteArray.mk ((List.replicate 65536 0).toArray)⟩)
+    ← Ffi.freshBuffer 65536⟩)
 
 /-- Open a listening socket bound to @host@ and return the listener fd
 plus the bound port (port 0 picks an ephemeral port). Empty host = the
@@ -174,7 +174,7 @@ private partial def loopAccept (lfd : UInt64) (session : Transport → IO Unit) 
         IO.eprintln "tcp: accept failed; continuing"
     else
       let peer ← peerDesc cfd
-      let t := tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)), ByteArray.mk ((List.replicate 65536 0).toArray)⟩
+      let t := tcpTransport ⟨cfd, ← IO.mkRef ByteArray.empty, ← Ffi.freshBuffer 65536⟩
       try
         session t
       catch e =>
@@ -310,7 +310,7 @@ one task shape that has never crashed on Windows). -/
 private def runTcpConn (session : Transport → IO Unit) (peer : String)
     (cfd : UInt64) : IO Unit := do
   let t := tcpTransport ⟨cfd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8)),
-      ByteArray.mk ((List.replicate 65536 0).toArray)⟩
+      ← Ffi.freshBuffer 65536⟩
   try
     session t
   catch e =>

@@ -719,6 +719,38 @@ def unitGeneratedTraceDelivery (fails : Failures) : IO Unit := do
         (error.contains "not valid JSON") error
   removeSessionDir runDir3
 
+def unitAsyncTraceDecoding (fails : Failures) : IO Unit := do
+  let cfg : Codec.ApalacheConfig := {
+    constInit := none, initPredicate := none, invariant := "Inv", lengthBound := 1,
+    nextPredicate := none, paramVars := "", specPath := "HourClock.tla" }
+  for mode in ["valid", "json", "value", "missing"] do
+    let token ← Shell.Jobs.CancelToken.newTracked true
+    token.resourceEvent .start
+    let directory ← IO.mkRef ""
+    let result ← Shell.Apalache.generateJobTracesVia (fun run _ _ => do
+      let dir := run.getD ""
+      directory.set dir
+      let first := dir ++ "/first.itf.json"
+      let second := dir ++ "/second.itf.json"
+      IO.FS.writeFile first "1"
+      if mode != "missing" then
+        IO.FS.writeFile second (if mode == "valid" then "2"
+          else if mode == "json" then "{" else "{\"#bigint\":\"bad\"}")
+      return .ok (dir, [first, second])) token cfg
+        (some { sources := [hcSrc] }) { numTraces := 2, view := none }
+    token.resourceEvent .settle
+    match result with
+    | .ok result =>
+        check fails s!"async decoding: {mode} preserves complete result"
+          (mode == "valid" && result.itfTraces.length == 2 && result.itfTracePaths.length == 2)
+    | .error error =>
+        check fails s!"async decoding: {mode} rejects complete operation"
+          (mode != "valid" && error == (if mode == "json" then "generated ITF trace is not valid JSON"
+            else if mode == "value" then "generated ITF trace has an invalid value"
+            else "unable to read generated ITF trace")) error
+    check fails s!"async decoding: {mode} releases owned files"
+      (!(← (System.FilePath.mk (← directory.get)).pathExists))
+
 def unitTraceGenerationCleanupPrecedence (fails : Failures) : IO Unit := do
   let removals ← IO.mkRef 0
   let releaseFailure : IO Unit := throw (IO.userError "release detail")
@@ -871,6 +903,7 @@ def main : IO UInt32 := do
   run "generated-trace-resource-fallback" unitGeneratedTraceResourceFallback
   run "trace-generation-failure-formatting" unitTraceGenerationFailureFormatting
   run "generated-trace-delivery" unitGeneratedTraceDelivery
+  run "async-trace-decoding" unitAsyncTraceDecoding
   run "trace-generation-cleanup-precedence" unitTraceGenerationCleanupPrecedence
   run "integration" integration
   let fs ← fails.get

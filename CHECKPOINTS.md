@@ -5,6 +5,46 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-29 — Source-review fixes authorized for branch publication
+
+The user requested commit and push of the six runtime fixes, focused
+regressions, maintained contracts/status and their hash-bound evidence to
+`origin/main` (`https://github.com/NzSN/Mirrors.git`). The runtime sources remain
+identical to the passing full local non-model and isolated native rebuild
+checks recorded in the source-review fix evidence below. Publication updates
+only the maintained status after that validation snapshot; the original
+validation files and historical entries retain their original bytes.
+
+The staged scope excludes the unrelated editor cache, ignored toolchain cache,
+temporary PKI and build artifacts. Payload/hash audits and remote-ref receipts
+are retained locally under `/tmp/mirrors-source-review-publish-20261029/`.
+Branch publication does not renew live-model, native M4, installed/framework
+or release qualification and does not deploy a service or advance a tag.
+
+## 2026-10-29 — Six source-review bugs fixed and locally validated
+
+At base Mirrors `0cb5679`, the user requested all six reproduced fixes. The
+working tree now uses fresh native output buffers, complete generated-trace
+decoding, nonzero Explorer assertion exits, exact-envelope async delivery,
+UTF-8 HTTP lengths and owned client TLS sockets. Opaque boxed handle types
+repair native reference-count omissions that kept SSL externals alive;
+rejected pins send best-effort close-notify.
+
+Focused suites pass, including 512 synchronized HTTP requests, malformed/missing
+trace controls, exact 65,535/65,536/70,000-byte outcome checks and twelve rejected
+pins alternating with successful echoes at stable descriptor counts. The
+original 960-request probe has zero corrupt responses, and its rejection-only
+probe leaks no sockets. The handle type/instance axiom audit is clean.
+
+The full local non-model aggregate and isolated native rebuild gate pass. The
+first aggregate's unrelated SANY cache mismatch is retained; restoring the
+exact existing lock bytes resolves it without changing a pin, and the old cache
+is preserved separately. Four live differential cases and the unselected
+optional native integer-map tier remain skipped. No local Apalache/TLC,
+Windows/native M4 admission, new framework/release qualification, commit/push
+or deployment is claimed. Exact receipts and identities are in
+[the source-review fix evidence](Plans/runtime-source-review-fix-evidence-20261029/README.md).
+
 ## 2026-10-29 — Audited branch publication authorized
 
 The user authorized commit and push of the Mirrors and MirrorGate runtime-review

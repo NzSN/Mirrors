@@ -6,6 +6,28 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
+## Current continuation — 2026-10-29 (source-review publication)
+
+The user now authorizes commit and push of the six source-review fixes and
+their reviewed tests, contracts, status and retained evidence to `origin/main`.
+Preserve the validation snapshot and initial failed receipts byte-for-byte;
+stage the explicit delivery scope and leave the editor cache, toolchain cache,
+PKI and build artifacts outside the commit. Verify the remote branch after
+publication. The passing runtime source identities and the prior qualification
+limits remain unchanged; no package publication or deployment is requested.
+
+## Current continuation — 2026-10-29 (source-review remediation)
+
+The user requested fixes for all six reproduced source-review bugs. At base
+`0cb5679`, working-tree remediation and focused regressions are complete. The
+full local non-model aggregate and isolated native rebuild gate pass.
+[The evidence](runtime-source-review-fix-evidence-20261029/README.md) records
+the runtime corrections, boxed TLS ownership repair, exact outcome limits,
+original probes, initial failures and final receipts. The stale ignored SANY
+cache was restored to the unchanged committed pin after preserving its old
+bytes. Live/native/framework qualification stays separate. These changes have
+not been committed, pushed or deployed.
+
 ## Current continuation — 2026-10-29 (publication)
 
 The user now authorizes commit and push of the audited Mirrors and MirrorGate

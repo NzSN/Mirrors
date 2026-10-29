@@ -72,6 +72,24 @@ private def withJobResources (token : Shell.Jobs.CancelToken)
   | .error e => return .error e
   | .ok (res, cfg') => withAcquiredJobScope token res cfg' freshSessionDir body
 
+/-- Generate and decode a complete async trace result inside its owned scope.
+The invocation seam permits file/codec failure regressions without a model
+checker; production uses the cancellable Apalache invocation. -/
+def generateJobTracesVia
+    (generate : Option String → Codec.ApalacheConfig → Codec.TraceConfig →
+      IO (Except String (String × List String)))
+    (token : Shell.Jobs.CancelToken) (cfg : Codec.ApalacheConfig)
+    (spec : Option Codec.SpecConfig) (tc : Codec.TraceConfig) :
+    IO (Except String Codec.TraceGenResult) := do
+  if ← token.isCancelled then return .error "job cancelled before resource acquisition"
+  match ← acquireSpec spec cfg with
+  | .error e => return .error e
+  | .ok (res, cfg') =>
+      withAcquiredJobScope token res cfg' freshSessionDir fun cfg' dir => do
+        match ← generate (some dir) cfg' tc with
+        | .error e => pure (.error e)
+        | .ok (_, paths) => readGeneratedTraceResult paths
+
 /-- The async-job runner backed by real apalache (validate) and by file
 trace generation (gen-traces; returns the trace contents read back from
 the generated files). -/
@@ -79,21 +97,9 @@ def jobRunner : Shell.Jobs.Runner where
   validate := fun cfg spec bound token =>
     withJobResources token cfg spec (fun cfg' dir =>
       validateSpecVia (runApalacheCancellable token) (some dir) cfg' bound)
-  genTraces := fun cfg spec tc token => do
-    if ← token.isCancelled then return .error "job cancelled before resource acquisition"
-    match ← acquireSpec spec cfg with
-    | .error e => return .error e
-    | .ok (res, cfg') =>
-        withAcquiredJobScope token res cfg' freshSessionDir fun cfg' dir => do
-          match ← generateTraceFilesVia (runApalacheCancellable token) (some dir) cfg' tc with
-          | .error e => pure (.error e)
-          | .ok (_, paths) => do
-              let contents ← paths.mapM (fun (p : String) => do
-                let txt ← IO.FS.readFile p
-                match Lean.Json.parse txt with
-                | .error _ => pure none
-                | .ok j => pure ((Codec.decodeValue j).toOption))
-              pure (.ok (⟨paths, contents.filterMap id⟩ : Codec.TraceGenResult))
+  genTraces := fun cfg spec tc token =>
+    generateJobTracesVia (generateTraceFilesVia (runApalacheCancellable token))
+      token cfg spec tc
 
 /-! ## The explorer flows (Haskell MkExploreMirror / MkExploreSession) -/
 

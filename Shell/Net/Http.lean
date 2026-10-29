@@ -35,9 +35,6 @@ structure HttpResponse where
   body : String
 deriving Repr
 
-private def recvBuf : ByteArray :=
-  ByteArray.mk ((List.replicate 65536 0).toArray)
-
 /-! ## Parsing helpers -/
 
 /-- Case-insensitive header lookup over raw header text; trimmed value. -/
@@ -119,13 +116,14 @@ private def ascii (b : ByteArray) : String :=
 structure Conn where
   fd : UInt64
   buf : IO.Ref ByteArray
+  rbuf : ByteArray
 
 /-- Resolve an IPv4 host name to a dotted address (getaddrinfo via the
 shim); dotted literals and @localhost@ pass through unchanged. -/
 def resolveHost (host : String) : IO (Except String String) := do
   if host == "localhost" then return .ok "127.0.0.1"
   if host == "127.0.0.1" then return .ok host
-  let buf := ByteArray.mk ((List.replicate 64 0).toArray)
+  let buf ← Ffi.freshBuffer 64
   let n ← Ffi.resolveHostRaw host buf 63
   if n == Ffi.fdError then
     return .error s!"cannot resolve host: {host}"
@@ -145,7 +143,7 @@ def openConnTo (host : String) (port : Nat) (timeoutMs : Nat) :
     if conn == Ffi.fdError then
       Ffi.closeFd fd
       return .error s!"connect to {host}:{port} failed"
-    return .ok ⟨fd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩
+    return .ok ⟨fd, ← IO.mkRef ByteArray.empty, ← Ffi.freshBuffer 65536⟩
 
 def openConn (port : Nat) (timeoutMs : Nat) : IO (Except String Conn) := do
   let fd ← Ffi.tcpSocket
@@ -155,15 +153,15 @@ def openConn (port : Nat) (timeoutMs : Nat) : IO (Except String Conn) := do
   if conn == Ffi.fdError then
     Ffi.closeFd fd
     return .error s!"connect to localhost:{port} failed"
-  return .ok ⟨fd, ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))⟩
+  return .ok ⟨fd, ← IO.mkRef ByteArray.empty, ← Ffi.freshBuffer 65536⟩
 
 def closeConn (c : Conn) : IO Unit := Ffi.closeFd c.fd
 
 private def fill (c : Conn) : IO Bool := do
-  let n ← Ffi.recvSome c.fd recvBuf 65536
+  let n ← Ffi.recvSome c.fd c.rbuf 65536
   if n == 0 || n == Ffi.fdError then
     return false
-  c.buf.modify (fun acc => acc.append (recvBuf.extract 0 n.toNat))
+  c.buf.modify (fun acc => acc.append (c.rbuf.extract 0 n.toNat))
   return true
 
 private partial def bytesEqAt (b : ByteArray) (pat : List UInt8) (j : Nat) (i : Nat) : Bool :=
@@ -216,7 +214,7 @@ def postKa (c : Conn) (port : Nat) (path : String) (body : String) :
   let req := "POST " ++ path ++ " HTTP/1.1\r\n"
     ++ "Host: localhost:" ++ toString port ++ "\r\n"
     ++ "Content-Type: application/json\r\n"
-    ++ "Content-Length: " ++ toString body.length ++ "\r\n"
+    ++ "Content-Length: " ++ toString body.utf8ByteSize ++ "\r\n"
     ++ "Accept: application/json\r\n\r\n"
     ++ body
   let sent ← Ffi.sendAll c.fd req.toUTF8 (req.toUTF8.size.toUInt64)
@@ -269,6 +267,7 @@ def postKa (c : Conn) (port : Nat) (path : String) (body : String) :
 
 /-- Read from the fd until EOF (Connection: close), accumulating. -/
 private def recvAll (fd : UInt64) : IO (Except String ByteArray) := do
+  let recvBuf ← Ffi.freshBuffer 65536
   let bufRef ← IO.mkRef (ByteArray.mk (#[] : Array UInt8))
   let mut loop := true
   while loop do
@@ -291,7 +290,7 @@ def requestTo (method : String) (host : String) (port : Nat) (path : String)
       let req := method ++ " " ++ path ++ " HTTP/1.1\r\n"
         ++ "Host: " ++ host ++ ":" ++ toString port ++ "\r\n"
         ++ "Content-Type: application/json\r\n"
-        ++ "Content-Length: " ++ toString body.length ++ "\r\n"
+        ++ "Content-Length: " ++ toString body.utf8ByteSize ++ "\r\n"
         ++ "Connection: close\r\n\r\n"
         ++ body
       let sent ← Ffi.sendAll c.fd req.toUTF8 (req.toUTF8.size.toUInt64)

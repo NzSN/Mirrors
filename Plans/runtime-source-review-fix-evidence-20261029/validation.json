@@ -1,0 +1,225 @@
+{
+  "schema": "mirrors.runtime-source-review-fixes/v1",
+  "timestampUtc": "2026-10-29T02:36:14.722343+00:00",
+  "baseCommit": "0cb5679a9e02d5e4a31c68b43b2b0f8b1abd02bb",
+  "workingTree": true,
+  "fixedFindings": 6,
+  "runtimeSourceDigest": "0ef865d748acef42955cae129690c18bf6287c416528359c80949cbf09c76ed1",
+  "reviewedFiles": {
+    "CHECKPOINTS.md": {
+      "sha256": "b5d3070dbded1e01db7d0d01daa6ac4b75dcf0c923395966cfdc762aed847ea7",
+      "bytes": 123418
+    },
+    "Docs/client-implementation-guide.md": {
+      "sha256": "f274a2da3c6541ecb5fa97e31f1d6d78fddc62c4ce80679dcf7e156bb6a83c80",
+      "bytes": 71081
+    },
+    "Docs/current-status.md": {
+      "sha256": "9341ee02c954fce4580e9a58ba3a94f00f40bb944b2995175ba3175cb0b4ac1c",
+      "bytes": 15061
+    },
+    "Docs/interface-reference.md": {
+      "sha256": "7ab7c8ec2182af5808410f22852899db158157416e8adcdfe64958fc56f4f783",
+      "bytes": 23529
+    },
+    "Ffi/Buffer.lean": {
+      "sha256": "ca00536dec6deed4fed9f9b48c262912ca6d4a3dbe5335163446cbd4a22a895e",
+      "bytes": 436
+    },
+    "Ffi/README.md": {
+      "sha256": "fc446ddfc909a246df2c34cfc700b5a4fe771b00a0b8162d14af2e79a64b435f",
+      "bytes": 2525
+    },
+    "Ffi/Socket.lean": {
+      "sha256": "ab70fe338c5f061b89bee679566e1a13768f9b7eb4ea947cd47d1e35523bae6a",
+      "bytes": 4307
+    },
+    "Ffi/Tls.lean": {
+      "sha256": "43141477ce5fdf35954cc157357ebd7c153a57fe2c752173f77944591e839ae9",
+      "bytes": 4066
+    },
+    "Ffi/tls_shim.c": {
+      "sha256": "cbded2a52c8b4c4a12f76b803cc2fe213cdde779050cd60f8a0362609091e9c9",
+      "bytes": 27657
+    },
+    "Plans/execution-decisions.md": {
+      "sha256": "1775d211dad3f72ef4bf9061c35334bfbbdd7f8ffcfbd4c9a7229281a6945802",
+      "bytes": 41024
+    },
+    "Shell/Apalache/Runner.lean": {
+      "sha256": "bc0acd228f35b04ace2976e4f3582876f9c6a8d04251d1e0949ebd4d30522297",
+      "bytes": 16971
+    },
+    "Shell/Apalache/TraceGeneration.lean": {
+      "sha256": "c8e5acbe7d2d38b4a99e444bf6f1333576a0add7429a3734c9b3ac476fd85d53",
+      "bytes": 5029
+    },
+    "Shell/Mirror/Session.lean": {
+      "sha256": "aa21a6b5cb5ce5ca5d8a972fec864965ff842c1cfa6ece672a418bb216ca7ab3",
+      "bytes": 46458
+    },
+    "Shell/Net/Http.lean": {
+      "sha256": "c35790c95833af36e9146a63eace8761e4aefb141630c48822b33e4ffa51cf55",
+      "bytes": 13508
+    },
+    "Shell/Transport/Tcp.lean": {
+      "sha256": "6c9ed8b96ac88b5ddce5fc45eb12782257719091a79e8d33f4c662e0c4feeac5",
+      "bytes": 13010
+    },
+    "Shell/Transport/Tls.lean": {
+      "sha256": "b245d7e67d7b07eabffd0629f0a395fe3046ea31d3e67d4c6d13318dd40bf8bf",
+      "bytes": 15861
+    },
+    "Shell/Transport/TraceDelivery.lean": {
+      "sha256": "3979a80353f9db330b05124f59da56cbffb8e2cbcfec579e8b9e7a308dc29a7f",
+      "bytes": 4691
+    },
+    "tools/ApalacheCliSpec.lean": {
+      "sha256": "26c5de9e99cfaea268099daa91b28ed2c9d2f7e971fe6b08befd1184dbbea8ea",
+      "bytes": 44567
+    },
+    "tools/ExplorerSpec.lean": {
+      "sha256": "70b85322041739b25a5af0dc216846498717516891973a37c13e12b15b54552d",
+      "bytes": 12451
+    },
+    "tools/JobStoreSpec.lean": {
+      "sha256": "911fec906d811910301e0282d20e436e1dcc3fda389904f9ba44469d95cf8d8d",
+      "bytes": 33955
+    },
+    "tools/TransportSpec.lean": {
+      "sha256": "bff54b9027eb3621786ae5b44a62f95ce6d4025a78e3a5c00c354970e18858ce",
+      "bytes": 38233
+    },
+    "tools/http_test_server.py": {
+      "sha256": "9645a855efeae0f93b38fd528d86c41c51ff0979548997a687f366ac5d878e07",
+      "bytes": 2300
+    }
+  },
+  "binaries": {
+    "mirror": {
+      "sha256": "1cbe3d57c8bb66ca98b61137e377e1c334ff02e74ca8e2316d24123b2898736f",
+      "bytes": 129463040
+    },
+    "jobstore_spec": {
+      "sha256": "7e2e65946d414797ae5611ab230b2a86e993f9702e5f7a18221fce76370975b2",
+      "bytes": 122725312
+    },
+    "apalache_cli_spec": {
+      "sha256": "55eecc9937e6c83fe37554f150bb3888fdac421efcd6fb4316621828e5d79b31",
+      "bytes": 121878688
+    },
+    "explorer_spec": {
+      "sha256": "50fc7cc91023c89fba2002c289d3c43f44e51f6ce21d4d7ddd0952d90cf07379",
+      "bytes": 121115840
+    },
+    "transport_spec": {
+      "sha256": "6542f81a7da0046998e5efc4c7f6977404863aceebc640e6675e11f96082ac36",
+      "bytes": 127278696
+    },
+    "trace_generation_transport_repro_spec": {
+      "sha256": "b702fb07067c18c91c71498f66df620341a569cce1cdc426d43161566303f15f",
+      "bytes": 122819568
+    }
+  },
+  "commands": [
+    {
+      "command": "TMPDIR=$REPO/tmp/runtime-source-review-fixes bash tools/run-local-no-model-check.sh",
+      "exitCode": 0,
+      "log": "local-no-model-final.log"
+    },
+    {
+      "command": "TMPDIR=$REPO/tmp/runtime-source-review-fixes bash tools/check-native-rebuild.sh",
+      "exitCode": 0,
+      "log": "native-rebuild.log"
+    },
+    {
+      "command": "jobstore_spec",
+      "exitCode": 0,
+      "log": "jobstore.log"
+    },
+    {
+      "command": "env -u APALACHE_MC apalache_cli_spec",
+      "exitCode": 0,
+      "log": "apalache-cli.log"
+    },
+    {
+      "command": "env -u APALACHE_MC explorer_spec",
+      "exitCode": 0,
+      "log": "explorer.log"
+    },
+    {
+      "command": "transport_spec",
+      "exitCode": 0,
+      "log": "transport-final.log"
+    },
+    {
+      "command": "original native reproduction probe suite",
+      "exitCode": 0,
+      "log": "original-reproductions-after-fix.log"
+    },
+    {
+      "command": "TLS type/instance axiom audit",
+      "exitCode": 0,
+      "log": "tls-type-axioms.log"
+    }
+  ],
+  "regressions": {
+    "synchronizedHttpRequests": 512,
+    "originalHttpReplayRequests": 960,
+    "httpWrongBodies": 0,
+    "unicodeHttpModes": [
+      "one-shot",
+      "keep-alive"
+    ],
+    "asyncTraceCases": [
+      "complete valid set",
+      "malformed JSON",
+      "invalid encoded value",
+      "missing file"
+    ],
+    "jobResultFinalBytes": [
+      65535,
+      65536,
+      70000
+    ],
+    "jobOutcomeKinds": [
+      "invalid validation",
+      "infrastructure error"
+    ],
+    "jobResultRepeatedReplies": 3,
+    "jobRunnerExecutions": 1,
+    "explorerDeliberateFailureExitCode": 1,
+    "tlsRejectedPinsWithSuccessfulFollowup": 12,
+    "tlsAlternatingDescriptorCounts": [
+      17,
+      17
+    ],
+    "tlsOriginalProbeDescriptorCounts": [
+      12,
+      12
+    ],
+    "newTlsTypeDefinitionsHaveAxioms": false
+  },
+  "initialFailures": [
+    {
+      "log": "local-no-model-initial.log",
+      "reason": "unchanged committed SANY pin disagreed with pre-existing ignored cache"
+    },
+    {
+      "log": "transport-initial.log",
+      "reason": "BIO ownership alone left enum-shaped handle references alive"
+    },
+    {
+      "log": "transport-followup.log",
+      "reason": "graceful rejection restored progress, but handles still leaked until opaque boxed types repaired native decrements"
+    }
+  ],
+  "sanyPinChanged": false,
+  "skipped": [
+    "four live-reference differential checks",
+    "live Apalache/TLC tiers",
+    "optional native integer-map gate without MIRRORCPP_PREFIX"
+  ],
+  "acceptance": "local non-model source/runtime and native-build dependency checks only",
+  "commitPushDeploymentPerformed": false
+}

@@ -45,6 +45,42 @@ def loadHcSrc : IO String := do
 
 private def spikeUnused : Nat := 0
 
+private def httpRegressions (fails : Failures) (port : Nat) : IO Unit := do
+  let body := "{\"value\":\"汉🙂\"}"
+  match ← Shell.Net.Http.post port "/rpc" body with
+  | .error e => check fails "http: Unicode one-shot" false e
+  | .ok response => check fails "http: Unicode one-shot" (response.body == body) response.body
+  match ← Shell.Net.Http.openConn port 3000 with
+  | .error e => check fails "http: Unicode keep-alive connect" false e
+  | .ok conn =>
+      try
+        for text in [body, "{\"value\":\"second\"}"] do
+          match ← Shell.Net.Http.postKa conn port "/rpc" text with
+          | .error e => check fails "http: Unicode keep-alive framing" false e
+          | .ok response =>
+              check fails "http: Unicode keep-alive framing" (response.body == text) response.body
+      finally Shell.Net.Http.closeConn conn
+  let tasks ← (List.range 8).mapM fun worker =>
+    IO.asTask (prio := Task.Priority.dedicated) do
+      let .ok conn ← Shell.Net.Http.openConn port 15000
+        | throw (IO.userError "parallel HTTP connection failed")
+      let text := String.ofList (List.replicate 24000 (Char.ofNat (65 + worker)))
+      let mut mismatches := 0
+      try
+        for iteration in [:64] do
+          let response ← if iteration % 2 == 0 then
+            Shell.Net.Http.post port "/race" text (timeoutMs := 15000)
+          else Shell.Net.Http.postKa conn port "/race" text
+          match response with
+          | .ok response => if response.body != text then mismatches := mismatches + 1
+          | .error _ => mismatches := mismatches + 1
+      finally Shell.Net.Http.closeConn conn
+      return mismatches
+  for task in tasks do
+    match ← IO.wait task with
+    | .ok count => check fails "http: concurrent response isolation" (count == 0) (toString count)
+    | .error e => check fails "http: concurrent response isolation" false (toString e)
+
 /-- HTTP spike against a python3 loopback peer: JSON echo with
 Content-Length, chunked decoding, recv-timeout on a silent endpoint,
 and connect refusal on a dead port. -/
@@ -71,6 +107,7 @@ def httpSpike (fails : Failures) : IO Unit := do
   match ← Shell.Net.Http.post port "/chunked" body (timeoutMs := 5000) with
   | .error e => check fails "http: chunked decode" false e
   | .ok resp => check fails "http: chunked decode" (resp.body == body) resp.body
+  httpRegressions fails port
   -- (d) silent peer: recv timeout (bound 300 ms, peer waits 2 s)
   match ← Shell.Net.Http.post port "/silent" body (timeoutMs := 300) with
   | .ok _ => check fails "http: recv timeout" false "unexpected success"
@@ -212,20 +249,29 @@ private def integrationExplore (fails : Failures) : IO Unit := do
           let _ ← expectMirror fails client "explore: all steps done"
             (fun m => match m with | .allStepsDone => true | _ => false)
 
-def main : IO Unit := do
+def main (args : List String) : IO UInt32 := do
   let fails ← IO.mkRef ([] : List String)
-  httpSpike fails
-  transcriptParity fails
-  let apalache? ← IO.getEnv "APALACHE_MC"
-  match apalache? with
-  | none => IO.println "explorer integration: skipped (APALACHE_MC not set)"
-  | some _ =>
-      integrationSession fails
-      integrationExplore fails
+  if args == ["--assertion-failure-control"] then
+    check fails "deliberate assertion failure control" false
+  else
+    httpSpike fails
+    transcriptParity fails
+    let control ← IO.Process.output {
+      cmd := (← IO.appPath).toString, args := #["--assertion-failure-control"] }
+    check fails "runner: failed assertion exits nonzero"
+      (control.exitCode == 1 && control.stdout.contains "deliberate assertion failure control")
+    let apalache? ← IO.getEnv "APALACHE_MC"
+    match apalache? with
+    | none => IO.println "explorer integration: skipped (APALACHE_MC not set)"
+    | some _ =>
+        integrationSession fails
+        integrationExplore fails
   let fs ← fails.get
   if fs.isEmpty then
     IO.println "EXPLORER SPEC: all green"
+    return 0
   else
     IO.println s!"EXPLORER SPEC: {fs.length} failures"
     for f in fs do
       IO.println s!"  FAIL {f}"
+    return 1

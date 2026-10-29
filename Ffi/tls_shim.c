@@ -12,7 +12,9 @@
  * objects whose finalizer frees them (the only GC finalizer backstop in
  * the code base, per design 9.7). dsh_tls_close only performs a
  * best-effort close_notify shutdown; memory is released by the
- * finalizer, so close-then-GC is safe.
+ * finalizer, so close-then-GC is safe. A successfully connected client SSL
+ * owns its socket BIO; server SSLs and failed client handshakes leave socket
+ * ownership with the Lean caller.
  *
  * Errors: NULL / -1 returns; human-readable reason via dsh_tls_errmsg.
  */
@@ -491,6 +493,12 @@ LEAN_EXPORT lean_object *dsh_tls_connect(lean_object *ctx, lean_object *host,
     }
     TLS_LOG(1, "connect: ok host=%s %s %s ssl=%p", lean_string_cstr(host),
             SSL_get_version(s), SSL_get_cipher(s), (void *)s);
+    /* Only a successful client handshake transfers socket ownership. The
+     * caller still closes every failed handshake, while accepted server
+     * sockets remain owned by their accept loop. SSL_set_fd uses one shared
+     * socket BIO for reading and writing; SSL_free now closes it exactly once,
+     * including when Lean rejects a post-handshake fingerprint pin. */
+    BIO_set_close(SSL_get_rbio(s), BIO_CLOSE);
     return lean_alloc_external(ssl_class(), s);
 }
 

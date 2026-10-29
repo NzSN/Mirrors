@@ -383,13 +383,22 @@ and `job_result` (terminal outcome, idempotent):
 Semantics (machine-proven, §6.4): terminal phases are absorbing;
 `unknown` is answered exactly for never-submitted or evicted ids;
 cancellation is cooperative and kills the apalache child; a completed
-validate job's outcome payload **equals** the synchronous
-`register_validate` reply for the same config. Trace-generation job results
+validate job's in-limit outcome payload **equals** the synchronous
+`register_validate` reply for the same config. Validation and infrastructure
+outcomes whose complete compact `job_result` exceeds 65,535 UTF-8 bytes are
+delivered as a bounded `{"error":"JOB_RESULT_TOO_LARGE: …"}` result for the
+same job ID. The stored terminal state remains unchanged and the connection
+stays open. Trace-generation job results
 are network results and therefore require inline delivery. If their compact
 `job_result` would exceed 65,535 UTF-8 bytes, the same job ID instead has the
 terminal `{"error":"TRACE_RESULT_TOO_LARGE: …"}` outcome. Repeated
 `query_job` or `await_job` operations return that same deterministic terminal
 outcome and do not rerun Apalache.
+
+Every generated trace file must be readable and decode successfully before
+the owned run directory is removed. A malformed or missing file fails the
+whole operation, including async jobs; it never produces a successful partial
+trace list.
 
 ## 5. Error replies
 

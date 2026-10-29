@@ -1,5 +1,24 @@
 # Current framework status and navigation
 
+## October 29 source-review bug fixes
+
+Working-tree fixes at base `0cb5679` resolve six reproduced runtime findings:
+shared HTTP receive storage, partial async trace decoding, Explorer's successful
+exit after failed assertions, oversized async diagnostics, Unicode HTTP lengths
+and rejected-pin socket retention. TLS handles now retain boxed ownership
+through native FFI wrappers so their finalizers run. The affected
+[wire contract](interface-reference.md) and [native boundary](../Ffi/README.md)
+describe the resulting behavior.
+
+The complete local non-model aggregate and isolated native rebuild check pass.
+The original probes pass after restoring the exact already-pinned SANY bytes
+in the ignored cache while preserving the previous artifact. No pin changed.
+[The evidence record](../Plans/runtime-source-review-fix-evidence-20261029/README.md)
+retains initial failures, final passes, identities and skipped tiers. These local
+checks do not renew live-model, native M4 or framework/release qualification.
+The user subsequently authorized commit and push of these fixes and their
+retained evidence; the newest checkpoint records that branch publication.
+
 ## October 29 publication boundary
 
 The user authorized branch commit/push of the runtime review and SANY re-pin.

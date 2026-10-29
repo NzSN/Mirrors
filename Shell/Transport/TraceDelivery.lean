@@ -2,7 +2,7 @@ import Codec.Json
 import Shell.Transport.Stdio
 
 /-!
-# Shell.Transport.TraceDelivery — exact-byte trace-result delivery planning
+# Shell.Transport.TraceDelivery — exact-byte result delivery planning
 
 One trace-generation result has up to three wire representations: the full
 inline `gen_traces_done`, the same message with `itfTraces: []` (paths only),
@@ -19,6 +19,8 @@ size, character count, or a payload fragment.
 
 The v1 protocol line limit is unchanged at @maxProtocolLineBytes@; a future
 chunking protocol would replace the failure arm under a new wire contract.
+Async validation and infrastructure outcomes use the same exact-envelope
+check and retain their encoding whenever the complete result fits.
 -/
 
 namespace Shell.Transport.TraceDelivery
@@ -79,6 +81,17 @@ def planTraceJobResult (jobId : String) (result : Codec.TraceGenResult) : Plan :
   else
     .failure (Codec.MirrorMessage.jobResult jobId
       (.infraError (tooLargeError (encodedBytes full))))
+
+/-- Preserve every in-limit outcome, and project oversized validation or
+infrastructure diagnostics to one deterministic, bounded terminal error. -/
+def planJobResult (jobId : String) (outcome : Codec.JobOutcome) : Plan :=
+  match outcome with
+  | .genTraces result => planTraceJobResult jobId result
+  | _ =>
+      let full := Codec.MirrorMessage.jobResult jobId outcome
+      if fits full then .full full
+      else .failure (Codec.MirrorMessage.jobResult jobId (.infraError
+        s!"JOB_RESULT_TOO_LARGE: job result needs {encodedBytes full} UTF-8 bytes (limit {maxProtocolLineBytes})"))
 
 /-- The message a plan selects. -/
 def Plan.message : Plan → Codec.MirrorMessage

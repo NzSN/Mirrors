@@ -1,0 +1,80 @@
+{
+  "sourceCommit": "0cb5679a9e02d5e4a31c68b43b2b0f8b1abd02bb",
+  "scope": [
+    "async job store and session driver",
+    "Apalache result handling",
+    "HTTP transport",
+    "TCP and TLS resource ownership",
+    "focused test entrypoints"
+  ],
+  "sourceChanges": false,
+  "modelCheckerExecution": false,
+  "findings": [
+    {
+      "priority": "P1",
+      "file": "Shell/Net/Http.lean",
+      "line": 162,
+      "problem": "Concurrent HTTP connections mutate one global receive array",
+      "reproduced": "20 wrong bodies, zero transport errors, in 960 requests"
+    },
+    {
+      "priority": "P1",
+      "file": "Shell/Apalache/Runner.lean",
+      "line": 91,
+      "problem": "Async trace decoding silently discards invalid files",
+      "reproduced": "One malformed ITF file returned successful genTraces with one path and zero decoded traces"
+    },
+    {
+      "priority": "P1",
+      "file": "tools/ExplorerSpec.lean",
+      "line": 225,
+      "problem": "Failed assertions do not produce nonzero exit status",
+      "reproduced": "Restricted socket run printed three failures and exited zero"
+    },
+    {
+      "priority": "P2",
+      "file": "Shell/Mirror/Session.lean",
+      "line": 124,
+      "problem": "Non-trace async outcomes lack wire-size projection",
+      "reproduced": "70000 byte invalid diagnostic caused framing exception, only job_accepted delivered, session cleanup evicted job"
+    },
+    {
+      "priority": "P2",
+      "file": "Shell/Net/Http.lean",
+      "line": 219,
+      "problem": "Content-Length counts characters instead of UTF-8 bytes in postKa and requestTo",
+      "reproduced": "13 character / 15 byte JSON body declared 13; peer received invalid JSON in both request modes"
+    },
+    {
+      "priority": "P2",
+      "file": "Shell/Transport/Tls.lean",
+      "line": 364,
+      "problem": "Post-handshake pin rejection loses socket ownership",
+      "reproduced": "Twelve rejected pins grew open descriptors from twelve to twenty-four"
+    }
+  ],
+  "validation": {
+    "lake build mirror jobstore_spec": "passed (514 jobs)",
+    "lake build transport_spec apalache_cli_spec explorer_spec": "passed (503 jobs)",
+    "jobstore_spec": "JOBSTORE PARITY GREEN",
+    "apalache_cli_spec": "APALACHE CLI GREEN; live integration skipped",
+    "explorer_spec": "all green with loopback access; live integration skipped; separate negative exit-status control retained",
+    "transport_spec": "all green",
+    "fullAggregate": "not run"
+  },
+  "logs": [
+    "reproductions.log",
+    "jobstore.log",
+    "apalache-cli.log",
+    "explorer.log",
+    "explorer-loopback.log",
+    "transport.log",
+    "focused-build.log"
+  ],
+  "reproductionSources": [
+    "ReviewProbe.lean",
+    "fake-apalache.py",
+    "http-fixture.py",
+    "run-network-probes.py"
+  ]
+}

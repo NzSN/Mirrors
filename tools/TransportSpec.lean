@@ -672,6 +672,28 @@ def mainTests : IO UInt32 := do
   let head62 : String := (fp.take 62).toString
   let wrongFp : String := head62 ++ (if (fp.take 2).toString == "00" then "11" else "00")
   expectErr f "mtls wrong fingerprint rejected" (← connectTlsPinned clientCtx "localhost" tp wrongFp)
+  -- Alternating rejection and success catches leaks and any late finalizer
+  -- that closes a descriptor reused by the next client. Server-side socket
+  -- ownership remains in the accept loop.
+  if ← ("/proc/self/fd" : System.FilePath).pathExists then
+    let before := (← ("/proc/self/fd" : System.FilePath).readDir).size
+    for _ in [:12] do
+      let rejected ← connectTlsPinned clientCtx "localhost" tp wrongFp
+      check f "repeated TLS pin rejection reaches fingerprint check"
+        (match rejected with
+        | .error error => error.startsWith "certificate fingerprint mismatch"
+        | .ok _ => false)
+      match ← connectTlsPinned clientCtx "localhost" tp fp with
+      | .error error =>
+          check f s!"TLS connection after pin rejection ({error})" false
+          break
+      | .ok transport =>
+          transport.send "after-rejected-pin"
+          check f "TLS connection after pin rejection"
+            ((← transport.recv) == some "echo:after-rejected-pin")
+    let after := (← ("/proc/self/fd" : System.FilePath).readDir).size
+    check f s!"TLS pin rejection and success release descriptors ({before} -> {after})"
+      (after == before)
 
   -- t26: client trusting the WRONG CA cannot handshake with the good
   -- server (complement of the rogue-client test)

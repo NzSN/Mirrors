@@ -10,6 +10,19 @@ C shims for capabilities with no Lean ecosystem package (design §5.4):
 Everything under `Ffi/` is trusted, not proved; keep it small, boring,
 and line-auditable (§5.4, §9.1).
 
+Native output buffers come from `Ffi.freshBuffer`; closed pure array expressions
+can be shared by Lean's native compiler and must not be used as mutable scratch
+across concurrent calls. HTTP and TCP retain separate receive storage per
+connection; TLS allocates fresh receive storage for each receive operation.
+
+After a successful client TLS handshake, the SSL object's socket BIO owns the
+socket and closes it when the SSL external is released, including pin rejection.
+TLS handles use opaque boxed types so native compilation retains reference
+counting through higher-order FFI wrappers and actually runs their finalizers.
+Failed client handshakes and accepted server sockets remain caller-owned, so
+the Lean failure path or server accept loop closes them. `tlsClose` still only
+sends best-effort `close_notify`; it does not free the SSL external.
+
 ## Building and checking native changes
 
 Run `lake build` after editing a shim. Lake tracks C source/header contents and

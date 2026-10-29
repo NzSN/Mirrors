@@ -241,9 +241,12 @@ client → cancel_job {jobId}              → job_result | job_status
   C6).
 - **C20.** A completed validate job's `outcome.validate` payload is
   **identical** to what the synchronous `register_validate` flow
-  would have answered for the same config (machine-proven congruence,
+  would have answered for the same config when the complete result fits
+  the wire limit (machine-proven congruence,
   `async-enablement-design.md` §6.4) — clients **MAY** share result
-  handling between sync and async paths.
+  handling between sync and async paths. Oversized validation and infrastructure
+  diagnostics produce a bounded `JOB_RESULT_TOO_LARGE` terminal error for the
+  same ID, preserving the connection and idempotent query/await behavior.
 - **C21.** `job_status.phase` `"unknown"` is answered exactly for
   never-submitted or evicted ids. Clients **MUST NOT** retry-loop on
   `unknown` expecting the job to appear.

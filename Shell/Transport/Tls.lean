@@ -36,20 +36,8 @@ structure TlsFiles where
   keyFile : System.FilePath
   caFile : System.FilePath
 
-private def freshZeroedBuffer (size : Nat) : IO ByteArray := do
-  -- Do not construct FFI output buffers from a closed pure expression such as
-  -- `ByteArray.mk ((List.replicate size 0).toArray)`. Native compilation may
-  -- share that immutable value across calls, while the C shim necessarily
-  -- writes through `lean_sarray_cptr`; a later fingerprint call can then read
-  -- bytes left by an earlier call. Building from a fresh capacity allocation
-  -- gives each invocation uniquely owned mutable storage at the FFI boundary.
-  let mut bytes := ByteArray.emptyWithCapacity size
-  for _ in [0:size] do
-    bytes := bytes.push 0
-  return bytes
-
 private def fpOfRaw (run : ByteArray → UInt64 → BaseIO UInt64) : IO (Option String) := do
-  let buf ← freshZeroedBuffer 65
+  let buf ← Ffi.freshBuffer 65
   let n ← liftM (run buf 64)
   if n == Ffi.tlsError then return none
   return some (String.fromUTF8? (buf.extract 0 64) |>.getD "")
@@ -154,9 +142,9 @@ private def validatePartialLine (b : ByteArray) : IO Unit := do
 /-- Line-framed @Transport@ over an established TLS session (the
 Haskell recv-line-over-decrypted-stream loop). -/
 def tlsTransport (t : TlsSession) : Transport :=
-  let recvBuf := ByteArray.mk ((List.replicate 65536 0).toArray)
   { scope := .remote
     recv := do
+      let recvBuf ← Ffi.freshBuffer 65536
       let mut acc ← t.buf.get
       validatePartialLine acc
       let mut found := true
@@ -313,7 +301,8 @@ partial def serveTlsConcurrentOn (host : String) (port : Nat) (files : TlsFiles)
     (fun _fingerprint transport => session transport) workers
 
 /-- Shared connect: resolve, TCP connect, TLS 1.3 handshake with CA and
-SAN validation. Returns the session's SSL object on success. -/
+SAN validation. On success the SSL object owns the connected socket and its
+finalizer closes it; failure paths retain and close the caller-owned fd. -/
 private def tlsHandshake (ctx : Ffi.TlsCtx) (host : String) (port : Nat) :
     IO (Except String Ffi.TlsSsl) := do
   let ip ← match ← Shell.Net.Http.resolveHost host with
@@ -359,9 +348,12 @@ def connectTlsPinned (ctx : Ffi.TlsCtx) (host : String) (port : Nat)
   | .error e => return .error e
   | .ok ssl =>
       match ← peerCertFingerprintSHA256 ssl with
-      | none => return .error "peer presented no certificate"
+      | none =>
+          try let _ ← Ffi.tlsClose ssl catch _ => pure ()
+          return .error "peer presented no certificate"
       | some fp =>
-          if fp.toLower != expectedFp.toLower then
+          if fp.toLower != expectedFp.toLower then do
+            try let _ ← Ffi.tlsClose ssl catch _ => pure ()
             return .error
               s!"certificate fingerprint mismatch for {host}:{port} (want {expectedFp}, got {fp})"
           else

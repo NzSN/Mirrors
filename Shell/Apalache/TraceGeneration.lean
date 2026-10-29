@@ -62,8 +62,10 @@ def withTraceGenerationCleanup (operation : IO (Except String α))
       else
         return .error ("TRACE_GENERATION_CLEANUP_FAILED: " ++ cleanupEvidence)
 
-private def decodeTraceValues (paths : List String) :
-    IO (Except String (List Value)) := do
+/-- Read a complete generated result before owned-file cleanup. Every listed
+file must decode; a corrupt file cannot become a successful partial result. -/
+def readGeneratedTraceResult (paths : List String) :
+    IO (Except String Codec.TraceGenResult) := do
   try
     let mut values := []
     for path in paths do
@@ -74,7 +76,7 @@ private def decodeTraceValues (paths : List String) :
           match Codec.decodeValue json with
           | .error _ => return .error "generated ITF trace has an invalid value"
           | .ok value => values := values ++ [value]
-    return .ok values
+    return .ok { itfTracePaths := paths, itfTraces := values }
   catch _ =>
     return .error "unable to read generated ITF trace"
 
@@ -105,9 +107,9 @@ def prepareGeneratedTraceDelivery (runDir outDir : String)
           else
             pure (paths, false)
       | none => pure (paths, false)
-    match ← decodeTraceValues finalPaths with
+    match ← readGeneratedTraceResult finalPaths with
     | .error error => return .error error
-    | .ok contents =>
+    | .ok result =>
         let durable ← if copied then
           let owned ← IO.FS.realPath runDir
           let destination ← IO.FS.realPath (dest.getD "")
@@ -115,7 +117,7 @@ def prepareGeneratedTraceDelivery (runDir outDir : String)
         else
           pure false
         return .ok {
-          result := { itfTracePaths := finalPaths, itfTraces := contents }
+          result
           pathsDurable := durable
         }
   catch _ =>

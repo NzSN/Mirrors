@@ -1,0 +1,17 @@
+probe traces exit=0
+Except.ok (Codec.JobOutcome.infraError "generated ITF trace is not valid JSON")
+probe oversize exit=0
+messages sent=2 (expected acceptance plus terminal result)
+job phase after failed delivery=JobPhase.jobUnknown
+probe unicode exit=0
+body chars=13 bytes=15
+Except.ok { status := 200,
+  body := "{\"contentLength\": 15, \"receivedHex\": \"7b2276616c7565223a22e6b189227d\", \"validJson\": true}" }
+Except.ok { status := 200,
+  body := "{\"contentLength\": 15, \"receivedHex\": \"7b2276616c7565223a22e6b189227d\", \"validJson\": true}" }
+probe race exit=0
+HTTP concurrent wrong-body=0 errors=0 total=960
+probe tls-leak exit=0
+FDs before=12 after=12 leaked=0
+warning: client certificate /tmp/mirrors-six-fixes-20261029/pki/client.crt expires in 1 day(s)
+

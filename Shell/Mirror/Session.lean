@@ -117,16 +117,11 @@ private def sendTracePlan (t : Shell.Transport.Transport)
       s!"{Shell.Transport.TraceDelivery.traceResultTooLarge}: selected delivery exceeds one v1 protocol line")
   sendMirror t message
 
-/-- Route one terminal job outcome to the wire. Trace-generation results pass
-through the exact-byte delivery planner (a job result has no durable-path form:
-network peers deliver inline only); every other outcome keeps the historical
-encoding. -/
+/-- Every terminal result uses exact-byte delivery planning. Oversized
+diagnostics must not turn a completed job into a broken owner connection. -/
 private def sendJobResult (t : Shell.Transport.Transport) (jobId : String)
     (outcome : Codec.JobOutcome) : IO Unit :=
-  match outcome with
-  | .genTraces result =>
-      sendTracePlan t (Shell.Transport.TraceDelivery.planTraceJobResult jobId result)
-  | _ => sendMirror t (Codec.MirrorMessage.jobResult jobId outcome)
+  sendTracePlan t (Shell.Transport.TraceDelivery.planJobResult jobId outcome)
 
 private def sendSpecValidatedWithInterface (t : Shell.Transport.Transport)
     (reply : Option Codec.ModelInterfaceDistributionJson.ReplyV1) : IO Unit := do

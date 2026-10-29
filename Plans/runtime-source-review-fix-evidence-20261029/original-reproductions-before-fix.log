@@ -1,0 +1,29 @@
+probe traces exit=0
+BUG: successful genTraces paths=1 decoded=0
+probe oversize exit=0
+oversize result broke session: protocol line exceeds 65535 UTF-8 bytes
+messages sent=1 (expected acceptance plus terminal result)
+job phase after failed delivery=JobPhase.jobUnknown
+probe unicode exit=0
+body chars=13 bytes=15
+Except.ok { status := 200,
+  body := "{\"contentLength\": 13, \"receivedHex\": \"7b2276616c7565223a22e6b189\", \"validJson\": false}" }
+Except.ok { status := 200,
+  body := "{\"contentLength\": 13, \"receivedHex\": \"7b2276616c7565223a22e6b189\", \"validJson\": false}" }
+probe race exit=0
+worker=0 received prefix=HHHHHHHHHHHHHHHHHHHH bytes=24000
+worker=2 received prefix=FFFFFFFFFFFFFFFFFFFF bytes=24000
+worker=3 received prefix=JJJJJJJJJJJJJJJJJJJJ bytes=24000
+worker=4 received prefix=EEEEEEEEEEEEEEEEEEEE bytes=24000
+worker=5 received prefix=EEEEEEEEEEEEEEEEEEEE bytes=24000
+worker=6 received prefix=KKKKKKKKKKKKKKKKKKKK bytes=24000
+worker=7 received prefix=JJJJJJJJJJJJJJJJJJJJ bytes=24000
+worker=8 received prefix=IIIIIIIIIIIIIIIIIIII bytes=24000
+worker=9 received prefix=BBBBBBBBBBBBBBBBBBBB bytes=24000
+worker=10 received prefix=GGGGGGGGGGGGGGGGGGGG bytes=24000
+worker=11 received prefix=DDDDDDDDDDDDDDDDDDDD bytes=24000
+HTTP concurrent wrong-body=20 errors=0 total=960
+probe tls-leak exit=0
+FDs before=12 after=24 leaked=12
+warning: client certificate /tmp/mirrors-source-review-20261029/pki/client.crt expires in 1 day(s)
+
