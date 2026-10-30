@@ -31,7 +31,7 @@ HEX_DIGEST = re.compile(r"^[0-9a-f]{64}$")
 
 def pins() -> tuple[dict, dict]:
     try:
-        lock = json.loads(LOCK.read_text())
+        lock = json.loads(LOCK.read_text(encoding="utf-8"))
         return lock["tools"]["apalache"], lock["tools"]["sany"]
     except (OSError, json.JSONDecodeError, KeyError, TypeError) as error:
         raise SystemExit(f"toolchain lock is unreadable: {error}") from error
@@ -295,7 +295,7 @@ def extract_apalache(pin: dict, archive: Path) -> None:
 
 def runtime_pin() -> dict:
     try:
-        runtime = json.loads(LOCK.read_text())["tools"]["runtime"]
+        runtime = json.loads(LOCK.read_text(encoding="utf-8"))["tools"]["runtime"]
     except (OSError, json.JSONDecodeError, KeyError, TypeError) as error:
         raise SystemExit(f"toolchain lock runtime is unreadable: {error}") from error
     if not isinstance(runtime, dict) or any(

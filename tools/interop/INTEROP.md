@@ -1,5 +1,18 @@
 # Client interop validation (Phase 6)
 
+October 29 continuation: the current source-built ECMA selection is `f943588`,
+with pinned Node 24.15.0/TypeScript 5.9.3. The gate accepts an explicitly selected
+endpoint through `MIRRORS_REMOTE_HOST`/`MIRRORS_REMOTE_PORT`; every native/ECMA
+adapter receives the same admitted selection. For a separately owned Windows
+host, supply `MIRRORS_REMOTE_INTEROP_ROOT` and the matching `interopFixtures`
+hashes in its fresh deployment observation. This avoids assuming that the
+coordinator's `/mnt/c` is the selected remote host. See
+[endpoint and evidence admission](../evidence/README.md#explicit-remote-endpoint-selection).
+The [completion campaign](../../Plans/completion-evidence-20261029/README.md)
+records the fresh 22-row pass and cleanup; it does not renew the separate full
+framework or Ubuntu 24.04 distribution qualification.
+
+
 Documentation synchronized 2026-10-07. The [current named profile](../../Plans/completed/q3-published-roadmap-2026-10-07.md)
 passed all 22 declared remote rows at its frozen compatibility pins. Generated
 client source/transport gates, DPM profiles and legacy all-transport acceptance

@@ -1,6 +1,6 @@
 """Pinned standalone-SANY adapter; it receives no Mirrors expectations."""
 from __future__ import annotations
-import hashlib, json
+import hashlib, json, os
 from pathlib import Path
 from typing import Mapping, Any
 from capture import AdapterFixture, MaterializedFixture, verify_materialized
@@ -10,7 +10,7 @@ def observe(*, fixture: AdapterFixture, materialized: MaterializedFixture, confi
     jar = Path(str(config["sany_jar"])).resolve(); classes = Path(str(config["bridge_classes"])).resolve(); java = str(config.get("java", "java"))
     scratch = materialized.input_dir / ".sany-artifacts"
     scratch.mkdir(exist_ok=False)
-    argv = [java, "-XX:-UsePerfData", "-Xmx1g", "-Djava.io.tmpdir=" + str(scratch), "-cp", f"{classes}:{jar}", "SanyBridge", materialized.root_path.name]
+    argv = [java, "-XX:-UsePerfData", "-Xmx1g", "-Djava.io.tmpdir=" + str(scratch), "-cp", os.pathsep.join([str(classes), str(jar)]), "SanyBridge", materialized.root_path.name]
     result = run_process(ProcessRequest(argv, materialized.input_dir, artifact_dir=scratch), limits)
     raw = []
     artifact_dir.mkdir(parents=True, exist_ok=True)

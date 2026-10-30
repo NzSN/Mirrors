@@ -30,7 +30,7 @@ class ProcessTests(unittest.TestCase):
             result = run_process(self.request(Path(temporary), "import sys; print('rejected'); sys.exit(7)"))
         self.assertEqual(result.status, ExecutionStatus.COMPLETED)
         self.assertEqual(result.returncode, 7)
-        self.assertEqual(result.stdout, b"rejected\n")
+        self.assertEqual(result.stdout, b"rejected" + os.linesep.encode("ascii"))
 
     def test_missing_executable_is_unavailable(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -69,7 +69,8 @@ class ProcessTests(unittest.TestCase):
             captured.update(keywords)
             return FakeProcess()
 
-        with tempfile.TemporaryDirectory() as temporary, patch("process._terminate_process_group") as terminate:
+        with tempfile.TemporaryDirectory() as temporary, patch("process._terminate_process_group") as terminate, \
+                patch("windows_job.WindowsJob") as windows_job:
             result = run_process(
                 ProcessRequest(["oracle", "--frontend"], Path(temporary), {"JAVA_HOME": "/pinned/java"}),
                 popen_factory=fake_popen,
@@ -78,6 +79,7 @@ class ProcessTests(unittest.TestCase):
         self.assertEqual(result.stdout, b"stdout")
         self.assertEqual(result.stderr, b"stderr")
         terminate.assert_called_once()
+        if os.name == 'nt': windows_job.return_value.assign_and_resume.assert_called_once()
         self.assertFalse(captured["shell"])
         environment = captured["env"]
         self.assertEqual(environment["JAVA_HOME"], "/pinned/java")  # type: ignore[index]

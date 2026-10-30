@@ -73,7 +73,7 @@ def _failed_observation(
     *, fixture: capture.AdapterFixture, engine: str, input_digest: str, message: str, config: Mapping[str, object], artifact_dir: Path, output_dir: Path
 ) -> dict[str, Any]:
     error_file = artifact_dir / "runner-error.txt"
-    error_file.write_text(message + "\n", encoding="utf-8")
+    error_file.write_text(message + "\n", encoding="utf-8", newline="\n")
     observation = _unavailable_observation(
         fixture=fixture, engine=engine, input_digest=input_digest, message=message, config=config
     )
@@ -146,7 +146,7 @@ def run_corpus(
                             output_dir=output_dir,
                         )
             observation_path = artifact_dir.parent / "observation.json"
-            observation_path.write_text(corpus.canonical_json(observation) + "\n", encoding="utf-8")
+            observation_path.write_text(corpus.canonical_json(observation) + "\n", encoding="utf-8", newline="\n")
             observations.append(observation)
     return tuple(observations)
 
@@ -171,9 +171,9 @@ def main(argv: list[str] | None = None) -> int:
     try:
         captured = corpus.load_corpus(root)
         registry_path = root / "test/fixtures/tla-frontend/differential/differences.json"
-        registry = json.loads(registry_path.read_text())
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
         lock_path = Path(__file__).with_name("toolchain.lock.json")
-        lock = json.loads(lock_path.read_text())
+        lock = json.loads(lock_path.read_text(encoding="utf-8"))
         lock_digest = hashlib.sha256(lock_path.read_bytes()).hexdigest()
         corpus.validate_contract("lock", lock)
         limits = ProcessLimits(timeout_seconds=args.timeout)
@@ -184,7 +184,8 @@ def main(argv: list[str] | None = None) -> int:
     from report import write_report
     from process import ProcessRequest, run_process
     import acquire
-    cli, driver = root / ".lake/build/bin/tla_frontend", root / ".lake/build/bin/tla_differential_driver"
+    suffix = '.exe' if __import__('os').name == 'nt' else ''
+    cli, driver = root / (".lake/build/bin/tla_frontend" + suffix), root / (".lake/build/bin/tla_differential_driver" + suffix)
     digest = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
     configs = {}
     adapters = {}
@@ -234,7 +235,7 @@ def main(argv: list[str] | None = None) -> int:
                 "text": source.normalized_bytes.decode("utf-8")} for source in fixture.supplied_sources]}
             for fixture in captured.fixtures]}
     capture_path = output / "captured-inputs.json"
-    capture_path.write_text(corpus.canonical_json(captured_inputs) + "\n")
+    capture_path.write_text(corpus.canonical_json(captured_inputs) + "\n", encoding="utf-8", newline="\n")
     runtime_observation = None
     if "sany" in configs:
         runtime_result = run_process(ProcessRequest([configs["sany"]["java"], "-XX:-UsePerfData", "-version"], root), limits)

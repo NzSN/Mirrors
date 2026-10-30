@@ -20,6 +20,9 @@ run "async emitter" python3 tools/check-async-emitter.py
 run "CMake consumers" python3 tools/check-cmake-consumer.py
 if [[ -n "${MIRRORCPP_PREFIX:-}" ]]; then
   run "native integer maps" python3 tools/check-cpp-integer-maps.py --prefix "$MIRRORCPP_PREFIX"
+  run "controlled model native preparation" "${MIRRORS_DPM_PYTHON:-python3}" -I -S -B \
+    tools/check-controlled-model.py --prefix "$MIRRORCPP_PREFIX" \
+    --out "$(mktemp -d "${TMPDIR:-/tmp}/mirrors-controlled-gate.XXXXXX")/results"
 else
   echo "SKIP native integer maps: set MIRRORCPP_PREFIX to the prepared MirrorCPP package"
 fi
@@ -50,6 +53,7 @@ run "DPM launcher identities" "${MIRRORS_DPM_PYTHON:-python3}" -I -S -B tools/de
 run "DPM build dependencies" python3 tools/check-dpm-build.py
 run "DPM pure policy" .lake/build/bin/dpm_spec
 run "DPM typed evidence" .lake/build/bin/dpm_evidence_spec
+run "DPM controlled witness admission" .lake/build/bin/dpm_sync_spec
 run "DPM kit and timeline" python3 -m unittest discover -s tools/deterministic-scheduling/tests
 run "model-interface reviewed workflows" .lake/build/bin/model_interface_workflow_spec
 run "model-interface workflow CLI" .lake/build/bin/model_interface_workflow_cli_spec

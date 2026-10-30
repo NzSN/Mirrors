@@ -1,5 +1,41 @@
 # Current framework status and navigation
 
+## October 30 completion design and execution plan
+
+The [completion, qualification, and release design](completion-qualification-release-design.md)
+and [fine-grained execution plan](../Plans/completion-qualification-release-plan-2026-10-30.md)
+now cover all remaining stages: final source/evidence freeze, audited branch
+delivery, clean tagged Linux/Windows packaging, native M4, exact-candidate
+M5/D/Q and Windows acceptance, release admission, publication, deployment,
+rollback, reboot, retention, and the two-release compatibility lifecycle.
+They define identity invalidation, explicit approval boundaries and exit gates.
+This planning addition does not change the candidate or grant any new
+qualification, publication or deployment result.
+
+## October 29 completion campaign in progress
+
+The [execution plan](../Plans/completion-execution-plan-2026-10-29.md) is being
+performed from published `7e9a27d`. The source prepares `v0.2.0-rc.1`; nothing
+has been published or deployed. The [new evidence record](../Plans/completion-evidence-20261029/README.md)
+records completed finite F5 remote model comparison/reduction, independent
+profile-6 T/U acceptance, source-hidden installed C++/ECMA/Rust DPM acceptance,
+the RC non-model/native rebuild gates, eight native Windows runtime suites and
+the selected MirrorGate complete required gate. A new TLS long-poll timeout fix
+is included. Raw F5 SDK receipt semantics remain unchanged.
+
+The current five-client mTLS matrix passes all 22 verdict/pin/protocol rows.
+The installer now derives observed platform/package versions from actual inputs,
+and its complete non-model aggregate passes after that correction. The Ubuntu 24.04 reference
+distribution's full M5/D/Q renewal needs a matching selected environment; this
+coordinator is Ubuntu 26.04. Native M4 needs the requested native runner and
+delegated cgroup-v2 parent. The compatibility decision retains stdio
+`register_error` and the Haskell oracle with measured retirement prerequisites.
+Windows RC packaging is staged; Linux packaging and the final release handoff
+are prepared downstream of the validated source snapshot. The separate fetched
+Apalache carrier was refused on its archive hash; its contained JAR matches the
+observed selected runtime, and the original archive pin remains unchanged. Historical records below keep their original scope.
+
+
 ## October 29 source-review bug fixes
 
 Working-tree fixes at base `0cb5679` resolve six reproduced runtime findings:

@@ -1,6 +1,8 @@
 import json
 import fcntl
 import os
+import shutil
+import tarfile
 import tempfile
 import unittest
 from pathlib import Path
@@ -27,6 +29,96 @@ def fake_verify_installation(path: Path, *_args):
 
 
 class InstallTransactionTests(unittest.TestCase):
+    def test_materialization_retains_actual_package_and_host_facts(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            cache = root / "cache"; cache.mkdir()
+            inputs = root / "inputs"; inputs.mkdir()
+            artifacts = []
+
+            def record(artifact_id: str, path: Path) -> None:
+                size, digest = installer.sha256_file(path)
+                artifacts.append({"artifactId": artifact_id, "path": path.name,
+                                  "bytes": size, "sha256": digest})
+
+            def archive(artifact_id: str, prefix: str, files: dict[str, str]) -> Path:
+                source = inputs / artifact_id; source.mkdir()
+                for name, content in files.items():
+                    target = source / name; target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_text(content)
+                target = cache / (artifact_id + ".tar.gz")
+                with tarfile.open(target, "w:gz") as stream:
+                    stream.add(source, arcname=prefix)
+                record(artifact_id, target)
+                return source
+
+            for artifact_id in ["mirror-server", "model-interface-gen", "framework-catalog-verifier",
+                                "counter-corpus", "counter-model", "selected-catalog"]:
+                target = cache / artifact_id; target.write_text("{}")
+                record(artifact_id, target)
+            archive("node-runtime", "node", {"bin/node": "fixture"})
+            package = archive("mirrorecma-package", "package", {
+                "package.json": json.dumps({"name": "mirrorecma", "version": "0.1.0"}),
+                "dist/index.js": "export {};"})
+            application = archive("application-validation-fixtures", "application-validation", {"fixture.txt": "public"})
+            shutil.copytree(package / "dist", application / "dist")
+            for artifact_id, prefix in [("counter-suite-bundle", "counter-suite"),
+                    ("evidence-verifier", "verification"), ("evidence-verifier-dependencies", "wheels"),
+                    ("distribution-locks", "distribution-locks")]:
+                archive(artifact_id, prefix, {"fixture.txt": "public"})
+            manifest = {"profileId": "checked-replay-local", "artifacts": artifacts,
+                "componentRefs": [], "runtimeTrees": [], "catalogSelectionRef": {"kind": "sha256", "value": "a"*64},
+                "buildProvenance": {"trees": [
+                    {"inputId": "package:mirrorecma", **installer.runtime_tree(package)},
+                    {"inputId": "application:validation", **installer.runtime_tree(application)}]}}
+            (cache / "distribution-manifest.json").write_text(json.dumps(manifest))
+            (cache / "cache-index.json").write_text("{}")
+            target_platform = {"os": "linux", "osRelease": "ubuntu-24.04",
+                               "architecture": "x86_64", "backend": "local-process"}
+            contract = {"dependencies": {"node-runtime": {"runtimeSelection": {
+                "rootPrefix": "node", "include": ["bin/node"]}}},
+                "profiles": {"checked-replay-local": {"catalogProfileId": "declared-target", "combinationId": "fixture"}},
+                "catalog": {"distributionProfiles": [{"profileId": "declared-target", "platform": target_platform}]}}
+            with patch.object(installer.platform, "freedesktop_os_release",
+                              return_value={"ID": "ubuntu", "VERSION_ID": "26.04"}), \
+                 patch.object(installer.platform, "machine", return_value="x86_64"):
+                installer.materialize(cache, root / "runtime", manifest, contract)
+            data = json.loads((root / "runtime/framework-input.json").read_text())
+            self.assertEqual(data["observed"]["packages"][0]["version"], "0.1.0")
+            self.assertEqual(data["installation"]["packages"][0]["manifest"]["version"], "0.1.0")
+            self.assertEqual(data["observed"]["platform"]["osRelease"], "ubuntu-26.04")
+            self.assertNotEqual(data["observed"]["platform"], target_platform)
+
+    def test_package_observation_reads_actual_version_instead_of_a_profile_constant(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for name, version in [("mirrorecma", "0.1.0"), ("mirrorecma", "2.1.0"),
+                                  ("mirrorgate-mirrorecma", "0.2.0-rc.1")]:
+                (root / "package.json").write_text(json.dumps({"name": name, "version": version}))
+                self.assertEqual(installer.observed_package_version(root, name), version)
+            for package in [{"name": "other", "version": "2.0.0"},
+                            {"name": "mirrorecma"}, {"name": "mirrorecma", "version": 2}]:
+                (root / "package.json").write_text(json.dumps(package))
+                with self.assertRaisesRegex(ValueError, "identity/version"):
+                    installer.observed_package_version(root, "mirrorecma")
+
+    def test_platform_observation_does_not_claim_the_catalogs_ubuntu_24_target(self) -> None:
+        with patch.object(installer.platform, "freedesktop_os_release",
+                          return_value={"ID": "ubuntu", "VERSION_ID": "26.04"}), \
+             patch.object(installer.platform, "machine", return_value="x86_64"):
+            actual = installer.observed_platform("checked-replay-local")
+            self.assertEqual(actual, {"os": "linux", "osRelease": "ubuntu-26.04",
+                "architecture": "x86_64", "backend": "local-process"})
+            self.assertNotEqual(actual["osRelease"], "ubuntu-24.04")
+            self.assertEqual(installer.observed_platform("checked-replay-gate")["backend"],
+                             "linux-bubblewrap-v1")
+        with patch.object(installer.platform, "freedesktop_os_release", return_value={"ID": "ubuntu"}):
+            with self.assertRaisesRegex(ValueError, "incomplete"):
+                installer.observed_platform("checked-replay-local")
+        with patch.object(installer.sys, "platform", "darwin"):
+            with self.assertRaisesRegex(ValueError, "Linux"):
+                installer.observed_platform("checked-replay-local")
+
     def test_cache_copy_rejects_links_and_normalizes_modes(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

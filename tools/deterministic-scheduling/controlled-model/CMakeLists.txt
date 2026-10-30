@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.24)
+project(mirrors_controlled_model LANGUAGES CXX)
+find_package(mirrorcpp CONFIG REQUIRED)
+add_executable(controlled_model_runner native.cpp)
+target_compile_features(controlled_model_runner PRIVATE cxx_std_23)
+target_compile_options(controlled_model_runner PRIVATE -Wall -Wextra -Werror)
+target_link_libraries(controlled_model_runner PRIVATE mirrorcpp::mirrorcpp)

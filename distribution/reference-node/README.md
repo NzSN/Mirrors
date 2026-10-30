@@ -150,3 +150,15 @@ second run with unchanged component sources is byte-stable. Concurrent companion
 edits legitimately change their dirty-content digest and therefore the downstream
 catalog selection; this is recorded as a new provisional snapshot, not mistaken
 for a self-hash cycle.
+
+
+## Installation observation provenance
+
+Package versions in `framework-input.json` come from the verified materialized
+`package.json` files, including their exact package names. Platform observations
+come from the installation host's OS-release metadata and architecture; the
+backend names the selected execution profile. The installer does not copy the
+catalog's target platform or a historical package-version literal into observed
+facts. C3 admission therefore sees an Ubuntu 26.04 host as `ubuntu-26.04`, even
+when the selected distribution requires Ubuntu 24.04. Missing host/package
+metadata refuses. This source correction grants no new platform qualification.

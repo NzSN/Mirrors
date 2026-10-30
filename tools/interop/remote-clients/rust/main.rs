@@ -4,7 +4,7 @@ fn main(){
  let mut tls=TlsOptions::new(e("MIRRORS_REMOTE_CA"),e("MIRRORS_REMOTE_CLIENT_CERT"),e("MIRRORS_REMOTE_CLIENT_KEY"));
  tls.pin=Some(e("MIRRORS_REMOTE_SERVER_PIN"));
  let result=(|| {
-  let t=connect_tls_mirror("172.28.144.1",8999,&tls)?;
+  let t=connect_tls_mirror(&e("MIRRORS_REMOTE_HOST"),e("MIRRORS_REMOTE_PORT").parse::<u16>().expect("selected port"),&tls)?;
   let spec=spec_from_file(e("M5_INTEROP_SPEC"))?;
   let bound=e("M5_INTEROP_BOUND").parse::<u32>().unwrap();
   let config=ApalacheConfig{spec_path:"HourClock.tla".into(),invariant:e("M5_INTEROP_INV"),length_bound:i64::from(bound),const_init:None,init_predicate:Some("Init".into()),next_predicate:Some("Next".into()),param_vars:None};

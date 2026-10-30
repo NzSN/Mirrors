@@ -1,0 +1,11 @@
+﻿{
+    "binarySha256":  "80fc6a864ed3cb2e6afd833a918159bf10d7b4eeab4c9c451c49d3308b759fa6",
+    "baseCommit":  "7e9a27d0db72ec36b49c6fc5764b2687b565edfd",
+    "schema":  "mirrors.windows-client-overlay/v1",
+    "productionChanged":  false,
+    "overlaySources":  {
+                           "Shell/Transport/Tls.lean":  "2f715310e0d9951297be676d45641b0bb77798c970d3b762d8b369c9f1a43a77",
+                           "tools/TransportSpec.lean":  "9f0339a5b7af0fa74c0c5e37b7858de4106a6b864865a982f4bf2f4b6eaca21b"
+                       },
+    "status":  "transport-gate-passed"
+}

@@ -17,7 +17,7 @@ MIRRORS_DPM_PYTHON=/path/to/python3 lake build mirrors_dpm
 ```
 
 The generator resolves the selected interpreter's actual executable path and
-hashes its bytes and the three packaged host files. It writes
+hashes its bytes and the four packaged host files. It writes
 `.lake/build/dpm-generated/Shell/Dpm/HostIdentity.lean`; the launcher compiles
 those constants. `lake build`, `lake build Shell` and direct launcher builds
 prepare this dependency automatically. An unchanged build preserves the generated
@@ -145,3 +145,40 @@ module. The ordinary checkpoint CLI profiles do not silently admit its extra
 resource boundaries or perform resource-aware reduction. The CLI can render its
 actual receipts. A generated model binding needs an explicit reviewed adapter.
 See the [C++ resource guide](../../MirrorCPP/docs/controlled-synchronization.md).
+
+## Finite controlled mutex/FIFO comparison
+
+`compare-sync` consumes a completed real C++ controlled-resource receipt and
+validates its decision/observation witness against the independently reviewed
+model through a selected remote Mirrors CLI. Its separate result schema is
+`mirrors.controlled-sync-model-comparison/v1`; the raw SDK v1 receipt retains
+`modelComparison:false`. A model rejection exits 1; incomplete admission,
+transport, deadline or cleanup exits 2. A completed match exits 0.
+
+```sh
+mirrors-dpm compare-sync \
+  --receipt native.json --receipt-sha256 SELECTED_RECEIPT_SHA \
+  --mapping mapping.json --mapping-sha256 SELECTED_MAPPING_SHA \
+  --implementation ./native --model specs/ControlledMutexFifo.tla \
+  --mirror ./mirror --mirror-sha256 SELECTED_MIRROR_SHA \
+  --remote remote.json --remote-sha256 SELECTED_REMOTE_CONFIG_SHA \
+  --out ./new-comparison
+```
+
+Select hashes from the reviewed build manifest. The mapping pins the model and
+implementation hashes; an input's self-asserted identity is insufficient. The
+new output directory retains the original native receipt, typed admission,
+witness, exact model/query, fresh remote observation and bounded verdict logs.
+`report --receipt new-comparison/result.json --expected-sha256 TRUSTED_RESULT_SHA`
+checks the complete retained artifact inventory.
+
+The selected remote config binds the endpoint, mTLS pin, credential paths,
+server source/binary, Apalache JAR and Java 25.0.4+7 identities. Observations
+must be fresh within 300 seconds and the certificate unexpired. Future clock
+tolerance defaults to zero; an explicitly measured `clockSkewSeconds` is bounded
+at five. For credentials already on the coordinator, direct mTLS is supported.
+The `ssh-windows` execution mode instead pins SSH, its configuration and a fixed
+remote helper; only public model sources and verdict evidence cross SSH. Keys
+remain on the remote host. See
+[the finite profile contract](dpm-controlled-model-comparison.md) and
+[the acceptance record](../Plans/completion-evidence-20261029/README.md).

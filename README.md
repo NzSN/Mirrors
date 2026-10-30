@@ -1,7 +1,8 @@
 # Mirrors
 
-Current source declares Mirrors `v0.1.1`, a compatible DPM build-preparation
-patch. For component release semantics and the retained `v0.1.0` baseline,
+Current source prepares Mirrors `v0.2.0-rc.1`, adding a finite controlled
+mutex/FIFO model-comparison command and runtime repairs. This candidate has
+not been published or deployed. For component release semantics and the retained `v0.1.0` baseline,
 see the [ecosystem versioning policy](Docs/ecosystem-versioning.md). Exact
 validation and release status are in [current status](Docs/current-status.md).
 

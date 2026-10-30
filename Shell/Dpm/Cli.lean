@@ -1,5 +1,6 @@
 import Codec.Dpm
 import Codec.DpmEvidence
+import Codec.DpmSyncComparison
 import Shell.FrameworkCatalog
 import Shell.Dpm.HostIdentity
 import Core.ModelInterface.Sha256
@@ -9,6 +10,13 @@ namespace Shell.Dpm
 def main (args : List String) : IO UInt32 := do
   try
     match args with
+    | ["_sync-check", path] =>
+      let raw ← match ← Shell.FrameworkCatalog.readBounded path (1024*1024) with
+        | .ok bytes => pure bytes
+        | .error e => throw (IO.userError e)
+      match Codec.DpmSyncComparison.check raw with
+      | .error e => IO.eprintln e; return 2
+      | .ok result => IO.println result.compress; return 0
     | ["_value-check", path] =>
       let raw ← match ← Shell.FrameworkCatalog.readBounded path (32*1024*1024) with
         | .ok bytes => pure bytes

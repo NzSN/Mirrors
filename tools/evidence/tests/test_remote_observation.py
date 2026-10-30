@@ -6,12 +6,32 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 s = importlib.util.spec_from_file_location("remote_probe", Path(__file__).parents[1] / "run_remote_model_check.py")
 remote = importlib.util.module_from_spec(s)
 s.loader.exec_module(remote)
 
 class RemoteObservationTests(unittest.TestCase):
+    def test_endpoint_selection_is_explicit_and_bounded(self):
+        self.assertEqual(remote.selected_endpoint({}), (remote.HOST, remote.PORT))
+        self.assertEqual(remote.selected_endpoint({"MIRRORS_REMOTE_HOST":"127.0.0.1",
+            "MIRRORS_REMOTE_PORT":"19131"}), ("127.0.0.1", "19131"))
+        for host, port in [("localhost",None),(None,"19131"),("--option","19131"),
+                           ("localhost","0"),("localhost","65536"),("localhost","1;echo"),
+                           ("localhost","019131")]:
+            env = {name:value for name,value in [("MIRRORS_REMOTE_HOST",host),
+                ("MIRRORS_REMOTE_PORT",port)] if value is not None}
+            with self.subTest(environment=env), self.assertRaises(ValueError):
+                remote.selected_endpoint(env)
+
+    def test_selected_endpoint_must_match_the_actual_observation(self):
+        with patch.dict(remote.os.environ, {"MIRRORS_REMOTE_HOST":"localhost", "MIRRORS_REMOTE_PORT":"19131"}):
+            with self.assertRaisesRegex(ValueError, "identity"):
+                self.admit(self.value)
+            value = {**self.value, "endpoint":{"host":"localhost", "port":19131}}
+            self.assertEqual(len(self.admit(value)), 64)
+
     def setUp(self):
         self.root = tempfile.TemporaryDirectory()
         self.addCleanup(self.root.cleanup)

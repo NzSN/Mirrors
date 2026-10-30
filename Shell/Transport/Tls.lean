@@ -310,9 +310,12 @@ private def tlsHandshake (ctx : Ffi.TlsCtx) (host : String) (port : Nat) :
     | .error e => return .error e
   let fd ← Ffi.tcpSocket
   if fd == Ffi.fdError then return .error "socket creation failed"
-  -- bounded reads: a peer that vanishes without close_notify must not
-  -- wedge the client forever (SO_RCVTIMEO surfaces as a read error)
-  let _ ← Ffi.setRecvTimeoutMs fd 5000
+  -- Bound the handshake separately. Application operations include 30-second
+  -- long polls and own their wait semantics; a five-second handshake budget
+  -- must not remain active on an established protocol connection.
+  if (← Ffi.setRecvTimeoutMs fd 5000) == Ffi.fdError then
+    Ffi.closeFd fd
+    return .error "cannot configure TLS handshake timeout"
   let crc ← Ffi.connectIpv4 fd ip port.toUInt64
   if crc == Ffi.fdError then
     Ffi.closeFd fd
@@ -322,6 +325,9 @@ private def tlsHandshake (ctx : Ffi.TlsCtx) (host : String) (port : Nat) :
   if nul == 1 then
     Ffi.closeFd fd
     return .error s!"TLS handshake failed: {← Ffi.tlsErrmsg}"
+  if (← Ffi.setRecvTimeoutMs fd 0) == Ffi.fdError then
+    -- A successful client SSL owns the fd; dropping it closes the socket.
+    return .error "cannot clear TLS handshake timeout"
   return .ok ssl
 
 /-- Connect over mutually-authenticated TLS 1.3 with CA/SAN validation

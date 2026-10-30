@@ -13,7 +13,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/evidence"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from run_remote_model_check import HOST, PORT, validate_observation
+from run_remote_model_check import selected_endpoint, validate_observation
 from validate import loads_json_bytes
 from store import write_exclusive as write_output
 from ecma_runtime import PIN, node_environment, verify_runtime
@@ -29,6 +29,17 @@ def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def admit_remote_fixtures(runtime: Path, observation: dict, selected_root: str) -> dict:
+    if not selected_root or len(selected_root) > 1024 or "\0" in selected_root:
+        raise ValueError("invalid selected Windows fixture root")
+    expected = {name: digest(runtime / relative) for name, relative in
+                (("Counter.tla", "specs/Counter.tla"),
+                 ("violation.itf.json", "specs/traces/violation.itf.json"))}
+    if observation.get("interopFixtures") != {"root": selected_root, "files": expected}:
+        raise ValueError("observed remote fixtures differ from the selected SDK and root")
+    return expected
+
+
 def classify_result(client: str, case: str, returncode: int,
                     stdout: str, stderr: str) -> bool:
     """Match the selected clients' terminal verdict frames and exit contracts."""
@@ -40,7 +51,7 @@ def classify_result(client: str, case: str, returncode: int,
     markers = [line for line in out + err
                if re.match(r"^(?:VALID|INVALID)(?:\s|$)|^spec invalid:", line)]
     warnings = {"haskell": r"warning: client certificate .+ expires in [0-9]+ day\(s\)",
-                "lean": r"mirrorlean: WARNING: client certificate expires within 7 days \([0-9]+ days\)"}
+                "lean": r"mirrorlean: WARNING: client certificate expires within 7 days \([0-9]+ days?\)"}
     errors = [line for line in err if not re.fullmatch(warnings.get(client, r"(?!)"), line)]
     if case == "valid":
         return returncode == 0 and out == ["VALID"] and markers == ["VALID"] and not errors
@@ -89,12 +100,14 @@ def main() -> int:
     observation_sha = validate_observation(admin, pin,
         required("MIRRORS_REMOTE_SERVICE_BINARY_SHA256"),
         required("MIRRORS_REMOTE_SERVICE_SOURCE_REF"))
+    host, port = selected_endpoint()
     env = node_environment(dict(os.environ))
+    env.update(MIRRORS_REMOTE_HOST=host, MIRRORS_REMOTE_PORT=port)
     for name in ("APALACHE_MC", "APALACHE_JAR", "TLA2TOOLS_JAR"): env.pop(name, None)
     spec = ROOT / "test/specs/HourClock.tla"
     env["M5_INTEROP_SPEC"] = str(spec)
     env["M5_INTEROP_OUTPUT"] = str(output)
-    common = ["--host", HOST, "--port", PORT, "--tls", "--cert", required("MIRRORS_REMOTE_CLIENT_CERT"),
+    common = ["--host", host, "--port", port, "--tls", "--cert", required("MIRRORS_REMOTE_CLIENT_CERT"),
         "--key", required("MIRRORS_REMOTE_CLIENT_KEY"), "--ca", required("MIRRORS_REMOTE_CA"),
         "--pin", pin, "--spec", str(spec), "--init", "Init", "--next", "Next"]
     commands = {
@@ -109,17 +122,22 @@ def main() -> int:
     protocol_hash = digest(protocol)
     output.mkdir(mode=0o700, exist_ok=True)
     write_output(output / "ecma-runtime-pin.json", PIN.read_bytes())
-    windows = Path("/mnt/c/Users/ayden/Desktop/Workspace/MirrorsRemote/interop")
-    if not windows.is_dir() or windows.is_symlink():
-        raise ValueError("prepare the Windows Workspace interop fixture directory")
-    fixture_hashes = {}
-    for name, relative in (("Counter.tla", "specs/Counter.tla"),
-            ("violation.itf.json", "specs/traces/violation.itf.json")):
-        source = runtime / relative
-        target = windows / name
-        if target.is_symlink(): raise ValueError("Windows interop fixture must not be a symlink")
-        target.write_bytes(source.read_bytes())
-        fixture_hashes[name] = digest(target)
+    selected_root = os.environ.get("MIRRORS_REMOTE_INTEROP_ROOT")
+    windows = None
+    if selected_root is not None:
+        fixture_hashes = admit_remote_fixtures(runtime, json.loads(admin.read_text()), selected_root)
+    else:
+        windows = Path("/mnt/c/Users/ayden/Desktop/Workspace/MirrorsRemote/interop")
+        if not windows.is_dir() or windows.is_symlink():
+            raise ValueError("prepare the Windows Workspace interop fixture directory")
+        fixture_hashes = {}
+        for name, relative in (("Counter.tla", "specs/Counter.tla"),
+                ("violation.itf.json", "specs/traces/violation.itf.json")):
+            source = runtime / relative
+            target = windows / name
+            if target.is_symlink(): raise ValueError("Windows interop fixture must not be a symlink")
+            target.write_bytes(source.read_bytes())
+            fixture_hashes[name] = digest(target)
     rows = []
     for client, command in commands.items():
         for case, invariant, bound in [("valid", "Inv", 3), ("invalid", "TraceComplete", 13), ("wrong-pin", "Inv", 3)]:
@@ -153,8 +171,9 @@ def main() -> int:
         rows.append({"client": "ecma", "case": case, "exitCode": 0,
             "log": log.name, "logSha256": digest(log)})
         print(f"remote interop ecma/{case}: PASS", flush=True)
-    for name, sha in fixture_hashes.items():
-        if digest(windows / name) != sha: raise ValueError("Windows fixture changed during interop")
+    if windows is not None:
+        for name, sha in fixture_hashes.items():
+            if digest(windows / name) != sha: raise ValueError("Windows fixture changed during interop")
     if digest(admin) != observation_sha: raise ValueError("deployment observation changed during interop")
     for name, command in commands.items():
         if name != "ecma" and digest(Path(command[0])) != binary_hashes[name]:
@@ -168,7 +187,7 @@ def main() -> int:
         raise ValueError("retained runtime pin differs from the admitted pin")
     receipt = {"schema": "mirrors.remote-interop/v2", "profile": "remote-five-client-mtls/v1",
         "scope": "five-client bounded verdicts/pin rejection and ECMA replay/generation/exploration; legacy all-transport matrix remains separate",
-        "endpoint": {"host": HOST, "port": int(PORT)}, "transport": "pinned-mtls",
+        "endpoint": {"host": host, "port": int(port)}, "transport": "pinned-mtls",
         "revisions": revisions, "binaries": binary_hashes, "modelSha256": digest(spec),
         "deploymentObservationSha256": observation_sha, "windowsFixtureSha256": fixture_hashes,
         "ecmaRuntime": binding, "protocolAdapterSha256": protocol_hash, "rows": rows}

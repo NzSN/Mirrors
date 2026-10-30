@@ -1,0 +1,107 @@
+INVALID
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: d:\ModelMirrors\releases\20261029-completion-7e9a27d\tmp\modelmirrors-session-31-620402148\_apalache-out\ControlledWitnessCase.tla\2026-10-29T13-43-27_14746251975061753620
+# APALACHE version: 0.62.2 | build: f0dec98                       I@13:43:27.809
+Tuning:                                                           I@13:43:27.813
+PASS #0: SanyParser                                               I@13:43:27.930
+PASS #1: TypeCheckerSnowcat                                       I@13:43:28.088
+ > Running Snowcat .::.                                           I@13:43:28.088
+ > Your types are purrfect!                                       I@13:43:28.344
+ > All expressions are typed                                      I@13:43:28.345
+PASS #2: ConfigurationPass                                        I@13:43:28.346
+  > Set the initialization predicate to Init                      I@13:43:28.348
+  > Set the transition predicate to Next                          I@13:43:28.349
+  > Set the constant initialization predicate to ConstInit        I@13:43:28.349
+  > Set an invariant to Conforms                                  I@13:43:28.349
+PASS #3: DesugarerPass                                            I@13:43:28.352
+  > Desugaring...                                                 I@13:43:28.352
+PASS #4: InlinePass                                               I@13:43:28.359
+Leaving only relevant operators: Conforms, ConstInit, ConstInitPrimed, Init, InitPrimed, Next I@13:43:28.359
+PASS #5: TemporalPass                                             I@13:43:28.393
+  > Rewriting temporal operators...                               I@13:43:28.393
+  > No temporal property specified, nothing to encode             I@13:43:28.394
+PASS #6: InlinePass                                               I@13:43:28.394
+Leaving only relevant operators: Conforms, ConstInit, ConstInitPrimed, Init, InitPrimed, Next I@13:43:28.394
+PASS #7: PrimingPass                                              I@13:43:28.398
+  > Introducing ConstInitPrimed for ConstInit'                    I@13:43:28.399
+  > Introducing InitPrimed for Init'                              I@13:43:28.491
+PASS #8: VCGen                                                    I@13:43:28.492
+  > Producing verification conditions from the invariant Conforms I@13:43:28.492
+  > VCGen produced 4 verification condition(s)                    I@13:43:28.495
+PASS #9: PreprocessingPass                                        I@13:43:28.496
+  > Before preprocessing: unique renaming                         I@13:43:28.496
+ > Applying standard transformations:                             I@13:43:28.500
+  > PrimePropagation                                              I@13:43:28.500
+  > Desugarer                                                     I@13:43:28.502
+  > UniqueRenamer                                                 I@13:43:28.504
+  > Normalizer                                                    I@13:43:28.506
+  > SetMembershipSimplifier                                       I@13:43:28.510
+  > Keramelizer                                                   I@13:43:28.513
+  > After preprocessing: UniqueRenamer                            I@13:43:28.519
+PASS #10: TransitionFinderPass                                    I@13:43:28.524
+  > Found 1 initializing transitions                              I@13:43:28.542
+  > Found 16 transitions                                          I@13:43:28.557
+  > Found constant initializer ConstInit                          I@13:43:28.557
+  > Applying unique renaming                                      I@13:43:28.560
+PASS #11: OptimizationPass                                        I@13:43:28.563
+ > Applying optimizations:                                        I@13:43:28.566
+  > ConstSimplifier                                               I@13:43:28.566
+  > ExprOptimizer                                                 I@13:43:28.584
+  > SetMembershipSimplifier                                       I@13:43:28.589
+  > ConstSimplifier                                               I@13:43:28.591
+PASS #12: AnalysisPass                                            I@13:43:28.608
+ > Marking skolemizable existentials and sets to be expanded...   I@13:43:28.609
+  > Skolemization                                                 I@13:43:28.609
+  > Expansion                                                     I@13:43:28.610
+  > Remove unused let-in defs                                     I@13:43:28.614
+ > Running analyzers...                                           I@13:43:28.617
+  > Introduced expression grades                                  I@13:43:28.621
+PASS #13: BoundedChecker                                          I@13:43:28.621
+State 0: Checking 4 state invariants                              I@13:43:28.819
+State 0: state invariant 0 holds.                                 I@13:43:28.821
+State 0: state invariant 1 holds.                                 I@13:43:28.831
+State 0: state invariant 2 holds.                                 I@13:43:28.846
+State 0: state invariant 3 holds.                                 I@13:43:28.874
+Step 0: picking a transition out of 1 transition(s)               I@13:43:28.875
+Step 1: Transition #0 is disabled                                 I@13:43:28.878
+Step 1: Transition #1 is disabled                                 I@13:43:28.886
+State 1: Checking 4 state invariants                              I@13:43:28.899
+State 1: state invariant 0 holds.                                 I@13:43:28.899
+State 1: state invariant 1 holds.                                 I@13:43:28.900
+State 1: state invariant 2 holds.                                 I@13:43:28.903
+State 1: state invariant 3 holds.                                 I@13:43:28.912
+Step 1: Transition #3 is disabled                                 I@13:43:28.921
+Step 1: Transition #4 is disabled                                 I@13:43:28.930
+Step 1: Transition #5 is disabled                                 I@13:43:28.937
+Step 1: Transition #6 is disabled                                 I@13:43:28.947
+Step 1: Transition #7 is disabled                                 I@13:43:28.955
+Step 1: Transition #8 is disabled                                 I@13:43:28.963
+Step 1: Transition #9 is disabled                                 I@13:43:28.970
+Step 1: Transition #10 is disabled                                I@13:43:28.978
+Step 1: Transition #11 is disabled                                I@13:43:28.986
+Step 1: Transition #12 is disabled                                I@13:43:28.993
+Step 1: Transition #13 is disabled                                I@13:43:29.000
+Step 1: Transition #14 is disabled                                I@13:43:29.009
+Step 1: Transition #15 is disabled                                I@13:43:29.017
+Step 1: picking a transition out of 1 transition(s)               I@13:43:29.017
+Step 2: Transition #0 is disabled                                 I@13:43:29.018
+Step 2: Transition #1 is disabled                                 I@13:43:29.022
+Step 2: Transition #2 is disabled                                 I@13:43:29.028
+State 2: Checking 4 state invariants                              I@13:43:29.034
+State 2: state invariant 0 holds.                                 I@13:43:29.034
+Check the trace in: d:\ModelMirrors\releases\20261029-completion-7e9a27d\tmp\modelmirrors-session-31-620402148\_apalache-out\ControlledWitnessCase.tla\2026-10-29T13-43-27_14746251975061753620\violation1.tla, d:\ModelMirrors\releases\20261029-completion-7e9a27d\tmp\modelmirrors-session-31-620402148\_apalache-out\ControlledWitnessCase.tla\2026-10-29T13-43-27_14746251975061753620\MCviolation1.out, d:\ModelMirrors\releases\20261029-completion-7e9a27d\tmp\modelmirrors-session-31-620402148\_apalache-out\ControlledWitnessCase.tla\2026-10-29T13-43-27_14746251975061753620\violation1.json, d:\ModelMirrors\releases\20261029-completion-7e9a27d\tmp\modelmirrors-session-31-620402148\_apalache-out\ControlledWitnessCase.tla\2026-10-29T13-43-27_14746251975061753620\violation1.itf.json I@13:43:29.191
+State 2: state invariant 1 violated.                              I@13:43:29.191
+Found 1 error(s)                                                  I@13:43:29.192
+The outcome is: Error                                             I@13:43:29.195
+Checker has found an error                                        I@13:43:29.211
+It took me 0 days  0 hours  0 min  1 sec                          I@13:43:29.211
+Total time: 1.400 sec                                             I@13:43:29.211
+EXITCODE: ERROR (12)
+find: unknown predicate `--debug'
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/D:/Programs/apalache/lib/apalache.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+

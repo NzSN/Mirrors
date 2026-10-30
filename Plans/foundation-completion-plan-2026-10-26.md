@@ -4,7 +4,13 @@ Date: 2026-10-26
 
 Baseline: Mirrors `fe86ec03e8bcd557ac8561321fda3b5141af5dff`
 
-Status: proposed execution plan; no qualification is granted by this document.
+Status reconciliation (2026-10-29): this original design is retained below.
+[The current execution plan](completion-execution-plan-2026-10-29.md) and
+[its evidence](completion-evidence-20261029/README.md) supersede the old queue:
+immutable artifact acquisition and journal-v2 recovery source work are already
+implemented; finite F5 comparison and profile-6 qualification now have new scoped
+acceptance. Current framework/platform qualification and release/deployment
+remain separately tracked. This plan alone grants no qualification.
 
 ## Execution rules
 

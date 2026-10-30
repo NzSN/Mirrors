@@ -33,9 +33,9 @@ def write_report(output_dir, inputs, observations, comparisons, coverage, verdic
     value = {"schema": REPORT_SCHEMA, "inputs": inputs, "observations": list(observations),
              "comparisons": comparisons, "coverage": coverage, "verdict": verdict}
     validate_contract("report", value)
-    (output_dir / "report.json").write_text(canonical_json(value) + "\n")
+    (output_dir / "report.json").write_text(canonical_json(value) + "\n", encoding="utf-8", newline="\n")
     semantic = canonical_json(semantic_payload(value)) + "\n"
-    (output_dir / "semantic.json").write_text(semantic)
+    (output_dir / "semantic.json").write_text(semantic, encoding="utf-8", newline="\n")
     lines = ["# TLA+ differential validation", "", f"Verdict: **{verdict}**.", "",
              f"{coverage['fixtures']} fixtures; {coverage['branches']} branches; {coverage['observations']}/{coverage['expectedObservations']} observations.",
              f"Semantic SHA-256: `{hashlib.sha256(semantic.encode()).hexdigest()}`.", "",
@@ -46,5 +46,5 @@ def write_report(output_dir, inputs, observations, comparisons, coverage, verdic
               for row in comparisons if row["status"] in ("fail", "incomplete", "oracle_disagreement")]
     lines += ["", "Raw evidence and exact comparisons: [report.json](report.json).",
               "Unsupported surfaces are coverage gaps, not passed comparisons. This report does not certify complete TLA+ conformance.", ""]
-    (output_dir / "summary.md").write_text("\n".join(lines))
+    (output_dir / "summary.md").write_text("\n".join(lines), encoding="utf-8", newline="\n")
     return value

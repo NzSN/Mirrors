@@ -1,0 +1,36 @@
+** WARNING: connection is not using a post-quantum key exchange algorithm.
+** This session may be vulnerable to "store now, decrypt later" attacks.
+** The server may need to be upgraded. See https://openssh.com/pq.html
+Source overlay admitted: 34 files
+test_exited_leader_cannot_leave_a_pipe_holding_descendant (test_windows_job.WindowsContainmentTests) ... ok
+test_timeout_reclaims_descendants_and_preserves_unrelated_sentinel (test_windows_job.WindowsContainmentTests) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.107s
+
+OK
+test_artifact_flood_is_resource_exhausted_and_discarded (test_process.ProcessTests) ... ok
+test_completed_keeps_nonzero_exit_for_adapter_classification (test_process.ProcessTests) ... ok
+test_completed_leader_does_not_leave_background_child (test_process.ProcessTests) ... skipped 'the stdlib recursive process-group assertion is POSIX-only'
+test_environment_does_not_inherit_ambient_configuration (test_process.ProcessTests) ... ok
+test_invalid_artifact_directory_is_refused_before_execution (test_process.ProcessTests) ... ok
+test_missing_executable_is_unavailable (test_process.ProcessTests) ... ok
+test_popen_double_receives_direct_hermetic_invocation (test_process.ProcessTests) ... ok
+test_stdout_flood_is_resource_exhausted_and_bounded (test_process.ProcessTests) ... ok
+test_timeout_discards_artifact_overflow_without_losing_timeout_status (test_process.ProcessTests) ... ok
+test_timeout_kills_term_ignoring_child_process_group (test_process.ProcessTests) ... skipped 'the stdlib recursive process-group assertion is POSIX-only'
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.273s
+
+OK (skipped=2)
+✔ [32/39] Built Codec.TlaFrontendJson (498ms)
+✔ [33/39] Built Codec.TlaFrontendJson:c.o (402ms)
+✔ [34/39] Built tools.TlaDifferentialDriver (421ms)
+✔ [35/39] Built tools.TlaDifferentialDriver:c.o (211ms)
+✔ [36/39] Built tools.TlaFrontendCli (532ms)
+✔ [37/39] Built tools.TlaFrontendCli:c.o (269ms)
+✔ [38/39] Built tla_differential_driver:exe (1.0s)
+✔ [39/39] Built tla_frontend:exe (1.0s)
+Build completed successfully (39 jobs).
+WINDOWS REFERENCE HOST ADMISSION PASSED

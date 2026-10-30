@@ -1,0 +1,23 @@
+-- The CXX compiler identification is GNU 15.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found suitable version "3.5.5", minimum required is "3.0")
+-- Found nlohmann_json: /home/lsz/Codebase/Mirrors/.golden-build/completion-20261029/cpp-prefix/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake (found suitable version "3.11.3", minimum required is "3.11")
+CMake Warning (dev) at /home/lsz/Codebase/Mirrors/.golden-build/completion-20261029/cpp-prefix/lib/cmake/mirrorcpp/mirrorcppConfig.cmake:43 (find_package):
+  Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
+  --help-policy CMP0167" for policy details.  Use the cmake_policy command to
+  set the policy and suppress this warning.
+
+Call Stack (most recent call first):
+  CMakeLists.txt:3 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Configuring done (3.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/lsz/Codebase/Mirrors/.golden-build/completion-20261029/controlled-remote-2/build

@@ -1,0 +1,10 @@
+{
+  "schema": "mirrors.controlled-model-acceptance/v1",
+  "status": "remote-comparison-passed",
+  "profile": "mirrors.controlled-mutex-fifo-model/v1",
+  "modelComparison": true,
+  "freshExecutions": 13,
+  "nativeExecutableSha256": "350ff7243f219add85a9d1dbb09d0b0f4c806d124d4d6a2d47cd5f3dde7d31cc",
+  "mappingSha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+  "scope": "finite declared producer/consumer mapping; no generic or exhaustive scheduling claim"
+}

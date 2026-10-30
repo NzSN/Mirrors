@@ -1,0 +1,168 @@
+warning: server certificate D:\ModelMirrors\releases\20261029-completion-7e9a27d\matrix-pki\server.crt expires in 1 day(s)
+tls: listening on 127.0.0.1:19131 (mTLS, TLS 1.3, worker pool, 4 workers)
+tls: session ended: TLS read failed: TLS read failed: error:0A000126:SSL routines::unexpected eof while reading
+tls: session ended: TLS read failed: TLS read failed: error:0A000126:SSL routines::unexpected eof while reading
+tls: session ended: TLS read failed: TLS read failed: error:0A000126:SSL routines::unexpected eof while reading
+tls: session ended: TLS read failed: TLS read failed: error:0A000126:SSL routines::unexpected eof while reading
+tls: handshake rejected (TLS accept (handshake) failed: error:0A000126:SSL routines::unexpected eof while reading)
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: d:\ModelMirrors\releases\20261029-completion-7e9a27d\matrix-run-2\modelmirrors-session-39-632599427\_apalache-out\server\2026-10-29T17-06-40_8644881844828178238
+# APALACHE version: 0.62.2 | build: f0dec98                       I@17:06:40.681
+Starting explorer server on port 61310...                         I@17:06:40.683
+Created thread pool with core pool size 32, max pool size 1024, keep alive 60 sec I@17:06:41.065
+JSON-RPC server running on http://localhost:61310/rpc (gzip+zstd compression enabled)
+Session 1: Loading specification with 1 sources.                  I@17:06:41.478
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/D:/Programs/apalache/lib/apalache.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+PASS #0: SanyParser                                               I@17:06:41.582
+PASS #1: TypeCheckerSnowcat                                       I@17:06:41.696
+ > Running Snowcat .::.                                           I@17:06:41.697
+ > Your types are purrfect!                                       I@17:06:41.794
+ > All expressions are typed                                      I@17:06:41.794
+PASS #2: ConfigurationPass                                        I@17:06:41.794
+  > Set the initialization predicate to Init                      I@17:06:41.796
+  > Set the transition predicate to Next                          I@17:06:41.796
+  > Set an invariant to Inv                                       I@17:06:41.796
+PASS #3: DesugarerPass                                            I@17:06:41.798
+  > Desugaring...                                                 I@17:06:41.798
+PASS #4: InlinePass                                               I@17:06:41.897
+Leaving only relevant operators: CInitPrimed, Init, InitPrimed, Inv, Next I@17:06:41.897
+PASS #5: TemporalPass                                             I@17:06:41.907
+  > Rewriting temporal operators...                               I@17:06:41.907
+  > No temporal property specified, nothing to encode             I@17:06:41.907
+PASS #6: InlinePass                                               I@17:06:41.907
+Leaving only relevant operators: CInitPrimed, Init, InitPrimed, Inv, Next I@17:06:41.907
+PASS #7: PrimingPass                                              I@17:06:41.908
+  > Introducing InitPrimed for Init'                              I@17:06:41.909
+PASS #8: VCGen                                                    I@17:06:41.912
+  > Producing verification conditions from the invariant Inv      I@17:06:41.912
+  > VCGen produced 1 verification condition(s)                    I@17:06:41.915
+PASS #9: PreprocessingPass                                        I@17:06:41.916
+  > Before preprocessing: unique renaming                         I@17:06:41.916
+ > Applying standard transformations:                             I@17:06:41.919
+  > PrimePropagation                                              I@17:06:41.919
+  > Desugarer                                                     I@17:06:41.920
+  > UniqueRenamer                                                 I@17:06:41.920
+  > Normalizer                                                    I@17:06:41.921
+  > SetMembershipSimplifier                                       I@17:06:41.923
+  > Keramelizer                                                   I@17:06:41.924
+  > After preprocessing: UniqueRenamer                            I@17:06:41.925
+PASS #10: TransitionFinderPass                                    I@17:06:41.928
+  > Found 1 initializing transitions                              I@17:06:41.936
+  > Found 1 transitions                                           I@17:06:41.937
+  > No constant initializer                                       I@17:06:41.937
+  > Applying unique renaming                                      I@17:06:41.938
+PASS #11: OptimizationPass                                        I@17:06:41.939
+ > Applying optimizations:                                        I@17:06:41.941
+  > ConstSimplifier                                               I@17:06:41.942
+  > ExprOptimizer                                                 I@17:06:41.943
+  > SetMembershipSimplifier                                       I@17:06:41.943
+  > ConstSimplifier                                               I@17:06:41.944
+PASS #12: AnalysisPass                                            I@17:06:41.945
+ > Marking skolemizable existentials and sets to be expanded...   I@17:06:41.946
+  > Skolemization                                                 I@17:06:41.947
+  > Expansion                                                     I@17:06:41.947
+  > Remove unused let-in defs                                     I@17:06:41.947
+ > Running analyzers...                                           I@17:06:41.948
+  > Introduced expression grades                                  I@17:06:41.950
+PASS #13: BoundedChecker                                          I@17:06:41.950
+The outcome is: prepared for remote symbolic execution            I@17:06:42.108
+Session=1 Step=0 Snapshot=0: Specification ready                  I@17:06:42.112
+Session=1 Step=0 Snapshot=2: transition 0 ENABLED                 I@17:06:42.163
+Session=1 Step=1 Snapshot=3: Switched from step 0                 I@17:06:42.172
+Session=1 Step=1 Snapshot=5: assumeState ENABLED                  I@17:06:42.277
+Session=1: Recovered snapshot 6                                   I@17:06:42.286
+Session=1 Step=1 Snapshot=6: invariant 0 SATISFIED                I@17:06:42.286
+Session=1 Step=1 Snapshot=8: transition 0 ENABLED                 I@17:06:42.292
+Session=1 Step=2 Snapshot=9: Switched from step 1                 I@17:06:42.294
+Session=1 Step=2 Snapshot=11: assumeState ENABLED                 I@17:06:42.380
+Session=1: Recovered snapshot 12                                  I@17:06:42.382
+Session=1 Step=2 Snapshot=12: invariant 0 SATISFIED               I@17:06:42.382
+Session=1 Step=2 Snapshot=14: transition 0 ENABLED                I@17:06:42.385
+Session=1 Step=3 Snapshot=15: Switched from step 2                I@17:06:42.386
+Session=1 Step=3 Snapshot=17: assumeState ENABLED                 I@17:06:42.459
+Session=1: Recovered snapshot 18                                  I@17:06:42.461
+Session=1 Step=3 Snapshot=18: invariant 0 SATISFIED               I@17:06:42.461
+Session=1 Step=3 Snapshot=20: transition 0 ENABLED                I@17:06:42.464
+Session=1 Step=4 Snapshot=21: Switched from step 3                I@17:06:42.465
+Session=1 Step=4 Snapshot=23: assumeState ENABLED                 I@17:06:42.534
+Session=1: Recovered snapshot 24                                  I@17:06:42.536
+Session=1 Step=4 Snapshot=24: invariant 0 SATISFIED               I@17:06:42.536
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: d:\ModelMirrors\releases\20261029-completion-7e9a27d\matrix-run-2\modelmirrors-session-40-632602781\_apalache-out\server\2026-10-29T17-06-44_2932492295178801251
+# APALACHE version: 0.62.2 | build: f0dec98                       I@17:06:44.046
+Starting explorer server on port 61315...                         I@17:06:44.048
+Created thread pool with core pool size 32, max pool size 1024, keep alive 60 sec I@17:06:44.291
+JSON-RPC server running on http://localhost:61315/rpc (gzip+zstd compression enabled)
+Session 1: Loading specification with 1 sources.                  I@17:06:44.831
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/D:/Programs/apalache/lib/apalache.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+PASS #0: SanyParser                                               I@17:06:44.934
+PASS #1: TypeCheckerSnowcat                                       I@17:06:45.052
+ > Running Snowcat .::.                                           I@17:06:45.053
+ > Your types are purrfect!                                       I@17:06:45.154
+ > All expressions are typed                                      I@17:06:45.154
+PASS #2: ConfigurationPass                                        I@17:06:45.155
+  > Set the initialization predicate to Init                      I@17:06:45.156
+  > Set the transition predicate to Next                          I@17:06:45.157
+  > Set an invariant to Inv                                       I@17:06:45.157
+PASS #3: DesugarerPass                                            I@17:06:45.159
+  > Desugaring...                                                 I@17:06:45.159
+PASS #4: InlinePass                                               I@17:06:45.258
+Leaving only relevant operators: CInitPrimed, Init, InitPrimed, Inv, Next I@17:06:45.258
+PASS #5: TemporalPass                                             I@17:06:45.268
+  > Rewriting temporal operators...                               I@17:06:45.268
+  > No temporal property specified, nothing to encode             I@17:06:45.268
+PASS #6: InlinePass                                               I@17:06:45.268
+Leaving only relevant operators: CInitPrimed, Init, InitPrimed, Inv, Next I@17:06:45.268
+PASS #7: PrimingPass                                              I@17:06:45.269
+  > Introducing InitPrimed for Init'                              I@17:06:45.270
+PASS #8: VCGen                                                    I@17:06:45.274
+  > Producing verification conditions from the invariant Inv      I@17:06:45.274
+  > VCGen produced 1 verification condition(s)                    I@17:06:45.277
+PASS #9: PreprocessingPass                                        I@17:06:45.278
+  > Before preprocessing: unique renaming                         I@17:06:45.278
+ > Applying standard transformations:                             I@17:06:45.281
+  > PrimePropagation                                              I@17:06:45.282
+  > Desugarer                                                     I@17:06:45.282
+  > UniqueRenamer                                                 I@17:06:45.283
+  > Normalizer                                                    I@17:06:45.284
+  > SetMembershipSimplifier                                       I@17:06:45.285
+  > Keramelizer                                                   I@17:06:45.286
+  > After preprocessing: UniqueRenamer                            I@17:06:45.288
+PASS #10: TransitionFinderPass                                    I@17:06:45.291
+  > Found 1 initializing transitions                              I@17:06:45.300
+  > Found 1 transitions                                           I@17:06:45.301
+  > No constant initializer                                       I@17:06:45.301
+  > Applying unique renaming                                      I@17:06:45.302
+PASS #11: OptimizationPass                                        I@17:06:45.303
+ > Applying optimizations:                                        I@17:06:45.305
+  > ConstSimplifier                                               I@17:06:45.305
+  > ExprOptimizer                                                 I@17:06:45.307
+  > SetMembershipSimplifier                                       I@17:06:45.307
+  > ConstSimplifier                                               I@17:06:45.307
+PASS #12: AnalysisPass                                            I@17:06:45.308
+ > Marking skolemizable existentials and sets to be expanded...   I@17:06:45.309
+  > Skolemization                                                 I@17:06:45.310
+  > Expansion                                                     I@17:06:45.310
+  > Remove unused let-in defs                                     I@17:06:45.311
+ > Running analyzers...                                           I@17:06:45.312
+  > Introduced expression grades                                  I@17:06:45.313
+PASS #13: BoundedChecker                                          I@17:06:45.313
+The outcome is: prepared for remote symbolic execution            I@17:06:45.472
+Session=1 Step=0 Snapshot=0: Specification ready                  I@17:06:45.476
+Session=1 Step=0 Snapshot=2: transition 0 ENABLED                 I@17:06:45.542
+Session=1 Step=1 Snapshot=3: Switched from step 0                 I@17:06:45.560
+Session=1: Recovered snapshot 4                                   I@17:06:45.613
+Session=1 Step=1 Snapshot=4: invariant 0 SATISFIED                I@17:06:45.613
+Session=1 Step=1 Snapshot=6: assumeState ENABLED                  I@17:06:45.641
+Session=1: Recovered snapshot 0                                   I@17:06:45.657
+Session 1: Disposed.                                              I@17:06:45.677

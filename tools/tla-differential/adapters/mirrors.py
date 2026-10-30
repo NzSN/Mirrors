@@ -61,7 +61,7 @@ def observe(*, fixture, materialized, config, limits, artifact_dir):
         request = materialized.input_dir / "request.json"
         request.write_text(json.dumps({"root": fixture.root, "sources": [
             {"name": item["logicalName"], "text": materialized.source_bytes[item["stagedPath"]].decode("utf-8")}
-            for item in fixture.inline_source_map]}))
+            for item in fixture.inline_source_map]}), encoding="utf-8", newline="\n")
         commands = [("driver", [str(driver), "inline", str(request)])]
     else:
         commands = [("cli", [str(cli), "resolve", "--spec", str(materialized.root_path), "--format", "json"]),

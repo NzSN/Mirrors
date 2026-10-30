@@ -1,0 +1,112 @@
+INVALID
+# Usage statistics is OFF. We care about your privacy.
+# If you want to help our project, consider enabling statistics with config --enable-stats=true.
+
+Output directory: d:\ModelMirrors\releases\20261029-completion-7e9a27d\matrix-run-2\modelmirrors-session-9-632359948\_apalache-out\HourClock.tla\2026-10-29T17-02-42_14233106088595390676
+# APALACHE version: 0.62.2 | build: f0dec98                       I@17:02:42.889
+Tuning:                                                           I@17:02:42.894
+PASS #0: SanyParser                                               I@17:02:43.009
+PASS #1: TypeCheckerSnowcat                                       I@17:02:43.113
+ > Running Snowcat .::.                                           I@17:02:43.113
+ > Your types are purrfect!                                       I@17:02:43.223
+ > All expressions are typed                                      I@17:02:43.223
+PASS #2: ConfigurationPass                                        I@17:02:43.224
+  > Set the initialization predicate to Init                      I@17:02:43.225
+  > Set the transition predicate to Next                          I@17:02:43.226
+  > Set an invariant to TraceComplete                             I@17:02:43.226
+PASS #3: DesugarerPass                                            I@17:02:43.228
+  > Desugaring...                                                 I@17:02:43.228
+PASS #4: InlinePass                                               I@17:02:43.332
+Leaving only relevant operators: CInitPrimed, Init, InitPrimed, Next, TraceComplete I@17:02:43.332
+PASS #5: TemporalPass                                             I@17:02:43.342
+  > Rewriting temporal operators...                               I@17:02:43.342
+  > No temporal property specified, nothing to encode             I@17:02:43.343
+PASS #6: InlinePass                                               I@17:02:43.343
+Leaving only relevant operators: CInitPrimed, Init, InitPrimed, Next, TraceComplete I@17:02:43.343
+PASS #7: PrimingPass                                              I@17:02:43.344
+  > Introducing InitPrimed for Init'                              I@17:02:43.345
+PASS #8: VCGen                                                    I@17:02:43.349
+  > Producing verification conditions from the invariant TraceComplete I@17:02:43.349
+  > VCGen produced 1 verification condition(s)                    I@17:02:43.352
+PASS #9: PreprocessingPass                                        I@17:02:43.354
+  > Before preprocessing: unique renaming                         I@17:02:43.354
+ > Applying standard transformations:                             I@17:02:43.357
+  > PrimePropagation                                              I@17:02:43.357
+  > Desugarer                                                     I@17:02:43.358
+  > UniqueRenamer                                                 I@17:02:43.358
+  > Normalizer                                                    I@17:02:43.359
+  > SetMembershipSimplifier                                       I@17:02:43.361
+  > Keramelizer                                                   I@17:02:43.362
+  > After preprocessing: UniqueRenamer                            I@17:02:43.364
+PASS #10: TransitionFinderPass                                    I@17:02:43.367
+  > Found 1 initializing transitions                              I@17:02:43.375
+  > Found 1 transitions                                           I@17:02:43.375
+  > No constant initializer                                       I@17:02:43.376
+  > Applying unique renaming                                      I@17:02:43.376
+PASS #11: OptimizationPass                                        I@17:02:43.377
+ > Applying optimizations:                                        I@17:02:43.380
+  > ConstSimplifier                                               I@17:02:43.380
+  > ExprOptimizer                                                 I@17:02:43.381
+  > SetMembershipSimplifier                                       I@17:02:43.381
+  > ConstSimplifier                                               I@17:02:43.382
+PASS #12: AnalysisPass                                            I@17:02:43.382
+ > Marking skolemizable existentials and sets to be expanded...   I@17:02:43.383
+  > Skolemization                                                 I@17:02:43.384
+  > Expansion                                                     I@17:02:43.384
+  > Remove unused let-in defs                                     I@17:02:43.385
+ > Running analyzers...                                           I@17:02:43.386
+  > Introduced expression grades                                  I@17:02:43.387
+PASS #13: BoundedChecker                                          I@17:02:43.387
+State 0: Checking 1 state invariants                              I@17:02:43.581
+State 0: state invariant 0 holds.                                 I@17:02:43.582
+Step 0: picking a transition out of 1 transition(s)               I@17:02:43.584
+State 1: Checking 1 state invariants                              I@17:02:43.591
+State 1: state invariant 0 holds.                                 I@17:02:43.591
+Step 1: picking a transition out of 1 transition(s)               I@17:02:43.591
+State 2: Checking 1 state invariants                              I@17:02:43.594
+State 2: state invariant 0 holds.                                 I@17:02:43.594
+Step 2: picking a transition out of 1 transition(s)               I@17:02:43.595
+State 3: Checking 1 state invariants                              I@17:02:43.597
+State 3: state invariant 0 holds.                                 I@17:02:43.598
+Step 3: picking a transition out of 1 transition(s)               I@17:02:43.598
+State 4: Checking 1 state invariants                              I@17:02:43.601
+State 4: state invariant 0 holds.                                 I@17:02:43.601
+Step 4: picking a transition out of 1 transition(s)               I@17:02:43.601
+State 5: Checking 1 state invariants                              I@17:02:43.604
+State 5: state invariant 0 holds.                                 I@17:02:43.604
+Step 5: picking a transition out of 1 transition(s)               I@17:02:43.605
+State 6: Checking 1 state invariants                              I@17:02:43.607
+State 6: state invariant 0 holds.                                 I@17:02:43.607
+Step 6: picking a transition out of 1 transition(s)               I@17:02:43.608
+State 7: Checking 1 state invariants                              I@17:02:43.610
+State 7: state invariant 0 holds.                                 I@17:02:43.610
+Step 7: picking a transition out of 1 transition(s)               I@17:02:43.611
+State 8: Checking 1 state invariants                              I@17:02:43.613
+State 8: state invariant 0 holds.                                 I@17:02:43.613
+Step 8: picking a transition out of 1 transition(s)               I@17:02:43.613
+State 9: Checking 1 state invariants                              I@17:02:43.615
+State 9: state invariant 0 holds.                                 I@17:02:43.616
+Step 9: picking a transition out of 1 transition(s)               I@17:02:43.616
+State 10: Checking 1 state invariants                             I@17:02:43.618
+State 10: state invariant 0 holds.                                I@17:02:43.619
+Step 10: picking a transition out of 1 transition(s)              I@17:02:43.619
+State 11: Checking 1 state invariants                             I@17:02:43.621
+State 11: state invariant 0 holds.                                I@17:02:43.621
+Step 11: picking a transition out of 1 transition(s)              I@17:02:43.621
+State 12: Checking 1 state invariants                             I@17:02:43.624
+State 12: state invariant 0 holds.                                I@17:02:43.624
+Step 12: picking a transition out of 1 transition(s)              I@17:02:43.624
+State 13: Checking 1 state invariants                             I@17:02:43.626
+Check the trace in: d:\ModelMirrors\releases\20261029-completion-7e9a27d\matrix-run-2\modelmirrors-session-9-632359948\_apalache-out\HourClock.tla\2026-10-29T17-02-42_14233106088595390676\violation1.tla, d:\ModelMirrors\releases\20261029-completion-7e9a27d\matrix-run-2\modelmirrors-session-9-632359948\_apalache-out\HourClock.tla\2026-10-29T17-02-42_14233106088595390676\MCviolation1.out, d:\ModelMirrors\releases\20261029-completion-7e9a27d\matrix-run-2\modelmirrors-session-9-632359948\_apalache-out\HourClock.tla\2026-10-29T17-02-42_14233106088595390676\violation1.json, d:\ModelMirrors\releases\20261029-completion-7e9a27d\matrix-run-2\modelmirrors-session-9-632359948\_apalache-out\HourClock.tla\2026-10-29T17-02-42_14233106088595390676\violation1.itf.json I@17:02:43.754
+State 13: state invariant 0 violated.                             I@17:02:43.754
+Found 1 error(s)                                                  I@17:02:43.755
+The outcome is: Error                                             I@17:02:43.757
+Checker has found an error                                        I@17:02:43.770
+It took me 0 days  0 hours  0 min  0 sec                          I@17:02:43.770
+Total time: 0.879 sec                                             I@17:02:43.770
+EXITCODE: ERROR (12)
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/D:/Programs/apalache/lib/apalache.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+warning: client certificate <private-credential-path> expires in 1 day(s)

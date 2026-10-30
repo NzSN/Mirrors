@@ -12,13 +12,13 @@ from report import semantic_payload
 
 
 def archive(source: Path, destination: Path, repository: Path):
-    report = json.loads((source / "report.json").read_text())
+    report = json.loads((source / "report.json").read_text(encoding="utf-8"))
     if not report["inputs"].get("implementationStable"):
         raise ValueError("cannot publish evidence from a changing implementation")
     if destination.exists():
         raise ValueError("evidence destination already exists")
     semantic = canonical_json(semantic_payload(report)) + "\n"
-    if semantic != (source / "semantic.json").read_text():
+    if semantic != (source / "semantic.json").read_text(encoding="utf-8"):
         raise ValueError("source semantic payload does not verify")
     refs = {ref["path"]: ref["sha256"] for row in report["observations"] for ref in row["rawArtifacts"]}
     for name, sha in refs.items():
@@ -39,14 +39,17 @@ def archive(source: Path, destination: Path, repository: Path):
 
     for name in refs:
         path = destination / name
-        path.write_text(portable(path.read_text(encoding="utf-8")), encoding="utf-8")
+        # Native Windows diagnostics can use an OEM code page. Preserve those
+        # bytes and line endings while replacing only known workspace paths.
+        raw = path.read_bytes().decode("utf-8", errors="surrogateescape")
+        path.write_bytes(portable(raw).encode("utf-8", errors="surrogateescape"))
     for row in report["observations"]:
         row["invocation"]["argv"] = [portable(arg) for arg in row["invocation"]["argv"]]
         row["diagnostics"] = json.loads(portable(json.dumps(row["diagnostics"])))
         for ref in row["rawArtifacts"]:
             ref["sha256"] = hashlib.sha256((destination / ref["path"]).read_bytes()).hexdigest()
         observation_path = destination / "fixtures" / row["fixture"] / row["engine"] / "observation.json"
-        observation_path.write_text(canonical_json(row) + "\n")
+        observation_path.write_text(canonical_json(row) + "\n", encoding="utf-8", newline="\n")
     report["inputs"]["command"] = [portable(arg) for arg in report["inputs"]["command"]]
     report["inputs"]["archive"] = {"sanitizedHostPaths": True,
         "archiverSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -54,7 +57,7 @@ def archive(source: Path, destination: Path, repository: Path):
         "originalRawHashes": refs}
     if canonical_json(semantic_payload(report)) + "\n" != semantic:
         raise ValueError("archiving changed semantic evidence")
-    (destination / "report.json").write_text(canonical_json(report) + "\n")
+    (destination / "report.json").write_text(canonical_json(report) + "\n", encoding="utf-8", newline="\n")
     return report
 
 

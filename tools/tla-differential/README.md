@@ -112,3 +112,20 @@ The reference adapters receive no summary/outcome fields. They are trusted
 comparison tooling, not a security boundary: public fixture IDs can suggest an
 outcome and are never an oracle. There is no automatic expectation update or
 reviewed-difference promotion.
+
+
+## Native Windows reference execution
+
+The runner supports native Windows with the supplied pinned JDK. It creates
+reference processes suspended, assigns them to a non-inheritable Windows Job
+with kill-on-close, and resumes only after successful assignment. Timeout,
+output overflow and normal leader exit terminate the entire owned job and
+confirm it empty. Native controls exercise exited-leader descendants, timeout
+cleanup and an unrelated sentinel. This platform adapter is separate from
+MirrorGate and establishes no M4 quota or recovery acceptance.
+
+SANY classpaths use the platform separator; canonical JSON/text uses UTF-8 and
+LF. Portable archiving preserves non-UTF-8 diagnostic bytes and original line
+endings while replacing known workspace paths. Source and archived hashes are
+retained independently. Actual live calibration refuses a missing bridge when
+`DV_LIVE_REFERENCES=1`; use the bridge compiled by the required runner.

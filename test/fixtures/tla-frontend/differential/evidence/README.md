@@ -1,5 +1,16 @@
 # Differential validation evidence — 2026-09-13
 
+## Profile-6 acceptance — 2026-10-29
+
+Fresh native-Windows required runs [T](profile6-20261029-t/README.md) and
+[U](profile6-20261029-u/README.md) pass with identical semantic bytes, 183/183
+observations and zero unresolved findings. Fourteen outcome-only policy bindings
+were reviewed from the [new probe](profile6-20261029-probe-portable/README.md);
+profile-5 approvals remain unchanged history. Unsupported comparisons remain
+coverage gaps. The language-profile document is retained byte-identically as a
+qualified input; its dated October 26 pending-status note is superseded here.
+
+
 **Profile-4 differential acceptance: passed.** Historical profile-3 and
 profile-2 captures below remain immutable evidence; they are not rewritten or
 reinterpreted.

@@ -1,0 +1,15 @@
+Source overlay admitted: 42 files
+
+** WARNING: connection is not using a post-quantum key exchange algorithm.
+** This session may be vulnerable to "store now, decrypt later" attacks.
+** The server may need to be upgraded. See https://openssh.com/pq.html
+test_invalid_json_is_never_success (test_references.References) ... ok
+test_live_chained_and_local_instance_visibility (test_references.References) ... ok
+test_live_chained_and_two_named_instances_are_distinct (test_references.References) ... ok
+test_live_pinned_sany_named_unnamed_implicit_and_level (test_references.References) ... ok
+test_live_sany_syntax_name_and_level_rejections (test_references.References) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.436s
+
+OK

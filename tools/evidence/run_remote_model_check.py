@@ -42,6 +42,20 @@ def required(name: str) -> str:
     return value
 
 
+def selected_endpoint(environment=None) -> tuple[str, str]:
+    """Explicit qualification selection; retain the historical manual default."""
+    environment = os.environ if environment is None else environment
+    host = environment.get("MIRRORS_REMOTE_HOST")
+    port = environment.get("MIRRORS_REMOTE_PORT")
+    if host is None and port is None:
+        return HOST, PORT
+    if (not isinstance(host, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9.-]{0,252}", host)
+            or not isinstance(port, str) or not re.fullmatch(r"[1-9][0-9]{0,4}", port)
+            or int(port) > 65535):
+        raise ValueError("explicit remote host and port must both be valid")
+    return host, port
+
+
 def regular_file(name: str) -> str:
     value = required(name)
     info = os.stat(value, follow_symlinks=False)
@@ -62,9 +76,10 @@ def validate_observation(path: Path, pin: str, binary: str, source: str) -> str:
     """Admit an observed owned Windows process, without claiming a service."""
     if path.is_symlink() or not path.is_file() or path.stat().st_size > 1024 * 1024:
         raise ValueError("deployment observation is not a bounded regular file")
+    host, port = selected_endpoint()
     observation = json.loads(path.read_text())
     if (observation["schema"] != "mirrors.windows-deployment-observation/v1"
-            or observation["endpoint"] != {"host": HOST, "port": int(PORT)}
+            or observation["endpoint"] != {"host": host, "port": int(port)}
             or observation["deploymentMode"] != "owned-native-console"
             or type(observation["processId"]) is not int or observation["processId"] < 1
             or observation["binarySha256"] != binary
@@ -91,6 +106,7 @@ def validate_observation(path: Path, pin: str, binary: str, source: str) -> str:
 
 def main() -> int:
     try:
+        host, port = selected_endpoint()
         cert = regular_file("MIRRORS_REMOTE_CLIENT_CERT")
         key = regular_file("MIRRORS_REMOTE_CLIENT_KEY")
         ca = regular_file("MIRRORS_REMOTE_CA")
@@ -130,7 +146,7 @@ def main() -> int:
 
     print(
         "remote-model-check "
-        f"endpoint={HOST}:{PORT} service={SERVICE} tls=1.3-mtls "
+        f"endpoint={host}:{port} service={SERVICE} tls=1.3-mtls "
         f"server_pin_sha256={pin} service_binary_sha256={service_binary} "
         f"service_source_ref={source_ref} client_binary_sha256={sha256(MIRROR)} "
         f"model=HourClock.tla model_sha256={sha256(SPEC)} "
@@ -144,8 +160,8 @@ def main() -> int:
     argv = [
         str(MIRROR),
         "validate",
-        "--host", HOST,
-        "--port", PORT,
+        "--host", host,
+        "--port", port,
         "--tls",
         "--cert", cert,
         "--key", key,

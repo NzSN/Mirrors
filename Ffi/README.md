@@ -23,6 +23,11 @@ Failed client handshakes and accepted server sockets remain caller-owned, so
 the Lean failure path or server accept loop closes them. `tlsClose` still only
 sends best-effort `close_notify`; it does not free the SSL external.
 
+The client receive timeout bounds only the TLS handshake and is cleared after
+success. Established protocol operations retain their own wait semantics,
+including 30-second async long polls; callers can apply an outer operation
+deadline. A delayed application response cannot consume the handshake budget.
+
 ## Building and checking native changes
 
 Run `lake build` after editing a shim. Lake tracks C source/header contents and

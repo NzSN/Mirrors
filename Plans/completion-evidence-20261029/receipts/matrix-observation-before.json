@@ -1,0 +1,35 @@
+{
+  "binarySha256": "97770abddf6e5a1c198c9e5a0ef37ffa35aa29c1b9135169642c5365856190ea",
+  "deploymentMode": "owned-native-console",
+  "endpoint": {
+    "host": "127.0.0.1",
+    "port": 19131
+  },
+  "interopFixtures": {
+    "files": {
+      "Counter.tla": "9d18338f44e5ae57a332cffd522cd13d7ca823f2cf114d661483602e85198f37",
+      "violation.itf.json": "f7135cdd39e4da69d81c2529919e899d3193f2a3afa532c0433f40f5e20c89eb"
+    },
+    "root": "D:\\ModelMirrors\\releases\\20261029-completion-7e9a27d\\matrix-interop"
+  },
+  "mtls": {
+    "serverLeafSha256": "2ddc38ae257eafaee59763fa055242abac9a5f71a8047c6496a36b6d4f455922"
+  },
+  "observedAt": "2026-10-29T09:05:04.249Z",
+  "processCreatedAt": "2026-10-29T08:29:55.311Z",
+  "processId": 27476,
+  "runtime": {
+    "apalacheArchiveSha256": "7cfadf6e8c04c63f05ac907ec9541c66297005c8cb5efb1731f6a838dfc3fad2",
+    "apalacheJarSha256": "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8",
+    "apalacheVersion": "0.62.2",
+    "javaArchiveSha256": "54ba13f3ef80887fa74708b2a32daaae6262517ba68433d850bb4b426343172b",
+    "javaExecutableSha256": "58df5c13e5d6e68f242ad9b724479122828523008ef0907d3f2a02f54afaff23",
+    "javaVersion": "25.0.4+7-LTS"
+  },
+  "runtimeArchiveVerification": "actual executable JAR, Java executable and launcher hashes; Apalache archive pin is selection metadata",
+  "runtimeManifestSha256": "632dde9c78f1552850e268a6f59a17a8743369d56655f2edf98482f40517a2f4",
+  "schema": "mirrors.windows-deployment-observation/v1",
+  "sourceBaseRevision": "7e9a27d0db72ec36b49c6fc5764b2687b565edfd",
+  "sourceManifestSha256": "e2da95969b554d650925a44ba8410094f0809e280afe2a8cc147169941e163ba",
+  "sourceTreeSha256": "7bd27aff6fb776d6b75de05702637f659ab8d933b6e1e3c34a298a569d623faa"
+}

@@ -18,7 +18,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[3]
 TOOLS = ROOT / 'tools/deterministic-scheduling'
 LAUNCHER = ROOT / '.lake/build/bin/mirrors_dpm'
-HELPERS = ('cli.py', 'dpm_host.py', 'timeline.py')
+HELPERS = ('cli.py', 'dpm_host.py', 'timeline.py', 'controlled_model.py')
 
 
 def sha(path):

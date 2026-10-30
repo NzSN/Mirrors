@@ -1,0 +1,100 @@
+[  4%] Building CXX object CMakeFiles/mirrorcpp.dir/src/value.cpp.o
+[  9%] Building CXX object CMakeFiles/mirrorcpp.dir/src/protocol.cpp.o
+[ 13%] Building CXX object CMakeFiles/mirrorcpp.dir/src/model_interface.cpp.o
+[ 18%] Building CXX object CMakeFiles/mirrorcpp.dir/src/schedule.cpp.o
+[ 22%] Building CXX object CMakeFiles/mirrorcpp.dir/src/schedule_binding.cpp.o
+[ 27%] Building CXX object CMakeFiles/mirrorcpp.dir/src/schedule_exploration.cpp.o
+[ 31%] Building CXX object CMakeFiles/mirrorcpp.dir/src/schedule_sync.cpp.o
+[ 36%] Building CXX object CMakeFiles/mirrorcpp.dir/src/client.cpp.o
+[ 40%] Building CXX object CMakeFiles/mirrorcpp.dir/src/registry.cpp.o
+[ 45%] Building CXX object CMakeFiles/mirrorcpp.dir/src/spec.cpp.o
+[ 50%] Building CXX object CMakeFiles/mirrorcpp.dir/src/transport.cpp.o
+[ 54%] Building CXX object CMakeFiles/mirrorcpp.dir/src/detail/net.cpp.o
+[ 59%] Building CXX object CMakeFiles/mirrorcpp.dir/src/detail/process.cpp.o
+[ 63%] Building CXX object CMakeFiles/mirrorcpp.dir/src/detail/http.cpp.o
+[ 68%] Building CXX object CMakeFiles/mirrorcpp.dir/src/detail/tls.cpp.o
+[ 72%] Linking CXX static library libmirrorcpp.a
+[ 72%] Built target mirrorcpp
+[ 77%] Building CXX object examples/CMakeFiles/hourclock.dir/hourclock.cpp.o
+[ 81%] Building CXX object examples/CMakeFiles/scheduled_counter.dir/scheduled_counter.cpp.o
+In file included from /home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.cpp:1:
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp: In function ‘mirrorcpp::schedule::Schedule scheduled_counter::plan(bool)’:
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:20:1: error: dangling pointer to an unnamed temporary may be used [-Werror=dangling-pointer=]
+   20 | }
+      | ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:16:57: note: unnamed temporary defined here
+   16 |           {"b", "write"}, {"a", "$done"}, {"b", "$done"}}
+      |                                                         ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:20:1: error: dangling pointer to an unnamed temporary may be used [-Werror=dangling-pointer=]
+   20 | }
+      | ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:16:57: note: unnamed temporary defined here
+   16 |           {"b", "write"}, {"a", "$done"}, {"b", "$done"}}
+      |                                                         ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:20:1: error: dangling pointer to an unnamed temporary may be used [-Werror=dangling-pointer=]
+   20 | }
+      | ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:16:57: note: unnamed temporary defined here
+   16 |           {"b", "write"}, {"a", "$done"}, {"b", "$done"}}
+      |                                                         ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:20:1: error: dangling pointer to an unnamed temporary may be used [-Werror=dangling-pointer=]
+   20 | }
+      | ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:16:57: note: unnamed temporary defined here
+   16 |           {"b", "write"}, {"a", "$done"}, {"b", "$done"}}
+      |                                                         ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:20:1: error: dangling pointer to an unnamed temporary may be used [-Werror=dangling-pointer=]
+   20 | }
+      | ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:16:57: note: unnamed temporary defined here
+   16 |           {"b", "write"}, {"a", "$done"}, {"b", "$done"}}
+      |                                                         ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:20:1: error: dangling pointer to an unnamed temporary may be used [-Werror=dangling-pointer=]
+   20 | }
+      | ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:16:57: note: unnamed temporary defined here
+   16 |           {"b", "write"}, {"a", "$done"}, {"b", "$done"}}
+      |                                                         ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:20:1: error: dangling pointer to an unnamed temporary may be used [-Werror=dangling-pointer=]
+   20 | }
+      | ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:18:56: note: unnamed temporary defined here
+   18 |           {"b", "read"}, {"b", "write"}, {"b", "$done"}};
+      |                                                        ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:20:1: error: dangling pointer to an unnamed temporary may be used [-Werror=dangling-pointer=]
+   20 | }
+      | ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:18:56: note: unnamed temporary defined here
+   18 |           {"b", "read"}, {"b", "write"}, {"b", "$done"}};
+      |                                                        ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:20:1: error: dangling pointer to an unnamed temporary may be used [-Werror=dangling-pointer=]
+   20 | }
+      | ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:18:56: note: unnamed temporary defined here
+   18 |           {"b", "read"}, {"b", "write"}, {"b", "$done"}};
+      |                                                        ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:20:1: error: dangling pointer to an unnamed temporary may be used [-Werror=dangling-pointer=]
+   20 | }
+      | ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:18:56: note: unnamed temporary defined here
+   18 |           {"b", "read"}, {"b", "write"}, {"b", "$done"}};
+      |                                                        ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:20:1: error: dangling pointer to an unnamed temporary may be used [-Werror=dangling-pointer=]
+   20 | }
+      | ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:18:56: note: unnamed temporary defined here
+   18 |           {"b", "read"}, {"b", "write"}, {"b", "$done"}};
+      |                                                        ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:20:1: error: dangling pointer to an unnamed temporary may be used [-Werror=dangling-pointer=]
+   20 | }
+      | ^
+/home/lsz/Codebase/MirrorCPP/examples/scheduled_counter.hpp:18:56: note: unnamed temporary defined here
+   18 |           {"b", "read"}, {"b", "write"}, {"b", "$done"}};
+      |                                                        ^
+cc1plus: all warnings being treated as errors
+gmake[2]: *** [examples/CMakeFiles/scheduled_counter.dir/build.make:79: examples/CMakeFiles/scheduled_counter.dir/scheduled_counter.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:1123: examples/CMakeFiles/scheduled_counter.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+[ 86%] Linking CXX executable hourclock
+[ 86%] Built target hourclock
+gmake: *** [Makefile:146: all] Error 2

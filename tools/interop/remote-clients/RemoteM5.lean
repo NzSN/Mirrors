@@ -21,7 +21,9 @@ def main : IO UInt32 := do
     initPredicate := some "Init", nextPredicate := some "Next" }
   let tls : ServerMode.TlsClientConfig := {
     caFile := ca, certFile := cert, keyFile := key, expectedCertSha256 := some pin }
-  let t ← ServerMode.connectMirrorTls tls "172.28.144.1" 8999
+  let host ← required "MIRRORS_REMOTE_HOST"
+  let port := (← required "MIRRORS_REMOTE_PORT").toNat!
+  let t ← ServerMode.connectMirrorTls tls host (UInt16.ofNat port)
   match ← runClientValidate (.transport t) cfg bound (some spec) with
   | .ok _ => IO.println "VALID"; return 0
   | .error e => IO.eprintln (MirrorError.toString e); return 1

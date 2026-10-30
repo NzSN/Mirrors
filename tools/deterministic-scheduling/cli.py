@@ -39,6 +39,17 @@ Project, Refusal, reduce, strict, write, validate_exploration, sha = (
 
 ACTIVE_PROJECT = None
 
+
+def controlled_model():
+    source = Path(__file__).with_name('controlled_model.py')
+    raw = source.read_bytes()
+    if len(raw) > 1048576 or hashlib.sha256(raw).hexdigest() != HOST_IDENTITIES.get(source.name):
+        raise Refusal('controlled model helper differs from launcher selection')
+    module = types.ModuleType('controlled_model')
+    module.__file__ = str(source)
+    exec(compile(raw, str(source), 'exec'), module.__dict__)
+    return module
+
 def main():
     global ACTIVE_PROJECT
     def cancelled(_signal, _frame): host.cancel_operation(_signal, _frame)
@@ -63,10 +74,29 @@ def main():
     report.add_argument('--receipt', type=Path, required=True)
     report.add_argument('--format', choices=['text', 'json'], default='text')
     report.add_argument('--expected-sha256', required=True)
+    compare = sub.add_parser('compare-sync')
+    for name in ['receipt', 'mapping', 'mirror', 'remote']:
+        compare.add_argument('--' + name, type=Path, required=True)
+        compare.add_argument('--' + name + '-sha256', required=True)
+    compare.add_argument('--model', type=Path, required=True)
+    compare.add_argument('--implementation', type=Path, required=True)
+    compare.add_argument('--out', type=Path, required=True)
     args = parser.parse_args()
+    if args.operation == 'compare-sync':
+        result, code = controlled_model().compare(args, SELECTED_POLICY, host)
+        print(json.dumps(result, sort_keys=True))
+        return code
     if args.operation == 'report':
         if sha(args.receipt) != args.expected_sha256: raise Refusal('receipt digest differs')
         receipt = strict(args.receipt)
+        if receipt.get('schema') == 'mirrors.controlled-sync-model-comparison/v1':
+            controlled_model().validate_result(receipt)
+            for name, digest in receipt['artifacts'].items():
+                artifact = host.regular(args.receipt.parent / name)
+                if sha(artifact) != digest: raise Refusal('controlled comparison artifact differs')
+            print(json.dumps(receipt, sort_keys=True) if args.format == 'json' else
+                  receipt['comparison'] + ': finite controlled mutex/FIFO model; cleanup=' + receipt['cleanup'])
+            return 0
         if receipt.get('schema') in ['mirrors.dpm-reduction/v1', 'mirrors.dpm-exploration/v1', 'mirrors.controlled-sync-replay/v1', 'mirrors.controlled-sync-exploration/v1']:
             if receipt.get('schema') == 'mirrors.dpm-reduction/v1':
                 if receipt.get('claim') not in ['best_observed','minimal_in_admitted_catalog'] or receipt.get('scope') != 'admitted-catalog-only': raise Refusal('unknown reduction claim')

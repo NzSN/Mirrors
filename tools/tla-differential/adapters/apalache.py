@@ -36,7 +36,7 @@ def observe(*, fixture, materialized, config, limits, artifact_dir):
     parsed = None
     if result.status.value == 'completed' and parsed_path.is_file():
         try:
-            parsed = json.loads(parsed_path.read_text())
+            parsed = json.loads(parsed_path.read_text(encoding="utf-8"))
         except (ValueError, OSError):
             pass
     execution, outcome = classify(result, parsed)

@@ -232,7 +232,9 @@ def deliveryPlanning (f : Failures) : IO Unit := do
 (the accept loop then closes the socket and takes the next client). -/
 def echoSession (t : Transport) : IO Unit := do
   match ← t.recv with
-  | some l => t.send ("echo:" ++ l)
+  | some l =>
+      if l == "slow-poll" then IO.sleep 6000
+      t.send ("echo:" ++ l)
   | none => pure ()
 
 /-- One session per connection; drops are logged and survived. -/
@@ -622,6 +624,17 @@ def mainTests : IO UInt32 := do
       t.send "secure-hello"
       let r ← t.recv
       check f "mtls echo round trip (TLS 1.3, pinned fp)" (r == some "echo:secure-hello")
+  -- A long-poll response may arrive after the handshake's five-second budget.
+  match ← tryConnectTls clientCtx "localhost" tp fp 10 with
+  | .error error => check f s!"TLS delayed response connects ({error})" false
+  | .ok transport =>
+      transport.send "slow-poll"
+      let started ← IO.monoMsNow
+      try
+        let response ← transport.recv
+        check f "TLS application wait survives the handshake timeout"
+          (response == some "echo:slow-poll" && (← IO.monoMsNow)-started >= 5500)
+      catch error => check f s!"TLS delayed application read ({error})" false
   -- t26: IP-literal connect (M3) — the good cert carries SAN
   -- IP:127.0.0.1, so pinning the IP literal must now SUCCEED via
   -- set1_ip_asc (it used to fail closed)

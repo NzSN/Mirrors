@@ -261,3 +261,29 @@ permissions, public canaries, and historical-package boundaries.
 Qualification coverage additionally includes bounded linked scopes, graph
 cycles, duplicate credit, exact distribution binding, reproduction-origin
 linkage, and removal or tampering of any finalized input bundle.
+
+
+## Explicit remote endpoint selection
+
+Qualification collection now requires `MIRRORS_REMOTE_HOST` and
+`MIRRORS_REMOTE_PORT`. Both must be supplied together; host syntax and numeric
+port bounds are checked before contact. The fresh owned-process observation must
+name that exact client endpoint. These fields enter the private command context.
+The historical module constants remain defaults only for uncollected manual use;
+they do not establish a current endpoint or a current service identity.
+
+A loopback SSH-forwarded endpoint is admissible only with its separately observed
+owned Windows server, selected source/runtime identities and exact mTLS peer pin.
+A listening tunnel alone is not oracle evidence. Retain the tunnel selection,
+actual remote observations and owned-server cleanup with the campaign. Test
+private keys can be generated independently on their consuming hosts, exchanging
+only public CSRs/certificates; no remote private-key export is required.
+
+`mirrors.interop` also records `MIRRORS_REMOTE_INTEROP_ROOT`. In this remote-staged
+mode, the fresh deployment observation must contain `interopFixtures` with the
+same Windows root and exact Counter/trace hashes derived from the admitted SDK
+runtime. The driver does not write a presumed coordinator-side Windows mount.
+The operator observes the remote fixture identities before and after the campaign;
+those observations remain part of the acceptance record. The legacy shared-mount
+manual path is retained separately. Fresh execution results never renew an older
+platform, archive carrier or whole-framework qualification implicitly.

@@ -1,0 +1,32 @@
+{
+    "schema":  "mirrors.windows-candidate-package/v1",
+    "version":  "0.2.0-rc.1",
+    "published":  false,
+    "deployed":  false,
+    "sourceBase":  "7e9a27d0db72ec36b49c6fc5764b2687b565edfd",
+    "sourceOverlaySha256":  "2777aaa312afff749c023fbc580e98ffa10e9987c391701610249b5d03c7183a",
+    "sourceOverlayVerifiedAfterGates":  true,
+    "files":  {
+                  "bin/libcrypto-3-x64.dll":  "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7",
+                  "bin/libssl-3-x64.dll":  "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+                  "bin/model_interface_gen.exe":  "573400fe73473037aff6008a119579b7fa3d34a59efc216ec2f3b054c83fa142",
+                  "bin/ModelMirrors.exe":  "97770abddf6e5a1c198c9e5a0ef37ffa35aa29c1b9135169642c5365856190ea",
+                  "bin/zlib1.dll":  "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5"
+              },
+    "gates":  [
+                  "fixtures_replay",
+                  "diff_cross",
+                  "model_interface_spec",
+                  "stdio_smoke",
+                  "transport_spec",
+                  "jobstore_spec",
+                  "async_resource_spec",
+                  "dpm_sync_spec"
+              ],
+    "scope":  "native build and eight selected non-model runtime suites; no full lake test, M5 matrix, production service lifecycle or reboot qualification",
+    "production":  {
+                       "pid":  9920,
+                       "sha256":  "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+                       "modified":  false
+                   }
+}

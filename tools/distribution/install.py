@@ -7,6 +7,7 @@ import argparse
 import fcntl
 import json
 import os
+import platform
 import shutil
 import stat
 import sys
@@ -252,6 +253,34 @@ def extract_prefix(archive: Path, destination: Path, expected_prefix: str) -> No
         shutil.copytree(source, destination)
 
 
+def observed_package_version(directory: Path, expected_name: str) -> str:
+    package = load_json(directory / "package.json")
+    version = package.get("version")
+    if (package.get("name") != expected_name or not isinstance(version, str)
+            or not version or len(version.encode("utf-8")) > 128
+            or any(ord(character) < 32 for character in version)):
+        raise ValueError(f"materialized package identity/version is invalid: {expected_name}")
+    return version
+
+
+def observed_platform(profile_id: str) -> dict:
+    backends = {"checked-replay-local": "local-process",
+        "checked-replay-gate": "linux-bubblewrap-v1", "fresh-trace": "local-process"}
+    if sys.platform != "linux" or profile_id not in backends:
+        raise ValueError("reference distribution requires an observed Linux platform")
+    try:
+        release = platform.freedesktop_os_release()
+    except OSError as error:
+        raise ValueError("cannot observe the installation OS release") from error
+    distribution, version = release.get("ID", ""), release.get("VERSION_ID", "")
+    architecture = platform.machine()
+    if any(not re.fullmatch(r"[A-Za-z0-9._-]{1,64}", value)
+           for value in [distribution, version, architecture]):
+        raise ValueError("installation platform identity is incomplete or malformed")
+    return {"os": "linux", "osRelease": distribution + "-" + version,
+        "architecture": architecture, "backend": backends[profile_id]}
+
+
 def materialize(cache: Path, runtime: Path, manifest: dict, contract: dict) -> dict:
     runtime.mkdir(mode=0o700)
     artifacts = {entry["artifactId"]: cache / entry["path"] for entry in manifest["artifacts"]}
@@ -304,21 +333,21 @@ def materialize(cache: Path, runtime: Path, manifest: dict, contract: dict) -> d
                 selected["rootPrefix"], selected.get("include", []),
                 selected.get("includeTrees", []))
     profile = contract["profiles"][manifest["profileId"]]
-    catalog_profile = next(item for item in contract["catalog"]["distributionProfiles"]
-        if item["profileId"] == profile["catalogProfileId"])
     artifact_identities = {entry["artifactId"]: entry for entry in manifest["artifacts"]}
     admitted_trees = {entry["inputId"]: {key: entry[key]
         for key in ("algorithm", "digest", "entryCount", "bytes")}
         for entry in manifest["buildProvenance"]["trees"]}
     packages_observed = [{"packageId": "mirrorecma", "componentId": "mirrorecma",
-        "artifactId": "mirrorecma-package", "version": "2.0.0",
+        "artifactId": "mirrorecma-package",
+        "version": observed_package_version(packages / "mirrorecma", "mirrorecma"),
         "sha256": artifact_identities["mirrorecma-package"]["sha256"]}]
     package_policy = [{"packageId": "mirrorecma", "componentId": "mirrorecma",
         "artifactId": "mirrorecma-package"}]
     if "mirrorgate-integration" in artifact_identities:
         packages_observed.append({"packageId": "mirrorgate-mirrorecma",
             "componentId": "mirrorgate", "artifactId": "mirrorgate-integration",
-            "version": "0.1.0", "sha256": artifact_identities["mirrorgate-integration"]["sha256"]})
+            "version": observed_package_version(packages / "mirrorgate-mirrorecma", "mirrorgate-mirrorecma"),
+            "sha256": artifact_identities["mirrorgate-integration"]["sha256"]})
         package_policy.append({"packageId": "mirrorgate-mirrorecma",
             "componentId": "mirrorgate", "artifactId": "mirrorgate-integration"})
     executable_policy = [
@@ -393,7 +422,7 @@ def materialize(cache: Path, runtime: Path, manifest: dict, contract: dict) -> d
                 cache / "cache-index.json").decode("utf-8"),
             "componentRefs": manifest["componentRefs"], "packages": packages_observed,
             "executables": executable_observed, "runtimeTrees": manifest["runtimeTrees"],
-            "platform": catalog_profile["platform"],
+            "platform": observed_platform(manifest["profileId"]),
             "policy": {"admission": "qualification-candidate",
                 "manifestProfileId": manifest["profileId"],
                 "catalogProfileId": profile["catalogProfileId"], "packages": package_policy,

@@ -209,18 +209,19 @@ class _OwnedCancellation:
             raise Refusal('operation cancelled')
 
 
-def owned_process(command, directory, timeout, max_bytes, budget=None):
+def owned_process(command, directory, timeout, max_bytes, budget=None, accepted_exits=(0,), input_path=None):
     """Run one non-detaching process group, bound stream retention, audit all files."""
     with _OwnedCancellation() as cancellation:
-        return _run_owned_process(command, directory, timeout, max_bytes, budget, cancellation)
+        return _run_owned_process(command, directory, timeout, max_bytes, budget, cancellation, accepted_exits, input_path)
 
 
-def _run_owned_process(command, directory, timeout, max_bytes, budget, cancellation):
+def _run_owned_process(command, directory, timeout, max_bytes, budget, cancellation, accepted_exits, input_path):
     directory = Path(directory)
     budget = budget or EvidenceBudget(directory, max_bytes, reserve=0)
     logs = [directory / 'stdout.log', directory / 'stderr.log']
     handles = [p.open('xb') for p in logs]
     child = None
+    input_handle = None
     selector = selectors.DefaultSelector()
     deadline = time.monotonic() + timeout
     primary = None
@@ -229,8 +230,12 @@ def _run_owned_process(command, directory, timeout, max_bytes, budget, cancellat
     try:
         cancellation.check()
         budget.audit(directory, max_bytes)
+        if input_path is not None:
+            selected_input = regular(input_path)
+            if selected_input.stat().st_size > max_bytes: raise Refusal('owned input stream exceeds operation bound')
+            input_handle = selected_input.open('rb')
         child = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            cwd=directory, start_new_session=True,
+            stdin=input_handle, cwd=directory, start_new_session=True,
             env={'PATH': '/usr/bin:/bin', 'LC_ALL': 'C.UTF-8', 'PYTHONDONTWRITEBYTECODE': '1'})
         for pipe, handle in zip([child.stdout, child.stderr], handles):
             os.set_blocking(pipe.fileno(), False)
@@ -255,10 +260,11 @@ def _run_owned_process(command, directory, timeout, max_bytes, budget, cancellat
                 if _group_alive(child.pid): raise Refusal('runner exited with live owned descendants')
                 if not selector.get_map(): break
             if time.monotonic() >= deadline: raise Refusal('runner timeout')
-        if child.returncode != 0: raise Refusal('runner failed: ' + str(child.returncode))
+        if child.returncode not in accepted_exits: raise Refusal('runner failed: ' + str(child.returncode))
     except (Refusal, OSError, subprocess.SubprocessError) as error:
         primary = error
     finally:
+        if input_handle is not None: input_handle.close()
         if child is not None:
             for sig in [signal.SIGTERM, signal.SIGKILL]:
                 try: os.killpg(child.pid, sig)
@@ -298,6 +304,7 @@ def _run_owned_process(command, directory, timeout, max_bytes, budget, cancellat
         if primary is not None:
             raise ProcessFailure(primary, cleanup, measured, max_bytes, discarded)
         if cleanup != 'confirmed': raise Refusal('owned process cleanup incomplete')
+    return child.returncode
 
 
 class Project:

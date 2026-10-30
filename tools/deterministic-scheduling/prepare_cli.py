@@ -48,7 +48,7 @@ def main():
         (root / 'share/mirrors-dpm').mkdir(parents=True)
         shutil.copy2(ROOT / '.lake/build/bin/mirrors_dpm', root / 'bin/mirrors-dpm')
         shutil.copy2(ROOT / '.lake/build/bin/mirror', root / 'runtime/mirror')
-        for name in ['cli.py', 'dpm_host.py', 'timeline.py']:
+        for name in ['cli.py', 'dpm_host.py', 'timeline.py', 'controlled_model.py']:
             shutil.copy2(TOOLS / name, root / 'share/mirrors-dpm' / name)
         shutil.copy2(TOOLS / 'apps/counter_runner.py', root / 'counter_runner.py')
         shutil.copy2(ROOT / 'test/fixtures/deterministic-scheduling/ScheduledCounter.tla', root / 'model.tla')

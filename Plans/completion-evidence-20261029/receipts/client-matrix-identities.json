@@ -1,0 +1,26 @@
+{
+  "schema": "mirrors.client-matrix-artifact-reobservation/v1",
+  "status": "passed",
+  "rows": 22,
+  "sourceRevisions": {
+    "cpp": "8c542a6b1339cc0b6176465ff7f17a32e614553d",
+    "haskell": "4aa693f86e18349bb97c050dd33aecbf730b6fa2",
+    "rust": "6b9480ab81717b76ca7f74b41fc554578b70c890",
+    "lean": "a8634ebe2455f97d15b55bec3c810d945cb6e3d3",
+    "ecma": "f94358834dce2e527c8bc8feec0423a54cf4176c"
+  },
+  "binaries": {
+    "cpp": "182daa799d8d2c8f7c1f41ae0ba23a0aaba0103ae5cc1f0c99d587b0c3a4416a",
+    "haskell": "843327b28f18c20608d8b56855ccba6e88ea406986ac1f17eb576bb8036a4b37",
+    "rust": "d059e1c35dac82aa35d4a482b5f9439007342646405dae57b13d01fe5738a8d0",
+    "lean": "5c31b195659f078b10cae3ac053922fa2654267aa9ec6e8a130e85111e5a6c8f",
+    "ecmaAdapter": "7870d367c7777ad0fb620a6a0ad788488d3274957672c6563605c7a22f09741c"
+  },
+  "node": {
+    "bytes": 122889056,
+    "sha256": "d1de76d8edf2fededf6f8b30d244e2c0529ac607923a018283b77e9c74bd932c"
+  },
+  "credentialProvisioning": "fresh keys created independently on consuming hosts; only public CSR/certificates exchanged",
+  "productionModified": false,
+  "fullFrameworkQualification": false
+}

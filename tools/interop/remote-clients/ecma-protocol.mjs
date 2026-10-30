@@ -7,10 +7,10 @@ const sdk=await import(pathToFileURL(resolve(env.ECMA_RUNTIME_ROOT,'dist/index.j
 const {connectTlsMirror,runClient,runClientWithTraces,runClientGenTraces,
   runClientExplore,startExploreSession,specFromFile,specFromFiles,presetClient,
   asInt,getParam}=sdk;
-const connect=()=>connectTlsMirror('172.28.144.1',8999,{
+const connect=()=>connectTlsMirror(env.MIRRORS_REMOTE_HOST,Number(env.MIRRORS_REMOTE_PORT),{
   caPath:env.MIRRORS_REMOTE_CA,certPath:env.MIRRORS_REMOTE_CLIENT_CERT,
   keyPath:env.MIRRORS_REMOTE_CLIENT_KEY,pin:env.MIRRORS_REMOTE_SERVER_PIN});
-const winRoot='C:\\Users\\ayden\\Desktop\\Workspace\\MirrorsRemote\\interop';
+const winRoot=env.MIRRORS_REMOTE_INTEROP_ROOT ?? 'C:\\Users\\ayden\\Desktop\\Workspace\\MirrorsRemote\\interop';
 const config={specPath:winRoot+'\\Counter.tla',invariant:'TraceComplete',
   lengthBound:6,constInit:'CInit',paramVars:'parameters'};
 const generation={numTraces:4,view:'View'};

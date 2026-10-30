@@ -99,6 +99,26 @@ class DpmHostTests(unittest.TestCase):
             with tempfile.TemporaryDirectory() as directory:
                 with self.assertRaises(Refusal):owned_process([sys.executable,'-c',code],Path(directory),timeout,bound)
 
+    def test_only_explicit_model_validator_calls_accept_exit_one(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(Refusal):
+                owned_process([sys.executable, '-c', 'raise SystemExit(1)'], Path(directory), 2, 4096)
+        with tempfile.TemporaryDirectory() as directory:
+            self.assertEqual(owned_process([sys.executable, '-c', 'raise SystemExit(1)'],
+                             Path(directory), 2, 4096, accepted_exits=(0, 1)), 1)
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(Refusal):
+                owned_process([sys.executable, '-c', 'raise SystemExit(2)'],
+                              Path(directory), 2, 4096, accepted_exits=(0, 1))
+
+    def test_owned_input_stream_is_bounded_and_delivered_without_a_shell(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory); source = root/'public-input.json'
+            source.write_text('{"publicModel":true}\n')
+            self.assertEqual(owned_process([sys.executable, '-c',
+                'import sys;sys.stdout.write(sys.stdin.read())'], root, 2, 4096, input_path=source), 0)
+            self.assertEqual((root/'stdout.log').read_text(), source.read_text())
+
     def test_launcher_refuses_changed_host_before_execution(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);(root/'bin').mkdir();(root/'share/mirrors-dpm').mkdir(parents=True)

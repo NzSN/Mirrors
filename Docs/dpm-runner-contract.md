@@ -165,3 +165,14 @@ tamper controls. F5: real mutex contention and queue backpressure, deterministic
 replay, enabled-set exploration, resource misuse, deadlock, cancellation,
 semantic mutations and confirmed joins. Existing generated/wire bytes and
 frozen historical evidence remain stable. New results get a separate record.
+
+
+## Finite F5 model-comparison extension
+
+The raw SDK `mirrors.controlled-sync-replay/v1` and exploration schemas retain
+`modelComparison:false`. The separate
+`mirrors.controlled-sync-model-comparison/v1` result can record a real remote
+model verdict for `mirrors.controlled-mutex-fifo-model/v1` only after complete
+native receipt admission, identity binding and confirmed cleanup. See the
+[finite mapping contract](dpm-controlled-model-comparison.md). This does not
+extend arbitrary C++ receipts, the general SDK explorer or F5 weak-memory scope.

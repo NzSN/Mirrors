@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 TOOL_DIR = Path(__file__).resolve().parent
 DEFAULT_OUTPUT = ROOT / '.lake/build/dpm-generated/Shell/Dpm/HostIdentity.lean'
-FILES = ['cli.py', 'dpm_host.py', 'timeline.py']
+FILES = ['cli.py', 'dpm_host.py', 'timeline.py', 'controlled_model.py']
 
 
 class PreparationError(Exception):

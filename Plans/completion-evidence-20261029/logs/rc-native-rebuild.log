@@ -1,0 +1,56 @@
+Native rebuild regression uses /home/lsz/Codebase/Mirrors/.golden-build/completion-20261029/gate-tmp/mirrors-native-rebuild-q2_78mvj/repo
+Build completed successfully (519 jobs).
+Build completed successfully (519 jobs).
+✔ [516/519] Built mirrors/socket_shim_o (118ms)
+✔ [517/519] Built transport_spec:exe (1.2s)
+✔ [518/519] Built apalache_cli_spec:exe (1.2s)
+✔ [519/519] Built mirror:exe (1.2s)
+Build completed successfully (519 jobs).
+Build completed successfully (519 jobs).
+PASS: socket C edit rebuilt all requested socket consumers
+✔ [517/519] Built mirrors/tls_shim_o (122ms)
+✔ [518/519] Built transport_spec:exe (1000ms)
+✔ [519/519] Built mirror:exe (1.1s)
+Build completed successfully (519 jobs).
+Build completed successfully (519 jobs).
+PASS: TLS C edit rebuilt TLS consumers and preserved socket-only output
+✔ [509/519] Built mirrors/socket_shim_o (64ms)
+✔ [516/519] Built mirrors/tls_shim_o (113ms)
+✔ [517/519] Built apalache_cli_spec:exe (824ms)
+✔ [518/519] Built mirror:exe (1.1s)
+✔ [519/519] Built transport_spec:exe (1.2s)
+Build completed successfully (519 jobs).
+✔ [509/519] Built mirrors/socket_shim_o (75ms)
+✔ [516/519] Built mirrors/tls_shim_o (130ms)
+✔ [517/519] Built apalache_cli_spec:exe (986ms)
+✔ [518/519] Built transport_spec:exe (1.1s)
+✔ [519/519] Built mirror:exe (1.2s)
+Build completed successfully (519 jobs).
+Build completed successfully (519 jobs).
+PASS: header-only edit reached linked executables
+✔ [512/519] Built mirrors/socket_shim_o (87ms)
+Build completed successfully (519 jobs).
+✔ [509/519] Built mirrors/socket_shim_o (77ms)
+✔ [516/519] Built mirrors/tls_shim_o (126ms)
+✔ [517/519] Built apalache_cli_spec:exe (1.5s)
+✔ [518/519] Built transport_spec:exe (1.6s)
+✔ [519/519] Built mirror:exe (1.8s)
+Build completed successfully (519 jobs).
+Build completed successfully (519 jobs).
+PASS: compiler selection/options invalidate cached build configuration
+✔ [517/519] Built mirrors/tls_shim_o (115ms)
+✔ [518/519] Built transport_spec:exe (819ms)
+✔ [519/519] Built mirror:exe (922ms)
+Build completed successfully (519 jobs).
+✔ [517/519] Built mirrors/tls_shim_o (116ms)
+✔ [518/519] Built mirror:exe (959ms)
+✔ [519/519] Built transport_spec:exe (965ms)
+Build completed successfully (519 jobs).
+Build completed successfully (519 jobs).
+PASS: OSSL_INC changes rebuild TLS consumers after lakefile caching
+✔ [518/519] Built mirror:exe (785ms)
+✔ [519/519] Built transport_spec:exe (808ms)
+Build completed successfully (519 jobs).
+Build completed successfully (519 jobs).
+PASS: OSSL_LIB changes relink TLS consumers after lakefile caching
+All native rebuild checks passed; original shim sources unchanged.

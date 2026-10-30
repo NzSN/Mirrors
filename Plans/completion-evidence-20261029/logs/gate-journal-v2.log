@@ -1,0 +1,17 @@
+test_cut_after_removal_before_terminal_publication_replays_durable_empty_evidence (test_group_process_recovery.GroupProcessRecoveryTests.test_cut_after_removal_before_terminal_publication_replays_durable_empty_evidence) ... ok
+test_foreign_session_never_reclaims_process (test_group_process_recovery.GroupProcessRecoveryTests.test_foreign_session_never_reclaims_process) ... ok
+test_group_empty_authorizes_linked_process_then_filesystem_and_retry (test_group_process_recovery.GroupProcessRecoveryTests.test_group_empty_authorizes_linked_process_then_filesystem_and_retry) ... ok
+test_group_failure_keeps_process_retryable_and_protects_files (test_group_process_recovery.GroupProcessRecoveryTests.test_group_failure_keeps_process_retryable_and_protects_files) ... ok
+test_missing_group_without_durable_empty_observation_stays_ambiguous (test_group_process_recovery.GroupProcessRecoveryTests.test_missing_group_without_durable_empty_observation_stays_ambiguous) ... ok
+test_production_process_hooks_publish_exact_link_only_after_join (test_group_process_recovery.GroupProcessRecoveryTests.test_production_process_hooks_publish_exact_link_only_after_join) ... ok
+test_recovery_interruption_after_group_cleanup_uses_durable_empty_observation (test_group_process_recovery.GroupProcessRecoveryTests.test_recovery_interruption_after_group_cleanup_uses_durable_empty_observation) ... ok
+test_replaced_delegation_never_touches_original_group (test_group_process_recovery.GroupProcessRecoveryTests.test_replaced_delegation_never_touches_original_group) ... ok
+test_stale_boot_never_writes_group_kill (test_group_process_recovery.GroupProcessRecoveryTests.test_stale_boot_never_writes_group_kill) ... ok
+test_unpublished_membership_never_reclaims_process (test_group_process_recovery.GroupProcessRecoveryTests.test_unpublished_membership_never_reclaims_process) ... ok
+test_v2_identity_and_linkage_are_immutable (test_group_process_recovery.GroupProcessRecoveryTests.test_v2_identity_and_linkage_are_immutable) ... ok
+test_wrong_group_digest_never_reclaims_process_or_enclosing_files (test_group_process_recovery.GroupProcessRecoveryTests.test_wrong_group_digest_never_reclaims_process_or_enclosing_files) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.130s
+
+OK

@@ -3,6 +3,14 @@
 Date: 2026-10-07
 Status: capability preflight implemented; native-host execution unavailable.
 
+October 29 reconciliation: selected MirrorGate `4b379ac0c017e7621c945ebf8c106cd98a6c70d1`
+contains the versioned process/group journal extension described below, including
+retryable observed-empty evidence. Its twelve focused recovery controls and
+complete local required gate pass. The earlier source-gap section is historical
+design, not queued implementation. [Current preflight and evidence](completion-evidence-20261029/README.md)
+still require a selected native runner and operator-owned cgroup-v2 parent for
+actual quota, descendant and controller-death acceptance.
+
 ## Platform decision
 
 Accept the existing Linux/Bubblewrap backend on a native Linux runner before

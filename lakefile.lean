@@ -197,6 +197,11 @@ lean_exe dpm_spec where
 lean_exe dpm_evidence_spec where
   root := `tools.DpmEvidenceSpec
 
+/-- Complete native controlled-resource witnesses; no model oracle is inferred. -/
+@[default_target]
+lean_exe dpm_sync_spec where
+  root := `tools.DpmSyncComparisonSpec
+
 /-- Strict framework capability catalog validator and deterministic renderer. -/
 @[default_target]
 lean_exe framework_catalog where
@@ -486,7 +491,7 @@ script test do
   if dpmUsability.exitCode != 0 then
     IO.eprintln dpmUsability.stderr
     return dpmUsability.exitCode
-  for executable in #["dpm_spec", "dpm_evidence_spec", "model_interface_language_spec", "model_interface_lean_spec",
+  for executable in #["dpm_spec", "dpm_evidence_spec", "dpm_sync_spec", "model_interface_language_spec", "model_interface_lean_spec",
       "model_interface_workflow_spec", "model_interface_workflow_cli_spec",
       "model_interface_workflow_provenance_spec", "model_interface_corpus_spec",
       "model_interface_migration_spec"] do

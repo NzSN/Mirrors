@@ -128,6 +128,12 @@ def deterministic_environment(overrides: Mapping[str, str] = {}) -> dict[str, st
         "TERM": "dumb",
         "TZ": "UTC",
     }
+    if os.name == 'nt':
+        # Native loader prerequisites only; never inherit user JVM/TLA paths.
+        for name in ('SystemRoot', 'WINDIR', 'COMSPEC'):
+            if name in os.environ: environment[name] = os.environ[name]
+        if 'SystemRoot' in environment:
+            environment['PATH'] = str(Path(environment['SystemRoot']) / 'System32')
     environment.update(overrides)
     return environment
 
@@ -161,7 +167,7 @@ def _process_group_exists(process_group_id: int) -> bool:
     return True
 
 
-def _terminate_process_group(process: subprocess.Popen[bytes]) -> None:
+def _terminate_process_group(process: subprocess.Popen[bytes], windows_job=None) -> None:
     """End every POSIX group member, including children of an exited leader."""
 
     if os.name == "posix":
@@ -182,11 +188,8 @@ def _terminate_process_group(process: subprocess.Popen[bytes]) -> None:
                 pass
         return
 
-    # Windows has no stdlib equivalent of POSIX killpg. CREATE_NEW_PROCESS_GROUP
-    # lets Console tools receive CTRL_BREAK_EVENT; terminating the direct process
-    # remains the portable fallback. CI support for recursive Windows cleanup must
-    # be supplied by the runner's platform-specific containment layer.
-    process.terminate()
+    if windows_job is None: raise OSError('recursive Windows tool containment is unavailable')
+    windows_job.terminate()
 
 
 def _stream_reader(
@@ -225,7 +228,12 @@ def run_process(
         raise ValueError("poll_interval_seconds must be positive")
 
     started = monotonic()
+    windows_job = None
+    process = None
     try:
+        if os.name == 'nt':
+            from windows_job import WindowsJob
+            windows_job = WindowsJob()
         process = popen_factory(
             list(request.argv),
             cwd=request.cwd,
@@ -235,9 +243,15 @@ def run_process(
             stderr=subprocess.PIPE,
             shell=False,
             start_new_session=os.name == "posix",
-            creationflags=(subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0),
+            creationflags=((subprocess.CREATE_NEW_PROCESS_GROUP | 0x4) if os.name == "nt" else 0),
         )
+        if windows_job is not None: windows_job.assign_and_resume(process)
     except OSError as error:
+        if process is not None:
+            process.kill(); process.wait()
+            if process.stdout is not None: process.stdout.close()
+            if process.stderr is not None: process.stderr.close()
+        if windows_job is not None: windows_job.close()
         return ProcessResult(
             ExecutionStatus.UNAVAILABLE, None, b"", b"", monotonic() - started, None, str(error)
         )
@@ -262,7 +276,7 @@ def run_process(
                 # The leader can exit while a background child still owns the
                 # pipes and artifacts. Every invocation owns its whole group.
                 process.wait()
-                _terminate_process_group(process)
+                _terminate_process_group(process, windows_job)
                 break
             elapsed = monotonic() - started
             if elapsed >= limits.timeout_seconds:
@@ -274,19 +288,19 @@ def run_process(
                 if artifact_bytes > limits.max_artifact_bytes:
                     status, detail = ExecutionStatus.RESOURCE_EXHAUSTED, "process exceeded artifact limit"
             if status is not ExecutionStatus.COMPLETED:
-                _terminate_process_group(process)
+                _terminate_process_group(process, windows_job)
                 break
             time.sleep(poll_interval_seconds)
 
         try:
             returncode = process.wait(timeout=1)
         except subprocess.TimeoutExpired:
-            _terminate_process_group(process)
+            _terminate_process_group(process, windows_job)
             returncode = process.wait()
     except BaseException:
         # The subprocess has a separate session, so an interrupted Python
         # runner must explicitly end the complete tool group before propagating.
-        _terminate_process_group(process)
+        _terminate_process_group(process, windows_job)
         try:
             process.wait(timeout=1)
         except subprocess.TimeoutExpired:
@@ -295,12 +309,14 @@ def run_process(
             reader.join()
         process.stdout.close()
         process.stderr.close()
+        if windows_job is not None: windows_job.close()
         raise
     else:
         for reader in readers:
             reader.join()
         process.stdout.close()
         process.stderr.close()
+        if windows_job is not None: windows_job.close()
 
     if status is ExecutionStatus.COMPLETED and (stdout_exceeded.is_set() or stderr_exceeded.is_set()):
         status, detail = ExecutionStatus.RESOURCE_EXHAUSTED, "process exceeded output limit"
@@ -315,5 +331,7 @@ def run_process(
             detail = f"{detail}; discarded {observed_bytes} retained artifact bytes"
     if status is ExecutionStatus.COMPLETED and returncode < 0:
         status, detail = ExecutionStatus.CRASH, f"process terminated by signal {-returncode}"
+    if status is ExecutionStatus.COMPLETED and os.name == 'nt' and returncode >= 0xC0000000:
+        status, detail = ExecutionStatus.CRASH, f"Windows process exception 0x{returncode:08x}"
 
     return ProcessResult(status, returncode, bytes(stdout), bytes(stderr), monotonic() - started, artifact_bytes, detail)

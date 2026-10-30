@@ -40,11 +40,11 @@ def main(argv=None) -> int:
         args.output_dir.mkdir(parents=True, exist_ok=True)
         for fixture, value in generated.items():
             (args.output_dir / f"{fixture}.json").write_text(
-                json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True) + "\n")
+                json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     else:
         for fixture, value in generated.items():
             destination = args.output_dir / f"{fixture}.json"
-            if not destination.is_file() or json.loads(destination.read_text()) != value:
+            if not destination.is_file() or json.loads(destination.read_text(encoding="utf-8")) != value:
                 print(f"{fixture}: summary differs from the real frontend projection")
                 return 1
     print("JUNCTION SUMMARY GENERATION GREEN" if args.write else "JUNCTION SUMMARY CHECK GREEN")

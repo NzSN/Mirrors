@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "request": {
+        "proto_step": "register_validate_async",
+        "apalacheConfig": {
+          "specPath": "missing.tla"
+        },
+        "bound": 1
+      },
+      "response": {
+        "error": "async jobs arrive in Phase 4",
+        "proto_step": "register_error"
+      },
+      "exitCode": 0
+    },
+    {
+      "request": {
+        "proto_step": "register_trace_gen_async",
+        "apalacheConfig": {
+          "specPath": "missing.tla"
+        },
+        "traceConfig": {
+          "numTraces": 1
+        }
+      },
+      "response": {
+        "error": "async jobs arrive in Phase 4",
+        "proto_step": "register_error"
+      },
+      "exitCode": 0
+    },
+    {
+      "request": {
+        "proto_step": "query_job",
+        "jobId": "missing"
+      },
+      "response": {
+        "error": "async jobs arrive in Phase 4",
+        "proto_step": "register_error"
+      },
+      "exitCode": 0
+    },
+    {
+      "request": {
+        "proto_step": "await_job",
+        "jobId": "missing"
+      },
+      "response": {
+        "error": "async jobs arrive in Phase 4",
+        "proto_step": "register_error"
+      },
+      "exitCode": 0
+    },
+    {
+      "request": {
+        "proto_step": "cancel_job",
+        "jobId": "missing"
+      },
+      "response": {
+        "error": "async jobs arrive in Phase 4",
+        "proto_step": "register_error"
+      },
+      "exitCode": 0
+    }
+  ]
+}

@@ -15,6 +15,29 @@ spec.loader.exec_module(remote)
 
 
 class RemoteVerdictTests(unittest.TestCase):
+    def test_lean_certificate_warning_accepts_the_native_singular_and_plural_forms(self):
+        for days in ['1 day', '0 days', '6 days']:
+            warning = f'mirrorlean: WARNING: client certificate expires within 7 days ({days})\n'
+            self.assertTrue(remote.classify_result('lean', 'valid', 0, 'VALID\n', warning))
+            self.assertFalse(remote.classify_result('lean', 'valid', 0, 'VALID\n', warning+'unexpected error\n'))
+            self.assertFalse(remote.classify_result('lean', 'valid', 1, 'VALID\n', warning))
+
+    def test_remote_fixture_observation_binds_selected_sdk_bytes_and_root(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            runtime = Path(temporary)
+            (runtime/'specs/traces').mkdir(parents=True)
+            (runtime/'specs/Counter.tla').write_text('public model')
+            (runtime/'specs/traces/violation.itf.json').write_text('{"public":"trace"}')
+            files = {name:remote.digest(runtime/path) for name,path in
+                     [('Counter.tla','specs/Counter.tla'),('violation.itf.json','specs/traces/violation.itf.json')]}
+            observation = {'interopFixtures':{'root':'D:\\Owned\\interop','files':files}}
+            self.assertEqual(remote.admit_remote_fixtures(runtime, observation, 'D:\\Owned\\interop'), files)
+            with self.assertRaisesRegex(ValueError, 'fixtures'):
+                remote.admit_remote_fixtures(runtime, observation, 'D:\\Other')
+            (runtime/'specs/Counter.tla').write_text('changed model')
+            with self.assertRaisesRegex(ValueError, 'fixtures'):
+                remote.admit_remote_fixtures(runtime, observation, 'D:\\Owned\\interop')
+
     def test_runtime_receipts_meet_the_real_attachment_capture_contract(self):
         import collect
         with tempfile.TemporaryDirectory() as temporary:

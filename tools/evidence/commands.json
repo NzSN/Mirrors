@@ -42,7 +42,9 @@
         "MIRRORS_REMOTE_SERVER_PIN",
         "MIRRORS_REMOTE_SERVICE_BINARY_SHA256",
         "MIRRORS_REMOTE_SERVICE_SOURCE_REF",
-        "MIRRORS_REMOTE_ADMIN_OBSERVATION"
+        "MIRRORS_REMOTE_ADMIN_OBSERVATION",
+        "MIRRORS_REMOTE_HOST",
+        "MIRRORS_REMOTE_PORT"
       ],
       "defaultTimeoutSeconds": 600,
       "catalogComponentId": "mirrors",
@@ -61,11 +63,11 @@
       "requiredCwdComponentId": "mirrors",
       "requiredEnvironment": {
         "INTEROP_VERIFY_PINS": "1",
-        "ECMA_REF": "61890cf14d8465df31ba6c95e72eade0a5716a66",
-        "CPP_REF": "e73dadbac6055fa3ff94b5ee90c0649e4ad03ebd",
-        "RUST_REF": "a3f826f6590bea1bbbffe095353bf9a104c4c1d1",
+        "ECMA_REF": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+        "CPP_REF": "8c542a6b1339cc0b6176465ff7f17a32e614553d",
+        "RUST_REF": "6b9480ab81717b76ca7f74b41fc554578b70c890",
         "HS_REF": "4aa693f86e18349bb97c050dd33aecbf730b6fa2",
-        "LEAN_CLIENT_REF": "e5f50133968361ee00d6872162d9c874f93ff849"
+        "LEAN_CLIENT_REF": "a8634ebe2455f97d15b55bec3c810d945cb6e3d3"
       },
       "requiredEnvironmentNames": [
         "ECMA_REPO",
@@ -85,7 +87,10 @@
         "MIRRORS_REMOTE_SERVICE_BINARY_SHA256",
         "MIRRORS_REMOTE_SERVICE_SOURCE_REF",
         "ECMA_RUNTIME_ROOT",
-        "ECMA_NODE_BIN"
+        "ECMA_NODE_BIN",
+        "MIRRORS_REMOTE_HOST",
+        "MIRRORS_REMOTE_PORT",
+        "MIRRORS_REMOTE_INTEROP_ROOT"
       ],
       "defaultTimeoutSeconds": 7200,
       "catalogComponentId": "mirrors",

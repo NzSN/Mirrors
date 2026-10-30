@@ -15,8 +15,9 @@ The [October 7 profile](../Plans/completed/q3-published-roadmap-2026-10-07.md) p
 22-case five-client remote mTLS matrix; the legacy all-transport/release-cycle
 matrix below remains a separate qualification scope. The runner includes Lean,
 Rust, C++, ECMA and Haskell; top-level runner integration is implemented.
-Two cutover decisions remain: the stdio async error-tag choice in §3 and the
-Haskell deprecation/soak criteria in §5. Source comments and old test counts below
+The [October 29 lifecycle decision](../Plans/compatibility-lifecycle-decision-2026-10-29.md)
+retains the stdio `register_error` contract and defines measured Haskell
+deprecation/soak criteria; those measurements have not been completed. Source comments and old test counts below
 are historical; current SDKs implement generated Lean/Rust replay and the
 separately scoped DPM profiles. Haskell remains a pinned compatibility oracle.
 
@@ -88,13 +89,12 @@ Docs/worker-pool-design.md / Docs/worker-pool-impl-status.md.
   accepts wildcards anywhere in the label. The Lean behavior is
   stricter and fail-closed. Documented in Docs/tls-ffi-review.md;
   accepted by the captain.
-- Async job messages in synchronous stdio mode (NOT yet accepted as
-  permanent): Lean answers register_error ("async jobs arrive in
+- Async job messages in synchronous stdio mode (retained supported contract): Lean answers register_error ("async jobs arrive in
   Phase 4"), Haskell answers protocol_error ("Expected Register
-  message"). Trivial to harmonize if desired; flagged because it is
-  observable on that wire path. Server-mode job controls are supported,
+  message"). Changing this observable tag requires a new compatibility
+  decision and consumer migration evidence. Server-mode job controls are supported,
   including a query from another connection without a new registration.
-  Track the stdio error-tag choice as an open item.
+  The October 29 lifecycle decision retains this tag for current supported clients.
 
 ## 4. Non-Lean client legs — implementation and runner green
 
@@ -112,11 +112,14 @@ not as a substitute for a missing non-Lean client gate.
 
 ## 5. Haskell deprecation plan
 
+The October 29 decision above supplies the required ledger and consumer exit
+criteria; no deprecation or removal is authorized by elapsed time alone.
+
 1. Soak: run both implementations side by side; diff wire transcripts
    on real workloads (the golden corpus + tools/interop/run.sh give
    the automated version of this).
 2. Keep the implemented MirrorRust runner/CI wiring (§4) in the regression
-   matrix and decide the stdio async-message error harmonization (§3).
+   matrix and preserve the selected stdio async-message error contract (§3).
 3. Freeze ModelMirros@3496251 as the read-only reference artifact
    (fixtures oracle + differential test binary). It stays pinned in
    CI (.github/workflows/interop.yml) as the oracle.
