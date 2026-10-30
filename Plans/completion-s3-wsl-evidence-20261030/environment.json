@@ -1,0 +1,45 @@
+{
+  "architecture": "x86_64",
+  "cpuCount": 16,
+  "filesystem": {
+    "device": "/dev/sdd",
+    "path": "/home/lsz/Codebase/Mirrors",
+    "sameDeviceForTmp": false,
+    "type": "ext4"
+  },
+  "kernel": "6.18.54.1-microsoft-standard-WSL2",
+  "libc": "glibc 2.43-2ubuntu2.4",
+  "limits": [
+    "Not Ubuntu 24.04 qualification.",
+    "Not native Linux qualification.",
+    "WSL2 kernel and virtualization scope only.",
+    "No live-model or framework qualification."
+  ],
+  "memoryBytes": 31543156736,
+  "observations": {
+    "artifactMode": "0444",
+    "isolatedRuntimePath": "/usr/bin:/bin",
+    "lakeAndLeanAbsentFromIsolatedRuntimePath": true,
+    "tempRootMode": "0700"
+  },
+  "os": {
+    "codename": "resolute",
+    "id": "ubuntu",
+    "prettyName": "Ubuntu 26.04.1 LTS",
+    "versionId": "26.04"
+  },
+  "producedAt": "2026-10-30T06:04:35Z",
+  "schema": "mirrors.s3.wsl-environment/v1",
+  "scopeName": "ubuntu-26.04-wsl2-x86_64",
+  "tools": {
+    "git": "/usr/bin/git",
+    "gzip": "/usr/bin/gzip",
+    "lake": "/home/lsz/.elan/bin/lake",
+    "ldd": "/usr/bin/ldd",
+    "lean": "/home/lsz/.elan/bin/lean",
+    "python3": "/usr/bin/python3",
+    "tar": "/usr/bin/tar",
+    "uname": "/usr/bin/uname"
+  },
+  "virtualization": "WSL2 (microsoft-standard-WSL2 kernel)"
+}

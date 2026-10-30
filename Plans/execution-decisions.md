@@ -6,6 +6,23 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
+## Current continuation — 2026-10-30 (execution environment scope)
+
+The user removed all native-runner execution planning from the current
+completion campaign and selected the existing Ubuntu 26.04.1 WSL2 coordinator
+for S3.6 and S5. The dedicated native-host plan is now a link-preserving
+withdrawal placeholder, and the active completion/foundation plans no longer
+contain native-runner tasks. Dated evidence and checkpoint history remain
+unchanged.
+
+The new acceptance scope must be named explicitly as Ubuntu 26.04.1 WSL2.
+Actual host observations continue to override catalog targets; no receipt may
+relabel this host as Ubuntu 24.04 or claim native-Linux enforcement. Any new
+distribution/catalog profile needed for this selection must be additive and
+scoped, with focused validation and a new identity freeze if source inputs
+change. S3.6/S5 execution continues through `generic-executor`; publication,
+deployment and reboot remain separate approval gates.
+
 ## Current continuation — 2026-10-29 (source-review publication)
 
 The user now authorizes commit and push of the six source-review fixes and

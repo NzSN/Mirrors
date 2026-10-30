@@ -1,0 +1,33 @@
+observedAt=2026-10-30T06:04:35Z
+uname=Linux DESKTOP-C7HNV2Q 6.18.54.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 GNU/Linux
+kernel=6.18.54.1-microsoft-standard-WSL2
+osRelease:
+  PRETTY_NAME="Ubuntu 26.04.1 LTS"
+  NAME="Ubuntu"
+  VERSION_ID="26.04"
+  VERSION="26.04.1 LTS (Resolute Raccoon)"
+  VERSION_CODENAME=resolute
+  ID=ubuntu
+  ID_LIKE=debian
+  HOME_URL="https://www.ubuntu.com/"
+  SUPPORT_URL="https://help.ubuntu.com/"
+  BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+  PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+  UBUNTU_CODENAME=resolute
+  LOGO=ubuntu-logo
+libc=ldd (Ubuntu GLIBC 2.43-2ubuntu2.4) 2.43
+fs=/dev/sdd       ext4 1055762868 298350480 703708916  30% /home/lsz/Codebase/Mirrors
+nproc=16
+memory=31543156736
+wsl=6.18.54.1-microsoft-standard-WSL2
+interop=WSL2
+paths:
+  python3=/usr/bin/python3
+  tar=/usr/bin/tar
+  gzip=/usr/bin/gzip
+  ldd=/usr/bin/ldd
+  git=/usr/bin/git
+  uname=/usr/bin/uname
+  lake=/home/lsz/.elan/bin/lake
+  lean=/home/lsz/.elan/bin/lean
+uid=1000 gid=1000 user=lsz

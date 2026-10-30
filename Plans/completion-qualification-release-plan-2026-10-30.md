@@ -6,6 +6,11 @@ Status: detailed plan for all remaining stages. Only the design/plan documents
 are being added by this planning task. No acceptance gate, commit, push, tag,
 publication, deployment, or reboot is authorized by this file.
 
+Scope revision, October 30: native-runner/M4 execution tasks are removed.
+S3.6 and S5 select the current Ubuntu 26.04.1 WSL2 coordinator under that
+explicit profile name. Stage IDs S5-S8 remain unchanged for evidence
+compatibility.
+
 Read the normative [completion and release design](../Docs/completion-qualification-release-design.md)
 with this plan. Existing completed results and their limits are in the
 [October 29 evidence](completion-evidence-20261029/README.md).
@@ -37,8 +42,7 @@ the producer execution.
 | --- | --- |
 | Coordinator | Source/evidence freeze, local checks, delivery audit, records |
 | Release operator | Clean tag checkout, Linux/Windows package set, release handoff |
-| Native operator | Native Linux host, cgroup-v2 delegation, M4 execution |
-| Platform operator | Matching Ubuntu 24.04 environment, distribution and M5 producers |
+| Platform operator | Current Ubuntu 26.04.1 WSL2 environment, distribution and M5 producers |
 | Windows operator | Full Windows gates, isolated oracle, service lifecycle and reboot |
 | Independent verifier | Inventory, Q1/Q2 independence, negative controls, final handoff |
 
@@ -46,8 +50,7 @@ the producer execution.
 | --- | --- | --- |
 | Reviewed final source payload | Working tree above `7e9a27d` | S1/S2 |
 | Exact candidate tag name and local tag approval | `v0.2.0-rc.1` prepared in source, not approved as a tag | S3 |
-| Native Linux runner and serving-UID cgroup-v2 parent | Not supplied; WSL2 preflight only | S4 |
-| Matching declared Ubuntu 24.04 qualification environment | Coordinator is Ubuntu 26.04.1 | S5-A/S5-B |
+| Current Ubuntu 26.04.1 WSL2 qualification environment | Selected explicitly by the user; reobserve actual facts | S3.6/S5 |
 | Windows host with current source/runtime and service access | Prior records exist; fresh observation required | S5-B/S7 |
 | Owned remote oracle and current mTLS credentials | Must be reobserved; no historical health claim | S5/S7 |
 | Branch/tag/publication/deployment/reboot approvals | Not granted by this plan | S2/S3/S7 |
@@ -56,17 +59,13 @@ the producer execution.
 
 ```text
 S0 -> S1 -> S2 -> S3 -> S5 -> S6 -> S7 -> S8
-             |                  ^
-             +-> S4 ------------+
 
 S8 compatibility work spans this release and one later qualifying release.
-S4 and S5 can run concurrently once their independent inputs are admitted.
-S4 uses the selected Gate source and does not consume the S3 Mirrors packages.
 ```
 
-An explicitly scoped prerelease may reach S6 with S4 or another non-selected
-tier absent, but the handoff must name that absence. It cannot claim the
-missing capability or full-framework qualification.
+An explicitly scoped prerelease may reach S6 with a non-selected tier absent,
+but the handoff must name that absence. It cannot claim the missing capability
+or full-framework qualification.
 
 ## 4. Stage S0: baseline intake
 
@@ -74,7 +73,7 @@ missing capability or full-framework qualification.
 | --- | --- | --- | --- |
 | S0.1 | Ready | Inventory `git status`, full diff, untracked evidence, ignored logs, companion revisions, and unrelated files. Write a baseline path inventory. | Every changed path is classified as candidate payload, evidence, generated output, credential, or unrelated/preserved |
 | S0.2 | Ready | Index October 29 accepted results, failed attempts, skips, and limits. Map F5, profile 6, DPM, matrix, Windows, and Gate receipts to their exact identities. | No completed result is listed as an unconditional remaining implementation task |
-| S0.3 | Ready | Record actual coordinator OS/kernel/filesystem, available tools, and absent Ubuntu 24.04/native M4 prerequisites. | Host facts and target declarations are separate |
+| S0.3 | Ready | Record actual coordinator OS/kernel/filesystem and available tools for the selected Ubuntu 26.04.1 WSL2 profile. | Host facts and target declarations are separate |
 | S0.4 | Ready | Create the new stage ledger using the claim states in the design. Link this plan, prior evidence, and external input requests. | Every S1-S8 task has a state and owner role |
 
 ## 5. Stage S1: source and evidence freeze
@@ -107,24 +106,10 @@ missing capability or full-framework qualification.
 | S3.3 | Ready after S3.2 | Run `python3 -m unittest discover -s tools/release -p 'test_*.py' -v`. | All release identity/package/refusal tests pass |
 | S3.4 | Ready after S3.2 | On Linux x86-64 run `python3 tools/release/release.py build --source CLEAN_SOURCE --tag v0.2.0-rc.1 --output EMPTY_DIST`. | Build and focused non-model gates pass; source identity is stable before/after |
 | S3.5 | Ready after S3.4 | Verify `SHA256SUMS`, `BUILD.json`, external manifest, executable versions, `ldd`, archive paths/types, and absence of source/credentials. | Archive and both manifests bind the same tag, commit, binaries, and prerequisites |
-| S3.6 | Ready after S3.4 | In Ubuntu 24.04 without Lean/source, run `release.py check-archive --tag v0.2.0-rc.1 --archive LINUX_ARCHIVE` after checksum verification. | Isolated runtime smoke passes; observed host is actually Ubuntu 24.04 |
+| S3.6 | Ready after S3.4 | In the selected Ubuntu 26.04.1 WSL2 environment without Lean/source lookup in the packaged runtime path, run `release.py check-archive --tag v0.2.0-rc.1 --archive LINUX_ARCHIVE` after checksum verification. | Isolated WSL2 runtime smoke passes and records the actual OS/kernel/runtime scope |
 | S3.7 | Ready after S2 | Compare Windows base-plus-overlay inputs with S2. Reuse the staged ZIP only for an audited non-behavioral difference and identical build inputs; otherwise rebuild and rerun affected suites. | Windows archive and binary/DLL hashes are explicitly bound or rejected |
 | S3.8 | Ready after S3.7 | Recheck Windows packaging repeatability, version, archive membership, DLL closure, and no-credential rules. | Windows ZIP receipt remains limited to packaging and its actual gates |
 | S3.9 | Gate | Emit `package-set.json` with every artifact hash, source/build identity, runtime prerequisite, test scope, and retention location. | Complete reviewable Linux/Windows artifact set; no publication or deployment |
-
-## 8. Stage S4: native M4 acceptance
-
-| ID | State | Task and concrete output | Exit criterion |
-| --- | --- | --- | --- |
-| S4.1 | Blocked externally | Obtain native Linux runner, operator-owned serving-UID cgroup-v2 parent, durable state root, Bubblewrap, loopback, and ptrace admission. | Host/delegation inputs are explicit and operator approved |
-| S4.2 | Blocked externally | Freeze Gate commit, journal-v2 schema, backend/recovery source hashes, host, and delegation. Run read-only `preflight_m4.py --gate-root GATE --cgroup-parent PARENT`. | Native host and delegation validate; preflight still claims no enforcement |
-| S4.3 | Blocked externally | Create one owned child and run cpu/memory/pids quota writes/readbacks with independent counters. | Kernel observations equal selected limits; owned child cleanup confirmed |
-| S4.4 | Blocked externally | Run real descendant enforcement, escape refusal, missing-controller, and resource-pressure controls. | Limits apply to the whole owned tree; escapes and unavailable controls fail closed |
-| S4.5 | Blocked externally | Launch a journaled worker tree and retain exact boot/UID/session/PID/start-time/cgroup device/inode/delegation linkage. | Every process claim binds the exact group resource; no PID/path inference |
-| S4.6 | Blocked externally | Kill only the owned controller; recover through a new administrative incarnation. | Exact subtree becomes observed-empty before owned filesystem cleanup and claim removal |
-| S4.7 | Blocked externally | Exercise wrong identities, PID reuse, inode replacement, stale/torn records, concurrent recovery, unavailable delegation, nonempty retries, and durable retry evidence. | Ambiguity refuses action; retries remain recoverable; no ownership broadening |
-| S4.8 | Blocked externally | Verify unrelated process/file sentinels and final resource/process cleanup; retain before/run/recovery linkage. | Sentinels unchanged; no owned test descendants remain |
-| S4.9 | Gate | Independent verifier reviews native receipts and emits `m4-native-acceptance.json`. | All selected native rows pass at one identity, or M4 remains explicitly unqualified |
 
 ## 9. Stage S5: exact-candidate qualification
 
@@ -132,7 +117,7 @@ missing capability or full-framework qualification.
 
 | ID | State | Task and concrete output | Exit criterion |
 | --- | --- | --- | --- |
-| S5.1 | Blocked externally | Select the declared Ubuntu 24.04 host/profile and record actual OS, kernel/virtualization, filesystem, libc, runtimes, and permissions. | Environment matches the complete declared profile; no Ubuntu 26.04 substitution |
+| S5.1 | Ready | Select the current Ubuntu 26.04.1 WSL2 host/profile and record actual OS, kernel, filesystem, libc, runtimes, and permissions. | Environment matches the declared WSL2 profile; no Ubuntu 24.04 or native-Linux claim |
 | S5.2 | Ready after S3/S5.1 | Freeze Mirrors/companion SHAs, C0 catalog, distribution locks, package/cache hashes, and model/corpus identities. | One immutable selection is used by every producer |
 | S5.3 | Ready after S5.2 | Materialize owner-only installations from admitted caches; hide source and disable network/PATH fallbacks. | Installed runtime contains only declared artifacts and actual host/package observations |
 | S5.4 | Ready after S5.3 | Run both required D installation/distribution audits before dependent producers. | Both manifests/cache indexes verify and exact active versions are committed |
@@ -167,8 +152,8 @@ missing capability or full-framework qualification.
 
 | ID | State | Task and concrete output | Exit criterion |
 | --- | --- | --- | --- |
-| S6.1 | Ready after S3-S5 | Assemble source, package, M4, M5/D/Q, Windows, compatibility, and cleanup results into a claim matrix. | Every claim links evidence and every absent tier is visible |
-| S6.2 | Decision | Select full-scope or explicitly scoped prerelease admission. Record any M4/F5/platform exclusion in the release scope. | No missing capability is silently credited |
+| S6.1 | Ready after S3-S5 | Assemble source, package, M5/D/Q, Windows, compatibility, and cleanup results into a claim matrix. | Every claim links evidence and every absent tier is visible |
+| S6.2 | Decision | Select full-scope or explicitly scoped prerelease admission. Record any F5/platform exclusion in the release scope. | No missing capability is silently credited |
 | S6.3 | Ready after S6.2 | Draft release notes for F5 capability, runtime fixes, compatibility retention, installation prerequisites, evidence scope, and known limits. | Notes agree with machine-readable receipts and artifact contents |
 | S6.4 | Ready after S6.2 | Prepare production inventory template, candidate-port checks, hash-guarded replacement, automatic rollback, and post-deployment controls. | Concrete operation names host, paths, old/new hashes, preserved configuration, and rollback triggers |
 | S6.5 | Independent | Verify handoff inventory, public/private classification, checksums, and required negative controls. | Independent handoff review passes; no private material included |
@@ -210,7 +195,6 @@ missing capability or full-framework qualification.
 | W1 finite F5 comparison | Completed scoped input; S5 repeats only required exact-candidate integration or invalidated controls |
 | W2 profile-6 T/U | Completed scoped input; rerun under the design's source/toolchain invalidation rules |
 | W3 exact-candidate acceptance | S1-S5, including packages, full Windows, M5/D/Q, and independent verification |
-| W4 native M4 | S4; externally blocked until native host/delegation arrives |
 | W5 compatibility | Decision retained in S0; measured lifecycle in S8 |
 | W6 release candidate | S3 and S6-S8; no public/production operation without concrete approval |
 
@@ -223,13 +207,11 @@ The campaign is complete only when:
    scoped and names each absent tier;
 3. exact-candidate Q1/Q2 and all negative controls pass for the claimed
    framework profile;
-4. native M4 is either actually accepted under S4 or explicitly outside the
-   approved release scope;
-5. published refs/assets match the handoff, if publication was selected;
-6. deployed bytes and live controls match the handoff, if deployment was
+4. published refs/assets match the handoff, if publication was selected;
+5. deployed bytes and live controls match the handoff, if deployment was
    selected;
-7. reboot acceptance is separately evidenced or remains unclaimed;
-8. retention, rollback, cleanup, and compatibility obligations are recorded.
+6. reboot acceptance is separately evidenced or remains unclaimed;
+7. retention, rollback, cleanup, and compatibility obligations are recorded.
 
 No single local aggregate, green matrix, branch push, release workflow, service
 status, or elapsed interval satisfies this completion definition by itself.

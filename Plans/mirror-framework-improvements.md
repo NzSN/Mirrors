@@ -494,7 +494,8 @@ Required tiers must run where their primitives are permitted: `ptrace` (the
 installation audit traces its relocated replay), AF_INET/AF_UNIX loopback (Gate
 supervisor control, transport, registry), writable component checkouts and
 evidence store. Delegated cgroup-v2 enforcement and native Ubuntu acceptance
-are separate Linux-scope capabilities excluded from the selected M5 profile.
+are outside the selected M5 profile and have no execution tasks in the current
+completion plan.
 The 2026-09-25 pass inside an agent sandbox that denies these primitives
 produced environment-limited incompletes, not product failures; such tiers
 remain incomplete and are never downgraded to optional or passed.

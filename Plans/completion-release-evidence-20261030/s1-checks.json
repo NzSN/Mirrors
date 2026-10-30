@@ -1,0 +1,143 @@
+{
+  "commands": [
+    {
+      "command": "git diff --check",
+      "exit": 0,
+      "id": "diff-check",
+      "log": {
+        "bytes": 18,
+        "path": "Plans/completion-release-evidence-20261030/logs/diff-check.log",
+        "sha256": "127faf38e2de4c61f70753164c4437c89eef62f31bbcb7cbf9c78f48eae6dcf8"
+      },
+      "result": "no whitespace errors (empty output)"
+    },
+    {
+      "command": "python3 Plans/completion-release-evidence-20261030/linkcheck.py",
+      "exit": 0,
+      "id": "link-check",
+      "log": {
+        "bytes": 123,
+        "path": "Plans/completion-release-evidence-20261030/logs/linkcheck.log",
+        "sha256": "7b7103c4d9ac6f6244b248207249cfc1a030e341085c8754baa15b4223e5fb39"
+      },
+      "result": "221 relative links in 28 changed Markdown files (including this record); 4 existing cross-repository companion links"
+    },
+    {
+      "command": "python3 -m unittest discover -s tools/distribution -p \"test_*.py\"",
+      "exit": 0,
+      "id": "focused-distribution",
+      "log": {
+        "bytes": 218,
+        "path": "Plans/completion-release-evidence-20261030/logs/focused-distribution.log",
+        "sha256": "5f4e873dd141d364bc7d60d7f8eac5de02c03e3c237fe2f50e8b062d58cd8449"
+      },
+      "result": "42 tests OK"
+    },
+    {
+      "command": "python3 -m unittest discover -s tools/evidence/tests -p \"test_*.py\"",
+      "exit": 0,
+      "id": "focused-evidence",
+      "log": {
+        "bytes": 254,
+        "path": "Plans/completion-release-evidence-20261030/logs/focused-evidence.log",
+        "sha256": "86589c0932c0837d135aec76f73f131ef3464bd43cd4723f2723db934709cd19"
+      },
+      "result": "146 tests OK"
+    },
+    {
+      "command": "python3 -m unittest discover -s tools/deterministic-scheduling/tests",
+      "exit": 0,
+      "id": "focused-dpm",
+      "log": {
+        "bytes": 194,
+        "path": "Plans/completion-release-evidence-20261030/logs/focused-deterministic.log",
+        "sha256": "df4ba86ae045e2280aca59f391e0bce09411ad383109c9c0073453b3fdd37b78"
+      },
+      "result": "87 tests OK"
+    },
+    {
+      "command": "python3 -m unittest discover -s tools/tla-differential/tests",
+      "exit": 0,
+      "id": "focused-tla-differential",
+      "log": {
+        "bytes": 995,
+        "path": "Plans/completion-release-evidence-20261030/logs/focused-tla-differential.log",
+        "sha256": "b0a60d88f86010290339890262a73f1f063f6a189924d8774611cacd27f3180a"
+      },
+      "result": "81 tests OK, 6 live-reference skips"
+    },
+    {
+      "command": "python3 Plans/completion-evidence-20261029/verify.py",
+      "exit": 0,
+      "id": "october29-verifier",
+      "inventoryEdit": "Only the README.md entry (bytes/sha256) was updated in place; entry order and all other bytes were preserved.",
+      "inventoryRegeneration": {
+        "file": "Plans/completion-evidence-20261029/README.md",
+        "newBytes": 9264,
+        "newSha256": "32d322eebaea75d8bce0cde1f2f250596bd0e341b06cb4f6c5b5ed8368f0027e",
+        "oldBytes": 7438,
+        "oldSha256": "028d6792ea6c2fe4f5c5f3ace5d861c66be54c60b3d33f1cc50abef07cd360d2",
+        "reason": "The final campaign summary README was extended after the 18:05 inventory was written (file mtime 18:12) with the final non-model aggregate and production-boundary text; only that documentation entry changed. All other 373 inventory entries were byte-identical. No receipt, log or result payload changed, so no pass/fail claim was reissued."
+      },
+      "result": "passed; profile6 semantic c1938ecf..., 11 controlled verdicts, 22 matrix rows, negative controls rejected"
+    },
+    {
+      "command": "python3 scan over the 474-file proposed delivery plus the execution record",
+      "exit": 0,
+      "id": "payload-audit",
+      "report": "Plans/completion-release-evidence-20261030/s1-payload-audit.json",
+      "result": "no private keys, credentials, ELF/PE binaries or tool archives; 3 reviewed public evidence tar.gz archives explicitly excepted"
+    },
+    {
+      "command": "python3 Plans/completion-release-evidence-20261030/preflight.py",
+      "exit": 0,
+      "id": "gate-preflight",
+      "report": "Plans/completion-release-evidence-20261030/s1-gate-preflight.json",
+      "result": "loopback connect ok; ext4 task-owned TMPDIR; MirrorCPP prefix valid"
+    },
+    {
+      "command": "TMPDIR=tmp/completion-20261030 MIRRORCPP_PREFIX=.golden-build/completion-20261029/cpp-prefix MIRRORS_DPM_PYTHON=/usr/bin/python3 bash tools/run-local-no-model-check.sh",
+      "endUtc": "2026-10-30T03:28:46Z",
+      "exit": 0,
+      "id": "local-no-model",
+      "log": {
+        "bytes": 113742,
+        "path": "Plans/completion-release-evidence-20261030/logs/local-no-model-final.log",
+        "sha256": "54397ac5592e8fdb0b345907d0f54542ed8de11c93ebabd066dee714d17c504d"
+      },
+      "result": "ALL LOCAL NON-MODEL GATES GREEN; live model tiers skipped explicitly",
+      "startUtc": "2026-10-30T03:26:16Z"
+    },
+    {
+      "command": "TMPDIR=tmp/completion-20261030 bash tools/check-native-rebuild.sh",
+      "endUtc": "2026-10-30T03:30:11Z",
+      "exit": 0,
+      "id": "native-rebuild",
+      "log": {
+        "bytes": 2724,
+        "path": "Plans/completion-release-evidence-20261030/logs/native-rebuild-final.log",
+        "sha256": "5624f06d12c4866e145eea3cd78bb3dbc0110560102e495c07f2e18b51f50b86"
+      },
+      "result": "All native rebuild checks passed; original shim sources unchanged",
+      "startUtc": "2026-10-30T03:29:16Z"
+    }
+  ],
+  "date": "2026-10-30",
+  "environmentalDiagnostics": [
+    {
+      "id": "tmpfs-TMPDIR",
+      "observation": "A first focused distribution run used /tmp (tmpfs) and failed with \"version 1 requires ext4 installation filesystem, got tmpfs\" in 10 tests. This is an environmental diagnostic, not a source failure; the same suite passes 42/42 with the ext4 task-owned TMPDIR."
+    }
+  ],
+  "schema": "mirrors.completion-s1-checks/v1",
+  "skips": [
+    {
+      "id": "live-local-model",
+      "reason": "APALACHE_MC absent by repository policy; coordinator runs the no-model gate only"
+    },
+    {
+      "id": "live-tla-references",
+      "reason": "DV_LIVE_REFERENCES unset in the focused tla-differential suite (6 skips); the required offline suites ran"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+﻿{
+    "schema":  "mirrors.s3.windows-package-receipt/v1",
+    "package":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\candidate-v0.2.0-rc.1",
+    "versionOutput":  "v0.2.0-rc.1",
+    "archive":  {
+                    "schema":  "mirrors.s3.windows-archive/v1",
+                    "archive":  "mirrors-v0.2.0-rc.1-windows-x86_64.zip",
+                    "sha256":  "8d971bd9a735a70c3e707f11d6a52c0b02b712404d4381dee1d72f678ecfecf3",
+                    "bytes":  73725020,
+                    "repeatArchive":  "mirrors-v0.2.0-rc.1-windows-x86_64-repeat.zip",
+                    "repeatSha256":  "8d971bd9a735a70c3e707f11d6a52c0b02b712404d4381dee1d72f678ecfecf3",
+                    "repeatedPackagingIdentical":  true,
+                    "scope":  "identical packaging of the same selected binaries; no reproducible-compilation claim"
+                },
+    "externalBuildJson":  {
+                              "name":  "mirrors-v0.2.0-rc.1-windows-x86_64.build.json",
+                              "sha256":  "69e17843f7de338cd993402c4a98e25ec9e8e4686fa64628826a71ea1e4a3aa2",
+                              "bytes":  9690
+                          },
+    "packageFiles":  {
+                         "bin/libcrypto-3-x64.dll":  {
+                                                         "sha256":  "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7",
+                                                         "bytes":  5689843
+                                                     },
+                         "bin/libssl-3-x64.dll":  {
+                                                      "sha256":  "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+                                                      "bytes":  1025928
+                                                  },
+                         "bin/model_interface_gen.exe":  {
+                                                             "sha256":  "83a2c353af98de0246378ee5c922951b27f1544692df154c7e07144243e1bfbd",
+                                                             "bytes":  112591360
+                                                         },
+                         "bin/ModelMirrors.exe":  {
+                                                      "sha256":  "5500df1b9b8a028d93a5a79a13e5aa3dba8e92a5da4ad4fb39f285d097cc6627",
+                                                      "bytes":  111192576
+                                                  },
+                         "bin/zlib1.dll":  {
+                                               "sha256":  "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5",
+                                               "bytes":  128488
+                                           }
+                     }
+}

@@ -1,0 +1,123 @@
+﻿{
+    "schema":  "mirrors.s3.windows-build-environment/v1",
+    "host":  "DESKTOP-6DKB5JD",
+    "os":  "Microsoft Windows NT 10.0.19045.0",
+    "powershell":  "5.1.19041.6456",
+    "stagingDirectory":  "D:/ModelMirrors/staging/s3-windows-20261030-d737aa0",
+    "sourceDirectory":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+    "capturedAtUtc":  "2026-10-30T04:20:41Z",
+    "tools":  [
+                  {
+                      "label":  "lake",
+                      "path":  "C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe",
+                      "present":  true,
+                      "version":  "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)",
+                      "outputSha256":  "a48b2ae54a894044ed0b93d91441c2e7f0d283ce3dc4376514c36ab1dceeb280",
+                      "sha256":  "a1aebb13fc502ae9190745c6b3bd2101d0fec39f030cfc07b1993799c2374644"
+                  },
+                  {
+                      "label":  "lean",
+                      "path":  "C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.exe",
+                      "present":  true,
+                      "version":  "Lean (version 4.33.0, x86_64-w64-windows-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+                      "outputSha256":  "9cc0a205cfc62fc2c738b93e352c7c0874e8e3a2894aae233dad6fd2c658bf99",
+                      "sha256":  "dd86e9b24990b1da425ea4af910f016e4db8f9a25c9ddad27bc6bee3690e677f"
+                  },
+                  {
+                      "label":  "gcc",
+                      "path":  "D:\\Programs\\Perl\\c\\bin\\gcc.exe",
+                      "present":  true,
+                      "version":  "gcc.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r8) 13.2.0",
+                      "outputSha256":  "ee7a4c9f7201ead5d34ae127fe62178fa0e6545d904fea971df05934c1ae4488",
+                      "sha256":  "34a92e71f6814bd936135d0bd82b80b63daaf445791bba4a6bba93075235e8a4"
+                  },
+                  {
+                      "label":  "python",
+                      "path":  "D:\\Programs\\Python310\\python.exe",
+                      "present":  true,
+                      "version":  "Python 3.10.11",
+                      "outputSha256":  "e6b49afcda8a7e1f9a242b200c21d54e1607b2ee0072eeae78ecbdd27be866ae",
+                      "sha256":  "3cce33d75d6fdae4e004d0bdf149320b3147482a9caf370079dcb9c191a1b260"
+                  },
+                  {
+                      "label":  "git",
+                      "path":  "C:\\Program Files\\Git\\cmd\\git.exe",
+                      "present":  true,
+                      "version":  "git version 2.54.0.windows.1",
+                      "outputSha256":  "ed871e4cd38f9f099af6c54fef23cc904a84844bf9a9b78ef361bea9c72b1a1c",
+                      "sha256":  "81ef35ae005ca9318018d18e3327578ce939fb99feaad6b2d7c8ab15f3de8db5"
+                  }
+              ],
+    "openssl":  {
+                    "version":  "OpenSSL 3.5.0 8 Apr 2025 (Library: OpenSSL 3.5.0 8 Apr 2025)",
+                    "includeDir":  "D:/Programs/msys2/ucrt64/include",
+                    "libraryDir":  "D:/Programs/msys2/ucrt64/lib",
+                    "libcrypto":  "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7",
+                    "libssl":  "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+                    "zlib1":  null
+                },
+    "environment":  {
+                        "CC":  "D:/Programs/Perl/c/bin/gcc.exe",
+                        "OSSL_INC":  "D:/Programs/msys2/ucrt64/include",
+                        "OSSL_LIB":  "D:/Programs/msys2/ucrt64/lib",
+                        "TEMP":  "D:\\ModelMirrors\\tmp\\s3-windows-20261030",
+                        "APALACHE_MC":  "unset",
+                        "APALACHE_JAR":  "unset",
+                        "TLA2TOOLS_JAR":  "unset"
+                    },
+    "productionBefore":  {
+                             "serviceStatus":  "Running",
+                             "processes":  [
+                                               {
+                                                   "pid":  9920,
+                                                   "path":  "D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+                                                   "created":  "\/Date(1792988453974)\/",
+                                                   "commandLine":  "\"D:\\ModelMirrors\\bin\\ModelMirrors.exe\" --server 8999 --tls --cert D:\\ModelMirrors\\certs\\server.crt --key D:\\ModelMirrors\\certs\\server.key --ca D:\\ModelMirrors\\certs\\ca.crt --jobs 4"
+                                               }
+                                           ],
+                             "files":  {
+                                           "D:\\ModelMirrors\\bin\\ModelMirrors.exe":  {
+                                                                                           "sha256":  "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+                                                                                           "bytes":  111196672,
+                                                                                           "lastWriteUtc":  "2026-10-26T04:14:24Z",
+                                                                                           "hashOnly":  false
+                                                                                       },
+                                           "D:\\ModelMirrors\\bin\\libcrypto-3-x64.dll":  {
+                                                                                              "sha256":  "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7",
+                                                                                              "bytes":  5689843,
+                                                                                              "lastWriteUtc":  "2026-09-18T02:27:16Z",
+                                                                                              "hashOnly":  false
+                                                                                          },
+                                           "D:\\ModelMirrors\\bin\\libssl-3-x64.dll":  {
+                                                                                           "sha256":  "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+                                                                                           "bytes":  1025928,
+                                                                                           "lastWriteUtc":  "2026-09-18T02:27:16Z",
+                                                                                           "hashOnly":  false
+                                                                                       },
+                                           "D:\\ModelMirrors\\bin\\zlib1.dll":  {
+                                                                                    "sha256":  "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5",
+                                                                                    "bytes":  128488,
+                                                                                    "lastWriteUtc":  "2026-09-18T02:34:55Z",
+                                                                                    "hashOnly":  false
+                                                                                },
+                                           "D:\\ModelMirrors\\certs\\server.crt":  {
+                                                                                       "sha256":  "03f98bb439fb7f9100cbbaf5fc8562e3629f17e85bc7e807ce26bd239e82c854",
+                                                                                       "bytes":  1212,
+                                                                                       "lastWriteUtc":  "2026-08-15T12:50:06Z",
+                                                                                       "hashOnly":  false
+                                                                                   },
+                                           "D:\\ModelMirrors\\certs\\ca.crt":  {
+                                                                                   "sha256":  "f04a3ce394cdf041ddd4c32aad868bc40ace79c00712aead6a9445adcebc9c6e",
+                                                                                   "bytes":  1150,
+                                                                                   "lastWriteUtc":  "2026-08-15T12:50:06Z",
+                                                                                   "hashOnly":  false
+                                                                               },
+                                           "D:\\ModelMirrors\\certs\\server.key":  {
+                                                                                       "sha256":  "db99faaca76a98f8d77c6ae4491e714f69c834b866b334f038ff7ffa242a53ef",
+                                                                                       "bytes":  1732,
+                                                                                       "lastWriteUtc":  "2026-08-15T12:50:06Z",
+                                                                                       "hashOnly":  true
+                                                                                   }
+                                       }
+                         }
+}

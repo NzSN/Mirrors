@@ -1,0 +1,280 @@
+{
+  "aggregate": {
+    "S3.6": {
+      "record": "Plans/completion-s3-wsl-evidence-20261030/acceptance.json",
+      "scope": "ubuntu-26.04-wsl2-x86_64",
+      "state": "passed"
+    },
+    "S3.7": {
+      "record": "Plans/completion-s3-windows-evidence-20261030/",
+      "state": "passed"
+    },
+    "S3.8": {
+      "record": "Plans/completion-s3-windows-evidence-20261030/",
+      "scope": "packaging only",
+      "state": "passed"
+    },
+    "S3.9": {
+      "limits": [
+        "Windows validation is eight selected non-model suites, not full lake test or M5 matrix",
+        "No publication, deployment, reboot, or reproducible-compilation claim",
+        "Linux runtime scope is Ubuntu 26.04.1 WSL2 only"
+      ],
+      "scope": "complete reviewable Linux/Windows artifact set; scopes recorded per artifact",
+      "state": "passed"
+    }
+  },
+  "artifacts": [
+    {
+      "archiveEntries": 6,
+      "archiveFiles": 4,
+      "binaries": {
+        "bin/mirror": {
+          "bytes": 129463840,
+          "libraries": [
+            "libc.so.6",
+            "libdl.so.2",
+            "libm.so.6",
+            "libpthread.so.0",
+            "librt.so.1"
+          ],
+          "sha256": "1140d6fdfb9b1a619df13ecf3dd38791d25b5b72f04a04accf656c507e43e34a"
+        },
+        "bin/model_interface_gen": {
+          "bytes": 124701968,
+          "libraries": [
+            "libc.so.6",
+            "libdl.so.2",
+            "libm.so.6",
+            "libpthread.so.0",
+            "librt.so.1"
+          ],
+          "sha256": "f7bd3c9927c1b2ddfc94ba20cc68ddaf9e6ea00d5eddf3b0b0cdeeac03e6ace2"
+        }
+      },
+      "bytes": 72209232,
+      "claim": "S3.6 isolated packaged runtime smoke passed in ubuntu-26.04-wsl2-x86_64; no Ubuntu 24.04, native Linux, live-model, native M4, or framework qualification",
+      "externalBuildManifest": {
+        "bytes": 2874,
+        "identicalToEmbedded": true,
+        "path": ".golden-build/completion-20261030/dist-linux/mirrors-v0.2.0-rc.1-linux-x86_64.build.json",
+        "schema": "mirrors.github-release/v1",
+        "sha256": "28beda2c810c085e28b0112d9e8bed5443a5cd64fe7aa62dcf67c0058db8da5a"
+      },
+      "fileName": "mirrors-v0.2.0-rc.1-linux-x86_64.tar.gz",
+      "id": "linux-x86_64",
+      "platform": "linux-x86_64",
+      "retentionIntegrity": {
+        "archivePresent": true
+      },
+      "retentionLocation": ".golden-build/completion-20261030/dist-linux/mirrors-v0.2.0-rc.1-linux-x86_64.tar.gz",
+      "runtimePrerequisites": {
+        "apalache": "separate prerequisite, not bundled",
+        "glibc": ">=2.25 (max observed GLIBC symbol version; built against glibc 2.43)",
+        "leanRequired": false,
+        "libraries": "OpenSSL 3 (libssl3t64, libcrypto), GMP (libgmp10)",
+        "os": "Ubuntu 26.04.1 WSL2 x86_64 (observed); archive was built on the same distribution and requires a compatible Linux x86_64 runtime"
+      },
+      "sha256": "39623040464f71bcaff5f1b1002f93b1eec6d19e0bbecabc9a141b523d90b60a",
+      "sourceBinding": {
+        "builtFromCleanTaggedCheckout": true,
+        "cleanCheckout": ".golden-build/completion-20261030/release-source",
+        "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+        "state": "bound",
+        "tag": "v0.2.0-rc.1",
+        "tagPeelsTo": "d737aa0886b9d406e391955756922d9d735d7ec1"
+      },
+      "validation": {
+        "archiveCheck": {
+          "acceptedForS3_6": true,
+          "command": "env -i PATH=/usr/bin:/bin HOME=<owner-only> TMPDIR=<owner-only> LC_ALL=C.UTF-8 python3 tools/release/release.py check-archive --tag v0.2.0-rc.1 --archive <read-only archive>",
+          "exit": 0,
+          "host": "ubuntu-26.04-wsl2-x86_64",
+          "hostScope": "Ubuntu 26.04.1 WSL2 x86_64, glibc 2.43, kernel 6.18.54.1-microsoft-standard-WSL2",
+          "isolated": true,
+          "leanAndLakeAbsent": true,
+          "log": "Plans/completion-s3-wsl-evidence-20261030/logs/s3.6-check-archive.log",
+          "record": "Plans/completion-s3-wsl-evidence-20261030/acceptance.json"
+        },
+        "gates": [
+          "fixtures_replay",
+          "diff_cross",
+          "model_interface_spec",
+          "stdio_smoke",
+          "transport_spec",
+          "check-client-framing.py",
+          "relocated-binary-cli-smoke"
+        ],
+        "scope": "focused non-model package gates on the coordinator; no live-model, native M4, Ubuntu 24.04 platform, or framework qualification",
+        "ubuntu2404IsolatedSmoke": "not-claimed; superseded by the user-selected Ubuntu 26.04.1 WSL2 scope"
+      }
+    },
+    {
+      "archiveEntries": 7,
+      "archiveFiles": 7,
+      "binaries": {
+        "bin/ModelMirrors.exe": {
+          "bytes": 111192576,
+          "sha256": "5500df1b9b8a028d93a5a79a13e5aa3dba8e92a5da4ad4fb39f285d097cc6627"
+        },
+        "bin/libcrypto-3-x64.dll": {
+          "bytes": 5689843,
+          "sha256": "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7"
+        },
+        "bin/libssl-3-x64.dll": {
+          "bytes": 1025928,
+          "sha256": "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c"
+        },
+        "bin/model_interface_gen.exe": {
+          "bytes": 112591360,
+          "sha256": "83a2c353af98de0246378ee5c922951b27f1544692df154c7e07144243e1bfbd"
+        },
+        "bin/zlib1.dll": {
+          "bytes": 128488,
+          "sha256": "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5"
+        }
+      },
+      "bytes": 73725020,
+      "claim": "staged native Windows rebuild from the exact S2-bound local tag with eight non-model suites and packaging verification; no reproducible-compilation, full Windows lake test, M5, or release-admission claim",
+      "externalBuildManifest": {
+        "bytes": 9690,
+        "identicalToEmbedded": true,
+        "path": ".golden-build/completion-20261030/dist-windows/mirrors-v0.2.0-rc.1-windows-x86_64.build.json",
+        "schema": "mirrors.s3.windows-package/v1",
+        "sha256": "69e17843f7de338cd993402c4a98e25ec9e8e4686fa64628826a71ea1e4a3aa2"
+      },
+      "fileName": "mirrors-v0.2.0-rc.1-windows-x86_64.zip",
+      "id": "windows-x86_64",
+      "platform": "windows-x86_64",
+      "productionPreservation": {
+        "pid": 9920,
+        "serviceStatus": "Running",
+        "sha256": "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+        "taskOwnedDescendantCount": 0,
+        "unchanged": true
+      },
+      "retentionIntegrity": {
+        "archivePresent": true,
+        "sourceArchivePresent": true
+      },
+      "retentionLocation": ".golden-build/completion-20261030/dist-windows/mirrors-v0.2.0-rc.1-windows-x86_64.zip",
+      "runtimePrerequisites": {
+        "leanRequired": false,
+        "os": "Windows 10/11 x86_64",
+        "runtime": "ucrtbase.dll and system DLLs; bundled OpenSSL 3 DLLs (zlib1.dll is bundled but not imported by either executable)"
+      },
+      "sha256": "8d971bd9a735a70c3e707f11d6a52c0b02b712404d4381dee1d72f678ecfecf3",
+      "sourceBinding": {
+        "builtOnHost": "win10 (DESKTOP-6DKB5JD, Windows 10.0.19045.0)",
+        "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+        "overlay": false,
+        "sourceArchive": "mirrors-v0.2.0-rc.1-source.tar.gz",
+        "sourceArchiveBytes": 21871950,
+        "sourceArchiveRetention": ".golden-build/completion-20261030/windows-build/input/mirrors-v0.2.0-rc.1-source.tar.gz",
+        "sourceArchiveSha256": "9de8226a0738d134c7ed0f0b6e3ebbad375f9169191331eaf204b1f4a8abe274",
+        "sourceContentTreeDigest": "e54a22e0ca262b236973db2412f7b7e46fdc5d9489bcfc95e15822005d3b3b40",
+        "sourceFileCount": 9207,
+        "stagingDirectory": "D:/ModelMirrors/staging/s3-windows-20261030-d737aa0",
+        "state": "bound",
+        "tag": "v0.2.0-rc.1",
+        "tagObject": "f135f2809e6612d158c5be176c7ea6429b9d51f3",
+        "tree": "8d2de2561d25c219e685bb46980080c03d7d1c98"
+      },
+      "validation": {
+        "build": {
+          "command": "lake build mirror model_interface_gen fixtures_replay diff_cross model_interface_spec stdio_smoke transport_spec jobstore_spec async_resource_spec dpm_sync_spec",
+          "exit": 0,
+          "jobsCompleted": 606,
+          "log": "Plans/completion-s3-windows-evidence-20261030/logs/build.log",
+          "seconds": 87.4
+        },
+        "gates": [
+          "fixtures_replay",
+          "diff_cross",
+          "model_interface_spec",
+          "stdio_smoke",
+          "transport_spec",
+          "jobstore_spec",
+          "async_resource_spec",
+          "dpm_sync_spec"
+        ],
+        "gatesEnvironment": {
+          "APALACHE_JAR": "unset",
+          "APALACHE_MC": "unset",
+          "TLA2TOOLS_JAR": "unset"
+        },
+        "packaging": {
+          "deterministicRepackByteIdentical": true,
+          "embeddedAndExternalBuildJsonIdentical": true,
+          "executableVersionStringPresent": true,
+          "memberHashesMatchBuildJson": true,
+          "memberSetMatches": true,
+          "noCredentialMaterial": true,
+          "peImportClosureResolved": true
+        },
+        "scope": "native Windows build from the exact local v0.2.0-rc.1 tag and eight selected non-model runtime suites; no full lake test, M5 matrix, production service lifecycle, reboot, reproducible-compilation or release admission claim"
+      }
+    }
+  ],
+  "notClaimed": [
+    "Ubuntu 24.04 runtime acceptance",
+    "native Linux acceptance",
+    "live-model or full-framework qualification",
+    "release publication",
+    "production deployment or reboot",
+    "reproducible compilation"
+  ],
+  "producedAt": "2026-10-30",
+  "reconciliation": {
+    "handoff": {
+      "path": "Plans/completion-s5-wsl-executor-handoff-2026-10-30.md",
+      "sha256": "66ffa6ca2ae38ba35005633d3268327bb74ec0e3578655375659a85f01eeff0e"
+    },
+    "inputs": [
+      {
+        "record": "Plans/completion-s3-package-evidence-20261030/",
+        "role": "original S3 build, manifests and rejected historical Windows row"
+      },
+      {
+        "record": "Plans/completion-s3-windows-evidence-20261030/",
+        "role": "S2-bound Windows rebuild and package input"
+      },
+      {
+        "record": "Plans/completion-s3-reconciled-evidence-20261030/",
+        "role": "bound Linux/Windows package set superseded only for the S3.6 platform scope"
+      },
+      {
+        "record": "Plans/completion-s3-wsl-evidence-20261030/acceptance.json",
+        "role": "new S3.6 current-WSL package acceptance",
+        "sha256": "b9799c3ab010f572bed2ae8fc801cbdf04e4e768b8b47c1348e7fb247eab416c"
+      }
+    ],
+    "supersedes": {
+      "effect": "Linux S3.6 is accepted under the explicitly selected Ubuntu 26.04.1 WSL2 scope instead of awaiting Ubuntu 24.04; the bound Windows row is carried forward unchanged.",
+      "record": "Plans/completion-s3-reconciled-evidence-20261030/package-set.json",
+      "schema": "mirrors.s3.package-set/v2",
+      "sha256": "7f4c726b0c89410560d46751916cf8c59a659a2dfde8870f42f6ab709c01cb84"
+    }
+  },
+  "schema": "mirrors.s3.package-set/v3",
+  "source": {
+    "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+    "embeddedVersion": "0.2.0-rc.1",
+    "lakeManifestSha256": "24b5ca4312c41640a3d65f0d9d4443a559c257bbd0e2034c0215e85287566e75",
+    "leanToolchain": "leanprover/lean4:v4.33.0",
+    "tree": "8d2de2561d25c219e685bb46980080c03d7d1c98",
+    "versionFile": "Shell/Version.lean"
+  },
+  "tag": {
+    "annotated": true,
+    "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+    "localOnly": true,
+    "name": "v0.2.0-rc.1",
+    "objectSha": "f135f2809e6612d158c5be176c7ea6429b9d51f3",
+    "pushed": false,
+    "remoteAbsent": true,
+    "remoteObservation": "Inherited from the input records (2026-10-30 read-only GitHub and git ls-remote observations returned only v0.1.0 and v0.1.1); not re-observed during reconciliation.",
+    "type": "tag"
+  },
+  "version": "0.2.0-rc.1"
+}

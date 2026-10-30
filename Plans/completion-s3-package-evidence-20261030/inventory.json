@@ -1,0 +1,95 @@
+{
+ "schema": "mirrors.s3.package-record-inventory/v1",
+ "files": [
+  {
+   "path": ".gitattributes",
+   "bytes": 13,
+   "sha256": "9e8f041ed812cb5288282cc6b187de804e96b688d56647fdae181c49fec71863"
+  },
+  {
+   "path": ".gitignore",
+   "bytes": 3,
+   "sha256": "b39decba66e79d9a8ab7a89e6e3c7942c0c92f125e9ece55c45020b877170638"
+  },
+  {
+   "path": "README.md",
+   "bytes": 6743,
+   "sha256": "8abe5bf05b4513e898e49826c8336de38d77b95351184d3672bf818f0bf56d46"
+  },
+  {
+   "path": "logs/s3.3-release-unittests.log",
+   "bytes": 1917,
+   "sha256": "e1d9b9216b6f03a2d2f60f9806ff02fa1c1eba2fca59a4174e0afe6e7611e567"
+  },
+  {
+   "path": "logs/s3.4-build-linux.log",
+   "bytes": 92094,
+   "sha256": "fd3149f6e1595807edf92413e63cd737a91245d1bdddfc9b5b0ffcb9a3b6ba07"
+  },
+  {
+   "path": "logs/s3.5-archive-member-audit.json",
+   "bytes": 2238,
+   "sha256": "92d965e2ce431340878e6758ad60fd79c073bc37cec3798aad6c6fe064a00e86"
+  },
+  {
+   "path": "logs/s3.5-checksums.log",
+   "bytes": 92,
+   "sha256": "53bee1d05d108fbe0369fdf17a86bc5e8f52c647a87c83939685650c37343f6f"
+  },
+  {
+   "path": "logs/s3.5-linux-artifact-verification.log",
+   "bytes": 1410,
+   "sha256": "2118685e9c43f5b66f1af246e46b120d63ee87c392e3e2342b975d4ee10a30c0"
+  },
+  {
+   "path": "logs/s3.6-check-archive-ubuntu-26.04.log",
+   "bytes": 7,
+   "sha256": "19eaf43821a7660ec323a87c8457bf74823beb296c39f5e01aa8a683aa50f061"
+  },
+  {
+   "path": "logs/s3.7-windows-source-comparison.log",
+   "bytes": 2742,
+   "sha256": "2993d3de18a485a044770ed43c9498e8ff2c77fbedb9c8fd77f84563272235e8"
+  },
+  {
+   "path": "logs/s3.8-windows-dll-closure.log",
+   "bytes": 1451,
+   "sha256": "63560216031c93a57f21e63ebcff357ec954dff9d81a65b9cc61216ec0404a1c"
+  },
+  {
+   "path": "logs/s3.8-windows-packaging-repeatability.log",
+   "bytes": 321,
+   "sha256": "b9fc3734bd4e1d9141dddd18f53d9348ca0585e4eacd4c29d5c5fc939954f4d5"
+  },
+  {
+   "path": "logs/s3.8-windows-zip-audit.log",
+   "bytes": 2171,
+   "sha256": "05c26ffb9932345418fb49df57f132d6fff18fa2a5b7bb010bb87e89be09b3ef"
+  },
+  {
+   "path": "logs/s3.9-final-observation.log",
+   "bytes": 1200,
+   "sha256": "6550baf29ea3aa741d3cceb73be6821746de7b99ef99462d0f65dbb92057ae22"
+  },
+  {
+   "path": "package-set.json",
+   "bytes": 7205,
+   "sha256": "d1a0b1f86cf3ca976eb24750c0ad2d628882e4e026e3a8a30850fbd0f53fde15"
+  },
+  {
+   "path": "s3-ledger.json",
+   "bytes": 5676,
+   "sha256": "153d2a592afd960e2e17825b83c5836c49545e07cad8a9148a0ed514613a839c"
+  },
+  {
+   "path": "verify.py",
+   "bytes": 8916,
+   "sha256": "2c282b496fd5b10e540d17780740ab283b521b09033bb758f495251c06ecda5b"
+  },
+  {
+   "path": "windows-binding.json",
+   "bytes": 47098,
+   "sha256": "1b9f32c476149c1584b85dfcb0c278dfb9d2b4cde0255bd957550df66c1e905c"
+  }
+ ]
+}

@@ -1,0 +1,23 @@
++zsh:1> cd .golden-build/completion-20261030/dist-linux
++zsh:1> sha256sum -c SHA256SUMS
+mirrors-v0.2.0-rc.1-linux-x86_64.build.json: OK
+mirrors-v0.2.0-rc.1-linux-x86_64.tar.gz: OK
++zsh:1> tar -xOzf mirrors-v0.2.0-rc.1-linux-x86_64.tar.gz mirrors-v0.2.0-rc.1-linux-x86_64/BUILD.json
++zsh:1> cmp /tmp/s3.6-embedded-build.json mirrors-v0.2.0-rc.1-linux-x86_64.build.json
++zsh:1> python3 -
+tag v0.2.0-rc.1
+commit d737aa0886b9d406e391955756922d9d735d7ec1
+embeddedVersion 0.2.0-rc.1
+binaries {"mirror": "1140d6fdfb9b1a619df13ecf3dd38791d25b5b72f04a04accf656c507e43e34a", "model_interface_gen": "f7bd3c9927c1b2ddfc94ba20cc68ddaf9e6ea00d5eddf3b0b0cdeeac03e6ace2"}
+platform linux-x86_64
+qualification focused non-model release gates only; no live model qualification
+buildTools {"cc": "cc (Ubuntu 15.2.0-16ubuntu1) 15.2.0\nCopyright (C) 2025 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.", "glibc": "glibc 2.43", "lake": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)", "openssl": "OpenSSL 3.5.5 27 Jan 2026 (Library: OpenSSL 3.5.5 27 Jan 2026)"}
++zsh:13> cd /home/lsz/Codebase/Mirrors
++zsh:13> git rev-parse 'v0.2.0-rc.1^{commit}' 'v0.2.0-rc.1^{tree}'
+d737aa0886b9d406e391955756922d9d735d7ec1
+8d2de2561d25c219e685bb46980080c03d7d1c98
++zsh:13> git cat-file -t v0.2.0-rc.1
+tag
++zsh:13> git for-each-ref '--format=%(refname) %(objectname)' refs/tags/v0.2.0-rc.1
+refs/tags/v0.2.0-rc.1 f135f2809e6612d158c5be176c7ea6429b9d51f3
++zsh:13> set +x

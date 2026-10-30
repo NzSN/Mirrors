@@ -109,34 +109,7 @@ References: [October 25 qualification](completed/current-source-qualification-20
 - Independent Q1/Q2-style verification succeeds.
 - Results are explicitly labeled local-candidate, not production acceptance.
 
-## 4. M4 ownership and recovery
-
-**Goal:** safe aggregate resource enforcement and descendant recovery.
-
-Contract: [M4 acceptance and platform progression](m4-native-host-and-platform-plan-2026-10-07.md).
-
-1. Design a versioned journal extension binding each process to its exact
-   delegated cgroup resource identity.
-2. Keep v1 process records ambiguity-only; never infer ownership from PID or
-   path text.
-3. Implement revalidation of boot, principal, session, cgroup inode, and
-   delegation before recovery actions.
-4. Record cleanup only after the owned subtree is confirmed empty.
-5. Add unit and fault-injection tests for stale identities, PID reuse, torn
-   writes, concurrent recovery, and retries.
-6. On a native Linux host with an operator-owned cgroup-v2 delegation, run
-   CPU/memory/PID quota readbacks, descendant enforcement and escape refusal,
-   abrupt controller termination, administrative recovery and filesystem
-   cleanup, and wrong-principal/session/boot plus unrelated-sentinel controls.
-
-**Exit criteria**
-
-- Owned descendants and resources are reclaimed safely.
-- Ambiguous or unrelated processes/files survive untouched.
-- Aggregate limits apply to the whole descendant tree.
-- Exact native-host evidence supports only the tested profile.
-
-## 5. F5 C++ model comparison
+## 4. F5 C++ model comparison
 
 **Goal:** turn the controlled mutex/FIFO prototype into a verified scheduling
 profile.
@@ -162,7 +135,7 @@ and [runner contract](../Docs/dpm-runner-contract.md).
 - Cleanup and deadline failures remain non-passing.
 - Only then change `modelComparison` to `true`.
 
-## 6. Compatibility lifecycle
+## 5. Compatibility lifecycle
 
 **Goal:** retire legacy behavior without breaking supported clients.
 
@@ -184,10 +157,10 @@ Contract: [Haskell cutover](../Docs/cutover.md).
 - Supported clients have a verified migration path.
 - Removal introduces no unreviewed wire or schema change.
 
-## 7. Release and controlled deployment
+## 6. Release and controlled deployment
 
-After items 1–3, prepare the release. M4 and F5 may remain separately scoped
-roadmap capabilities and must not be advertised as accepted.
+After items 1–3, prepare the release. F5 may remain a separately scoped roadmap
+capability and must not be advertised as accepted without its gates.
 
 Contract: [ecosystem versioning](../Docs/ecosystem-versioning.md).
 
@@ -205,9 +178,9 @@ Contract: [ecosystem versioning](../Docs/ecosystem-versioning.md).
 Execute **immutable toolchain → profile-6 qualification → exact-candidate
 qualification → release**.
 
-M4 and F5 are independent architectural tracks. They need not block a
-compatible release whose documented scope excludes them, but each remains
-unaccepted until its own gates pass. Windows/macOS Gate backends, arbitrary
+F5 is an independent architectural track. It need not block a compatible
+release whose documented scope excludes it, but it remains unaccepted until
+its gates pass. Windows/macOS Gate backends, arbitrary
 instruction preemption, browser or async-Rust scheduling, weak-memory
 completeness, POR, and generic native-trap instrumentation are not implicitly
 added by this plan.

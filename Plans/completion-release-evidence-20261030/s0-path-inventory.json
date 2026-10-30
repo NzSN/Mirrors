@@ -1,0 +1,4999 @@
+{
+  "baseCommit": "7e9a27d0db72ec36b49c6fc5764b2687b565edfd",
+  "baseSubject": "runtime: fix transport ownership and async result delivery",
+  "branch": "main",
+  "classificationNote": "Five-way S0.1 classification: payload (candidate source/contracts/tests/fixtures), evidence (dated receipts and profile-6 runs), generated (ignored build/cache/scratch roots), credential (none present in the status set), unrelated/preserved (.projectile-cache.eld). Ignored roots are listed separately because git status does not enumerate their files.",
+  "companionRevisions": {
+    "MirrorCPP": "8c542a6b1339cc0b6176465ff7f17a32e614553d",
+    "MirrorECMA": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+    "MirrorHaskell": "4aa693f86e18349bb97c050dd33aecbf730b6fa2",
+    "MirrorLean": "a8634ebe2455f97d15b55bec3c810d945cb6e3d3",
+    "MirrorRust": "6b9480ab81717b76ca7f74b41fc554578b70c890"
+  },
+  "counts": {
+    "entries": 483,
+    "modified": 55,
+    "trackedDeletions": 164,
+    "trackedInsertions": 1199,
+    "untracked": 428
+  },
+  "credentialCandidates": [],
+  "date": "2026-10-30",
+  "entries": [
+    {
+      "bytes": 17533,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Docs/current-status.md",
+      "reason": "contract or navigation document",
+      "sha256": "42d82bb69816f369dd0d9a32a07bd2aa3d198ebf67a44c95cd63b0513fb8a68b",
+      "status": "M"
+    },
+    {
+      "bytes": 7638,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Docs/cutover.md",
+      "reason": "contract or navigation document",
+      "sha256": "20c8e34e60f16a1ac38701191a7240e9b00710b337601020bc9ce2476e610474",
+      "status": "M"
+    },
+    {
+      "bytes": 10725,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Docs/dpm-cli-guide.md",
+      "reason": "contract or navigation document",
+      "sha256": "ad1fcdadac2328e591ef1cac2f0cb308c31bbbfb3b66684ffe4877e53aca44b4",
+      "status": "M"
+    },
+    {
+      "bytes": 11098,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Docs/dpm-runner-contract.md",
+      "reason": "contract or navigation document",
+      "sha256": "7532cd1b541d87c9ae77c7591d7dcaae177ea2c5d524bfb6ed5467be9fe5d3cf",
+      "status": "M"
+    },
+    {
+      "bytes": 2831,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Ffi/README.md",
+      "reason": "contract or navigation document",
+      "sha256": "3757dac274dae2f7e9a35702029e3a3a452c398a7e9a6860293dc9f36b739ae5",
+      "status": "M"
+    },
+    {
+      "bytes": 9450,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/foundation-completion-plan-2026-10-26.md",
+      "reason": "reviewed plan/decision/handoff document",
+      "sha256": "43dc0bae84ff035a39ea99df6c615ccdc39369151019ff6b429c98a220b8bc90",
+      "status": "M"
+    },
+    {
+      "bytes": 5047,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/m4-native-host-and-platform-plan-2026-10-07.md",
+      "reason": "reviewed plan/decision/handoff document",
+      "sha256": "f07d577bced0aca7bbf85bf11d2d1926a3f897ec72bb696ae41bd2514baef7d0",
+      "status": "M"
+    },
+    {
+      "bytes": 19565,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "README.md",
+      "reason": "contract or navigation document",
+      "sha256": "8869511b2d19ed1ac0b943a30cc20e8f43e385aaf8e15ff332e7a4cd856cf467",
+      "status": "M"
+    },
+    {
+      "bytes": 2718,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Shell/Dpm/Cli.lean",
+      "reason": "candidate source or test payload",
+      "sha256": "9fa0130a6a20cf5dd20fa1b774b1bcd243ac3bfddcfd1e3dc696ba82188fb8f9",
+      "status": "M"
+    },
+    {
+      "bytes": 16227,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Shell/Transport/Tls.lean",
+      "reason": "candidate source or test payload",
+      "sha256": "2f715310e0d9951297be676d45641b0bb77798c970d3b762d8b369c9f1a43a77",
+      "status": "M"
+    },
+    {
+      "bytes": 242,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Shell/Version.lean",
+      "reason": "candidate source or test payload",
+      "sha256": "a4fa98763523ec113c6a74264971668e824e54e3b2a0330c61a8a63a6880a77a",
+      "status": "M"
+    },
+    {
+      "bytes": 9363,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "distribution/reference-node/README.md",
+      "reason": "contract or navigation document",
+      "sha256": "69ab646cd2af6bfc11b61f008ede755e7aff075020ae663491b8ecc4c31c8c79",
+      "status": "M"
+    },
+    {
+      "bytes": 36675,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "lakefile.lean",
+      "reason": "candidate source or test payload",
+      "sha256": "344bed3a64b44c64ac5404f12d84db003990a6bbde225cbe61061a0c73955694",
+      "status": "M"
+    },
+    {
+      "bytes": 22698,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/differences.json",
+      "reason": "frozen fixture/golden input",
+      "sha256": "89fa87a687dbaced146c0f4963c26e889f37c7d8832b6a790f7a7b0e98d34b8e",
+      "status": "M"
+    },
+    {
+      "bytes": 10164,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/README.md",
+      "reason": "contract or navigation document",
+      "sha256": "c043e7f04e8be35f53e08e6998acd5a8f4428de25b0c4291f00c69043cc0fbc2",
+      "status": "M"
+    },
+    {
+      "bytes": 7606,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/StdioSmoke.lean",
+      "reason": "candidate source or test payload",
+      "sha256": "96a04c88e6bfee9cdfc0cbf903c3d7d152d085016c8e1e121027844e0d95246d",
+      "status": "M"
+    },
+    {
+      "bytes": 38874,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/TransportSpec.lean",
+      "reason": "candidate source or test payload",
+      "sha256": "9f0339a5b7af0fa74c0c5e37b7858de4106a6b864865a982f4bf2f4b6eaca21b",
+      "status": "M"
+    },
+    {
+      "bytes": 20793,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/check_cli_installed.py",
+      "reason": "candidate source or test payload",
+      "sha256": "3386c4dbc52c406c9f5679eeef152c550e96f9f14d35266b79a6481289da3f9e",
+      "status": "M"
+    },
+    {
+      "bytes": 11455,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/cli.py",
+      "reason": "candidate source or test payload",
+      "sha256": "1d3379cb37af8afb84fc79dc94d415c13e947e426542cc45113ad6c981c2a3c1",
+      "status": "M"
+    },
+    {
+      "bytes": 51936,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/dpm_host.py",
+      "reason": "candidate source or test payload",
+      "sha256": "e6177f91bda1088cb711e6c1c4848d23eecfcd60755e0b00f35556daa7bd8e88",
+      "status": "M"
+    },
+    {
+      "bytes": 5300,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/install_cli.py",
+      "reason": "candidate source or test payload",
+      "sha256": "ac0a1cc94db3be91a746e18baef15869d33dcbdd998a4706e0abae6587ed1059",
+      "status": "M"
+    },
+    {
+      "bytes": 106,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/languages/ecma/package.json",
+      "reason": "candidate source or test payload",
+      "sha256": "bf24c58a8393a3c07b9ab27fd6243cd9ef1bd22ef8ff2a524499a8b86961cf65",
+      "status": "M"
+    },
+    {
+      "bytes": 11931,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/languages/rust/Cargo.lock",
+      "reason": "candidate source or test payload",
+      "sha256": "1f261b4184a4edf845335ba0d53986d737300a3a200d8e6be7ddfb5de6c3bcdc",
+      "status": "M"
+    },
+    {
+      "bytes": 253,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/languages/rust/Cargo.toml",
+      "reason": "candidate source or test payload",
+      "sha256": "2a1f6c8c3057837d694c30b5727a6835e7c98134cc96897e0831bc5756fd76e8",
+      "status": "M"
+    },
+    {
+      "bytes": 10054,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/prepare_cli.py",
+      "reason": "candidate source or test payload",
+      "sha256": "a7fd10688d439cb1e65344f27bdcfd1b56f152be2a170d22dce34e0683627438",
+      "status": "M"
+    },
+    {
+      "bytes": 5477,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/refresh_host_identity.py",
+      "reason": "candidate source or test payload",
+      "sha256": "2e570dc783e835994a94a6634437c0ccb48791e66c8a9ac3523e87192dc8d136",
+      "status": "M"
+    },
+    {
+      "bytes": 37836,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/tests/test_dpm_host.py",
+      "reason": "candidate source or test payload",
+      "sha256": "78eb351d647a9bfeac6a29766b3c72d1e3e101c620996cb6a7a39bf13abe608f",
+      "status": "M"
+    },
+    {
+      "bytes": 11744,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/tests/test_dpm_launcher_install.py",
+      "reason": "candidate source or test payload",
+      "sha256": "566ba481430d3a516709a19e58fb08e399929c7b4cbf0626b7f22c555030b359",
+      "status": "M"
+    },
+    {
+      "bytes": 41346,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/distribution/install.py",
+      "reason": "candidate source or test payload",
+      "sha256": "08a57d6ba8440481cc751b4c5b09eb6703019dea26f3e23aea180d19ac995289",
+      "status": "M"
+    },
+    {
+      "bytes": 16386,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/distribution/test_install.py",
+      "reason": "candidate source or test payload",
+      "sha256": "e7cd8e58bcc0dd3ca8f4142320bb0ce35054aae1727239e678e62e77d09e8bd2",
+      "status": "M"
+    },
+    {
+      "bytes": 15428,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/evidence/README.md",
+      "reason": "contract or navigation document",
+      "sha256": "af92583c31f86f89134581d7f0dfab791026a3f164579c3361afd2874276d867",
+      "status": "M"
+    },
+    {
+      "bytes": 44983,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/evidence/commands.json",
+      "reason": "candidate source or test payload",
+      "sha256": "04ded2066f18584c0fa3e87fd48d3b58bb4f2a79c24b12776abdeb3576c17bb3",
+      "status": "M"
+    },
+    {
+      "bytes": 8406,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/evidence/run_remote_model_check.py",
+      "reason": "candidate source or test payload",
+      "sha256": "e1f7d29073589ed7360f45a903afbb23219de2a9a73052003dbb84df9ca969b1",
+      "status": "M"
+    },
+    {
+      "bytes": 7842,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/evidence/tests/test_remote_interop.py",
+      "reason": "candidate source or test payload",
+      "sha256": "e85327c30d469073b3a52d425df32f3a3c935c8fab48c70af1e94df3288a144e",
+      "status": "M"
+    },
+    {
+      "bytes": 5246,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/evidence/tests/test_remote_observation.py",
+      "reason": "candidate source or test payload",
+      "sha256": "c20af8bb48e1f5a5d1a07782dd0caaccd1ab9eea4ca8425b45ee714ccd34865d",
+      "status": "M"
+    },
+    {
+      "bytes": 22008,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/interop/INTEROP.md",
+      "reason": "candidate source or test payload",
+      "sha256": "76464185d9d2eeaed431bf665ac7576f64e294137eb113a2351477d915253ef2",
+      "status": "M"
+    },
+    {
+      "bytes": 851,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/interop/ecma-runtime-pin.json",
+      "reason": "candidate source or test payload",
+      "sha256": "598bb5efc53447444eedec428ac72ea6d1ef478a75995452d7176414f7df8c83",
+      "status": "M"
+    },
+    {
+      "bytes": 1407,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/interop/remote-clients/RemoteM5.lean",
+      "reason": "candidate source or test payload",
+      "sha256": "530f9454938f318dc43026f77b7902ab735e628e218b306dba24c737f661d3fc",
+      "status": "M"
+    },
+    {
+      "bytes": 4287,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/interop/remote-clients/ecma-protocol.mjs",
+      "reason": "candidate source or test payload",
+      "sha256": "47ea270534f937a6c722cfb4fde97c76fb709a8c854bed9fccfba89435ee8656",
+      "status": "M"
+    },
+    {
+      "bytes": 870,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/interop/remote-clients/ecma.mjs",
+      "reason": "candidate source or test payload",
+      "sha256": "7870d367c7777ad0fb620a6a0ad788488d3274957672c6563605c7a22f09741c",
+      "status": "M"
+    },
+    {
+      "bytes": 1071,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/interop/remote-clients/rust/main.rs",
+      "reason": "candidate source or test payload",
+      "sha256": "2d9d17f00b086061420b7bdbad3709c514bf6fcbd765f7cb291055c51674dd84",
+      "status": "M"
+    },
+    {
+      "bytes": 11354,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/interop/run-remote.py",
+      "reason": "candidate source or test payload",
+      "sha256": "95c854f8e56a625b9fc1502608196a1eb96c805fb0937d09b3385448af8990c7",
+      "status": "M"
+    },
+    {
+      "bytes": 7064,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/run-local-no-model-check.sh",
+      "reason": "candidate source or test payload",
+      "sha256": "572991c2247b1081c8c115c70451bcd584f5552a73bfc652ffc9f71c78517f87",
+      "status": "M"
+    },
+    {
+      "bytes": 6654,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/README.md",
+      "reason": "contract or navigation document",
+      "sha256": "3d9e6ed94886ed7702066727cc552d5a8611a3a721adb8c6aee15b874709893d",
+      "status": "M"
+    },
+    {
+      "bytes": 16902,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/acquire.py",
+      "reason": "candidate source or test payload",
+      "sha256": "402cfb6373fa244f629bd8e849380a176943112e37bf8330c13b88c3ddb08e30",
+      "status": "M"
+    },
+    {
+      "bytes": 4020,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/adapters/apalache.py",
+      "reason": "candidate source or test payload",
+      "sha256": "608b443e2ded8bb6f3a1abfbd20b029674107d0ecef7ce439d44bc4b57e48eb3",
+      "status": "M"
+    },
+    {
+      "bytes": 7228,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/adapters/mirrors.py",
+      "reason": "candidate source or test payload",
+      "sha256": "c130609f24371ec6c6eb524fd293306b475a792664eb8399f1d428857247852e",
+      "status": "M"
+    },
+    {
+      "bytes": 5290,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/adapters/sany.py",
+      "reason": "candidate source or test payload",
+      "sha256": "ed78c5519698e757bbb3bbeb556f8dc393bd548b87c8c45985b337e04120bb12",
+      "status": "M"
+    },
+    {
+      "bytes": 3614,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/archive.py",
+      "reason": "candidate source or test payload",
+      "sha256": "9d4f8be7e718b71884214ae59676efe5b6560af1d0c1cbe4f66205906b29b89e",
+      "status": "M"
+    },
+    {
+      "bytes": 2499,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/junction_summaries.py",
+      "reason": "candidate source or test payload",
+      "sha256": "f93be9c590d88f3993f19b1882b043646d4793c3f58610bf2b324a367f32f960",
+      "status": "M"
+    },
+    {
+      "bytes": 12855,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/process.py",
+      "reason": "candidate source or test payload",
+      "sha256": "e17552e1d7d22ca47262e8a21d1fe5fea6b5a6898f98b50f65358fde5c5a1306",
+      "status": "M"
+    },
+    {
+      "bytes": 3045,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/report.py",
+      "reason": "candidate source or test payload",
+      "sha256": "f2b412b891491bb673bd7f98544daa99af5c5e118c69d04dc538c953bbf9f626",
+      "status": "M"
+    },
+    {
+      "bytes": 15261,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/run.py",
+      "reason": "candidate source or test payload",
+      "sha256": "65496d2d281b59bef86d8116c59bfda73b4b63c9c0840c346469d0630c10114f",
+      "status": "M"
+    },
+    {
+      "bytes": 9625,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/tests/test_process.py",
+      "reason": "candidate source or test payload",
+      "sha256": "ae6efb1d96e9b50a09d4351fff9b4effe0c8b96c06c2daac44162e7d85db1331",
+      "status": "M"
+    },
+    {
+      "bytes": 6214,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/tests/test_references.py",
+      "reason": "candidate source or test payload",
+      "sha256": "17e79acb89b8c0428aff1f124464986873e56abb397d73cb86c36f8de53cd813",
+      "status": "M"
+    },
+    {
+      "bytes": 641215,
+      "category": "unrelated",
+      "delivery": "exclude",
+      "kind": "file",
+      "path": ".projectile-cache.eld",
+      "reason": "local editor cache; excluded and preserved on disk",
+      "sha256": "44965bc73ced717731734f802c64e98816b88368ee891aafebf69cb502f33e26",
+      "status": "??"
+    },
+    {
+      "bytes": 7589,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Codec/DpmSyncComparison.lean",
+      "reason": "candidate source or test payload",
+      "sha256": "362b6105cce8c2379dd9ede4e56e1f8a07b4ccfa83d9b807af55c7d7dc9cf5f8",
+      "status": "??"
+    },
+    {
+      "bytes": 5585,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Core/DpmSyncComparison.lean",
+      "reason": "candidate source or test payload",
+      "sha256": "fb8b18fae0a14bcd21886913ac54a0a655a4ad8da01ddee13ff7e7440b00cfdf",
+      "status": "??"
+    },
+    {
+      "bytes": 26360,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Docs/completion-qualification-release-design.md",
+      "reason": "contract or navigation document",
+      "sha256": "3d217a613fa10d9604c28eb739d8ca2f4e821af9df8422b847873df47d7dda39",
+      "status": "??"
+    },
+    {
+      "bytes": 3629,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Docs/dpm-controlled-model-comparison.md",
+      "reason": "contract or navigation document",
+      "sha256": "ef36d8d74e4833153a702ae3afe083f00190cef4381d9a21152ee082651ba392",
+      "status": "??"
+    },
+    {
+      "bytes": 3096,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Drafts/tla-profile6-policy-review-20261029.md",
+      "reason": "reviewed policy-difference record referenced by differences.json",
+      "sha256": "fa90179a8bf4660841a909326241f2caf80d05555a5353500219fd9827a2558b",
+      "status": "??"
+    },
+    {
+      "bytes": 2295,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/compatibility-lifecycle-decision-2026-10-29.md",
+      "reason": "reviewed plan/decision/handoff document",
+      "sha256": "ae32857ed427d5261c08b4891133df36fc5ce1293f73222a46278dd1680abaab",
+      "status": "??"
+    },
+    {
+      "bytes": 120,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/.gitattributes",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7e2d6820d24356eaf2c67c91d8c035d7fcef3a9d51f7938c76e607d3b03c4b1c",
+      "status": "??"
+    },
+    {
+      "bytes": 7,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/.gitignore",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e027cf8ebf80d6dcdacced8a4dbd1c440e2436fb1868ec851db4061cb67bb787",
+      "status": "??"
+    },
+    {
+      "bytes": 9264,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/README.md",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "32d322eebaea75d8bce0cde1f2f250596bd0e341b06cb4f6c5b5ed8368f0027e",
+      "status": "??"
+    },
+    {
+      "bytes": 9751,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix-initial-failure/cpp-invalid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "6ae29178fdbdce04d697185c4afc2bbe5739b50154676185b3a57e0d9c51034a",
+      "status": "??"
+    },
+    {
+      "bytes": 6,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix-initial-failure/cpp-valid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2",
+      "status": "??"
+    },
+    {
+      "bytes": 213,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix-initial-failure/cpp-wrong-pin.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "4d6e7b06658477e314b1faacc82c021919fa3e5b32625ed58e9765fa82cbd62b",
+      "status": "??"
+    },
+    {
+      "bytes": 851,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix-initial-failure/ecma-runtime-pin.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "598bb5efc53447444eedec428ac72ea6d1ef478a75995452d7176414f7df8c83",
+      "status": "??"
+    },
+    {
+      "bytes": 9829,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix-initial-failure/haskell-invalid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7e42fb8b73860ac3953d84f1a8fde553dc9b3569b1de5fd42ddd40c7e64460ff",
+      "status": "??"
+    },
+    {
+      "bytes": 80,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix-initial-failure/haskell-valid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "38a71698102e500756a21c75e0c5d6ce17d66541ea7e5f0869ff5a160fecc283",
+      "status": "??"
+    },
+    {
+      "bytes": 158,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix-initial-failure/haskell-wrong-pin.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a31037e5f04eb11bad0c837a28077be6f2d56a70f01d07cd952bfe4ddf30e644",
+      "status": "??"
+    },
+    {
+      "bytes": 76,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix-initial-failure/lean-valid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "c7351e0aa2aa26bf0f59cd1cc50ca3943ea85d41c3889ffd9b1fa78ccd71b45a",
+      "status": "??"
+    },
+    {
+      "bytes": 9751,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix-initial-failure/rust-invalid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7988b2f4832ec07f0c8bff04afcbfab06688d4c2c87e8fdd87811b496533243a",
+      "status": "??"
+    },
+    {
+      "bytes": 6,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix-initial-failure/rust-valid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2",
+      "status": "??"
+    },
+    {
+      "bytes": 183,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix-initial-failure/rust-wrong-pin.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "f221e8c2a3ffd564493825a01f452c2387daf0def5f13d9196b426d89bc9b0a9",
+      "status": "??"
+    },
+    {
+      "bytes": 9761,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/cpp-invalid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "bb7a6677b50e93e0b97f52634342a1dedd385b20b7744cd63b8f300acbb5f5be",
+      "status": "??"
+    },
+    {
+      "bytes": 6,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/cpp-valid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2",
+      "status": "??"
+    },
+    {
+      "bytes": 213,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/cpp-wrong-pin.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "4d6e7b06658477e314b1faacc82c021919fa3e5b32625ed58e9765fa82cbd62b",
+      "status": "??"
+    },
+    {
+      "bytes": 1377,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/ecma-generated-0.itf.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "644136f578badf5872df861a92d767f1e7c5f50dd3254d0335071c62dc3d8efb",
+      "status": "??"
+    },
+    {
+      "bytes": 1201,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/ecma-generated-1.itf.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d4f9e7bd6e51d89c04ab4803c96d8d76cd977430755c3e29e9f1129c9bcd5369",
+      "status": "??"
+    },
+    {
+      "bytes": 1376,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/ecma-generated-2.itf.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "35cc07892c88f114b4a54eb5b06f62b4cce1c1ccae82c385c8eb0043480aa9d3",
+      "status": "??"
+    },
+    {
+      "bytes": 1376,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/ecma-generated-3.itf.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "f31d5ba4b897976589e633ae591c1448832480aea0f6ea75d6446034cfa2d1a8",
+      "status": "??"
+    },
+    {
+      "bytes": 1377,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/ecma-generated-4.itf.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "644136f578badf5872df861a92d767f1e7c5f50dd3254d0335071c62dc3d8efb",
+      "status": "??"
+    },
+    {
+      "bytes": 10138,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/ecma-invalid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "9803909456ffdbfc4a70afa7f15f0b4eb5d9fff04003a1fcda282f8750322aed",
+      "status": "??"
+    },
+    {
+      "bytes": 595,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/ecma-protocol-receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "89fc63acc3f126e9aa84447f6f0233419bfd5ca96498be84d7ca209c8fd9d098",
+      "status": "??"
+    },
+    {
+      "bytes": 240,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/ecma-protocol.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d941c7cf25fc2a68c0985fda6d9cadecb503dcda195b22bb56d89c260948276e",
+      "status": "??"
+    },
+    {
+      "bytes": 851,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/ecma-runtime-pin.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "598bb5efc53447444eedec428ac72ea6d1ef478a75995452d7176414f7df8c83",
+      "status": "??"
+    },
+    {
+      "bytes": 6,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/ecma-valid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2",
+      "status": "??"
+    },
+    {
+      "bytes": 695,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/ecma-wrong-pin.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b8033b215207e51b2cdaf91c995bf2662b869cdb675b4f8830171c1ee62d7506",
+      "status": "??"
+    },
+    {
+      "bytes": 9829,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/haskell-invalid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3584e465f98696a4b83b4d7bd3ea7ab9f15d030819df2c098eed610a449739b",
+      "status": "??"
+    },
+    {
+      "bytes": 80,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/haskell-valid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "38a71698102e500756a21c75e0c5d6ce17d66541ea7e5f0869ff5a160fecc283",
+      "status": "??"
+    },
+    {
+      "bytes": 158,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/haskell-wrong-pin.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a31037e5f04eb11bad0c837a28077be6f2d56a70f01d07cd952bfe4ddf30e644",
+      "status": "??"
+    },
+    {
+      "bytes": 9837,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/lean-invalid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e35be6c38d3c00770f2dad1ef41c35b7aa6c0be032b072c7f5f04ab3831a0182",
+      "status": "??"
+    },
+    {
+      "bytes": 76,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/lean-valid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "c7351e0aa2aa26bf0f59cd1cc50ca3943ea85d41c3889ffd9b1fa78ccd71b45a",
+      "status": "??"
+    },
+    {
+      "bytes": 292,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/lean-wrong-pin.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d3afd4cc8f370a9ce4837bf72107d449d84215e8c95ed5c5016624473e4fcc56",
+      "status": "??"
+    },
+    {
+      "bytes": 6591,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e9dc73bed808e97561996484e0a53a118c862fc025e2ffa11b113802a276057a",
+      "status": "??"
+    },
+    {
+      "bytes": 9756,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/rust-invalid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "ab0da30064118b241597c1ccd47aac415d78f2ed55efc1df8bdcaac50e731ee8",
+      "status": "??"
+    },
+    {
+      "bytes": 6,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/rust-valid.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2",
+      "status": "??"
+    },
+    {
+      "bytes": 183,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/client-matrix/rust-wrong-pin.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "f221e8c2a3ffd564493825a01f452c2387daf0def5f13d9196b426d89bc9b0a9",
+      "status": "??"
+    },
+    {
+      "bytes": 4464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/acceptance.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "4358e899fdbe7f88a29473fe1f63c5dd2c527ac0db8a60b0fb63fc34e53593df",
+      "status": "??"
+    },
+    {
+      "bytes": 177,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/build.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "952eec5077606b80e13f7e45a177a056d806aa3aac02027186b183cb6566091c",
+      "status": "??"
+    },
+    {
+      "bytes": 4875,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/cleanup-refusal/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "c33e2d3fda694b731006b3a3d23fda868ef01bb0e9b830fbe7a825762dc4e729",
+      "status": "??"
+    },
+    {
+      "bytes": 5206,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/cleanup-refusal/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7b964d24d341361fcaea7741347aa7b36fa9347bfa82e69cf4a2149277e7dabd",
+      "status": "??"
+    },
+    {
+      "bytes": 46,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/cleanup-refusal/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "fc56d0f28f0f3f76efa6c7500a695662ee2bfa0ff42dd2589f22a5ee471e5213",
+      "status": "??"
+    },
+    {
+      "bytes": 1377,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/configure.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "855186cd915570b6f3be219242a7efb15a7a1a5565452dc1e09338a2066dc60b",
+      "status": "??"
+    },
+    {
+      "bytes": 46,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/control-cleanup/refusal.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "fc56d0f28f0f3f76efa6c7500a695662ee2bfa0ff42dd2589f22a5ee471e5213",
+      "status": "??"
+    },
+    {
+      "bytes": 5199,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/control-cleanup/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "ca6b2854e3f197fe53614572f20f731e72a44d4672714fda328f14978b10a12e",
+      "status": "??"
+    },
+    {
+      "bytes": 46,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/control-deadline/refusal.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "fc56d0f28f0f3f76efa6c7500a695662ee2bfa0ff42dd2589f22a5ee471e5213",
+      "status": "??"
+    },
+    {
+      "bytes": 5197,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/control-deadline/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5819d10a4bb6bfb68c6f2911f4a4a19aa3ec7ea5f15f82a7315071c205918301",
+      "status": "??"
+    },
+    {
+      "bytes": 39,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/control-event-ordinal/refusal.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "000fd91275633c1d1a0d634eedbccce22f40eda5c155c9bf26eccfb855e611ea",
+      "status": "??"
+    },
+    {
+      "bytes": 5198,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/control-event-ordinal/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "1e9af2f22c8455abddf40b29aa85911192fbab9c16d277fa63a9aaa3cd292cf5",
+      "status": "??"
+    },
+    {
+      "bytes": 57,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/control-implementation-identity/refusal.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "9525a1395f511d575908ec37076d98d9c0118729bf4face6ef9a697c8645a024",
+      "status": "??"
+    },
+    {
+      "bytes": 5198,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/control-implementation-identity/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b0f83b89fb33180d9a28d3ce37c736be8ff09cccadb9ed0e2d94b5c5390bc182",
+      "status": "??"
+    },
+    {
+      "bytes": 58,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/control-missing-observation/refusal.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "4201f5426638c4f83464669e9afdf92a3a7632afbe9bf1a41f0ad622b21ba840",
+      "status": "??"
+    },
+    {
+      "bytes": 5137,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/control-missing-observation/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "2c3aa4694a11bc0d7b56ecc4db7b2df6839c321b3cf720d5a09ba8a3dc83519b",
+      "status": "??"
+    },
+    {
+      "bytes": 59,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/control-preclaimed-model-match/refusal.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "49abefac232fc71c71dd38554b06ec81fd39cf49eeeb925fa6d8cc24b2197c2a",
+      "status": "??"
+    },
+    {
+      "bytes": 5197,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/control-preclaimed-model-match/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "81b269794401b420f9a6399255e0ddb41fd66a4d1d4e159e67bf17061cf0bde1",
+      "status": "??"
+    },
+    {
+      "bytes": 2869,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "dcea9251a2cb81a0119153f7d6410e0c798e24e06fd56c3f1b2ed36ad2659117",
+      "status": "??"
+    },
+    {
+      "bytes": 5198,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/admission.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "55e8695783e00fd0d56c42d6d8aa2ba0a050b1a3d6621a2683d7a95df490c3e5",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/admission/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 981,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/admission/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b745ba8f52fee966b089fc90e48792f2836b20af0b3422426e8f0f3da19e451a",
+      "status": "??"
+    },
+    {
+      "bytes": 464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/mapping.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1065,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "84b6be29a1ad3116701194e8f5de4d09ebbe7c9e397f5c963a93545026bc2ba6",
+      "status": "??"
+    },
+    {
+      "bytes": 4867,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/native-receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "2810d999e7c22a67d5d2ed755974fa8dc90d21c1125fd54254790692cf5486f4",
+      "status": "??"
+    },
+    {
+      "bytes": 7772,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/relay/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "14c63f9defd2659829645ce7ad2913593f4098ec52aa747d7d91aea0358426a0",
+      "status": "??"
+    },
+    {
+      "bytes": 222,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/relay/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "048e2ba89ae430962e02f5341cf60c694fb7e131cb417790075a56b32ca09992",
+      "status": "??"
+    },
+    {
+      "bytes": 1366,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/relay/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "8beb04ff738d16dcd1f5a7dcae62ad4783c57afc8b504473251e63670c819a3f",
+      "status": "??"
+    },
+    {
+      "bytes": 665,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/remote-observation.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7fd760c8f74c4bce40a9ff566ff37076f385d36187e63c61b18c1e8b2d0ce621",
+      "status": "??"
+    },
+    {
+      "bytes": 2781,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/result.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "202f300c37a22fd0f70566eae31ec0b4792bbe6feb0ed585c3fd02e77c9b89a4",
+      "status": "??"
+    },
+    {
+      "bytes": 118,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/validation/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d36184ab1fb3dfd78342f706214e492389f02e767199affedf738a3ccfd895fe",
+      "status": "??"
+    },
+    {
+      "bytes": 6,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/validation/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2",
+      "status": "??"
+    },
+    {
+      "bytes": 981,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b745ba8f52fee966b089fc90e48792f2836b20af0b3422426e8f0f3da19e451a",
+      "status": "??"
+    },
+    {
+      "bytes": 206,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/frontend.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a3cd1557b676d1d608a564979d4a29e97c2104672a0d808a1a66ab076646b782",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1065,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "84b6be29a1ad3116701194e8f5de4d09ebbe7c9e397f5c963a93545026bc2ba6",
+      "status": "??"
+    },
+    {
+      "bytes": 4867,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "2810d999e7c22a67d5d2ed755974fa8dc90d21c1125fd54254790692cf5486f4",
+      "status": "??"
+    },
+    {
+      "bytes": 2869,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/report.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "dcea9251a2cb81a0119153f7d6410e0c798e24e06fd56c3f1b2ed36ad2659117",
+      "status": "??"
+    },
+    {
+      "bytes": 5198,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "55e8695783e00fd0d56c42d6d8aa2ba0a050b1a3d6621a2683d7a95df490c3e5",
+      "status": "??"
+    },
+    {
+      "bytes": 981,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-first/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b745ba8f52fee966b089fc90e48792f2836b20af0b3422426e8f0f3da19e451a",
+      "status": "??"
+    },
+    {
+      "bytes": 2869,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "019a8654572fae0d9b5fd032f3b1f3bca83f68e68550c050a66ad71d841c9292",
+      "status": "??"
+    },
+    {
+      "bytes": 5195,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/admission.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5a1bd436006e24896c75381d52f7afb4eb93fc06754350d22112711f1d3b9575",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/admission/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 978,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/admission/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "9f0d35ccd71984ed8259f8d0c18f4ea55c7ac132e5257333d0172e8d1b08dfef",
+      "status": "??"
+    },
+    {
+      "bytes": 464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/mapping.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1062,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a1c6ea8c9c58a1d9e50704e98b5cf3e3c0d3c3893b0374e105186f6279605e4b",
+      "status": "??"
+    },
+    {
+      "bytes": 4864,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/native-receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "8ca9ef3113aaacc5b061c097b178108e725e249e0a15e08fb0fa9055917bc501",
+      "status": "??"
+    },
+    {
+      "bytes": 7768,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/relay/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "32cca3b1f174ca724650115b46907972dc1d44cd7a857d3e570139531345489d",
+      "status": "??"
+    },
+    {
+      "bytes": 222,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/relay/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "048e2ba89ae430962e02f5341cf60c694fb7e131cb417790075a56b32ca09992",
+      "status": "??"
+    },
+    {
+      "bytes": 1366,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/relay/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "16402706c69765d8be52732aefc44463d7da276bc3975dfdc21add578d70bbed",
+      "status": "??"
+    },
+    {
+      "bytes": 665,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/remote-observation.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "f89e2d71dc2a157f279d8315cb1d1b8bb343b43692eec8509bd90cbceb95ca9c",
+      "status": "??"
+    },
+    {
+      "bytes": 2781,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/result.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "288a86d782882b451379591d66c84ad01a269c4d1d4a7676c08891782cddd3dc",
+      "status": "??"
+    },
+    {
+      "bytes": 118,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/validation/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d36184ab1fb3dfd78342f706214e492389f02e767199affedf738a3ccfd895fe",
+      "status": "??"
+    },
+    {
+      "bytes": 6,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/validation/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2",
+      "status": "??"
+    },
+    {
+      "bytes": 978,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "9f0d35ccd71984ed8259f8d0c18f4ea55c7ac132e5257333d0172e8d1b08dfef",
+      "status": "??"
+    },
+    {
+      "bytes": 206,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/frontend.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a3cd1557b676d1d608a564979d4a29e97c2104672a0d808a1a66ab076646b782",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1062,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a1c6ea8c9c58a1d9e50704e98b5cf3e3c0d3c3893b0374e105186f6279605e4b",
+      "status": "??"
+    },
+    {
+      "bytes": 4864,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "8ca9ef3113aaacc5b061c097b178108e725e249e0a15e08fb0fa9055917bc501",
+      "status": "??"
+    },
+    {
+      "bytes": 2869,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/report.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "019a8654572fae0d9b5fd032f3b1f3bca83f68e68550c050a66ad71d841c9292",
+      "status": "??"
+    },
+    {
+      "bytes": 5195,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5a1bd436006e24896c75381d52f7afb4eb93fc06754350d22112711f1d3b9575",
+      "status": "??"
+    },
+    {
+      "bytes": 978,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/correct-last/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "9f0d35ccd71984ed8259f8d0c18f4ea55c7ac132e5257333d0172e8d1b08dfef",
+      "status": "??"
+    },
+    {
+      "bytes": 2873,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e5e58df003f4aa8f5ed1f252012107549b7719a7a58dd799f6655def658ec884",
+      "status": "??"
+    },
+    {
+      "bytes": 5199,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/admission.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "8cec16edd9c4120435b698ead1849ea9b6ff4a403602b1d2c5ca9a9775232a47",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/admission/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 982,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/admission/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "92882da512848740ccb43c1d8b5cfa145f38d70a239988173f941c2c52fc89dd",
+      "status": "??"
+    },
+    {
+      "bytes": 464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/mapping.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1065,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "daa7e6e495a13b1200d2a9de09e9a8e9681f7320a524b642184be3ea5d6329fb",
+      "status": "??"
+    },
+    {
+      "bytes": 4868,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/native-receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e84268a1a66e6524c3f8c62660dfec13f74a0e66bc0982017282c5dac74d881b",
+      "status": "??"
+    },
+    {
+      "bytes": 7772,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/relay/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "57a32a9841070275e14aa9154427252bdc3e7fb29eff5b1c391e2ccc0538d5cd",
+      "status": "??"
+    },
+    {
+      "bytes": 222,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/relay/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "048e2ba89ae430962e02f5341cf60c694fb7e131cb417790075a56b32ca09992",
+      "status": "??"
+    },
+    {
+      "bytes": 16234,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/relay/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5cc999f73425d578cc1a8e1d3c0b69d792f210ee1d9138e3cbb0fb663014f9c9",
+      "status": "??"
+    },
+    {
+      "bytes": 665,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/remote-observation.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "eab65fd402765a05890759f082dd3860f33d174c481cde1e391db0fe3b008d36",
+      "status": "??"
+    },
+    {
+      "bytes": 2785,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/result.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5ec18f960b79f139fc30e129248691d7440b38a193d55eebb6fde8b9b21508b7",
+      "status": "??"
+    },
+    {
+      "bytes": 118,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/validation/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d36184ab1fb3dfd78342f706214e492389f02e767199affedf738a3ccfd895fe",
+      "status": "??"
+    },
+    {
+      "bytes": 11157,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/validation/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "46e294bc3ee1a65ee2530f6e5ce5a08311d3d61c0614bf46a0cba84a58d83d3e",
+      "status": "??"
+    },
+    {
+      "bytes": 982,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "92882da512848740ccb43c1d8b5cfa145f38d70a239988173f941c2c52fc89dd",
+      "status": "??"
+    },
+    {
+      "bytes": 206,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/frontend.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a3cd1557b676d1d608a564979d4a29e97c2104672a0d808a1a66ab076646b782",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1065,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "daa7e6e495a13b1200d2a9de09e9a8e9681f7320a524b642184be3ea5d6329fb",
+      "status": "??"
+    },
+    {
+      "bytes": 4868,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e84268a1a66e6524c3f8c62660dfec13f74a0e66bc0982017282c5dac74d881b",
+      "status": "??"
+    },
+    {
+      "bytes": 2873,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/report.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e5e58df003f4aa8f5ed1f252012107549b7719a7a58dd799f6655def658ec884",
+      "status": "??"
+    },
+    {
+      "bytes": 5199,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "8cec16edd9c4120435b698ead1849ea9b6ff4a403602b1d2c5ca9a9775232a47",
+      "status": "??"
+    },
+    {
+      "bytes": 982,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-first/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "92882da512848740ccb43c1d8b5cfa145f38d70a239988173f941c2c52fc89dd",
+      "status": "??"
+    },
+    {
+      "bytes": 2872,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7984b3b6daed02378addb9d8c51509d682ad1e979b3356506c8c5be0342e9b72",
+      "status": "??"
+    },
+    {
+      "bytes": 5195,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/admission.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "99e39ca608d3ee43d4f1bd0e629a237f58dd0b8bc25581451efd40288151227e",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/admission/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 978,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/admission/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "390d650599006a1695e9042e99bab624594e1810dee5a57e49ae4d37a31cab3d",
+      "status": "??"
+    },
+    {
+      "bytes": 464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/mapping.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1062,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7e577514637eeb05246b21000c4179598601658d5444c3a85c9538b0461b8ef2",
+      "status": "??"
+    },
+    {
+      "bytes": 4864,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/native-receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "dd9f819fd3ed006e6d9318b36074a28b60f7663da6e31f089666b10fd69b4964",
+      "status": "??"
+    },
+    {
+      "bytes": 7768,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/relay/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e60cabf01684554ef260bd62bf978a94b159c472826f7a8f8018556b79ade7a8",
+      "status": "??"
+    },
+    {
+      "bytes": 222,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/relay/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "048e2ba89ae430962e02f5341cf60c694fb7e131cb417790075a56b32ca09992",
+      "status": "??"
+    },
+    {
+      "bytes": 13946,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/relay/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "195c9aa3df9ec2a9c6dfd6e10d825c52f0d732dddf8446b2ddcb520fc0c042d1",
+      "status": "??"
+    },
+    {
+      "bytes": 665,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/remote-observation.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "9c6b9dd73fed902d097abd9a9585855435e85f1eeee0fba118114bd5d20c18e3",
+      "status": "??"
+    },
+    {
+      "bytes": 2784,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/result.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "afeadeb9ae7803f6a21969d2fe4443902a9a51cfaa1dc979cdae37f10803633d",
+      "status": "??"
+    },
+    {
+      "bytes": 118,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/validation/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d36184ab1fb3dfd78342f706214e492389f02e767199affedf738a3ccfd895fe",
+      "status": "??"
+    },
+    {
+      "bytes": 9440,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/validation/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "343901d906193cbc2737a7ade1f181cca6b0ba55aae4bc95aa2abd34dc4fec28",
+      "status": "??"
+    },
+    {
+      "bytes": 978,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "390d650599006a1695e9042e99bab624594e1810dee5a57e49ae4d37a31cab3d",
+      "status": "??"
+    },
+    {
+      "bytes": 206,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/frontend.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a3cd1557b676d1d608a564979d4a29e97c2104672a0d808a1a66ab076646b782",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1062,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7e577514637eeb05246b21000c4179598601658d5444c3a85c9538b0461b8ef2",
+      "status": "??"
+    },
+    {
+      "bytes": 4864,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "dd9f819fd3ed006e6d9318b36074a28b60f7663da6e31f089666b10fd69b4964",
+      "status": "??"
+    },
+    {
+      "bytes": 2872,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/report.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7984b3b6daed02378addb9d8c51509d682ad1e979b3356506c8c5be0342e9b72",
+      "status": "??"
+    },
+    {
+      "bytes": 5195,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "99e39ca608d3ee43d4f1bd0e629a237f58dd0b8bc25581451efd40288151227e",
+      "status": "??"
+    },
+    {
+      "bytes": 978,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/count-last/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "390d650599006a1695e9042e99bab624594e1810dee5a57e49ae4d37a31cab3d",
+      "status": "??"
+    },
+    {
+      "bytes": 1504,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/deadline-refusal/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a15b5f590e3ce5f5c2b4f307942c896d5332eb8a66be2478e78258d0aae57ac5",
+      "status": "??"
+    },
+    {
+      "bytes": 1835,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/deadline-refusal/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "c19edd2af7685501b10429e9d3b2b011adaeb98028fca6560ceca22c6b75b91c",
+      "status": "??"
+    },
+    {
+      "bytes": 34,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/deadline-refusal/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7a29bf33d4c707f6707406aa0d3a4bf9eee05270199dc86af734e35c550b221e",
+      "status": "??"
+    },
+    {
+      "bytes": 2872,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b7a1161d98910b361aaada87bf8c035140347884aeb29c8a04b9d17657877467",
+      "status": "??"
+    },
+    {
+      "bytes": 5198,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/admission.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "edb0316a0a6969d4108fa8b775e373a72800e6beb1e3079949db84063d23ba61",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/admission/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 981,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/admission/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d684f36ee7d55a94677e017e7057b03cd286c1c71776be7f4643ab7d1f8c20f8",
+      "status": "??"
+    },
+    {
+      "bytes": 464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/mapping.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1065,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "c8981b4c24733194ce8a16867837ac054b7f981eee43dd1e29b3dd3ab70e87f3",
+      "status": "??"
+    },
+    {
+      "bytes": 4867,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/native-receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "37c4bfa23aee96eeec422a3a22e95ba7b4c71cdf065c31d217487ae01aaf675d",
+      "status": "??"
+    },
+    {
+      "bytes": 7772,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/relay/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "23487c350d5bb858f3d4c86a73325233a50e8fe0ec1488387467e4cfaae360fe",
+      "status": "??"
+    },
+    {
+      "bytes": 222,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/relay/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "048e2ba89ae430962e02f5341cf60c694fb7e131cb417790075a56b32ca09992",
+      "status": "??"
+    },
+    {
+      "bytes": 18538,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/relay/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "19c16ddaa37736c7063bd61214ef22596150bc39d392d8b8936770271bf1ed86",
+      "status": "??"
+    },
+    {
+      "bytes": 665,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/remote-observation.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b01d9bd3baa3015fa203ce9f10611d06c9b7dab2c83dbf8d7f6a681f4ea97769",
+      "status": "??"
+    },
+    {
+      "bytes": 2784,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/result.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "acab1e6d682656f32e216f91e162f68d074a2e185cbc9f25383957a50179eec9",
+      "status": "??"
+    },
+    {
+      "bytes": 118,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/validation/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d36184ab1fb3dfd78342f706214e492389f02e767199affedf738a3ccfd895fe",
+      "status": "??"
+    },
+    {
+      "bytes": 12884,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/validation/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5cbca948f1ae5bd65f9d4b25cf3ea59b5929c7bda721645817a39e60cd78183a",
+      "status": "??"
+    },
+    {
+      "bytes": 981,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d684f36ee7d55a94677e017e7057b03cd286c1c71776be7f4643ab7d1f8c20f8",
+      "status": "??"
+    },
+    {
+      "bytes": 206,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/frontend.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a3cd1557b676d1d608a564979d4a29e97c2104672a0d808a1a66ab076646b782",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1065,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "c8981b4c24733194ce8a16867837ac054b7f981eee43dd1e29b3dd3ab70e87f3",
+      "status": "??"
+    },
+    {
+      "bytes": 4867,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "37c4bfa23aee96eeec422a3a22e95ba7b4c71cdf065c31d217487ae01aaf675d",
+      "status": "??"
+    },
+    {
+      "bytes": 2872,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/report.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b7a1161d98910b361aaada87bf8c035140347884aeb29c8a04b9d17657877467",
+      "status": "??"
+    },
+    {
+      "bytes": 5198,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "edb0316a0a6969d4108fa8b775e373a72800e6beb1e3079949db84063d23ba61",
+      "status": "??"
+    },
+    {
+      "bytes": 981,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d684f36ee7d55a94677e017e7057b03cd286c1c71776be7f4643ab7d1f8c20f8",
+      "status": "??"
+    },
+    {
+      "bytes": 2872,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "ce6a0f0f1abc04c8abd36b0d864cbf0a0f145af3833859a78db3493b1a4f0cc2",
+      "status": "??"
+    },
+    {
+      "bytes": 5195,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/admission.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d1eaf7f6bbaec27780c4535710a0e485208251118ea4d08f670bde71490fa615",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/admission/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 978,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/admission/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "15c85242078334edcaf727cc1044018cbfdc1e50707a88795de0e8856add5a85",
+      "status": "??"
+    },
+    {
+      "bytes": 464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/mapping.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1062,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "fa9acfb0950c9e028d9e9fd84aac43b581d65cb46d2a79f4b90710cf648be190",
+      "status": "??"
+    },
+    {
+      "bytes": 4864,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/native-receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "01b51ac7fdb4bc0d12dd723701eb4efb4f396e7bc09ec192325a7c210a448944",
+      "status": "??"
+    },
+    {
+      "bytes": 7768,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/relay/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b3c6ea92e655e56a9d1075a685b989a4238e64c2118af9895842a33a925210fd",
+      "status": "??"
+    },
+    {
+      "bytes": 222,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/relay/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "048e2ba89ae430962e02f5341cf60c694fb7e131cb417790075a56b32ca09992",
+      "status": "??"
+    },
+    {
+      "bytes": 21046,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/relay/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b95aab8fd87fa728dfb5ad5b110f53caed1c20b4b255624a32b6ea6678e31ffc",
+      "status": "??"
+    },
+    {
+      "bytes": 665,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/remote-observation.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "c5df05c64cabd0ac94575f66822ff5912a7c5adb506aadd52e15477ec661192e",
+      "status": "??"
+    },
+    {
+      "bytes": 2784,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/result.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d15351012763ed299e8c0040d1db45942bdd4205888887d3cd718a145296cad0",
+      "status": "??"
+    },
+    {
+      "bytes": 118,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/validation/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d36184ab1fb3dfd78342f706214e492389f02e767199affedf738a3ccfd895fe",
+      "status": "??"
+    },
+    {
+      "bytes": 14765,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/validation/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "3820fd7a3fc4cd79f14a059b3cac8aadcf09592631dd86d2b3242dc67a702fce",
+      "status": "??"
+    },
+    {
+      "bytes": 978,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "15c85242078334edcaf727cc1044018cbfdc1e50707a88795de0e8856add5a85",
+      "status": "??"
+    },
+    {
+      "bytes": 206,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/frontend.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a3cd1557b676d1d608a564979d4a29e97c2104672a0d808a1a66ab076646b782",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1062,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "fa9acfb0950c9e028d9e9fd84aac43b581d65cb46d2a79f4b90710cf648be190",
+      "status": "??"
+    },
+    {
+      "bytes": 4864,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "01b51ac7fdb4bc0d12dd723701eb4efb4f396e7bc09ec192325a7c210a448944",
+      "status": "??"
+    },
+    {
+      "bytes": 2872,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/report.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "ce6a0f0f1abc04c8abd36b0d864cbf0a0f145af3833859a78db3493b1a4f0cc2",
+      "status": "??"
+    },
+    {
+      "bytes": 5195,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d1eaf7f6bbaec27780c4535710a0e485208251118ea4d08f670bde71490fa615",
+      "status": "??"
+    },
+    {
+      "bytes": 978,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/fifo-last/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "15c85242078334edcaf727cc1044018cbfdc1e50707a88795de0e8856add5a85",
+      "status": "??"
+    },
+    {
+      "bytes": 464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/mapping.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+      "status": "??"
+    },
+    {
+      "bytes": 2873,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "15e9e4d00d9a109edaa4b85b2e7360e67f2cc10c7d26f8fcf81da51a73f8dc8f",
+      "status": "??"
+    },
+    {
+      "bytes": 5199,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/admission.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b036fe41882f0e6c561d60abc9ba28df375d457014cb7fab7c639e11e77bd62c",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/admission/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 982,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/admission/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "355f28f629effc50e4cb1c372f6acfc8bd781dc714561009af2842d63820b67c",
+      "status": "??"
+    },
+    {
+      "bytes": 464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/mapping.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1065,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "daa7e6e495a13b1200d2a9de09e9a8e9681f7320a524b642184be3ea5d6329fb",
+      "status": "??"
+    },
+    {
+      "bytes": 4868,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/native-receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "10d995202c997a6848f4fbb75b3f5f93d45999046b9fdda77a78f79a6cd26d8e",
+      "status": "??"
+    },
+    {
+      "bytes": 7772,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/relay/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "f64b7e8cbf1ad2696f0c8f80e8e8a353f94773584a09c01ee433249cd2958e88",
+      "status": "??"
+    },
+    {
+      "bytes": 222,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/relay/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "048e2ba89ae430962e02f5341cf60c694fb7e131cb417790075a56b32ca09992",
+      "status": "??"
+    },
+    {
+      "bytes": 16234,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/relay/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "dd290f5d8211586a5d54d81de51a4de1d72b2406f89c3305cf77b8e4ac3fb3d7",
+      "status": "??"
+    },
+    {
+      "bytes": 665,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/remote-observation.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "258ec44dbb49af70b696c933eea56e68b565ae54335dd7b437317ea43020b914",
+      "status": "??"
+    },
+    {
+      "bytes": 2785,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/result.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "326e28ff4641a480fe5b4cc9bd2a9ccf2b09ff1b0c15daf7301933592e95f0b1",
+      "status": "??"
+    },
+    {
+      "bytes": 118,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/validation/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d36184ab1fb3dfd78342f706214e492389f02e767199affedf738a3ccfd895fe",
+      "status": "??"
+    },
+    {
+      "bytes": 11157,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/validation/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "6b86623463d4ab2495fe21ddd3792a46c4b5bc9f325d59c028457794378920b9",
+      "status": "??"
+    },
+    {
+      "bytes": 982,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "355f28f629effc50e4cb1c372f6acfc8bd781dc714561009af2842d63820b67c",
+      "status": "??"
+    },
+    {
+      "bytes": 206,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/frontend.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a3cd1557b676d1d608a564979d4a29e97c2104672a0d808a1a66ab076646b782",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1065,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "daa7e6e495a13b1200d2a9de09e9a8e9681f7320a524b642184be3ea5d6329fb",
+      "status": "??"
+    },
+    {
+      "bytes": 4868,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "10d995202c997a6848f4fbb75b3f5f93d45999046b9fdda77a78f79a6cd26d8e",
+      "status": "??"
+    },
+    {
+      "bytes": 2873,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/report.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "15e9e4d00d9a109edaa4b85b2e7360e67f2cc10c7d26f8fcf81da51a73f8dc8f",
+      "status": "??"
+    },
+    {
+      "bytes": 5199,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b036fe41882f0e6c561d60abc9ba28df375d457014cb7fab7c639e11e77bd62c",
+      "status": "??"
+    },
+    {
+      "bytes": 982,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "355f28f629effc50e4cb1c372f6acfc8bd781dc714561009af2842d63820b67c",
+      "status": "??"
+    },
+    {
+      "bytes": 2873,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "4108dab88a4fc5baf615188b657ca0867ce12297c078cf35e2f0e50898ecc113",
+      "status": "??"
+    },
+    {
+      "bytes": 5199,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/admission.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "267bb2bc514d82f79389b1017270642e090f105f4de96f1d4a54efe29bcedccd",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/admission/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 982,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/admission/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5fc161473a7cdd20efbb02a0125274560e1f27afb95571fc3357fa7ef20f3bd0",
+      "status": "??"
+    },
+    {
+      "bytes": 464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/mapping.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1065,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "daa7e6e495a13b1200d2a9de09e9a8e9681f7320a524b642184be3ea5d6329fb",
+      "status": "??"
+    },
+    {
+      "bytes": 4868,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/native-receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "dbda79b8aa2b48748becbdf651c58530858ec1b01ec8425e5d3dbf11dd8f9870",
+      "status": "??"
+    },
+    {
+      "bytes": 7772,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/relay/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "9ed75f8f66fc6893cd5aac0a93ff87ec9741665e225cf25f9902db6759415f03",
+      "status": "??"
+    },
+    {
+      "bytes": 222,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/relay/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "048e2ba89ae430962e02f5341cf60c694fb7e131cb417790075a56b32ca09992",
+      "status": "??"
+    },
+    {
+      "bytes": 16234,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/relay/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "15226b40713efd695dddf9e6e20aa020627520d9fe5bf11ba9c463cc5fffad63",
+      "status": "??"
+    },
+    {
+      "bytes": 665,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/remote-observation.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "3a7f76fe7f50c84e92c33e89c087861944b21d5900c3ed2a55717d50c3a64803",
+      "status": "??"
+    },
+    {
+      "bytes": 2785,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/result.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "11caea993a6805abafb29a2dcb44cdb4e9b5ef44e06c71146cae02b00508d096",
+      "status": "??"
+    },
+    {
+      "bytes": 118,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/validation/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d36184ab1fb3dfd78342f706214e492389f02e767199affedf738a3ccfd895fe",
+      "status": "??"
+    },
+    {
+      "bytes": 11157,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/validation/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "158cdbc42b8bd36cbe681bd35a7d5261a4e34c936b40a76cd12edb5eea5f451f",
+      "status": "??"
+    },
+    {
+      "bytes": 982,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5fc161473a7cdd20efbb02a0125274560e1f27afb95571fc3357fa7ef20f3bd0",
+      "status": "??"
+    },
+    {
+      "bytes": 206,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/frontend.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a3cd1557b676d1d608a564979d4a29e97c2104672a0d808a1a66ab076646b782",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1065,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "daa7e6e495a13b1200d2a9de09e9a8e9681f7320a524b642184be3ea5d6329fb",
+      "status": "??"
+    },
+    {
+      "bytes": 4868,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "dbda79b8aa2b48748becbdf651c58530858ec1b01ec8425e5d3dbf11dd8f9870",
+      "status": "??"
+    },
+    {
+      "bytes": 2873,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/report.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "4108dab88a4fc5baf615188b657ca0867ce12297c078cf35e2f0e50898ecc113",
+      "status": "??"
+    },
+    {
+      "bytes": 5199,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "267bb2bc514d82f79389b1017270642e090f105f4de96f1d4a54efe29bcedccd",
+      "status": "??"
+    },
+    {
+      "bytes": 982,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5fc161473a7cdd20efbb02a0125274560e1f27afb95571fc3357fa7ef20f3bd0",
+      "status": "??"
+    },
+    {
+      "bytes": 2873,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d90e879284487a4ef665ce999c660d1af59f88275517761fb16aec8eb7bb6f24",
+      "status": "??"
+    },
+    {
+      "bytes": 5196,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/admission.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d0bc183566847e44619503e04814015b96fe978dd007249dc2adee4c711e0950",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/admission/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 979,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/admission/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "54eb3bdb20e3b7e85833f3391a8fb9748c494714c7b3422d32a37583765c3f6e",
+      "status": "??"
+    },
+    {
+      "bytes": 464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/mapping.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1062,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7e577514637eeb05246b21000c4179598601658d5444c3a85c9538b0461b8ef2",
+      "status": "??"
+    },
+    {
+      "bytes": 4865,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/native-receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "0e90a89c31c8b34d4b83875df94b44159cc223ea8988a6725a38afb8ee2b4836",
+      "status": "??"
+    },
+    {
+      "bytes": 7768,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/relay/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "bb6f782070a5817058d136b8f6e95a44dd7cc261519b633bc108dbd4cf014456",
+      "status": "??"
+    },
+    {
+      "bytes": 222,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/relay/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "048e2ba89ae430962e02f5341cf60c694fb7e131cb417790075a56b32ca09992",
+      "status": "??"
+    },
+    {
+      "bytes": 13946,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/relay/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "c9586f3cc95dcb4da985d5d5055200a05a97d25e2030afddda3d2a1db9138518",
+      "status": "??"
+    },
+    {
+      "bytes": 665,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/remote-observation.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7816bfecfa1b979b13edd22dfc5c34bcfa4517ac0400f3f1c5897b2cf7027155",
+      "status": "??"
+    },
+    {
+      "bytes": 2785,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/result.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "92998cd5164dea87d349d9181eb222a28cd3e3d6ec1ec720eef9dcc69891503b",
+      "status": "??"
+    },
+    {
+      "bytes": 118,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/validation/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d36184ab1fb3dfd78342f706214e492389f02e767199affedf738a3ccfd895fe",
+      "status": "??"
+    },
+    {
+      "bytes": 9440,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/validation/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "f97671b9450a8ad3b794af9cec6f8cef1585d504c6eca091a3d4054612fab256",
+      "status": "??"
+    },
+    {
+      "bytes": 979,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "54eb3bdb20e3b7e85833f3391a8fb9748c494714c7b3422d32a37583765c3f6e",
+      "status": "??"
+    },
+    {
+      "bytes": 206,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/frontend.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a3cd1557b676d1d608a564979d4a29e97c2104672a0d808a1a66ab076646b782",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1062,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7e577514637eeb05246b21000c4179598601658d5444c3a85c9538b0461b8ef2",
+      "status": "??"
+    },
+    {
+      "bytes": 4865,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "0e90a89c31c8b34d4b83875df94b44159cc223ea8988a6725a38afb8ee2b4836",
+      "status": "??"
+    },
+    {
+      "bytes": 2873,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/report.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d90e879284487a4ef665ce999c660d1af59f88275517761fb16aec8eb7bb6f24",
+      "status": "??"
+    },
+    {
+      "bytes": 5196,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d0bc183566847e44619503e04814015b96fe978dd007249dc2adee4c711e0950",
+      "status": "??"
+    },
+    {
+      "bytes": 979,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "54eb3bdb20e3b7e85833f3391a8fb9748c494714c7b3422d32a37583765c3f6e",
+      "status": "??"
+    },
+    {
+      "bytes": 2872,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "4268a7cc076e7759f427c8828f4fbddefc55e425e8c81789c99db0e24d1fcf32",
+      "status": "??"
+    },
+    {
+      "bytes": 5195,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/admission.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "46bb028e845f75e27aa852b403ab3901ba9981f559bc41f74b44d950c0e339be",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/admission/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 978,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/admission/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5e18d4b0161c0ab0581e691f8c282206abc78266d63dc48bd31eec53ff55cfc0",
+      "status": "??"
+    },
+    {
+      "bytes": 464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/mapping.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1062,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7e577514637eeb05246b21000c4179598601658d5444c3a85c9538b0461b8ef2",
+      "status": "??"
+    },
+    {
+      "bytes": 4864,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/native-receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "1475ad31486090be6ba31947d965e79242415604974d51505b02477abf584290",
+      "status": "??"
+    },
+    {
+      "bytes": 7768,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/relay/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "1976b9ce63060e8ee8a5e06c7a49a7d078fa4e2944354132c4e2f4d6f318ae14",
+      "status": "??"
+    },
+    {
+      "bytes": 222,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/relay/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "048e2ba89ae430962e02f5341cf60c694fb7e131cb417790075a56b32ca09992",
+      "status": "??"
+    },
+    {
+      "bytes": 13938,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/relay/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "56ece43819f4abc3da5f5faa293627210e3bb98588a3250553e2147a98947ed1",
+      "status": "??"
+    },
+    {
+      "bytes": 665,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/remote-observation.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5078be6d7e54db0588590122b6be0e07908c49f0bfadaa9cbef85623cffe15d4",
+      "status": "??"
+    },
+    {
+      "bytes": 2784,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/result.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "1f67197b2c20c5576c01879702d335cdf928a1b5d20b015c44d1a2a06fd1c305",
+      "status": "??"
+    },
+    {
+      "bytes": 118,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/validation/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d36184ab1fb3dfd78342f706214e492389f02e767199affedf738a3ccfd895fe",
+      "status": "??"
+    },
+    {
+      "bytes": 9435,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/validation/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "9c533042526c8e6e8afa9c6fddb73176250538573b1fbc0f7762c87706760b82",
+      "status": "??"
+    },
+    {
+      "bytes": 978,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5e18d4b0161c0ab0581e691f8c282206abc78266d63dc48bd31eec53ff55cfc0",
+      "status": "??"
+    },
+    {
+      "bytes": 206,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/frontend.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a3cd1557b676d1d608a564979d4a29e97c2104672a0d808a1a66ab076646b782",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1062,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7e577514637eeb05246b21000c4179598601658d5444c3a85c9538b0461b8ef2",
+      "status": "??"
+    },
+    {
+      "bytes": 4864,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "1475ad31486090be6ba31947d965e79242415604974d51505b02477abf584290",
+      "status": "??"
+    },
+    {
+      "bytes": 2872,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/report.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "4268a7cc076e7759f427c8828f4fbddefc55e425e8c81789c99db0e24d1fcf32",
+      "status": "??"
+    },
+    {
+      "bytes": 5195,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "46bb028e845f75e27aa852b403ab3901ba9981f559bc41f74b44d950c0e339be",
+      "status": "??"
+    },
+    {
+      "bytes": 978,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5e18d4b0161c0ab0581e691f8c282206abc78266d63dc48bd31eec53ff55cfc0",
+      "status": "??"
+    },
+    {
+      "bytes": 2872,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "2a66eea0228053113278aaa6c62da62b83c4574776487756d042c3a515bbebda",
+      "status": "??"
+    },
+    {
+      "bytes": 5198,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/admission.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "c24fce0abdbfca8c57f741eab28ef0a1ee46c2abcb4888a2306f607cb40e0c2a",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/admission/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 981,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/admission/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "389f7ccfac7ee46a048e495805818d5b185536fecb4698ef54039dde8e2f727d",
+      "status": "??"
+    },
+    {
+      "bytes": 464,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/mapping.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "82e57b05ab00ce196852bcbfc65ba83268f29ccdfa624af438017e5c04450c31",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1065,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "daa7e6e495a13b1200d2a9de09e9a8e9681f7320a524b642184be3ea5d6329fb",
+      "status": "??"
+    },
+    {
+      "bytes": 4867,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/native-receipt.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "ef07576ec933eb7fd3c4134b7b4934b57ec540140a88b264ba6641a9611bba80",
+      "status": "??"
+    },
+    {
+      "bytes": 7772,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/relay/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "9e129147f0dd3d86e8d9514c9c4b22833ae295a3e49b09ebebacb6e18bdf6681",
+      "status": "??"
+    },
+    {
+      "bytes": 222,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/relay/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "048e2ba89ae430962e02f5341cf60c694fb7e131cb417790075a56b32ca09992",
+      "status": "??"
+    },
+    {
+      "bytes": 16234,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/relay/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "f039b8a0ac9bc7f279b6725bc3c35a6c1c91010dcdb7883286327ce597618206",
+      "status": "??"
+    },
+    {
+      "bytes": 665,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/remote-observation.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "fd5e3c8a9666d139621ca599cabd4c8946b663eea8dce4f59b32d297f85fb0a6",
+      "status": "??"
+    },
+    {
+      "bytes": 2784,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/result.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5ce152ff08f5bf3c25444993ce5f2cc32807e4a421ed8d669bb82e030b7f5b97",
+      "status": "??"
+    },
+    {
+      "bytes": 118,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/validation/stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d36184ab1fb3dfd78342f706214e492389f02e767199affedf738a3ccfd895fe",
+      "status": "??"
+    },
+    {
+      "bytes": 11157,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/validation/stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "679d7ff7ba63bae147d31b9f2ba43e396d382f54ca0c9db50454f814334cda9a",
+      "status": "??"
+    },
+    {
+      "bytes": 981,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "389f7ccfac7ee46a048e495805818d5b185536fecb4698ef54039dde8e2f727d",
+      "status": "??"
+    },
+    {
+      "bytes": 206,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/frontend.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a3cd1557b676d1d608a564979d4a29e97c2104672a0d808a1a66ab076646b782",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/model/ControlledMutexFifo.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 1065,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/model/ControlledWitnessCase.tla",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "daa7e6e495a13b1200d2a9de09e9a8e9681f7320a524b642184be3ea5d6329fb",
+      "status": "??"
+    },
+    {
+      "bytes": 4867,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/native.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "ef07576ec933eb7fd3c4134b7b4934b57ec540140a88b264ba6641a9611bba80",
+      "status": "??"
+    },
+    {
+      "bytes": 2872,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/report.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "2a66eea0228053113278aaa6c62da62b83c4574776487756d042c3a515bbebda",
+      "status": "??"
+    },
+    {
+      "bytes": 5198,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/request.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "c24fce0abdbfca8c57f741eab28ef0a1ee46c2abcb4888a2306f607cb40e0c2a",
+      "status": "??"
+    },
+    {
+      "bytes": 981,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/witness.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "389f7ccfac7ee46a048e495805818d5b185536fecb4698ef54039dde8e2f727d",
+      "status": "??"
+    },
+    {
+      "bytes": 1162,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/controlled-model/reduction.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "1cbd740888d458b19bebba6f370e0e3f2db65b3580f9ff42bcf34bb3fd54a6c4",
+      "status": "??"
+    },
+    {
+      "bytes": 1672,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/harness/matrix-selection.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "21bf322f064ea125fa2e8181fbd09a23a3f8fdb1135d1a5362d41e9bbeabec85",
+      "status": "??"
+    },
+    {
+      "bytes": 8645,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/harness/matrix-server-owner.py",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "37e4ee16f3c34e067ecdcf545d459fd81f092c54ec8c077d6565d31d7d2a7c5c",
+      "status": "??"
+    },
+    {
+      "bytes": 3165,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/harness/package-windows-candidate.ps1",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "80041aa4a5da1bc299b2d7c88677280f46fe149ffc31d5cf9362c2f75e16bbee",
+      "status": "??"
+    },
+    {
+      "bytes": 1169,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/harness/zip-windows-candidate.py",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "2e5a189b2dfd4f8f18992efd83b4bf7bbf0518eaa12640627ecbf9c67a9d72b7",
+      "status": "??"
+    },
+    {
+      "bytes": 69472,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/inventory.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "86f814f89a54cd081939df17d6d8f6d0507f04009ff9755fb7019f7c62fcc7ea",
+      "status": "??"
+    },
+    {
+      "bytes": 486,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/controlled-remote-campaign-2.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7b6bed0f6f09824a63705ab222e519c047ca56b0048e085ea6791006321f699d",
+      "status": "??"
+    },
+    {
+      "bytes": 198,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/cpp-build-library.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "bc6545622cc3683387c165ccf6ba7a3f7c51bcfec22de65df26abc7c372512ea",
+      "status": "??"
+    },
+    {
+      "bytes": 6935,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/cpp-build.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d996164aa62843e69c7710f42413dc0dd484b33b8e9181b8a24174be7b3041a4",
+      "status": "??"
+    },
+    {
+      "bytes": 804,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/differential-offline-final.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "f1a707fb6b9804aa8ee676ecef910ef5684ad1807a9bdcc6602e48958891e36f",
+      "status": "??"
+    },
+    {
+      "bytes": 211,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/distribution-observation-tests-2.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "763c15f46494515dc232e0f1d69a5702fe832cf9ade9c10f1956f03104157bc3",
+      "status": "??"
+    },
+    {
+      "bytes": 186,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/dpm-tests-final-shape.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "42ae585b456dde6c4b5c4e09695445fece673016103e0c39ee629753b4c0abad",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/ecma-consumer-build.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/ecma-sdk-build.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 247,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/evidence-final-tests.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e9ba359453540e5e67ab3371a8a2ba4eed5b3cb1465d3a965022a56ed745e75d",
+      "status": "??"
+    },
+    {
+      "bytes": 91636,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/final-local-no-model-interrupted.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "fa9ebf1d57d8a9649c2db6dd5dcefb0846987dfc35206dd083cf0fec707ca3da",
+      "status": "??"
+    },
+    {
+      "bytes": 113788,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/final-local-no-model.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "532698edb38d0c466d8627957ad9c422f62ae80f0e18a650cb7a57d85e80a5fe",
+      "status": "??"
+    },
+    {
+      "bytes": 104671,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/full-local-no-model-network.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "0c45ccab7ba13ecb25102364d0c95467976f4af8eb7b76bb99e125ab38e413af",
+      "status": "??"
+    },
+    {
+      "bytes": 87047,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/full-local-no-model.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "da3a45d26b4d288a42b0c47180d4a0135225a8701a3820ce80f9978ab9fb3cbb",
+      "status": "??"
+    },
+    {
+      "bytes": 66603,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/gate-full-selected-2.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "dc4fb5b0b3e2512d6ae414e7b0a8c1d7c6eb41b1d936bb99342bfb154233a0a6",
+      "status": "??"
+    },
+    {
+      "bytes": 67061,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/gate-full-selected-3.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d39b6d1e4d217cb3f786ae2b39a26e96e612ffc0e7aaff2acf25ecbc7b0794d5",
+      "status": "??"
+    },
+    {
+      "bytes": 67023,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/gate-full-selected-4.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "ebaf863c9c7c948715b6276daec215f2421ac5a8da469d52361478b37260745e",
+      "status": "??"
+    },
+    {
+      "bytes": 82260,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/gate-full-selected-5.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "2648fe115bf545f5eb2ce52333663089cd14e633589f2f3746d2bf25fd36b13a",
+      "status": "??"
+    },
+    {
+      "bytes": 81551,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/gate-full-selected.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "dc550b460a156654cfdaf10d0dea7e63453ddfb0b9665496771614aea28c54f0",
+      "status": "??"
+    },
+    {
+      "bytes": 2301,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/gate-journal-v2.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "8c80af9eac75ab0a52841132e88b49f96f92b65c530addd744fd73f45c4936c7",
+      "status": "??"
+    },
+    {
+      "bytes": 7577,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/installed-dpm-gate.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "36f1fedc2b7b0ab500a0dbac6f5d1d6722db4eaa1ba3247ec504ac6ffd9b95c7",
+      "status": "??"
+    },
+    {
+      "bytes": 246,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/matrix-evidence-offline-2.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "1c4884173d761f1934d08b16802628c7b424696b5dcbc04e46da11b96694b302",
+      "status": "??"
+    },
+    {
+      "bytes": 197,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/matrix-java-version.stderr",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "03a2a50b9461c6dac293d1b16cfd41908a7774968db6ab93d83d592c96d7e233",
+      "status": "??"
+    },
+    {
+      "bytes": 14334,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/matrix-server.stderr.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "b6afca1c7bf9a6fb7c0a5116bc7c9fc467325a778e6ab06f622f54e0b76a854f",
+      "status": "??"
+    },
+    {
+      "bytes": 0,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/matrix-server.stdout.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "??"
+    },
+    {
+      "bytes": 79,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/native-integer-maps.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "2229c9dd261bbb501528c1298473c341078fd93d650f1a7147029824eb00f143",
+      "status": "??"
+    },
+    {
+      "bytes": 113642,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/rc-full-local-no-model.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "2fe5f42715b3b2ef4ef5c2757cbcae478848df858dae676db4159cfc9dd68e8f",
+      "status": "??"
+    },
+    {
+      "bytes": 2695,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/rc-native-rebuild.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "d3b525ad7e78ee84c4f12e5ddc7ce353cfbabd8e7eab9a9919ee05e6428aa336",
+      "status": "??"
+    },
+    {
+      "bytes": 1535,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/rust-consumer-build.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7b6214cc38cbddf3c97edbc5c07d01f6357a3a8f75f2a27dfd17e47758a39885",
+      "status": "??"
+    },
+    {
+      "bytes": 1984,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/windows-candidate-package.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "1bb970063edf835a5a86b27df42ae2bc56342002119644f858080b9bfaf05f8a",
+      "status": "??"
+    },
+    {
+      "bytes": 2236,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/windows-reference-admission-2.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "62b875b0e45fb66c65127ef2b609ed511e02f6c838c25c81381441741cb3e409",
+      "status": "??"
+    },
+    {
+      "bytes": 787,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/windows-reference-calibration.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "6c1822e1109d74c6cf63b9f7450ffe2ccfc1a26153060c1b472ed925a9dcd3f9",
+      "status": "??"
+    },
+    {
+      "bytes": 99895,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/windows-reference-finals.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "5d74d42820b74ee4e982141f5d8d1932f0062cf2795542721ba4fa9ae102692e",
+      "status": "??"
+    },
+    {
+      "bytes": 4691,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/logs/windows-reference-probe.log",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "1479c00b7f17535260ddbae5f100a3435a1b5dcb765d222fcf40e9532da3a00f",
+      "status": "??"
+    },
+    {
+      "bytes": 452,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/apalache-carrier-refusal.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "f5e8834b45f4e08e25f5d70244ef5fbb7e555da4e9f6da3563d9a681eee5fdd4",
+      "status": "??"
+    },
+    {
+      "bytes": 1155,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/client-matrix-identities.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7534064674ae8869b3d19503abbcfb805386fbf54a8e3a892e3692d77857f22d",
+      "status": "??"
+    },
+    {
+      "bytes": 272,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/clock-observation.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "7ba38e0dfe3d3b8f503c134b4f104379420e24f35a33d8a6c2d01a4af2cbcbdc",
+      "status": "??"
+    },
+    {
+      "bytes": 381,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/cpp-dependencies.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e06e338370c5582cea4d54bf9e852084382ccd9cb2cc881e5788a1208133c291",
+      "status": "??"
+    },
+    {
+      "bytes": 222,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/current-installation-platform.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "9fdb6af9aaab389e8dad29bc99629b950f5a72cec7086a5c2c63cfb585760203",
+      "status": "??"
+    },
+    {
+      "bytes": 425,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/gate-dependencies.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "597a25cc71483a325e61a50ea7b397ad903eda21c5b8f2679760b805fd641cea",
+      "status": "??"
+    },
+    {
+      "bytes": 86586,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/haskell-build-plan.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "9cf65ea3238311ff7f48c895f2e13749e2dcbc66a9d127f26ffc22f2696834ca",
+      "status": "??"
+    },
+    {
+      "bytes": 367,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/haskell-toolchain-downloads.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "c4a7e84f9058630a5b74e145083951bdcef17a1150babb27c2fb130a6ea45567",
+      "status": "??"
+    },
+    {
+      "bytes": 5232,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/installed-dpm-acceptance.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "502b7ac5a1b3f8034d53cca9be2e9ab3e51641b3d727ff53f7cc765ad3626cbd",
+      "status": "??"
+    },
+    {
+      "bytes": 774,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/language-builds.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "045d96b766844977c6c94229d9fc06e82702c7de62c836079353e546519b9a4e",
+      "status": "??"
+    },
+    {
+      "bytes": 867,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/m4-selected-preflight.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "784e889d57ad0f34d995e8b1e75447b49c6140ea10c8b6be640f9029945e6671",
+      "status": "??"
+    },
+    {
+      "bytes": 431,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/matrix-apalache-manifest.txt",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "54f1c44d17ed0ce23ee4e2949662c33d8260010da90cb68f8492f867b7e64c70",
+      "status": "??"
+    },
+    {
+      "bytes": 6294,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/matrix-cleanup.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "99accb9fcb546a5c56a53989e691517c58ee628991a5b2fbfd955db43afe5e70",
+      "status": "??"
+    },
+    {
+      "bytes": 7460,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/matrix-lifecycle.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a4768181c1fce6eab015a1041c5a040160f891203b3fb812e647c4be220ca404",
+      "status": "??"
+    },
+    {
+      "bytes": 1749,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/matrix-observation-after.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "36412a8d2112b944e4a02da913aea78ec580df0388cc08fe205f7e4f6ef5d28d",
+      "status": "??"
+    },
+    {
+      "bytes": 1749,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/matrix-observation-before.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "76106823ad1ce90831d03e4a57ba5e0d09a4ba736019dcf515996e405c5a7f59",
+      "status": "??"
+    },
+    {
+      "bytes": 6858,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/matrix-observed-java.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "76342197fa4f2faf1baddc268cf4c9cce788158076858c0a54c14a7e7f984eae",
+      "status": "??"
+    },
+    {
+      "bytes": 815,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/matrix-runtime-manifest.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "632dde9c78f1552850e268a6f59a17a8743369d56655f2edf98482f40517a2f4",
+      "status": "??"
+    },
+    {
+      "bytes": 2018350,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/matrix-source-manifest.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "e2da95969b554d650925a44ba8410094f0809e280afe2a8cc147169941e163ba",
+      "status": "??"
+    },
+    {
+      "bytes": 176,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/oracle-shutdown.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "96be96f2910c096a008c5b23ceb9b1ed23f02376f6881b309db98128a04fc821",
+      "status": "??"
+    },
+    {
+      "bytes": 1447,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/stdio-compatibility.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "f2b774b58e3094502ecd19cdde8e058080fba541472b621cd4173985d9b4e712",
+      "status": "??"
+    },
+    {
+      "bytes": 339,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/windows-candidate-archive.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "a7e915a8cdad2956980366f85bcbb14e5d41dc995d2cf47104dbdf84415ad1b2",
+      "status": "??"
+    },
+    {
+      "bytes": 1667,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/windows-candidate-build.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "58a73917aef49cdee7d28d743fec1e94d2f1bb20b3ce123c0c299cf2c2de7804",
+      "status": "??"
+    },
+    {
+      "bytes": 592,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/receipts/windows-client-overlay-results.json",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "78918c2f170d5b9d354cf32ef5146654743e9bc84f65ad20d5e46d9bf43a393c",
+      "status": "??"
+    },
+    {
+      "bytes": 11240,
+      "category": "evidence",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-evidence-20261029/verify.py",
+      "reason": "frozen October 29 campaign receipts",
+      "sha256": "6c590ca1b806123035189afe702c34bc9f9bee58d7925a4a71e6d8ee88a5ff7b",
+      "status": "??"
+    },
+    {
+      "bytes": 9720,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-execution-plan-2026-10-29.md",
+      "reason": "reviewed plan/decision/handoff document",
+      "sha256": "2ed23920ae8f5b5d808cb01ae05349854dbf3cc28a0750f3a083e5b7e7cfea7c",
+      "status": "??"
+    },
+    {
+      "bytes": 2908,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-executor-handoff-2026-10-30.md",
+      "reason": "reviewed plan/decision/handoff document",
+      "sha256": "f3f0db79bd6bc83d93a7f01c988c1904ca5c0b0f47bfcf80e66267effa48f2d9",
+      "status": "??"
+    },
+    {
+      "bytes": 23632,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "Plans/completion-qualification-release-plan-2026-10-30.md",
+      "reason": "reviewed plan/decision/handoff document",
+      "sha256": "2ebeb188f41492d233aaed8e1192be0118c27c6a2e28e98b9c642ae3284dbe53",
+      "status": "??"
+    },
+    {
+      "bytes": 14,
+      "category": "evidence",
+      "delivery": "exclude",
+      "deliveryNote": "S1/S0 execution record is produced after the S1 freeze; not part of the S2 source payload",
+      "kind": "file",
+      "path": "Plans/completion-release-evidence-20261030/.gitattributes",
+      "reason": "this execution record",
+      "sha256": "41ac01e0af44f82e7ff2bc8642b67a0593a9592020e925d21652ad1f90615893",
+      "status": "??"
+    },
+    {
+      "bytes": 7,
+      "category": "evidence",
+      "delivery": "exclude",
+      "deliveryNote": "S1/S0 execution record is produced after the S1 freeze; not part of the S2 source payload",
+      "kind": "file",
+      "path": "Plans/completion-release-evidence-20261030/.gitignore",
+      "reason": "this execution record",
+      "sha256": "e027cf8ebf80d6dcdacced8a4dbd1c440e2436fb1868ec851db4061cb67bb787",
+      "status": "??"
+    },
+    {
+      "bytes": 2295,
+      "category": "evidence",
+      "delivery": "exclude",
+      "deliveryNote": "S1/S0 execution record is produced after the S1 freeze; not part of the S2 source payload",
+      "kind": "file",
+      "path": "Plans/completion-release-evidence-20261030/linkcheck.py",
+      "reason": "this execution record",
+      "sha256": "6427c9a5c741255e531891cab914bd144b85b6af00fbc999d019f60466220bff",
+      "status": "??"
+    },
+    {
+      "bytes": 2058,
+      "category": "evidence",
+      "delivery": "exclude",
+      "deliveryNote": "S1/S0 execution record is produced after the S1 freeze; not part of the S2 source payload",
+      "kind": "file",
+      "path": "Plans/completion-release-evidence-20261030/s0-host-facts.json",
+      "reason": "this execution record",
+      "sha256": "b7d898a8e72b19dbe20c00a408916aa405fe4a1baec697f98dc132a001984eec",
+      "status": "??"
+    },
+    {
+      "bytes": 8615,
+      "category": "evidence",
+      "delivery": "exclude",
+      "deliveryNote": "S1/S0 execution record is produced after the S1 freeze; not part of the S2 source payload",
+      "kind": "file",
+      "path": "Plans/completion-release-evidence-20261030/s0-october29-index.json",
+      "reason": "this execution record",
+      "sha256": "f758d3b2fde31f7fcfb67e50fa107e2c7f08560f5efdcdb49b2d85b92f050c6b",
+      "status": "??"
+    },
+    {
+      "bytes": 179045,
+      "category": "evidence",
+      "delivery": "exclude",
+      "deliveryNote": "S1/S0 execution record is produced after the S1 freeze; not part of the S2 source payload",
+      "kind": "file",
+      "path": "Plans/completion-release-evidence-20261030/s0-path-inventory.json",
+      "reason": "this execution record",
+      "sha256": "583ce9e97630a73a41ee3f1c88c9de3f473641630ba4ac8a9a94ce4b13667735",
+      "status": "??"
+    },
+    {
+      "bytes": 36381,
+      "category": "evidence",
+      "delivery": "exclude",
+      "deliveryNote": "S1/S0 execution record is produced after the S1 freeze; not part of the S2 source payload",
+      "kind": "file",
+      "path": "Plans/completion-release-evidence-20261030/s0-stage-ledger.json",
+      "reason": "this execution record",
+      "sha256": "ecce77d58fde46e2cd33e2d52f5f63ae72023b3bcf160fcf47c19e00f09e3f6a",
+      "status": "??"
+    },
+    {
+      "bytes": 2503,
+      "category": "evidence",
+      "delivery": "exclude",
+      "deliveryNote": "S1/S0 execution record is produced after the S1 freeze; not part of the S2 source payload",
+      "kind": "file",
+      "path": "Plans/completion-release-evidence-20261030/s1-payload-audit.json",
+      "reason": "this execution record",
+      "sha256": "c092b19ee99dd89d5faf5388c84ebde9264c4602a305c266e4f0677472151431",
+      "status": "??"
+    },
+    {
+      "bytes": 4268,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "specs/ControlledMutexFifo.tla",
+      "reason": "candidate source or test payload",
+      "sha256": "049e2dce622129478b3e5faaef6c44f3c1e98139d1e7ac6f23137309dc371e69",
+      "status": "??"
+    },
+    {
+      "bytes": 4868,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "test/fixtures/deterministic-scheduling/controlled-sync/native-complete.json",
+      "reason": "frozen fixture/golden input",
+      "sha256": "868831e5be8b75eda3ac2c65650efdbf6da729d70433871944e2c8c43e255e9c",
+      "status": "??"
+    },
+    {
+      "bytes": 660,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/README.md",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "92d87670a0d424007cf2486047e5df28b09daf92ad80bff8900ada1e866c5c3f",
+      "status": "??"
+    },
+    {
+      "bytes": 165349,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/artifact-index.json",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "461960c4d5dce2d7067ac9a3a68a631685b1e8445f35711ea200df328ff44a19",
+      "status": "??"
+    },
+    {
+      "bytes": 927429,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/captured-inputs.json",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "63737fc6e51f899f058cbf2787a5d22f15d676dca2bd01ea968f0cd35b0ae0ca",
+      "status": "??"
+    },
+    {
+      "bytes": 531610,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/raw-evidence.tar.gz",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "e324f412de2686025fb0d21b1f2099ea550c5aa003b32ae3dac24d8b7cccab21",
+      "status": "??"
+    },
+    {
+      "bytes": 764243,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/report.json",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "010baad3695ee594357d81a46074f2d652c923fd70fba8fb9e9d9a9dffdbb686",
+      "status": "??"
+    },
+    {
+      "bytes": 428108,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/semantic.json",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "375736401fc7f045136ec5f287514fc6e6f75d133c23773a0401480d92f867f2",
+      "status": "??"
+    },
+    {
+      "bytes": 1555,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/summary.md",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "25a709e4f7037fbeb3a610d6e1ea6962883295102f4911cdc0b1a8937ac16ada",
+      "status": "??"
+    },
+    {
+      "bytes": 810,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/README.md",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "b1e9219517c23547d7ca6c58977c5e6e3eba7e45673d6003406e4172ba32bc44",
+      "status": "??"
+    },
+    {
+      "bytes": 165322,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/artifact-index.json",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "a1150d3b7335a868b6c4c0f413dea3086dedf461d067e9730a84542707be4006",
+      "status": "??"
+    },
+    {
+      "bytes": 987191,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/captured-inputs.json",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "7c1bc027ef6e482158348c1a10269840c2e62bdc969cd81a0a1992da4363ff37",
+      "status": "??"
+    },
+    {
+      "bytes": 520898,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/raw-evidence.tar.gz",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "edfdd15dee2c6b5c40b54d1e8be2c279c33809778a82da5ac3491a001c6b6447",
+      "status": "??"
+    },
+    {
+      "bytes": 764792,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/report.json",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "0af6c09286d5c7a3a99c94baf70add31d8d2064d515fe693e7b83ee7be702bb8",
+      "status": "??"
+    },
+    {
+      "bytes": 428709,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/semantic.json",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "c1938ecf662c828557fd1535cd25389368a6c27dcef445ea20405c7e41a47edb",
+      "status": "??"
+    },
+    {
+      "bytes": 498,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/summary.md",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "59d8c2bb18d9a522d518fb0d5d319a96b98585b3428aecb22a75661ffd1852da",
+      "status": "??"
+    },
+    {
+      "bytes": 810,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/README.md",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "a2d67396fdd20b077f7e86fead1e51db6905a264683b141ede664e60d475ac05",
+      "status": "??"
+    },
+    {
+      "bytes": 165338,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/artifact-index.json",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "4e0008fca665d850922cf386993b636b3fe68f4ae51841bb369ee528be066e6d",
+      "status": "??"
+    },
+    {
+      "bytes": 987191,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/captured-inputs.json",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "7c1bc027ef6e482158348c1a10269840c2e62bdc969cd81a0a1992da4363ff37",
+      "status": "??"
+    },
+    {
+      "bytes": 521057,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/raw-evidence.tar.gz",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "daa167b2f5f3c566470dcd3155a308ff8f3cafcf7bcd7782a0767a9b43942465",
+      "status": "??"
+    },
+    {
+      "bytes": 764824,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/report.json",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "ff6c80731a0b81868119946ca1a0168bedde2207e6de47b33b2c2862e3c24cc4",
+      "status": "??"
+    },
+    {
+      "bytes": 428709,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/semantic.json",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "c1938ecf662c828557fd1535cd25389368a6c27dcef445ea20405c7e41a47edb",
+      "status": "??"
+    },
+    {
+      "bytes": 498,
+      "category": "evidence",
+      "delivery": "include",
+      "deliveryNote": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier",
+      "kind": "file",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/summary.md",
+      "reason": "October 29 profile-6 differential run evidence",
+      "sha256": "59d8c2bb18d9a522d518fb0d5d319a96b98585b3428aecb22a75661ffd1852da",
+      "status": "??"
+    },
+    {
+      "bytes": 4173,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/DpmSyncComparisonSpec.lean",
+      "reason": "candidate source or test payload",
+      "sha256": "2faed659f9acc76e97b5712be55252a7619896eb40bad07297bebc19a459b791",
+      "status": "??"
+    },
+    {
+      "bytes": 11595,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/check-controlled-model.py",
+      "reason": "candidate source or test payload",
+      "sha256": "ad6349da7508224bfd91b3e17a744d034d46d58f104c7d31b7c3f66f4d00803b",
+      "status": "??"
+    },
+    {
+      "bytes": 398,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/controlled-model/CMakeLists.txt",
+      "reason": "candidate source or test payload",
+      "sha256": "e5b6afb635407a33d10f8cf214b178dd1e808a68890c4b5fc9b659888a97e923",
+      "status": "??"
+    },
+    {
+      "bytes": 3856,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/controlled-model/native.cpp",
+      "reason": "candidate source or test payload",
+      "sha256": "6adfab085e6224cb0fdbed183783be60b20ac275491cc64691640512d1b58931",
+      "status": "??"
+    },
+    {
+      "bytes": 7846,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/controlled-model/remote-validate.ps1",
+      "reason": "candidate source or test payload",
+      "sha256": "919e0573977e1eb863dd6d8dcb49689aebbd968e1b24ab4c9c65a2f9a3ee4253",
+      "status": "??"
+    },
+    {
+      "bytes": 20911,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/controlled_model.py",
+      "reason": "candidate source or test payload",
+      "sha256": "8abfe71349571c4b429fbc3acbc4726e85a86f15db76d5c19dfdc869821b7b0d",
+      "status": "??"
+    },
+    {
+      "bytes": 6836,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/deterministic-scheduling/tests/test_controlled_model.py",
+      "reason": "candidate source or test payload",
+      "sha256": "934d01ac2b27356c4214b199d9ee0e8e30abede35229410f7307a8d2ae411fd4",
+      "status": "??"
+    },
+    {
+      "bytes": 2091,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/tests/test_archive.py",
+      "reason": "candidate source or test payload",
+      "sha256": "fc213293481071f11d48bbd3e3cc82878d28a18d963f02636f246724c1ed9578",
+      "status": "??"
+    },
+    {
+      "bytes": 3323,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/tests/test_windows_job.py",
+      "reason": "candidate source or test payload",
+      "sha256": "0c2bd2cf9ab09e90c05262915cba7e797f604e507ec71e804beda5104de74ab2",
+      "status": "??"
+    },
+    {
+      "bytes": 6323,
+      "category": "payload",
+      "delivery": "include",
+      "kind": "file",
+      "path": "tools/tla-differential/windows_job.py",
+      "reason": "candidate source or test payload",
+      "sha256": "b18d6c8f6ec0288cd221edb271125149a940348b42f792f013518d91004b84b8",
+      "status": "??"
+    }
+  ],
+  "ignoredPaths": [
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": ".golden-build/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": ".lake/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tmp/completion-20261030/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tmp/runtime-source-review-fixes/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/deterministic-scheduling/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/deterministic-scheduling/tests/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/distribution/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/evidence/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/evidence/tests/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/interop/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/model-interface-projected-corpus/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/release/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/release/compatibility/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/tla-differential/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/tla-differential/adapters/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    },
+    {
+      "category": "generated",
+      "delivery": "exclude",
+      "path": "tools/tla-differential/tests/__pycache__/",
+      "reason": "generated output, dependency cache or task scratch; not source payload"
+    }
+  ],
+  "schema": "mirrors.completion-baseline-inventory/v1",
+  "summary": {
+    "('evidence', 'exclude')": 8,
+    "('evidence', 'include')": 398,
+    "('payload', 'include')": 76,
+    "('unrelated', 'exclude')": 1
+  },
+  "trackedDiff": {
+    "bytes": 131756,
+    "note": "full working-tree diff against the base commit; per-file bytes are in candidate-freeze delivery entries",
+    "sha256": "d40ee05eb0de2be813213640b004eb234799d608ca218cf37359316e700dbf1c"
+  }
+}

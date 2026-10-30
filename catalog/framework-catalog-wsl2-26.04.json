@@ -1,0 +1,1120 @@
+{
+  "schemaVersion": "mirrors.framework-catalog/v1",
+  "catalogId": "mirrors.framework.candidate-2026-10-30-wsl2-26.04",
+  "visibility": "private",
+  "components": [
+    {
+      "componentRef": {
+        "componentId": "mirrorecma",
+        "repository": "https://github.com/NzSN/MirrorECMA.git",
+        "revision": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+        "dirty": false
+      },
+      "product": {
+        "name": "mirrorecma",
+        "version": "2.0.0"
+      },
+      "records": [
+        {
+          "recordId": "capabilities",
+          "path": "catalog/framework-capabilities.json",
+          "recordKind": "manifest"
+        },
+        {
+          "recordId": "package",
+          "path": "package.json",
+          "recordKind": "manifest"
+        },
+        {
+          "recordId": "pins",
+          "path": "scripts/ci/versions.env",
+          "recordKind": "pins"
+        }
+      ]
+    },
+    {
+      "componentRef": {
+        "componentId": "mirrorgate",
+        "repository": "https://github.com/NzSN/MirrorGate.git",
+        "revision": "4ef786b30ac6be45e471fb02610484581f5da3b0",
+        "dirty": false
+      },
+      "product": {
+        "name": "MirrorGate",
+        "version": "0.1.0"
+      },
+      "records": [
+        {
+          "recordId": "compatibility",
+          "path": "sdk/compatibility.json",
+          "recordKind": "manifest"
+        }
+      ]
+    },
+    {
+      "componentRef": {
+        "componentId": "mirrors",
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "d737aa0886b9d406e391955756922d9d735d7ec1",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "d00bd319231ae978ca6e5f0c314381053d6e1fec9ed6290404649e5e26f5d9d2",
+          "method": "git-diff-and-untracked-manifest-v1",
+          "includedPaths": [
+            "Docs/completion-qualification-release-design.md",
+            "Docs/current-status.md",
+            "tools/distribution/build.py",
+            "tools/distribution/install.py",
+            "tools/distribution/manifest_check.py",
+            "tools/distribution/refresh_identity.py",
+            "tools/distribution/test_install.py",
+            "tools/distribution/test_manifest_check.py"
+          ],
+          "excludedPaths": [
+            {
+              "path": ".projectile-cache.eld",
+              "reasonCode": "pre-existing-unrelated"
+            },
+            {
+              "path": "catalog/framework-catalog-wsl2-26.04.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/README.md",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+              "reasonCode": "evidence-output"
+            }
+          ]
+        }
+      },
+      "product": {
+        "name": "Mirrors",
+        "version": "0.1.1"
+      },
+      "records": [
+        {
+          "recordId": "capabilities",
+          "path": "catalog/components/mirrors.json",
+          "recordKind": "manifest"
+        },
+        {
+          "recordId": "compiler",
+          "path": "Shell/ModelInterface/Compiler.lean",
+          "recordKind": "source"
+        },
+        {
+          "recordId": "pins",
+          "path": "tools/ci/versions.env",
+          "recordKind": "pins"
+        }
+      ]
+    }
+  ],
+  "evidenceRefs": [],
+  "capabilities": [
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorcpp-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate a C++ model-interface port",
+      "declaration": {
+        "state": "available",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "Shell/ModelInterface/Emit/Cpp.lean",
+            "symbol": "emit"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorecma-async-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate an asynchronous TypeScript suite",
+      "declaration": {
+        "state": "available",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "Shell/ModelInterface/Emit/TypeScriptAsync.lean",
+            "symbol": "emit"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorecma-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate a synchronous TypeScript binding",
+      "declaration": {
+        "state": "available",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "Shell/ModelInterface/Emit/TypeScript.lean",
+            "symbol": "emit"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorrust-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate a Rust model-interface port; generic installed and Gate application acceptance remain unestablished",
+      "declaration": {
+        "state": "experimental",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "Shell/ModelInterface/Emit/Rust.lean",
+            "symbol": "emit"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorecma.project.doctor-read-only",
+      "ownerComponentId": "mirrorecma",
+      "description": "Read configured tool, package, bundle and corpus identities without executing them",
+      "declaration": {
+        "state": "available",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "src/project.ts",
+            "symbol": "doctorProject"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorecma.suite.checked-corpus",
+      "ownerComponentId": "mirrorecma",
+      "description": "Replay compiler-owned suites from pinned checked corpora",
+      "declaration": {
+        "state": "available",
+        "constraints": [
+          {
+            "constraintId": "node-runtime",
+            "fact": {
+              "kind": "dependencyVersion",
+              "id": "node"
+            },
+            "operator": "equals",
+            "values": [
+              "24.15.0"
+            ]
+          }
+        ]
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "src/suite-runner.ts",
+            "symbol": "runSuite"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.backend.linux-bubblewrap-v1",
+      "ownerComponentId": "mirrorgate",
+      "description": "Linux namespace isolation through the Gate Bubblewrap backend",
+      "declaration": {
+        "state": "experimental",
+        "constraints": [
+          {
+            "constraintId": "bubblewrap-minimum",
+            "fact": {
+              "kind": "dependencyVersion",
+              "id": "bubblewrap"
+            },
+            "operator": "atLeastSemver",
+            "values": [
+              "0.9.0"
+            ]
+          },
+          {
+            "constraintId": "linux-only",
+            "fact": {
+              "kind": "platformField",
+              "id": "os"
+            },
+            "operator": "equals",
+            "values": [
+              "linux"
+            ]
+          },
+          {
+            "constraintId": "python-minimum",
+            "fact": {
+              "kind": "dependencyVersion",
+              "id": "python"
+            },
+            "operator": "atLeastSemver",
+            "values": [
+              "3.12.0"
+            ]
+          }
+        ]
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "supervisor/mirrorgate/preparation.py"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.generated-application.mirrorrust-v1",
+      "ownerComponentId": "mirrorgate",
+      "description": "Generic generated Rust application target in Gate",
+      "declaration": {
+        "state": "unavailable",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "absent",
+        "locations": []
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.rust-evaluator.counter-fixture-v1",
+      "ownerComponentId": "mirrorgate",
+      "description": "Handwritten Rust Counter evaluator fixture, distinct from a generated application target",
+      "declaration": {
+        "state": "experimental",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "integrations/mirrorrust/Cargo.toml"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.runtime.node-v1",
+      "ownerComponentId": "mirrorgate",
+      "description": "Node worker runtime profile",
+      "declaration": {
+        "state": "experimental",
+        "constraints": [
+          {
+            "constraintId": "node-runtime",
+            "fact": {
+              "kind": "dependencyVersion",
+              "id": "node"
+            },
+            "operator": "equals",
+            "values": [
+              "24.15.0"
+            ]
+          }
+        ]
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "runtimes/node/worker.mjs"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.control.v1",
+      "ownerComponentId": "mirrorgate",
+      "description": "Gate control protocol version 1",
+      "declaration": {
+        "state": "experimental",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "protocol/control-v1/schema.json"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.control.v2",
+      "ownerComponentId": "mirrorgate",
+      "description": "Gate control protocol version 2",
+      "declaration": {
+        "state": "experimental",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "protocol/control-v2/schema.json"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.pair.node-evaluator.node-worker-v1",
+      "ownerComponentId": "mirrorgate",
+      "description": "Node evaluator through the Node worker-v1 runtime",
+      "declaration": {
+        "state": "experimental",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "sdk/node/control.mjs"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.pair.rust-evaluator.rust-worker-v1",
+      "ownerComponentId": "mirrorgate",
+      "description": "Rust evaluator through the Rust worker-v1 runtime; current generic application generation remains unavailable",
+      "declaration": {
+        "state": "experimental",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "integrations/mirrorrust/src/lib.rs"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.runtime.rust-v1",
+      "ownerComponentId": "mirrorgate",
+      "description": "Rust worker runtime profile",
+      "declaration": {
+        "state": "experimental",
+        "constraints": [
+          {
+            "constraintId": "rust-toolchain",
+            "fact": {
+              "kind": "dependencyVersion",
+              "id": "rust"
+            },
+            "operator": "equals",
+            "values": [
+              "1.96.0"
+            ]
+          }
+        ]
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "runtimes/rust/src/worker.rs"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.worker.v1",
+      "ownerComponentId": "mirrorgate",
+      "description": "Gate worker public-port protocol version 1",
+      "declaration": {
+        "state": "experimental",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "protocol/request.schema.json"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.quota.aggregate-v1",
+      "ownerComponentId": "mirrorgate",
+      "description": "Session aggregate cgroup-v2 enforcement; admission requires a live operator delegation and policy-v3 aggregateLimits on every selected policy",
+      "declaration": {
+        "state": "experimental",
+        "constraints": [
+          {
+            "constraintId": "linux-only",
+            "fact": {
+              "kind": "platformField",
+              "id": "os"
+            },
+            "operator": "equals",
+            "values": [
+              "linux"
+            ]
+          }
+        ]
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "supervisor/mirrorgate/cgroup.py"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.recovery.offline-reclaim-v1",
+      "ownerComponentId": "mirrorgate",
+      "description": "Journal-v1 offline inspection and explicit ownership-validated reclamation with recovery-receipt/v1",
+      "declaration": {
+        "state": "experimental",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "supervisor/mirrorgate/recovery.py"
+          },
+          {
+            "path": "supervisor/mirrorgate/recovery_journal.py"
+          },
+          {
+            "path": "supervisor/mirrorgate/recovery_receipt.py"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrorgate.recovery.session-adoption",
+      "ownerComponentId": "mirrorgate",
+      "description": "Adopt or resume abandoned Gate sessions",
+      "declaration": {
+        "state": "unavailable",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "absent",
+        "locations": []
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    }
+  ],
+  "distributionProfiles": [
+    {
+      "profileId": "mirrors.reference-fresh-trace/ubuntu-26.04-wsl2-x86_64/v1",
+      "platform": {
+        "os": "linux",
+        "osRelease": "ubuntu-26.04",
+        "architecture": "x86_64",
+        "backend": "local-process"
+      },
+      "requiredCapabilityIds": [
+        "mirrors.compiler.target.mirrorecma-async-v1"
+      ],
+      "optionalCapabilityIds": [],
+      "requiredObservationDimensions": [
+        "installedConsumerAccepted"
+      ],
+      "dependencies": [
+        {
+          "dependencyId": "apalache",
+          "version": "0.61.0",
+          "class": "bundled-artifact"
+        },
+        {
+          "dependencyId": "java",
+          "version": "25.0.4+7",
+          "class": "content-addressed-runtime-tree"
+        },
+        {
+          "dependencyId": "virtualization",
+          "version": "WSL2",
+          "class": "operator-host-prerequisite"
+        }
+      ]
+    },
+    {
+      "profileId": "mirrors.reference-node-checked/ubuntu-26.04-wsl2-x86_64/v1",
+      "platform": {
+        "os": "linux",
+        "osRelease": "ubuntu-26.04",
+        "architecture": "x86_64",
+        "backend": "local-process"
+      },
+      "requiredCapabilityIds": [
+        "mirrors.compiler.target.mirrorecma-async-v1",
+        "mirrorecma.suite.checked-corpus"
+      ],
+      "optionalCapabilityIds": [
+        "mirrorecma.project.doctor-read-only"
+      ],
+      "requiredObservationDimensions": [
+        "installedConsumerAccepted"
+      ],
+      "dependencies": [
+        {
+          "dependencyId": "glibc",
+          "version": "2.39",
+          "class": "operator-host-prerequisite"
+        },
+        {
+          "dependencyId": "model-interface-gen",
+          "class": "bundled-artifact"
+        },
+        {
+          "dependencyId": "modelmirrors",
+          "class": "bundled-artifact"
+        },
+        {
+          "dependencyId": "mirrorecma",
+          "version": "2.0.0",
+          "class": "bundled-artifact"
+        },
+        {
+          "dependencyId": "node",
+          "version": "24.15.0",
+          "class": "content-addressed-runtime-tree"
+        },
+        {
+          "dependencyId": "virtualization",
+          "version": "WSL2",
+          "class": "operator-host-prerequisite"
+        }
+      ]
+    },
+    {
+      "profileId": "mirrors.reference-node-gate/ubuntu-26.04-wsl2-x86_64/v1",
+      "platform": {
+        "os": "linux",
+        "osRelease": "ubuntu-26.04",
+        "architecture": "x86_64",
+        "backend": "linux-bubblewrap-v1"
+      },
+      "requiredCapabilityIds": [
+        "mirrors.compiler.target.mirrorecma-async-v1",
+        "mirrorecma.suite.checked-corpus",
+        "mirrorgate.backend.linux-bubblewrap-v1",
+        "mirrorgate.control.v2",
+        "mirrorgate.pair.node-evaluator.node-worker-v1",
+        "mirrorgate.runtime.node-v1",
+        "mirrorgate.worker.v1"
+      ],
+      "optionalCapabilityIds": [
+        "mirrorgate.quota.aggregate-v1",
+        "mirrorgate.recovery.offline-reclaim-v1"
+      ],
+      "requiredObservationDimensions": [
+        "installedConsumerAccepted",
+        "locallyAccepted"
+      ],
+      "dependencies": [
+        {
+          "dependencyId": "bubblewrap",
+          "version": "0.9.0",
+          "class": "operator-host-prerequisite"
+        },
+        {
+          "dependencyId": "glibc",
+          "version": "2.39",
+          "class": "operator-host-prerequisite"
+        },
+        {
+          "dependencyId": "model-interface-gen",
+          "class": "bundled-artifact"
+        },
+        {
+          "dependencyId": "modelmirrors",
+          "class": "bundled-artifact"
+        },
+        {
+          "dependencyId": "mirrorecma",
+          "version": "2.0.0",
+          "class": "bundled-artifact"
+        },
+        {
+          "dependencyId": "mirrorgate",
+          "version": "0.1.0",
+          "class": "bundled-artifact"
+        },
+        {
+          "dependencyId": "mirrorgate-mirrorecma",
+          "version": "0.1.0",
+          "class": "bundled-artifact"
+        },
+        {
+          "dependencyId": "node",
+          "version": "24.15.0",
+          "class": "content-addressed-runtime-tree"
+        },
+        {
+          "dependencyId": "python",
+          "version": "3.12.3",
+          "class": "operator-host-prerequisite"
+        },
+        {
+          "dependencyId": "virtualization",
+          "version": "WSL2",
+          "class": "operator-host-prerequisite"
+        }
+      ]
+    }
+  ],
+  "combinations": [
+    {
+      "combinationId": "candidate.local-node-checked",
+      "componentIds": [
+        "mirrorecma",
+        "mirrors"
+      ],
+      "platform": {
+        "os": "linux",
+        "osRelease": "ubuntu-26.04",
+        "architecture": "x86_64",
+        "backend": "local-process"
+      },
+      "capabilityIds": [
+        "mirrors.compiler.target.mirrorecma-async-v1",
+        "mirrorecma.project.doctor-read-only",
+        "mirrorecma.suite.checked-corpus"
+      ],
+      "distributionProfileIds": [
+        "mirrors.reference-node-checked/ubuntu-26.04-wsl2-x86_64/v1"
+      ],
+      "declaredState": "candidate",
+      "evidenceIds": []
+    },
+    {
+      "combinationId": "candidate.node-gate",
+      "componentIds": [
+        "mirrorecma",
+        "mirrorgate",
+        "mirrors"
+      ],
+      "platform": {
+        "os": "linux",
+        "osRelease": "ubuntu-26.04",
+        "architecture": "x86_64",
+        "backend": "linux-bubblewrap-v1"
+      },
+      "capabilityIds": [
+        "mirrors.compiler.target.mirrorecma-async-v1",
+        "mirrorecma.suite.checked-corpus",
+        "mirrorgate.backend.linux-bubblewrap-v1",
+        "mirrorgate.control.v2",
+        "mirrorgate.pair.node-evaluator.node-worker-v1",
+        "mirrorgate.runtime.node-v1",
+        "mirrorgate.worker.v1",
+        "mirrorgate.quota.aggregate-v1",
+        "mirrorgate.recovery.offline-reclaim-v1"
+      ],
+      "distributionProfileIds": [
+        "mirrors.reference-node-gate/ubuntu-26.04-wsl2-x86_64/v1"
+      ],
+      "declaredState": "candidate",
+      "evidenceIds": []
+    },
+    {
+      "combinationId": "candidate.fresh-trace",
+      "componentIds": [
+        "mirrorecma",
+        "mirrors"
+      ],
+      "platform": {
+        "os": "linux",
+        "osRelease": "ubuntu-26.04",
+        "architecture": "x86_64",
+        "backend": "local-process"
+      },
+      "capabilityIds": [
+        "mirrors.compiler.target.mirrorecma-async-v1",
+        "mirrorecma.suite.checked-corpus"
+      ],
+      "distributionProfileIds": [
+        "mirrors.reference-fresh-trace/ubuntu-26.04-wsl2-x86_64/v1"
+      ],
+      "declaredState": "candidate",
+      "evidenceIds": []
+    }
+  ],
+  "extensions": {
+    "org.nzsn.snapshot": {
+      "capturedAt": "2026-10-30T06:27:50Z",
+      "provisional": true,
+      "reason": "additive Ubuntu 26.04 WSL2 platform variant of the unchanged candidate catalog; no new capability or component revision claim"
+    }
+  }
+}

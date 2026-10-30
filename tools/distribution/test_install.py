@@ -278,5 +278,49 @@ class InstallTransactionTests(unittest.TestCase):
                     self.assertEqual(installer.selector(prefix), previous)
 
 
+class WslProfileAdmissionTests(unittest.TestCase):
+    def test_observed_virtualization_reads_the_kernel_release(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            release = Path(temporary) / "osrelease"
+            release.write_text("6.18.54.1-microsoft-standard-WSL2\n")
+            self.assertEqual(installer.observed_virtualization(release), "wsl2")
+            release.write_text("6.8.0-40-generic\n")
+            self.assertIsNone(installer.observed_virtualization(release))
+            self.assertIsNone(installer.observed_virtualization(Path(temporary) / "missing"))
+
+    def test_wsl2_catalog_profile_requires_a_wsl2_host(self) -> None:
+        profile = "mirrors.reference-node-checked/ubuntu-26.04-wsl2-x86_64/v1"
+        installer.require_profile_host(profile, "wsl2")
+        with self.assertRaisesRegex(ValueError, "observed WSL2 host"):
+            installer.require_profile_host(profile, None)
+        # The existing Ubuntu 24.04 profiles stay admissible on either host.
+        installer.require_profile_host(
+            "mirrors.reference-node-checked/ubuntu-24.04-x86_64/v1", None)
+        installer.require_profile_host(
+            "mirrors.reference-node-checked/ubuntu-24.04-x86_64/v1", "wsl2")
+
+    def test_reference_wsl2_catalog_and_locks_are_additive(self) -> None:
+        repo = Path(__file__).resolve().parents[2]
+        base_catalog = json.loads((repo / "catalog/framework-catalog.json").read_text())
+        variant = json.loads((repo / "catalog/framework-catalog-wsl2-26.04.json").read_text())
+        base_ids = {entry["profileId"] for entry in base_catalog["distributionProfiles"]}
+        self.assertIn("mirrors.reference-node-checked/ubuntu-24.04-x86_64/v1", base_ids)
+        self.assertIn("mirrors.reference-node-gate/ubuntu-24.04-x86_64/v1", base_ids)
+        for entry in variant["distributionProfiles"]:
+            self.assertEqual(entry["platform"]["osRelease"], "ubuntu-26.04")
+            self.assertIn("wsl2", entry["profileId"])
+            self.assertIn({"dependencyId": "virtualization", "version": "WSL2",
+                           "class": "operator-host-prerequisite"}, entry["dependencies"])
+        self.assertEqual(
+            {entry["combinationId"] for entry in base_catalog["combinations"]},
+            {entry["combinationId"] for entry in variant["combinations"]})
+        profiles = json.loads((repo / "distribution/reference-node-wsl2-26.04/profiles.json").read_text())
+        self.assertEqual(
+            {entry["profileId"] for entry in profiles["profiles"]},
+            {"checked-replay-local", "checked-replay-gate", "fresh-trace"})
+        for entry in profiles["profiles"]:
+            self.assertIn("wsl2", entry["catalogProfileId"])
+
+
 if __name__ == "__main__":
     unittest.main()

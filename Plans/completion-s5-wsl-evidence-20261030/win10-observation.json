@@ -1,0 +1,36 @@
+{
+  "host": "win10",
+  "isolatedOracleListener19131": "absent",
+  "leftoverTestOracle": "none-observed",
+  "limits": [
+    "This is an observation of the existing production instance, not candidate qualification.",
+    "No TLS handshake, mTLS control, backend version, reboot, or health claim follows.",
+    "No fresh client/server credential or isolated oracle was created."
+  ],
+  "ownedProcesses": [
+    {
+      "name": "nssm.exe",
+      "path": "D:\\ModelMirrors\\tools\\nssm.exe",
+      "pid": 11788
+    },
+    {
+      "name": "ModelMirrors.exe",
+      "path": "D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+      "pid": 9920
+    }
+  ],
+  "producedAt": "2026-10-30T06:26:38Z",
+  "production": {
+    "listener": {
+      "address": "0.0.0.0",
+      "port": 8999
+    },
+    "path": "D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+    "pid": 9920,
+    "serviceName": "ModelMirrors",
+    "serviceStatus": "running",
+    "sha256": "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+    "startType": "automatic"
+  },
+  "schema": "mirrors.s5.win10-observation/v1"
+}

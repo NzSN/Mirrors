@@ -1,0 +1,115 @@
+{
+  "archiveFindings": [
+    {
+      "kind": "gzip archive",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/raw-evidence.tar.gz"
+    },
+    {
+      "kind": "gzip archive",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/raw-evidence.tar.gz"
+    },
+    {
+      "kind": "gzip archive",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/raw-evidence.tar.gz"
+    }
+  ],
+  "binaryFindings": [
+    {
+      "kind": "NUL-containing bytes",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/raw-evidence.tar.gz"
+    },
+    {
+      "kind": "NUL-containing bytes",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/raw-evidence.tar.gz"
+    },
+    {
+      "kind": "NUL-containing bytes",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/raw-evidence.tar.gz"
+    }
+  ],
+  "date": "2026-10-30",
+  "evidenceTracking": {
+    "attributes": {
+      "json": "text unset (-text)",
+      "logs": "text unset (-text)",
+      "markdown": "normal text (UTF-8/LF is recorded separately by content hashes)",
+      "verifiedWith": "git check-attr text -- Plans/completion-release-evidence-20261030/logs/local-no-model-final.log Plans/completion-release-evidence-20261030/candidate-freeze.json Plans/completion-release-evidence-20261030/README.md"
+    },
+    "newRecordFiles": 25,
+    "newRecordIgnoredFiles": [],
+    "note": "Both evidence directories negate the global *.log ignore; logs and JSON artifacts are marked -text. git ls-files --others --ignored --exclude-standard reports zero ignored files in either evidence directory.",
+    "october29IgnoredFiles": []
+  },
+  "exceptions": [
+    {
+      "kind": "reviewed evidence archive",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/raw-evidence.tar.gz",
+      "reason": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier"
+    },
+    {
+      "kind": "reviewed evidence archive",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/raw-evidence.tar.gz",
+      "reason": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier"
+    },
+    {
+      "kind": "reviewed evidence archive",
+      "path": "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/raw-evidence.tar.gz",
+      "reason": "public profile-6 evidence; raw-evidence.tar.gz is a reviewed archive required by the October 29 verifier"
+    }
+  ],
+  "excluded": [
+    {
+      "category": "unrelated",
+      "path": ".projectile-cache.eld",
+      "reason": "local editor cache; excluded and preserved on disk"
+    },
+    {
+      "category": "evidence",
+      "path": "Plans/completion-release-evidence-20261030/.gitattributes",
+      "reason": "this execution record"
+    },
+    {
+      "category": "evidence",
+      "path": "Plans/completion-release-evidence-20261030/.gitignore",
+      "reason": "this execution record"
+    },
+    {
+      "category": "evidence",
+      "path": "Plans/completion-release-evidence-20261030/linkcheck.py",
+      "reason": "this execution record"
+    },
+    {
+      "category": "evidence",
+      "path": "Plans/completion-release-evidence-20261030/s0-host-facts.json",
+      "reason": "this execution record"
+    },
+    {
+      "category": "evidence",
+      "path": "Plans/completion-release-evidence-20261030/s0-october29-index.json",
+      "reason": "this execution record"
+    },
+    {
+      "category": "evidence",
+      "path": "Plans/completion-release-evidence-20261030/s0-path-inventory.json",
+      "reason": "this execution record"
+    },
+    {
+      "category": "evidence",
+      "path": "Plans/completion-release-evidence-20261030/s0-stage-ledger.json",
+      "reason": "this execution record"
+    },
+    {
+      "category": "evidence",
+      "path": "Plans/completion-release-evidence-20261030/s1-payload-audit.json",
+      "reason": "this execution record"
+    }
+  ],
+  "proposedDeliveryFiles": 474,
+  "scanScope": {
+    "executionRecord": 24,
+    "proposedDelivery": 474
+  },
+  "schema": "mirrors.completion-payload-audit/v1",
+  "secretFindings": [],
+  "verdict": "pass"
+}

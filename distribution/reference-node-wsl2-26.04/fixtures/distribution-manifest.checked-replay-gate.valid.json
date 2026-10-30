@@ -1,0 +1,478 @@
+{
+  "schemaVersion": "mirrors.reference-distribution-manifest/v1",
+  "distributionId": "mirrors-reference-node-ubuntu-24.04-x86_64-v1",
+  "catalogSelectionRef": {
+    "schemaVersion": "mirrors.framework-catalog/v1",
+    "selectionKind": "sha256",
+    "selectionValue": "5603d9d42700b1e009db5cb56247a29d06c0a96642540d66937a79a4fa2d0bd5"
+  },
+  "profileId": "checked-replay-gate",
+  "componentRefs": [
+    {
+      "componentId": "mirrorecma",
+      "repository": "https://github.com/NzSN/MirrorECMA.git",
+      "revision": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+      "dirty": false
+    },
+    {
+      "componentId": "mirrorgate",
+      "repository": "https://github.com/NzSN/MirrorGate.git",
+      "revision": "4ef786b30ac6be45e471fb02610484581f5da3b0",
+      "dirty": false
+    },
+    {
+      "componentId": "mirrors",
+      "repository": "https://github.com/NzSN/Mirrors.git",
+      "revision": "d737aa0886b9d406e391955756922d9d735d7ec1",
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "d00bd319231ae978ca6e5f0c314381053d6e1fec9ed6290404649e5e26f5d9d2",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "Docs/completion-qualification-release-design.md",
+          "Docs/current-status.md",
+          "tools/distribution/build.py",
+          "tools/distribution/install.py",
+          "tools/distribution/manifest_check.py",
+          "tools/distribution/refresh_identity.py",
+          "tools/distribution/test_install.py",
+          "tools/distribution/test_manifest_check.py"
+        ],
+        "excludedPaths": [
+          {
+            "path": ".projectile-cache.eld",
+            "reasonCode": "pre-existing-unrelated"
+          },
+          {
+            "path": "catalog/framework-catalog-wsl2-26.04.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/README.md",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+            "reasonCode": "evidence-output"
+          }
+        ]
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "artifactId": "counter-corpus",
+      "path": "artifacts/examples/counter.itf.json",
+      "bytes": 1,
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "mode": "0644",
+      "kind": "file",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "counter-corpus"
+      }
+    },
+    {
+      "artifactId": "counter-suite-bundle",
+      "path": "artifacts/examples/counter-suite.tar",
+      "bytes": 1,
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "mode": "0644",
+      "kind": "archive",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "counter-suite-bundle"
+      }
+    },
+    {
+      "artifactId": "evidence-verifier",
+      "path": "artifacts/evidence/tools.tar",
+      "bytes": 1,
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "mode": "0644",
+      "kind": "archive",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "evidence-verifier"
+      }
+    },
+    {
+      "artifactId": "evidence-verifier-dependencies",
+      "path": "artifacts/evidence/wheels.tar",
+      "bytes": 1,
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "mode": "0644",
+      "kind": "archive",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "evidence-verifier-dependencies"
+      }
+    },
+    {
+      "artifactId": "framework-catalog-verifier",
+      "path": "artifacts/bin/framework_catalog",
+      "bytes": 1,
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "mode": "0755",
+      "kind": "file",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "framework-catalog-verifier"
+      },
+      "dynamicLibraries": [
+        {
+          "soname": "libc.so.6",
+          "path": "/lib/x86_64-linux-gnu/libc.so.6",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ]
+    },
+    {
+      "artifactId": "mirror-server",
+      "path": "artifacts/bin/ModelMirrors",
+      "bytes": 1,
+      "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+      "mode": "0755",
+      "kind": "file",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "mirror-server"
+      },
+      "dynamicLibraries": [
+        {
+          "soname": "libc.so.6",
+          "path": "/lib/x86_64-linux-gnu/libc.so.6",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ]
+    },
+    {
+      "artifactId": "mirrorecma-package",
+      "path": "artifacts/packages/mirrorecma.tgz",
+      "bytes": 1,
+      "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+      "mode": "0644",
+      "kind": "archive",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "mirrorecma-package"
+      }
+    },
+    {
+      "artifactId": "model-interface-gen",
+      "path": "artifacts/bin/model_interface_gen",
+      "bytes": 1,
+      "sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+      "mode": "0755",
+      "kind": "file",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "component-build",
+        "id": "model-interface-gen"
+      },
+      "dynamicLibraries": [
+        {
+          "soname": "libc.so.6",
+          "path": "/lib/x86_64-linux-gnu/libc.so.6",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ]
+    },
+    {
+      "artifactId": "node-runtime",
+      "path": "artifacts/runtimes/node.tar.xz",
+      "bytes": 31164460,
+      "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+      "mode": "0644",
+      "kind": "archive",
+      "mediaType": "application/octet-stream",
+      "source": {
+        "kind": "dependency-lock",
+        "id": "node-runtime"
+      }
+    },
+    {
+      "artifactId": "distribution-locks",
+      "path": "artifacts/inputs/distribution-locks.tar.gz",
+      "kind": "archive",
+      "mediaType": "application/gzip",
+      "bytes": 1,
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "mode": "0644",
+      "source": {
+        "kind": "component-build",
+        "id": "distribution-locks"
+      }
+    },
+    {
+      "artifactId": "selected-catalog",
+      "path": "artifacts/inputs/framework-catalog.A.json",
+      "kind": "file",
+      "mediaType": "application/json",
+      "bytes": 1,
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "mode": "0644",
+      "source": {
+        "kind": "component-build",
+        "id": "selected-catalog"
+      }
+    },
+    {
+      "artifactId": "mirrorgate-integration",
+      "path": "artifacts/packages/mirrorgate-mirrorecma.tgz",
+      "kind": "archive",
+      "mediaType": "application/gzip",
+      "bytes": 1,
+      "sha256": "abababababababababababababababababababababababababababababababab",
+      "mode": "0644",
+      "source": {
+        "kind": "component-build",
+        "id": "mirrorgate-integration"
+      }
+    },
+    {
+      "artifactId": "mirrorgate-protocol",
+      "path": "artifacts/gate/mirrorgate-protocol.tar.gz",
+      "kind": "archive",
+      "mediaType": "application/gzip",
+      "bytes": 1,
+      "sha256": "acacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacac",
+      "mode": "0644",
+      "source": {
+        "kind": "component-build",
+        "id": "mirrorgate-protocol"
+      }
+    },
+    {
+      "artifactId": "mirrorgate-runtime",
+      "path": "artifacts/gate/mirrorgate-runtime.tar.gz",
+      "kind": "archive",
+      "mediaType": "application/gzip",
+      "bytes": 1,
+      "sha256": "adadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadad",
+      "mode": "0644",
+      "source": {
+        "kind": "component-build",
+        "id": "mirrorgate-runtime"
+      }
+    },
+    {
+      "artifactId": "mirrorgate-supervisor",
+      "path": "artifacts/gate/mirrorgate-supervisor.tar.gz",
+      "kind": "archive",
+      "mediaType": "application/gzip",
+      "bytes": 1,
+      "sha256": "aeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeae",
+      "mode": "0644",
+      "source": {
+        "kind": "component-build",
+        "id": "mirrorgate-supervisor"
+      }
+    },
+    {
+      "artifactId": "application-validation-fixtures",
+      "path": "artifacts/examples/application-validation-fixtures.tar.gz",
+      "kind": "archive",
+      "mediaType": "application/gzip",
+      "bytes": 1,
+      "sha256": "1818181818181818181818181818181818181818181818181818181818181818",
+      "mode": "0644",
+      "source": {
+        "kind": "component-build",
+        "id": "application-validation-fixtures"
+      }
+    },
+    {
+      "artifactId": "counter-model",
+      "path": "artifacts/examples/Counter.tla",
+      "kind": "file",
+      "mediaType": "text/plain",
+      "bytes": 1,
+      "sha256": "1919191919191919191919191919191919191919191919191919191919191919",
+      "mode": "0644",
+      "source": {
+        "kind": "component-build",
+        "id": "counter-model"
+      }
+    }
+  ],
+  "runtimeTrees": [
+    {
+      "treeId": "node-runtime",
+      "sourceArtifactId": "node-runtime",
+      "selectionId": "node-v24.15.0-minimal-v1",
+      "path": "artifacts/runtimes/node",
+      "algorithm": "mirrors-runtime-tree-v1",
+      "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "entryCount": 2,
+      "bytes": 1
+    },
+    {
+      "treeId": "mirrorgate-runtime",
+      "sourceArtifactId": "mirrorgate-runtime",
+      "selectionId": "mirrorgate-node-runtime-v1",
+      "path": "artifacts/selected-trees/mirrorgate-runtime",
+      "algorithm": "mirrors-runtime-tree-v1",
+      "digest": "afafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafaf",
+      "entryCount": 1,
+      "bytes": 1
+    }
+  ],
+  "hostRequirements": [
+    {
+      "id": "bubblewrap",
+      "minimumVersion": "0.9.0",
+      "observedVersion": "unverified-custom-build"
+    },
+    {
+      "id": "python",
+      "minimumVersion": "3.12.0",
+      "observedVersion": "3.12.3"
+    },
+    {
+      "id": "glibc",
+      "observedVersion": "2.39",
+      "requirement": "consumer libc, libdl, libm, libpthread and librt ABI compatibility must be verified"
+    },
+    {
+      "id": "libgcc",
+      "observedVersion": "host-selected",
+      "requirement": "Node libgcc_s.so.1 resolution and file identity are recorded at install verification"
+    },
+    {
+      "id": "libstdcxx",
+      "observedVersion": "host-selected",
+      "requirement": "Node libstdc++.so.6 resolution and file identity are recorded at install verification"
+    },
+    {
+      "id": "linux-x86_64-loader",
+      "observedVersion": "/lib64/ld-linux-x86-64.so.2",
+      "requirement": "Every ELF interpreter and resolved dynamic library path/hash are recorded before activation"
+    }
+  ],
+  "publication": "unclaimed",
+  "buildInputs": [
+    {
+      "inputId": "profiles-lock",
+      "path": "distribution/reference-node/profiles.json",
+      "bytes": 4727,
+      "sha256": "657488b3805a7c7ff5d1db9f59d2594a7012e6bb0861d9b94086124d71d2511e"
+    },
+    {
+      "inputId": "component-lock",
+      "path": "distribution/reference-node/component-lock.json",
+      "bytes": 11638,
+      "sha256": "6acb27ec325c0ea6c6a859c89b9109c0067c34cfe633834af7e27c40015ccae4"
+    },
+    {
+      "inputId": "dependency-lock",
+      "path": "distribution/reference-node/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "e45725e9b2dc530323709e3eb5b1d281080792b88157dbc445e2b45343862bc7"
+    }
+  ],
+  "buildProvenance": {
+    "snapshotIndexSha256": "1212121212121212121212121212121212121212121212121212121212121212",
+    "tools": [
+      {
+        "toolId": "python",
+        "version": "Python fixture",
+        "bytes": 1,
+        "sha256": "1818181818181818181818181818181818181818181818181818181818181818"
+      },
+      {
+        "toolId": "git",
+        "version": "git version fixture",
+        "bytes": 1,
+        "sha256": "1313131313131313131313131313131313131313131313131313131313131313"
+      },
+      {
+        "toolId": "ldd",
+        "version": "ldd fixture",
+        "bytes": 1,
+        "sha256": "1919191919191919191919191919191919191919191919191919191919191919"
+      },
+      {
+        "toolId": "lake",
+        "version": "Lake fixture",
+        "bytes": 1,
+        "sha256": "1414141414141414141414141414141414141414141414141414141414141414"
+      },
+      {
+        "toolId": "framework-catalog-bootstrap",
+        "version": "framework catalog fixture",
+        "bytes": 1,
+        "sha256": "1717171717171717171717171717171717171717171717171717171717171717"
+      }
+    ],
+    "trees": [
+      {
+        "inputId": "evidence-wheels",
+        "algorithm": "mirrors-runtime-tree-v1",
+        "digest": "1515151515151515151515151515151515151515151515151515151515151515",
+        "entryCount": 1,
+        "bytes": 1
+      },
+      {
+        "inputId": "typescript-node-modules",
+        "algorithm": "mirrors-runtime-tree-v1",
+        "digest": "1616161616161616161616161616161616161616161616161616161616161616",
+        "entryCount": 1,
+        "bytes": 1
+      },
+      {
+        "inputId": "package:mirrorecma",
+        "algorithm": "mirrors-runtime-tree-v1",
+        "digest": "1717171717171717171717171717171717171717171717171717171717171717",
+        "entryCount": 1,
+        "bytes": 1
+      },
+      {
+        "inputId": "application:validation",
+        "algorithm": "mirrors-runtime-tree-v1",
+        "digest": "1818181818181818181818181818181818181818181818181818181818181818",
+        "entryCount": 1,
+        "bytes": 1
+      },
+      {
+        "inputId": "package:mirrorgate-mirrorecma",
+        "algorithm": "mirrors-runtime-tree-v1",
+        "digest": "1919191919191919191919191919191919191919191919191919191919191919",
+        "entryCount": 1,
+        "bytes": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "coordinator": {
+    "filesystem": "ext4",
+    "filesystemProbe": "findmnt -no FSTYPE --target . => ext4 (statfs reports ext2/ext3 for ext4; read-only lsblk on the WSL disk shows ext2/ext3)",
+    "gcc": "cc (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "git": "git version 2.53.0",
+    "kernel": "6.18.54.1-microsoft-standard-WSL2",
+    "lake": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)",
+    "lean": "Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+    "machine": "x86_64",
+    "node": "v24.22.0",
+    "openssl": "OpenSSL 3.5.5 27 Jan 2026 (Library: OpenSSL 3.5.5 27 Jan 2026)",
+    "opensslPkgConfig": "3.5.5",
+    "osRelease": {
+      "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+      "HOME_URL": "https://www.ubuntu.com/",
+      "ID": "ubuntu",
+      "ID_LIKE": "debian",
+      "LOGO": "ubuntu-logo",
+      "NAME": "Ubuntu",
+      "PRETTY_NAME": "Ubuntu 26.04.1 LTS",
+      "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+      "SUPPORT_URL": "https://help.ubuntu.com/",
+      "UBUNTU_CODENAME": "resolute",
+      "VERSION": "26.04.1 LTS (Resolute Raccoon)",
+      "VERSION_CODENAME": "resolute",
+      "VERSION_ID": "26.04"
+    },
+    "path": "/home/lsz/Codebase/Mirrors",
+    "python": "3.14.4",
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)"
+  },
+  "date": "2026-10-30",
+  "declarations": "Host facts are observations, not qualification. Ubuntu 26.04 is not the declared Ubuntu 24.04 reference environment, and WSL2 supplies no admitted cgroup-v2 parent for native M4.",
+  "environmentLimits": {
+    "cgroupV2Delegation": "not supplied",
+    "declaredReferencePlatform": "Ubuntu 24.04",
+    "liveOracle": "must be reobserved; no historical health claim",
+    "nativeM4Host": false,
+    "observedCoordinatorPlatform": "ubuntu-26.04",
+    "platformMismatch": true,
+    "wsl2": "Linux DESKTOP-C7HNV2Q 6.18.54.1-microsoft-standard-WSL2"
+  },
+  "preparationInputs": {
+    "ext4TempRoot": "tmp/completion-20261030",
+    "mirrorcppPrefix": ".golden-build/completion-20261029/cpp-prefix",
+    "mirrorcppPrefixPresent": true
+  },
+  "schema": "mirrors.completion-host-facts/v1"
+}

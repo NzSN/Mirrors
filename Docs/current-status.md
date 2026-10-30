@@ -5,12 +5,18 @@
 The [completion, qualification, and release design](completion-qualification-release-design.md)
 and [fine-grained execution plan](../Plans/completion-qualification-release-plan-2026-10-30.md)
 now cover all remaining stages: final source/evidence freeze, audited branch
-delivery, clean tagged Linux/Windows packaging, native M4, exact-candidate
-M5/D/Q and Windows acceptance, release admission, publication, deployment,
-rollback, reboot, retention, and the two-release compatibility lifecycle.
+delivery, clean tagged Linux/Windows packaging, exact-candidate M5/D/Q and
+Windows acceptance, release admission, publication, deployment, rollback,
+reboot, retention, and the two-release compatibility lifecycle.
 They define identity invalidation, explicit approval boundaries and exit gates.
 This planning addition does not change the candidate or grant any new
 qualification, publication or deployment result.
+
+The user subsequently removed native-runner/M4 execution planning and selected
+the current Ubuntu 26.04.1 WSL2 coordinator for S3.6 and S5. This is a distinct
+WSL2 scope; it neither relabels the host as Ubuntu 24.04 nor creates a
+native-Linux acceptance claim. Dated M4 and Ubuntu 24.04 evidence remains
+historical.
 
 ## October 29 completion campaign in progress
 
@@ -25,10 +31,9 @@ is included. Raw F5 SDK receipt semantics remain unchanged.
 
 The current five-client mTLS matrix passes all 22 verdict/pin/protocol rows.
 The installer now derives observed platform/package versions from actual inputs,
-and its complete non-model aggregate passes after that correction. The Ubuntu 24.04 reference
-distribution's full M5/D/Q renewal needs a matching selected environment; this
-coordinator is Ubuntu 26.04. Native M4 needs the requested native runner and
-delegated cgroup-v2 parent. The compatibility decision retains stdio
+and its complete non-model aggregate passes after that correction. The full
+M5/D/Q renewal uses the explicitly selected current Ubuntu 26.04.1 WSL2
+environment. The compatibility decision retains stdio
 `register_error` and the Haskell oracle with measured retirement prerequisites.
 Windows RC packaging is staged; Linux packaging and the final release handoff
 are prepared downstream of the validated source snapshot. The separate fetched
@@ -217,15 +222,12 @@ retained-output accounting and C++ callback/join deadlines include the review
 corrections. Cancellation preserves ownership through the first cleanup
 instruction and final accounting; C++ admission measures complete retained
 rows and commas; empty literal arguments remain intact. These changes do not extend the frozen M5 candidate or
-qualify a new framework release. Broader M4 stays independent.
+qualify a new framework release.
 
 ## Separate work and open choices
 
-- Broader M4: aggregate cgroup enforcement and active-process post-restart
-  recovery stay on a separate track, as explicitly requested by the user. See
-  [native-host/process ownership plan](../Plans/m4-native-host-and-platform-plan-2026-10-07.md).
-- Native Ubuntu acceptance, Windows/macOS Gate backends, service-manager
-  AUTO_START acceptance and the legacy full all-transport matrix remain separate.
+- Windows/macOS Gate backends, service-manager AUTO_START acceptance and the
+  legacy full all-transport matrix remain separate.
 - DPM does not supply arbitrary instruction preemption, browser or async-Rust
   scheduling, weak-memory completeness, POR or generic native trap instrumentation.
   Non-intrusive scheduling is optional research, not an approved implemented profile.

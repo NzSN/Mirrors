@@ -1,0 +1,811 @@
+{
+  "authorizedHere": [
+    "S0.1",
+    "S0.2",
+    "S0.3",
+    "S0.4",
+    "S1.1",
+    "S1.2",
+    "S1.3",
+    "S1.4",
+    "S1.5",
+    "S1.6"
+  ],
+  "currentSnapshot": "S0.1-S0.4 and S1.1-S1.6 passed at source-validated scope; S1.7 and every external/approval stage remain open. No mutation, publication, deployment or reboot occurred.",
+  "date": "2026-10-30",
+  "design": "Docs/completion-qualification-release-design.md",
+  "handoff": "Plans/completion-executor-handoff-2026-10-30.md",
+  "notAuthorizedHere": [
+    "S1.7 approval",
+    "S2 branch publication",
+    "S3 local tag",
+    "S3.6/S5 Ubuntu 24.04 qualification",
+    "S4 native M4",
+    "S6-S7 publication/deployment/reboot",
+    "S8 retirement"
+  ],
+  "note": "Plan states are copied from the dated plan. currentState is this execution snapshot; external blockers are explicit and none is silently credited.",
+  "plan": "Plans/completion-qualification-release-plan-2026-10-30.md",
+  "rows": [
+    {
+      "claimLevel": "source-validated",
+      "currentState": "passed",
+      "exitCriterion": "Every changed path is classified as candidate payload, evidence, generated output, credential, or unrelated/preserved",
+      "externalBlocker": null,
+      "id": "S0.1",
+      "ownerRole": "Coordinator",
+      "planState": "Ready",
+      "task": "Inventory `git status`, full diff, untracked evidence, ignored logs, companion revisions, and unrelated files. Write a baseline path inventory."
+    },
+    {
+      "claimLevel": "source-validated",
+      "currentState": "passed",
+      "exitCriterion": "No completed result is listed as an unconditional remaining implementation task",
+      "externalBlocker": null,
+      "id": "S0.2",
+      "ownerRole": "Coordinator",
+      "planState": "Ready",
+      "task": "Index October 29 accepted results, failed attempts, skips, and limits. Map F5, profile 6, DPM, matrix, Windows, and Gate receipts to their exact identities."
+    },
+    {
+      "claimLevel": "source-validated",
+      "currentState": "passed",
+      "exitCriterion": "Host facts and target declarations are separate",
+      "externalBlocker": null,
+      "id": "S0.3",
+      "ownerRole": "Coordinator",
+      "planState": "Ready",
+      "task": "Record actual coordinator OS/kernel/filesystem, available tools, and absent Ubuntu 24.04/native M4 prerequisites."
+    },
+    {
+      "claimLevel": "source-validated",
+      "currentState": "passed",
+      "exitCriterion": "Every S1-S8 task has a state and owner role",
+      "externalBlocker": null,
+      "id": "S0.4",
+      "ownerRole": "Coordinator",
+      "planState": "Ready",
+      "task": "Create the new stage ledger using the claim states in the design. Link this plan, prior evidence, and external input requests."
+    },
+    {
+      "claimLevel": "source-validated",
+      "currentState": "passed",
+      "evidence": "s1-review.json",
+      "exitCriterion": "Complete diff reviewed; no unrelated reset/cleanup",
+      "externalBlocker": null,
+      "id": "S1.1",
+      "ownerRole": "Coordinator",
+      "planState": "Ready",
+      "task": "Review behavioral source and contracts, including controlled comparison, TLS timeout handling, installer observations, release version, and compatibility docs. Record reviewed path list."
+    },
+    {
+      "claimLevel": "source-validated",
+      "currentState": "passed",
+      "evidence": "s1-checks.json",
+      "exitCriterion": "No whitespace, navigation, or focused regression failure remains",
+      "externalBlocker": null,
+      "id": "S1.2",
+      "note": "git diff --check and 218-link check pass; four focused suites pass (356 tests, 6 live-reference skips); no behavioral file changed after the October 29 aggregate.",
+      "ownerRole": "Coordinator",
+      "planState": "Ready",
+      "task": "Run `git diff --check`, Markdown/link checks for the new docs, and focused tests for any file changed after its last recorded gate. Retain commands and exits."
+    },
+    {
+      "claimLevel": "source-validated",
+      "currentState": "passed",
+      "evidence": "s1-checks.json#october29-verifier",
+      "exitCriterion": "Verifier exits zero and reports the intended bounded counts",
+      "externalBlocker": null,
+      "id": "S1.3",
+      "note": "October 29 verifier passes after a documentation-only README inventory update (7438->9264 bytes); all other 373 entries unchanged.",
+      "ownerRole": "Coordinator",
+      "planState": "Ready",
+      "task": "Regenerate the final October 29 inventory if its payload changed, then run `python3 Plans/completion-evidence-20261029/verify.py`."
+    },
+    {
+      "claimLevel": "source-validated",
+      "currentState": "passed",
+      "evidence": "s1-payload-audit.json",
+      "exitCriterion": "No private key, credential, binary, tool archive, or unreviewed ignored file is included",
+      "externalBlocker": null,
+      "id": "S1.4",
+      "ownerRole": "Coordinator",
+      "planState": "Ready",
+      "task": "Verify ignored evidence tracking explicitly; run secret/credential and binary/archive scans over the proposed delivery list."
+    },
+    {
+      "claimLevel": "source-validated",
+      "currentState": "passed",
+      "evidence": "s1-checks.json#local-no-model+native-rebuild",
+      "exitCriterion": "`ALL LOCAL NON-MODEL GATES GREEN`; native gate passes where required; live tiers remain reported separately",
+      "externalBlocker": null,
+      "id": "S1.5",
+      "note": "ALL LOCAL NON-MODEL GATES GREEN at 2026-10-30T03:28:46Z and native rebuild passes; live model tiers remain skipped.",
+      "ownerRole": "Coordinator",
+      "planState": "Ready",
+      "task": "Run the final required local gates: `bash tools/run-local-no-model-check.sh` and, for native dependency changes, `bash tools/check-native-rebuild.sh`, using admitted socket/ext4 prerequisites."
+    },
+    {
+      "claimLevel": "source-validated",
+      "currentState": "passed",
+      "evidence": "candidate-freeze.json + s2-delivery-payload.json",
+      "exitCriterion": "All local required checks pass and every external obligation is marked pending or blocked",
+      "externalBlocker": null,
+      "id": "S1.6",
+      "ownerRole": "Coordinator",
+      "planState": "Ready",
+      "task": "Freeze source/companion/tool hashes and the validation snapshot. Write `candidate-freeze.json` and a human-readable freeze summary."
+    },
+    {
+      "claimLevel": "source-validated",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "User approves or rejects the concrete S2 operation",
+      "externalBlocker": "user approval of the concrete S2 payload",
+      "id": "S1.7",
+      "ownerRole": "Coordinator",
+      "planState": "Gate",
+      "task": "Present the exact branch-delivery payload and exclusions for approval."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "Staged bytes equal reviewed bytes; unrelated paths remain unstaged",
+      "externalBlocker": "S1.7 approval; no commit/push authorized here",
+      "id": "S2.1",
+      "ownerRole": "Release operator",
+      "planState": "Approval-gated",
+      "task": "Stage only the approved paths, including explicitly selected ignored evidence. Compare staged blob hashes with the freeze manifest."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "No forbidden content or whitespace error",
+      "externalBlocker": "S1.7 approval",
+      "id": "S2.2",
+      "ownerRole": "Release operator",
+      "planState": "Approval-gated",
+      "task": "Repeat credential/binary scans on the staged payload and inspect `git diff --cached --check`."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "Local commit is the audited tree; push reports success",
+      "externalBlocker": "S1.7 approval",
+      "id": "S2.3",
+      "ownerRole": "Release operator",
+      "planState": "Approval-gated",
+      "task": "Commit with a scoped subject and push `main`."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "Remote ref exactly matches the reviewed commit; no tag or release created",
+      "externalBlocker": "S2.3 executed",
+      "id": "S2.4",
+      "ownerRole": "Release operator",
+      "planState": "Approval-gated",
+      "task": "Fetch/reobserve `origin/main`, verify full remote SHA and zero divergence for the published branch, and write `source-delivery-audit.json`."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "Exact tag name/commit approved; no remote tag mutation",
+      "externalBlocker": "local tag approval after S2",
+      "id": "S3.1",
+      "ownerRole": "Release operator",
+      "planState": "Approval-gated",
+      "task": "Confirm `v0.2.0-rc.1` matches `Shell/Version.lean` and approve local-only tag creation at S2. Any version change returns to S1."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "Release builder identity preconditions hold",
+      "externalBlocker": "clean checkout and local tag approval",
+      "id": "S3.2",
+      "ownerRole": "Release operator",
+      "planState": "Ready after S3.1",
+      "task": "Create a separate clean checkout and local tag. Require clean status and `refs/tags/v0.2.0-rc.1^{commit}` equal to S2."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "All release identity/package/refusal tests pass",
+      "externalBlocker": null,
+      "id": "S3.3",
+      "ownerRole": "Release operator",
+      "planState": "Ready after S3.2",
+      "task": "Run `python3 -m unittest discover -s tools/release -p 'test_*.py' -v`."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "Build and focused non-model gates pass; source identity is stable before/after",
+      "externalBlocker": null,
+      "id": "S3.4",
+      "ownerRole": "Release operator",
+      "planState": "Ready after S3.2",
+      "task": "On Linux x86-64 run `python3 tools/release/release.py build --source CLEAN_SOURCE --tag v0.2.0-rc.1 --output EMPTY_DIST`."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "Archive and both manifests bind the same tag, commit, binaries, and prerequisites",
+      "externalBlocker": null,
+      "id": "S3.5",
+      "ownerRole": "Release operator",
+      "planState": "Ready after S3.4",
+      "task": "Verify `SHA256SUMS`, `BUILD.json`, external manifest, executable versions, `ldd`, archive paths/types, and absence of source/credentials."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "Isolated runtime smoke passes; observed host is actually Ubuntu 24.04",
+      "externalBlocker": "Ubuntu 24.04 qualification host",
+      "id": "S3.6",
+      "ownerRole": "Release operator",
+      "planState": "Ready after S3.4",
+      "task": "In Ubuntu 24.04 without Lean/source, run `release.py check-archive --tag v0.2.0-rc.1 --archive LINUX_ARCHIVE` after checksum verification."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "Windows archive and binary/DLL hashes are explicitly bound or rejected",
+      "externalBlocker": "fresh Windows host at the S2 identity",
+      "id": "S3.7",
+      "ownerRole": "Release operator",
+      "planState": "Ready after S2",
+      "task": "Compare Windows base-plus-overlay inputs with S2. Reuse the staged ZIP only for an audited non-behavioral difference and identical build inputs; otherwise rebuild and rerun affected suites."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "Windows ZIP receipt remains limited to packaging and its actual gates",
+      "externalBlocker": "S3.7",
+      "id": "S3.8",
+      "ownerRole": "Release operator",
+      "planState": "Ready after S3.7",
+      "task": "Recheck Windows packaging repeatability, version, archive membership, DLL closure, and no-credential rules."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "approval-gated",
+      "exitCriterion": "Complete reviewable Linux/Windows artifact set; no publication or deployment",
+      "externalBlocker": null,
+      "id": "S3.9",
+      "ownerRole": "Release operator",
+      "planState": "Gate",
+      "task": "Emit `package-set.json` with every artifact hash, source/build identity, runtime prerequisite, test scope, and retention location."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "blocked-external",
+      "exitCriterion": "Host/delegation inputs are explicit and operator approved",
+      "externalBlocker": "native Linux runner and operator-owned cgroup-v2 delegation (not supplied)",
+      "id": "S4.1",
+      "ownerRole": "Native operator",
+      "planState": "Blocked externally",
+      "task": "Obtain native Linux runner, operator-owned serving-UID cgroup-v2 parent, durable state root, Bubblewrap, loopback, and ptrace admission."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "blocked-external",
+      "exitCriterion": "Native host and delegation validate; preflight still claims no enforcement",
+      "externalBlocker": null,
+      "id": "S4.2",
+      "ownerRole": "Native operator",
+      "planState": "Blocked externally",
+      "task": "Freeze Gate commit, journal-v2 schema, backend/recovery source hashes, host, and delegation. Run read-only `preflight_m4.py --gate-root GATE --cgroup-parent PARENT`."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "blocked-external",
+      "exitCriterion": "Kernel observations equal selected limits; owned child cleanup confirmed",
+      "externalBlocker": null,
+      "id": "S4.3",
+      "ownerRole": "Native operator",
+      "planState": "Blocked externally",
+      "task": "Create one owned child and run cpu/memory/pids quota writes/readbacks with independent counters."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "blocked-external",
+      "exitCriterion": "Limits apply to the whole owned tree; escapes and unavailable controls fail closed",
+      "externalBlocker": null,
+      "id": "S4.4",
+      "ownerRole": "Native operator",
+      "planState": "Blocked externally",
+      "task": "Run real descendant enforcement, escape refusal, missing-controller, and resource-pressure controls."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "blocked-external",
+      "exitCriterion": "Every process claim binds the exact group resource; no PID/path inference",
+      "externalBlocker": null,
+      "id": "S4.5",
+      "ownerRole": "Native operator",
+      "planState": "Blocked externally",
+      "task": "Launch a journaled worker tree and retain exact boot/UID/session/PID/start-time/cgroup device/inode/delegation linkage."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "blocked-external",
+      "exitCriterion": "Exact subtree becomes observed-empty before owned filesystem cleanup and claim removal",
+      "externalBlocker": null,
+      "id": "S4.6",
+      "ownerRole": "Native operator",
+      "planState": "Blocked externally",
+      "task": "Kill only the owned controller; recover through a new administrative incarnation."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "blocked-external",
+      "exitCriterion": "Ambiguity refuses action; retries remain recoverable; no ownership broadening",
+      "externalBlocker": null,
+      "id": "S4.7",
+      "ownerRole": "Native operator",
+      "planState": "Blocked externally",
+      "task": "Exercise wrong identities, PID reuse, inode replacement, stale/torn records, concurrent recovery, unavailable delegation, nonempty retries, and durable retry evidence."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "blocked-external",
+      "exitCriterion": "Sentinels unchanged; no owned test descendants remain",
+      "externalBlocker": null,
+      "id": "S4.8",
+      "ownerRole": "Native operator",
+      "planState": "Blocked externally",
+      "task": "Verify unrelated process/file sentinels and final resource/process cleanup; retain before/run/recovery linkage."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "blocked-external",
+      "exitCriterion": "All selected native rows pass at one identity, or M4 remains explicitly unqualified",
+      "externalBlocker": null,
+      "id": "S4.9",
+      "ownerRole": "Native operator",
+      "planState": "Gate",
+      "task": "Independent verifier reviews native receipts and emits `m4-native-acceptance.json`."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "blocked-external",
+      "exitCriterion": "Environment matches the complete declared profile; no Ubuntu 26.04 substitution",
+      "externalBlocker": "matching declared Ubuntu 24.04 environment (coordinator is ubuntu-26.04)",
+      "id": "S5.1",
+      "ownerRole": "Platform operator",
+      "planState": "Blocked externally",
+      "task": "Select the declared Ubuntu 24.04 host/profile and record actual OS, kernel/virtualization, filesystem, libc, runtimes, and permissions."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "One immutable selection is used by every producer",
+      "externalBlocker": null,
+      "id": "S5.2",
+      "ownerRole": "Platform operator",
+      "planState": "Ready after S3/S5.1",
+      "task": "Freeze Mirrors/companion SHAs, C0 catalog, distribution locks, package/cache hashes, and model/corpus identities."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Installed runtime contains only declared artifacts and actual host/package observations",
+      "externalBlocker": null,
+      "id": "S5.3",
+      "ownerRole": "Platform operator",
+      "planState": "Ready after S5.2",
+      "task": "Materialize owner-only installations from admitted caches; hide source and disable network/PATH fallbacks."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Both manifests/cache indexes verify and exact active versions are committed",
+      "externalBlocker": null,
+      "id": "S5.4",
+      "ownerRole": "Platform operator",
+      "planState": "Ready after S5.3",
+      "task": "Run both required D installation/distribution audits before dependent producers."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Fresh observation satisfies all selected pins; no remote private key export",
+      "externalBlocker": "reobserved owned remote oracle and current mTLS credentials",
+      "id": "S5.5",
+      "ownerRole": "Platform operator",
+      "planState": "Ready before remote runs",
+      "task": "Observe owned remote endpoint, server process/binary, Apalache archive/JAR, Java, certificate validity/pin, and fixture files. Generate credentials independently per host."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Every registered source command finalizes with the required result",
+      "externalBlocker": null,
+      "id": "S5.6",
+      "ownerRole": "Platform operator",
+      "planState": "Ready after admission",
+      "task": "Run source and companion required gates at the frozen selection, including Mirrors no-model, MirrorECMA check/test, and MirrorGate required."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Correct replay passes; faulty replay produces the declared mismatch; R1 binds exact R0 bytes",
+      "externalBlocker": null,
+      "id": "S5.7",
+      "ownerRole": "Platform operator",
+      "planState": "Ready after D",
+      "task": "Run installed correct/faulty replay, both R1 reproduction branches, and exact origin/bundle linkage."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Reduction receipts bind the exact original R0/R1 inputs and preserve failure signatures",
+      "externalBlocker": null,
+      "id": "S5.8",
+      "ownerRole": "Platform operator",
+      "planState": "Ready after R1",
+      "task": "Run LeaseService domain reduction and WorkQueue prefix reduction, including correct/faulty reduced replay and minimality scope."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "All declared cases pass; recovery gets only its supported filesystem claim",
+      "externalBlocker": null,
+      "id": "S5.9",
+      "ownerRole": "Platform operator",
+      "planState": "Ready after D",
+      "task": "Run the complete local/Gate mutation aggregates and prepared-filesystem recovery origin/receipt path."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Required VALID/INVALID/wrong-pin/protocol results and before/after identities pass",
+      "externalBlocker": null,
+      "id": "S5.10",
+      "ownerRole": "Platform operator",
+      "planState": "Ready after S5.5",
+      "task": "Run the remote model-check producer and all 22 selected five-client verdict/pin/protocol rows through the Mirrors CLI."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "All three profiles pass and retain `freshModelCheck:false`",
+      "externalBlocker": null,
+      "id": "S5.11",
+      "ownerRole": "Platform operator",
+      "planState": "Ready after S3",
+      "task": "Renew source-hidden/network-isolated installed C++/ECMA/Rust DPM acceptance for the exact candidate."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "No required Windows tier is replaced by the earlier eight-suite pass",
+      "externalBlocker": "separately admitted Windows live-check host",
+      "id": "S5.12",
+      "ownerRole": "Platform operator",
+      "planState": "Windows input required",
+      "task": "On a separately admitted Windows live-check host, run full native `lake test`, native integer-map, compiler/model-interface, runtime, and TLS long-poll gates at the exact candidate. Any live backend skip remains explicit and prevents a full-suite claim."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "All owned processes are gone except intentionally retained production; no input drift",
+      "externalBlocker": null,
+      "id": "S5.13",
+      "ownerRole": "Platform operator",
+      "planState": "After every owned run",
+      "task": "Confirm job/server/backend cleanup and reobserve source/runtime/fixture stability."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "No missing, duplicate, optionalized, or substituted required command",
+      "externalBlocker": null,
+      "id": "S5.14",
+      "ownerRole": "Platform operator",
+      "planState": "Gate",
+      "task": "Reconcile actual completed command/tier membership against `tools/evidence/commands.json` and the selected 18-command/16-tier profile."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "All references are finalized, acyclic, unique, and bound to one catalog selection",
+      "externalBlocker": null,
+      "id": "S5.15",
+      "ownerRole": "Platform operator",
+      "planState": "Ready after producers",
+      "task": "Finalize all private bundles/public projections and construct the C0 -> D -> R0 -> R1 -> Q DAG."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Q1 accepts every required node and both exact D bindings",
+      "externalBlocker": null,
+      "id": "S5.16",
+      "ownerRole": "Platform operator",
+      "planState": "Ready after S5.15",
+      "task": "Run linked installed Q1 across the complete scope."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Independent Q2 accepts the complete selected scope",
+      "externalBlocker": null,
+      "id": "S5.17",
+      "ownerRole": "Platform operator",
+      "planState": "Independent",
+      "task": "Run Q2 from the installed verifier/schema/registry with source/producer scratch hidden, network unshared, and inputs read-only."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Every negative control is actually rejected and retained",
+      "externalBlocker": null,
+      "id": "S5.18",
+      "ownerRole": "Platform operator",
+      "planState": "Independent",
+      "task": "Execute missing artifact, changed byte, wrong D, wrong R0/R1, wrong R1/R5, and incomplete-profile controls."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Acceptance is byte-identical and needs no live service or source checkout",
+      "externalBlocker": null,
+      "id": "S5.19",
+      "ownerRole": "Platform operator",
+      "planState": "Independent",
+      "task": "Stop the owned oracle and repeat offline verification from retained verifier/runtime bytes."
+    },
+    {
+      "claimLevel": "platform-qualified",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "One frozen candidate earns only the exact platform/framework scope proven",
+      "externalBlocker": null,
+      "id": "S5.20",
+      "ownerRole": "Platform operator",
+      "planState": "Gate",
+      "task": "Emit `framework-qualification.json`, public run references, retention index, and a limitation summary."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "not-started",
+      "exitCriterion": "Every claim links evidence and every absent tier is visible",
+      "externalBlocker": null,
+      "id": "S6.1",
+      "ownerRole": "Coordinator",
+      "planState": "Ready after S3-S5",
+      "task": "Assemble source, package, M4, M5/D/Q, Windows, compatibility, and cleanup results into a claim matrix."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "not-started",
+      "exitCriterion": "No missing capability is silently credited",
+      "externalBlocker": null,
+      "id": "S6.2",
+      "ownerRole": "Coordinator",
+      "planState": "Decision",
+      "task": "Select full-scope or explicitly scoped prerelease admission. Record any M4/F5/platform exclusion in the release scope."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "not-started",
+      "exitCriterion": "Notes agree with machine-readable receipts and artifact contents",
+      "externalBlocker": null,
+      "id": "S6.3",
+      "ownerRole": "Coordinator",
+      "planState": "Ready after S6.2",
+      "task": "Draft release notes for F5 capability, runtime fixes, compatibility retention, installation prerequisites, evidence scope, and known limits."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "not-started",
+      "exitCriterion": "Concrete operation names host, paths, old/new hashes, preserved configuration, and rollback triggers",
+      "externalBlocker": null,
+      "id": "S6.4",
+      "ownerRole": "Coordinator",
+      "planState": "Ready after S6.2",
+      "task": "Prepare production inventory template, candidate-port checks, hash-guarded replacement, automatic rollback, and post-deployment controls."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "not-started",
+      "exitCriterion": "Independent handoff review passes; no private material included",
+      "externalBlocker": null,
+      "id": "S6.5",
+      "ownerRole": "Coordinator",
+      "planState": "Independent",
+      "task": "Verify handoff inventory, public/private classification, checksums, and required negative controls."
+    },
+    {
+      "claimLevel": "release-admitted",
+      "currentState": "not-started",
+      "exitCriterion": "User can approve a concrete immutable operation; no mutation has occurred",
+      "externalBlocker": "separate publication/deployment/reboot approvals",
+      "id": "S6.6",
+      "ownerRole": "Coordinator",
+      "planState": "Gate",
+      "task": "Present separate approval requests for tag/release publication, optional Windows asset publication, production replacement, and reboot."
+    },
+    {
+      "claimLevel": "published",
+      "currentState": "approval-gated",
+      "exitCriterion": "Target is unused and source remote identity matches S6",
+      "externalBlocker": "explicit publication approval",
+      "id": "S7.1",
+      "ownerRole": "Release operator",
+      "planState": "Approval-gated",
+      "task": "Reobserve remote source/tag/release state; refuse existing or moved tags and existing drafts/releases."
+    },
+    {
+      "claimLevel": "published",
+      "currentState": "approval-gated",
+      "exitCriterion": "Remote tag remains at the approved commit",
+      "externalBlocker": "explicit tag-push approval including automated release publication",
+      "id": "S7.2",
+      "ownerRole": "Release operator",
+      "planState": "Approval-gated",
+      "task": "Push the selected tag with approval that explicitly includes automated GitHub release publication."
+    },
+    {
+      "claimLevel": "published",
+      "currentState": "approval-gated",
+      "exitCriterion": "Workflow succeeds or the exact failed/draft state is retained for review",
+      "externalBlocker": null,
+      "id": "S7.3",
+      "ownerRole": "Release operator",
+      "planState": "Publication workflow",
+      "task": "Observe tooling, build, isolated archive check, draft asset creation, and publication jobs. Do not rerun blindly over a partial draft."
+    },
+    {
+      "claimLevel": "published",
+      "currentState": "approval-gated",
+      "exitCriterion": "Published assets equal S6; prerelease is not Latest",
+      "externalBlocker": null,
+      "id": "S7.4",
+      "ownerRole": "Release operator",
+      "planState": "After publication",
+      "task": "Verify peeled tag commit, asset names/hashes/checksums, release notes, prerelease and Latest flags."
+    },
+    {
+      "claimLevel": "published",
+      "currentState": "approval-gated",
+      "exitCriterion": "Windows asset hash equals S6; no existing asset overwritten",
+      "externalBlocker": null,
+      "id": "S7.5",
+      "ownerRole": "Release operator",
+      "planState": "Optional approval-gated",
+      "task": "Publish the reviewed Windows ZIP separately if selected."
+    },
+    {
+      "claimLevel": "published",
+      "currentState": "approval-gated",
+      "exitCriterion": "Current old identity and rollback bytes are known; no historical health assumption",
+      "externalBlocker": null,
+      "id": "S7.6",
+      "ownerRole": "Release operator",
+      "planState": "Before deployment",
+      "task": "Reobserve production service, paths, configuration, executable/DLL/runtime hashes, listener, and credential metadata. Retain rollback copy."
+    },
+    {
+      "claimLevel": "published",
+      "currentState": "approval-gated",
+      "exitCriterion": "All candidate controls pass and owned candidate processes clean up",
+      "externalBlocker": null,
+      "id": "S7.7",
+      "ownerRole": "Release operator",
+      "planState": "Before replacement",
+      "task": "Run candidate on an isolated port and execute sync/async valid/invalid mTLS plus selected protocol/client checks."
+    },
+    {
+      "claimLevel": "published",
+      "currentState": "approval-gated",
+      "exitCriterion": "Installed bytes equal S6 or previous bytes are restored automatically",
+      "externalBlocker": "explicit production replacement approval",
+      "id": "S7.8",
+      "ownerRole": "Release operator",
+      "planState": "Approval-gated",
+      "task": "Hash-guard stop/replace/start production while preserving configuration and automatic rollback."
+    },
+    {
+      "claimLevel": "published",
+      "currentState": "approval-gated",
+      "exitCriterion": "All controls pass; negative cases remain rejected; production identity is stable",
+      "externalBlocker": null,
+      "id": "S7.9",
+      "ownerRole": "Release operator",
+      "planState": "After replacement",
+      "task": "Run production four-way mTLS controls, backend/version/hash/configuration checks, and unexpected-process inspection."
+    },
+    {
+      "claimLevel": "published",
+      "currentState": "approval-gated",
+      "exitCriterion": "Old service health is independently reestablished; failed deployment remains failed",
+      "externalBlocker": null,
+      "id": "S7.10",
+      "ownerRole": "Release operator",
+      "planState": "On any deployment failure",
+      "task": "Restore previous bytes/configuration and rerun the same live controls."
+    },
+    {
+      "claimLevel": "published",
+      "currentState": "approval-gated",
+      "exitCriterion": "Reboot persistence passes at the deployed identity",
+      "externalBlocker": "separate reboot approval",
+      "id": "S7.11",
+      "ownerRole": "Release operator",
+      "planState": "Separate approval-gated",
+      "task": "Reboot the selected host and recheck AUTO_START, hashes, listener, backend, TLS identity, and four-way controls."
+    },
+    {
+      "claimLevel": "published",
+      "currentState": "approval-gated",
+      "exitCriterion": "Only successfully observed operations are marked complete",
+      "externalBlocker": null,
+      "id": "S7.12",
+      "ownerRole": "Release operator",
+      "planState": "Gate",
+      "task": "Finalize `deployment.json` and lifecycle receipts with explicit publication/deployment/reboot scopes."
+    },
+    {
+      "claimLevel": "lifecycle-accepted",
+      "currentState": "not-started",
+      "exitCriterion": "Independent retention verification passes without credentials",
+      "externalBlocker": null,
+      "id": "S8.1",
+      "ownerRole": "Independent verifier",
+      "planState": "After S7",
+      "task": "Finalize private/public evidence indexes, permissions, artifact retention, rollback retention, and post-deployment observation."
+    },
+    {
+      "claimLevel": "lifecycle-accepted",
+      "currentState": "not-started",
+      "exitCriterion": "No compatibility removal in this candidate",
+      "externalBlocker": null,
+      "id": "S8.2",
+      "ownerRole": "Independent verifier",
+      "planState": "Current and next release",
+      "task": "Retain stdio `register_error`, Haskell oracle, golden bytes, and supported client behavior."
+    },
+    {
+      "claimLevel": "lifecycle-accepted",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Two consecutive shipped cycles are green with no required skips",
+      "externalBlocker": "two shipped release cycles",
+      "id": "S8.3",
+      "ownerRole": "Independent verifier",
+      "planState": "Two shipped cycles",
+      "task": "Run independent full declared compatibility matrices for both implementations, including Rust and async error-tag rows."
+    },
+    {
+      "claimLevel": "lifecycle-accepted",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Dated execution ledger is complete; calendar time alone earns no credit",
+      "externalBlocker": "two shipped release cycles of real-workload soak",
+      "id": "S8.4",
+      "ownerRole": "Independent verifier",
+      "planState": "Two shipped cycles",
+      "task": "Record real-workload soak hashes, counts, byte comparisons, differences, failures, incidents, and resolutions."
+    },
+    {
+      "claimLevel": "lifecycle-accepted",
+      "currentState": "not-started",
+      "exitCriterion": "Retirement prerequisites are either all met or retirement remains unapproved",
+      "externalBlocker": null,
+      "id": "S8.5",
+      "ownerRole": "Independent verifier",
+      "planState": "After S8.3/S8.4",
+      "task": "Confirm zero unresolved divergence, consumer migration acknowledgements, and tested fallback/rollback."
+    },
+    {
+      "claimLevel": "lifecycle-accepted",
+      "currentState": "awaiting-external-input",
+      "exitCriterion": "Removal occurs only in that separately approved release",
+      "externalBlocker": "separate future deprecation decision",
+      "id": "S8.6",
+      "ownerRole": "Independent verifier",
+      "planState": "Separate future decision",
+      "task": "If admitted, prepare deprecation notice, migration guide, compatibility release, fresh goldens/matrix, and historical oracle retention."
+    }
+  ],
+  "schema": "mirrors.completion-stage-ledger/v1"
+}

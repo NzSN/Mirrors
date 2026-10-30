@@ -1,0 +1,144 @@
+{
+  "baseCommit": "7e9a27d0db72ec36b49c6fc5764b2687b565edfd",
+  "baseSubject": "runtime: fix transport ownership and async result delivery",
+  "branch": "main",
+  "candidateVersion": "0.2.0-rc.1",
+  "classification": {
+    "('evidence', 'exclude')": 8,
+    "('evidence', 'include')": 398,
+    "('payload', 'include')": 76,
+    "('unrelated', 'exclude')": 1
+  },
+  "companionPins": {
+    "MirrorCPP": "8c542a6b1339cc0b6176465ff7f17a32e614553d",
+    "MirrorECMA": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+    "MirrorHaskell": "4aa693f86e18349bb97c050dd33aecbf730b6fa2",
+    "MirrorLean": "a8634ebe2455f97d15b55bec3c810d945cb6e3d3",
+    "MirrorRust": "6b9480ab81717b76ca7f74b41fc554578b70c890"
+  },
+  "counts": {
+    "entries": 483,
+    "modified": 55,
+    "trackedDeletions": 164,
+    "trackedInsertions": 1199,
+    "untracked": 428
+  },
+  "date": "2026-10-30",
+  "externalObligations": [
+    {
+      "id": "S1.7",
+      "need": "user approval of the concrete S2 delivery payload",
+      "state": "pending"
+    },
+    {
+      "id": "S2",
+      "need": "branch staging/commit/push approval",
+      "state": "not-authorized"
+    },
+    {
+      "id": "S3",
+      "need": "local tag approval, Ubuntu 24.04 isolated archive smoke, Windows overlay rebind",
+      "state": "not-authorized"
+    },
+    {
+      "id": "S4",
+      "need": "native Linux runner and cgroup-v2 delegation",
+      "state": "blocked-external"
+    },
+    {
+      "id": "S5",
+      "need": "matching Ubuntu 24.04 environment, reobserved remote oracle, Windows live-check host",
+      "state": "blocked-external"
+    },
+    {
+      "id": "S6-S7",
+      "need": "release admission and separate publication/deployment/reboot approvals",
+      "state": "not-authorized"
+    },
+    {
+      "id": "S8",
+      "need": "two shipped compatibility/soak cycles and separate retirement decision",
+      "state": "awaiting"
+    }
+  ],
+  "identities": {
+    "deliveryFileCount": 474,
+    "deliveryManifestDefinition": "sha256 over sorted lines \"<path>\\0<sha256>\\n\" for every proposed S2 file",
+    "deliveryManifestSha256": "e01b565ef20b7b3ccb39c8493f6fd614ec1c2b3a9e883531e620cd56e762017b",
+    "payloadFileCount": 76,
+    "payloadManifestSha256": "1da82f9539baa2f792ff11bf210d8e1a08922b43d695454efbf7757694568b5d",
+    "statusListingSha256": "5ae1dd710abe41d4ca1b7e5465eca1d12e7fc8e5e5896f51d686617c718a60b2",
+    "trackedDiffSha256": "d40ee05eb0de2be813213640b004eb234799d608ca218cf37359316e700dbf1c"
+  },
+  "notClaimed": [
+    "release-admitted",
+    "published",
+    "deployed",
+    "platform-qualified",
+    "native M4 acceptance",
+    "full-framework qualification",
+    "live model tiers",
+    "reproducible compilation",
+    "Ubuntu 24.04 qualification"
+  ],
+  "schema": "mirrors.completion-candidate-freeze/v1",
+  "scope": "Local source and evidence freeze only. These checks cannot transfer to a later commit, another host, an artifact set, a published tag or a deployed service.",
+  "tagCreated": false,
+  "toolPins": {
+    "apalacheObservedJarSha256": "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8",
+    "apalacheSelectedArchiveSha256": "7cfadf6e8c04c63f05ac907ec9541c66297005c8cb5efb1731f6a838dfc3fad2",
+    "frontendEnginePins": {
+      "apalache": "33611081942d392646af60993c599907f1f41752fce4a62304dbf9e2cdad4346",
+      "mirrors": "5b688d6f21f42c07b9804a16dc7fff7c225872328244f7e1520fb2987ad5bfde",
+      "sany": "fc6878c603f0fdc18b9fe3e5bf51860cb90ab5b1154e3c371660c036d6bdd63e"
+    },
+    "gcc": "15.2.0",
+    "java": "25.0.4+7-LTS",
+    "lake": "5.0.0-src+d8b1897",
+    "lean": "4.33.0",
+    "node": "24.22.0",
+    "openssl": "3.5.5",
+    "python": "3.14.4",
+    "rustc": "1.99.1"
+  },
+  "validation": {
+    "checksRecord": "Plans/completion-release-evidence-20261030/s1-checks.json",
+    "checksRecordSha256": "55cb13bf9e16e16e1c09a4790c903dd3f90c6a2efb16dae0fa1f7b9fc9256497",
+    "claim": "source-validated",
+    "focusedSuites": {
+      "focused-distribution": "42 tests OK",
+      "focused-dpm": "87 tests OK",
+      "focused-evidence": "146 tests OK",
+      "focused-tla-differential": "81 tests OK, 6 live-reference skips"
+    },
+    "localNoModel": {
+      "exit": 0,
+      "log": {
+        "bytes": 113742,
+        "path": "Plans/completion-release-evidence-20261030/logs/local-no-model-final.log",
+        "sha256": "54397ac5592e8fdb0b345907d0f54542ed8de11c93ebabd066dee714d17c504d"
+      },
+      "result": "ALL LOCAL NON-MODEL GATES GREEN; live model tiers skipped explicitly"
+    },
+    "nativeRebuild": {
+      "exit": 0,
+      "log": {
+        "bytes": 2724,
+        "path": "Plans/completion-release-evidence-20261030/logs/native-rebuild-final.log",
+        "sha256": "5624f06d12c4866e145eea3cd78bb3dbc0110560102e495c07f2e18b51f50b86"
+      },
+      "result": "All native rebuild checks passed; original shim sources unchanged"
+    },
+    "october29Verifier": "passed; profile6 semantic c1938ecf..., 11 controlled verdicts, 22 matrix rows, negative controls rejected",
+    "skippedLiveTiers": [
+      {
+        "id": "live-local-model",
+        "reason": "APALACHE_MC absent by repository policy; coordinator runs the no-model gate only"
+      },
+      {
+        "id": "live-tla-references",
+        "reason": "DV_LIVE_REFERENCES unset in the focused tla-differential suite (6 skips); the required offline suites ran"
+      }
+    ]
+  }
+}

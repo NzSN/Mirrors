@@ -1,0 +1,7 @@
+# Remote tag observation (read-only), 2026-10-30
+$ git remote -v
+origin	https://github.com/NzSN/Mirrors.git (fetch)
+origin	https://github.com/NzSN/Mirrors.git (push)
+$ git ls-remote --tags origin 'v0.2.0-rc.1' 'v0.1.1'
+186819986000947bdb3e2a8f5bd83efdb71690a1	refs/tags/v0.1.1
+# No refs/tags/v0.2.0-rc.1 line was returned: the local-only tag was not pushed.

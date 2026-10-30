@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-30",
+  "ext4": true,
+  "filesystem": "ext2/ext3",
+  "liveTierPolicy": "live model tiers stay skipped; no local Apalache/TLC",
+  "loopback": {
+    "bind": "127.0.0.1",
+    "connect": "ok",
+    "ephemeralPort": 44227
+  },
+  "mirrorcppPrefix": "/home/lsz/Codebase/Mirrors/.golden-build/completion-20261029/cpp-prefix",
+  "mirrorcppPrefixValid": true,
+  "mirrorsDpmPython": "/usr/bin/python3",
+  "schema": "mirrors.completion-gate-preflight/v1",
+  "tempRoot": "/home/lsz/Codebase/Mirrors/tmp/completion-20261030"
+}

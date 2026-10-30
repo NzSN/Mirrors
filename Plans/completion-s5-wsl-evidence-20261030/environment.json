@@ -1,0 +1,36 @@
+{
+  "architecture": "x86_64",
+  "filesystem": {
+    "device": "/dev/sdd",
+    "path": "/home/lsz/Codebase/Mirrors",
+    "type": "ext4"
+  },
+  "gid": 1000,
+  "kernel": "6.18.54.1-microsoft-standard-WSL2",
+  "libc": "glibc 2.43-2ubuntu2.4",
+  "limits": [
+    "WSL2 scope only; not Ubuntu 24.04 and not native Linux.",
+    "No live-model, framework, release, deployment, or reboot acceptance is granted by this environment record."
+  ],
+  "os": {
+    "codename": "resolute",
+    "id": "ubuntu",
+    "prettyName": "Ubuntu 26.04.1 LTS",
+    "versionId": "26.04"
+  },
+  "producedAt": "2026-10-30T06:20:00Z",
+  "schema": "mirrors.s5.wsl-environment/v1",
+  "scopeName": "ubuntu-26.04-wsl2-x86_64",
+  "tools": {
+    "cc": "cc (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "git": "git version 2.53.0",
+    "lake": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)",
+    "leanToolchain": "leanprover/lean4:v4.33.0",
+    "node": "v24.22.0",
+    "openssl": "OpenSSL 3.5.5 27 Jan 2026 (Library: OpenSSL 3.5.5 27 Jan 2026)",
+    "python": "3.14.4"
+  },
+  "uid": 1000,
+  "user": "lsz",
+  "virtualization": "wsl2"
+}

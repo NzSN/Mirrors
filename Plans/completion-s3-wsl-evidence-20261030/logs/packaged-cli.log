@@ -1,0 +1,75 @@
+tempRoot=/tmp/mirrors-s3.6-wsl2-cli.mWKVde
+== members ==
+drwxr-xr-x lsz/lsz           0 2026-10-30 12:05 mirrors-v0.2.0-rc.1-linux-x86_64/
+-rw-r--r-- lsz/lsz        2874 2026-10-30 12:05 mirrors-v0.2.0-rc.1-linux-x86_64/BUILD.json
+-rw-r--r-- lsz/lsz         798 2026-10-30 12:05 mirrors-v0.2.0-rc.1-linux-x86_64/README.txt
+drwxr-xr-x lsz/lsz           0 2026-10-30 12:05 mirrors-v0.2.0-rc.1-linux-x86_64/bin/
+-rwxr-xr-x lsz/lsz   129463840 2026-10-30 12:05 mirrors-v0.2.0-rc.1-linux-x86_64/bin/mirror
+-rwxr-xr-x lsz/lsz   124701968 2026-10-30 12:05 mirrors-v0.2.0-rc.1-linux-x86_64/bin/model_interface_gen
+== extract ==
+== version ==
+v0.2.0-rc.1
+versionExit=0
+== out-of-order protocol smoke ==
+{"error":"Expected Register message","proto_step":"protocol_error"}
+smokeExit=0
+== model_interface_gen usage ==
+usage:
+  model_interface_gen resolve --spec FILE --contract FILE --evidence FILE
+    [--param-var NAME] --lock FILE [--diagnostics json]
+  model_interface_gen generate --lock FILE --target TARGET --out DIR
+    [--diagnostics json]
+  model_interface_gen bundle --lock FILE --target mirrorecma-async-v1 --out DIR
+    [--diagnostics json]
+  model_interface_gen check-bundle --spec FILE --contract FILE --evidence FILE
+    [--param-var NAME] --lock FILE --target mirrorecma-async-v1 --out DIR
+    [--diagnostics json]
+  model_interface_gen check --spec FILE --contract FILE --evidence FILE
+    [--param-var NAME] --lock FILE --target TARGET --out DIR
+    [--diagnostics json]
+  model_interface_gen generate-dpm|check-dpm --lock FILE --mapping FILE --target TARGET --out DIR
+    [--diagnostics json]
+  model_interface_gen compare-locks --from-lock OLD --to-lock NEW
+    [--diagnostics json]
+  model_interface_gen preflight --lock FILE --trace PATH
+    [--require-all-actions] [--diagnostics json]
+  model_interface_gen scaffold --spec FILE --evidence FILE
+    [--param-var NAME] [--projection PLAN] --proposal FILE
+    [--replace] [--diagnostics json]
+  model_interface_gen scaffold --reviewable --spec FILE --evidence FILE
+    [--evidence FILE ...] [--param-var NAME] [--projection PLAN] --proposal FILE
+  model_interface_gen seal-scaffold --spec FILE --evidence FILE [--evidence FILE ...]
+    [--param-var NAME] [--projection PLAN] --proposal FILE --review FILE --out DIR
+  model_interface_gen resolve-sealed --spec FILE --evidence FILE [--evidence FILE ...]
+    [--param-var NAME] [--projection PLAN] --sealed DIR [--corpus-manifest FILE] --lock FILE
+  model_interface_gen check-sealed|check-sealed-bundle --spec FILE --evidence FILE
+    [--evidence FILE ...] [--param-var NAME] [--projection PLAN] --sealed DIR
+    [--corpus-manifest FILE] --lock FILE --target TARGET --out DIR
+  model_interface_gen project-corpus --spec FILE --evidence RAW [--evidence RAW ...]
+    --projection PLAN --out DIR [--diagnostics json]
+  model_interface_gen check-corpus --out DIR --manifest-sha256 HASH [--diagnostics json]
+  model_interface_gen project-trace --spec FILE --evidence RAW
+    --projection PLAN --out PROJECTED --receipt RECEIPT
+    [--replace] [--diagnostics json]
+  model_interface_gen generate-cmake|check-cmake --spec FILE --contract FILE
+    --evidence FILE [--param-var NAME] --lock FILE --target CPP_TARGET --out DIR
+    (paths relative to the consumer root; optional CMake helpers)
+  TARGET: mirrorecma-v1 | mirrorecma-async-v1 | mirrorecma-async-v2 | mirrorcpp-v1 | mirrorcpp-v2 | mirrorrust-v1 | mirrorrust-v2 | mirrorlean-v1
+genExit=2
+== ldd ==
+	linux-vdso.so.1 (0x000079c1fe7a2000)
+	libc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x000079c1f9000000)
+	/lib64/ld-linux-x86-64.so.2 (0x000079c1fe7a4000)
+	libpthread.so.0 => /usr/lib/x86_64-linux-gnu/libpthread.so.0 (0x000079c1f9339000)
+	libdl.so.2 => /usr/lib/x86_64-linux-gnu/libdl.so.2 (0x000079c1f9334000)
+	librt.so.1 => /usr/lib/x86_64-linux-gnu/librt.so.1 (0x000079c1f932f000)
+	libm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x000079c1f8eda000)
+	linux-vdso.so.1 (0x00007d4936780000)
+	libc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x00007d4931400000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007d4936782000)
+	libpthread.so.0 => /usr/lib/x86_64-linux-gnu/libpthread.so.0 (0x00007d4931773000)
+	libdl.so.2 => /usr/lib/x86_64-linux-gnu/libdl.so.2 (0x00007d493176e000)
+	librt.so.1 => /usr/lib/x86_64-linux-gnu/librt.so.1 (0x00007d4931769000)
+	libm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007d4931643000)
+== source/lean artifacts ==
+none-if-empty

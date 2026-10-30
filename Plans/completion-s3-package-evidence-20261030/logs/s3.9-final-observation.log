@@ -1,0 +1,30 @@
+# S3.9 final observation — 2026-10-30T04:08Z
+
+## Shared checkout (unchanged)
+
+HEAD: d737aa0886b9d406e391955756922d9d735d7ec1
+git status --short:
+  ?? .projectile-cache.eld
+  ?? Plans/completion-release-evidence-20261030/
+  ?? Plans/completion-s2-executor-handoff-2026-10-30.md
+  ?? Plans/completion-s2-publication-evidence-20261030/
+  ?? Plans/completion-s3-executor-handoff-2026-10-30.md
+  ?? Plans/completion-s3-package-evidence-20261030/
+
+No tracked path was modified, staged, reset, cleaned, rebased or checked out
+over. The pre-existing untracked editor cache and execution records are intact;
+this record is a new untracked directory.
+
+## Local tag
+
+refs/tags/v0.2.0-rc.1 -> annotated tag object f135f2809e6612d158c5be176c7ea6429b9d51f3
+peels to commit d737aa0886b9d406e391955756922d9d735d7ec1
+Only v0.1.0 and v0.2.0-rc.1 exist locally.
+
+## Remote observation
+
+GitHub REST GET /repos/NzSN/Mirrors/git/refs/tags returned exactly:
+  refs/tags/v0.1.0 -> 57883d5e0fc5af41b5198ac75e715efec574df41
+  refs/tags/v0.1.1 -> 186819986000947bdb3e2a8f5bd83efdb71690a1
+refs/tags/v0.2.0-rc.1 is absent. No tag push, release, package publication,
+deployment, service replacement, restart or reboot occurred.

@@ -1,0 +1,263 @@
+{
+  "accepted": [
+    {
+      "claim": "scoped-accepted",
+      "id": "f5-model-comparison",
+      "identity": {
+        "acceptance": "controlled-model/acceptance.json",
+        "freshExecutions": 13,
+        "modelComparison": true,
+        "oracle": "isolated owned Windows process at loopback 19129",
+        "oracleServerSha256": "f137abc5a51da1291e5c72323fb3069bd462b5427f6fb6e0401708b356ee3513",
+        "status": "remote-comparison-passed",
+        "verdicts": 11
+      },
+      "notImplied": [
+        "arbitrary programs",
+        "other candidate commits",
+        "native M4",
+        "publication"
+      ],
+      "scope": "finite F5 producer/consumer mutex/FIFO comparison over two declared actor-order policies"
+    },
+    {
+      "claim": "scoped-accepted",
+      "id": "f5-reduction",
+      "identity": {
+        "acceptance": "controlled-model/acceptance.json",
+        "baselineCost": [
+          2,
+          0,
+          4,
+          14
+        ],
+        "claim": "minimal_in_admitted_catalog",
+        "freshBestComparison": "rejected",
+        "reducedCost": [
+          2,
+          0,
+          2,
+          14
+        ]
+      },
+      "notImplied": [
+        "minimality outside the admitted catalog"
+      ],
+      "scope": "two-declared-actor-order-policies only"
+    },
+    {
+      "claim": "scoped-accepted",
+      "id": "profile-6-t-u",
+      "identity": {
+        "coverage": {
+          "match": 564,
+          "reviewed_difference": 14,
+          "unsupported": 292
+        },
+        "t": {
+          "observations": 183,
+          "semanticSha256": "c1938ecf662c828557fd1535cd25389368a6c27dcef445ea20405c7e41a47edb",
+          "verdict": "pass"
+        },
+        "u": {
+          "semanticSha256": "c1938ecf662c828557fd1535cd25389368a6c27dcef445ea20405c7e41a47edb",
+          "verdict": "pass"
+        },
+        "unresolvedFindings": 0
+      },
+      "notImplied": [
+        "unsupported comparisons",
+        "later fixture/tool identity changes",
+        "full framework qualification"
+      ],
+      "scope": "independent required profile-6 differential campaigns"
+    },
+    {
+      "claim": "scoped-accepted",
+      "id": "installed-dpm",
+      "identity": {
+        "freshModelCheck": false,
+        "networkNamespaceIsolated": true,
+        "profiles": [
+          "cpp",
+          "ecma",
+          "rust"
+        ],
+        "receipt": "receipts/installed-dpm-acceptance.json",
+        "sourceHidden": true,
+        "status": "passed"
+      },
+      "notImplied": [
+        "fresh model checking",
+        "arbitrary programs",
+        "native cgroup enforcement"
+      ],
+      "scope": "source-hidden, network-isolated installed C++/ECMA/Rust DPM profiles"
+    },
+    {
+      "claim": "source-validated",
+      "id": "mirrors-local-gates",
+      "identity": {
+        "aggregate": "logs/rc-full-local-no-model.log",
+        "nativeRebuild": "logs/rc-native-rebuild.log",
+        "note": "fresh MirrorCPP prefix and ext4 temporary root; live model tiers skipped"
+      },
+      "notImplied": [
+        "live model tiers",
+        "release publication"
+      ],
+      "scope": "RC non-model aggregate and native rebuild"
+    },
+    {
+      "claim": "scoped-accepted",
+      "id": "native-windows",
+      "identity": {
+        "archiveBytes": 73723251,
+        "archiveSha256": "bed5c045102b80441a006a36e789164cf8dd50ad737008d3dda53a02d496a172",
+        "log": "logs/windows-reference-finals.log",
+        "windowsBuild": "7e9a27d0db72ec36b49c6fc5764b2687b565edfd"
+      },
+      "notImplied": [
+        "full lake test",
+        "production service qualification",
+        "reproducible compilation"
+      ],
+      "scope": "full native Windows build and eight selected runtime suites"
+    },
+    {
+      "claim": "scoped-accepted",
+      "id": "mirrorgate",
+      "identity": {
+        "commit": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+        "integrationTests": 11,
+        "log": "logs/gate-full-selected-5.log",
+        "nodeTests": 227,
+        "pythonSkips": 5,
+        "pythonTests": 311
+      },
+      "notImplied": [
+        "native cgroup enforcement",
+        "other Gate commits"
+      ],
+      "scope": "selected MirrorGate clean commit required gate"
+    },
+    {
+      "claim": "scoped-accepted",
+      "id": "five-client-matrix",
+      "identity": {
+        "endpoint": {
+          "host": "127.0.0.1",
+          "port": 19131
+        },
+        "observationAfter": "receipts/matrix-observation-after.json",
+        "receipt": "client-matrix/receipt.json",
+        "revisions": {
+          "cpp": "8c542a6b1339cc0b6176465ff7f17a32e614553d",
+          "ecma": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+          "haskell": "4aa693f86e18349bb97c050dd33aecbf730b6fa2",
+          "lean": "a8634ebe2455f97d15b55bec3c810d945cb6e3d3",
+          "rust": "6b9480ab81717b76ca7f74b41fc554578b70c890"
+        },
+        "rows": 22,
+        "serverBinarySha256": "97770abddf6e5a1c198c9e5a0ef37ffa35aa29c1b9135169642c5365856190ea",
+        "serverLeafSha256": "2ddc38ae257eafaee59763fa055242abac9a5f71a8047c6496a36b6d4f455922"
+      },
+      "notImplied": [
+        "later source/host/credential identity",
+        "legacy all-transport matrix"
+      ],
+      "scope": "22-row five-client remote mTLS matrix plus seven ECMA protocol scenarios"
+    },
+    {
+      "claim": "scoped-accepted",
+      "id": "stdio-compatibility",
+      "identity": {
+        "receipt": "receipts/stdio-compatibility.json",
+        "status": "passed"
+      },
+      "notImplied": [
+        "consumer migration",
+        "Haskell retirement"
+      ],
+      "scope": "five-request stdio register_error compatibility probe"
+    }
+  ],
+  "baseCommit": "7e9a27d0db72ec36b49c6fc5764b2687b565edfd",
+  "date": "2026-10-30",
+  "externalBlockers": [
+    {
+      "id": "native-linux-m4-host",
+      "needs": "native Linux runner and serving-UID cgroup-v2 delegation"
+    },
+    {
+      "id": "ubuntu-24.04-environment",
+      "needs": "matching declared Ubuntu 24.04 qualification host"
+    },
+    {
+      "id": "windows-host-refresh",
+      "needs": "fresh Windows host/source/runtime/service observation"
+    },
+    {
+      "id": "remote-oracle",
+      "needs": "reobserved owned remote oracle and current mTLS credentials"
+    },
+    {
+      "id": "approvals",
+      "needs": "branch push, tag/tag-push, publication, production replacement, reboot"
+    }
+  ],
+  "mappingRule": "Every accepted row above is an input with its recorded identity and limits; none is an unconditional remaining implementation task. Unsupported comparisons, skipped tiers and external blockers stay visible.",
+  "requiredSkips": [
+    {
+      "id": "live-local-model-tiers",
+      "reason": "coordinator runs repository-owned no-model gate only"
+    },
+    {
+      "id": "ubuntu-24.04-m5-d-q",
+      "matches": false,
+      "observed": {
+        "architecture": "x86_64",
+        "backend": "local-process",
+        "os": "linux",
+        "osRelease": "ubuntu-26.04"
+      },
+      "reason": "coordinator is ubuntu-26.04; reference distribution declares ubuntu-24.04",
+      "selected": "ubuntu-24.04"
+    },
+    {
+      "id": "native-m4",
+      "kernelEnforcementTested": false,
+      "nativeLinuxHost": false,
+      "postRestartProcessRecoveryTested": false,
+      "preflight": {
+        "readOnlyValidation": "not_requested",
+        "reason": "no_operator_delegation_supplied",
+        "requestedParent": null
+      },
+      "reason": "WSL2 and no operator-supplied cgroup-v2 parent"
+    }
+  ],
+  "retainedFailures": [
+    {
+      "artifact": "client-matrix-initial-failure/",
+      "id": "initial-client-matrix-lean-warning",
+      "result": "harness rejected singular \"1 day\" certificate warning; narrow matcher fix then full fresh rerun passed"
+    },
+    {
+      "actualSha256": "765f610537281a0f25b8c30f2554f19523e2859c824e80e62276653ee23c10e2",
+      "artifact": "receipts/apalache-carrier-refusal.json",
+      "executed": false,
+      "expectedSha256": "7cfadf6e8c04c63f05ac907ec9541c66297005c8cb5efb1731f6a838dfc3fad2",
+      "id": "apalache-carrier-refusal",
+      "pinChanged": false,
+      "result": "fetched archive refused"
+    },
+    {
+      "artifact": "Plans/completion-evidence-20261029/README.md",
+      "id": "environment-failures",
+      "result": "sandbox socket refusal, tmpfs rejection for required ext4 gate, stale SANY calibration path, non-UTF-8 diagnostic archiving, optional MirrorCPP example GCC-15 warning; retained without pass credit"
+    }
+  ],
+  "schema": "mirrors.october29-accepted-index/v1",
+  "source": "Plans/completion-evidence-20261029/README.md and its receipts"
+}

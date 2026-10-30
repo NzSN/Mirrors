@@ -1,0 +1,39 @@
+# S3.7 Windows base-plus-overlay comparison against S2 d737aa0
+
+Manifest files: 8810
+Identical to S2: 8790
+Differing: 20
+S2-only paths (all planning/documentation/evidence): 397
+
+## Differing paths
+
+- Docs/current-status.md [documentation] windows=d2a0bcd5cdb4 s2=42d82bb69816 bytes 15177->17533
+- Docs/cutover.md [documentation] windows=c1f6fd496a96 s2=20c8e34e60f1 bytes 7623->7638
+- Plans/foundation-completion-plan-2026-10-26.md [planning-record] windows=2f2342e9805a s2=43dc0bae84ff bytes 8994->9450
+- Plans/m4-native-host-and-platform-plan-2026-10-07.md [planning-record] windows=bbf5321c5aa9 s2=f07d577bced0 bytes 4473->5047
+- distribution/reference-node/README.md [documentation] windows=23b2e175c56a s2=69ab646cd2af bytes 8693->9363
+- test/fixtures/tla-frontend/differential/evidence/README.md [evidence-documentation] windows=ab225a359cad s2=c043e7f04e8b bytes 9574->10164
+- tools/distribution/install.py [behavioral-tooling-linux-installer] windows=f1e9b76f1494 s2=08a57d6ba844 bytes 39840->41346
+- tools/distribution/test_install.py [tooling-test] windows=00ca4bdc9896 s2=e7cd8e58bcc0 bytes 10084->16386
+- tools/evidence/README.md [documentation] windows=19b637eeb491 s2=af92583c31f8 bytes 13819->15428
+- tools/evidence/commands.json [behavioral-tooling-config] windows=05542d9a548c s2=04ded2066f18 bytes 44820->44983
+- tools/evidence/run_remote_model_check.py [behavioral-tooling-remote-check] windows=376c1dc1ddd4 s2=e1f7d2907358 bytes 7634->8406
+- tools/evidence/tests/test_remote_interop.py [tooling-test] windows=8b02a61630f0 s2=e85327c30d46 bytes 6154->7842
+- tools/evidence/tests/test_remote_observation.py [tooling-test] windows=a16eddde5d2b s2=c20af8bb48e1 bytes 3986->5246
+- tools/interop/INTEROP.md [documentation] windows=82efa0ca5d3a s2=76464185d9d2 bytes 21175->22008
+- tools/interop/ecma-runtime-pin.json [tooling-config-pin] windows=5bdb875dbbe7 s2=598bb5efc534 bytes 851->851
+- tools/interop/remote-clients/RemoteM5.lean [interop-client-source] windows=886257dbd0e7 s2=530f9454938f bytes 1298->1407
+- tools/interop/remote-clients/ecma-protocol.mjs [interop-client-source] windows=57c6efffd4bb s2=47ea270534f9 bytes 4216->4287
+- tools/interop/remote-clients/ecma.mjs [interop-client-source] windows=b4464db789b6 s2=7870d367c777 bytes 834->870
+- tools/interop/remote-clients/rust/main.rs [interop-client-source] windows=9edc75480331 s2=2d9d17f00b08 bytes 1001->1071
+- tools/interop/run-remote.py [behavioral-tooling-interop-harness] windows=c25fdc8ab36f s2=95c854f8e56a bytes 10291->11354
+
+## Verdict
+
+REBUILD REQUIRED — compiled build inputs identical, but behavioral tooling/client files differ; the strict reuse condition in the S3 handoff is not met.
+
+## S2-only path roots
+
+- Docs: 1
+- Plans: 381
+- test: 15

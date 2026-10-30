@@ -1,0 +1,7 @@
+# Post-build source integrity recheck on win10, after build, gates and packaging
+# Rehashes every one of the 9,207 archive members against the source manifest.
+$ powershell -NoProfile -ExecutionPolicy Bypass -File post-source-check.ps1
+POST_SOURCE_CHECK changed=0 extraOutsideLake=0 checked=9207
+# The .lake build/dependency outputs and .golden-build generated test outputs are
+# expected additions inside the extracted tree and are excluded from this check.
+# Receipt: receipts/post-source-check.json

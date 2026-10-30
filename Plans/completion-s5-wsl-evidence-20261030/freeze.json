@@ -1,0 +1,143 @@
+{
+  "artifacts": {
+    "linux": {
+      "file": ".golden-build/completion-20261030/dist-linux/mirrors-v0.2.0-rc.1-linux-x86_64.tar.gz",
+      "sha256": "39623040464f71bcaff5f1b1002f93b1eec6d19e0bbecabc9a141b523d90b60a"
+    },
+    "windows": {
+      "file": ".golden-build/completion-20261030/dist-windows/mirrors-v0.2.0-rc.1-windows-x86_64.zip",
+      "sha256": "8d971bd9a735a70c3e707f11d6a52c0b02b712404d4381dee1d72f678ecfecf3"
+    }
+  },
+  "blocker": "The base catalog still names the pre-candidate published cohort, and the additive profile change is not committed. The WSL2 variant is provisionally bound to the current dirty tree. A new S1/S2 source delivery, S3 package build, and post-commit C0/lock refresh are required before an exact-candidate installation or producer can be admitted.",
+  "c0": {
+    "base": {
+      "path": "catalog/framework-catalog.json",
+      "platform": "ubuntu-24.04",
+      "role": "checked base catalog, unchanged",
+      "sha256": "ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421"
+    },
+    "wsl2Variant": {
+      "combinationIds": "unchanged from base",
+      "path": "catalog/framework-catalog-wsl2-26.04.json",
+      "platform": "ubuntu-26.04",
+      "profileIds": "26.04-wsl2",
+      "role": "additive variant for the selected WSL2 host",
+      "sha256": "5603d9d42700b1e009db5cb56247a29d06c0a96642540d66937a79a4fa2d0bd5"
+    }
+  },
+  "candidate": {
+    "mirrors": {
+      "componentId": "mirrors",
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "d00bd319231ae978ca6e5f0c314381053d6e1fec9ed6290404649e5e26f5d9d2",
+        "excludedPaths": [
+          {
+            "path": ".projectile-cache.eld",
+            "reasonCode": "pre-existing-unrelated"
+          },
+          {
+            "path": "catalog/framework-catalog-wsl2-26.04.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+            "reasonCode": "evidence-output"
+          }
+        ],
+        "includedPaths": [
+          "Docs/completion-qualification-release-design.md",
+          "Docs/current-status.md",
+          "tools/distribution/build.py",
+          "tools/distribution/install.py",
+          "tools/distribution/manifest_check.py",
+          "tools/distribution/refresh_identity.py",
+          "tools/distribution/test_install.py",
+          "tools/distribution/test_manifest_check.py"
+        ],
+        "method": "git-diff-and-untracked-manifest-v1"
+      },
+      "repository": "https://github.com/NzSN/Mirrors.git",
+      "revision": "d737aa0886b9d406e391955756922d9d735d7ec1"
+    },
+    "note": "The local tag still identifies the committed d737aa0 tree. The working tree now contains an additive WSL2 profile change, so this freeze is a NEW candidate input and the tag does not cover it.",
+    "tag": {
+      "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+      "name": "v0.2.0-rc.1",
+      "object": "f135f2809e6612d158c5be176c7ea6429b9d51f3",
+      "tree": "8d2de2561d25c219e685bb46980080c03d7d1c98"
+    }
+  },
+  "companions": {
+    "mirrorecma": {
+      "dirty": false,
+      "repository": "https://github.com/NzSN/MirrorECMA.git",
+      "revision": "f94358834dce2e527c8bc8feec0423a54cf4176c"
+    },
+    "mirrorgate": {
+      "dirty": false,
+      "repository": "https://github.com/NzSN/MirrorGate.git",
+      "revision": "4ef786b30ac6be45e471fb02610484581f5da3b0"
+    }
+  },
+  "distributionLocks": {
+    "base": {
+      "component-lock.json": "e958e6ccee14a14545ce7c9dd386efdca279111f930d4633e1db368de0ba307f",
+      "dependency-lock.json": "e45725e9b2dc530323709e3eb5b1d281080792b88157dbc445e2b45343862bc7",
+      "profiles.json": "bec499dd7c6526bc00f6b3eed92584973c98b78ed9ec14af18f355d46a31907b"
+    },
+    "wsl2Variant": {
+      "component-lock.json": "6acb27ec325c0ea6c6a859c89b9109c0067c34cfe633834af7e27c40015ccae4",
+      "dependency-lock.json": "e45725e9b2dc530323709e3eb5b1d281080792b88157dbc445e2b45343862bc7",
+      "profiles.json": "26e598c97df86b989203408d8fea023999e5bc7a8e43eb16fd69f9c2c38c78bb"
+    }
+  },
+  "models": {
+    "Counter.tla": {
+      "path": "test/specs/Counter.tla",
+      "sha256": "405b4ffb80464cdf919d986e142b180e044c41caf8e6aabe978db0e8e7aa0340"
+    },
+    "HourClock.tla": {
+      "path": "test/specs/HourClock.tla",
+      "sha256": "3c88f0816b38fc188e1678e26ab15f2d9202ae162c4b427f611209607c67f6e4"
+    }
+  },
+  "producedAt": "2026-10-30T06:25:00Z",
+  "schema": "mirrors.s5.candidate-freeze/v1",
+  "status": "blocked-new-candidate-input",
+  "toolchain": {
+    "cc": "cc (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "git": "git version 2.53.0",
+    "lake": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)",
+    "leanToolchain": "leanprover/lean4:v4.33.0",
+    "node": "v24.22.0",
+    "openssl": "OpenSSL 3.5.5 27 Jan 2026 (Library: OpenSSL 3.5.5 27 Jan 2026)",
+    "python": "3.14.4"
+  }
+}

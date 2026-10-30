@@ -1,0 +1,32 @@
+== sha256sum -c
+mirrors-v0.2.0-rc.1-linux-x86_64.build.json: OK
+mirrors-v0.2.0-rc.1-linux-x86_64.tar.gz: OK
+== embedded vs external BUILD.json
+identical
+== version
+v0.2.0-rc.1
+== model_interface_gen --help exit
+exit=2
+1
+== ldd
+	linux-vdso.so.1 (0x00007c53a9e13000)
+	libc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x00007c53a4400000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007c53a9e15000)
+	libpthread.so.0 => /usr/lib/x86_64-linux-gnu/libpthread.so.0 (0x00007c53a9dfa000)
+	libdl.so.2 => /usr/lib/x86_64-linux-gnu/libdl.so.2 (0x00007c53a9df5000)
+	librt.so.1 => /usr/lib/x86_64-linux-gnu/librt.so.1 (0x00007c53a9df0000)
+	libm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007c53a9cca000)
+	linux-vdso.so.1 (0x0000740810ec9000)
+	libc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x000074080ba00000)
+	/lib64/ld-linux-x86-64.so.2 (0x0000740810ecb000)
+	libpthread.so.0 => /usr/lib/x86_64-linux-gnu/libpthread.so.0 (0x0000740810eb0000)
+	libdl.so.2 => /usr/lib/x86_64-linux-gnu/libdl.so.2 (0x0000740810eab000)
+	librt.so.1 => /usr/lib/x86_64-linux-gnu/librt.so.1 (0x0000740810ea6000)
+	libm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x000074080bcda000)
+== ELF/osabi
+Displaying notes found in: .note.ABI-tag
+  Owner                Data size 	Description
+  GNU                  0x00000010	NT_GNU_ABI_TAG (ABI version tag)
+    OS: Linux, ABI: 2.6.32
+== lean sources in archive
+mirrors-v0.2.0-rc.1-linux-x86_64/BUILD.json

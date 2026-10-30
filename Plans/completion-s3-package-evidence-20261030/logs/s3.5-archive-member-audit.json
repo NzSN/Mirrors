@@ -1,0 +1,70 @@
+{
+ "secretFindings": [],
+ "linuxMembers": {
+  "mirrors-v0.2.0-rc.1-linux-x86_64": {
+   "type": "dir",
+   "bytes": 0
+  },
+  "mirrors-v0.2.0-rc.1-linux-x86_64/BUILD.json": {
+   "type": "file",
+   "bytes": 2874,
+   "sha256": "28beda2c810c085e28b0112d9e8bed5443a5cd64fe7aa62dcf67c0058db8da5a"
+  },
+  "mirrors-v0.2.0-rc.1-linux-x86_64/README.txt": {
+   "type": "file",
+   "bytes": 798,
+   "sha256": "4ee53e4091c1b94efbd99a1f35951e1942ec97e56f15dad08faa2651c36cd5fe"
+  },
+  "mirrors-v0.2.0-rc.1-linux-x86_64/bin": {
+   "type": "dir",
+   "bytes": 0
+  },
+  "mirrors-v0.2.0-rc.1-linux-x86_64/bin/mirror": {
+   "type": "file",
+   "bytes": 129463840,
+   "sha256": "1140d6fdfb9b1a619df13ecf3dd38791d25b5b72f04a04accf656c507e43e34a"
+  },
+  "mirrors-v0.2.0-rc.1-linux-x86_64/bin/model_interface_gen": {
+   "type": "file",
+   "bytes": 124701968,
+   "sha256": "f7bd3c9927c1b2ddfc94ba20cc68ddaf9e6ea00d5eddf3b0b0cdeeac03e6ace2"
+  }
+ },
+ "windowsMembers": {
+  "mirrors-v0.2.0-rc.1-windows-x86_64/bin/libcrypto-3-x64.dll": {
+   "type": "file",
+   "bytes": 5689843,
+   "sha256": "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7"
+  },
+  "mirrors-v0.2.0-rc.1-windows-x86_64/bin/libssl-3-x64.dll": {
+   "type": "file",
+   "bytes": 1025928,
+   "sha256": "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c"
+  },
+  "mirrors-v0.2.0-rc.1-windows-x86_64/bin/model_interface_gen.exe": {
+   "type": "file",
+   "bytes": 112591360,
+   "sha256": "573400fe73473037aff6008a119579b7fa3d34a59efc216ec2f3b054c83fa142"
+  },
+  "mirrors-v0.2.0-rc.1-windows-x86_64/bin/ModelMirrors.exe": {
+   "type": "file",
+   "bytes": 111192576,
+   "sha256": "97770abddf6e5a1c198c9e5a0ef37ffa35aa29c1b9135169642c5365856190ea"
+  },
+  "mirrors-v0.2.0-rc.1-windows-x86_64/bin/zlib1.dll": {
+   "type": "file",
+   "bytes": 128488,
+   "sha256": "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5"
+  },
+  "mirrors-v0.2.0-rc.1-windows-x86_64/BUILD.json": {
+   "type": "file",
+   "bytes": 1667,
+   "sha256": "58a73917aef49cdee7d28d743fec1e94d2f1bb20b3ce123c0c299cf2c2de7804"
+  },
+  "mirrors-v0.2.0-rc.1-windows-x86_64/README.txt": {
+   "type": "file",
+   "bytes": 189,
+   "sha256": "a66e5bc19123779977a32d61d082bfa278ebbb9e84d2b858f5cdd83eaaa523e3"
+  }
+ }
+}

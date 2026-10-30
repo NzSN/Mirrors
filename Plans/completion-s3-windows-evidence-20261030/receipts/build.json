@@ -1,0 +1,24 @@
+﻿{
+    "schema":  "mirrors.s3.windows-build/v1",
+    "command":  "lake build mirror model_interface_gen fixtures_replay diff_cross model_interface_spec stdio_smoke transport_spec jobstore_spec async_resource_spec dpm_sync_spec",
+    "cwd":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+    "exit":  0,
+    "startedUtc":  "2026-10-30T04:20:42Z",
+    "finishedUtc":  "2026-10-30T04:22:09Z",
+    "seconds":  87.4,
+    "log":  "logs/build.log",
+    "logBytes":  93255,
+    "logSha256":  "0bbc378ae5fae175591f1382f17be9ea99f0cef3ea827f6f276a625638f05da0",
+    "binaries":  {
+                     "mirror":  {
+                                    "path":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0\\.lake\\build\\bin\\mirror.exe",
+                                    "sha256":  "5500df1b9b8a028d93a5a79a13e5aa3dba8e92a5da4ad4fb39f285d097cc6627",
+                                    "bytes":  111192576
+                                },
+                     "model_interface_gen":  {
+                                                 "path":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0\\.lake\\build\\bin\\model_interface_gen.exe",
+                                                 "sha256":  "83a2c353af98de0246378ee5c922951b27f1544692df154c7e07144243e1bfbd",
+                                                 "bytes":  112591360
+                                             }
+                 }
+}

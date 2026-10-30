@@ -1,0 +1,25 @@
+== base catalog profile platforms ==
+catalog/framework-catalog.json mirrors.framework.candidate-2026-09-22
+  mirrors.reference-fresh-trace/ubuntu-24.04-x86_64/v1 {'os': 'linux', 'osRelease': 'ubuntu-24.04', 'architecture': 'x86_64', 'backend': 'local-process'}
+  mirrors.reference-node-checked/ubuntu-24.04-x86_64/v1 {'os': 'linux', 'osRelease': 'ubuntu-24.04', 'architecture': 'x86_64', 'backend': 'local-process'}
+  mirrors.reference-node-gate/ubuntu-24.04-x86_64/v1 {'os': 'linux', 'osRelease': 'ubuntu-24.04', 'architecture': 'x86_64', 'backend': 'linux-bubblewrap-v1'}
+  combo candidate.local-node-checked {'os': 'linux', 'osRelease': 'ubuntu-24.04', 'architecture': 'x86_64', 'backend': 'local-process'}
+  combo candidate.node-gate {'os': 'linux', 'osRelease': 'ubuntu-24.04', 'architecture': 'x86_64', 'backend': 'linux-bubblewrap-v1'}
+  combo candidate.fresh-trace {'os': 'linux', 'osRelease': 'ubuntu-24.04', 'architecture': 'x86_64', 'backend': 'local-process'}
+catalog/framework-catalog-wsl2-26.04.json mirrors.framework.candidate-2026-10-30-wsl2-26.04
+  mirrors.reference-fresh-trace/ubuntu-26.04-wsl2-x86_64/v1 {'os': 'linux', 'osRelease': 'ubuntu-26.04', 'architecture': 'x86_64', 'backend': 'local-process'}
+  mirrors.reference-node-checked/ubuntu-26.04-wsl2-x86_64/v1 {'os': 'linux', 'osRelease': 'ubuntu-26.04', 'architecture': 'x86_64', 'backend': 'local-process'}
+  mirrors.reference-node-gate/ubuntu-26.04-wsl2-x86_64/v1 {'os': 'linux', 'osRelease': 'ubuntu-26.04', 'architecture': 'x86_64', 'backend': 'linux-bubblewrap-v1'}
+  combo candidate.local-node-checked {'os': 'linux', 'osRelease': 'ubuntu-26.04', 'architecture': 'x86_64', 'backend': 'local-process'}
+  combo candidate.node-gate {'os': 'linux', 'osRelease': 'ubuntu-26.04', 'architecture': 'x86_64', 'backend': 'linux-bubblewrap-v1'}
+  combo candidate.fresh-trace {'os': 'linux', 'osRelease': 'ubuntu-26.04', 'architecture': 'x86_64', 'backend': 'local-process'}
+== observed platform ==
+{'os': 'linux', 'osRelease': 'ubuntu-26.04', 'architecture': 'x86_64', 'backend': 'local-process'}
+virtualization wsl2
+== installed admission equality check ==
+177:  | "platform_identity_mismatch"
+1771:        "platform_identity_mismatch",
+1778:      !same(profile.platform, input.observed.platform)
+1781:        "platform_identity_mismatch",
+== focused tests ==
+725:    "platform_identity_mismatch",

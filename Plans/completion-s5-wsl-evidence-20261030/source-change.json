@@ -1,0 +1,112 @@
+{
+  "behavior": [
+    "build.py accepts --catalog and --locks-root while defaulting to the checked Ubuntu 24.04 pair",
+    "manifest_check.validate_locks accepts an explicit catalog path",
+    "install.py refuses a WSL2 catalog profile on a host whose kernel release is not microsoft-standard-WSL2",
+    "refresh_identity.py can refresh the variant catalog/locks without rewriting component-owned records or the 24.04 compact projection"
+  ],
+  "candidateEffect": {
+    "existingTagDisposition": "v0.2.0-rc.1 remains a local-only tag at d737aa0 and must not be moved.",
+    "newCandidateInput": true,
+    "reason": "The additive profile and tooling changes postdate the published d737aa0 tree and the local v0.2.0-rc.1 tag.",
+    "requiredApproval": "A new S1 freeze and S2 branch delivery (and new clean tagged package) before S5 exact-candidate continuation."
+  },
+  "compatibility": {
+    "combinationIdsChanged": false,
+    "commandRegistryChanged": false,
+    "existingCatalogBytesChanged": false,
+    "existingProfilesJsonBytesChanged": false,
+    "existingUbuntu2404ProfilesPreserved": true,
+    "localTagMoved": false
+  },
+  "kind": "additive Ubuntu 26.04 WSL2 distribution/catalog profile variant",
+  "modifiedFiles": [
+    {
+      "path": "tools/distribution/build.py",
+      "sha256": "693684dd3da2ad76b3240632ab33def36b96a67125e76cd9f12ff8d4d35c6bb8"
+    },
+    {
+      "path": "tools/distribution/install.py",
+      "sha256": "5f161c67cb9dfd1c8975188e0ec7313768187df19b7c742522116de08b80ae3f"
+    },
+    {
+      "path": "tools/distribution/manifest_check.py",
+      "sha256": "f0e1cd985a690628892e8626801ccb50db0426d927fbc1b2cb7e293b3e821c30"
+    },
+    {
+      "path": "tools/distribution/refresh_identity.py",
+      "sha256": "3edb34613bc307c34a1454a8f26dc73f9af2c3031edc2002bc47e873658c017e"
+    },
+    {
+      "path": "tools/distribution/test_install.py",
+      "sha256": "97fcce7814f24f46ed92d6d2cf6cca6a9df63f3d5e69d853f34b235e29938545"
+    },
+    {
+      "path": "tools/distribution/test_manifest_check.py",
+      "sha256": "2d3342cf45e2b5f8f9dd945096d96439319d5e60aee6a1fd6c58b371a0b84188"
+    }
+  ],
+  "newFiles": [
+    {
+      "path": "catalog/framework-catalog-wsl2-26.04.json",
+      "sha256": "8abdb3c78483a121a0d6369b7d5bfc6f1cfd000d0e78b4319613b2503d6b974a"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+      "sha256": "26e598c97df86b989203408d8fea023999e5bc7a8e43eb16fd69f9c2c38c78bb"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+      "sha256": "6acb27ec325c0ea6c6a859c89b9109c0067c34cfe633834af7e27c40015ccae4"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+      "sha256": "e45725e9b2dc530323709e3eb5b1d281080792b88157dbc445e2b45343862bc7"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+      "sha256": "85b558f7542b70adceec9de1fe0a161bfee856ce97f3f3ce2411aa5904f7ed25"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "sha256": "11fc803b2cf972a340e9c293b5ae8f7331e5df8e7de84724f1e0ae3129755fd3"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+      "sha256": "5487d5d49987bf7585eb8c0f6f5e420293fda887121f52213649d52d6980856d"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "sha256": "c484d42192ee2275bc96c15e294dc3f2a04c6d78c8e4a527965b5ca4737a9a8f"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/README.md",
+      "sha256": "67fd638b4dd8c3253b6750451c58040477c231802331da2da704164cd4328d36"
+    }
+  ],
+  "producedAt": "2026-10-30T06:27:00Z",
+  "schema": "mirrors.s5.source-change/v1",
+  "verification": {
+    "catalogValidation": {
+      "base": "ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421",
+      "exit": 0,
+      "log": "logs/catalog-validation.log",
+      "variant": "5603d9d42700b1e009db5cb56247a29d06c0a96642540d66937a79a4fa2d0bd5"
+    },
+    "distributionTests": {
+      "command": "TMPDIR=<ext4> python3 -m unittest discover -s . -p test_*.py -v",
+      "exit": 0,
+      "log": "logs/distribution-tests.log",
+      "tests": 46
+    },
+    "localNoModelGate": {
+      "exit": 0,
+      "log": "logs/local-no-model.log",
+      "result": "ALL LOCAL NON-MODEL GATES GREEN"
+    },
+    "refreshSmoke": {
+      "exit": 0,
+      "log": "logs/refresh-variant-smoke.log"
+    }
+  }
+}

@@ -36,6 +36,23 @@ class ManifestCheckTests(unittest.TestCase):
         manifest = checker.validate_distribution_manifest(VALID_MANIFEST, "checked-replay-local", locked)
         checker.validate_cache_index(VALID_CACHE, "checked-replay-local", locked, manifest)
 
+    def test_wsl2_variant_catalog_and_locks_resolve_additively(self) -> None:
+        variant = ROOT / "distribution/reference-node-wsl2-26.04"
+        catalog = ROOT / "catalog/framework-catalog-wsl2-26.04.json"
+        contract = checker.validate_locks(variant, CATALOG_BIN, catalog_path=catalog)
+        self.assertEqual(contract["selection"]["selectionValue"],
+            checker.digest_json(json.loads(catalog.read_text())))
+        self.assertEqual(set(contract["profiles"]),
+            {"checked-replay-local", "checked-replay-gate", "fresh-trace"})
+        self.assertEqual(contract["combinationComponents"]["checked-replay-local"],
+            {"mirrors", "mirrorecma"})
+        # The checked Ubuntu 24.04 locks and catalog remain byte-valid.
+        base = checker.validate_locks(LOCK_ROOT, CATALOG_BIN)
+        self.assertNotEqual(base["selection"]["selectionValue"],
+            contract["selection"]["selectionValue"])
+        self.assertEqual(base["profiles"]["checked-replay-local"]["catalogProfileId"],
+            "mirrors.reference-node-checked/ubuntu-24.04-x86_64/v1")
+
     def test_wrong_catalog_and_product_only_component_match_fail(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

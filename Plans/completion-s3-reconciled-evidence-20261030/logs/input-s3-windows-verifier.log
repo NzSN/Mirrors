@@ -1,0 +1,9 @@
+WINDOWS EVIDENCE VERIFIED
+  inventory files: 45
+  source: v0.2.0-rc.1 @ d737aa0886b9d406e391955756922d9d735d7ec1 (9207 files)
+  artifact: mirrors-v0.2.0-rc.1-windows-x86_64.zip  sha256=8d971bd9a735a70c3e707f11d6a52c0b02b712404d4381dee1d72f678ecfecf3  bytes=73725020  members=7
+  gates: 8/8 exit 0; no unresolved PE imports
+  production: pid 9920 unchanged; task-owned descendants: 0
+  negative controls: missing artifact, tampered archive, tampered member, tampered manifest, tampered inventory all refused
+  scope: staged native build and eight non-model suites only
+exit=0

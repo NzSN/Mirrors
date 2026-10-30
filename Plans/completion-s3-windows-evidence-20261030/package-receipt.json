@@ -1,0 +1,538 @@
+{
+ "artifact": {
+  "bundledDlls": [
+   "libcrypto-3-x64.dll",
+   "libssl-3-x64.dll",
+   "zlib1.dll"
+  ],
+  "bytes": 73725020,
+  "embeddedEqualsExternal": true,
+  "executableVersionStringPresent": true,
+  "externalBuildManifest": {
+   "bytes": 9690,
+   "path": ".golden-build/completion-20261030/dist-windows/mirrors-v0.2.0-rc.1-windows-x86_64.build.json",
+   "sha256": "69e17843f7de338cd993402c4a98e25ec9e8e4686fa64628826a71ea1e4a3aa2"
+  },
+  "forbiddenSuffixes": [],
+  "memberCount": 7,
+  "members": [
+   {
+    "bytes": 5689843,
+    "dateTime": [
+     2026,
+     10,
+     30,
+     0,
+     0,
+     0
+    ],
+    "externalAttr": "0o600",
+    "path": "mirrors-v0.2.0-rc.1-windows-x86_64/bin/libcrypto-3-x64.dll",
+    "sha256": "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7",
+    "type": "file"
+   },
+   {
+    "bytes": 1025928,
+    "dateTime": [
+     2026,
+     10,
+     30,
+     0,
+     0,
+     0
+    ],
+    "externalAttr": "0o600",
+    "path": "mirrors-v0.2.0-rc.1-windows-x86_64/bin/libssl-3-x64.dll",
+    "sha256": "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+    "type": "file"
+   },
+   {
+    "bytes": 112591360,
+    "dateTime": [
+     2026,
+     10,
+     30,
+     0,
+     0,
+     0
+    ],
+    "externalAttr": "0o600",
+    "path": "mirrors-v0.2.0-rc.1-windows-x86_64/bin/model_interface_gen.exe",
+    "sha256": "83a2c353af98de0246378ee5c922951b27f1544692df154c7e07144243e1bfbd",
+    "type": "file"
+   },
+   {
+    "bytes": 111192576,
+    "dateTime": [
+     2026,
+     10,
+     30,
+     0,
+     0,
+     0
+    ],
+    "externalAttr": "0o600",
+    "path": "mirrors-v0.2.0-rc.1-windows-x86_64/bin/ModelMirrors.exe",
+    "sha256": "5500df1b9b8a028d93a5a79a13e5aa3dba8e92a5da4ad4fb39f285d097cc6627",
+    "type": "file"
+   },
+   {
+    "bytes": 128488,
+    "dateTime": [
+     2026,
+     10,
+     30,
+     0,
+     0,
+     0
+    ],
+    "externalAttr": "0o600",
+    "path": "mirrors-v0.2.0-rc.1-windows-x86_64/bin/zlib1.dll",
+    "sha256": "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5",
+    "type": "file"
+   },
+   {
+    "bytes": 9690,
+    "dateTime": [
+     2026,
+     10,
+     30,
+     0,
+     0,
+     0
+    ],
+    "externalAttr": "0o600",
+    "path": "mirrors-v0.2.0-rc.1-windows-x86_64/BUILD.json",
+    "sha256": "69e17843f7de338cd993402c4a98e25ec9e8e4686fa64628826a71ea1e4a3aa2",
+    "type": "file"
+   },
+   {
+    "bytes": 217,
+    "dateTime": [
+     2026,
+     10,
+     30,
+     0,
+     0,
+     0
+    ],
+    "externalAttr": "0o600",
+    "path": "mirrors-v0.2.0-rc.1-windows-x86_64/README.txt",
+    "sha256": "5e19200f2f08ae2b301734088640f5892f9462dfd84db090857c291a921b2922",
+    "type": "file"
+   }
+  ],
+  "name": "mirrors-v0.2.0-rc.1-windows-x86_64.zip",
+  "peImports": {
+   "ModelMirrors.exe": {
+    "imports": [
+     "ADVAPI32.dll",
+     "IPHLPAPI.DLL",
+     "KERNEL32.dll",
+     "SHELL32.dll",
+     "USER32.dll",
+     "USERENV.dll",
+     "WS2_32.dll",
+     "bcrypt.dll",
+     "dbghelp.dll",
+     "icu.dll",
+     "libcrypto-3-x64.dll",
+     "libssl-3-x64.dll",
+     "ole32.dll",
+     "ucrtbase.dll"
+    ],
+    "unresolved": []
+   },
+   "libcrypto-3-x64.dll": {
+    "imports": [
+     "ADVAPI32.dll",
+     "CRYPT32.dll",
+     "KERNEL32.dll",
+     "USER32.dll",
+     "WS2_32.dll",
+     "api-ms-win-crt-convert-l1-1-0.dll",
+     "api-ms-win-crt-environment-l1-1-0.dll",
+     "api-ms-win-crt-filesystem-l1-1-0.dll",
+     "api-ms-win-crt-heap-l1-1-0.dll",
+     "api-ms-win-crt-private-l1-1-0.dll",
+     "api-ms-win-crt-runtime-l1-1-0.dll",
+     "api-ms-win-crt-stdio-l1-1-0.dll",
+     "api-ms-win-crt-string-l1-1-0.dll",
+     "api-ms-win-crt-time-l1-1-0.dll",
+     "api-ms-win-crt-utility-l1-1-0.dll"
+    ],
+    "unresolved": []
+   },
+   "libssl-3-x64.dll": {
+    "imports": [
+     "KERNEL32.dll",
+     "WS2_32.dll",
+     "api-ms-win-crt-convert-l1-1-0.dll",
+     "api-ms-win-crt-environment-l1-1-0.dll",
+     "api-ms-win-crt-filesystem-l1-1-0.dll",
+     "api-ms-win-crt-heap-l1-1-0.dll",
+     "api-ms-win-crt-private-l1-1-0.dll",
+     "api-ms-win-crt-runtime-l1-1-0.dll",
+     "api-ms-win-crt-stdio-l1-1-0.dll",
+     "api-ms-win-crt-string-l1-1-0.dll",
+     "api-ms-win-crt-time-l1-1-0.dll",
+     "api-ms-win-crt-utility-l1-1-0.dll",
+     "libcrypto-3-x64.dll"
+    ],
+    "unresolved": []
+   },
+   "model_interface_gen.exe": {
+    "imports": [
+     "ADVAPI32.dll",
+     "IPHLPAPI.DLL",
+     "KERNEL32.dll",
+     "SHELL32.dll",
+     "USER32.dll",
+     "USERENV.dll",
+     "WS2_32.dll",
+     "bcrypt.dll",
+     "dbghelp.dll",
+     "icu.dll",
+     "ole32.dll",
+     "ucrtbase.dll"
+    ],
+    "unresolved": []
+   },
+   "zlib1.dll": {
+    "imports": [
+     "KERNEL32.dll",
+     "msvcrt.dll"
+    ],
+    "unresolved": []
+   }
+  },
+  "repeatArchive": "mirrors-v0.2.0-rc.1-windows-x86_64-repeat.zip",
+  "repeatSha256": "8d971bd9a735a70c3e707f11d6a52c0b02b712404d4381dee1d72f678ecfecf3",
+  "repeatedPackagingIdentical": true,
+  "retentionLocation": ".golden-build/completion-20261030/dist-windows/mirrors-v0.2.0-rc.1-windows-x86_64.zip",
+  "sha256": "8d971bd9a735a70c3e707f11d6a52c0b02b712404d4381dee1d72f678ecfecf3",
+  "versionOutput": "v0.2.0-rc.1"
+ },
+ "build": {
+  "binaries": {
+   "mirror": {
+    "bytes": 111192576,
+    "path": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0\\.lake\\build\\bin\\mirror.exe",
+    "sha256": "5500df1b9b8a028d93a5a79a13e5aa3dba8e92a5da4ad4fb39f285d097cc6627"
+   },
+   "model_interface_gen": {
+    "bytes": 112591360,
+    "path": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0\\.lake\\build\\bin\\model_interface_gen.exe",
+    "sha256": "83a2c353af98de0246378ee5c922951b27f1544692df154c7e07144243e1bfbd"
+   }
+  },
+  "command": "lake build mirror model_interface_gen fixtures_replay diff_cross model_interface_spec stdio_smoke transport_spec jobstore_spec async_resource_spec dpm_sync_spec",
+  "cwd": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+  "exit": 0,
+  "jobsCompleted": 606,
+  "log": "logs/build.log",
+  "logBytes": 93255,
+  "logSha256": "0bbc378ae5fae175591f1382f17be9ea99f0cef3ea827f6f276a625638f05da0",
+  "seconds": 87.4
+ },
+ "claimBoundary": [
+  "staged native Windows build from the exact local tag and eight existing non-model suites",
+  "no full lake test",
+  "no live-model tier",
+  "no reproducible-compilation claim",
+  "no Ubuntu 24.04 runtime acceptance (S3.6)",
+  "no native M4, framework or Windows full qualification (S4/S5)",
+  "no release admission, remote tag, publication, deployment, service replacement, restart or reboot (S6)"
+ ],
+ "environment": {
+  "buildDirectory": "D:/ModelMirrors/staging/s3-windows-20261030-d737aa0",
+  "environment": {
+   "APALACHE_JAR": "unset",
+   "APALACHE_MC": "unset",
+   "CC": "D:/Programs/Perl/c/bin/gcc.exe",
+   "OSSL_INC": "D:/Programs/msys2/ucrt64/include",
+   "OSSL_LIB": "D:/Programs/msys2/ucrt64/lib",
+   "TEMP": "D:\\ModelMirrors\\tmp\\s3-windows-20261030",
+   "TLA2TOOLS_JAR": "unset"
+  },
+  "host": "DESKTOP-6DKB5JD",
+  "openssl": {
+   "includeDir": "D:/Programs/msys2/ucrt64/include",
+   "libcrypto": "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7",
+   "libraryDir": "D:/Programs/msys2/ucrt64/lib",
+   "libssl": "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+   "version": "OpenSSL 3.5.0 8 Apr 2025 (Library: OpenSSL 3.5.0 8 Apr 2025)",
+   "zlib1": null
+  },
+  "os": "Microsoft Windows NT 10.0.19045.0",
+  "powershell": "5.1.19041.6456",
+  "tools": [
+   {
+    "label": "lake",
+    "outputSha256": "a48b2ae54a894044ed0b93d91441c2e7f0d283ce3dc4376514c36ab1dceeb280",
+    "path": "C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe",
+    "present": true,
+    "sha256": "a1aebb13fc502ae9190745c6b3bd2101d0fec39f030cfc07b1993799c2374644",
+    "version": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)"
+   },
+   {
+    "label": "lean",
+    "outputSha256": "9cc0a205cfc62fc2c738b93e352c7c0874e8e3a2894aae233dad6fd2c658bf99",
+    "path": "C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.exe",
+    "present": true,
+    "sha256": "dd86e9b24990b1da425ea4af910f016e4db8f9a25c9ddad27bc6bee3690e677f",
+    "version": "Lean (version 4.33.0, x86_64-w64-windows-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)"
+   },
+   {
+    "label": "gcc",
+    "outputSha256": "ee7a4c9f7201ead5d34ae127fe62178fa0e6545d904fea971df05934c1ae4488",
+    "path": "D:\\Programs\\Perl\\c\\bin\\gcc.exe",
+    "present": true,
+    "sha256": "34a92e71f6814bd936135d0bd82b80b63daaf445791bba4a6bba93075235e8a4",
+    "version": "gcc.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r8) 13.2.0"
+   },
+   {
+    "label": "python",
+    "outputSha256": "e6b49afcda8a7e1f9a242b200c21d54e1607b2ee0072eeae78ecbdd27be866ae",
+    "path": "D:\\Programs\\Python310\\python.exe",
+    "present": true,
+    "sha256": "3cce33d75d6fdae4e004d0bdf149320b3147482a9caf370079dcb9c191a1b260",
+    "version": "Python 3.10.11"
+   },
+   {
+    "label": "git",
+    "outputSha256": "ed871e4cd38f9f099af6c54fef23cc904a84844bf9a9b78ef361bea9c72b1a1c",
+    "path": "C:\\Program Files\\Git\\cmd\\git.exe",
+    "present": true,
+    "sha256": "81ef35ae005ca9318018d18e3327578ce939fb99feaad6b2d7c8ab15f3de8db5",
+    "version": "git version 2.54.0.windows.1"
+   }
+  ]
+ },
+ "gates": {
+  "allExitZero": true,
+  "count": 8,
+  "environment": {
+   "APALACHE_JAR": "unset",
+   "APALACHE_MC": "unset",
+   "TLA2TOOLS_JAR": "unset",
+   "opensslCli": "D:\\Programs\\msys2\\ucrt64\\bin\\openssl.exe\r\nD:\\Programs\\Perl\\c\\bin\\openssl.exe\r\nC:\\Program Files\\Git\\mingw64\\bin\\openssl.exe\r\nC:\\Program Files\\Git\\usr\\bin\\openssl.exe",
+   "pathPrepend": "D:\\Programs\\msys2\\ucrt64\\bin;C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin;D:\\Programs\\Perl\\c\\bin"
+  },
+  "rows": [
+   {
+    "command": ".lake/build/bin/fixtures_replay.exe",
+    "cwd": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+    "exit": 0,
+    "finishedUtc": "2026-10-30T04:26:29Z",
+    "gate": "fixtures_replay",
+    "log": "logs/fixtures_replay.log",
+    "logBytes": 39,
+    "logSha256": "a1ac3ec1016e3876374f06b9344c078979bf1517ad2eb01f2f37f1e21c54528b",
+    "seconds": 0,
+    "startedUtc": "2026-10-30T04:26:29Z"
+   },
+   {
+    "command": ".lake/build/bin/diff_cross.exe",
+    "cwd": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+    "exit": 0,
+    "finishedUtc": "2026-10-30T04:26:29Z",
+    "gate": "diff_cross",
+    "log": "logs/diff_cross.log",
+    "logBytes": 92,
+    "logSha256": "c756c8eca2e4314e3c42a5b2b6ecf284205075a8f820e9904c4d424a9674f6c7",
+    "seconds": 0.1,
+    "startedUtc": "2026-10-30T04:26:29Z"
+   },
+   {
+    "command": ".lake/build/bin/model_interface_spec.exe",
+    "cwd": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+    "exit": 0,
+    "finishedUtc": "2026-10-30T04:26:30Z",
+    "gate": "model_interface_spec",
+    "log": "logs/model_interface_spec.log",
+    "logBytes": 622,
+    "logSha256": "115609a409cb81cbe2bb938de26e52004835c819dff7697c0ab3b7d6f26ea266",
+    "seconds": 0.5,
+    "startedUtc": "2026-10-30T04:26:29Z"
+   },
+   {
+    "command": ".lake/build/bin/stdio_smoke.exe",
+    "cwd": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+    "exit": 0,
+    "finishedUtc": "2026-10-30T04:26:30Z",
+    "gate": "stdio_smoke",
+    "log": "logs/stdio_smoke.log",
+    "logBytes": 312,
+    "logSha256": "150e212d9d245bbe9c356ea1df8578e4eb92f38e38b653139d13c56065779cc6",
+    "seconds": 0.2,
+    "startedUtc": "2026-10-30T04:26:30Z"
+   },
+   {
+    "command": ".lake/build/bin/transport_spec.exe",
+    "cwd": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+    "exit": 0,
+    "finishedUtc": "2026-10-30T04:26:38Z",
+    "gate": "transport_spec",
+    "log": "logs/transport_spec.log",
+    "logBytes": 3990,
+    "logSha256": "f6962354deb979257d64546f374d934814eba22d43e43a3b8257a8d68f515420",
+    "seconds": 7.9,
+    "startedUtc": "2026-10-30T04:26:30Z"
+   },
+   {
+    "command": ".lake/build/bin/jobstore_spec.exe",
+    "cwd": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+    "exit": 0,
+    "finishedUtc": "2026-10-30T04:26:39Z",
+    "gate": "jobstore_spec",
+    "log": "logs/jobstore_spec.log",
+    "logBytes": 505,
+    "logSha256": "f019ed3c03f0d635f84059339f6cb6a1903c1188393eb00bc0a05afde6824f6c",
+    "seconds": 0.9,
+    "startedUtc": "2026-10-30T04:26:38Z"
+   },
+   {
+    "command": ".lake/build/bin/async_resource_spec.exe",
+    "cwd": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+    "exit": 0,
+    "finishedUtc": "2026-10-30T04:26:39Z",
+    "gate": "async_resource_spec",
+    "log": "logs/async_resource_spec.log",
+    "logBytes": 28,
+    "logSha256": "e14caa75aaa0068084e7fd6deddd639a29ed223da67c4480ffca7e11ce6f7dd8",
+    "seconds": 0,
+    "startedUtc": "2026-10-30T04:26:39Z"
+   },
+   {
+    "command": ".lake/build/bin/dpm_sync_spec.exe",
+    "cwd": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+    "exit": 0,
+    "finishedUtc": "2026-10-30T04:26:39Z",
+    "gate": "dpm_sync_spec",
+    "log": "logs/dpm_sync_spec.log",
+    "logBytes": 34,
+    "logSha256": "140867b31de2908bb87a6df57305c60ccd6da439fbbd9c7f07bc5ea4db575302",
+    "seconds": 0,
+    "startedUtc": "2026-10-30T04:26:39Z"
+   }
+  ],
+  "transportInitialFailure": {
+   "bytes": 2388,
+   "cause": "OpenSSL CLI resolution: the prepared PATH put a non-conforming openssl ahead of the OpenSSL 3 CLI, so throwaway PKI signing failed; corrected by prepending the OpenSSL 3.5.0 msys2 ucrt64 bin directory",
+   "log": "logs/transport_spec-initial-failure.log",
+   "sha256": "434c4d0d834da30b97d0f1773a84c49bb929ec8bb8927843cd591c12eb0b1263"
+  }
+ },
+ "generatedAtUtc": "2026-10-30T04:35:04Z",
+ "handoff": "Plans/completion-s3-windows-executor-handoff-2026-10-30.md",
+ "offlineDependency": {
+  "capturedPath": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0\\.lake\\packages\\batteries",
+  "contentTreeDigest": "1f6896b77a7e0690d9083ec13ec7c35252cfb9e73d0b94070fdce3ea2dc45354",
+  "fileCount": 3962,
+  "lakefileSha256": "acadcd8beb13a53a4ac9399e6706c829309d2380f338d13b037886666f978015",
+  "leanToolchain": "leanprover/lean4:v4.33.0",
+  "manifestInputRev": "v4.33.0",
+  "manifestRev": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+  "name": "batteries",
+  "note": "offline copy of the batteries package used by the 2026-10-29 staging tree; bound by content digest because the copy has no VCS metadata",
+  "retainedSourcePath": "D:/ModelMirrors/releases/20261029-completion-7e9a27d/source/.lake/packages/batteries",
+  "schema": "mirrors.s3.windows-offline-dependency/v1"
+ },
+ "production": {
+  "before": {
+   "files": {
+    "D:\\ModelMirrors\\bin\\ModelMirrors.exe": {
+     "bytes": 111196672,
+     "hashOnly": false,
+     "lastWriteUtc": "2026-10-26T04:14:24Z",
+     "sha256": "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc"
+    },
+    "D:\\ModelMirrors\\bin\\libcrypto-3-x64.dll": {
+     "bytes": 5689843,
+     "hashOnly": false,
+     "lastWriteUtc": "2026-09-18T02:27:16Z",
+     "sha256": "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7"
+    },
+    "D:\\ModelMirrors\\bin\\libssl-3-x64.dll": {
+     "bytes": 1025928,
+     "hashOnly": false,
+     "lastWriteUtc": "2026-09-18T02:27:16Z",
+     "sha256": "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c"
+    },
+    "D:\\ModelMirrors\\bin\\zlib1.dll": {
+     "bytes": 128488,
+     "hashOnly": false,
+     "lastWriteUtc": "2026-09-18T02:34:55Z",
+     "sha256": "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5"
+    },
+    "D:\\ModelMirrors\\certs\\ca.crt": {
+     "bytes": 1150,
+     "hashOnly": false,
+     "lastWriteUtc": "2026-08-15T12:50:06Z",
+     "sha256": "f04a3ce394cdf041ddd4c32aad868bc40ace79c00712aead6a9445adcebc9c6e"
+    },
+    "D:\\ModelMirrors\\certs\\server.crt": {
+     "bytes": 1212,
+     "hashOnly": false,
+     "lastWriteUtc": "2026-08-15T12:50:06Z",
+     "sha256": "03f98bb439fb7f9100cbbaf5fc8562e3629f17e85bc7e807ce26bd239e82c854"
+    },
+    "D:\\ModelMirrors\\certs\\server.key": {
+     "bytes": 1732,
+     "hashOnly": true,
+     "lastWriteUtc": "2026-08-15T12:50:06Z",
+     "sha256": "db99faaca76a98f8d77c6ae4491e714f69c834b866b334f038ff7ffa242a53ef"
+    }
+   },
+   "processes": [
+    {
+     "commandLine": "\"D:\\ModelMirrors\\bin\\ModelMirrors.exe\" --server 8999 --tls --cert D:\\ModelMirrors\\certs\\server.crt --key D:\\ModelMirrors\\certs\\server.key --ca D:\\ModelMirrors\\certs\\ca.crt --jobs 4",
+     "created": "/Date(1792988453974)/",
+     "path": "D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+     "pid": 9920
+    }
+   ],
+   "serviceStatus": "Running"
+  },
+  "configurationHashes": {
+   "caCrt": "f04a3ce394cdf041ddd4c32aad868bc40ace79c00712aead6a9445adcebc9c6e",
+   "serverCrt": "03f98bb439fb7f9100cbbaf5fc8562e3629f17e85bc7e807ce26bd239e82c854",
+   "serverKeyHashOnly": "db99faaca76a98f8d77c6ae4491e714f69c834b866b334f038ff7ffa242a53ef"
+  },
+  "pid": 9920,
+  "pidUnchanged": true,
+  "serviceStatus": "Running",
+  "sha256": "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+  "taskOwnedDescendantCount": 0,
+  "unchanged": true
+ },
+ "schema": "mirrors.s3.windows-binding/v1",
+ "source": {
+  "archive": "mirrors-v0.2.0-rc.1-source.tar.gz",
+  "archiveBytes": 21871950,
+  "archiveRetention": ".golden-build/completion-20261030/windows-build/input/mirrors-v0.2.0-rc.1-source.tar.gz",
+  "archiveSha256": "9de8226a0738d134c7ed0f0b6e3ebbad375f9169191331eaf204b1f4a8abe274",
+  "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+  "contentTreeDigest": "e54a22e0ca262b236973db2412f7b7e46fdc5d9489bcfc95e15822005d3b3b40",
+  "extractionVerifiedOnHost": {
+   "archive": "mirrors-v0.2.0-rc.1-source.tar.gz",
+   "archiveBytes": 21871950,
+   "archiveSha256": "9de8226a0738d134c7ed0f0b6e3ebbad375f9169191331eaf204b1f4a8abe274",
+   "contentTreeDigest": "e54a22e0ca262b236973db2412f7b7e46fdc5d9489bcfc95e15822005d3b3b40",
+   "embeddedVersion": "0.2.0-rc.1",
+   "extractedAt": "2026-10-30T04:18:13Z",
+   "extractedDirectory": "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+   "fileCount": 9207,
+   "gitDirectoryPresent": false,
+   "schema": "mirrors.s3.windows-source-verification/v1",
+   "stagingDirectory": "D:/ModelMirrors/staging/s3-windows-20261030-d737aa0"
+  },
+  "fileCount": 9207,
+  "overlay": false,
+  "tag": "v0.2.0-rc.1",
+  "tagObject": "f135f2809e6612d158c5be176c7ea6429b9d51f3",
+  "tree": "8d2de2561d25c219e685bb46980080c03d7d1c98"
+ },
+ "state": "bound"
+}

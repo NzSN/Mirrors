@@ -1,0 +1,136 @@
+{
+ "schema": "mirrors.s3.reconciled-ledger/v1",
+ "producedAt": "2026-10-30",
+ "authorizedScope": "Evidence reconciliation only under Plans/completion-s3-reconcile-executor-handoff-2026-10-30.md",
+ "supersedes": {
+  "record": "Plans/completion-s3-package-evidence-20261030/s3-ledger.json",
+  "sha256": "153d2a592afd960e2e17825b83c5836c49545e07cad8a9148a0ed514613a839c"
+ },
+ "rows": [
+  {
+   "id": "S3.1",
+   "currentState": "passed",
+   "claimLevel": "local-tag-only",
+   "exitCriterion": "Exact tag name/commit approved; no remote tag mutation",
+   "detail": "HEAD and the approved S2 commit are d737aa0886b9d406e391955756922d9d735d7ec1. Shell/Version.lean at the tag embeds 0.2.0-rc.1. The annotated local-only tag v0.2.0-rc.1 (tag object f135f2809e6612d158c5be176c7ea6429b9d51f3) peels to that commit. Reconciliation re-observed the tag object, type, peeled commit, tree and version string; the remote absence is inherited from the input records and was not re-observed.",
+   "evidence": [
+    "package-set.json#tag",
+    "package-set.json#source",
+    "logs/reconciliation-identity.log",
+    "Plans/completion-s3-package-evidence-20261030/package-set.json"
+   ]
+  },
+  {
+   "id": "S3.2",
+   "currentState": "passed",
+   "claimLevel": "local-tag-only",
+   "exitCriterion": "Release builder identity preconditions hold",
+   "detail": "The retained clean checkout .golden-build/completion-20261030/release-source was created from the shared repository, detached at refs/tags/v0.2.0-rc.1, with empty git status and tag peel equal to d737aa0. The tag tree is 8d2de2561d25c219e685bb46980080c03d7d1c98.",
+   "evidence": [
+    "package-set.json#artifacts[0].sourceBinding",
+    "logs/reconciliation-identity.log"
+   ]
+  },
+  {
+   "id": "S3.3",
+   "currentState": "passed",
+   "claimLevel": "release-tooling-unit",
+   "exitCriterion": "All release identity/package/refusal tests pass",
+   "detail": "The retained release-tooling log records 11 unittest cases in the clean tagged checkout tools/release, exit 0. Reconciliation rechecked the log inventory hash through the input record verifier; no test was re-executed and no source was rebuilt.",
+   "evidence": [
+    "Plans/completion-s3-package-evidence-20261030/logs/s3.3-release-unittests.log"
+   ]
+  },
+  {
+   "id": "S3.4",
+   "currentState": "passed",
+   "claimLevel": "local-package-build",
+   "exitCriterion": "Build and focused non-model gates pass; source identity is stable before/after",
+   "detail": "release.py build from the clean tagged checkout produced both Linux binaries. fixtures_replay, diff_cross, model_interface_spec, stdio_smoke, transport_spec, check-client-framing.py and the relocated-binary CLI smoke all passed in the retained non-sandbox run. No rebuild was performed during reconciliation.",
+   "evidence": [
+    "Plans/completion-s3-package-evidence-20261030/logs/s3.4-build-linux.log"
+   ]
+  },
+  {
+   "id": "S3.5",
+   "currentState": "passed",
+   "claimLevel": "local-package-verification",
+   "exitCriterion": "Archive and both manifests bind the same tag, commit, binaries, and prerequisites",
+   "detail": "Linux archive mirrors-v0.2.0-rc.1-linux-x86_64.tar.gz is 72,209,232 bytes, SHA-256 39623040464f71bcaff5f1b1002f93b1eec6d19e0bbecabc9a141b523d90b60a, six entries (four files, two directories). Embedded and external BUILD.json are byte-identical and bind v0.2.0-rc.1 at d737aa0. Binary digests equal the manifest; the dynamic-library closure is limited to libc/libdl/libm/libpthread/librt; no Lean source or credential material is present.",
+   "evidence": [
+    "package-set.json#artifacts[0]",
+    "Plans/completion-s3-package-evidence-20261030/logs/s3.5-archive-member-audit.json",
+    "Plans/completion-s3-package-evidence-20261030/logs/s3.5-linux-artifact-verification.log",
+    "Plans/completion-s3-package-evidence-20261030/logs/s3.5-checksums.log"
+   ]
+  },
+  {
+   "id": "S3.6",
+   "currentState": "awaiting-external-input",
+   "claimLevel": "none",
+   "exitCriterion": "Isolated runtime smoke passes; observed host is actually Ubuntu 24.04",
+   "externalBlocker": "A real Ubuntu 24.04 host or container without Lean and without a source checkout.",
+   "detail": "No admitted Ubuntu 24.04 runtime exists on this coordinator (Ubuntu 26.04.1 LTS, WSL2, glibc 2.43). The retained release.py check-archive run on Ubuntu 26.04 passed but remains diagnostic only. The maximum required GLIBC symbol version is 2.25, compatible with Ubuntu 24.04 glibc 2.39, but that is static evidence, not a runtime smoke. This row stays open after reconciliation.",
+   "evidence": [
+    "Plans/completion-s3-package-evidence-20261030/logs/s3.6-check-archive-ubuntu-26.04.log",
+    "package-set.json#artifacts[0].validation.ubuntu2404IsolatedSmoke"
+   ]
+  },
+  {
+   "id": "S3.7",
+   "currentState": "passed",
+   "claimLevel": "s2-bound-windows-native-build",
+   "exitCriterion": "Windows archive and binary/DLL hashes are explicitly bound or rejected",
+   "detail": "Superseding result: the Windows operator host built from an archive of the exact local annotated tag v0.2.0-rc.1 (commit d737aa0, tree 8d2de2561d25c219e685bb46980080c03d7d1c98), with no overlay. The source archive is 21,871,950 bytes, SHA-256 9de8226a0738d134c7ed0f0b6e3ebbad375f9169191331eaf204b1f4a8abe274, 9,207 files, content tree digest e54a22e0ca262b236973db2412f7b7e46fdc5d9489bcfc95e15822005d3b3b40. Native lake build exited 0 with 606 jobs.",
+   "supersededAttempt": {
+    "state": "failed",
+    "reason": "October 29 staged ZIP was built from 7e9a27d + overlay 2777aaa3\u2026. Against d737aa0, 8,790 of 8,810 manifest files were identical, 20 differed and 12 of those were behavioral tooling, tooling tests or interop-client sources, so the strict reuse condition was not met.",
+    "record": "Plans/completion-s3-package-evidence-20261030/",
+    "ledgerSha256": "153d2a592afd960e2e17825b83c5836c49545e07cad8a9148a0ed514613a839c",
+    "windowsBindingSha256": "1b9f32c476149c1584b85dfcb0c278dfb9d2b4cde0255bd957550df66c1e905c",
+    "historicalRow": "package-set.json#supersededArtifacts[0]"
+   },
+   "evidence": [
+    "package-set.json#artifacts[1].sourceBinding",
+    "Plans/completion-s3-windows-evidence-20261030/receipts/source-verification.json",
+    "Plans/completion-s3-windows-evidence-20261030/logs/build.log",
+    "Plans/completion-s3-windows-evidence-20261030/logs/s3.7-remote-tag-observation.log"
+   ]
+  },
+  {
+   "id": "S3.8",
+   "currentState": "passed",
+   "claimLevel": "s2-bound-windows-package",
+   "exitCriterion": "Windows ZIP receipt remains limited to packaging and its actual gates",
+   "detail": "Superseding package: mirrors-v0.2.0-rc.1-windows-x86_64.zip is 73,725,020 bytes, SHA-256 8d971bd9a735a70c3e707f11d6a52c0b02b712404d4381dee1d72f678ecfecf3, seven files. Every member hash equals the embedded BUILD.json and the external manifest (69e17843f7de338cd993402c4a98e25ec9e8e4686fa64628826a71ea1e4a3aa2). Two independent packagings are byte-identical. Both executables import only system DLLs plus bundled OpenSSL 3 DLLs; no unresolved imports; no credential material. Eight non-model gates exited 0. This supersedes the earlier packaging-only-unbound row.",
+   "supersedes": {
+    "record": "Plans/completion-s3-package-evidence-20261030/s3-ledger.json",
+    "row": "S3.8",
+    "previousState": "passed",
+    "previousClaimLevel": "packaging-only-unbound"
+   },
+   "evidence": [
+    "package-set.json#artifacts[1]",
+    "Plans/completion-s3-windows-evidence-20261030/package-receipt.json",
+    "Plans/completion-s3-windows-evidence-20261030/receipts/gates.json",
+    "Plans/completion-s3-windows-evidence-20261030/receipts/windows-package-archive.json"
+   ]
+  },
+  {
+   "id": "S3.9",
+   "currentState": "partial",
+   "claimLevel": "linux-and-windows-bound-package-set",
+   "exitCriterion": "Complete reviewable Linux/Windows artifact set; no publication or deployment",
+   "detail": "package-set.json schema mirrors.s3.package-set/v2 names both accepted artifacts: the Linux tar.gz bound to the clean tagged checkout and the Windows ZIP bound to the exact-tag source archive; each row records source/build identity, binary hashes, runtime prerequisites, validation scope and retention. The rejected October 29 Windows row remains under supersededArtifacts. S3.9 is partial solely because S3.6 is open, not because a Windows artifact is missing; no publication or deployment is claimed.",
+   "openDependencies": [
+    "S3.6"
+   ],
+   "evidence": [
+    "package-set.json",
+    "logs/input-s3-package-verifier.log",
+    "logs/input-s3-windows-verifier.log",
+    "logs/reconciled-verifier.log"
+   ]
+  }
+ ]
+}

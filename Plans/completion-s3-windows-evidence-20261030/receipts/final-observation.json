@@ -1,0 +1,87 @@
+﻿{
+    "schema":  "mirrors.s3.windows-observation/v1",
+    "capturedAtUtc":  "2026-10-30T04:35:33Z",
+    "production":  [
+                       {
+                           "pid":  9920,
+                           "path":  "D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+                           "created":  "\/Date(1792988453974)\/",
+                           "commandLine":  "\"D:\\ModelMirrors\\bin\\ModelMirrors.exe\" --server 8999 --tls --cert D:\\ModelMirrors\\certs\\server.crt --key D:\\ModelMirrors\\certs\\server.key --ca D:\\ModelMirrors\\certs\\ca.crt --jobs 4"
+                       }
+                   ],
+    "serviceStatus":  "Running",
+    "files":  {
+                  "D:\\ModelMirrors\\bin\\ModelMirrors.exe":  {
+                                                                  "sha256":  "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+                                                                  "bytes":  111196672,
+                                                                  "lastWriteUtc":  "2026-10-26T04:14:24Z",
+                                                                  "hashOnly":  false
+                                                              },
+                  "D:\\ModelMirrors\\bin\\libcrypto-3-x64.dll":  {
+                                                                     "sha256":  "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7",
+                                                                     "bytes":  5689843,
+                                                                     "lastWriteUtc":  "2026-09-18T02:27:16Z",
+                                                                     "hashOnly":  false
+                                                                 },
+                  "D:\\ModelMirrors\\bin\\libssl-3-x64.dll":  {
+                                                                  "sha256":  "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+                                                                  "bytes":  1025928,
+                                                                  "lastWriteUtc":  "2026-09-18T02:27:16Z",
+                                                                  "hashOnly":  false
+                                                              },
+                  "D:\\ModelMirrors\\bin\\zlib1.dll":  {
+                                                           "sha256":  "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5",
+                                                           "bytes":  128488,
+                                                           "lastWriteUtc":  "2026-09-18T02:34:55Z",
+                                                           "hashOnly":  false
+                                                       },
+                  "D:\\ModelMirrors\\certs\\server.crt":  {
+                                                              "sha256":  "03f98bb439fb7f9100cbbaf5fc8562e3629f17e85bc7e807ce26bd239e82c854",
+                                                              "bytes":  1212,
+                                                              "lastWriteUtc":  "2026-08-15T12:50:06Z",
+                                                              "hashOnly":  false
+                                                          },
+                  "D:\\ModelMirrors\\certs\\ca.crt":  {
+                                                          "sha256":  "f04a3ce394cdf041ddd4c32aad868bc40ace79c00712aead6a9445adcebc9c6e",
+                                                          "bytes":  1150,
+                                                          "lastWriteUtc":  "2026-08-15T12:50:06Z",
+                                                          "hashOnly":  false
+                                                      },
+                  "D:\\ModelMirrors\\certs\\server.key":  {
+                                                              "sha256":  "db99faaca76a98f8d77c6ae4491e714f69c834b866b334f038ff7ffa242a53ef",
+                                                              "bytes":  1732,
+                                                              "lastWriteUtc":  "2026-08-15T12:50:06Z",
+                                                              "hashOnly":  true
+                                                          }
+              },
+    "productionExecutableUnchanged":  true,
+    "productionPidUnchanged":  true,
+    "configurationHashes":  {
+                                "serverCrt":  "03f98bb439fb7f9100cbbaf5fc8562e3629f17e85bc7e807ce26bd239e82c854",
+                                "caCrt":  "f04a3ce394cdf041ddd4c32aad868bc40ace79c00712aead6a9445adcebc9c6e",
+                                "serverKeyHashOnly":  "db99faaca76a98f8d77c6ae4491e714f69c834b866b334f038ff7ffa242a53ef"
+                            },
+    "taskOwnedDescendants":  [
+
+                             ],
+    "observerProcesses":  [
+                              {
+                                  "pid":  24892,
+                                  "name":  "bash.exe",
+                                  "commandLine":  "\"c:\\program files\\git\\bin\\bash.exe\" -c \"powershell -NoProfile -ExecutionPolicy Bypass -File D:/ModelMirrors/staging/s3-windows-20261030-d737aa0/final-check.ps1\""
+                              },
+                              {
+                                  "pid":  20824,
+                                  "name":  "bash.exe",
+                                  "commandLine":  "\"C:\\Program Files\\Git\\bin\\..\\usr\\bin\\bash.exe\" -c \"powershell -NoProfile -ExecutionPolicy Bypass -File D:/ModelMirrors/staging/s3-windows-20261030-d737aa0/final-check.ps1\""
+                              },
+                              {
+                                  "pid":  22996,
+                                  "name":  "powershell.exe",
+                                  "commandLine":  "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -NoProfile -ExecutionPolicy Bypass -File D:/ModelMirrors/staging/s3-windows-20261030-d737aa0/final-check.ps1"
+                              }
+                          ],
+    "taskOwnedDescendantCount":  0,
+    "packageZipSha256":  "8d971bd9a735a70c3e707f11d6a52c0b02b712404d4381dee1d72f678ecfecf3",
+    "repeatedPackagingIdentical":  true
+}

@@ -326,7 +326,8 @@ def runtime_tree_requirements(profile_id: str, profiles: dict[str, dict[str, Any
 
 
 def validate_locks(root: Path, framework_catalog_bin: Path | None = None,
-    framework_catalog_sha256: str | None = None) -> dict[str, Any]:
+    framework_catalog_sha256: str | None = None,
+    catalog_path: Path | None = None) -> dict[str, Any]:
     lock_files = {
         "profiles-lock": root / "profiles.json",
         "component-lock": root / "component-lock.json",
@@ -336,7 +337,8 @@ def validate_locks(root: Path, framework_catalog_bin: Path | None = None,
     profiles_doc = _decode_json(lock_files["profiles-lock"], lock_raw["profiles-lock"])
     components_doc = _decode_json(lock_files["component-lock"], lock_raw["component-lock"])
     dependencies_doc = _decode_json(lock_files["dependency-lock"], lock_raw["dependency-lock"])
-    catalog_path = root.parents[1] / "catalog/framework-catalog.json"
+    selected_catalog_path = catalog_path or (root.parents[1] / "catalog/framework-catalog.json")
+    catalog_path = selected_catalog_path
     catalog_raw = _read_bounded_regular(catalog_path)
     catalog = _decode_json(catalog_path, catalog_raw)
     catalog_bin = framework_catalog_bin or (root.parents[1] / ".lake/build/bin/framework_catalog")

@@ -263,6 +263,22 @@ def observed_package_version(directory: Path, expected_name: str) -> str:
     return version
 
 
+def observed_virtualization(release_path: Path | None = None) -> str | None:
+    """Observe the host virtualization family without claiming a catalog target."""
+    path = release_path or Path("/proc/sys/kernel/osrelease")
+    try:
+        release = path.read_text(encoding="utf-8", errors="replace").strip()
+    except OSError:
+        return None
+    return "wsl2" if "microsoft-standard-wsl2" in release.lower() else None
+
+
+def require_profile_host(catalog_profile_id: str, virtualization: str | None) -> None:
+    """Refuse a WSL2 profile on a host that is not the observed WSL2 kernel family."""
+    if "wsl2" in catalog_profile_id.lower() and virtualization != "wsl2":
+        raise ValueError(f"profile requires an observed WSL2 host: {catalog_profile_id}")
+
+
 def observed_platform(profile_id: str) -> dict:
     backends = {"checked-replay-local": "local-process",
         "checked-replay-gate": "linux-bubblewrap-v1", "fresh-trace": "local-process"}
@@ -282,6 +298,8 @@ def observed_platform(profile_id: str) -> dict:
 
 
 def materialize(cache: Path, runtime: Path, manifest: dict, contract: dict) -> dict:
+    profile = contract["profiles"][manifest["profileId"]]
+    require_profile_host(profile["catalogProfileId"], observed_virtualization())
     runtime.mkdir(mode=0o700)
     artifacts = {entry["artifactId"]: cache / entry["path"] for entry in manifest["artifacts"]}
     binaries = runtime / "bin"; binaries.mkdir()

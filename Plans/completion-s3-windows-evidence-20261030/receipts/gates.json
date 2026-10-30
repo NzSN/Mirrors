@@ -1,0 +1,109 @@
+{
+    "schema":  "mirrors.s3.windows-gates/v1",
+    "cwd":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+    "environment":  {
+                        "pathPrepend":  "D:\\Programs\\msys2\\ucrt64\\bin;C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin;D:\\Programs\\Perl\\c\\bin",
+                        "opensslCli":  "D:\\Programs\\msys2\\ucrt64\\bin\\openssl.exe\r\nD:\\Programs\\Perl\\c\\bin\\openssl.exe\r\nC:\\Program Files\\Git\\mingw64\\bin\\openssl.exe\r\nC:\\Program Files\\Git\\usr\\bin\\openssl.exe",
+                        "APALACHE_MC":  "unset",
+                        "APALACHE_JAR":  "unset",
+                        "TLA2TOOLS_JAR":  "unset"
+                    },
+    "gates":  [
+                  {
+                      "gate":  "fixtures_replay",
+                      "command":  ".lake/build/bin/fixtures_replay.exe",
+                      "cwd":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+                      "exit":  0,
+                      "startedUtc":  "2026-10-30T04:26:29Z",
+                      "finishedUtc":  "2026-10-30T04:26:29Z",
+                      "seconds":  0,
+                      "log":  "logs/fixtures_replay.log",
+                      "logBytes":  39,
+                      "logSha256":  "a1ac3ec1016e3876374f06b9344c078979bf1517ad2eb01f2f37f1e21c54528b"
+                  },
+                  {
+                      "gate":  "diff_cross",
+                      "command":  ".lake/build/bin/diff_cross.exe",
+                      "cwd":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+                      "exit":  0,
+                      "startedUtc":  "2026-10-30T04:26:29Z",
+                      "finishedUtc":  "2026-10-30T04:26:29Z",
+                      "seconds":  0.1,
+                      "log":  "logs/diff_cross.log",
+                      "logBytes":  92,
+                      "logSha256":  "c756c8eca2e4314e3c42a5b2b6ecf284205075a8f820e9904c4d424a9674f6c7"
+                  },
+                  {
+                      "gate":  "model_interface_spec",
+                      "command":  ".lake/build/bin/model_interface_spec.exe",
+                      "cwd":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+                      "exit":  0,
+                      "startedUtc":  "2026-10-30T04:26:29Z",
+                      "finishedUtc":  "2026-10-30T04:26:30Z",
+                      "seconds":  0.5,
+                      "log":  "logs/model_interface_spec.log",
+                      "logBytes":  622,
+                      "logSha256":  "115609a409cb81cbe2bb938de26e52004835c819dff7697c0ab3b7d6f26ea266"
+                  },
+                  {
+                      "gate":  "stdio_smoke",
+                      "command":  ".lake/build/bin/stdio_smoke.exe",
+                      "cwd":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+                      "exit":  0,
+                      "startedUtc":  "2026-10-30T04:26:30Z",
+                      "finishedUtc":  "2026-10-30T04:26:30Z",
+                      "seconds":  0.2,
+                      "log":  "logs/stdio_smoke.log",
+                      "logBytes":  312,
+                      "logSha256":  "150e212d9d245bbe9c356ea1df8578e4eb92f38e38b653139d13c56065779cc6"
+                  },
+                  {
+                      "gate":  "transport_spec",
+                      "command":  ".lake/build/bin/transport_spec.exe",
+                      "cwd":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+                      "exit":  0,
+                      "startedUtc":  "2026-10-30T04:26:30Z",
+                      "finishedUtc":  "2026-10-30T04:26:38Z",
+                      "seconds":  7.9,
+                      "log":  "logs/transport_spec.log",
+                      "logBytes":  3990,
+                      "logSha256":  "f6962354deb979257d64546f374d934814eba22d43e43a3b8257a8d68f515420"
+                  },
+                  {
+                      "gate":  "jobstore_spec",
+                      "command":  ".lake/build/bin/jobstore_spec.exe",
+                      "cwd":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+                      "exit":  0,
+                      "startedUtc":  "2026-10-30T04:26:38Z",
+                      "finishedUtc":  "2026-10-30T04:26:39Z",
+                      "seconds":  0.9,
+                      "log":  "logs/jobstore_spec.log",
+                      "logBytes":  505,
+                      "logSha256":  "f019ed3c03f0d635f84059339f6cb6a1903c1188393eb00bc0a05afde6824f6c"
+                  },
+                  {
+                      "gate":  "async_resource_spec",
+                      "command":  ".lake/build/bin/async_resource_spec.exe",
+                      "cwd":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+                      "exit":  0,
+                      "startedUtc":  "2026-10-30T04:26:39Z",
+                      "finishedUtc":  "2026-10-30T04:26:39Z",
+                      "seconds":  0,
+                      "log":  "logs/async_resource_spec.log",
+                      "logBytes":  28,
+                      "logSha256":  "e14caa75aaa0068084e7fd6deddd639a29ed223da67c4480ffca7e11ce6f7dd8"
+                  },
+                  {
+                      "gate":  "dpm_sync_spec",
+                      "command":  ".lake/build/bin/dpm_sync_spec.exe",
+                      "cwd":  "D:\\ModelMirrors\\staging\\s3-windows-20261030-d737aa0\\mirrors-d737aa0",
+                      "exit":  0,
+                      "startedUtc":  "2026-10-30T04:26:39Z",
+                      "finishedUtc":  "2026-10-30T04:26:39Z",
+                      "seconds":  0,
+                      "log":  "logs/dpm_sync_spec.log",
+                      "logBytes":  34,
+                      "logSha256":  "140867b31de2908bb87a6df57305c60ccd6da439fbbd9c7f07bc5ea4db575302"
+                  }
+              ]
+}

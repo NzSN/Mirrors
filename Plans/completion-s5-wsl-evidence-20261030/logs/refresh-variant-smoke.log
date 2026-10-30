@@ -1,0 +1,6 @@
+== variant refresh ==
+IDENTITY REFRESH GREEN catalogSha256=a4ffe2eb86c3fd646afc7fc570358694e96f862a5c61c572672991c3a7c80cc7
+exit=0
+== validate refreshed variant ==
+selection a4ffe2eb86c3fd646afc7fc570358694e96f862a5c61c572672991c3a7c80cc7
+profiles ['checked-replay-gate', 'checked-replay-local', 'fresh-trace']

@@ -1,0 +1,126 @@
+{
+  "archive": {
+    "binaries": {
+      "mirror": "1140d6fdfb9b1a619df13ecf3dd38791d25b5b72f04a04accf656c507e43e34a",
+      "model_interface_gen": "f7bd3c9927c1b2ddfc94ba20cc68ddaf9e6ea00d5eddf3b0b0cdeeac03e6ace2"
+    },
+    "bytes": 72209232,
+    "entries": 6,
+    "expectedSha256": "39623040464f71bcaff5f1b1002f93b1eec6d19e0bbecabc9a141b523d90b60a",
+    "externalBuildManifest": {
+      "bytes": 2874,
+      "identicalToEmbedded": true,
+      "path": ".golden-build/completion-20261030/dist-linux/mirrors-v0.2.0-rc.1-linux-x86_64.build.json",
+      "sha256": "28beda2c810c085e28b0112d9e8bed5443a5cd64fe7aa62dcf67c0058db8da5a"
+    },
+    "files": 4,
+    "mode": "0o444",
+    "path": ".golden-build/completion-20261030/dist-linux/mirrors-v0.2.0-rc.1-linux-x86_64.tar.gz",
+    "sha256": "39623040464f71bcaff5f1b1002f93b1eec6d19e0bbecabc9a141b523d90b60a",
+    "sha256Matches": true
+  },
+  "checks": [
+    {
+      "command": "sha256sum -c SHA256SUMS",
+      "exit": 0,
+      "id": "archive-and-manifest-sha256",
+      "log": "logs/archive-source-binding.log"
+    },
+    {
+      "command": "tar -xOzf ... BUILD.json | cmp - external build json",
+      "exit": 0,
+      "id": "embedded-external-manifest-identical",
+      "log": "logs/archive-source-binding.log"
+    },
+    {
+      "command": "git cat-file -t v0.2.0-rc.1; git rev-parse v0.2.0-rc.1^{commit} v0.2.0-rc.1^{tree}",
+      "exit": 0,
+      "id": "tag-object-and-peel",
+      "log": "logs/archive-source-binding.log"
+    },
+    {
+      "command": "env -i PATH=/usr/bin:/bin ... python3 tools/release/release.py check-archive --tag v0.2.0-rc.1 --archive <read-only archive>",
+      "exit": 0,
+      "id": "isolated-check-archive",
+      "log": "logs/s3.6-check-archive.log"
+    },
+    {
+      "command": "bin/mirror --version; protocol smoke; bin/model_interface_gen --help",
+      "exit": 0,
+      "id": "packaged-cli",
+      "log": "logs/packaged-cli.log",
+      "results": {
+        "mirrorVersion": "v0.2.0-rc.1",
+        "modelInterfaceGenHelpExit": 2,
+        "protocolSmoke": "protocol_error Expected Register message"
+      }
+    },
+    {
+      "command": "readelf --version-info/-l",
+      "exit": 0,
+      "id": "elf-requirements",
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "log": "logs/elf-requirements.log",
+      "maxGlibc": {
+        "mirror": "2.25",
+        "model_interface_gen": "2.17"
+      }
+    }
+  ],
+  "claim": "S3.6 isolated packaged runtime smoke in the explicitly selected Ubuntu 26.04.1 WSL2 x86_64 environment.",
+  "environment": {
+    "architecture": "x86_64",
+    "filesystem": {
+      "device": "/dev/sdd",
+      "path": "/home/lsz/Codebase/Mirrors",
+      "sameDeviceForTmp": false,
+      "type": "ext4"
+    },
+    "kernel": "6.18.54.1-microsoft-standard-WSL2",
+    "libc": "glibc 2.43-2ubuntu2.4",
+    "os": {
+      "codename": "resolute",
+      "id": "ubuntu",
+      "prettyName": "Ubuntu 26.04.1 LTS",
+      "versionId": "26.04"
+    },
+    "path": "environment.json",
+    "sha256": "4b7e098f4219847c35735657d7eadd8e437864ec7a4a4ead8346c5ada3332ae4",
+    "virtualization": "WSL2 (microsoft-standard-WSL2 kernel)"
+  },
+  "handoff": {
+    "path": "Plans/completion-s5-wsl-executor-handoff-2026-10-30.md",
+    "sha256": "66ffa6ca2ae38ba35005633d3268327bb74ec0e3578655375659a85f01eeff0e"
+  },
+  "isolation": {
+    "artifactReadOnly": true,
+    "commandEnvironment": "env -i PATH=/usr/bin:/bin HOME=<owner-only> TMPDIR=<owner-only> LC_ALL=C.UTF-8",
+    "emptyWorkingDirectory": true,
+    "lakeAbsent": true,
+    "leanAbsent": true,
+    "sourceLookupDisabled": true,
+    "tempRootOwnerOnlyMode": "0700",
+    "tempRootResidualEntries": 0
+  },
+  "notClaimed": [
+    "Ubuntu 24.04 runtime acceptance",
+    "native Linux acceptance",
+    "live-model or full-framework qualification",
+    "release publication or deployment"
+  ],
+  "producedAt": "2026-10-30T06:06:00Z",
+  "result": "passed",
+  "schema": "mirrors.s3.wsl-archive-acceptance/v1",
+  "scope": "ubuntu-26.04-wsl2-x86_64",
+  "sourceBinding": {
+    "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+    "embeddedVersion": "0.2.0-rc.1",
+    "state": "bound",
+    "tag": "v0.2.0-rc.1",
+    "tagObject": "f135f2809e6612d158c5be176c7ea6429b9d51f3",
+    "tagPeelsTo": "d737aa0886b9d406e391955756922d9d735d7ec1",
+    "tagType": "tag",
+    "tree": "8d2de2561d25c219e685bb46980080c03d7d1c98"
+  },
+  "task": "S3.6 current-WSL package acceptance"
+}

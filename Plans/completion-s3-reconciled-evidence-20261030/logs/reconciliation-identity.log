@@ -1,0 +1,25 @@
+== date ==
+2026-10-30T04:38:52Z
+== tag object ==
+f135f2809e6612d158c5be176c7ea6429b9d51f3
+tag
+== tag peeled commit ==
+d737aa0886b9d406e391955756922d9d735d7ec1
+== tag tree ==
+8d2de2561d25c219e685bb46980080c03d7d1c98
+== tag annotation ==
+refs/tags/v0.2.0-rc.1 tag f135f2809e6612d158c5be176c7ea6429b9d51f3
+== version at tag ==
+/-! Product release identity, independent of protocol and compiler schema versions. -/
+
+namespace Shell.Version
+
+/-- Mirrors product version. Update when preparing a product release. -/
+def version : String := "0.2.0-rc.1"
+
+end Shell.Version
+== local tags ==
+v0.1.0
+v0.2.0-rc.1
+== worktree HEAD ==
+d737aa0886b9d406e391955756922d9d735d7ec1

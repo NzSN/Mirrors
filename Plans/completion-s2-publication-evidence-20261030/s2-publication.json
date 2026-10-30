@@ -1,0 +1,149 @@
+{
+  "audit": {
+    "archiveFindings": [
+      "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/raw-evidence.tar.gz",
+      "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/raw-evidence.tar.gz",
+      "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/raw-evidence.tar.gz"
+    ],
+    "archiveFindingsOutsideExceptions": [],
+    "binaryFindings": [
+      "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/raw-evidence.tar.gz",
+      "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/raw-evidence.tar.gz",
+      "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/raw-evidence.tar.gz"
+    ],
+    "binaryFindingsOutsideExceptions": [],
+    "reviewedArchiveExceptions": [
+      "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-probe-portable/raw-evidence.tar.gz",
+      "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-t/raw-evidence.tar.gz",
+      "test/fixtures/tla-frontend/differential/evidence/profile6-20261029-u/raw-evidence.tar.gz"
+    ],
+    "secretFindings": []
+  },
+  "authority": {
+    "approvedScope": "S1.7 approval to commit and push the frozen 474-file payload to origin/main, including three reviewed profile-6 raw-evidence.tar.gz archives",
+    "excludedActions": [
+      "tag",
+      "package build",
+      "release publication",
+      "production deployment",
+      "service replacement",
+      "restart",
+      "reboot"
+    ],
+    "handoff": "Plans/completion-s2-executor-handoff-2026-10-30.md"
+  },
+  "baseCommit": "7e9a27d0db72ec36b49c6fc5764b2687b565edfd",
+  "claim": "Branch publication of source-validated evidence only; no tag, release, package, native M4, full-framework, production or reboot acceptance.",
+  "commit": {
+    "filesChanged": 474,
+    "sha": "d737aa0886b9d406e391955756922d9d735d7ec1",
+    "subject": "dpm: publish controlled comparison, runtime fixes, and completion evidence",
+    "tree": "8d2de2561d25c219e685bb46980080c03d7d1c98"
+  },
+  "date": "2026-10-30",
+  "diffCheck": {
+    "blankLineAtEof": 18,
+    "diagnosticLines": 1542,
+    "exit": 2,
+    "filesWithDiagnostics": 54,
+    "note": "All diagnosed bytes are part of the S1 freeze; SHA-256 equality forbids whitespace repair. No Lean/Python source file is affected; three added payload documents retain a blank line at EOF and the remaining files are retained CRLF/BOM evidence logs and receipts.",
+    "perFile": {
+      "Docs/completion-qualification-release-design.md": 1,
+      "Plans/completion-evidence-20261029/client-matrix-initial-failure/cpp-invalid.log": 1,
+      "Plans/completion-evidence-20261029/client-matrix-initial-failure/rust-invalid.log": 1,
+      "Plans/completion-evidence-20261029/client-matrix/cpp-invalid.log": 1,
+      "Plans/completion-evidence-20261029/client-matrix/lean-invalid.log": 1,
+      "Plans/completion-evidence-20261029/client-matrix/rust-invalid.log": 1,
+      "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/relay/stderr.log": 3,
+      "Plans/completion-evidence-20261029/controlled-model/correct-first/comparison/relay/stdout.log": 1,
+      "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/relay/stderr.log": 3,
+      "Plans/completion-evidence-20261029/controlled-model/correct-last/comparison/relay/stdout.log": 1,
+      "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/relay/stderr.log": 3,
+      "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/relay/stdout.log": 1,
+      "Plans/completion-evidence-20261029/controlled-model/count-first/comparison/validation/stdout.log": 123,
+      "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/relay/stderr.log": 3,
+      "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/relay/stdout.log": 1,
+      "Plans/completion-evidence-20261029/controlled-model/count-last/comparison/validation/stdout.log": 102,
+      "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/relay/stderr.log": 3,
+      "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/relay/stdout.log": 1,
+      "Plans/completion-evidence-20261029/controlled-model/early-unlock-first/comparison/validation/stdout.log": 144,
+      "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/relay/stderr.log": 3,
+      "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/relay/stdout.log": 1,
+      "Plans/completion-evidence-20261029/controlled-model/fifo-last/comparison/validation/stdout.log": 167,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/relay/stderr.log": 3,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/relay/stdout.log": 1,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-0/comparison/validation/stdout.log": 123,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/relay/stderr.log": 3,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/relay/stdout.log": 1,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-baseline-1/comparison/validation/stdout.log": 123,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/relay/stderr.log": 3,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/relay/stdout.log": 1,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-fresh-best/comparison/validation/stdout.log": 102,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/relay/stderr.log": 3,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/relay/stdout.log": 1,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-trial-0/comparison/validation/stdout.log": 102,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/relay/stderr.log": 3,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/relay/stdout.log": 1,
+      "Plans/completion-evidence-20261029/controlled-model/reduction-trial-1/comparison/validation/stdout.log": 123,
+      "Plans/completion-evidence-20261029/logs/gate-full-selected-2.log": 4,
+      "Plans/completion-evidence-20261029/logs/gate-full-selected.log": 8,
+      "Plans/completion-evidence-20261029/logs/matrix-java-version.stderr": 3,
+      "Plans/completion-evidence-20261029/logs/matrix-server.stderr.log": 155,
+      "Plans/completion-evidence-20261029/logs/windows-candidate-package.log": 36,
+      "Plans/completion-evidence-20261029/logs/windows-reference-admission-2.log": 27,
+      "Plans/completion-evidence-20261029/logs/windows-reference-calibration.log": 14,
+      "Plans/completion-evidence-20261029/logs/windows-reference-finals.log": 15,
+      "Plans/completion-evidence-20261029/logs/windows-reference-probe.log": 54,
+      "Plans/completion-evidence-20261029/receipts/matrix-apalache-manifest.txt": 13,
+      "Plans/completion-evidence-20261029/receipts/matrix-cleanup.json": 1,
+      "Plans/completion-evidence-20261029/receipts/oracle-shutdown.json": 1,
+      "Plans/completion-evidence-20261029/receipts/windows-candidate-archive.json": 8,
+      "Plans/completion-evidence-20261029/receipts/windows-candidate-build.json": 31,
+      "Plans/completion-evidence-20261029/receipts/windows-client-overlay-results.json": 11,
+      "Plans/completion-executor-handoff-2026-10-30.md": 1,
+      "Plans/completion-qualification-release-plan-2026-10-30.md": 1
+    },
+    "trailingWhitespaceLines": 1524
+  },
+  "manifest": {
+    "deliveryManifestSha256": "e01b565ef20b7b3ccb39c8493f6fd614ec1c2b3a9e883531e620cd56e762017b",
+    "fileCount": 474,
+    "fileSha256": "2ff7d9124f9a00eb468bf38d72b00e03cd8b10e637cdc79c73e4f37674649c17",
+    "path": "Plans/completion-release-evidence-20261030/s2-delivery-payload.json",
+    "recomputedDeliveryManifestSha256": "e01b565ef20b7b3ccb39c8493f6fd614ec1c2b3a9e883531e620cd56e762017b"
+  },
+  "preserved": {
+    "resetCleanOrCheckoutPerformed": false,
+    "unrelatedChangesNotReverted": true,
+    "untrackedExclusions": [
+      ".projectile-cache.eld",
+      "Plans/completion-release-evidence-20261030/",
+      "Plans/completion-s2-executor-handoff-2026-10-30.md",
+      "Plans/completion-s2-publication-evidence-20261030/"
+    ]
+  },
+  "push": {
+    "beforeSha": "7e9a27d0db72ec36b49c6fc5764b2687b565edfd",
+    "divergence": false,
+    "fastForward": true,
+    "fetchSha": "d737aa0886b9d406e391955756922d9d735d7ec1",
+    "localHeadSha": "d737aa0886b9d406e391955756922d9d735d7ec1",
+    "pushedSha": "d737aa0886b9d406e391955756922d9d735d7ec1",
+    "ref": "refs/heads/main",
+    "remote": "https://github.com/NzSN/Mirrors.git",
+    "reobservedRemoteSha": "d737aa0886b9d406e391955756922d9d735d7ec1"
+  },
+  "schema": "mirrors.completion-s2-publication/v1",
+  "stagedVerification": {
+    "addedUntracked": 419,
+    "blobMismatches": [],
+    "diskByteOrSha256Mismatches": [],
+    "extraPaths": [],
+    "missingPaths": [],
+    "modeDeviations": [],
+    "modeDeviationsNote": "compared with the base tree; install.py remains 100755 as in the base and 419 new files are 100644",
+    "modifiedTracked": 55,
+    "stagedPathCount": 474,
+    "stagedSetEqualsManifest": true
+  }
+}

@@ -4,12 +4,8 @@ Date: 2026-10-29. Starting Mirrors commit:
 `7e9a27d0db72ec36b49c6fc5764b2687b565edfd`.
 
 The user requested a design and execution of the remaining qualification,
-controlled-synchronization comparison, M4 acceptance, compatibility and release
-work. This supersedes the earlier exclusion of M4 from the October 28 task,
-but does not select or provision an arbitrary native host. The coordinator is
-observed WSL2 with Java 21; neither fact satisfies native M4 or pinned Java 25
-reference admission. A native runner/delegation has been requested while other
-work continues. Existing dated evidence and unrelated editor caches remain.
+controlled-synchronization comparison, compatibility and release work.
+Existing dated evidence and unrelated editor caches remain.
 
 Detailed continuation, October 30: the
 [completion and release design](../Docs/completion-qualification-release-design.md)
@@ -17,6 +13,11 @@ and [fine-grained execution plan](completion-qualification-release-plan-2026-10-
 now define every remaining stage, task, dependency, evidence gate and approval
 boundary. They govern the unfinished work ordering; the completed October 29
 results and their original limits below remain unchanged.
+
+Scope revision, October 30: native-runner/M4 execution work is removed from
+this plan. S3.6 and the exact-candidate M5 renewal select the current Ubuntu
+26.04.1 WSL2 coordinator under an explicit WSL2 profile, not an Ubuntu 24.04
+or native-Linux claim.
 
 ## Design and ownership
 
@@ -52,9 +53,8 @@ the first finite comparison profile.
 | W1 | Add a finite controlled mutex/FIFO model, native consumer fixture, pure admission/projection, bounded remote comparison workflow and composite receipt. Add matching, FIFO/count mutation, malformed receipt, incomplete cleanup, deadline and output-bound controls. Exercise more than one admitted decision order, and retain fresh reduced failure replay where supported by the explicit catalog. | Actual SDK execution uses real threads/resources. Remote model-valid positives and model-invalid semantic mutations are required before any new `modelComparison:true` claim. Existing v1 schemas keep their meaning. |
 | W2 | Stage the exact pinned SANY/Apalache artifacts and an already supplied Java 25.0.4+7 runtime on a separately admitted host. Build the current frontend, run required campaigns T/U into fresh directories, compare semantic reports and review every difference under profile 6. | All 61 fixtures and required observations complete; no unresolved differences; identical semantic payloads; stable before/after hashes. Preserve profile-5 approvals as historical. Do not download an unselected JDK or run reference model tools on this coordinator. |
 | W3 | Freeze the current Mirrors and companion identities. Run full local non-model gates with the explicit MirrorCPP prefix, current Windows build/tests, source-hidden installed C++/Node/Rust DPM acceptance, remote model/client matrix and independent evidence verification. | One frozen candidate must pass every required selected tier. Reobserve the selected oracle process, certificate and backend/runtime identities before use. Local source tests do not replace Windows or installed acceptance. |
-| W4 | Run M4 eligibility and, on the selected native host/delegation, actual aggregate quota readbacks, descendant enforcement/escape refusal, controller-death recovery, durable journal retries and unrelated-sentinel controls. | Requires an admitted native Linux runner, operator-owned cgroup-v2 parent and declared storage/resource envelope. Existing journal-v2 code is reused; unavailable native acceptance remains pending. Never create ownership from PID/path similarity. |
 | W5 | Inventory the stdio async error-tag and Haskell consumers. Record a compatibility decision and measurable deprecation/soak criteria. Keep supported behavior until consumer migration and soak evidence satisfy those criteria. | Golden bytes and supported clients remain compatible. A calendar interval alone cannot authorize removal. Refresh the maintained plan/status navigation without rewriting historical evidence. |
-| W6 | Prepare a versioned release candidate, reproducible archives, hashes, release notes, Windows staging, explicit rollback and service lifecycle checks. A new public F5 comparison capability uses the pre-1.0 minor-release policy; a fixes-only release can stay on the patch line. | Qualification records must name the exact scope. Prepare a reviewable payload and deployment first. Public tags/package publication, production service replacement and a machine reboot require final approval of that concrete payload and operation. M4/F5 can be excluded only by an explicit release scope, never silently credited. |
+| W6 | Prepare a versioned release candidate, reproducible archives, hashes, release notes, Windows staging, explicit rollback and service lifecycle checks. A new public F5 comparison capability uses the pre-1.0 minor-release policy; a fixes-only release can stay on the patch line. | Qualification records must name the exact scope. Prepare a reviewable payload and deployment first. Public tags/package publication, production service replacement and a machine reboot require final approval of that concrete payload and operation. |
 
 ## Execution order
 
@@ -62,9 +62,7 @@ the first finite comparison profile.
 2. Implement and locally validate W1 while remote prerequisites are inspected.
 3. Freeze the changed implementation; run W2 and W3 against that identity.
    Repairs invalidate affected campaigns and require a new freeze.
-4. Execute W4 when its selected runner/delegation is supplied. Its absence does
-   not prevent independent implementation or qualification preparation.
-5. Complete W5 documentation/consumer controls, then stage W6 with exact
+4. Complete W5 documentation/consumer controls, then stage W6 with exact
    qualification limits and request only the final publication/deployment action.
 
 Every work package receives a new result record: `completed`, `failed`,
@@ -95,12 +93,12 @@ acceptance. W2 has independent required T/U passes with identical semantic
 payloads. W3 has the full local non-model/native rebuild gates, current native
 Windows build/eight suites, three installed DPM profiles and the selected Gate
 required gate; its current five-client matrix is in progress. The existing
-Ubuntu 24.04 reference distribution's D/Q/M5 renewal cannot be transferred to
-this observed Ubuntu 26.04.1 coordinator. W4 still needs the requested native
-runner/delegation. W5 records the compatibility decision, preserving both legacy
-behaviors while measured retirement prerequisites remain open. W6 has a validated
-Windows RC archive and a prepared independent Linux build checkout; packaging
-and final handoff continue. See the [evidence record](completion-evidence-20261029/README.md).
+The D/Q/M5 renewal uses the explicitly selected Ubuntu 26.04.1 WSL2 profile;
+it does not claim the older Ubuntu 24.04 platform. W5 records the compatibility
+decision, preserving both legacy behaviors while measured retirement
+prerequisites remain open. W6 has a validated Windows RC archive and a prepared
+independent Linux build checkout; packaging and final handoff continue. See the
+[evidence record](completion-evidence-20261029/README.md).
 
 The matrix uses fresh identities generated independently on each host and a
 loopback SSH tunnel. Only public CSRs/certificates cross hosts. This is the safe

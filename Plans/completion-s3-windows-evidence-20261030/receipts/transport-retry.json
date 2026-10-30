@@ -1,0 +1,14 @@
+﻿{
+    "schema":  "mirrors.s3.windows-gate-retry/v1",
+    "gate":  "transport_spec",
+    "initialAttempt":  {
+                           "log":  "logs/transport_spec-initial-failure.log",
+                           "bytes":  2388,
+                           "sha256":  "434c4d0d834da30b97d0f1773a84c49bb929ec8bb8927843cd591c12eb0b1263",
+                           "cause":  "OpenSSL CLI resolution: the prepared PATH put a non-conforming openssl ahead of the OpenSSL 3 CLI, so throwaway PKI signing failed; corrected by prepending the OpenSSL 3.5.0 msys2 ucrt64 bin directory"
+                       },
+    "correctedPathPrepend":  "D:\\Programs\\msys2\\ucrt64\\bin",
+    "opensslCliResolved":  "D:\\Programs\\msys2\\ucrt64\\bin\\openssl.exe\r\nD:\\Programs\\Perl\\c\\bin\\openssl.exe\r\nC:\\Program Files\\Git\\mingw64\\bin\\openssl.exe\r\nC:\\Program Files\\Git\\usr\\bin\\openssl.exe",
+    "exit":  0,
+    "logSha256":  "64939b077de508d669a0bebaed2fac68411382b3ae19411a086fe4cc8bead14c"
+}

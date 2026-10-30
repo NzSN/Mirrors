@@ -1,0 +1,61 @@
+{
+ "schema": "mirrors.s3.reconciled-inventory/v1",
+ "producedAt": "2026-10-30",
+ "files": [
+  {
+   "path": ".gitattributes",
+   "bytes": 13,
+   "sha256": "9e8f041ed812cb5288282cc6b187de804e96b688d56647fdae181c49fec71863"
+  },
+  {
+   "path": ".gitignore",
+   "bytes": 3,
+   "sha256": "b39decba66e79d9a8ab7a89e6e3c7942c0c92f125e9ece55c45020b877170638"
+  },
+  {
+   "path": "README.md",
+   "bytes": 8215,
+   "sha256": "afb72c0e9a866c999100f8f3b5f9d863a70b0dde5410f164e4df3e0b19975db2"
+  },
+  {
+   "path": "logs/input-s3-package-verifier.log",
+   "bytes": 429,
+   "sha256": "b6c01e317532d2875ca9ee9796ebdb559a60dd45164305abe0075a9fcc303dcd"
+  },
+  {
+   "path": "logs/input-s3-windows-verifier.log",
+   "bytes": 575,
+   "sha256": "fd1a12b2e9b3bad1b02036ed9a7bdade40be763299b368e2305e73fbf0b54a9a"
+  },
+  {
+   "path": "logs/reconciled-verifier.log",
+   "bytes": 754,
+   "sha256": "fcd66e2fb951ede0b4bb41ceec79eb9636a2018be384a921bc837af392f93be2"
+  },
+  {
+   "path": "logs/reconciliation-artifact-hashes.log",
+   "bytes": 1115,
+   "sha256": "ee1b1697bb31cd9ba47d5db649c76861c1ac820134ae3781683e4404738a993e"
+  },
+  {
+   "path": "logs/reconciliation-identity.log",
+   "bytes": 663,
+   "sha256": "758c2420ffe47dc1c2d065e3291095c541519daf46bbf0e2146d378868e2ab6f"
+  },
+  {
+   "path": "package-set.json",
+   "bytes": 11149,
+   "sha256": "7f4c726b0c89410560d46751916cf8c59a659a2dfde8870f42f6ab709c01cb84"
+  },
+  {
+   "path": "s3-ledger.json",
+   "bytes": 8581,
+   "sha256": "7fc858bace4d153b5b5754ad5eb897fd67f5996cb45bf9bc188d513e159e0647"
+  },
+  {
+   "path": "verify.py",
+   "bytes": 16448,
+   "sha256": "5d76ab56439ed6a058c2a6a82ca02348a565dbb6134e317dddb4e24d6b5e3b0e"
+  }
+ ]
+}

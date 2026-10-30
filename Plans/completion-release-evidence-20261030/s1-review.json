@@ -1,0 +1,140 @@
+{
+  "areas": {
+    "controlled-comparison": [
+      "Core/DpmSyncComparison.lean",
+      "Codec/DpmSyncComparison.lean",
+      "tools/DpmSyncComparisonSpec.lean",
+      "tools/check-controlled-model.py",
+      "tools/deterministic-scheduling/controlled_model.py",
+      "specs/ControlledMutexFifo.tla",
+      "test/fixtures/deterministic-scheduling/controlled-sync/native-complete.json",
+      "tools/deterministic-scheduling/controlled-model/native.cpp",
+      "tools/deterministic-scheduling/controlled-model/CMakeLists.txt",
+      "tools/deterministic-scheduling/controlled-model/remote-validate.ps1",
+      "tools/deterministic-scheduling/tests/test_controlled_model.py",
+      "Shell/Dpm/Cli.lean",
+      "lakefile.lean",
+      "tools/run-local-no-model-check.sh",
+      "Docs/dpm-controlled-model-comparison.md"
+    ],
+    "dpm-launcher": [
+      "tools/deterministic-scheduling/cli.py",
+      "tools/deterministic-scheduling/dpm_host.py",
+      "tools/deterministic-scheduling/install_cli.py",
+      "tools/deterministic-scheduling/check_cli_installed.py",
+      "tools/deterministic-scheduling/prepare_cli.py",
+      "tools/deterministic-scheduling/refresh_host_identity.py",
+      "tools/deterministic-scheduling/tests/test_dpm_host.py",
+      "tools/deterministic-scheduling/tests/test_dpm_launcher_install.py",
+      "tools/deterministic-scheduling/languages/ecma/package.json",
+      "tools/deterministic-scheduling/languages/rust/Cargo.toml",
+      "tools/deterministic-scheduling/languages/rust/Cargo.lock",
+      "Docs/dpm-cli-guide.md",
+      "Docs/dpm-runner-contract.md"
+    ],
+    "evidence-and-interop-selection": [
+      "tools/evidence/run_remote_model_check.py",
+      "tools/evidence/commands.json",
+      "tools/evidence/README.md",
+      "tools/evidence/tests/test_remote_interop.py",
+      "tools/evidence/tests/test_remote_observation.py",
+      "tools/interop/run-remote.py",
+      "tools/interop/INTEROP.md",
+      "tools/interop/ecma-runtime-pin.json",
+      "tools/interop/remote-clients/RemoteM5.lean",
+      "tools/interop/remote-clients/ecma-protocol.mjs",
+      "tools/interop/remote-clients/ecma.mjs",
+      "tools/interop/remote-clients/rust/main.rs"
+    ],
+    "installer-observations": [
+      "tools/distribution/install.py",
+      "tools/distribution/test_install.py",
+      "distribution/reference-node/README.md"
+    ],
+    "policy-and-planning": [
+      "test/fixtures/tla-frontend/differential/differences.json",
+      "test/fixtures/tla-frontend/differential/evidence/README.md",
+      "Drafts/tla-profile6-policy-review-20261029.md",
+      "Docs/completion-qualification-release-design.md",
+      "Plans/completion-execution-plan-2026-10-29.md",
+      "Plans/completion-qualification-release-plan-2026-10-30.md",
+      "Plans/completion-executor-handoff-2026-10-30.md"
+    ],
+    "release-version-and-compatibility": [
+      "Shell/Version.lean",
+      "tools/StdioSmoke.lean",
+      "README.md",
+      "Docs/current-status.md",
+      "Docs/cutover.md",
+      "Ffi/README.md",
+      "Plans/compatibility-lifecycle-decision-2026-10-29.md",
+      "Plans/foundation-completion-plan-2026-10-26.md",
+      "Plans/m4-native-host-and-platform-plan-2026-10-07.md"
+    ],
+    "tla-differential-windows": [
+      "tools/tla-differential/process.py",
+      "tools/tla-differential/windows_job.py",
+      "tools/tla-differential/tests/test_windows_job.py",
+      "tools/tla-differential/archive.py",
+      "tools/tla-differential/tests/test_archive.py",
+      "tools/tla-differential/report.py",
+      "tools/tla-differential/run.py",
+      "tools/tla-differential/acquire.py",
+      "tools/tla-differential/adapters/apalache.py",
+      "tools/tla-differential/adapters/mirrors.py",
+      "tools/tla-differential/adapters/sany.py",
+      "tools/tla-differential/junction_summaries.py",
+      "tools/tla-differential/tests/test_process.py",
+      "tools/tla-differential/tests/test_references.py",
+      "tools/tla-differential/README.md"
+    ],
+    "tls-timeout": [
+      "Shell/Transport/Tls.lean",
+      "tools/TransportSpec.lean"
+    ]
+  },
+  "cleanup": "No reset, clean, checkout over, revert, commit, push, tag or dependency change was performed. Unrelated .projectile-cache.eld and pre-existing ignored build trees are preserved.",
+  "date": "2026-10-30",
+  "findings": [
+    {
+      "area": "tls-timeout",
+      "review": "Handshake sets a 5 s receive budget and now clears it to 0 after a successful SSL handshake, refusing to proceed if either configuration call fails; a 6 s application response is exercised by TransportSpec. Handshake budget remains enforced."
+    },
+    {
+      "area": "controlled-comparison",
+      "review": "Pure Lean admission requires a completed, cleaned, int64-bounded 1..32 decision witness with paired grant/result events, start/done chains, and terminal actor/resource shape; it returns a witness with modelComparison:false. Only the selected remote Mirrors run can produce mirrors.controlled-sync-model-comparison/v1, and model rejection is exit 1 while incomplete admission is exit 2."
+    },
+    {
+      "area": "installer-observations",
+      "review": "Observed package versions now come from materialized package.json identity, and observed platform from freedesktop_os_release/platform.machine with a profile-to-backend map; missing/malformed facts refuse. Tests prove a 26.04 host is observed as ubuntu-26.04 rather than relabelled to the declared 24.04 target."
+    },
+    {
+      "area": "dpm-launcher",
+      "review": "controlled_model.py joins the packaged helper identity set (four files); cli.py verifies its digest before compiling it. owned_process gains explicit accepted_exits and a bounded stdin path; default remains exit 0 only. Tests cover the exit-1 exception and input bound."
+    },
+    {
+      "area": "evidence-and-interop-selection",
+      "review": "Remote host/port must be supplied together, are syntax/range checked, and must match the fresh deployment observation; the historical constants remain manual defaults only. Remote-staged interop binds the selected Windows fixture root and exact SDK fixture hashes instead of writing a presumed coordinator mount."
+    },
+    {
+      "area": "tla-differential-windows",
+      "review": "Native Windows reference tools are created suspended, assigned to a non-inheritable kill-on-close job, then resumed; timeout/leader exit terminates and confirms the job empty. UTF-8/LF writes and byte-preserving archive sanitisation fix cross-platform evidence drift. The adapter explicitly grants no Gate or M4 credit."
+    },
+    {
+      "area": "release-version-and-compatibility",
+      "review": "Product version and the stdio smoke expectation move together to v0.2.0-rc.1. Docs retain stdio register_error and the Haskell oracle until measured migration/soak prerequisites; no retirement is claimed."
+    },
+    {
+      "area": "policy-and-planning",
+      "review": "differences.json contains exactly 14 reviewed outcome-only profile-6 bindings, all citing the new dated policy review and probe evidence; candidates list is empty. The new design/plan/handoff keep approval boundaries explicit."
+    }
+  ],
+  "residualRisks": [
+    "windows_job.py uses CPython Popen internals (_handle) and is only exercised on native Windows; the October 29 Windows record is the only platform evidence and this Linux run cannot revalidate it.",
+    "The coordinator is not the declared Ubuntu 24.04 reference environment; installer observation tests are fixtures, not platform qualification.",
+    "No live model tier, native M4, package build, publication or deployment is exercised by this review."
+  ],
+  "reviewedPaths": 76,
+  "schema": "mirrors.completion-source-review/v1",
+  "unmappedPayloadPaths": []
+}

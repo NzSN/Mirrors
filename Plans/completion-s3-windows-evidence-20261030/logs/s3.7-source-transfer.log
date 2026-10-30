@@ -1,0 +1,18 @@
+# Source archive construction and win10 transfer verification, 2026-10-30
+# Local (shared checkout): archive of the exact local annotated tag, no overlay.
+$ git archive --format=tar.gz --prefix=mirrors-d737aa0/ \
+    -o .golden-build/completion-20261030/windows-build/input/mirrors-v0.2.0-rc.1-source.tar.gz \
+    v0.2.0-rc.1
+$ sha256sum .golden-build/completion-20261030/windows-build/input/mirrors-v0.2.0-rc.1-source.tar.gz
+9de8226a0738d134c7ed0f0b6e3ebbad375f9169191331eaf204b1f4a8abe274  mirrors-v0.2.0-rc.1-source.tar.gz
+# bytes: 21871950
+# tag object: f135f2809e6612d158c5be176c7ea6429b9d51f3
+# peeled commit: d737aa0886b9d406e391955756922d9d735d7ec1
+# tree: 8d2de2561d25c219e685bb46980080c03d7d1c98
+# manifest: 9207 files; content tree digest e54a22e0ca262b236973db2412f7b7e46fdc5d9489bcfc95e15822005d3b3b40
+# Transferred with scp -F ~/.ssh/config to D:/ModelMirrors/staging/s3-windows-20261030-d737aa0/
+# Remote: hash of received bytes, tar extraction, ordinal path/size/sha256 digest over all files.
+$ powershell -File verify-source.ps1 -ExpectedArchiveSha 9de8226a... -ExpectedTreeDigest e54a22e0... -ExpectedFileCount 9207
+SOURCE VERIFIED 9de8226a0738d134c7ed0f0b6e3ebbad375f9169191331eaf204b1f4a8abe274 e54a22e0ca262b236973db2412f7b7e46fdc5d9489bcfc95e15822005d3b3b40 9207
+# Extracted tree contained no .git directory; Shell/Version.lean embeds 0.2.0-rc.1.
+# Receipt: receipts/source-verification.json

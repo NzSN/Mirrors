@@ -1,0 +1,55 @@
+ok: framing accepts exactly 65535 UTF-8 bytes
+ok: framing rejects 65536 UTF-8 bytes
+ok: framing rejects embedded newline
+ok: framing rejects invalid UTF-8
+ok: TCP coalesced first LF frame survives later read failure
+ok: TCP coalesced CRLF suffix is preserved
+ok: TCP empty read error is not clean EOF
+ok: TCP read error cannot complete an unterminated JSON fragment
+ok: TCP read error discards retained fragment
+ok: delivery: sync boundary is exactly 65535 bytes
+ok: delivery: 65535 shared stays full
+ok: delivery: 65535 remote stays full
+ok: delivery: sync overflow is exactly 65536 bytes
+ok: delivery: 65536 durable shared uses paths only
+ok: delivery: 65536 ephemeral shared is a bounded failure
+ok: delivery: 65536 remote is a bounded failure
+ok: delivery: path-only overflow is a bounded failure
+ok: delivery: async boundary is exactly 65535 bytes
+ok: delivery: async 65535 stays full
+ok: delivery: async overflow is exactly 65536 bytes
+ok: delivery: async 65536 is a terminal error for the same job
+ok: delivery: stdio transport is shared-filesystem
+ok: delivery: TCP transport is remote
+FAIL: pki: server cert signed
+FAIL: pki: client cert signed
+FAIL: pki: nosan cert signed
+FAIL: pki: rogue cert signed
+FAIL: pki: soon-expiry cert signed
+FAIL: pki: other-san cert signed
+FAIL: pki: stray (unchainable) cert signed
+FAIL: pki: expired cert signed
+FAIL: server ctx (good PKI) (key file not found)
+ok: server ctx rejected: no SAN
+ok: server ctx rejected: unchainable cert
+ok: server ctx rejected: cert/key mismatch
+ok: server ctx rejected: garbage cert file
+ok: server ctx rejected: empty cert file
+ok: fingerprint of garbage cert is none
+FAIL: expired cert: ctx still created (key file not found)
+FAIL: expired cert days <= 0 (M2)
+FAIL: client ctx (good PKI) (key file not found)
+FAIL: fingerprint matches openssl CLI
+FAIL: sequential certificate fingerprints keep distinct output
+FAIL: mTLS leaf fingerprint grants exact allowlisted verify scope
+FAIL: mTLS leaf fingerprint denies a non-allowlisted principal
+FAIL: soon cert days in [1,2]
+FAIL: long cert days > 300
+ok: listenTcp binds 127.0.0.1
+ok: listenTcp rejects unresolvable bind name
+ok: listenTcp rejects invalid bind literal
+ok: tcp echo round trip
+ok: tcp server survived peer drop
+client ctx unavailable; skipping TLS tier
+ok: bind 127.0.0.1 reachable via loopback
+ok: bind 127.0.0.1 NOT reachable via non-loopback addr

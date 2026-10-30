@@ -1,0 +1,130 @@
+{
+  "schema": "mirrors.completion-execution-inventory/v1",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 27,
+      "sha256": "77839798f6e843cf3fff31c8e09c3e5584882cf7603866ffd7d018303517b606"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 7,
+      "sha256": "e027cf8ebf80d6dcdacced8a4dbd1c440e2436fb1868ec851db4061cb67bb787"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6005,
+      "sha256": "d4a38442e2914e43471af81f69eecb722b77618f4da6a4bacc9a0eba97fe151e"
+    },
+    {
+      "path": "candidate-freeze.json",
+      "bytes": 5351,
+      "sha256": "2c8d20358aa500b1fc1d56782b36dcb3ab9fa2f69b87b9a42f62747b28c722a2"
+    },
+    {
+      "path": "linkcheck.py",
+      "bytes": 2199,
+      "sha256": "70aa86125a525b95087bf3b4840d0985d45293a7f2446ab82a2a11d23bbade01"
+    },
+    {
+      "path": "logs/diff-check.log",
+      "bytes": 18,
+      "sha256": "127faf38e2de4c61f70753164c4437c89eef62f31bbcb7cbf9c78f48eae6dcf8"
+    },
+    {
+      "path": "logs/final-verification.log",
+      "bytes": 766,
+      "sha256": "8507fcf48c70fa319cdcc82261d45a24fca7abad476a12dded501fcaad1c5867"
+    },
+    {
+      "path": "logs/focused-deterministic.log",
+      "bytes": 194,
+      "sha256": "df4ba86ae045e2280aca59f391e0bce09411ad383109c9c0073453b3fdd37b78"
+    },
+    {
+      "path": "logs/focused-distribution.log",
+      "bytes": 218,
+      "sha256": "5f4e873dd141d364bc7d60d7f8eac5de02c03e3c237fe2f50e8b062d58cd8449"
+    },
+    {
+      "path": "logs/focused-evidence.log",
+      "bytes": 254,
+      "sha256": "86589c0932c0837d135aec76f73f131ef3464bd43cd4723f2723db934709cd19"
+    },
+    {
+      "path": "logs/focused-tla-differential.log",
+      "bytes": 995,
+      "sha256": "b0a60d88f86010290339890262a73f1f063f6a189924d8774611cacd27f3180a"
+    },
+    {
+      "path": "logs/linkcheck.log",
+      "bytes": 123,
+      "sha256": "7b7103c4d9ac6f6244b248207249cfc1a030e341085c8754baa15b4223e5fb39"
+    },
+    {
+      "path": "logs/local-no-model-final.log",
+      "bytes": 113742,
+      "sha256": "54397ac5592e8fdb0b345907d0f54542ed8de11c93ebabd066dee714d17c504d"
+    },
+    {
+      "path": "logs/native-rebuild-final.log",
+      "bytes": 2724,
+      "sha256": "5624f06d12c4866e145eea3cd78bb3dbc0110560102e495c07f2e18b51f50b86"
+    },
+    {
+      "path": "preflight.py",
+      "bytes": 1485,
+      "sha256": "9bb22a78e21d96889bfb3039379a0027af32dc119742f41902247eef2c83fcd1"
+    },
+    {
+      "path": "s0-host-facts.json",
+      "bytes": 2202,
+      "sha256": "330d9f1c229fcc4521497d5a413ab3e86b9d4ee4b7e3537ec725408830ab7473"
+    },
+    {
+      "path": "s0-october29-index.json",
+      "bytes": 8615,
+      "sha256": "f758d3b2fde31f7fcfb67e50fa107e2c7f08560f5efdcdb49b2d85b92f050c6b"
+    },
+    {
+      "path": "s0-path-inventory.json",
+      "bytes": 187763,
+      "sha256": "f39d7de6cab1ec7eba96f0e0d67ffd68a13a63cd5bf09d43fd14e4c22fc7adbf"
+    },
+    {
+      "path": "s0-stage-ledger.json",
+      "bytes": 37309,
+      "sha256": "d41651b470a7297404ee250034e728012f4a76bb30a2adfd3645c7711c7cbd63"
+    },
+    {
+      "path": "s1-checks.json",
+      "bytes": 6247,
+      "sha256": "55cb13bf9e16e16e1c09a4790c903dd3f90c6a2efb16dae0fa1f7b9fc9256497"
+    },
+    {
+      "path": "s1-gate-preflight.json",
+      "bytes": 532,
+      "sha256": "b6847176a43fe1b82aa38ea3125aa1ecc4e3caff433df86dcedd09fe4fe31be7"
+    },
+    {
+      "path": "s1-payload-audit.json",
+      "bytes": 4342,
+      "sha256": "be520101d4283e0d999718e284f27be2748f2f87bfc7d8a55f4d45cccd1ff765"
+    },
+    {
+      "path": "s1-review.json",
+      "bytes": 7747,
+      "sha256": "d3946837268757e5e67f792c3369c9132451200add5c8c14e852261877d5eb0a"
+    },
+    {
+      "path": "s2-delivery-payload.json",
+      "bytes": 212554,
+      "sha256": "2ff7d9124f9a00eb468bf38d72b00e03cd8b10e637cdc79c73e4f37674649c17"
+    },
+    {
+      "path": "verify.py",
+      "bytes": 6220,
+      "sha256": "fe9e34810357102549455869632e252c091bfffa29dbd57d88071330c758a811"
+    }
+  ]
+}

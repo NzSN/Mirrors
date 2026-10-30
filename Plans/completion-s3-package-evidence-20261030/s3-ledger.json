@@ -1,0 +1,96 @@
+{
+ "schema": "mirrors.s3.ledger/v1",
+ "producedAt": "2026-10-30",
+ "authorizedScope": "S3.1-S3.9 under Plans/completion-s3-executor-handoff-2026-10-30.md",
+ "rows": [
+  {
+   "id": "S3.1",
+   "currentState": "passed",
+   "claimLevel": "local-tag-only",
+   "detail": "HEAD d737aa0886b9d406e391955756922d9d735d7ec1 equals the approved S2 commit and Shell/Version.lean embedded version is 0.2.0-rc.1. Created annotated local tag v0.2.0-rc.1 (tag object f135f2809e6612d158c5be176c7ea6429b9d51f3) at that commit; not pushed. Remote tag observation showed only v0.1.0 and v0.1.1.",
+   "evidence": [
+    "package-set.json#tag"
+   ]
+  },
+  {
+   "id": "S3.2",
+   "currentState": "passed",
+   "claimLevel": "local-tag-only",
+   "detail": "Separate clean checkout .golden-build/completion-20261030/release-source cloned from the shared repository, detached at refs/tags/v0.2.0-rc.1. git status --porcelain --untracked-files=normal returned empty; refs/tags/v0.2.0-rc.1^{commit} = d737aa0.",
+   "evidence": [
+    "package-set.json#cleanCheckout"
+   ]
+  },
+  {
+   "id": "S3.3",
+   "currentState": "passed",
+   "claimLevel": "release-tooling-unit",
+   "detail": "python3 -m unittest discover -s . -p test_*.py -v in the clean checkout tools/release: 11 tests OK, exit 0.",
+   "evidence": [
+    "logs/s3.3-release-unittests.log"
+   ]
+  },
+  {
+   "id": "S3.4",
+   "currentState": "passed",
+   "claimLevel": "local-package-build",
+   "detail": "release.py build from the clean tagged checkout with the pinned lean-toolchain. The first sandboxed invocation failed only at transport_spec with \"socket creation failed\"; the retained run outside the sandbox passed all five non-model gates, check-client-framing.py and relocated-binary-cli-smoke. Source identity was rechecked by the builder before packaging.",
+   "evidence": [
+    "logs/s3.4-build-linux.log"
+   ]
+  },
+  {
+   "id": "S3.5",
+   "currentState": "passed",
+   "claimLevel": "local-package-verification",
+   "detail": "SHA256SUMS verified; embedded and external BUILD.json byte-identical and bound to tag v0.2.0-rc.1 at d737aa0; mirror --version prints v0.2.0-rc.1; model_interface_gen --help exits 2 with usage; ldd closure limited to libc/libm/libpthread/libdl/librt; archive contains only the expected six entries (four files, two directories); no Lean source, no credentials, no private keys.",
+   "evidence": [
+    "logs/s3.5-linux-artifact-verification.log",
+    "logs/s3.5-checksums.log",
+    "logs/s3.5-archive-member-audit.json"
+   ]
+  },
+  {
+   "id": "S3.6",
+   "currentState": "awaiting-external-input",
+   "claimLevel": "none",
+   "detail": "No admitted Ubuntu 24.04 runtime with Lean absent is available on this coordinator (Ubuntu 26.04.1 LTS, WSL2, glibc 2.43). release.py check-archive was executed here and passed as a diagnostic only; it does not establish Ubuntu 24.04 runtime acceptance. Max required GLIBC symbol version observed in both binaries is 2.25, which is compatible with Ubuntu 24.04 glibc 2.39, but that is static evidence, not a runtime smoke.",
+   "externalBlocker": "A real Ubuntu 24.04 host or container without Lean and without a source checkout.",
+   "evidence": [
+    "logs/s3.6-check-archive-ubuntu-26.04.log"
+   ]
+  },
+  {
+   "id": "S3.7",
+   "currentState": "failed",
+   "claimLevel": "none",
+   "detail": "The October 29 staged ZIP was built from base 7e9a27d plus overlay 2777aaa3\u2026 (manifest tree digest 7bd27aff\u2026 reproduced). Compared with S2 d737aa0: 8,790 of 8,810 manifest files identical, 20 differ, and 397 S2-only paths are planning/documentation/evidence. All compiled build inputs are identical, but 12 remaining files are behavioral tooling, tooling tests or interop client sources (the other 8 are documentation, planning or evidence), so the strict reuse condition is not met. Verdict: rebuild required; the archive is rejected for S2 binding.",
+   "evidence": [
+    "windows-binding.json",
+    "logs/s3.7-windows-source-comparison.log"
+   ]
+  },
+  {
+   "id": "S3.8",
+   "currentState": "passed",
+   "claimLevel": "packaging-only-unbound",
+   "detail": "Retained ZIP re-verified: SHA-256 bed5c045\u2026 equals the October 29 receipt; exactly 7 members with expected names; all five binary/DLL hashes equal BUILD.json; embedded BUILD.json equals the external one; deterministic local repack is byte-identical across two runs; ModelMirrors.exe contains the 0.2.0-rc.1 string; PE imports of both executables resolve to system DLLs plus the bundled OpenSSL 3 DLLs (bundled zlib1.dll is not imported); no credential material. This is not reproducible compilation and does not bind the ZIP to d737aa0.",
+   "evidence": [
+    "logs/s3.8-windows-zip-audit.log",
+    "logs/s3.8-windows-packaging-repeatability.log",
+    "logs/s3.8-windows-dll-closure.log"
+   ]
+  },
+  {
+   "id": "S3.9",
+   "currentState": "partial",
+   "claimLevel": "linux-bound-windows-excluded",
+   "detail": "package-set.json (mirrors.s3.package-set/v1) emitted with the bound Linux artifact, the explicitly rejected Windows artifact, source/build identities, runtime prerequisites, validation scope and retention locations. The exit gate \"complete reviewable Linux/Windows artifact set\" is not met because the Windows artifact requires a rebuild. No publication, deployment, tag push, or release creation was performed.",
+   "externalBlocker": "Windows operator rebuild from d737aa0 plus the eight Windows gates.",
+   "evidence": [
+    "package-set.json"
+   ]
+  }
+ ],
+ "claimBoundary": "No remote tag, GitHub release, package-registry publication, production deployment, service replacement, restart or reboot. No Ubuntu 24.04, native M4, full-framework, live-model or Windows full-gate acceptance."
+}

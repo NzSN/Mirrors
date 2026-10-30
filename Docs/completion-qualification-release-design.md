@@ -7,6 +7,11 @@ behavior and dated acceptance records are unchanged. This document does not
 authorize a branch push, tag push, package publication, production deployment,
 or machine reboot.
 
+Scope revision, October 30: the user removed native-runner/M4 execution work
+from this campaign and selected the observed Ubuntu 26.04.1 WSL2 coordinator
+for S3.6 and S5. This is a distinct WSL2 qualification scope, not Ubuntu 24.04
+qualification. Stage IDs S5-S8 remain stable for existing evidence references.
+
 The executable task breakdown is in the
 [October 30 execution plan](../Plans/completion-qualification-release-plan-2026-10-30.md).
 The original campaign and its bounded results remain in the
@@ -16,10 +21,10 @@ The original campaign and its bounded results remain in the
 ## 1. Purpose and scope
 
 This design covers every remaining stage from the current uncommitted
-`v0.2.0-rc.1` candidate through source delivery, package construction, native
-M4 acceptance, exact-candidate framework qualification, release admission,
-publication, deployment, rollback, reboot acceptance, and the longer
-compatibility lifecycle.
+`v0.2.0-rc.1` candidate through source delivery, package construction,
+exact-candidate framework qualification, release admission, publication,
+deployment, rollback, reboot acceptance, and the longer compatibility
+lifecycle.
 
 It does not reopen completed work without cause. The following already have
 scoped acceptance at their recorded identities:
@@ -61,7 +66,6 @@ creating a parallel qualification or packaging format:
 | Evidence identity, collection, and retention | [Durable evidence](durable-evidence-design.md) and [evidence tools](../tools/evidence/README.md) |
 | M5 commands and linked Q1/Q2 | [Qualification harness](qualification-harness-design.md) |
 | Reference platform and installation | [Reference distribution](reference-distribution-profile.md) and [activation transaction](../distribution/reference-node/activation-transaction.md) |
-| Native M4 | [M4 host and recovery plan](../Plans/m4-native-host-and-platform-plan-2026-10-07.md) |
 | Remote oracle and service operation | [Remote server guide](remote-server-guide.md) and [interop instructions](../tools/interop/INTEROP.md) |
 | Release identity and Linux assets | [Versioning](versioning.md), [release workflow](../.github/workflows/release.yml), and [release tooling](../tools/release/release.py) |
 | F5 comparison boundary | [Controlled model comparison](dpm-controlled-model-comparison.md) |
@@ -81,7 +85,7 @@ Each stage emits exactly the strongest claim supported by its observations:
 | --- | --- | --- |
 | `source-validated` | Named source and non-model gates passed | Installed, live-model, native, or release acceptance |
 | `scoped-accepted` | A declared finite profile passed at exact identities | Arbitrary inputs, other hosts, or a later source candidate |
-| `platform-qualified` | All required tiers of the selected platform profile passed | Other platforms or native M4 unless separately included |
+| `platform-qualified` | All required tiers of the selected platform profile passed | Other platforms, hosts, or profiles |
 | `release-admitted` | A concrete artifact set and its qualification limits passed review | Public availability or production deployment |
 | `published` | Remote immutable tag and release assets were reobserved | Production health or service lifecycle |
 | `deployed` | The selected production bytes were replaced and checked | Reboot persistence or future health |
@@ -148,16 +152,11 @@ S0 baseline intake
        -> S6 release admission and concrete handoff
        -> S7 approved publication, deployment, and reboot checks
        -> S8 retention and compatibility lifecycle
-
-S2 -> S4 native M4 acceptance -> S6
 ```
 
-S4 and S5 may execute in parallel after their respective source, host, and
-artifact inputs are admitted. S4 consumes the selected Gate source, not the
-Mirrors package set, so it does not need to wait for S3. S6 may prepare a
-scoped prerelease handoff while an unrelated external tier is pending, but it
-must label that tier absent. A full-scope release claim requires every selected
-required stage to pass.
+S6 may prepare a scoped prerelease handoff while an unrelated external tier is
+pending, but it must label that tier absent. A full-scope release claim
+requires every selected required stage to pass.
 
 ## 5. Detailed stage designs
 
@@ -173,8 +172,8 @@ records.
    or cleaning the shared checkout.
 2. Classify existing receipts as accepted, failed, incomplete, skipped, or
    historical. Preserve their bytes and original claim limits.
-3. Reobserve coordinator OS/kernel/filesystem facts and record the unavailable
-   native M4 and Ubuntu 24.04 inputs as external prerequisites.
+3. Reobserve coordinator OS/kernel/filesystem facts and bind the selected
+   Ubuntu 26.04.1 WSL2 execution scope to actual observations.
 4. Confirm the selected F5/profile-6/DPM/matrix evidence verifier and inventory
    cover the intended candidate. Do not treat absent files as skips.
 5. Assign each outstanding obligation to S1-S8 and record its dependency.
@@ -240,9 +239,10 @@ publish the GitHub release automatically after its gates.
    `tools/release/release.py build` into an empty artifact directory.
 3. Verify `SHA256SUMS`, external and embedded build manifests, source/tag
    identity, executable versions, dynamic dependencies, and archive membership.
-4. Run `check-archive` in the declared Ubuntu 24.04 runtime without Lean or a
-   source checkout. Keep the DPM CLI outside this archive, as the existing
-   release contract specifies.
+4. Run `check-archive` in the selected Ubuntu 26.04.1 WSL2 environment without
+   Lean or source lookup in the packaged runtime path. Record this WSL2 scope
+   explicitly. Keep the DPM CLI outside this archive, as the existing release
+   contract specifies.
 5. Record that these are focused non-model package gates, not live-model or
    framework qualification.
 
@@ -259,40 +259,6 @@ publish the GitHub release automatically after its gates.
 **Exit gate.** A versioned package-set manifest binds every artifact to the S2
 commit, its build inputs, runtime prerequisites, test scope, and checksum.
 
-### S4. Native M4 acceptance
-
-This stage is `awaiting-external-input` until an operator supplies a native
-Linux runner and an operator-owned cgroup-v2 parent. WSL2 eligibility output
-is not enforcement evidence.
-
-1. Freeze MirrorGate source, journal schema, profile, host, delegation, and
-   durable-state identities. Confirm the journal-v2 process-to-cgroup binding
-   is the selected implementation.
-2. Run read-only `tools/qualification/preflight_m4.py` with the explicit Gate
-   root and cgroup parent. Require native Linux, a valid serving-UID
-   delegation, cpu/memory/pids controllers, unprivileged Bubblewrap, loopback,
-   ptrace, ownership tokens, and a private durable state root.
-3. Create only a new owned child cgroup. Verify actual cpu/memory/pids quota
-   writes and kernel readbacks, independent counters, and cleanup.
-4. Launch real descendant trees and test limit enforcement, escape refusal,
-   unavailable-controller behavior, and unrelated-process preservation.
-5. Start a real worker tree behind the journal barrier. Retain exact process,
-   session, boot, principal, cgroup device/inode, and delegation linkage.
-6. Abruptly terminate only the owned controller. Recover through a new
-   administrative incarnation and require an observed-empty owned subtree
-   before filesystem cleanup or claim removal.
-7. Exercise wrong boot/UID/session/group, PID reuse, inode replacement, stale
-   and torn records, unavailable delegation, concurrent recovery, retryable
-   nonempty observations, and durable retries. Unrelated sentinels must
-   survive unchanged.
-8. Reboot or restart only when separately approved for the selected lifecycle
-   profile; otherwise label that subscope unexecuted.
-
-**Exit gate.** All selected native steps pass at one frozen Gate/host/
-delegation identity, with before/after/retry receipts and confirmed cleanup.
-A refusal or ambiguous ownership result fails closed and cannot be relaxed to
-obtain acceptance.
-
 ### S5. Exact-candidate platform and framework qualification
 
 S5 binds the S2 source and S3 artifacts to fresh installed and remote evidence.
@@ -301,9 +267,9 @@ producer when the exact selected identity differs.
 
 #### S5-A. Admission and distribution bindings
 
-1. Select the declared Ubuntu 24.04 environment, including its actual kernel
-   and virtualization class. Ubuntu 26.04 cannot stand in for it, and native
-   Ubuntu and WSL profiles are not interchangeable.
+1. Select the observed Ubuntu 26.04.1 WSL2 coordinator, including its actual
+   kernel, filesystem, libc, runtimes, and permissions. Name this WSL2 profile
+   in every receipt; do not claim Ubuntu 24.04 or native-Linux acceptance.
 2. Freeze Mirrors and companion full SHAs/dirty policy, C0 catalog selection,
    distribution locks, package/cache bytes, and toolchain/runtime identities.
 3. Build or install from the clean candidate in owner-only staging. Hide source
@@ -358,11 +324,11 @@ and all exclusions are named explicitly.
 
 ### S6. Release admission and concrete handoff
 
-1. Assemble the package-set, source-delivery, S4/S5, compatibility, and negative
+1. Assemble the package-set, source-delivery, S5, compatibility, and negative
    control receipts into one release-claim matrix.
-2. Choose the release scope. If M4 or another tier is excluded, the release
-   notes and handoff must state that exclusion; a scoped prerelease must not
-   claim full framework or native M4 qualification.
+2. Choose the release scope. If a tier is excluded, the release notes and
+   handoff must state that exclusion; a scoped prerelease must not claim
+   unexecuted qualification.
 3. Confirm tag/version/source equality, immutable artifact hashes, runtime
    prerequisites, known limitations, upgrade path, and retained previous
    production bytes.
@@ -471,7 +437,7 @@ The concrete handoff must contain:
    toolchain selections;
 3. tag/version and every archive, executable, DLL, manifest, and checksum hash;
 4. a stage-by-stage claim matrix with required skips and external exclusions;
-5. Q1/Q2 and negative-control references, plus native M4 status;
+5. Q1/Q2 and negative-control references, plus the exact WSL2 platform scope;
 6. installation/runtime prerequisites and known compatibility limits;
 7. current production inventory, staged candidate checks, and service
    configuration to preserve;

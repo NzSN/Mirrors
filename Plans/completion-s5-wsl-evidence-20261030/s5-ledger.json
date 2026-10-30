@@ -1,0 +1,158 @@
+{
+  "producedAt": "2026-10-30",
+  "profile": "m5-wsl-windows-remote/v1",
+  "rows": [
+    {
+      "blocker": "none",
+      "evidence": "Actual Ubuntu 26.04.1 WSL2 x86_64 facts recorded; scope is ubuntu-26.04-wsl2-x86_64, never Ubuntu 24.04 or native Linux.",
+      "evidencePath": "environment.json",
+      "id": "S5.1",
+      "state": "passed"
+    },
+    {
+      "blocker": "new S1/S2 delivery; refresh both C0 variants and locks at the new commit",
+      "evidence": "Mirrors dirty candidate digest, companions, toolchain, base/variant C0 and locks, artifacts and model hashes are frozen provisionally; the base catalog still carries pre-candidate refs and the variant must be refreshed after commit.",
+      "evidencePath": "freeze.json",
+      "id": "S5.2",
+      "state": "blocked"
+    },
+    {
+      "blocker": "S5.2",
+      "evidence": "No exact-candidate owner-only installation can be materialized before the new source/tag/C0/locks freeze. The profile gap itself is resolved additively.",
+      "evidencePath": "profile-gap.json",
+      "id": "S5.3",
+      "state": "blocked"
+    },
+    {
+      "blocker": "S5.3",
+      "evidence": "Both D installation/distribution audits have no exact-candidate installation.",
+      "evidencePath": "none",
+      "id": "S5.4",
+      "state": "blocked"
+    },
+    {
+      "blocker": "fresh operator-owned credentials and isolated oracle",
+      "evidence": "win10 is reachable; production PID 9920 is running at the original hash with listener 8999, no listener 19131, and no leftover test oracle. No fresh isolated oracle or credentials were created.",
+      "evidencePath": "win10-observation.json",
+      "id": "S5.5",
+      "state": "blocked"
+    },
+    {
+      "blocker": "S5.2-S5.4",
+      "evidence": "Only the repository-owned no-model gate was run as focused source validation; no E2-finalized producer at a frozen C0.",
+      "evidencePath": "logs/local-no-model.log",
+      "id": "S5.6",
+      "state": "not_started"
+    },
+    {
+      "blocker": "S5.3/S5.4",
+      "evidence": "Installed replay not run.",
+      "evidencePath": "none",
+      "id": "S5.7",
+      "state": "not_started"
+    },
+    {
+      "blocker": "S5.3/S5.4",
+      "evidence": "Installed reductions not run.",
+      "evidencePath": "none",
+      "id": "S5.8",
+      "state": "not_started"
+    },
+    {
+      "blocker": "S5.3/S5.4",
+      "evidence": "Mutation/recovery producers not run.",
+      "evidencePath": "none",
+      "id": "S5.9",
+      "state": "not_started"
+    },
+    {
+      "blocker": "S5.5 and a fresh isolated oracle",
+      "evidence": "Remote model/22-row matrix not run.",
+      "evidencePath": "none",
+      "id": "S5.10",
+      "state": "not_started"
+    },
+    {
+      "blocker": "S5.3/S5.4",
+      "evidence": "Installed DPM acceptance not renewed for this candidate.",
+      "evidencePath": "none",
+      "id": "S5.11",
+      "state": "not_started"
+    },
+    {
+      "blocker": "new S1/S2 candidate",
+      "evidence": "win10 is reachable, but the exact candidate changed and full native lake test/integer-map/compiler/runtime/TLS tiers were not run.",
+      "evidencePath": "none",
+      "id": "S5.12",
+      "state": "blocked"
+    },
+    {
+      "blocker": "S5.6-S5.12",
+      "evidence": "No owned producer campaign to clean up.",
+      "evidencePath": "none",
+      "id": "S5.13",
+      "state": "not_started"
+    },
+    {
+      "blocker": "S5.6-S5.13",
+      "evidence": "No 18-command/16-tier inventory to reconcile.",
+      "evidencePath": "none",
+      "id": "S5.14",
+      "state": "not_started"
+    },
+    {
+      "blocker": "S5.6-S5.14",
+      "evidence": "No producer bundles or DAG.",
+      "evidencePath": "none",
+      "id": "S5.15",
+      "state": "not_started"
+    },
+    {
+      "blocker": "S5.15",
+      "evidence": "No linked Q1.",
+      "evidencePath": "none",
+      "id": "S5.16",
+      "state": "not_started"
+    },
+    {
+      "blocker": "S5.15",
+      "evidence": "No independent Q2.",
+      "evidencePath": "none",
+      "id": "S5.17",
+      "state": "not_started"
+    },
+    {
+      "blocker": "S5.15",
+      "evidence": "No negative controls.",
+      "evidencePath": "none",
+      "id": "S5.18",
+      "state": "not_started"
+    },
+    {
+      "blocker": "S5.17",
+      "evidence": "No offline replay.",
+      "evidencePath": "none",
+      "id": "S5.19",
+      "state": "not_started"
+    },
+    {
+      "blocker": "S5.16-S5.19",
+      "evidence": "No framework-qualification result.",
+      "evidencePath": "none",
+      "id": "S5.20",
+      "state": "not_started"
+    }
+  ],
+  "schema": "mirrors.s5.ledger/v1",
+  "scope": "ubuntu-26.04-wsl2-x86_64",
+  "summary": {
+    "blocked": 5,
+    "notStarted": 14,
+    "passed": 1,
+    "productionTouched": false,
+    "publication": false,
+    "requiredCommands": 18,
+    "requiredTiers": 16,
+    "tagMoved": false
+  }
+}

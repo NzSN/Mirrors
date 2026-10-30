@@ -258,6 +258,10 @@ def artifact_record(artifact_id: str, path: Path, cache_root: Path, mode: str,
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--profile", required=True, choices=["checked-replay-local", "checked-replay-gate", "fresh-trace"])
+    parser.add_argument("--locks-root", type=Path, default=MIRRORS / "distribution/reference-node",
+        help="lock/profile root; defaults to the checked Ubuntu 24.04 reference profile")
+    parser.add_argument("--catalog", type=Path, default=MIRRORS / "catalog/framework-catalog.json",
+        help="selected catalog A JSON; defaults to the checked Ubuntu 24.04 reference catalog")
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--snapshot-root", type=Path, required=True)
     parser.add_argument("--lake-bin", type=Path, required=True)
@@ -278,8 +282,8 @@ def main() -> int:
         print("build output must not exist", file=sys.stderr)
         return 1
     try:
-        contract = validate_locks(MIRRORS / "distribution/reference-node", args.framework_catalog_bin,
-            args.framework_catalog_sha256)
+        contract = validate_locks(args.locks_root, args.framework_catalog_bin,
+            args.framework_catalog_sha256, catalog_path=args.catalog)
         verify_source_snapshots(args.snapshot_root, contract)
         verify_running_builder(args.snapshot_root)
         profile = contract["profiles"][args.profile]
@@ -443,7 +447,7 @@ def main() -> int:
         locks_out = artifacts_root / "inputs/distribution-locks.tar.gz"
         deterministic_tar(locks_dir, locks_out, "distribution-locks")
         artifact_paths["distribution-locks"] = (locks_out, "0644", "component-build", "application/gzip")
-        catalog_raw = _read_bounded_regular(MIRRORS / "catalog/framework-catalog.json")
+        catalog_raw = _read_bounded_regular(args.catalog)
         catalog_value = json.loads(catalog_raw.decode("utf-8"))
         if digest_json(catalog_value) != contract["selection"]["selectionValue"]:
             raise ValueError("selected catalog changed after lock validation")
@@ -538,7 +542,7 @@ def main() -> int:
             trees.append({"treeId": tree_id, "sourceArtifactId": requirement["sourceArtifactId"],
                 "selectionId": requirement["selectionId"], "path": f"artifacts/selected-trees/{tree_id}", **identity})
         manifest = {"schemaVersion": "mirrors.reference-distribution-manifest/v1",
-            "distributionId": json.loads((MIRRORS / "distribution/reference-node/profiles.json").read_text())["distributionId"],
+            "distributionId": json.loads((args.locks_root / "profiles.json").read_text())["distributionId"],
             "catalogSelectionRef": contract["selection"], "profileId": args.profile,
             "componentRefs": [contract["componentRefs"][component_id]
                 for component_id in sorted(contract["combinationComponents"][args.profile])],
@@ -550,7 +554,7 @@ def main() -> int:
                     tool_record("ldd", args.ldd_bin, ["--version"]),
                     tool_record("lake", args.lake_bin, ["--version"]),
                     tool_record("framework-catalog-bootstrap", args.framework_catalog_bin, ["validate",
-                        str(MIRRORS / "catalog/framework-catalog.json")])],
+                        str(args.catalog)])],
                 "trees": [{"inputId": "typescript-node-modules", **typescript_identity},
                     {"inputId": "evidence-wheels", **wheels_identity},
                     {"inputId": "package:mirrorecma", **runtime_tree(package_dir)},

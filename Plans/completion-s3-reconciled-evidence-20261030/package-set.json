@@ -1,0 +1,284 @@
+{
+ "schema": "mirrors.s3.package-set/v2",
+ "producedAt": "2026-10-30",
+ "version": "0.2.0-rc.1",
+ "reconciliation": {
+  "handoff": "Plans/completion-s3-reconcile-executor-handoff-2026-10-30.md",
+  "handoffSha256": "949311ed97061466c46aedbd5d0b410424ba9c108cb56264a212f482d108ca7d",
+  "supersedes": {
+   "record": "Plans/completion-s3-package-evidence-20261030/package-set.json",
+   "schema": "mirrors.s3.package-set/v1",
+   "sha256": "d1a0b1f86cf3ca976eb24750c0ad2d628882e4e026e3a8a30850fbd0f53fde15",
+   "effect": "The windows-x86_64 row is replaced by the S2-bound Windows rebuild. The rejected October 29 row is retained unchanged under supersededArtifacts and in the original S3 package record."
+  },
+  "inputs": [
+   {
+    "record": "Plans/completion-s3-package-evidence-20261030/",
+    "ledgerSha256": "153d2a592afd960e2e17825b83c5836c49545e07cad8a9148a0ed514613a839c",
+    "windowsBindingSha256": "1b9f32c476149c1584b85dfcb0c278dfb9d2b4cde0255bd957550df66c1e905c",
+    "role": "S3.1-S3.6 and S3.9 Linux-side inputs; original S3.7 rejection retained"
+   },
+   {
+    "record": "Plans/completion-s3-windows-evidence-20261030/",
+    "receiptSha256": "1c43b0878fedad011a63565ab604644ec89e5f63a7cef72747438621beca0a9f",
+    "role": "S3.7-S3.9 Windows rebuild and package input"
+   }
+  ]
+ },
+ "tag": {
+  "name": "v0.2.0-rc.1",
+  "type": "tag",
+  "objectSha": "f135f2809e6612d158c5be176c7ea6429b9d51f3",
+  "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+  "annotated": true,
+  "localOnly": true,
+  "pushed": false,
+  "remoteAbsent": true,
+  "remoteObservation": "Inherited from the input records (2026-10-30 read-only GitHub and git ls-remote observations returned only v0.1.0 and v0.1.1); not re-observed during reconciliation."
+ },
+ "source": {
+  "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+  "tree": "8d2de2561d25c219e685bb46980080c03d7d1c98",
+  "versionFile": "Shell/Version.lean",
+  "embeddedVersion": "0.2.0-rc.1",
+  "leanToolchain": "leanprover/lean4:v4.33.0",
+  "lakeManifestSha256": "24b5ca4312c41640a3d65f0d9d4443a559c257bbd0e2034c0215e85287566e75"
+ },
+ "artifacts": [
+  {
+   "id": "linux-x86_64",
+   "platform": "linux-x86_64",
+   "fileName": "mirrors-v0.2.0-rc.1-linux-x86_64.tar.gz",
+   "bytes": 72209232,
+   "sha256": "39623040464f71bcaff5f1b1002f93b1eec6d19e0bbecabc9a141b523d90b60a",
+   "retentionLocation": ".golden-build/completion-20261030/dist-linux/mirrors-v0.2.0-rc.1-linux-x86_64.tar.gz",
+   "archiveEntries": 6,
+   "archiveFiles": 4,
+   "sourceBinding": {
+    "state": "bound",
+    "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+    "tag": "v0.2.0-rc.1",
+    "builtFromCleanTaggedCheckout": true,
+    "cleanCheckout": ".golden-build/completion-20261030/release-source",
+    "tagPeelsTo": "d737aa0886b9d406e391955756922d9d735d7ec1"
+   },
+   "externalBuildManifest": {
+    "path": ".golden-build/completion-20261030/dist-linux/mirrors-v0.2.0-rc.1-linux-x86_64.build.json",
+    "sha256": "28beda2c810c085e28b0112d9e8bed5443a5cd64fe7aa62dcf67c0058db8da5a",
+    "bytes": 2874,
+    "identicalToEmbedded": true,
+    "schema": "mirrors.github-release/v1"
+   },
+   "binaries": {
+    "bin/mirror": {
+     "sha256": "1140d6fdfb9b1a619df13ecf3dd38791d25b5b72f04a04accf656c507e43e34a",
+     "bytes": 129463840,
+     "libraries": [
+      "libc.so.6",
+      "libdl.so.2",
+      "libm.so.6",
+      "libpthread.so.0",
+      "librt.so.1"
+     ]
+    },
+    "bin/model_interface_gen": {
+     "sha256": "f7bd3c9927c1b2ddfc94ba20cc68ddaf9e6ea00d5eddf3b0b0cdeeac03e6ace2",
+     "bytes": 124701968,
+     "libraries": [
+      "libc.so.6",
+      "libdl.so.2",
+      "libm.so.6",
+      "libpthread.so.0",
+      "librt.so.1"
+     ]
+    }
+   },
+   "runtimePrerequisites": {
+    "os": "Ubuntu 24.04 declared (or compatible Linux x86_64)",
+    "glibc": ">=2.25 (max observed GLIBC symbol version; built against glibc 2.43)",
+    "libraries": "OpenSSL 3 (libssl3t64, libcrypto), GMP (libgmp10)",
+    "leanRequired": false,
+    "apalache": "separate prerequisite, not bundled"
+   },
+   "validation": {
+    "gates": [
+     "fixtures_replay",
+     "diff_cross",
+     "model_interface_spec",
+     "stdio_smoke",
+     "transport_spec",
+     "check-client-framing.py",
+     "relocated-binary-cli-smoke"
+    ],
+    "scope": "focused non-model package gates on the coordinator; no live-model, native M4, Ubuntu 24.04 platform, or framework qualification",
+    "archiveCheck": {
+     "command": "python3 tools/release/release.py check-archive --tag v0.2.0-rc.1 --archive <linux archive>",
+     "exit": 0,
+     "host": "Ubuntu 26.04.1 (diagnostic only)",
+     "acceptedForS3_6": false,
+     "log": "Plans/completion-s3-package-evidence-20261030/logs/s3.6-check-archive-ubuntu-26.04.log"
+    },
+    "ubuntu2404IsolatedSmoke": "awaiting-external-input"
+   },
+   "claim": "local non-model package verification only; no Ubuntu 24.04 runtime, live-model, native M4, or framework qualification",
+   "retentionIntegrity": {
+    "archivePresent": true
+   }
+  },
+  {
+   "id": "windows-x86_64",
+   "platform": "windows-x86_64",
+   "fileName": "mirrors-v0.2.0-rc.1-windows-x86_64.zip",
+   "bytes": 73725020,
+   "sha256": "8d971bd9a735a70c3e707f11d6a52c0b02b712404d4381dee1d72f678ecfecf3",
+   "retentionLocation": ".golden-build/completion-20261030/dist-windows/mirrors-v0.2.0-rc.1-windows-x86_64.zip",
+   "archiveEntries": 7,
+   "archiveFiles": 7,
+   "sourceBinding": {
+    "state": "bound",
+    "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+    "tag": "v0.2.0-rc.1",
+    "tagObject": "f135f2809e6612d158c5be176c7ea6429b9d51f3",
+    "tree": "8d2de2561d25c219e685bb46980080c03d7d1c98",
+    "sourceArchive": "mirrors-v0.2.0-rc.1-source.tar.gz",
+    "sourceArchiveBytes": 21871950,
+    "sourceArchiveSha256": "9de8226a0738d134c7ed0f0b6e3ebbad375f9169191331eaf204b1f4a8abe274",
+    "sourceArchiveRetention": ".golden-build/completion-20261030/windows-build/input/mirrors-v0.2.0-rc.1-source.tar.gz",
+    "sourceFileCount": 9207,
+    "sourceContentTreeDigest": "e54a22e0ca262b236973db2412f7b7e46fdc5d9489bcfc95e15822005d3b3b40",
+    "overlay": false,
+    "builtOnHost": "win10 (DESKTOP-6DKB5JD, Windows 10.0.19045.0)",
+    "stagingDirectory": "D:/ModelMirrors/staging/s3-windows-20261030-d737aa0"
+   },
+   "externalBuildManifest": {
+    "path": ".golden-build/completion-20261030/dist-windows/mirrors-v0.2.0-rc.1-windows-x86_64.build.json",
+    "sha256": "69e17843f7de338cd993402c4a98e25ec9e8e4686fa64628826a71ea1e4a3aa2",
+    "bytes": 9690,
+    "identicalToEmbedded": true,
+    "schema": "mirrors.s3.windows-package/v1"
+   },
+   "binaries": {
+    "bin/ModelMirrors.exe": {
+     "sha256": "5500df1b9b8a028d93a5a79a13e5aa3dba8e92a5da4ad4fb39f285d097cc6627",
+     "bytes": 111192576
+    },
+    "bin/model_interface_gen.exe": {
+     "sha256": "83a2c353af98de0246378ee5c922951b27f1544692df154c7e07144243e1bfbd",
+     "bytes": 112591360
+    },
+    "bin/libcrypto-3-x64.dll": {
+     "sha256": "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7",
+     "bytes": 5689843
+    },
+    "bin/libssl-3-x64.dll": {
+     "sha256": "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+     "bytes": 1025928
+    },
+    "bin/zlib1.dll": {
+     "sha256": "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5",
+     "bytes": 128488
+    }
+   },
+   "runtimePrerequisites": {
+    "os": "Windows 10/11 x86_64",
+    "runtime": "ucrtbase.dll and system DLLs; bundled OpenSSL 3 DLLs (zlib1.dll is bundled but not imported by either executable)",
+    "leanRequired": false
+   },
+   "validation": {
+    "gates": [
+     "fixtures_replay",
+     "diff_cross",
+     "model_interface_spec",
+     "stdio_smoke",
+     "transport_spec",
+     "jobstore_spec",
+     "async_resource_spec",
+     "dpm_sync_spec"
+    ],
+    "scope": "native Windows build from the exact local v0.2.0-rc.1 tag and eight selected non-model runtime suites; no full lake test, M5 matrix, production service lifecycle, reboot, reproducible-compilation or release admission claim",
+    "build": {
+     "command": "lake build mirror model_interface_gen fixtures_replay diff_cross model_interface_spec stdio_smoke transport_spec jobstore_spec async_resource_spec dpm_sync_spec",
+     "exit": 0,
+     "jobsCompleted": 606,
+     "seconds": 87.4,
+     "log": "Plans/completion-s3-windows-evidence-20261030/logs/build.log"
+    },
+    "gatesEnvironment": {
+     "APALACHE_MC": "unset",
+     "APALACHE_JAR": "unset",
+     "TLA2TOOLS_JAR": "unset"
+    },
+    "packaging": {
+     "memberSetMatches": true,
+     "memberHashesMatchBuildJson": true,
+     "deterministicRepackByteIdentical": true,
+     "executableVersionStringPresent": true,
+     "embeddedAndExternalBuildJsonIdentical": true,
+     "peImportClosureResolved": true,
+     "noCredentialMaterial": true
+    }
+   },
+   "productionPreservation": {
+    "unchanged": true,
+    "pid": 9920,
+    "sha256": "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+    "serviceStatus": "Running",
+    "taskOwnedDescendantCount": 0
+   },
+   "claim": "staged native Windows rebuild from the exact S2-bound local tag with eight non-model suites and packaging verification; no reproducible-compilation, full Windows lake test, M5, or release-admission claim",
+   "retentionIntegrity": {
+    "archivePresent": true,
+    "sourceArchivePresent": true
+   }
+  }
+ ],
+ "supersededArtifacts": [
+  {
+   "id": "windows-x86_64",
+   "status": "rejected-rebuild-required",
+   "attempt": "October 29 staged ZIP",
+   "fileName": "mirrors-v0.2.0-rc.1-windows-x86_64.zip",
+   "bytes": 73723251,
+   "sha256": "bed5c045102b80441a006a36e789164cf8dd50ad737008d3dda53a02d496a172",
+   "retentionLocation": ".golden-build/completion-20261029/release-artifacts/mirrors-v0.2.0-rc.1-windows-x86_64.zip",
+   "builtFrom": "7e9a27d0db72ec36b49c6fc5764b2687b565edfd + overlay 2777aaa3\u2026",
+   "comparison": {
+    "totalManifestFiles": 8810,
+    "identical": 8790,
+    "differing": 20,
+    "s2OnlyPaths": 397,
+    "compiledBuildInputsIdentical": true,
+    "reuseCondition": "not-met",
+    "behavioralToolingOrClientDifferences": 12
+   },
+   "retainedIn": "Plans/completion-s3-package-evidence-20261030/",
+   "state": "failed/replaced attempt; historical and unedited",
+   "replacedBy": "8d971bd9a735a70c3e707f11d6a52c0b02b712404d4381dee1d72f678ecfecf3"
+  }
+ ],
+ "aggregate": {
+  "stage": "S3.9",
+  "state": "partial",
+  "exitCriterion": "Complete reviewable Linux/Windows artifact set; no publication or deployment",
+  "artifactSetComplete": true,
+  "exitCriterionMet": true,
+  "stageStateReason": "S3.9 is partial solely because S3.6 (Ubuntu 24.04 isolated runtime smoke) remains awaiting-external-input. Both accepted platform artifacts are present, bound to d737aa0, and verified.",
+  "openExternalInputs": [
+   {
+    "stage": "S3.6",
+    "needs": "A real Ubuntu 24.04 host or container without Lean and without a source checkout",
+    "currentEvidence": "Ubuntu 26.04.1 WSL2 check-archive run, diagnostic only"
+   }
+  ]
+ },
+ "notClaimed": [
+  "S3 completion",
+  "Ubuntu 24.04 runtime qualification",
+  "native M4",
+  "full framework qualification",
+  "release admission",
+  "publication",
+  "deployment",
+  "service replacement, restart, or reboot"
+ ]
+}

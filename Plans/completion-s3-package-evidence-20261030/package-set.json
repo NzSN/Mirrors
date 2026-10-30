@@ -1,0 +1,200 @@
+{
+ "schema": "mirrors.s3.package-set/v1",
+ "producedAt": "2026-10-30",
+ "version": "0.2.0-rc.1",
+ "tag": {
+  "name": "v0.2.0-rc.1",
+  "type": "tag",
+  "objectSha": "f135f2809e6612d158c5be176c7ea6429b9d51f3",
+  "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+  "annotated": true,
+  "localOnly": true,
+  "pushed": false,
+  "remoteAbsent": true,
+  "remoteObservation": "GitHub REST GET /repos/NzSN/Mirrors/git/refs/tags returned only refs/tags/v0.1.0 and refs/tags/v0.1.1 during S3"
+ },
+ "source": {
+  "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+  "tree": "8d2de2561d25c219e685bb46980080c03d7d1c98",
+  "versionFile": "Shell/Version.lean",
+  "embeddedVersion": "0.2.0-rc.1",
+  "leanToolchain": "leanprover/lean4:v4.33.0",
+  "lakeManifestSha256": "24b5ca4312c41640a3d65f0d9d4443a559c257bbd0e2034c0215e85287566e75"
+ },
+ "cleanCheckout": {
+  "path": ".golden-build/completion-20261030/release-source",
+  "head": "d737aa0886b9d406e391955756922d9d735d7ec1",
+  "tagPeelsTo": "d737aa0886b9d406e391955756922d9d735d7ec1",
+  "statusClean": true
+ },
+ "releaseTooling": {
+  "path": "tools/release/release.py",
+  "sha256": "0ff709b74c1119bf244eed762306089ab92fdab5a3969ce38d4602e7b2402589",
+  "unitTests": {
+   "command": "python3 -m unittest discover -s . -p test_*.py -v",
+   "tests": 11,
+   "exit": 0,
+   "log": "logs/s3.3-release-unittests.log"
+  }
+ },
+ "buildCommand": "python3 tools/release/release.py build --source .golden-build/completion-20261030/release-source --tag v0.2.0-rc.1 --output .golden-build/completion-20261030/dist-linux",
+ "buildEnvironment": {
+  "os": "Ubuntu 26.04.1 LTS",
+  "kernel": "6.18.54.1-microsoft-standard-WSL2",
+  "arch": "x86_64",
+  "filesystem": "ext4 (/dev/sdd)",
+  "glibc": "2.43",
+  "cc": "cc (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "openssl": "OpenSSL 3.5.5 27 Jan 2026",
+  "python": "3.14.4",
+  "lake": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)",
+  "leanToolchain": "leanprover/lean4:v4.33.0",
+  "separateUbuntu2404RuntimeAvailable": false
+ },
+ "artifacts": [
+  {
+   "id": "linux-x86_64",
+   "platform": "linux-x86_64",
+   "fileName": "mirrors-v0.2.0-rc.1-linux-x86_64.tar.gz",
+   "bytes": 72209232,
+   "sha256": "39623040464f71bcaff5f1b1002f93b1eec6d19e0bbecabc9a141b523d90b60a",
+   "retentionLocation": ".golden-build/completion-20261030/dist-linux/mirrors-v0.2.0-rc.1-linux-x86_64.tar.gz",
+   "sourceBinding": {
+    "state": "bound",
+    "commit": "d737aa0886b9d406e391955756922d9d735d7ec1",
+    "tag": "v0.2.0-rc.1",
+    "builtFromCleanTaggedCheckout": true,
+    "buildInputsIdentical": true
+   },
+   "externalBuildManifest": {
+    "path": ".golden-build/completion-20261030/dist-linux/mirrors-v0.2.0-rc.1-linux-x86_64.build.json",
+    "sha256": "28beda2c810c085e28b0112d9e8bed5443a5cd64fe7aa62dcf67c0058db8da5a",
+    "identicalToEmbedded": true
+   },
+   "embeddedBuildManifestAccepted": true,
+   "binaries": {
+    "mirror": {
+     "sha256": "1140d6fdfb9b1a619df13ecf3dd38791d25b5b72f04a04accf656c507e43e34a",
+     "libraries": [
+      "libc.so.6",
+      "libdl.so.2",
+      "libm.so.6",
+      "libpthread.so.0",
+      "librt.so.1"
+     ]
+    },
+    "model_interface_gen": {
+     "sha256": "f7bd3c9927c1b2ddfc94ba20cc68ddaf9e6ea00d5eddf3b0b0cdeeac03e6ace2",
+     "libraries": [
+      "libc.so.6",
+      "libdl.so.2",
+      "libm.so.6",
+      "libpthread.so.0",
+      "librt.so.1"
+     ]
+    }
+   },
+   "runtimePrerequisites": {
+    "os": "Ubuntu 24.04 declared (or compatible Linux x86_64)",
+    "glibc": ">=2.25 (max observed GLIBC symbol version; built against glibc 2.43)",
+    "libraries": "OpenSSL 3 (libssl3t64, libcrypto), GMP (libgmp10)",
+    "leanRequired": false,
+    "apalache": "separate prerequisite, not bundled"
+   },
+   "validation": {
+    "gates": [
+     "fixtures_replay",
+     "diff_cross",
+     "model_interface_spec",
+     "stdio_smoke",
+     "transport_spec",
+     "check-client-framing.py",
+     "relocated-binary-cli-smoke"
+    ],
+    "archiveCheck": {
+     "command": "python3 tools/release/release.py check-archive --tag v0.2.0-rc.1 --archive <linux archive>",
+     "exit": 0,
+     "host": "Ubuntu 26.04.1 (diagnostic only)",
+     "acceptedForS3_6": false,
+     "log": "logs/s3.6-check-archive-ubuntu-26.04.log"
+    },
+    "ubuntu2404IsolatedSmoke": "awaiting-external-input",
+    "archiveEntries": 6,
+    "archiveFiles": 4
+   },
+   "claim": "focused non-model package gates on the coordinator; no live-model, native M4, Ubuntu 24.04 platform, or framework qualification",
+   "retentionIntegrity": {
+    "archivePresent": true
+   }
+  },
+  {
+   "id": "windows-x86_64",
+   "platform": "windows-x86_64",
+   "fileName": "mirrors-v0.2.0-rc.1-windows-x86_64.zip",
+   "bytes": 73723251,
+   "sha256": "bed5c045102b80441a006a36e789164cf8dd50ad737008d3dda53a02d496a172",
+   "retentionLocation": ".golden-build/completion-20261029/release-artifacts/mirrors-v0.2.0-rc.1-windows-x86_64.zip",
+   "sourceBinding": {
+    "state": "rejected-rebuild-required",
+    "builtFrom": "7e9a27d0db72ec36b49c6fc5764b2687b565edfd + overlay 2777aaa3\u2026",
+    "buildInputsIdentical": true,
+    "nonBuildInputFilesDiffer": 20,
+    "requiredCommit": "d737aa0886b9d406e391955756922d9d735d7ec1"
+   },
+   "externalBuildManifest": {
+    "path": ".golden-build/completion-20261029/release-artifacts/BUILD.json",
+    "sha256": "58a73917aef49cdee7d28d743fec1e94d2f1bb20b3ce123c0c299cf2c2de7804",
+    "identicalToEmbedded": true
+   },
+   "binaries": {
+    "bin/libcrypto-3-x64.dll": {
+     "sha256": "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7"
+    },
+    "bin/libssl-3-x64.dll": {
+     "sha256": "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c"
+    },
+    "bin/model_interface_gen.exe": {
+     "sha256": "573400fe73473037aff6008a119579b7fa3d34a59efc216ec2f3b054c83fa142"
+    },
+    "bin/ModelMirrors.exe": {
+     "sha256": "97770abddf6e5a1c198c9e5a0ef37ffa35aa29c1b9135169642c5365856190ea"
+    },
+    "bin/zlib1.dll": {
+     "sha256": "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5"
+    }
+   },
+   "runtimePrerequisites": {
+    "os": "Windows 10/11 x86_64",
+    "runtime": "ucrtbase.dll, system DLLs; bundled OpenSSL 3 DLLs",
+    "leanRequired": false
+   },
+   "validation": {
+    "gates": [
+     "fixtures_replay",
+     "diff_cross",
+     "model_interface_spec",
+     "stdio_smoke",
+     "transport_spec",
+     "jobstore_spec",
+     "async_resource_spec",
+     "dpm_sync_spec"
+    ],
+    "scope": "native build and eight selected non-model runtime suites; no full lake test, M5 matrix, production service lifecycle or reboot qualification",
+    "packagingRecheck": {
+     "zipSha256MatchesReceipt": true,
+     "memberSetMatches": true,
+     "memberHashesMatchBuildJson": true,
+     "deterministicLocalRepackRepeatable": true,
+     "versionStringInModelMirrors": true,
+     "dllClosureResolved": true,
+     "unusedBundledDll": [
+      "zlib1.dll"
+     ],
+     "noCredentials": true,
+     "embeddedAndExternalBuildJsonIdentical": true
+    }
+   },
+   "claim": "packaging-only receipt for selected October 29 binaries; rejected as an S2-bound artifact because 20 non-build-input files changed between the Windows overlay and d737aa0; no reproducible-compilation or full Windows lake test claim"
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+{
+  "additiveMitigation": {
+    "catalog": "catalog/framework-catalog-wsl2-26.04.json",
+    "combinationIds": "unchanged candidate.local-node-checked / candidate.node-gate / candidate.fresh-trace",
+    "locksRoot": "distribution/reference-node-wsl2-26.04",
+    "profileIds": "mirrors.reference-node-checked/ubuntu-26.04-wsl2-x86_64/v1 and gate/fresh-trace variants",
+    "selection": "5603d9d42700b1e009db5cb56247a29d06c0a96642540d66937a79a4fa2d0bd5",
+    "wslGuard": "tools/distribution/install.py require_profile_host refuses a non-WSL2 host whenever the selected catalog profile ID contains wsl2"
+  },
+  "baseCatalog": {
+    "platform": "ubuntu-24.04",
+    "profiles": [
+      "mirrors.reference-node-checked/ubuntu-24.04-x86_64/v1",
+      "mirrors.reference-node-gate/ubuntu-24.04-x86_64/v1",
+      "mirrors.reference-fresh-trace/ubuntu-24.04-x86_64/v1"
+    ],
+    "selection": "ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421"
+  },
+  "enforcement": {
+    "behavior": "installed platform/profile differs from combination -> platform_identity_mismatch",
+    "conclusion": "The checked Ubuntu 24.04 catalog cannot honestly admit this Ubuntu 26.04 host; relabeling would fail this equality check.",
+    "lines": "1771-1783",
+    "source": "../MirrorECMA/src/framework-catalog.ts",
+    "test": "../MirrorECMA/test/framework-catalog.test.ts:711-729"
+  },
+  "observed": {
+    "kernel": "6.18.54.1-microsoft-standard-WSL2",
+    "platform": {
+      "architecture": "x86_64",
+      "backend": "local-process",
+      "os": "linux",
+      "osRelease": "ubuntu-26.04"
+    },
+    "virtualization": "wsl2"
+  },
+  "preservation": {
+    "baseArtifactSha256": "2908378235978f4d3e60ecbc4bf0e86a07e14fe5213414e5ef9cbb5c50994f9d",
+    "baseCatalogUnchanged": true,
+    "baseLocksUnchanged": true,
+    "basePlatform": "ubuntu-24.04",
+    "baseProfileIds": [
+      "checked-replay-local",
+      "checked-replay-gate",
+      "fresh-trace"
+    ]
+  },
+  "producedAt": "2026-10-30T06:26:00Z",
+  "residualBlocker": "The base catalog still names the pre-candidate component cohort. The WSL2 variant is provisionally bound to the current uncommitted tree and must be refreshed again after the additive change is committed in a new S1/S2 delivery. No committed exact-candidate C0 exists yet.",
+  "schema": "mirrors.s5.platform-gap/v1"
+}

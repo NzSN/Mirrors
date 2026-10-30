@@ -62,6 +62,7 @@ def exclusions(component_id: str, repository: Path) -> dict[str, str]:
                 "catalog/components/mirrors.json",
                 "catalog/framework-catalog.json",
                 "catalog/framework-catalog.compact.json",
+                "catalog/framework-catalog-wsl2-26.04.json",
                 "distribution/reference-node/component-lock.json",
                 "distribution/reference-node/dependency-lock.json",
                 "distribution/reference-node/profiles.json",
@@ -69,6 +70,14 @@ def exclusions(component_id: str, repository: Path) -> dict[str, str]:
                 "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
                 "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
                 "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+                "distribution/reference-node-wsl2-26.04/README.md",
+                "distribution/reference-node-wsl2-26.04/component-lock.json",
+                "distribution/reference-node-wsl2-26.04/profiles.json",
+                "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+                "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+                "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+                "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+                "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
                 "Plans/q3-readiness-2026-09-25.md",
             }:
                 result[path] = "evidence-output"
@@ -93,8 +102,9 @@ def selected_refs(mirrorecma: Path, mirrorgate: Path) -> dict[str, dict[str, Any
 
 
 def update_catalogs(refs: dict[str, dict[str, Any]], mirrorecma: Path,
-    write_mirrorecma_record: bool = True) -> tuple[dict[str, Any], str]:
-    catalog_path = MIRRORS / "catalog/framework-catalog.json"
+    write_mirrorecma_record: bool = True, catalog_path: Path | None = None,
+    write_component_records: bool = True) -> tuple[dict[str, Any], str]:
+    catalog_path = catalog_path or (MIRRORS / "catalog/framework-catalog.json")
     catalog = read(catalog_path)
     old_refs = {entry["componentRef"]["componentId"]: entry["componentRef"] for entry in catalog["components"]}
     if old_refs != refs:
@@ -105,11 +115,12 @@ def update_catalogs(refs: dict[str, dict[str, Any]], mirrorecma: Path,
     for entry in catalog["components"]:
         entry["componentRef"] = refs[entry["componentRef"]["componentId"]]
     write(catalog_path, catalog)
-    mirrors_record = read(MIRRORS / "catalog/components/mirrors.json")
-    mirrors_record["components"][0]["componentRef"] = refs["mirrors"]
-    mirrors_record["extensions"]["org.nzsn.snapshot"]["capturedAt"] = captured
-    write(MIRRORS / "catalog/components/mirrors.json", mirrors_record)
-    if write_mirrorecma_record:
+    if write_component_records:
+        mirrors_record = read(MIRRORS / "catalog/components/mirrors.json")
+        mirrors_record["components"][0]["componentRef"] = refs["mirrors"]
+        mirrors_record["extensions"]["org.nzsn.snapshot"]["capturedAt"] = captured
+        write(MIRRORS / "catalog/components/mirrors.json", mirrors_record)
+    if write_component_records and write_mirrorecma_record:
         ecma_path = mirrorecma / "catalog/framework-capabilities.json"
         ecma_record = read(ecma_path)
         ecma_record["components"][0]["componentRef"] = refs["mirrorecma"]
@@ -118,8 +129,10 @@ def update_catalogs(refs: dict[str, dict[str, Any]], mirrorecma: Path,
     return catalog, digest_json(catalog)
 
 
-def update_locks(refs: dict[str, dict[str, Any]], selection_digest: str) -> None:
-    root = MIRRORS / "distribution/reference-node"
+def update_locks(refs: dict[str, dict[str, Any]], selection_digest: str,
+    root: Path | None = None, catalog_path: Path | None = None) -> None:
+    root = root or (MIRRORS / "distribution/reference-node")
+    catalog_path = catalog_path or (MIRRORS / "catalog/framework-catalog.json")
     selection = {"schemaVersion": "mirrors.framework-catalog/v1", "selectionKind": "sha256", "selectionValue": selection_digest}
     profiles = read(root / "profiles.json")
     profiles["catalogSelectionRef"] = selection
@@ -142,7 +155,7 @@ def update_locks(refs: dict[str, dict[str, Any]], selection_digest: str) -> None
     fixture = root / "fixtures/distribution-manifest.checked-replay-local.valid.json"
     manifest = read(fixture)
     manifest["catalogSelectionRef"] = selection
-    catalog = read(MIRRORS / "catalog/framework-catalog.json")
+    catalog = read(catalog_path)
     local_profile = next(profile for profile in profiles["profiles"]
         if profile["profileId"] == "checked-replay-local")
     local_combination = next(combination for combination in catalog["combinations"]
@@ -175,6 +188,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--mirrorgate", type=Path, default=MIRRORS.parent / "MirrorGate")
     parser.add_argument("--framework-catalog-bin", type=Path,
         default=MIRRORS / ".lake/build/bin/framework_catalog")
+    parser.add_argument("--catalog", type=Path, default=MIRRORS / "catalog/framework-catalog.json",
+        help="catalog to refresh; defaults to the checked Ubuntu 24.04 catalog")
+    parser.add_argument("--locks-root", type=Path, default=MIRRORS / "distribution/reference-node",
+        help="lock root to refresh; defaults to the checked Ubuntu 24.04 root")
+    parser.add_argument("--skip-component-records", action="store_true",
+        help="variant snapshots only: do not rewrite component-owned catalog records")
+    parser.add_argument("--skip-render", action="store_true",
+        help="variant snapshots only: skip compact/markdown projection generation")
     parser.add_argument("--skip-mirrorecma-record-write", action="store_true",
         help="development snapshots only: leave the component-owned derived record unchanged")
     return parser.parse_args()
@@ -184,13 +205,15 @@ def main() -> int:
     args = parse_args()
     refs = selected_refs(args.mirrorecma.resolve(), args.mirrorgate.resolve())
     _catalog, selection_digest = update_catalogs(refs, args.mirrorecma.resolve(),
-        not args.skip_mirrorecma_record_write)
-    update_locks(refs, selection_digest)
-    subprocess.run([str(args.framework_catalog_bin), "render", "--catalog",
-        str(MIRRORS / "catalog/framework-catalog.json"), "--json-out",
-        str(MIRRORS / "catalog/framework-catalog.compact.json"), "--markdown-out",
-        str(MIRRORS / "Docs/framework-map.md")], check=True)
-    validate_locks(MIRRORS / "distribution/reference-node", args.framework_catalog_bin)
+        not args.skip_mirrorecma_record_write, catalog_path=args.catalog,
+        write_component_records=not args.skip_component_records)
+    update_locks(refs, selection_digest, root=args.locks_root, catalog_path=args.catalog)
+    if not args.skip_render:
+        compact = args.catalog.with_name(args.catalog.stem + ".compact.json")
+        subprocess.run([str(args.framework_catalog_bin), "render", "--catalog",
+            str(args.catalog), "--json-out", str(compact), "--markdown-out",
+            str(MIRRORS / "Docs/framework-map.md")], check=True)
+    validate_locks(args.locks_root, args.framework_catalog_bin, catalog_path=args.catalog)
     print(f"IDENTITY REFRESH GREEN catalogSha256={selection_digest}")
     return 0
 
