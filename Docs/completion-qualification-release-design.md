@@ -20,8 +20,8 @@ The original campaign and its bounded results remain in the
 
 ## 1. Purpose and scope
 
-This design covers every remaining stage from the current uncommitted
-`v0.2.0-rc.1` candidate through source delivery, package construction,
+This design covers every remaining stage from the current release
+candidate through source delivery, package construction,
 exact-candidate framework qualification, release admission, publication,
 deployment, rollback, reboot acceptance, and the longer compatibility
 lifecycle.

@@ -3,7 +3,7 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "5603d9d42700b1e009db5cb56247a29d06c0a96642540d66937a79a4fa2d0bd5"
+    "selectionValue": "8d0cf791558618aa1db08f2d33d24d1939a300c9405946b884d450d029b2ed8a"
   },
   "components": [
     {
@@ -34,21 +34,16 @@
       "componentRef": {
         "componentId": "mirrors",
         "repository": "https://github.com/NzSN/Mirrors.git",
-        "revision": "d737aa0886b9d406e391955756922d9d735d7ec1",
+        "revision": "1fe379a5361fad8959ac40b47474beb6eb3bbe09",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "d00bd319231ae978ca6e5f0c314381053d6e1fec9ed6290404649e5e26f5d9d2",
+          "digest": "213e6ec13d2fb5cef2500a7d16a6b73353424295556afdbdd86d75c48be3b933",
           "method": "git-diff-and-untracked-manifest-v1",
           "includedPaths": [
             "Docs/completion-qualification-release-design.md",
-            "Docs/current-status.md",
-            "tools/distribution/build.py",
-            "tools/distribution/install.py",
-            "tools/distribution/manifest_check.py",
-            "tools/distribution/refresh_identity.py",
-            "tools/distribution/test_install.py",
-            "tools/distribution/test_manifest_check.py"
+            "Shell/Version.lean",
+            "tools/StdioSmoke.lean"
           ],
           "excludedPaths": [
             {
@@ -56,11 +51,23 @@
               "reasonCode": "pre-existing-unrelated"
             },
             {
+              "path": "Docs/framework-map.md",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "catalog/components/mirrors.json",
+              "reasonCode": "evidence-output"
+            },
+            {
               "path": "catalog/framework-catalog-wsl2-26.04.json",
               "reasonCode": "evidence-output"
             },
             {
-              "path": "distribution/reference-node-wsl2-26.04/README.md",
+              "path": "catalog/framework-catalog.compact.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "catalog/framework-catalog.json",
               "reasonCode": "evidence-output"
             },
             {
@@ -89,6 +96,34 @@
             },
             {
               "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/component-lock.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/dependency-lock.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/profiles.json",
               "reasonCode": "evidence-output"
             }
           ]

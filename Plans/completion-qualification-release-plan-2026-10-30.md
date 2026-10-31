@@ -49,7 +49,7 @@ the producer execution.
 | Required input | Current state | Unblocks |
 | --- | --- | --- |
 | Reviewed final source payload | Working tree above `7e9a27d` | S1/S2 |
-| Exact candidate tag name and local tag approval | `v0.2.0-rc.1` prepared in source, not approved as a tag | S3 |
+| Exact candidate tag name and local tag approval | `v0.2.0-rc.2` approved for local-only creation after the version delivery | S3 |
 | Current Ubuntu 26.04.1 WSL2 qualification environment | Selected explicitly by the user; reobserve actual facts | S3.6/S5 |
 | Windows host with current source/runtime and service access | Prior records exist; fresh observation required | S5-B/S7 |
 | Owned remote oracle and current mTLS credentials | Must be reobserved; no historical health claim | S5/S7 |
@@ -101,12 +101,12 @@ or full-framework qualification.
 
 | ID | State | Task and concrete output | Exit criterion |
 | --- | --- | --- | --- |
-| S3.1 | Approval-gated | Confirm `v0.2.0-rc.1` matches `Shell/Version.lean` and approve local-only tag creation at S2. Any version change returns to S1. | Exact tag name/commit approved; no remote tag mutation |
-| S3.2 | Ready after S3.1 | Create a separate clean checkout and local tag. Require clean status and `refs/tags/v0.2.0-rc.1^{commit}` equal to S2. | Release builder identity preconditions hold |
+| S3.1 | Approval-gated | Confirm `v0.2.0-rc.2` matches `Shell/Version.lean` and approve local-only tag creation at S2. Any later version change returns to S1. | Exact tag name/commit approved; no remote tag mutation |
+| S3.2 | Ready after S3.1 | Create a separate clean checkout and local tag. Require clean status and `refs/tags/v0.2.0-rc.2^{commit}` equal to S2. | Release builder identity preconditions hold |
 | S3.3 | Ready after S3.2 | Run `python3 -m unittest discover -s tools/release -p 'test_*.py' -v`. | All release identity/package/refusal tests pass |
-| S3.4 | Ready after S3.2 | On Linux x86-64 run `python3 tools/release/release.py build --source CLEAN_SOURCE --tag v0.2.0-rc.1 --output EMPTY_DIST`. | Build and focused non-model gates pass; source identity is stable before/after |
+| S3.4 | Ready after S3.2 | On Linux x86-64 run `python3 tools/release/release.py build --source CLEAN_SOURCE --tag v0.2.0-rc.2 --output EMPTY_DIST`. | Build and focused non-model gates pass; source identity is stable before/after |
 | S3.5 | Ready after S3.4 | Verify `SHA256SUMS`, `BUILD.json`, external manifest, executable versions, `ldd`, archive paths/types, and absence of source/credentials. | Archive and both manifests bind the same tag, commit, binaries, and prerequisites |
-| S3.6 | Ready after S3.4 | In the selected Ubuntu 26.04.1 WSL2 environment without Lean/source lookup in the packaged runtime path, run `release.py check-archive --tag v0.2.0-rc.1 --archive LINUX_ARCHIVE` after checksum verification. | Isolated WSL2 runtime smoke passes and records the actual OS/kernel/runtime scope |
+| S3.6 | Ready after S3.4 | In the selected Ubuntu 26.04.1 WSL2 environment without Lean/source lookup in the packaged runtime path, run `release.py check-archive --tag v0.2.0-rc.2 --archive LINUX_ARCHIVE` after checksum verification. | Isolated WSL2 runtime smoke passes and records the actual OS/kernel/runtime scope |
 | S3.7 | Ready after S2 | Compare Windows base-plus-overlay inputs with S2. Reuse the staged ZIP only for an audited non-behavioral difference and identical build inputs; otherwise rebuild and rerun affected suites. | Windows archive and binary/DLL hashes are explicitly bound or rejected |
 | S3.8 | Ready after S3.7 | Recheck Windows packaging repeatability, version, archive membership, DLL closure, and no-credential rules. | Windows ZIP receipt remains limited to packaging and its actual gates |
 | S3.9 | Gate | Emit `package-set.json` with every artifact hash, source/build identity, runtime prerequisite, test scope, and retention location. | Complete reviewable Linux/Windows artifact set; no publication or deployment |

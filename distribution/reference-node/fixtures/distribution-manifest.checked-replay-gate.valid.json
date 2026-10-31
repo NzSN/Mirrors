@@ -4,74 +4,35 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421"
+    "selectionValue": "3331af29d1a057d9635028d73efb5190a395e7be836ed0066c6c1495f8907b31"
   },
   "profileId": "checked-replay-gate",
   "componentRefs": [
     {
       "componentId": "mirrorecma",
       "repository": "https://github.com/NzSN/MirrorECMA.git",
-      "revision": "13847be5d63d93437c551fad8c5e98f2afd884b0",
-      "dirty": true,
-      "dirtyContent": {
-        "algorithm": "sha256",
-        "digest": "a11675b6e8b93192f9588238ba75a914e4bcfd70df419b936085b6a6d92e9e03",
-        "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [],
-        "excludedPaths": [
-          {
-            "path": ".projectile-cache.eld",
-            "reasonCode": "pre-existing-unrelated"
-          },
-          {
-            "path": "catalog/framework-capabilities.json",
-            "reasonCode": "evidence-output"
-          }
-        ]
-      }
+      "revision": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+      "dirty": false
     },
     {
       "componentId": "mirrorgate",
       "repository": "https://github.com/NzSN/MirrorGate.git",
-      "revision": "5055d91757a071467b96d38a16ffece1265c3138",
-      "dirty": true,
-      "dirtyContent": {
-        "algorithm": "sha256",
-        "digest": "48c18ea917cdaf2a2999db28ef887768ee8926c7cd6bed378d69acaa7742e2e1",
-        "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [],
-        "excludedPaths": [
-          {
-            "path": ".projectile-cache.eld",
-            "reasonCode": "pre-existing-unrelated"
-          }
-        ]
-      }
+      "revision": "4ef786b30ac6be45e471fb02610484581f5da3b0",
+      "dirty": false
     },
     {
       "componentId": "mirrors",
       "repository": "https://github.com/NzSN/Mirrors.git",
-      "revision": "81b1f769f84372410a4bee787549d4f484bbcf45",
+      "revision": "1fe379a5361fad8959ac40b47474beb6eb3bbe09",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "aaddfd6619878e7a3ded32f13dcaa7c6f5cf00cca4460929646dfebb762b780b",
+        "digest": "213e6ec13d2fb5cef2500a7d16a6b73353424295556afdbdd86d75c48be3b933",
         "method": "git-diff-and-untracked-manifest-v1",
         "includedPaths": [
-          "Docs/current-status.md",
-          "Docs/qualification-harness-design.md",
-          "Docs/remote-server-guide.md",
-          "README.md",
-          "Shell/Apalache/SpecSource.lean",
-          "tools/ApalacheCliSpec.lean",
-          "tools/TraceGenerationTransportReproSpec.lean",
-          "tools/evidence/README.md",
-          "tools/evidence/commands.json",
-          "tools/evidence/run_remote_model_check.py",
-          "tools/interop/remote-clients/RemoteM5.lean",
-          "tools/interop/remote-clients/ecma-protocol.mjs",
-          "tools/interop/remote-clients/ecma.mjs",
-          "tools/interop/remote-clients/rust/main.rs"
+          "Docs/completion-qualification-release-design.md",
+          "Shell/Version.lean",
+          "tools/StdioSmoke.lean"
         ],
         "excludedPaths": [
           {
@@ -87,6 +48,10 @@
             "reasonCode": "evidence-output"
           },
           {
+            "path": "catalog/framework-catalog-wsl2-26.04.json",
+            "reasonCode": "evidence-output"
+          },
+          {
             "path": "catalog/framework-catalog.compact.json",
             "reasonCode": "evidence-output"
           },
@@ -95,7 +60,39 @@
             "reasonCode": "evidence-output"
           },
           {
+            "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+            "reasonCode": "evidence-output"
+          },
+          {
             "path": "distribution/reference-node/component-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/dependency-lock.json",
             "reasonCode": "evidence-output"
           },
           {
@@ -426,19 +423,19 @@
       "inputId": "profiles-lock",
       "path": "distribution/reference-node/profiles.json",
       "bytes": 4307,
-      "sha256": "bec499dd7c6526bc00f6b3eed92584973c98b78ed9ec14af18f355d46a31907b"
+      "sha256": "cc9ae5e362ffbc55d9816bbddeb475d39f3d32d455ff1675a6d682fa72c18dad"
     },
     {
       "inputId": "component-lock",
       "path": "distribution/reference-node/component-lock.json",
-      "bytes": 12885,
-      "sha256": "e958e6ccee14a14545ce7c9dd386efdca279111f930d4633e1db368de0ba307f"
+      "bytes": 12926,
+      "sha256": "3452526521c7eb6ad892a208dea0c7a33b7bd9ba9baabecdf9a10bfb458e5ceb"
     },
     {
       "inputId": "dependency-lock",
       "path": "distribution/reference-node/dependency-lock.json",
       "bytes": 2135,
-      "sha256": "e45725e9b2dc530323709e3eb5b1d281080792b88157dbc445e2b45343862bc7"
+      "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
     }
   ],
   "buildProvenance": {
