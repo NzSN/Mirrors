@@ -1,0 +1,24 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "windows-package-build",
+  "argv": [
+    "python3",
+    "Plans/completion-rc5-evidence-20261031/package_windows.py"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors",
+  "startedAt": "2026-10-31T12:23:46.428330+00:00",
+  "finishedAt": "2026-10-31T12:24:20.933963+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/windows-package-build.log",
+  "logBytes": 2832,
+  "logSha256": "961686c0c5353b23f978bdfba13be66ea37fff33295c78711e1cc1e3a3466239",
+  "environment": {
+    "TMPDIR": "/tmp/",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "schema": "mirrors.batteries-repin-candidate-preview/v1",
+  "selection": "319f1ef05cb70fa375361ab1dfbb5d85111bef4ac0e0d9efde3afb2649c507bb",
+  "sourceRefs": [
+    {
+      "componentId": "mirrorecma",
+      "repository": "https://github.com/NzSN/MirrorECMA.git",
+      "revision": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+      "dirty": false
+    },
+    {
+      "componentId": "mirrorgate",
+      "repository": "https://github.com/NzSN/MirrorGate.git",
+      "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+      "dirty": false
+    },
+    {
+      "componentId": "mirrors",
+      "repository": "https://github.com/NzSN/Mirrors.git",
+      "revision": "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "4be6ea76f9f1c6cdd772b6a3c5992e1d64d5288c2e0e00883b6bf6efe348e272",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "Docs/current-status.md"
+        ],
+        "excludedPaths": [
+          {
+            "path": ".projectile-cache.eld",
+            "reasonCode": "pre-existing-unrelated"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/dependency-lock.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+            "reasonCode": "evidence-output"
+          },
+          {
+            "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+            "reasonCode": "evidence-output"
+          }
+        ]
+      }
+    }
+  ],
+  "byteStableRefreshes": 2,
+  "refreshes": [
+    {
+      "argv": [
+        "python3",
+        "tools/distribution/refresh_identity.py",
+        "--mirrorecma",
+        "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/MirrorECMA",
+        "--mirrorgate",
+        "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/MirrorGate",
+        "--framework-catalog-bin",
+        "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog",
+        "--catalog",
+        "/home/nzsn/Repos/Mirrors/.golden-build/batteries-repin-20261031/candidate/catalog/framework-catalog.json",
+        "--locks-root",
+        "/home/nzsn/Repos/Mirrors/.golden-build/batteries-repin-20261031/candidate/reference-node",
+        "--skip-component-records",
+        "--skip-render"
+      ],
+      "exitCode": 0,
+      "log": "logs/candidate-final-refresh-1.log",
+      "logSha256": "8c157f9594e673b4cb0518dad943c98acdeaa51d493a5b7e41de4008360bb3dc",
+      "hashes": {
+        "catalog/framework-catalog.json": "46f2eaa0a9b2f9a098062fbdd4916696c968c19bb52615ad030ffffd165824cc",
+        "reference-node/cache-index.schema.json": "59dbe68542dd94853b1ee79c77e54ae65b1275aecd7298c419814a974c3b4ddc",
+        "reference-node/distribution-manifest.schema.json": "1b8f10da12c61217a5e5e061e0fa947d24617f4dfc94c59e15df4d3020763d1b",
+        "reference-node/activation-transaction.md": "962eb6e9440d840872117094fbeb71ee0b7403c94889df12758cf1cdf25d45ce",
+        "reference-node/profiles.json": "51bc9caccf1ed966b90d19e55a9e375280de54eb30df664ef934f9f10a5ad3c7",
+        "reference-node/README.md": "69ab646cd2af6bfc11b61f008ede755e7aff075020ae663491b8ecc4c31c8c79",
+        "reference-node/component-lock.json": "e21744022aa74f68233e52ee679080c2f0fab4623a1622bf4e1e896976bafeb9",
+        "reference-node/dependency-lock.json": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe",
+        "reference-node/fixtures/cache-index.checked-replay-local.valid.json": "0ca70baf5ce656e929765084c67a64baf7d7298792a8e85d506a86fa2f3204e5",
+        "reference-node/fixtures/cache-index.checked-replay-gate.valid.json": "a72ab3999462f40d81370d79fe83bd0a8dade5754d0bae3940a0f2830d09293f",
+        "reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json": "ad5fa4e19b7e0a36c028a4af206c844e3ec4dc93d4df7c7116f792698781f756",
+        "reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json": "af5a0d6cb88f0f1451a5a823068b37b3bdc44fe51f57cf061d917adee3ee89cf"
+      }
+    },
+    {
+      "argv": [
+        "python3",
+        "tools/distribution/refresh_identity.py",
+        "--mirrorecma",
+        "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/MirrorECMA",
+        "--mirrorgate",
+        "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/MirrorGate",
+        "--framework-catalog-bin",
+        "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog",
+        "--catalog",
+        "/home/nzsn/Repos/Mirrors/.golden-build/batteries-repin-20261031/candidate/catalog/framework-catalog.json",
+        "--locks-root",
+        "/home/nzsn/Repos/Mirrors/.golden-build/batteries-repin-20261031/candidate/reference-node",
+        "--skip-component-records",
+        "--skip-render"
+      ],
+      "exitCode": 0,
+      "log": "logs/candidate-final-refresh-2.log",
+      "logSha256": "8c157f9594e673b4cb0518dad943c98acdeaa51d493a5b7e41de4008360bb3dc",
+      "hashes": {
+        "catalog/framework-catalog.json": "46f2eaa0a9b2f9a098062fbdd4916696c968c19bb52615ad030ffffd165824cc",
+        "reference-node/cache-index.schema.json": "59dbe68542dd94853b1ee79c77e54ae65b1275aecd7298c419814a974c3b4ddc",
+        "reference-node/distribution-manifest.schema.json": "1b8f10da12c61217a5e5e061e0fa947d24617f4dfc94c59e15df4d3020763d1b",
+        "reference-node/activation-transaction.md": "962eb6e9440d840872117094fbeb71ee0b7403c94889df12758cf1cdf25d45ce",
+        "reference-node/profiles.json": "51bc9caccf1ed966b90d19e55a9e375280de54eb30df664ef934f9f10a5ad3c7",
+        "reference-node/README.md": "69ab646cd2af6bfc11b61f008ede755e7aff075020ae663491b8ecc4c31c8c79",
+        "reference-node/component-lock.json": "e21744022aa74f68233e52ee679080c2f0fab4623a1622bf4e1e896976bafeb9",
+        "reference-node/dependency-lock.json": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe",
+        "reference-node/fixtures/cache-index.checked-replay-local.valid.json": "0ca70baf5ce656e929765084c67a64baf7d7298792a8e85d506a86fa2f3204e5",
+        "reference-node/fixtures/cache-index.checked-replay-gate.valid.json": "a72ab3999462f40d81370d79fe83bd0a8dade5754d0bae3940a0f2830d09293f",
+        "reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json": "ad5fa4e19b7e0a36c028a4af206c844e3ec4dc93d4df7c7116f792698781f756",
+        "reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json": "af5a0d6cb88f0f1451a5a823068b37b3bdc44fe51f57cf061d917adee3ee89cf"
+      }
+    }
+  ],
+  "status": "working-tree preview, not published/final qualification",
+  "qualificationCredit": false
+}

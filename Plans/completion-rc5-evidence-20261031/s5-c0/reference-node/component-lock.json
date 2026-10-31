@@ -1,0 +1,355 @@
+{
+  "schemaVersion": "mirrors.reference-component-lock/v1",
+  "catalogSelectionRef": {
+    "schemaVersion": "mirrors.framework-catalog/v1",
+    "selectionKind": "sha256",
+    "selectionValue": "50b12873ffd6799174efea4c1ee69afdbd2e592370e39b39cc84c9d5fab305a8"
+  },
+  "components": [
+    {
+      "componentRef": {
+        "componentId": "mirrorecma",
+        "repository": "https://github.com/NzSN/MirrorECMA.git",
+        "revision": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+        "dirty": false
+      },
+      "product": {
+        "name": "mirrorecma",
+        "version": "2.0.0"
+      }
+    },
+    {
+      "componentRef": {
+        "componentId": "mirrorgate",
+        "repository": "https://github.com/NzSN/MirrorGate.git",
+        "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+        "dirty": false
+      },
+      "product": {
+        "name": "MirrorGate",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "componentRef": {
+        "componentId": "mirrors",
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+        "dirty": false
+      },
+      "product": {
+        "name": "Mirrors",
+        "version": "0.1.1"
+      }
+    }
+  ],
+  "buildArtifacts": [
+    {
+      "artifactId": "mirror-server",
+      "componentId": "mirrors",
+      "recipe": {
+        "tool": "lake",
+        "resolution": "operator-explicit",
+        "argv": [
+          "build",
+          "mirror"
+        ]
+      },
+      "outputPath": "artifacts/bin/ModelMirrors",
+      "mode": "0755",
+      "source": {
+        "kind": "file",
+        "path": ".lake/build/bin/mirror"
+      },
+      "dynamicLinkPolicy": "record-resolved-path-and-sha256",
+      "buildDependencies": [
+        "lean-batteries-source"
+      ]
+    },
+    {
+      "artifactId": "model-interface-gen",
+      "componentId": "mirrors",
+      "recipe": {
+        "tool": "lake",
+        "resolution": "operator-explicit",
+        "argv": [
+          "build",
+          "model_interface_gen"
+        ]
+      },
+      "outputPath": "artifacts/bin/model_interface_gen",
+      "mode": "0755",
+      "source": {
+        "kind": "file",
+        "path": ".lake/build/bin/model_interface_gen"
+      },
+      "dynamicLinkPolicy": "record-resolved-path-and-sha256",
+      "buildDependencies": [
+        "lean-batteries-source"
+      ]
+    },
+    {
+      "artifactId": "mirrorecma-package",
+      "componentId": "mirrorecma",
+      "recipe": {
+        "tool": "typescript-package",
+        "resolution": "internal",
+        "argv": [
+          "tsc -p integrations/mirrorecma/tsconfig.json",
+          "copy dist service examples scripts package.json README.md VALIDATION.md WORKFLOW.md *.mjs",
+          "deterministic-tar package"
+        ]
+      },
+      "outputPath": "artifacts/packages/mirrorecma.tgz",
+      "mode": "0644",
+      "source": {
+        "kind": "component-root",
+        "description": "package root selected by componentRef"
+      }
+    },
+    {
+      "artifactId": "mirrorgate-integration",
+      "componentId": "mirrorgate",
+      "recipe": {
+        "tool": "npm",
+        "resolution": "operator-explicit",
+        "argv": [
+          "pack",
+          "--ignore-scripts"
+        ]
+      },
+      "outputPath": "artifacts/packages/mirrorgate-mirrorecma.tgz",
+      "mode": "0644",
+      "source": {
+        "kind": "tree",
+        "path": "integrations/mirrorecma"
+      }
+    },
+    {
+      "artifactId": "mirrorgate-protocol",
+      "componentId": "mirrorgate",
+      "recipe": {
+        "tool": "copy-reviewed-tree",
+        "resolution": "internal",
+        "argv": [
+          "protocol"
+        ]
+      },
+      "outputPath": "artifacts/gate/protocol",
+      "mode": "tree",
+      "source": {
+        "kind": "tree",
+        "path": "protocol"
+      }
+    },
+    {
+      "artifactId": "mirrorgate-runtime",
+      "componentId": "mirrorgate",
+      "recipe": {
+        "tool": "copy-reviewed-tree",
+        "resolution": "internal",
+        "argv": [
+          "package.json",
+          "runtimes/node",
+          "sdk/compatibility.json",
+          "sdk/node",
+          "integrations/agent-host",
+          "supervisor/mirrorgate",
+          "protocol"
+        ]
+      },
+      "outputPath": "artifacts/gate/mirrorgate-runtime.tar.gz",
+      "mode": "tree",
+      "source": {
+        "kind": "generated",
+        "description": "complete relocated Gate Node package, runtime shim, supervisor package and protocol closure"
+      }
+    },
+    {
+      "artifactId": "mirrorgate-supervisor",
+      "componentId": "mirrorgate",
+      "recipe": {
+        "tool": "copy-reviewed-tree",
+        "resolution": "internal",
+        "argv": [
+          "supervisor"
+        ]
+      },
+      "outputPath": "artifacts/gate/supervisor",
+      "mode": "tree",
+      "source": {
+        "kind": "tree",
+        "path": "supervisor"
+      }
+    },
+    {
+      "artifactId": "counter-suite-bundle",
+      "componentId": "mirrors",
+      "recipe": {
+        "tool": "model_interface_gen",
+        "resolution": "component-artifact",
+        "argv": [
+          "bundle",
+          "--target",
+          "mirrorecma-async-v1"
+        ]
+      },
+      "outputPath": "artifacts/examples/counter-suite",
+      "mode": "tree",
+      "source": {
+        "kind": "tree",
+        "path": "test/fixtures/model-interface/counter"
+      }
+    },
+    {
+      "artifactId": "counter-corpus",
+      "componentId": "mirrors",
+      "recipe": {
+        "tool": "copy-reviewed-file",
+        "resolution": "internal",
+        "argv": [
+          "test/fixtures/model-interface/counter/counter.itf.json"
+        ]
+      },
+      "outputPath": "artifacts/examples/counter.itf.json",
+      "mode": "0644",
+      "source": {
+        "kind": "file",
+        "path": "test/fixtures/model-interface/counter/counter.itf.json"
+      }
+    },
+    {
+      "artifactId": "framework-catalog-verifier",
+      "componentId": "mirrors",
+      "recipe": {
+        "tool": "lake",
+        "resolution": "operator-explicit",
+        "argv": [
+          "build",
+          "framework_catalog"
+        ]
+      },
+      "outputPath": "artifacts/bin/framework_catalog",
+      "mode": "0755",
+      "source": {
+        "kind": "file",
+        "path": ".lake/build/bin/framework_catalog"
+      },
+      "dynamicLinkPolicy": "record-resolved-path-and-sha256",
+      "buildDependencies": [
+        "lean-batteries-source"
+      ]
+    },
+    {
+      "artifactId": "evidence-verifier",
+      "componentId": "mirrors",
+      "recipe": {
+        "tool": "copy-reviewed-tree",
+        "resolution": "internal",
+        "argv": [
+          "tools/evidence"
+        ]
+      },
+      "outputPath": "artifacts/evidence/tools",
+      "mode": "tree",
+      "source": {
+        "kind": "tree",
+        "path": "tools/evidence"
+      }
+    },
+    {
+      "artifactId": "evidence-verifier-dependencies",
+      "componentId": "mirrors",
+      "recipe": {
+        "tool": "python3",
+        "resolution": "operator-explicit",
+        "argv": [
+          "-m",
+          "pip",
+          "download",
+          "--requirement",
+          "tools/evidence/requirements.txt"
+        ]
+      },
+      "outputPath": "artifacts/evidence/wheels",
+      "mode": "tree",
+      "source": {
+        "kind": "generated",
+        "description": "<prepared-wheel-output>"
+      }
+    },
+    {
+      "artifactId": "distribution-locks",
+      "componentId": "mirrors",
+      "recipe": {
+        "tool": "archive-reviewed-inputs",
+        "resolution": "internal",
+        "argv": [
+          "profiles.json",
+          "component-lock.json",
+          "dependency-lock.json"
+        ]
+      },
+      "source": {
+        "kind": "generated",
+        "description": "complete raw I2 lock carrier files"
+      },
+      "outputPath": "artifacts/inputs/distribution-locks.tar",
+      "mode": "0644"
+    },
+    {
+      "artifactId": "selected-catalog",
+      "componentId": "mirrors",
+      "recipe": {
+        "tool": "copy-validated-catalog",
+        "resolution": "internal",
+        "argv": [
+          "catalog/framework-catalog.json"
+        ]
+      },
+      "source": {
+        "kind": "generated",
+        "description": "immutable selected private catalog A bytes"
+      },
+      "outputPath": "artifacts/inputs/framework-catalog.A.json",
+      "mode": "0644"
+    },
+    {
+      "artifactId": "application-validation-fixtures",
+      "componentId": "mirrorecma",
+      "recipe": {
+        "tool": "typescript",
+        "resolution": "operator-explicit",
+        "argv": [
+          "-p",
+          "tsconfig.examples.json",
+          "-p",
+          "tsconfig.application-validation.json"
+        ]
+      },
+      "source": {
+        "kind": "tree",
+        "path": "examples"
+      },
+      "outputPath": "artifacts/examples/application-validation-fixtures.tar.gz",
+      "mode": "tree"
+    },
+    {
+      "artifactId": "counter-model",
+      "componentId": "mirrors",
+      "recipe": {
+        "tool": "copy-reviewed-file",
+        "resolution": "internal",
+        "argv": [
+          "specs/Counter.tla"
+        ]
+      },
+      "source": {
+        "kind": "file",
+        "path": "specs/Counter.tla"
+      },
+      "outputPath": "artifacts/examples/Counter.tla",
+      "mode": "0644"
+    }
+  ]
+}

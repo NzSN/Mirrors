@@ -1,0 +1,34 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "windows-build-attempt6",
+  "argv": [
+    "powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    "\\\\wsl.localhost\\Ubuntu-NzSN\\home\\nzsn\\Repos\\Mirrors\\Plans\\completion-rc5-evidence-20261031\\build_windows.ps1",
+    "-InputRoot",
+    "\\\\wsl.localhost\\Ubuntu-NzSN\\home\\nzsn\\Repos\\Mirrors\\.golden-build\\completion-rc5-20261031\\windows-input",
+    "-RecordRoot",
+    "\\\\wsl.localhost\\Ubuntu-NzSN\\home\\nzsn\\Repos\\Mirrors\\Plans\\completion-rc5-evidence-20261031",
+    "-ResumeVerifiedStage"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors",
+  "startedAt": "2026-10-31T12:22:46.897210+00:00",
+  "finishedAt": "2026-10-31T12:23:29.591733+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/windows-build-attempt6.log",
+  "logBytes": 41,
+  "logSha256": "25f3ea22ed72682f901da9d4018aba7580a63a27a16532f372c88d084ab4d7a7",
+  "environment": {
+    "TMPDIR": "/tmp/",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

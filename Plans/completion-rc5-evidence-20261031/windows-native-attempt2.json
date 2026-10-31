@@ -1,0 +1,37 @@
+{
+    "schema":  "mirrors.completion-windows-build/v1",
+    "host":  "L",
+    "os":  "Microsoft Windows NT 10.0.26300.0",
+    "stage":  "D:\\mr5-1031",
+    "source":  "D:\\mr5-1031\\source",
+    "tag":  "v0.2.0-rc.5",
+    "commit":  "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+    "tree":  "de476486fe23bb5f04ee7f8878355ffcf46fbee1",
+    "startedAt":  "2026-10-31T12:10:22.3734166Z",
+    "tools":  {
+
+              },
+    "archives":  {
+                     "mirrors-v0.2.0-rc.5-source.tar.gz":  {
+                                                               "sha256":  "d51f1ddb39ec31d2472caa10f4e6aee92e5597c7ed736fb2b93f44ef92acb905",
+                                                               "bytes":  22459875
+                                                           },
+                     "batteries-4488d40d.tar.gz":  {
+                                                       "sha256":  "3b2f5ff246d07c2a0af0a652c2bd35912e21d164334b6bbe928b8adfc2a6192b",
+                                                       "bytes":  364983
+                                                   }
+                 },
+    "gates":  [
+
+              ],
+    "files":  {
+
+              },
+    "state":  "failed",
+    "published":  false,
+    "deployed":  false,
+    "modelCheckerStarted":  false,
+    "sourceFilesVerified":  9367,
+    "error":  "Batteries extraction failed",
+    "finishedAt":  "2026-10-31T12:11:18.6712715Z"
+}

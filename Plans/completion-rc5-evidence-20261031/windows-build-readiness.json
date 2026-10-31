@@ -1,0 +1,27 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "windows-build-readiness",
+  "argv": [
+    "powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-Command",
+    "$ErrorActionPreference=\"Stop\"; $paths=@(\"C:\\Users\\ayden\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe\",\"C:\\Users\\ayden\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.exe\",\"D:\\Programs\\msys2\\ucrt64\\bin\\gcc.exe\",\"D:\\Programs\\msys2\\ucrt64\\bin\\openssl.exe\",\"D:\\Programs\\Git\\cmd\\git.exe\"); foreach($p in $paths){if(Test-Path -LiteralPath $p){$p; & $p --version 2>&1 | Select-Object -First 2}}; Get-Command python.exe,python3.exe,git.exe,tar.exe -ErrorAction SilentlyContinue | Select-Object Name,Source; Get-ChildItem D:\\Repositories -Directory | Where-Object Name -Match \"Mirror\" | Select-Object FullName; [Environment]::GetFolderPath(\"UserProfile\"); exit 0"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors",
+  "startedAt": "2026-10-31T12:06:15.775911+00:00",
+  "finishedAt": "2026-10-31T12:06:19.573444+00:00",
+  "timeoutSeconds": 60,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/windows-build-readiness.log",
+  "logBytes": 608,
+  "logSha256": "16084ff9af1f9289d57b167bb24c4b35ee02ec7debc02bbdd4bf0248a7f1b4b7",
+  "environment": {
+    "TMPDIR": "/tmp/",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

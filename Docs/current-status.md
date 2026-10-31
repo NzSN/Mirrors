@@ -1,5 +1,35 @@
 # Current framework status and navigation
 
+## October 31 Batteries carrier re-pin
+
+At the user's request, a [new Batteries bundle](../Plans/batteries-bundle-repin-evidence-20261031/README.md)
+replaces the unavailable carrier pin in both distribution profiles. The new
+artifact is 3,739,542 bytes, SHA-256 `73130433…`; the exact Batteries source
+revision/tree is unchanged. Standalone clone/object checks, both lock-root
+validations and all 55 distribution tests pass. Dependent fixture manifest and
+cache-index hashes are regenerated; old rc.5 evidence remains immutable.
+
+The carrier is now available for the new dependency candidate. A new S1/S2
+freeze/delivery boundary precedes final S5 admission; the earlier rc.5 packages
+do not inherit the re-pin. D/M5/Q and release qualification remain outstanding.
+
+## October 31 rc.5 packages and S5 admission
+
+The [new rc.5 record](../Plans/completion-rc5-evidence-20261031/README.md)
+binds clean Linux and Windows packages to committed `3ee3d92` and a local-only
+tag in a separate clone. Seven Linux release checks, isolated archive smoke,
+the full Linux non-model aggregate and eight Windows non-model suites pass.
+The actual hosts are Ubuntu 24.04.3 WSL2 and Windows 11 `L`; the October 30
+Ubuntu 26.04.1 WSL2 and Windows `win10` receipts are not transferred.
+
+A separate clean C0/source snapshot is prepared. S5 distribution admission is
+blocked because the required Batteries Git bundle `f6efbfeb…`, 3,684,180 bytes,
+is unavailable; the real builder rejects the retained `69a03e73…` carrier.
+No dependency pin changed. Both D audits and the qualified 18-command/16-tier
+campaign remain at zero, with fresh remote/client admission and full Windows
+qualification still required. No remote tag, release, deployment, or reboot
+was performed. The package set is reviewable; release admission is pending.
+
 ## October 30 completion design and execution plan
 
 The [completion, qualification, and release design](completion-qualification-release-design.md)

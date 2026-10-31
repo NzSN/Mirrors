@@ -1,0 +1,57 @@
+{
+  "schema": "mirrors.completion-rc5-intake/v1",
+  "observedAt": "2026-10-31T12:04:02.254759+00:00",
+  "commit": "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+  "tree": "de476486fe23bb5f04ee7f8878355ffcf46fbee1",
+  "localOriginTrackingRef": "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+  "remoteRefReobserved": false,
+  "status": "?? .projectile-cache.eld",
+  "editorCacheSha256": "85d7676c0a92eb52c098252db3144e4e0cdd859331bf33d6e7403747c5ea535a",
+  "osRelease": "PRETTY_NAME=\"Ubuntu 24.04.3 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.3 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo\n",
+  "kernel": "6.18.54.1-microsoft-standard-WSL2",
+  "architecture": "x86_64",
+  "glibc": "glibc 2.39",
+  "filesystem": "ext4",
+  "tag": "v0.2.0-rc.5",
+  "embeddedVersion": "0.2.0-rc.5",
+  "workRoot": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031",
+  "scopeMismatch": "actual Ubuntu 24.04.3 WSL2 differs from selected Ubuntu 26.04.1 WSL2; no relabeling or transferred qualification",
+  "tools": {
+    "lean": "Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+    "lake": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)",
+    "python": "Python 3.12.3",
+    "cc": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+    "openssl": "OpenSSL 3.0.13 30 Jan 2024 (Library: OpenSSL 3.0.13 30 Jan 2024)"
+  },
+  "companionStatus": {
+    "MirrorCPP": {
+      "path": "/home/nzsn/Repos/MirrorCPP",
+      "commit": "ec2ccc94547fd787296d5cd4158094b03831738d",
+      "status": ""
+    },
+    "MirrorECMA": {
+      "path": "/home/nzsn/Repos/MirrorECMA",
+      "commit": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+      "status": "?? .projectile-cache.eld"
+    },
+    "MirrorRust": {
+      "path": "/home/nzsn/Repos/MirrorRust",
+      "commit": "5049e99886a3d1f775e60190478c26e39c9aefc9",
+      "status": "M tests/protocol.rs"
+    },
+    "MirrorLean": {
+      "path": "/home/nzsn/Repos/MirrorLean",
+      "commit": "196a58702ffc6b3f400d02431b98a66967260a15",
+      "status": ""
+    },
+    "MirrorHaskell": {
+      "path": "/home/nzsn/Repos/MirrorHaskell",
+      "state": "absent"
+    },
+    "MirrorGate": {
+      "path": "/home/nzsn/Repos/MirrorGate",
+      "commit": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+      "status": "?? .projectile-cache.eld"
+    }
+  }
+}

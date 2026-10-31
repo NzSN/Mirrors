@@ -1,0 +1,27 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "windows-host-observation",
+  "argv": [
+    "powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-Command",
+    "$PSVersionTable.PSVersion.ToString(); [Environment]::MachineName; Get-CimInstance Win32_OperatingSystem | Select-Object Caption,Version; Test-Path D:\\ModelMirrors; Test-Path D:\\Programs\\msys2\\ucrt64\\bin\\gcc.exe; Get-Service -Name ModelMirrors -ErrorAction SilentlyContinue | Select-Object Name,Status,StartType"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors",
+  "startedAt": "2026-10-31T12:05:12.921784+00:00",
+  "finishedAt": "2026-10-31T12:05:14.253357+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 1,
+  "log": "logs/windows-host-observation.log",
+  "logBytes": 200,
+  "logSha256": "9dc8bc570e8efe93702819c1de1ec98107b765cb9644f2af5355f207085f9931",
+  "environment": {
+    "TMPDIR": "/tmp/",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

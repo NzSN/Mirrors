@@ -1,0 +1,34 @@
+{
+  "expected": {
+    "artifactId": "lean-batteries-source",
+    "version": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+    "availability": "prepared-cache",
+    "fileName": "batteries-v4.33.0.bundle",
+    "bytes": 3684180,
+    "sha256": "f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3",
+    "mediaType": "application/vnd.git.bundle",
+    "licenseStatus": "review-required"
+  },
+  "observed": [
+    {
+      "path": "/home/nzsn/.local/state/mirrors/m5-roadmap-20261007-incomplete/batteries-head.bundle",
+      "bytes": 3739625,
+      "sha256": "69a03e73a2cffcf1f251bc1e13a6d262bc8d32001e06e100119158c2c0f463aa",
+      "matchesLockedArtifact": false
+    },
+    {
+      "path": "/home/nzsn/.local/state/mirrors/m5-roadmap-final-20261007/batteries-head.bundle",
+      "bytes": 3739625,
+      "sha256": "69a03e73a2cffcf1f251bc1e13a6d262bc8d32001e06e100119158c2c0f463aa",
+      "matchesLockedArtifact": false
+    },
+    {
+      "path": "/home/nzsn/.local/state/mirrors/m5-current-20261025/final/batteries-head.bundle",
+      "bytes": 3739625,
+      "sha256": "69a03e73a2cffcf1f251bc1e13a6d262bc8d32001e06e100119158c2c0f463aa",
+      "matchesLockedArtifact": false
+    }
+  ],
+  "admitted": false,
+  "pinChanged": false
+}

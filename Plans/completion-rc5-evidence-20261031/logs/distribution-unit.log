@@ -1,0 +1,194 @@
+test_duplicate_members_rejected_by_generic_extractor (test_archive_bounds.ArchiveBoundsTests.test_duplicate_members_rejected_by_generic_extractor) ... ok
+test_duplicate_selected_node_member_rejected (test_archive_bounds.ArchiveBoundsTests.test_duplicate_selected_node_member_rejected) ... ok
+test_gate_operator_closure_preserves_relocated_root_layout (test_archive_bounds.ArchiveBoundsTests.test_gate_operator_closure_preserves_relocated_root_layout) ... ok
+test_gate_profile_lock_selects_every_installed_package (test_archive_bounds.ArchiveBoundsTests.test_gate_profile_lock_selects_every_installed_package) ... ok
+test_local_profile_lock_selects_only_the_mirrorecma_package (test_archive_bounds.ArchiveBoundsTests.test_local_profile_lock_selects_only_the_mirrorecma_package) ... ok
+test_reference_projects_pin_compiler_and_fixed_faulty_adapter (test_archive_bounds.ArchiveBoundsTests.test_reference_projects_pin_compiler_and_fixed_faulty_adapter) ... ok
+test_selected_fresh_runtime_tree_is_materialized (test_archive_bounds.ArchiveBoundsTests.test_selected_fresh_runtime_tree_is_materialized) ... ok
+test_package_scripts_are_copied_and_missing_sources_fail_closed (test_build_package_scripts.BuildPackageScriptTests.test_package_scripts_are_copied_and_missing_sources_fail_closed) ... ok
+test_registry_referenced_package_scripts_are_packaged (test_build_package_scripts.BuildPackageScriptTests.test_registry_referenced_package_scripts_are_packaged) ... ok
+test_projectile_cache_is_excluded_from_snapshot_and_artifacts (test_editor_cache.EditorCacheExclusionTests.test_projectile_cache_is_excluded_from_snapshot_and_artifacts) ... ok
+test_all_interruption_boundaries_preserve_previous_selector (test_install.InstallTransactionTests.test_all_interruption_boundaries_preserve_previous_selector) ... ok
+test_cache_copy_rejects_links_and_normalizes_modes (test_install.InstallTransactionTests.test_cache_copy_rejects_links_and_normalizes_modes) ... ok
+test_commit_idempotence_and_after_activation_rollback (test_install.InstallTransactionTests.test_commit_idempotence_and_after_activation_rollback) ... ok
+test_interrupted_stage_is_quarantined_before_retry (test_install.InstallTransactionTests.test_interrupted_stage_is_quarantined_before_retry) ... ok
+test_lock_symlink_and_selector_confinement (test_install.InstallTransactionTests.test_lock_symlink_and_selector_confinement) ... ok
+test_materialization_retains_actual_package_and_host_facts (test_install.InstallTransactionTests.test_materialization_retains_actual_package_and_host_facts) ... ok
+test_package_observation_reads_actual_version_instead_of_a_profile_constant (test_install.InstallTransactionTests.test_package_observation_reads_actual_version_instead_of_a_profile_constant) ... ok
+test_platform_observation_does_not_claim_the_catalogs_ubuntu_24_target (test_install.InstallTransactionTests.test_platform_observation_does_not_claim_the_catalogs_ubuntu_24_target) ... ok
+test_proc_fd_stage_is_removed_without_rmtree_on_the_symlink (test_install.InstallTransactionTests.test_proc_fd_stage_is_removed_without_rmtree_on_the_symlink) ... ok
+test_restart_recovery_verification_failure_restores_previous (test_install.InstallTransactionTests.test_restart_recovery_verification_failure_restores_previous) ... ok
+test_staged_cache_is_verified_before_materialization (test_install.InstallTransactionTests.test_staged_cache_is_verified_before_materialization) ... ok
+test_observed_virtualization_reads_the_kernel_release (test_install.WslProfileAdmissionTests.test_observed_virtualization_reads_the_kernel_release) ... ok
+test_reference_wsl2_catalog_and_locks_are_additive (test_install.WslProfileAdmissionTests.test_reference_wsl2_catalog_and_locks_are_additive) ... ok
+test_wsl2_catalog_profile_requires_a_wsl2_host (test_install.WslProfileAdmissionTests.test_wsl2_catalog_profile_requires_a_wsl2_host) ... ok
+test_confirmed_cleanup_uses_succeeded_status_and_keeps_the_faulty_coordinate (test_installed_counter.InstalledCounterBindingTests.test_confirmed_cleanup_uses_succeeded_status_and_keeps_the_faulty_coordinate) ... ok
+test_generated_digest_binding_fails_closed_without_the_fix (test_installed_counter.InstalledCounterBindingTests.test_generated_digest_binding_fails_closed_without_the_fix) ... ok
+test_build_inputs_bind_selected_lock_root (test_manifest_check.ManifestCheckTests.test_build_inputs_bind_selected_lock_root) ... ERROR
+test_cache_traversal_private_path_and_closure_fail (test_manifest_check.ManifestCheckTests.test_cache_traversal_private_path_and_closure_fail) ... ERROR
+test_final_manifest_digest_and_entry_identity (test_manifest_check.ManifestCheckTests.test_final_manifest_digest_and_entry_identity) ... ERROR
+test_final_manifest_rejects_tree_source_and_host_downgrades (test_manifest_check.ManifestCheckTests.test_final_manifest_rejects_tree_source_and_host_downgrades) ... ERROR
+test_fresh_trace_is_unavailable_without_exact_java (test_manifest_check.ManifestCheckTests.test_fresh_trace_is_unavailable_without_exact_java) ... ERROR
+test_identity_dag_excludes_carriers_and_binds_lock_bytes (test_manifest_check.ManifestCheckTests.test_identity_dag_excludes_carriers_and_binds_lock_bytes) ... ERROR
+test_locked_profiles_and_local_cache (test_manifest_check.ManifestCheckTests.test_locked_profiles_and_local_cache) ... ERROR
+test_malformed_catalog_and_bounded_loader (test_manifest_check.ManifestCheckTests.test_malformed_catalog_and_bounded_loader) ... FAIL
+test_wrong_catalog_and_product_only_component_match_fail (test_manifest_check.ManifestCheckTests.test_wrong_catalog_and_product_only_component_match_fail) ... FAIL
+test_wsl2_variant_catalog_and_locks_resolve_additively (test_manifest_check.ManifestCheckTests.test_wsl2_variant_catalog_and_locks_resolve_additively) ... ERROR
+test_complete_catalog_identity_ignores_planning_only_changes (test_planning_docs_exclusion.PlanningDocumentationExclusionTests.test_complete_catalog_identity_ignores_planning_only_changes) ... ok
+test_planning_documents_are_excluded_and_do_not_move_the_digest (test_planning_docs_exclusion.PlanningDocumentationExclusionTests.test_planning_documents_are_excluded_and_do_not_move_the_digest) ... ok
+test_q3_report_stays_evidence_output (test_planning_docs_exclusion.PlanningDocumentationExclusionTests.test_q3_report_stays_evidence_output) ... ok
+test_real_catalog_refresh_preserves_selection_and_capture_time (test_planning_docs_exclusion.PlanningDocumentationExclusionTests.test_real_catalog_refresh_preserves_selection_and_capture_time) ... ok
+test_snapshot_membership_ignores_tracked_and_new_planning (test_planning_docs_exclusion.PlanningDocumentationExclusionTests.test_snapshot_membership_ignores_tracked_and_new_planning) ... ok
+test_admission_failure_retains_bounded_audit (test_qualification.QualificationAuditTests.test_admission_failure_retains_bounded_audit) ... distribution qualification failed: installation has no active version
+ok
+test_component_checks_follow_the_installed_combination (test_qualification.QualificationAuditTests.test_component_checks_follow_the_installed_combination) ... ok
+test_trace_audit_accepts_only_one_replacement_mount_probe_per_hidden_root (test_qualification.QualificationAuditTests.test_trace_audit_accepts_only_one_replacement_mount_probe_per_hidden_root) ... ok
+test_lease_project_pins_two_occurrences_and_selects_real_expired_token_adapter (test_reference_projects.ReferenceProjectTests.test_lease_project_pins_two_occurrences_and_selects_real_expired_token_adapter) ... ok
+test_unsupported_reference_application_fails_before_writing (test_reference_projects.ReferenceProjectTests.test_unsupported_reference_application_fails_before_writing) ... ok
+test_workqueue_project_remains_separate_and_gate_lock_selects_all_packages (test_reference_projects.ReferenceProjectTests.test_workqueue_project_remains_separate_and_gate_lock_selects_all_packages) ... ok
+setUpClass (test_verify_bootstrap.BootstrapCacheVerifyTests) ... skipped 'framework catalog binary is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog'
+test_absolute_traversal_and_foreign_paths_are_rejected (test_verify_bootstrap.BootstrapLockRootTests.test_absolute_traversal_and_foreign_paths_are_rejected) ... ok
+test_base_and_variant_roots_are_derived (test_verify_bootstrap.BootstrapLockRootTests.test_base_and_variant_roots_are_derived) ... ok
+test_expected_filenames_are_enforced (test_verify_bootstrap.BootstrapLockRootTests.test_expected_filenames_are_enforced) ... ok
+test_incomplete_duplicate_and_malformed_inputs_are_rejected (test_verify_bootstrap.BootstrapLockRootTests.test_incomplete_duplicate_and_malformed_inputs_are_rejected) ... ok
+test_mixed_roots_are_rejected (test_verify_bootstrap.BootstrapLockRootTests.test_mixed_roots_are_rejected) ... ok
+test_base_and_variant_archives_materialize_the_declared_root (test_verify_bootstrap.BootstrapMaterializeTests.test_base_and_variant_archives_materialize_the_declared_root) ... ok
+test_mixed_root_archive_is_rejected_before_extraction (test_verify_bootstrap.BootstrapMaterializeTests.test_mixed_root_archive_is_rejected_before_extraction) ... ok
+
+======================================================================
+ERROR: test_build_inputs_bind_selected_lock_root (test_manifest_check.ManifestCheckTests.test_build_inputs_bind_selected_lock_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 57, in test_build_inputs_bind_selected_lock_root
+    base = load_contract()
+           ^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 20, in load_contract
+    return checker.validate_locks(root, CATALOG_BIN)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/manifest_check.py", line 388, in validate_locks
+    raise ContractError(f"trusted framework_catalog executable is missing: {catalog_bin}")
+manifest_check.ContractError: trusted framework_catalog executable is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog
+
+======================================================================
+ERROR: test_cache_traversal_private_path_and_closure_fail (test_manifest_check.ManifestCheckTests.test_cache_traversal_private_path_and_closure_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 110, in test_cache_traversal_private_path_and_closure_fail
+    contract = load_contract()
+               ^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 20, in load_contract
+    return checker.validate_locks(root, CATALOG_BIN)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/manifest_check.py", line 388, in validate_locks
+    raise ContractError(f"trusted framework_catalog executable is missing: {catalog_bin}")
+manifest_check.ContractError: trusted framework_catalog executable is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog
+
+======================================================================
+ERROR: test_final_manifest_digest_and_entry_identity (test_manifest_check.ManifestCheckTests.test_final_manifest_digest_and_entry_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 162, in test_final_manifest_digest_and_entry_identity
+    locked = load_contract()
+             ^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 20, in load_contract
+    return checker.validate_locks(root, CATALOG_BIN)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/manifest_check.py", line 388, in validate_locks
+    raise ContractError(f"trusted framework_catalog executable is missing: {catalog_bin}")
+manifest_check.ContractError: trusted framework_catalog executable is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog
+
+======================================================================
+ERROR: test_final_manifest_rejects_tree_source_and_host_downgrades (test_manifest_check.ManifestCheckTests.test_final_manifest_rejects_tree_source_and_host_downgrades)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 203, in test_final_manifest_rejects_tree_source_and_host_downgrades
+    locked = load_contract()
+             ^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 20, in load_contract
+    return checker.validate_locks(root, CATALOG_BIN)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/manifest_check.py", line 388, in validate_locks
+    raise ContractError(f"trusted framework_catalog executable is missing: {catalog_bin}")
+manifest_check.ContractError: trusted framework_catalog executable is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog
+
+======================================================================
+ERROR: test_fresh_trace_is_unavailable_without_exact_java (test_manifest_check.ManifestCheckTests.test_fresh_trace_is_unavailable_without_exact_java)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 142, in test_fresh_trace_is_unavailable_without_exact_java
+    contract = load_contract()
+               ^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 20, in load_contract
+    return checker.validate_locks(root, CATALOG_BIN)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/manifest_check.py", line 388, in validate_locks
+    raise ContractError(f"trusted framework_catalog executable is missing: {catalog_bin}")
+manifest_check.ContractError: trusted framework_catalog executable is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog
+
+======================================================================
+ERROR: test_identity_dag_excludes_carriers_and_binds_lock_bytes (test_manifest_check.ManifestCheckTests.test_identity_dag_excludes_carriers_and_binds_lock_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 174, in test_identity_dag_excludes_carriers_and_binds_lock_bytes
+    locked = load_contract()
+             ^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 20, in load_contract
+    return checker.validate_locks(root, CATALOG_BIN)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/manifest_check.py", line 388, in validate_locks
+    raise ContractError(f"trusted framework_catalog executable is missing: {catalog_bin}")
+manifest_check.ContractError: trusted framework_catalog executable is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog
+
+======================================================================
+ERROR: test_locked_profiles_and_local_cache (test_manifest_check.ManifestCheckTests.test_locked_profiles_and_local_cache)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 25, in test_locked_profiles_and_local_cache
+    locked = load_contract()
+             ^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 20, in load_contract
+    return checker.validate_locks(root, CATALOG_BIN)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/manifest_check.py", line 388, in validate_locks
+    raise ContractError(f"trusted framework_catalog executable is missing: {catalog_bin}")
+manifest_check.ContractError: trusted framework_catalog executable is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog
+
+======================================================================
+ERROR: test_wsl2_variant_catalog_and_locks_resolve_additively (test_manifest_check.ManifestCheckTests.test_wsl2_variant_catalog_and_locks_resolve_additively)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 42, in test_wsl2_variant_catalog_and_locks_resolve_additively
+    contract = checker.validate_locks(variant, CATALOG_BIN, catalog_path=catalog)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/manifest_check.py", line 388, in validate_locks
+    raise ContractError(f"trusted framework_catalog executable is missing: {catalog_bin}")
+manifest_check.ContractError: trusted framework_catalog executable is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog
+
+======================================================================
+FAIL: test_malformed_catalog_and_bounded_loader (test_manifest_check.ManifestCheckTests.test_malformed_catalog_and_bounded_loader)
+----------------------------------------------------------------------
+manifest_check.ContractError: trusted framework_catalog executable is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 250, in test_malformed_catalog_and_bounded_loader
+    with self.assertRaisesRegex(checker.ContractError, "fails C3 validation"):
+AssertionError: "fails C3 validation" does not match "trusted framework_catalog executable is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog"
+
+======================================================================
+FAIL: test_wrong_catalog_and_product_only_component_match_fail (test_manifest_check.ManifestCheckTests.test_wrong_catalog_and_product_only_component_match_fail)
+----------------------------------------------------------------------
+manifest_check.ContractError: trusted framework_catalog executable is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/test_manifest_check.py", line 94, in test_wrong_catalog_and_product_only_component_match_fail
+    with self.assertRaisesRegex(checker.ContractError, "catalogSelectionRef"):
+AssertionError: "catalogSelectionRef" does not match "trusted framework_catalog executable is missing: /home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog"
+
+----------------------------------------------------------------------
+Ran 54 tests in 2.428s
+
+FAILED (failures=2, errors=8, skipped=1)

@@ -1,0 +1,24 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "prior-rc5-preservation",
+  "argv": [
+    "python3",
+    "Plans/completion-rc5-evidence-20261031/verify.py"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors",
+  "startedAt": "2026-10-31T12:46:19.238383+00:00",
+  "finishedAt": "2026-10-31T12:46:25.070748+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/prior-rc5-preservation.log",
+  "logBytes": 296,
+  "logSha256": "15e2341006eb2874efa2145db4cd60a3b6db40b81c1578c0ebe50d85744bd66e",
+  "environment": {
+    "TMPDIR": "/tmp/",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

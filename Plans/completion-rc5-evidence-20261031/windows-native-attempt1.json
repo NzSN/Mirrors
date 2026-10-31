@@ -1,0 +1,36 @@
+{
+    "schema":  "mirrors.completion-windows-build/v1",
+    "host":  "L",
+    "os":  "Microsoft Windows NT 10.0.26300.0",
+    "stage":  "C:\\Users\\ayden\\AppData\\Local\\Temp\\Mirrors-rc5-20261031-3ee3d92",
+    "source":  "C:\\Users\\ayden\\AppData\\Local\\Temp\\Mirrors-rc5-20261031-3ee3d92\\source",
+    "tag":  "v0.2.0-rc.5",
+    "commit":  "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+    "tree":  "de476486fe23bb5f04ee7f8878355ffcf46fbee1",
+    "startedAt":  "2026-10-31T12:08:42.5927659Z",
+    "tools":  {
+
+              },
+    "archives":  {
+                     "mirrors-v0.2.0-rc.5-source.tar.gz":  {
+                                                               "sha256":  "d51f1ddb39ec31d2472caa10f4e6aee92e5597c7ed736fb2b93f44ef92acb905",
+                                                               "bytes":  22459875
+                                                           },
+                     "batteries-4488d40d.tar.gz":  {
+                                                       "sha256":  "3b2f5ff246d07c2a0af0a652c2bd35912e21d164334b6bbe928b8adfc2a6192b",
+                                                       "bytes":  364983
+                                                   }
+                 },
+    "gates":  [
+
+              ],
+    "files":  {
+
+              },
+    "state":  "failed",
+    "published":  false,
+    "deployed":  false,
+    "modelCheckerStarted":  false,
+    "error":  "Cannot find path \u0027C:\\Users\\ayden\\AppData\\Local\\Temp\\Mirrors-rc5-20261031-3ee3d92\\source\\test\\fixtures\\tla-frontend\\differential\\evidence\\profile5-20261001-baseline\\fixtures\\acc-annotations\\apalache\\raw\\native\\AcceptAnnotations.tla\\2026-09-30T23-56-45_11021561961571968839\\run.txt\u0027 because it does not exist.",
+    "finishedAt":  "2026-10-31T12:09:52.0103419Z"
+}

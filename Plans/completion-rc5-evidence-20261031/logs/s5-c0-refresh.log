@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/refresh_identity.py", line 218, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/refresh_identity.py", line 212, in main
+    validate_locks(args.locks_root, args.framework_catalog_bin, catalog_path=args.catalog)
+  File "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/tools/distribution/manifest_check.py", line 403, in validate_locks
+    raise ContractError(f"selected catalog fails C3 validation: {detail}")
+manifest_check.ContractError: selected catalog fails C3 validation: E-FCAT-IDENTITY-001 $.components[0].componentRef.repository: repository must not be a host-local path

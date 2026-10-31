@@ -1,0 +1,24 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "local-no-model",
+  "argv": [
+    "bash",
+    "tools/run-local-no-model-check.sh"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source",
+  "startedAt": "2026-10-31T12:09:14.180041+00:00",
+  "finishedAt": "2026-10-31T12:13:37.664189+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/local-no-model.log",
+  "logBytes": 119103,
+  "logSha256": "d8899140074219774bde65a6840fa5b70f5396390159a725b6bee27a82126e0e",
+  "environment": {
+    "TMPDIR": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/tmp",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

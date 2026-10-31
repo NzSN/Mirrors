@@ -1,0 +1,153 @@
+{
+  "schema": "mirrors.completion-stage-ledger/v1",
+  "candidate": "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+  "tag": "v0.2.0-rc.5",
+  "stages": {
+    "S3.1": {
+      "state": "passed",
+      "record": "package-set.json"
+    },
+    "S3.2": {
+      "state": "passed",
+      "record": "package-set.json"
+    },
+    "S3.3": {
+      "state": "passed",
+      "record": "package-set.json"
+    },
+    "S3.4": {
+      "state": "passed",
+      "record": "package-set.json"
+    },
+    "S3.5": {
+      "state": "passed",
+      "record": "package-set.json"
+    },
+    "S3.6": {
+      "state": "passed",
+      "record": "isolated-archive.json",
+      "scope": "ubuntu-24.04-wsl2-x86_64"
+    },
+    "S3.7": {
+      "state": "passed",
+      "record": "windows-native.json"
+    },
+    "S3.8": {
+      "state": "passed",
+      "record": "windows-package.json"
+    },
+    "S3.9": {
+      "state": "passed",
+      "record": "package-set.json"
+    },
+    "S5.1": {
+      "state": "passed",
+      "scope": "actual Ubuntu 24.04.3 WSL2 environment observation",
+      "record": "intake.json",
+      "limit": "no Ubuntu 26.04 admission claim"
+    },
+    "S5.2": {
+      "state": "awaiting-external-input",
+      "reason": "locked Batteries Git bundle is unavailable; available carriers rejected",
+      "record": "s5-batteries-carrier-admission.json",
+      "completedSubscope": "C0 selection and immutable clean component snapshots frozen"
+    },
+    "S5.3": {
+      "state": "awaiting-external-input",
+      "reason": "locked Batteries Git bundle is unavailable; available carriers rejected",
+      "record": "s5-batteries-carrier-admission.json"
+    },
+    "S5.4": {
+      "state": "awaiting-external-input",
+      "reason": "locked Batteries Git bundle is unavailable; available carriers rejected",
+      "record": "s5-batteries-carrier-admission.json"
+    },
+    "S5.5": {
+      "state": "awaiting-external-input",
+      "reason": "fresh selected remote oracle/backend/certificate and full five-client runtime admission required"
+    },
+    "S5.6": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.7": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.8": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.9": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.10": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.11": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.12": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete",
+      "supplementalEvidence": "eight Windows non-model suites only; full Windows lake test not run"
+    },
+    "S5.13": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.14": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.15": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.16": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.17": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.18": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.19": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    },
+    "S5.20": {
+      "state": "not-started",
+      "reason": "exact-candidate D/remote admission is incomplete"
+    }
+  },
+  "c0Selection": "50b12873ffd6799174efea4c1ee69afdbd2e592370e39b39cc84c9d5fab305a8",
+  "completedDAudits": 0,
+  "requiredDAudits": 2,
+  "qualifiedM5Commands": 0,
+  "requiredM5Commands": 18,
+  "qualifiedM5Tiers": 0,
+  "requiredM5Tiers": 16,
+  "sourceOnlyAcceptance": "local-no-model.json; not collected/finalized as a qualified M5 producer",
+  "frameworkQualified": false,
+  "releaseAdmitted": false,
+  "published": false,
+  "deployed": false,
+  "nextRequiredInput": {
+    "artifactId": "lean-batteries-source",
+    "version": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+    "availability": "prepared-cache",
+    "fileName": "batteries-v4.33.0.bundle",
+    "bytes": 3684180,
+    "sha256": "f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3",
+    "mediaType": "application/vnd.git.bundle",
+    "licenseStatus": "review-required"
+  }
+}

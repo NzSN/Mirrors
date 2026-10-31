@@ -1,0 +1,188 @@
+{
+    "schema":  "mirrors.completion-windows-build/v1",
+    "host":  "L",
+    "os":  "Microsoft Windows NT 10.0.26300.0",
+    "stage":  "D:\\mr5-1031c",
+    "source":  "D:\\mr5-1031c\\source",
+    "tag":  "v0.2.0-rc.5",
+    "commit":  "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+    "tree":  "de476486fe23bb5f04ee7f8878355ffcf46fbee1",
+    "startedAt":  "2026-10-31T12:22:47.6254032Z",
+    "tools":  {
+                  "lean":  {
+                               "path":  "C:\\Users\\ayden\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.exe",
+                               "sha256":  "dd86e9b24990b1da425ea4af910f016e4db8f9a25c9ddad27bc6bee3690e677f",
+                               "version":  "Lean (version 4.33.0, x86_64-w64-windows-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)"
+                           },
+                  "lake":  {
+                               "path":  "C:\\Users\\ayden\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe",
+                               "sha256":  "a1aebb13fc502ae9190745c6b3bd2101d0fec39f030cfc07b1993799c2374644",
+                               "version":  "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)"
+                           },
+                  "gcc":  {
+                              "path":  "D:\\Programs\\msys2\\ucrt64\\bin\\gcc.exe",
+                              "sha256":  "75e87953e9d04e8a5d81225397292e9f8ae599a0ed85f70ed175767577aaa9f6",
+                              "version":  "gcc.exe (Rev3, Built by MSYS2 project) 16.2.0\r\nCopyright (C) 2026 Free Software Foundation, Inc.\r\nThis is free software; see the source for copying conditions.  There is NO\r\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+                          },
+                  "openssl":  {
+                                  "path":  "D:\\Programs\\msys2\\ucrt64\\bin\\openssl.exe",
+                                  "sha256":  "77dedf7ee9a6e58a7786e1ef5844b3bcda8fc52be6e104ed3e1a51a8ab96205c",
+                                  "version":  "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)"
+                              }
+              },
+    "archives":  {
+                     "mirrors-v0.2.0-rc.5-source.tar.gz":  {
+                                                               "sha256":  "d51f1ddb39ec31d2472caa10f4e6aee92e5597c7ed736fb2b93f44ef92acb905",
+                                                               "bytes":  22459875
+                                                           },
+                     "batteries-4488d40d-release.bundle":  {
+                                                               "sha256":  "69a03e73a2cffcf1f251bc1e13a6d262bc8d32001e06e100119158c2c0f463aa",
+                                                               "bytes":  3739625
+                                                           }
+                 },
+    "gates":  [
+                  {
+                      "name":  "fixtures_replay",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\fixtures_replay.exe\"",
+                      "exitCode":  0,
+                      "startedAt":  "2026-10-31T12:23:05.6557307Z",
+                      "finishedAt":  "2026-10-31T12:23:05.7458323Z",
+                      "log":  "logs/fixtures_replay.log",
+                      "logBytes":  39,
+                      "logSha256":  "a1ac3ec1016e3876374f06b9344c078979bf1517ad2eb01f2f37f1e21c54528b"
+                  },
+                  {
+                      "name":  "diff_cross",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\diff_cross.exe\"",
+                      "exitCode":  0,
+                      "startedAt":  "2026-10-31T12:23:05.7497083Z",
+                      "finishedAt":  "2026-10-31T12:23:05.8636251Z",
+                      "log":  "logs/diff_cross.log",
+                      "logBytes":  92,
+                      "logSha256":  "c756c8eca2e4314e3c42a5b2b6ecf284205075a8f820e9904c4d424a9674f6c7"
+                  },
+                  {
+                      "name":  "model_interface_spec",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\model_interface_spec.exe\"",
+                      "exitCode":  0,
+                      "startedAt":  "2026-10-31T12:23:05.8644711Z",
+                      "finishedAt":  "2026-10-31T12:23:06.7311535Z",
+                      "log":  "logs/model_interface_spec.log",
+                      "logBytes":  622,
+                      "logSha256":  "115609a409cb81cbe2bb938de26e52004835c819dff7697c0ab3b7d6f26ea266"
+                  },
+                  {
+                      "name":  "stdio_smoke",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\stdio_smoke.exe\"",
+                      "exitCode":  0,
+                      "startedAt":  "2026-10-31T12:23:06.7311535Z",
+                      "finishedAt":  "2026-10-31T12:23:07.1728905Z",
+                      "log":  "logs/stdio_smoke.log",
+                      "logBytes":  312,
+                      "logSha256":  "150e212d9d245bbe9c356ea1df8578e4eb92f38e38b653139d13c56065779cc6"
+                  },
+                  {
+                      "name":  "transport_spec",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\transport_spec.exe\"",
+                      "exitCode":  0,
+                      "startedAt":  "2026-10-31T12:23:07.1749625Z",
+                      "finishedAt":  "2026-10-31T12:23:16.0996311Z",
+                      "log":  "logs/transport_spec.log",
+                      "logBytes":  3990,
+                      "logSha256":  "133eb89e51c808f9637b95cef7010ec115f27b6e0ff034fda18d50073db32570"
+                  },
+                  {
+                      "name":  "jobstore_spec",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\jobstore_spec.exe\"",
+                      "exitCode":  0,
+                      "startedAt":  "2026-10-31T12:23:16.0996311Z",
+                      "finishedAt":  "2026-10-31T12:23:16.8491109Z",
+                      "log":  "logs/jobstore_spec.log",
+                      "logBytes":  505,
+                      "logSha256":  "f019ed3c03f0d635f84059339f6cb6a1903c1188393eb00bc0a05afde6824f6c"
+                  },
+                  {
+                      "name":  "async_resource_spec",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\async_resource_spec.exe\"",
+                      "exitCode":  0,
+                      "startedAt":  "2026-10-31T12:23:16.8598645Z",
+                      "finishedAt":  "2026-10-31T12:23:16.9818320Z",
+                      "log":  "logs/async_resource_spec.log",
+                      "logBytes":  28,
+                      "logSha256":  "e14caa75aaa0068084e7fd6deddd639a29ed223da67c4480ffca7e11ce6f7dd8"
+                  },
+                  {
+                      "name":  "dpm_sync_spec",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\dpm_sync_spec.exe\"",
+                      "exitCode":  0,
+                      "startedAt":  "2026-10-31T12:23:16.9818320Z",
+                      "finishedAt":  "2026-10-31T12:23:17.1120978Z",
+                      "log":  "logs/dpm_sync_spec.log",
+                      "logBytes":  34,
+                      "logSha256":  "140867b31de2908bb87a6df57305c60ccd6da439fbbd9c7f07bc5ea4db575302"
+                  }
+              ],
+    "files":  {
+                  "ModelMirrors.exe":  {
+                                           "source":  "D:\\mr5-1031c\\source\\.lake\\build\\bin\\mirror.exe",
+                                           "sha256":  "98d027c195a70f2dc312e7759e6cf7156b28f33934def3ef008cebf44c531267",
+                                           "bytes":  111188992
+                                       },
+                  "model_interface_gen.exe":  {
+                                                  "source":  "D:\\mr5-1031c\\source\\.lake\\build\\bin\\model_interface_gen.exe",
+                                                  "sha256":  "56bcab8ad620915507db0b5e9373514b3839a8c4139dc8d072a1bd8ede8ddda1",
+                                                  "bytes":  112591360
+                                              },
+                  "libssl-3-x64.dll":  {
+                                           "source":  "D:\\Programs\\msys2\\ucrt64\\bin\\libssl-3-x64.dll",
+                                           "sha256":  "7f53951cf786e299521e46d860f7764d6bd671ce85d2a03dc929a8184792e2ab",
+                                           "bytes":  996164
+                                       },
+                  "libcrypto-3-x64.dll":  {
+                                              "source":  "D:\\Programs\\msys2\\ucrt64\\bin\\libcrypto-3-x64.dll",
+                                              "sha256":  "616e5c9cfd5c6f786fd81238198ec479076f5bf6702127f81686f46b31b2464d",
+                                              "bytes":  5495100
+                                          },
+                  "zlib1.dll":  {
+                                    "source":  "D:\\Programs\\msys2\\ucrt64\\bin\\zlib1.dll",
+                                    "sha256":  "11cd91171765cd65f1c3362e3df67e5f5a618a6b88c8cdec899b802eaf1c7b0d",
+                                    "bytes":  127291
+                                }
+              },
+    "state":  "passed",
+    "published":  false,
+    "deployed":  false,
+    "modelCheckerStarted":  false,
+    "sourceFilesVerified":  9367,
+    "batteriesRevision":  "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+    "nativeLinkEnvironment":  {
+                                  "CC":  "D:/Programs/msys2/ucrt64/bin/gcc.exe",
+                                  "OSSL_INC":  "D:/Programs/msys2/ucrt64/include",
+                                  "OSSL_LIB":  "D:/mr5-1031c/openssl-import-libs",
+                                  "importLibraries":  [
+                                                          {
+                                                              "name":  "libcrypto.dll.a",
+                                                              "bytes":  4030258,
+                                                              "sha256":  "73eb73b0d5049ea82eda53c8b6871e71bfb14ae7027fdd481671242e398dbe4d"
+                                                          },
+                                                          {
+                                                              "name":  "libssl.dll.a",
+                                                              "bytes":  415524,
+                                                              "sha256":  "3319d2d52c1287913bc4793c7caf5559163c7407eaf5a83a425edfc042bb5a14"
+                                                          }
+                                                      ]
+                              },
+    "build":  {
+                  "name":  "build",
+                  "command":  "\"C:\\Users\\ayden\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe\" build mirror model_interface_gen fixtures_replay diff_cross model_interface_spec stdio_smoke transport_spec jobstore_spec async_resource_spec dpm_sync_spec",
+                  "exitCode":  0,
+                  "startedAt":  "2026-10-31T12:23:02.7499263Z",
+                  "finishedAt":  "2026-10-31T12:23:05.6469379Z",
+                  "log":  "logs/build.log",
+                  "logBytes":  82195,
+                  "logSha256":  "e6a512bb60ae08d6896333f826767679006258835a1792befd251723e8601652"
+              },
+    "postBuildSourceStable":  true,
+    "versionOutput":  "v0.2.0-rc.5",
+    "finishedAt":  "2026-10-31T12:23:29.4339352Z"
+}

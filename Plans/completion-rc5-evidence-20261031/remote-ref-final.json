@@ -1,0 +1,28 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "remote-ref-final",
+  "argv": [
+    "git",
+    "ls-remote",
+    "origin",
+    "refs/heads/main",
+    "refs/tags/v0.2.0-rc.5",
+    "refs/tags/v0.2.0-rc.5^{}"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors",
+  "startedAt": "2026-10-31T12:23:55.285304+00:00",
+  "finishedAt": "2026-10-31T12:23:58.107710+00:00",
+  "timeoutSeconds": 30,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/remote-ref-final.log",
+  "logBytes": 57,
+  "logSha256": "f94c789b8a7e1768b562b82cd485b5c0cf9a576bb038055ff4e90ef23a59a691",
+  "environment": {
+    "TMPDIR": "/tmp/",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "release-unit",
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tools/release",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source",
+  "startedAt": "2026-10-31T12:04:51.637592+00:00",
+  "finishedAt": "2026-10-31T12:04:53.657961+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/release-unit.log",
+  "logBytes": 1917,
+  "logSha256": "7223ece25f6c700f17789b43fa1bfcc7479a11a430e7a3a5c886fbe813eb9ac2",
+  "environment": {
+    "TMPDIR": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/tmp",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "s5-source-snapshot",
+  "argv": [
+    "python3",
+    "tools/distribution/snapshot_sources.py",
+    "--component-lock",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/reference-node/component-lock.json",
+    "--out",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/source-snapshot",
+    "--mirrors",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source",
+    "--mirrorecma",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/MirrorECMA",
+    "--mirrorgate",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/MirrorGate"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source",
+  "startedAt": "2026-10-31T12:15:44.843787+00:00",
+  "finishedAt": "2026-10-31T12:15:56.997684+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/s5-source-snapshot.log",
+  "logBytes": 22,
+  "logSha256": "47751951f76441918a4b601f1229a952914b7e545c7a54695b358e320e54ee0c",
+  "environment": {
+    "TMPDIR": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/tmp",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

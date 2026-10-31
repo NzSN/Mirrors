@@ -1,0 +1,133 @@
+{
+    "schema":  "mirrors.completion-windows-build/v1",
+    "host":  "L",
+    "os":  "Microsoft Windows NT 10.0.26300.0",
+    "stage":  "D:\\mr5-1031c",
+    "source":  "D:\\mr5-1031c\\source",
+    "tag":  "v0.2.0-rc.5",
+    "commit":  "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+    "tree":  "de476486fe23bb5f04ee7f8878355ffcf46fbee1",
+    "startedAt":  "2026-10-31T12:20:41.6280641Z",
+    "tools":  {
+                  "lean":  {
+                               "path":  "C:\\Users\\ayden\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.exe",
+                               "sha256":  "dd86e9b24990b1da425ea4af910f016e4db8f9a25c9ddad27bc6bee3690e677f",
+                               "version":  "Lean (version 4.33.0, x86_64-w64-windows-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)"
+                           },
+                  "lake":  {
+                               "path":  "C:\\Users\\ayden\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe",
+                               "sha256":  "a1aebb13fc502ae9190745c6b3bd2101d0fec39f030cfc07b1993799c2374644",
+                               "version":  "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)"
+                           },
+                  "gcc":  {
+                              "path":  "D:\\Programs\\msys2\\ucrt64\\bin\\gcc.exe",
+                              "sha256":  "75e87953e9d04e8a5d81225397292e9f8ae599a0ed85f70ed175767577aaa9f6",
+                              "version":  "gcc.exe (Rev3, Built by MSYS2 project) 16.2.0\r\nCopyright (C) 2026 Free Software Foundation, Inc.\r\nThis is free software; see the source for copying conditions.  There is NO\r\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+                          },
+                  "openssl":  {
+                                  "path":  "D:\\Programs\\msys2\\ucrt64\\bin\\openssl.exe",
+                                  "sha256":  "77dedf7ee9a6e58a7786e1ef5844b3bcda8fc52be6e104ed3e1a51a8ab96205c",
+                                  "version":  "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)"
+                              }
+              },
+    "archives":  {
+                     "mirrors-v0.2.0-rc.5-source.tar.gz":  {
+                                                               "sha256":  "d51f1ddb39ec31d2472caa10f4e6aee92e5597c7ed736fb2b93f44ef92acb905",
+                                                               "bytes":  22459875
+                                                           },
+                     "batteries-4488d40d-release.bundle":  {
+                                                               "sha256":  "69a03e73a2cffcf1f251bc1e13a6d262bc8d32001e06e100119158c2c0f463aa",
+                                                               "bytes":  3739625
+                                                           }
+                 },
+    "gates":  [
+                  {
+                      "name":  "fixtures_replay",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\fixtures_replay.exe\"",
+                      "exitCode":  0,
+                      "startedAt":  "2026-10-31T12:21:01.5518464Z",
+                      "finishedAt":  "2026-10-31T12:21:01.6764169Z",
+                      "log":  "logs/fixtures_replay.log",
+                      "logBytes":  39,
+                      "logSha256":  "a1ac3ec1016e3876374f06b9344c078979bf1517ad2eb01f2f37f1e21c54528b"
+                  },
+                  {
+                      "name":  "diff_cross",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\diff_cross.exe\"",
+                      "exitCode":  0,
+                      "startedAt":  "2026-10-31T12:21:01.6821648Z",
+                      "finishedAt":  "2026-10-31T12:21:01.8319330Z",
+                      "log":  "logs/diff_cross.log",
+                      "logBytes":  92,
+                      "logSha256":  "c756c8eca2e4314e3c42a5b2b6ecf284205075a8f820e9904c4d424a9674f6c7"
+                  },
+                  {
+                      "name":  "model_interface_spec",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\model_interface_spec.exe\"",
+                      "exitCode":  0,
+                      "startedAt":  "2026-10-31T12:21:01.8319330Z",
+                      "finishedAt":  "2026-10-31T12:21:02.8028409Z",
+                      "log":  "logs/model_interface_spec.log",
+                      "logBytes":  622,
+                      "logSha256":  "115609a409cb81cbe2bb938de26e52004835c819dff7697c0ab3b7d6f26ea266"
+                  },
+                  {
+                      "name":  "stdio_smoke",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\stdio_smoke.exe\"",
+                      "exitCode":  0,
+                      "startedAt":  "2026-10-31T12:21:02.8051417Z",
+                      "finishedAt":  "2026-10-31T12:21:03.3140995Z",
+                      "log":  "logs/stdio_smoke.log",
+                      "logBytes":  312,
+                      "logSha256":  "150e212d9d245bbe9c356ea1df8578e4eb92f38e38b653139d13c56065779cc6"
+                  },
+                  {
+                      "name":  "transport_spec",
+                      "command":  "\"D:\\mr5-1031c\\source\\.lake\\build\\bin\\transport_spec.exe\"",
+                      "exitCode":  1,
+                      "startedAt":  "2026-10-31T12:21:03.3202431Z",
+                      "finishedAt":  "2026-10-31T12:21:04.3119058Z",
+                      "log":  "logs/transport_spec.log",
+                      "logBytes":  1417,
+                      "logSha256":  "34b859e7f6a2b4502222fe5b1a2d8bf474bf52969114f6a892b78cdf7b250a4d"
+                  }
+              ],
+    "files":  {
+
+              },
+    "state":  "failed",
+    "published":  false,
+    "deployed":  false,
+    "modelCheckerStarted":  false,
+    "sourceFilesVerified":  9367,
+    "batteriesRevision":  "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+    "nativeLinkEnvironment":  {
+                                  "CC":  "D:/Programs/msys2/ucrt64/bin/gcc.exe",
+                                  "OSSL_INC":  "D:/Programs/msys2/ucrt64/include",
+                                  "OSSL_LIB":  "D:/mr5-1031c/openssl-import-libs",
+                                  "importLibraries":  [
+                                                          {
+                                                              "name":  "libcrypto.dll.a",
+                                                              "bytes":  4030258,
+                                                              "sha256":  "73eb73b0d5049ea82eda53c8b6871e71bfb14ae7027fdd481671242e398dbe4d"
+                                                          },
+                                                          {
+                                                              "name":  "libssl.dll.a",
+                                                              "bytes":  415524,
+                                                              "sha256":  "3319d2d52c1287913bc4793c7caf5559163c7407eaf5a83a425edfc042bb5a14"
+                                                          }
+                                                      ]
+                              },
+    "build":  {
+                  "name":  "build",
+                  "command":  "\"C:\\Users\\ayden\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe\" build mirror model_interface_gen fixtures_replay diff_cross model_interface_spec stdio_smoke transport_spec jobstore_spec async_resource_spec dpm_sync_spec",
+                  "exitCode":  0,
+                  "startedAt":  "2026-10-31T12:20:56.8622330Z",
+                  "finishedAt":  "2026-10-31T12:21:01.5419407Z",
+                  "log":  "logs/build.log",
+                  "logBytes":  82279,
+                  "logSha256":  "276c2fc4a2903ec726eef441ae770f8087892b07993b7926d3d7e76145add33b"
+              },
+    "error":  "Windows gate failed: transport_spec",
+    "finishedAt":  "2026-10-31T12:21:04.3212963Z"
+}

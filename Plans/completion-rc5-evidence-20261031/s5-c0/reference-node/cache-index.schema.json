@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mirrors.invalid/schema/reference-cache-index-v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "profileId", "catalogSelectionRef", "distributionManifestSha256", "entries"],
+  "properties": {
+    "schemaVersion": {"const": "mirrors.reference-cache-index/v1"},
+    "profileId": {"type": "string", "minLength": 1, "maxLength": 128},
+    "catalogSelectionRef": {"type": "object", "additionalProperties": false, "required": ["schemaVersion", "selectionKind", "selectionValue"], "properties": {"schemaVersion": {"const": "mirrors.framework-catalog/v1"}, "selectionKind": {"const": "sha256"}, "selectionValue": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}},
+    "distributionManifestSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "entries": {"type": "array", "minItems": 1, "maxItems": 2048, "items": {"type": "object", "additionalProperties": false, "required": ["artifactId", "path", "bytes", "sha256", "mode"], "properties": {"artifactId": {"type": "string", "minLength": 1, "maxLength": 128}, "path": {"type": "string", "minLength": 1, "maxLength": 1024}, "bytes": {"type": "integer", "minimum": 0, "maximum": 536870912}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "mode": {"enum": ["0644", "0755"]}}}}
+  }
+}

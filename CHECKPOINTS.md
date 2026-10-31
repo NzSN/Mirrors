@@ -5,6 +5,61 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-10-31 — Batteries carrier re-pinned at unchanged source revision
+
+The user requested a new Batteries bundle. A fresh, read-only, content-addressed
+carrier is pinned in both base and Ubuntu 26.04 WSL2 distribution locks:
+3,739,542 bytes, SHA-256
+`73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a`.
+The source remains `4488d40d070b9700d4d5a6aa342f0d40c31b2a2d`, tree
+`5a1de86f7997958aaffec998882c29006b688d1e`. A standalone clone, full Git object
+check, complete-history bundle verification and exact HEAD/tree checks pass.
+
+The lock-generation API refreshes four fixture manifests and four cache-index
+hashes. Both lock roots validate and all 55 distribution tests pass. The prior
+rc.5 evidence, its retained artifacts, tag and failed old-carrier admission are
+preserved. The re-pin is a new working-tree dependency candidate; source
+freeze/delivery and every affected final S5 installation/producer/Q gate remain
+necessary. No new D, M5, full Windows, framework or release credit is granted.
+
+The [new record](Plans/batteries-bundle-repin-evidence-20261031/README.md)
+retains the old lock bytes, new artifact identity, provenance, validation and
+candidate preview. No source commit/push, tag change, publication, deployment,
+model checker or reboot was performed.
+
+## 2026-10-31 — rc.5 clean packages; S5 blocked on exact Batteries carrier
+
+At user request, the next completion boundary was executed against Mirrors
+`3ee3d9226f6258583fe7266c1737acff5abd1edf`. A separate clean clone owns the
+local-only annotated `v0.2.0-rc.5` tag; the shared checkout's tag refs are
+unchanged. Remote observations before and after construction find the exact
+candidate on `origin/main` and no remote rc.5 tag.
+
+The Linux package passes seven release checks, isolated no-Lean runtime smoke
+on the actual Ubuntu 24.04.3 WSL2 host, and the full source non-model aggregate.
+The Windows 11 `L` build passes 606 Lake jobs and eight non-model suites after
+isolating OpenSSL import libraries and admitting required Unix helper tools.
+Source archive verification checks 9,367 files before and after; repeat Windows
+packaging is identical and PE import closure is checked. Initial setup/link/test
+failures remain retained separately. This is scoped package acceptance, not full
+Windows `lake test` or framework qualification.
+
+Fresh C0 `50b12873…` binds clean Mirrors `3ee3d92`, MirrorECMA `f943588` and
+MirrorGate `4b379ac` without editing checked-in catalogs or companion sources.
+The real distribution builder refuses the available Batteries carrier. Required:
+`batteries-v4.33.0.bundle`, 3,684,180 bytes, SHA-256
+`f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3`.
+The three retained copies are different bytes (`69a03e73…`); no pin changed.
+Both D audits, all 18 qualified M5 commands and all 16 required tiers remain
+uncredited. Remote/backend/certificate and five-client admission, full Windows
+tests and Q1/Q2 remain open.
+
+The [new evidence](Plans/completion-rc5-evidence-20261031/README.md) retains
+packages, source/tag bindings, C0, command receipts, failed attempts and an
+offline verifier. Earlier dated records and editor caches are preserved.
+No source commit/push, remote tag, release, deployment, restart, or reboot was
+performed; no Ubuntu 26.04, native M4, full S5 or release admission is granted.
+
 ## 2026-10-29 — Source-review fixes authorized for branch publication
 
 The user requested commit and push of the six runtime fixes, focused

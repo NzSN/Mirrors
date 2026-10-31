@@ -1,0 +1,36 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "s5-c0-refresh-canonical-remotes",
+  "argv": [
+    "python3",
+    "tools/distribution/refresh_identity.py",
+    "--mirrorecma",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/MirrorECMA",
+    "--mirrorgate",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/MirrorGate",
+    "--framework-catalog-bin",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog",
+    "--catalog",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/catalog/framework-catalog.json",
+    "--locks-root",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/reference-node",
+    "--skip-component-records",
+    "--skip-render"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source",
+  "startedAt": "2026-10-31T12:13:30.872031+00:00",
+  "finishedAt": "2026-10-31T12:13:32.340699+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/s5-c0-refresh-canonical-remotes.log",
+  "logBytes": 102,
+  "logSha256": "e2969993f7822aaff31176e01ddfa6308f5ad9c32870684553e457c15c7b9502",
+  "environment": {
+    "TMPDIR": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/tmp",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

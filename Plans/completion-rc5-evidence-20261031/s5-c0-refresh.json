@@ -1,0 +1,36 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "s5-c0-refresh",
+  "argv": [
+    "python3",
+    "tools/distribution/refresh_identity.py",
+    "--mirrorecma",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/MirrorECMA",
+    "--mirrorgate",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/MirrorGate",
+    "--framework-catalog-bin",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog",
+    "--catalog",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/catalog/framework-catalog.json",
+    "--locks-root",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/reference-node",
+    "--skip-component-records",
+    "--skip-render"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source",
+  "startedAt": "2026-10-31T12:12:57.017375+00:00",
+  "finishedAt": "2026-10-31T12:12:57.784119+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 1,
+  "log": "logs/s5-c0-refresh.log",
+  "logBytes": 851,
+  "logSha256": "91a89de320bfcd308c3df80a71509bf112962b3676831d992dd5d921e30915e5",
+  "environment": {
+    "TMPDIR": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/tmp",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

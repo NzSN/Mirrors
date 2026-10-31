@@ -1,0 +1,36 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "candidate-refresh",
+  "argv": [
+    "python3",
+    "tools/distribution/refresh_identity.py",
+    "--mirrorecma",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/MirrorECMA",
+    "--mirrorgate",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/qualification/MirrorGate",
+    "--framework-catalog-bin",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source/.lake/build/bin/framework_catalog",
+    "--catalog",
+    "/home/nzsn/Repos/Mirrors/.golden-build/batteries-repin-20261031/candidate/catalog/framework-catalog.json",
+    "--locks-root",
+    "/home/nzsn/Repos/Mirrors/.golden-build/batteries-repin-20261031/candidate/reference-node",
+    "--skip-component-records",
+    "--skip-render"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors",
+  "startedAt": "2026-10-31T12:44:05.299805+00:00",
+  "finishedAt": "2026-10-31T12:44:06.217391+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/candidate-refresh.log",
+  "logBytes": 102,
+  "logSha256": "3927306079243a77c9c42e545fa3b12ef7242f1db40fb0ba13ca9621baa19a68",
+  "environment": {
+    "TMPDIR": "/tmp/",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

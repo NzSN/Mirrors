@@ -1,0 +1,27 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "windows-build-process-observation",
+  "argv": [
+    "powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-Command",
+    "Get-CimInstance Win32_Process | Where-Object {$_.Name -in @(\"lake.exe\",\"lean.exe\",\"git.exe\",\"clang.exe\",\"gcc.exe\") -and ($_.CommandLine -like \"*mr5-1031b*\" -or $_.Name -eq \"lake.exe\")} | Select-Object ProcessId,ParentProcessId,Name,CommandLine | ConvertTo-Json -Depth 3"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors",
+  "startedAt": "2026-10-31T12:14:18.005899+00:00",
+  "finishedAt": "2026-10-31T12:14:18.688537+00:00",
+  "timeoutSeconds": 60,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/windows-build-process-observation.log",
+  "logBytes": 355,
+  "logSha256": "e1d35a5cd1a50dfc967314205f69d356742c87e451193148897e5a864a6798f8",
+  "environment": {
+    "TMPDIR": "/tmp/",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

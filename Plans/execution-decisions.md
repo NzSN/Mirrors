@@ -6,6 +6,39 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
+## Current continuation — 2026-10-31 (Batteries carrier re-pin)
+
+The user requested re-pinning to a new bundle. Both distribution profiles now
+select the retained `73130433…` carrier, 3,739,542 bytes, at the unchanged
+Batteries source revision `4488d40d…`. Dependent fixture hashes are regenerated;
+standalone Git/source checks and all 55 distribution tests pass. See the
+[new record](batteries-bundle-repin-evidence-20261031/README.md).
+
+The missing-carrier prerequisite is resolved for the new dependency selection.
+Earlier rc.5 source/package evidence remains bound to its original bytes. A new
+source/contract freeze and delivery boundary precedes final exact-candidate S5
+installation and downstream producers/Q. No commit/push, tag mutation, release,
+production operation or model-checking run is authorized by this record.
+
+## Current continuation — 2026-10-31 (rc.5 construction and admission)
+
+The user requested execution of the next boundary. Clean rc.5 package
+construction and local checks were performed in isolated Linux/Windows staging,
+with the annotated tag local to the separate build clone. No public or
+production operation was performed. See the
+[new evidence](completion-rc5-evidence-20261031/README.md).
+
+The actual coordinator is Ubuntu 24.04.3 WSL2, not the October 30 Ubuntu 26.04.1
+host. This continuation prepares admission with the existing 24.04 catalog and
+records that scope explicitly; the earlier 26.04 receipts are unchanged and
+receive no new credit. Source and catalog preparation do not qualify a host.
+
+Continue S5 only with the exact locked Batteries Git bundle, or a separately
+reviewed new dependency selection and all resulting invalidation gates. The
+available carrier is rejected, so neither D audit nor any dependent qualified
+producer is complete. Fresh remote/client admission and full Windows tests
+remain required. Publication, deployment and reboot stay separate boundaries.
+
 ## Current continuation — 2026-10-30 (execution environment scope)
 
 The user removed all native-runner execution planning from the current

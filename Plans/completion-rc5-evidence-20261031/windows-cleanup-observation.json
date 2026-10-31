@@ -1,0 +1,27 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "windows-cleanup-observation",
+  "argv": [
+    "powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-Command",
+    "$all=Get-CimInstance Win32_Process; $owned=@($all | Where-Object {($_.ExecutablePath -like \"D:\\mr5-1031*\" -or $_.ExecutablePath -like \"C:\\Users\\ayden\\AppData\\Local\\Temp\\Mirrors-rc5-20261031-3ee3d92*\") -and $_.Name -notin @(\"powershell.exe\",\"cmd.exe\")}); [ordered]@{observedAt=(Get-Date).ToUniversalTime().ToString(\"o\");host=$env:COMPUTERNAME;taskOwnedExecutableCount=$owned.Count;processes=@($owned | Select-Object ProcessId,Name,ExecutablePath)} | ConvertTo-Json -Depth 4; if($owned.Count -ne 0){exit 1}"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors",
+  "startedAt": "2026-10-31T12:23:49.701317+00:00",
+  "finishedAt": "2026-10-31T12:23:50.279522+00:00",
+  "timeoutSeconds": 60,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/windows-cleanup-observation.log",
+  "logBytes": 158,
+  "logSha256": "094e3265221bac530b5033d09b7c9c1471a8eec2ec6556de63e3abea52818900",
+  "environment": {
+    "TMPDIR": "/tmp/",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

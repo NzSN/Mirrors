@@ -1,0 +1,31 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "distribution-unit",
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tools/distribution",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source",
+  "startedAt": "2026-10-31T12:08:42.912195+00:00",
+  "finishedAt": "2026-10-31T12:08:45.734352+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 1,
+  "log": "logs/distribution-unit.log",
+  "logBytes": 21158,
+  "logSha256": "904c61b91684b1344c15ffd116ffc1cefab15b0a69d17a2ab27ff10533e0aa46",
+  "environment": {
+    "TMPDIR": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/tmp",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

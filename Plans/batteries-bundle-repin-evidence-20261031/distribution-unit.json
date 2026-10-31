@@ -1,0 +1,31 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "distribution-unit",
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tools/distribution",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors",
+  "startedAt": "2026-10-31T12:43:18.912396+00:00",
+  "finishedAt": "2026-10-31T12:43:26.601974+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/distribution-unit.log",
+  "logBytes": 9181,
+  "logSha256": "8d36fb55711d67a057676ae3b3e762c5af69eb0b2a3588e5d57ac39bf94957e0",
+  "environment": {
+    "TMPDIR": "/tmp/",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

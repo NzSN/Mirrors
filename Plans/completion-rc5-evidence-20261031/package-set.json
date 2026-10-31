@@ -1,0 +1,123 @@
+{
+  "schema": "mirrors.s3.package-set/v2",
+  "source": {
+    "tag": "v0.2.0-rc.5",
+    "commit": "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+    "tree": "de476486fe23bb5f04ee7f8878355ffcf46fbee1",
+    "tagObject": "19db70433443d21fe5a4919873be6250fa92472e",
+    "tagScope": "local-only separate clone; main checkout tag refs unchanged"
+  },
+  "artifacts": [
+    {
+      "bytes": 72209913,
+      "sha256": "1d2aa6dda1a844e666b30128de53b1897f02029d574d8a2514c4c8beff6a33b7",
+      "retentionLocation": ".golden-build/completion-rc5-20261031/dist-linux/mirrors-v0.2.0-rc.5-linux-x86_64.tar.gz",
+      "platform": "linux-x86_64",
+      "fileName": "mirrors-v0.2.0-rc.5-linux-x86_64.tar.gz",
+      "members": {
+        "BUILD.json": {
+          "bytes": 2843,
+          "sha256": "08a86b4465fe86267f9855effdeb4f1101470fd720d4f62f96405d42a6e1f23a"
+        },
+        "README.txt": {
+          "bytes": 798,
+          "sha256": "6d1e67460cfd1ae8a2a6d5ca79fc88305af72fcde9d33fbcd98f336b9ca2a534"
+        },
+        "bin/mirror": {
+          "bytes": 129463904,
+          "sha256": "bd58237c5f6d6fd36c462ab9505face8f4dc9b171fd384947ffc78f4b8636928"
+        },
+        "bin/model_interface_gen": {
+          "bytes": 124701968,
+          "sha256": "f7bd3c9927c1b2ddfc94ba20cc68ddaf9e6ea00d5eddf3b0b0cdeeac03e6ace2"
+        }
+      },
+      "externalBuildManifest": {
+        "path": ".golden-build/completion-rc5-20261031/dist-linux/mirrors-v0.2.0-rc.5-linux-x86_64.build.json",
+        "bytes": 2843,
+        "sha256": "08a86b4465fe86267f9855effdeb4f1101470fd720d4f62f96405d42a6e1f23a"
+      },
+      "host": "Ubuntu 24.04.3 WSL2 x86_64; glibc 2.39",
+      "passedGates": [
+        "fixtures_replay",
+        "diff_cross",
+        "model_interface_spec",
+        "stdio_smoke",
+        "transport_spec",
+        "check-client-framing.py",
+        "relocated-binary-cli-smoke"
+      ],
+      "validationScope": "seven focused release checks and isolated packaged-runtime smoke",
+      "sourceBinding": {
+        "tag": "v0.2.0-rc.5",
+        "commit": "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+        "state": "bound"
+      }
+    },
+    {
+      "bytes": 73675376,
+      "sha256": "d0dab3ba1281b875d6b61a99df6acb17020856040a7f1aa33a8a36925446e803",
+      "retentionLocation": ".golden-build/completion-rc5-20261031/dist-windows/mirrors-v0.2.0-rc.5-windows-x86_64.zip",
+      "platform": "windows-x86_64",
+      "fileName": "mirrors-v0.2.0-rc.5-windows-x86_64.zip",
+      "members": {
+        "BUILD.json": {
+          "bytes": 8545,
+          "sha256": "4a4bcead941b4111be5ac06c16912217ab78cbee892a924812e84d8378697aff"
+        },
+        "README.txt": {
+          "bytes": 178,
+          "sha256": "fd06a35f722c9390bc58c696a273d66b70d3ea765b87327f20825af546443deb"
+        },
+        "bin/ModelMirrors.exe": {
+          "bytes": 111188992,
+          "sha256": "98d027c195a70f2dc312e7759e6cf7156b28f33934def3ef008cebf44c531267"
+        },
+        "bin/libcrypto-3-x64.dll": {
+          "bytes": 5495100,
+          "sha256": "616e5c9cfd5c6f786fd81238198ec479076f5bf6702127f81686f46b31b2464d"
+        },
+        "bin/libssl-3-x64.dll": {
+          "bytes": 996164,
+          "sha256": "7f53951cf786e299521e46d860f7764d6bd671ce85d2a03dc929a8184792e2ab"
+        },
+        "bin/model_interface_gen.exe": {
+          "bytes": 112591360,
+          "sha256": "56bcab8ad620915507db0b5e9373514b3839a8c4139dc8d072a1bd8ede8ddda1"
+        },
+        "bin/zlib1.dll": {
+          "bytes": 127291,
+          "sha256": "11cd91171765cd65f1c3362e3df67e5f5a618a6b88c8cdec899b802eaf1c7b0d"
+        }
+      },
+      "externalBuildManifest": {
+        "path": ".golden-build/completion-rc5-20261031/dist-windows/mirrors-v0.2.0-rc.5-windows-x86_64.build.json",
+        "bytes": 8545,
+        "sha256": "4a4bcead941b4111be5ac06c16912217ab78cbee892a924812e84d8378697aff"
+      },
+      "host": "Microsoft Windows NT 10.0.26300.0 / L",
+      "passedGates": [
+        "fixtures_replay",
+        "diff_cross",
+        "model_interface_spec",
+        "stdio_smoke",
+        "transport_spec",
+        "jobstore_spec",
+        "async_resource_spec",
+        "dpm_sync_spec"
+      ],
+      "validationScope": "native build, eight selected non-model suites, repeatable packaging, PE import closure",
+      "sourceBinding": {
+        "tag": "v0.2.0-rc.5",
+        "commit": "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+        "state": "bound"
+      }
+    }
+  ],
+  "limits": [
+    "Linux runtime acceptance is Ubuntu 24.04.3 WSL2 only",
+    "Windows is the observed Windows 11 host, not the earlier win10 fixture",
+    "No full Windows lake test, M5/D/Q, native M4, release admission, publication, deployment or reboot",
+    "Repeated Windows packaging does not establish reproducible compilation"
+  ]
+}

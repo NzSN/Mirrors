@@ -1,0 +1,31 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "linux-build",
+  "argv": [
+    "python3",
+    "tools/release/release.py",
+    "build",
+    "--source",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source",
+    "--tag",
+    "v0.2.0-rc.5",
+    "--output",
+    "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/dist-linux"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/source",
+  "startedAt": "2026-10-31T12:04:55.369690+00:00",
+  "finishedAt": "2026-10-31T12:07:17.149776+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/linux-build.log",
+  "logBytes": 124133,
+  "logSha256": "c9ff55994cf430fb5ebc79b53e8b6fc65acc3d4adc00ad7978475ceeff38d94f",
+  "environment": {
+    "TMPDIR": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/tmp",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}

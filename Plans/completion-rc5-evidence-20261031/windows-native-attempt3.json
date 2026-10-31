@@ -1,0 +1,66 @@
+{
+    "schema":  "mirrors.completion-windows-build/v1",
+    "host":  "L",
+    "os":  "Microsoft Windows NT 10.0.26300.0",
+    "stage":  "D:\\mr5-1031b",
+    "source":  "D:\\mr5-1031b\\source",
+    "tag":  "v0.2.0-rc.5",
+    "commit":  "3ee3d9226f6258583fe7266c1737acff5abd1edf",
+    "tree":  "de476486fe23bb5f04ee7f8878355ffcf46fbee1",
+    "startedAt":  "2026-10-31T12:12:06.1775996Z",
+    "tools":  {
+                  "lean":  {
+                               "path":  "C:\\Users\\ayden\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.exe",
+                               "sha256":  "dd86e9b24990b1da425ea4af910f016e4db8f9a25c9ddad27bc6bee3690e677f",
+                               "version":  "Lean (version 4.33.0, x86_64-w64-windows-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)"
+                           },
+                  "lake":  {
+                               "path":  "C:\\Users\\ayden\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe",
+                               "sha256":  "a1aebb13fc502ae9190745c6b3bd2101d0fec39f030cfc07b1993799c2374644",
+                               "version":  "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)"
+                           },
+                  "gcc":  {
+                              "path":  "D:\\Programs\\msys2\\ucrt64\\bin\\gcc.exe",
+                              "sha256":  "75e87953e9d04e8a5d81225397292e9f8ae599a0ed85f70ed175767577aaa9f6",
+                              "version":  "gcc.exe (Rev3, Built by MSYS2 project) 16.2.0\r\nCopyright (C) 2026 Free Software Foundation, Inc.\r\nThis is free software; see the source for copying conditions.  There is NO\r\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+                          },
+                  "openssl":  {
+                                  "path":  "D:\\Programs\\msys2\\ucrt64\\bin\\openssl.exe",
+                                  "sha256":  "77dedf7ee9a6e58a7786e1ef5844b3bcda8fc52be6e104ed3e1a51a8ab96205c",
+                                  "version":  "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)"
+                              }
+              },
+    "archives":  {
+                     "mirrors-v0.2.0-rc.5-source.tar.gz":  {
+                                                               "sha256":  "d51f1ddb39ec31d2472caa10f4e6aee92e5597c7ed736fb2b93f44ef92acb905",
+                                                               "bytes":  22459875
+                                                           },
+                     "batteries-4488d40d-windows.tar.gz":  {
+                                                               "sha256":  "20cd6d70b2175693576323875bfc47f842ecd6c3c8c63026e8b35686ab3d45fe",
+                                                               "bytes":  371977
+                                                           }
+                 },
+    "gates":  [
+
+              ],
+    "files":  {
+
+              },
+    "state":  "failed",
+    "published":  false,
+    "deployed":  false,
+    "modelCheckerStarted":  false,
+    "sourceFilesVerified":  9367,
+    "build":  {
+                  "name":  "build",
+                  "command":  "\"C:\\Users\\ayden\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe\" build mirror model_interface_gen fixtures_replay diff_cross model_interface_spec stdio_smoke transport_spec jobstore_spec async_resource_spec dpm_sync_spec",
+                  "exitCode":  1,
+                  "startedAt":  "2026-10-31T12:13:06.7920935Z",
+                  "finishedAt":  "2026-10-31T12:14:49.9946891Z",
+                  "log":  "logs/build.log",
+                  "logBytes":  249,
+                  "logSha256":  "c58d1339ae928e9fa15c0dd919f812ee182fe3cd6f9b6bb9ce55d5a18268cf04"
+              },
+    "error":  "Windows lake build failed",
+    "finishedAt":  "2026-10-31T12:14:50.0076818Z"
+}

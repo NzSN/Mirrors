@@ -1,0 +1,24 @@
+{
+  "schema": "mirrors.completion-command/v1",
+  "name": "linux-archive-smoke",
+  "argv": [
+    "python3",
+    "Plans/completion-rc5-evidence-20261031/archive_smoke.py"
+  ],
+  "cwd": "/home/nzsn/Repos/Mirrors",
+  "startedAt": "2026-10-31T12:07:44.513254+00:00",
+  "finishedAt": "2026-10-31T12:07:47.139781+00:00",
+  "timeoutSeconds": 3600,
+  "timedOut": false,
+  "exitCode": 0,
+  "log": "logs/linux-archive-smoke.log",
+  "logBytes": 835,
+  "logSha256": "d089a2650685700d2a6056138a2951a5f6e66eb55b60c74a7a20fe355a79339c",
+  "environment": {
+    "TMPDIR": "/home/nzsn/Repos/Mirrors/.golden-build/completion-rc5-20261031/tmp",
+    "MIRRORS_DPM_PYTHON": null,
+    "CC": null,
+    "OSSL_INC": null,
+    "OSSL_LIB": null
+  }
+}
