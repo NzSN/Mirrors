@@ -3,7 +3,7 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "a99a32b2d1a0663c623244f36f34323d56ed58334fec32ff5189441a4e03be7c"
+    "selectionValue": "4a485efb456bb930a0e56832800725c7bdaeff92a533e0241d41cdefcaef5a23"
   },
   "components": [
     {
@@ -44,19 +44,17 @@
       "componentRef": {
         "componentId": "mirrors",
         "repository": "https://github.com/NzSN/Mirrors.git",
-        "revision": "38a94ec85dd9e5e8c5aef45da2a5c909bcd74de5",
+        "revision": "5ab907d890e2656191e3cf1639244dc1ad15b1b7",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "1f645a9af3fe325f2d4d8f1d1c7e0278dbf74671c188dbd2353221c51c4fb6ee",
+          "digest": "4bfc4d5c5deca48ba3649728e32e8c235a0868770cb27cc8184003f7dad64c0f",
           "method": "git-diff-and-untracked-manifest-v1",
           "includedPaths": [
             "Shell/Version.lean",
             "tools/StdioSmoke.lean",
-            "tools/distribution/build.py",
-            "tools/distribution/manifest_check.py",
-            "tools/distribution/refresh_identity.py",
-            "tools/distribution/test_manifest_check.py"
+            "tools/distribution/test_verify_bootstrap.py",
+            "tools/distribution/verify.py"
           ],
           "excludedPaths": [
             {

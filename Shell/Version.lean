@@ -3,6 +3,6 @@
 namespace Shell.Version
 
 /-- Mirrors product version. Update when preparing a product release. -/
-def version : String := "0.2.0-rc.4"
+def version : String := "0.2.0-rc.5"
 
 end Shell.Version

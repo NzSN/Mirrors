@@ -7,19 +7,17 @@
       "componentRef": {
         "componentId": "mirrors",
         "repository": "https://github.com/NzSN/Mirrors.git",
-        "revision": "38a94ec85dd9e5e8c5aef45da2a5c909bcd74de5",
+        "revision": "5ab907d890e2656191e3cf1639244dc1ad15b1b7",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "1f645a9af3fe325f2d4d8f1d1c7e0278dbf74671c188dbd2353221c51c4fb6ee",
+          "digest": "4bfc4d5c5deca48ba3649728e32e8c235a0868770cb27cc8184003f7dad64c0f",
           "method": "git-diff-and-untracked-manifest-v1",
           "includedPaths": [
             "Shell/Version.lean",
             "tools/StdioSmoke.lean",
-            "tools/distribution/build.py",
-            "tools/distribution/manifest_check.py",
-            "tools/distribution/refresh_identity.py",
-            "tools/distribution/test_manifest_check.py"
+            "tools/distribution/test_verify_bootstrap.py",
+            "tools/distribution/verify.py"
           ],
           "excludedPaths": [
             {
@@ -262,7 +260,7 @@
   "combinations": [],
   "extensions": {
     "org.nzsn.snapshot": {
-      "capturedAt": "2026-10-31T07:51:30Z",
+      "capturedAt": "2026-10-31T09:16:42Z",
       "provisional": true
     }
   }

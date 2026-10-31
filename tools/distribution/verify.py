@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import stat
 import sys
 import tarfile
@@ -16,8 +17,9 @@ HERE = Path(__file__).resolve().parent
 MIRRORS = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 from distribution_lib import extract_selected_node, extract_selected_tree, runtime_tree, sha256_file
-from manifest_check import (ContractError, digest_json, load_json, validate_cache_index,
-    run_trusted_catalog_validation, validate_distribution_manifest, validate_locks)
+from manifest_check import (LOCK_INPUT_FILES, ContractError, digest_json, load_json,
+    validate_cache_index, run_trusted_catalog_validation, validate_distribution_manifest,
+    validate_locks)
 
 
 def safe_extract_regular(archive_path: Path, destination: Path) -> None:
@@ -65,6 +67,55 @@ def safe_extract_regular(archive_path: Path, destination: Path) -> None:
             target.chmod(0o755 if member.mode & 0o111 else 0o644)
 
 
+def bootstrap_lock_relative_root(manifest: dict) -> str:
+    """Return the single safe lock root named by the bootstrap build inputs."""
+    inputs = manifest.get("buildInputs")
+    if not isinstance(inputs, list) or len(inputs) > 64:
+        raise ContractError("bootstrap buildInputs must be a bounded array")
+    seen: set[str] = set()
+    roots: set[str] = set()
+    for index, identity in enumerate(inputs):
+        if not isinstance(identity, dict):
+            raise ContractError(f"bootstrap buildInputs[{index}] must be an object")
+        input_id = identity.get("inputId")
+        if input_id not in LOCK_INPUT_FILES or input_id in seen:
+            raise ContractError(f"bootstrap build input identity is invalid: {input_id}")
+        seen.add(input_id)
+        path = identity.get("path")
+        if not isinstance(path, str) or not path or len(path.encode()) > 1024:
+            raise ContractError(f"bootstrap build input path is invalid: {input_id}")
+        if any(ord(character) < 0x20 or ord(character) == 0x7F for character in path):
+            raise ContractError(f"bootstrap build input path contains a control character: {input_id}")
+        parts = path.split("/")
+        if (path.startswith("/") or "\\" in path or "//" in path or re.match(r"^[A-Za-z]:", path)
+                or any(part in {"", ".", ".."} for part in parts)):
+            raise ContractError(f"bootstrap build input path must be relative and traversal-free: {input_id}")
+        if len(parts) != 3 or parts[0] != "distribution" or parts[2] != LOCK_INPUT_FILES[input_id]:
+            raise ContractError(f"bootstrap build input must name distribution/<root>/{LOCK_INPUT_FILES[input_id]}: {input_id}")
+        roots.add(parts[1])
+    if seen != set(LOCK_INPUT_FILES):
+        raise ContractError("bootstrap lock build inputs are incomplete")
+    if len(roots) != 1:
+        raise ContractError("bootstrap lock build inputs name mixed roots")
+    return f"distribution/{roots.pop()}"
+
+
+def materialize_bootstrap_locks(cache: Path, artifacts: dict, manifest: dict,
+    bootstrap: Path) -> Path:
+    """Reconstruct exactly the locked bootstrap root declared by the cache manifest."""
+    lock_relative = bootstrap_lock_relative_root(manifest)
+    safe_extract_regular(cache / artifacts["distribution-locks"]["path"], bootstrap / "extracted")
+    extracted = bootstrap / "extracted/distribution-locks"
+    lock_root = bootstrap / lock_relative
+    lock_root.mkdir(parents=True)
+    for name in LOCK_INPUT_FILES.values():
+        source = extracted / name
+        if not source.is_file() or source.is_symlink():
+            raise ContractError(f"bootstrap lock file is missing or unsafe: {name}")
+        (lock_root / name).write_bytes(source.read_bytes())
+    return lock_root
+
+
 def reject_symlink_chain(path: Path) -> None:
     current = Path(path.anchor)
     for part in path.parts[1:]:
@@ -93,13 +144,8 @@ def verify(cache: Path, framework_catalog_bin: Path, framework_catalog_sha256: s
             raise ContractError(f"bootstrap artifact identity mismatch: {artifact_id}")
     with tempfile.TemporaryDirectory(prefix="mirrors-distribution-bootstrap-") as temporary:
         bootstrap = Path(temporary)
-        safe_extract_regular(cache / bootstrap_artifacts["distribution-locks"]["path"],
-            bootstrap / "extracted")
-        extracted = bootstrap / "extracted/distribution-locks"
-        lock_root = bootstrap / "distribution/reference-node"
-        lock_root.mkdir(parents=True)
-        for name in ("profiles.json", "component-lock.json", "dependency-lock.json"):
-            (lock_root / name).write_bytes((extracted / name).read_bytes())
+        lock_root = materialize_bootstrap_locks(cache, bootstrap_artifacts,
+            bootstrap_manifest, bootstrap)
         catalog_root = bootstrap / "catalog"; catalog_root.mkdir()
         (catalog_root / "framework-catalog.json").write_bytes(
             (cache / bootstrap_artifacts["selected-catalog"]["path"]).read_bytes())
