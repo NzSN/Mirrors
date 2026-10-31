@@ -325,6 +325,48 @@ def runtime_tree_requirements(profile_id: str, profiles: dict[str, dict[str, Any
     return result
 
 
+LOCK_INPUT_FILES = {
+    "profiles-lock": "profiles.json",
+    "component-lock": "component-lock.json",
+    "dependency-lock": "dependency-lock.json",
+}
+
+
+def lock_root_repository(root: Path) -> Path:
+    """Return the repository root that owns one selected distribution lock root."""
+    return root.resolve().parents[1]
+
+
+def selected_lock_input_path(root: Path, name: str) -> str:
+    """Return a selected-root relative repository path for one lock build input."""
+    resolved = root.resolve()
+    return (resolved.relative_to(lock_root_repository(root)) / name).as_posix()
+
+
+def lock_build_inputs(root: Path, raw: dict[str, bytes]) -> dict[str, dict[str, Any]]:
+    """Bind every lock file byte to a path under the selected lock root."""
+    return {
+        input_id: {
+            "inputId": input_id,
+            "path": selected_lock_input_path(root, name),
+            "bytes": len(raw[input_id]),
+            "sha256": hashlib.sha256(raw[input_id]).hexdigest(),
+        }
+        for input_id, name in LOCK_INPUT_FILES.items()
+    }
+
+
+def resolve_lock_build_input(root: Path, identity: dict[str, Any]) -> Path:
+    """Resolve one locked build input under exactly the selected lock root."""
+    path = logical_path(identity.get("path"), "buildInput.path")
+    input_id = identity.get("inputId")
+    source = lock_root_repository(root) / path
+    if (source.parent.resolve() != root.resolve()
+            or source.name != LOCK_INPUT_FILES.get(input_id)):
+        raise ContractError(f"lock input does not resolve to selected root: {input_id}")
+    return source
+
+
 def validate_locks(root: Path, framework_catalog_bin: Path | None = None,
     framework_catalog_sha256: str | None = None,
     catalog_path: Path | None = None) -> dict[str, Any]:
@@ -518,15 +560,7 @@ def validate_locks(root: Path, framework_catalog_bin: Path | None = None,
         if combination is None or profile["catalogProfileId"] not in combination["distributionProfileIds"]:
             raise ContractError(f"profile combination does not resolve: {profile_id}")
         combination_components[profile_id] = set(combination["componentIds"])
-    build_inputs = {
-        input_id: {
-            "inputId": input_id,
-            "path": f"distribution/reference-node/{path.name}",
-            "bytes": len(lock_raw[input_id]),
-            "sha256": hashlib.sha256(lock_raw[input_id]).hexdigest(),
-        }
-        for input_id, path in lock_files.items()
-    }
+    build_inputs = lock_build_inputs(root, lock_raw)
     return {"profiles": profiles, "dependencies": dependencies, "buildArtifacts": build_artifacts,
         "selection": selection, "componentRefs": locked_components, "combinationComponents": combination_components,
         "buildInputs": build_inputs, "distributionId": profiles_doc["distributionId"],

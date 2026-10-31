@@ -7,16 +7,19 @@
       "componentRef": {
         "componentId": "mirrors",
         "repository": "https://github.com/NzSN/Mirrors.git",
-        "revision": "1fe379a5361fad8959ac40b47474beb6eb3bbe09",
+        "revision": "38a94ec85dd9e5e8c5aef45da2a5c909bcd74de5",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "213e6ec13d2fb5cef2500a7d16a6b73353424295556afdbdd86d75c48be3b933",
+          "digest": "1f645a9af3fe325f2d4d8f1d1c7e0278dbf74671c188dbd2353221c51c4fb6ee",
           "method": "git-diff-and-untracked-manifest-v1",
           "includedPaths": [
-            "Docs/completion-qualification-release-design.md",
             "Shell/Version.lean",
-            "tools/StdioSmoke.lean"
+            "tools/StdioSmoke.lean",
+            "tools/distribution/build.py",
+            "tools/distribution/manifest_check.py",
+            "tools/distribution/refresh_identity.py",
+            "tools/distribution/test_manifest_check.py"
           ],
           "excludedPaths": [
             {
@@ -48,10 +51,6 @@
               "reasonCode": "evidence-output"
             },
             {
-              "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
-              "reasonCode": "evidence-output"
-            },
-            {
               "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
               "reasonCode": "evidence-output"
             },
@@ -73,10 +72,6 @@
             },
             {
               "path": "distribution/reference-node/component-lock.json",
-              "reasonCode": "evidence-output"
-            },
-            {
-              "path": "distribution/reference-node/dependency-lock.json",
               "reasonCode": "evidence-output"
             },
             {
@@ -267,7 +262,7 @@
   "combinations": [],
   "extensions": {
     "org.nzsn.snapshot": {
-      "capturedAt": "2026-10-31T02:40:33Z",
+      "capturedAt": "2026-10-31T07:51:30Z",
       "provisional": true
     }
   }

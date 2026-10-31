@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 import subprocess
@@ -20,7 +19,7 @@ sys.path.insert(0, str(HERE))
 
 from collect import _changed_paths, component_ref  # type: ignore  # noqa: E402
 from source_policy import is_planning_documentation as _is_planning_documentation  # noqa: E402
-from manifest_check import digest_json, validate_locks  # noqa: E402
+from manifest_check import digest_json, lock_build_inputs, validate_locks  # noqa: E402
 
 
 def read(path: Path) -> dict[str, Any]:
@@ -147,11 +146,8 @@ def update_locks(refs: dict[str, dict[str, Any]], selection_digest: str,
         "component-lock": root / "component-lock.json",
         "dependency-lock": root / "dependency-lock.json",
     }
-    build_inputs = []
-    for input_id, path in lock_files.items():
-        raw = path.read_bytes()
-        build_inputs.append({"inputId": input_id, "path": f"distribution/reference-node/{path.name}",
-            "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()})
+    build_inputs = list(lock_build_inputs(root,
+        {input_id: path.read_bytes() for input_id, path in lock_files.items()}).values())
     fixture = root / "fixtures/distribution-manifest.checked-replay-local.valid.json"
     manifest = read(fixture)
     manifest["catalogSelectionRef"] = selection

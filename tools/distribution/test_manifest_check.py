@@ -53,6 +53,33 @@ class ManifestCheckTests(unittest.TestCase):
         self.assertEqual(base["profiles"]["checked-replay-local"]["catalogProfileId"],
             "mirrors.reference-node-checked/ubuntu-24.04-x86_64/v1")
 
+    def test_build_inputs_bind_selected_lock_root(self) -> None:
+        base = load_contract()
+        variant_root = ROOT / "distribution/reference-node-wsl2-26.04"
+        variant = checker.validate_locks(variant_root, CATALOG_BIN,
+            catalog_path=ROOT / "catalog/framework-catalog-wsl2-26.04.json")
+        selections = (
+            (base, LOCK_ROOT, "distribution/reference-node/"),
+            (variant, variant_root, "distribution/reference-node-wsl2-26.04/"),
+        )
+        for contract, root, prefix in selections:
+            self.assertEqual(set(contract["buildInputs"]), set(checker.LOCK_INPUT_FILES))
+            for identity in contract["buildInputs"].values():
+                self.assertTrue(identity["path"].startswith(prefix), identity["path"])
+                self.assertEqual(checker.resolve_lock_build_input(root, identity),
+                    ROOT / identity["path"])
+        for fixture in ("fixtures/distribution-manifest.checked-replay-local.valid.json",
+                "fixtures/distribution-manifest.checked-replay-gate.valid.json"):
+            manifest = json.loads((variant_root / fixture).read_text())
+            self.assertEqual({entry["inputId"]: entry for entry in manifest["buildInputs"]},
+                variant["buildInputs"])
+        with self.assertRaisesRegex(checker.ContractError,
+                "lock input does not resolve to selected root"):
+            checker.resolve_lock_build_input(variant_root, base["buildInputs"]["profiles-lock"])
+        with self.assertRaisesRegex(checker.ContractError,
+                "lock input does not resolve to selected root"):
+            checker.resolve_lock_build_input(LOCK_ROOT, variant["buildInputs"]["profiles-lock"])
+
     def test_wrong_catalog_and_product_only_component_match_fail(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

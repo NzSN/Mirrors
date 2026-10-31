@@ -21,7 +21,7 @@ sys.path.insert(0, str(HERE))
 from distribution_lib import (deterministic_tar, dynamic_libraries, extract_selected_node, extract_selected_tree,
     runtime_tree, sha256_file, write_json)
 from manifest_check import (_read_bounded_regular, digest_json, profile_resolution,
-    load_json, runtime_tree_requirements, validate_locks)
+    load_json, resolve_lock_build_input, runtime_tree_requirements, validate_locks)
 
 
 def run(argv: list[str], cwd: Path) -> None:
@@ -439,7 +439,7 @@ def main() -> int:
         artifact_paths["evidence-verifier-dependencies"] = (wheels_out, "0644", "component-build", "application/gzip")
         locks_dir = work / "distribution-locks"; locks_dir.mkdir()
         for input_id, identity in contract["buildInputs"].items():
-            source = MIRRORS / identity["path"]
+            source = resolve_lock_build_input(args.locks_root, identity)
             raw = _read_bounded_regular(source)
             if len(raw) != identity["bytes"] or hashlib.sha256(raw).hexdigest() != identity["sha256"]:
                 raise ValueError(f"lock input changed after validation: {input_id}")

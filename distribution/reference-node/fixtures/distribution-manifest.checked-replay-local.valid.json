@@ -4,7 +4,7 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "3331af29d1a057d9635028d73efb5190a395e7be836ed0066c6c1495f8907b31"
+    "selectionValue": "a8760bbffabbbce192388f09ccd4d43d00e023142dcc18e86cffeab53b55b440"
   },
   "profileId": "checked-replay-local",
   "componentRefs": [
@@ -12,21 +12,34 @@
       "componentId": "mirrorecma",
       "repository": "https://github.com/NzSN/MirrorECMA.git",
       "revision": "f94358834dce2e527c8bc8feec0423a54cf4176c",
-      "dirty": false
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "498e1393fbce7fd58467e1a148e6ab5e085511fad5246aa6bf077f1b9e73efea",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "node_modules-pnpm-isolated/.package-map.json",
+          "node_modules-pnpm-isolated/.pnpm-workspace-state-v1.json"
+        ],
+        "excludedPaths": []
+      }
     },
     {
       "componentId": "mirrors",
       "repository": "https://github.com/NzSN/Mirrors.git",
-      "revision": "1fe379a5361fad8959ac40b47474beb6eb3bbe09",
+      "revision": "38a94ec85dd9e5e8c5aef45da2a5c909bcd74de5",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "213e6ec13d2fb5cef2500a7d16a6b73353424295556afdbdd86d75c48be3b933",
+        "digest": "1f645a9af3fe325f2d4d8f1d1c7e0278dbf74671c188dbd2353221c51c4fb6ee",
         "method": "git-diff-and-untracked-manifest-v1",
         "includedPaths": [
-          "Docs/completion-qualification-release-design.md",
           "Shell/Version.lean",
-          "tools/StdioSmoke.lean"
+          "tools/StdioSmoke.lean",
+          "tools/distribution/build.py",
+          "tools/distribution/manifest_check.py",
+          "tools/distribution/refresh_identity.py",
+          "tools/distribution/test_manifest_check.py"
         ],
         "excludedPaths": [
           {
@@ -58,10 +71,6 @@
             "reasonCode": "evidence-output"
           },
           {
-            "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
-            "reasonCode": "evidence-output"
-          },
-          {
             "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
             "reasonCode": "evidence-output"
           },
@@ -83,10 +92,6 @@
           },
           {
             "path": "distribution/reference-node/component-lock.json",
-            "reasonCode": "evidence-output"
-          },
-          {
-            "path": "distribution/reference-node/dependency-lock.json",
             "reasonCode": "evidence-output"
           },
           {
@@ -345,13 +350,13 @@
       "inputId": "profiles-lock",
       "path": "distribution/reference-node/profiles.json",
       "bytes": 4307,
-      "sha256": "cc9ae5e362ffbc55d9816bbddeb475d39f3d32d455ff1675a6d682fa72c18dad"
+      "sha256": "884e3252d332fbed74cd545f3ad5d70e02903d4ca27ea066d09d7d5df321acd8"
     },
     {
       "inputId": "component-lock",
       "path": "distribution/reference-node/component-lock.json",
-      "bytes": 12926,
-      "sha256": "3452526521c7eb6ad892a208dea0c7a33b7bd9ba9baabecdf9a10bfb458e5ceb"
+      "bytes": 13178,
+      "sha256": "308e4b55f99b450b2292f3f5ff8ca8209bf94e2b8524aa63f2da7ff7af6feb0b"
     },
     {
       "inputId": "dependency-lock",
