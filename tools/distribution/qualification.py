@@ -71,6 +71,47 @@ def required_component_checks(runtime: Path, combination: str) -> set[str]:
     return {f"catalog.component.{component_id}" for component_id in components}
 
 
+def json_document(output: str | bytes, error_output: str | bytes):
+    """Parse one CLI JSON document from stdout, otherwise from stderr.
+
+    Each whole stream is tried first. Non-JSON warning text before the first
+    object is accepted only when ``JSONDecoder.raw_decode`` yields one value
+    and only whitespace follows it. Invalid JSON, trailing non-whitespace, and
+    a second JSON value are rejected.
+    """
+    def as_text(data: str | bytes) -> str:
+        return data.decode("utf-8") if isinstance(data, bytes) else data
+
+    streams = (as_text(output), as_text(error_output))
+    for text in streams:
+        if not text.strip():
+            continue
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError:
+            continue
+    decoder = json.JSONDecoder()
+    failures: list[Exception] = []
+    for text in streams:
+        start = text.find("{")
+        if start < 0:
+            continue
+        try:
+            value, end = decoder.raw_decode(text, start)
+        except json.JSONDecodeError as error:
+            failures.append(error)
+            continue
+        if text[end:].strip():
+            failures.append(ValueError(
+                "CLI JSON diagnostic has trailing non-whitespace"))
+            continue
+        if text[:start].strip():
+            return value
+    if failures:
+        raise failures[0]
+    raise ValueError("CLI JSON diagnostic is not one JSON document")
+
+
 def descendants(pid: int) -> set[int]:
     found = {pid}; pending = [pid]
     while pending and len(found) < 4096:
@@ -290,8 +331,7 @@ def main() -> int:
                     if code != expected_exit:
                         raise ValueError(f"installed CLI {label} exit differs: {code} != {expected_exit}: "
                             f"{error_output.decode('utf-8', 'replace')[-2000:]}")
-                    raw = output.strip() or error_output.strip()
-                    value = json.loads(raw)
+                    value = json_document(output, error_output)
                     return value, trace_audit(cli_trace, hidden)
 
                 project = "/tmp/runtime/applications/reference-project/mirror.project.json"

@@ -72,6 +72,28 @@ class QualificationAuditTests(unittest.TestCase):
             self.assertIn("no active version", retained["error"])
             self.assertLess(audit.stat().st_size, 8 * 1024 * 1024)
 
+    def test_json_document_reads_plain_stdout(self) -> None:
+        value = qualification.json_document('{"ok": true}\n', "")
+        self.assertEqual(value, {"ok": True})
+
+    def test_json_document_reads_warning_prefixed_stderr(self) -> None:
+        stderr = ("(node:7) Warning: catalog selection is unset\n"
+            '{"failure": {"code": "catalog_selection_required"}}\n')
+        value = qualification.json_document(b"", stderr.encode())
+        self.assertEqual(value["failure"]["code"], "catalog_selection_required")
+
+    def test_json_document_rejects_invalid_json(self) -> None:
+        with self.assertRaises(json.JSONDecodeError):
+            qualification.json_document("{", "")
+
+    def test_json_document_rejects_trailing_garbage(self) -> None:
+        with self.assertRaisesRegex(ValueError, "trailing non-whitespace"):
+            qualification.json_document('{"a": 1} trailing', "")
+
+    def test_json_document_rejects_multiple_json_values(self) -> None:
+        with self.assertRaisesRegex(ValueError, "trailing non-whitespace"):
+            qualification.json_document('{"a": 1}{"b": 2}', "")
+
 
 if __name__ == "__main__":
     unittest.main()
