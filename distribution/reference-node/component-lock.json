@@ -3,36 +3,26 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "03d084ef7464bb40348d3ba81b7f13f48ad86e41b0b7ba6b0b3f07b0176d38d1"
+    "selectionValue": "e971cfec068c09532f2ffd01b15425be33aab42fa7dca507c0a0fe844c818b59"
   },
   "components": [
     {
       "componentRef": {
         "componentId": "mirrorecma",
         "repository": "https://github.com/NzSN/MirrorECMA.git",
-        "revision": "f94358834dce2e527c8bc8feec0423a54cf4176c",
-        "dirty": true,
-        "dirtyContent": {
-          "algorithm": "sha256",
-          "digest": "498e1393fbce7fd58467e1a148e6ab5e085511fad5246aa6bf077f1b9e73efea",
-          "method": "git-diff-and-untracked-manifest-v1",
-          "includedPaths": [
-            "node_modules-pnpm-isolated/.package-map.json",
-            "node_modules-pnpm-isolated/.pnpm-workspace-state-v1.json"
-          ],
-          "excludedPaths": []
-        }
+        "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+        "dirty": false
       },
       "product": {
         "name": "mirrorecma",
-        "version": "2.0.0"
+        "version": "0.1.0"
       }
     },
     {
       "componentRef": {
         "componentId": "mirrorgate",
         "repository": "https://github.com/NzSN/MirrorGate.git",
-        "revision": "4ef786b30ac6be45e471fb02610484581f5da3b0",
+        "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
         "dirty": false
       },
       "product": {
@@ -44,23 +34,17 @@
       "componentRef": {
         "componentId": "mirrors",
         "repository": "https://github.com/NzSN/Mirrors.git",
-        "revision": "5ab907d890e2656191e3cf1639244dc1ad15b1b7",
+        "revision": "bd5d3b51b1dcd75fbdf6c3188f1c90b1e6fe6ea0",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "4bfc4d5c5deca48ba3649728e32e8c235a0868770cb27cc8184003f7dad64c0f",
+          "digest": "51dcae7b433da3604f0f5e068ed253895502c5b563114fce6efaa31f9cb78cdd",
           "method": "git-diff-and-untracked-manifest-v1",
           "includedPaths": [
-            "Shell/Version.lean",
-            "tools/StdioSmoke.lean",
-            "tools/distribution/test_verify_bootstrap.py",
-            "tools/distribution/verify.py"
+            "tools/distribution/refresh_identity.py",
+            "tools/distribution/test_refresh_identity.py"
           ],
           "excludedPaths": [
-            {
-              "path": ".projectile-cache.eld",
-              "reasonCode": "pre-existing-unrelated"
-            },
             {
               "path": "Docs/framework-map.md",
               "reasonCode": "evidence-output"

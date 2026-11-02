@@ -7,23 +7,17 @@
       "componentRef": {
         "componentId": "mirrors",
         "repository": "https://github.com/NzSN/Mirrors.git",
-        "revision": "5ab907d890e2656191e3cf1639244dc1ad15b1b7",
+        "revision": "bd5d3b51b1dcd75fbdf6c3188f1c90b1e6fe6ea0",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "4bfc4d5c5deca48ba3649728e32e8c235a0868770cb27cc8184003f7dad64c0f",
+          "digest": "51dcae7b433da3604f0f5e068ed253895502c5b563114fce6efaa31f9cb78cdd",
           "method": "git-diff-and-untracked-manifest-v1",
           "includedPaths": [
-            "Shell/Version.lean",
-            "tools/StdioSmoke.lean",
-            "tools/distribution/test_verify_bootstrap.py",
-            "tools/distribution/verify.py"
+            "tools/distribution/refresh_identity.py",
+            "tools/distribution/test_refresh_identity.py"
           ],
           "excludedPaths": [
-            {
-              "path": ".projectile-cache.eld",
-              "reasonCode": "pre-existing-unrelated"
-            },
             {
               "path": "Docs/framework-map.md",
               "reasonCode": "evidence-output"
@@ -260,7 +254,7 @@
   "combinations": [],
   "extensions": {
     "org.nzsn.snapshot": {
-      "capturedAt": "2026-10-31T09:16:42Z",
+      "capturedAt": "2026-11-01T17:11:08Z",
       "provisional": true
     }
   }

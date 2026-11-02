@@ -4,52 +4,36 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "4a485efb456bb930a0e56832800725c7bdaeff92a533e0241d41cdefcaef5a23"
+    "selectionValue": "3bef64ce1e1e4fdc7b9d99e2cb4f5a1f165cd54f49cdeac7af42f6c3130253ee"
   },
   "profileId": "checked-replay-gate",
   "componentRefs": [
     {
       "componentId": "mirrorecma",
       "repository": "https://github.com/NzSN/MirrorECMA.git",
-      "revision": "f94358834dce2e527c8bc8feec0423a54cf4176c",
-      "dirty": true,
-      "dirtyContent": {
-        "algorithm": "sha256",
-        "digest": "498e1393fbce7fd58467e1a148e6ab5e085511fad5246aa6bf077f1b9e73efea",
-        "method": "git-diff-and-untracked-manifest-v1",
-        "includedPaths": [
-          "node_modules-pnpm-isolated/.package-map.json",
-          "node_modules-pnpm-isolated/.pnpm-workspace-state-v1.json"
-        ],
-        "excludedPaths": []
-      }
+      "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+      "dirty": false
     },
     {
       "componentId": "mirrorgate",
       "repository": "https://github.com/NzSN/MirrorGate.git",
-      "revision": "4ef786b30ac6be45e471fb02610484581f5da3b0",
+      "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
       "dirty": false
     },
     {
       "componentId": "mirrors",
       "repository": "https://github.com/NzSN/Mirrors.git",
-      "revision": "5ab907d890e2656191e3cf1639244dc1ad15b1b7",
+      "revision": "bd5d3b51b1dcd75fbdf6c3188f1c90b1e6fe6ea0",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "4bfc4d5c5deca48ba3649728e32e8c235a0868770cb27cc8184003f7dad64c0f",
+        "digest": "51dcae7b433da3604f0f5e068ed253895502c5b563114fce6efaa31f9cb78cdd",
         "method": "git-diff-and-untracked-manifest-v1",
         "includedPaths": [
-          "Shell/Version.lean",
-          "tools/StdioSmoke.lean",
-          "tools/distribution/test_verify_bootstrap.py",
-          "tools/distribution/verify.py"
+          "tools/distribution/refresh_identity.py",
+          "tools/distribution/test_refresh_identity.py"
         ],
         "excludedPaths": [
-          {
-            "path": ".projectile-cache.eld",
-            "reasonCode": "pre-existing-unrelated"
-          },
           {
             "path": "Docs/framework-map.md",
             "reasonCode": "evidence-output"
@@ -426,13 +410,13 @@
       "inputId": "profiles-lock",
       "path": "distribution/reference-node-wsl2-26.04/profiles.json",
       "bytes": 4933,
-      "sha256": "cba06a9cfd1ac3642912c7c82fa86deb752dc3ee98deca9e23bb222679979cd9"
+      "sha256": "27f91fa6fa98c923fd0a61a8389c05239be50977206cc66fdb07c45fc3e36e59"
     },
     {
       "inputId": "component-lock",
       "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
-      "bytes": 13075,
-      "sha256": "52dfd869fc845c5c8b7df77eefccfd8dd72369d466f8066118879442eecba4e8"
+      "bytes": 12467,
+      "sha256": "fca0a5a6534ff6746af33846f2e4b3553659e6a3291a50dd8e830fa608393b0e"
     },
     {
       "inputId": "dependency-lock",

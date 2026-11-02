@@ -136,10 +136,17 @@ def update_locks(refs: dict[str, dict[str, Any]], selection_digest: str,
     profiles = read(root / "profiles.json")
     profiles["catalogSelectionRef"] = selection
     write(root / "profiles.json", profiles)
+    catalog = read(catalog_path)
+    products = {
+        entry["componentRef"]["componentId"]: entry["product"]
+        for entry in catalog["components"]
+    }
     components = read(root / "component-lock.json")
     components["catalogSelectionRef"] = selection
     for entry in components["components"]:
-        entry["componentRef"] = refs[entry["componentRef"]["componentId"]]
+        component_id = entry["componentRef"]["componentId"]
+        entry["componentRef"] = refs[component_id]
+        entry["product"] = products[component_id]
     write(root / "component-lock.json", components)
     lock_files = {
         "profiles-lock": root / "profiles.json",
@@ -151,7 +158,6 @@ def update_locks(refs: dict[str, dict[str, Any]], selection_digest: str,
     fixture = root / "fixtures/distribution-manifest.checked-replay-local.valid.json"
     manifest = read(fixture)
     manifest["catalogSelectionRef"] = selection
-    catalog = read(catalog_path)
     local_profile = next(profile for profile in profiles["profiles"]
         if profile["profileId"] == "checked-replay-local")
     local_combination = next(combination for combination in catalog["combinations"]
