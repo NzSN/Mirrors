@@ -1,0 +1,84 @@
+{
+  "schema": "mirrors.s3-rc6.phase-b.linux-build/v1",
+  "published": false,
+  "deployed": false,
+  "at": "2026-11-03T08:19:25Z",
+  "phase": "B",
+  "acceptance": "not claimed; Codex owns S3 acceptance",
+  "scope": "focused non-model release gates only; no live model checker; no DPM CLI",
+  "source": ".golden-build/mainwork-s3-rc6-20261103/source",
+  "tag": "v0.2.0-rc.6",
+  "tagObject": "5a2a6fd8728b610db7a6225b4a9d4c5d585344aa",
+  "commit": "3c4a87309cc3a81924660497207d7c295759bdc1",
+  "dist": ".golden-build/mainwork-s3-rc6-20261103/linux-dist",
+  "tmpdir": ".golden-build/mainwork-s3-rc6-20261103/linux-tmp",
+  "tmpdirFilesystem": "ext4",
+  "tests": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/release",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/home/lsz/Codebase/Mirrors",
+    "exit": 0,
+    "finishedAt": "2026-11-03T08:14:58Z",
+    "log": ".golden-build/mainwork-s3-rc6-20261103/linux-logs/0006-release-tests.log",
+    "logBytes": 2072,
+    "logSha256": "9e889c78461b59b34b84196186102d633b87ea20d5f0fc0c06c2600ef72da2b9",
+    "name": "release-tests",
+    "startedAt": "2026-11-03T08:14:57Z",
+    "stderrBytes": 1682,
+    "stdoutBytes": 235,
+    "timedOut": false
+  },
+  "build": {
+    "argv": [
+      "python3",
+      "tools/release/release.py",
+      "build",
+      "--source",
+      "/home/lsz/Codebase/Mirrors/.golden-build/mainwork-s3-rc6-20261103/source",
+      "--tag",
+      "v0.2.0-rc.6",
+      "--output",
+      "/home/lsz/Codebase/Mirrors/.golden-build/mainwork-s3-rc6-20261103/linux-dist"
+    ],
+    "cwd": "/home/lsz/Codebase/Mirrors",
+    "exit": 0,
+    "finishedAt": "2026-11-03T08:17:17Z",
+    "log": ".golden-build/mainwork-s3-rc6-20261103/linux-logs/0007-release-build.log",
+    "logBytes": 124583,
+    "logSha256": "7c49eedcb9a1e064ddc48b34a87cb509360716f4a64f269f1b13bc71a71fc491",
+    "name": "release-build",
+    "startedAt": "2026-11-03T08:14:58Z",
+    "stderrBytes": 2017,
+    "stdoutBytes": 122248,
+    "timedOut": false
+  },
+  "passedGates": [
+    "fixtures_replay",
+    "diff_cross",
+    "model_interface_spec",
+    "stdio_smoke",
+    "transport_spec",
+    "check-client-framing.py",
+    "relocated-binary-cli-smoke"
+  ],
+  "buildTools": {
+    "lake": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)",
+    "cc": "cc (Ubuntu 15.2.0-16ubuntu1) 15.2.0\nCopyright (C) 2025 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+    "openssl": "OpenSSL 3.5.5 27 Jan 2026 (Library: OpenSSL 3.5.5 27 Jan 2026)",
+    "glibc": "glibc 2.43"
+  },
+  "qualification": "focused non-model release gates only; no live model qualification",
+  "retainedFailures": [
+    "Plans/mainwork-s3-rc6-20261103/linux-failure.json",
+    "Plans/mainwork-s3-rc6-20261103/linux-failure-resume.json"
+  ]
+}

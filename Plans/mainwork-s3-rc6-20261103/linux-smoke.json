@@ -1,0 +1,95 @@
+{
+  "schema": "mirrors.s3-rc6.phase-b.linux-smoke/v1",
+  "published": false,
+  "deployed": false,
+  "at": "2026-11-03T08:19:25Z",
+  "host": {
+    "osRelease": "PRETTY_NAME=\"Ubuntu 26.04.1 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"26.04\"\nVERSION=\"26.04.1 LTS (Resolute Raccoon)\"\nVERSION_CODENAME=resolute\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=resolute\nLOGO=ubuntu-logo\n",
+    "uname": "Linux DESKTOP-C7HNV2Q 6.18.54.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 GNU/Linux"
+  },
+  "historicalUbuntu2404ClaimCopied": false,
+  "path": "/usr/bin:/bin",
+  "sourceAbsentFromPath": true,
+  "leanAbsentFromPath": true,
+  "pathProbe": {
+    "exit": 0,
+    "stdout": "/usr/bin:/bin",
+    "stderr": ""
+  },
+  "mirrorVersion": {
+    "exit": 0,
+    "stdout": "v0.2.0-rc.6\n",
+    "stderr": ""
+  },
+  "protocol": {
+    "exit": 0,
+    "stdout": "{\"error\":\"Expected Register message\",\"proto_step\":\"protocol_error\"}\n",
+    "stderr": ""
+  },
+  "modelInterfaceGenHelp": {
+    "exit": 2,
+    "stderr": "usage:\n  model_interface_gen resolve --spec FILE --contract FILE --evidence FILE\n    [--param-var NAME] --lock FILE [--diagnostics json]\n  model_interface_gen generate --lock FILE --target TARGET --out DIR\n    [--diagnostics json]\n  model_interface_gen bundle --lock FILE --target mirrorecma-async-v1 --out DIR\n    [--diagnostics json]\n  model_interface_gen check-bundle --spec FILE --contract FILE --evidence FILE\n    [--param-var NAME] --lock FILE --target mirrorecma-async-v1 --out DIR\n    [--diagnostics json]\n  model_interface_gen check --spec FILE --contract FILE --evidence FILE\n    [--param-var NAME] --lock FILE --target TARGET --out DIR\n    [--diagnostics json]\n  model_interface_gen generate-dpm|check-dpm --lock FILE --mapping FILE --target TARGET --out DIR\n    [--diagnostics json]\n  model_interface_gen compare-locks --from-lock OLD --to-lock NEW\n    [--diagnostics json]\n  model_interface_gen preflight --lock FILE --trace PATH\n    [--require-all-actions] [--diagnostics json]\n  model_interface_gen scaffold --spec FILE --evidence FILE\n    [--param-var NAME] [--projection PLAN] --proposal FILE\n    [--replace] [--diagnostics json]\n  model_interface_gen scaffold --reviewable --spec FILE --evidence FILE\n    [--evidence FILE ...] [--param-var NAME] [--projection PLAN] --proposal FILE\n  model_interface_gen seal-scaffold --spec FILE --evidence FILE [--evidence FILE ...]\n    [--param-var NAME] [--projection PLAN] --proposal FILE --review FILE --out DIR\n  model_interface_gen resolve-sealed --spec FILE --evidence FILE [--evidence FILE ...]\n    [--param-var NAME] [--projection PLAN] --sealed DIR [--corpus-manifest FILE] --lock FILE\n  model_interface_gen check-sealed|check-sealed-bundle --spec FILE --evidence FILE\n    [--evidence FILE ...] [--param-var NAME] [--projection PLAN] --sealed DIR\n    [--corpus-manifest FILE] --lock FILE --target TARGET --out DIR\n  model_interface_gen project-corpus --spec FILE --evidence RAW [--evidence RAW ...]\n    --projection PLAN --out DIR [--diagnostics json]\n  model_interface_gen check-corpus --out DIR --manifest-sha256 HASH [--diagnostics json]\n  model_interface_gen project-trace --spec FILE --evidence RAW\n    --projection PLAN --out PROJECTED --receipt RECEIPT\n    [--replace] [--diagnostics json]\n  model_interface_gen generate-cmake|check-cmake --spec FILE --contract FILE\n    --evidence FILE [--param-var NAME] --lock FILE --target CPP_TARGET --out DIR\n    (paths relative to the consumer root; optional CMake helpers)\n  TARGET: mirrorecma-v1 | mirrorecma-async-v1 | mirrorecma-async-v2 | mirrorcpp-v1 | mirrorcpp-v2 | mirrorrust-v1 | mirrorrust-v2 | mirrorlean-v1\n"
+  },
+  "ldd": {
+    "mirror": "\tlinux-vdso.so.1 (0x000075c138ec8000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x000075c133600000)\n\t/lib64/ld-linux-x86-64.so.2 (0x000075c138eca000)\n\tlibpthread.so.0 => /usr/lib/x86_64-linux-gnu/libpthread.so.0 (0x000075c138eaf000)\n\tlibdl.so.2 => /usr/lib/x86_64-linux-gnu/libdl.so.2 (0x000075c138eaa000)\n\tlibrt.so.1 => /usr/lib/x86_64-linux-gnu/librt.so.1 (0x000075c138ea5000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x000075c1338da000)\n",
+    "model_interface_gen": "\tlinux-vdso.so.1 (0x000073e89bdcc000)\n\tlibc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x000073e896800000)\n\t/lib64/ld-linux-x86-64.so.2 (0x000073e89bdce000)\n\tlibpthread.so.0 => /usr/lib/x86_64-linux-gnu/libpthread.so.0 (0x000073e89bdb3000)\n\tlibdl.so.2 => /usr/lib/x86_64-linux-gnu/libdl.so.2 (0x000073e89bdae000)\n\tlibrt.so.1 => /usr/lib/x86_64-linux-gnu/librt.so.1 (0x000073e89bda9000)\n\tlibm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x000073e89bc81000)\n"
+  },
+  "libraryTargets": {
+    "mirror": [
+      {
+        "soname": "libc.so.6",
+        "target": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+        "targetSha256": "85e64f97e348786a8fb4d9f3d52fec289e2fb86bba20f0731dfe61990525e0f7"
+      },
+      {
+        "soname": "libpthread.so.0",
+        "target": "/usr/lib/x86_64-linux-gnu/libpthread.so.0",
+        "targetSha256": "1327fc40710691dbd94e88b6cf4efce27fefe8fbb93f7d1164a75b4dccaea696"
+      },
+      {
+        "soname": "libdl.so.2",
+        "target": "/usr/lib/x86_64-linux-gnu/libdl.so.2",
+        "targetSha256": "59d725ca30596a9863f4fa2552a7125f834842abc86b40890231c129358965d2"
+      },
+      {
+        "soname": "librt.so.1",
+        "target": "/usr/lib/x86_64-linux-gnu/librt.so.1",
+        "targetSha256": "9f3cc59207bcaaac74aaf7aca961f4816f0f4d945e4bd1c3cb98ec516becf161"
+      },
+      {
+        "soname": "libm.so.6",
+        "target": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+        "targetSha256": "1c488db6f4fe8cecb72456bc018de000b7a9b539c2994864b0416b5e8371b3d8"
+      }
+    ],
+    "model_interface_gen": [
+      {
+        "soname": "libc.so.6",
+        "target": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+        "targetSha256": "85e64f97e348786a8fb4d9f3d52fec289e2fb86bba20f0731dfe61990525e0f7"
+      },
+      {
+        "soname": "libpthread.so.0",
+        "target": "/usr/lib/x86_64-linux-gnu/libpthread.so.0",
+        "targetSha256": "1327fc40710691dbd94e88b6cf4efce27fefe8fbb93f7d1164a75b4dccaea696"
+      },
+      {
+        "soname": "libdl.so.2",
+        "target": "/usr/lib/x86_64-linux-gnu/libdl.so.2",
+        "targetSha256": "59d725ca30596a9863f4fa2552a7125f834842abc86b40890231c129358965d2"
+      },
+      {
+        "soname": "librt.so.1",
+        "target": "/usr/lib/x86_64-linux-gnu/librt.so.1",
+        "targetSha256": "9f3cc59207bcaaac74aaf7aca961f4816f0f4d945e4bd1c3cb98ec516becf161"
+      },
+      {
+        "soname": "libm.so.6",
+        "target": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+        "targetSha256": "1c488db6f4fe8cecb72456bc018de000b7a9b539c2994864b0416b5e8371b3d8"
+      }
+    ]
+  },
+  "toolEnvUsedForBuildOnly": "/usr/bin:/bin:/home/lsz/.elan/bin",
+  "scope": "second isolated runtime smoke on the observed Ubuntu 26.04.1 WSL2 host"
+}

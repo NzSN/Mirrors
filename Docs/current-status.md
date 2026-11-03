@@ -1,5 +1,22 @@
 # Current framework status and navigation
 
+## November 3 rc.6 clean packages
+
+The [S3 package review](../Plans/mainwork-s3-rc6-20261103/review.md) accepts
+clean Linux and Windows packages built from the local-only annotated
+`v0.2.0-rc.6` tag at freeze `3c4a873`. The Linux archive SHA-256 is
+`9dc8e0ce…`; the Windows ZIP and identical repeat are `9919ac2c…`.
+Maintained Linux release gates and isolated Ubuntu 26.04.1 WSL2 smoke pass.
+The exact Windows source build and eight declared non-model suites pass, with
+repeat packaging and PE closure verified. All 9,833 original source files are
+unchanged after the Windows gates.
+
+The shared checkout and remote have no rc.6 tag; no hosted release, deployment
+or service operation occurred. Package acceptance is not full Windows
+`lake test`, installed D/M5/Q, remote-model, framework or release admission.
+S5-A remains gated on the exact locked Batteries carrier, ptrace/namespace
+admission, both installed profiles/D audits and fresh remote/client inputs.
+
 ## November 3 final source/C0 freeze
 
 The [MW-12 freeze review](../Plans/mainwork-freeze-20261103/review.md) accepts
@@ -14,9 +31,9 @@ dirty-snapshot C0 is not reused.
 This is not installed D, M5/Q, Windows, remote-model, framework or release
 acceptance. Exact Batteries bytes, ptrace/namespace admission, both D audits,
 remote/TLS/client/Windows inputs and release remain open. S3 clean packages
-require separately selected version/tag and build approvals. Candidate raw
-artifacts remain ignored; no rc.6 tag, package, deployment or service operation
-has been performed.
+are recorded above; S5-A retains its own gates. Candidate raw artifacts remain
+ignored; no remote rc.6 tag, hosted release, deployment or service operation has
+been performed.
 
 ## November 3 source-candidate reconciliation
 

@@ -1,0 +1,165 @@
+{
+  "schema": "mirrors.s3-rc6.phase-a.input-inventory/v1",
+  "published": false,
+  "deployed": false,
+  "at": "2026-11-03T08:08:40Z",
+  "phase": "A",
+  "buildsRun": false,
+  "inputs": [
+    {
+      "role": "source-clone",
+      "path": ".golden-build/mainwork-s3-rc6-20261103/source",
+      "commit": "3c4a87309cc3a81924660497207d7c295759bdc1",
+      "tree": "5c15228e006f4d1b6efaa7e088488bc4b1fe619e",
+      "tag": "v0.2.0-rc.6",
+      "tagObject": "5a2a6fd8728b610db7a6225b4a9d4c5d585344aa"
+    },
+    {
+      "role": "source-archive",
+      "path": ".golden-build/mainwork-s3-rc6-20261103/archive/mirrors-v0.2.0-rc.6-source.tar.gz",
+      "sha256": "87ab9dee6c1a247da0ef4f1a7028c941323997202721ccada2e6ef6c62371a62",
+      "fileCount": 9833
+    },
+    {
+      "role": "source-manifest",
+      "path": ".golden-build/mainwork-s3-rc6-20261103/archive/source-manifest.json",
+      "fileCount": 9833
+    },
+    {
+      "role": "batteries-offline",
+      "path": ".golden-build/mainwork-s3-rc6-20261103/inputs/batteries",
+      "revision": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+      "tree": "5a1de86f7997958aaffec998882c29006b688d1e"
+    },
+    {
+      "role": "linux-toolchain",
+      "observation": {
+        "os-release": {
+          "argv": [
+            "bash",
+            "-lc",
+            "cat /etc/os-release"
+          ],
+          "exit": 0,
+          "stdout": "PRETTY_NAME=\"Ubuntu 26.04.1 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"26.04\"\nVERSION=\"26.04.1 LTS (Resolute Raccoon)\"\nVERSION_CODENAME=resolute\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=resolute\nLOGO=ubuntu-logo\n",
+          "stderr": ""
+        },
+        "uname": {
+          "argv": [
+            "uname",
+            "-a"
+          ],
+          "exit": 0,
+          "stdout": "Linux DESKTOP-C7HNV2Q 6.18.54.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 GNU/Linux\n",
+          "stderr": ""
+        },
+        "git": {
+          "argv": [
+            "git",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "git version 2.53.0\n",
+          "stderr": ""
+        },
+        "gcc": {
+          "argv": [
+            "gcc",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0\nCopyright (C) 2025 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+          "stderr": ""
+        },
+        "openssl": {
+          "argv": [
+            "openssl",
+            "version"
+          ],
+          "exit": 0,
+          "stdout": "OpenSSL 3.5.5 27 Jan 2026 (Library: OpenSSL 3.5.5 27 Jan 2026)\n",
+          "stderr": ""
+        },
+        "python": {
+          "argv": [
+            "/usr/bin/python3",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "Python 3.14.4\n",
+          "stderr": ""
+        },
+        "lean": {
+          "present": true,
+          "path": "/home/lsz/.elan/toolchains/leanprover--lean4---v4.33.0/bin/lean",
+          "sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+          "exit": 0,
+          "stdout": "Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\n",
+          "stderr": ""
+        },
+        "lake": {
+          "present": true,
+          "path": "/home/lsz/.elan/toolchains/leanprover--lean4---v4.33.0/bin/lake",
+          "sha256": "60330ab6f07dce20f3fa9ebb08e8b984ea9549eac172afeb15d9d2227060e2b3",
+          "exit": 0,
+          "stdout": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "role": "windows-host",
+      "observation": {
+        "tools": {
+          "lake": {
+            "present": "True",
+            "path": "C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe",
+            "version": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)",
+            "sha": "a1aebb13fc502ae9190745c6b3bd2101d0fec39f030cfc07b1993799c2374644"
+          },
+          "lean": {
+            "present": "True",
+            "path": "C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.exe",
+            "version": "Lean (version 4.33.0, x86_64-w64-windows-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+            "sha": "dd86e9b24990b1da425ea4af910f016e4db8f9a25c9ddad27bc6bee3690e677f"
+          },
+          "gcc": {
+            "present": "True",
+            "path": "D:\\Programs\\Perl\\c\\bin\\gcc.exe",
+            "version": "gcc.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r8) 13.2.0",
+            "sha": "34a92e71f6814bd936135d0bd82b80b63daaf445791bba4a6bba93075235e8a4"
+          },
+          "git": {
+            "present": "True",
+            "path": "C:\\Program Files\\Git\\cmd\\git.exe",
+            "version": "git version 2.54.0.windows.1",
+            "sha": "81ef35ae005ca9318018d18e3327578ce939fb99feaad6b2d7c8ab15f3de8db5"
+          },
+          "openssl": {
+            "present": "True",
+            "path": "D:\\Programs\\msys2\\ucrt64\\bin\\openssl.exe",
+            "version": "OpenSSL 3.5.0 8 Apr 2025 (Library: OpenSSL 3.5.0 8 Apr 2025)",
+            "sha": "3d3b16f407f22c058f52afd6e92c6309ad4ffd8b68406fd41c2de4d011705069"
+          }
+        },
+        "PROBE_UTC": "2026-11-03T08:08:36Z",
+        "HOST": "DESKTOP-6DKB5JD",
+        "USER": "win10",
+        "OS": "Microsoft Windows NT 10.0.19045.0",
+        "PRODUCT": "Windows 10 Enterprise for Virtual Desktops 22H2 build 19045.6456",
+        "PS": "5.1.19041.6456",
+        "PS_EDITION": "Desktop",
+        "VOL": "D: free=64959823872 size=4000768323584 fs=NTFS",
+        "DLL": "libssl 85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+        "STAGE_PARENT_EXISTS": "True",
+        "STAGE": "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873",
+        "STAGE_EXISTS": "False",
+        "STAGING_ENTRIES": "framework-q-20260922 | s3-rc2-windows-20261030-1fe379a | s3-rc3-windows-20261031-38a94ec | s3-rc4-windows-20261031-5ab907d | s3-rc5-windows-20261031-3ee3d92 | s3-windows-20261030-d737aa0",
+        "PROD_SHA": "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+        "SERVICE": "Running/Automatic",
+        "PROCPID": "9920 D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+        "PROBE_DONE": true
+      }
+    }
+  ]
+}

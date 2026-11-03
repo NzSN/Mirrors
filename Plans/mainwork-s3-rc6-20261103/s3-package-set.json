@@ -1,0 +1,60 @@
+{
+  "schema": "mirrors.s3-rc6.package-set/v1",
+  "published": false,
+  "deployed": false,
+  "releaseAdmission": false,
+  "tag": "v0.2.0-rc.6",
+  "tagObject": "5a2a6fd8728b610db7a6225b4a9d4c5d585344aa",
+  "commit": "3c4a87309cc3a81924660497207d7c295759bdc1",
+  "tree": "5c15228e006f4d1b6efaa7e088488bc4b1fe619e",
+  "tagScope": "local-only annotated tag in task-owned clone; shared and remote tag refs absent",
+  "sourceArchive": {
+    "path": ".golden-build/mainwork-s3-rc6-20261103/archive/mirrors-v0.2.0-rc.6-source.tar.gz",
+    "bytes": 23447774,
+    "sha256": "87ab9dee6c1a247da0ef4f1a7028c941323997202721ccada2e6ef6c62371a62"
+  },
+  "linux": {
+    "archive": {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-dist/mirrors-v0.2.0-rc.6-linux-x86_64.tar.gz",
+      "bytes": 72209225,
+      "sha256": "9dc8e0ce2203c155bf8150479fd25e19bb5cd9774a6b688fd38fc57e74022038"
+    },
+    "externalManifest": {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-dist/mirrors-v0.2.0-rc.6-linux-x86_64.build.json",
+      "bytes": 2874,
+      "sha256": "25ec8bc7183f52fdf4a09b014cda4199b5b4e2d067362af212a66b454d3d49b1"
+    },
+    "checksums": {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-dist/SHA256SUMS",
+      "bytes": 216,
+      "sha256": "53cab296ad81fae325193449ba910e47850b4bf394cbfa943bb3a3988346eb83"
+    },
+    "scope": "focused non-model release gates and second isolated Ubuntu 26.04.1 WSL2 smoke"
+  },
+  "windows": {
+    "archive": {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/mirrors-v0.2.0-rc.6-windows-x86_64.zip",
+      "bytes": 73724538,
+      "sha256": "9919ac2cb96a3dd693df89b02059a559f25aff7e052efc00a60a2e569c87564e"
+    },
+    "repeatArchive": {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/mirrors-v0.2.0-rc.6-windows-x86_64-repeat.zip",
+      "bytes": 73724538,
+      "sha256": "9919ac2cb96a3dd693df89b02059a559f25aff7e052efc00a60a2e569c87564e"
+    },
+    "externalManifest": {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/mirrors-v0.2.0-rc.6-windows-x86_64.build.json",
+      "bytes": 6690,
+      "sha256": "9ef8692102cbe705048ad5b1ce5c20c4c501f691e9e1cc5e7493fdd182a8ecc9"
+    },
+    "checksums": {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/SHA256SUMS",
+      "bytes": 329,
+      "sha256": "7de152393db7691fd86f17c431e093c63d6b625a325d0f9de85b9a37efb4e1ce"
+    },
+    "scope": "native Windows exact source build and eight non-model suites; not full lake test or reproducible compilation"
+  },
+  "fullLakeTest": false,
+  "installedDOrM5OrQ": false,
+  "remoteModelQualification": false
+}

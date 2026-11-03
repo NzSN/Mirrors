@@ -1,0 +1,57 @@
+{
+    "schema":  "mirrors.s3-rc6.windows-observation/v1",
+    "published":  false,
+    "deployed":  false,
+    "capturedAtUtc":  "2026-11-03T08:23:12Z",
+    "serviceStatus":  "Running",
+    "production":  [
+                       {
+                           "pid":  9920,
+                           "path":  "D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+                           "commandLine":  "\"D:\\ModelMirrors\\bin\\ModelMirrors.exe\" --server 8999 --tls --cert D:\\ModelMirrors\\certs\\server.crt --key D:\\ModelMirrors\\certs\\server.key --ca D:\\ModelMirrors\\certs\\ca.crt --jobs 4"
+                       }
+                   ],
+    "productionExecutableUnchanged":  true,
+    "productionPidUnchanged":  true,
+    "configurationUnchanged":  true,
+    "allBaselineFilesUnchanged":  true,
+    "fileComparisons":  {
+                            "D:\\ModelMirrors\\bin\\ModelMirrors.exe":  {
+                                                                            "baselineSha256":  "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+                                                                            "observedSha256":  "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+                                                                            "unchanged":  true
+                                                                        },
+                            "D:\\ModelMirrors\\bin\\libcrypto-3-x64.dll":  {
+                                                                               "baselineSha256":  "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7",
+                                                                               "observedSha256":  "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7",
+                                                                               "unchanged":  true
+                                                                           },
+                            "D:\\ModelMirrors\\bin\\libssl-3-x64.dll":  {
+                                                                            "baselineSha256":  "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+                                                                            "observedSha256":  "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+                                                                            "unchanged":  true
+                                                                        },
+                            "D:\\ModelMirrors\\bin\\zlib1.dll":  {
+                                                                     "baselineSha256":  "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5",
+                                                                     "observedSha256":  "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5",
+                                                                     "unchanged":  true
+                                                                 },
+                            "D:\\ModelMirrors\\certs\\server.crt":  {
+                                                                        "baselineSha256":  "03f98bb439fb7f9100cbbaf5fc8562e3629f17e85bc7e807ce26bd239e82c854",
+                                                                        "observedSha256":  "03f98bb439fb7f9100cbbaf5fc8562e3629f17e85bc7e807ce26bd239e82c854",
+                                                                        "unchanged":  true
+                                                                    },
+                            "D:\\ModelMirrors\\certs\\ca.crt":  {
+                                                                    "baselineSha256":  "f04a3ce394cdf041ddd4c32aad868bc40ace79c00712aead6a9445adcebc9c6e",
+                                                                    "observedSha256":  "f04a3ce394cdf041ddd4c32aad868bc40ace79c00712aead6a9445adcebc9c6e",
+                                                                    "unchanged":  true
+                                                                },
+                            "D:\\ModelMirrors\\certs\\server.key":  {
+                                                                        "baselineSha256":  "db99faaca76a98f8d77c6ae4491e714f69c834b866b334f038ff7ffa242a53ef",
+                                                                        "observedSha256":  "db99faaca76a98f8d77c6ae4491e714f69c834b866b334f038ff7ffa242a53ef",
+                                                                        "unchanged":  true
+                                                                    }
+                        },
+    "serviceLifecycleChanged":  false,
+    "reboot":  false
+}

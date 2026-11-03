@@ -1,0 +1,45 @@
+{
+  "schema": "mirrors.s3-rc6.codex-verification/v1",
+  "recordedAt": "2026-11-03T08:36:07.467565+00:00",
+  "status": "passed",
+  "tag": "v0.2.0-rc.6",
+  "commit": "3c4a87309cc3a81924660497207d7c295759bdc1",
+  "phaseAVerifier": "passed",
+  "maintainedLinuxCheckArchive": "passed",
+  "linuxChecksums": "passed",
+  "windowsRepeatMembersPayloadsAndGateLogs": "passed",
+  "independentPeClosure": "passed",
+  "postBuildSource": {
+    "observedFiles": 15013,
+    "expectedFiles": 9833,
+    "missing": [],
+    "changed": [],
+    "extraOutsideLake": [
+      ".golden-build/model-interface-rust/CorpusMirror.generated.rs",
+      ".golden-build/model-interface-rust/MultiMirror.generated.rs"
+    ],
+    "archiveMembersUnchanged": true
+  },
+  "initialConsolidatedVerifierFailure": {
+    "exitCode": 1,
+    "error": "tag peel probe omitted rev-parse",
+    "log": {
+      "path": ".golden-build/mainwork-s3-rc6-review-20261103/verify-s3-initial.log",
+      "bytes": 427,
+      "sha256": "ab16166db195a3ddba0c52b42c64978250ce90765fb1c4e1509a5c0af9c8e1f0"
+    }
+  },
+  "successfulConsolidatedVerifier": {
+    "exitCode": 0,
+    "stdout": [
+      "S3 RC6 VERIFY GREEN",
+      "SOURCE/TAG + LINUX + WINDOWS + PE + SOURCE-AFTER + INVENTORY + NEGATIVE CONTROLS"
+    ],
+    "log": {
+      "path": ".golden-build/mainwork-s3-rc6-review-20261103/verify-s3-second.log",
+      "bytes": 298,
+      "sha256": "fa669231a6ffcb3b679d5fee6caf8c2b62f6a76403eaf600e8190a36127092a5"
+    }
+  },
+  "downstreamQualificationGranted": false
+}

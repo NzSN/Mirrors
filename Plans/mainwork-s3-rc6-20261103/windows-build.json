@@ -1,0 +1,67 @@
+{
+    "schema":  "mirrors.s3-rc6.windows-build/v1",
+    "published":  false,
+    "deployed":  false,
+    "command":  "lake build mirror model_interface_gen fixtures_replay diff_cross model_interface_spec stdio_smoke transport_spec jobstore_spec async_resource_spec dpm_sync_spec",
+    "cwd":  "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873\\mirrors-v0.2.0-rc.6",
+    "exit":  0,
+    "startedUtc":  "2026-11-03T08:19:52Z",
+    "finishedUtc":  "2026-11-03T08:21:29Z",
+    "seconds":  96.8,
+    "log":  "logs/build.log",
+    "logBytes":  115009,
+    "logSha256":  "8afbb697763400dd91874e5273eb8dacd5b45383254fcc9b3af7e0a1d13edb27",
+    "fullLakeTest":  false,
+    "binaries":  {
+                     "mirror":  {
+                                    "path":  "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873\\mirrors-v0.2.0-rc.6\\.lake\\build\\bin\\mirror.exe",
+                                    "sha256":  "3b408336ce8127fc9b98db6b0a233a476a33381bcbdee061686ddcec4ae16d7d",
+                                    "bytes":  111192576
+                                },
+                     "model_interface_gen":  {
+                                                 "path":  "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873\\mirrors-v0.2.0-rc.6\\.lake\\build\\bin\\model_interface_gen.exe",
+                                                 "sha256":  "b8c89bc610d91ebdfd7c00a1e69f7f05ad5bd3d3cfc22641bfe1ad0ed2d82a51",
+                                                 "bytes":  112591360
+                                             },
+                     "fixtures_replay":  {
+                                             "path":  "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873\\mirrors-v0.2.0-rc.6\\.lake\\build\\bin\\fixtures_replay.exe",
+                                             "sha256":  "fad4d5114e3673229e9596e6dda137ae0de802775056fc04027738285feba4ea",
+                                             "bytes":  107937280
+                                         },
+                     "diff_cross":  {
+                                        "path":  "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873\\mirrors-v0.2.0-rc.6\\.lake\\build\\bin\\diff_cross.exe",
+                                        "sha256":  "7a32761d4868042fdfad0c23665c56be36e038dcc846fec3a882a5ec38e78d53",
+                                        "bytes":  107774976
+                                    },
+                     "model_interface_spec":  {
+                                                  "path":  "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873\\mirrors-v0.2.0-rc.6\\.lake\\build\\bin\\model_interface_spec.exe",
+                                                  "sha256":  "5fbf27b89ea6ee7043ccf1614ee789621ad3707b8f826e26aef2c35bbf4c0ece",
+                                                  "bytes":  112636928
+                                              },
+                     "stdio_smoke":  {
+                                         "path":  "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873\\mirrors-v0.2.0-rc.6\\.lake\\build\\bin\\stdio_smoke.exe",
+                                         "sha256":  "cad39d796659c4f7bca4410c5857f2d323edef7fee20e6aa1cf7c7fddb0ba819",
+                                         "bytes":  108994048
+                                     },
+                     "transport_spec":  {
+                                            "path":  "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873\\mirrors-v0.2.0-rc.6\\.lake\\build\\bin\\transport_spec.exe",
+                                            "sha256":  "cae487d832f15fca4203d4b09f8a7b35873710f6ce565a4749a8f3851906462c",
+                                            "bytes":  109185536
+                                        },
+                     "jobstore_spec":  {
+                                           "path":  "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873\\mirrors-v0.2.0-rc.6\\.lake\\build\\bin\\jobstore_spec.exe",
+                                           "sha256":  "78d12970806b30b82ec3bbe84346c1e9709241ee58d6a203a50f77dbb46966d4",
+                                           "bytes":  110764544
+                                       },
+                     "async_resource_spec":  {
+                                                 "path":  "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873\\mirrors-v0.2.0-rc.6\\.lake\\build\\bin\\async_resource_spec.exe",
+                                                 "sha256":  "adf9b1a3927dde84c8b020deb6f2e4a7981e7cbcec0bfbb60767f4fa877de907",
+                                                 "bytes":  107628544
+                                             },
+                     "dpm_sync_spec":  {
+                                           "path":  "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873\\mirrors-v0.2.0-rc.6\\.lake\\build\\bin\\dpm_sync_spec.exe",
+                                           "sha256":  "2490d8f67410d939981f23831135c1d584038e32283e364958bf1aefba24828d",
+                                           "bytes":  107853312
+                                       }
+                 }
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "mirrors.s3-rc6.windows-source-check/v1",
+  "published": false,
+  "deployed": false,
+  "label": "after",
+  "observedFiles": 15013,
+  "expectedFiles": 9833,
+  "missing": [],
+  "changed": [],
+  "extraOutsideLake": [
+    ".golden-build/model-interface-rust/CorpusMirror.generated.rs",
+    ".golden-build/model-interface-rust/MultiMirror.generated.rs"
+  ],
+  "matched": false,
+  "archiveMembersUnchanged": true,
+  "note": "All 9833 archive members match the Phase A manifest. model_interface_spec wrote two generated files under .golden-build. Those files are outside the source archive and are retained."
+}

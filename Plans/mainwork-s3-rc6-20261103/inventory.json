@@ -1,0 +1,641 @@
+{
+  "schema": "mirrors.s3-rc6.inventory/v1",
+  "files": [
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/archive/mirrors-v0.2.0-rc.6-source.tar.gz",
+      "bytes": 23447774,
+      "sha256": "87ab9dee6c1a247da0ef4f1a7028c941323997202721ccada2e6ef6c62371a62",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/archive/source-manifest.json",
+      "bytes": 2459752,
+      "sha256": "d1075b4df558f57ff0dbc32876e85a8342995e4c02bac081498d18fcb9c09ed4",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/SHA256SUMS",
+      "bytes": 329,
+      "sha256": "7de152393db7691fd86f17c431e093c63d6b625a325d0f9de85b9a37efb4e1ce",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/logs/async_resource_spec.log",
+      "bytes": 28,
+      "sha256": "e14caa75aaa0068084e7fd6deddd639a29ed223da67c4480ffca7e11ce6f7dd8",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/logs/build.log",
+      "bytes": 115009,
+      "sha256": "8afbb697763400dd91874e5273eb8dacd5b45383254fcc9b3af7e0a1d13edb27",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/logs/diff_cross.log",
+      "bytes": 92,
+      "sha256": "c756c8eca2e4314e3c42a5b2b6ecf284205075a8f820e9904c4d424a9674f6c7",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/logs/dpm_sync_spec.log",
+      "bytes": 34,
+      "sha256": "140867b31de2908bb87a6df57305c60ccd6da439fbbd9c7f07bc5ea4db575302",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/logs/fixtures_replay.log",
+      "bytes": 39,
+      "sha256": "a1ac3ec1016e3876374f06b9344c078979bf1517ad2eb01f2f37f1e21c54528b",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/logs/jobstore_spec.log",
+      "bytes": 505,
+      "sha256": "f019ed3c03f0d635f84059339f6cb6a1903c1188393eb00bc0a05afde6824f6c",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/logs/model_interface_spec.log",
+      "bytes": 622,
+      "sha256": "115609a409cb81cbe2bb938de26e52004835c819dff7697c0ab3b7d6f26ea266",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/logs/stdio_smoke.log",
+      "bytes": 312,
+      "sha256": "150e212d9d245bbe9c356ea1df8578e4eb92f38e38b653139d13c56065779cc6",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/logs/transport_spec.log",
+      "bytes": 3988,
+      "sha256": "75e55f32eb063921d50c9095f9390cc272e790b11baaa8c51506ecfc0d2ea78c",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/mirrors-v0.2.0-rc.6-windows-x86_64-repeat.zip",
+      "bytes": 73724538,
+      "sha256": "9919ac2cb96a3dd693df89b02059a559f25aff7e052efc00a60a2e569c87564e",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/mirrors-v0.2.0-rc.6-windows-x86_64.build.json",
+      "bytes": 6690,
+      "sha256": "9ef8692102cbe705048ad5b1ce5c20c4c501f691e9e1cc5e7493fdd182a8ecc9",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/mirrors-v0.2.0-rc.6-windows-x86_64.zip",
+      "bytes": 73724538,
+      "sha256": "9919ac2cb96a3dd693df89b02059a559f25aff7e052efc00a60a2e569c87564e",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/windows-build-environment.json",
+      "bytes": 9661,
+      "sha256": "ccdb18ab4d566bbf7a196bc1022cdee96b25e56ee5a60c30df85f817a7e79b88",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/windows-build-record.json",
+      "bytes": 5156,
+      "sha256": "9a16010f1407b3bc03ca361f82e04a78c90ef12e71beb0761c0a64367e27af29",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/windows-final-observation.json",
+      "bytes": 4856,
+      "sha256": "2a1e92f8e1965797ac66f6cbaedb332966aae82c1154b4fb7c848c160427335f",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/windows-gates.json",
+      "bytes": 6270,
+      "sha256": "b434ed860a68977bf35293eed2968b5974837c12b4cfbad7b686b619335bd524",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/windows-offline-dependency.json",
+      "bytes": 784,
+      "sha256": "31f51f56e9de2e5f1237e48593bc7a0341596d6815a5f0609ba68f1e23ba44a0",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/windows-package-archive.json",
+      "bytes": 547,
+      "sha256": "eb16a11dedee119b16b5c785eb8ae860289778ec1ea7bd8d8fd3ea0ba92367b6",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/windows-pe.json",
+      "bytes": 2031,
+      "sha256": "521ed31a3264a1decdd866be1a862cc8c68b67084c81f2200e56c9be1be52637",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/dist-windows/windows-source-after.jsonl",
+      "bytes": 2807300,
+      "sha256": "bfac987a264c21c6d98e82cdf143250651b5623e66a0a5944f92beabc611515d",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-dist/SHA256SUMS",
+      "bytes": 216,
+      "sha256": "53cab296ad81fae325193449ba910e47850b4bf394cbfa943bb3a3988346eb83",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-dist/mirrors-v0.2.0-rc.6-linux-x86_64.build.json",
+      "bytes": 2874,
+      "sha256": "25ec8bc7183f52fdf4a09b014cda4199b5b4e2d067362af212a66b454d3d49b1",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-dist/mirrors-v0.2.0-rc.6-linux-x86_64.tar.gz",
+      "bytes": 72209225,
+      "sha256": "9dc8e0ce2203c155bf8150479fd25e19bb5cd9774a6b688fd38fc57e74022038",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-dist/release-notes.txt",
+      "bytes": 583,
+      "sha256": "ff8a96d84beb769a4008684b3d560cd604263fba5f9fae83dfb563fc77d95e8c",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-resume/0000-check-archive.log",
+      "bytes": 271,
+      "sha256": "7ed32922967d2d71c5fddd018c18dbd8927f662001fba4abbf8e15448770bac2",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-resume/0001-ldd-mirror.log",
+      "bytes": 764,
+      "sha256": "8b91364957b8e9b352c794334ad33737e817b1685b6054227ebc23b864a08bfa",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-resume/0002-ldd-model_interface_gen.log",
+      "bytes": 777,
+      "sha256": "837bc1c479a7c689aed6203c5a985558fa30d2d277d7e692e3534905e54816b0",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-resume/0003-smoke-os-release.log",
+      "bytes": 509,
+      "sha256": "748cfe56f9b4b4fc3dee2b50fd241d3d04cf2ad9323515a44c370ac47d0ab26d",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-resume/0004-smoke-uname.log",
+      "bytes": 213,
+      "sha256": "2d95ccd1d2e32baf7fe89c1b3fc11891292827743771879d44bcd3046e98a2cc",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-resume/0005-smoke-path-absent.log",
+      "bytes": 340,
+      "sha256": "51e0c47ae0196755ac92e1cc4c8aef6c21415ea0b5b4c4aa37489cebb0e96854",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-smoke/0000-ldd-mirror.log",
+      "bytes": 794,
+      "sha256": "e283ae7ca98e7f22fcf54df1508b32a93b3fef46b167b957d38876a15dd5e559",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-smoke/0001-ldd-model_interface_gen.log",
+      "bytes": 807,
+      "sha256": "852cb5ec5d52fe1a59d9e788a7cc89ab9162c50208d9fe967920b5e842ba365b",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-smoke/0002-os-release.log",
+      "bytes": 631,
+      "sha256": "b8e8c0f13918611eb668806f7ba0ca29490cd54324e7210427182819437c5f8a",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-smoke/0003-uname.log",
+      "bytes": 335,
+      "sha256": "0ea7889e1c08eaa1307405eec96eeb1409b1661fe86cd92bf4b1d5aaa9c7f213",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-smoke/0004-path-absent.log",
+      "bytes": 326,
+      "sha256": "0581bb4a7ad1cb9dd86df44b692fc2b9d7c73baee7dd3257bcaf97aec14a6ccb",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-smoke/0005-version.log",
+      "bytes": 344,
+      "sha256": "a3d6b0adc9f90699e85b7eef3c4cef3c40d25bae41965a8ccc155ef4eeab6898",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-smoke/0006-protocol.log",
+      "bytes": 390,
+      "sha256": "741c3ca17b561c8767499d3da312bb28d313b288a7e3073c12a943f1cf1ad801",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-smoke/0007-help.log",
+      "bytes": 2972,
+      "sha256": "1d05cce549ba59055439555116f7c086afb0b35eb7d3efd508288d57cf536f0e",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs/0000-tmpdir-fstype.log",
+      "bytes": 219,
+      "sha256": "dce08aac2e5ff180d7138f25611adc3788beb19d2b18fe76ccd68ab8bcf4888a",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs/0001-phase-a-verifier.log",
+      "bytes": 366,
+      "sha256": "2583bea45a842571c1ee21818ec5619c232105071c5a949594d6f6c5d7c2e4a0",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs/0002-source-head.log",
+      "bytes": 229,
+      "sha256": "737f4e5ef0616696ba020083e8e2758f591b702b947572db2dc039c8559f87c4",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs/0003-source-tag-peel.log",
+      "bytes": 255,
+      "sha256": "b9cd0a01cec640cf014b7c760b8c861625c97ec074afd822bc668bfd5c0325d1",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs/0004-source-tag-object.log",
+      "bytes": 246,
+      "sha256": "c4dd8482a05454340172f56ac19dba6804908a99d368c5d43bcd3fb75f374df4",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs/0005-batteries-head.log",
+      "bytes": 239,
+      "sha256": "9351a80688509312a745dc4ae509854ba4c0a56ec0ff58469075c0c0f0a476cc",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs/0006-release-tests.log",
+      "bytes": 2072,
+      "sha256": "9e889c78461b59b34b84196186102d633b87ea20d5f0fc0c06c2600ef72da2b9",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs/0007-release-build.log",
+      "bytes": 124583,
+      "sha256": "7c49eedcb9a1e064ddc48b34a87cb509360716f4a64f269f1b13bc71a71fc491",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs/0008-source-status-after.log",
+      "bytes": 195,
+      "sha256": "60622e3521b7e8c41af01ab5248b35cceecd0a29a00611b9547c85065924cdfa",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-20261103/linux-logs/0009-shared-tag-absent.log",
+      "bytes": 171,
+      "sha256": "03f6e1bb41348d15902ce4cb323226958d87f74dccd63f8a1f1582227b209198",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-review-20261103/review-source-after.jsonl",
+      "bytes": 2807300,
+      "sha256": "bfac987a264c21c6d98e82cdf143250651b5623e66a0a5944f92beabc611515d",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-review-20261103/windows-local-review.json",
+      "bytes": 2742,
+      "sha256": "2265d9ee4e7cbe0d91de26be13b2d8d352a3b4e072c2299e97be81ade59c86f2",
+      "class": "ignored-raw"
+    },
+    {
+      "path": ".golden-build/mainwork-s3-rc6-review-20261103/windows-source-review.json",
+      "bytes": 286,
+      "sha256": "88994ba999785a3284b898d0d2eb8a9711b0864bd5affa49d5d0487ce5872325",
+      "class": "ignored-raw"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/.gitattributes",
+      "bytes": 216,
+      "sha256": "135420bb5e611b0fd4e63bdd3f4167c13a479019255d0e682e0335228294ed98",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/README.md",
+      "bytes": 1845,
+      "sha256": "4b7153f1482dcd8ab9c22539127af0034778b0933d3d9d9d7c7217184a5e2a67",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/admit.py",
+      "bytes": 29166,
+      "sha256": "4b4ce1d97d6615b5c4edbd8372f91f5753f3059c563b6db3f31123673db7f9db",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/blocker.json",
+      "bytes": 9064,
+      "sha256": "65095fa75a3b07f26dbd4b902de76e1954c1b1a55bdb3186e81379a800cb61a1",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/input-inventory.json",
+      "bytes": 6726,
+      "sha256": "0c8587232b62d9cca1b592f0e2c7dc7e06fdf0a2ecdf0183dcd75cd9508e26bf",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/intake.json",
+      "bytes": 981,
+      "sha256": "0d6eca2a55dffbd8dafb797935e3a4137aab1c0daf96036dba95fc8cda6a5a6c",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/linux-archive.json",
+      "bytes": 3959,
+      "sha256": "a74168f33beac8022d9be1e3ab7fb736710b53cbc75eedc23261f23fd18ee089",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/linux-build.json",
+      "bytes": 2929,
+      "sha256": "1453100cf6029002adacb8eb0f392b15ffdfd6ba3e0aa1fbc56be064457bbab0",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/linux-commands-resume.jsonl",
+      "bytes": 3088,
+      "sha256": "194dc5d988162d1b5de4c40eb2f9d29845c86556c64245b81d029141bcadd9cf",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/linux-commands-smoke.jsonl",
+      "bytes": 4520,
+      "sha256": "e79eab65fed56fc6f4ee1be541ca7e4e475783fdfb36b11af9c4f6cd2e726fbc",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/linux-commands.jsonl",
+      "bytes": 5268,
+      "sha256": "cbd51146643fb3e3923331748e8b5f25d74800d3e3f46a607589340f9041c829",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/linux-failure-resume.json",
+      "bytes": 3901,
+      "sha256": "8bf8fffdf2bbd1cbca33c9828649f5798c254198cc009b870768bf0184451fb4",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/linux-failure.json",
+      "bytes": 6906,
+      "sha256": "02bad8fe5a0561274d353e6d4437460a519002b70e5910c634726e8048c24804",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/linux-phase-b-resume.py",
+      "bytes": 14529,
+      "sha256": "6e0ae66b146b5d709df97c503347a732a699a8c4d38797e16f249c956cc6887e",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/linux-phase-b-smoke.py",
+      "bytes": 13025,
+      "sha256": "de29818d1667ef32b9e8cc7f0ecaf8ac0309c131949d35d8a5928e633c599912",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/linux-phase-b.py",
+      "bytes": 20112,
+      "sha256": "2cad627e3325db50f0560cdb89ac665398c90ed206a854fbe83e01a85f9ac1ad",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/linux-smoke.json",
+      "bytes": 7176,
+      "sha256": "e7cda36d5a19fca61b6b65f3945dda7ba1cd33f9874ea975ba875b6c3d664937",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/package-set.json",
+      "bytes": 1331,
+      "sha256": "a40d4479c65031c0dd347954204d9c2df652daeea29f544081b89410c3ff7fb9",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/receipts/attempt-1/commands.jsonl",
+      "bytes": 2761,
+      "sha256": "40aa1768827fe013bcf43c5c1d26c0961429615e9b098b76ea626684bbb9914f",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/receipts/attempt-1/logs/0000.json",
+      "bytes": 237,
+      "sha256": "b6a712f85dba3a85cdb87e9a028e5f3f0a66f37b784b50e00a75d022e44ad954",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/receipts/attempt-1/logs/0001.json",
+      "bytes": 244,
+      "sha256": "c8ad30e8b46b5731102f5113024343e837f1da474c3c8db83c6b179ee6329819",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/receipts/attempt-1/logs/0002.json",
+      "bytes": 1802,
+      "sha256": "e1163dfb3beb9bebaa28118d137d40e5a70f5cafae8fbf1ddd2fac5a20ab714c",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/receipts/attempt-1/logs/0003.json",
+      "bytes": 634,
+      "sha256": "ce9f9846f1dce1161f7e4e7378d252826eebd8086564abdf95d4638f0ac7281b",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/receipts/attempt-1/note.txt",
+      "bytes": 182,
+      "sha256": "96c7c866ff4764d72a81530339de65e9b38f3c007850b246cbdb3c11d76b8d80",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/receipts/commands.jsonl",
+      "bytes": 115064,
+      "sha256": "7941aa6a46839d93ba8ffdd88be0355fe207f0dc3c651cde56bdd120c6641bbf",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/receipts/linux-observe.json",
+      "bytes": 2531,
+      "sha256": "a9332303ca5a12e2b1713e951698aa99bd0e73ff1199fc965bb1b4c5ebfa3ce6",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/receipts/windows-observe.json",
+      "bytes": 4719,
+      "sha256": "d9279b03a9f933b692418df902ec89a8f8ef79e46f1fefed64a4ff30fd72a176",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/review.md",
+      "bytes": 3743,
+      "sha256": "eaac2e9409f132ce28b004b035771c4f2c58df2541e8f0c5013c7200a4d233d4",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/s3-package-set.json",
+      "bytes": 2631,
+      "sha256": "258f004c2eb68661f5da3d9cca4d35b815c42b3eeb8d69e3531ecf921fa2372e",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/source-identity.json",
+      "bytes": 2869,
+      "sha256": "7bd7e4ce161f5b4e47bfc371194a19963be7576d5f2bb9089943f1469499f522",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/task.md",
+      "bytes": 7748,
+      "sha256": "a6d8a6e77fe2705594f5bd3125ebe184e0c3bb20037af5b816621445bf971b59",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/verification.json",
+      "bytes": 1505,
+      "sha256": "0eb1692791edbab35f0827cdcc730e5a60dbefe803452bc0ec767b2ab9725fe5",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/verify.py",
+      "bytes": 5721,
+      "sha256": "f11721585f07887831bf3147eb4f7a8b2fb52b04c77431314b8833c76d7d6d6a",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/verify_s3.py",
+      "bytes": 15110,
+      "sha256": "6d85135318811c3ce2e036dac1016156f4e6ead3d2130ef978fde1783a2f9c20",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-build.json",
+      "bytes": 5156,
+      "sha256": "9a16010f1407b3bc03ca361f82e04a78c90ef12e71beb0761c0a64367e27af29",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-build.ps1",
+      "bytes": 8333,
+      "sha256": "a14df47b4b3bf7f1328898b09359adc5e513e1d5932d972e2125c9db094d089c",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-compare.py",
+      "bytes": 1537,
+      "sha256": "d615d53d64623aea7c4537565827a96da5ea184b1e4ccc646131f08f547766d0",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-final-observation.json",
+      "bytes": 4856,
+      "sha256": "2a1e92f8e1965797ac66f6cbaedb332966aae82c1154b4fb7c848c160427335f",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-final.ps1",
+      "bytes": 2938,
+      "sha256": "e992fab45df311535a388a46ea8b4ff042c6f577c2773417e4f86503fcc4cca3",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-gates.json",
+      "bytes": 6270,
+      "sha256": "b434ed860a68977bf35293eed2968b5974837c12b4cfbad7b686b619335bd524",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-observe.ps1",
+      "bytes": 4020,
+      "sha256": "44b55d2a4f068974bd10a7f0f53a4d3f92b492286a6877cad3be07e41322d6d2",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-offline-dependency.json",
+      "bytes": 784,
+      "sha256": "31f51f56e9de2e5f1237e48593bc7a0341596d6815a5f0609ba68f1e23ba44a0",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-package-archive.json",
+      "bytes": 547,
+      "sha256": "eb16a11dedee119b16b5c785eb8ae860289778ec1ea7bd8d8fd3ea0ba92367b6",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-package-set.json",
+      "bytes": 918,
+      "sha256": "8dd67c7073c8227624fb75e3e636db398280b55f722234f2ee20ad1cbdc3b547",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-package.json",
+      "bytes": 2003,
+      "sha256": "ee54158a32fb19bd43b8250055c221d6e7c16af4010f3c55902f4e81b6e54062",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-package.ps1",
+      "bytes": 4758,
+      "sha256": "af1ebf8f584f72b8e02091e19ea872f538180f7d615e4bf0991c5333c6266ad0",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-pe.json",
+      "bytes": 2031,
+      "sha256": "521ed31a3264a1decdd866be1a862cc8c68b67084c81f2200e56c9be1be52637",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-pe.py",
+      "bytes": 3276,
+      "sha256": "cb68820db2bf2c45c3c76cbe1278883391944a4d01f151291b38739654a21067",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-remote.py",
+      "bytes": 8169,
+      "sha256": "a15645f482b150a34e0ac5a529767544ca7eb4bc6cf34158f73c1eee961f2caa",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-source-after.json",
+      "bytes": 618,
+      "sha256": "87c01d6fcfdea58c89536f3e3cb246bba39e43a920384f0994724d395df91588",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-source-before.json",
+      "bytes": 250,
+      "sha256": "5240cd951c9fd2a0ebb1594d0028cf9218b04d691d3f2be1f09b2969e0cb1134",
+      "class": "git-payload"
+    },
+    {
+      "path": "Plans/mainwork-s3-rc6-20261103/windows-zip.py",
+      "bytes": 2452,
+      "sha256": "45c6c3086af1be25d6122c2f5ad1011b64f7532ab693bcff5f797f8b6176cc0a",
+      "class": "git-payload"
+    }
+  ]
+}

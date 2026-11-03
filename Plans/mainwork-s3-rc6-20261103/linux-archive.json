@@ -1,0 +1,130 @@
+{
+  "schema": "mirrors.s3-rc6.phase-b.linux-archive/v1",
+  "published": false,
+  "deployed": false,
+  "at": "2026-11-03T08:19:25Z",
+  "tag": "v0.2.0-rc.6",
+  "commit": "3c4a87309cc3a81924660497207d7c295759bdc1",
+  "archive": {
+    "path": ".golden-build/mainwork-s3-rc6-20261103/linux-dist/mirrors-v0.2.0-rc.6-linux-x86_64.tar.gz",
+    "bytes": 72209225,
+    "sha256": "9dc8e0ce2203c155bf8150479fd25e19bb5cd9774a6b688fd38fc57e74022038"
+  },
+  "externalManifest": {
+    "path": ".golden-build/mainwork-s3-rc6-20261103/linux-dist/mirrors-v0.2.0-rc.6-linux-x86_64.build.json",
+    "bytes": 2874,
+    "sha256": "25ec8bc7183f52fdf4a09b014cda4199b5b4e2d067362af212a66b454d3d49b1"
+  },
+  "sha256sums": {
+    "path": ".golden-build/mainwork-s3-rc6-20261103/linux-dist/SHA256SUMS",
+    "sha256": "53cab296ad81fae325193449ba910e47850b4bf394cbfa943bb3a3988346eb83",
+    "entries": {
+      "mirrors-v0.2.0-rc.6-linux-x86_64.build.json": "25ec8bc7183f52fdf4a09b014cda4199b5b4e2d067362af212a66b454d3d49b1",
+      "mirrors-v0.2.0-rc.6-linux-x86_64.tar.gz": "9dc8e0ce2203c155bf8150479fd25e19bb5cd9774a6b688fd38fc57e74022038"
+    },
+    "verified": true,
+    "unlistedByBuilderOrder": [
+      "SHA256SUMS",
+      "release-notes.txt"
+    ]
+  },
+  "maintainedCheckArchive": {
+    "argv": [
+      "python3",
+      "tools/release/release.py",
+      "check-archive",
+      "--tag",
+      "v0.2.0-rc.6",
+      "--archive",
+      "/home/lsz/Codebase/Mirrors/.golden-build/mainwork-s3-rc6-20261103/linux-dist/mirrors-v0.2.0-rc.6-linux-x86_64.tar.gz"
+    ],
+    "cwd": "/home/lsz/Codebase/Mirrors",
+    "exit": 0,
+    "finishedAt": "2026-11-03T08:18:29Z",
+    "log": ".golden-build/mainwork-s3-rc6-20261103/linux-logs-resume/0000-check-archive.log",
+    "logBytes": 271,
+    "logSha256": "7ed32922967d2d71c5fddd018c18dbd8927f662001fba4abbf8e15448770bac2",
+    "name": "check-archive",
+    "startedAt": "2026-11-03T08:18:27Z"
+  },
+  "embeddedManifestEqualsExternal": true,
+  "members": [
+    {
+      "name": "mirrors-v0.2.0-rc.6-linux-x86_64",
+      "mode": "0o755",
+      "kind": "dir"
+    },
+    {
+      "name": "mirrors-v0.2.0-rc.6-linux-x86_64/BUILD.json",
+      "mode": "0o644",
+      "kind": "file",
+      "bytes": 2874,
+      "sha256": "25ec8bc7183f52fdf4a09b014cda4199b5b4e2d067362af212a66b454d3d49b1"
+    },
+    {
+      "name": "mirrors-v0.2.0-rc.6-linux-x86_64/README.txt",
+      "mode": "0o644",
+      "kind": "file",
+      "bytes": 798,
+      "sha256": "3a82a0b7261b1e41f23444b52ef0362a29f58bfcb3bed602487e491b0579c5e8"
+    },
+    {
+      "name": "mirrors-v0.2.0-rc.6-linux-x86_64/bin",
+      "mode": "0o755",
+      "kind": "dir"
+    },
+    {
+      "name": "mirrors-v0.2.0-rc.6-linux-x86_64/bin/mirror",
+      "mode": "0o755",
+      "kind": "file",
+      "bytes": 129463840,
+      "sha256": "236cd3ccb6239cbe96a61bd8fce74f1f2498912b0ba8c128d5774b89e8b6b9d1"
+    },
+    {
+      "name": "mirrors-v0.2.0-rc.6-linux-x86_64/bin/model_interface_gen",
+      "mode": "0o755",
+      "kind": "file",
+      "bytes": 124701968,
+      "sha256": "f7bd3c9927c1b2ddfc94ba20cc68ddaf9e6ea00d5eddf3b0b0cdeeac03e6ace2"
+    }
+  ],
+  "binaries": {
+    "mirror": {
+      "sha256": "236cd3ccb6239cbe96a61bd8fce74f1f2498912b0ba8c128d5774b89e8b6b9d1",
+      "bytes": 129463840,
+      "libraries": [
+        "libc.so.6",
+        "libpthread.so.0",
+        "libdl.so.2",
+        "librt.so.1",
+        "libm.so.6"
+      ]
+    },
+    "model_interface_gen": {
+      "sha256": "f7bd3c9927c1b2ddfc94ba20cc68ddaf9e6ea00d5eddf3b0b0cdeeac03e6ace2",
+      "bytes": 124701968,
+      "libraries": [
+        "libc.so.6",
+        "libpthread.so.0",
+        "libdl.so.2",
+        "librt.so.1",
+        "libm.so.6"
+      ]
+    }
+  },
+  "allowedLibraries": [
+    "libatomic.so.1",
+    "libc.so.6",
+    "libcrypto.so.3",
+    "libdl.so.2",
+    "libgcc_s.so.1",
+    "libgmp.so.10",
+    "libm.so.6",
+    "libpthread.so.0",
+    "librt.so.1",
+    "libssl.so.3",
+    "libstdc++.so.6",
+    "libuv.so.1",
+    "libz.so.1"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "published": false,
+  "deployed": false,
+  "stdout": "PROBE_UTC 2026-11-03T08:08:36Z\r\nHOST DESKTOP-6DKB5JD\r\nUSER win10\r\nOS Microsoft Windows NT 10.0.19045.0\r\nPRODUCT Windows 10 Enterprise for Virtual Desktops 22H2 build 19045.6456\r\nPS 5.1.19041.6456\r\nPS_EDITION Desktop\r\nVOL C: free=6710235136 size=255609606144 fs=NTFS\r\nVOL D: free=64959823872 size=4000768323584 fs=NTFS\r\nTOOL\tlake\tpresent=True\tpath=C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe\tversion=Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)\tsha=a1aebb13fc502ae9190745c6b3bd2101d0fec39f030cfc07b1993799c2374644\r\nTOOL\tlean\tpresent=True\tpath=C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.exe\tversion=Lean (version 4.33.0, x86_64-w64-windows-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\tsha=dd86e9b24990b1da425ea4af910f016e4db8f9a25c9ddad27bc6bee3690e677f\r\nTOOL\tgcc\tpresent=True\tpath=D:\\Programs\\Perl\\c\\bin\\gcc.exe\tversion=gcc.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r8) 13.2.0\tsha=34a92e71f6814bd936135d0bd82b80b63daaf445791bba4a6bba93075235e8a4\r\nTOOL\tgit\tpresent=True\tpath=C:\\Program Files\\Git\\cmd\\git.exe\tversion=git version 2.54.0.windows.1\tsha=81ef35ae005ca9318018d18e3327578ce939fb99feaad6b2d7c8ab15f3de8db5\r\nTOOL\topenssl\tpresent=True\tpath=D:\\Programs\\msys2\\ucrt64\\bin\\openssl.exe\tversion=OpenSSL 3.5.0 8 Apr 2025 (Library: OpenSSL 3.5.0 8 Apr 2025)\tsha=3d3b16f407f22c058f52afd6e92c6309ad4ffd8b68406fd41c2de4d011705069\r\nDLL libcrypto 7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7\r\nDLL libssl 85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c\r\nSTAGE_PARENT_EXISTS True\r\nSTAGE D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873\r\nSTAGE_EXISTS False\r\nSTAGING_ENTRIES framework-q-20260922 | s3-rc2-windows-20261030-1fe379a | s3-rc3-windows-20261031-38a94ec | s3-rc4-windows-20261031-5ab907d | s3-rc5-windows-20261031-3ee3d92 | s3-windows-20261030-d737aa0\r\nPROD_SHA 8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc\r\nSERVICE Running/Automatic\r\nPROCPID 9920 D:\\ModelMirrors\\bin\\ModelMirrors.exe\r\nPROBE_DONE\r\n",
+  "parsed": {
+    "tools": {
+      "lake": {
+        "present": "True",
+        "path": "C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe",
+        "version": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)",
+        "sha": "a1aebb13fc502ae9190745c6b3bd2101d0fec39f030cfc07b1993799c2374644"
+      },
+      "lean": {
+        "present": "True",
+        "path": "C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.exe",
+        "version": "Lean (version 4.33.0, x86_64-w64-windows-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+        "sha": "dd86e9b24990b1da425ea4af910f016e4db8f9a25c9ddad27bc6bee3690e677f"
+      },
+      "gcc": {
+        "present": "True",
+        "path": "D:\\Programs\\Perl\\c\\bin\\gcc.exe",
+        "version": "gcc.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r8) 13.2.0",
+        "sha": "34a92e71f6814bd936135d0bd82b80b63daaf445791bba4a6bba93075235e8a4"
+      },
+      "git": {
+        "present": "True",
+        "path": "C:\\Program Files\\Git\\cmd\\git.exe",
+        "version": "git version 2.54.0.windows.1",
+        "sha": "81ef35ae005ca9318018d18e3327578ce939fb99feaad6b2d7c8ab15f3de8db5"
+      },
+      "openssl": {
+        "present": "True",
+        "path": "D:\\Programs\\msys2\\ucrt64\\bin\\openssl.exe",
+        "version": "OpenSSL 3.5.0 8 Apr 2025 (Library: OpenSSL 3.5.0 8 Apr 2025)",
+        "sha": "3d3b16f407f22c058f52afd6e92c6309ad4ffd8b68406fd41c2de4d011705069"
+      }
+    },
+    "PROBE_UTC": "2026-11-03T08:08:36Z",
+    "HOST": "DESKTOP-6DKB5JD",
+    "USER": "win10",
+    "OS": "Microsoft Windows NT 10.0.19045.0",
+    "PRODUCT": "Windows 10 Enterprise for Virtual Desktops 22H2 build 19045.6456",
+    "PS": "5.1.19041.6456",
+    "PS_EDITION": "Desktop",
+    "VOL": "D: free=64959823872 size=4000768323584 fs=NTFS",
+    "DLL": "libssl 85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+    "STAGE_PARENT_EXISTS": "True",
+    "STAGE": "D:\\ModelMirrors\\staging\\s3-rc6-20261103-3c4a873",
+    "STAGE_EXISTS": "False",
+    "STAGING_ENTRIES": "framework-q-20260922 | s3-rc2-windows-20261030-1fe379a | s3-rc3-windows-20261031-38a94ec | s3-rc4-windows-20261031-5ab907d | s3-rc5-windows-20261031-3ee3d92 | s3-windows-20261030-d737aa0",
+    "PROD_SHA": "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+    "SERVICE": "Running/Automatic",
+    "PROCPID": "9920 D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+    "PROBE_DONE": true
+  }
+}

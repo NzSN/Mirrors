@@ -5,6 +5,56 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-03 — S3 rc.6 clean Linux/Windows packages accepted
+
+At the user's request, Codex developed phased S3 tasks and delegated execution
+to Grok. Phase A admitted a local-only annotated `v0.2.0-rc.6` packaging tag,
+exact source archive, offline Batteries and actual host inputs. Linux and
+Windows construction then ran independently. The
+[S3 record](Plans/mainwork-s3-rc6-20261103/README.md) and
+[Codex review](Plans/mainwork-s3-rc6-20261103/review.md) accept the bounded
+clean-package stage.
+
+The task-owned tag object `5a2a6fd8728b610db7a6225b4a9d4c5d585344aa`
+peels to freeze `3c4a87309cc3a81924660497207d7c295759bdc1`. The shared
+checkout has no rc.6 tag and no remote tag was pushed. The source archive has
+9,833 files and SHA-256
+`87ab9dee6c1a247da0ef4f1a7028c941323997202721ccada2e6ef6c62371a62`.
+
+Accepted package identities:
+
+- Linux `mirrors-v0.2.0-rc.6-linux-x86_64.tar.gz`, SHA-256
+  `9dc8e0ce2203c155bf8150479fd25e19bb5cd9774a6b688fd38fc57e74022038`;
+  maintained focused non-model release gates and a second isolated Ubuntu
+  26.04.1 WSL2 runtime smoke pass.
+- Windows `mirrors-v0.2.0-rc.6-windows-x86_64.zip`, SHA-256
+  `9919ac2cb96a3dd693df89b02059a559f25aff7e052efc00a60a2e569c87564e`;
+  the exact source build and all eight declared non-model suites pass on
+  `DESKTOP-6DKB5JD`, repeat ZIP bytes are identical and PE imports satisfy the
+  reviewed closure.
+
+Codex independently reran phase-A, Linux checksum/archive, Windows
+checksum/member/payload/gate-log and PE checks. A fresh post-build Windows
+manifest confirmed zero missing or changed original source files; only two
+expected generated Rust outputs were added outside the archive. The final
+`verify_s3.py` and its negative controls pass. Retained SSH/probe, checksum
+listing, PATH, ZIP-order, source-comparison and verifier-correction failures are
+recorded without becoming skipped required gates.
+
+This is package acceptance only: not full Windows `lake test`, reproducible
+compilation, installed D/M5/Q, remote-model, framework or release admission.
+Exact locked Batteries carrier `73130433…`, ptrace/namespace admission, both D
+audits, remote/TLS/client inputs, full Windows tests and release remain open.
+Production service PID, executable and configuration stayed unchanged. No
+remote tag, hosted release, deployment, service change or reboot occurred.
+
+The user then requested commit and push of the accepted S3 work to
+`origin/main`. Publication is scoped to this checkpoint, maintained status and
+`Plans/mainwork-s3-rc6-20261103/`; package binaries, source/build trees, the
+Windows stage, ignored review logs and older unrelated untracked records stay
+out of the payload. This entry records the request, not push success; the
+publication receipt and fresh remote-ref observation own delivery proof.
+
 ## 2026-11-03 — MW-12 final source/C0 freeze accepted after review
 
 At the user's request, Codex developed bounded F0–F4 freeze tasks, delegated

@@ -1,0 +1,70 @@
+{
+  "schema": "mirrors.s3-rc6.phase-a.source-identity/v1",
+  "published": false,
+  "deployed": false,
+  "at": "2026-11-03T08:08:40Z",
+  "resumedAfterRetainedFailure": "Plans/mainwork-s3-rc6-20261103/blocker.json",
+  "sharedHead": "0d95b6ff586c9014b456ed42ebdfbbccdb600701",
+  "sharedTree": "35fa9bdedf549afd6369168e5fc04cddf51e4c3a",
+  "freeze": "3c4a87309cc3a81924660497207d7c295759bdc1",
+  "freezeTree": "5c15228e006f4d1b6efaa7e088488bc4b1fe619e",
+  "publishedCommit": "0d95b6ff586c9014b456ed42ebdfbbccdb600701",
+  "publishedDiffPaths": [
+    "CHECKPOINTS.md",
+    "Docs/current-status.md",
+    "Plans/mainwork-freeze-20261103/README.md",
+    "Plans/mainwork-freeze-20261103/freeze-manifest.json",
+    "Plans/mainwork-freeze-20261103/intake.json",
+    "Plans/mainwork-freeze-20261103/inventory.json",
+    "Plans/mainwork-freeze-20261103/prepare.py",
+    "Plans/mainwork-freeze-20261103/report.md",
+    "Plans/mainwork-freeze-20261103/result.json",
+    "Plans/mainwork-freeze-20261103/review.md",
+    "Plans/mainwork-freeze-20261103/review/review.json",
+    "Plans/mainwork-freeze-20261103/task.md",
+    "Plans/mainwork-freeze-20261103/verify.py"
+  ],
+  "publishedDiffIsPlanningStatusOnly": true,
+  "tag": "v0.2.0-rc.6",
+  "tagType": "tag",
+  "tagObject": "5a2a6fd8728b610db7a6225b4a9d4c5d585344aa",
+  "tagPeel": "3c4a87309cc3a81924660497207d7c295759bdc1",
+  "tagRepository": ".golden-build/mainwork-s3-rc6-20261103/source",
+  "sharedTagRefsUnchanged": true,
+  "remoteTag": {
+    "ref": "refs/tags/v0.2.0-rc.6",
+    "present": false,
+    "stdout": ""
+  },
+  "remoteMain": {
+    "stdout": "0d95b6ff586c9014b456ed42ebdfbbccdb600701\trefs/heads/main"
+  },
+  "releaseIdentity": {
+    "schema": "mirrors.github-release/v1",
+    "tag": "v0.2.0-rc.6",
+    "commit": "3c4a87309cc3a81924660497207d7c295759bdc1",
+    "embeddedVersion": "0.2.0-rc.6",
+    "expectedVersionOutput": "v0.2.0-rc.6\n",
+    "historical": false,
+    "baselineAlias": false,
+    "prerelease": true,
+    "leanToolchain": "leanprover/lean4:v4.33.0",
+    "lakeManifestSha256": "24b5ca4312c41640a3d65f0d9d4443a559c257bbd0e2034c0215e85287566e75"
+  },
+  "archive": {
+    "path": ".golden-build/mainwork-s3-rc6-20261103/archive/mirrors-v0.2.0-rc.6-source.tar.gz",
+    "sha256": "87ab9dee6c1a247da0ef4f1a7028c941323997202721ccada2e6ef6c62371a62",
+    "bytes": 23447774,
+    "fileCount": 9833,
+    "manifest": ".golden-build/mainwork-s3-rc6-20261103/archive/source-manifest.json"
+  },
+  "batteries": {
+    "revision": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+    "tree": "5a1de86f7997958aaffec998882c29006b688d1e",
+    "retainedSource": ".lake/packages/batteries",
+    "offlineClone": ".golden-build/mainwork-s3-rc6-20261103/inputs/batteries",
+    "historyCount": 1309,
+    "substitutesLockedCarrier": false,
+    "missingCarrierSha256": "73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a"
+  }
+}

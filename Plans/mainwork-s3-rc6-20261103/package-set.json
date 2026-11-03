@@ -1,0 +1,34 @@
+{
+  "schema": "mirrors.s3-rc6.phase-b.package-set/v1",
+  "published": false,
+  "deployed": false,
+  "at": "2026-11-03T08:19:25Z",
+  "acceptance": "package records only; not full S3 acceptance and not Codex acceptance",
+  "tag": "v0.2.0-rc.6",
+  "tagObject": "5a2a6fd8728b610db7a6225b4a9d4c5d585344aa",
+  "commit": "3c4a87309cc3a81924660497207d7c295759bdc1",
+  "scope": "focused non-model Linux gates and isolated runtime smoke only",
+  "modelCheckerRun": false,
+  "dpmCliPackaged": false,
+  "fullLakeTest": false,
+  "archiveSha256": "9dc8e0ce2203c155bf8150479fd25e19bb5cd9774a6b688fd38fc57e74022038",
+  "externalManifestSha256": "25ec8bc7183f52fdf4a09b014cda4199b5b4e2d067362af212a66b454d3d49b1",
+  "checksumsSha256": "53cab296ad81fae325193449ba910e47850b4bf394cbfa943bb3a3988346eb83",
+  "binaries": {
+    "mirror": "236cd3ccb6239cbe96a61bd8fce74f1f2498912b0ba8c128d5774b89e8b6b9d1",
+    "model_interface_gen": "f7bd3c9927c1b2ddfc94ba20cc68ddaf9e6ea00d5eddf3b0b0cdeeac03e6ace2"
+  },
+  "passedGates": [
+    "fixtures_replay",
+    "diff_cross",
+    "model_interface_spec",
+    "stdio_smoke",
+    "transport_spec",
+    "check-client-framing.py",
+    "relocated-binary-cli-smoke"
+  ],
+  "retainedFailures": [
+    "Plans/mainwork-s3-rc6-20261103/linux-failure.json",
+    "Plans/mainwork-s3-rc6-20261103/linux-failure-resume.json"
+  ]
+}
