@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "mirrors.mainwork-freeze-result/v1",
+  "task": "Plans/mainwork-freeze-20261103/task.md",
+  "freezeRevision": "3c4a87309cc3a81924660497207d7c295759bdc1",
+  "freezeTree": "5c15228e006f4d1b6efaa7e088488bc4b1fe619e",
+  "validatedRevision": "25b62541ca443d5779fccc8d45fd90f64312747e",
+  "selectedProfile": "ubuntu-26.04-wsl2-x86_64",
+  "baseRole": "structural-control",
+  "catalogSelectionSha256": {
+    "base": "f2bf471a2eba49d39a414bcee2c498d05dd350ac0494c5dd482ea292ccd30a0a",
+    "wsl2": "4bb83aa2efb022e801c7be5d7efb102f32d2f354f01d5d002d4f8897197af1f5"
+  },
+  "historicalDirtySnapshotsReused": false,
+  "validation": {
+    "tmpdir": ".golden-build/mainwork-freeze-20261103/tmp",
+    "filesystem": "ext4",
+    "distribution": {"command": "python3 -m unittest discover -s tools/distribution -p test_*.py", "tests": 68, "exitCode": 0, "result": "OK"},
+    "durableEvidence": {"command": "python3 -m unittest discover -s tools/evidence/tests -p test_*.py", "tests": 146, "exitCode": 0, "result": "OK"}
+  },
+  "discardedFailure": {
+    "command": "inventory generation followed by verify.py redirected into receipts/verifier-rerun.*",
+    "exitCode": 1,
+    "terminalLines": [
+      "6374 8 6366",
+      "VERIFY:1",
+      "FREEZE VERIFY FAILED: inventory closure mismatch missing=[] extra=['.golden-build/mainwork-freeze-20261103/receipts/verifier-rerun.stderr', '.golden-build/mainwork-freeze-20261103/receipts/verifier-rerun.stdout']"
+    ],
+    "originalReceiptFilesPreserved": false,
+    "recoveredTranscript": ".golden-build/mainwork-freeze-20261103/receipts/verifier-first-invocation.terminal.txt",
+    "sourceLog": "call-0e2122b2-a85d-4404-b37f-750e57463d7a-59"
+  },
+  "fixedPointMkdirFailure": {
+    "exitCode": 1,
+    "error": "FileExistsError: tmp/fixed-point",
+    "retainedTranscript": ".golden-build/mainwork-freeze-20261103/receipts/verifier-fixed-point-mkdir.terminal.txt"
+  },
+  "codexAcceptance": false,
+  "qualificationTransferred": false,
+  "openGates": [
+    "batteries-carrier",
+    "ptrace-namespace-admission",
+    "installed-D-audit",
+    "remote-tls-client-windows",
+    "M5",
+    "Q",
+    "release"
+  ]
+}

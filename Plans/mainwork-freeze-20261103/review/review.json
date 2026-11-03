@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "mirrors.mainwork-freeze-codex-review/v1",
+  "recordedAt": "2026-11-03T07:25:47.862022+00:00",
+  "status": "accepted-after-correction",
+  "scope": "bounded F0-F4 final source/C0 freeze only",
+  "freezeRevision": "3c4a87309cc3a81924660497207d7c295759bdc1",
+  "freezeTree": "5c15228e006f4d1b6efaa7e088488bc4b1fe619e",
+  "catalogSelectionSha256": {
+    "base": "f2bf471a2eba49d39a414bcee2c498d05dd350ac0494c5dd482ea292ccd30a0a",
+    "wsl2": "4bb83aa2efb022e801c7be5d7efb102f32d2f354f01d5d002d4f8897197af1f5"
+  },
+  "grokJobs": {
+    "initial": "task-mw0cdcb1-864xea",
+    "correction": "task-mw0cxvlw-sns8x8",
+    "session": "01a1a038-8c33-7ca0-8136-57eb0120abcd"
+  },
+  "findingsCorrected": [
+    "owner-only candidate modes",
+    "deleted initial verifier failure receipt",
+    "S1 actual/expected hash comparison",
+    "independent refresh fixed-point verification"
+  ],
+  "independentValidation": {
+    "verifyAfterCorrection": {
+      "exitCode": 0,
+      "stdout": [
+        "FREEZE VERIFY GREEN",
+        "NEGATIVE CONTROL GREEN"
+      ],
+      "log": {
+        "path": ".golden-build/mainwork-freeze-review-20261103/verify-after-correction.log",
+        "bytes": 43,
+        "sha256": "fec5b162dc7fd3dd0fe069ecfb393bdc1ef593af9060920cedb63c55826698d3"
+      }
+    },
+    "fixedPoint": [
+      {
+        "family": "base",
+        "exitCode": 0,
+        "stdout": "IDENTITY REFRESH GREEN catalogSha256=f2bf471a2eba49d39a414bcee2c498d05dd350ac0494c5dd482ea292ccd30a0a\n",
+        "byteIdenticalAfterIndependentRefresh": true
+      },
+      {
+        "family": "wsl2",
+        "exitCode": 0,
+        "stdout": "IDENTITY REFRESH GREEN catalogSha256=4bb83aa2efb022e801c7be5d7efb102f32d2f354f01d5d002d4f8897197af1f5\n",
+        "byteIdenticalAfterIndependentRefresh": true
+      }
+    ],
+    "focusedTests": [
+      {
+        "name": "distribution",
+        "argv": [
+          "python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/distribution",
+          "-p",
+          "test_*.py"
+        ],
+        "exitCode": 0,
+        "seconds": 4.675159348989837
+      },
+      {
+        "name": "durable-evidence",
+        "argv": [
+          "python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/evidence/tests",
+          "-p",
+          "test_*.py"
+        ],
+        "exitCode": 0,
+        "seconds": 23.16756556695327
+      }
+    ]
+  },
+  "inventory": {
+    "totalFiles": 6378,
+    "gitPayload": 10,
+    "ignoredRaw": 6368,
+    "selfHashExcluded": "Plans/mainwork-freeze-20261103/inventory.json"
+  },
+  "downstreamQualificationGranted": false,
+  "commitPushTagPackageInstallAuditModelDeploymentOrRebootPerformed": false
+}

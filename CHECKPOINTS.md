@@ -5,6 +5,46 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-03 — MW-12 final source/C0 freeze accepted after review
+
+At the user's request, Codex developed bounded F0–F4 freeze tasks, delegated
+execution to Grok and independently reviewed the outcome. The
+[freeze record](Plans/mainwork-freeze-20261103/README.md) binds clean Mirrors
+`3c4a87309cc3a81924660497207d7c295759bdc1`, tree
+`5c15228e006f4d1b6efaa7e088488bc4b1fe619e`, clean MirrorECMA `9192171` and
+MirrorGate `4b379ac`. Fresh canonical C0 selections are base structural control
+`f2bf471a2eba49d39a414bcee2c498d05dd350ac0494c5dd482ea292ccd30a0a` and
+selected Ubuntu 26.04 WSL2
+`4bb83aa2efb022e801c7be5d7efb102f32d2f354f01d5d002d4f8897197af1f5`.
+The previous dirty-snapshot C0 identities were not reused.
+
+Codex rejected Grok's first result for non-owner-only candidate directories, a
+deleted initial verifier-failure receipt, incomplete S1 hash comparison and no
+independent refresh fixed-point check. Grok corrected all four without changing
+the C0/catalog/lock/snapshot content. The recovered deleted-failure transcript
+and a second retained verifier failure are recorded honestly.
+
+Independent Codex validation passed: the corrected verifier and negative
+controls, byte-identical third refreshes of both candidates, 68 distribution
+tests and 146 durable-evidence tests. The full local aggregate remains bound to
+parent `25b62541…`; only the proved planning-documentation delta separates it
+from the freeze. The [Codex review](Plans/mainwork-freeze-20261103/review.md)
+accepts only this bounded source/C0 freeze, not installed D, M5/Q, Windows,
+remote-model, framework or release qualification.
+
+Exact Batteries bytes, ptrace/namespace admission, both D audits,
+remote/TLS/client/Windows inputs, M5/Q and release remain open. No tag, package,
+cache build, installation, local/remote model operation, deployment, service
+change or reboot occurred. The next S3 clean-package stage retains separate
+version/tag and build approval boundaries.
+
+The user then requested commit and push of the accepted freeze work to
+`origin/main`. Publication is scoped to this checkpoint, the maintained status
+and `Plans/mainwork-freeze-20261103/`; ignored candidate/snapshot/raw evidence,
+review logs and all older unrelated untracked records remain excluded and
+preserved. This entry records the request, not push success; the publication
+receipt and fresh remote-ref observation own delivery proof.
+
 ## 2026-11-03 — MW-12 full local non-model gate passed
 
 The user explicitly approved and requested the pending long/full local gate.

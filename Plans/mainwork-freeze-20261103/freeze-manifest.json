@@ -1,0 +1,310 @@
+{
+  "acceptance": "prepared for independent Codex review; not accepted",
+  "branch": "main",
+  "c3": {
+    "bytes": 119687824,
+    "path": ".lake/build/bin/framework_catalog",
+    "sha256": "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126"
+  },
+  "companions": {
+    "MirrorECMA": {
+      "clean": true,
+      "path": ".golden-build/mw12-20261103/inputs/companions/MirrorECMA",
+      "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+      "tree": "3a48d828710fafdc9076f0b57bf4e089cdd372ee"
+    },
+    "MirrorGate": {
+      "clean": true,
+      "path": ".golden-build/mw12-20261103/inputs/companions/MirrorGate",
+      "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+      "tree": "96e7fa4d0ac90c526d7e499f95664f00b1bc3e9b"
+    }
+  },
+  "ecmaRuntimePin": {
+    "path": "tools/interop/ecma-runtime-pin.json",
+    "runtimeDigest": "77e4e6f2ad896eb1e94aa76ca78c542cbc82d91daadb887a38058a585b67b73a",
+    "sha256": "c5de570f37b4aaf7d3a05644f90269183ecf6585ef8d9c85e49a5d4d46fb3e8c",
+    "sourceRevision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+    "sourceTree": "3a48d828710fafdc9076f0b57bf4e089cdd372ee"
+  },
+  "families": {
+    "base": {
+      "catalogFile": {
+        "bytes": 26964,
+        "path": ".golden-build/mainwork-freeze-20261103/candidates/base/catalog/framework-catalog.json",
+        "sha256": "c4fcd1dd156a9f7292a75047f6e24c0c04e09eb7659d81f2228d3845e6f02dc7"
+      },
+      "catalogSelectionSha256": "f2bf471a2eba49d39a414bcee2c498d05dd350ac0494c5dd482ea292ccd30a0a",
+      "dependencyLock": {
+        "bytes": 2135,
+        "path": "distribution/reference-node/dependency-lock.json",
+        "sha256": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+      },
+      "profile": null,
+      "role": "structural-control",
+      "selectedForExecution": false,
+      "snapshot": {
+        "components": [
+          {
+            "componentId": "mirrorecma",
+            "dirty": false,
+            "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+            "treeIndexSha256": "3a0a25fa95766f0a0d38b099be054042805227433cb80d0177455d3e3f3235d0"
+          },
+          {
+            "componentId": "mirrorgate",
+            "dirty": false,
+            "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+            "treeIndexSha256": "34754952b811ab077c95bf17e415083351c4f5db3c2d68e95c00d0f01215e348"
+          },
+          {
+            "componentId": "mirrors",
+            "dirty": false,
+            "revision": "3c4a87309cc3a81924660497207d7c295759bdc1",
+            "treeIndexSha256": "191dab3d21844fc804615b94769956e54167219eaf1220289983902bf35af037"
+          }
+        ],
+        "index": {
+          "bytes": 868841,
+          "path": ".golden-build/mainwork-freeze-20261103/snapshots/base/snapshot-index.json",
+          "sha256": "2f440377e9275722da5080d8528f2383744b4458da7ed3d94067efc83ff44f54"
+        }
+      }
+    },
+    "wsl2": {
+      "catalogFile": {
+        "bytes": 27487,
+        "path": ".golden-build/mainwork-freeze-20261103/candidates/wsl2/catalog/framework-catalog-wsl2-26.04.json",
+        "sha256": "b2768b200a202377d08be4e6dca19a9c93baaee98369101fe78f3bef470a318f"
+      },
+      "catalogSelectionSha256": "4bb83aa2efb022e801c7be5d7efb102f32d2f354f01d5d002d4f8897197af1f5",
+      "dependencyLock": {
+        "bytes": 2135,
+        "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+        "sha256": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+      },
+      "profile": "ubuntu-26.04-wsl2-x86_64",
+      "role": "selected-execution",
+      "selectedForExecution": true,
+      "snapshot": {
+        "components": [
+          {
+            "componentId": "mirrorecma",
+            "dirty": false,
+            "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+            "treeIndexSha256": "3a0a25fa95766f0a0d38b099be054042805227433cb80d0177455d3e3f3235d0"
+          },
+          {
+            "componentId": "mirrorgate",
+            "dirty": false,
+            "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+            "treeIndexSha256": "34754952b811ab077c95bf17e415083351c4f5db3c2d68e95c00d0f01215e348"
+          },
+          {
+            "componentId": "mirrors",
+            "dirty": false,
+            "revision": "3c4a87309cc3a81924660497207d7c295759bdc1",
+            "treeIndexSha256": "191dab3d21844fc804615b94769956e54167219eaf1220289983902bf35af037"
+          }
+        ],
+        "index": {
+          "bytes": 868841,
+          "path": ".golden-build/mainwork-freeze-20261103/snapshots/wsl2/snapshot-index.json",
+          "sha256": "2f440377e9275722da5080d8528f2383744b4458da7ed3d94067efc83ff44f54"
+        }
+      }
+    }
+  },
+  "freezeRevision": "3c4a87309cc3a81924660497207d7c295759bdc1",
+  "freezeTree": "5c15228e006f4d1b6efaa7e088488bc4b1fe619e",
+  "historicalDirtySnapshotsRejected": {
+    "base": "ad9d28ae4b3b4eb2a662117b411fc8acc82e24cc82a04d8dfe6e770289c610bc",
+    "dirtySource": "59be0488dc9b32c086ac0b66e05459197fe9209e410ceeb47a87cf26f55ba80a",
+    "wsl2": "22596af73d943b2204a2ae3c7bbc39ae9c41ff03442507e0f26b183ac503a88c"
+  },
+  "openGates": [
+    "batteries-carrier",
+    "ptrace-namespace-admission",
+    "installed-D-audit",
+    "remote-tls-client-windows",
+    "M5",
+    "Q",
+    "release"
+  ],
+  "originMain": "3c4a87309cc3a81924660497207d7c295759bdc1",
+  "planningDelta": [
+    {
+      "path": "CHECKPOINTS.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/s1-local-no-model-evidence-20261103/README.md",
+      "status": "A"
+    }
+  ],
+  "preserved": {
+    "Docs/framework-map.md": {
+      "bytes": 13057,
+      "path": "Docs/framework-map.md",
+      "sha256": "4ebac0471c4fbffc0d249f50b8770b92962844c5b16e3c5a489ae566c4969b7c"
+    },
+    "catalog/components/mirrors.json": {
+      "bytes": 8230,
+      "path": "catalog/components/mirrors.json",
+      "sha256": "16da982c03cf410669e9dcaf20dafdf952c91d5f9b1304f794f9717bf1eb5052"
+    },
+    "catalog/framework-catalog-wsl2-26.04.json": {
+      "bytes": 31086,
+      "path": "catalog/framework-catalog-wsl2-26.04.json",
+      "sha256": "af47093b7f78d361800008bb03cda2dd2663b17ed9b67aa09ce8fda2b23e34c4"
+    },
+    "catalog/framework-catalog.compact.json": {
+      "bytes": 19261,
+      "path": "catalog/framework-catalog.compact.json",
+      "sha256": "27c602874b3df69779dd6384d1ab9985e1ae2f5a5b2de65eeeed492108f42b3b"
+    },
+    "catalog/framework-catalog.json": {
+      "bytes": 30563,
+      "path": "catalog/framework-catalog.json",
+      "sha256": "d69e8f5244d990d652ef6201f2f37ae0b12896d6c235c13d118aeade212e6f4d"
+    },
+    "companions/MirrorECMA/catalog/framework-capabilities.json": {
+      "bytes": 3540,
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorECMA/catalog/framework-capabilities.json",
+      "sha256": "483cde50b6905aa4f9f31ae1665fa4fcb56f0b6d0b71d26ce4c073aefa9d1a15"
+    },
+    "distribution/reference-node-wsl2-26.04/README.md": {
+      "bytes": 1028,
+      "path": "distribution/reference-node-wsl2-26.04/README.md",
+      "sha256": "67fd638b4dd8c3253b6750451c58040477c231802331da2da704164cd4328d36"
+    },
+    "distribution/reference-node-wsl2-26.04/component-lock.json": {
+      "bytes": 12866,
+      "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+      "sha256": "4deab387f27d6c43834e8b0a87cd2563000b58bdb18982a525386c8469ca8e93"
+    },
+    "distribution/reference-node-wsl2-26.04/dependency-lock.json": {
+      "bytes": 2135,
+      "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+      "sha256": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+    },
+    "distribution/reference-node-wsl2-26.04/profiles.json": {
+      "bytes": 4933,
+      "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+      "sha256": "87d31ef00f9eb8f5371575eebae9a89224458604f4c6a8ed9355265cd6525d67"
+    },
+    "distribution/reference-node/component-lock.json": {
+      "bytes": 12866,
+      "path": "distribution/reference-node/component-lock.json",
+      "sha256": "fce0b3569ed3b6e65bc448acda9fcbb654444f9a38f119c63b0134a8be99795f"
+    },
+    "distribution/reference-node/dependency-lock.json": {
+      "bytes": 2135,
+      "path": "distribution/reference-node/dependency-lock.json",
+      "sha256": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+    },
+    "distribution/reference-node/profiles.json": {
+      "bytes": 4307,
+      "path": "distribution/reference-node/profiles.json",
+      "sha256": "549da39669c69f32ec7a2f7810da9a5fa4f05a26af3697d6e0960d6946d3d05f"
+    }
+  },
+  "registry": {
+    "commandCount": 24,
+    "path": "tools/evidence/commands.json",
+    "sha256": "2e4ef9d4f5e393defdef473eb1582a0f16ff5d6660700af422fb0048c3c0bfd2"
+  },
+  "s1": {
+    "files": {
+      "receipt.json": {
+        "bytes": 1775,
+        "expectedSha256": "8a3b204f8563309751c29bb6d5fa065cea58b85041479a2bca09a1ac4863fe83",
+        "matchesRecordedHash": true,
+        "path": ".golden-build/s1-local-no-model-20261103/receipt.json",
+        "sha256": "8a3b204f8563309751c29bb6d5fa065cea58b85041479a2bca09a1ac4863fe83"
+      },
+      "run.log": {
+        "bytes": 113274,
+        "expectedSha256": "59d1b39bc0bf7176fd3b66140debeb1e98b8bcd66e81f9b95b9171c62fd11dba",
+        "matchesRecordedHash": true,
+        "path": ".golden-build/s1-local-no-model-20261103/run.log",
+        "sha256": "59d1b39bc0bf7176fd3b66140debeb1e98b8bcd66e81f9b95b9171c62fd11dba"
+      },
+      "sandbox-attempt.log": {
+        "bytes": 86762,
+        "expectedSha256": "1eefddfae98692536508a38faf5e90349e201c26fdf20152e534128339ba951a",
+        "matchesRecordedHash": true,
+        "path": ".golden-build/s1-local-no-model-20261103/sandbox-attempt.log",
+        "sha256": "1eefddfae98692536508a38faf5e90349e201c26fdf20152e534128339ba951a"
+      },
+      "tmpfs-attempt.log": {
+        "bytes": 104151,
+        "expectedSha256": "88cfa74bfc5c320f8cc32996eb81ae26e3df90103e376c3bed92ea25fbb842db",
+        "matchesRecordedHash": true,
+        "path": ".golden-build/s1-local-no-model-20261103/tmpfs-attempt.log",
+        "sha256": "88cfa74bfc5c320f8cc32996eb81ae26e3df90103e376c3bed92ea25fbb842db"
+      }
+    },
+    "liveModelExclusion": "Counter and Async live Apalache tiers self-skipped; local Apalache/TLC excluded by the runner",
+    "nativeExclusion": "MIRRORCPP_PREFIX unset; native integer maps and controlled native preparation skipped",
+    "qualificationTransferred": false,
+    "terminalLine": "ALL LOCAL NON-MODEL GATES GREEN"
+  },
+  "schemaVersion": "mirrors.mainwork-freeze-20261103/v1",
+  "tracer": {
+    "qualificationClaim": false,
+    "records": [
+      {
+        "bytes": 1627,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/integration-runtime/strace-pinned",
+        "sha256": "0d677426d0a518cf7f3c4f9b6527d1b313752eabb0e3a96d4ec8fa799b4265c7"
+      },
+      {
+        "bytes": 18832,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-ptrace.so.0",
+        "sha256": "d22b4d04f3379571e733c02611884d2d3e0c5e588637c96cc8a8df44b00801b5"
+      },
+      {
+        "bytes": 67720,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-x86_64.so.8",
+        "sha256": "e7cf258af27d39ff199342f4fb181218368df93238fb9d2ecf2eae52bf049b32"
+      },
+      {
+        "bytes": 72008,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind.so.8",
+        "sha256": "ba50c4006ec13e89fc7065e1928345737d58e4f17c7f0ecff0914c3ac96e711f"
+      },
+      {
+        "bytes": 2370264,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/root/usr/bin/strace",
+        "sha256": "f47342683309e807bca57d6d89b82f94a9b39aa614e9c28c2b67cefbc35eee58"
+      },
+      {
+        "bytes": 254864,
+        "path": "/lib64/ld-linux-x86-64.so.2",
+        "sha256": "bda779ea9e9ad234f60315477d7cfd0bdde861cd8ddd9df8cdaf62f18c4cec14"
+      },
+      {
+        "bytes": 254864,
+        "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "sha256": "bda779ea9e9ad234f60315477d7cfd0bdde861cd8ddd9df8cdaf62f18c4cec14"
+      },
+      {
+        "bytes": 2190608,
+        "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+        "sha256": "85e64f97e348786a8fb4d9f3d52fec289e2fb86bba20f0731dfe61990525e0f7"
+      },
+      {
+        "bytes": 215448,
+        "path": "/usr/lib/x86_64-linux-gnu/liblzma.so.5",
+        "sha256": "515749273a91ca5e3b273b4025dc2c1f8827f90005baea0ab85ffb594e74f72f"
+      },
+      {
+        "bytes": 212504,
+        "path": "/usr/lib/x86_64-linux-gnu/libtinfo.so.6",
+        "sha256": "085dbbe5dc38619276bdd0af37ae588969b1308baded09a2990ce8824a602912"
+      }
+    ]
+  },
+  "validatedRevision": "25b62541ca443d5779fccc8d45fd90f64312747e"
+}

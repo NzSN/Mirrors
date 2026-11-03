@@ -1,5 +1,23 @@
 # Current framework status and navigation
 
+## November 3 final source/C0 freeze
+
+The [MW-12 freeze review](../Plans/mainwork-freeze-20261103/review.md) accepts
+the bounded final source/C0 freeze after Grok execution and independent Codex
+correction/reproduction. Clean Mirrors is
+`3c4a87309cc3a81924660497207d7c295759bdc1`; fresh C0 selections are base
+structural control `f2bf471a…` and selected Ubuntu 26.04 WSL2 `4bb83aa2…`.
+Independent third refreshes are byte-stable, the verifier/negative controls
+pass, and the distribution 68 plus durable-evidence 146 tests pass. The earlier
+dirty-snapshot C0 is not reused.
+
+This is not installed D, M5/Q, Windows, remote-model, framework or release
+acceptance. Exact Batteries bytes, ptrace/namespace admission, both D audits,
+remote/TLS/client/Windows inputs and release remain open. S3 clean packages
+require separately selected version/tag and build approvals. Candidate raw
+artifacts remain ignored; no rc.6 tag, package, deployment or service operation
+has been performed.
+
 ## November 3 source-candidate reconciliation
 
 The [MW-12 continuation](../Plans/mainwork-mw12-20261103/README.md) prepares
@@ -13,8 +31,8 @@ declaration, including when the selected tree differs from the tool checkout.
 The pinned MirrorECMA `9192171` and MirrorGate
 `4b379ac` revisions have been acquired in clean task-owned copies, preserving
 the older shared checkouts. Catalog/lock and registry reconciliation, focused
-validation and Codex review are recorded in that continuation. Final freeze
-and exact-candidate qualification retain their own gates.
+validation and Codex review are recorded in that continuation. The final freeze
+is recorded above; exact-candidate qualification retains its own gates.
 
 The actual coordinator remains Ubuntu 26.04.1 WSL2. Both selected local/Gate
 D audits still need admitted tools, namespace permissions and exact dependency
