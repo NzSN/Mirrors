@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "mirrors.mw12.command/v1",
+  "argv": [
+    "/usr/bin/python3",
+    "tools/distribution/refresh_identity.py",
+    "--mirrorecma",
+    "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorECMA",
+    "--mirrorgate",
+    "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorGate",
+    "--framework-catalog-bin",
+    "/home/lsz/Codebase/Mirrors/.lake/build/bin/framework_catalog",
+    "--skip-mirrorecma-record-write"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "startedAt": "2026-11-03T03:49:26.154412+00:00",
+  "finishedAt": "2026-11-03T03:49:26.620612+00:00",
+  "monotonicDurationSeconds": 0.46619669697247446,
+  "environmentOverrides": {
+    "TMPDIR": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/binding-tmp"
+  },
+  "exitCode": 0,
+  "logs": [
+    {
+      "path": "logs/binding-a1-base-refresh.stdout",
+      "bytes": 129,
+      "sha256": "02515c19dff79e355f297465ec478aacd9897e6f3932adf772097bacd4b82b4a"
+    },
+    {
+      "path": "logs/binding-a1-base-refresh.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "mirrors.mainwork-admission-review/v1",
+  "claim": "structural checks and capability probes only; not S5 admission",
+  "existingVerifierSha256": "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126",
+  "verifierProvenance": "existing local binary; not a newly frozen build",
+  "locks": [
+    {
+      "root": "distribution/reference-node",
+      "validated": true,
+      "catalog": "framework-catalog.json",
+      "lockSha256": {
+        "distribution/reference-node/profiles.json": "35a12d81d78e730b3fb35f86504bfd78f7d72b493163fc4b920c608875d7b28b",
+        "distribution/reference-node/component-lock.json": "4a0805879381a4a5329dc82dffeecc6d7fa8b4eea7a499f3e51e18cecc7fe66c",
+        "distribution/reference-node/dependency-lock.json": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+      },
+      "returnedFields": [
+        "buildArtifacts",
+        "buildInputs",
+        "catalog",
+        "combinationComponents",
+        "componentRefs",
+        "dependencies",
+        "distributionId",
+        "profiles",
+        "selection"
+      ]
+    },
+    {
+      "root": "distribution/reference-node-wsl2-26.04",
+      "validated": true,
+      "catalog": "framework-catalog-wsl2-26.04.json",
+      "lockSha256": {
+        "distribution/reference-node-wsl2-26.04/profiles.json": "27f91fa6fa98c923fd0a61a8389c05239be50977206cc66fdb07c45fc3e36e59",
+        "distribution/reference-node-wsl2-26.04/component-lock.json": "fca0a5a6534ff6746af33846f2e4b3553659e6a3291a50dd8e830fa608393b0e",
+        "distribution/reference-node-wsl2-26.04/dependency-lock.json": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+      },
+      "returnedFields": [
+        "buildArtifacts",
+        "buildInputs",
+        "catalog",
+        "combinationComponents",
+        "componentRefs",
+        "dependencies",
+        "distributionId",
+        "profiles",
+        "selection"
+      ]
+    }
+  ],
+  "repositoryFilesystem": "ext4",
+  "defaultTmpFilesystem": "tmpfs",
+  "socketProbes": [
+    {
+      "family": "AF_INET",
+      "bindListen": false,
+      "errno": 1,
+      "error": "[Errno 1] Operation not permitted"
+    },
+    {
+      "family": "AF_UNIX",
+      "bindListen": false,
+      "errno": 1,
+      "error": "[Errno 1] Operation not permitted"
+    }
+  ],
+  "straceOnPath": null,
+  "recordedCarrierExists": false
+}

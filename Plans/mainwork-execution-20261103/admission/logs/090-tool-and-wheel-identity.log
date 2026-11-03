@@ -1,0 +1,113 @@
+# name: tool-and-wheel-identity
+# started: 2026-11-03T02:12:00Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["python3", "-"]
+# note: sha256 of current tool binaries and runtime-tree identity of discovered wheel directories
+
+{
+  "tools": [
+    {
+      "path": "/usr/bin/python3",
+      "resolved": "/usr/bin/python3.14",
+      "bytes": 7477160,
+      "sha256": "52e0a13e60a981d8c4b6478be2ba5176f69da07948a056bf49cf6f077e30cb41",
+      "mode": "0o755",
+      "symlink": true
+    },
+    {
+      "path": "/usr/bin/git",
+      "resolved": "/usr/bin/git",
+      "bytes": 4547768,
+      "sha256": "ed8b2df973b28c0fb773b9c0dc0816d3ee2b3835bb932d9153c21417bb51b362",
+      "mode": "0o755",
+      "symlink": false
+    },
+    {
+      "path": "/usr/bin/ldd",
+      "resolved": "/usr/bin/ldd",
+      "bytes": 5390,
+      "sha256": "8b85fafd8313f5e55058f543a66d3826adcd11e073c697f9d0208755378e2054",
+      "mode": "0o755",
+      "symlink": false
+    },
+    {
+      "path": "/usr/bin/bwrap",
+      "resolved": "/usr/bin/bwrap",
+      "bytes": 80424,
+      "sha256": "523da3e7399044be5163aee6f57a77a6bef7454376e28f0a0627920bae1b76b6",
+      "mode": "0o755",
+      "symlink": false
+    },
+    {
+      "path": "/usr/bin/cp",
+      "resolved": "/usr/bin/gnucp",
+      "bytes": 137840,
+      "sha256": "8fcdb2485ebc68f00392d647b3d3d9130f0d4bb9f72c69ee258086dd63e1c122",
+      "mode": "0o755",
+      "symlink": true
+    },
+    {
+      "path": "/usr/bin/gcc",
+      "resolved": "/usr/bin/x86_64-linux-gnu-gcc-15",
+      "bytes": 1305304,
+      "sha256": "b5f1b773a7c733738352000c92a077dc5852a1a2fc6d836b1e411be1e9ec5f88",
+      "mode": "0o755",
+      "symlink": true
+    },
+    {
+      "path": "/home/lsz/.elan/bin/lake",
+      "resolved": "/home/lsz/.elan/bin/lake",
+      "bytes": 13452832,
+      "sha256": "e0f4b30b29c565625189744847dfef5f132b6322c5e452dbebfeae780c9749e5",
+      "mode": "0o755",
+      "symlink": false
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/.lake/build/bin/framework_catalog",
+      "resolved": "/home/lsz/Codebase/Mirrors/.lake/build/bin/framework_catalog",
+      "bytes": 119687824,
+      "sha256": "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126",
+      "mode": "0o755",
+      "symlink": false
+    }
+  ],
+  "wheels": [
+    {
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-a1a2-20261031/wheels",
+      "files": [
+        "attrs-23.2.0-py3-none-any.whl",
+        "jsonschema-4.10.3-py3-none-any.whl",
+        "pyrsistent-0.20.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ],
+      "algorithm": "mirrors-runtime-tree-v1",
+      "digest": "6423086879a2db6ae9fb9ba5e69ea29cceb6d84a0a1f079e4f79bfd20c69d743",
+      "entryCount": 3,
+      "bytes": 264319
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-20261031/wheels",
+      "files": [
+        "attrs-23.2.0-py3-none-any.whl",
+        "jsonschema-4.10.3-py3-none-any.whl",
+        "pyrsistent-0.20.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ],
+      "algorithm": "mirrors-runtime-tree-v1",
+      "digest": "6423086879a2db6ae9fb9ba5e69ea29cceb6d84a0a1f079e4f79bfd20c69d743",
+      "entryCount": 3,
+      "bytes": 264319
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-20261031/prepared/evidence-wheels",
+      "files": [
+        "attrs-23.2.0-py3-none-any.whl",
+        "jsonschema-4.10.3-py3-none-any.whl",
+        "pyrsistent-0.20.0-py3-none-any.whl"
+      ],
+      "algorithm": "mirrors-runtime-tree-v1",
+      "digest": "f2c2e4edb2fe7d20afeba90192d09683b5d810b8fb2fb76df0c99cecd5301861",
+      "entryCount": 3,
+      "bytes": 200090
+    }
+  ]
+}

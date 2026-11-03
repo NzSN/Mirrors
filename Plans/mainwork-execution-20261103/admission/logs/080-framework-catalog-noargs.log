@@ -1,0 +1,13 @@
+# name: framework-catalog-noargs
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 2
+# argv: ["/home/lsz/Codebase/Mirrors/.lake/build/bin/framework_catalog"]
+# note: usage only; no catalog written
+
+
+--- stderr ---
+usage:
+  framework_catalog validate CATALOG
+  framework_catalog render --catalog CATALOG [--json-out FILE] [--markdown-out FILE] [--check]
+  defaults: catalog/framework-catalog.compact.json and Docs/framework-map.md

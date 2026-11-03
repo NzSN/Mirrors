@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "mirrors.mw12.command/v1",
+  "argv": [
+    ".golden-build/mw12-20261103/integration-runtime/strace-pinned",
+    "--version"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "startedAt": "2026-11-03T03:28:33.918142+00:00",
+  "finishedAt": "2026-11-03T03:28:33.934381+00:00",
+  "monotonicDurationSeconds": 0.01622871297877282,
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "logs": [
+    {
+      "path": "logs/strace-version.stdout",
+      "bytes": 327,
+      "sha256": "ad6ab5ec84c6b4547b18865da3bd0597852266a391b21b0d6191ac0f76f19828"
+    },
+    {
+      "path": "logs/strace-version.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

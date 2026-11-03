@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "mirrors.mainwork-identity-review/v1",
+  "observedAt": "2026-11-03T02:08:00.731429+00:00",
+  "head": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+  "sourceVersionFileSha256": "6617aae54de1c1263278de4d9173e7b5858fcb8af0f2b4032a90a4c8d0527896",
+  "sourceVersion": "0.2.0-rc.5",
+  "catalogsAndLocks": [
+    {
+      "path": "catalog/framework-catalog.json",
+      "sha256": "f6b0e9001fa4f583a4e61a4c7726a50b6ee810444cb4cc8a9164c624122b3bc5",
+      "components": [
+        {
+          "id": "mirrorecma",
+          "product": {
+            "name": "mirrorecma",
+            "version": "0.1.0"
+          },
+          "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+          "dirty": false
+        },
+        {
+          "id": "mirrorgate",
+          "product": {
+            "name": "MirrorGate",
+            "version": "0.1.0"
+          },
+          "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+          "dirty": false
+        },
+        {
+          "id": "mirrors",
+          "product": {
+            "name": "Mirrors",
+            "version": "0.1.1"
+          },
+          "revision": "bd5d3b51b1dcd75fbdf6c3188f1c90b1e6fe6ea0",
+          "dirty": true
+        }
+      ]
+    },
+    {
+      "path": "catalog/framework-catalog-wsl2-26.04.json",
+      "sha256": "c6ec7f2694e27eab1406f13fcf68c85821369bce3aecfcf4fbd27de08a722a83",
+      "components": [
+        {
+          "id": "mirrorecma",
+          "product": {
+            "name": "mirrorecma",
+            "version": "0.1.0"
+          },
+          "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+          "dirty": false
+        },
+        {
+          "id": "mirrorgate",
+          "product": {
+            "name": "MirrorGate",
+            "version": "0.1.0"
+          },
+          "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+          "dirty": false
+        },
+        {
+          "id": "mirrors",
+          "product": {
+            "name": "Mirrors",
+            "version": "0.1.1"
+          },
+          "revision": "bd5d3b51b1dcd75fbdf6c3188f1c90b1e6fe6ea0",
+          "dirty": true
+        }
+      ]
+    },
+    {
+      "path": "distribution/reference-node/component-lock.json",
+      "sha256": "4a0805879381a4a5329dc82dffeecc6d7fa8b4eea7a499f3e51e18cecc7fe66c",
+      "components": [
+        {
+          "id": "mirrorecma",
+          "product": {
+            "name": "mirrorecma",
+            "version": "0.1.0"
+          },
+          "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+          "dirty": false
+        },
+        {
+          "id": "mirrorgate",
+          "product": {
+            "name": "MirrorGate",
+            "version": "0.1.0"
+          },
+          "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+          "dirty": false
+        },
+        {
+          "id": "mirrors",
+          "product": {
+            "name": "Mirrors",
+            "version": "0.1.1"
+          },
+          "revision": "bd5d3b51b1dcd75fbdf6c3188f1c90b1e6fe6ea0",
+          "dirty": true
+        }
+      ]
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+      "sha256": "fca0a5a6534ff6746af33846f2e4b3553659e6a3291a50dd8e830fa608393b0e",
+      "components": [
+        {
+          "id": "mirrorecma",
+          "product": {
+            "name": "mirrorecma",
+            "version": "0.1.0"
+          },
+          "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+          "dirty": false
+        },
+        {
+          "id": "mirrorgate",
+          "product": {
+            "name": "MirrorGate",
+            "version": "0.1.0"
+          },
+          "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+          "dirty": false
+        },
+        {
+          "id": "mirrors",
+          "product": {
+            "name": "Mirrors",
+            "version": "0.1.1"
+          },
+          "revision": "bd5d3b51b1dcd75fbdf6c3188f1c90b1e6fe6ea0",
+          "dirty": true
+        }
+      ]
+    }
+  ],
+  "companions": [
+    {
+      "path": "/home/lsz/Codebase/MirrorECMA",
+      "head": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+      "trackedStatus": ""
+    },
+    {
+      "path": "/home/lsz/Codebase/MirrorGate",
+      "head": "4ef786b30ac6be45e471fb02610484581f5da3b0",
+      "trackedStatus": ""
+    }
+  ],
+  "recordedCarrierPathExists": false
+}

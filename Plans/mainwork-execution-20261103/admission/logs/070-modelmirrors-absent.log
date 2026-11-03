@@ -1,0 +1,9 @@
+# name: modelmirrors-absent
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 127
+# argv: ["test", "-d", "/home/lsz/Codebase/ModelMirrors"]
+
+
+--- stderr ---
+missing companion checkout: /home/lsz/Codebase/ModelMirrors

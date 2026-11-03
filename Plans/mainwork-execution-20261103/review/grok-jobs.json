@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "mirrors.mainwork-grok-jobs/v1",
+  "jobs": [
+    {
+      "name": "source",
+      "jobId": "task-mw01aed1-qwunu2",
+      "status": "completed",
+      "exitCode": 0,
+      "stopReason": "end_turn",
+      "createdAt": "2026-11-03T01:53:29.657Z",
+      "finishedAt": "2026-11-03T02:12:03.505Z",
+      "sessionId": "01a19f1c-88da-78d1-8415-7318c330afdf",
+      "numTurns": 38,
+      "stderr": null,
+      "errorClassification": null
+    },
+    {
+      "name": "handoff-initial",
+      "jobId": "task-mw01an01-ykiuvm",
+      "status": "failed",
+      "exitCode": 1,
+      "stopReason": "max_turn_requests",
+      "createdAt": "2026-11-03T01:53:40.854Z",
+      "finishedAt": "2026-11-03T02:15:24.972Z",
+      "sessionId": "01a19f1c-b4a6-77c3-8750-c611b28afe8c",
+      "numTurns": 60,
+      "stderr": "Error: max turns reached\n",
+      "errorClassification": "turn-limit; companion authentication label was incorrect"
+    },
+    {
+      "name": "handoff-resume",
+      "jobId": "task-mw024ayy-cb5udw",
+      "status": "completed",
+      "exitCode": 0,
+      "stopReason": "end_turn",
+      "createdAt": "2026-11-03T02:16:44.942Z",
+      "finishedAt": "2026-11-03T02:22:00.355Z",
+      "sessionId": "01a19f1c-b4a6-77c3-8750-c611b28afe8c",
+      "numTurns": 14,
+      "stderr": null,
+      "errorClassification": null
+    },
+    {
+      "name": "admission-initial",
+      "jobId": "task-mw01aiok-fut1xh",
+      "status": "failed",
+      "exitCode": 1,
+      "stopReason": "max_turn_requests",
+      "createdAt": "2026-11-03T01:53:35.257Z",
+      "finishedAt": "2026-11-03T02:17:48.647Z",
+      "sessionId": "01a19f1c-9eb8-7632-9130-df5cf651539c",
+      "numTurns": 60,
+      "stderr": "Error: max turns reached\n",
+      "errorClassification": "turn-limit; companion authentication label was incorrect"
+    },
+    {
+      "name": "admission-resume",
+      "jobId": "task-mw026hrs-ivmqrb",
+      "status": "completed",
+      "exitCode": 0,
+      "stopReason": "end_turn",
+      "createdAt": "2026-11-03T02:18:27.069Z",
+      "finishedAt": "2026-11-03T02:25:14.415Z",
+      "sessionId": "01a19f1c-9eb8-7632-9130-df5cf651539c",
+      "numTurns": 5,
+      "stderr": null,
+      "errorClassification": null
+    }
+  ]
+}

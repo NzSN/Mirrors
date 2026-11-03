@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/lsz/Codebase/Mirrors/Plans/mainwork-mw12-20261103/selected_source_probe.py", line 32, in <module>
+    assert observed == "0.0.9", "catalog used the running tool checkout instead of selected source"
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: catalog used the running tool checkout instead of selected source

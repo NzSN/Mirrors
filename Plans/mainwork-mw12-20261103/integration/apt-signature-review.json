@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "mirrors.mw12.command/v1",
+  "argv": [
+    "gpgv",
+    "--keyring",
+    "/usr/share/keyrings/ubuntu-archive-keyring.gpg",
+    "/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_resolute_InRelease"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "startedAt": "2026-11-03T03:36:37.049907+00:00",
+  "finishedAt": "2026-11-03T03:36:37.059774+00:00",
+  "monotonicDurationSeconds": 0.009854311007075012,
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "logs": [
+    {
+      "path": "logs/apt-signature-review.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "logs/apt-signature-review.stderr",
+      "bytes": 221,
+      "sha256": "ad0a34f5b6c3c14800ead085b2ed341e65a7e216d8b0b988c396dc2ee05a896f"
+    }
+  ]
+}

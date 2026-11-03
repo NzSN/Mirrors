@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "mirrors.mainwork-recipe-review/v1",
+  "observedAt": "2026-11-03T02:30:50.469737+00:00",
+  "registrySha256": "04ded2066f18584c0fa3e87fd48d3b58bb4f2a79c24b12776abdeb3576c17bb3",
+  "profileId": "m5-wsl-windows-remote",
+  "requiredCommandCount": 18,
+  "requiredTierCount": 16,
+  "contractArgvChecks": [
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "mirrors.local-no-model",
+      "argvLength": 2,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "mirrorecma.project-check",
+      "argvLength": 3,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "mirrorecma.test",
+      "argvLength": 3,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "mirrorgate.required",
+      "argvLength": 2,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "mirrors.remote-model-check",
+      "argvLength": 2,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "framework.install-diagnostics",
+      "argvLength": 22,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "framework.install-diagnostics-gate",
+      "argvLength": 24,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "framework.replay-correct",
+      "argvLength": 4,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "framework.replay-faulty",
+      "argvLength": 4,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "framework.lease-origin-installed",
+      "argvLength": 3,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "framework.reproduction",
+      "argvLength": 19,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "framework.reproduction-lease",
+      "argvLength": 19,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "framework.reduction-prefix",
+      "argvLength": 26,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "framework.reduction",
+      "argvLength": 28,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "framework.mutation-local",
+      "argvLength": 7,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "framework.mutation-gate",
+      "argvLength": 3,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "framework.recovery-origin-installed",
+      "argvLength": 3,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "mirrorgate.recovery",
+      "argvLength": 17,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/tasks.md",
+      "commandId": "mirrors.interop",
+      "argvLength": 3,
+      "prefixMatches": true
+    },
+    {
+      "path": "handoff/verification.md",
+      "commandId": "evidence.offline-verify",
+      "argvLength": 6,
+      "prefixMatches": true
+    }
+  ],
+  "allRequiredCommandsHaveCards": true,
+  "correctionSyntaxChecks": [
+    {
+      "block": 1,
+      "bashSyntaxExit": 0,
+      "executed": false
+    },
+    {
+      "block": 2,
+      "bashSyntaxExit": 0,
+      "executed": false
+    },
+    {
+      "block": 3,
+      "bashSyntaxExit": 0,
+      "executed": false
+    },
+    {
+      "block": 4,
+      "bashSyntaxExit": 0,
+      "executed": false
+    },
+    {
+      "block": 5,
+      "bashSyntaxExit": 0,
+      "executed": false
+    }
+  ],
+  "limitations": [
+    "Checked prefixes/lengths and shell syntax only; not installed/runtime acceptance.",
+    "Codex correction overlay overrides scalar argv, missing attachment plan, Q2 isolation and negative-control drafts."
+  ]
+}

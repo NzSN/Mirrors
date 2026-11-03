@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "mirrors.mw12.command/v1",
+  "argv": [
+    ".lake/build/bin/stdio_smoke"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "startedAt": "2026-11-03T03:31:56.708119+00:00",
+  "finishedAt": "2026-11-03T03:31:56.923596+00:00",
+  "monotonicDurationSeconds": 0.2154698170197662,
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "logs": [
+    {
+      "path": "logs/stdio-smoke.stdout",
+      "bytes": 312,
+      "sha256": "150e212d9d245bbe9c356ea1df8578e4eb92f38e38b653139d13c56065779cc6"
+    },
+    {
+      "path": "logs/stdio-smoke.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

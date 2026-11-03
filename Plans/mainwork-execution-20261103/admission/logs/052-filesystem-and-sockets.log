@@ -1,0 +1,16 @@
+# name: filesystem-and-sockets
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 1
+# argv: ["/usr/bin/python3", "/tmp/mw50-filesystem-and-sockets-zcx1aegy.py"]
+
+
+--- stderr ---
+Traceback (most recent call last):
+  File "/tmp/mw50-filesystem-and-sockets-zcx1aegy.py", line 19, in <module>
+    probe = Path(tempfile.mkdtemp(prefix=f"mw50-case-{name}-", dir=str(path if path.is_dir() else "/tmp")))
+                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/tempfile.py", line 381, in mkdtemp
+    _os.mkdir(file, 0o700)
+    ~~~~~~~~~^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/home/lsz/mw50-case-home-6_wthw11'

@@ -1,0 +1,9 @@
+# name: help-run_remote_model_check
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 2
+# argv: ["/usr/bin/python3", "/home/lsz/Codebase/Mirrors/tools/evidence/run_remote_model_check.py", "--help"]
+
+
+--- stderr ---
+remote model-check admission failed: required private environment name is absent: MIRRORS_REMOTE_CLIENT_CERT

@@ -1,0 +1,15 @@
+# name: help-run-remote
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["/usr/bin/python3", "/home/lsz/Codebase/Mirrors/tools/interop/run-remote.py", "--help"]
+
+usage: run-remote.py [-h] output
+
+Pinned native-Windows remote client validation matrix; no local backend.
+
+positional arguments:
+  output
+
+options:
+  -h, --help  show this help message and exit

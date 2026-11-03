@@ -1,0 +1,8 @@
+# name: strace-path
+# started: 2026-11-03T02:09:47Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["bash", "-lc", "command -v strace; test -e /usr/bin/strace; echo test_exit:$?"]
+# note: confirm strace absence; a zero from command -v would print a path
+
+test_exit:1

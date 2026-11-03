@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "mirrors.mw12-source-correction-inventory/v1",
+  "root": "Plans/mainwork-mw12-20261103/source-correction",
+  "generatedAt": "2026-11-03T03:33:42Z",
+  "excludes": [
+    "inventory.json"
+  ],
+  "files": [
+    {
+      "path": "logs/command-records.json",
+      "bytes": 1848,
+      "sha256": "8a57ba4c67c1df4f0e3fd9823a072bf55eb0d2e69308858937af24c412533840"
+    },
+    {
+      "path": "logs/distribution.stderr",
+      "bytes": 11137,
+      "sha256": "ae830d90c2fde3dae54ea05e2956cd43b49b4ed8fe95c73e4c4bf4c64ad9d40d"
+    },
+    {
+      "path": "logs/distribution.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "logs/selected-source-probe.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "logs/selected-source-probe.stdout",
+      "bytes": 70,
+      "sha256": "1d8e150fc7411118f299fdc0a480d8bfe82a60ccdf0a93b9ee0c1578c5b86b9b"
+    },
+    {
+      "path": "logs/tmpdir-filesystem.txt",
+      "bytes": 72,
+      "sha256": "ffc0e99e832eccf666352ba7bf915a66f04d6cadafd96798b7edaa54cff8ee37"
+    },
+    {
+      "path": "report.md",
+      "bytes": 1500,
+      "sha256": "3e72643c93ca0a9ef9f825094062811dedc02f73accfaa9a16933828e9cbfc6b"
+    },
+    {
+      "path": "result.json",
+      "bytes": 3166,
+      "sha256": "93e7d67f4c48673353ccca8acb0b662964884944654c665e50e57b0ada6c72d9"
+    }
+  ]
+}

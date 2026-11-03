@@ -1,0 +1,44 @@
+started=2026-11-03T03:20:26Z
+purpose=userspace dependency extract for strace --version; no dpkg install
+attempt=1 apt-get download libunwind8
+Get:1 http://archive.ubuntu.com/ubuntu resolute/main amd64 libunwind8 amd64 1.8.3-0ubuntu1 [59.6 kB]
+Fetched 59.6 kB in 5s (12.5 kB/s)
+download1_exit=0
+deb_bytes=59630
+deb_sha256=7a9978fadf0940f45500ced0fba219cb5954f322a31068b7b32ad04f3ddc5c3f
+deb_authenticated=1
+Package: libunwind8
+Source: libunwind
+Version: 1.8.3-0ubuntu1
+Architecture: amd64
+control_exit=0
+extract_exit=0
+LIBS_BEGIN
+3613	/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/share/doc/libunwind8/copyright
+1124	/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/share/doc/libunwind8/changelog.Debian.gz
+67720	/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-x86_64.so.8.2.0
+18832	/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-ptrace.so.0.0.0
+22504	/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-coredump.so.0.0.0
+72008	/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind.so.8.2.0
+LIBS_END
+LDD_BEGIN
+	linux-vdso.so.1 (0x0000700089b91000)
+	libtinfo.so.6 => /usr/lib/x86_64-linux-gnu/libtinfo.so.6 (0x0000700089b48000)
+	libunwind-ptrace.so.0 => /home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-ptrace.so.0 (0x0000700089b42000)
+	libunwind-x86_64.so.8 => /home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-x86_64.so.8 (0x0000700089b26000)
+	libc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x0000700089400000)
+	liblzma.so.5 => /usr/lib/x86_64-linux-gnu/liblzma.so.5 (0x0000700089af1000)
+	libunwind.so.8 => /home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind.so.8 (0x0000700089ad3000)
+	/lib64/ld-linux-x86-64.so.2 (0x0000700089b93000)
+ldd_exit=0
+LDD_END
+VERSION_BEGIN
+strace -- version 6.19
+Copyright (c) 1991-2026 The strace developers <https://strace.io>.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Optional features enabled: stack-trace=libunwind stack-demangle m32-mpers mx32-mpers
+version_exit=0
+VERSION_END
+finished=2026-11-03T03:20:31Z

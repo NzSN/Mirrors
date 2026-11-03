@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "mirrors.mw12-acquisition-inputs/v1",
+  "observedAt": "2026-11-03T03:23:36Z",
+  "acquired": [
+    {
+      "id": "MirrorECMA",
+      "path": ".golden-build/mw12-20261103/inputs/companions/MirrorECMA",
+      "origin": "https://github.com/NzSN/MirrorECMA.git",
+      "commit": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+      "tree": "3a48d828710fafdc9076f0b57bf4e089cdd372ee",
+      "package": "mirrorecma",
+      "packageVersion": "0.1.0",
+      "clean": true,
+      "detached": true
+    },
+    {
+      "id": "MirrorGate",
+      "path": ".golden-build/mw12-20261103/inputs/companions/MirrorGate",
+      "origin": "https://github.com/NzSN/MirrorGate.git",
+      "commit": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+      "tree": "96e7fa4d0ac90c526d7e499f95664f00b1bc3e9b",
+      "package": "mirrorgate",
+      "packageVersion": "0.1.0",
+      "clean": true,
+      "detached": true
+    },
+    {
+      "id": "strace",
+      "path": ".golden-build/mw12-20261103/inputs/strace/root/usr/bin/strace",
+      "sha256": "f47342683309e807bca57d6d89b82f94a9b39aa614e9c28c2b67cefbc35eee58",
+      "bytes": 2370264,
+      "package": "strace",
+      "source": "strace",
+      "version": "6.19+ds-0ubuntu5",
+      "architecture": "amd64",
+      "deb": ".golden-build/mw12-20261103/inputs/strace/strace_6.19+ds-0ubuntu5_amd64.deb",
+      "debSha256": "aa530bb652e46beaf92d5c916403182a5ac6b2ba79a94f18e5b9da45d1799ee5",
+      "libraryPath": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu",
+      "versionCommandExit": 0,
+      "versionFirstLine": "strace -- version 6.19"
+    }
+  ],
+  "remoteObservation": {
+    "id": "Mirrors",
+    "url": "https://github.com/NzSN/Mirrors.git",
+    "refs/heads/main": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+    "refs/tags/v0.2.0-rc.6": null
+  },
+  "blockers": [
+    {
+      "id": "batteries-carrier",
+      "fileName": "batteries-v4.33.0.bundle",
+      "bytes": 3739542,
+      "sha256": "73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a",
+      "revision": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+      "tree": "5a1de86f7997958aaffec998882c29006b688d1e",
+      "reason": "Exact bytes were absent from .golden-build and readable /tmp paths."
+    }
+  ]
+}

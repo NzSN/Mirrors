@@ -1,0 +1,7 @@
+# name: check-ignore-golden
+# started: 2026-11-03T02:09:47Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["git", "--no-optional-locks", "-C", "/home/lsz/Codebase/Mirrors", "check-ignore", "-v", ".golden-build"]
+
+.gitignore:3:.golden-build/	.golden-build

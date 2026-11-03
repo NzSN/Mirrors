@@ -4,7 +4,7 @@
   "catalogSelectionRef": {
     "schemaVersion": "mirrors.framework-catalog/v1",
     "selectionKind": "sha256",
-    "selectionValue": "3bef64ce1e1e4fdc7b9d99e2cb4f5a1f165cd54f49cdeac7af42f6c3130253ee"
+    "selectionValue": "22596af73d943b2204a2ae3c7bbc39ae9c41ff03442507e0f26b183ac503a88c"
   },
   "profileId": "checked-replay-gate",
   "componentRefs": [
@@ -23,15 +23,24 @@
     {
       "componentId": "mirrors",
       "repository": "https://github.com/NzSN/Mirrors.git",
-      "revision": "bd5d3b51b1dcd75fbdf6c3188f1c90b1e6fe6ea0",
+      "revision": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
       "dirty": true,
       "dirtyContent": {
         "algorithm": "sha256",
-        "digest": "51dcae7b433da3604f0f5e068ed253895502c5b563114fce6efaa31f9cb78cdd",
+        "digest": "59be0488dc9b32c086ac0b66e05459197fe9209e410ceeb47a87cf26f55ba80a",
         "method": "git-diff-and-untracked-manifest-v1",
         "includedPaths": [
+          "Docs/current-status.md",
+          "Docs/framework-catalog-contract.md",
+          "Docs/versioning.md",
+          "Shell/Version.lean",
+          "tools/StdioSmoke.lean",
           "tools/distribution/refresh_identity.py",
-          "tools/distribution/test_refresh_identity.py"
+          "tools/distribution/test_planning_docs_exclusion.py",
+          "tools/distribution/test_refresh_identity.py",
+          "tools/evidence/commands.json",
+          "tools/interop/INTEROP.md",
+          "tools/interop/ecma-runtime-pin.json"
         ],
         "excludedPaths": [
           {
@@ -410,13 +419,13 @@
       "inputId": "profiles-lock",
       "path": "distribution/reference-node-wsl2-26.04/profiles.json",
       "bytes": 4933,
-      "sha256": "27f91fa6fa98c923fd0a61a8389c05239be50977206cc66fdb07c45fc3e36e59"
+      "sha256": "87d31ef00f9eb8f5371575eebae9a89224458604f4c6a8ed9355265cd6525d67"
     },
     {
       "inputId": "component-lock",
       "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
-      "bytes": 12467,
-      "sha256": "fca0a5a6534ff6746af33846f2e4b3553659e6a3291a50dd8e830fa608393b0e"
+      "bytes": 12866,
+      "sha256": "4deab387f27d6c43834e8b0a87cd2563000b58bdb18982a525386c8469ca8e93"
     },
     {
       "inputId": "dependency-lock",

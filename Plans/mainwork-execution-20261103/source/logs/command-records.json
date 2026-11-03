@@ -1,0 +1,77 @@
+[
+  {
+    "id": "distribution-unit",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/distribution",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/home/lsz/Codebase/Mirrors",
+    "startedAt": "2026-11-03T02:00:38Z",
+    "finishedAt": "2026-11-03T02:00:41Z",
+    "elapsedMs": 3359,
+    "exitCode": 1,
+    "stdoutPath": "Plans/mainwork-execution-20261103/source/logs/distribution-unit.stdout",
+    "stderrPath": "Plans/mainwork-execution-20261103/source/logs/distribution-unit.stderr",
+    "stdoutBytes": 0,
+    "stderrBytes": 20525,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "9f303a6438031ee3a4e05817cbf1b2d2e89dbe29eaf00be4770f5d17c915fe60"
+  },
+  {
+    "id": "release-unit",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/release",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/home/lsz/Codebase/Mirrors",
+    "startedAt": "2026-11-03T02:00:41Z",
+    "finishedAt": "2026-11-03T02:00:42Z",
+    "elapsedMs": 1021,
+    "exitCode": 0,
+    "stdoutPath": "Plans/mainwork-execution-20261103/source/logs/release-unit.stdout",
+    "stderrPath": "Plans/mainwork-execution-20261103/source/logs/release-unit.stderr",
+    "stdoutBytes": 235,
+    "stderrBytes": 1682,
+    "stdoutSha256": "8fad8ab778eaf024dc73d280560be49d174d677a827fba900cdffa8ee77a44ab",
+    "stderrSha256": "86dde23f0878011e07238d86887f39350594f8e7063cfa35c5687db01df79e7c"
+  },
+  {
+    "id": "evidence-unit",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/evidence/tests",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/home/lsz/Codebase/Mirrors",
+    "startedAt": "2026-11-03T02:00:42Z",
+    "finishedAt": "2026-11-03T02:00:59Z",
+    "elapsedMs": 16984,
+    "exitCode": 0,
+    "stdoutPath": "Plans/mainwork-execution-20261103/source/logs/evidence-unit.stdout",
+    "stderrPath": "Plans/mainwork-execution-20261103/source/logs/evidence-unit.stderr",
+    "stdoutBytes": 0,
+    "stderrBytes": 21985,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "b988eb5fe643b6d3fcbe30035969ffc3010b39a2c7e2533d4e9792a24c47439e"
+  }
+]

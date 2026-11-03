@@ -1,6 +1,13 @@
 # Client interop validation (Phase 6)
 
-October 29 continuation: the current source-built ECMA selection is `f943588`,
+November 3 MW-12 prepares ECMA `9192171fc5f8d8457f8d13ffaafa117222914ec2`
+with a newly built runtime at locked Node 24.15.0/TypeScript 5.9.3. The runtime
+pin and registered `ECMA_REF` are reconciled in the
+[source continuation](../../Plans/mainwork-mw12-20261103/README.md). This is
+input preparation only; the 22-row remote matrix must be rerun after fresh
+endpoint/TLS/backend/client admission. Historical rows do not transfer.
+
+October 29 continuation: that campaign's source-built ECMA selection is `f943588`,
 with pinned Node 24.15.0/TypeScript 5.9.3. The gate accepts an explicitly selected
 endpoint through `MIRRORS_REMOTE_HOST`/`MIRRORS_REMOTE_PORT`; every native/ECMA
 adapter receives the same admitted selection. For a separately owned Windows

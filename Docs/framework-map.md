@@ -80,7 +80,7 @@ Catalog `mirrors.framework.candidate-2026-09-22` visibility: **private**. Dirty 
 | --- | --- | --- |
 | `mirrorecma` | `9192171fc5f8d8457f8d13ffaafa117222914ec2` | false |
 | `mirrorgate` | `4b379ac0c017e7621c945ebf8c106cd98a6c70d1` | false |
-| `mirrors` | `bd5d3b51b1dcd75fbdf6c3188f1c90b1e6fe6ea0` | true |
+| `mirrors` | `75fbf962020cea8a13e009ecfdb3e912e7ce212f` | true |
 
 | Capability | Owner | Declared | Source | Tested | Local | Installed | Hosted CI | Published |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |

@@ -5,6 +5,169 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-03 — MW-12 branch publication authorized
+
+The user explicitly requested commit and push of the reviewed mainwork stages,
+Grok execution/review evidence and rc.6 source/binding preparation to
+`origin/main` at `https://github.com/NzSN/Mirrors.git`. Publish the reviewed
+source/status paths, scoped raw-evidence checkout attributes, new mainwork stage
+plan and its two bounded execution/evidence directories. Preserve older
+untracked completion records and editor caches;
+exclude `.golden-build`, tool/binary archives, credentials and unrelated files.
+
+The current-source verifier passed before publication edits: 53 MW-12 inventory
+records and the previous 116 records remain intact, with 225 focused Python
+tests and targeted Lean/CLI validation retained at their original identities.
+Post-validation changes are publication wording in `Docs/versioning.md` and
+checkout/whitespace attributes preserving raw evidence. This entry records
+authorization, not a completed push.
+Raw staged-blob/payload scans and final remote-ref receipts are retained under
+the ignored `.golden-build/mainwork-publication-20261103/` audit root.
+
+Branch delivery does not pass the pending full S1 local gate or renew the
+dirty-snapshot C0, installed D/M5/Q, Windows, framework or release qualification.
+The committed source will need a fresh final candidate/C0 binding before those
+stages. No tag is created/pushed, release published, service changed or reboot
+performed by this publication request. Historical entries and evidence below
+remain unchanged. See the [publication scope](Plans/mainwork-publication-20261103/README.md).
+
+## 2026-11-03 — MW-12 rc.6 source and binding reconciliation reviewed
+
+At the user's request to continue in the same manner, Grok implemented the
+next source stage and Codex reviewed/corrected its outcomes. The
+[MW-12 record](Plans/mainwork-mw12-20261103/README.md) prepares **0.2.0-rc.6**
+without changing HEAD `75fbf962020cea8a13e009ecfdb3e912e7ce212f`, existing tags,
+old packages or dated evidence. Catalog refresh now reads the selected Mirrors
+source declaration, rejects invalid/ambiguous declarations before writes and
+updates its owned record consistently. The stdio smoke uses the declared
+version, and the targeted mirror/stdio/C3 build and actual CLI smoke pass.
+
+The exact selected MirrorECMA `9192171` / MirrorGate `4b379ac` revisions are
+available in clean task-owned copies. A fresh SDK runtime uses the locked
+Node 24.15.0 / TypeScript 5.9.3 inputs. The registry and runtime pin now agree;
+the two D prefixes bind actual candidate/C3/tracer/hide-root identities while
+preserving command lengths, attachment contracts and other client/backend pins.
+Both catalogs/locks/fixtures are regenerated and both dependency locks retain
+their original bytes. The active execution scope remains Ubuntu 26.04 WSL2.
+
+Selected WSL2 C0 is `22596af73d943b2204a2ae3c7bbc39ae9c41ff03442507e0f26b183ac503a88c`;
+the base structural-control C0 is `ad9d28ae4b3b4eb2a662117b411fc8acc82e24cc82a04d8dfe6e770289c610bc`.
+Mirrors' dirty source digest is `59be0488dc9b32c086ac0b66e05459197fe9209e410ceeb47a87cf26f55ba80a`.
+These identify reviewed working-tree preparation, not a clean/tagged release.
+
+Codex reproduced a wrong-source lookup in Grok's first patch and returned it
+for correction; the selected-source regression now passes. The first binding
+job hit its turn limit and was resumed. An integration-harness stability check
+ran before generated-output exclusions settled; its failure is preserved.
+Stable follow-up refreshes and an independent run of the corrected bounded
+convergence harness pass. Original reports/logs are retained separately.
+
+Validation: **68 distribution, 146 evidence and 11 release Python tests pass**,
+plus targeted Lean rebuild/version/stdio checks. Codex verified 53 workstream
+inventory records and the earlier 116 retained files. Signed APT metadata and
+exact strace/libunwind packages were independently checked; an explicitly
+hash-guarded userspace tracer starts without exporting loader paths to children.
+Its actual tracing smoke is denied by this context's ptrace policy. This grants
+no tracer/namespace, installed D, M5/Q, Windows, framework or release acceptance.
+
+Full S1 local no-model validation remains pending the long/full-build approval
+question presented during this turn. The exact `73130433…` Batteries carrier
+is still absent from the searched local stores, and its location was requested.
+Fresh execution-context and remote/TLS/client/Windows admission remain open.
+No local Apalache/TLC, installed build, D audit, new release archive/tag,
+commit/push, remote model/service operation, deployment or reboot occurred.
+All changes are uncommitted. The next gate is the approved full local aggregate,
+followed by final source freeze and audited delivery; S5 dependencies stay
+explicitly incomplete. See the [Codex review](Plans/mainwork-mw12-20261103/review.md).
+
+## 2026-11-03 — Grok stage-task outcomes reviewed; freeze/admission gates remain
+
+The requested stage/task development and delegated preparation batch are
+complete. The [active plan](Plans/mainwork-stages-2026-11-03.md) preserves
+S0–S8 identifiers and defines 25 owned tasks with dependencies and exit gates.
+Three Grok workstreams produced source audit/validation, admission readiness,
+and downstream package/producer/Q/release/operations/compatibility task cards.
+The initial admission and handoff jobs reached their 60-turn limits; both
+failed attempts are retained and same-session continuations finished the work.
+Exact job IDs and states are in the
+[ledger](Plans/mainwork-execution-20261103/tasks.json).
+
+Codex verified all **116 inventoried output files** and their command/log
+bindings. Focused results are **61 distribution tests passed** with task-owned
+ext4 temporary storage, **11 release tests passed** and **146 evidence tests
+passed**. The initial distribution tmpfs failure (two failures/eight errors)
+is preserved; the independent full rerun passed without source changes. Both
+lock roots pass read-only structural checks. Twenty command vectors cover the
+selected registry's 18 required commands/16 tiers with exact prefixes/lengths.
+These are bounded preparation/source checks, not final framework qualification.
+
+The [Codex review](Plans/mainwork-execution-20261103/review.md) accepts preparation
+with an [authoritative correction overlay](Plans/mainwork-execution-20261103/review/corrected-commands.md):
+preserve collector argument/attachment boundaries; complete independent Q
+isolation and payload/profile controls; keep tag/package ordering and artifact
+immutability; require explicit client/replacement/rollback commands; preserve
+`distribution/<root>/...` bootstrap paths and this session's writable roots;
+run only the selected WSL2 local/Gate D pair. No Ubuntu 24.04/native-host work
+is reintroduced. Original Grok drafts, failed attempts and raw logs remain
+unchanged. The draft lock layout was independently rejected by the actual
+bootstrap validator and the corrected WSL2 layout accepted.
+
+Final freeze remains open: catalogs/locks say Mirrors `0.1.1` while source
+declares `0.2.0-rc.5`; the catalog names an older dirty Mirrors snapshot and
+companion refs absent from the current local object databases. Registry paths
+also need reconciliation before final freeze. Exact pinned Batteries carrier
+`73130433…` is absent from its recorded path, strace is missing, namespace
+admission failed and remote/TLS/client/Windows inputs need fresh observation.
+Grok and Codex socket probes observed different execution-context permissions;
+neither transfers admission to a future producer. A manually supplied probe-log
+timestamp receives no freshness credit.
+
+Source stays `75fbf962020cea8a13e009ecfdb3e912e7ce212f`. No final full build,
+new package/tag, D/M5/Q/Windows acceptance, local model checker, remote contact,
+commit/push, publication, production operation or reboot occurred in this batch.
+Compatibility ledgers remain unexecuted. New planning/evidence files and this
+checkpoint are reviewable, uncommitted work; older records and unrelated files
+are preserved. Continue from MW-12's candidate reconciliation and the explicit
+admission prerequisites in the [execution index](Plans/mainwork-execution-20261103/README.md).
+
+## 2026-11-03 — Release-completion stages and Grok task delegation
+
+The user requested stage development for the main release-completion work,
+recording here, executable stage tasks, Grok delegation and Codex review.
+The [new active plan](Plans/mainwork-stages-2026-11-03.md) continues the existing
+stage IDs: S0 intake; S1 source/evidence review and freeze; S2 audited branch
+delivery; S3 clean tagged Linux/Windows packages; S5-A distribution/host/remote
+admission; S5-B complete required producers and Windows acceptance; S5-C linked
+and independent Q; S6 release admission; S7 separately selected operations;
+S8 retention and measured compatibility lifecycle. Withdrawn S4/native-runner
+work is not reopened.
+
+The starting HEAD is `75fbf962020cea8a13e009ecfdb3e912e7ce212f`, matching cached
+`origin/main` with no tracked changes before planning. `72d83b0` committed the
+Batteries re-pin; `f0daef9` propagated maintained product identities; `75fbf96`
+accepts warning-prefixed CLI diagnostics. Thus the October 31 status text is
+historical where it describes the re-pin as uncommitted. The earlier rc.5
+packages remain bound to `3ee3d92` and grant no later-source qualification.
+Cached refs do not establish a fresh remote observation. Existing untracked
+completion plans/evidence and editor caches are preserved.
+
+Task IDs MW-00–MW-81 define dependencies, responsible roles, concrete outputs
+and exit gates in the plan and its
+[execution ledger](Plans/mainwork-execution-20261103/tasks.json). The ready
+batch is delegated to Grok in three disjoint scopes: source review/focused
+validation and delivery preparation; host/dependency/distribution/remote
+admission readiness; downstream package/producer/Q/handoff/operations and
+compatibility task preparation. Codex owns independent artifact/claim review,
+focused reproduction and acceptance. Job completion alone grants no stage pass.
+
+Final freeze, construction, both D audits, complete M5 producers, full Windows
+and Q remain dependency-gated. No local Apalache/TLC is allowed. This planning
+and delegation request does not itself authorize full builds, ref/tag mutation,
+release publication, production replacement or reboot; concrete reviewable
+operations precede their existing approval boundaries. No new package,
+framework, platform, live-model, publication or deployment credit is claimed
+by this checkpoint. Delegation results and review will be recorded separately.
+
 ## 2026-10-31 — Batteries carrier re-pinned at unchanged source revision
 
 The user requested a new Batteries bundle. A fresh, read-only, content-addressed

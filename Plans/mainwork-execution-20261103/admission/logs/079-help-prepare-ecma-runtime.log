@@ -1,0 +1,20 @@
+# name: help-prepare-ecma-runtime
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["/usr/bin/python3", "/home/lsz/Codebase/Mirrors/tools/interop/prepare-ecma-runtime.py", "--help"]
+
+usage: prepare-ecma-runtime.py [-h] --repo REPO --ref REF --node NODE
+                               --node-modules NODE_MODULES --out OUT
+                               --pin-out PIN_OUT
+
+Build a new SDK from Git objects; emit a pin for review before qualification.
+
+options:
+  -h, --help            show this help message and exit
+  --repo REPO
+  --ref REF
+  --node NODE
+  --node-modules NODE_MODULES
+  --out OUT
+  --pin-out PIN_OUT

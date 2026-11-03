@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "mirrors.mw12-review-progress/v1",
+  "sourceFinding": {
+    "initialProbe": "integration/selected-source-initial.json",
+    "correction": "source-correction/result.json",
+    "independentPassingProbe": "integration/selected-source-reviewed.json",
+    "accepted": true
+  },
+  "acquisitionReview": {
+    "companionRefsAndTrees": "verified",
+    "packageAuthentication": "integration/apt-package-review.json",
+    "nativeVersionCheck": "integration/strace-version.json",
+    "traceAttempt": "integration/strace-smoke.json",
+    "traceAdmission": false
+  },
+  "fullLocalGate": "awaiting explicit answer to approval question",
+  "batteriesCarrier": "awaiting exact location/bytes; no re-pin",
+  "bindingReview": "pending job completion"
+}

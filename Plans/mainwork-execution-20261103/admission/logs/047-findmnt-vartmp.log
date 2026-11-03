@@ -1,0 +1,8 @@
+# name: findmnt-vartmp
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["findmnt", "-T", "/var/tmp", "-o", "TARGET,SOURCE,FSTYPE,OPTIONS"]
+
+TARGET SOURCE   FSTYPE OPTIONS
+/      /dev/sdd ext4   rw,nosuid,nodev,relatime,discard,errors=remount-ro,data=ordered

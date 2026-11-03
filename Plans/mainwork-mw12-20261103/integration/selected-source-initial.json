@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "mirrors.mw12.command/v1",
+  "argv": [
+    "python3",
+    "Plans/mainwork-mw12-20261103/selected_source_probe.py"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "startedAt": "2026-11-03T03:25:41.229370+00:00",
+  "finishedAt": "2026-11-03T03:25:41.494378+00:00",
+  "monotonicDurationSeconds": 0.2649902540142648,
+  "environmentOverrides": {},
+  "exitCode": 1,
+  "logs": [
+    {
+      "path": "logs/selected-source-initial.stdout",
+      "bytes": 75,
+      "sha256": "1b53cbd021658bb157086f90b06e08442cdca65cb11a559524e22b457bd457bb"
+    },
+    {
+      "path": "logs/selected-source-initial.stderr",
+      "bytes": 360,
+      "sha256": "6dd75121ab4505f0963e77193e2a736acafe9ff825b930b308095959758eea11"
+    }
+  ]
+}

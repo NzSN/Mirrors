@@ -1,0 +1,19 @@
+test_all_interruption_boundaries_preserve_previous_selector (test_install.InstallTransactionTests.test_all_interruption_boundaries_preserve_previous_selector) ... ok
+test_cache_copy_rejects_links_and_normalizes_modes (test_install.InstallTransactionTests.test_cache_copy_rejects_links_and_normalizes_modes) ... ok
+test_commit_idempotence_and_after_activation_rollback (test_install.InstallTransactionTests.test_commit_idempotence_and_after_activation_rollback) ... ok
+test_interrupted_stage_is_quarantined_before_retry (test_install.InstallTransactionTests.test_interrupted_stage_is_quarantined_before_retry) ... ok
+test_lock_symlink_and_selector_confinement (test_install.InstallTransactionTests.test_lock_symlink_and_selector_confinement) ... ok
+test_materialization_retains_actual_package_and_host_facts (test_install.InstallTransactionTests.test_materialization_retains_actual_package_and_host_facts) ... ok
+test_package_observation_reads_actual_version_instead_of_a_profile_constant (test_install.InstallTransactionTests.test_package_observation_reads_actual_version_instead_of_a_profile_constant) ... ok
+test_platform_observation_does_not_claim_the_catalogs_ubuntu_24_target (test_install.InstallTransactionTests.test_platform_observation_does_not_claim_the_catalogs_ubuntu_24_target) ... ok
+test_proc_fd_stage_is_removed_without_rmtree_on_the_symlink (test_install.InstallTransactionTests.test_proc_fd_stage_is_removed_without_rmtree_on_the_symlink) ... ok
+test_restart_recovery_verification_failure_restores_previous (test_install.InstallTransactionTests.test_restart_recovery_verification_failure_restores_previous) ... ok
+test_staged_cache_is_verified_before_materialization (test_install.InstallTransactionTests.test_staged_cache_is_verified_before_materialization) ... ok
+test_observed_virtualization_reads_the_kernel_release (test_install.WslProfileAdmissionTests.test_observed_virtualization_reads_the_kernel_release) ... ok
+test_reference_wsl2_catalog_and_locks_are_additive (test_install.WslProfileAdmissionTests.test_reference_wsl2_catalog_and_locks_are_additive) ... ok
+test_wsl2_catalog_profile_requires_a_wsl2_host (test_install.WslProfileAdmissionTests.test_wsl2_catalog_profile_requires_a_wsl2_host) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.288s
+
+OK

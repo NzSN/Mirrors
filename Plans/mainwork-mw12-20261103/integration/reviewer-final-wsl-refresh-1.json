@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "mirrors.mw12.command/v1",
+  "argv": [
+    "/usr/bin/python3",
+    "tools/distribution/refresh_identity.py",
+    "--mirrorecma",
+    "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorECMA",
+    "--mirrorgate",
+    "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorGate",
+    "--framework-catalog-bin",
+    "/home/lsz/Codebase/Mirrors/.lake/build/bin/framework_catalog",
+    "--catalog",
+    "/home/lsz/Codebase/Mirrors/catalog/framework-catalog-wsl2-26.04.json",
+    "--locks-root",
+    "/home/lsz/Codebase/Mirrors/distribution/reference-node-wsl2-26.04",
+    "--skip-component-records",
+    "--skip-render"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "startedAt": "2026-11-03T03:57:22.379029+00:00",
+  "finishedAt": "2026-11-03T03:57:22.744725+00:00",
+  "monotonicDurationSeconds": 0.36568354902556166,
+  "environmentOverrides": {
+    "TMPDIR": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/binding-tmp"
+  },
+  "exitCode": 0,
+  "logs": [
+    {
+      "path": "logs/reviewer-final-wsl-refresh-1.stdout",
+      "bytes": 102,
+      "sha256": "c2ee92b4b5bee873eed1149ff05a8c642bdc2dcdc3af2679533b32454b7c8809"
+    },
+    {
+      "path": "logs/reviewer-final-wsl-refresh-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

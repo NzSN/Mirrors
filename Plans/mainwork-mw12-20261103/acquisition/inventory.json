@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "mirrors.mw12-acquisition-inventory/v1",
+  "observedAt": "2026-11-03T03:23:36Z",
+  "excludes": [
+    "Plans/mainwork-mw12-20261103/acquisition/inventory.json"
+  ],
+  "companionTrees": [
+    {
+      "path": ".golden-build/mw12-20261103/inputs/companions/MirrorECMA",
+      "commit": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+      "tree": "3a48d828710fafdc9076f0b57bf4e089cdd372ee"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/companions/MirrorGate",
+      "commit": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+      "tree": "96e7fa4d0ac90c526d7e499f95664f00b1bc3e9b"
+    }
+  ],
+  "files": [
+    {
+      "path": "Plans/mainwork-mw12-20261103/acquisition/inputs.json",
+      "bytes": 2252,
+      "sha256": "46f7199dad2a72f840077cc5bdad724e009fa2b2fcb3c37282090126694f9ff2"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorECMA-fetch.log",
+      "bytes": 2125,
+      "sha256": "ff9b328f6a3fbeca2c3d729fa963f45a8f110f8a8523ac69880ce0ced7ae73c2"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorGate-fetch.log",
+      "bytes": 1742,
+      "sha256": "8ad6f8e217efd3dc35f8ae425025a6536d4784188dd32e8e86145d78d8a81146"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/acquisition/logs/carrier-lookup.txt",
+      "bytes": 166,
+      "sha256": "f7e9b6f7ea8cbc5d6543263690c990393937c819a7334c3da8bd62b387821e61"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/acquisition/logs/carrier-size-lookup.log",
+      "bytes": 1009,
+      "sha256": "ee06fc238b8c35aa1058a77947a9149d3f873e4880a2083f6e72e7e7c696049b"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/acquisition/logs/mirrors-ls-remote.log",
+      "bytes": 279,
+      "sha256": "5a89d473ad1dcd98a950f63c44146825f85b2b6af15675948389cffb6dbf93b9"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/acquisition/logs/strace-acquire.log",
+      "bytes": 2396,
+      "sha256": "acda96e232cf00886976f7adbba7338cff15b06d919c7f363c2ad46813223e56"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/acquisition/logs/strace-libunwind.log",
+      "bytes": 2617,
+      "sha256": "0eda46d0bc51d9c375236e881c5c332e761502231ad148970cd8a41074ac9997"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/acquisition/report.md",
+      "bytes": 4302,
+      "sha256": "dc5089514936cf389eaea9440db3a723aef733a0d2cab5e41e23cd298efc9343"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/acquisition/result.json",
+      "bytes": 13271,
+      "sha256": "83889bbfa7a8455e67f9ce34aa560e5a8b4659faa17dfdebc4c61c201ddacb74"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/strace_6.19+ds-0ubuntu5_amd64.deb",
+      "bytes": 677520,
+      "sha256": "aa530bb652e46beaf92d5c916403182a5ac6b2ba79a94f18e5b9da45d1799ee5"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/root/usr/bin/strace",
+      "bytes": 2370264,
+      "sha256": "f47342683309e807bca57d6d89b82f94a9b39aa614e9c28c2b67cefbc35eee58"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/libunwind8_1.8.3-0ubuntu1_amd64.deb",
+      "bytes": 59630,
+      "sha256": "7a9978fadf0940f45500ced0fba219cb5954f322a31068b7b32ad04f3ddc5c3f"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-ptrace.so.0.0.0",
+      "bytes": 18832,
+      "sha256": "d22b4d04f3379571e733c02611884d2d3e0c5e588637c96cc8a8df44b00801b5"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-x86_64.so.8.2.0",
+      "bytes": 67720,
+      "sha256": "e7cf258af27d39ff199342f4fb181218368df93238fb9d2ecf2eae52bf049b32"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind.so.8.2.0",
+      "bytes": 72008,
+      "sha256": "ba50c4006ec13e89fc7065e1928345737d58e4f17c7f0ecff0914c3ac96e711f"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/share/doc/libunwind8/copyright",
+      "bytes": 3613,
+      "sha256": "977d981f5677652884b09cccef6b62f992aa9c74b7a748bfe9863a703f5aed58"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/share/doc/libunwind8/changelog.Debian.gz",
+      "bytes": 1124,
+      "sha256": "88899afdd3fde6c6aedea0a4c022320732d9f1171eb6e9de2172381736e6bd44"
+    }
+  ]
+}

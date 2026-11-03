@@ -1,0 +1,275 @@
+{
+  "schemaVersion": "mirrors.framework-catalog/v1",
+  "catalogId": "component.mirrors",
+  "visibility": "private",
+  "components": [
+    {
+      "componentRef": {
+        "componentId": "mirrors",
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+        "dirty": true,
+        "dirtyContent": {
+          "algorithm": "sha256",
+          "digest": "59be0488dc9b32c086ac0b66e05459197fe9209e410ceeb47a87cf26f55ba80a",
+          "method": "git-diff-and-untracked-manifest-v1",
+          "includedPaths": [
+            "Docs/current-status.md",
+            "Docs/framework-catalog-contract.md",
+            "Docs/versioning.md",
+            "Shell/Version.lean",
+            "tools/StdioSmoke.lean",
+            "tools/distribution/refresh_identity.py",
+            "tools/distribution/test_planning_docs_exclusion.py",
+            "tools/distribution/test_refresh_identity.py",
+            "tools/evidence/commands.json",
+            "tools/interop/INTEROP.md",
+            "tools/interop/ecma-runtime-pin.json"
+          ],
+          "excludedPaths": [
+            {
+              "path": "Docs/framework-map.md",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "catalog/components/mirrors.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "catalog/framework-catalog-wsl2-26.04.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "catalog/framework-catalog.compact.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "catalog/framework-catalog.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/component-lock.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+              "reasonCode": "evidence-output"
+            },
+            {
+              "path": "distribution/reference-node/profiles.json",
+              "reasonCode": "evidence-output"
+            }
+          ]
+        }
+      },
+      "product": {
+        "name": "Mirrors",
+        "version": "0.2.0-rc.6"
+      },
+      "records": [
+        {
+          "recordId": "compiler",
+          "path": "Shell/ModelInterface/Compiler.lean",
+          "recordKind": "source"
+        },
+        {
+          "recordId": "pins",
+          "path": "tools/ci/versions.env",
+          "recordKind": "pins"
+        },
+        {
+          "recordId": "product-version",
+          "path": "Shell/Version.lean",
+          "recordKind": "source"
+        }
+      ]
+    }
+  ],
+  "evidenceRefs": [],
+  "capabilities": [
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorcpp-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate a C++ model-interface port",
+      "declaration": {
+        "state": "available",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "Shell/ModelInterface/Emit/Cpp.lean",
+            "symbol": "emit"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorecma-async-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate an asynchronous TypeScript suite",
+      "declaration": {
+        "state": "available",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "Shell/ModelInterface/Emit/TypeScriptAsync.lean",
+            "symbol": "emit"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorecma-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate a synchronous TypeScript binding",
+      "declaration": {
+        "state": "available",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "Shell/ModelInterface/Emit/TypeScript.lean",
+            "symbol": "emit"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    },
+    {
+      "capabilityId": "mirrors.compiler.target.mirrorrust-v1",
+      "ownerComponentId": "mirrors",
+      "description": "Generate a Rust model-interface port; source availability does not establish a generic installed or Gate suite",
+      "declaration": {
+        "state": "experimental",
+        "constraints": []
+      },
+      "sourceImplementation": {
+        "state": "present",
+        "locations": [
+          {
+            "path": "Shell/ModelInterface/Emit/Rust.lean",
+            "symbol": "emit"
+          }
+        ]
+      },
+      "observations": {
+        "sourceTested": {
+          "state": "unknown"
+        },
+        "locallyAccepted": {
+          "state": "unknown"
+        },
+        "installedConsumerAccepted": {
+          "state": "unknown"
+        },
+        "hostedCiAccepted": {
+          "state": "unknown"
+        },
+        "published": {
+          "state": "unknown"
+        }
+      }
+    }
+  ],
+  "distributionProfiles": [],
+  "combinations": [],
+  "extensions": {
+    "org.nzsn.snapshot": {
+      "capturedAt": "2026-11-03T03:49:27Z",
+      "provisional": true
+    }
+  }
+}

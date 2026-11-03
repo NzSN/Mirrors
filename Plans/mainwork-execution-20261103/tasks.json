@@ -1,0 +1,538 @@
+{
+  "schemaVersion": "mirrors.mainwork-task-ledger/v1",
+  "createdDate": "2026-11-03",
+  "baselineHead": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+  "plan": "../mainwork-stages-2026-11-03.md",
+  "acceptanceRule": "Only Codex-reviewed actual evidence can pass a stage; completed preparation does not pass downstream execution.",
+  "stages": {
+    "S0": {
+      "state": "passed",
+      "claim": "Intake and task mapping only; no qualification credit."
+    },
+    "S1": {
+      "state": "awaiting-external-input",
+      "claim": "rc.6 source/catalog/registry reconciliation reviewed; 225 focused Python tests and targeted Lean/CLI checks pass. Full local no-model approval/gate and final freeze remain."
+    },
+    "S2": {
+      "state": "not-started",
+      "preparation": "reviewed where covered by assigned task cards; no execution acceptance"
+    },
+    "S3": {
+      "state": "not-started",
+      "preparation": "reviewed where covered by assigned task cards; no execution acceptance"
+    },
+    "S5-A": {
+      "state": "awaiting-external-input",
+      "claim": "Readiness checked; exact carrier/tools/capabilities and fresh remote/Windows inputs missing. Neither D audit ran."
+    },
+    "S5-B": {
+      "state": "not-started",
+      "preparation": "reviewed where covered by assigned task cards; no execution acceptance"
+    },
+    "S5-C": {
+      "state": "not-started",
+      "preparation": "reviewed where covered by assigned task cards; no execution acceptance"
+    },
+    "S6": {
+      "state": "not-started",
+      "preparation": "reviewed where covered by assigned task cards; no execution acceptance"
+    },
+    "S7": {
+      "state": "not-started",
+      "preparation": "reviewed where covered by assigned task cards; no execution acceptance"
+    },
+    "S8": {
+      "state": "not-started",
+      "preparation": "reviewed where covered by assigned task cards; no execution acceptance"
+    }
+  },
+  "jobs": {
+    "source": {
+      "jobId": "task-mw01aed1-qwunu2",
+      "state": "completed",
+      "taskIds": [
+        "MW-00",
+        "MW-10",
+        "MW-20"
+      ],
+      "brief": "source-task.md",
+      "reviewState": "accepted-with-corrections",
+      "sessionId": "01a19f1c-88da-78d1-8415-7318c330afdf",
+      "inventory": "source/inventory.json"
+    },
+    "admission": {
+      "jobId": "task-mw01aiok-fut1xh",
+      "state": "failed",
+      "taskIds": [
+        "MW-50",
+        "MW-51",
+        "MW-52"
+      ],
+      "brief": "admission-task.md",
+      "reviewState": "pending",
+      "failure": "max_turn_requests at 60 turns; completed probes retained, dossier unfinished",
+      "sessionId": "01a19f1c-9eb8-7632-9130-df5cf651539c",
+      "inventory": "admission/inventory.json"
+    },
+    "handoff": {
+      "jobId": "task-mw01an01-ykiuvm",
+      "state": "failed",
+      "taskIds": [
+        "MW-30",
+        "MW-60",
+        "MW-65",
+        "MW-70",
+        "MW-80"
+      ],
+      "brief": "handoff-task.md",
+      "reviewState": "pending",
+      "failure": "max_turn_requests at 60 turns; companion error text misclassified as authentication",
+      "sessionId": "01a19f1c-b4a6-77c3-8750-c611b28afe8c",
+      "inventory": "handoff/inventory.json"
+    },
+    "handoff-resume": {
+      "jobId": "task-mw024ayy-cb5udw",
+      "resumes": "task-mw01an01-ykiuvm",
+      "state": "completed",
+      "brief": "handoff-task.md",
+      "taskIds": [
+        "MW-30",
+        "MW-60",
+        "MW-65",
+        "MW-70",
+        "MW-80"
+      ],
+      "reviewState": "accepted-with-corrections"
+    },
+    "admission-resume": {
+      "jobId": "task-mw026hrs-ivmqrb",
+      "resumes": "task-mw01aiok-fut1xh",
+      "state": "completed",
+      "brief": "admission-task.md",
+      "taskIds": [
+        "MW-50",
+        "MW-51",
+        "MW-52"
+      ],
+      "reviewState": "accepted-with-corrections"
+    }
+  },
+  "tasks": [
+    {
+      "id": "MW-00",
+      "stage": "S0",
+      "owner": "source",
+      "dependsOn": [],
+      "output": "source/report.md",
+      "state": "complete",
+      "reviewState": "accepted",
+      "executionState": "passed",
+      "delegatedJobId": "task-mw01aed1-qwunu2"
+    },
+    {
+      "id": "MW-10",
+      "stage": "S1",
+      "owner": "source",
+      "dependsOn": [
+        "MW-00"
+      ],
+      "output": "source/result.json",
+      "state": "complete",
+      "reviewState": "accepted",
+      "executionState": "passed",
+      "delegatedJobId": "task-mw01aed1-qwunu2"
+    },
+    {
+      "id": "MW-11",
+      "stage": "S1",
+      "owner": "codex",
+      "dependsOn": [
+        "MW-10"
+      ],
+      "output": "review.md",
+      "state": "complete",
+      "reviewState": "accepted",
+      "executionState": "passed",
+      "notes": "Source inventory and command logs verified; independent full 61-test distribution rerun passed with ext-family TMPDIR."
+    },
+    {
+      "id": "MW-12",
+      "stage": "S1",
+      "owner": "grok-then-codex",
+      "dependsOn": [
+        "MW-11"
+      ],
+      "output": "Plans/mainwork-mw12-20261103/review.md",
+      "state": "awaiting-external-input",
+      "reviewState": "accepted-after-corrections",
+      "executionState": "source-prepared-focused-validated",
+      "notes": "Full local no-model gate awaiting approval; final freeze not passed.",
+      "continuation": "Plans/mainwork-mw12-20261103/intake.json"
+    },
+    {
+      "id": "MW-20",
+      "stage": "S2",
+      "owner": "source-then-codex",
+      "dependsOn": [
+        "MW-12"
+      ],
+      "output": "source/report.md",
+      "state": "preparation-complete",
+      "reviewState": "accepted",
+      "executionState": "not-started",
+      "delegatedJobId": "task-mw01aed1-qwunu2"
+    },
+    {
+      "id": "MW-30",
+      "stage": "S3",
+      "owner": "handoff",
+      "dependsOn": [],
+      "output": "handoff/tasks.md",
+      "state": "preparation-complete",
+      "reviewState": "accepted-with-corrections",
+      "executionState": "not-started",
+      "delegatedJobId": "task-mw024ayy-cb5udw",
+      "reviewCorrections": "review/corrected-commands.md",
+      "notes": "Source prepares rc.6; unused remote tag observed during MW-12. No local tag creation or publication approval inferred."
+    },
+    {
+      "id": "MW-31",
+      "stage": "S3",
+      "owner": "grok-then-codex",
+      "dependsOn": [
+        "MW-20",
+        "MW-30"
+      ],
+      "output": "package-set.json",
+      "state": "pending",
+      "reviewState": "pending",
+      "executionState": "not-started"
+    },
+    {
+      "id": "MW-32",
+      "stage": "S3",
+      "owner": "grok-then-codex",
+      "dependsOn": [
+        "MW-20",
+        "MW-30"
+      ],
+      "output": "package-set.json",
+      "state": "pending",
+      "reviewState": "pending",
+      "executionState": "not-started"
+    },
+    {
+      "id": "MW-50",
+      "stage": "S5-A",
+      "owner": "admission",
+      "dependsOn": [],
+      "output": "admission/result.json",
+      "state": "complete",
+      "reviewState": "accepted-with-corrections",
+      "executionState": "passed-readiness-only",
+      "delegatedJobId": "task-mw026hrs-ivmqrb",
+      "reviewCorrections": "review/corrected-commands.md"
+    },
+    {
+      "id": "MW-51",
+      "stage": "S5-A",
+      "owner": "admission",
+      "dependsOn": [
+        "MW-50"
+      ],
+      "output": "admission/commands.md",
+      "state": "preparation-complete",
+      "reviewState": "accepted-with-corrections",
+      "executionState": "not-started",
+      "delegatedJobId": "task-mw026hrs-ivmqrb",
+      "reviewCorrections": "review/corrected-commands.md"
+    },
+    {
+      "id": "MW-52",
+      "stage": "S5-A",
+      "owner": "admission",
+      "dependsOn": [],
+      "output": "admission/report.md",
+      "state": "preparation-complete",
+      "reviewState": "accepted-with-corrections",
+      "executionState": "not-started",
+      "delegatedJobId": "task-mw026hrs-ivmqrb",
+      "reviewCorrections": "review/corrected-commands.md"
+    },
+    {
+      "id": "MW-53",
+      "stage": "S5-A",
+      "owner": "grok-then-codex",
+      "dependsOn": [
+        "MW-12",
+        "MW-31",
+        "MW-32",
+        "MW-51"
+      ],
+      "output": "distribution-admission.json",
+      "state": "pending",
+      "reviewState": "pending",
+      "executionState": "not-started"
+    },
+    {
+      "id": "MW-54",
+      "stage": "S5-A",
+      "owner": "grok-then-codex",
+      "dependsOn": [
+        "MW-52"
+      ],
+      "output": "remote-windows-admission.json",
+      "state": "pending",
+      "reviewState": "pending",
+      "executionState": "not-started",
+      "freshnessRule": "Capture immediately before dependent remote runs; observation must meet current registry freshness window."
+    },
+    {
+      "id": "MW-60",
+      "stage": "S5-B",
+      "owner": "handoff",
+      "dependsOn": [],
+      "output": "handoff/tasks.md",
+      "state": "preparation-complete",
+      "reviewState": "accepted-with-corrections",
+      "executionState": "not-started",
+      "delegatedJobId": "task-mw024ayy-cb5udw",
+      "reviewCorrections": "review/corrected-commands.md"
+    },
+    {
+      "id": "MW-61",
+      "stage": "S5-B",
+      "owner": "grok-then-codex",
+      "dependsOn": [
+        "MW-53",
+        "MW-60"
+      ],
+      "output": "producers.json",
+      "state": "pending",
+      "reviewState": "pending",
+      "executionState": "not-started",
+      "conditionalDependencies": {
+        "remote-dependent reductions": [
+          "MW-54"
+        ]
+      }
+    },
+    {
+      "id": "MW-62",
+      "stage": "S5-B",
+      "owner": "grok-then-codex",
+      "dependsOn": [
+        "MW-53",
+        "MW-54",
+        "MW-60"
+      ],
+      "output": "remote-client-results.json",
+      "state": "pending",
+      "reviewState": "pending",
+      "executionState": "not-started"
+    },
+    {
+      "id": "MW-63",
+      "stage": "S5-B",
+      "owner": "grok-then-codex",
+      "dependsOn": [
+        "MW-31",
+        "MW-32",
+        "MW-53"
+      ],
+      "output": "installed-dpm-results.json",
+      "state": "pending",
+      "reviewState": "pending",
+      "executionState": "not-started"
+    },
+    {
+      "id": "MW-64",
+      "stage": "S5-B",
+      "owner": "grok-then-codex",
+      "dependsOn": [
+        "MW-32",
+        "MW-54"
+      ],
+      "output": "windows-acceptance.json",
+      "state": "pending",
+      "reviewState": "pending",
+      "executionState": "not-started"
+    },
+    {
+      "id": "MW-65",
+      "stage": "S5-C",
+      "owner": "handoff",
+      "dependsOn": [],
+      "output": "handoff/verification.md",
+      "state": "preparation-complete",
+      "reviewState": "accepted-with-corrections",
+      "executionState": "not-started",
+      "delegatedJobId": "task-mw024ayy-cb5udw",
+      "reviewCorrections": "review/corrected-commands.md"
+    },
+    {
+      "id": "MW-66",
+      "stage": "S5-C",
+      "owner": "grok-then-codex",
+      "dependsOn": [
+        "MW-61",
+        "MW-62",
+        "MW-63",
+        "MW-64",
+        "MW-65"
+      ],
+      "output": "framework-qualification.json",
+      "state": "pending",
+      "reviewState": "pending",
+      "executionState": "not-started",
+      "acceptanceRequirements": [
+        "linked Q1",
+        "independent installed offline Q2",
+        "complete-profile catalog linkage",
+        "missing-required-payload rejection",
+        "changed-byte rejection",
+        "wrong-D/origin/reduction-link rejection",
+        "incomplete-profile semantic rejection",
+        "owned-backend stop authority before stop/repeat"
+      ]
+    },
+    {
+      "id": "MW-70",
+      "stage": "S6",
+      "owner": "handoff",
+      "dependsOn": [],
+      "output": "handoff/release-handoff.md",
+      "state": "preparation-complete",
+      "reviewState": "accepted-with-corrections",
+      "executionState": "not-started",
+      "delegatedJobId": "task-mw024ayy-cb5udw",
+      "reviewCorrections": "review/corrected-commands.md"
+    },
+    {
+      "id": "MW-71",
+      "stage": "S6",
+      "owner": "codex",
+      "dependsOn": [
+        "MW-31",
+        "MW-32",
+        "MW-66",
+        "MW-70"
+      ],
+      "output": "release-review.md",
+      "state": "pending",
+      "reviewState": "pending",
+      "executionState": "not-started"
+    },
+    {
+      "id": "MW-72",
+      "stage": "S7",
+      "owner": "grok-then-codex",
+      "dependsOn": [
+        "MW-71"
+      ],
+      "output": "operations-results.json",
+      "state": "pending",
+      "reviewState": "pending",
+      "executionState": "not-started"
+    },
+    {
+      "id": "MW-80",
+      "stage": "S8",
+      "owner": "handoff",
+      "dependsOn": [],
+      "output": "handoff/compatibility-retention.md",
+      "state": "preparation-complete",
+      "reviewState": "accepted-with-corrections",
+      "executionState": "not-started",
+      "delegatedJobId": "task-mw024ayy-cb5udw",
+      "reviewCorrections": "review/corrected-commands.md"
+    },
+    {
+      "id": "MW-81",
+      "stage": "S8",
+      "owner": "grok-then-codex",
+      "dependsOn": [
+        "MW-80"
+      ],
+      "output": "compatibility-results.json",
+      "state": "pending",
+      "reviewState": "pending",
+      "executionState": "not-started"
+    }
+  ],
+  "updatedAt": "2026-11-03T04:05:35.424349+00:00",
+  "review": "review.md",
+  "commandCorrections": "review/corrected-commands.md",
+  "scope": "ubuntu-26.04-wsl2-x86_64; base lock validation is a structural control only",
+  "batchState": "MW-12 source preparation reviewed; full S1 gate pending",
+  "blockers": [
+    {
+      "id": "B1",
+      "tasks": [
+        "MW-12",
+        "MW-30"
+      ],
+      "owner": "candidate/source owner",
+      "fact": "Catalog/product/source-version split, stale Mirrors snapshot and new immutable tag/version selection require reconciliation.",
+      "status": "resolved-for-working-tree-preparation",
+      "resolution": "See Plans/mainwork-mw12-20261103/review.md; final clean-source identity is downstream of full local gate/delivery."
+    },
+    {
+      "id": "B2",
+      "tasks": [
+        "MW-12"
+      ],
+      "owner": "companion/source owner",
+      "fact": "Selected ECMA 9192171 and Gate 4b379ac objects are absent from current local companion checkouts; acquire or explicitly select exact admissible refs.",
+      "status": "resolved-for-working-tree-preparation",
+      "resolution": "See Plans/mainwork-mw12-20261103/review.md; final clean-source identity is downstream of full local gate/delivery."
+    },
+    {
+      "id": "B3",
+      "tasks": [
+        "MW-53"
+      ],
+      "owner": "artifact custodian",
+      "fact": "Exact Batteries carrier 73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a, 3739542 bytes, is missing from recorded local retention."
+    },
+    {
+      "id": "B4",
+      "tasks": [
+        "MW-53",
+        "MW-63",
+        "MW-66"
+      ],
+      "owner": "selected execution-context operator",
+      "fact": "Authenticated userspace strace and hash-guarded launcher prepared. Actual tracing is denied in Codex context; namespace/producer execution-context admission remains."
+    },
+    {
+      "id": "B5",
+      "tasks": [
+        "MW-54",
+        "MW-62",
+        "MW-64"
+      ],
+      "owner": "remote/Windows/client operator",
+      "fact": "Fresh endpoint/TLS/backend/client/Windows observations and required exact inputs remain unavailable."
+    },
+    {
+      "id": "B6",
+      "tasks": [
+        "MW-12"
+      ],
+      "owner": "evidence registry owner",
+      "fact": "Old absolute installed prefixes/hide roots and tool hashes must be reconciled before final source freeze.",
+      "status": "resolved-for-working-tree-preparation",
+      "resolution": "See Plans/mainwork-mw12-20261103/review.md; final clean-source identity is downstream of full local gate/delivery."
+    },
+    {
+      "id": "B7",
+      "tasks": [
+        "MW-12"
+      ],
+      "owner": "user/full-gate executor",
+      "status": "pending",
+      "fact": "Full local no-model gate approval question has no answer yet; targeted rebuild/smoke and focused Python suites passed."
+    }
+  ]
+}

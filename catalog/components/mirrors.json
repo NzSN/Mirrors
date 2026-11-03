@@ -7,15 +7,24 @@
       "componentRef": {
         "componentId": "mirrors",
         "repository": "https://github.com/NzSN/Mirrors.git",
-        "revision": "bd5d3b51b1dcd75fbdf6c3188f1c90b1e6fe6ea0",
+        "revision": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
         "dirty": true,
         "dirtyContent": {
           "algorithm": "sha256",
-          "digest": "51dcae7b433da3604f0f5e068ed253895502c5b563114fce6efaa31f9cb78cdd",
+          "digest": "59be0488dc9b32c086ac0b66e05459197fe9209e410ceeb47a87cf26f55ba80a",
           "method": "git-diff-and-untracked-manifest-v1",
           "includedPaths": [
+            "Docs/current-status.md",
+            "Docs/framework-catalog-contract.md",
+            "Docs/versioning.md",
+            "Shell/Version.lean",
+            "tools/StdioSmoke.lean",
             "tools/distribution/refresh_identity.py",
-            "tools/distribution/test_refresh_identity.py"
+            "tools/distribution/test_planning_docs_exclusion.py",
+            "tools/distribution/test_refresh_identity.py",
+            "tools/evidence/commands.json",
+            "tools/interop/INTEROP.md",
+            "tools/interop/ecma-runtime-pin.json"
           ],
           "excludedPaths": [
             {
@@ -91,7 +100,7 @@
       },
       "product": {
         "name": "Mirrors",
-        "version": "0.1.1"
+        "version": "0.2.0-rc.6"
       },
       "records": [
         {
@@ -103,6 +112,11 @@
           "recordId": "pins",
           "path": "tools/ci/versions.env",
           "recordKind": "pins"
+        },
+        {
+          "recordId": "product-version",
+          "path": "Shell/Version.lean",
+          "recordKind": "source"
         }
       ]
     }
@@ -254,7 +268,7 @@
   "combinations": [],
   "extensions": {
     "org.nzsn.snapshot": {
-      "capturedAt": "2026-11-01T17:11:08Z",
+      "capturedAt": "2026-11-03T03:49:27Z",
       "provisional": true
     }
   }

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -100,11 +101,75 @@ def selected_refs(mirrorecma: Path, mirrorgate: Path) -> dict[str, dict[str, Any
     }
 
 
+# MAJOR.MINOR.PATCH[-prerelease], the same rule as release.TAG_PATTERN without
+# the leading "v". Historical four-part tags are not product declarations.
+_PRODUCT_VERSION = re.compile(
+    r"(?:0|[1-9][0-9]*)(?:\.(?:0|[1-9][0-9]*)){2}"
+    r"(?:-[0-9A-Za-z]+(?:[.-][0-9A-Za-z]+)*)?"
+)
+_VERSION_DECL = re.compile(r'^def version : String := "([^"]*)"$', re.MULTILINE)
+
+
+class SourceVersionError(ValueError):
+    """The selected Mirrors source has no single usable product declaration."""
+
+
+def declared_product_version(source: Path) -> str:
+    version_file = source / "Shell" / "Version.lean"
+    if not version_file.is_file():
+        raise SourceVersionError("Mirrors source version declaration is missing")
+    try:
+        text = version_file.read_text(encoding="utf-8")
+    except UnicodeDecodeError as error:
+        raise SourceVersionError("Mirrors source version declaration is malformed") from error
+    matches = _VERSION_DECL.findall(text)
+    if not matches:
+        raise SourceVersionError("Mirrors source version declaration is missing")
+    if len(matches) != 1:
+        raise SourceVersionError("Mirrors source version declaration is ambiguous")
+    version = matches[0]
+    if len(version) > 127 or not _PRODUCT_VERSION.fullmatch(version):
+        raise SourceVersionError("Mirrors source version declaration is malformed")
+    if "-" in version:
+        for identifier in version.split("-", 1)[1].split("."):
+            if identifier.isdigit() and len(identifier) > 1 and identifier.startswith("0"):
+                raise SourceVersionError("Mirrors source version declaration is malformed")
+    return version
+
+
+def require_mirrors_component(document: dict[str, Any]) -> dict[str, Any]:
+    components = document.get("components")
+    matches: list[dict[str, Any]] = []
+    if isinstance(components, list):
+        matches = [
+            entry for entry in components
+            if isinstance(entry, dict)
+            and isinstance(entry.get("componentRef"), dict)
+            and entry["componentRef"].get("componentId") == "mirrors"
+        ]
+    if len(matches) != 1:
+        raise ValueError("Mirrors catalog component is missing or ambiguous")
+    return matches[0]
+
+
+def assign_mirrors_source_version(entry: dict[str, Any], version: str) -> dict[str, str]:
+    product = entry.get("product")
+    name = product.get("name") if isinstance(product, dict) else None
+    if not isinstance(product, dict) or not isinstance(name, str) or not name:
+        raise ValueError("Mirrors product record is missing")
+    product["version"] = version
+    return {"name": name, "version": version}
+
+
 def update_catalogs(refs: dict[str, dict[str, Any]], mirrorecma: Path,
     write_mirrorecma_record: bool = True, catalog_path: Path | None = None,
-    write_component_records: bool = True) -> tuple[dict[str, Any], str]:
+    write_component_records: bool = True, *,
+    mirrors_source: Path | None = None) -> tuple[dict[str, Any], str]:
+    source = MIRRORS if mirrors_source is None else mirrors_source
+    version = declared_product_version(source)
     catalog_path = catalog_path or (MIRRORS / "catalog/framework-catalog.json")
     catalog = read(catalog_path)
+    corrected = assign_mirrors_source_version(require_mirrors_component(catalog), version)
     old_refs = {entry["componentRef"]["componentId"]: entry["componentRef"] for entry in catalog["components"]}
     if old_refs != refs:
         captured = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
@@ -113,12 +178,17 @@ def update_catalogs(refs: dict[str, dict[str, Any]], mirrorecma: Path,
         captured = catalog["extensions"]["org.nzsn.snapshot"]["capturedAt"]
     for entry in catalog["components"]:
         entry["componentRef"] = refs[entry["componentRef"]["componentId"]]
-    write(catalog_path, catalog)
+    owned_record = None
+    owned_path = MIRRORS / "catalog/components/mirrors.json"
     if write_component_records:
-        mirrors_record = read(MIRRORS / "catalog/components/mirrors.json")
-        mirrors_record["components"][0]["componentRef"] = refs["mirrors"]
-        mirrors_record["extensions"]["org.nzsn.snapshot"]["capturedAt"] = captured
-        write(MIRRORS / "catalog/components/mirrors.json", mirrors_record)
+        owned_record = read(owned_path)
+        owned = require_mirrors_component(owned_record)
+        owned["product"] = dict(corrected)
+        owned["componentRef"] = refs["mirrors"]
+        owned_record["extensions"]["org.nzsn.snapshot"]["capturedAt"] = captured
+    write(catalog_path, catalog)
+    if owned_record is not None:
+        write(owned_path, owned_record)
     if write_component_records and write_mirrorecma_record:
         ecma_path = mirrorecma / "catalog/framework-capabilities.json"
         ecma_record = read(ecma_path)

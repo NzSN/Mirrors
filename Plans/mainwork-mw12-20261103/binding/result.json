@@ -1,0 +1,239 @@
+{
+  "schemaVersion": "mirrors.mw12-binding-result/v1",
+  "createdAt": "2026-11-03T03:56:24Z",
+  "baseline": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+  "python": "3.14.4",
+  "candidateInstalled": false,
+  "newQualificationClaim": false,
+  "namespaceAdmissionEstablished": false,
+  "dAuditRan": false,
+  "filesystem": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/binding-tmp",
+    "fstype": "ext4",
+    "source": "/dev/sdd[/home/lsz]",
+    "target": "/home/lsz",
+    "log": "Plans/mainwork-mw12-20261103/binding/logs/tmpdir-filesystem.txt",
+    "logSha256": "a9f4e59fe2963f0469bc2f0c95968ad0ac47c89f85a9c609dbf242158d4ead90"
+  },
+  "applyBindings": {
+    "argv": [
+      "python3",
+      "Plans/mainwork-mw12-20261103/apply_bindings.py",
+      "--attempt",
+      "binding-a1"
+    ],
+    "exitCode": 1,
+    "failure": "in-run catalog file hashes differed between refresh and immediate repeat"
+  },
+  "beforeSnapshots": [
+    {
+      "path": "Plans/mainwork-mw12-20261103/binding/binding-a1-before/catalog/components/mirrors.json",
+      "bytes": 7696,
+      "sha256": "75036f1a222e24123c603da917326579240091927066efcc1be8da8d196cfc32"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/binding/binding-a1-before/catalog/framework-catalog-wsl2-26.04.json",
+      "bytes": 30552,
+      "sha256": "c6ec7f2694e27eab1406f13fcf68c85821369bce3aecfcf4fbd27de08a722a83"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/binding/binding-a1-before/catalog/framework-catalog.json",
+      "bytes": 30029,
+      "sha256": "f6b0e9001fa4f583a4e61a4c7726a50b6ee810444cb4cc8a9164c624122b3bc5"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/binding/binding-a1-before/tools/evidence/commands.json",
+      "bytes": 44983,
+      "sha256": "04ded2066f18584c0fa3e87fd48d3b58bb4f2a79c24b12776abdeb3576c17bb3"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/binding/binding-a1-before/tools/interop/ecma-runtime-pin.json",
+      "bytes": 851,
+      "sha256": "598bb5efc53447444eedec428ac72ea6d1ef478a75995452d7176414f7df8c83"
+    }
+  ],
+  "assertionReceipt": {
+    "path": "Plans/mainwork-mw12-20261103/binding/binding-a1-assertions.json",
+    "bytes": 11631,
+    "sha256": "9d100fd3f9ded395c2de0b4ef3a6265e3a21e46a4da0bbeec43cd7ba0d7e68b8"
+  },
+  "refreshCommands": [
+    {
+      "path": "Plans/mainwork-mw12-20261103/integration/binding-a1-base-refresh.json",
+      "bytes": 1172,
+      "sha256": "61017541ebc5099d0d60ce6a0954942871088193593af3bbf8f6a34d4d61fb36"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/integration/binding-a1-wsl-refresh.json",
+      "bytes": 1370,
+      "sha256": "987598a142848af192dfd04cc8c8d7810b3868ecaa91211f99481d2cb7fada12"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/integration/binding-a1-base-repeat.json",
+      "bytes": 1169,
+      "sha256": "c54178a22edb6401c79f5e99347c02ca54e313c944835ad9f024f13d6a60405d"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/integration/binding-a1-wsl-repeat.json",
+      "bytes": 1368,
+      "sha256": "23782dfd675282a557f0c43b2f86dc15f972491af9cfa7272e038941c9dff301"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/integration/binding-a1-base-stable.json",
+      "bytes": 1170,
+      "sha256": "f966759e099eb5d2b0ccbaf91d4573684cd0918b1e04bb4f7592e2d213cee093"
+    },
+    {
+      "path": "Plans/mainwork-mw12-20261103/integration/binding-a1-wsl-stable.json",
+      "bytes": 1368,
+      "sha256": "93ccb1b76b0faf422ed37e9da601e3fd987d2e02a584c0783e4d91a1b45b9746"
+    }
+  ],
+  "activeFiles": [
+    {
+      "path": "tools/evidence/commands.json",
+      "bytes": 45457,
+      "sha256": "2e4ef9d4f5e393defdef473eb1582a0f16ff5d6660700af422fb0048c3c0bfd2"
+    },
+    {
+      "path": "tools/interop/ecma-runtime-pin.json",
+      "bytes": 851,
+      "sha256": "c5de570f37b4aaf7d3a05644f90269183ecf6585ef8d9c85e49a5d4d46fb3e8c"
+    },
+    {
+      "path": "catalog/framework-catalog.json",
+      "bytes": 30563,
+      "sha256": "d69e8f5244d990d652ef6201f2f37ae0b12896d6c235c13d118aeade212e6f4d"
+    },
+    {
+      "path": "catalog/framework-catalog.compact.json",
+      "bytes": 19261,
+      "sha256": "27c602874b3df69779dd6384d1ab9985e1ae2f5a5b2de65eeeed492108f42b3b"
+    },
+    {
+      "path": "catalog/framework-catalog-wsl2-26.04.json",
+      "bytes": 31086,
+      "sha256": "af47093b7f78d361800008bb03cda2dd2663b17ed9b67aa09ce8fda2b23e34c4"
+    },
+    {
+      "path": "catalog/components/mirrors.json",
+      "bytes": 8230,
+      "sha256": "16da982c03cf410669e9dcaf20dafdf952c91d5f9b1304f794f9717bf1eb5052"
+    },
+    {
+      "path": "Docs/framework-map.md",
+      "bytes": 13057,
+      "sha256": "4ebac0471c4fbffc0d249f50b8770b92962844c5b16e3c5a489ae566c4969b7c"
+    },
+    {
+      "path": "distribution/reference-node/component-lock.json",
+      "bytes": 12866,
+      "sha256": "fce0b3569ed3b6e65bc448acda9fcbb654444f9a38f119c63b0134a8be99795f"
+    },
+    {
+      "path": "distribution/reference-node/profiles.json",
+      "bytes": 4307,
+      "sha256": "549da39669c69f32ec7a2f7810da9a5fa4f05a26af3697d6e0960d6946d3d05f"
+    },
+    {
+      "path": "distribution/reference-node/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+    },
+    {
+      "path": "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+      "bytes": 3440,
+      "sha256": "d17c36bdabb41e82578b5569938c52ad2ec664e74fc18e7afd36d42b77129cd0"
+    },
+    {
+      "path": "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+      "bytes": 4399,
+      "sha256": "31370b750ca502fd246001e51c7feb89588a1abe7728edd30d6dcac70c60eb4a"
+    },
+    {
+      "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "bytes": 14032,
+      "sha256": "e8a677d24588854c33fe45205f691d8132cad850f7e03a566060bd4f161202eb"
+    },
+    {
+      "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "bytes": 16690,
+      "sha256": "78a74700f3d0b97f72547e3f41783a90010476b138ed90c22a06cef2e7590eb3"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+      "bytes": 12866,
+      "sha256": "4deab387f27d6c43834e8b0a87cd2563000b58bdb18982a525386c8469ca8e93"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+      "bytes": 4933,
+      "sha256": "87d31ef00f9eb8f5371575eebae9a89224458604f4c6a8ed9355265cd6525d67"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+      "bytes": 3440,
+      "sha256": "439493a3051b5cfadb59560bbcf30dc49116deff622ae52f1a3ef56ff9e5b50b"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+      "bytes": 4399,
+      "sha256": "d08476a7164e2995c152bffaa230413d1542df14c878cc25ff404e81322d007c"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "bytes": 14065,
+      "sha256": "0c467b6a6aaae9dec65e50d481afd3aae233d1d819020a6fd45bdee8c48fc462"
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "bytes": 16723,
+      "sha256": "a247108f8180902ffe87cb52c605eddc74fb16f92ea929ba76cbfdfe5a33e54f"
+    }
+  ],
+  "tests": {
+    "distribution": {
+      "ran": 68,
+      "failures": 0,
+      "exitCode": 0,
+      "elapsedSeconds": 4.899,
+      "stdout": {
+        "path": "Plans/mainwork-mw12-20261103/binding/logs/distribution.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "Plans/mainwork-mw12-20261103/binding/logs/distribution.stderr",
+        "bytes": 11137,
+        "sha256": "eef8ecc5c7c144e2d6e341ae34a393d6c4942c74553f80e4b570139ce9f323ed"
+      }
+    },
+    "durableEvidence": {
+      "ran": 146,
+      "failures": 0,
+      "exitCode": 0,
+      "elapsedSeconds": 23.027,
+      "stdout": {
+        "path": "Plans/mainwork-mw12-20261103/binding/logs/evidence.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "Plans/mainwork-mw12-20261103/binding/logs/evidence.stderr",
+        "bytes": 21985,
+        "sha256": "340b5cf5bae1faa88611d4cd20e801405597ff03894c84c93e184b9011d3b131"
+      }
+    }
+  },
+  "limitations": [
+    "apply_bindings.py exited 1 before it wrote an assertion file. The retained catalogs are the repeat outputs, and a follow-up refresh pair left those bytes unchanged.",
+    "No Lake or native build, installed build, D audit, Apalache, TLC, remote model operation, or production operation.",
+    "No commit, push, tag, or other Git ref mutation.",
+    "Tracer namespace admission is not established. The candidate install directory was not created."
+  ]
+}

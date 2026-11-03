@@ -1,0 +1,47 @@
+# name: help-build
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["/usr/bin/python3", "/home/lsz/Codebase/Mirrors/tools/distribution/build.py", "--help"]
+
+usage: build.py [-h]
+                --profile {checked-replay-local,checked-replay-gate,fresh-trace}
+                [--locks-root LOCKS_ROOT] [--catalog CATALOG] --out OUT
+                --snapshot-root SNAPSHOT_ROOT --lake-bin LAKE_BIN
+                --node-archive NODE_ARCHIVE
+                --batteries-bundle BATTERIES_BUNDLE --git-bin GIT_BIN
+                --ldd-bin LDD_BIN
+                --typescript-node-modules TYPESCRIPT_NODE_MODULES
+                --evidence-wheels EVIDENCE_WHEELS
+                --framework-catalog-bin FRAMEWORK_CATALOG_BIN
+                --framework-catalog-sha256 FRAMEWORK_CATALOG_SHA256
+                [--lean-build-cache LEAN_BUILD_CACHE]
+                [--export-lean-build-cache EXPORT_LEAN_BUILD_CACHE]
+                [--apalache-archive APALACHE_ARCHIVE]
+                [--java-archive JAVA_ARCHIVE]
+
+Build one reference-distribution cache from immutable source snapshots.
+
+options:
+  -h, --help            show this help message and exit
+  --profile {checked-replay-local,checked-replay-gate,fresh-trace}
+  --locks-root LOCKS_ROOT
+                        lock/profile root; defaults to the checked Ubuntu
+                        24.04 reference profile
+  --catalog CATALOG     selected catalog A JSON; defaults to the checked
+                        Ubuntu 24.04 reference catalog
+  --out OUT
+  --snapshot-root SNAPSHOT_ROOT
+  --lake-bin LAKE_BIN
+  --node-archive NODE_ARCHIVE
+  --batteries-bundle BATTERIES_BUNDLE
+  --git-bin GIT_BIN
+  --ldd-bin LDD_BIN
+  --typescript-node-modules TYPESCRIPT_NODE_MODULES
+  --evidence-wheels EVIDENCE_WHEELS
+  --framework-catalog-bin FRAMEWORK_CATALOG_BIN
+  --framework-catalog-sha256 FRAMEWORK_CATALOG_SHA256
+  --lean-build-cache LEAN_BUILD_CACHE
+  --export-lean-build-cache EXPORT_LEAN_BUILD_CACHE
+  --apalache-archive APALACHE_ARCHIVE
+  --java-archive JAVA_ARCHIVE

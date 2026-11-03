@@ -1,0 +1,20 @@
+# name: help-install
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["/usr/bin/python3", "/home/lsz/Codebase/Mirrors/tools/distribution/install.py", "--help"]
+
+usage: install.py [-h] --cache CACHE --prefix PREFIX
+                  --framework-catalog-bin FRAMEWORK_CATALOG_BIN
+                  --framework-catalog-sha256 FRAMEWORK_CATALOG_SHA256
+                  [--fail-at {after-copy,after-materialize,after-verify,before-activate,after-version-rename,after-selector,after-activate}]
+
+Stage, verify, atomically activate, and roll back a verified cache.
+
+options:
+  -h, --help            show this help message and exit
+  --cache CACHE
+  --prefix PREFIX
+  --framework-catalog-bin FRAMEWORK_CATALOG_BIN
+  --framework-catalog-sha256 FRAMEWORK_CATALOG_SHA256
+  --fail-at {after-copy,after-materialize,after-verify,before-activate,after-version-rename,after-selector,after-activate}

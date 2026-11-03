@@ -1,0 +1,53 @@
+[
+  {
+    "id": "selected-source-probe",
+    "argv": [
+      "python3",
+      "Plans/mainwork-mw12-20261103/selected_source_probe.py"
+    ],
+    "cwd": "/home/lsz/Codebase/Mirrors",
+    "env": {
+      "TMPDIR": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/source-correction-tmp",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "startedAt": "2026-11-03T03:32:33.700839Z",
+    "finishedAt": "2026-11-03T03:32:33.844897Z",
+    "elapsedMs": 144,
+    "exitCode": 0,
+    "stdoutPath": "Plans/mainwork-mw12-20261103/source-correction/logs/selected-source-probe.stdout",
+    "stderrPath": "Plans/mainwork-mw12-20261103/source-correction/logs/selected-source-probe.stderr",
+    "stdoutBytes": 70,
+    "stderrBytes": 0,
+    "stdoutSha256": "1d8e150fc7411118f299fdc0a480d8bfe82a60ccdf0a93b9ee0c1578c5b86b9b",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "id": "distribution",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/distribution",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/home/lsz/Codebase/Mirrors",
+    "env": {
+      "TMPDIR": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/source-correction-tmp",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "startedAt": "2026-11-03T03:32:33.845074Z",
+    "finishedAt": "2026-11-03T03:32:37.653266Z",
+    "elapsedMs": 3808,
+    "exitCode": 0,
+    "stdoutPath": "Plans/mainwork-mw12-20261103/source-correction/logs/distribution.stdout",
+    "stderrPath": "Plans/mainwork-mw12-20261103/source-correction/logs/distribution.stderr",
+    "stdoutBytes": 0,
+    "stderrBytes": 11137,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "ae830d90c2fde3dae54ea05e2956cd43b49b4ed8fe95c73e4c4bf4c64ad9d40d"
+  }
+]

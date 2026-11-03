@@ -1,0 +1,2013 @@
+# Checkpoints
+
+Date-flow record of execution checkpoints, newest entry first. Each dated
+entry records the frozen identity, qualified evidence, validation performed,
+and open work at that date. Entries are append-only history, not current
+status; later entries do not implicitly amend earlier ones.
+
+## 2026-11-03 — Grok stage-task outcomes reviewed; freeze/admission gates remain
+
+The requested stage/task development and delegated preparation batch are
+complete. The [active plan](Plans/mainwork-stages-2026-11-03.md) preserves
+S0–S8 identifiers and defines 25 owned tasks with dependencies and exit gates.
+Three Grok workstreams produced source audit/validation, admission readiness,
+and downstream package/producer/Q/release/operations/compatibility task cards.
+The initial admission and handoff jobs reached their 60-turn limits; both
+failed attempts are retained and same-session continuations finished the work.
+Exact job IDs and states are in the
+[ledger](Plans/mainwork-execution-20261103/tasks.json).
+
+Codex verified all **116 inventoried output files** and their command/log
+bindings. Focused results are **61 distribution tests passed** with task-owned
+ext4 temporary storage, **11 release tests passed** and **146 evidence tests
+passed**. The initial distribution tmpfs failure (two failures/eight errors)
+is preserved; the independent full rerun passed without source changes. Both
+lock roots pass read-only structural checks. Twenty command vectors cover the
+selected registry's 18 required commands/16 tiers with exact prefixes/lengths.
+These are bounded preparation/source checks, not final framework qualification.
+
+The [Codex review](Plans/mainwork-execution-20261103/review.md) accepts preparation
+with an [authoritative correction overlay](Plans/mainwork-execution-20261103/review/corrected-commands.md):
+preserve collector argument/attachment boundaries; complete independent Q
+isolation and payload/profile controls; keep tag/package ordering and artifact
+immutability; require explicit client/replacement/rollback commands; preserve
+`distribution/<root>/...` bootstrap paths and this session's writable roots;
+run only the selected WSL2 local/Gate D pair. No Ubuntu 24.04/native-host work
+is reintroduced. Original Grok drafts, failed attempts and raw logs remain
+unchanged. The draft lock layout was independently rejected by the actual
+bootstrap validator and the corrected WSL2 layout accepted.
+
+Final freeze remains open: catalogs/locks say Mirrors `0.1.1` while source
+declares `0.2.0-rc.5`; the catalog names an older dirty Mirrors snapshot and
+companion refs absent from the current local object databases. Registry paths
+also need reconciliation before final freeze. Exact pinned Batteries carrier
+`73130433…` is absent from its recorded path, strace is missing, namespace
+admission failed and remote/TLS/client/Windows inputs need fresh observation.
+Grok and Codex socket probes observed different execution-context permissions;
+neither transfers admission to a future producer. A manually supplied probe-log
+timestamp receives no freshness credit.
+
+Source stays `75fbf962020cea8a13e009ecfdb3e912e7ce212f`. No final full build,
+new package/tag, D/M5/Q/Windows acceptance, local model checker, remote contact,
+commit/push, publication, production operation or reboot occurred in this batch.
+Compatibility ledgers remain unexecuted. New planning/evidence files and this
+checkpoint are reviewable, uncommitted work; older records and unrelated files
+are preserved. Continue from MW-12's candidate reconciliation and the explicit
+admission prerequisites in the [execution index](Plans/mainwork-execution-20261103/README.md).
+
+## 2026-11-03 — Release-completion stages and Grok task delegation
+
+The user requested stage development for the main release-completion work,
+recording here, executable stage tasks, Grok delegation and Codex review.
+The [new active plan](Plans/mainwork-stages-2026-11-03.md) continues the existing
+stage IDs: S0 intake; S1 source/evidence review and freeze; S2 audited branch
+delivery; S3 clean tagged Linux/Windows packages; S5-A distribution/host/remote
+admission; S5-B complete required producers and Windows acceptance; S5-C linked
+and independent Q; S6 release admission; S7 separately selected operations;
+S8 retention and measured compatibility lifecycle. Withdrawn S4/native-runner
+work is not reopened.
+
+The starting HEAD is `75fbf962020cea8a13e009ecfdb3e912e7ce212f`, matching cached
+`origin/main` with no tracked changes before planning. `72d83b0` committed the
+Batteries re-pin; `f0daef9` propagated maintained product identities; `75fbf96`
+accepts warning-prefixed CLI diagnostics. Thus the October 31 status text is
+historical where it describes the re-pin as uncommitted. The earlier rc.5
+packages remain bound to `3ee3d92` and grant no later-source qualification.
+Cached refs do not establish a fresh remote observation. Existing untracked
+completion plans/evidence and editor caches are preserved.
+
+Task IDs MW-00–MW-81 define dependencies, responsible roles, concrete outputs
+and exit gates in the plan and its
+[execution ledger](Plans/mainwork-execution-20261103/tasks.json). The ready
+batch is delegated to Grok in three disjoint scopes: source review/focused
+validation and delivery preparation; host/dependency/distribution/remote
+admission readiness; downstream package/producer/Q/handoff/operations and
+compatibility task preparation. Codex owns independent artifact/claim review,
+focused reproduction and acceptance. Job completion alone grants no stage pass.
+
+Final freeze, construction, both D audits, complete M5 producers, full Windows
+and Q remain dependency-gated. No local Apalache/TLC is allowed. This planning
+and delegation request does not itself authorize full builds, ref/tag mutation,
+release publication, production replacement or reboot; concrete reviewable
+operations precede their existing approval boundaries. No new package,
+framework, platform, live-model, publication or deployment credit is claimed
+by this checkpoint. Delegation results and review will be recorded separately.
+
+## 2026-10-31 — Batteries carrier re-pinned at unchanged source revision
+
+The user requested a new Batteries bundle. A fresh, read-only, content-addressed
+carrier is pinned in both base and Ubuntu 26.04 WSL2 distribution locks:
+3,739,542 bytes, SHA-256
+`73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a`.
+The source remains `4488d40d070b9700d4d5a6aa342f0d40c31b2a2d`, tree
+`5a1de86f7997958aaffec998882c29006b688d1e`. A standalone clone, full Git object
+check, complete-history bundle verification and exact HEAD/tree checks pass.
+
+The lock-generation API refreshes four fixture manifests and four cache-index
+hashes. Both lock roots validate and all 55 distribution tests pass. The prior
+rc.5 evidence, its retained artifacts, tag and failed old-carrier admission are
+preserved. The re-pin is a new working-tree dependency candidate; source
+freeze/delivery and every affected final S5 installation/producer/Q gate remain
+necessary. No new D, M5, full Windows, framework or release credit is granted.
+
+The [new record](Plans/batteries-bundle-repin-evidence-20261031/README.md)
+retains the old lock bytes, new artifact identity, provenance, validation and
+candidate preview. No source commit/push, tag change, publication, deployment,
+model checker or reboot was performed.
+
+## 2026-10-31 — rc.5 clean packages; S5 blocked on exact Batteries carrier
+
+At user request, the next completion boundary was executed against Mirrors
+`3ee3d9226f6258583fe7266c1737acff5abd1edf`. A separate clean clone owns the
+local-only annotated `v0.2.0-rc.5` tag; the shared checkout's tag refs are
+unchanged. Remote observations before and after construction find the exact
+candidate on `origin/main` and no remote rc.5 tag.
+
+The Linux package passes seven release checks, isolated no-Lean runtime smoke
+on the actual Ubuntu 24.04.3 WSL2 host, and the full source non-model aggregate.
+The Windows 11 `L` build passes 606 Lake jobs and eight non-model suites after
+isolating OpenSSL import libraries and admitting required Unix helper tools.
+Source archive verification checks 9,367 files before and after; repeat Windows
+packaging is identical and PE import closure is checked. Initial setup/link/test
+failures remain retained separately. This is scoped package acceptance, not full
+Windows `lake test` or framework qualification.
+
+Fresh C0 `50b12873…` binds clean Mirrors `3ee3d92`, MirrorECMA `f943588` and
+MirrorGate `4b379ac` without editing checked-in catalogs or companion sources.
+The real distribution builder refuses the available Batteries carrier. Required:
+`batteries-v4.33.0.bundle`, 3,684,180 bytes, SHA-256
+`f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3`.
+The three retained copies are different bytes (`69a03e73…`); no pin changed.
+Both D audits, all 18 qualified M5 commands and all 16 required tiers remain
+uncredited. Remote/backend/certificate and five-client admission, full Windows
+tests and Q1/Q2 remain open.
+
+The [new evidence](Plans/completion-rc5-evidence-20261031/README.md) retains
+packages, source/tag bindings, C0, command receipts, failed attempts and an
+offline verifier. Earlier dated records and editor caches are preserved.
+No source commit/push, remote tag, release, deployment, restart, or reboot was
+performed; no Ubuntu 26.04, native M4, full S5 or release admission is granted.
+
+## 2026-10-29 — Source-review fixes authorized for branch publication
+
+The user requested commit and push of the six runtime fixes, focused
+regressions, maintained contracts/status and their hash-bound evidence to
+`origin/main` (`https://github.com/NzSN/Mirrors.git`). The runtime sources remain
+identical to the passing full local non-model and isolated native rebuild
+checks recorded in the source-review fix evidence below. Publication updates
+only the maintained status after that validation snapshot; the original
+validation files and historical entries retain their original bytes.
+
+The staged scope excludes the unrelated editor cache, ignored toolchain cache,
+temporary PKI and build artifacts. Payload/hash audits and remote-ref receipts
+are retained locally under `/tmp/mirrors-source-review-publish-20261029/`.
+Branch publication does not renew live-model, native M4, installed/framework
+or release qualification and does not deploy a service or advance a tag.
+
+## 2026-10-29 — Six source-review bugs fixed and locally validated
+
+At base Mirrors `0cb5679`, the user requested all six reproduced fixes. The
+working tree now uses fresh native output buffers, complete generated-trace
+decoding, nonzero Explorer assertion exits, exact-envelope async delivery,
+UTF-8 HTTP lengths and owned client TLS sockets. Opaque boxed handle types
+repair native reference-count omissions that kept SSL externals alive;
+rejected pins send best-effort close-notify.
+
+Focused suites pass, including 512 synchronized HTTP requests, malformed/missing
+trace controls, exact 65,535/65,536/70,000-byte outcome checks and twelve rejected
+pins alternating with successful echoes at stable descriptor counts. The
+original 960-request probe has zero corrupt responses, and its rejection-only
+probe leaks no sockets. The handle type/instance axiom audit is clean.
+
+The full local non-model aggregate and isolated native rebuild gate pass. The
+first aggregate's unrelated SANY cache mismatch is retained; restoring the
+exact existing lock bytes resolves it without changing a pin, and the old cache
+is preserved separately. Four live differential cases and the unselected
+optional native integer-map tier remain skipped. No local Apalache/TLC,
+Windows/native M4 admission, new framework/release qualification, commit/push
+or deployment is claimed. Exact receipts and identities are in
+[the source-review fix evidence](Plans/runtime-source-review-fix-evidence-20261029/README.md).
+
+## 2026-10-29 — Audited branch publication authorized
+
+The user authorized commit and push of the Mirrors and MirrorGate runtime-review
+changes, architecture/contracts, retained evidence and SANY re-pin. Stage only
+the audited paths; retain ignored raw logs explicitly with their hash-bound bytes
+and preserve unrelated editor caches and tool/build artifacts.
+
+Mirrors started at `ed86c2c`, current with origin. MirrorGate's new runtime commit
+was rebased onto upstream `4ef786b`, preserving all three incoming compatibility/CI
+commits and the README link; candidate `4b379ac` retains every runtime/test byte
+from the previously reviewed payload. The full Gate gate passes again after
+rebase (311 Python cases with five native cgroup skips, 227 Node cases, 11
+integration cases, native SDK/worker gates), as do all 171 optional integration
+tests. Existing Mirrors/SANY receipts and their source bindings remain unchanged.
+
+This is branch publication only. Native acceptance remains excluded by the user,
+not a pass; no new live model, installed distribution, framework qualification,
+release tag, registry publication or production deployment is implied. Exact
+payload/staged-blob SHA-256 audits, credential scans and final remote-ref checks
+are retained locally under `/tmp/mirrors-publish-20261029/`. Earlier checkpoint
+and evidence entries keep their historical identities and outcomes.
+
+## 2026-10-28 — SANY re-pinned; local gates restored; native acceptance excluded
+
+The user explicitly requested ignoring the native-runner remainder and re-pinning
+SANY. The fresh artifact is `fc6878c6…`, manifest `2.0 2026-10-28`, build revision
+`56d37a9`. The lock now binds its exact size/hash, computed SHA-1, manifest and
+changed native SANY help banner. Its complete 20-module standard-library digest,
+11 catalog module hashes and 17 import facts match the previous reviewed set;
+profile 6, catalog v3 and corpus/difference data remain unchanged. Apalache and
+Java pins are unchanged.
+
+The old cached `db131ddb…` jar is preserved under a dated sibling name, and the
+new reviewed bytes are retained in an explicitly selected ignored SHA-256 store.
+Fresh SANY-only offline restoration passes. The two previously failing catalog
+checks pass; the differential suite passes 74 of 78 checks with four live skips.
+The complete local non-model aggregate exits 0 and reports
+`ALL LOCAL NON-MODEL GATES GREEN`, including the runtime-remediation regressions.
+
+The requested local remediation is complete with native/delegated-cgroup
+acceptance explicitly excluded by the user, not credited as a pass. Live
+differential and installed/framework/release qualification remain separate.
+The earlier failed receipts and checkpoint entries are unchanged. Exact
+identities, logs and limits are in [the October 28 re-pin evidence](Plans/sany-repin-evidence-20261028/README.md).
+No local Apalache/TLC, commit/push, publication or host provisioning occurred.
+
+## 2026-10-28 — Architecture runtime fixes delivered; native acceptance pending
+
+The user requested runtime remediation of the Mirrors/Gate architecture review
+and continuation through full resolution. At base Mirrors `ed86c2c` / MirrorGate
+`5055d91`, uncommitted changes now add bounded retained outcomes, exact v2
+process/group/delegation journal linkage with pre-removal empty-counter persistence,
+retryable recovery, and persistent per-author/corpus evaluation attempt budgets
+with service-level disclosure filtering. The existing fidelity campaign now has
+an additional Gate shadow-observer rejection regression. Architecture and
+integration contracts describe the actual trust/result and evidence boundaries.
+
+The destination Gate required gate passes: 311 Python tests with five native
+cgroup cases skipped, 227 Node tests, 11 integration tests, three C++ CTest cases,
+Rust SDK/worker gates and actual Bubblewrap conformance/lifecycle checks. All
+171 optional integration tests, packed JS/TS consumers, seven durable-budget
+tests, 12 new group-process contract tests, six observer-fidelity tests, 142
+Mirrors evidence tests, the final 728-job build, job-store regression and the
+retention theorem's axiom audit pass. The remaining local non-model gates also
+pass separately, with documented live tiers skipped.
+
+The complete Mirrors aggregate remains failed at two unchanged standard-catalog
+assertions: cached SANY `db131ddb…` differs from pinned `d15655ee…`. A baseline
+replay reproduces both. The release URL returned `fc6878c6…`, which was rejected;
+no pin/cache/profile was changed. The first wire-sized retention cap also failed
+the trace-overflow regression; the final separate 256 KiB storage budget preserves
+that regression. Initial failures are retained separately from final passes.
+
+Read-only native preflight still reports WSL2 and no operator-supplied delegation.
+Required real native quota/descendant/controller-death acceptance, whole-host
+storage/resource admission and any new framework qualification remain open.
+The admitted native Linux runner and writable cgroup-v2 parent have been requested
+and are not supplied. No local Apalache/TLC, commit/push, release publication or
+host configuration occurred. Exact commands, hashes and receipts are in
+[the October 28 evidence](Plans/mirrors-gate-runtime-review-evidence-20261028/README.md).
+
+## 2026-10-26 — SANY re-pin advances provisional frontend profile 6
+
+At the user's explicit request, the standalone SANY pin now binds the newly
+served jar at build revision `2ef2af8`, SHA-256 `d15655ee…`, and its changed
+standard-library identity. The new `Bags.tla` removes public `Bags -> TLC`, so
+this is a catalog/profile migration rather than a hash-only refresh:
+`mirrors-standard-modules/v3` and `mirrors-tla-frontend-profile-6` are active.
+Profile-5 approvals are archived byte-identically and are not renewed. Exact
+identities and limits are in [the re-pin evidence](Plans/sany-repin-profile6-evidence-20261026/README.md).
+
+All 61 corpus fixtures match through the real frontend. Offline differential
+tests pass 59 with four documented skips, and the complete no-model aggregate
+passes with ext4 `TMPDIR`: 728 build jobs and `ALL LOCAL NON-MODEL GATES GREEN`.
+The coordinator's Java 21 fails the unchanged Java 25.0.4+7 runtime pin.
+Fresh required live differential runs and actual difference review remain
+pending; profile 6 receives no historical profile-5 or framework qualification.
+
+## 2026-10-26 — Windows compiler and temporary-path repairs validated
+
+Against Mirrors `81b1f76`, an uncommitted repair canonicalizes existing
+temporary-directory bases before constructing owned Apalache session paths.
+The model-interface Windows tests now use the compiler's actual stale-path
+separator spelling and a started, wall-clock-bounded concurrent injector;
+production publication/rollback code is unchanged. The local no-model runner
+adds a permanent trailing-`TMPDIR` trace-diagnostic regression. Exact source,
+archive, binary and result identities are in
+[the repair evidence](Plans/windows-compiler-temp-path-fix-evidence-20261026/README.md).
+
+The original eight Windows `model_interface_spec` assertions now pass, followed
+by three additional consecutive Windows passes. Windows Apalache pure/unit
+checks pass with trailing temporary-path variables; live integration remains
+skipped. Local trace failure fixtures pass with `/tmp`, `/tmp/` and `/tmp//`.
+The full local aggregate built 728 jobs but is not green: the ext4 run reached
+three offline acquisition failures/errors caused by missing original pinned
+artifacts, and the currently served SANY jar failed the existing hash pin.
+All commands after that aggregate step passed separately. Live models, full
+cross-client qualification, service reboot, production deployment, commit,
+push, tagging and publication remain outside this scoped result.
+
+During publication rebase, upstream `658b9ef` independently supplied the
+temporary-root implementation and broader suffix regressions. That upstream
+implementation is retained and the duplicate local runner change is dropped;
+the pre-rebase evidence above remains unchanged history. The Windows
+model-interface stale-path/race repair remains in the delivered change.
+
+## 2026-10-26 — Scoped Windows v0.1.0 service upgrade retained
+
+[The retained service record](Plans/windows-service-upgrade-evidence-20261026/README.md)
+observes `ModelMirrors` upgraded from 0.0.2 to `v0.1.0` at source `b243b37`,
+running in automatic-start mode on port 8999. Six focused runtime suites pass;
+synchronous/asynchronous positive and negative live controls behave as
+expected. The original eight compiler failures remain recorded as failures.
+Full `lake test`, the complete cross-client matrix and reboot testing did not
+run. This is neither current health evidence nor full service-manager,
+framework or v0.1.1 qualification.
+
+## 2026-10-25 — Publication boundary recorded
+
+The user authorized commit and push of the temporary-root sanitizer repair,
+qualification tooling/catalog updates and retained October 25 evidence. Mirrors
+and the related MirrorECMA generated catalog record are the only repositories
+with tracked changes; editor caches and ignored qualification/credential scratch
+remain excluded. Dated evidence and the accepted C0
+`ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421`
+retain their original identities and qualification bounds.
+
+Origin inspection found Mirrors current and MirrorECMA three commits behind.
+The latter was fast-forwarded to `f943588`, preserving the catalog bytes/local
+diff and all upstream release/CI changes. Publication checks cover that incoming
+source separately; the prior M5 receipts still bind MirrorECMA `13847be` and
+Mirrors `81b1f76` plus their recorded working-tree content. New published refs
+receive no automatic M5/DPM/native-platform qualification. A fresh freeze and
+corresponding gates are required before crediting those refs.
+
+This is branch publication only; existing release tags and historical receipts
+are preserved. Exact staged-file hashes, credential-scan results and verified
+remote commit refs are recorded separately in the local publication audit under
+`/tmp/mirrors-publish-20261025/`. No qualification producer is rerun or relabeled
+as part of this publication step.
+
+## 2026-10-25 — Current-source M5 profile qualification renewed
+
+The exact working-tree selection
+`ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421`
+qualifies for `m5-wsl-windows-remote/v1`, class `local-candidate`, at Mirrors
+81b1f76 / MirrorECMA 13847be / MirrorGate 5055d91 with their recorded dirty
+identities. [Current readiness](Plans/completed/current-source-qualification-2026-10-25.md)
+and its byte-identical result receipts own the exact scope, source/package/run
+identities, preserved diagnostics and exclusions. Catalog/component-lock product
+declarations now match Mirrors `0.1.1`; the temporary-root repair is included.
+
+Both rebuilt caches verified and both dated installs committed, preserving
+previous versions. Both fresh D audits ran first: `run-c6640359…` and
+`run-33a1216d…`. All 18 required commands/16 tiers passed. Fresh correct/faulty
+replay, both reproduction branches, 17-case local/Gate mutation aggregates,
+shortest-prefix reduction (2/16, complete minimality), four-resource prepared-
+filesystem recovery, remote HourClock validation, all 22 client rows and actual
+model-valid LeaseService reduction passed. The reduction preserved the original
+failure signature and confirmed `explore_done` cleanup.
+
+Q1 `run-aa8c2197…` verified the full 19-node/two-D scope. Independent offline Q2
+verified all 20 selected finalized bundles, accepted catalog B and both D
+bindings, and rejected six actual controls: missing artifact, changed byte,
+wrong D component binding, wrong R0/R1 origin, wrong R1/R5 input linkage and
+incomplete profile. Source/scratch were hidden, network unshared, archive
+read-only and the verifier/schema/registry/wheels were the exact installed
+inputs. The supporting recovery R0 receives no qualification credit. Failed and
+incomplete attempts remain unqualified; no historical producer credit transferred.
+
+The installed sanitizer regression passed through both packaged servers with
+`TMPDIR=/tmp/`, bounded 4,147-byte replies and owned paths redacted. Final
+source/catalog/lock identities and both installed inventories reverified without
+drift. The isolated Windows oracle used freshly observed mTLS credentials and
+endpoint with the original pinned native oracle binary/runtime; it is not a
+current-source native Windows release. Before/after observations matched. No
+native model images remained, then only the exact owned temporary server was
+stopped. The original deployment state and credentials were preserved. No live
+service health is claimed after cleanup and no local Apalache/TLC ran.
+
+Private proof and the exact installed verifier runtime are retained under
+`~/.local/state/mirrors/m5-current-20261025/final/`. A second isolated Q2 run
+using that durable verifier after oracle shutdown produced a byte-identical
+accepted result. Retention indexed 9,887 files / 3,525,340,683 bytes,
+owner-only, excluding actual credential carriers. Index SHA-256:
+`121e7585ca6e6450e90857e7fb71643d7727b4e9d1d4eb2fafe0c7bcee33ea52`.
+
+Broader M4, aggregate cgroups, active-process restart recovery, native Ubuntu,
+additional Gate platforms, legacy all-transport acceptance, full DPM-package
+renewal and production/publication stay separate. No commit, tag or push was
+requested or performed. A source/commit or selected-identity change requires a
+new freeze and corresponding gates. Earlier entries retain their dated scope.
+
+## 2026-10-25 — Corrected v0.1.1 qualification candidate frozen
+
+The active renewal now selects
+`ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421`.
+A final declaration audit found that the catalog and component lock still
+identified Mirrors as `0.0.2`; they now match source/executable `0.1.1`.
+The strict validator refused the first incomplete declaration update. After
+synchronizing the component lock, three refreshes reached byte stability and
+produced a new immutable snapshot. Both packages rebuilt, verified and committed
+to the dated prefixes, retaining their prior versions. Earlier `772f36d9…`
+packages and passed D runs are preserved without credit for the new candidate.
+
+The corrected local D audit passed; the Gate D audit is active. The installed
+sanitizer check and remaining source/installed/remote producers are queued behind
+both successful D bindings. Full Q1/Q2 is pending. The [campaign report](Plans/completed/current-source-qualification-2026-10-25.md)
+records exact manifest identities, diagnostic attempts, scope and exclusions.
+The final source/cache/store namespace is
+`~/.local/state/mirrors/m5-current-20261025/final/`; operational drivers remain in
+`tmp/qualification-20261025/`. Historical entries retain their original meaning.
+
+## 2026-10-25 — Current-source qualification renewal started
+
+The user requested the second outstanding status item: renew qualification for
+current source and rebuilt packages. The selected scope remains the named
+`m5-wsl-windows-remote/v1` local-candidate profile: 18 required commands, 16
+tiers, both installed D bindings, fresh origin/reproduction/reduction linkage,
+independent Q2 and six refusal controls. Broader M4 remains separate.
+
+A new working-tree freeze includes the temporary-root repair and current
+Mirrors/MirrorECMA/MirrorGate identities. The final selection is
+`772f36d9335e629b7476c36dfe5dd77082d60e3b5ca6e209364befbc44d35540`.
+Three identity refreshes reached final byte stability before the immutable
+snapshot. The first snapshot, taken before maintained remote-document updates,
+is preserved separately and receives no producer credit. Editor caches remain
+on disk and outside the source snapshot. No commit, tag or push is included.
+
+Fresh native inspection found the October 7 process and endpoint absent and
+its CA/server/client certificates expired. A separate owned qualification
+fixture now binds `172.28.144.1:8999`, using fresh seven-day mTLS credentials,
+two workers and separate temporary data/logs. The pinned oracle binary remains
+`5949af30735cd1bf515e64fb9d2299023e13b2c36245ce9be696d65944b32dec`
+at source base `1a069cd3e34d7bfea272e3ee7e10f51acedcc7cb`, with the pinned
+Apalache 0.62.2 / Java 25.0.4+7-LTS bytes. The old deployment, credentials and
+dated evidence remain unchanged. This is a model-oracle fixture, not acceptance
+of a rebuilt current-source native Windows server. The startup caller reached
+its 45-second capture timeout after readiness; a separate observation confirmed
+the owned listener. The failed caller is not a qualification pass.
+
+Rust and Lean interop harnesses were rebuilt from the current harness sources
+against their selected client-library revisions; their new binary hashes and
+the new endpoint are bound by the refreshed registry/source identity. Eleven
+remote-admission/interoperability-policy tests pass. Both distribution caches
+are being rebuilt and verified from the final snapshot, with new dated install
+prefixes. Both D audits must finalize before any remaining producer receives
+credit. Full Q1/Q2 and renewed package/framework acceptance are pending.
+
+Campaign drivers and progress: `tmp/qualification-20261025/`; new immutable
+snapshot/caches and durable store: `~/.local/state/mirrors/m5-current-20261025/`.
+No historical producer result is transferred to the new selection. No local
+Apalache/TLC process is permitted or has been started.
+
+## 2026-10-25 — Temporary-root path redaction repaired
+
+Working changes based on `81b1f76` (`v0.1.1`) repair the inherited trace-error
+sanitizer failure with `TMPDIR=/tmp/`. Before the fix, the focused synthetic
+failure fixture exited 1 because the owned path contained `/tmp//` while the
+child reported `/tmp/`; its private `modelmirrors-session-…` path escaped literal
+redaction. The October 22 failed receipts remain unchanged.
+
+`Shell/Apalache/SpecSource.lean` resolves the selected temporary root through
+`IO.FS.realPath` before creating owned spec/session directories and avoids adding
+another separator to a filesystem root. The recorded directory and the child's
+physical cwd now share a spelling. The diagnostic formatter and its UTF-8
+budget/category/exit-status behavior retain their existing contracts.
+
+The existing trace-generation transport suite now launches diagnostic children
+with temporary-root suffixes `""`, `/`, `///` and `/./`; every case checks path
+redaction, category/exit retention, stdout/stderr, multibyte text and truncation.
+The existing Apalache CLI suite also checks canonical owned spec directories.
+These regressions run through their existing Lake and non-model gates.
+
+Validation: the focused build passed 489 jobs; both focused suites pass
+with `TMPDIR=/tmp/` (real Apalache integration explicitly skipped). Separate
+synthetic diagnostic checks pass for a physical root containing spaces/Unicode,
+a symlinked root and a relative symlinked root. The first non-model aggregate
+stopped at a sandbox-denied loopback socket in `check-validate-closure.py`; it is
+retained as a failed attempt, not a pass. The complete aggregate with local socket
+access, `TMPDIR=/tmp/ bash tools/run-local-no-model-check.sh`, exited 0 and
+reported `ALL LOCAL NON-MODEL GATES GREEN`, including the synthetic trace-error
+fixture that previously failed. Its build passed 728 jobs and its DPM Python
+suite passed 79 tests. Native integer-map coverage, four live TLA reference
+tests and the live Apalache/explorer/Counter/async tiers remain explicitly
+skipped. No local or remote model checker ran; no release or new framework,
+installed-package or native Windows/macOS qualification is claimed.
+
+## 2026-10-22 — v0.1.1 patch release prepared
+
+The user requested a semantic-version advance while publishing the DPM changes.
+Mirrors `03510b4` commits the accepted DPM build preparation and documentation
+reconciliation. The next release is `v0.1.1`: a compatible build fix under the
+[ecosystem policy](Docs/ecosystem-versioning.md), with no wire/schema change.
+`Shell.Version.version` and the stdio version regression now require `0.1.1` /
+`v0.1.1\n`. The existing annotated `v0.1.0` object
+`57883d5e0fc5af41b5198ac75e715efec574df41`, pointing to `b243b37`, is preserved;
+the new release uses a separate annotated tag.
+
+Local release preparation passed 589 build jobs, 11 release-tooling tests,
+`fixtures_replay`, `diff_cross`, `model_interface_spec`, `stdio_smoke`,
+`transport_spec` and `check-client-framing.py`. The rebuilt mirror prints exactly
+`v0.1.1`. The earlier full non-model run remains bound to its recorded DPM
+source identities and explicit `TMPDIR=/tmp` condition; its inherited-environment
+sanitizer failure remains open and is not repaired by the version bump.
+
+Tag publication invokes the ordinary release workflow for the exact tag. Its
+archive contains `mirror` and `model_interface_gen`; the DPM launcher retains
+its separate build/install path. The PR packaging-tooling regression keeps the
+fixed `v0.1.0` baseline. Hosted artifact publication is not claimed by these
+local checks. No new live-model, cross-client, full DPM-package or framework
+qualification is granted by this patch version. Historical acceptance records
+and the original compatibility/retag inventories remain unchanged.
+
+## 2026-10-22 — DPM build preparation and current status reconciled
+
+Working changes against Mirrors `b243b37` (`v0.1.0`) replace the checked-in
+Python 3.10 identity with a generated Lake dependency under `.lake/build`.
+`MIRRORS_DPM_PYTHON` selects the build interpreter; actual interpreter and helper
+bytes are pinned before compilation. Unchanged builds preserve outputs, changed
+inputs rebuild the launcher, and ordinary mirror builds do not require DPM
+Python. Runtime integrity refusals and explicit reviewed installer-helper pins
+remain enforced. [Evidence and exact source/artifact identities](Plans/dpm-build-preparation-evidence-20261022/README.md)
+record the new acceptance boundary.
+
+The local build passed 728 jobs. DPM pure-policy 25 gates, typed-evidence 11
+gates and 79 Python tests passed, including identity preparation and actual
+temporary installation/relocation, doctor, retained-report and tamper controls.
+The dedicated build regression passed generation from absence, no-op behavior,
+runtime selection through cached Lake configuration, interpreter/helper changes,
+and failure preservation. The installed fixture does not acquire an SDK runner
+or establish fresh model comparison, source-hidden replay or full F4 acceptance.
+
+The complete non-model suite passed with explicit `TMPDIR=/tmp`. The first
+aggregate with inherited `TMPDIR=/tmp/` failed the trace-generation error-path
+sanitizer. A separately archived/rebuilt `b243b37` reproduces that failure with
+`/tmp/` and passes with `/tmp`; the unchanged sanitizer misses the canonical
+spelling of a double-slash temporary directory. Both failed receipts remain
+failed. Sanitizer normalization is separate open runtime work. Native integer-map
+coverage and live model tiers remain explicitly skipped; no local or remote
+model checker ran.
+
+Maintained documentation now records the committed Mirrors DPM tooling and
+October 15 conformance repairs, October 14 scoped acceptance, and the distinction
+between the original `ea8091c` compatibility matrix and the `b243b37` retag.
+Architecture JSON and HTML, source ownership and local links were checked.
+Earlier checkpoint/evidence entries and the generated catalog retain their bytes.
+The changes are uncommitted. No publication, production install, new full DPM
+package qualification or new framework qualification is claimed.
+
+## 2026-10-14 — DPM review follow-up fixes accepted on remote WSL
+
+The [fix plan](Plans/completed/dpm-review-followup-2026-10-14.md) and
+[tasks](Plans/completed/dpm-review-followup-tasks-2026-10-14.md) completed against working
+trees based on Mirrors 6e0cbce, MirrorCPP 75a63db, MirrorECMA fe9a648 and
+MirrorRust 7606173. [New acceptance evidence](Plans/dpm-review-followup-evidence-20261014/README.md)
+binds the corrected sources and fresh installation. Earlier checkpoint entries
+and both previous October acceptance dossiers retain their original bytes.
+
+Cooperative cancellation registers ownership before acquisition and preserves
+it through the first cleanup instruction, termination/reaping, stream closure
+and final accounting. Repeated signals cannot bypass cleanup; the primary
+failure retains precedence. Seven function/handler controls and separate
+public single/repeated cancellation controls confirm owned-runner absence.
+C++ event/observation admission measures fully wrapped rows and commas before
+retention. Exact-limit/one-byte-over regressions pass; the original 1,024-byte
+reproducer now refuses with 420 retained bytes and confirmed cleanup. Empty
+literal argv entries are admitted and delivered intact; path/NUL/UTF-8 bounds
+remain. All 27 synchronization CTest cases have TIMEOUT 30.
+
+All heavy validation ran on windows-dev Ubuntu WSL. Lean 727 targets, 25 pure
+policy gates, 11 typed-evidence gates, 65 Python tests, C++ scheduling/binding/
+exploration 35 cases/752 assertions, synchronization 27 cases/362 assertions,
+ECMA 23 tests and Rust offline consumer/vendoring passed. Fresh three-profile
+installed acceptance and the full non-model suite exited 0. The selected
+installation manifest is aa12b8377ee829558d8b872bb2ae793505e471cb21a22599a094fe54501351f8;
+all 5,265 files/hash/modes verify and its inventory remains unchanged.
+
+Independent review verified 36 implementation-file parity, 24 supplied-trace
+catalog matches, 120 local SDK schedules, 24 malformed-receipt refusals and
+30 unique cleaned reduction executions, with no remaining confirmed finding
+in the corrected scope. Each reduction retains its two baselines, seven
+smaller trials and fresh best replay. The public empty-argv control proves
+actual invocation and intentional missing-response refusal, not model match.
+Stale copied helpers and incomplete first curation remain superseded diagnostics.
+
+The new source/install namespace uses an owned 12-GiB ext4 image on D:; its
+mount recovery workflow preserves the image after WSL shutdown. Earlier remote
+source/install trees remain unchanged. No local builds/tests, fresh model
+checking, new M5/native-platform qualification, production change, commit or
+push occurred. Live tiers remain explicitly skipped. F5 modelComparison stays
+false; broader M4, hard quotas and uninterruptible-wait termination stay separate.
+
+## 2026-10-14 — DPM review remediation accepted on remote WSL
+
+The [approved remediation plan](Plans/completed/dpm-review-remediation-2026-10-13.md)
+completed R1–R5 against working trees based on Mirrors 6e0cbce, MirrorCPP
+75a63db, MirrorECMA fe9a648 and MirrorRust 7606173. The
+[new evidence record](Plans/dpm-review-remediation-evidence-20261014/README.md)
+binds exact source/runtime/installation identities and all final raw gates.
+Original October 13 evidence and earlier checkpoint entries remain unchanged.
+
+Corrected behavior includes v2 typed commands and isolated verified Python
+loading, launcher-owned pure policy, complete retained-output accounting,
+profile-aware execution/typed oracle validation, SDK denominator consistency,
+model-action aliases and initial-mismatch compatibility. C++ controlled-resource
+deadlines cover returning callbacks and actual joins; late cleanup stays
+non-passing while preserving physical cleanup and the primary failure.
+
+At the user's request, all final heavy qualification ran on the owned remote
+Windows/Ubuntu WSL host. Installed acceptance and the full non-model gate both
+exited 0. The three fresh source-hidden, network-isolated consumers each passed
+match/mismatch, eight catalog comparisons, 40 SDK schedules, 11 control families
+and eight fresh receipt mutants. Their reductions each confirmed two baselines,
+seven smaller trials and a fresh best replay, reducing [3,1,4,7] to [2,0,0,6].
+The selected installation manifest is
+829f09ddef80a5db433f3580160092b80e0134e55032c8263ad14f087f341285;
+independent review verified 5,265 installed files and found no remaining confirmed
+findings in its reviewed scope.
+
+Validation includes Lean 727 targets, 16 pure policy gates, 11 typed evidence
+gates, 58 DPM Python tests, C++ scheduling 35 cases/752 assertions, controlled
+synchronization 25 cases/331 assertions, ECMA 23 tests and Rust offline/fresh
+consumer gates. The full suite includes 39 distribution, 142 durable-evidence
+and 63 offline TLA differential tests; four live reference tests and the live
+Apalache/Counter/async tiers stay explicitly skipped. Environment/cache/layout
+failures are preserved as superseded diagnostics, not passes.
+
+The independent audit confirms 24 catalog matches, 120 local SDK runs, 30 fresh
+reduction executions and 24 malformed-receipt refusals. The separate installed
+controlled-resource overrun reports timed_out/passed=false with both budget
+flags true and cleanup confirmed; modelComparison remains false. There was no
+fresh model check, new M5/native-platform qualification, production deployment,
+commit or push. Broader M4 and hard OS resource confinement remain separate.
+
+## 2026-10-13 — F3 reducer, F4 installed CLI and F5 C++ prototype accepted
+
+The user authorized all six execution stages. The working changes start from
+Mirrors 66f9418, MirrorCPP 75a63db, MirrorECMA fe9a648 and MirrorRust 7606173.
+[Implementation and evidence](Plans/dpm-f3-f5-evidence-20261013/README.md)
+records exact source/installation identities, commands, receipts and limitations.
+The changes remain uncommitted; no push, publication, service change or fresh
+model check ran. MirrorExamples and ModelMirrors remain excluded.
+
+F3 validates whole actor-local chains and deterministically searches a finite
+oracle-backed catalog. C++, Node and Rust actually reduce cost [3,1,4,7] to
+[2,0,0,6] with the same write/count delta-1 failure, two baseline reproductions,
+seven smaller trials and fresh confirmed best replay. Minimality is confined to
+the admitted catalog. F4 installs an artifact/runtime-bound CLI with doctor,
+replay, exploration, reduction and receipt reporting. All three fresh consumers
+rebuilt with checkouts hidden and Linux networking isolated; each passed actual
+match/mismatch, eight model-backed catalog cases, 40 SDK local finite cases,
+report, tamper, bounded-search and cleanup controls. The selected install
+manifest is 81a0bb368f108ea12880ed3f7cec6a253c329390817e2f6e81d0c91c42078ef2.
+
+F5 is a separate C++ controlled nonrecursive mutex/bounded FIFO prototype on
+real threads, with explicit enabledness, retained deadlock graph, fresh prefix
+exploration and joins. Eleven cases/179 assertions and an installed public API
+sample pass; resource receipts explicitly have modelComparison false.
+The installed ECMA gate exposed a private-channel completion/exit race.
+MirrorECMA now acknowledges completion before unreferencing that channel;
+the real-exit/late-hook behavior and the new delayed-delivery regression pass.
+
+Validation: full Lean build (722 jobs), eight pure gates, 34 DPM Python tests,
+all local non-model gates, 35 legacy C++ scheduling cases/752 assertions and
+23 ECMA scheduling cases passed. Live Counter/async model tiers were explicitly
+skipped. Exact October 5 remote captures were reused and provenance checked;
+no local Apalache/TLC started. C++ unit tests used Debug with warnings as errors;
+a pre-existing GCC optimized fixture warning blocked the initial Release unit
+build, while the fresh installed C++ consumers compiled in Release.
+
+This acceptance is separate from frozen M5 C0 94271a54… and does not qualify a
+new framework release or native Ubuntu/Windows/macOS platform. Broader M4 and
+Node/Rust controlled-resource wrappers remain separate. Historical evidence and
+unrelated editor caches/ECMA .work/ remain preserved.
+
+## 2026-10-09 — Maintained documentation synchronized to current source
+
+The user requested synchronization of outdated documentation. The review starts
+at Mirrors 548ba71, MirrorECMA 1e87f3e, MirrorCPP 25a44b5, MirrorRust 0f77fdf,
+MirrorGate 8afae26 and MirrorLean b8b9491; these are source-navigation identities,
+not a new qualification freeze. [Synchronization audit](Plans/completed/documentation-sync-2026-10-09.md)
+records the exact changed-document inventory and validation results.
+
+Current status, architecture Markdown/text/JSON/HTML, compiler/target guides,
+roadmap/task navigation, AGENTS instructions and linked C++/ECMA/Rust scheduling
+and remote guides now include source-accepted F1/F2. F3 reducer, F4 installed CLI
+and F5 synchronization-wrapper research remain approved and unimplemented;
+broader M4 stays separate. Frozen M5 C0 94271a54… remains bound to
+f0894d2/eef6f71/455e196; the newer compiler/tools have no new installed-package
+or full-current-source qualification.
+
+Reduction and frontend guides now distinguish completed October 7 domain
+qualification and retained profile-5 differential acceptance from earlier
+pending/failed records. The old AGENTS September sections are archived verbatim
+in [the checkpoint reference](Plans/completed/framework-checkpoint-reference-2026-09-22.md).
+Remote guides record that the old certificate validity ended October 8, while
+leaving live service/replacement identities unobserved. No service or credential
+was changed and no model-check/qualification campaign ran.
+
+All maintained local document targets/anchors, architecture payload/graph/source
+references and embedded JavaScript syntax are checked in the audit. Historical
+checkpoint entries, frozen source/evidence/fixture bytes, generated catalog block,
+unrelated Rust protocol-test edit and editor caches remain preserved. Changes
+are documentation only and remain uncommitted; no push or package publication.
+
+## 2026-10-07 — DPM usability and documentation publication checkpoint
+
+The user requested recording the current state and committing/pushing the completed
+work. F1 generated DPM integration kits and F2 counterexample timelines are source
+accepted. `model_interface_gen generate-dpm/check-dpm` covers six C++/async-ECMA/
+Rust target modes; the read-only timeline consumes actual SDK receipts with explicit
+identity, digest and attribution checks. Applications own checkpoints and actual
+observations; scheduling remains cooperative at declared checkpoints.
+
+[First-slice evidence](Plans/dpm-usability-evidence-20261007/README.md) records 21
+focused tests, compiler/eight-emitter language/23 migration regressions, actual
+helper/seed compilation in three languages, and a generated Node consumer with
+real workers: normal match and increment mutation `step_mismatch`, both with
+confirmed cleanup. Parsing 148 retained receipts is diagnostic coverage. No fresh
+model check or installed-package qualification is claimed for these new changes.
+
+Maintained documentation across Mirrors, MirrorECMA, MirrorCPP, MirrorRust,
+MirrorGate and MirrorLean is synchronized. [Current status](Docs/current-status.md)
+and the [terminal architecture diagram](Docs/architecture-overview.txt) describe
+implemented boundaries. Historical evidence and prior entries retain their bytes;
+the earlier C0 94271a54… acceptance remains tied to its exact frozen profile.
+
+Resume approved F3 schedule reduction, F4 installed cross-language CLI and F5
+synchronization-wrapper research from the [feature plan](Plans/dpm-usability-features-2026-10-07.md)
+and [design](Docs/dpm-usability-design.md). Those follow-ons remain unimplemented;
+broader M4 remains separate. Any qualification of the new source/tool revisions
+requires a new identity freeze and corresponding gates.
+
+Publication includes the feature, source evidence and coordinated documentation
+changes. The unrelated MirrorRust `tests/protocol.rs` edit and untracked editor
+caches are excluded. Commit and remote identities are verified after publication;
+this entry records the state prepared for that operation.
+
+## 2026-10-07 — Approved DPM usability first slice source accepted
+
+The user approved the five feature recommendations, with the generated integration
+kit and timeline first. [Feature contracts](Plans/dpm-usability-features-2026-10-07.md)
+were written before code. `generate-dpm/check-dpm` now validates explicit model/
+actor/action/checkpoint mappings and publishes ordinary bindings plus native
+helper, canonical metadata, application seed and checklist through existing owned
+atomic generation. Six C++/async-ECMA/Rust target modes pass; ordinary binding
+bytes stay unchanged. Lean/sync-ECMA, malformed/incomplete mappings and bad actor
+inputs reject before output. Applications still own actual hooks/observations.
+
+The read-only timeline consumes actual CPP/ECMA/Rust/native receipts, correlates
+permits/arrivals/observations, preserves model failure versus cleanup cancellation,
+and leaves absent/ambiguous attribution unknown. Trusted kit metadata annotation,
+input digest checks, event/identity/terminal contradictions, truncated evidence
+and no-clobber controls pass. The viewer parsed 148 retained actual receipts;
+that diagnostic probe is not fresh replay/model qualification.
+
+[Source acceptance](Plans/dpm-usability-evidence-20261007/README.md) records 21
+focused tests, compiler/eight-emitter language/23 migration regressions and actual
+SDK helper/seed compiles in all three languages. A fresh generated Node consumer
+runs real workers and real local supplied-trace comparison: normal match and
+production increment mutation `step_mismatch`, both with confirmed cleanup.
+No new model checker ran. Regression inputs are copied byte-identically from
+accepted records; historical proof/acceptance files stay unchanged.
+
+Schedule reduction, installed CLI and synchronization wrappers remain approved
+follow-ons, not implemented by this first slice. Broader M4 stays separate.
+Source/tool changes require their own later freeze/gates; old C094271… is still
+its exact frozen profile record. Concurrent documentation sync, unrelated Rust
+edit and editor caches remain preserved. No commit/push is included.
+
+## 2026-10-07 — Maintained documentation synchronized
+
+The user requested all docs synchronized after published qualification and the
+plain-text architecture explanation. [Documentation audit](Plans/completed/documentation-sync-2026-10-07.md)
+updates maintained Mirrors/client entry points, current status, architecture
+Markdown/plain text/JSON/HTML, compiler/migration/profile scope, operator commands
+and SDK DPM/Lean/Gate guides. Broader M4 remains explicitly separate.
+
+[Current status](Docs/current-status.md), [terminal block diagram](Docs/architecture-overview.txt)
+and [DPM guide](Docs/deterministic-scheduling.md) form the new navigation paths.
+The accepted named profile remains frozen at C0 94271a54… with implementation
+bases f0894d2/eef6f71/455e196; documentation changes are not fresh qualification.
+Dated evidence, fixtures, source identities and prior checkpoint entries retain
+original bytes/counts. Optional checkouts no longer cause local broken links.
+
+Changed-document targets/anchors/fences, architecture graph/embedded copies,
+JavaScript/Python snippet syntax and all repository whitespace checks pass.
+Three evidence inventories (11+25+700 files) remain unchanged. No source/runtime
+code, service operation, model check or commit/push was included; unrelated editor
+caches and Rust protocol-test edits remain preserved.
+
+## 2026-10-07 — Published roadmap revisions fully qualified
+
+The user authorized the remaining qualification and necessary unchanged-deployment
+startup. Fresh published C0 `94271a543085118e47c7fd540ee8d34d3f427fa5f45fedaeba0c852534f4f34a`
+qualifies for `m5-wsl-windows-remote/v1` at Mirrors f0894d2, MirrorECMA eef6f71
+and MirrorGate 455e196. Three refreshes reached byte stability; one immutable
+snapshot produced verified local/Gate caches and committed installations. Both
+D audits ran first. All 18 required commands and 16 tiers pass.
+
+Fresh HourClock is VALID, the declared 22-case remote matrix passes, and
+LeaseService domain reduction is model-valid with the same mismatch and confirmed
+cleanup. Full Q1 verifies 19 linked nodes and both D bindings. Independent Q2
+accepts 20 selected bundles with source/scratch hidden, networking unshared and
+read-only archived inputs; all six negative controls reject. Final source/catalog/
+lock and installed inventories are unchanged.
+
+[Published readiness](Plans/completed/q3-published-roadmap-2026-10-07.md) records identities,
+fresh public run references, diagnostics and exact scope. Native before/after
+observations preserve PID 35888, binary 5949af… and original Apalache 0.62.2,
+Java 25.0.4+7-LTS and TLS identities. Only the intended resident server remains;
+no owned qualification/model images remain. No local model checker ran.
+
+First approval B omitted required observation bindings and was correctly refused;
+its bytes and archive remain diagnostic. Corrected later approval binds only
+actual required source/local/installed observations. Prior incomplete and older
+qualified records remain unchanged. Full private evidence is retained owner-only
+at ~/.local/state/mirrors/m5-roadmap-final-20261007, excluding credential bytes.
+M4 native enforcement/process restart and broader platform acceptance remain
+unqualified. No commit/push is included in this qualification task.
+
+## 2026-10-07 — Current roadmap candidate: available gates accepted, full Q pending
+
+The fresh working-tree C0 `d5358150e9fe041c930a066b6f2f0f88b2f617e782692dd7ad0e9c5b2bfe7109`
+reached byte stability after three refreshes. One immutable snapshot produced
+verified local/Gate caches and committed canonical-prefix installations. Both
+D audits qualify with relocation, hidden sources, offline namespaces and actual
+correct/mismatch replay. The installed migration supplement passes in both
+runtimes with tamper refusal and unchanged inputs.
+
+14/18 required command IDs pass; the extra Gate D and retained interruption
+origin give 16 selected bundles. All source commands, installed correct/fault
+replay, local/Gate mutation, LeaseService origin, both R1 branches, shortest-prefix
+reduction (2/16, complete minimality) and recovery of four owned prepared filesystem
+resources pass. Independent installed/offline verification accepts their integrity
+and linkage, with `q1Complete=false` and `q2FullProfilePassed=false`.
+
+[Current readiness](Plans/q3-roadmap-refresh-2026-10-07.md) records exact boundaries.
+The selected owned Windows oracle has no live process/listener; startup approval
+is still pending. Remote model check, 22-case interop, domain reduction and final
+full-scope verification remain required. No local model checker ran, no service
+was started/reconfigured, and no historical envelope was rewritten.
+
+Earlier failed setup/bytecode/missing-runtime attempts remain diagnostic. The
+migration helper is source accepted (23 controls and compiler/language gates);
+M4 native enforcement and durable process-to-cgroup recovery remain unqualified.
+No commit/push is included. Unrelated editor caches and the Rust protocol-test
+edit remain untouched.
+
+## 2026-10-07 — Roadmap continuation: migration helper accepted, refresh active
+
+The user authorized applying the recommended roadmap sequence. The
+[execution plan](Plans/completed/roadmap-next-execution-2026-10-07.md) batches source changes
+before a fresh M5 freeze. `compare-locks` now reads and validates both locks,
+reports canonical semantic/provenance differences and explicit regeneration
+requirements, and performs no output-file writes. All 23 migration controls,
+the existing compiler spec and eight-emitter language gate pass; the helper is
+registered in both local and Lake gates. [Source/preflight evidence](Plans/roadmap-next-evidence-20261007/README.md)
+is distinct from fresh installed or release qualification.
+
+The M4 preflight imports Gate's actual delegation validator. WSL2 and the
+absence of an admitted parent keep native enforcement unqualified; the root
+control refuses. Source audit also identifies the missing durable process-to-
+cgroup resource binding needed for post-restart process recovery. The
+[native-host/platform plan](Plans/m4-native-host-and-platform-plan-2026-10-07.md)
+selects native Linux acceptance first and describes the required extension and
+negative controls. No Gate process ownership rule was weakened.
+
+The retained October 3 archive survives; old /tmp drivers/carriers were restored
+from admitted bytes. The Batteries commit stays pinned at 4488d40…; a regenerated
+same-revision Git bundle has an explicit new archive byte/hash pin. Current
+candidate refresh is active. The owned Windows oracle is stopped; unchanged-
+deployment startup has been prepared and approval requested, so remote producers
+remain pending. Historical M5/DPM records stay unchanged. No commit/push is
+included; editor caches and unrelated Rust protocol-test edits remain untouched.
+
+The October 5 DPM changes were committed and pushed after their acceptance
+checkpoint: Mirrors 05a9ce1, MirrorECMA 18735bd, MirrorRust 08d189f. Earlier
+“uncommitted” entries describe their original acceptance times.
+
+## 2026-10-05 — MirrorECMA and MirrorRust DPM-0–DPM-5 accepted
+
+Both declared language profiles now pass the [stage plan](Plans/completed/dpm-mirrorecma-mirrorrust.md).
+[Retained acceptance](Plans/dpm-languages-evidence-20261005/README.md) binds source,
+packages, generated consumers, fresh oracles and installed receipts. Each client
+passes 60 counter replay cases, 11 finite-exploration checks, 14 actual Windows
+native runs and three pre-acquisition mapping controls. Installed consumers build
+and run with source checkouts hidden and Linux networking isolated. The native
+Windows dependency remains external to that namespace.
+
+Six bounded remote safety checks are VALID; no local model checker ran. Final
+owned-worker count is zero; the oracle PID and binary are unchanged. Additive
+async-ECMA/Rust v2 targets supply integer-key maps while v1 output stays stable.
+Local Mirrors gates, Rust tests/clippy and ECMA stages pass with skips and earlier
+failed combined invocations explicitly distinguished in the retained report.
+
+Changes remain uncommitted. No package publication or new M5/full-WriteSentry
+qualification is claimed. The unrelated Rust protocol test and editor caches
+remain untouched.
+
+## 2026-10-04 — DPM-2–DPM-5 declared profiles accepted after approval
+
+The user approved the selected oracle/model transfers and native staging. The
+[final acceptance](Plans/dpm2-dpm5-qualified-20261004/README.md) closes the earlier
+Partial checkpoint for these stages. Four fresh counter cases pass 60 replay
+controls. Four native schedules each match on two fresh Windows processes; two
+staged production mutations cause actual `step_mismatch`. Actual phase divergence,
+paused cancellation, image mismatch and owned-child termination are classified;
+three incompatible mappings reject before acquisition. Four fixed-schedule
+`MBTSafety` checks returned VALID through the existing Windows oracle.
+
+The installed consumer compiles and runs with both source checkouts hidden and
+networking isolated. Portable replay/exploration gates and the installed native
+matrix pass. The native gate uses the existing WSL carrier to execute actual
+Windows workers, not a Windows build of the complete SDK. Final observation
+finds zero remaining owned test processes. The service kept PID 2572 and its
+original binary hash; it was not reconfigured or restarted.
+
+Counter type annotations and ordered overlap guards, native build/runtime working
+directories and a missing standard header were corrected during real acceptance.
+The native generated binding was regenerated from raw fresh ITF to preserve exact
+parameter-metadata negotiation; WriteSentry's existing lock/source work remains
+untouched. The SDK's unchanged runtime retains 220/220 unit passes. Generated
+counter/native outputs check clean. Changes remain uncommitted; no package was
+published. Scope excludes full WriteSentry qualification, a Windows Gate backend,
+universal concurrency correctness and a new M5 release candidate.
+
+## 2026-10-04 — DPM-2–DPM-5 local work retained; native acceptance pending
+
+The authorized stage plans and step-by-step local execution are retained in
+[the DPM-2–DPM-5 plan](Plans/completed/deterministic-production-mbt-dpm2-dpm5.md) and
+[acceptance evidence](Plans/dpm2-dpm5-evidence-20261004/README.md). Incremental
+MirrorCPP binding/replay and finite exploration are implemented. All 220 SDK
+unit cases pass; generated output checks clean. A fresh installed consumer with
+repositories hidden and networking isolated passes 15 replay cases, 11 exploration
+cases and artifact/profile refusal controls. Full local exploration covers 20
+schedules and two inputs, with independent denominator and semantic coverage checks.
+
+The native WriteSentry bridge and frozen pilot/build inputs are prepared; seven
+synthetic transport controls pass. The transport crash control exposed and fixed
+a POSIX SIGPIPE failure, covered by a red/green child-process regression. No
+WriteSentry production source was changed by this work.
+
+Overall acceptance is **Partial**: explicit authorization is pending for new
+model/source transfers to the existing Windows oracle/owned staging root. No
+fresh oracle capture, native Windows pilot or native production-mutation acceptance
+was run. DPM-5 native capability therefore remains unqualified. No commit/push or
+external package publication was performed. Older records below remain historical.
+
+## 2026-10-04 — DPM-0 design and DPM-1 portable coordinator accepted
+
+The user authorized the deterministic-production-MBT recommendation: specify
+DPM-0 and implement DPM-1's small concurrent fixture. MirrorCPP now exposes an
+experimental cooperative scheduler with static admission before factories,
+real worker-stack preservation, exact checkpoint replay, quiescent observations,
+classified failures and retained ownership after cleanup timeout.
+
+The refreshed WriteSentry baseline already contains an application-specific
+native phase scheduler and recorded bounded v3 acceptance. This work adds the
+reusable portable interface; it does not replace its trap-safe atomic handshake
+or claim a new native WriteSentry result.
+
+Validation: 615 assertions across 18 focused cases; 202/202 local unit tests;
+17 fresh-process replays over two schedule shapes and two inputs; installed
+CMake consumer; Address/Leak/UndefinedBehavior fixture checks; ThreadSanitizer
+615-assertion suite. The successful TSan process used `setarch x86_64 -R` after
+a runtime mapping collision; diagnostic sanitizer startup failures receive no
+credit. No model checker ran.
+
+[Design and execution plan](Plans/completed/deterministic-production-mbt-dpm0-dpm1.md)
+and [retained acceptance](Plans/dpm1-evidence-20261004/acceptance.json) record
+source/binary hashes, replay receipts, cleanup outcomes and limits. DPM-2
+comparison integration, DPM-3 native adapter, DPM-4 exploration and DPM-5
+capability publication remain separate proposed slices. Changes are uncommitted;
+this local acceptance does not modify the earlier M5 qualification.
+
+## 2026-10-03 — Published revisions qualified
+
+Fresh qualification covers the compiler/client follow-ups and M6 implementation
+at the published component revisions under the established profile.
+
+The published-revision C0 `f01fb7717ca9bab18a68443707f478d49c15a15d420273db1e881c9683b16384`
+qualifies for `m5-wsl-windows-remote/v1`. 3 refreshes reached byte stability; both
+caches and installs passed; local D `run-2c926686-0c27-4877-bb4e-edc9ba92ff07`
+and Gate D `run-e0df2658-fbad-4ad8-aaf9-85a48872b083` qualified first.
+All 18 required commands/16 tiers, 22 remote client cases, both reproduction
+branches, prefix/domain reduction, both 17-case mutations and prepared-filesystem
+recovery pass. Source-hidden LeaseService acceptance also passes.
+
+Outer Q `run-5b93e3af-9ddf-4bef-979a-9159cbca6dcb` and independent Q2 accept
+all 20 selected bundles and the 19-node/two-D scope; six controls reject.
+Installed trees and native process/binary/runtime identities remain stable at
+close. No local model checker ran. Native Ubuntu, aggregate cgroups,
+active-process recovery, service-manager acceptance and legacy all-transport
+interop remain unqualified. No commit or push was performed for this batch.
+
+[Current Q3 readiness](Plans/completed/q3-published-2026-10-03.md) records exact
+identities, run references and limits. Owner-only retained evidence lives at
+`~/.local/state/mirrors/m5-published-20261003`; credentials are excluded.
+
+## 2026-10-03 — Post-M6 publication checkpoint
+
+The user authorized commit and push of the completed compiler/client, M6 and
+fresh M5 qualification work. Implementation commits:
+
+- MirrorCPP: `aa906a5cef166e7290a2636a93f89b1123cbff23`.
+- MirrorRust: `afbb694bd847ad34dbfbbba75a05038653a350a1`.
+- MirrorLean: `b161cbe7f61a7c468a67a451bba1765d6fe0336f`.
+- MirrorECMA: `a03cf10a8787ff7691a4fd8b8f1013667501dfb7`.
+- Mirrors: `fcaa34192b20c49a0e224e7491afe6f50236367c`.
+
+MirrorGate has no implementation changes in this batch. Editor caches remain
+untracked. The qualified selection remains the recorded working-tree C0
+`879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`;
+these new Git identities require a fresh freeze before claiming qualification
+of the published revisions. The retained Q3 and earlier checkpoint remain
+unchanged. This publication record is a documentation-only follow-up commit.
+
+## 2026-10-03 — Post-M6 candidate qualified
+
+Fresh qualification covers the compiler/client follow-ups and M6 implementation
+in the admitted working trees under the established profile.
+
+The post-M6 working-tree C0 `879be4fd92d3c2e1abbb19b0737c620dcf7cea466f6796a4703b75aa5a533c25`
+qualifies for `m5-wsl-windows-remote/v1`. 2 refreshes reached byte stability; both
+caches and installs passed; local D `run-3bafa0a2-bab8-40a2-8ca3-4d75e2dea475`
+and Gate D `run-050b159c-eea4-440c-9e16-ed610c84e2ed` qualified first.
+All 18 required commands/16 tiers, 22 remote client cases, both reproduction
+branches, prefix/domain reduction, both 17-case mutations and prepared-filesystem
+recovery pass. Source-hidden LeaseService acceptance also passes.
+
+Outer Q `run-307609e0-303a-4cf3-82af-7cd7ab2090a2` and independent Q2 accept
+all 20 selected bundles and the 19-node/two-D scope; six controls reject.
+Installed trees and native process/binary/runtime identities remain stable at
+close. No local model checker ran. Native Ubuntu, aggregate cgroups,
+active-process recovery, service-manager acceptance and legacy all-transport
+interop remain unqualified. No commit or push was performed for this batch.
+
+[Current Q3 readiness](Plans/completed/q3-post-m6-2026-10-03.md) records exact
+identities, run references and limits. Owner-only retained evidence lives at
+`~/.local/state/mirrors/m5-post-m6-final-20261003`; credentials are excluded.
+
+## 2026-10-03 — M6 reviewed scaffolds and public corpus integration complete
+
+The authorized M6 plan was presented after the compiler/client follow-ups and
+documentation housekeeping, then implemented. All five clauses pass at the
+declared source and public integration scope: deterministic multi-evidence
+scaffolding, explicit review and immutable sealing, workflow-bearing v2 lock
+provenance, atomic corpus publication, and the public projected-cells fixture.
+Legacy single-input proposal and v1 lock behavior remains available.
+
+Validation: 151 compiler/workflow/CLI checks, six read-only artifact controls,
+three optimized source-hiding probe checks, the full Mirrors local non-model
+runner, and MirrorECMA type checking plus 676 tests across 42 suites. MirrorECMA
+retains 13 optional skips; live model checks were not run for M6.
+
+The same generated suite passes ten runtime checks locally and through Gate's
+real worker collection bridge. Correct runs match two traces, four updates and
+two Update/Update pairs. Typed faulty observations produce expected-zero /
+actual-one model mismatches. Cleanup is independently confirmed and persisted;
+deliberate disposal failures prevent success. Corpus admission precedes all
+resource acquisition, while later Gate preflight rejection confirms cleanup of
+its already prepared control session without binding the implementation.
+
+Final relocated, source-hidden, network-isolated receipt:
+`/tmp/m6-projected-cells-integration-v2-20261003/receipt.json`, SHA-256
+`4cf4202297c0c0439a009eec1f9c21347e420496ac0c7a33e78551015198eda1`.
+The final run used `PYTHONOPTIMIZE=1`; the model-check sentinel records zero
+invocations. Receipt input, compiler, package, corpus and log hashes were
+independently rechecked. The [M6 execution record](Plans/completed/m6-reviewed-scaffolds-and-corpora.md)
+and [workflow reference](Docs/model-interface-compiler/reviewed-corpora.md) retain
+the exact contracts, evidence and publication limits.
+
+These changes remain uncommitted and do not inherit the frozen M5 qualification.
+Native Ubuntu, aggregate cgroups, active-process recovery and Windows
+service-manager acceptance remain outside this work. The Windows publication
+path correction has source evidence only, without native Windows execution.
+
+## 2026-10-03 — Compiler/client follow-ups and documentation housekeeping complete
+
+Generated Lean bindings and required registry negotiation are implemented.
+Shared Core judgments and generated consumers cover all six supported profiles,
+including the additive C++ v2 profile. Fifteen common recordings and sixteen
+actual SDK `report_state` frames agree across the profiles. Codec regressions,
+typed observation failures, deferred construction, poisoning and cleanup checks
+pass. Rust and Lean each pass four supplied-trace/offline rows and five fresh
+owned-Windows mTLS rows, with source trees hidden and prepared inputs verified.
+
+The five-base-profile/18-row aggregate receipt is
+`fcc03960006c509e79bdbc0a40cb30f64a1342a597f19cda9237401096f87499`;
+the supplemental C++ v2 receipt is
+`d212c1f7986db6a8d5d53e89ff2e18219e57dcf9b054e6f990b34eda9947b264`.
+Mirrors non-model gates, SDK checks and regenerated Counter golden checks pass.
+Architecture references and stale plan headers were reconciled while retaining
+historical records. [The follow-up report](Plans/completed/compiler-client-followups-2026-10-03.md)
+records exact scope, results and receipt paths.
+
+These working-tree changes do not inherit the frozen M5 qualification below.
+No local model checker, commit or push was performed. The user-authorized M6
+plan and execution follow this completed phase.
+
+## 2026-10-03 — Qualification integrity fixes qualified
+
+All three reviewed gaps are fixed: exact interop verdict/exit classification,
+source-built and pinned ECMA runtime/Node with required v2 receipt retention,
+and planning audit records separated from C0 identity. Source regressions and
+owning checks pass (142 evidence, 39 distribution and 19 focused ECMA tests;
+Mirrors non-model suite and ECMA type checking). Historical v1 readers/hashes
+remain unchanged; planning edits/additions/deletions/restorations preserve C0.
+
+The corrected working-tree C0 `de4e1864af4c5686d7620592adfead0c9822d9319c745ccc9bdee3ff25e534af`
+qualifies for `m5-wsl-windows-remote/v1`. 2 refreshes reached byte stability; both
+caches and installs passed; local D `run-5f1bdf28-8ece-42f9-b337-ef53c5d64c56`
+and Gate D `run-c29693ba-8070-430f-aae5-2c994ffb4d54` qualified first.
+All 18 required commands/16 tiers, 22 remote client cases, both reproduction
+branches, prefix/domain reduction, both 17-case mutations and prepared-filesystem
+recovery pass. Source-hidden LeaseService acceptance also passes.
+
+Outer Q `run-cb7c34cf-cead-4b1d-85e3-ba3b4a092889` and independent Q2 accept
+all 20 selected bundles and the 19-node/two-D scope; six controls reject.
+Installed trees and native process/binary/runtime identities remain stable at
+close. The stopped Windows oracle was restarted from unchanged bytes before
+collection. No local model checker ran. Native Ubuntu, aggregate cgroups,
+active-process recovery, service-manager acceptance and legacy all-transport
+interop remain unqualified. No commit or push was performed for this batch.
+
+[Current Q3 readiness](Plans/completed/q3-integrity-fixes-2026-10-03.md) records exact
+identities, run references and limits. Owner-only retained evidence lives at
+`~/.local/state/mirrors/m5-integrity-20261003`; credentials are excluded.
+
+## 2026-10-02 — Published-commit M5 qualification complete
+
+The user-authorized qualification passes for published Mirrors `29d50ab25ac46ece70c0628f57a70dca4e8aef43`,
+MirrorECMA `f2a6a5aa554d745e4497874ede7ce9ee9db9436f` and MirrorGate `455e196c73332a1b0d85b1d822dfc4aa3542bbd9`.
+New C0: `77b9f27dbd6f806708bbf9609ed0169912bd7d0fc78463556c05c59f75cb44f6`. All included implementation-path
+lists are empty; no source/producer/registry change was required. Three refreshes
+reached byte stability, one immutable snapshot produced both verified caches,
+and both installations committed. Fresh local D `run-d582b76c-297b-464c-af40-f1ad7f842ce6`
+and Gate D `run-d7aa1a4e-b537-486f-a648-2168fd0b35a9` qualified first.
+
+All 18 required commands and 16 tiers pass. Both fresh R0/R1 branches reproduce;
+prefix reduction proves best 2/16 with complete minimality; full LeaseService R5
+preserves the same actual reduced-corpus state-5 `write` mismatch with a passed
+correct baseline and confirmed cleanup. Both fixed 17-mutant aggregates pass.
+Fresh recovery reclaims four prepared filesystem resources from its deliberately
+interrupted origin, retained without credit. Source-hidden/offline Lease origin,
+R1 and candidate replay pass. Fresh Windows HourClock is `VALID` and all 22
+declared five-client mTLS cases pass on the actual 0.62.2/25.0.4+7-LTS console.
+
+Outer Q `run-ef411ef2-976e-4732-818f-2a5aa698412c` and C1
+`bb6845ec78ab9184384ee302eb753b123f3dddc1ef3d8f5ca6662e7d6997942c` qualify the complete profile.
+The 19-node scope with both D bindings and all 20 selected bundles independently
+verify using installed pinned wheels, sources/scratch hidden, archive read-only
+and network unshared. All six tamper, binding, linkage and incomplete-profile
+controls reject. Final installed trees remain unchanged; native identity is
+stable before/after. No local model checker ran.
+
+Current [published-commit readiness](Plans/completed/q3-published-commits-2026-10-02.md)
+records exact public references, acceptance and limits. Authoritative private
+evidence is owner-only under `~/.local/state/mirrors/m5-published-commits-20261002`;
+credential bytes are excluded. Native Ubuntu, aggregate cgroups, active-process
+post-restart recovery and service-manager acceptance remain outside this profile.
+Windows work stays within `C:\Users\ayden\Desktop\Workspace`.
+Target commits are unchanged; only generated metadata/reporting outputs are
+modified. Historical qualification evidence and entries are preserved.
+
+## 2026-10-02 — Published-commit M5 qualification started
+
+The user authorizes the full qualification campaign for published source refs
+Mirrors `29d50ab…`, MirrorECMA `f2a6a5a…` and MirrorGate `455e196…`.
+The selected profile remains `m5-wsl-windows-remote/v1`; native Ubuntu and
+aggregate cgroups remain excluded. Windows work stays under
+`C:\Users\ayden\Desktop\Workspace\MirrorsRemote`; no local model checker.
+The new [readiness record](Plans/completed/q3-published-commits-2026-10-02.md) is pending
+fresh freeze, dual builds/installs and D audits, every Q1 producer, independent
+Q2 and final Q3. Previous qualified snapshots and evidence remain unchanged.
+
+## 2026-10-01 — M5 completion source commits published
+
+The user authorized commit and push after the five-item completion campaign.
+The coordinated implementation and public evidence are published on each
+repository's `origin/main`:
+
+- Mirrors: `aaa5ad185d6d5fd4226823e73c55d1c31c16d1d1` — installed LeaseService origin/R1/full
+  reduced-corpus acceptance, prepared-snapshot recovery, Windows remote producers,
+  multiple-D scope approval and complete Q3/public evidence records.
+- MirrorECMA: `f2a6a5aa554d745e4497874ede7ce9ee9db9436f` — remote Apalache 0.62.2 pin,
+  awaited validator digest checks and updated remote-admission tests.
+- MirrorGate: `455e196c73332a1b0d85b1d822dfc4aa3542bbd9` — launch-helper `-B` and the
+  real package-immutability regression.
+
+The recorded acceptance remains bound to working-tree C0
+`f2080fd722ed097eb1d5e4b4fd8cd4e8d7a1d1092b91530d48a51ca3bf141670`:
+18 required commands, 16 tiers, the full 19-node scope with both D bindings,
+20 independently verified bundles and six rejected negative controls. Source
+validation is unchanged: Mirrors 129 evidence/36 distribution/63 capture tests;
+MirrorECMA 626 passed with 13 optional skips; required supported Gate gates passed.
+Both installed trees and the observed Windows deployment identities remained
+unchanged at campaign close. No local model checker ran.
+
+Public evidence blobs retain every recorded byte count/hash, including the four
+intentionally projected logs. Private envelopes, inputs, native receipts and
+credentials remain outside Git. The unrelated `.projectile-cache.eld` files
+remain on disk and untracked. Frozen readiness reports and previous checkpoint
+entries are historical and unchanged.
+
+Publication creates new source revisions. It does not relabel the retained
+pre-publication qualification as a clean-commit run; a later qualification round
+must refresh the catalog/snapshot from the published refs and rerun its gates.
+This newest entry records publication and supersedes the earlier uncommitted
+state. The following checkpoint-only commit preserves the source/evidence bytes
+published above.
+
+## 2026-10-01 — Five-item M5 completion qualified
+
+The authorized five-item plan is complete for `m5-wsl-windows-remote/v1`
+(`local-candidate`). Exact C0: `f2080fd722ed097eb1d5e4b4fd8cd4e8d7a1d1092b91530d48a51ca3bf141670`.
+Both caches rebuilt from one immutable snapshot and both installations committed;
+local D `run-2a4f088c-4ff0-4636-ace2-3b42609fa94f` and Gate D
+`run-20b4d70c-48c3-4c17-952a-14f34bec284d` qualified first.
+All 18 required commands and 16 tiers pass for this candidate.
+
+Installed LeaseService R0/R1 and full domain reduction preserve the same required
+bundle and actual reduced-corpus `write` mismatch at state 5, with a passed correct
+baseline and confirmed cleanup. WorkQueue prefix reduction proves best 2/16 with
+complete minimality after three actual stability reproductions. Both fixed
+17-mutant aggregates pass. Native recovery reclaims four prepared filesystem
+resources from its fresh, deliberately interrupted origin; that origin is retained
+without credit. Source-hidden/offline Lease origin, R1 and candidate replay pass.
+Fresh Windows bound-3 HourClock is `VALID`; all 22 declared five-client mTLS cases
+pass under the actual 0.62.2/25.0.4+7-LTS console identity.
+
+Q `run-9a271249-3947-4273-8a51-c5ccf9154119` verifies a full 19-node scope with both D
+bindings. Twenty selected bundles, the complete graph and the named C1 catalog
+qualification verify independently with installed pinned wheels, repositories and
+scratch hidden, archive read-only and network unshared. Six tamper, binding,
+linkage and incomplete-profile controls reject. C1 approval is
+`1b8db918f96fc713a2fab00bffd7158e06e491e71a019e4c42e12b03aa941ef5`.
+
+Real execution corrected Q's producer label and Gate helper bytecode writes;
+each source correction triggered a complete new freeze/build/install/rerun.
+Final materialization checks pass for both installed trees. Mirrors' non-model
+gate passes (129 evidence, 36 distribution, 63 capture tests); MirrorECMA check
+and 626 tests pass with 13 optional skips; required supported Gate gates pass.
+No local model checker ran.
+
+The [completion readiness report](Plans/completed/q3-m5-complete-2026-10-01.md) records
+exact public references, boundaries and clause acceptance. Authoritative private
+evidence, native observations, raw receipts, exact caches/snapshot, independent
+results and failed attempts are owner-only under
+`~/.local/state/mirrors/m5-completion-20261001`. Credential bytes are excluded.
+Native Ubuntu/aggregate cgroups remain outside this named profile; active-process
+post-restart recovery and Windows service-manager acceptance remain unqualified.
+All Windows work remains within `C:\Users\ayden\Desktop\Workspace`.
+Changes are uncommitted; historical entries/reports remain unchanged.
+
+## 2026-10-01 — Five-item M5 completion campaign started
+
+The user authorized execution of `/tmp/m5-remaining-five-items-plan-2026-10-01.md`.
+Implementation and qualification are in progress; current report:
+[completion campaign](Plans/completed/q3-m5-complete-2026-10-01.md).
+
+## 2026-10-01 — M5 Linux requirements removed; Windows remote work passed
+
+The user removes native Ubuntu host acceptance and real aggregate-cgroup
+acceptance from M5, selecting `m5-wsl-windows-remote/v1`. WSL-supported
+installed, isolation/recovery and evidence requirements remain. All Windows
+work stays under `C:\Users\ayden\Desktop\Workspace\MirrorsRemote`.
+The active oracle is `172.20.208.1:8999`, pinned mTLS, Apalache 0.62.2 and
+Microsoft Java 25.0.4+7-LTS, using an observed owned native console process.
+
+Final selection: `3fbab48a8e94be8f72c53ea0f3cc07df97b2c04facf8e169b83d29838861c53c`.
+Both caches were rebuilt from one immutable snapshot and both installations
+committed. Local D `run-d3cfb744…` and Gate D `run-1afaf007…` qualified.
+Remote model check `run-af4c9237…` returned bound-3 HourClock `VALID`.
+Interop `run-4f0f263b…` passed all 22 declared mTLS verdict/pin/protocol cases
+across five clients. Installed domain materialization `run-c938aa2f…` qualified:
+LeaseService input `Client: 2 -> 1` at state 2, fresh remote model validity,
+confirmed oracle cleanup. Installed replay with all three framework repositories
+hidden preserved the exact `write` mismatch at state 5 and confirmed cleanup.
+
+Real execution exposed and fixed the unresolved-digest Promise comparison in
+MirrorECMA and the evidence adapter's forbidden local-mirror field requirement.
+Mirrors' full non-model gate passed (including 123 evidence tests); MirrorECMA
+check and 626 tests passed with 13 skips; supported real Gate gates passed with
+the pinned Node runtime. No local model checker ran.
+
+Ten individual finalized bundles verified independently offline with sources,
+producer scratch and network unavailable. Missing required artifact and changed
+byte controls were rejected. A supporting nine-node scope verified with both D
+bindings. **Full M5 remains unqualified**: giving R5 complete scope credit needs
+its exact LeaseService bundle in a finalized R1, and current-candidate project
+replay/reproduction/prefix-reduction/mutation/recovery plus the complete installed
+Q1/Q2 graph remain. No excluded Linux capability or historical selection is
+credited to this candidate.
+
+The [readiness record](Plans/q3-windows-remote-2026-10-01.md) contains exact run
+IDs and remaining clauses. [Public summaries](Plans/m5-windows-remote-evidence-20261001/README.md)
+are diagnostic projections; authoritative private inputs, receipts, observations,
+verifier output and failed attempts are owner-only under
+`~/.local/state/mirrors/m5-windows-remote-20261001`. Changes remain uncommitted.
+
+## 2026-10-01 — WriteSentry publication and immutable dependency pin completed
+
+The user authorized commit/push and the remaining publication work. Published
+the qualified Mirrors compiler/capture implementation and exact retained
+evidence as `739834141d2f7cd4db2f8cb19be9e828262d258f` on `origin/main`.
+Raw evidence retains native CRLF/trailing blanks through path-specific Git
+attributes; all 202 linked retained hashes and 175 fresh corpus entries verify.
+The unrelated `.projectile-cache.eld` remains untracked on disk.
+
+Published the clean MirrorCPP v2 carrier as
+`e73dadbac6055fa3ff94b5ee90c0649e4ad03ebd` on `origin/main`. Its exact patch
+matches the earlier qualified dirty carrier. Negotiation tests pass 21 cases
+with 393 assertions; v1 binding tests pass six cases with 50 assertions.
+WriteSentry's gitlink now pins that full immutable SHA. Published its reviewed
+original-table integration, fresh-evidence binding, generated CMake guards,
+remote campaign and updated instructions as
+`a8fe1cf19e973624f4f1ee883f90dee30e03bf13` on `origin/main`.
+
+A new consumer build disables installed-package discovery and compiles the
+published SDK directly from WriteSentry's submodule. Configure/build and 8/8
+CTests pass. That consumer also passes native and real stdio replay of the
+complete retained fresh corpus, plus all three real-server mutation controls.
+The semantic digest remains
+`517189720fc2a3eee8015ba55ad771aed3c2a74212a1f70f0c22e6c4bfb6c8a5`.
+Acceptance: [published-pin evidence](Plans/model-interface-compiler/writesentry-publication-evidence-20261001/acceptance.json).
+
+The remaining publication/dependency-pin work is complete. The previous Windows
+campaign stays bound to its actual dirty source snapshot and process/tool
+identities; this separate clean-pin consumer run does not relabel it as a new
+remote generation campaign. Windows DR/VEH runtime, remote application replay,
+Q1 service-manager acceptance and frontend reference conformance against 0.62.2
+remain outside this scoped result. Earlier checkpoint entries are historical.
+
+## 2026-10-01 — Fresh WriteSentry qualification on the current Windows host
+
+The user authorized a current-machine Windows oracle with Apalache 0.62.2 and
+required all Windows work under `C:\Users\ayden\Desktop\Workspace`.
+The isolated deployment is in `Workspace\MirrorsRemote`; existing global tool
+installations and firewall settings were preserved. Verified official portable
+Apalache 0.62.2 and Microsoft Java 25.0.4+7-LTS were staged there. Native Lean
+4.33.0 builds the reviewed dirty source snapshot; the final server build passes
+520 jobs. The owned native console server listens with pinned mTLS at
+`172.20.208.1:8999`, PID 25156, binary SHA-256
+`5949af30735cd1bf515e64fb9d2299023e13b2c36245ce9be696d65944b32dec`.
+Matching before/after observations retain its source tree, tool hashes, DLLs
+and certificate identities. This is a console deployment, not an AUTO_START
+Windows service-manager qualification.
+
+The first inline campaign failed honestly: its lifecycle reply required
+229,159 bytes against the frozen 65,535-byte line limit. Implemented an explicit,
+allowlisted shared-artifact grant with a confined Workspace root and paired
+client mapping. Generation still occurs through the pinned mTLS endpoint.
+New direct-child destinations are reserved atomically; escaping, existing and
+async destinations fail before generation. Source artifacts retain strict
+JSON/ITF checks, 16 MiB/file, 64 MiB aggregate and 64-artifact limits, original
+hashes and metadata. Ordinary remote and async behavior remains inline-only.
+Contract: [confined transfer](Plans/model-interface-compiler/windows-shared-trace-transfer.md).
+
+**Fresh portable WriteSentry oracle qualification passes:** fourteen scenarios,
+424 actually replayed snapshots, 212 snapshots across fourteen distinct
+per-scenario state sequences, all eighteen actions, eight reached flags, both
+overlap directions and all three real-server `step_mismatch` controls.
+Apalache's 28 numbered/unnumbered artifacts have equal paired state sequences
+and distinct description timestamps; all are preserved. The separate fresh
+corpus is `freshOracle: true`; the historical recorded corpus stays false.
+The binding was regenerated/checked from fresh evidence, with unchanged
+semantic digest `517189720fc2a3eee8015ba55ad771aed3c2a74212a1f70f0c22e6c4bfb6c8a5`.
+The normal rebuilt WriteSentry consumer passes 8/8 CTests, fresh native and
+stdio replay, and all three real-server mutation controls again.
+
+Native fixes: correct three Winsock pointer arguments; link the capture spec's
+native dependencies; isolate OpenSSL import libraries from an incompatible
+newer MSYS2 CRT. The native rebuild gate now excludes unrelated ignored
+`.golden-build` caches from its disposable copy. Original caches stay on disk.
+Final validation: native Windows capture/shared specs, fifteen CLI cases, five
+remote admission/integrity cases, full local non-model aggregate and native
+rebuild graph pass. All 175 fresh campaign entries and 28 original Windows
+artifacts have verified hashes. Automatic approval review timed out once before
+the post-campaign observation; its single permitted retry succeeded.
+
+Evidence and exact identities:
+[Windows acceptance](Plans/model-interface-compiler/writesentry-windows-evidence-20261001/acceptance.json).
+A complete Windows copy is in `Workspace\MirrorsRemote\qualification\20261001`.
+The server is left running; Workspace contains the owned start/observe/stop
+scripts and seven-day credentials. Private client material is outside Git.
+
+Remaining publication: the separate MirrorCPP v2 commit/push and WriteSentry
+gitlink advancement still await their requested publication authorization.
+These new source/evidence changes are uncommitted. Windows DR/VEH runtime,
+remote application replay and Q1 service-manager acceptance are separate tiers.
+The retained profile-5 frontend reference remains pinned to Apalache 0.61.0;
+this backend campaign does not relabel it as 0.62.2 reference conformance.
+
+## 2026-10-01 — Actual WriteSentry adoption and profile-5 reference qualification
+
+The user identified `~/Repos/WriteSentry` and requested all remaining work.
+That checkout now has the intended `9dd4b57` history, replacing the unrelated
+history observed in the earlier entry. The tested original-table adoption is
+applied in that actual checkout. Its pinned MirrorCPP submodule is initialized
+at `d8ed445` and contains the reviewed v2 client change; these source changes
+remain uncommitted. No publication was inferred for this separate repository.
+
+- Actual WriteSentry CMake build and **8/8 CTests pass**, including its new
+  remote-wrapper admission/integrity test. The independent recorded replay
+  recounts **14 scenarios, 212 states, 18 actions, eight flags**. Original
+  `reg`/`dr`/`tls` values are compared with no slot projections.
+- The actual MirrorCPP submodule builds and passes **27 unit cases** (393
+  negotiation assertions, 50 v1 binding assertions). The selected v2 profile
+  replays over stdio, loopback TCP, and ephemeral mTLS; negotiated stdio and
+  allowlisted mTLS pass; plain-TCP negotiation denial and incompatible profile
+  selection run zero application code. Unsupported TypeScript/Rust profiles
+  fail before generated output publication.
+- The selected Microsoft JDK archive and executable match respectively
+  `75894d107e474ffb6c947ab050e3893e0a1d3d40d36f107d42936ac6088769c1`
+  and `e7bc0bc01b516a2ade3d9fceabc12d16c3a3b737adbf186a353602872ba31aad`.
+  The runtime reports `25.0.4+7-LTS`. It is extracted in `/tmp/mic-selected-jdk`;
+  the system runtime was not replaced.
+- **Profile-5 required differential qualification passes** with 183 completed
+  observations, 564 matches, fourteen reviewed outcome-only differences, and
+  292 explicitly unsupported reference projections. Renewals cover exactly
+  the seven existing stricter/resource policies in language-profile section 9,
+  with unchanged fixture sources and selected tool fingerprints. Raw baseline
+  and final evidence is retained under the frontend differential corpus;
+  review: `Drafts/tla-profile5-policy-renewals.md`. These runs parse reference
+  sources only; no local model exploration occurred.
+- Implemented `mirror trace-gen`: captured source closure and inline ITF
+  retrieval through the existing synchronous/async protocol, strict raw reply
+  parsing, exact ITF metadata, bounded job correlation/cancellation, and new
+  local output/hash receipt publication. Its owning Lean spec and **fourteen
+  actual loopback CLI cases pass**. Design:
+  `Plans/model-interface-compiler/writesentry-remote-oracle-path.md`.
+- Actual WriteSentry now owns `tools/mbt/generate_corpus_remote.py` and its four
+  offline tests. The campaign checks selected service context, a same-time
+  six-field operator observation, capture artifact membership/hashes, source
+  and executable stability, recounted coverage, and genuine local-server
+  mutation controls. It never invokes a local Apalache launcher.
+- The full current local non-model aggregate passes **44/44 runner steps**.
+  Automatic approval review initially timed out before that aggregate started;
+  the single permitted retry was approved and completed. Source/doc whitespace
+  checks pass. The pre-existing Rust edits were preserved.
+
+Retained local results and exact binaries/component identities:
+[remaining-work acceptance](Plans/model-interface-compiler/writesentry-remaining-evidence/acceptance.json).
+
+**Fresh deployed-service qualification is still incomplete.** Its admission
+fails before network contact because `MIRRORS_REMOTE_CLIENT_CERT` and the
+associated private context are absent; no same-time operator observation was
+provided. The remote code and protocol fixtures do not qualify a fresh oracle.
+The old recorded corpus remains explicitly `freshOracle: false`.
+
+Dependency publication also remains pending: upstream MirrorCPP still points
+to `d8ed445`, so a clean v2 dependency SHA requires a separate MirrorCPP commit
+and push, then updating WriteSentry's gitlink. Explicit publication approval
+was requested asynchronously after the tested result was concrete. The earlier
+commit/push published Mirrors `772a82c`; it did not publish these separate
+repository changes. Nothing was deployed or installed globally.
+
+## 2026-10-01 — WriteSentry work resumed; local acceptance green, fresh qualification open
+
+The user resumed the five-workstream plan. The historical paused implementation
+was already committed in `52768f8`; Mirrors started this pass at
+`da0ae6d4f50176cdc4d7795006fc9e71471279a8`. Current changes remain uncommitted.
+The CMake build blocker and a following `SourceDigest.path` error are fixed;
+`lake build` now passes (646 jobs). No agents were spawned.
+
+Contracts and complete acceptance position:
+[extension contract](Docs/model-interface-compiler/writesentry-extensions.md),
+[updated plan](Plans/model-interface-compiler/writesentry-integration-improvements.md),
+[retained evidence](Plans/model-interface-compiler/writesentry-v2-evidence/acceptance.json).
+
+| Workstream | Exercised position | Open acceptance |
+| --- | --- | --- |
+| MIC-2 | Shared recorded-first parameter partition and existing `/v1` rationale documented; focused proofs/regressions and ordinary recorded server replay pass. | Full new-profile cross-client/transport qualification. |
+| MIC-1 | Integer-map codecs/proofs and native v2 fixture pass. Native coverage includes large signed keys, both key sorts, nested/empty maps, ownership, literal lookup, and input failures before callbacks. Runtime specialization checks every template replacement. | Fresh original-table remote oracle; intended application checkout delivery and full supported-combination qualification. |
+| MIC-3 | Frontend profile 5 and live corpus migrated; standard summary regenerated through the producer. All eleven module hashes and eighteen public/local edges match the locked standalone jar. | Required differential run remains incomplete: selected JDK `25.0.4+7` unavailable; installed `25.0.4.1+1` is rejected. Profile-4 approvals are archived, never credited to profile 5. |
+| MIC-4 | Generated helpers pass offline/configure/build checks, captured dependency/input/output mutations, unsafe/duplicate paths, omitted-owned-artifact rejection, regeneration failures, and unrelated-file preservation. Gates wired into owning runners. | Broader platform/consumer qualification. |
+| MIC-5 | Five independent native lowering findings agree between executable JSON/human diagnostics and identify nested types/projection segments and lock pointers. Focused diagnostic regressions pass. | Escaping and executable JSON/human agreement pass; broader cross-client qualification remains open. |
+
+The final local non-model aggregate passed **42/42 runner steps**, using prepared
+MirrorCPP at `/tmp/mic-mirrorcpp-install`; its live tiers remain excluded or
+self-skipped. Differential offline tests: **63 tests, four live-reference
+skips**. The offline acquisition test now simulates runtime admission separately
+from its real artifact-hash/extraction checks, and an explicit regression proves
+that the different JDK cannot satisfy live qualification. The live pin was not
+weakened. The required profile-5 differential attempt exited 2, incomplete.
+
+WriteSentry's exact recorded upstream integration `9dd4b57` was retrieved to
+`/tmp/mic-writesentry`. The sibling checkout has unrelated Bazel history at
+`ed35481` and was preserved. The adoption removes all six slot observations and
+projection-only replay, restores the base imports, observes original `reg`,
+`dr`, and `tls`, and uses `mirrorcpp-v2` generated CMake helpers. Normal consumer
+CTest passes **7/7**. Recorded native replay recounts **14 scenarios, 212 states,
+18 actions, eight flag classes**, with both overlap directions. Real stdio
+server replay passes; `drop-reservation`, `skip-clear`, and
+`allow-foreign-writer` each produce actual server `step_mismatch`.
+
+The derived corpus records **`freshOracle: false`** and its original manifest
+identity. This is original-table acceptance over recorded data, not a fresh
+remote qualification. The [adoption patch](Plans/model-interface-compiler/writesentry-v2-evidence/writesentry-v2.patch)
+applies cleanly to exact commit `9dd4b57`; no change was forced into the unrelated
+sibling checkout. Prepared native sources remain at `/tmp/mic-mirrorcpp`, exact
+MirrorCPP baseline `d8ed4455e8f73a9144215f62f1dc6963d6d792e7`, built with GCC 13.3.0.
+A later negotiated check exposed its v1-only runner allowlist. The
+[retained client patch](Plans/model-interface-compiler/writesentry-v2-evidence/mirrorcpp-v2.patch)
+adds exactly v2, preserves the default v1 profile and exact four-part registry
+key, and passes real negotiated v2 stdio replay plus wrong-profile rejection
+with zero application factories/callbacks. Client unit suites pass 21 negotiation
+cases (393 assertions) and six v1 binding cases (50 assertions). Invalid
+identifier quotes/backslashes/newlines are now escaped consistently in human
+CLI diagnostics, with an executable regression. Native string `mapKey` data
+containing embedded NUL/quotes/backslashes/newline exposed C-string truncation;
+the v2 renderer now uses length-delimited UTF-8 byte literals, and its real
+ordinary/negotiated replay passes. Keyword rejections also name the selected
+profile. This carrier is the baseline plus
+uncommitted patch, not the unmodified baseline.
+
+Current binaries:
+
+- Compiler SHA-256 `55bf151eae973a0c83f2827f38ee4dafa5558fb12770b15b3d3837bdafcc2257`.
+- Built mirror SHA-256 `185a49d6278d0d2fdc424180db34d0dcaf44b6eabadbc1e4ce23013b44ba9ecc`.
+- WriteSentry semantic digest `517189720fc2a3eee8015ba55ad771aed3c2a74212a1f70f0c22e6c4bfb6c8a5`.
+
+Fresh remote work is still open. Admission fails before contact because
+`MIRRORS_REMOTE_CLIENT_CERT` and the associated private credential/service
+identity context are absent. The selected JDK download timed out. A reviewed
+Mirrors CLI remote trace-generation/retrieval path is also outstanding; the
+current CLI supports remote validation, and local file paths cannot transfer
+this corpus. No local model checker ran, and the deployed service was not
+contacted or changed.
+
+The five-workstream definition of done remains incomplete. Next: obtain the
+selected local JDK and renew profile-5 differential review, choose the intended
+WriteSentry checkout for the tested adoption, then implement/review the remote
+corpus path and execute fresh qualification with operator credentials and
+same-time backend identity. Commit/push, installation, publication, and
+deployment were not performed. Framework M3/M5 qualification was not advanced;
+these source edits require a new candidate freeze before any new framework
+credit. Preserve `.projectile-cache.eld` and the existing `Proposals/` work.
+
+## 2026-09-30 — WriteSentry compiler improvements paused by user
+
+Recorded at **21:42 +08:00** after the user requested: “Break, record current
+state as checkpoint to CHECKPOINTS.md.” Implementation is intentionally stopped.
+Do not continue until the user resumes it. The five-workstream plan is **not
+complete**, and the working tree currently does **not** pass a full build.
+
+Plan: [WriteSentry integration improvements](Plans/model-interface-compiler/writesentry-integration-improvements.md).
+
+### Source and delivery state
+
+- Mirrors `HEAD == origin/main` locally at
+  `b009cafebc8f057901ce98c66cc9772898c04d57` (the plan commit). These are local
+  tracking observations; no new remote query was made for this stop.
+- The earlier published `v0.0.3` tag still targets
+  `adcf1290e52380367d6632187631b0591cfea4c2`. The new implementation remains
+  uncommitted and unpushed; the tag does not include it.
+- Before this checkpoint edit: 16 tracked implementation files changed, plus
+  new `Core/Tla/StandardCatalog.lean` and
+  `Shell/ModelInterface/Emit/CMake.lean`. Preserve the unrelated
+  `.projectile-cache.eld` and `Proposals/README.md`; do not stage or remove them
+  as part of this work. `Proposals/` was not created by this implementation pass.
+- MirrorCPP remains clean at
+  `d8ed4455e8f73a9144215f62f1dc6963d6d792e7`; no sibling source was edited by
+  this pass. MirrorRegistry is excluded from scope at the user's request.
+- **WriteSentry advanced independently** from the plan's `e26fe92` baseline to
+  `9dd4b57844603878d93fdecc2ee43f7f1abe0ee2`
+  (`Tests: use generated WriteSentry model-interface binding`). Its current
+  untracked entries are `.projectile-cache.eld`, `CHECKPOINTS.md`, and `Plans/`.
+  Reinspect that committed integration before resuming: the plan's statement
+  that it is an uncommitted working tree is now historical. This pass neither
+  created that commit nor verified its remote publication.
+- No agents were spawned. The last Lake build finished with an error; its
+  unified-exec session is no longer active. A host process check found no
+  `lake`, `lean`, or `leanc` process running. No qualification command remains
+  live from this pass.
+
+### Implementation and acceptance boundary
+
+| Workstream | Current changes | Remaining acceptance |
+| --- | --- | --- |
+| MIC-2 replay partition | `Core/Trace.lean` now uses stable, deduplicated recorded names followed by configured additions for both metadata and `resplit`. Resolver normalization shares that policy. Membership, losslessness, disjointness, and pointwise repeated-split proofs remain checked. A WriteSentry-shaped regression covers recorded names, empty configuration, additions, duplicates, and repeated application. | Full replay/negotiation and affected regression closure; update compatibility and Haskell-divergence documentation. The working decision retains comparison policy `/v1` because the descriptor already specified the combined partition; record and review that rationale before acceptance. |
+| MIC-1 integer maps | New `Value.vintmap` stores integer keys separately from root/record string keys. Concrete integer walkers preserve equality equivalence proofs. ITF decoding accepts homogeneous `#bigint` keys and rejects duplicate integer, malformed, mixed, and unsupported keys. Canonical empty maps remain `vmap []`, interpreted using the resolved key type. Codec round-trip proof, typed preflight, and integer-key input projection compile. Integer-map diffs currently produce an atomic map-level mismatch, preserving the existing diff theorems. | Native C++ compilation/execution, executable projection/zero-callback failures, original-table WriteSentry adoption and replay, compatibility documentation, and full gates. No final WriteSentry or cross-client qualification was performed. |
+| MIC-1 C++ profile | Additive `mirrorcpp-v2` accepts integer/string maps and corresponding literal `mapKey` paths; `mirrorcpp-v1` keeps its previous capability boundary and passes its existing exact golden check. CLI target allowlist and ownership profile version handling were extended. The v2 runtime specializes checked v1 template sections and rejects missing/ambiguous map or variant boundaries. | Review runtime-template assembly, native ownership/copy safety, supported key matrix, packaging, and supported client/server combinations. Pure emitter success is not native execution evidence. |
+| MIC-3 standard imports | New pure catalog records public and local dependency edges. `Integers -> Naturals` and `Reals -> Integers` become visible unqualified and through named instances; local imports stay hidden. Shell catalog identity is now `mirrors-standard-modules/v2`, with a TLA+ Tools 1.8.0 baseline label. Focused elaboration and resolver scenarios were updated. | Frontend language-profile bump and frozen corpus/summary migration are still pending: lexer/parser and corpus still identify profile 4. Catalog content identities, source-override coverage, and pinned differential/reference qualification remain open. Do not credit historical profile-4 evidence to these changed semantics. |
+| MIC-5 diagnostics | C++ target validation accumulates independent unsupported-type/path findings with model/action/input/observation IDs, typed-lock pointers, nested type paths, and target context. Shared emitter diagnostic fields feed existing structured compiler diagnostics. Focused C++ rejection/context/order checks pass. | Executable CLI JSON/human agreement, escaping/location cases, projection diagnostics, and expanded-profile guidance. |
+| MIC-4 CMake consumers | Draft pure emitter creates `MirrorInterface.cmake`, `MirrorVerify.cmake`, and `MirrorInterface.inputs.json` alongside binding/ownership files. Draft `generate-cmake`/`check-cmake` commands compile inputs, hash source/input/output artifacts and compiler bytes, and reuse owned publication. The helper proposes offline checks, build dependencies, and explicit regeneration. | **Currently fails to compile.** No CMake configure/build/replay, freshness/mutation, path-safety, failure/rollback, or consumer acceptance gate has run. Draft helper safety and schema behavior still need review. |
+
+The polymorphic mutually recursive map attempt triggered a Lean 4.33 compiler
+IR/explicit-boxing failure. It was replaced with concrete string/integer
+walkers; `Core.Value` subsequently built successfully. Do not reintroduce that
+failed polymorphic version or use `noncomputable`, `sorry`, or axioms as a
+workaround. The changed proof files contain no `sorry` or added axioms.
+
+### Validation retained before the last CMake edit
+
+- Initial replay-partition regression was red with **11 failures** in
+  `/tmp/mic-partition-red-test.log`; the repaired focused suite passed in
+  `/tmp/mic-partition-green-test.log`.
+- `lake build Core.Value` passed:
+  `/tmp/mic-intmap-value-build.log`.
+- `lake build Codec.Json` passed, including the extended round-trip theorem:
+  `/tmp/mic-intmap-codec-build.log`. `Core.Diff` and typed preflight also built
+  during this work.
+- Latest successful pre-CMake build:
+  `lake build model_interface_spec model_interface_gen mirror`, recorded in
+  `/tmp/mic-intmap-compiler-build.log` (537 jobs).
+- `.lake/build/bin/model_interface_spec` returned
+  `MODEL INTERFACE SPEC GREEN` in `/tmp/mic-intmap-compiler-test.log`, including
+  replay partition, integer-map codecs/projection, emitter capability, and
+  diagnostic regressions. Log SHA-256:
+  `115609a409cb81cbe2bb938de26e52004835c819dff7697c0ab3b7d6f26ea266`.
+- Counter `model_interface_gen check --target mirrorcpp-v1` returned
+  `model-interface check clean` in `/tmp/mic-cpp-v1-golden.log`. Log SHA-256:
+  `5b793c730e6597d40440b7464ed2be6748b25079c359b7dfa4d75908cd93596b`.
+- `/tmp/mic-diagnostics-import-build.log` contains
+  `TLA ELABORATION SPEC GREEN` after import changes, but that aggregate later
+  failed on an emitter-test syntax error subsequently fixed. Treat the
+  individual elaboration result separately from that failed aggregate;
+  re-run the affected frontend/resolver executables on resume.
+- `git diff --check` passed at stop. No full local non-model aggregate, native
+  C++ gate, CTest consumer campaign, interop, or model checking ran during this
+  implementation pass. The remote service was not contacted or changed.
+
+The latest command was `lake build model_interface_gen model_interface_spec`,
+logged in `/tmp/mic-cmake-build.log`. It **failed** in
+`Shell/ModelInterface/Emit/CMake.lean:158–159`:
+
+```text
+invalid {...} notation, expected type is not known
+Invalid dotted identifier notation: The expected type of .lt could not be determined
+```
+
+The failure is in the final generated-file list/qsort expression; explicit
+`GeneratedFile`/list/comparator type annotations are the next diagnostic step,
+not a proven fix. No downstream test ran after this failure. Log SHA-256:
+`055fe6f2e7bb163971f6159358a29c7a28f7bcc79ce0d6ea2d8146c7d2ad8f75`.
+
+### Binaries and reference provenance
+
+These files were inspected at stop; their hashes do not establish a successful
+build of the current tree containing the unfinished CMake changes:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `.lake/build/bin/mirror` | `9bd54dddff7996c4639176162e9b3ba93839c2687d0c2be64adf1f7ad7ebb306` |
+| `.lake/build/bin/model_interface_gen` | `84650c730a00627e540ebd5340b764dfa00184d07b102b6930ffc13a17d551e3` |
+| Installed `/home/nzsn/.local/bin/ModelMirrors` | `fbada2a422a5ace6378eeca8b6866c6581a3a9f3f93202ec4db00e955bc4a459` |
+
+The installed ModelMirrors remains the earlier released version-fix binary;
+this implementation was not installed, published, tagged, or deployed.
+
+The local cached `tla2tools.jar` at
+`/home/nzsn/.cache/coursier/v1/https/github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar`
+has SHA-256
+`cc4803dce2a8ffaf0f5920a9dc39df4b5ee34ab4cb53fb58ac557277a7e516b3`,
+which **does not match** the differential lock's expected
+`db131ddb48e7004d823bef4493df7b35694babe37505b9d9fa5685e7a331f1f1`.
+Its directory name is not pinned-tool identity proof. The public/private import
+distinction was also inspected in published TLA+ Tools v1.8.0 sources, but no
+pinned reference qualification was run; re-acquire and verify the selected tool
+before crediting differential evidence.
+
+### Resume order
+
+1. Respect the stop until resumed. Reinspect dirty trees and WriteSentry's new
+   `9dd4b57` integration; preserve the unrelated entries above.
+2. Diagnose the CMake emitter type errors, build the compiler/spec targets,
+   then run the focused suites. Prior binaries and green logs predate this
+   unfinished slice and cannot qualify it.
+3. Add a generated/native C++ v2 integer-table fixture with positive replay,
+   arbitrary-precision/empty/nested maps, both key sorts, duplicate/missing/
+   mistyped key rejection, and zero application callbacks on input failures.
+   Complete CMake offline/configure/build/replay/regeneration checks, including
+   unsafe/duplicate paths, source edits after configure, rollback, and unrelated
+   output preservation. Wire new meaningful gates into the owning runners.
+4. Record compatibility decisions in the compiler/interface/client contracts.
+   Bump the frontend profile and regenerate its affected corpus/summary outputs
+   through the documented tooling; verify pinned reference identities.
+5. Adopt original `reg`, `dr`, and `tls` observations in WriteSentry using
+   `mirrorcpp-v2`; regenerate contract/lock/evidence/binding/helpers, then remove
+   projections only after original-table compile and replay acceptance.
+6. Requalify all 14 scenarios and 18 actions, both overlap directions, eight
+   reached flag classes, and `drop-reservation`, `skip-clear`, and
+   `allow-foreign-writer` as real server `step_mismatch` controls. Record fresh
+   totals, not an assumed 212 snapshots.
+7. Run `bash tools/run-local-no-model-check.sh` and affected client/native
+   gates. Required model checks must go through the Mirrors CLI to
+   `192.168.150.219:8999`; do not start local Apalache or TLC. WriteSentry's
+   existing local-backend corpus generator needs a reviewed remote-oracle path;
+   ordinary local trace paths cannot establish remote replay. Retain actual
+   deployed backend identity and all unavailable/skipped gates.
+
+Completion, commit/push, installation, and service deployment have not been
+claimed for these implementation changes.
+
+## 2026-09-30 — Closing sweep complete: shortest-prefix claim credited
+
+Status: **round closed by parent after delegated execution.** Selection
+`fed55175b792feaec86cf71bf7fae1bae680a0313797a5c982f3a6ecc746f025`
+(BYTE_STABLE; Mirrors `e6772d5`, MirrorECMA `4992b07`, MirrorGate `0fa8a31`).
+Snapshot `/tmp/mirrors-candidate-snapshot-m3r5`; caches verify green (local
+`2bf94a0e…`, gate per Q3 report); installs `state=committed`. Full evidence:
+`Plans/q3-readiness-2026-09-30.md`.
+
+- **SR-5a re-qualified with the strong claim**: `framework.reduction-prefix`
+  `run-dcc51362-9084-4c2d-9eeb-9329bacb8d01`, exit 0,
+  `shortest_reproducing_prefix`, `minimalityComplete: true`,
+  `stopReason: complete`, best 2/16, cleanup confirmed; collector credited.
+  The length-1 classification gap is closed on the probe path only
+  (`prefixProbeSignatureFromSuiteResult`, MirrorECMA `4992b07`).
+- Q2 scope verified **16/16** with the reduction tier credited; offline
+  verifier 17/17; `mirrors.local-no-model` all 40 gates green on the pinned
+  JDK 25.0.4+7.
+- Also closed: finding-1 hardening (`settleOracleCleanup` extracted and
+  covered); JDK pin reconciliation recorded (decision 4 closed as a rule);
+  `Plans/handling-governance.md` drafted (decision 3 pending ratification).
+- M3 remains Partial — only SR-5b (remote domain reduction) remains,
+  operator-gated on service activation. M5 remains not qualified; remote
+  model check and interop unavailable; deferred tiers unchanged.
+
+## 2026-09-30 — SR-5a credited: prefix reduction qualified (diagnostic WSL2 profile)
+
+Status: **round closed by parent after delegated execution.** Selection
+`5dd41ae95910381e680cdfb2964e27802e6c1a2905b66cb79cb209e5d76f3d40`
+(BYTE_STABLE; Mirrors `e8ba489`, MirrorECMA `b753695`, MirrorGate `0fa8a31`).
+Snapshot `/tmp/mirrors-candidate-snapshot-m3r4` (index `9bb62d04…`); caches
+verify green (local manifest `f160029f…`, gate `e837fd27…`); both installs
+`state=committed`. Store `/tmp/m3r4/store`, 17 finalized bundles.
+
+- **SR-5a qualified**: `framework.reduction-prefix` `run-4f97221c-29a0-4be4-8f9d-dd75d5846fe4`,
+  exit 0, collector credited. Claim `smallest_observed_reproducing_prefix`,
+  best 2/16, `minimalityComplete: false` (length-1 candidate hits the known
+  `normalization_context_missing` classification gap — honest bounded claim,
+  no over-claim; fix is a future separately-sequenced decision).
+- **Q2 scope verified 16/16** (`local-candidate.sr4r4-20260930`), reduction
+  tier included for the first time; offline verifier 17/17.
+- Defects found and fixed this cycle (each with focused tests):
+  `tools/distribution/build.py` shipped only the materializer (Mirrors
+  `e8ba489`); the prefix driver omitted `corpusTraceFile` (MirrorECMA
+  `ad3c0cb`); fractional `durationMs` violated the evidence layer's
+  integer-only JSON policy (MirrorECMA `b753695`).
+- M3 remains Partial: SR-5b (domain reduction) is operator-gated on Apalache
+  0.61.0 / Java 25.0.4+7-LTS activation at `192.168.150.219:8999` with a
+  same-time identity observation. Interop and remote model check remain
+  unavailable; native-Ubuntu tiers stay deferred; Q3 incomplete.
+
+## 2026-09-29 — Safe reduction implemented and published; native-Ubuntu tiers deferred
+
+Status: **publication checkpoint, no qualification run.** Records the landing
+of the M3 safe-reduction implementation and one operator decision. Parent-written
+after round close.
+
+### Published change sets (source-test tier validated)
+
+- MirrorECMA `da18f1a` (`reproduction: add remote explore-session oracle mode
+  and prefix-reduction driver`): remote oracle mode with operator-observed
+  service identity and mTLS peer-leaf pinning; receipts mint
+  `mirrorecma.lease-reduction-oracle/v2`; new R4 driver
+  `scripts/reduce-reproduction-prefix.mjs`. Validation: jest 38/38 new +
+  23/23 regression, `tsc --noEmit` clean.
+- Mirrors `abbf70b` (design + impl plan: `Plans/completed/m3-safe-reduction-design.md`,
+  `Plans/completed/m3-safe-reduction-implementation-plan.md`) and `b19e090`
+  (`framework: split reduction tier with remote oracle wiring`): tiers
+  `qualification.reduction-prefix` + `qualification.reduction-domain`,
+  collector v2 receipt reader and prefix adapter, profiles/scope registration.
+  Validation: unittest discovery 118/118.
+
+### Decision recorded (owner: user, 2026-09-29)
+
+Every tier requiring a native Ubuntu host is **deferred** — no such machine is
+available: M4 aggregate cgroup-v2 enforcement and the native Ubuntu acceptance
+profile. This settles open decision 1 from the 2026-09-27 standing checkpoint
+(cgroup: deferred, not merely incomplete). Reduction qualification is
+unaffected: it proceeds via the remote oracle mode against the deployed
+service once the operator activates Apalache 0.61.0 / Java 25.0.4+7-LTS on
+`192.168.150.219:8999` with a same-time identity observation.
+
+### Position
+
+- Frozen selection `68a3ad58…` is invalidated by the published change sets;
+  all prior credited runs are diagnostic history.
+- M3 remains Partial; M5 remains not qualified.
+- Next: SR-4 re-freeze from the pushed SHAs (identity refresh with
+  `.projectile-cache.eld` moved out, snapshot, dual cache builds, dual
+  installs), then SR-5a (prefix tier, local WSL2, escalated posture) and
+  SR-5b (domain tier, gated on the operator service activation). Open decision
+  2 from 2026-09-27 (dispatch timing) was settled by building the remote mode
+  first; decisions 3 (`handling` governance) and 4 (JDK pin reconciliation)
+  remain open.
+
+## 2026-09-27 — Standing after the reproduction round: M5 position and open decisions
+
+Status: **standing checkpoint, no execution.** Records the milestone positions
+after the route-2 campaign and the decisions still open. Full evidence detail:
+`/tmp/q1-route2-result.md` (Parts A–F); next work package spec:
+`/tmp/m3-reduction-plan.md`.
+
+### Milestone positions (selection `68a3ad58…`, diagnostic WSL2 profile)
+
+| Milestone | Position |
+| --- | --- |
+| M0, M1 | Done (2026-09-22 reviews; catalog and evidence exercised together) |
+| M2 | Done on the diagnostic profile: both D bindings qualified (`run-432e1b13…`, `run-2a1a8c0c…`); native Ubuntu acceptance descoped by operator decision 2026-09-27 |
+| M3 | Partial: mutation controls qualified (17/17 local + Gate); reproduction qualified and credited (`run-6accf0f9…`); **safe reduction outstanding** (remote explore-session mode; spec staged) |
+| M4 | Partial: recovery qualified (`run-41660b4b…`); **aggregate-limit gate open** (no delegated cgroup-v2 parent on this host) |
+| M5 | In execution: Q1 diagnostic scope verified (15 credited runs, both D bindings, schema v2), Q2 offline 16/16; Q3 pending; **cannot be treated as complete** — demonstration #4's reduction half, interop, remote model check, and cgroup tiers lack evidence, and M3/M4 partials structurally forbid M5-complete. A descoped variant would need a named profile (e.g. "M5-diagnostic"), never the bare name. |
+
+### Open decisions (owner: user)
+
+1. **cgroup tier**: keep incomplete, or descope alongside native Ubuntu.
+2. **Reduction dispatch timing**: implement the remote explore-session mode now
+   (live run still gated on operator service activation) or hold until the
+   service is activated.
+3. **`handling` governance**: the reproduction bundle's five policy IDs are
+   documented test-fixture placeholders; a governance decision owns the real
+   values (preflight does not consult them today).
+4. **Remote JDK pin reconciliation**: local Microsoft JDK archive bytes
+   (`75894d10…`/`e7bc0bc0…`) differ from the remote-tier pins
+   (`54ba13f3…`/`58df5c13…`); decide whether pins name the server's toolchain.
+
+### Operator prerequisites (unchanged)
+
+Activate Apalache 0.61.0 / Java 25.0.4+7-LTS on `192.168.150.219:8999` with a
+same-time identity observation (unblocks remote model check AND reduction);
+supply a delegated cgroup-v2 parent on a suitable host (unblocks M4's
+aggregate-limit clause); provide interop companion checkouts or approve a
+remote-only interop mode.
+
+## 2026-09-27 — Reproduction gate fixed, qualified, and credited (selection 68a3ad58)
+
+Status: **`framework.reproduction` is implemented, qualified, and credited.**
+M3 advances to reproduction + mutation complete, reduction outstanding. M5
+remains not qualified (reduction, interop, remote model check, cgroup open;
+native Ubuntu descoped). Executed by the delegated `general-purpose-flash`
+executor; full detail in `/tmp/q1-route2-result.md` Part F.
+
+- Final selection: `68a3ad583d2889695e37bbde4af3b81d12b184a8d72e1bb9a360d6266a709c68`
+  (byte-stable; Mirrors `e23ff68e…`/31, MirrorECMA `80e63904…`/9, MirrorGate
+  `b0ba4350…`/3). Snapshot `22e54f1f…`; local manifest `eb57ddd4…`; gate
+  manifest `103e1769…`; both installs `state=committed`.
+- Decisions applied (user-confirmed): (a) MirrorECMA exports
+  `inspectProjectReproductionAuthority` (+ `identitySha256`-class helpers) from
+  `src/index.ts`; post-hoc signature construction via public validators;
+  authoritative R0 = the installed faulty replay of the same selection.
+- Mirrors change set: `tools/evidence/reproduction-capture.mjs` (R0→bundle via
+  the public authority, refusal on R0 inconsistency before any suite run),
+  `mirrorecma.reproduction-capture/v1` adapter in `collect.py`, attachment-plan
+  schema enum, registry fixes (R-a/R-b/R-c), and a scope-verifier extension
+  letting a reproduction node credit its R0 as origin-or-replay. Suites:
+  distribution 31 OK, evidence 112 OK; MirrorECMA focused jest 1/1 +
+  `pnpm run check` clean.
+- Reproduction evidence: bundle sha256 `bb657526d52f0f20…` built from R0
+  `run-63e28740…`; installed CLI `status: reproduced`, exit 0,
+  expected == observed (trace 0, state 1, action `enqueue`); `handling` policy
+  IDs are documented test-fixture placeholders pending the governance decision.
+- Scope verdict: `{"status": "verified", "verifiedRunCount": 15}` — both D
+  bindings credited, reproduction node credited. Offline verifier: 16/16.
+- Key runs: reproduction `run-6accf0f9-8323-41ca-b385-29fcd66b425d`; D-local
+  `run-432e1b13-…`; D-gate `run-2a1a8c0c-…`; R0 `run-63e28740-…`; Q
+  `run-c8969f9c-…`; 15 tiers total.
+- Confirmations: no commits/pushes (HEADs unchanged); store append-only
+  (116 runs); no local model checker; no remote-service contact; WSL2
+  diagnostic profile.
+
+## 2026-09-27 — Q1 route-2 rerun: verified two-binding scope (diagnostic WSL2 profile)
+
+Status: **Q1 diagnostic scope complete; Q2 verified over the full required scope.
+M5 remains not qualified** (reproduction, reduction, interop, remote model check,
+and cgroup tiers open; native Ubuntu acceptance descoped by operator decision
+2026-09-27). Executed by the delegated `general-purpose-flash` executor per
+`/tmp/q1-route2-plan.md` and the Part-C brief; full detail in
+`/tmp/q1-route2-result.md` (Parts A–E).
+
+### Final candidate identity
+
+- Catalog selection: `9ae8fb472a183183f91fb3128e6b6c2a7fda71d9f6a0b43e7066a5958abb451e`
+  (byte-stable; Mirrors `b11c502c…`/30 paths, MirrorECMA `a306a2cd…`/7,
+  MirrorGate `b0ba4350…`/3 — `IDENTITY_OK`).
+- Snapshot index SHA-256 `2135f090…`; local manifest `c867b01a…`; gate manifest
+  `e1c572e1…`; both installs `state=committed`, pristine pre-audit.
+- Lineage this round: `9b187ba7…` (2026-09-25, superseded by doc drift) →
+  `52e9a083…` (doc-drift adoption) → `32135a3b…` (P1–P3 batch) → `af71db25…`
+  (MirrorECMA vocabulary) → `9ae8fb47…` (reference-project generator fix).
+
+### Qualified runs (14 credited + Q scope run; all cite the final selection)
+
+| Command | Run ID |
+| --- | --- |
+| `framework.install-diagnostics` (D-local) | `run-ae0b01c9-f874-4c1f-894f-9d867a20a4cb` |
+| `framework.install-diagnostics-gate` (D-gate) | `run-2b6e15c6-6c81-44b2-a807-cb1949878d51` |
+| `framework.replay-correct` | `run-fef0497e-…` |
+| `framework.replay-faulty` (intended mismatch) | `run-1b91446a-…` |
+| `framework.mutation-local` | `run-45a009d0-…` |
+| `framework.mutation-gate` | `run-23fdc30d-…` |
+| `mirrorgate.application-campaign.work-queue` | `run-d45164e2-…` |
+| `mirrorgate.application-campaign.persistent-transfer` | `run-3463e63d-…` |
+| `mirrorgate.application-campaign.lease-service` | `run-755e0221-…` |
+| `mirrorgate.recovery` (bound to fresh work-queue run) | `run-efeb64cc-…` |
+| `mirrorecma.project-check` | `run-9fd1355e-…` |
+| `mirrorecma.test` | `run-b2d0d731-…` |
+| `mirrorgate.required` | `run-b936c96a-…` |
+| `mirrors.local-no-model` (40/40 steps, Microsoft JDK 25.0.4+7 on PATH) | `run-762e0694-…` |
+| Q scope run | `run-413a466b-dc30-491b-9956-ce718c60aef0` |
+
+### Verifier verdicts (verbatim)
+
+- Scope verifier (schema v2, both D bindings): `{"status": "verified",
+  "verifiedRunCount": 14}`; local binding `c867b01a…` → `[mirrorecma, mirrors]`,
+  gate binding `e1c572e1…` → `[mirrorecma, mirrorgate, mirrors]`.
+- Offline bundle verifier: **15/15 exit 0**, `integrity: sha256-membership-verified`.
+
+### Defects surfaced and fixed during this campaign (all with focused tests)
+
+1. MirrorECMA exclusion-vocabulary seam: `planning-documentation` added on both
+   sides (Mirrors P3 + MirrorECMA `framework-catalog.ts`); doctor refusal cleared.
+2. Distribution generator: `write_reference_project` now selects every installed
+   package for the gate profile (was: only `mirrorecma`; the D audit's doctor
+   caught the mismatch at `catalog.filesystem-binding`).
+3. Scope verifier: `command_cwd_matches` now honors `requiredCwdSubdirectory`
+   and is stricter than before (nested commands exactly one level below owner).
+4. Two envelope declaration bugs (`mirrorgate.required`, `mirrors.local-no-model`
+   declared wrong component sets) — re-collected, not edited.
+
+### Route-2 notes
+
+Headless guardian repaired via `auto_review_model_override` in the operator
+model catalog; escalations approved per action. Scope schema v2
+(`distributionBindingRunIds`, 1–8) credits each installed node against its own
+D binding by exact component-set equality. Planning docs (`Plans/**`, `tmp/**`,
+root `CHECKPOINTS.md`) are now class `planning-documentation` and no longer move
+the selection digest. Evidence is diagnostic WSL2 evidence; it does not
+establish native Ubuntu acceptance.
+
+### Remaining blockers
+
+`framework.reproduction` (registry defects + identity-authority decision, see
+`tmp/m5-reproduction-adapter.md`), `framework.reduction` (pins local Apalache),
+`mirrors.interop` (missing companion checkouts), `mirrors.remote-model-check`
+(operator credentials; Microsoft-JDK bytes differ from the remote-tier pin),
+delegated cgroup-v2 enforcement (no writable parent on this host; descope
+decision open), publication/deployment (separate operational actions).
+
+### Confirmations
+
+No commits/pushes (HEADs Mirrors `ce75058b…`, MirrorECMA `59b722a…`, MirrorGate
+`72880aa…`); canonical store strictly append-only (76 → 93 runs); no local
+model checker; no contact with `192.168.150.219:8999`; no Plans/ or
+CHECKPOINTS.md edits by the executor (this entry is parent-written after round
+close).
+
+## 2026-09-25 — M5 execution checkpoint
+
+Status: **M5 not qualified; Q1 and Q2 incomplete.** This records the delegated
+`general-purpose-flash` execution of [the M5 plan](tmp/m5-qualification-plan.md).
+The full run table and blockers are in
+[the Q3 readiness report](Plans/q3-readiness-2026-09-25.md); the reproduction
+contract analysis is in [the adapter handoff](tmp/m5-reproduction-adapter.md).
+
+### Frozen candidate and retained evidence
+
+- Catalog selection: `9b187ba71af41cfff8ad681f174f3f88bcadd7b5aee99cac082b589e257e8877`.
+- Source snapshot: `/tmp/mirrors-candidate-snapshot-e14`, index SHA-256 `22fdde17f6b0c568798c3e0fcaff28b71c3a6b1d49f322f901b4f56c251be2a9`.
+- Local and Gate canonical manifest digests: `6d9464fbc77b09e6c5758a911848e69409f6aba6734eb9cfeecb3cc13d3fc55b` and `df07907cd6b7208f2234d477c8b1eb927b9d17b7e98df11a584d240755b8f87f`. Both caches verified and both installs reported `state=committed`; `/tmp/m5/m5-freeze-verify.py` reported `PROBLEMS: none` after execution.
+- Evidence from this pass is in `/tmp/m5-store`. The canonical evidence store was read-only to the sandbox and was not modified. Two earlier origin runs under the same selection were copied into `/tmp/m5-store` for offline scope checks. Retained identifiers and envelope hashes are in `/tmp/m5/m5-summary.json` and the Q3 report.
+
+| Individually qualified command | Run ID |
+| --- | --- |
+| `framework.replay-correct` | `run-a120cdd5-e296-4ae3-bcd0-c9d2ce2e9351` |
+| `framework.replay-faulty` (intended mismatch) | `run-2b9bfa73-2c80-428d-96c6-60750c8f76f7` |
+| `framework.mutation-local` | `run-ba548a80-6f32-43a1-bc87-a6f1deb8e62f` |
+| `mirrorgate.recovery` (filesystem resource; no cgroup claim) | `run-e0cbd2b9-365a-416b-9eb4-2613ce386c39` |
+| WorkQueue origin campaign | `run-dce8b40e-4e5d-4d62-a1b8-e3bde4fe02ee` |
+| PersistentTransfer origin campaign | `run-2686572d-a84d-42fc-8103-cf47deaf29ef` |
+
+These are individual run results, **not** a verified Q2 scope. The installation
+audit failed under sandbox `ptrace` restrictions, so there is no qualified
+distribution binding for the scope verifier.
+
+### Validation performed
+
+- The authoritative `/tmp/m5/logs-v3/` local non-model run executed the 40 steps from `tools/run-local-no-model-check.sh`: 35 exited zero and five were blocked by sockets or the required Java 25.0.4+7 toolchain. `explorer_spec` exited zero while printing three socket failures, so it was not credited as green. The `/tmp/m5/LOG-PROVENANCE.md` note distinguishes this run from earlier temporary-harness path failures.
+- The installed offline bundle verifier accepted an untouched bundle and rejected a deleted artifact and a changed byte. The scope verifier correctly rejected an attempted scope containing the unqualified installation audit. Q2 remains incomplete.
+- An installed CLI probe reproduced the recorded faulty replay with `status: reproduced`, exit zero, and wrote its result and cleanup files. This proves the replay mechanism, not the registered `framework.reproduction` command.
+- `git diff --check` passed. No source files were changed during this execution pass; the Q3 readiness report and these `tmp/` documents were updated. Nothing was committed, pushed, published, or deployed. No local model checker ran, and the remote service was not contacted or changed.
+
+### Required work still open
+
+| Area | Blocking fact | Next action |
+| --- | --- | --- |
+| Installation and Gate checks | The sandbox denies `ptrace`, AF_INET/AF_UNIX sockets, and writes in MirrorECMA, MirrorGate, and the canonical store. The installation audit, Gate aggregate, LeaseService origin, and some source gates cannot qualify here. | Rerun on a permitted native Ubuntu runner with loopback, UNIX sockets, `ptrace`, and a writable evidence store. Provide a delegated cgroup-v2 parent for real aggregate-limit evidence. |
+| Automatic approval | Escalated commands were rejected *before execution*: `supported API model names are deepseek-flash, deepseek-v4-pro, but you passed codex-auto-review`. | Repair the automatic reviewer configuration or provide an approved execution environment. The rejected action was unsandboxed access needed for sockets, `ptrace`, and the canonical store; no such run was performed. |
+| Reproduction | The frozen registry omits required CLI arguments, passes an incompatible tool registry, and names a correct project for a mismatch bundle. The bundle's project identity authority is not in MirrorECMA's public package exports. | Prefer a MirrorECMA-owned public identity/capture API, then implement the Mirrors R0-to-bundle adapter and fix the registry. See [the adapter handoff](tmp/m5-reproduction-adapter.md) for the proved mechanism, secondary policy choices, and file list. |
+| Reduction and interop | Reduction starts a pinned local Apalache launcher; interop requires a local Apalache and missing companion checkouts. Local model checking is prohibited on this coordinator. | Provide a reviewed remote explore-session/interop path or run these tiers on an authorized suitable host with the required companions. |
+| Remote model check | Operator credentials and network access are absent. The selected deployed Apalache 0.61.0 and Java 25.0.4+7 identities were not observed. | Activate and inspect the selected remote service under operator control, then retain a same-time identity observation and Mirrors CLI result. |
+| Q2 and Q3 | No qualified distribution binding or full verified scope exists. | After producer changes, re-freeze the selection and rerun affected Q1 commands; then verify the full retained scope and update Q3. |
+
+Publication and production deployment are separate operational actions; their
+absence is not treated as a substitute for any required M5 tier. Any producer
+change alters the candidate identity, so the six individual runs above cannot
+automatically qualify a later selection.

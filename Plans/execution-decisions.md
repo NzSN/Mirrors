@@ -6,6 +6,29 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
+## Current continuation — 2026-11-03 (MW-12 source reconciliation)
+
+The user requested continuing the next mainwork stage with the same Grok
+execution and Codex review process. The
+[MW-12 record](mainwork-mw12-20261103/README.md) prepares source `0.2.0-rc.6`,
+fixes source-to-catalog product propagation, and acquires the already selected
+MirrorECMA `9192171` / MirrorGate `4b379ac` revisions in isolated copies. Shared
+companion checkouts and existing rc.1–rc.5 refs remain unchanged.
+
+Reconcile selected catalog/lock, tool and evidence-command/runtime bindings
+before final freeze. The active execution scope is Ubuntu 26.04.1 WSL2 with
+the selected local/Gate D pair; the base lock is a structural control only.
+Exact Batteries carrier restoration and execution-context admission remain
+separate prerequisites. Do not substitute a different bundle or weaken an
+identity/namespace refusal. Source preparation grants no D/M5/Q, Windows or
+release acceptance.
+
+Long/full local gate approval is pending the question presented during this
+continuation; focused validation proceeds meanwhile. No commit/push, tag
+creation, package publication, production change or reboot is performed by
+this source-reconciliation boundary. Historical decisions below retain their
+original authorization and execution scope.
+
 ## Current continuation — 2026-10-31 (Batteries carrier re-pin)
 
 The user requested re-pinning to a new bundle. Both distribution profiles now

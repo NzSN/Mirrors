@@ -1,0 +1,25 @@
+# name: help-manifest_check
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["/usr/bin/python3", "/home/lsz/Codebase/Mirrors/tools/distribution/manifest_check.py", "--help"]
+
+usage: manifest_check.py [-h] [--profile PROFILE] [--cache-index CACHE_INDEX]
+                         [--manifest MANIFEST]
+                         [--framework-catalog-bin FRAMEWORK_CATALOG_BIN]
+                         [--framework-catalog-sha256 FRAMEWORK_CATALOG_SHA256]
+                         {validate,resolve} root
+
+Strict offline checker for the reference distribution locks and cache indexes.
+
+positional arguments:
+  {validate,resolve}
+  root
+
+options:
+  -h, --help            show this help message and exit
+  --profile PROFILE
+  --cache-index CACHE_INDEX
+  --manifest MANIFEST
+  --framework-catalog-bin FRAMEWORK_CATALOG_BIN
+  --framework-catalog-sha256 FRAMEWORK_CATALOG_SHA256

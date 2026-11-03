@@ -1,0 +1,86 @@
+# name: artifact-scan
+# started: 2026-11-03T02:03:05Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["/usr/bin/python3", "/tmp/mw50-artifact-scan-soy_lank.py"]
+
+{
+  "found": {
+    "apalache-0.61.0.tgz": [
+      {
+        "match": true,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/tla-differential/toolchain/downloads/apalache-0.61.0.tgz",
+        "bytes": 191998425,
+        "sha256": "68fb56dd9d053cf21d692fd7ec3fbaaeba1395661ec7434fa2b4c47e6fc432b8",
+        "mode": "0o644"
+      }
+    ],
+    "batteries-v4.33.0.bundle": [
+      {
+        "match": false,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-20261031/inputs/sha256/f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3/batteries-v4.33.0.bundle",
+        "bytes": 3684180,
+        "sha256": "f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3",
+        "mode": "0o444"
+      }
+    ],
+    "node-v24.15.0-linux-x64.tar.xz": [
+      {
+        "match": true,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/version-0.1/toolchains/node-v24.15.0-linux-x64.tar.xz",
+        "bytes": 31164460,
+        "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+        "mode": "0o644"
+      },
+      {
+        "match": true,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc4-s5-20261031/dist-gate-final/artifacts/runtimes/node-v24.15.0-linux-x64.tar.xz",
+        "bytes": 31164460,
+        "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+        "mode": "0o644"
+      },
+      {
+        "match": true,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc4-s5-20261031/dist-local-final/artifacts/runtimes/node-v24.15.0-linux-x64.tar.xz",
+        "bytes": 31164460,
+        "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+        "mode": "0o644"
+      },
+      {
+        "match": true,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-20261031/dist-local/artifacts/runtimes/node-v24.15.0-linux-x64.tar.xz",
+        "bytes": 31164460,
+        "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+        "mode": "0o644"
+      },
+      {
+        "match": true,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-20261031/dist-local-3/artifacts/runtimes/node-v24.15.0-linux-x64.tar.xz",
+        "bytes": 31164460,
+        "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+        "mode": "0o644"
+      },
+      {
+        "match": true,
+        "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-20261031/dist-local-2/artifacts/runtimes/node-v24.15.0-linux-x64.tar.xz",
+        "bytes": 31164460,
+        "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+        "mode": "0o644"
+      }
+    ]
+  },
+  "truncated": [
+    {
+      "root": "/home/lsz/Codebase/Mirrors/.work",
+      "reason": "absent"
+    }
+  ],
+  "typescript": {
+    "path": "/home/lsz/Codebase/MirrorECMA/node_modules/typescript/package.json",
+    "present": true,
+    "name": "typescript",
+    "version": "5.9.3"
+  },
+  "typesPresent": true,
+  "javaLockAvailability": "missing-by-contract"
+}

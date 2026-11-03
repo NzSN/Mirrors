@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tools/distribution",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "startedAt": "2026-11-03T02:01:26.041861+00:00",
+  "durationSeconds": 4.278,
+  "environmentOverrides": {
+    "TMPDIR": "/home/lsz/Codebase/Mirrors/.golden-build/mainwork-20261103-review-tmp"
+  },
+  "filesystem": "ext2/ext3",
+  "exitCode": 0,
+  "logs": [
+    {
+      "path": "distribution-ext4.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "distribution-ext4.stderr",
+      "bytes": 10038,
+      "sha256": "e77670b53ca0e4e014465028da6ae7b643b2c9dab3d26c108f9edda58b423623"
+    }
+  ]
+}

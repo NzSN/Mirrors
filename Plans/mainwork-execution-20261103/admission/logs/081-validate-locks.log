@@ -1,0 +1,182 @@
+# name: validate-locks
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["/usr/bin/python3", "/tmp/mw50-validate-locks-egu18c9z.py"]
+# note: library validate_locks; lock bytes must stay unchanged
+
+{
+  "frameworkCatalogSha256": "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126",
+  "results": [
+    {
+      "label": "base-explicit",
+      "lockRoot": "/home/lsz/Codebase/Mirrors/distribution/reference-node",
+      "catalog": "/home/lsz/Codebase/Mirrors/catalog/framework-catalog.json",
+      "before": {
+        "profiles.json": "35a12d81d78e730b3fb35f86504bfd78f7d72b493163fc4b920c608875d7b28b",
+        "component-lock.json": "4a0805879381a4a5329dc82dffeecc6d7fa8b4eea7a499f3e51e18cecc7fe66c",
+        "dependency-lock.json": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+      },
+      "result": "passed",
+      "distributionId": "mirrors-reference-node-ubuntu-24.04-x86_64-v1",
+      "selection": {
+        "schemaVersion": "mirrors.framework-catalog/v1",
+        "selectionKind": "sha256",
+        "selectionValue": "e971cfec068c09532f2ffd01b15425be33aab42fa7dca507c0a0fe844c818b59"
+      },
+      "profiles": {
+        "checked-replay-local": {
+          "status": "build-required",
+          "catalogProfileId": "mirrors.reference-node-checked/ubuntu-24.04-x86_64/v1",
+          "combinationId": "candidate.local-node-checked"
+        },
+        "checked-replay-gate": {
+          "status": "build-required",
+          "catalogProfileId": "mirrors.reference-node-gate/ubuntu-24.04-x86_64/v1",
+          "combinationId": "candidate.node-gate"
+        },
+        "fresh-trace": {
+          "status": "blocked-missing-java-artifact",
+          "catalogProfileId": "mirrors.reference-fresh-trace/ubuntu-24.04-x86_64/v1",
+          "combinationId": "candidate.fresh-trace"
+        }
+      },
+      "dependencies": {
+        "apalache": {
+          "availability": "prepared-cache",
+          "bytes": 191998425,
+          "sha256": "68fb56dd9d053cf21d692fd7ec3fbaaeba1395661ec7434fa2b4c47e6fc432b8",
+          "version": "0.61.0",
+          "fileName": "apalache-0.61.0.tgz",
+          "reason": null
+        },
+        "java-runtime": {
+          "availability": "missing",
+          "bytes": null,
+          "sha256": null,
+          "version": "25.0.4+7",
+          "fileName": null,
+          "reason": "the exact Microsoft OpenJDK 25.0.4+7 archive is not present in the final prepared input cache"
+        },
+        "node-runtime": {
+          "availability": "prepared-cache",
+          "bytes": 31164460,
+          "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+          "version": "24.15.0",
+          "fileName": "node-v24.15.0-linux-x64.tar.xz",
+          "reason": null
+        },
+        "lean-batteries-source": {
+          "availability": "prepared-cache",
+          "bytes": 3739542,
+          "sha256": "73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a",
+          "version": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+          "fileName": "batteries-v4.33.0.bundle",
+          "reason": null
+        }
+      },
+      "catalogFileSha256": "f6b0e9001fa4f583a4e61a4c7726a50b6ee810444cb4cc8a9164c624122b3bc5",
+      "catalogCanonicalSha256": "e971cfec068c09532f2ffd01b15425be33aab42fa7dca507c0a0fe844c818b59",
+      "after": {
+        "profiles.json": "35a12d81d78e730b3fb35f86504bfd78f7d72b493163fc4b920c608875d7b28b",
+        "component-lock.json": "4a0805879381a4a5329dc82dffeecc6d7fa8b4eea7a499f3e51e18cecc7fe66c",
+        "dependency-lock.json": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+      },
+      "bytesUnchanged": true
+    },
+    {
+      "label": "wsl2-explicit",
+      "lockRoot": "/home/lsz/Codebase/Mirrors/distribution/reference-node-wsl2-26.04",
+      "catalog": "/home/lsz/Codebase/Mirrors/catalog/framework-catalog-wsl2-26.04.json",
+      "before": {
+        "profiles.json": "27f91fa6fa98c923fd0a61a8389c05239be50977206cc66fdb07c45fc3e36e59",
+        "component-lock.json": "fca0a5a6534ff6746af33846f2e4b3553659e6a3291a50dd8e830fa608393b0e",
+        "dependency-lock.json": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+      },
+      "result": "passed",
+      "distributionId": "mirrors-reference-node-ubuntu-26.04-wsl2-x86_64-v1",
+      "selection": {
+        "schemaVersion": "mirrors.framework-catalog/v1",
+        "selectionKind": "sha256",
+        "selectionValue": "3bef64ce1e1e4fdc7b9d99e2cb4f5a1f165cd54f49cdeac7af42f6c3130253ee"
+      },
+      "profiles": {
+        "checked-replay-local": {
+          "status": "build-required",
+          "catalogProfileId": "mirrors.reference-node-checked/ubuntu-26.04-wsl2-x86_64/v1",
+          "combinationId": "candidate.local-node-checked"
+        },
+        "checked-replay-gate": {
+          "status": "build-required",
+          "catalogProfileId": "mirrors.reference-node-gate/ubuntu-26.04-wsl2-x86_64/v1",
+          "combinationId": "candidate.node-gate"
+        },
+        "fresh-trace": {
+          "status": "blocked-missing-java-artifact",
+          "catalogProfileId": "mirrors.reference-fresh-trace/ubuntu-26.04-wsl2-x86_64/v1",
+          "combinationId": "candidate.fresh-trace"
+        }
+      },
+      "dependencies": {
+        "apalache": {
+          "availability": "prepared-cache",
+          "bytes": 191998425,
+          "sha256": "68fb56dd9d053cf21d692fd7ec3fbaaeba1395661ec7434fa2b4c47e6fc432b8",
+          "version": "0.61.0",
+          "fileName": "apalache-0.61.0.tgz",
+          "reason": null
+        },
+        "java-runtime": {
+          "availability": "missing",
+          "bytes": null,
+          "sha256": null,
+          "version": "25.0.4+7",
+          "fileName": null,
+          "reason": "the exact Microsoft OpenJDK 25.0.4+7 archive is not present in the final prepared input cache"
+        },
+        "node-runtime": {
+          "availability": "prepared-cache",
+          "bytes": 31164460,
+          "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+          "version": "24.15.0",
+          "fileName": "node-v24.15.0-linux-x64.tar.xz",
+          "reason": null
+        },
+        "lean-batteries-source": {
+          "availability": "prepared-cache",
+          "bytes": 3739542,
+          "sha256": "73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a",
+          "version": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+          "fileName": "batteries-v4.33.0.bundle",
+          "reason": null
+        }
+      },
+      "catalogFileSha256": "c6ec7f2694e27eab1406f13fcf68c85821369bce3aecfcf4fbd27de08a722a83",
+      "catalogCanonicalSha256": "3bef64ce1e1e4fdc7b9d99e2cb4f5a1f165cd54f49cdeac7af42f6c3130253ee",
+      "after": {
+        "profiles.json": "27f91fa6fa98c923fd0a61a8389c05239be50977206cc66fdb07c45fc3e36e59",
+        "component-lock.json": "fca0a5a6534ff6746af33846f2e4b3553659e6a3291a50dd8e830fa608393b0e",
+        "dependency-lock.json": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+      },
+      "bytesUnchanged": true
+    },
+    {
+      "label": "wsl2-api-default-catalog",
+      "lockRoot": "/home/lsz/Codebase/Mirrors/distribution/reference-node-wsl2-26.04",
+      "catalog": null,
+      "before": {
+        "profiles.json": "27f91fa6fa98c923fd0a61a8389c05239be50977206cc66fdb07c45fc3e36e59",
+        "component-lock.json": "fca0a5a6534ff6746af33846f2e4b3553659e6a3291a50dd8e830fa608393b0e",
+        "dependency-lock.json": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+      },
+      "result": "failed",
+      "error": "ContractError: catalogSelectionRef does not identify the selected catalog bytes",
+      "after": {
+        "profiles.json": "27f91fa6fa98c923fd0a61a8389c05239be50977206cc66fdb07c45fc3e36e59",
+        "component-lock.json": "fca0a5a6534ff6746af33846f2e4b3553659e6a3291a50dd8e830fa608393b0e",
+        "dependency-lock.json": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe"
+      },
+      "bytesUnchanged": true
+    }
+  ]
+}

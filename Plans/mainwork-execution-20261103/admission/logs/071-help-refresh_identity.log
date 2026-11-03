@@ -1,0 +1,33 @@
+# name: help-refresh_identity
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["/usr/bin/python3", "/home/lsz/Codebase/Mirrors/tools/distribution/refresh_identity.py", "--help"]
+
+usage: refresh_identity.py [-h] [--mirrorecma MIRRORECMA]
+                           [--mirrorgate MIRRORGATE]
+                           [--framework-catalog-bin FRAMEWORK_CATALOG_BIN]
+                           [--catalog CATALOG] [--locks-root LOCKS_ROOT]
+                           [--skip-component-records] [--skip-render]
+                           [--skip-mirrorecma-record-write]
+
+Refresh the acyclic private C4 catalog and I2 lock identities.
+
+options:
+  -h, --help            show this help message and exit
+  --mirrorecma MIRRORECMA
+  --mirrorgate MIRRORGATE
+  --framework-catalog-bin FRAMEWORK_CATALOG_BIN
+  --catalog CATALOG     catalog to refresh; defaults to the checked Ubuntu
+                        24.04 catalog
+  --locks-root LOCKS_ROOT
+                        lock root to refresh; defaults to the checked Ubuntu
+                        24.04 root
+  --skip-component-records
+                        variant snapshots only: do not rewrite component-owned
+                        catalog records
+  --skip-render         variant snapshots only: skip compact/markdown
+                        projection generation
+  --skip-mirrorecma-record-write
+                        development snapshots only: leave the component-owned
+                        derived record unchanged

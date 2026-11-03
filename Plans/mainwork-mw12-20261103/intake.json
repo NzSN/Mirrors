@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "mirrors.mw12-intake/v1",
+  "observedAt": "2026-11-03T03:13:16.003761+00:00",
+  "head": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+  "tree": "484e8f2991d1e2c56c8d47af668888e1cb48904f",
+  "priorTrackedDiff": [
+    "CHECKPOINTS.md"
+  ],
+  "sha256": {
+    "CHECKPOINTS.md": "50ad0768483f39b185602970e8b01648219a037a6ec819bd54c81bebe6363683",
+    "Shell/Version.lean": "6617aae54de1c1263278de4d9173e7b5858fcb8af0f2b4032a90a4c8d0527896",
+    "tools/distribution/refresh_identity.py": "6aabc413976c56676d7a0ab3a3bc5c63522874cd4807d6035393ea2b42bee4cb",
+    "tools/distribution/test_refresh_identity.py": "5b67b248bfabfd6383630e2ab9cf34e3e19af6b8c5370c88637f31b32bf9a5d3",
+    "tools/evidence/commands.json": "04ded2066f18584c0fa3e87fd48d3b58bb4f2a79c24b12776abdeb3576c17bb3",
+    "Docs/current-status.md": "75e4d3004299e53125e2e16be3ffb59441e0f2610f86d2d69f05d0e7eb477eb3",
+    "Docs/versioning.md": "e489673c8df55268de8374abe0e617ef98b0dea79aa9ce3e0bc6691be86d546f",
+    "Plans/execution-decisions.md": "62138f387b0ea85ff30d54e89d9f49ef967fae9781907eae169b3cf2516bab86"
+  },
+  "proposedSourceVersion": "0.2.0-rc.6",
+  "publicationAuthorized": false,
+  "jobs": {
+    "source": {
+      "jobId": "task-mw0454z2-w700m0",
+      "state": "completed-reviewed-with-correction",
+      "brief": "source-task.md"
+    },
+    "acquisition": {
+      "jobId": "task-mw0458po-h7bo3y",
+      "state": "completed-reviewed",
+      "brief": "acquisition-task.md"
+    },
+    "source-correction": {
+      "jobId": "task-mw04qypr-zqzsho",
+      "state": "completed-reviewed",
+      "evidence": "source-correction/result.json"
+    },
+    "binding": {
+      "jobId": "task-mw04xexr-24hexw",
+      "state": "failed-turn-limit",
+      "brief": "integration-task.md",
+      "stopReason": "max_turn_requests"
+    },
+    "binding-resume": {
+      "jobId": "task-mw05e00k-pfyxt8",
+      "state": "completed-reviewed-after-stability-recovery",
+      "evidence": "binding/result.json"
+    }
+  },
+  "outcome": "source-preparation-reviewed; full S1 local gate pending",
+  "updatedAt": "2026-11-03T04:05:35.423486+00:00",
+  "fullLocalGate": {
+    "approved": null,
+    "executed": false,
+    "state": "awaiting answer to presented approval question"
+  },
+  "newTagCreated": false,
+  "commitOrPushPerformed": false
+}

@@ -1,0 +1,10 @@
+# name: strace-dpkg
+# started: 2026-11-03T02:09:47Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 1
+# argv: ["dpkg-query", "-W", "-f", "${Package} ${Status}\\n", "strace"]
+# note: package state only
+
+
+--- stderr ---
+dpkg-query: no packages found matching strace

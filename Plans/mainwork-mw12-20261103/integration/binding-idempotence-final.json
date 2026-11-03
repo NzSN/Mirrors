@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "mirrors.mw12.command/v1",
+  "argv": [
+    "python3",
+    "Plans/mainwork-mw12-20261103/apply_bindings.py",
+    "--attempt",
+    "reviewer-final",
+    "--evidence-root",
+    "Plans/mainwork-mw12-20261103/review/idempotence"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "startedAt": "2026-11-03T03:57:21.685830+00:00",
+  "finishedAt": "2026-11-03T03:57:23.959317+00:00",
+  "monotonicDurationSeconds": 2.27347933803685,
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "logs": [
+    {
+      "path": "logs/binding-idempotence-final.stdout",
+      "bytes": 302,
+      "sha256": "129ef7bd1b246e364257e4e82b0013eb24731a245fcfa678946c9cda918e7bbc"
+    },
+    {
+      "path": "logs/binding-idempotence-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

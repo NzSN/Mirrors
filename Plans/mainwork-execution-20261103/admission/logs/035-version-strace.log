@@ -1,0 +1,10 @@
+# name: version-strace
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 127
+# argv: ["strace", "--version"]
+# note: absent tool is environmental evidence
+
+
+--- stderr ---
+tool not found on PATH

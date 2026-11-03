@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "mirrors.mw12.command/v1",
+  "argv": [
+    "python3",
+    "tools/interop/prepare-ecma-runtime.py",
+    "--repo",
+    ".golden-build/mw12-20261103/inputs/companions/MirrorECMA",
+    "--ref",
+    "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+    "--node",
+    ".golden-build/mw12-20261103/integration-runtime/node",
+    "--node-modules",
+    "/home/lsz/Codebase/MirrorECMA/node_modules",
+    "--out",
+    ".golden-build/mw12-20261103/integration-runtime/ecma-runtime",
+    "--pin-out",
+    "Plans/mainwork-mw12-20261103/integration/ecma-runtime-pin.json"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "startedAt": "2026-11-03T03:22:24.239916+00:00",
+  "finishedAt": "2026-11-03T03:22:26.711379+00:00",
+  "monotonicDurationSeconds": 2.4714420689851977,
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "logs": [
+    {
+      "path": "logs/ecma-runtime-prepare.stdout",
+      "bytes": 759,
+      "sha256": "fda3938cb29c65d10899dd98db74dd8826bc426011d5e649a81a61da1dc15bb9"
+    },
+    {
+      "path": "logs/ecma-runtime-prepare.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

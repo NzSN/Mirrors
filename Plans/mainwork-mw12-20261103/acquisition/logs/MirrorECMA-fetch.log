@@ -1,0 +1,82 @@
+started=2026-11-03T03:18:01Z
+url=https://github.com/NzSN/MirrorECMA.git
+commit=9192171fc5f8d8457f8d13ffaafa117222914ec2
+URL_REWRITES_BEGIN
+URL_REWRITES_END
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorECMA/.git/
+init_exit=0
+remote_add_exit=0
+attempt=1
+fatal: missing environment variable 'GIT_CONFIG_GLOBAL' for configuration 'gc.x'
+fetch1_exit=128
+fetch_head_after_attempt1=128
+attempt=2
+From https://github.com/NzSN/MirrorECMA
+ * branch            9192171fc5f8d8457f8d13ffaafa117222914ec2 -> FETCH_HEAD
+fetch2_exit=0
+fetch_head=9192171fc5f8d8457f8d13ffaafa117222914ec2
+HEAD is now at 9192171 catalog: retain October 25 qualification snapshot
+checkout_exit=0
+HEAD=9192171fc5f8d8457f8d13ffaafa117222914ec2
+TREE=3a48d828710fafdc9076f0b57bf4e089cdd372ee
+ABBREV=HEAD
+ORIGIN=https://github.com/NzSN/MirrorECMA.git
+SHALLOW=false
+STATUS_SB_BEGIN
+## HEAD (no branch)
+STATUS_SB_END
+STATUS_PORCELAIN_BEGIN
+STATUS_PORCELAIN_END
+status_exit=0
+TOP_BEGIN
+.bazelignore
+.bazelrc
+.bazelversion
+.git
+.github
+.gitignore
+.npmrc
+AGENTS.md
+BUILD.bazel
+MODULE.bazel
+MODULE.bazel.lock
+README.md
+catalog
+docs
+examples
+experiments
+jest.config.cjs
+mirrors-compatibility.json
+package.bazel.json
+package.json
+patches
+pnpm-lock.yaml
+pnpm-workspace.yaml
+schemas
+scripts
+specs
+src
+test
+tools
+tsconfig.application-validation.json
+tsconfig.bazel.json
+tsconfig.examples.json
+tsconfig.json
+tsconfig.model-interface.json
+TOP_END
+package_name=mirrorecma
+package_version=0.1.0
+finished=2026-11-03T03:18:08Z

@@ -1,0 +1,162 @@
+{
+  "observedAt": "2026-11-03T02:00:38Z",
+  "mirrors": {
+    "head": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+    "tree": "484e8f2991d1e2c56c8d47af668888e1cb48904f",
+    "branch": "main",
+    "upstreamRef": "origin/main",
+    "upstreamSha": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+    "originMain": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+    "ahead": 0,
+    "behind": 0,
+    "indexNames": [],
+    "trackedDiffNames": [
+      "CHECKPOINTS.md"
+    ],
+    "porcelainCount": 247,
+    "nonUntracked": [
+      " M CHECKPOINTS.md"
+    ],
+    "porcelainClassCounts": {
+      " M": 1,
+      "??": 246
+    },
+    "untrackedTopCounts": {
+      "Plans": 246
+    },
+    "originMainReflogLatest": "75fbf96 refs/remotes/origin/main@{2026-11-03 09:42:59 +0800}: pull origin refs/heads/main: fast-forward",
+    "originUrl": "https://github.com/NzSN/Mirrors.git",
+    "localTagsV020": [
+      {
+        "tag": "v0.2.0-rc.1",
+        "commit": "d737aa0886b9d406e391955756922d9d735d7ec1"
+      },
+      {
+        "tag": "v0.2.0-rc.2",
+        "commit": "1fe379a5361fad8959ac40b47474beb6eb3bbe09"
+      },
+      {
+        "tag": "v0.2.0-rc.3",
+        "commit": "38a94ec85dd9e5e8c5aef45da2a5c909bcd74de5"
+      },
+      {
+        "tag": "v0.2.0-rc.4",
+        "commit": "5ab907d890e2656191e3cf1639244dc1ad15b1b7"
+      },
+      {
+        "tag": "v0.2.0-rc.5",
+        "commit": "3ee3d9226f6258583fe7266c1737acff5abd1edf"
+      }
+    ],
+    "committedCheckpointHeadings": [
+      "8:## 2026-10-31 \u2014 Batteries carrier re-pinned at unchanged source revision",
+      "30:## 2026-10-31 \u2014 rc.5 clean packages; S5 blocked on exact Batteries carrier"
+    ],
+    "worktreeCheckpointHeadings": [
+      "8:## 2026-11-03 \u2014 Release-completion stages and Grok task delegation",
+      "46:## 2026-10-31 \u2014 Batteries carrier re-pinned at unchanged source revision",
+      "68:## 2026-10-31 \u2014 rc.5 clean packages; S5 blocked on exact Batteries carrier"
+    ],
+    "checkpointsWorktreeSha256": "ab1d4a1eb012fc83c0474ff06c909a9a34770c3ce3e7184fea18123b69ce018c",
+    "checkpointsHeadBlob": "988d0fd7ae33a9a8c9c0021d7efb2ec71dcafb03"
+  },
+  "companions": [
+    {
+      "name": "MirrorECMA",
+      "path": "/home/lsz/Codebase/MirrorECMA",
+      "present": true,
+      "isGit": true,
+      "head": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+      "tree": "e9fdf0e513a998fb72faa47c8501cdab9c34f782",
+      "branch": "main",
+      "upstreamRef": "origin/main",
+      "upstreamSha": "f94358834dce2e527c8bc8feec0423a54cf4176c",
+      "ahead": 0,
+      "behind": 0,
+      "originUrl": "https://github.com/NzSN/MirrorECMA.git",
+      "porcelainCount": 2,
+      "porcelainClassCounts": {
+        "??": 2
+      },
+      "nonUntracked": [],
+      "indexEmpty": true,
+      "porcelainSha256": "729147df1d112463650664793c054daf0f015a19cfe10ff4154485b59360813f"
+    },
+    {
+      "name": "MirrorGate",
+      "path": "/home/lsz/Codebase/MirrorGate",
+      "present": true,
+      "isGit": true,
+      "head": "4ef786b30ac6be45e471fb02610484581f5da3b0",
+      "tree": "e2dcc7632cbcead146d3173174817c4aefc7c4c3",
+      "branch": "main",
+      "upstreamRef": "origin/main",
+      "upstreamSha": "4ef786b30ac6be45e471fb02610484581f5da3b0",
+      "ahead": 0,
+      "behind": 0,
+      "originUrl": "https://github.com/NzSN/MirrorGate.git",
+      "porcelainCount": 0,
+      "porcelainClassCounts": {},
+      "nonUntracked": [],
+      "indexEmpty": true,
+      "porcelainSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "MirrorCPP",
+      "path": "/home/lsz/Codebase/MirrorCPP",
+      "present": true,
+      "isGit": true,
+      "head": "8c542a6b1339cc0b6176465ff7f17a32e614553d",
+      "tree": "f8700c53f49ff5c0e7200019845596b99c80f6ac",
+      "branch": "main",
+      "upstreamRef": "origin/main",
+      "upstreamSha": "8c542a6b1339cc0b6176465ff7f17a32e614553d",
+      "ahead": 0,
+      "behind": 0,
+      "originUrl": "https://github.com/NzSN/MirrorCPP.git",
+      "porcelainCount": 0,
+      "porcelainClassCounts": {},
+      "nonUntracked": [],
+      "indexEmpty": true,
+      "porcelainSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "MirrorRust",
+      "path": "/home/lsz/Codebase/MirrorRust",
+      "present": true,
+      "isGit": true,
+      "head": "6b9480ab81717b76ca7f74b41fc554578b70c890",
+      "tree": "8e85af41e8eb1cd1a53d8037d76ffc52a0a02599",
+      "branch": "main",
+      "upstreamRef": "origin/main",
+      "upstreamSha": "6b9480ab81717b76ca7f74b41fc554578b70c890",
+      "ahead": 0,
+      "behind": 0,
+      "originUrl": "https://github.com/NzSN/MirrorRust.git",
+      "porcelainCount": 0,
+      "porcelainClassCounts": {},
+      "nonUntracked": [],
+      "indexEmpty": true,
+      "porcelainSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "MirrorLean",
+      "path": "/home/lsz/Codebase/MirrorLean",
+      "present": true,
+      "isGit": true,
+      "head": "a8634ebe2455f97d15b55bec3c810d945cb6e3d3",
+      "tree": "ff01f8a2a91b1e1485c14c88a7604a37810b99f2",
+      "branch": "main",
+      "upstreamRef": "origin/main",
+      "upstreamSha": "a8634ebe2455f97d15b55bec3c810d945cb6e3d3",
+      "ahead": 0,
+      "behind": 0,
+      "originUrl": "https://github.com/NzSN/MirrorLean.git",
+      "porcelainCount": 0,
+      "porcelainClassCounts": {},
+      "nonUntracked": [],
+      "indexEmpty": true,
+      "porcelainSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

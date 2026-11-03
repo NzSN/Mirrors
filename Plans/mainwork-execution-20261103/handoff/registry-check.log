@@ -1,0 +1,28 @@
+bounded local registry check
+HEAD 75fbf962020cea8a13e009ecfdb3e912e7ce212f
+TREE 484e8f2991d1e2c56c8d47af668888e1cb48904f
+BRANCH main
+registryCommands 24
+registrySha256 04ded2066f18584c0fa3e87fd48d3b58bb4f2a79c24b12776abdeb3576c17bb3
+contractArgvFences 20
+mismatches 0
+ok tasks.md:mirrors.local-no-model tokens=2
+ok tasks.md:mirrorecma.project-check tokens=3
+ok tasks.md:mirrorecma.test tokens=3
+ok tasks.md:mirrorgate.required tokens=2
+ok tasks.md:mirrors.remote-model-check tokens=2
+ok tasks.md:framework.install-diagnostics tokens=22
+ok tasks.md:framework.install-diagnostics-gate tokens=24
+ok tasks.md:framework.replay-correct tokens=4
+ok tasks.md:framework.replay-faulty tokens=4
+ok tasks.md:framework.lease-origin-installed tokens=3
+ok tasks.md:framework.reproduction tokens=19
+ok tasks.md:framework.reproduction-lease tokens=19
+ok tasks.md:framework.reduction-prefix tokens=26
+ok tasks.md:framework.reduction tokens=28
+ok tasks.md:framework.mutation-local tokens=7
+ok tasks.md:framework.mutation-gate tokens=3
+ok tasks.md:framework.recovery-origin-installed tokens=3
+ok tasks.md:mirrorgate.recovery tokens=17
+ok tasks.md:mirrors.interop tokens=3
+ok verification.md:evidence.offline-verify tokens=6

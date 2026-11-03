@@ -1,0 +1,378 @@
+{
+  "schemaVersion": "mirrors.mw12-acquisition-result/v1",
+  "observedAt": "2026-11-03T03:23:36Z",
+  "sharedRepository": {
+    "path": ".",
+    "observedHead": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+    "observedHeadExit": 0,
+    "writes": [],
+    "checkIgnore": {
+      "exitCode": 0,
+      "stdout": ".gitignore:3:.golden-build/\t.golden-build/mw12-20261103/inputs/strace/root/usr/bin/strace"
+    }
+  },
+  "companions": {
+    "MirrorECMA": {
+      "path": ".golden-build/mw12-20261103/inputs/companions/MirrorECMA",
+      "head": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+      "tree": "3a48d828710fafdc9076f0b57bf4e089cdd372ee",
+      "origin": "https://github.com/NzSN/MirrorECMA.git",
+      "abbrev": "HEAD",
+      "shallow": "false",
+      "packageName": "mirrorecma",
+      "packageVersion": "0.1.0",
+      "clean": true,
+      "detached": true,
+      "attempts": [
+        {
+          "n": 1,
+          "kind": "local-config",
+          "exitCode": 128,
+          "detail": "fatal: missing environment variable GIT_CONFIG_GLOBAL; no network"
+        },
+        {
+          "n": 2,
+          "kind": "https-fetch",
+          "exitCode": 0,
+          "shallow": false
+        }
+      ]
+    },
+    "MirrorGate": {
+      "path": ".golden-build/mw12-20261103/inputs/companions/MirrorGate",
+      "head": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+      "tree": "96e7fa4d0ac90c526d7e499f95664f00b1bc3e9b",
+      "origin": "https://github.com/NzSN/MirrorGate.git",
+      "abbrev": "HEAD",
+      "shallow": "true",
+      "packageName": "mirrorgate",
+      "packageVersion": "0.1.0",
+      "clean": true,
+      "detached": true,
+      "attempts": [
+        {
+          "n": 1,
+          "kind": "https-fetch-depth-1",
+          "exitCode": 0,
+          "shallow": true
+        }
+      ]
+    }
+  },
+  "mirrorsRemote": {
+    "url": "https://github.com/NzSN/Mirrors.git",
+    "command": [
+      "git",
+      "ls-remote",
+      "https://github.com/NzSN/Mirrors.git",
+      "refs/heads/main",
+      "refs/tags/v0.2.0-rc.6"
+    ],
+    "exitCode": 0,
+    "attempts": 1,
+    "refs": {
+      "refs/heads/main": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+      "refs/tags/v0.2.0-rc.6": null
+    }
+  },
+  "batteriesCarrier": {
+    "status": "absent",
+    "required": {
+      "fileName": "batteries-v4.33.0.bundle",
+      "bytes": 3739542,
+      "sha256": "73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a",
+      "revision": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+      "tree": "5a1de86f7997958aaffec998882c29006b688d1e"
+    },
+    "knownPaths": [
+      {
+        "path": ".golden-build/batteries-repin-20261031/artifacts/sha256/73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a/batteries-v4.33.0.bundle",
+        "exists": false
+      },
+      {
+        "path": ".golden-build/batteries-repin-20261031/prepared.bundle",
+        "exists": false
+      }
+    ],
+    "filenameLookup": {
+      "roots": [
+        ".golden-build",
+        "/tmp"
+      ],
+      "names": [
+        "batteries*.bundle",
+        "prepared.bundle",
+        "*73130433*"
+      ],
+      "hits": [
+        {
+          "path": ".golden-build/rc3-20261031/inputs/sha256/f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3/batteries-v4.33.0.bundle",
+          "bytes": 3684180,
+          "sha256": "f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3"
+        }
+      ]
+    },
+    "sizeLookup": {
+      "bytes": 3739542,
+      "hits": [],
+      "findExit": 1,
+      "unreadable": [
+        "/tmp/systemd-private-da0bb7a57218403f96b4966ef493f82d-wsl-pro.service-yTHiQZ",
+        "/tmp/systemd-private-da0bb7a57218403f96b4966ef493f82d-systemd-logind.service-nvqvOr",
+        "/tmp/systemd-private-da0bb7a57218403f96b4966ef493f82d-polkit.service-3ahc9c",
+        "/tmp/systemd-private-da0bb7a57218403f96b4966ef493f82d-chrony.service-WAzvhd",
+        "/tmp/snap-private-tmp"
+      ]
+    },
+    "copied": false,
+    "bundleClone": false
+  },
+  "strace": {
+    "status": "acquired",
+    "metadata": {
+      "inrelease": "/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_resolute_InRelease",
+      "gpgvExit": 0,
+      "signer": "Ubuntu Archive Automatic Signing Key (2018) <ftpmaster@ubuntu.com>",
+      "key": "F6ECB3762474EDA9D21B7022871920D1991BC93C",
+      "packages": "/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_resolute_main_binary-amd64_Packages",
+      "packagesBytes": 7581722,
+      "packagesSha256": "92eb335c0ed27983d41a5a0efdf0edce3e67bfa34e8e987af9df260ca72d9bf9",
+      "sourcesIndex": null
+    },
+    "package": {
+      "package": "strace",
+      "source": "strace",
+      "sourceEvidence": "Source field omitted from the signed binary Packages stanza",
+      "version": "6.19+ds-0ubuntu5",
+      "architecture": "amd64",
+      "deb": {
+        "path": ".golden-build/mw12-20261103/inputs/strace/strace_6.19+ds-0ubuntu5_amd64.deb",
+        "bytes": 677520,
+        "sha256": "aa530bb652e46beaf92d5c916403182a5ac6b2ba79a94f18e5b9da45d1799ee5"
+      },
+      "downloadExit": 0,
+      "attempts": 1
+    },
+    "executable": {
+      "path": ".golden-build/mw12-20261103/inputs/strace/root/usr/bin/strace",
+      "bytes": 2370264,
+      "sha256": "f47342683309e807bca57d6d89b82f94a9b39aa614e9c28c2b67cefbc35eee58",
+      "directVersionExit": 127,
+      "directVersionError": "libunwind-ptrace.so.0: cannot open shared object file"
+    },
+    "libunwind8": {
+      "package": "libunwind8",
+      "source": "libunwind",
+      "version": "1.8.3-0ubuntu1",
+      "architecture": "amd64",
+      "deb": {
+        "path": ".golden-build/mw12-20261103/inputs/strace/libunwind8_1.8.3-0ubuntu1_amd64.deb",
+        "bytes": 59630,
+        "sha256": "7a9978fadf0940f45500ced0fba219cb5954f322a31068b7b32ad04f3ddc5c3f"
+      },
+      "downloadExit": 0,
+      "extractExit": 0,
+      "attempts": 1,
+      "installed": false,
+      "libraryDirectory": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu",
+      "files": [
+        {
+          "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-coredump.so.0",
+          "symlink": "libunwind-coredump.so.0.0.0"
+        },
+        {
+          "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-coredump.so.0.0.0",
+          "bytes": 22504,
+          "sha256": "189e953d953d351ebf7787a1a6bfdf4efacd491652995a264b2832a024775d5d"
+        },
+        {
+          "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-ptrace.so.0",
+          "symlink": "libunwind-ptrace.so.0.0.0"
+        },
+        {
+          "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-ptrace.so.0.0.0",
+          "bytes": 18832,
+          "sha256": "d22b4d04f3379571e733c02611884d2d3e0c5e588637c96cc8a8df44b00801b5"
+        },
+        {
+          "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-x86_64.so.8",
+          "symlink": "libunwind-x86_64.so.8.2.0"
+        },
+        {
+          "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-x86_64.so.8.2.0",
+          "bytes": 67720,
+          "sha256": "e7cf258af27d39ff199342f4fb181218368df93238fb9d2ecf2eae52bf049b32"
+        },
+        {
+          "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind.so.8",
+          "symlink": "libunwind.so.8.2.0"
+        },
+        {
+          "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind.so.8.2.0",
+          "bytes": 72008,
+          "sha256": "ba50c4006ec13e89fc7065e1928345737d58e4f17c7f0ecff0914c3ac96e711f"
+        }
+      ]
+    },
+    "version": {
+      "command": "LD_LIBRARY_PATH=.golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu .golden-build/mw12-20261103/inputs/strace/root/usr/bin/strace --version",
+      "exitCode": 0,
+      "firstLine": "strace -- version 6.19"
+    }
+  },
+  "commands": [
+    {
+      "id": "mirrorecma-init",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorECMA-fetch.log"
+    },
+    {
+      "id": "mirrorecma-remote-add",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorECMA-fetch.log"
+    },
+    {
+      "id": "mirrorecma-fetch-1",
+      "exitCode": 128,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorECMA-fetch.log"
+    },
+    {
+      "id": "mirrorecma-fetch-2",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorECMA-fetch.log"
+    },
+    {
+      "id": "mirrorecma-checkout",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorECMA-fetch.log"
+    },
+    {
+      "id": "mirrorecma-status",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorECMA-fetch.log"
+    },
+    {
+      "id": "mirrorgate-init",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorGate-fetch.log"
+    },
+    {
+      "id": "mirrorgate-remote-add",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorGate-fetch.log"
+    },
+    {
+      "id": "mirrorgate-fetch-1",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorGate-fetch.log"
+    },
+    {
+      "id": "mirrorgate-checkout",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorGate-fetch.log"
+    },
+    {
+      "id": "mirrorgate-status",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/MirrorGate-fetch.log"
+    },
+    {
+      "id": "mirrors-ls-remote",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/mirrors-ls-remote.log"
+    },
+    {
+      "id": "carrier-filename-lookup",
+      "stdoutHits": 1,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/carrier-lookup.txt"
+    },
+    {
+      "id": "carrier-size-lookup",
+      "exitCode": 1,
+      "stdoutHits": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/carrier-size-lookup.log"
+    },
+    {
+      "id": "strace-gpgv",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/strace-acquire.log"
+    },
+    {
+      "id": "strace-download",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/strace-acquire.log"
+    },
+    {
+      "id": "strace-control",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/strace-acquire.log"
+    },
+    {
+      "id": "strace-extract",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/strace-acquire.log"
+    },
+    {
+      "id": "strace-version-direct",
+      "exitCode": 127,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/strace-acquire.log"
+    },
+    {
+      "id": "libunwind-download",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/strace-libunwind.log"
+    },
+    {
+      "id": "libunwind-extract",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/strace-libunwind.log"
+    },
+    {
+      "id": "strace-version-with-owned-libunwind",
+      "exitCode": 0,
+      "log": "Plans/mainwork-mw12-20261103/acquisition/logs/strace-libunwind.log"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/strace_6.19+ds-0ubuntu5_amd64.deb",
+      "bytes": 677520,
+      "sha256": "aa530bb652e46beaf92d5c916403182a5ac6b2ba79a94f18e5b9da45d1799ee5"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/root/usr/bin/strace",
+      "bytes": 2370264,
+      "sha256": "f47342683309e807bca57d6d89b82f94a9b39aa614e9c28c2b67cefbc35eee58"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/libunwind8_1.8.3-0ubuntu1_amd64.deb",
+      "bytes": 59630,
+      "sha256": "7a9978fadf0940f45500ced0fba219cb5954f322a31068b7b32ad04f3ddc5c3f"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-ptrace.so.0.0.0",
+      "bytes": 18832,
+      "sha256": "d22b4d04f3379571e733c02611884d2d3e0c5e588637c96cc8a8df44b00801b5"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind-x86_64.so.8.2.0",
+      "bytes": 67720,
+      "sha256": "e7cf258af27d39ff199342f4fb181218368df93238fb9d2ecf2eae52bf049b32"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/lib/x86_64-linux-gnu/libunwind.so.8.2.0",
+      "bytes": 72008,
+      "sha256": "ba50c4006ec13e89fc7065e1928345737d58e4f17c7f0ecff0914c3ac96e711f"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/share/doc/libunwind8/copyright",
+      "bytes": 3613,
+      "sha256": "977d981f5677652884b09cccef6b62f992aa9c74b7a748bfe9863a703f5aed58"
+    },
+    {
+      "path": ".golden-build/mw12-20261103/inputs/strace/libunwind-root/usr/share/doc/libunwind8/changelog.Debian.gz",
+      "bytes": 1124,
+      "sha256": "88899afdd3fde6c6aedea0a4c022320732d9f1171eb6e9de2172381736e6bd44"
+    }
+  ]
+}

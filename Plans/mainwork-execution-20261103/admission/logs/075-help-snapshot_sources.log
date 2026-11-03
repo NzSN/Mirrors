@@ -1,0 +1,19 @@
+# name: help-snapshot_sources
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["/usr/bin/python3", "/home/lsz/Codebase/Mirrors/tools/distribution/snapshot_sources.py", "--help"]
+
+usage: snapshot_sources.py [-h] --component-lock COMPONENT_LOCK --out OUT
+                           [--mirrors MIRRORS] [--mirrorecma MIRRORECMA]
+                           [--mirrorgate MIRRORGATE]
+
+Create immutable regular-file source snapshots matching component-lock refs.
+
+options:
+  -h, --help            show this help message and exit
+  --component-lock COMPONENT_LOCK
+  --out OUT
+  --mirrors MIRRORS
+  --mirrorecma MIRRORECMA
+  --mirrorgate MIRRORGATE

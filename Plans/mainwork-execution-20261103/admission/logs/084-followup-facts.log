@@ -1,0 +1,218 @@
+# name: followup-facts
+# started: 2026-11-03T02:09:47Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["/usr/bin/python3", "mw50-admission-followup.py"]
+# note: filesystem, socket, carrier search, node member and input facts
+
+{
+  "filesystems": {
+    "repo": {
+      "path": "/home/lsz/Codebase/Mirrors",
+      "exists": true,
+      "writable": true,
+      "device": 2096,
+      "inode": 268837,
+      "filesystemType": "ext4",
+      "caseSensitive": "passed"
+    },
+    "codebase": {
+      "path": "/home/lsz/Codebase",
+      "exists": true,
+      "writable": false,
+      "device": 2096,
+      "inode": 162084,
+      "filesystemType": "ext4",
+      "caseSensitive": "mkdir-denied: PermissionError: [Errno 13] Permission denied: '/home/lsz/Codebase/mw50-case-codebase-u6079271'"
+    },
+    "home": {
+      "path": "/home/lsz",
+      "exists": true,
+      "writable": false,
+      "device": 2096,
+      "inode": 743,
+      "filesystemType": "ext4",
+      "caseSensitive": "mkdir-denied: PermissionError: [Errno 13] Permission denied: '/home/lsz/mw50-case-home-88w02pzf'"
+    },
+    "local-state": {
+      "path": "/home/lsz/.local",
+      "exists": true,
+      "writable": false,
+      "device": 2096,
+      "inode": 80369,
+      "filesystemType": "ext4",
+      "caseSensitive": "mkdir-denied: PermissionError: [Errno 13] Permission denied: '/home/lsz/.local/mw50-case-local-state-wo8h5ycv'"
+    },
+    "tmp": {
+      "path": "/tmp",
+      "exists": true,
+      "writable": true,
+      "device": 74,
+      "inode": 1,
+      "filesystemType": "tmpfs",
+      "caseSensitive": "passed"
+    },
+    "vartmp": {
+      "path": "/var/tmp",
+      "exists": true,
+      "writable": true,
+      "device": 2096,
+      "inode": 44786,
+      "filesystemType": "ext4",
+      "caseSensitive": "passed"
+    },
+    "golden": {
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build",
+      "exists": true,
+      "writable": true,
+      "device": 2096,
+      "inode": 486581,
+      "filesystemType": "ext4",
+      "caseSensitive": "passed"
+    },
+    "admission": {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/mainwork-execution-20261103/admission",
+      "exists": true,
+      "writable": true,
+      "device": 2096,
+      "inode": 26421,
+      "filesystemType": "ext4",
+      "caseSensitive": "passed"
+    }
+  },
+  "unix": {
+    "result": "passed",
+    "filesystemType": "tmpfs"
+  },
+  "loopback": {
+    "ipv4": {
+      "result": "passed",
+      "ephemeralPort": 34823
+    },
+    "ipv6": {
+      "result": "passed",
+      "ephemeralPort": 41177
+    }
+  },
+  "cgroup": {
+    "path": "/sys/fs/cgroup",
+    "exists": true,
+    "writable": false,
+    "controllers": "cpuset cpu io memory hugetlb pids rdma",
+    "self": "0::/non-systemd",
+    "currentPath": "/sys/fs/cgroup/non-systemd",
+    "currentWritable": false
+  },
+  "batteriesSearch": [
+    {
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-20261031/inputs/sha256/f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3/batteries-v4.33.0.bundle",
+      "bytes": 3684180,
+      "sha256": "f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3",
+      "matchesLockedPin": false
+    }
+  ],
+  "retainedCarrierDirectoryExists": false,
+  "nodeExecutableInLockedArchive": {
+    "member": "node-v24.15.0-linux-x64/bin/node",
+    "bytes": 122889056,
+    "sha256": "d1de76d8edf2fededf6f8b30d244e2c0529ac607923a018283b77e9c74bd932c",
+    "pinNodeSha256": "d1de76d8edf2fededf6f8b30d244e2c0529ac607923a018283b77e9c74bd932c",
+    "pinNodeBytes": 122889056,
+    "matchesInteropPin": true
+  },
+  "typescriptTrees": {
+    "typescript": {
+      "path": "/home/lsz/Codebase/MirrorECMA/node_modules/typescript",
+      "present": true,
+      "symlinkSamples": [],
+      "symlinkSampleTruncated": false,
+      "algorithm": "mirrors-runtime-tree-v1",
+      "digest": "80a859dc2c85ecd5731cbbf3b58ddf6f5457bf11fd7ab31ffb56ef4c05855661",
+      "entryCount": 132,
+      "bytes": 23625066
+    },
+    "@types": {
+      "path": "/home/lsz/Codebase/MirrorECMA/node_modules/@types",
+      "present": true,
+      "symlinkSamples": [
+        "jest",
+        "node"
+      ],
+      "symlinkSampleTruncated": false,
+      "runtimeTree": "not-computed: source contains symlinks; build.py copies with symlinks=False and hashes the copy"
+    },
+    "undici-types": {
+      "path": "/home/lsz/Codebase/MirrorECMA/node_modules/undici-types",
+      "present": true,
+      "symlinkSamples": [],
+      "symlinkSampleTruncated": false,
+      "algorithm": "mirrors-runtime-tree-v1",
+      "digest": "e6e7d9829315a79290f035d1657b368c1a07d2b2276e8d365334675a15ec274f",
+      "entryCount": 41,
+      "bytes": 83680
+    },
+    "typescriptMatchesInteropPinDigest": true
+  },
+  "wheelHits": [
+    {
+      "directory": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-a1a2-20261031/wheels",
+      "wheels": [
+        "attrs-23.2.0-py3-none-any.whl",
+        "jsonschema-4.10.3-py3-none-any.whl",
+        "pyrsistent-0.20.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ]
+    },
+    {
+      "directory": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-20261031/wheels",
+      "wheels": [
+        "attrs-23.2.0-py3-none-any.whl",
+        "jsonschema-4.10.3-py3-none-any.whl",
+        "pyrsistent-0.20.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ]
+    },
+    {
+      "directory": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-20261031/prepared/evidence-wheels",
+      "wheels": [
+        "attrs-23.2.0-py3-none-any.whl",
+        "jsonschema-4.10.3-py3-none-any.whl",
+        "pyrsistent-0.20.0-py3-none-any.whl"
+      ]
+    }
+  ],
+  "statusSummary": {
+    "059-mirrors-status.log": {
+      "porcelainLines": 29,
+      "top": {
+        "CHECKPOINTS.md": 1,
+        "Plans": 28
+      }
+    },
+    "061-mirrorecma-status-count.log": {
+      "porcelainLines": 1,
+      "top": {
+        "node_modules-pnpm-isolated": 1
+      }
+    },
+    "063-mirrorgate-status-count.log": {
+      "porcelainLines": 0,
+      "top": {}
+    },
+    "065-mirrorcpp-status-count.log": {
+      "porcelainLines": 0,
+      "top": {}
+    },
+    "067-mirrorlean-status-count.log": {
+      "porcelainLines": 0,
+      "top": {}
+    },
+    "069-mirrorrust-status-count.log": {
+      "porcelainLines": 0,
+      "top": {}
+    }
+  },
+  "ecmaPinFile": {
+    "path": "/home/lsz/Codebase/Mirrors/tools/interop/ecma-runtime-pin.json",
+    "bytes": 851,
+    "sha256": "598bb5efc53447444eedec428ac72ea6d1ef478a75995452d7176414f7df8c83"
+  }
+}

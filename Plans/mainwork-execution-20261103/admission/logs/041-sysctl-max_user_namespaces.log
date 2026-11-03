@@ -1,0 +1,7 @@
+# name: sysctl-max_user_namespaces
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["bash", "-lc", "if [ -r /proc/sys/user/max_user_namespaces ]; then echo -n /proc/sys/user/max_user_namespaces=; cat /proc/sys/user/max_user_namespaces; else echo UNREADABLE /proc/sys/user/max_user_namespaces; fi"]
+
+/proc/sys/user/max_user_namespaces=2147483647

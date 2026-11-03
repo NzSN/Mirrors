@@ -1,0 +1,7 @@
+# name: loader-path
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["bash", "-lc", "if [ -e /lib64/ld-linux-x86-64.so.2 ]; then ls -l /lib64/ld-linux-x86-64.so.2; else echo MISSING; fi"]
+
+lrwxrwxrwx 1 nobody nogroup 44 Sep  3 22:09 /lib64/ld-linux-x86-64.so.2 -> ../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2

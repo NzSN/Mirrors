@@ -1,0 +1,54 @@
+[
+  {
+    "case": "draft",
+    "lockRoot": "/tmp/proposed/wsl2/locks",
+    "buildInputs": [
+      {
+        "inputId": "profiles-lock",
+        "path": "wsl2/locks/profiles.json",
+        "bytes": 2,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "inputId": "component-lock",
+        "path": "wsl2/locks/component-lock.json",
+        "bytes": 2,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "inputId": "dependency-lock",
+        "path": "wsl2/locks/dependency-lock.json",
+        "bytes": 2,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      }
+    ],
+    "accepted": false,
+    "error": "bootstrap build input must name distribution/<root>/profiles.json: profiles-lock"
+  },
+  {
+    "case": "corrected",
+    "lockRoot": "/tmp/proposed/distribution/reference-node-wsl2-26.04",
+    "buildInputs": [
+      {
+        "inputId": "profiles-lock",
+        "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+        "bytes": 2,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "inputId": "component-lock",
+        "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+        "bytes": 2,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "inputId": "dependency-lock",
+        "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+        "bytes": 2,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      }
+    ],
+    "accepted": true,
+    "derivedRoot": "distribution/reference-node-wsl2-26.04"
+  }
+]

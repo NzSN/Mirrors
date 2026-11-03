@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "mirrors.mw12.command/v1",
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tools/release",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "startedAt": "2026-11-03T03:55:53.109605+00:00",
+  "finishedAt": "2026-11-03T03:55:54.177986+00:00",
+  "monotonicDurationSeconds": 1.0683699760120362,
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "logs": [
+    {
+      "path": "logs/release-unit-final.stdout",
+      "bytes": 235,
+      "sha256": "8fad8ab778eaf024dc73d280560be49d174d677a827fba900cdffa8ee77a44ab"
+    },
+    {
+      "path": "logs/release-unit-final.stderr",
+      "bytes": 1682,
+      "sha256": "87a1996d38dcd2108367cf97289c6dddec56cfc2b1da9b068b9be6f609aa2ffe"
+    }
+  ]
+}

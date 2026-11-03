@@ -1,0 +1,13 @@
+test_update_locks_assigns_product_by_component_id (test_refresh_identity.LockProductPropagationTests.test_update_locks_assigns_product_by_component_id) ... ok
+test_checkout_declares_prepared_version (test_refresh_identity.SourceProductRefreshTests.test_checkout_declares_prepared_version) ... ok
+test_checkout_source_overrides_patched_sandbox_and_stale_catalog (test_refresh_identity.SourceProductRefreshTests.test_checkout_source_overrides_patched_sandbox_and_stale_catalog) ... ok
+test_invalid_declaration_is_refused_before_catalog_write (test_refresh_identity.SourceProductRefreshTests.test_invalid_declaration_is_refused_before_catalog_write) ... ok
+test_owned_record_follows_mirrors_component_only (test_refresh_identity.SourceProductRefreshTests.test_owned_record_follows_mirrors_component_only) ... ok
+test_skip_component_records_leaves_the_owned_record_unchanged (test_refresh_identity.SourceProductRefreshTests.test_skip_component_records_leaves_the_owned_record_unchanged) ... ok
+test_skip_flags_stay_independent (test_refresh_identity.SourceProductRefreshTests.test_skip_flags_stay_independent) ... ok
+test_stale_catalog_product_is_corrected_before_selection (test_refresh_identity.SourceProductRefreshTests.test_stale_catalog_product_is_corrected_before_selection) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.041s
+
+OK

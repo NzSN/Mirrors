@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "mirrors.mw12.grok-jobs/v1",
+  "jobs": [
+    {
+      "name": "source-initial",
+      "jobId": "task-mw0454z2-w700m0",
+      "status": "completed",
+      "exitCode": 0,
+      "stopReason": "end_turn",
+      "sessionId": "01a19f65-ad0b-76e0-bd1d-7090f05ef39b",
+      "createdAt": "2026-11-03T03:13:23.057Z",
+      "finishedAt": "2026-11-03T03:29:33.845Z",
+      "numTurns": 28,
+      "stderr": null,
+      "errorClassification": null
+    },
+    {
+      "name": "source-correction",
+      "jobId": "task-mw04qypr-zqzsho",
+      "status": "completed",
+      "exitCode": 0,
+      "stopReason": "end_turn",
+      "sessionId": "01a19f65-ad0b-76e0-bd1d-7090f05ef39b",
+      "createdAt": "2026-11-03T03:30:21.378Z",
+      "finishedAt": "2026-11-03T03:34:00.113Z",
+      "numTurns": 9,
+      "stderr": null,
+      "errorClassification": null
+    },
+    {
+      "name": "acquisition",
+      "jobId": "task-mw0458po-h7bo3y",
+      "status": "completed",
+      "exitCode": 0,
+      "stopReason": "end_turn",
+      "sessionId": "01a19f65-c009-7e82-909e-7995ebb2f790",
+      "createdAt": "2026-11-03T03:13:27.903Z",
+      "finishedAt": "2026-11-03T03:24:06.139Z",
+      "numTurns": 14,
+      "stderr": null,
+      "errorClassification": null
+    },
+    {
+      "name": "binding-initial",
+      "jobId": "task-mw04xexr-24hexw",
+      "status": "failed",
+      "exitCode": 1,
+      "stopReason": "max_turn_requests",
+      "sessionId": "01a19f79-ce7e-7b81-9960-6d4b3dd9f39d",
+      "createdAt": "2026-11-03T03:35:22.339Z",
+      "finishedAt": "2026-11-03T03:43:18.054Z",
+      "numTurns": 30,
+      "stderr": "Error: max turns reached\n",
+      "errorClassification": "turn limit; companion authentication label was incorrect"
+    },
+    {
+      "name": "binding-resume",
+      "jobId": "task-mw05e00k-pfyxt8",
+      "status": "completed",
+      "exitCode": 0,
+      "stopReason": "end_turn",
+      "sessionId": "01a19f79-ce7e-7b81-9960-6d4b3dd9f39d",
+      "createdAt": "2026-11-03T03:48:16.152Z",
+      "finishedAt": "2026-11-03T03:56:51.199Z",
+      "numTurns": 13,
+      "stderr": null,
+      "errorClassification": null
+    }
+  ]
+}

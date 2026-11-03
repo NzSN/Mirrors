@@ -180,6 +180,13 @@ Each component record is closed:
 tag or publication. `records` identify the component-owned inputs an adapter
 used. `recordKind` is `source`, `manifest`, `pins`, `protocol`, or `ledger`.
 
+Mirrors catalog refresh reads its product declaration from the selected Mirrors
+source's `Shell/Version.lean` before computing the selection digest. Missing,
+malformed or ambiguous declarations fail before catalog writes. Refresh keeps
+the component-owned Mirrors record consistent when that record is requested;
+the skip-record flags leave it unchanged. Other components retain their own
+declared products.
+
 ## Capabilities and evidence states
 
 Each capability has a globally unique `capabilityId`, one `ownerComponentId`, a

@@ -1,0 +1,60 @@
+[
+  {
+    "id": "refresh-identity",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/distribution",
+      "-p",
+      "test_refresh_identity.py",
+      "-v"
+    ],
+    "cwd": "/home/lsz/Codebase/Mirrors",
+    "env": {
+      "TMPDIR": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/tmp",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "startedAt": "2026-11-03T03:26:26.824033Z",
+    "finishedAt": "2026-11-03T03:26:26.982722Z",
+    "elapsedMs": 158,
+    "exitCode": 0,
+    "stdoutPath": "Plans/mainwork-mw12-20261103/source/logs/refresh-identity.stdout",
+    "stderrPath": "Plans/mainwork-mw12-20261103/source/logs/refresh-identity.stderr",
+    "stdoutBytes": 0,
+    "stderrBytes": 1382,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "e03a00b812f93b2572d5b9a58cc8e079a6bba81c4c124e7e2f7d1fef3dee7604"
+  },
+  {
+    "id": "distribution",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/distribution",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/home/lsz/Codebase/Mirrors",
+    "env": {
+      "TMPDIR": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/tmp",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "startedAt": "2026-11-03T03:26:26.982906Z",
+    "finishedAt": "2026-11-03T03:26:30.837252Z",
+    "elapsedMs": 3854,
+    "exitCode": 0,
+    "stdoutPath": "Plans/mainwork-mw12-20261103/source/logs/distribution.stdout",
+    "stderrPath": "Plans/mainwork-mw12-20261103/source/logs/distribution.stderr",
+    "stdoutBytes": 0,
+    "stderrBytes": 11163,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "664c36da7c903f278e69180a4d2c1bda7076c528b7c3870fab05e45192dc6238"
+  }
+]

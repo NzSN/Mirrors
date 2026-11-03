@@ -97,6 +97,9 @@ class PlanningDocumentationExclusionTests(unittest.TestCase):
         git(repository, "config", "user.name", "Planning Test")
         (repository / "tools").mkdir()
         (repository / "tools/registry.py").write_text("VALUE = 1\n")
+        (repository / "Shell").mkdir()
+        (repository / "Shell/Version.lean").write_text(
+            'def version : String := "0.0.9"\n', encoding="utf-8")
         (repository / "Plans").mkdir()
         (repository / "Plans/plan.md").write_text("plan v1\n")
         (repository / "AGENTS.md").write_text("agents v1\n")

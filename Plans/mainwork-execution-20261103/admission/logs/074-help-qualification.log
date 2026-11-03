@@ -1,0 +1,28 @@
+# name: help-qualification
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["/usr/bin/python3", "/home/lsz/Codebase/Mirrors/tools/distribution/qualification.py", "--help"]
+
+usage: qualification.py [-h] --prefix PREFIX
+                        --framework-catalog-bin FRAMEWORK_CATALOG_BIN
+                        --framework-catalog-sha256 FRAMEWORK_CATALOG_SHA256
+                        --bwrap BWRAP --strace STRACE
+                        --strace-sha256 STRACE_SHA256
+                        [--combination COMBINATION] --audit-out AUDIT_OUT
+                        --hide-root HIDE_ROOT
+
+Relocate and exercise an installed checked-replay runtime without
+source/global tools.
+
+options:
+  -h, --help            show this help message and exit
+  --prefix PREFIX
+  --framework-catalog-bin FRAMEWORK_CATALOG_BIN
+  --framework-catalog-sha256 FRAMEWORK_CATALOG_SHA256
+  --bwrap BWRAP
+  --strace STRACE
+  --strace-sha256 STRACE_SHA256
+  --combination COMBINATION
+  --audit-out AUDIT_OUT
+  --hide-root HIDE_ROOT

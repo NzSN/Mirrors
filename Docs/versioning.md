@@ -1,9 +1,16 @@
 # Product versions and local installation
 
 The current cross-repository policy is
-[ecosystem versioning](ecosystem-versioning.md). Current source declares Mirrors
-`v0.1.1`, a compatible patch for DPM build preparation and maintained status
-documentation. The build fix landed in `03510b4`; its
+[ecosystem versioning](ecosystem-versioning.md). Current source prepares Mirrors
+`v0.2.0-rc.6` in the [MW-12 continuation](../Plans/mainwork-mw12-20261103/README.md).
+This source candidate does not imply a new tag or published package. Branch
+delivery is recorded separately in [CHECKPOINTS.md](../CHECKPOINTS.md).
+Existing rc.5 refs and packages remain unchanged. Catalog refresh
+derives the Mirrors product declaration from `Shell/Version.lean` before
+calculating catalog and distribution-lock identities.
+
+The earlier `v0.1.1` compatible patch covers DPM build preparation and maintained
+status documentation. Its build fix landed in `03510b4`; its
 [bounded validation record](../Plans/dpm-build-preparation-evidence-20261022/README.md)
 retains the exact tested source/artifact hashes. The newest
 [checkpoint](../CHECKPOINTS.md) records the separate patch-release validation
@@ -75,12 +82,14 @@ and is compiled into the executable:
 
 ```console
 $ .lake/build/bin/mirror --version
-v0.1.1
+v0.2.0-rc.6
 $ ModelMirrors --version
-v0.1.1
+v0.2.0-rc.6
 ```
 
-The second command requires installation under that name on `PATH`.
+These examples describe binaries rebuilt from the prepared rc.6 source; they
+are not observations of an existing installation. The second command requires
+installation under that name on `PATH`.
 See the [CLI reference](interface-reference.md) for exit codes and argument
 validation. The examples require rebuilding and, for `ModelMirrors`, reinstalling
 that build. Binaries from the superseded `v0.1.0` alias still print `v0.0.3.2`;

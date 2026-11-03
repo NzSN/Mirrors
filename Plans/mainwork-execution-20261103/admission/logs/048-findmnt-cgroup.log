@@ -1,0 +1,8 @@
+# name: findmnt-cgroup
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["findmnt", "-t", "cgroup2"]
+
+TARGET         SOURCE  FSTYPE  OPTIONS
+/sys/fs/cgroup cgroup2 cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate

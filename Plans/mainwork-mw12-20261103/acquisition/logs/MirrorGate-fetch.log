@@ -1,0 +1,64 @@
+started=2026-11-03T03:18:01Z
+url=https://github.com/NzSN/MirrorGate.git
+commit=4b379ac0c017e7621c945ebf8c106cd98a6c70d1
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorGate/.git/
+init_exit=0
+remote_add_exit=0
+attempt=1
+From https://github.com/NzSN/MirrorGate
+ * branch            4b379ac0c017e7621c945ebf8c106cd98a6c70d1 -> FETCH_HEAD
+fetch1_exit=0
+fetch_head=4b379ac0c017e7621c945ebf8c106cd98a6c70d1
+HEAD is now at 4b379ac runtime: persist private budgets and group recovery
+checkout_exit=0
+HEAD=4b379ac0c017e7621c945ebf8c106cd98a6c70d1
+TREE=96e7fa4d0ac90c526d7e499f95664f00b1bc3e9b
+ABBREV=HEAD
+ORIGIN=https://github.com/NzSN/MirrorGate.git
+SHALLOW=true
+STATUS_SB_BEGIN
+## HEAD (no branch)
+STATUS_SB_END
+STATUS_PORCELAIN_BEGIN
+STATUS_PORCELAIN_END
+status_exit=0
+TOP_BEGIN
+.git
+.github
+.gitignore
+.node-version
+AGENTS.md
+README.md
+bin
+conformance
+docs
+examples
+integrations
+mirrors-compatibility.json
+package-lock.json
+package.json
+protocol
+runtimes
+rust-toolchain.toml
+scripts
+sdk
+specs
+supervisor
+tests
+TOP_END
+package_name=mirrorgate
+package_version=0.1.0
+finished=2026-11-03T03:18:20Z

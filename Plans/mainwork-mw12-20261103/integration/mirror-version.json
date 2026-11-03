@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "mirrors.mw12.command/v1",
+  "argv": [
+    ".lake/build/bin/mirror",
+    "--version"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "startedAt": "2026-11-03T03:31:56.573935+00:00",
+  "finishedAt": "2026-11-03T03:31:56.606451+00:00",
+  "monotonicDurationSeconds": 0.032508405012777075,
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "logs": [
+    {
+      "path": "logs/mirror-version.stdout",
+      "bytes": 12,
+      "sha256": "7b64cdf4bf8ac4250356580cb2b75533f78c5c331b9716b2f14984ff12550e12"
+    },
+    {
+      "path": "logs/mirror-version.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "mirrors.mw12.apt-review/v1",
+  "signedIndex": "/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_resolute_main_binary-amd64_Packages",
+  "indexBytes": 7581722,
+  "indexSha256": "92eb335c0ed27983d41a5a0efdf0edce3e67bfa34e8e987af9df260ca72d9bf9",
+  "packageRecords": [
+    {
+      "package": "libunwind8",
+      "version": "1.8.3-0ubuntu1",
+      "architecture": "amd64",
+      "deb": ".golden-build/mw12-20261103/inputs/strace/libunwind8_1.8.3-0ubuntu1_amd64.deb",
+      "bytes": 59630,
+      "sha256": "7a9978fadf0940f45500ced0fba219cb5954f322a31068b7b32ad04f3ddc5c3f"
+    },
+    {
+      "package": "strace",
+      "version": "6.19+ds-0ubuntu5",
+      "architecture": "amd64",
+      "deb": ".golden-build/mw12-20261103/inputs/strace/strace_6.19+ds-0ubuntu5_amd64.deb",
+      "bytes": 677520,
+      "sha256": "aa530bb652e46beaf92d5c916403182a5ac6b2ba79a94f18e5b9da45d1799ee5"
+    }
+  ],
+  "signatureReceipt": "apt-signature-review.json",
+  "claim": "exact signed input packages, not system installation or execution admission"
+}

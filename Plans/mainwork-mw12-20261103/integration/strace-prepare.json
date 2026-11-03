@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "mirrors.mw12.command/v1",
+  "argv": [
+    "python3",
+    "Plans/mainwork-mw12-20261103/prepare_strace.py"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "startedAt": "2026-11-03T03:28:33.746500+00:00",
+  "finishedAt": "2026-11-03T03:28:33.811077+00:00",
+  "monotonicDurationSeconds": 0.0645766950037796,
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "logs": [
+    {
+      "path": "logs/strace-prepare.stdout",
+      "bytes": 89,
+      "sha256": "4af53fdbda33df73d3d69b90c3710500c0a827f655a13d06bb6bf937203e3b4d"
+    },
+    {
+      "path": "logs/strace-prepare.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

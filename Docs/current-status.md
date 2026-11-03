@@ -1,5 +1,28 @@
 # Current framework status and navigation
 
+## November 3 source-candidate reconciliation
+
+The [MW-12 continuation](../Plans/mainwork-mw12-20261103/README.md) prepares
+source version `0.2.0-rc.6` after the reviewed
+[mainwork stage/task batch](../Plans/mainwork-execution-20261103/README.md).
+The existing rc.5 tag and packages remain bound to `3ee3d92`. No rc.6 tag,
+package, publication or deployment follows from this source preparation.
+
+Catalog refresh now derives Mirrors' product version from its selected source
+declaration, including when the selected tree differs from the tool checkout.
+The pinned MirrorECMA `9192171` and MirrorGate
+`4b379ac` revisions have been acquired in clean task-owned copies, preserving
+the older shared checkouts. Catalog/lock and registry reconciliation, focused
+validation and Codex review are recorded in that continuation. Final freeze
+and exact-candidate qualification retain their own gates.
+
+The actual coordinator remains Ubuntu 26.04.1 WSL2. Both selected local/Gate
+D audits still need admitted tools, namespace permissions and exact dependency
+bytes. The newly pinned Batteries carrier `73130433…` is absent from the
+recorded local retention path; the earlier acquisition evidence is historical.
+Remote/TLS/client/Windows admission, full M5/Q and release acceptance remain
+open. No local Apalache/TLC runs on this coordinator.
+
 ## October 31 Batteries carrier re-pin
 
 At the user's request, a [new Batteries bundle](../Plans/batteries-bundle-repin-evidence-20261031/README.md)

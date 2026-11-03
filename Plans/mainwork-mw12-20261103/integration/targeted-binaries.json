@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "mirrors.mw12.targeted-binaries/v1",
+  "binaries": [
+    {
+      "path": ".lake/build/bin/mirror",
+      "bytes": 129463840,
+      "sha256": "e9aef1bbeafa9fae672095ce9c494400c0aafcb590eeb2645302d7554153cf38"
+    },
+    {
+      "path": ".lake/build/bin/stdio_smoke",
+      "bytes": 120801672,
+      "sha256": "a886b3eea7ab771cc604d31199fc2ac0cf18c723e13ad2d131ca997d9bd7cf9c"
+    },
+    {
+      "path": ".lake/build/bin/framework_catalog",
+      "bytes": 119687824,
+      "sha256": "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126"
+    }
+  ],
+  "scope": "targeted build only; not full source/framework/package acceptance"
+}

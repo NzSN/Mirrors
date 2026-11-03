@@ -1,0 +1,7 @@
+# name: sysctl-osrelease
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["bash", "-lc", "if [ -r /proc/sys/kernel/osrelease ]; then echo -n /proc/sys/kernel/osrelease=; cat /proc/sys/kernel/osrelease; else echo UNREADABLE /proc/sys/kernel/osrelease; fi"]
+
+/proc/sys/kernel/osrelease=6.18.54.1-microsoft-standard-WSL2

@@ -1,0 +1,8 @@
+# name: findmnt-tmp
+# started: 2026-11-03T02:03:04Z
+# cwd: /home/lsz/Codebase/Mirrors
+# exit: 0
+# argv: ["findmnt", "-T", "/tmp", "-o", "TARGET,SOURCE,FSTYPE,OPTIONS"]
+
+TARGET SOURCE FSTYPE OPTIONS
+/tmp   tmpfs  tmpfs  rw,nosuid,nodev,size=15401932k,nr_inodes=1048576

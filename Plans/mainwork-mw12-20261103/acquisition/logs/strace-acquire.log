@@ -1,0 +1,56 @@
+started=2026-11-03T03:18:01Z
+packages=/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_resolute_main_binary-amd64_Packages
+inrelease=/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_resolute_InRelease
+KEYRINGS_BEGIN
+ls: cannot access '/usr/share/keyrings/ubuntu-archive-keyring.gpg~': No such file or directory
+-rw-r--r-- 1 nobody nogroup 3607 Nov 26  2023 /usr/share/keyrings/ubuntu-archive-keyring.gpg
+ubuntu-archive-keyring.gpg
+ubuntu-archive-removed-keys.gpg
+ubuntu-cloudimage-keyring.gpg
+ubuntu-cloudimage-removed-keys.gpg
+ubuntu-master-keyring.gpg
+ubuntu-pro-anbox-cloud.gpg
+ubuntu-pro-cc-eal.gpg
+ubuntu-pro-cis.gpg
+ubuntu-pro-esm-apps-legacy.gpg
+ubuntu-pro-esm-apps.gpg
+ubuntu-pro-esm-infra-legacy.gpg
+ubuntu-pro-esm-infra.gpg
+ubuntu-pro-fips-preview.gpg
+ubuntu-pro-fips.gpg
+ubuntu-pro-realtime-kernel.gpg
+ubuntu-pro-ros.gpg
+KEYRINGS_END
+GPGV_BEGIN
+gpgv: Signature made Fri Apr 24 01:07:30 2026 CST
+gpgv:                using RSA key F6ECB3762474EDA9D21B7022871920D1991BC93C
+gpgv: Good signature from "Ubuntu Archive Automatic Signing Key (2018) <ftpmaster@ubuntu.com>"
+gpgv_exit=0
+GPGV_END
+inrelease_main/binary-amd64/Packages=('92eb335c0ed27983d41a5a0efdf0edce3e67bfa34e8e987af9df260ca72d9bf9', '7581722')
+inrelease_main/binary-amd64/Packages.gz=('73a7cee8168c3d3a72ef49e268b2cbb8e73652b732af6b074d632071e8e9c594', '1874082')
+packages_bytes=7581722
+packages_sha256=92eb335c0ed27983d41a5a0efdf0edce3e67bfa34e8e987af9df260ca72d9bf9
+SOURCES_INDEX_BEGIN
+ls: cannot access '/var/lib/apt/lists/*resolute*source*': No such file or directory
+ls: cannot access '/var/lib/apt/lists/*_Sources': No such file or directory
+SOURCES_INDEX_END
+attempt=1 apt-get download
+Get:1 http://archive.ubuntu.com/ubuntu resolute/main amd64 strace amd64 6.19+ds-0ubuntu5 [678 kB]
+Fetched 678 kB in 3s (206 kB/s)
+download1_exit=0
+deb_bytes=677520
+deb_sha256=aa530bb652e46beaf92d5c916403182a5ac6b2ba79a94f18e5b9da45d1799ee5
+deb_authenticated=1
+Package: strace
+Version: 6.19+ds-0ubuntu5
+Architecture: amd64
+control_exit=0
+extract_exit=0
+bin_bytes=2370264
+bin_sha256=f47342683309e807bca57d6d89b82f94a9b39aa614e9c28c2b67cefbc35eee58
+VERSION_BEGIN
+/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/root/usr/bin/strace: error while loading shared libraries: libunwind-ptrace.so.0: cannot open shared object file: No such file or directory
+version_exit=127
+VERSION_END
+finished=2026-11-03T03:18:05Z

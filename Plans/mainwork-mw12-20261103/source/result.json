@@ -1,0 +1,174 @@
+{
+  "schemaVersion": "mirrors.mw12-source-result/v1",
+  "createdAt": "2026-11-03T03:29:09Z",
+  "baseline": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+  "head": "75fbf962020cea8a13e009ecfdb3e912e7ce212f",
+  "preparedVersion": "0.2.0-rc.6",
+  "python": "3.14.4",
+  "filesystem": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/tmp",
+    "fstype": "ext4",
+    "source": "/dev/sdd[/home/lsz]",
+    "target": "/home/lsz",
+    "log": "Plans/mainwork-mw12-20261103/source/logs/tmpdir-filesystem.txt",
+    "logSha256": "ffc0e99e832eccf666352ba7bf915a66f04d6cadafd96798b7edaa54cff8ee37"
+  },
+  "changedPaths": [
+    "Shell/Version.lean",
+    "tools/distribution/refresh_identity.py",
+    "tools/distribution/test_refresh_identity.py",
+    "Plans/mainwork-mw12-20261103/source/report.md",
+    "Plans/mainwork-mw12-20261103/source/result.json",
+    "Plans/mainwork-mw12-20261103/source/inventory.json",
+    "Plans/mainwork-mw12-20261103/source/logs/"
+  ],
+  "diffNumstat": {
+    "Shell/Version.lean": {
+      "insertions": 1,
+      "deletions": 1
+    },
+    "tools/distribution/refresh_identity.py": {
+      "insertions": 78,
+      "deletions": 6
+    },
+    "tools/distribution/test_refresh_identity.py": {
+      "insertions": 266,
+      "deletions": 0
+    }
+  },
+  "tests": {
+    "refreshIdentity": {
+      "ran": 8,
+      "failures": 0,
+      "exitCode": 0,
+      "elapsedMs": 158
+    },
+    "distribution": {
+      "ran": 68,
+      "failures": 0,
+      "exitCode": 0,
+      "elapsedMs": 3854
+    },
+    "invalidDeclarationSubtests": 10
+  },
+  "commands": [
+    {
+      "id": "refresh-identity",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/distribution",
+        "-p",
+        "test_refresh_identity.py",
+        "-v"
+      ],
+      "cwd": "/home/lsz/Codebase/Mirrors",
+      "env": {
+        "TMPDIR": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/tmp",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "startedAt": "2026-11-03T03:26:26.824033Z",
+      "finishedAt": "2026-11-03T03:26:26.982722Z",
+      "elapsedMs": 158,
+      "exitCode": 0,
+      "stdoutPath": "Plans/mainwork-mw12-20261103/source/logs/refresh-identity.stdout",
+      "stderrPath": "Plans/mainwork-mw12-20261103/source/logs/refresh-identity.stderr",
+      "stdoutBytes": 0,
+      "stderrBytes": 1382,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e03a00b812f93b2572d5b9a58cc8e079a6bba81c4c124e7e2f7d1fef3dee7604"
+    },
+    {
+      "id": "distribution",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/distribution",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/home/lsz/Codebase/Mirrors",
+      "env": {
+        "TMPDIR": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/tmp",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "startedAt": "2026-11-03T03:26:26.982906Z",
+      "finishedAt": "2026-11-03T03:26:30.837252Z",
+      "elapsedMs": 3854,
+      "exitCode": 0,
+      "stdoutPath": "Plans/mainwork-mw12-20261103/source/logs/distribution.stdout",
+      "stderrPath": "Plans/mainwork-mw12-20261103/source/logs/distribution.stderr",
+      "stdoutBytes": 0,
+      "stderrBytes": 11163,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "664c36da7c903f278e69180a4d2c1bda7076c528b7c3870fab05e45192dc6238"
+    }
+  ],
+  "checks": [
+    {
+      "id": "head",
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "stdoutPath": "Plans/mainwork-mw12-20261103/source/logs/head.txt",
+      "stdoutBytes": 41,
+      "stdoutSha256": "508e2784324a9c5339a9c1c39e98a7acd796ec1c97cd5f475eebf23b6297800f"
+    },
+    {
+      "id": "owned-status",
+      "argv": [
+        "git",
+        "status",
+        "--short",
+        "--",
+        "Shell/Version.lean",
+        "tools/distribution/refresh_identity.py",
+        "tools/distribution/test_refresh_identity.py",
+        "catalog",
+        "distribution",
+        "Docs/framework-map.md",
+        "tools/StdioSmoke.lean"
+      ],
+      "exitCode": 0,
+      "stdoutPath": "Plans/mainwork-mw12-20261103/source/logs/owned-status.txt",
+      "stdoutBytes": 111,
+      "stdoutSha256": "380f241a99f0644a32c56f3d8a2acf2ad585371cf639f6b7ca229bc7c5e38484"
+    },
+    {
+      "id": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "Shell/Version.lean",
+        "tools/distribution/refresh_identity.py",
+        "tools/distribution/test_refresh_identity.py"
+      ],
+      "exitCode": 0,
+      "stdoutPath": "Plans/mainwork-mw12-20261103/source/logs/diff-check.stdout",
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exitPath": "Plans/mainwork-mw12-20261103/source/logs/diff-check.exit",
+      "exitBytes": 18,
+      "exitSha256": "5d7eff295ba4f649252cce6989ba960e8cd0dc6e9642557197a0704bacd4e286"
+    }
+  ],
+  "limitations": [
+    "Checked-in catalogs and component locks still record Mirrors 0.1.1. This job did not refresh them.",
+    "tools/StdioSmoke.lean still expects v0.2.0-rc.5 and was not edited. No Lake or native build ran.",
+    "Docs/versioning.md still describes v0.1.1.",
+    "No commit, push, tag, or other Git ref mutation.",
+    "Release suite, evidence suite, Apalache, TLC, and remote operations were not run."
+  ]
+}
