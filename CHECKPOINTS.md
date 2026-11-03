@@ -5,6 +5,40 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-03 — MW-12 full local non-model gate passed
+
+The user explicitly approved and requested the pending long/full local gate.
+`bash tools/run-local-no-model-check.sh` passed at committed source
+`25b62541ca443d5779fccc8d45fd90f64312747e` (`distribution: prepare rc.6
+source and candidate bindings`), ending with `ALL LOCAL NON-MODEL GATES GREEN`.
+The build completed 737 jobs; distribution 68, DPM 87 and durable evidence 146
+tests passed. The offline TLA differential ran 81 tests with six documented
+skips. Native integer-map/controlled-native preparation remained skipped because
+`MIRRORCPP_PREFIX` was unset, and all live Apalache/TLC tiers retained the
+runner's explicit exclusions or self-skips.
+
+The first attempt was denied socket creation by the sandbox. The second reached
+distribution installation tests but used tmpfs `/tmp`, while those tests require
+ext4. Both failed logs are retained. The successful run used approved loopback
+execution outside the sandbox and an ext4-backed `TMPDIR`; these were execution
+environment corrections, not source changes. Tracked source remained unchanged
+and older untracked completion records were preserved.
+
+Raw logs and a hash-bound receipt are under the ignored
+`.golden-build/s1-local-no-model-20261103/` root; see the
+[validation record](Plans/s1-local-no-model-evidence-20261103/README.md).
+This completes the full local non-model gate only. Final candidate/source/C0
+freeze, exact Batteries carrier, ptrace/namespace and D admission,
+remote/TLS/client/Windows inputs, M5/Q, framework and release qualification
+remain separate. No local model checker, tag, release archive, deployment,
+service change or reboot occurred.
+
+The user then requested commit and push of this validation result to
+`origin/main`. Delivery is scoped to this checkpoint and its validation record;
+ignored raw logs, tool outputs and unrelated untracked records stay out of the
+payload. This entry records the request, not push success; the local publication
+receipt and fresh remote-ref observation own delivery proof.
+
 ## 2026-11-03 — MW-12 branch publication authorized
 
 The user explicitly requested commit and push of the reviewed mainwork stages,
