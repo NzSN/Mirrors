@@ -1,5 +1,19 @@
 # Current framework status and navigation
 
+## November 4 rc.7 source preparation
+
+Source now prepares `0.2.0-rc.7` with the committed Git-managed Batteries
+carrier and recovered dependency selection. The user requested performing the
+next stage after the recovery publication at `d541d24`, authorizing the proposed
+rc.7 preparation and full local non-model gate. The
+[new source-freeze record](../Plans/source-freeze-rc7-20261104/README.md) owns
+validation, clean candidate identity and fresh C0/snapshot outcomes.
+
+Earlier rc.6 packages and their source/C0 evidence remain bound to their
+original bytes. Version preparation does not create a tag, package, release,
+installed D, M5/Q or deployment result. Both installed audits and fresh
+remote/runtime/client admission retain separate gates.
+
 ## November 4 Batteries carrier recovery
 
 The [recovery record](../Plans/batteries-recovery-20261104/README.md) resolves

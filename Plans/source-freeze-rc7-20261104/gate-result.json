@@ -1,0 +1,86 @@
+{
+  "schema": "mirrors.rc7-source-freeze-gate/v1",
+  "startedAt": "2026-11-04T07:45:39.402580+00:00",
+  "finishedAt": "2026-11-04T07:47:59.235028+00:00",
+  "seconds": 139.8324079590384,
+  "argv": [
+    "bash",
+    "tools/run-local-no-model-check.sh"
+  ],
+  "cwd": "/home/lsz/Codebase/Mirrors",
+  "tmpdir": "/home/lsz/Codebase/Mirrors/.golden-build/source-freeze-rc7-20261104/tmp",
+  "exitCode": 0,
+  "passed": true,
+  "sourceAndCompanionsStable": true,
+  "before": {
+    "mirrors": {
+      "componentId": "mirrors",
+      "repository": "https://github.com/NzSN/Mirrors.git",
+      "revision": "d541d242d977308ddc1b7fe6c92b75eb0548b3ef",
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "7d1132bf568de26d26d0dfa79f79040e137310dfe1963b3b1e6df08f07c4af59",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "Docs/current-status.md",
+          "Docs/versioning.md",
+          "Shell/Version.lean",
+          "tools/distribution/test_refresh_identity.py"
+        ],
+        "excludedPaths": []
+      }
+    },
+    "mirrorecma": {
+      "componentId": "mirrorecma",
+      "repository": "https://github.com/NzSN/MirrorECMA.git",
+      "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+      "dirty": false
+    },
+    "mirrorgate": {
+      "componentId": "mirrorgate",
+      "repository": "https://github.com/NzSN/MirrorGate.git",
+      "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+      "dirty": false
+    }
+  },
+  "after": {
+    "mirrors": {
+      "componentId": "mirrors",
+      "repository": "https://github.com/NzSN/Mirrors.git",
+      "revision": "d541d242d977308ddc1b7fe6c92b75eb0548b3ef",
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "7d1132bf568de26d26d0dfa79f79040e137310dfe1963b3b1e6df08f07c4af59",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "Docs/current-status.md",
+          "Docs/versioning.md",
+          "Shell/Version.lean",
+          "tools/distribution/test_refresh_identity.py"
+        ],
+        "excludedPaths": []
+      }
+    },
+    "mirrorecma": {
+      "componentId": "mirrorecma",
+      "repository": "https://github.com/NzSN/MirrorECMA.git",
+      "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+      "dirty": false
+    },
+    "mirrorgate": {
+      "componentId": "mirrorgate",
+      "repository": "https://github.com/NzSN/MirrorGate.git",
+      "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+      "dirty": false
+    }
+  },
+  "log": {
+    "path": ".golden-build/source-freeze-rc7-20261104/full-local-no-model.log",
+    "bytes": 113610,
+    "sha256": "5bcca5442b592d383c1a5bfb5e62170b7a2b64f388ffb81daf679aa6b1ac883a"
+  },
+  "nativePrefixSet": false,
+  "liveModelOrWindowsQualificationGranted": false
+}
