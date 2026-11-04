@@ -1,5 +1,65 @@
 # Current framework status and navigation
 
+## November 4 Batteries carrier recovery
+
+The [recovery record](../Plans/batteries-recovery-20261104/README.md) resolves
+the offline carrier availability prerequisite for a new dependency selection.
+The unavailable `73130433…` bytes were not recovered from accessible original
+paths. Regeneration from the exact pinned Batteries commit/tree produces the
+earlier `f6efbfeb…` carrier, 3,684,180 bytes, now present at
+[`third_party/batteries/batteries-v4.33.0.bundle`](../third_party/batteries/README.md).
+Independent offline clones verify complete history, exact source and license.
+
+Both current dependency locks select those verified bytes; derived fixture
+hashes are regenerated without changing catalog/component/profile identities.
+All 73 distribution tests, both lock validations, checksum, byte-input admission
+and independent verification/negative controls pass. Historical records retain
+their original pins and evidence boundaries.
+
+A new source/candidate freeze must bind the changed builder, vendor file and
+locks before cache construction or installed D acceptance. Fresh remote/client
+admission, M5/Q, full Windows tests and release remain open. No full build,
+model operation, commit/push, tag or deployment was performed.
+
+## November 4 Batteries Git-managed location
+
+The user selected
+[`third_party/batteries/batteries-v4.33.0.bundle`](../third_party/batteries/README.md)
+for durable Git retention. The builder defaults to that checkout-relative path,
+retains explicit overrides and exact lock enforcement, and rejects missing or
+wrong bytes before staging. License/provenance/checksum metadata and binary Git
+attributes are prepared; all 72 distribution tests pass. Both dependency locks
+are unchanged.
+
+The actual locked bundle is still absent and has not been added to Git. S5-A
+remains blocked. Recover the original carrier, verify its Git identity, and
+renew source/candidate bindings for the changed builder and vendor input before
+distribution qualification. Earlier accepted rc.6 source and package evidence
+remains bound to its original bytes. See the
+[location preparation record](../Plans/batteries-vendoring-20261104/README.md).
+
+## November 4 S5-A admission attempt
+
+The [S5-A record](../Plans/mainwork-s5a-rc6-20261104/README.md) revalidates the
+existing frozen rc.6 catalogs/locks/snapshots, companion revisions and accepted
+package hashes. The actual Ubuntu 26.04.1 WSL2 host passes strace, bubblewrap
+network isolation, namespace and socket probes outside the restrictive sandbox;
+both environments' receipts are retained. These are capability observations,
+not installed D acceptance.
+
+The exact 3,739,542-byte Batteries bundle `73130433…` is still missing from
+the recorded location and searched readable local stores. Input admission
+refuses it; no cache build, installation or D audit is run. The locked Node
+archive and retained TypeScript/pure-Python input trees are inventoried.
+Restore the exact carrier before the prepared selected WSL2 build/install/D
+commands; do not substitute the older bundle or regenerate the pin.
+
+Read-only Windows observation confirms unchanged production PID/binary and
+a public server certificate valid through November 13. Selected remote
+fixture/runtime/client admission remains pending, as do both D audits,
+S5-B/C, full Windows tests and release acceptance. S5-A remains blocked.
+No production change, key export, model operation, publication or reboot occurs.
+
 ## November 3 rc.6 clean packages
 
 The [S3 package review](../Plans/mainwork-s3-rc6-20261103/review.md) accepts

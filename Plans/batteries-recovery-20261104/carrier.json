@@ -1,0 +1,135 @@
+{
+  "schema": "mirrors.batteries-carrier-recovery/v1",
+  "recordedAt": "2026-11-04T06:16:50.857233+00:00",
+  "outcome": "regenerated-from-verified-source",
+  "originalBytesReproduced": false,
+  "previousSha256": "73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a",
+  "artifact": {
+    "path": "third_party/batteries/batteries-v4.33.0.bundle",
+    "bytes": 3684180,
+    "sha256": "f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3"
+  },
+  "source": {
+    "revision": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+    "tree": "5a1de86f7997958aaffec998882c29006b688d1e",
+    "clean": true,
+    "completeHistory": true,
+    "historyCount": 1309
+  },
+  "generation": {
+    "argv": [
+      "git",
+      "-C",
+      "/home/lsz/Codebase/Mirrors/.golden-build/batteries-recovery-20261104/generation-source",
+      "-c",
+      "pack.threads=1",
+      "-c",
+      "pack.compression=9",
+      "bundle",
+      "create",
+      "/home/lsz/Codebase/Mirrors/.golden-build/batteries-recovery-20261104/candidate.bundle",
+      "HEAD"
+    ],
+    "gitVersion": "git version 2.53.0",
+    "reproducibleCarrierClaim": false
+  },
+  "license": {
+    "path": "third_party/batteries/LICENSE",
+    "bytes": 11357,
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  "receipts": [
+    {
+      "path": ".golden-build/batteries-recovery-20261104/input-revision.json",
+      "bytes": 247,
+      "sha256": "864413cbe0ba789a9bb3b9ac1aca2346862b9f647f3d5ef608714f43ef1da5f6"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/input-tree.json",
+      "bytes": 250,
+      "sha256": "13a636c5fbd0074160b9088b3bf14e964db4fca5bf0baf1b9ef7262fc89bdf44"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/input-status.json",
+      "bytes": 237,
+      "sha256": "a4e8ccba0dcaf6bfc5a3fec3338ffb0038e27aed7a962868ec1ae5e2c298391d"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/input-shallow.json",
+      "bytes": 230,
+      "sha256": "c4f7aa7990f443a8b146eea01e319c6d400e278bea87f99924b02e36a81b2f76"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/input-fsck.json",
+      "bytes": 198,
+      "sha256": "be95fba5bb72477b81a25394536d83af2d24587749f552631fbfa914b031bd50"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/git-version.json",
+      "bytes": 141,
+      "sha256": "b6e12fc2882d4b5ca31e576fb4c4ee390a4b96786bb0fb76576ed0126f7006d6"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/generation-clone.json",
+      "bytes": 1007,
+      "sha256": "0e472f25b18755ced8d28fda60f69afac2a0fc60e7a5fa67a2d87aea0cc73104"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/generation-checkout.json",
+      "bytes": 362,
+      "sha256": "b24c601d8c8fe4c6c4ff438285c6709e42919f48507b9f8ec551e42b481c0123"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/generation.json",
+      "bytes": 408,
+      "sha256": "de061f8b2e109511556a8c5ab3bfe9797e409118765ae92db38e1999af2a5ab7"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/bundle-verify.json",
+      "bytes": 587,
+      "sha256": "a1a74a2acef7277b3310245c6d7244750c143c755572167bfd0ad0d3e7eb783f"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/bundle-heads.json",
+      "bytes": 277,
+      "sha256": "5fb4c6212351e3ad5b1352a816094fb684c31045aedf77387d412c3b0a500855"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/independent-clone.json",
+      "bytes": 1031,
+      "sha256": "8d1550d9fbbfcef99505b1844d3e1f10f82f244df9d3cd118263913a7389c77f"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/independent-revision.json",
+      "bytes": 288,
+      "sha256": "e165745f791892213357757a41a7ea74e3ef13bee8f3da24fadd890f5e94b2d5"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/independent-tree.json",
+      "bytes": 291,
+      "sha256": "22c411b7f2c02266f0120619090f34d0722244da596c8bdccadbca6ca367f001"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/independent-status.json",
+      "bytes": 278,
+      "sha256": "8dd8926c71bb572e86a741cee4db42d97b2a3ff5d16a2c46bf68c17e330d34aa"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/independent-shallow.json",
+      "bytes": 271,
+      "sha256": "38f9934d2ffbdc1d1c5f251b8fbbbc7ad0d0c771142741a5c23689ed6e15bae3"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/independent-fsck.json",
+      "bytes": 239,
+      "sha256": "ada1d9867ca94e699e268bb99a315091e43985c027199859844322804a1c3186"
+    },
+    {
+      "path": ".golden-build/batteries-recovery-20261104/independent-history-count.json",
+      "bytes": 271,
+      "sha256": "bf103f5ca88736de5ad5aef09fb819a964d696cd09d1a84829e8a68ca51012ef"
+    }
+  ],
+  "dependencyLocksUpdated": false,
+  "frameworkQualificationGranted": false
+}

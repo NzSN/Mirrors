@@ -5,6 +5,121 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-04 — Batteries recovery and freeze preparation publication authorized
+
+The user requested commit then push of the reviewed current work to
+`origin/main`. The payload includes the verified Git-managed Batteries carrier,
+builder/default admission checks and regressions, both dependency locks and
+regenerated fixture bindings, maintained documentation, and the new S5-A,
+vendoring/recovery and source-freeze preparation records. Older unrelated
+untracked records and ignored raw evidence/build trees remain excluded and
+preserved.
+
+The current source version remains `0.2.0-rc.6`. Proposed rc.7 preparation and
+the new full local non-model gate still await explicit approval; no final new
+candidate/C0, package, installed D, M5/Q or release acceptance follows from
+branch delivery. Focused validation retains 73 distribution and 146
+durable-evidence test passes plus independent recovery verification and negative
+controls. This entry records authorization, not push success; the separate
+publication receipt and fresh remote-ref observation own delivery proof.
+No tag, hosted release, remote service change or deployment is authorized.
+
+## 2026-11-04 — Batteries carrier recovered at pinned source; both locks re-pinned
+
+The user requested checking the original producer paths and recovering the
+carrier if lost. Read-only observations find no original environment on the
+current Windows host and no `/home/nzsn/Repos/Mirrors` or either exact artifact
+path in owned win10's WSL environment, including an approved root read after
+the default user's permission denial. Earlier local/store and backup-name
+searches remain retained; no claim of global or permanent loss is made.
+
+The [recovery record](Plans/batteries-recovery-20261104/README.md) regenerates
+a bundle from exact clean Batteries `4488d40d…`, tree `5a1de86f…`, using Git
+2.53.0 and the recorded packing options. The generated 3,684,180-byte artifact
+is SHA-256 `f6efbfeb…`, identical to the earlier retained carrier. It is now
+present at `third_party/batteries/batteries-v4.33.0.bundle`. The unavailable
+`73130433…` bytes are not claimed recovered. Independent offline clones pass
+bundle verification, full fsck, exact commit/tree, clean/non-shallow history
+with 1,309 commits, and upstream license byte comparison.
+
+Both current dependency locks now select the verified carrier at the unchanged
+source revision/tree. The existing identity API regenerates dependent fixture
+manifest/cache hashes; catalog, component/profile identities, other dependencies,
+old dated evidence and ignored frozen candidates remain unchanged. All 73
+distribution tests, both lock validations, checksum, canonical-path input
+admission and independent verification/negative controls pass. The initial
+verifier stdout/stderr expectation failure is retained before correction.
+
+Carrier availability is resolved for this new dependency selection. The changed
+builder, vendored artifact and lock bytes require a new source/candidate freeze;
+earlier rc.6 packages/C0 do not inherit the re-pin. Both installed D audits,
+fresh remote/client admission, M5/Q, full Windows and release remain open.
+No long/full build, model operation, source-version change, commit/push, tag,
+release, deployment or reboot is performed.
+
+## 2026-11-04 — Batteries Git-managed location prepared; carrier still missing
+
+The user selected `third_party/batteries/batteries-v4.33.0.bundle` for Git
+retention. The [location record](Plans/batteries-vendoring-20261104/README.md)
+prepares checksum/provenance, the unchanged upstream Apache-2.0 license, and
+binary Git attributes. The distribution builder defaults to this path relative
+to its checkout, preserves explicit overrides, and rejects absent/wrong bytes
+before staging while retaining its immediate-before-use hash check. Both
+dependency locks remain unchanged.
+
+All 72 distribution tests pass, including four new carrier-admission cases.
+The initial test-expectation failures and corrected successful run are retained.
+The canonical path is not ignored and Git newline conversion is disabled.
+The broader local search still finds no exact carrier. Its real bytes have
+not been added to Git; canonical-path input admission remains refused.
+
+S5-A stays blocked. Recover the original `73130433…` / 3,739,542-byte bundle
+and verify its source identity before adding it. The changed builder and future
+vendor addition require a new source/candidate freeze; the earlier rc.6
+snapshot/package receipts remain historical exact-identity evidence. No full
+build, model operation, dependency re-pin, commit/push, tag, release or
+deployment is performed.
+
+## 2026-11-04 — S5-A rc.6 admission attempted; exact carrier still missing
+
+At the user's request, Codex executed the next S5-A admission preflight.
+The [new record](Plans/mainwork-s5a-rc6-20261104/README.md) revalidates the
+accepted rc.6 source/archive/package identities, both frozen catalog/lock
+families, immutable snapshots, and clean pinned companion copies. Selected
+execution remains Ubuntu 26.04.1 WSL2 with C0 `4bb83aa2…` and Mirrors
+`3c4a873`; the base catalog remains a structural control.
+
+Current host observations are kernel `6.18.54.1-microsoft-standard-WSL2`,
+glibc 2.43, uid 1000 and case-sensitive ext4. Sandbox socket/netlink/ptrace
+failures are retained. Separate admitted host execution passes strace child
+tracing, bubblewrap network isolation, user/network namespaces and IPv4/Unix
+bind/listen probes. The frozen tracer closure matches. These capability
+observations do not constitute either installed D audit.
+
+The exact 3,739,542-byte Batteries carrier `73130433…` remains absent from
+the recorded path and searched readable local stores. The original producer
+root `/home/nzsn/Repos/Mirrors` is absent here. The superseded `f6efbfeb…`
+carrier is rejected as an input. The selected Node archive verifies and the
+retained TypeScript/pure-Python build inputs are inventoried, but input
+admission exits 2 with `cacheBuildReady:false`. No cache build, installation,
+or D audit is run with the missing prerequisite. No pin is changed or bundle
+regenerated.
+
+Read-only SSH observes unchanged production PID 9920, executable `8173ddea…`
+and service Running/Automatic on Windows `DESKTOP-6DKB5JD`. Its public server
+certificate covers `192.168.150.219` and is valid through
+2026-11-13T12:50:06Z. This is not admission of the separately selected
+owned-native-console fixture, runtime archives, source manifests, or clients.
+The initial SSH denial and an OpenSSL/PowerShell observation failure are
+retained before the corrected observation succeeds. No private key is exported.
+
+The evidence verifier passes with the explicit result **S5-A remains blocked**.
+Restore and verify the exact retained carrier, then build/install both selected
+profiles and run both D audits in the admitted host context. Fresh selected
+remote/runtime/client admission, S5-B/C, full Windows tests, framework and
+release acceptance remain open. No model operation, commit/push, tag, release,
+deployment, service change or reboot occurs in this attempt.
+
 ## 2026-11-03 — S3 rc.6 clean Linux/Windows packages accepted
 
 At the user's request, Codex developed phased S3 tasks and delegated execution

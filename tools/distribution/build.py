@@ -266,7 +266,9 @@ def main() -> int:
     parser.add_argument("--snapshot-root", type=Path, required=True)
     parser.add_argument("--lake-bin", type=Path, required=True)
     parser.add_argument("--node-archive", type=Path, required=True)
-    parser.add_argument("--batteries-bundle", type=Path, required=True)
+    parser.add_argument("--batteries-bundle", type=Path,
+        default=MIRRORS / "third_party/batteries/batteries-v4.33.0.bundle",
+        help="exact locked Batteries carrier; defaults to third_party/batteries/batteries-v4.33.0.bundle")
     parser.add_argument("--git-bin", type=Path, required=True)
     parser.add_argument("--ldd-bin", type=Path, required=True)
     parser.add_argument("--typescript-node-modules", type=Path, required=True)
@@ -290,6 +292,10 @@ def main() -> int:
         if profile["status"].startswith("blocked"):
             raise ValueError(f"profile is unavailable: {profile['status']}")
         closure, prerequisites, _ = profile_resolution(args.profile, contract["profiles"])
+        batteries_size, batteries_digest = sha256_file(args.batteries_bundle)
+        batteries = contract["dependencies"]["lean-batteries-source"]
+        if batteries_size != batteries["bytes"] or batteries_digest != batteries["sha256"]:
+            raise ValueError("Batteries archive differs from dependency lock")
         args.out.mkdir(mode=0o700, parents=True)
         artifacts_root = args.out / "artifacts"
         work = args.out / ".build"
@@ -315,8 +321,8 @@ def main() -> int:
         # Mirrors build from immutable snapshot with exact prepared Batteries source.
         mirrors_work = work / "mirrors"
         shutil.copytree(sources / "mirrors", mirrors_work)
+        # Recheck the external carrier after staging, immediately before use.
         batteries_size, batteries_digest = sha256_file(args.batteries_bundle)
-        batteries = contract["dependencies"]["lean-batteries-source"]
         if batteries_size != batteries["bytes"] or batteries_digest != batteries["sha256"]:
             raise ValueError("Batteries archive differs from dependency lock")
         packages = mirrors_work / ".lake/packages"

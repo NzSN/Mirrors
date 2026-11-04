@@ -1,0 +1,91 @@
+{
+  "schema": "mirrors.batteries-vendoring-preparation/v1",
+  "recordedAt": "2026-11-04T06:04:14.625955+00:00",
+  "status": "location-prepared-artifact-missing",
+  "canonicalPath": "third_party/batteries/batteries-v4.33.0.bundle",
+  "artifactPresent": false,
+  "artifactAddedToGit": false,
+  "dependencyLocksChanged": false,
+  "sourceCandidateRenewalRequired": true,
+  "s5aAccepted": false,
+  "distributionTests": {
+    "passed": 72,
+    "initialRun": "retained-test-expectation-failures",
+    "correctedRunExitCode": 0
+  },
+  "canonicalPathIgnored": false,
+  "binaryAttributes": "third_party/batteries/batteries-v4.33.0.bundle: text: unset\nthird_party/batteries/batteries-v4.33.0.bundle: diff: unset\nthird_party/batteries/batteries-v4.33.0.bundle: merge: unset\n",
+  "licenseMatchesSelectedRevision": true,
+  "files": [
+    {
+      "path": "tools/distribution/build.py",
+      "bytes": 36718,
+      "sha256": "384622839da73b40918d1f683b1069c81101f21ded8ceb477e966ac3557d0a34"
+    },
+    {
+      "path": "tools/distribution/test_batteries_input.py",
+      "bytes": 5227,
+      "sha256": "241050b72e56d7b2a90c4e5a31c08ee35b74bcc0416f089e8c3524ee2de3f3ed"
+    },
+    {
+      "path": "Docs/reference-distribution-profile.md",
+      "bytes": 9565,
+      "sha256": "2a1c9a1124e620f6f01bba303dfe0977bfa298a163e793cd79bf35166e18220b"
+    },
+    {
+      "path": "Plans/batteries-vendoring-20261104/README.md",
+      "bytes": 3354,
+      "sha256": "cd13418b2d1d26d537793515c82c340009ece6822f4124c9d6b165de2fff5f20"
+    },
+    {
+      "path": "third_party/batteries/.gitattributes",
+      "bytes": 96,
+      "sha256": "1895db9fd8ce8a6ee5e0f929ba41abda5d55199f6f44b6ac390979cb3d3f464a"
+    },
+    {
+      "path": "third_party/batteries/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "third_party/batteries/README.md",
+      "bytes": 2466,
+      "sha256": "e525b79fb95ab5fbfb4e7f56576f16bff90d5533e3ae24c284f10a3332895d20"
+    },
+    {
+      "path": "third_party/batteries/SHA256SUMS",
+      "bytes": 113,
+      "sha256": "5d6a53ca67d049cf74f428ca11510c83dce70395c101188ee30485b46828dfa1"
+    },
+    {
+      "path": ".golden-build/batteries-vendoring-20261104/canonical-input-admission.json",
+      "bytes": 3880,
+      "sha256": "a0eb86a4ec7041bfcf5c02ecbf189b629da1240985aeb5e7d5fd443bb246b7fb"
+    },
+    {
+      "path": ".golden-build/batteries-vendoring-20261104/canonical-input-admission.log",
+      "bytes": 847,
+      "sha256": "332560bb594e4676d9129f7fe4f97751a9eff5d64a28657ee69af6f3e571a616"
+    },
+    {
+      "path": ".golden-build/batteries-vendoring-20261104/distribution-tests-corrected.log",
+      "bytes": 11901,
+      "sha256": "ca75b2266cf0872f27b2dca87fa55cd125748b63d411fd3da09e9d9a34b44dca"
+    },
+    {
+      "path": ".golden-build/batteries-vendoring-20261104/distribution-tests.log",
+      "bytes": 13437,
+      "sha256": "bbb428173d23f88cf623b6bb9dedd807ba1145729be5bdd53539a9735efa8824"
+    },
+    {
+      "path": ".golden-build/batteries-vendoring-20261104/license.json",
+      "bytes": 208,
+      "sha256": "f943dd9f81ff1603df468a50cfc768747fe3cb73ff7e68225db26f52a25e71e8"
+    },
+    {
+      "path": ".golden-build/batteries-vendoring-20261104/search.json",
+      "bytes": 1017,
+      "sha256": "bf7aea6fe3cdb13d8800cf11fbdd4cc4a7df0e7c69d67ac74c7e2d22e11e6c16"
+    }
+  ]
+}

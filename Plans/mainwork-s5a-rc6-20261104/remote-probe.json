@@ -1,0 +1,19 @@
+{
+  "observedAt": "2026-11-04T03:50:26.506903+00:00",
+  "argv": [
+    "ssh",
+    "-F",
+    "/home/lsz/.ssh/config",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "ConnectTimeout=15",
+    "win10",
+    "powershell -NoProfile -NonInteractive -Command '$code = [Console]::In.ReadToEnd(); Invoke-Expression $code'"
+  ],
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "** WARNING: connection is not using a post-quantum key exchange algorithm.\n** This session may be vulnerable to \"store now, decrypt later\" attacks.\n** The server may need to be upgraded. See https://openssh.com/pq.html\nopenssl.exe : No extensions in certificate\n\u6240\u5728\u4f4d\u7f6e \u884c:30 \u5b57\u7b26: 21\n+ ... $public = @(& $openssl x509 -in $path -noout -dates -fingerprint -sha ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (No extensions in certificate:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n"
+}

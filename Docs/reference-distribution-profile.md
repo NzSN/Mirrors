@@ -44,6 +44,20 @@ Read-only probes on 2026-09-22 observed:
 
 ## Dependency boundary
 
+### Offline Batteries build input
+
+The distribution builder defaults to the Git-managed path
+`third_party/batteries/batteries-v4.33.0.bundle`. An explicit
+`--batteries-bundle PATH` remains available. Both choices must match the selected
+dependency lock's byte length and SHA-256 before staging begins; there is no
+fallback to an ignored cache, an ambient checkout, or a network download.
+The [carrier metadata](../third_party/batteries/README.md) records the exact
+source, license and checksum. The November 4 recovery supplies verified carrier
+`f6efbfeb…` at the unchanged Batteries revision/tree and re-pins both dependency
+locks; the earlier `73130433…` carrier remains historical. New source/candidate
+bindings are required before distribution acceptance. This is a build input;
+installed replay still requires no source or compiler.
+
 ### Required local checked-corpus profile
 
 | Dependency | Distribution class | Rule |

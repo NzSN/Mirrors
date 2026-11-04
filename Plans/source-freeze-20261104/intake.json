@@ -1,0 +1,611 @@
+{
+  "schema": "mirrors.source-freeze-preparation/v1",
+  "recordedAt": "2026-11-04T06:56:30.344057+00:00",
+  "baseRevision": "e91299799d260bcc4da28b103053903df670308b",
+  "status": "reviewed-source-scope-awaiting-full-gate-approval",
+  "proposedProductVersion": "0.2.0-rc.7",
+  "versionEditPerformed": false,
+  "fullGatePerformed": false,
+  "sourceFreezeAccepted": false,
+  "sharedGitIndexUnchanged": true,
+  "reviewedFiles": [
+    {
+      "path": "CHECKPOINTS.md",
+      "bytes": 151652,
+      "sha256": "4acc2712a28dc482bfe07b84aaa5954659d0f7bf33fbc415cdff1e612a29f11c",
+      "executable": false
+    },
+    {
+      "path": "Docs/current-status.md",
+      "bytes": 25973,
+      "sha256": "9b2c4f4b167b82f8cf7806bc912c07f75b663c0b690e199fad8cd346ac951cf7",
+      "executable": false
+    },
+    {
+      "path": "Docs/reference-distribution-profile.md",
+      "bytes": 9706,
+      "sha256": "89eb3a0155c73503f5a6ada6d9904cc2a8f0a054a7edf67dc3d33d6572e76710",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/README.md",
+      "bytes": 5426,
+      "sha256": "aa438aa98f98c7986de24bd7427fc11df42baade04a6212940db0d39b27a2443",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node-wsl2-26.04/component-lock.json",
+      "bytes": 12866,
+      "sha256": "4deab387f27d6c43834e8b0a87cd2563000b58bdb18982a525386c8469ca8e93",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node-wsl2-26.04/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+      "bytes": 4399,
+      "sha256": "d08476a7164e2995c152bffaa230413d1542df14c878cc25ff404e81322d007c",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+      "bytes": 3440,
+      "sha256": "439493a3051b5cfadb59560bbcf30dc49116deff622ae52f1a3ef56ff9e5b50b",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "bytes": 16723,
+      "sha256": "a247108f8180902ffe87cb52c605eddc74fb16f92ea929ba76cbfdfe5a33e54f",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "bytes": 14065,
+      "sha256": "0c467b6a6aaae9dec65e50d481afd3aae233d1d819020a6fd45bdee8c48fc462",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node-wsl2-26.04/profiles.json",
+      "bytes": 4933,
+      "sha256": "87d31ef00f9eb8f5371575eebae9a89224458604f4c6a8ed9355265cd6525d67",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node/component-lock.json",
+      "bytes": 12866,
+      "sha256": "fce0b3569ed3b6e65bc448acda9fcbb654444f9a38f119c63b0134a8be99795f",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "6033532222a34073408ae0a9e59da548588e8f1eccead5f035d21d4a2087d5fe",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+      "bytes": 4399,
+      "sha256": "31370b750ca502fd246001e51c7feb89588a1abe7728edd30d6dcac70c60eb4a",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+      "bytes": 3440,
+      "sha256": "d17c36bdabb41e82578b5569938c52ad2ec664e74fc18e7afd36d42b77129cd0",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "bytes": 16690,
+      "sha256": "78a74700f3d0b97f72547e3f41783a90010476b138ed90c22a06cef2e7590eb3",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "bytes": 14032,
+      "sha256": "e8a677d24588854c33fe45205f691d8132cad850f7e03a566060bd4f161202eb",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/before/distribution/reference-node/profiles.json",
+      "bytes": 4307,
+      "sha256": "549da39669c69f32ec7a2f7810da9a5fa4f05a26af3697d6e0960d6946d3d05f",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/carrier.json",
+      "bytes": 4928,
+      "sha256": "cb0ea3b8f60d34c880d6f19d1250671f18e75874e2facedcf3acea06ffb2ca11",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/lock-update.json",
+      "bytes": 5422,
+      "sha256": "d31fc2091febd6e2a199945a3e5c45c09c6bc2367b9625289c2c288ac7adad49",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/recover.py",
+      "bytes": 4926,
+      "sha256": "307a3a6de74cb4cbca635c03c055e91f2e9f0b483e1d84227cde778f75fce75b",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/repin.py",
+      "bytes": 3813,
+      "sha256": "31af2fad50794087a0adcf4bb667be19ec91149f28923b93786c7d03da4dc3fd",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/result.json",
+      "bytes": 15897,
+      "sha256": "c77ad29bc9839dc0b0644dbadacd04b5bef0644d16dedc11a0049835cced591d",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-recovery-20261104/verify.py",
+      "bytes": 5956,
+      "sha256": "b5a0fedfd326734bbf250b047a50ed9893fbd9ee91fd84059faba55443a67eba",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-vendoring-20261104/README.md",
+      "bytes": 3354,
+      "sha256": "cd13418b2d1d26d537793515c82c340009ece6822f4124c9d6b165de2fff5f20",
+      "executable": false
+    },
+    {
+      "path": "Plans/batteries-vendoring-20261104/result.json",
+      "bytes": 3390,
+      "sha256": "0a5d603b250f6637354d5943afc6e1dca6cb19668c509a55aa5167635bf46c7d",
+      "executable": false
+    },
+    {
+      "path": "Plans/execution-decisions.md",
+      "bytes": 48653,
+      "sha256": "52e5d0d2bbb1238868e9c37d333820bf4dbc5c2ea683be81fbca6af24d4e3a55",
+      "executable": false
+    },
+    {
+      "path": "Plans/mainwork-s5a-rc6-20261104/README.md",
+      "bytes": 6345,
+      "sha256": "9fcb69cec306ce8c26e7e45c432c48bdcbc9356096be5c8f480bdab8dd22ac5f",
+      "executable": false
+    },
+    {
+      "path": "Plans/mainwork-s5a-rc6-20261104/admit-inputs.py",
+      "bytes": 3544,
+      "sha256": "74453f999818844971009186f990a46a6100039e7cdd6d4dd44498cd609d7c25",
+      "executable": false
+    },
+    {
+      "path": "Plans/mainwork-s5a-rc6-20261104/build-inputs.json",
+      "bytes": 4132,
+      "sha256": "f8e48047338d7c47937d96d6643a82d88e1e069bcbe6d494de828c7bd3d233d1",
+      "executable": false
+    },
+    {
+      "path": "Plans/mainwork-s5a-rc6-20261104/collect.py",
+      "bytes": 9172,
+      "sha256": "13e1d0b9b9d1dda2b7ad2ebb1b0ae24fc5799971f44a5dd007555d9cf24400ea",
+      "executable": false
+    },
+    {
+      "path": "Plans/mainwork-s5a-rc6-20261104/inventory.json",
+      "bytes": 10593,
+      "sha256": "4f4db97052f9d61f6b8d9e1bf01405f5905ef974d3f5aa924f7eff98b3e2f991",
+      "executable": false
+    },
+    {
+      "path": "Plans/mainwork-s5a-rc6-20261104/remote-observe.py",
+      "bytes": 1419,
+      "sha256": "efe080100bfca218d5904dd154ebd8da0a574283aa9b9f59c469b3e0cb5b28b4",
+      "executable": false
+    },
+    {
+      "path": "Plans/mainwork-s5a-rc6-20261104/remote-probe-corrected.json",
+      "bytes": 15822,
+      "sha256": "5246956ffe02994ec6ff8a2f558d1f6e7d4419785d5c9372867927f27aa3fff7",
+      "executable": false
+    },
+    {
+      "path": "Plans/mainwork-s5a-rc6-20261104/remote-probe.json",
+      "bytes": 1042,
+      "sha256": "6e6d2ab783cb284220197d5beac83df2a7142274cf9a9acbc16313f17b007100",
+      "executable": false
+    },
+    {
+      "path": "Plans/mainwork-s5a-rc6-20261104/result.json",
+      "bytes": 1883,
+      "sha256": "c7a9d4c7889eed05baee384210d92a4f79aa592d7de3a6eeee6d10241cc93b57",
+      "executable": false
+    },
+    {
+      "path": "Plans/mainwork-s5a-rc6-20261104/resume.md",
+      "bytes": 3477,
+      "sha256": "5d3db4bf466cda3cd68a3253da045e2a9a489f7e768d9a3cda08e69821609e98",
+      "executable": false
+    },
+    {
+      "path": "Plans/mainwork-s5a-rc6-20261104/verify.py",
+      "bytes": 2331,
+      "sha256": "05fe48369074a0465b9e4ef57a9ad0b79953e459804ad4cd479caf8ed2c2761e",
+      "executable": false
+    },
+    {
+      "path": "Plans/mainwork-s5a-rc6-20261104/windows-observe.ps1",
+      "bytes": 2882,
+      "sha256": "fa2a2ba8b4257cee4326ba8d908017b4a8c1ef3a35219d0080dfccc199ce62f4",
+      "executable": false
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5",
+      "executable": false
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+      "bytes": 4399,
+      "sha256": "b9a7849afc123157fcb380c042c4293d085f7648236bc2347917eb263f79caa5",
+      "executable": false
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+      "bytes": 3440,
+      "sha256": "3ff457d01308dc1c0d869277259ff7b52b6442c27589b4b5ea9639c2eacf3eec",
+      "executable": false
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "bytes": 16723,
+      "sha256": "162bcec60668b6c3c040904beadc9f408be6852467b531020c8a01a0f3eeb16f",
+      "executable": false
+    },
+    {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "bytes": 14065,
+      "sha256": "d7e267beeccbe7bfa3979e7264eacd8e84eb402e5f88a49de14e4a2f00ecf4bc",
+      "executable": false
+    },
+    {
+      "path": "distribution/reference-node/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5",
+      "executable": false
+    },
+    {
+      "path": "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+      "bytes": 4399,
+      "sha256": "57949f322829ecfd5292053368839da88bd268b1b575dd1ce05265cbccd86607",
+      "executable": false
+    },
+    {
+      "path": "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+      "bytes": 3440,
+      "sha256": "1b161698b410e2251211b7c65f7374ee882df90a1634e805bfdffa82d889e302",
+      "executable": false
+    },
+    {
+      "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "bytes": 16690,
+      "sha256": "f47f646736aac51b94e56ffc1f37dd91047e5e1575761d2ef4eb513736b38e86",
+      "executable": false
+    },
+    {
+      "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "bytes": 14032,
+      "sha256": "1808ba10b6c53e557ed6745a6ebed4891ef0bf8660bb63abab0bdc1f2e84b625",
+      "executable": false
+    },
+    {
+      "path": "third_party/batteries/.gitattributes",
+      "bytes": 96,
+      "sha256": "1895db9fd8ce8a6ee5e0f929ba41abda5d55199f6f44b6ac390979cb3d3f464a",
+      "executable": false
+    },
+    {
+      "path": "third_party/batteries/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "executable": false
+    },
+    {
+      "path": "third_party/batteries/README.md",
+      "bytes": 2687,
+      "sha256": "1acc116e16ceb184a526a927d0dab7238066fa9a12573f7286668cde8a2f20d9",
+      "executable": false
+    },
+    {
+      "path": "third_party/batteries/SHA256SUMS",
+      "bytes": 113,
+      "sha256": "8d6b75611616cfbb11027d494a5a9f0ff279e0e342b9da8d43e168d60b370b96",
+      "executable": false
+    },
+    {
+      "path": "third_party/batteries/batteries-v4.33.0.bundle",
+      "bytes": 3684180,
+      "sha256": "f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3",
+      "executable": false
+    },
+    {
+      "path": "tools/distribution/build.py",
+      "bytes": 36718,
+      "sha256": "384622839da73b40918d1f683b1069c81101f21ded8ceb477e966ac3557d0a34",
+      "executable": true
+    },
+    {
+      "path": "tools/distribution/test_batteries_input.py",
+      "bytes": 6314,
+      "sha256": "95d4d82c77ade0cc4bf27d5df6ffc08ed721269b33f75be236425d92920cc822",
+      "executable": false
+    }
+  ],
+  "preservedUnrelatedUntracked": [
+    "Plans/completion-rc3-package-evidence-20261031/README.md",
+    "Plans/completion-rc3-package-evidence-20261031/harness/build-and-gates.ps1",
+    "Plans/completion-rc3-package-evidence-20261031/harness/collect.py",
+    "Plans/completion-rc3-package-evidence-20261031/harness/final-check-explicit.ps1",
+    "Plans/completion-rc3-package-evidence-20261031/harness/inventory.py",
+    "Plans/completion-rc3-package-evidence-20261031/harness/linux_verify.py",
+    "Plans/completion-rc3-package-evidence-20261031/harness/package.ps1",
+    "Plans/completion-rc3-package-evidence-20261031/harness/post-source-check.ps1",
+    "Plans/completion-rc3-package-evidence-20261031/harness/probe.ps1",
+    "Plans/completion-rc3-package-evidence-20261031/harness/readme.py",
+    "Plans/completion-rc3-package-evidence-20261031/harness/setup-deps.ps1",
+    "Plans/completion-rc3-package-evidence-20261031/harness/source_archive.py",
+    "Plans/completion-rc3-package-evidence-20261031/harness/verify-source.ps1",
+    "Plans/completion-rc3-package-evidence-20261031/harness/windows_verify.py",
+    "Plans/completion-rc3-package-evidence-20261031/harness/wsl_check.sh",
+    "Plans/completion-rc3-package-evidence-20261031/harness/zip-windows.py",
+    "Plans/completion-rc3-package-evidence-20261031/inventory.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/environment.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/linux-package.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/linux-source-identity.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/package-set.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/windows-package-verified.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/windows/build-environment.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/windows/build.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/windows/final-observation.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/windows/gates.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/windows/mirrors-v0.2.0-rc.3-source-manifest.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/windows/offline-dependency.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/windows/post-source-check.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/windows/source-verification.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/windows/windows-package-archive.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/windows/windows-package-receipt.json",
+    "Plans/completion-rc3-package-evidence-20261031/receipts/wsl-archive-acceptance.json",
+    "Plans/completion-rc3-package-evidence-20261031/verify.py",
+    "Plans/completion-rc3-packages-execution-order-2026-10-31.md",
+    "Plans/completion-rc3-repin-evidence-20261031/README.md",
+    "Plans/completion-rc3-repin-evidence-20261031/bundle-proof.json",
+    "Plans/completion-rc3-repin-evidence-20261031/c0-identities.json",
+    "Plans/completion-rc3-repin-evidence-20261031/candidate-freeze.json",
+    "Plans/completion-rc3-repin-evidence-20261031/delivery-receipt.json",
+    "Plans/completion-rc3-repin-evidence-20261031/inventory.json",
+    "Plans/completion-rc3-repin-evidence-20261031/link-exception.json",
+    "Plans/completion-rc3-repin-evidence-20261031/s1-checks.json",
+    "Plans/completion-rc3-repin-evidence-20261031/s1-payload-audit.json",
+    "Plans/completion-rc3-repin-evidence-20261031/s2-delivery-payload.json",
+    "Plans/completion-rc3-repin-evidence-20261031/verify.py",
+    "Plans/completion-rc3-repin-execution-order-2026-10-31.md",
+    "Plans/completion-rc3-resume-execution-order-2026-10-31.md",
+    "Plans/completion-rc3-s1s2-execution-order-2026-10-31.md",
+    "Plans/completion-rc4-lockpath-evidence-20261031/README.md",
+    "Plans/completion-rc4-lockpath-evidence-20261031/added_link_check.py",
+    "Plans/completion-rc4-lockpath-evidence-20261031/c0-identities.json",
+    "Plans/completion-rc4-lockpath-evidence-20261031/c0_identities.py",
+    "Plans/completion-rc4-lockpath-evidence-20261031/candidate-freeze.json",
+    "Plans/completion-rc4-lockpath-evidence-20261031/defect-proof.json",
+    "Plans/completion-rc4-lockpath-evidence-20261031/defect_proof.py",
+    "Plans/completion-rc4-lockpath-evidence-20261031/delivery-receipt.json",
+    "Plans/completion-rc4-lockpath-evidence-20261031/inventory.json",
+    "Plans/completion-rc4-lockpath-evidence-20261031/link-exception.json",
+    "Plans/completion-rc4-lockpath-evidence-20261031/logs/base-fixpoint-after.sha",
+    "Plans/completion-rc4-lockpath-evidence-20261031/logs/base-fixpoint-before.sha",
+    "Plans/completion-rc4-lockpath-evidence-20261031/logs/wsl2-fixpoint-after.sha",
+    "Plans/completion-rc4-lockpath-evidence-20261031/logs/wsl2-fixpoint-before.sha",
+    "Plans/completion-rc4-lockpath-evidence-20261031/s1-checks.json",
+    "Plans/completion-rc4-lockpath-evidence-20261031/s1-payload-audit.json",
+    "Plans/completion-rc4-lockpath-evidence-20261031/s1-stage-verification.json",
+    "Plans/completion-rc4-lockpath-evidence-20261031/s2-delivery-payload.json",
+    "Plans/completion-rc4-lockpath-evidence-20261031/verify.py",
+    "Plans/completion-rc4-lockpath-execution-order-2026-10-31.md",
+    "Plans/completion-rc4-package-evidence-20261031/harness/build-and-gates.ps1",
+    "Plans/completion-rc4-package-evidence-20261031/harness/collect.py",
+    "Plans/completion-rc4-package-evidence-20261031/harness/final-check-explicit.ps1",
+    "Plans/completion-rc4-package-evidence-20261031/harness/inventory.py",
+    "Plans/completion-rc4-package-evidence-20261031/harness/linux_verify.py",
+    "Plans/completion-rc4-package-evidence-20261031/harness/package.ps1",
+    "Plans/completion-rc4-package-evidence-20261031/harness/post-source-check.ps1",
+    "Plans/completion-rc4-package-evidence-20261031/harness/probe.ps1",
+    "Plans/completion-rc4-package-evidence-20261031/harness/readme.py",
+    "Plans/completion-rc4-package-evidence-20261031/harness/setup-deps.ps1",
+    "Plans/completion-rc4-package-evidence-20261031/harness/source_archive.py",
+    "Plans/completion-rc4-package-evidence-20261031/harness/verify-dependency.ps1",
+    "Plans/completion-rc4-package-evidence-20261031/harness/verify-source.ps1",
+    "Plans/completion-rc4-package-evidence-20261031/harness/windows_verify.py",
+    "Plans/completion-rc4-package-evidence-20261031/harness/wsl_check.sh",
+    "Plans/completion-rc4-package-evidence-20261031/harness/zip-windows.py",
+    "Plans/completion-rc4-package-evidence-20261031/receipts/linux-package.json",
+    "Plans/completion-rc4-package-evidence-20261031/receipts/windows/build-environment.json",
+    "Plans/completion-rc4-package-evidence-20261031/receipts/windows/build.json",
+    "Plans/completion-rc4-package-evidence-20261031/receipts/windows/final-observation.json",
+    "Plans/completion-rc4-package-evidence-20261031/receipts/windows/gates.json",
+    "Plans/completion-rc4-package-evidence-20261031/receipts/windows/mirrors-v0.2.0-rc.4-source-manifest.json",
+    "Plans/completion-rc4-package-evidence-20261031/receipts/windows/mirrors-v0.2.0-rc.4-windows-x86_64.build.json",
+    "Plans/completion-rc4-package-evidence-20261031/receipts/windows/offline-dependency.json",
+    "Plans/completion-rc4-package-evidence-20261031/receipts/windows/post-source-check.json",
+    "Plans/completion-rc4-package-evidence-20261031/receipts/windows/source-verification.json",
+    "Plans/completion-rc4-package-evidence-20261031/receipts/windows/windows-package-archive.json",
+    "Plans/completion-rc4-package-evidence-20261031/receipts/windows/windows-package-receipt.json",
+    "Plans/completion-rc4-package-evidence-20261031/verify.py",
+    "Plans/completion-rc4-packages-execution-order-2026-10-31.md",
+    "Plans/completion-rc5-bootstrap-evidence-20261031/added_link_check.py",
+    "Plans/completion-rc5-bootstrap-evidence-20261031/c0-identities.json",
+    "Plans/completion-rc5-bootstrap-evidence-20261031/c0_identities.py",
+    "Plans/completion-rc5-bootstrap-evidence-20261031/candidate-freeze.json",
+    "Plans/completion-rc5-bootstrap-evidence-20261031/defect-proof.json",
+    "Plans/completion-rc5-bootstrap-evidence-20261031/defect_proof.py",
+    "Plans/completion-rc5-bootstrap-evidence-20261031/link-exception.json",
+    "Plans/completion-rc5-bootstrap-evidence-20261031/logs/base-fixpoint-after.sha",
+    "Plans/completion-rc5-bootstrap-evidence-20261031/logs/base-fixpoint-before.sha",
+    "Plans/completion-rc5-bootstrap-evidence-20261031/logs/wsl2-fixpoint-after.sha",
+    "Plans/completion-rc5-bootstrap-evidence-20261031/logs/wsl2-fixpoint-before.sha",
+    "Plans/completion-rc5-bootstrap-evidence-20261031/s1-checks.json",
+    "Plans/completion-rc5-bootstrap-execution-order-2026-10-31.md",
+    "Plans/completion-rc5-package-evidence-20261031/README.md",
+    "Plans/completion-rc5-package-evidence-20261031/harness/build-and-gates.ps1",
+    "Plans/completion-rc5-package-evidence-20261031/harness/collect.py",
+    "Plans/completion-rc5-package-evidence-20261031/harness/final-check-explicit.ps1",
+    "Plans/completion-rc5-package-evidence-20261031/harness/inventory.py",
+    "Plans/completion-rc5-package-evidence-20261031/harness/linux_verify.py",
+    "Plans/completion-rc5-package-evidence-20261031/harness/package.ps1",
+    "Plans/completion-rc5-package-evidence-20261031/harness/post-source-check.ps1",
+    "Plans/completion-rc5-package-evidence-20261031/harness/probe.ps1",
+    "Plans/completion-rc5-package-evidence-20261031/harness/readme.py",
+    "Plans/completion-rc5-package-evidence-20261031/harness/setup-deps.ps1",
+    "Plans/completion-rc5-package-evidence-20261031/harness/source_archive.py",
+    "Plans/completion-rc5-package-evidence-20261031/harness/verify-source.ps1",
+    "Plans/completion-rc5-package-evidence-20261031/harness/windows_verify.py",
+    "Plans/completion-rc5-package-evidence-20261031/harness/wsl_check.sh",
+    "Plans/completion-rc5-package-evidence-20261031/harness/zip-windows.py",
+    "Plans/completion-rc5-package-evidence-20261031/inventory.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/environment.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/linux-package.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/linux-source-identity.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/package-set.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/windows-package-verified.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/windows/build-environment.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/windows/build.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/windows/final-observation.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/windows/gates.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/windows/mirrors-v0.2.0-rc.5-source-manifest.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/windows/offline-dependency.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/windows/post-source-check.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/windows/source-verification.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/windows/windows-package-archive.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/windows/windows-package-receipt.json",
+    "Plans/completion-rc5-package-evidence-20261031/receipts/wsl-archive-acceptance.json",
+    "Plans/completion-rc5-package-evidence-20261031/verify.py",
+    "Plans/completion-rc5-packages-execution-order-2026-10-31.md",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/.gitattributes",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/.gitignore",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/README.md",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/candidate-freeze.json",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/inventory.json",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/logs/catalog-validation.log",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/logs/diff-check.log",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/logs/distribution-tests.log",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/logs/linkcheck.log",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/logs/local-no-model.log",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/logs/s3.6-wsl-verifier.log",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/logs/s5.1-wsl-verifier.log",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/logs/verifier.log",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/s1-checks.json",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/s1-payload-audit.json",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/s2-delivery-payload.json",
+    "Plans/completion-s1-wsl-freeze-evidence-20261030/verify.py",
+    "Plans/completion-s2-wsl-executor-handoff-2026-10-30.md",
+    "Plans/completion-s2-wsl-publication-evidence-20261030/.gitattributes",
+    "Plans/completion-s2-wsl-publication-evidence-20261030/.gitignore",
+    "Plans/completion-s2-wsl-publication-evidence-20261030/README.md",
+    "Plans/completion-s2-wsl-publication-evidence-20261030/inventory.json",
+    "Plans/completion-s2-wsl-publication-evidence-20261030/logs/diff-check.log",
+    "Plans/completion-s2-wsl-publication-evidence-20261030/logs/freeze-verifier.log",
+    "Plans/completion-s2-wsl-publication-evidence-20261030/logs/payload-audit.log",
+    "Plans/completion-s2-wsl-publication-evidence-20261030/logs/remote-observation.log",
+    "Plans/completion-s2-wsl-publication-evidence-20261030/logs/stage-identity.log",
+    "Plans/completion-s2-wsl-publication-evidence-20261030/s2-wsl-publication.json",
+    "Plans/completion-s2-wsl-publication-evidence-20261030/verify.py",
+    "Plans/completion-s3-rc2-evidence-20261030/.gitattributes",
+    "Plans/completion-s3-rc2-evidence-20261030/.gitignore",
+    "Plans/completion-s3-rc2-evidence-20261030/README.md",
+    "Plans/completion-s3-rc2-evidence-20261030/harness/build-and-gates.ps1",
+    "Plans/completion-s3-rc2-evidence-20261030/harness/final-check-explicit.ps1",
+    "Plans/completion-s3-rc2-evidence-20261030/harness/final-check.ps1",
+    "Plans/completion-s3-rc2-evidence-20261030/harness/package.ps1",
+    "Plans/completion-s3-rc2-evidence-20261030/harness/post-source-check.ps1",
+    "Plans/completion-s3-rc2-evidence-20261030/harness/rm-candidate.ps1",
+    "Plans/completion-s3-rc2-evidence-20261030/harness/setup-deps.ps1",
+    "Plans/completion-s3-rc2-evidence-20261030/harness/verify-source.ps1",
+    "Plans/completion-s3-rc2-evidence-20261030/harness/zip-windows.py",
+    "Plans/completion-s3-rc2-evidence-20261030/inventory.json",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/async_resource_spec.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/build.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/diff_cross.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/dpm_sync_spec.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/fixtures_replay.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/jobstore_spec.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/linux/A3-local-no-model-gate.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/linux/A3-stdio-smoke.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/linux/B1b-build-linux-rc2.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/linux/release-tooling-tests.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/linux/wsl-check-archive.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/linux/wsl-elf-requirements.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/linux/wsl-environment.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/linux/wsl-packaged-cli.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/model_interface_spec.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/stdio_smoke.log",
+    "Plans/completion-s3-rc2-evidence-20261030/logs/transport_spec.log",
+    "Plans/completion-s3-rc2-evidence-20261030/package-receipt.json",
+    "Plans/completion-s3-rc2-evidence-20261030/receipts/build-environment.json",
+    "Plans/completion-s3-rc2-evidence-20261030/receipts/build.json",
+    "Plans/completion-s3-rc2-evidence-20261030/receipts/final-observation-indexer-defect.json",
+    "Plans/completion-s3-rc2-evidence-20261030/receipts/final-observation.json",
+    "Plans/completion-s3-rc2-evidence-20261030/receipts/gates.json",
+    "Plans/completion-s3-rc2-evidence-20261030/receipts/offline-dependency.json",
+    "Plans/completion-s3-rc2-evidence-20261030/receipts/post-source-check.json",
+    "Plans/completion-s3-rc2-evidence-20261030/receipts/source-manifest.json",
+    "Plans/completion-s3-rc2-evidence-20261030/receipts/source-verification.json",
+    "Plans/completion-s3-rc2-evidence-20261030/receipts/windows-package-archive.json",
+    "Plans/completion-s3-rc2-evidence-20261030/receipts/windows-package-receipt.json",
+    "Plans/completion-s3-rc2-evidence-20261030/verify.py",
+    "Plans/completion-s3-rc2-execution-order-2026-10-30.md",
+    "Plans/completion-s3-rc2-executor-handoff-2026-10-30.md",
+    "Plans/completion-s3-rc2-resume-executor-handoff-2026-10-30.md",
+    "Plans/completion-s3-rc2-windows-resume-executor-handoff-2026-10-30.md",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/README.md",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/admission-block.json",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/c0-refresh.json",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/c0-validation.json",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/environment.json",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/harness/observe-environment.py",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/harness/observe-win10-oracle.ps1",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/harness/observe-win10.ps1",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/harness/validate-c0.py",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/inventory.json",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/logs/c0-before.sha256",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/logs/c0-variant-before.sha256",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/s5-ledger.json",
+    "Plans/completion-s5-rc2-wsl-evidence-20261030/verify.py",
+    "Plans/completion-s5-rc2-wsl-executor-handoff-2026-10-30.md",
+    "Plans/completion-s5-rc3-a1a2-execution-order-2026-10-31.md",
+    "Plans/completion-s5-rc3-wsl-execution-order-2026-10-31.md"
+  ],
+  "allowedVendoredBinary": {
+    "path": "third_party/batteries/batteries-v4.33.0.bundle",
+    "sha256": "f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3"
+  },
+  "requiredGate": {
+    "cwd": "/home/lsz/Codebase/Mirrors",
+    "command": "bash tools/run-local-no-model-check.sh",
+    "environment": {
+      "TMPDIR": "/home/lsz/Codebase/Mirrors/.golden-build/source-freeze-20261104/tmp"
+    },
+    "context": "admitted host execution with loopback and ext4 temporary storage"
+  },
+  "pendingFinalization": [
+    "prepare-unused-next-product-version",
+    "full-local-non-model-gate",
+    "clean-reviewed-source-identity",
+    "fresh-base-and-selected-WSL2-C0",
+    "immutable-source-snapshots-and-independent-verification"
+  ],
+  "noTagPublicationOrDeploymentAuthorized": true
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "mirrors.s5a-rc6.attempt/v1",
+  "recordedAt": "2026-11-04T03:55:04.524328+00:00",
+  "status": "blocked-missing-exact-carrier",
+  "s5aAccepted": false,
+  "selectedProfile": "ubuntu-26.04-wsl2-x86_64",
+  "freezeRevision": "3c4a87309cc3a81924660497207d7c295759bdc1",
+  "catalogSelectionSha256": "4bb83aa2efb022e801c7be5d7efb102f32d2f354f01d5d002d4f8897197af1f5",
+  "observedDocumentationHead": "e91299799d260bcc4da28b103053903df670308b",
+  "completedDAudits": 0,
+  "cacheBuildPerformed": false,
+  "installPerformed": false,
+  "remoteQualificationGranted": false,
+  "stages": {
+    "S5.1": "observed-current-WSL2-host-and-host-capabilities",
+    "S5.2": "existing-frozen-catalog-locks-snapshots-companions-packages-revalidated; cache-and-producer-identities-pending",
+    "S5.3": "blocked-missing-exact-batteries-carrier",
+    "S5.4": "blocked-no-installations",
+    "S5.5": "partial-read-only-production-observation; selected-console-runtime-fixture-and-client-admission-pending"
+  },
+  "missingInput": {
+    "artifactId": "lean-batteries-source",
+    "bytes": 3739542,
+    "sha256": "73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a",
+    "originalProducerRoot": "/home/nzsn/Repos/Mirrors"
+  },
+  "capabilityObservation": {
+    "sandbox": "socket-netlink-ptrace-restrictions-retained",
+    "host": "strace-bwrap-network-namespace-and-sockets-pass",
+    "qualificationTransferred": false
+  },
+  "preservation": {
+    "sourceCatalogLocksPackagesUnchanged": true,
+    "productionMutationPerformed": false,
+    "commitPushTagReleaseDeployRebootPerformed": false
+  },
+  "remainingGates": [
+    "restore-exact-carrier-and-verify-Git-identity",
+    "build-and-install-both-selected-profiles",
+    "both-D-audits",
+    "fresh-selected-remote-runtime-fixture-and-client-admission",
+    "S5-B-producers-and-Windows",
+    "S5-C-Q1-Q2",
+    "release-admission"
+  ]
+}

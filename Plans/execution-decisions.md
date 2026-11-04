@@ -6,6 +6,56 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
+## Current continuation — 2026-11-04 (Batteries recovery and re-pin)
+
+The user requested checking the original producer environment and recovery if
+lost. The [recovery](batteries-recovery-20261104/README.md) finds no original
+`73130433…` artifact at accessible recorded paths. Offline regeneration from
+the exact pinned source yields verified `f6efbfeb…` / 3,684,180 bytes, identical
+to the earlier retained carrier, now at the selected Git-managed location.
+Both current dependency locks are explicitly re-pinned, with derived fixture
+bindings regenerated through the existing API. Historical evidence is preserved.
+
+All 73 distribution tests, both lock roots, byte-input admission, independent
+offline-clone verification and negative controls pass. This resolves carrier
+availability for the new selection only. Renew the source/candidate freeze
+before new cache construction, installations and D audits. Earlier rc.6
+source/package evidence does not transfer. No long/full build, model operation,
+commit/push, tag, release or deployment is performed.
+
+The user subsequently requested commit then push of this reviewed recovery,
+vendor/default changes and source-freeze preparation records to `origin/main`.
+That authorizes the scoped branch delivery; rc.7 preparation and the long/full
+local gate remain pending. No tag, hosted release or deployment follows from it.
+
+## Current continuation — 2026-11-04 (Batteries Git-managed location)
+
+The user selected `third_party/batteries/batteries-v4.33.0.bundle`. The
+[location preparation](batteries-vendoring-20261104/README.md) adds its
+license/provenance/checksum metadata and binary Git attributes, and makes it
+the builder default without changing the locked identity. The actual bundle
+remains missing; no substitute or regeneration is selected. All 72 distribution
+tests pass. Recover and verify the original carrier before adding it to Git,
+then renew source/candidate bindings for the changed builder and vendor input.
+The earlier S5-A resume recipe must not combine this builder with its old
+snapshot. No full build, model operation, commit/push, tag or deployment occurs.
+
+## Current continuation — 2026-11-04 (S5-A admission attempt)
+
+The user requested execution of the next checkpoint step. The
+[S5-A attempt](mainwork-s5a-rc6-20261104/README.md) retains the accepted rc.6
+freeze and selected Ubuntu 26.04.1 WSL2 C0. Frozen inputs revalidate and the
+bounded host strace/bubblewrap/namespace/socket probes pass outside the
+restrictive sandbox. These observations replace neither installed D audit.
+
+Exact Batteries carrier `73130433…` is still missing. The input admission
+refuses that absent file; cache construction, both installations and D audits
+remain blocked. Restore the exact retained bytes and verify their Git identity
+before the prepared continuation commands. No regeneration or dependency re-pin
+is selected. Production Windows observation remains separate from fresh selected
+console/runtime/client admission. No source identity refresh, model operation,
+commit/push, tag, release, deployment, service change or reboot was performed.
+
 ## Current continuation — 2026-11-03 (MW-12 source reconciliation)
 
 The user requested continuing the next mainwork stage with the same Grok

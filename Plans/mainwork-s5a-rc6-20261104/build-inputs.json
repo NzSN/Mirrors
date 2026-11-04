@@ -1,0 +1,101 @@
+{
+  "schema": "mirrors.s5a-rc6.build-input-admission/v1",
+  "observedAt": "2026-11-04T03:52:38.036776+00:00",
+  "dependencies": [
+    {
+      "artifactId": "node-runtime",
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/version-0.1/toolchains/node-v24.15.0-linux-x64.tar.xz",
+      "expectedBytes": 31164460,
+      "expectedSha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+      "admitted": true,
+      "bytes": 31164460,
+      "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6"
+    },
+    {
+      "artifactId": "lean-batteries-source",
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/batteries-repin-20261031/artifacts/sha256/73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a/batteries-v4.33.0.bundle",
+      "expectedBytes": 3739542,
+      "expectedSha256": "73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a",
+      "admitted": false,
+      "error": "[Errno 2] No such file or directory: '/home/lsz/Codebase/Mirrors/.golden-build/batteries-repin-20261031/artifacts/sha256/73130433fb6388cd66847fc9c865bfece7b2ad389c174b55b61a00d60a7fac5a/batteries-v4.33.0.bundle'"
+    }
+  ],
+  "operatorInputTrees": [
+    {
+      "inputId": "typescript-node-modules",
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-20261031/ts-deps",
+      "algorithm": "mirrors-runtime-tree-v1",
+      "digest": "78e37ff48820505c5d5cf82e469876324e96852e8b55b91085a5f2150ea3d5f6",
+      "entryCount": 211,
+      "bytes": 26135259,
+      "selection": "operator-explicit retained input; digest recorded, no historical qualification transferred"
+    },
+    {
+      "inputId": "evidence-wheels",
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-20261031/prepared/evidence-wheels",
+      "algorithm": "mirrors-runtime-tree-v1",
+      "digest": "f2c2e4edb2fe7d20afeba90192d09683b5d810b8fb2fb76df0c99cecd5301861",
+      "entryCount": 3,
+      "bytes": 200090,
+      "selection": "operator-explicit retained input; digest recorded, no historical qualification transferred"
+    }
+  ],
+  "tools": [
+    {
+      "tool": "lean",
+      "path": "/home/lsz/.elan/bin/lean",
+      "resolved": "/home/lsz/.elan/bin/lean",
+      "bytes": 13452832,
+      "sha256": "e0f4b30b29c565625189744847dfef5f132b6322c5e452dbebfeae780c9749e5",
+      "exitCode": 0,
+      "stdout": "Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\n",
+      "stderr": ""
+    },
+    {
+      "tool": "lake",
+      "path": "/home/lsz/.elan/bin/lake",
+      "resolved": "/home/lsz/.elan/bin/lake",
+      "bytes": 13452832,
+      "sha256": "e0f4b30b29c565625189744847dfef5f132b6322c5e452dbebfeae780c9749e5",
+      "exitCode": 0,
+      "stdout": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)\n",
+      "stderr": ""
+    },
+    {
+      "tool": "python",
+      "path": "/usr/bin/python3",
+      "resolved": "/usr/bin/python3.14",
+      "bytes": 7477160,
+      "sha256": "52e0a13e60a981d8c4b6478be2ba5176f69da07948a056bf49cf6f077e30cb41",
+      "exitCode": 0,
+      "stdout": "Python 3.14.4\n",
+      "stderr": ""
+    },
+    {
+      "tool": "git",
+      "path": "/usr/bin/git",
+      "resolved": "/usr/bin/git",
+      "bytes": 4547768,
+      "sha256": "ed8b2df973b28c0fb773b9c0dc0816d3ee2b3835bb932d9153c21417bb51b362",
+      "exitCode": 0,
+      "stdout": "git version 2.53.0\n",
+      "stderr": ""
+    },
+    {
+      "tool": "ldd",
+      "path": "/usr/bin/ldd",
+      "resolved": "/usr/bin/ldd",
+      "bytes": 5390,
+      "sha256": "8b85fafd8313f5e55058f543a66d3826adcd11e073c697f9d0208755378e2054",
+      "exitCode": 0,
+      "stdout": "ldd (Ubuntu GLIBC 2.43-2ubuntu2.4) 2.43\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nWritten by Roland McGrath and Ulrich Drepper.\n",
+      "stderr": ""
+    }
+  ],
+  "caseSensitiveStage": true,
+  "stageUid": 1000,
+  "stageMode": "0o700",
+  "cacheBuildReady": false,
+  "cacheBuildPerformed": false,
+  "s5aAccepted": false
+}
