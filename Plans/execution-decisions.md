@@ -6,6 +6,29 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
+## Current continuation — 2026-11-04 (rc.7 local source/C0 freeze)
+
+After recovery publication, the user requested performing the next step. This
+authorizes the previously proposed rc.7 preparation and full local non-model
+gate. The [new freeze](source-freeze-rc7-20261104/README.md) passes the full gate
+and independent verification, binding a clean task-owned local commit
+`f525c63`, fresh base-control C0 `1d77a753…` and selected Ubuntu 26.04 WSL2
+C0 `e673c65e…`. The source snapshot equals the actual validated source under
+the maintained planning-exclusion policy. No installed/framework qualification
+is transferred.
+
+Shared main remains at published `d541d24`; no shared commit/push or tag is
+performed. The reviewed source edits/new records need separately authorized
+delivery and exact-identity reconciliation before new packages or D audits.
+Existing rc.6 refs/packages remain unchanged; remote/client, M5/Q, Windows,
+release and production operations retain their separate boundaries.
+
+The user subsequently requested commit and push. The authorized delivery
+preserves validated task-owned source commit `f525c63` in shared branch history,
+then adds only the final planning records. The publication audit checks exact
+source bytes, the planning-only delta, and the final remote full SHA. No tag,
+package or deployment is included.
+
 ## Current continuation — 2026-11-04 (Batteries recovery and re-pin)
 
 The user requested checking the original producer environment and recovery if

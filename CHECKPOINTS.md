@@ -5,6 +5,59 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-04 — rc.7 source and freeze-record publication authorized
+
+The user requested commit and push of the accepted rc.7 source and freeze
+records to `origin/main`. Delivery preserves task-owned validated source commit
+`f525c6349dc5a5e457757fa040c89312c6703e3a` in branch history, followed by a
+separate planning-record commit. The reviewed working-tree bytes and 240 older
+unrelated untracked files are preserved. Ignored raw logs, candidates, source
+checkouts and snapshots remain outside the Git payload.
+
+The publication audit must prove that the delta after the validated source
+commit contains only paths admitted by the maintained planning-documentation
+policy. Full source validation remains bound to the recorded gate and exact
+source snapshots; no installed, Windows, remote-model, framework or release
+qualification is transferred. This entry records authorization, not push
+success; the retained publication receipt and fresh remote-ref observation own
+delivery proof. No tag, package, release or deployment follows from this request.
+
+## 2026-11-04 — rc.7 local source/C0 freeze accepted after full gate
+
+The user requested performing the next step after verified recovery publication
+`d541d24`, authorizing the proposed rc.7 preparation and full local non-model
+gate. Source now declares `0.2.0-rc.7`; the runner passes with
+`ALL LOCAL NON-MODEL GATES GREEN` in 139.8 seconds. Lake reports 737 jobs;
+DPM 87, distribution 73 and durable-evidence 146 tests pass. Offline TLA runs
+81 tests with six documented skips. `MIRRORCPP_PREFIX` is unset, so native
+integer-map/controlled preparation stays skipped; live tiers retain explicit
+exclusions/self-skips and no local model checker runs.
+
+The [new record](Plans/source-freeze-rc7-20261104/README.md) binds clean
+task-owned commit `f525c6349dc5a5e457757fa040c89312c6703e3a`, parent
+`d541d242d977308ddc1b7fe6c92b75eb0548b3ef`, without changing shared refs.
+Fresh base structural-control C0 is `1d77a753…`; selected Ubuntu 26.04 WSL2
+C0 is `e673c65e…`. MirrorECMA `9192171` and MirrorGate `4b379ac` remain clean.
+The committed Batteries carrier is `f6efbfeb…` at unchanged source identity.
+
+Gate-validated worktree bytes, an independent snapshot of the clean task-owned
+commit, and both final source snapshots share the same maintained source
+tree-index identity. Planning receipts are excluded by that source policy;
+complete Git trees are not claimed identical. Both isolated catalog/lock
+families validate, independent third refreshes are byte-stable, and all six
+negative controls are rejected. Both candidate and snapshot directory trees
+are owner-only. The rebuilt mirror reports `v0.2.0-rc.7`; all 240 older unrelated
+untracked files remain unchanged.
+
+This accepts only the bounded local source/C0 freeze. Shared main stays at
+`d541d24`; reviewed rc.7 source edits and new records await separate delivery.
+Reconcile the eventual published source identity before new Linux/Windows
+packages and installed D admission. Earlier rc.6 packages receive no new credit.
+Both D audits, fresh remote/runtime/client inputs, M5/Q, full Windows tests and
+release remain open. No shared commit/push, tag, package/cache build,
+installation, remote model operation, service change, deployment or reboot
+is performed by this stage.
+
 ## 2026-11-04 — Batteries recovery and freeze preparation publication authorized
 
 The user requested commit then push of the reviewed current work to

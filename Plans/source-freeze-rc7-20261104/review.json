@@ -1,0 +1,52 @@
+{
+  "schema": "mirrors.rc7-source-freeze-review/v1",
+  "at": "2026-11-04T07:56:25.940548+00:00",
+  "status": "accepted-bounded-local-source-c0-freeze",
+  "freezeRevision": "f525c6349dc5a5e457757fa040c89312c6703e3a",
+  "freezeTree": "7b8bd98ac69a94497aa66cfe85885e15638d30db",
+  "sharedMain": "d541d242d977308ddc1b7fe6c92b75eb0548b3ef",
+  "sharedRefsUnchanged": true,
+  "productVersion": "0.2.0-rc.7",
+  "gateSeconds": 139.8324079590384,
+  "fullLocalNonModelGatePassed": true,
+  "gateToCleanCommitSourceTreeEqualityProved": true,
+  "independentVerification": {
+    "status": "RC7 SOURCE FREEZE VERIFY GREEN",
+    "versionOutput": "v0.2.0-rc.7",
+    "cleanTaskOwnedRevision": "f525c6349dc5a5e457757fa040c89312c6703e3a",
+    "validatedLiveSourceEqualsCleanSource": true,
+    "fixedPoints": [
+      {
+        "family": "base",
+        "byteStableThirdRefresh": true,
+        "selectionSha256": "1d77a753123b10349ded102879e8bc29f54755d613f3c76e5e8bfb6b8e614ec2"
+      },
+      {
+        "family": "wsl2",
+        "byteStableThirdRefresh": true,
+        "selectionSha256": "e673c65e1220d3d71f0ba200db77210267e342a7614d51a17168460afb02ff88"
+      }
+    ],
+    "negativeControlsRejected": [
+      "base-changed-catalog",
+      "base-substituted-snapshot-component",
+      "wsl2-changed-catalog",
+      "wsl2-substituted-snapshot-component",
+      "missing-carrier",
+      "same-size-carrier-corruption"
+    ],
+    "sharedMainUnchanged": true,
+    "installedDOrM5QOrReleaseQualificationGranted": false
+  },
+  "distributionTests": 73,
+  "dpmTests": 87,
+  "evidenceTests": 146,
+  "offlineTlaTests": {
+    "run": 81,
+    "skipped": 6
+  },
+  "nativeIntegerMapsAndControlledPreparation": "skipped-unset-MIRRORCPP_PREFIX",
+  "liveModelWindowsAndInstalledQualificationGranted": false,
+  "preservedUnrelatedFiles": 240,
+  "newSharedCommitPushTagPackageOrDeploymentPerformed": false
+}
