@@ -1,0 +1,60 @@
+{
+  "schema": "mirrors.s3-rc7.package-set/v1",
+  "tag": "v0.2.0-rc.7",
+  "tagObject": "9c7705c7fc02c692c79c27453bf2897227e54413",
+  "commit": "f525c6349dc5a5e457757fa040c89312c6703e3a",
+  "tree": "7b8bd98ac69a94497aa66cfe85885e15638d30db",
+  "sourceArchive": {
+    "path": ".golden-build/s3-rc7-20261104/archive/mirrors-v0.2.0-rc.7-source.tar.gz",
+    "bytes": 27460934,
+    "sha256": "940eb8217e0fd0c589c4a87398222aad9513958d84eeff11ab717a13d1124f21"
+  },
+  "sourceFileCount": 9947,
+  "linux": {
+    "archive": {
+      "path": ".golden-build/s3-rc7-20261104/linux-dist/mirrors-v0.2.0-rc.7-linux-x86_64.tar.gz",
+      "bytes": 72209154,
+      "sha256": "3747d37fa884eac6bfbf56c99f1674b81b7bb48dd01993b0f74b45dfb9125d64"
+    },
+    "externalManifest": {
+      "path": ".golden-build/s3-rc7-20261104/linux-dist/mirrors-v0.2.0-rc.7-linux-x86_64.build.json",
+      "bytes": 2874,
+      "sha256": "d166340848fee54a6c176da047499ebd8f7b88705745e9c3d316f4fb73c54551"
+    },
+    "checksums": {
+      "path": ".golden-build/s3-rc7-20261104/linux-dist/SHA256SUMS",
+      "bytes": 216,
+      "sha256": "086f832627f0f619ca01a9fe8d661eba2b3d080e1c3e00c20095262965c68be2"
+    },
+    "scope": "focused Linux non-model release gates and source-hidden/network-isolated Ubuntu 26.04 WSL2 smoke"
+  },
+  "windows": {
+    "archive": {
+      "path": ".golden-build/s3-rc7-20261104/windows/mirrors-v0.2.0-rc.7-windows-x86_64.zip",
+      "bytes": 73724526,
+      "sha256": "6c7043487f91345b36b39aab1e685100654926878597d179dcf4fff2422fca05"
+    },
+    "repeatArchive": {
+      "path": ".golden-build/s3-rc7-20261104/windows/mirrors-v0.2.0-rc.7-windows-x86_64-repeat.zip",
+      "bytes": 73724526,
+      "sha256": "6c7043487f91345b36b39aab1e685100654926878597d179dcf4fff2422fca05"
+    },
+    "externalManifest": {
+      "path": ".golden-build/s3-rc7-20261104/windows/mirrors-v0.2.0-rc.7-windows-x86_64.build.json",
+      "bytes": 6690,
+      "sha256": "5e325a523dce8e3977a4b1cdf2441a32971633d7beb3988fc0ce54d60e5e4650"
+    },
+    "checksums": {
+      "path": ".golden-build/s3-rc7-20261104/windows/SHA256SUMS",
+      "bytes": 329,
+      "sha256": "302b487b328330441ae3e1e2808c10f0157bb1f7f02eb3b1e9ab999a081f4f6d"
+    },
+    "scope": "native Windows exact source build and eight non-model suites, repeat ZIP/PE verification and restricted-PATH package smoke"
+  },
+  "published": false,
+  "deployed": false,
+  "releaseAdmission": false,
+  "fullWindowsLakeTest": false,
+  "installedDOrM5OrQ": false,
+  "remoteModelQualification": false
+}

@@ -5,6 +5,50 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-04 — S3 rc.7 clean Linux/Windows packages accepted
+
+The user approved local rc.7 tagging and package construction, then changed
+execution ownership from Grok to Codex before delegation. Codex executes and
+reviews the [new S3 stage](Plans/s3-rc7-20261104/README.md) directly. Local-only
+annotated tag `v0.2.0-rc.7`, object `9c7705c7…`, peels to published validated
+source `f525c6349dc5a5e457757fa040c89312c6703e3a`. Shared and remote tag refs
+remain unchanged; main stays at `679b2eb`.
+
+Accepted Linux archive SHA-256 is `3747d37f…` (72,209,154 bytes); Windows
+ZIP and identical repeat are `6c704348…` (73,724,526 bytes). The exact source
+archive `940eb821…` has 9,947 files, each independently compared with its
+immutable Git blob. Vendored Batteries is acquired offline and verified on
+both hosts.
+
+Linux release tests, maintained focused gates, archive check and a second
+source-hidden/network-isolated smoke pass on actual Ubuntu 26.04.1 WSL2 /
+glibc 2.43. Native Windows source build and all eight declared non-model
+package suites pass on `DESKTOP-6DKB5JD`. Repeat ZIP bytes, package membership,
+manifest/payload/gate-log hashes and PE closure pass independent verification.
+All original Windows source files are unchanged; only two declared generated
+Rust outputs are added outside `.lake/`. A separate restricted-PATH packaged
+Windows CLI smoke also passes. Four actual negative controls are rejected.
+
+Observed production PID/executable/public-file hashes are unchanged, service
+is Running/Automatic and no task-owned binary process remains. A historical
+Git-attributes warning is retained without changing the frozen source. No
+production private key material or production command line is read/exported.
+
+This is bounded package acceptance only. It is not reproducible compilation,
+full Windows `lake test`, optional C++ native coverage, installed D/M5/Q,
+remote-model, framework or release admission. S5-A distribution installation
+and both audits are next; fresh remote/runtime/client admission and later
+qualification remain separate. No shared commit/push, remote tag, hosted
+release, deployment, service change or reboot is performed.
+
+The user then requested commit and push of the accepted S3 records to
+`origin/main`. Publication is scoped to this checkpoint, maintained status and
+execution notes, and `Plans/s3-rc7-20261104/`. Package binaries, archives,
+source/build trees, Windows staging and ignored raw logs stay outside the Git
+payload; all 240 older unrelated files remain preserved. This paragraph records
+authorization, not push success; the separate publication receipt and fresh
+remote-ref observation own delivery proof. No tag or release is published.
+
 ## 2026-11-04 — rc.7 source and freeze-record publication authorized
 
 The user requested commit and push of the accepted rc.7 source and freeze

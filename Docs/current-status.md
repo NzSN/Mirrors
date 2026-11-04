@@ -1,5 +1,23 @@
 # Current framework status and navigation
 
+## November 4 rc.7 clean packages
+
+The [S3 record](../Plans/s3-rc7-20261104/README.md) accepts clean Linux and
+Windows packages from validated `f525c63` and a local-only annotated rc.7 tag.
+Linux SHA-256 is `3747d37f…`; Windows ZIP and identical repeat are `6c704348…`.
+All 9,947 source files match the exact Git blobs. Linux maintained release
+gates and source-hidden/network-isolated WSL2 smoke pass; Windows exact-source
+build, eight declared non-model suites, repeat packaging, PE closure and
+restricted-PATH CLI smoke pass. Original Windows source bytes and observed
+production state remain unchanged.
+
+This is package acceptance, with `published:false` and `deployed:false`.
+Full Windows tests, optional C++ native checks, installed D/M5/Q, remote-model
+and release admission remain open. Next is S5-A: exact-profile distribution
+construction/installation and both installed audits, plus fresh remote/client
+admission before their dependent producers. No tag publication, hosted release
+or production operation occurred.
+
 ## November 4 rc.7 source preparation
 
 Source now prepares `0.2.0-rc.7` with the committed Git-managed Batteries

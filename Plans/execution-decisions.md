@@ -6,6 +6,25 @@ The user authorized execution of the framework task cards using
 `general-purpose-gpt`. This record tracks B2 decisions and B3 assignments;
 implementation acceptance still requires reviewed destination files and checks.
 
+## Current continuation — 2026-11-04 (S3 rc.7 packages)
+
+The user approved local tagging and clean Linux/Windows package builds, then
+asked Codex to execute directly instead of delegating to Grok. The
+[S3 package stage](s3-rc7-20261104/README.md) passes construction and independent
+verification at exact `f525c63`, local tag object `9c7705c7…`. Linux archive
+`3747d37f…` and Windows/repeat ZIP `6c704348…` are accepted only for their
+declared package gates. Shared main and tag refs are unchanged; no remote tag,
+release publication, deployment or service operation occurs.
+
+Proceed to S5-A exact-profile cache/install and both installed audits before
+dependent producers. Native optional coverage, fresh remote/runtime/client
+admission, full Windows qualification, M5/Q and release remain separate.
+
+The user subsequently requested commit and push of the accepted S3 records to
+`origin/main`. Only reviewed records/status are included; package binaries,
+ignored build/raw evidence and older unrelated files remain excluded. This is
+branch-record publication, with no remote tag, hosted release or deployment.
+
 ## Current continuation — 2026-11-04 (rc.7 local source/C0 freeze)
 
 After recovery publication, the user requested performing the next step. This

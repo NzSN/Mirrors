@@ -1,0 +1,111 @@
+{
+  "schema": "mirrors.s3-rc7.review/v1",
+  "at": "2026-11-04T09:13:00.997303+00:00",
+  "status": "accepted-bounded-clean-package-stage",
+  "executor": "Codex; no delegation",
+  "independentVerification": {
+    "status": "S3 RC7 PACKAGE VERIFY GREEN",
+    "sourceFiles": 9947,
+    "sourceArchiveCheckedAgainstGitBlobs": true,
+    "linuxSha256": "3747d37fa884eac6bfbf56c99f1674b81b7bb48dd01993b0f74b45dfb9125d64",
+    "windowsArchive": {
+      "path": ".golden-build/s3-rc7-20261104/windows/mirrors-v0.2.0-rc.7-windows-x86_64.zip",
+      "bytes": 73724526,
+      "sha256": "6c7043487f91345b36b39aab1e685100654926878597d179dcf4fff2422fca05"
+    },
+    "windowsGateCount": 8,
+    "windowsRepeatZipIdentical": true,
+    "peImports": {
+      "bin/libcrypto-3-x64.dll": [
+        "ADVAPI32.dll",
+        "CRYPT32.dll",
+        "KERNEL32.dll",
+        "USER32.dll",
+        "WS2_32.dll",
+        "api-ms-win-crt-convert-l1-1-0.dll",
+        "api-ms-win-crt-environment-l1-1-0.dll",
+        "api-ms-win-crt-filesystem-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-private-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-time-l1-1-0.dll",
+        "api-ms-win-crt-utility-l1-1-0.dll"
+      ],
+      "bin/libssl-3-x64.dll": [
+        "KERNEL32.dll",
+        "WS2_32.dll",
+        "api-ms-win-crt-convert-l1-1-0.dll",
+        "api-ms-win-crt-environment-l1-1-0.dll",
+        "api-ms-win-crt-filesystem-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-private-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-time-l1-1-0.dll",
+        "api-ms-win-crt-utility-l1-1-0.dll",
+        "libcrypto-3-x64.dll"
+      ],
+      "bin/model_interface_gen.exe": [
+        "ADVAPI32.dll",
+        "IPHLPAPI.DLL",
+        "KERNEL32.dll",
+        "SHELL32.dll",
+        "USER32.dll",
+        "USERENV.dll",
+        "WS2_32.dll",
+        "bcrypt.dll",
+        "dbghelp.dll",
+        "icu.dll",
+        "ole32.dll",
+        "ucrtbase.dll"
+      ],
+      "bin/ModelMirrors.exe": [
+        "ADVAPI32.dll",
+        "IPHLPAPI.DLL",
+        "KERNEL32.dll",
+        "SHELL32.dll",
+        "USER32.dll",
+        "USERENV.dll",
+        "WS2_32.dll",
+        "bcrypt.dll",
+        "dbghelp.dll",
+        "icu.dll",
+        "libcrypto-3-x64.dll",
+        "libssl-3-x64.dll",
+        "ole32.dll",
+        "ucrtbase.dll"
+      ],
+      "bin/zlib1.dll": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    "negativeControlsRejected": [
+      "wrong-linux-tag",
+      "wrong-source-archive-hash",
+      "missing-windows-gate",
+      "unreviewed-pe-import"
+    ],
+    "published": false,
+    "deployed": false,
+    "releaseAdmission": false
+  },
+  "sharedAndRemoteTagRefsUnchanged": true,
+  "sourceAndLeanHiddenLinuxSmoke": true,
+  "windowsPackagedCliSmokePassed": true,
+  "productionUnchangedAndOwnedProcessesZero": true,
+  "observedImportLibraryHashesTiming": "after build; observed file timestamps predate construction",
+  "limitations": [
+    "package acceptance only",
+    "not full Windows lake test",
+    "no optional C++ native qualification",
+    "no installed D/M5/Q",
+    "no remote-model/framework/release admission"
+  ],
+  "commitPushTagPublicationOrDeploymentPerformed": false,
+  "allRetainedCommandStreamHashesVerified": true,
+  "preservedUnrelatedFiles": 240
+}
