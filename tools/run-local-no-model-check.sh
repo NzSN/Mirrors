@@ -6,6 +6,7 @@
 # exclusions below explicit. Model checking is a separate remote qualification
 # obligation owned by tools/evidence/run_remote_model_check.py.
 set -euo pipefail
+python3 -m unittest discover -s tools -p test_check_async_protocol.py
 
 unset APALACHE_MC APALACHE_JAR TLA2TOOLS_JAR MIRRORS_ASYNC_RESOURCE_E2E
 
@@ -114,7 +115,7 @@ run "Apalache CLI pure/unit" env -u APALACHE_MC .lake/build/bin/apalache_cli_spe
 run "explorer pure/unit" env -u APALACHE_MC .lake/build/bin/explorer_spec
 run "transport" .lake/build/bin/transport_spec
 run "trace transport failure fixture" env \
-  APALACHE_MC="$PWD/test/fixtures/trace-generation/apalache-failure.sh" \
+  APALACHE_MC="$PWD/.lake/build/bin/trace_generation_transport_repro_spec" \
   .lake/build/bin/trace_generation_transport_repro_spec
 run "registry" .lake/build/bin/registry_spec
 run "Counter live tier self-skip" env -u APALACHE_MC .lake/build/bin/counter_spec

@@ -69,7 +69,9 @@ private def run (root : System.FilePath) (failures : IO.Ref (List String))
   ck "workflow member retains domain receipt identity separately from file hash"
     (compiled.members.zip compiled.manifest.members |>.all fun (a,b) =>
       a.workflowEvidence.projection.any fun p => p.receiptSha256 != b.receipt.sha256)
-  let .ok _ ← projectCorpus paths | throw (IO.userError "happy corpus publication failed")
+  match ← projectCorpus paths with
+  | .ok _ => pure ()
+  | .error error => throw (IO.userError s!"happy corpus publication failed: {error.message}")
   ck "complete corpus verifies" (!(rejected (← checkCorpus paths.out compiled.manifestSha256)))
   ck "wrong expected manifest identity rejects"
     (rejected (← checkCorpus paths.out (String.ofList (List.replicate 64 '0'))))
@@ -127,9 +129,7 @@ private def run (root : System.FilePath) (failures : IO.Ref (List String))
 def main : IO UInt32 := do
   let failures ← IO.mkRef ([] : List String)
   let count ← IO.mkRef 0
-  let nonce ← IO.monoNanosNow
-  let root : System.FilePath := s!"/tmp/mirrors-corpus-spec-{nonce}"
-  IO.FS.createDir root
+  let root ← IO.FS.createTempDir
   try
     run root failures count
   catch error => failures.modify (· ++ [s!"unexpected exception: {error}"])

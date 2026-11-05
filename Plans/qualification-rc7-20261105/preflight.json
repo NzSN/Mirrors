@@ -1,0 +1,66 @@
+{
+  "schema": "mirrors.rc7-qualification-preflight/v1",
+  "status": "passed-local-S5A-prerequisites",
+  "sourceRevision": "f525c6349dc5a5e457757fa040c89312c6703e3a",
+  "selectedC0": "e673c65e1220d3d71f0ba200db77210267e342a7614d51a17168460afb02ff88",
+  "profile": "ubuntu-26.04-wsl2-x86_64",
+  "host": {
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "osRelease": "PRETTY_NAME=\"Ubuntu 26.04.1 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"26.04\"\nVERSION=\"26.04.1 LTS (Resolute Raccoon)\"\nVERSION_CODENAME=resolute\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=resolute\nLOGO=ubuntu-logo\n",
+    "filesystem": "ext4",
+    "uid": 1000
+  },
+  "inputs": [
+    {
+      "artifactId": "node-runtime",
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/version-0.1/toolchains/node-v24.15.0-linux-x64.tar.xz",
+      "bytes": 31164460,
+      "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6"
+    },
+    {
+      "artifactId": "lean-batteries-source",
+      "path": "/home/lsz/Codebase/Mirrors/third_party/batteries/batteries-v4.33.0.bundle",
+      "bytes": 3684180,
+      "sha256": "f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3"
+    }
+  ],
+  "trees": [
+    {
+      "inputId": "typescript",
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-20261031/ts-deps",
+      "algorithm": "mirrors-runtime-tree-v1",
+      "digest": "78e37ff48820505c5d5cf82e469876324e96852e8b55b91085a5f2150ea3d5f6",
+      "entryCount": 211,
+      "bytes": 26135259
+    },
+    {
+      "inputId": "evidence-wheels",
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/rc3-s5-20261031/prepared/evidence-wheels",
+      "algorithm": "mirrors-runtime-tree-v1",
+      "digest": "f2c2e4edb2fe7d20afeba90192d09683b5d810b8fb2fb76df0c99cecd5301861",
+      "entryCount": 3,
+      "bytes": 200090
+    }
+  ],
+  "sockets": [
+    {
+      "family": "AF_INET",
+      "bindListen": true
+    },
+    {
+      "family": "AF_UNIX",
+      "bindListen": true
+    }
+  ],
+  "strace": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/integration-runtime/strace-pinned",
+    "bytes": 1627,
+    "sha256": "0d677426d0a518cf7f3c4f9b6527d1b313752eabb0e3a96d4ec8fa799b4265c7"
+  },
+  "frameworkCatalog": {
+    "path": "/home/lsz/Codebase/Mirrors/.lake/build/bin/framework_catalog",
+    "bytes": 119687824,
+    "sha256": "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126"
+  },
+  "installedAuditsPassed": false
+}

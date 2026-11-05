@@ -67,3 +67,23 @@ The original repository's shim bytes must never be edited by the regression.
 Run the actual mirror plus transport executables to verify linkage. Linux
 execution validates the current host; Windows linkage is preserved in source
 but requires a Windows runner to claim execution coverage.
+
+## Windows path inspection
+
+`Shell.FileSystem.symlinkMetadata` supplements Lean 4.33's Windows metadata
+with `GetFileAttributesW`: the runtime reports file symlinks as regular files.
+The small `Ffi/path_shim.c` rejects all reparse tags before the existing
+no-link checks in compiler publication, source capture and trace paths.
+Missing paths still use the runtime's ordinary missing-file errors; native
+inspection failures fail closed. UTF-8 paths are converted explicitly to UTF-16.
+This check does not provide atomic protection against concurrent path mutation.
+
+The dedicated `FfiPath` library includes the content-tracked shim as a module
+native facet and precompiles that module. Both imported compile-time evaluation
+and linked executables therefore load the same native implementation. The
+rebuild regression also edits the copied path shim and verifies relinking and
+an unchanged second build. The CMake consumer regression checks existing and
+dangling output links, directory links and linked model sources on both hosts.
+
+Windows attribute semantics are documented in Microsoft's
+[symbolic-link function reference](https://learn.microsoft.com/en-us/windows/win32/fileio/symbolic-link-effects-on-file-systems-functions).

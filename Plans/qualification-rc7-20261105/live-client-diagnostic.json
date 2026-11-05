@@ -1,0 +1,28 @@
+{
+  "status": "passed-22-live-verdict-pin-protocol-rows",
+  "receipt": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/live-five-client/receipt.json",
+    "bytes": 6591,
+    "sha256": "0a4906c1ba0c59ac3854537dfc372afc65db3d10feddf4cff16d217b803a0dee"
+  },
+  "deploymentObservation": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/matrix-admin-observation.json",
+    "bytes": 1805,
+    "sha256": "c7a4bf88fba3ccf6e901cbb2ca10078ba846cc3a18bbf80d450b9dc8260ab96c"
+  },
+  "runtimeFiles": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/matrix-runtime-observation.json",
+    "bytes": 2721,
+    "sha256": "ecc3050f3885d54bd4abd464991483a515571ea62f1f9c208b5135dd0e3b4a4d"
+  },
+  "rows": 22,
+  "revisions": {
+    "ecma": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+    "cpp": "c95f0e185436f145af9fad8895430e899bc479a3",
+    "rust": "6b9480ab81717b76ca7f74b41fc554578b70c890",
+    "lean": "a8634ebe2455f97d15b55bec3c810d945cb6e3d3",
+    "haskell": "4aa693f86e18349bb97c050dd33aecbf730b6fa2"
+  },
+  "frameworkQualificationGranted": false,
+  "reason": "diagnostic under the explicit new selection; final clean source/C0/registered evidence still required"
+}

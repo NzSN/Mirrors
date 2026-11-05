@@ -1,0 +1,53 @@
+{
+  "status": "reviewed-input-rebinding-awaiting-new-candidate",
+  "previousRegistry": {
+    "path": "/home/lsz/Codebase/Mirrors/tools/evidence/commands.json",
+    "bytes": 45457,
+    "sha256": "2e4ef9d4f5e393defdef473eb1582a0f16ff5d6660700af422fb0048c3c0bfd2"
+  },
+  "newRegistry": {
+    "path": "/home/lsz/Codebase/Mirrors/tools/evidence/commands.json",
+    "bytes": 45391,
+    "sha256": "9049924ddf5cefdab796ff2d65857c4f9162c6669bd1ec0a96fd42cfb48194eb"
+  },
+  "apalache": {
+    "previousArchiveSha256": "7cfadf6e8c04c63f05ac907ec9541c66297005c8cb5efb1731f6a838dfc3fad2",
+    "selectedArchiveSha256": "765f610537281a0f25b8c30f2554f19523e2859c824e80e62276653ee23c10e2",
+    "originalBytesRecovered": false,
+    "jarUnchanged": true
+  },
+  "cpp": {
+    "sourceRevision": "c95f0e185436f145af9fad8895430e899bc479a3",
+    "sourceRepository": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/inputs/MirrorCPP-windows",
+    "sourceClean": true,
+    "cli": {
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/cpp-build-windows-fix/cli/mirrorcpp-validate",
+      "bytes": 4877992,
+      "sha256": "f0b2f4a71d84404b9376038cab8f97f0949fbca83cde58787766370349f6b22d"
+    },
+    "patch": {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/mirrorcpp-windows.patch",
+      "bytes": 23875,
+      "sha256": "0d728fb9157b14fecea53d38ca54c74fc7296d304862c0ed910bfe5c24a73fd2"
+    },
+    "bundle": {
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/inputs/mirrorcpp-windows-fixed.bundle",
+      "bytes": 345645,
+      "sha256": "fa06550a9d23c6efc50257ac531a1b4bce3b99b06ec050d6a0a95226b437bf0c"
+    },
+    "published": false,
+    "originalSiblingUnchanged": true
+  },
+  "otherClientBytesMatchRetainedOct29Receipt": true,
+  "installedAudits": {
+    "prefixRoot": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/install",
+    "tracer": {
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/tracer/bin/strace",
+      "bytes": 2378225,
+      "sha256": "10345119eae5a82fc79488417078fc19a145df378311f7e0b8da34e09fb9fadd"
+    },
+    "overlappingHidesRemoved": true,
+    "auditPolicyUnchanged": true
+  },
+  "qualificationGranted": false
+}

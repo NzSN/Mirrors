@@ -19,6 +19,13 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def temporal_counterexample(output: str) -> bool:
+    """Admit old and named TLC diagnostics for these declared properties only."""
+    properties = r'(?:AsyncResourcesReleased(?: and AsyncClosingEventuallyClean)?|AsyncClosingEventuallyClean(?: and AsyncResourcesReleased)?)'
+    pattern = rf'Error: Temporal (?:properties were violated\.|property {properties} was violated\.|properties {properties} were violated\.)'
+    return any(re.fullmatch(pattern, line) for line in output.splitlines())
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--quick', action='store_true')
@@ -77,7 +84,8 @@ def main():
                 args.output.mkdir(parents=True, exist_ok=True)
                 (args.output / (label + '.log')).write_text(output)
             if expected:
-                assert process.returncode != 0 and expected in output, (label, output[-6000:])
+                matched = temporal_counterexample(output) if label == 'no-fairness' else expected in output
+                assert process.returncode != 0 and matched, (label, process.returncode, output[-6000:])
             else:
                 assert process.returncode == 0 and 'Model checking completed. No error has been found.' in output, (label, output[-6000:])
             counts = re.findall(r'([\d,]+) states generated, ([\d,]+) distinct states found', output)

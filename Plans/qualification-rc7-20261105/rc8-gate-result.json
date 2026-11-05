@@ -1,0 +1,126 @@
+{
+  "status": "passed-stable-rc8-source",
+  "before": {
+    "mirrors": {
+      "componentId": "mirrors",
+      "repository": "https://github.com/NzSN/Mirrors.git",
+      "revision": "fbbe45a4f15825d7c4b4750d65350cf579d2f80b",
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "f06522d751b049ab0c4eb7ab7729f7b919ae3598663487d710a699c65f609ac8",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "Docs/current-status.md",
+          "Docs/native-build-design.md",
+          "Docs/versioning.md",
+          "Ffi/Path.lean",
+          "Ffi/README.md",
+          "Ffi/path_shim.c",
+          "Shell/FileSystem.lean",
+          "Shell/ModelInterface/Compiler.lean",
+          "Shell/ModelInterface/Publication.lean",
+          "Shell/SharedTrace.lean",
+          "Shell/Tla/SourceProvider.lean",
+          "Shell/TraceCapture.lean",
+          "Shell/Version.lean",
+          "lakefile.lean",
+          "third_party/mirrorcpp/README.md",
+          "third_party/mirrorcpp/mirrorcpp-windows-v0.1.1.bundle",
+          "tools/ModelInterfaceCorpusSpec.lean",
+          "tools/ModelInterfaceSpec.lean",
+          "tools/check-async-protocol.py",
+          "tools/check-cmake-consumer.py",
+          "tools/check-cpp-integer-maps.py",
+          "tools/check-native-rebuild.sh",
+          "tools/check-trace-capture.py",
+          "tools/distribution/test_refresh_identity.py",
+          "tools/evidence/commands.json",
+          "tools/evidence/run_remote_model_check.py",
+          "tools/evidence/tests/test_collect.py",
+          "tools/run-local-no-model-check.sh",
+          "tools/test_check_async_protocol.py"
+        ],
+        "excludedPaths": []
+      }
+    },
+    "mirrorecma": {
+      "componentId": "mirrorecma",
+      "repository": "https://github.com/NzSN/MirrorECMA.git",
+      "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+      "dirty": false
+    },
+    "mirrorgate": {
+      "componentId": "mirrorgate",
+      "repository": "https://github.com/NzSN/MirrorGate.git",
+      "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+      "dirty": false
+    }
+  },
+  "after": {
+    "mirrors": {
+      "componentId": "mirrors",
+      "repository": "https://github.com/NzSN/Mirrors.git",
+      "revision": "fbbe45a4f15825d7c4b4750d65350cf579d2f80b",
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "f06522d751b049ab0c4eb7ab7729f7b919ae3598663487d710a699c65f609ac8",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "Docs/current-status.md",
+          "Docs/native-build-design.md",
+          "Docs/versioning.md",
+          "Ffi/Path.lean",
+          "Ffi/README.md",
+          "Ffi/path_shim.c",
+          "Shell/FileSystem.lean",
+          "Shell/ModelInterface/Compiler.lean",
+          "Shell/ModelInterface/Publication.lean",
+          "Shell/SharedTrace.lean",
+          "Shell/Tla/SourceProvider.lean",
+          "Shell/TraceCapture.lean",
+          "Shell/Version.lean",
+          "lakefile.lean",
+          "third_party/mirrorcpp/README.md",
+          "third_party/mirrorcpp/mirrorcpp-windows-v0.1.1.bundle",
+          "tools/ModelInterfaceCorpusSpec.lean",
+          "tools/ModelInterfaceSpec.lean",
+          "tools/check-async-protocol.py",
+          "tools/check-cmake-consumer.py",
+          "tools/check-cpp-integer-maps.py",
+          "tools/check-native-rebuild.sh",
+          "tools/check-trace-capture.py",
+          "tools/distribution/test_refresh_identity.py",
+          "tools/evidence/commands.json",
+          "tools/evidence/run_remote_model_check.py",
+          "tools/evidence/tests/test_collect.py",
+          "tools/run-local-no-model-check.sh",
+          "tools/test_check_async_protocol.py"
+        ],
+        "excludedPaths": []
+      }
+    },
+    "mirrorecma": {
+      "componentId": "mirrorecma",
+      "repository": "https://github.com/NzSN/MirrorECMA.git",
+      "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+      "dirty": false
+    },
+    "mirrorgate": {
+      "componentId": "mirrorgate",
+      "repository": "https://github.com/NzSN/MirrorGate.git",
+      "revision": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+      "dirty": false
+    }
+  },
+  "sourceAndCompanionsStable": true,
+  "preservedUnrelatedFiles": 240,
+  "nativeCppPrefix": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/cpp-prefix-windows-fix",
+  "log": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/logs/rc8-stable-source-local-no-model.stdout",
+    "bytes": 108413,
+    "sha256": "9dfd4f51b6f57ab85622294533c67b92ddf5a4c0bfe5f3389c673e8af3087152"
+  },
+  "fullWindowsOrFrameworkCredit": false
+}

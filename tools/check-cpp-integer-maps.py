@@ -109,7 +109,7 @@ def main() -> None:
             'cmake_minimum_required(VERSION 3.24)\nproject(integer_maps LANGUAGES CXX)\n'
             'find_package(mirrorcpp CONFIG REQUIRED)\ninclude(generated/MirrorInterface.cmake)\n'
             'mirrors_add_model_interface(binding "${CMAKE_CURRENT_SOURCE_DIR}")\n'
-            f'add_executable(integer_maps "{ROOT}/tools/model-interface-cpp/integer_maps.cpp")\n'
+            f'add_executable(integer_maps "{ROOT.as_posix()}/tools/model-interface-cpp/integer_maps.cpp")\n'
             'target_link_libraries(integer_maps PRIVATE binding mirrorcpp::mirrorcpp)\n')
         run(["cmake", "-S", str(scratch), "-B", "build", f"-DCMAKE_PREFIX_PATH={args.prefix.resolve()}"])
         run(["cmake", "--build", "build", "-j", "2"])
@@ -123,7 +123,9 @@ def main() -> None:
                                       "--bind", "127.0.0.1", *arguments[1:]], cwd=scratch, stdout=log, stderr=log)
             try:
                 for _ in range(100):
-                    if child.poll() is not None: raise AssertionError("fixture server exited")
+                    if child.poll() is not None:
+                        raise AssertionError(f"fixture server exited {child.returncode}: " +
+                                             (scratch / "server.log").read_text(errors="replace"))
                     try:
                         with socket.create_connection(("127.0.0.1", port), timeout=.1): pass
                         break
@@ -139,6 +141,8 @@ def main() -> None:
         serve(["--serve"], ["--tcp"])
         # Ephemeral test identities; no service credentials are read or copied.
         run(["openssl", "req", "-x509", "-newkey", "rsa:2048", "-nodes", "-days", "1",
+             "-addext", "basicConstraints=critical,CA:TRUE",
+             "-addext", "keyUsage=critical,keyCertSign,cRLSign",
              "-subj", "/CN=trace-fixture-ca", "-keyout", "ca.key", "-out", "ca.crt"])
         for name, usage in (("server", "serverAuth"), ("client", "clientAuth")):
             run(["openssl", "req", "-newkey", "rsa:2048", "-nodes", "-subj", f"/CN={name}",

@@ -1,0 +1,19 @@
+{
+  "status": "passed-finite-controlled-model-comparison",
+  "acceptance": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/controlled-live/acceptance.json",
+    "bytes": 4473,
+    "sha256": "3d6b0674a5e30d27f45c0a7bbd13add160a0e41557ab3d35667c8d484e12db41"
+  },
+  "reduction": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/controlled-live/reduction.json",
+    "bytes": 1162,
+    "sha256": "5ba0aa890085e6d7461a027fe308521c15b1aab0ac96392b5b0d6eaf2efe8531"
+  },
+  "sourceSelection": "c95f0e185436f145af9fad8895430e899bc479a3",
+  "remoteSource": "f525c6349dc5a5e457757fa040c89312c6703e3a",
+  "freshExecutions": 13,
+  "modelComparison": true,
+  "frameworkQualificationGranted": false,
+  "scope": "finite declared producer/consumer mapping; no generic or exhaustive scheduling claim"
+}

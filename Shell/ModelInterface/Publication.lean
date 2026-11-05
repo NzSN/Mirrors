@@ -1,3 +1,4 @@
+import Shell.FileSystem
 import Shell.ModelInterface.Compiler
 
 /-! Fresh immutable directory publication. All content is supplied in memory;
@@ -19,7 +20,7 @@ private partial def chain (path : System.FilePath) : List System.FilePath :=
   | some parent => chain parent ++ [path]
 
 private def metadata? (path : System.FilePath) : IO (Option IO.FS.Metadata) := do
-  try return some (← path.symlinkMetadata)
+  try return some (← (Shell.FileSystem.symlinkMetadata path))
   catch error =>
     match error with
     | .noFileOrDirectory .. => return none

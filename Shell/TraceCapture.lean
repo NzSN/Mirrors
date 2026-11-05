@@ -1,3 +1,4 @@
+import Shell.FileSystem
 import Shell.Client
 import Shell.Apalache.SpecSource
 import Shell.Mirror.Session
@@ -144,7 +145,7 @@ def checkOutput (out : String) : IO (Except String System.FilePath) := do
     let absolute := (if path.isAbsolute then path else cwd / path).normalize
     if absolute.parent.isNone then return .error "filesystem root is not an output directory"
     for prefixPath in pathChain absolute do
-      match ← prefixPath.symlinkMetadata.toBaseIO with
+      match ← (Shell.FileSystem.symlinkMetadata prefixPath).toBaseIO with
       | .ok metadata =>
         if prefixPath == absolute then return .error "output already exists"
         if metadata.type != .dir then return .error "output parent is not an ordinary directory"

@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import socket
 import subprocess
+import sys
 import tempfile
 import threading
 
@@ -58,7 +59,16 @@ def run_case(root: Path, label: str, replies: list, expected: int, *, asynchrono
                         # Closing the reply direction also delivers the EOF case.
                         # Every terminal peer reply must be followed by zero writes.
                         connection.shutdown(socket.SHUT_WR)
-                        assert stream.readline(65537) == b"", (label, "unexpected follow-up write")
+                        # Windows may report peer process exit as WSAECONNRESET.
+                        # Read one byte, so even an unterminated follow-up is a
+                        # failure before any later disconnect is considered.
+                        try:
+                            followup = stream.read(1)
+                        except ConnectionResetError as error:
+                            if sys.platform != "win32" or error.winerror != 10054:
+                                raise
+                            followup = b""
+                        assert followup == b"", (label, "unexpected follow-up write")
             except Exception as error:
                 failures.append(repr(error))
         thread = threading.Thread(target=serve, daemon=True); thread.start()

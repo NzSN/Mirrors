@@ -1,0 +1,30 @@
+{
+  "status": "all-34-native-executables-passed-after-focused-fixes",
+  "initialInventory": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/windows-failures/native-suite-results-reconstructed.json",
+    "bytes": 2948,
+    "sha256": "4c680fb2b66e2c2847e30a5bd67f18d6131d6a65e694917b602c4c34f53ef775"
+  },
+  "followups": [
+    {
+      "exitCode": 0,
+      "name": "corpus-temp-native",
+      "logSha256": "b40118faabf901d95019fe0c0c27be08584e9e8ab5e435b47d5a81b9d3da1147"
+    },
+    {
+      "exitCode": 0,
+      "name": "portable-trace-failure-native",
+      "logSha256": "b4f7699f298b01b76c05aa0a9ac1973bb5db3efd62f7f2981554af8ebffa54ac"
+    },
+    {
+      "exitCode": 0,
+      "name": "explorer-owned-java-job",
+      "logSha256": "2b722640eab59421e9fe5b7d79b5b69365ca91a086c2ac8e2a66df15f8354f44"
+    }
+  ],
+  "ownedJavaRemaining": 0,
+  "fullLakeTestPassed": false,
+  "finalCandidateCredit": false,
+  "fullDriverBlocker": "POSIX DPM process control/installation; platform scope question pending",
+  "backendAdapterJobContainmentAdded": true
+}

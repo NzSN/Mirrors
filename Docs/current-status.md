@@ -1,5 +1,29 @@
 # Current framework status and navigation
 
+## November 5 qualification continuation
+
+The [active qualification record](../Plans/qualification-rc7-20261105/README.md)
+retains both passing installed audits, current C++ native checks, the finite
+controlled-model campaign with 13 fresh executions, and all 22 live client
+verdict/pin/protocol rows. These diagnostic results do not grant final framework
+credit under a changed source identity.
+
+Windows execution exposed and repaired logical CMake source paths, native
+reparse-point detection, an ambient-config-dependent fixture CA, terminal
+disconnect test behavior, and named TLC temporal diagnostics. Full native
+Windows `lake test` currently fails at DPM process-control/installation helpers
+that require POSIX APIs. The full driver remains unaccepted; no failed or
+unsupported required tier is converted to a pass.
+
+Source now prepares `0.2.0-rc.8` for these repairs and the reviewed execution
+input rebinding. The original Apalache carrier was not recovered: the new
+selection explicitly binds retained `765f6105…` bytes with the unchanged
+selected JAR. The new C++ source carrier retains the Windows fixes; other
+client hashes bind exact retained bytes. A clean source/C0, refreshed installs,
+registered evidence, and independent verification must precede final credit.
+The immutable rc.7 tag and earlier acceptance records retain their original
+scope. Production and release publication remain separate.
+
 ## November 4 rc.7 clean packages
 
 The [S3 record](../Plans/s3-rc7-20261104/README.md) accepts clean Linux and

@@ -1,0 +1,45 @@
+{
+  "status": "prepared-and-host-probed-direct-ELF",
+  "original": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/strace/root/usr/bin/strace",
+    "bytes": 2370264,
+    "sha256": "f47342683309e807bca57d6d89b82f94a9b39aa614e9c28c2b67cefbc35eee58"
+  },
+  "artifact": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/tracer/bin/strace",
+    "bytes": 2378225,
+    "sha256": "10345119eae5a82fc79488417078fc19a145df378311f7e0b8da34e09fb9fadd"
+  },
+  "libraries": [
+    {
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/tracer/lib/libunwind-ptrace.so.0",
+      "bytes": 18832,
+      "sha256": "d22b4d04f3379571e733c02611884d2d3e0c5e588637c96cc8a8df44b00801b5"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/tracer/lib/libunwind-x86_64.so.8",
+      "bytes": 67720,
+      "sha256": "e7cf258af27d39ff199342f4fb181218368df93238fb9d2ecf2eae52bf049b32"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/tracer/lib/libunwind.so.8",
+      "bytes": 72008,
+      "sha256": "ba50c4006ec13e89fc7065e1928345737d58e4f17c7f0ecff0914c3ac96e711f"
+    }
+  ],
+  "patchelfPackage": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/patchelf-input/patchelf_0.18.0-1.4build1_amd64.deb",
+    "bytes": 106098,
+    "sha256": "dd6cde91e0a77a73335a93a4ce41801f21dac36d2158539093c241e46e11b9fc"
+  },
+  "patchelf": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/patchelf-input/root/usr/bin/patchelf",
+    "bytes": 256432,
+    "sha256": "f8a2b35d3c22a19343e04c62a36ba3ceba9e6c91641615cb7248a9e82dc0e081"
+  },
+  "rpath": "$ORIGIN/../lib",
+  "noSystemPackageInstallation": true,
+  "sandboxPtraceFailureRetained": true,
+  "registeredRc7CommandBindingUnchanged": true,
+  "frameworkCreditGranted": false
+}

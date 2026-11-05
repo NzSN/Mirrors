@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -22,23 +23,24 @@ def run(argv: list[str], cwd: Path, *, ok: bool = True, signal: str = "") -> str
 
 
 def snapshot(root: Path) -> dict[str, str]:
-    return {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in root.rglob("*") if p.is_file()}
+    return {str(p.relative_to(root)):
+            "link:" + os.readlink(p) if p.is_symlink() else hashlib.sha256(p.read_bytes()).hexdigest()
+            for p in root.rglob("*") if p.is_symlink() or p.is_file()}
 
 
 def main() -> None:
     with tempfile.TemporaryDirectory(prefix="mirrors cmake consumer ") as directory:
         root = Path(directory)
-        (root / "specs").mkdir()
-        shutil.copy(ROOT / "specs/Counter.tla", root / "specs/Counter.tla")
-        source = root / "specs/Counter.tla"
+        (root / "specs/nested").mkdir(parents=True)
+        shutil.copy(ROOT / "specs/Counter.tla", root / "specs/nested/Counter.tla")
+        source = root / "specs/nested/Counter.tla"
         source.write_text(source.read_text().replace("EXTENDS Integers", "EXTENDS Integers, Support"))
-        (root / "specs/Support.tla").write_text("---- MODULE Support ----\nMarker == TRUE\n====\n")
+        (root / "specs/nested/Support.tla").write_text("---- MODULE Support ----\nMarker == TRUE\n====\n")
         fixture = ROOT / "test/fixtures/model-interface/counter"
         for src, dst in [("Counter.mirror-interface.json", "contract.json"),
                          ("counter.itf.json", "trace.json")]:
             shutil.copy(fixture / src, root / dst)
-        inputs = ["--spec", "specs/Counter.tla", "--contract", "contract.json",
+        inputs = ["--spec", "specs/nested/Counter.tla", "--contract", "contract.json",
                   "--evidence", "trace.json", "--param-var", "parameters", "--lock", "lock.json"]
         run([str(COMPILER), "resolve", *inputs], root)
         generated = root / "generated bindings"
@@ -62,8 +64,8 @@ def main() -> None:
         project.mkdir()
         (project / "CMakeLists.txt").write_text(
             'cmake_minimum_required(VERSION 3.24)\nproject(offline LANGUAGES CXX)\n'
-            f'include("{generated}/MirrorInterface.cmake")\n'
-            f'mirrors_add_model_interface(binding "{root}")\n'
+            f'include("{generated.as_posix()}/MirrorInterface.cmake")\n'
+            f'mirrors_add_model_interface(binding "{root.as_posix()}")\n'
             'add_custom_target(replay ALL COMMAND "${CMAKE_COMMAND}" -E echo replay)\n'
             'add_dependencies(replay binding_verify)\n')
         build = root / "build"
@@ -72,7 +74,7 @@ def main() -> None:
         manifest_path = generated / "MirrorInterface.inputs.json"
         original_manifest = manifest_path.read_bytes()
         manifest = json.loads(original_manifest)
-        assert "specs/Support.tla" in {entry["path"] for entry in manifest["inputs"]}, "missing captured dependency"
+        assert "specs/nested/Support.tla" in {entry["path"] for entry in manifest["inputs"]}, "missing captured dependency"
         for section in ("inputs", "outputs"):
             for entry in manifest[section]:
                 base = root if section == "inputs" else generated
@@ -118,19 +120,38 @@ def main() -> None:
         # Unsafe replacement must preserve every old byte, including unrelated files.
         outside = root / "outside.hpp"
         outside.write_text("do not replace\n")
-        header.unlink()
-        header.symlink_to(outside)
+        for destination in (outside, root / "missing-outside.hpp"):
+            header.unlink()
+            header.symlink_to(destination)
+            before = snapshot(generated)
+            run(generation, root, ok=False)
+            assert snapshot(generated) == before, "failed generation modified existing outputs"
+            assert outside.read_text() == "do not replace\n" and header.is_symlink()
+            assert not (root / "missing-outside.hpp").exists()
+            header.unlink()
+            header.write_bytes(original_header)
+
+        # Test on Windows as well: Lean's runtime lstat alone misses reparse points.
+        alias = root / "linked-output"
+        alias.symlink_to(generated, target_is_directory=True)
         before = snapshot(generated)
-        run(generation, root, ok=False)
-        assert snapshot(generated) == before, "failed generation modified existing outputs"
-        assert outside.read_text() == "do not replace\n" and header.is_symlink()
-        header.unlink()
-        header.write_bytes(original_header)
+        run([*generation[:-1], alias.name], root, ok=False)
+        assert snapshot(generated) == before and alias.is_symlink()
+        alias.unlink()
+        source_bytes = source.read_bytes()
+        external_source = root / "outside-Counter.tla"
+        external_source.write_bytes(source_bytes)
+        source.unlink()
+        source.symlink_to(external_source)
+        run([str(COMPILER), "resolve", *inputs], root, ok=False)
+        assert external_source.read_bytes() == source_bytes and source.is_symlink()
+        source.unlink()
+        source.write_bytes(source_bytes)
 
         (project / "CMakeLists.txt").write_text(
             'cmake_minimum_required(VERSION 3.24)\nproject(regeneration LANGUAGES CXX)\n'
-            f'include("{generated}/MirrorInterface.cmake")\n'
-            f'mirrors_add_model_interface(binding "{root}" COMPILER "{COMPILER}")\n')
+            f'include("{generated.as_posix()}/MirrorInterface.cmake")\n'
+            f'mirrors_add_model_interface(binding "{root.as_posix()}" COMPILER "{COMPILER.as_posix()}")\n')
         run(["cmake", "-S", str(project), "-B", str(build)], root)
         run(["cmake", "--build", str(build), "--target", "binding_regenerate"], root)
         contract = root / "contract.json"

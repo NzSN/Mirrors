@@ -2,10 +2,10 @@
 
 The current cross-repository policy is
 [ecosystem versioning](ecosystem-versioning.md). Current source prepares Mirrors
-`v0.2.0-rc.7` in the [recovered-source freeze](../Plans/source-freeze-rc7-20261104/README.md).
+`v0.2.0-rc.8` in the [qualification continuation](../Plans/qualification-rc7-20261105/README.md).
 This source candidate does not imply a new tag or published package. Branch
 delivery is recorded separately in [CHECKPOINTS.md](../CHECKPOINTS.md).
-Existing rc.1–rc.6 refs and packages remain unchanged. Catalog refresh
+Existing rc.1–rc.7 refs and packages remain unchanged. Catalog refresh
 derives the Mirrors product declaration from `Shell/Version.lean` before
 calculating catalog and distribution-lock identities.
 
@@ -82,12 +82,12 @@ and is compiled into the executable:
 
 ```console
 $ .lake/build/bin/mirror --version
-v0.2.0-rc.7
+v0.2.0-rc.8
 $ ModelMirrors --version
-v0.2.0-rc.7
+v0.2.0-rc.8
 ```
 
-These examples describe binaries rebuilt from the prepared rc.7 source; they
+These examples describe binaries rebuilt from the prepared rc.8 source; they
 are not observations of an existing installation. The second command requires
 installation under that name on `PATH`.
 See the [CLI reference](interface-reference.md) for exit codes and argument

@@ -16,7 +16,8 @@ source = Path(sys.argv[1])
 targets = ("mirror", "transport_spec", "apalache_cli_spec")
 socket_outputs = ("socket_shim.o", "bin/mirror", "bin/transport_spec", "bin/apalache_cli_spec")
 tls_outputs = ("tls_shim.o", "bin/mirror", "bin/transport_spec")
-outputs = tuple(dict.fromkeys(socket_outputs + tls_outputs))
+path_outputs = ("path_shim.o", "bin/mirror", "bin/apalache_cli_spec")
+outputs = tuple(dict.fromkeys(socket_outputs + tls_outputs + path_outputs))
 
 
 def digest(path):
@@ -25,7 +26,7 @@ def digest(path):
 
 
 original_sources = {name: digest(source / "Ffi" / name)
-                    for name in ("socket_shim.c", "tls_shim.c")}
+                    for name in ("socket_shim.c", "tls_shim.c", "path_shim.c")}
 
 
 def snapshot(work):
@@ -82,6 +83,19 @@ try:
         env = os.environ.copy()
         build(work, env)
         no_op(work, env)
+
+        before = snapshot(work)
+        path_shim = work / "Ffi/path_shim.c"
+        path_text = path_shim.read_text()
+        marker = "LEAN_EXPORT uint32_t mirrors_path_reparse_status(b_lean_obj_arg path) {"
+        if path_text.count(marker) != 1:
+            raise AssertionError("path probe insertion point changed")
+        path_shim.write_text(path_text.replace(marker, marker +
+            "\n    volatile unsigned native_build_probe = 31; (void)native_build_probe;"))
+        log = build(work, env)
+        changed(before, snapshot(work), path_outputs, log)
+        no_op(work, env)
+        print("PASS: path C edit rebuilt all requested path consumers", flush=True)
 
         before = snapshot(work)
         socket = work / "Ffi/socket_shim.c"

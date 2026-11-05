@@ -256,7 +256,15 @@ def diagnosticTempRootsRepro (fails : Failures) : IO Unit := do
   finally
     Shell.Apalache.SpecSource.removeSessionDir root
 
-def main (args : List String) : IO Unit := do
+def main (args : List String) : IO UInt32 := do
+  -- Portable synthetic backend for this executable's diagnostic subprocesses.
+  -- The real adapter supplies `check`; no shell or installed model checker is
+  -- needed to exercise exit status, UTF-8, truncation and cwd sanitization.
+  if args.head? == some "check" then
+    IO.println s!"synthetic stdout: run={← IO.currentDir} unicode=测试"
+    IO.eprintln ("synthetic stderr: category=typecheck detail=" ++
+      String.ofList (List.replicate 12000 '0'))
+    return 42
   let fails ← IO.mkRef ([] : List String)
   if args != ["--diagnostic"] then
     exactBoundaryControls fails
@@ -267,6 +275,7 @@ def main (args : List String) : IO Unit := do
   let failures ← fails.get
   if failures.isEmpty then
     IO.println "TRACE GENERATION TRANSPORT REPROS GREEN"
+    return 0
   else
     for failure in failures do IO.eprintln s!"FAIL: {failure}"
     throw (IO.userError s!"{failures.length} trace-generation hardening repro(s) remain red")

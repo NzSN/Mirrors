@@ -10,6 +10,12 @@ C shims for capabilities with no Lean ecosystem package (design §5.4):
 Everything under `Ffi/` is trusted, not proved; keep it small, boring,
 and line-auditable (§5.4, §9.1).
 
+`path_shim.c` supplies Windows reparse-point inspection for no-link filesystem
+policies. It uses UTF-16 `GetFileAttributesW` without opening target contents;
+all reparse tags and inspection errors are refused by the shell adapter. The
+tracked `FfiPath` module facet supports both native executables and compile-time
+evaluation. See the path-inspection section of the native build design.
+
 Native output buffers come from `Ffi.freshBuffer`; closed pure array expressions
 can be shared by Lean's native compiler and must not be used as mutable scratch
 across concurrent calls. HTTP and TCP retain separate receive storage per

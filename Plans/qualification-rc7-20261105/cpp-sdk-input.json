@@ -1,0 +1,16 @@
+{
+  "sourceRevision": "8c542a6b1339cc0b6176465ff7f17a32e614553d",
+  "prefix": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/cpp-prefix",
+  "freshArchive": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/cpp-prefix/lib/libmirrorcpp.a",
+    "bytes": 5069516,
+    "sha256": "a563f087837aed4f3889e795dbcb8ffcda47d91ef4b123bf8e108a2f32c3ec66"
+  },
+  "freshInteropBinary": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/cpp-build-offline/cli/mirrorcpp-validate",
+    "bytes": 1243136,
+    "sha256": "0d6b1ec694b55dd265f3f1a4c7273a7db0dfb24e9dde6a60c661d9bd090b2763"
+  },
+  "externalHeaderDependencies": "retained Boost/nlohmann headers from prior prefix; explicit offline selection",
+  "interopPinAdmissionGranted": false
+}

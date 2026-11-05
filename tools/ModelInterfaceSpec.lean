@@ -2251,6 +2251,16 @@ def run : IO UInt32 := do
   scenario "canonical-diagnostics" (scenarioCanonicalDiagnostics fails)
   scenario "replay-partition" (scenarioReplayPartition fails)
   scenario "integer-map-values" (scenarioIntegerMapValues fails)
+  scenario "cmake-portable-source-paths" do
+    let sibling := Shell.ModelInterface.Compiler.cmakeSourceSiblingPath
+    check fails "CMake root sibling" (sibling "Counter.tla" "Support.tla" == "Support.tla")
+    check fails "CMake nested sibling uses portable separators"
+      (sibling "specs/nested/Counter.tla" "Support.tla" == "specs/nested/Support.tla")
+    check fails "CMake nested logical source"
+      (sibling "specs/Counter.tla" "shared/Support.tla" == "specs/shared/Support.tla")
+    check fails "CMake traversal remains inadmissible"
+      (!Shell.ModelInterface.Compiler.safeRelativePath
+        (sibling "specs/Counter.tla" "../outside.tla"))
   let resolvedRef ← IO.mkRef (none : Option ResolvedModelInterface)
   scenario "counter-resolution" do
     match ← scenarioCounterResolution fails with

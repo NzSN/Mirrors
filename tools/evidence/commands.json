@@ -27,7 +27,7 @@
       "argvLength": 2,
       "requiredCwdComponentId": "mirrors",
       "requiredEnvironment": {
-        "MIRRORS_REMOTE_APALACHE_ARCHIVE_SHA256": "7cfadf6e8c04c63f05ac907ec9541c66297005c8cb5efb1731f6a838dfc3fad2",
+        "MIRRORS_REMOTE_APALACHE_ARCHIVE_SHA256": "765f610537281a0f25b8c30f2554f19523e2859c824e80e62276653ee23c10e2",
         "MIRRORS_REMOTE_APALACHE_JAR_SHA256": "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8",
         "MIRRORS_REMOTE_APALACHE_VERSION": "0.62.2",
         "MIRRORS_REMOTE_JAVA_ARCHIVE_SHA256": "54ba13f3ef80887fa74708b2a32daaae6262517ba68433d850bb4b426343172b",
@@ -64,7 +64,7 @@
       "requiredEnvironment": {
         "INTEROP_VERIFY_PINS": "1",
         "ECMA_REF": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
-        "CPP_REF": "8c542a6b1339cc0b6176465ff7f17a32e614553d",
+        "CPP_REF": "c95f0e185436f145af9fad8895430e899bc479a3",
         "RUST_REF": "6b9480ab81717b76ca7f74b41fc554578b70c890",
         "HS_REF": "4aa693f86e18349bb97c050dd33aecbf730b6fa2",
         "LEAN_CLIENT_REF": "a8634ebe2455f97d15b55bec3c810d945cb6e3d3"
@@ -97,10 +97,10 @@
       "catalogPath": "catalog/framework-catalog.json",
       "registryOwnerComponentId": "mirrors",
       "requiredEnvironmentFileSha256": {
-        "HS_BIN": "cc3c378e31f2632bf96fcdcb127f902b7cdee0cead40e51d7911976e8a6e3e9d",
-        "CPP_BIN": "5db2b6a3fd992d894d305dafbea93d8795af4137b769d7e7b22ea4de31853480",
-        "RUST_BIN": "d7af87983f4600121d01b4f4b2e780cf5e66e0f6b79d57e3ba234d2d980f20be",
-        "LEAN_CLIENT_BIN": "b02fa982ac20e7a245bde59e9e5eb060609809349fe4634bc914b8a5d36a523c",
+        "HS_BIN": "843327b28f18c20608d8b56855ccba6e88ea406986ac1f17eb576bb8036a4b37",
+        "CPP_BIN": "f0b2f4a71d84404b9376038cab8f97f0949fbca83cde58787766370349f6b22d",
+        "RUST_BIN": "d059e1c35dac82aa35d4a482b5f9439007342646405dae57b13d01fe5738a8d0",
+        "LEAN_CLIENT_BIN": "5c31b195659f078b10cae3ac053922fa2654267aa9ec6e8a130e85111e5a6c8f",
         "ECMA_NODE_BIN": "d1de76d8edf2fededf6f8b30d244e2c0529ac607923a018283b77e9c74bd932c"
       },
       "attachmentsAllowed": true,
@@ -325,7 +325,7 @@
         "/usr/bin/python3",
         "verification/bundle/tools/distribution/qualification.py",
         "--prefix",
-        "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/candidate/install/checked-replay-local",
+        "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/install/checked-replay-local",
         "--framework-catalog-bin",
         "/home/lsz/Codebase/Mirrors/.lake/build/bin/framework_catalog",
         "--framework-catalog-sha256",
@@ -333,15 +333,15 @@
         "--bwrap",
         "/usr/bin/bwrap",
         "--strace",
-        "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/integration-runtime/strace-pinned",
+        "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/tracer/bin/strace",
         "--strace-sha256",
-        "0d677426d0a518cf7f3c4f9b6527d1b313752eabb0e3a96d4ec8fa799b4265c7",
+        "10345119eae5a82fc79488417078fc19a145df378311f7e0b8da34e09fb9fadd",
         "--hide-root",
         "/home/lsz/Codebase/Mirrors",
         "--hide-root",
-        "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorECMA",
+        "/home/lsz/Codebase/MirrorECMA",
         "--hide-root",
-        "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorGate",
+        "/home/lsz/Codebase/MirrorGate",
         "--audit-out"
       ],
       "argvLength": 22,
@@ -394,7 +394,10 @@
           "producerResult": null
         }
       ],
-      "defaultTimeoutSeconds": 1800
+      "defaultTimeoutSeconds": 1800,
+      "requiredEnvironment": {
+        "TMPDIR": "/tmp"
+      }
     },
     {
       "catalogComponentId": "mirrors",
@@ -407,7 +410,7 @@
         "/usr/bin/python3",
         "verification/bundle/tools/distribution/qualification.py",
         "--prefix",
-        "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/candidate/install/checked-replay-gate",
+        "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/install/checked-replay-gate",
         "--framework-catalog-bin",
         "/home/lsz/Codebase/Mirrors/.lake/build/bin/framework_catalog",
         "--framework-catalog-sha256",
@@ -415,15 +418,15 @@
         "--bwrap",
         "/usr/bin/bwrap",
         "--strace",
-        "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/integration-runtime/strace-pinned",
+        "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/tracer/bin/strace",
         "--strace-sha256",
-        "0d677426d0a518cf7f3c4f9b6527d1b313752eabb0e3a96d4ec8fa799b4265c7",
+        "10345119eae5a82fc79488417078fc19a145df378311f7e0b8da34e09fb9fadd",
         "--hide-root",
         "/home/lsz/Codebase/Mirrors",
         "--hide-root",
-        "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorECMA",
+        "/home/lsz/Codebase/MirrorECMA",
         "--hide-root",
-        "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorGate",
+        "/home/lsz/Codebase/MirrorGate",
         "--combination",
         "candidate.node-gate",
         "--audit-out"
@@ -478,7 +481,10 @@
           "producerResult": null
         }
       ],
-      "defaultTimeoutSeconds": 1800
+      "defaultTimeoutSeconds": 1800,
+      "requiredEnvironment": {
+        "TMPDIR": "/tmp"
+      }
     },
     {
       "catalogComponentId": "mirrors",

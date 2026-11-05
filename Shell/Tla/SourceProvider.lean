@@ -1,3 +1,4 @@
+import Shell.FileSystem
 import Core.Tla.Graph
 import Core.Tla.Source
 
@@ -208,7 +209,7 @@ private def standardLookup (catalog : StandardModuleCatalog)
 
 private def metadataOrNone (path : System.FilePath) : IO (Option IO.FS.Metadata) := do
   try
-    return some (← path.symlinkMetadata)
+    return some (← (Shell.FileSystem.symlinkMetadata path))
   catch _ =>
     return none
 

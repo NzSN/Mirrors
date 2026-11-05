@@ -1,0 +1,598 @@
+From c95f0e185436f145af9fad8895430e899bc479a3 Mon Sep 17 00:00:00 2001
+From: NzSN <nzsn0101@gmail.com>
+Date: Thu, 5 Nov 2026 12:52:34 +0800
+Subject: [PATCH] transport: repair native Windows socket and handle operations
+
+---
+ CMakeLists.txt                    | 17 ++++++-
+ docs/windows-portability.md       | 17 +++++++
+ src/detail/http.cpp               |  2 +-
+ src/detail/line.hpp               | 40 +++++++++------
+ src/detail/net.cpp                | 42 +++++++++++-----
+ src/detail/net.hpp                |  7 +--
+ src/detail/process.cpp            | 16 +++---
+ src/detail/process.hpp            |  5 +-
+ src/detail/tls.cpp                | 32 +++++++++---
+ test/portability/socket_smoke.cpp | 83 +++++++++++++++++++++++++++++++
+ 10 files changed, 213 insertions(+), 48 deletions(-)
+ create mode 100644 docs/windows-portability.md
+ create mode 100644 test/portability/socket_smoke.cpp
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2321c86..027572d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -5,7 +5,7 @@
+ cmake_minimum_required(VERSION 3.24)
+ 
+ project(mirrorcpp
+-  VERSION 0.1.0
++  VERSION 0.1.1
+   DESCRIPTION "C++ client library for the ModelMirrors conformance-checking protocol"
+   HOMEPAGE_URL "https://github.com/NzSN/MirrorCPP"
+   LANGUAGES CXX)
+@@ -133,6 +133,11 @@ if(MIRRORCPP_WITH_TLS)
+ endif()
+ add_library(mirrorcpp::mirrorcpp ALIAS mirrorcpp)
+ 
++if(WIN32)
++  target_compile_definitions(mirrorcpp PRIVATE WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600)
++  target_link_libraries(mirrorcpp PRIVATE ws2_32)
++endif()
++
+ target_include_directories(mirrorcpp PUBLIC
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+@@ -209,3 +214,13 @@ endif()
+ if(MIRRORCPP_BUILD_TESTS)
+   add_subdirectory(test)
+ endif()
++
++option(MIRRORCPP_BUILD_PORTABILITY_TESTS "Build dependency-free native socket regression" OFF)
++if(MIRRORCPP_BUILD_PORTABILITY_TESTS)
++  enable_testing()
++  add_executable(mirrorcpp_platform_socket_test test/portability/socket_smoke.cpp)
++  target_link_libraries(mirrorcpp_platform_socket_test PRIVATE mirrorcpp::mirrorcpp)
++  target_include_directories(mirrorcpp_platform_socket_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
++  add_test(NAME mirrorcpp_platform_socket_test COMMAND mirrorcpp_platform_socket_test)
++  set_tests_properties(mirrorcpp_platform_socket_test PROPERTIES TIMEOUT 15)
++endif()
+diff --git a/docs/windows-portability.md b/docs/windows-portability.md
+new file mode 100644
+index 0000000..c2b09de
+--- /dev/null
++++ b/docs/windows-portability.md
+@@ -0,0 +1,17 @@
++# Bounded native Windows validation
++
++Version 0.1.1 repairs the existing Windows transport build: preserve Win64
++SOCKET/process HANDLE widths, receive socket data through Winsock rather than
++CRT descriptors, use WSAPoll/InetPton, link ws2_32, pass narrow OpenSSL paths,
++and use binary subprocess pipes. Wire framing and the 65535-byte limit stay
++unchanged. Existing Windows key-permission behavior is not strengthened here.
++
++Configure with MIRRORCPP_BUILD_PORTABILITY_TESTS=ON to run the dependency-free
++loopback framing regression. It exercises a real client send, fragmented reads,
++and partial-line EOF. On the qualification runner, native Windows compile,
++install and this test passed; Linux transport, TLS and registry suites also
++passed. ASCII certificate paths were used. This is not a claim that every
++SDK test, arbitrary Unicode credential path, or Windows ACL policy is qualified.
++
++The Mirrors qualification campaign retains exact source, compiler, OpenSSL,
++SDK prefix, logs and hashes. Rebuild and reobserve them for each candidate.
+diff --git a/src/detail/http.cpp b/src/detail/http.cpp
+index 9fa5984..f345958 100644
+--- a/src/detail/http.cpp
++++ b/src/detail/http.cpp
+@@ -118,7 +118,7 @@ Result<std::string> http_get(std::string_view url, std::chrono::milliseconds tim
+   // server cannot hang discovery (design 5.4 'timeout').
+ #ifdef _WIN32
+   const DWORD rcv = static_cast<DWORD>(timeout.count());
+-  if (::setsockopt(reinterpret_cast<SOCKET>(sock.native_handle()), SOL_SOCKET,
++  if (::setsockopt(static_cast<SOCKET>(sock.native_handle()), SOL_SOCKET,
+                    SO_RCVTIMEO, reinterpret_cast<const char*>(&rcv), sizeof rcv) != 0)
+     return unexpected(Error(ErrorKind::io, "setsockopt(SO_RCVTIMEO) failed"));
+ #else
+diff --git a/src/detail/line.hpp b/src/detail/line.hpp
+index e83fb00..8bbc3c7 100644
+--- a/src/detail/line.hpp
++++ b/src/detail/line.hpp
+@@ -34,8 +34,9 @@ inline constexpr std::size_t kLineChunkSize = 4096;
+ // A payload plus its trailing LF fits in one 64 KiB protocol record.
+ inline constexpr std::size_t kMaxProtocolLineBytes = 65535;
+ 
+-inline Result<std::string> read_line_from_fd(long fd, std::string& buf,
+-                                             const char* unexpected_eof_msg) {
++template <typename Reader>
++inline Result<std::string> read_line_from_source(Reader&& read, std::string& buf,
++                                                const char* unexpected_eof_msg) {
+   for (;;) {
+     auto nl = buf.find('\n');
+     if (nl != std::string::npos) {
+@@ -56,28 +57,39 @@ inline Result<std::string> read_line_from_fd(long fd, std::string& buf,
+           "protocol line exceeds 65535-byte UTF-8 payload limit"));
+     }
+     char chunk[kLineChunkSize];
+-#ifdef _WIN32
+-    int n = ::_read(static_cast<int>(fd), chunk, static_cast<unsigned>(sizeof chunk));
+-#else
+-    ssize_t n;
+-    do {
+-      n = ::read(fd, chunk, sizeof chunk);
+-    } while (n < 0 && errno == EINTR);
+-#endif
++    auto count = read(chunk, sizeof chunk);
++    if (!count) return unexpected(count.error());
++    const auto n = *count;
+     if (n == 0) {
+       // Clean EOF. An empty buffer is a clean EOF signal; a partial line is a
+       // framing violation (the peer closed mid-line).
+       if (buf.empty()) return std::string{};
+       return unexpected(Error(ErrorKind::io, std::string(unexpected_eof_msg)));
+     }
+-    if (n < 0) {
+-      return unexpected(Error(ErrorKind::io,
+-                              std::string("read failed: ") + std::strerror(errno)));
+-    }
+     buf.append(chunk, static_cast<std::size_t>(n));
+   }
+ }
+ 
++inline Result<std::string> read_line_from_fd(long fd, std::string& buf,
++                                             const char* unexpected_eof_msg) {
++  return read_line_from_source([fd](char* data, std::size_t capacity) -> Result<std::size_t> {
++#ifdef _WIN32
++    int count;
++    do {
++      count = ::_read(static_cast<int>(fd), data, static_cast<unsigned>(capacity));
++    } while (count < 0 && errno == EINTR);
++#else
++    ssize_t count;
++    do {
++      count = ::read(fd, data, capacity);
++    } while (count < 0 && errno == EINTR);
++#endif
++    if (count < 0)
++      return unexpected(Error(ErrorKind::io, std::string("read failed: ") + std::strerror(errno)));
++    return static_cast<std::size_t>(count);
++  }, buf, unexpected_eof_msg);
++}
++
+ // Framing invariants (guide C1/C2): reject blank, embedded-LF, and oversized
+ // UTF-8 payloads before writing anything. std::string::size() is the byte count.
+ // Shared by all transports (stdio/TCP/TLS).
+diff --git a/src/detail/net.cpp b/src/detail/net.cpp
+index 61e5a25..b92367d 100644
+--- a/src/detail/net.cpp
++++ b/src/detail/net.cpp
+@@ -17,7 +17,9 @@
+ #include <winsock2.h>
+ #include <mstcpip.h>
+ #include <ws2tcpip.h>
++#ifdef _MSC_VER
+ #pragma comment(lib, "ws2_32.lib")
++#endif
+ #else
+ #include <arpa/inet.h>
+ #include <fcntl.h>
+@@ -53,11 +55,13 @@ bool wsa_ready() {
+   return g.ok_;
+ }
+ 
+-// Cast a POSIX-style 'long' handle to the Winsock SOCKET type.
+-SOCKET to_sock(long fd) { return static_cast<SOCKET>(fd); }
+-long from_sock(SOCKET s) { return static_cast<long>(s); }
++static_assert(sizeof(Socket::native_handle_type) >= sizeof(SOCKET));
++SOCKET to_sock(Socket::native_handle_type fd) { return static_cast<SOCKET>(fd); }
++Socket::native_handle_type from_sock(SOCKET s) {
++  return static_cast<Socket::native_handle_type>(s);
++}
+ 
+-void set_nonblocking(long fd, bool nb) {
++void set_nonblocking(Socket::native_handle_type fd, bool nb) {
+   u_long mode = nb ? 1 : 0;
+   ioctlsocket(to_sock(fd), FIONBIO, &mode);
+ }
+@@ -68,7 +72,7 @@ const char* wsa_last_error_str() {
+   return buf;
+ }
+ #else
+-void set_nonblocking(long fd, bool nb) {
++void set_nonblocking(Socket::native_handle_type fd, bool nb) {
+   int flags = ::fcntl(fd, F_GETFL, 0);
+   if (flags < 0) return;
+   if (nb) flags |= O_NONBLOCK;
+@@ -98,16 +102,16 @@ Socket& Socket::operator=(Socket&& other) noexcept {
+ 
+ void Socket::close() noexcept {
+ #ifdef _WIN32
+-  if (fd_ >= 0) ::closesocket(to_sock(fd_));
++  if (valid()) ::closesocket(to_sock(fd_));
+ #else
+-  if (fd_ >= 0) ::close(fd_);
++  if (valid()) ::close(fd_);
+ #endif
+   fd_ = -1;
+   buf_.clear();
+ }
+ 
+ void Socket::set_nonblocking(bool nb) noexcept {
+-  if (fd_ < 0) return;
++  if (!valid()) return;
+   mirrorcpp::detail::set_nonblocking(fd_, nb);
+ }
+ 
+@@ -159,7 +163,7 @@ Result<void> Socket::connect(std::string_view host, std::uint16_t port,
+       last_error = wsa_last_error_str();
+       continue;
+     }
+-    long fd = from_sock(s);
++    const auto fd = from_sock(s);
+     mirrorcpp::detail::set_nonblocking(fd, true);
+     const int r = ::connect(s, ai->ai_addr, static_cast<int>(ai->ai_addrlen));
+     if (r == 0) { mirrorcpp::detail::set_nonblocking(fd, false); fd_ = fd; return {}; }
+@@ -238,8 +242,20 @@ Result<void> Socket::connect(std::string_view host, std::uint16_t port,
+ }
+ 
+ Result<std::string> Socket::read_line() {
+-  if (fd_ < 0) return unexpected(Error(ErrorKind::io, "read_line on closed socket"));
++  if (!valid()) return unexpected(Error(ErrorKind::io, "read_line on closed socket"));
++#ifdef _WIN32
++  // A Winsock SOCKET is not a CRT descriptor; _read would report EBADF.
++  auto line = read_line_from_source([this](char* data, std::size_t capacity) -> Result<std::size_t> {
++    for (;;) {
++      const int count = ::recv(to_sock(fd_), data, static_cast<int>(capacity), 0);
++      if (count >= 0) return static_cast<std::size_t>(count);
++      if (WSAGetLastError() != WSAEINTR)
++        return unexpected(Error(ErrorKind::io, wsa_last_error_str()));
++    }
++  }, buf_, "transport closed unexpectedly");
++#else
+   auto line = read_line_from_fd(fd_, buf_, "transport closed unexpectedly");
++#endif
+   if (!line) return unexpected(line.error());
+   if (line->empty())
+     return unexpected(Error(ErrorKind::io, "transport closed unexpectedly"));
+@@ -247,7 +263,7 @@ Result<std::string> Socket::read_line() {
+ }
+ 
+ Result<std::string> Socket::read_n(std::size_t n) {
+-  if (fd_ < 0) return unexpected(Error(ErrorKind::io, "read_n on closed socket"));
++  if (!valid()) return unexpected(Error(ErrorKind::io, "read_n on closed socket"));
+   std::string out;
+   out.reserve(n);
+   while (out.size() < n) {
+@@ -283,7 +299,7 @@ Result<std::string> Socket::read_n(std::size_t n) {
+ }
+ 
+ Result<std::string> Socket::read_until_eof() {
+-  if (fd_ < 0) return unexpected(Error(ErrorKind::io, "read_until_eof on closed socket"));
++  if (!valid()) return unexpected(Error(ErrorKind::io, "read_until_eof on closed socket"));
+   std::string out = std::move(buf_);
+   buf_.clear();
+   char chunk[4096];
+@@ -308,7 +324,7 @@ Result<std::string> Socket::read_until_eof() {
+ }
+ 
+ Result<void> Socket::write_all(std::string_view data) {
+-  if (fd_ < 0) return unexpected(Error(ErrorKind::io, "write_all on closed socket"));
++  if (!valid()) return unexpected(Error(ErrorKind::io, "write_all on closed socket"));
+   std::size_t off = 0;
+   while (off < data.size()) {
+ #ifdef _WIN32
+diff --git a/src/detail/net.hpp b/src/detail/net.hpp
+index c639b97..210396f 100644
+--- a/src/detail/net.hpp
++++ b/src/detail/net.hpp
+@@ -25,6 +25,7 @@ namespace mirrorcpp::detail {
+ 
+ class Socket {
+ public:
++  using native_handle_type = std::intptr_t;
+   Socket() = default;
+   ~Socket();
+ 
+@@ -55,10 +56,10 @@ public:
+   // Write all bytes; returns io error on short write / connection failure.
+   Result<void> write_all(std::string_view data);
+ 
+-  bool valid() const noexcept { return fd_ >= 0; }
++  bool valid() const noexcept { return fd_ != -1; }
+ 
+   // Native descriptor for SSL_set_fd / poll; -1 when closed.
+-  long native_handle() const noexcept { return fd_; }
++  native_handle_type native_handle() const noexcept { return fd_; }
+ 
+   // Toggle non-blocking mode (used by the TLS handshake deadline loop; the
+   // socket is left in blocking mode by connect()). No-op on a closed socket.
+@@ -67,7 +68,7 @@ public:
+   void close() noexcept;
+ 
+ private:
+-  long fd_ = -1;   // POSIX fd; Winsock SOCKET cast to long
++  native_handle_type fd_ = -1; // Preserve the complete Winsock SOCKET on Win64.
+   std::string buf_;
+ };
+ 
+diff --git a/src/detail/process.cpp b/src/detail/process.cpp
+index 4d2e1d7..614e78d 100644
+--- a/src/detail/process.cpp
++++ b/src/detail/process.cpp
+@@ -81,7 +81,7 @@ ssize_t write_no_sigpipe(long fd, const char* data, std::size_t n) {
+ 
+ Subprocess::~Subprocess() {
+   // Best effort: kill + reap so the child (and any Apalache JVM) is never orphaned.
+-  if (pid_ < 0) return;
++  if (pid_ == -1) return;
+   if (!exit_code_) {
+     (void)kill();
+     (void)wait();
+@@ -91,7 +91,7 @@ Subprocess::~Subprocess() {
+ }
+ 
+ void Subprocess::reset() noexcept {
+-  if (pid_ >= 0 && !exit_code_) {
++  if (pid_ != -1 && !exit_code_) {
+     (void)kill();
+     (void)wait();
+   }
+@@ -166,9 +166,9 @@ Result<void> Subprocess::spawn(const std::string& path) {
+   }
+   CloseHandle(child_in_r);
+   CloseHandle(child_out_w);
+-  pid_ = static_cast<long>(reinterpret_cast<uintptr_t>(pi.hProcess));
+-  stdin_fd_ = ::_open_osfhandle(reinterpret_cast<intptr_t>(child_in_w), _O_WRONLY);
+-  stdout_fd_ = ::_open_osfhandle(reinterpret_cast<intptr_t>(child_out_r), _O_RDONLY);
++  pid_ = reinterpret_cast<std::intptr_t>(pi.hProcess);
++  stdin_fd_ = ::_open_osfhandle(reinterpret_cast<intptr_t>(child_in_w), _O_WRONLY | _O_BINARY);
++  stdout_fd_ = ::_open_osfhandle(reinterpret_cast<intptr_t>(child_out_r), _O_RDONLY | _O_BINARY);
+   CloseHandle(pi.hThread);
+   return {};
+ #else
+@@ -280,7 +280,7 @@ Result<std::string> Subprocess::read_stdout() {
+ }
+ 
+ Result<std::pair<bool, long>> Subprocess::try_wait() {
+-  if (pid_ < 0) return std::pair<bool, long>{false, -1};
++  if (pid_ == -1) return std::pair<bool, long>{false, -1};
+   if (exit_code_) return std::pair<bool, long>{true, *exit_code_};
+ #ifdef _WIN32
+   const DWORD code = WaitForSingleObject(reinterpret_cast<HANDLE>(static_cast<uintptr_t>(pid_)), 0);
+@@ -305,7 +305,7 @@ Result<std::pair<bool, long>> Subprocess::try_wait() {
+ }
+ 
+ Result<long> Subprocess::wait() {
+-  if (pid_ < 0) return 0L;
++  if (pid_ == -1) return 0L;
+   if (exit_code_) return *exit_code_;
+ #ifdef _WIN32
+   WaitForSingleObject(reinterpret_cast<HANDLE>(static_cast<uintptr_t>(pid_)), INFINITE);
+@@ -330,7 +330,7 @@ Result<long> Subprocess::wait() {
+ }
+ 
+ Result<void> Subprocess::kill() {
+-  if (pid_ < 0 || exit_code_) return {};
++  if (pid_ == -1 || exit_code_) return {};
+ #ifdef _WIN32
+   TerminateProcess(reinterpret_cast<HANDLE>(static_cast<uintptr_t>(pid_)), 1);
+ #else
+diff --git a/src/detail/process.hpp b/src/detail/process.hpp
+index ec472c7..e50bc38 100644
+--- a/src/detail/process.hpp
++++ b/src/detail/process.hpp
+@@ -18,6 +18,7 @@
+ #include <mirrorcpp/error.hpp>
+ 
+ #include <optional>
++#include <cstdint>
+ #include <string>
+ #include <string_view>
+ #include <utility>
+@@ -59,13 +60,13 @@ public:
+   // Best-effort SIGKILL (POSIX) / TerminateProcess (Windows).
+   Result<void> kill();
+ 
+-  bool running() const noexcept { return pid_ >= 0 && !exit_code_.has_value(); }
++  bool running() const noexcept { return pid_ != -1 && !exit_code_.has_value(); }
+   std::optional<long> exit_code() const noexcept { return exit_code_; }
+   long stdout_fd() const noexcept { return stdout_fd_; }
+ 
+ private:
+   void reset() noexcept;
+-  long pid_ = -1;        // pid_t / DWORD held as long
++  std::intptr_t pid_ = -1; // pid_t / complete Win64 process HANDLE
+   long stdin_fd_ = -1;   // parent write end of the child's stdin pipe
+   long stdout_fd_ = -1;  // parent read end of the child's stdout pipe
+   std::optional<long> exit_code_;
+diff --git a/src/detail/tls.cpp b/src/detail/tls.cpp
+index e4a62bb..9b4ffa4 100644
+--- a/src/detail/tls.cpp
++++ b/src/detail/tls.cpp
+@@ -13,6 +13,8 @@
+ #include <openssl/x509v3.h>
+ 
+ #include <cctype>
++#include <algorithm>
++#include <climits>
+ #include <cerrno>
+ #include <cstdio>
+ #include <cstring>
+@@ -25,6 +27,7 @@
+ #define WIN32_LEAN_AND_MEAN
+ #endif
+ #include <winsock2.h>
++#include <ws2tcpip.h>
+ #else
+ #include <arpa/inet.h>
+ #include <netinet/in.h>
+@@ -57,6 +60,7 @@ std::string ssl_error_string() {
+ // credentials without modifying their mode or contents.
+ Result<void> check_key_mode(const std::filesystem::path& key_path) {
+ #ifdef _WIN32
++  (void)key_path;
+   return {};
+ #else
+   struct stat st {};
+@@ -100,13 +104,19 @@ Result<std::string> normalize_pin(std::string_view pin) {
+ bool is_ip_literal(const std::string& host) {
+   struct in_addr a4 {};
+   struct in6_addr a6 {};
++#ifdef _WIN32
++  return ::InetPtonA(AF_INET, host.c_str(), &a4) == 1 ||
++         ::InetPtonA(AF_INET6, host.c_str(), &a6) == 1;
++#else
+   return ::inet_pton(AF_INET, host.c_str(), &a4) == 1 ||
+          ::inet_pton(AF_INET6, host.c_str(), &a6) == 1;
++#endif
+ }
+ 
+ // Complete SSL_connect under a deadline using non-blocking I/O + poll. The fd
+ // must be in non-blocking mode for the duration of this loop.
+-Result<void> handshake_with_deadline(SSL* ssl, long fd, std::chrono::milliseconds timeout) {
++Result<void> handshake_with_deadline(SSL* ssl, Socket::native_handle_type fd,
++                                     std::chrono::milliseconds timeout) {
+   const auto start = std::chrono::steady_clock::now();
+   long long budget_ms = timeout.count();
+   if (budget_ms <= 0) budget_ms = 1;
+@@ -121,10 +131,20 @@ Result<void> handshake_with_deadline(SSL* ssl, long fd, std::chrono::millisecond
+       if (remaining <= 0) {
+         return unexpected(Error(ErrorKind::tls, "TLS handshake timed out"));
+       }
++      const int wait_ms = static_cast<int>(std::min<long long>(remaining, INT_MAX));
++#ifdef _WIN32
++      WSAPOLLFD pfd {};
++      pfd.fd = static_cast<SOCKET>(fd);
++      pfd.events = static_cast<short>(err == SSL_ERROR_WANT_READ ? POLLIN : POLLOUT);
++      if (::WSAPoll(&pfd, 1, wait_ms) == SOCKET_ERROR && WSAGetLastError() != WSAEINTR)
++        return unexpected(Error(ErrorKind::tls, "TLS handshake readiness wait failed"));
++#else
+       struct pollfd pfd {};
+       pfd.fd = fd;
+       pfd.events = static_cast<short>(err == SSL_ERROR_WANT_READ ? POLLIN : POLLOUT);
+-      ::poll(&pfd, 1, static_cast<int>(remaining));
++      if (::poll(&pfd, 1, wait_ms) < 0 && errno != EINTR)
++        return unexpected(Error(ErrorKind::tls, "TLS handshake readiness wait failed"));
++#endif
+       continue;
+     }
+     return unexpected(Error(ErrorKind::tls,
+@@ -201,15 +221,15 @@ Result<void> SslStream::connect(std::string_view host, std::uint16_t port,
+     return unexpected(Error(ErrorKind::tls, "failed to restrict to TLS 1.3: " + ssl_error_string()));
+   }
+ 
+-  if (SSL_CTX_load_verify_locations(ctx, opts.ca_path.c_str(), nullptr) != 1) {
++  if (SSL_CTX_load_verify_locations(ctx, opts.ca_path.string().c_str(), nullptr) != 1) {
+     return unexpected(Error(ErrorKind::tls, "SSL_CTX_load_verify_locations(" + opts.ca_path.string() +
+                             "): " + ssl_error_string()));
+   }
+-  if (SSL_CTX_use_certificate_chain_file(ctx, opts.cert_path.c_str()) != 1) {
++  if (SSL_CTX_use_certificate_chain_file(ctx, opts.cert_path.string().c_str()) != 1) {
+     return unexpected(Error(ErrorKind::tls, "SSL_CTX_use_certificate_chain_file(" + opts.cert_path.string() +
+                             "): " + ssl_error_string()));
+   }
+-  if (SSL_CTX_use_PrivateKey_file(ctx, opts.key_path.c_str(), SSL_FILETYPE_PEM) != 1) {
++  if (SSL_CTX_use_PrivateKey_file(ctx, opts.key_path.string().c_str(), SSL_FILETYPE_PEM) != 1) {
+     return unexpected(Error(ErrorKind::tls, "SSL_CTX_use_PrivateKey_file(" + opts.key_path.string() +
+                             "): " + ssl_error_string()));
+   }
+@@ -221,7 +241,7 @@ Result<void> SslStream::connect(std::string_view host, std::uint16_t port,
+   //    §3.6: both are configurable with a 10 s default).
+   auto cr = sock_.connect(host, port, opts.handshake_timeout);
+   if (!cr) return unexpected(cr.error());
+-  const long fd = sock_.native_handle();
++  const auto fd = sock_.native_handle();
+ 
+   // 5. Create the SSL and bind the socket.
+   SSL* ssl = SSL_new(ctx);
+diff --git a/test/portability/socket_smoke.cpp b/test/portability/socket_smoke.cpp
+new file mode 100644
+index 0000000..eae2260
+--- /dev/null
++++ b/test/portability/socket_smoke.cpp
+@@ -0,0 +1,83 @@
++#include <mirrorcpp/mirrorcpp.hpp>
++#include "detail/net.hpp"
++#include <atomic>
++#include <chrono>
++#include <cstring>
++#include <iostream>
++#include <thread>
++#ifdef _WIN32
++#include <winsock2.h>
++#include <ws2tcpip.h>
++using RawSocket = SOCKET;
++constexpr RawSocket invalid_socket = INVALID_SOCKET;
++static void close_socket(RawSocket fd) { ::closesocket(fd); }
++using SockLength = int;
++#else
++#include <arpa/inet.h>
++#include <sys/socket.h>
++#include <unistd.h>
++using RawSocket = int;
++constexpr RawSocket invalid_socket = -1;
++static void close_socket(RawSocket fd) { ::close(fd); }
++using SockLength = socklen_t;
++#endif
++
++int main() {
++  static_assert(sizeof(mirrorcpp::detail::Socket::native_handle_type) >= sizeof(void*));
++#ifdef _WIN32
++  WSADATA wsa{};
++  if (::WSAStartup(MAKEWORD(2, 2), &wsa) != 0) return 1;
++#endif
++  const RawSocket listener = ::socket(AF_INET, SOCK_STREAM, 0);
++  if (listener == invalid_socket) return 2;
++  sockaddr_in address{};
++  address.sin_family = AF_INET;
++  address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
++  address.sin_port = 0;
++  if (::bind(listener, reinterpret_cast<sockaddr*>(&address), sizeof address) != 0 ||
++      ::listen(listener, 1) != 0) return 3;
++  SockLength length = sizeof address;
++  if (::getsockname(listener, reinterpret_cast<sockaddr*>(&address), &length) != 0) return 4;
++  std::atomic<bool> server_ok{true};
++  std::jthread server([&] {
++    const RawSocket peer = ::accept(listener, nullptr, nullptr);
++    if (peer == invalid_socket) { server_ok = false; return; }
++    char input[32]{};
++    int size = 0;
++    while (size < 6) {
++      const int n = static_cast<int>(::recv(peer, input + size, 6 - size, 0));
++      if (n <= 0) { server_ok = false; close_socket(peer); return; }
++      size += n;
++    }
++    if (std::string(input, 6) != "hello\n") server_ok = false;
++    for (const char* chunk : {"first\nsec", "ond\npartial"}) {
++      int sent = 0;
++      const int count = static_cast<int>(std::strlen(chunk));
++      while (sent < count) {
++        const int n = static_cast<int>(::send(peer, chunk + sent, count - sent, 0));
++        if (n <= 0) { server_ok = false; close_socket(peer); return; }
++        sent += n;
++      }
++      std::this_thread::sleep_for(std::chrono::milliseconds(10));
++    }
++    close_socket(peer);
++  });
++  auto connected = mirrorcpp::connect_tcp("127.0.0.1", ntohs(address.sin_port),
++      mirrorcpp::ConnectOptions{std::chrono::milliseconds(1000)});
++  if (!connected) { close_socket(listener); return 5; }
++  auto client = std::move(*connected);
++  const auto sent = client->send_line("hello");
++  const auto first = client->recv_line();
++  const auto second = client->recv_line();
++  const auto partial = client->recv_line();
++  const bool ok = sent && first && *first == "first" && second && *second == "second" &&
++                  !partial && partial.error().kind == mirrorcpp::ErrorKind::io;
++  (void)client->close();
++  server.join();
++  close_socket(listener);
++#ifdef _WIN32
++  ::WSACleanup();
++#endif
++  if (!ok || !server_ok) return 6;
++  std::cout << "NATIVE SOCKET FRAMING GREEN\n";
++}
+-- 
+2.53.0
+

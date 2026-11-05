@@ -1,3 +1,4 @@
+import Shell.FileSystem
 import Shell.Mirror.Session
 import Core.ModelInterface.Sha256
 
@@ -53,7 +54,7 @@ def ordinaryRoot (root : System.FilePath) : IO System.FilePath := do
   let cwd ← IO.currentDir
   let path := (if root.isAbsolute then root else cwd / root).normalize
   for prefixPath in ancestors path do
-    let metadata ← prefixPath.symlinkMetadata
+    let metadata ← (Shell.FileSystem.symlinkMetadata prefixPath)
     if metadata.type != .dir then throw (IO.userError "shared root has a non-directory or symlink prefix")
   return ← IO.FS.realPath path
 
@@ -108,13 +109,13 @@ def load (mapping : Mapping) (paths : List String) (maximum : Nat) :
       if seen.contains name.toLower then return .error "duplicate shared trace artifact"
       seen := name.toLower :: seen
       let path := directory / name
-      let before ← path.symlinkMetadata
+      let before ← (Shell.FileSystem.symlinkMetadata path)
       if before.type != .file then return .error "shared trace artifact is not an ordinary file"
       let limit := min Shell.Mirror.maxItfTraceArtifactBytes (64 * 1024 * 1024 - total)
       if before.byteSize.toNat > limit then return .error "shared trace artifact exceeds its byte budget"
       let h ← IO.FS.Handle.mk path .read
       let bytes ← boundedRead h limit
-      let after ← path.symlinkMetadata
+      let after ← (Shell.FileSystem.symlinkMetadata path)
       let _ ← ordinaryRoot directory
       if after.type != .file || before.byteSize != after.byteSize || before.modified != after.modified || bytes.size != after.byteSize.toNat then
         return .error "shared trace artifact changed during capture"

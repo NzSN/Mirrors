@@ -306,6 +306,12 @@ target socket_shim_o pkg : System.FilePath := buildShim pkg "socket_shim" false
 
 target tls_shim_o pkg : System.FilePath := buildShim pkg "tls_shim" true
 
+target path_shim_o pkg : System.FilePath := buildShim pkg "path_shim" false
+
+/-- Include the path shim in this module's native facet so compile-time
+evaluation and standalone executables use the same no-follow primitive. -/
+module_facet pathNative mod : System.FilePath := buildShim mod.pkg "path_shim" false
+
 target openssl_ssl : Dynlib := opensslLibrary "ssl"
 
 target openssl_crypto : Dynlib := opensslLibrary "crypto"
@@ -313,6 +319,16 @@ target openssl_crypto : Dynlib := opensslLibrary "crypto"
 @[default_target]
 lean_lib Ffi where
   globs := #[.submodules `Ffi]
+
+/-- Declared after Ffi so its specific root owns Ffi.Path. -/
+@[default_target]
+lean_lib FfiPath where
+  roots := #[`Ffi.Path]
+  globs := #[.one `Ffi.Path]
+  precompileModules := true
+  nativeFacets := fun shouldExport => #[
+    if shouldExport then Module.oExportFacet else Module.oFacet,
+    ⟨Module.facetKind ++ `pathNative, FamilyDef.fam_eq⟩]
 
 /-- Phase 5: apalache CLI adapter regression suite
 (tools/ApalacheCliSpec.lean; real-apalache integration runs only with
@@ -456,6 +472,13 @@ script test do
   if validateAsync.exitCode != 0 then
     IO.eprintln validateAsync.stderr
     return validateAsync.exitCode
+  let asyncProtocolDiagnostics ← IO.Process.output
+    ({ cmd := "python3", args := #["-m", "unittest", "discover", "-s", "tools",
+      "-p", "test_check_async_protocol.py"] } : IO.Process.SpawnArgs)
+  IO.println asyncProtocolDiagnostics.stdout
+  if asyncProtocolDiagnostics.exitCode != 0 then
+    IO.eprintln asyncProtocolDiagnostics.stderr
+    return asyncProtocolDiagnostics.exitCode
   let asyncProtocol ← IO.Process.output
     ({ cmd := "python3", args := #["tools/check-async-protocol.py", "--quick"] } : IO.Process.SpawnArgs)
   IO.println asyncProtocol.stdout
@@ -780,7 +803,8 @@ script test do
     return out7.exitCode
   let repoRoot ← IO.currentDir
   let apalacheFailureFixture :=
-    repoRoot.toString ++ "/test/fixtures/trace-generation/apalache-failure.sh"
+    (repoRoot / ".lake/build/bin" / ("trace_generation_transport_repro_spec" ++
+      (if System.Platform.isWindows then ".exe" else ""))).toString
   let outTraceDelivery : IO.Process.Output ← IO.Process.output
     ({ cmd := ".lake/build/bin/trace_generation_transport_repro_spec", args := #[],
        env := #[("APALACHE_MC", some apalacheFailureFixture)] } :

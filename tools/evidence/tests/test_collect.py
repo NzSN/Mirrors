@@ -628,7 +628,7 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(
             commands["mirrors.remote-model-check"]["requiredEnvironment"], {
                 "MIRRORS_REMOTE_APALACHE_ARCHIVE_SHA256":
-                    "7cfadf6e8c04c63f05ac907ec9541c66297005c8cb5efb1731f6a838dfc3fad2",
+                    "765f610537281a0f25b8c30f2554f19523e2859c824e80e62276653ee23c10e2",
                 "MIRRORS_REMOTE_APALACHE_JAR_SHA256":
                     "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8",
                 "MIRRORS_REMOTE_APALACHE_VERSION":"0.62.2",

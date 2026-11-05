@@ -1,3 +1,4 @@
+import Shell.FileSystem
 import Core.ModelInterface
 import Core.ModelInterface.Scaffold
 import Core.ModelInterface.TraceProjection
@@ -768,7 +769,7 @@ private partial def pathChain (path : System.FilePath) : List System.FilePath :=
 
 private def lstat? (path : System.FilePath) :
     BaseIO (Except IO.Error (Option IO.FS.Metadata)) := do
-  match ← path.symlinkMetadata.toBaseIO with
+  match ← (Shell.FileSystem.symlinkMetadata path).toBaseIO with
   | .ok metadata => return .ok (some metadata)
   | .error (.noFileOrDirectory ..) => return .ok none
   | .error error => return .error error
@@ -1560,6 +1561,11 @@ def check (paths : InputPaths) (lockPath target out : String) (bundle : Bool := 
 
 /-! ## Read-only trace preflight -/
 
+/-- Join logical CMake source names without introducing native separators.
+Callers still validate the resulting path with `safeRelativePath`. -/
+def cmakeSourceSiblingPath (spec logical : String) : String :=
+  String.intercalate "/" ((spec.splitOn "/").dropLast ++ [logical])
+
 private def cmakeTree (paths : InputPaths) (lockPath target out : String) :
     IO (Except CompilerError (Compilation × Emit.TypeScript.GeneratedTree)) := do
   if target != mirrorcppTarget && target != mirrorcppTypedMapsTarget then
@@ -1572,11 +1578,9 @@ private def cmakeTree (paths : InputPaths) (lockPath target out : String) :
     | .error error => return .error error
   -- Provenance names are logical: the root uses the contract's source label,
   -- while captured sibling modules are relative to the root source directory.
-  let sourceDirectory := (paths.spec : System.FilePath).parent.getD "."
   let sourcePaths := compilation.lock.provenance.sources.map fun source =>
     if source.moduleName == compilation.lock.modelModule then paths.spec
-    else if sourceDirectory.toString == "." then source.logicalPath
-    else (sourceDirectory / source.logicalPath).toString
+    else cmakeSourceSiblingPath paths.spec source.logicalPath
   let inputPaths := sortStrings (stableUniqueStrings
     ([paths.spec, paths.contract, paths.evidence, lockPath] ++
       sourcePaths))
