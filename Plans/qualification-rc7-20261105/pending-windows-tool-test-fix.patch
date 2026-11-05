@@ -1,0 +1,5 @@
+--- a/tools/tla-differential/tests/test_acquire.py
++++ b/tools/tla-differential/tests/test_acquire.py
+@@ -358,1 +358,1 @@
+-                with self.assertRaisesRegex(SystemExit, "bin/apalache-mc"):
++                with self.assertRaisesRegex(SystemExit, r"bin[\\/]apalache-mc"):

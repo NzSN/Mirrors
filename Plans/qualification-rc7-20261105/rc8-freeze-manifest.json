@@ -1,0 +1,330 @@
+{
+  "schema": "mirrors.rc8-source-c0-freeze/v1",
+  "at": "2026-11-05T05:33:16.714067+00:00",
+  "status": "prepared-for-independent-verification",
+  "productVersion": "0.2.0-rc.8",
+  "sharedBaseRevision": "fbbe45a4f15825d7c4b4750d65350cf579d2f80b",
+  "taskOwnedSource": ".golden-build/qualification-rc7-20261105/refreshed/source",
+  "freezeRevision": "f328e328d6f961b49ccffefc0a6d0250bec2fb3c",
+  "freezeTree": "376870ea89e0b78a28ccc97dbf8b1733d81dbfd6",
+  "commitScope": "local task-owned repository only; shared main unchanged",
+  "validatedLiveSourceRef": {
+    "componentId": "mirrors",
+    "repository": "https://github.com/NzSN/Mirrors.git",
+    "revision": "fbbe45a4f15825d7c4b4750d65350cf579d2f80b",
+    "dirty": true,
+    "dirtyContent": {
+      "algorithm": "sha256",
+      "digest": "bc4229ceca5fcb17f213d40008cbe77f8eb6b3b6cc3b71e755eeb2cf020bfd85",
+      "method": "git-diff-and-untracked-manifest-v1",
+      "includedPaths": [
+        "Docs/current-status.md",
+        "Docs/native-build-design.md",
+        "Docs/versioning.md",
+        "Ffi/Path.lean",
+        "Ffi/README.md",
+        "Ffi/path_shim.c",
+        "Shell/FileSystem.lean",
+        "Shell/ModelInterface/Compiler.lean",
+        "Shell/ModelInterface/Publication.lean",
+        "Shell/SharedTrace.lean",
+        "Shell/Tla/SourceProvider.lean",
+        "Shell/TraceCapture.lean",
+        "Shell/Version.lean",
+        "lakefile.lean",
+        "third_party/mirrorcpp/README.md",
+        "third_party/mirrorcpp/mirrorcpp-windows-v0.1.1.bundle",
+        "tools/ModelInterfaceCorpusSpec.lean",
+        "tools/ModelInterfaceSpec.lean",
+        "tools/TraceGenerationTransportReproSpec.lean",
+        "tools/check-async-protocol.py",
+        "tools/check-cmake-consumer.py",
+        "tools/check-cpp-integer-maps.py",
+        "tools/check-native-rebuild.sh",
+        "tools/check-trace-capture.py",
+        "tools/distribution/test_refresh_identity.py",
+        "tools/evidence/commands.json",
+        "tools/evidence/run_remote_model_check.py",
+        "tools/evidence/tests/test_collect.py",
+        "tools/run-local-no-model-check.sh",
+        "tools/test_check_async_protocol.py"
+      ],
+      "excludedPaths": []
+    }
+  },
+  "validatedSourceIndex": {
+    "path": ".golden-build/qualification-rc7-20261105/refreshed/validated-source-index.json",
+    "bytes": 652600,
+    "sha256": "0c0da31d015e0725df707662a4f47c58ad85840fe913a8ff860d650ba24f2626"
+  },
+  "validatedSourceTreeIndexSha256": "3580a3eae61c4d75d2640081dd2c500fe95e744b5ac121aafd2fd05088c7b1cf",
+  "sourceBytesEqualValidatedSource": true,
+  "frameworkCatalog": {
+    "path": ".lake/build/bin/framework_catalog",
+    "bytes": 119687824,
+    "sha256": "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126"
+  },
+  "gateResult": {
+    "path": "Plans/qualification-rc7-20261105/rc8-final-gate-result.json",
+    "bytes": 4868,
+    "sha256": "6b32a38309f37c90e824b59b1f6e4c814f8ae61fcaf641e4570afe49674e09fa"
+  },
+  "families": {
+    "base": {
+      "catalog": {
+        "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/catalog/framework-catalog.json",
+        "bytes": 26964,
+        "sha256": "5365ae333326b953904b8abbc056fe40e58652d972da78316870fe80bf52cd7e"
+      },
+      "selectionSha256": "19c6a067be4a1dccc0d5a35b5f6dc3ee9ce65091b8e9c125b25596564ba3a0c3",
+      "locksRoot": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/distribution/reference-node",
+      "snapshotIndex": {
+        "path": ".golden-build/qualification-rc7-20261105/refreshed/snapshots/base/snapshot-index.json",
+        "bytes": 871458,
+        "sha256": "42a6af7ce7bb697df6ca8fa4c0964015d3f688be232323471418e912757e4995"
+      },
+      "sourceTreeIndexSha256": "3580a3eae61c4d75d2640081dd2c500fe95e744b5ac121aafd2fd05088c7b1cf",
+      "selectedForExecution": false,
+      "candidateFiles": {
+        "catalog/framework-catalog.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/catalog/framework-catalog.json",
+          "bytes": 26964,
+          "sha256": "5365ae333326b953904b8abbc056fe40e58652d972da78316870fe80bf52cd7e"
+        },
+        "distribution/reference-node/README.md": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/distribution/reference-node/README.md",
+          "bytes": 9363,
+          "sha256": "69ab646cd2af6bfc11b61f008ede755e7aff075020ae663491b8ecc4c31c8c79"
+        },
+        "distribution/reference-node/activation-transaction.md": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/distribution/reference-node/activation-transaction.md",
+          "bytes": 3684,
+          "sha256": "962eb6e9440d840872117094fbeb71ee0b7403c94889df12758cf1cdf25d45ce"
+        },
+        "distribution/reference-node/cache-index.schema.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/distribution/reference-node/cache-index.schema.json",
+          "bytes": 1367,
+          "sha256": "59dbe68542dd94853b1ee79c77e54ae65b1275aecd7298c419814a974c3b4ddc"
+        },
+        "distribution/reference-node/component-lock.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/distribution/reference-node/component-lock.json",
+          "bytes": 9267,
+          "sha256": "75f45369bd16ccf8ceef1c489487b875cfcc7d4226b9586a1546af3f8d4ce2c4"
+        },
+        "distribution/reference-node/dependency-lock.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/distribution/reference-node/dependency-lock.json",
+          "bytes": 2135,
+          "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
+        },
+        "distribution/reference-node/distribution-manifest.schema.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/distribution/reference-node/distribution-manifest.schema.json",
+          "bytes": 6636,
+          "sha256": "1b8f10da12c61217a5e5e061e0fa947d24617f4dfc94c59e15df4d3020763d1b"
+        },
+        "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+          "bytes": 4399,
+          "sha256": "21b56a9cc33cdf94bb9c4e0be73f98b07d46d3250a98752088d707598a9d2f9f"
+        },
+        "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+          "bytes": 3440,
+          "sha256": "6644f930886af169169ad3b973039150ba09b06816fe5c9ef4b2232e0373e516"
+        },
+        "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+          "bytes": 13266,
+          "sha256": "048f872fafdcf323fdb80807530da29f92cd677ad5cad5a7d5ef2b1fc5cd69fd"
+        },
+        "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+          "bytes": 10608,
+          "sha256": "188db31162e2101ed25deb410efbbe3216bdc37f1b0db8c289638a38d58819f4"
+        },
+        "distribution/reference-node/profiles.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/base/distribution/reference-node/profiles.json",
+          "bytes": 4307,
+          "sha256": "48c95d22cdd0c28f51dd5df8b75167e4f796906d89c561ac25739dd4ffa73b7c"
+        }
+      }
+    },
+    "wsl2": {
+      "catalog": {
+        "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/wsl2/catalog/framework-catalog-wsl2-26.04.json",
+        "bytes": 27487,
+        "sha256": "2dc98756addd67e759c1dffe8d66b48251a748b643d7ff9458b818ff271bfd0b"
+      },
+      "selectionSha256": "23625d60c29b8a6265171bbd818eadeba8505d03807bba8e504e9bef2bc14656",
+      "locksRoot": ".golden-build/qualification-rc7-20261105/refreshed/candidates/wsl2/distribution/reference-node-wsl2-26.04",
+      "snapshotIndex": {
+        "path": ".golden-build/qualification-rc7-20261105/refreshed/snapshots/wsl2/snapshot-index.json",
+        "bytes": 871458,
+        "sha256": "42a6af7ce7bb697df6ca8fa4c0964015d3f688be232323471418e912757e4995"
+      },
+      "sourceTreeIndexSha256": "3580a3eae61c4d75d2640081dd2c500fe95e744b5ac121aafd2fd05088c7b1cf",
+      "selectedForExecution": true,
+      "candidateFiles": {
+        "catalog/framework-catalog-wsl2-26.04.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/wsl2/catalog/framework-catalog-wsl2-26.04.json",
+          "bytes": 27487,
+          "sha256": "2dc98756addd67e759c1dffe8d66b48251a748b643d7ff9458b818ff271bfd0b"
+        },
+        "distribution/reference-node-wsl2-26.04/README.md": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/wsl2/distribution/reference-node-wsl2-26.04/README.md",
+          "bytes": 1028,
+          "sha256": "67fd638b4dd8c3253b6750451c58040477c231802331da2da704164cd4328d36"
+        },
+        "distribution/reference-node-wsl2-26.04/component-lock.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/wsl2/distribution/reference-node-wsl2-26.04/component-lock.json",
+          "bytes": 9267,
+          "sha256": "d24b5e4a8934da8819f1a28f9f98494624b2f823bfa0ba2f98309adb928da49d"
+        },
+        "distribution/reference-node-wsl2-26.04/dependency-lock.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/wsl2/distribution/reference-node-wsl2-26.04/dependency-lock.json",
+          "bytes": 2135,
+          "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
+        },
+        "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/wsl2/distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+          "bytes": 4399,
+          "sha256": "329fc12970762e86a8b8a337acccfd88893e2496cc7ea11a6aebfa5f9eaf79f8"
+        },
+        "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/wsl2/distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+          "bytes": 3440,
+          "sha256": "aaff12188dd858f8abe5891b62395e3c801a5bad119ccfce54dc292a4207d428"
+        },
+        "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/wsl2/distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+          "bytes": 13299,
+          "sha256": "b9466ec09858ec72992e82bc1196e22b7893805f6d364d62b0fa02f0d9026fff"
+        },
+        "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/wsl2/distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+          "bytes": 10641,
+          "sha256": "1556efc9e8202c7fc98fcaaac2fba7df8e6372192b43c5b1f662d34cf06ba377"
+        },
+        "distribution/reference-node-wsl2-26.04/profiles.json": {
+          "path": ".golden-build/qualification-rc7-20261105/refreshed/candidates/wsl2/distribution/reference-node-wsl2-26.04/profiles.json",
+          "bytes": 4933,
+          "sha256": "49c6df0827de618e3d5334cabdc368d27b9181bf563c0f9efb57f6502f529d52"
+        }
+      }
+    }
+  },
+  "preservedSharedInputs": {
+    "catalog/framework-catalog.json": {
+      "path": "catalog/framework-catalog.json",
+      "bytes": 30563,
+      "sha256": "d69e8f5244d990d652ef6201f2f37ae0b12896d6c235c13d118aeade212e6f4d"
+    },
+    "distribution/reference-node/README.md": {
+      "path": "distribution/reference-node/README.md",
+      "bytes": 9363,
+      "sha256": "69ab646cd2af6bfc11b61f008ede755e7aff075020ae663491b8ecc4c31c8c79"
+    },
+    "distribution/reference-node/activation-transaction.md": {
+      "path": "distribution/reference-node/activation-transaction.md",
+      "bytes": 3684,
+      "sha256": "962eb6e9440d840872117094fbeb71ee0b7403c94889df12758cf1cdf25d45ce"
+    },
+    "distribution/reference-node/cache-index.schema.json": {
+      "path": "distribution/reference-node/cache-index.schema.json",
+      "bytes": 1367,
+      "sha256": "59dbe68542dd94853b1ee79c77e54ae65b1275aecd7298c419814a974c3b4ddc"
+    },
+    "distribution/reference-node/component-lock.json": {
+      "path": "distribution/reference-node/component-lock.json",
+      "bytes": 12866,
+      "sha256": "fce0b3569ed3b6e65bc448acda9fcbb654444f9a38f119c63b0134a8be99795f"
+    },
+    "distribution/reference-node/dependency-lock.json": {
+      "path": "distribution/reference-node/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
+    },
+    "distribution/reference-node/distribution-manifest.schema.json": {
+      "path": "distribution/reference-node/distribution-manifest.schema.json",
+      "bytes": 6636,
+      "sha256": "1b8f10da12c61217a5e5e061e0fa947d24617f4dfc94c59e15df4d3020763d1b"
+    },
+    "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json": {
+      "path": "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+      "bytes": 4399,
+      "sha256": "57949f322829ecfd5292053368839da88bd268b1b575dd1ce05265cbccd86607"
+    },
+    "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json": {
+      "path": "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+      "bytes": 3440,
+      "sha256": "1b161698b410e2251211b7c65f7374ee882df90a1634e805bfdffa82d889e302"
+    },
+    "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json": {
+      "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "bytes": 16690,
+      "sha256": "f47f646736aac51b94e56ffc1f37dd91047e5e1575761d2ef4eb513736b38e86"
+    },
+    "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json": {
+      "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "bytes": 14032,
+      "sha256": "1808ba10b6c53e557ed6745a6ebed4891ef0bf8660bb63abab0bdc1f2e84b625"
+    },
+    "distribution/reference-node/profiles.json": {
+      "path": "distribution/reference-node/profiles.json",
+      "bytes": 4307,
+      "sha256": "549da39669c69f32ec7a2f7810da9a5fa4f05a26af3697d6e0960d6946d3d05f"
+    },
+    "catalog/framework-catalog-wsl2-26.04.json": {
+      "path": "catalog/framework-catalog-wsl2-26.04.json",
+      "bytes": 31086,
+      "sha256": "af47093b7f78d361800008bb03cda2dd2663b17ed9b67aa09ce8fda2b23e34c4"
+    },
+    "distribution/reference-node-wsl2-26.04/README.md": {
+      "path": "distribution/reference-node-wsl2-26.04/README.md",
+      "bytes": 1028,
+      "sha256": "67fd638b4dd8c3253b6750451c58040477c231802331da2da704164cd4328d36"
+    },
+    "distribution/reference-node-wsl2-26.04/component-lock.json": {
+      "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+      "bytes": 12866,
+      "sha256": "4deab387f27d6c43834e8b0a87cd2563000b58bdb18982a525386c8469ca8e93"
+    },
+    "distribution/reference-node-wsl2-26.04/dependency-lock.json": {
+      "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
+    },
+    "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json": {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+      "bytes": 4399,
+      "sha256": "b9a7849afc123157fcb380c042c4293d085f7648236bc2347917eb263f79caa5"
+    },
+    "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json": {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+      "bytes": 3440,
+      "sha256": "3ff457d01308dc1c0d869277259ff7b52b6442c27589b4b5ea9639c2eacf3eec"
+    },
+    "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json": {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "bytes": 16723,
+      "sha256": "162bcec60668b6c3c040904beadc9f408be6852467b531020c8a01a0f3eeb16f"
+    },
+    "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json": {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "bytes": 14065,
+      "sha256": "d7e267beeccbe7bfa3979e7264eacd8e84eb402e5f88a49de14e4a2f00ecf4bc"
+    },
+    "distribution/reference-node-wsl2-26.04/profiles.json": {
+      "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+      "bytes": 4933,
+      "sha256": "87d31ef00f9eb8f5371575eebae9a89224458604f4c6a8ed9355265cd6525d67"
+    }
+  },
+  "carrier": {
+    "path": "third_party/batteries/batteries-v4.33.0.bundle",
+    "bytes": 3684180,
+    "sha256": "f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3"
+  },
+  "selectedProfile": "ubuntu-26.04-wsl2-x86_64",
+  "qualificationGranted": false,
+  "sharedCommitPushTagPackageOrDeploymentPerformed": false
+}

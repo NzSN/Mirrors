@@ -1,0 +1,19 @@
+{
+  "status": "passed-finite-controlled-model-comparison",
+  "sourceRevision": "f328e328d6f961b49ccffefc0a6d0250bec2fb3c",
+  "sdkRevision": "c95f0e185436f145af9fad8895430e899bc479a3",
+  "acceptance": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/controlled-final/campaign/acceptance.json",
+    "bytes": 4973,
+    "sha256": "beca756bad39ec050224843cc24f0a447936b54a434e0230ea9c01f60baae883"
+  },
+  "reduction": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/controlled-final/campaign/reduction.json",
+    "bytes": 1160,
+    "sha256": "a7339a1be08212a958be9a84a3fe0cac4472943fcc9ae377d7e5dd6cc1484750"
+  },
+  "freshExecutions": 13,
+  "scope": "finite declared producer/consumer mapping; no generic or exhaustive scheduling claim",
+  "modelComparison": true,
+  "genericNativeSchedulingOrProductionQualification": false
+}

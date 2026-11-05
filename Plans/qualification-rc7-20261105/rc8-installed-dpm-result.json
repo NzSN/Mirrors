@@ -1,0 +1,29 @@
+{
+  "status": "all-three-installed-profiles-passed-at-exact-source",
+  "sourceRevision": "f328e328d6f961b49ccffefc0a6d0250bec2fb3c",
+  "sourceCppSdk": "c95f0e185436f145af9fad8895430e899bc479a3",
+  "sourceEcmaSdk": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+  "sourceRustSdk": "6b9480ab81717b76ca7f74b41fc554578b70c890",
+  "nodeVersion": "24.15.0",
+  "typescriptVersion": "5.9.3",
+  "rustVersion": "1.96.0",
+  "profiles": [
+    "cpp",
+    "ecma",
+    "rust"
+  ],
+  "sourceHidden": true,
+  "networkNamespaceIsolated": true,
+  "freshConsumersBuilt": true,
+  "freshModelCheck": false,
+  "acceptance": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/dpm-final/acceptance/acceptance.json",
+    "bytes": 5232,
+    "sha256": "724c92cb5f8463242cd087e07f42246a1e18269bad66e94b4e32d07ec1d9b271"
+  },
+  "manifest": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/dpm-final/installation.json",
+    "bytes": 816050,
+    "sha256": "cdd0ba72a7e310cd800072fea2822561d6ba58d252a0bba1ae2f6c8851ecfd0e"
+  }
+}

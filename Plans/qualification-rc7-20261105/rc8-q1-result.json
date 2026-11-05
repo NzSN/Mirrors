@@ -1,0 +1,34 @@
+{
+  "status": "linked-q1-complete-profile-accepted",
+  "sourceRevision": "f328e328d6f961b49ccffefc0a6d0250bec2fb3c",
+  "c0": "23625d60c29b8a6265171bbd818eadeba8505d03807bba8e504e9bef2bc14656",
+  "q": {
+    "bundle": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/evidence/runs/run-839b4f26-4be7-4205-a598-76e614fec4ad",
+    "privateRunRef": {
+      "envelopeSha256": "6494be9d54d46075ea78291d258f323c4e7b6ed8e2ef95bdee7627d69efe518f",
+      "projectionKind": "private",
+      "runId": "run-839b4f26-4be7-4205-a598-76e614fec4ad",
+      "schemaVersion": "mirrors.evidence-envelope/v1.0"
+    },
+    "publicRunRef": {
+      "envelopeSha256": "5291feb12a27b24680d2175f967a752d4dafb4f180d188ab162121ce39be7084",
+      "projectionKind": "public",
+      "runId": "run-839b4f26-4be7-4205-a598-76e614fec4ad",
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+    },
+    "schemaVersion": "mirrors.evidence-finalize-result/v1"
+  },
+  "scope": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/qualification/qualification-scope.json",
+    "bytes": 15883,
+    "sha256": "e631e46bf97c0205608fb8304de597eb6ab9c7915bade2e7f289eb46123e4236"
+  },
+  "catalog": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/qualification/qualified-catalog.json",
+    "bytes": 29091,
+    "sha256": "4f5f0d1a7a26ce6dfdb76f68f326768c27b5c1f9ff0366c8cd68bce096d7de90"
+  },
+  "independentInstalledQ2Pending": true,
+  "fullWindowsAcceptance": false,
+  "releaseOrProductionAdmission": false
+}

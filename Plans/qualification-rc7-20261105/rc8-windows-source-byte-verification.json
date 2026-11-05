@@ -1,0 +1,25 @@
+{
+  "status": "all-frozen-git-blob-bytes-match-on-windows",
+  "sourceRevision": "f328e328d6f961b49ccffefc0a6d0250bec2fb3c",
+  "sdkRevision": "c95f0e185436f145af9fad8895430e899bc479a3",
+  "results": [
+    {
+      "source": "Mirrors-rc8-f328e32",
+      "revision": "f328e328d6f961b49ccffefc0a6d0250bec2fb3c",
+      "files": 10034,
+      "manifestSha256": "86d10baedd688c06056dab399ec835e46c9facf1a357459a7e86e83642b6e901"
+    },
+    {
+      "source": "MirrorCPP-rc8-c95f0e1",
+      "revision": "c95f0e185436f145af9fad8895430e899bc479a3",
+      "files": 183,
+      "manifestSha256": "1075b2107f84177a20cb7a00abd8013eba782908e31137451b42d54cb0ac1838"
+    }
+  ],
+  "resultFile": {
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/windows-failures/rc8-source-byte-results.json",
+    "bytes": 445,
+    "sha256": "d758a848ed47abbb8f637b9d43e8bce44ac633ad4e40ad880cfd5de2368562a8"
+  },
+  "sourceAndSdkGitClean": true
+}

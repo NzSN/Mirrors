@@ -2,11 +2,18 @@
 
 ## November 5 qualification continuation
 
-The [active qualification record](../Plans/qualification-rc7-20261105/README.md)
-retains both passing installed audits, current C++ native checks, the finite
-controlled-model campaign with 13 fresh executions, and all 22 live client
-verdict/pin/protocol rows. These diagnostic results do not grant final framework
-credit under a changed source identity.
+The [qualification record](../Plans/qualification-rc7-20261105/README.md)
+binds validated source `f328e328…` and selected WSL2 C0 `23625d60…`.
+Both registered installed audits are qualified. M5 passes all 18 required
+commands and 16 tiers; linked Q1 and independent installed Q2 pass, including
+20 selected bundles and all six actual negative controls. Q2 also passes after
+the owned oracle and tunnel are stopped.
+
+All 22 live client rows, 13 finite controlled C++ model executions and three
+installed DPM profiles pass. All 34 native Windows executables and native
+stdio/TCP/mTLS integer-map checks pass. The installed DPM profiles retain
+`freshModelCheck:false`; the separate controlled campaign supplies actual finite
+model comparison without a generic scheduling claim.
 
 Windows execution exposed and repaired logical CMake source paths, native
 reparse-point detection, an ambient-config-dependent fixture CA, terminal
@@ -19,8 +26,10 @@ Source now prepares `0.2.0-rc.8` for these repairs and the reviewed execution
 input rebinding. The original Apalache carrier was not recovered: the new
 selection explicitly binds retained `765f6105…` bytes with the unchanged
 selected JAR. The new C++ source carrier retains the Windows fixes; other
-client hashes bind exact retained bytes. A clean source/C0, refreshed installs,
-registered evidence, and independent verification must precede final credit.
+client hashes bind exact retained bytes. New results apply to the exact frozen
+source and named profile; full Windows, W3, native M4, release and production
+admission remain separate. The [publication record](../Plans/qualification-rc7-20261105/publication/README.md)
+tracks the user-authorized source/checkpoint/receipt delivery.
 The immutable rc.7 tag and earlier acceptance records retain their original
 scope. Production and release publication remain separate.
 

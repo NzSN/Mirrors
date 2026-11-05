@@ -1,0 +1,17 @@
+{
+  "reason": "bundled Python helper generated four bytecode files before immutable-tree verification",
+  "failedInstallationRetainedAt": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/install/checked-replay-local-bytecode-refused",
+  "bytecodeFilesRetained": [
+    "versions/7347c2ceba41a26b46587c10c3c91ad7dc9a84a93b452607e828d6e2692d814b/runtime/verification/bundle/tools/distribution/__pycache__/distribution_lib.cpython-314.pyc",
+    "versions/7347c2ceba41a26b46587c10c3c91ad7dc9a84a93b452607e828d6e2692d814b/runtime/verification/bundle/tools/distribution/__pycache__/install.cpython-314.pyc",
+    "versions/7347c2ceba41a26b46587c10c3c91ad7dc9a84a93b452607e828d6e2692d814b/runtime/verification/bundle/tools/distribution/__pycache__/manifest_check.cpython-314.pyc",
+    "versions/7347c2ceba41a26b46587c10c3c91ad7dc9a84a93b452607e828d6e2692d814b/runtime/verification/bundle/tools/distribution/__pycache__/verify.cpython-314.pyc"
+  ],
+  "cacheUnchanged": true,
+  "freshInstallationAtOriginalRegisteredPrefix": true,
+  "nextExecutionEnvironment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "auditPolicyChanged": false,
+  "registryChanged": false
+}

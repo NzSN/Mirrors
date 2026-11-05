@@ -1,0 +1,38 @@
+{
+  "schema": "mirrors.rc8-qualification-continuation/v1",
+  "status": "m5-and-installed-native-live-work-complete-full-windows-open",
+  "sourceRevision": "f328e328d6f961b49ccffefc0a6d0250bec2fb3c",
+  "selectedC0": "23625d60c29b8a6265171bbd818eadeba8505d03807bba8e504e9bef2bc14656",
+  "installedAudits": "both-qualified",
+  "m5RequiredCommandsPassed": 18,
+  "m5RequiredTiersPassed": 16,
+  "q1Linked": true,
+  "q2InstalledIndependent": true,
+  "q2SelectedBundles": 20,
+  "negativeControlsRejected": 6,
+  "nativeWindowsExecutableSuitesPassed": 34,
+  "windowsSourceGitBlobsMatched": 10034,
+  "cppSdkGitBlobsMatched": 183,
+  "liveClientRowsPassed": 22,
+  "controlledModelFreshExecutions": 13,
+  "installedDpmProfilesPassed": [
+    "cpp",
+    "ecma",
+    "rust"
+  ],
+  "fullWindowsLakeTestPassed": false,
+  "fullWindowsScopeDecisionPending": true,
+  "fullFrameworkW3ReleaseOrProductionAcceptance": false,
+  "cleanup": {
+    "ownedFixtureStopped": 33320,
+    "ownedPort19099Closed": true,
+    "ownedJavaRemaining": 0,
+    "ownedBinaryProcessesRemaining": 0,
+    "productionPid": 9920,
+    "productionBinarySha256": "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc",
+    "productionServiceStatus": "Running",
+    "productionServiceStartType": "Automatic",
+    "observedAt": "2026-11-05T08:07:30.3041927Z"
+  },
+  "sharedBranchCommitPushOrTagPublicationPerformed": false
+}

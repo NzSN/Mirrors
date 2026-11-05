@@ -1,0 +1,31 @@
+{
+  "reason": "source commands require exact declared component subsets; local installed producers must match the two-component D manifest, excluding Gate",
+  "sourceOwnership": {
+    "mirrors.local-no-model": [
+      "mirrors"
+    ],
+    "mirrorecma.project-check": [
+      "mirrors",
+      "mirrorecma"
+    ],
+    "mirrorecma.test": [
+      "mirrors",
+      "mirrorecma"
+    ],
+    "mirrorgate.required": [
+      "mirrors",
+      "mirrorgate"
+    ],
+    "mirrors.interop": [
+      "mirrors",
+      "mirrorecma",
+      "mirrorgate"
+    ],
+    "mirrors.remote-model-check": [
+      "mirrors"
+    ]
+  },
+  "oldFinalizedBundlesPreserved": true,
+  "oldBundlesSelectedForFinalScope": false,
+  "auditPolicyOrRegistryChanged": false
+}

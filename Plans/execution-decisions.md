@@ -1,5 +1,35 @@
 # Framework execution decisions
 
+## 2026-11-05 — publish the exact rc.8 source and qualification progress
+
+The user requested commit/push and a current CHECKPOINTS.md entry. Preserve
+validated source f328e328 as a published ancestor, then commit the final receipts
+and status updates. The [publication record](qualification-rc7-20261105/publication/README.md)
+binds delivery verification. All qualification remains scoped to the recorded
+source/C0; full Windows and the platform-scope decision remain open. Raw
+artifacts, private credentials and older unrelated files are excluded.
+
+
+## 2026-11-05 — private rc.8 qualification outcome and Windows scope gap
+
+The user's completion request authorizes the pending qualification work with
+Codex executing directly. The [new record](qualification-rc7-20261105/README.md)
+binds clean private source f328e328, WSL2 C0 23625d60, both qualified D audits,
+complete M5/Q1/Q2, actual negative controls, native/live results and cleanup.
+New execution inputs are explicit: direct pinned strace with nonoverlapping
+source hides; admitted retained Apalache765 container with unchanged JAR;
+fixed C++ source c95f0e1 in a small Git-managed source carrier; and exact
+retained client binaries. Original unavailable carrier bytes are not described
+as recovered. No production or remote tag/release operation is performed.
+
+Full Windows qualification remains open because required POSIX helpers lack
+native Windows support. An unanswered scope question distinguishes a full
+Windows port from a checker/live-backend-only Windows profile with Linux tool
+qualification. The original full gate is preserved; no narrowed acceptance is
+assumed. Source and package publication remain separate from this private
+qualification result. The detailed receipts retain all refused attempts.
+
+
 Date: 2026-09-22
 
 The user authorized execution of the framework task cards using

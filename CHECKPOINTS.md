@@ -5,6 +5,59 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-05 — rc.8 source and qualification-record publication authorized
+
+The user requested commit/push and recording the current progress here.
+Delivery preserves the exact validated source commit
+`f328e328d6f961b49ccffefc0a6d0250bec2fb3c` as an ancestor and adds the final
+qualification receipts, maintained status and checkpoint on top. The
+[publication record](Plans/qualification-rc7-20261105/publication/README.md)
+owns the audited file inventory and remote-ref verification.
+
+At that source and WSL2 C0 `23625d60…`, both installed audits, all 18 required
+M5 commands / 16 tiers, Q1/Q2, six negative controls, 22 live client rows,
+13 finite controlled C++ executions and three installed DPM profiles pass.
+All 34 native Windows executable suites pass. Full Windows `lake test` remains
+unaccepted because required helpers use POSIX APIs; one acquisition test also
+assumes POSIX path separators. The scope decision remains open. This delivery
+does not grant full Windows, W3, native M4, release or production admission.
+
+The owned oracle/tunnel are stopped; production remains unchanged. Publication
+excludes raw stores, runtime/build trees, private keys and all 240 older
+unrelated files. The selected C++ Git source carrier is included. No tag is
+published. This entry records authorization and scope; the publication receipt
+and fresh remote-ref observation establish push success.
+
+## 2026-11-05 — private rc.8 M5/installed/native/live qualification; full Windows open
+
+The user requested completing the pending installed audits, native C++ checks,
+live-model work and Windows qualification, retaining direct Codex ownership.
+The [qualification record](Plans/qualification-rc7-20261105/README.md) owns the
+new exact private source `f328e328…`, product rc.8 and selected WSL2 C0
+`23625d60…`. Both registered installed audits pass and are finalized/qualified.
+M5 passes all 18 required commands and 16 tiers; Q1 accepts 19 linked nodes,
+and installed-only independent Q2 verifies 20 bundles with source/scratch
+hidden, network unshared and inputs read-only. All six actual integrity,
+linkage and incomplete-profile controls are rejected. Q2 repeats successfully
+after stopping the owned model backend and tunnel.
+
+All 22 fresh client rows, 13 finite controlled C++ model executions and three
+source-hidden/network-isolated installed DPM profiles pass. The latter retain
+`freshModelCheck:false`; the separate finite campaign records actual model
+comparison without a generic scheduling claim. All 34 native Windows
+executables and stdio/TCP/mTLS native integer maps pass. Every Windows source
+blob matches the frozen Git objects. Source fixes cover logical CMake paths,
+Windows reparse-point checks and portable regression fixtures/diagnostics.
+
+Full Windows `lake test` remains unaccepted: its POSIX DPM/installation/evidence
+helpers need a Windows implementation, and one acquisition test assumes POSIX
+path separators. The platform-scope question is pending; no required tier is
+silently skipped. This M5 result is not full Windows, W3, native M4, release or
+production admission. Task oracle/tunnel cleanup is confirmed; production
+PID 9920/hash/service remain unchanged. Shared main/index and previous tags
+retain their starting state; new source commits exist only in owned private
+repositories. All 240 older unrelated files remain preserved.
+
 ## 2026-11-04 — S3 rc.7 clean Linux/Windows packages accepted
 
 The user approved local rc.7 tagging and package construction, then changed

@@ -1,0 +1,29 @@
+{
+  "status": "native-checker-and-live-backend-gates-passed-with-full-driver-blocked",
+  "sourceRevision": "f328e328d6f961b49ccffefc0a6d0250bec2fb3c",
+  "nativeExecutableSuites": 34,
+  "nativeSuiteRecord": {
+    "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-windows-native-suites.json",
+    "bytes": 552,
+    "sha256": "2ac90f57a21adcb286070f00bd7fc800d6dd4f9537c4d93676815e873c0cc588"
+  },
+  "sourceByteVerification": {
+    "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-windows-source-byte-verification.json",
+    "bytes": 942,
+    "sha256": "89e4a16a03d9c8f4b242456e325296900677c63eb4ccda705427fa140b95f29f"
+  },
+  "nativeIntegerMapsStdIoTcpMtlsPassed": true,
+  "requiredTlcSafetyLivenessAndMutantsPassed": true,
+  "cppSdkSourceRevision": "c95f0e185436f145af9fad8895430e899bc479a3",
+  "allRuntimeSourceBlobsMatched": 10034,
+  "sdkSourceBlobsMatched": 183,
+  "fullLakeTestPassed": false,
+  "remainingRequiredDriverWork": [
+    "Windows DPM process/activation support instead of POSIX APIs",
+    "Windows distribution/evidence storage support instead of POSIX-only primitives",
+    "portable launcher-corruption test path separator assertion"
+  ],
+  "python312PrerequisitePrepared": true,
+  "platformScopeQuestionPending": true,
+  "narrowedQualificationAssumed": false
+}

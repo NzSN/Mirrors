@@ -1,0 +1,505 @@
+{
+  "schema": "mirrors.qualification-record-inventory/v1",
+  "files": [
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/README.md",
+      "bytes": 6174,
+      "sha256": "1ab6f022d442c6c98f5fc6bfeab53a5b1efdad686f9ec83b47411a022744a42a"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/WORK.md",
+      "bytes": 15058,
+      "sha256": "339ef61b97ced56cde2b6da69a09a74829b3f74fdbe341adc99bacc6a5cb66f7"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/audit-direct.py",
+      "bytes": 1470,
+      "sha256": "2aeffab7d67b57027a90ca4d42d1ff3a435cebba0e53dcffdcd6f477ccebe0aa"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/build-rc8-distributions.py",
+      "bytes": 1681,
+      "sha256": "0c2af691f8acde011053311ebb47af37676be916592a01b1840ce2000f89b296"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/collect-rc8-audits-no-bytecode.py",
+      "bytes": 3370,
+      "sha256": "fa9140a6a3d7cbe44f72b3f7785088fc547f4b0bf7bd84b40653390d59626f97"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/collect-rc8-audits.py",
+      "bytes": 3300,
+      "sha256": "e59acc553ad1a6936b8ec1445206ec6609f71c0b26c6e4e6f68864dcc92007d8"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/common.py",
+      "bytes": 2663,
+      "sha256": "ada6e2af88d72ca471051fd977a100208c7e0259b6cbdd645e03a86d1073837a"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/component-ownership-correction.json",
+      "bytes": 729,
+      "sha256": "484f53a4e3429ce171ca9c7b2eec6de0ff1928ce514a7686a78163b51448fd43"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/cpp-portability-selection.json",
+      "bytes": 973,
+      "sha256": "aabad928ebe3bc31c476c2b6911c07407d4451fed0c828e031e9b629f057de18"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/cpp-sdk-input.json",
+      "bytes": 812,
+      "sha256": "bbcf098d08485745ef942f38501a87ccf4ffc9d394b54fa10438b144f94f8138"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/cpp-vendored-carrier.json",
+      "bytes": 355,
+      "sha256": "7d7161b9112ecdf7abb5843138b6f6453c0d941765ec1a6dc4a682e826f4f580"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/credentials.py",
+      "bytes": 2003,
+      "sha256": "347760fda7c4aac737e42c7597162d2048f714a8e0b33e704bf8beeb4aff0386"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/distribution-resume.py",
+      "bytes": 2682,
+      "sha256": "ce49c2a23ca9fb40f83e63a669ebfb7a209bae8b94e81d94baacd6db971a71da"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/distribution.py",
+      "bytes": 2702,
+      "sha256": "b5d1b81d14794755e107146dfadcb31635835c968b974983c908e1fd7ef3c264"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/dpm-inputs.json",
+      "bytes": 592,
+      "sha256": "8e0320593177f1a426ca4b88761b3801bcc00138813e3d513c59d5b9006122a9"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/evidence_rc8.py",
+      "bytes": 4050,
+      "sha256": "7c38af681c52fe0b8df323d70580f727dae71cd1537e51779d22376346d2e5ec"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/final-review.json",
+      "bytes": 13595,
+      "sha256": "3bd048010dc8d5f277e289d5bfa16f280b9af2eb9e72030394d7590f415e63c7"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/freeze-rc8-resume.py",
+      "bytes": 10368,
+      "sha256": "d7c48f4ba017e5ed78d978431399529124bc7b093b8c7f431cb6db78ff7f9e3e"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/freeze-rc8.py",
+      "bytes": 9926,
+      "sha256": "6a18ffa3db215d9505be7f095e4832cf3979d4be748c4a369c82784ed7f2ccb3"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/gate-installed-diagnostic.json",
+      "bytes": 276,
+      "sha256": "d4b5ec5c51878044f85e7f460a6e7ebd38aed8aac4eca7a27855beee5a1149da"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/gate-integration-peer-selection.json",
+      "bytes": 449,
+      "sha256": "8d4adfc4744c27c731cb49898dd047092370242806f6be24d20e34d1f97fc038"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/gate-source-runtime-selection.json",
+      "bytes": 403,
+      "sha256": "464cc7e7eee50f44f0c1764090f344feaf5a9605e865a15553ba1f960acaa320"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/independent-q2.initial-mount.py",
+      "bytes": 6442,
+      "sha256": "b8bac92f80a3ba2396612799200086cc25fcd84f3ab55bb87cab3d54bb7f4e87"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/independent-q2.py",
+      "bytes": 6454,
+      "sha256": "c2d6957da234a471cd340214592524ccd93a385b4f411554b550d38ec49a5cda"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/installed-dpm-diagnostic.json",
+      "bytes": 571,
+      "sha256": "27e54bc0b3c9abc2955140f057afc8f3f0212f072432c7244a2106f851177c0e"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/live-client-diagnostic.json",
+      "bytes": 1255,
+      "sha256": "941aa7c038f10830ee58e807a91afcf8fce5aa6eb40184cf3397e52dfb3fdc92"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/local-installed-diagnostic.json",
+      "bytes": 367,
+      "sha256": "d39c8ad8b9cbec80cf4ba1d97594ad483d4a00b03aa136f7f39c535dc664b6f0"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/local-public-credentials.json",
+      "bytes": 477,
+      "sha256": "8bbe33fa90f0af756fb122165640edca260054e75fa22f570992744e894f14e1"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/locked-source-toolchain.json",
+      "bytes": 799,
+      "sha256": "d849af524900e2c829c04a80e54b9e734eff26f6b601e8437b5c4bc7b3f907fc"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/mirrorcpp-windows.patch",
+      "bytes": 23875,
+      "sha256": "0d728fb9157b14fecea53d38ca54c74fc7296d304862c0ed910bfe5c24a73fd2"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/native-checks.json",
+      "bytes": 152,
+      "sha256": "c29f799701e4747c2e8c7ad9ad425a2375ca32c1d4d71112bb0cf7aba4c589cb"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/native-controlled-live.json",
+      "bytes": 854,
+      "sha256": "a86cf734bbe09abbc1260b4c118f3410d839ec0749f594a8422d4cfa3796d49a"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/native-inputs.py",
+      "bytes": 3364,
+      "sha256": "6e03a6f4a4dc55d522f1b362d16d686e5aca77538c0eb5fee2f91312b988c83c"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/native-offline.py",
+      "bytes": 2468,
+      "sha256": "fdda4d95ad922fb3c5b7ff00bcea1278a4007043ff23073b1f347f5a9d19b537"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/native-prepare.py",
+      "bytes": 1964,
+      "sha256": "eb7f6b3c7ffca1a0d1c5db88258efa43440e3cccf7adb1cb6bdf2aee601368c2"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/observe-fixture.ps1",
+      "bytes": 1872,
+      "sha256": "b7ce06c9549086225bf784476040fa18d59f89155c6245b79f854674f0687d2c"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/observe-matrix-rc8.ps1",
+      "bytes": 2774,
+      "sha256": "1abd0cd3d51ce5f6ad9919be6d219b7777ac76350a77dc8cfd35fb118ddc2ec7"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/observe-matrix.ps1",
+      "bytes": 2771,
+      "sha256": "178efe2c748acb3df7d626eca8d0013857d44a503fd97e352ed732aa9a4f7c5e"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/paired-source-layout.json",
+      "bytes": 404,
+      "sha256": "b825a51180f1092718ee651439844778458a5ee0a2c8fe573cd37c40c4ebea02"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/pending-windows-tool-test-fix.patch",
+      "bytes": 281,
+      "sha256": "f5eae330891585bcd20f9e264d31216b26fd06cc11b85a254eea220c76b6a3b4"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/preflight.json",
+      "bytes": 2696,
+      "sha256": "fd349e0890cac71987f565ff7e5a07822512b639418d987498958dc994108cb6"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/preflight.py",
+      "bytes": 3717,
+      "sha256": "9020f06bc71217b57cd9ed66b02b92dbbff8eeb1efbeb3f4f59116b7d22823d6"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/prepare-prefix-stability.mjs",
+      "bytes": 2522,
+      "sha256": "19246aa13b1ab80cffcaca00f3757be7a3526a295f20aa094357217440eb615e"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/prepare-windows-inputs.py",
+      "bytes": 1954,
+      "sha256": "53dff1f0f15e20fd35f0dd9872af7266a5fcd5bf1698a78d9cdcc483579e68a0"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/python312-carrier.json",
+      "bytes": 896,
+      "sha256": "dd5772799dbf008e90f713f255605819f5856b34d3fbdf72b37a0b78b9ccac21"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/python312-first-download-partial.json",
+      "bytes": 377,
+      "sha256": "45ba73a590e4bc9eb449c40e2429fbe323d905383387e0a3c510771d1d16261e"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/qualify-rc8.py",
+      "bytes": 4891,
+      "sha256": "ca2f5c9d33e98eec6986c915fcd8bdeff2b264baba7074b0bde0a1f3bb0b01e8"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-bytecode-refusal.json",
+      "bytes": 1182,
+      "sha256": "2ee1376e99a79d0a4d18248e967a7369932e90a9802d9706c98dc2ce6221df26"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-controlled-model-result.json",
+      "bytes": 911,
+      "sha256": "b09bc2fa3d0cfce181cac47270eca2e8a614c3b602b48f30009b11c4bafd74eb"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-final-gate-result.json",
+      "bytes": 4868,
+      "sha256": "6b32a38309f37c90e824b59b1f6e4c814f8ae61fcaf641e4570afe49674e09fa"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-freeze-manifest.json",
+      "bytes": 18230,
+      "sha256": "b302b83fee0e7f93bed27d910047eae7f16aedc57a9b639b037b148234de2d3d"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-freeze-review.json",
+      "bytes": 885,
+      "sha256": "4ee521c8a059b59324b15df0c12262893d4481b3124654072ebfd5e60eca63b1"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-gate-result.json",
+      "bytes": 4753,
+      "sha256": "f7f0a8691b111c66490c6e58a62360eca47481119ecb5957f43c350d157a4af3"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-installed-dpm-result.json",
+      "bytes": 1080,
+      "sha256": "d85ef9bf04788a82c622eea79928965fb8d10a18c4f741b5887290f79e7f4fa5"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-intake.json",
+      "bytes": 54382,
+      "sha256": "2fcf246509632e14e094722f2dfdb44f90e36508f02ccc3b52d51a0f486c337c"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-owned-tunnel-cleanup.json",
+      "bytes": 196,
+      "sha256": "95f14e8f28e38155c7c213dc3d3e1c70e943706effc9790ea4049bf5c2265a22"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-q1-result.json",
+      "bytes": 1583,
+      "sha256": "f39bf3bc29846c4bd6bbd2980e15048b4935b13caa3166aa6c8a7d50865d3114"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-q2-after-backend-stop.json",
+      "bytes": 3416,
+      "sha256": "8b5d4abdbb13dda4a3cd99962ed74bf6411ec2d72b73ce443953ce938a604b34"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-q2-result.json",
+      "bytes": 3416,
+      "sha256": "8b5d4abdbb13dda4a3cd99962ed74bf6411ec2d72b73ce443953ce938a604b34"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-registered-installed-audits.json",
+      "bytes": 3607,
+      "sha256": "4db24a31b196d69b6ab8e2a3e24da4af97df73e849e5ffb39c40eb99a14c73db"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-windows-carrier.json",
+      "bytes": 348,
+      "sha256": "8057478a282f4afafd29c4d4869691ac194f4e753edd85b8e44191be5c764053"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-windows-checker-result.json",
+      "bytes": 1325,
+      "sha256": "8d48d503cf38205e4d5913a8952040fc3f65dcdfde42fbb988ce6cbf37d90eb0"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-windows-clean-build.json",
+      "bytes": 500,
+      "sha256": "aba096fdfcb771b82cd07163c59d12dd6b0c2cb45569836a8fdda0c8b5fbe6d2"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-windows-cleanup.json",
+      "bytes": 386,
+      "sha256": "76ae2b14b6975ba289a538c28e0643a05f908af91249ee87988bf4bbb65feb36"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-windows-native-suites.json",
+      "bytes": 552,
+      "sha256": "2ac90f57a21adcb286070f00bd7fc800d6dd4f9537c4d93676815e873c0cc588"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/rc8-windows-source-byte-verification.json",
+      "bytes": 942,
+      "sha256": "89e4a16a03d9c8f4b242456e325296900677c63eb4ccda705427fa140b95f29f"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/refreshed-final-gate.py",
+      "bytes": 1575,
+      "sha256": "ad17f2bf8ec55496f17bfeb4d5283f11923b9765b66bdcaf10f9c3483d49bc4b"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/refreshed-gate.py",
+      "bytes": 1572,
+      "sha256": "8e88710c250c86b455b864b6e00d6e609ce2ce7bbea52dbad7e3e14e992904f8"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/result.json",
+      "bytes": 1381,
+      "sha256": "382753eeee02e4cf68ae56764f68a306c9ef76f6677ef01ae2fd9ccefc650cab"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/runtime-carrier-candidate.json",
+      "bytes": 737,
+      "sha256": "7ef682c0d4729bfb7f84766c65613073b79c9a0d23c9ee311d6959a3ee8d55e7"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/selection-rebinding.json",
+      "bytes": 2289,
+      "sha256": "3a36e95e8232aab30b57ae2462257be8c63efea55bb52527c0a530c149a217f4"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/tracer-input.json",
+      "bytes": 1927,
+      "sha256": "e9b5d4dfdbe4569fc3061425f9ede1722aa070974f2d829afb6f86e0df06b64b"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/tracer.py",
+      "bytes": 2076,
+      "sha256": "3c41793f7056aea20b5b589cdd17a0c533b94ae37a800fc2ac5f996e75233879"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/verify-rc8.py",
+      "bytes": 8560,
+      "sha256": "6516daab4ee09277983e7f61ccd44e4d28355d1c38ae7738c2aea9e929c2b0a5"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-apalache-launcher.cpp",
+      "bytes": 2613,
+      "sha256": "99b6e8a2317a5a8a99bf3531e00168caf9aca788eb39686b91c174284fa84d77"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-full-openssl-owned.ps1",
+      "bytes": 2178,
+      "sha256": "b7e050f96ef2586f3d01d3bb4dedfc8ce2c5ad61fd9a35144fae4638fb3e9f23"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-full-openssl.ps1",
+      "bytes": 2074,
+      "sha256": "29869af400d03167c37f771d9db2596e75732fb941f11ab5311d639e8b47df39"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-full-utf8.ps1",
+      "bytes": 2098,
+      "sha256": "0bfca655e0f30e937bfd6a4337032714bd305a47e2628264b19e04f58985d58e"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-full.ps1",
+      "bytes": 3511,
+      "sha256": "6a07296b191e831d913813ea5ebe37966563286b1e15c5f07f4c90999286618a"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-inputs.json",
+      "bytes": 1204,
+      "sha256": "6cb60ad29ecbc2e1b81301346332eda51d684774e6643f045c2c851fc36b0669"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-native-diagnostic.json",
+      "bytes": 1079,
+      "sha256": "aa662dbbbacd46ca827c65c4cfe9bc399a7b86820cb4610bba2d16de7b88746b"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-native-suites.py",
+      "bytes": 1686,
+      "sha256": "9703b1405123a3814bf68d55b708f3bedc0bf14d0708edfbb0b4d576392dea03"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-new-csrs.ps1",
+      "bytes": 1074,
+      "sha256": "985c6151198d85ccced19dcdb50275d9faf7a45e338e762fc6bc90da18d5390b"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-next-facet.ps1",
+      "bytes": 2577,
+      "sha256": "5f4841b2b97939f4d63a33f569021d10412af883db76331191e4c98ecd697906"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-next.ps1",
+      "bytes": 2567,
+      "sha256": "e7c22717577beab3d26598e93d8abac01abd23b1b5525699ed48930e336d3eaa"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-oracle-rc8.ps1",
+      "bytes": 2877,
+      "sha256": "106e44248b35f8f8fbd76d1b9aa494ae0cd2b9541b42e4773299714e1b6e720e"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-oracle.ps1",
+      "bytes": 2929,
+      "sha256": "a8fe51d79949ec742a96f5c2ac63fc9bdf37130e05519db12587722b4300508d"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-prepare-longpaths.py",
+      "bytes": 3025,
+      "sha256": "1eb65bf09df159ecfb05dd7b02c29e6493a5d270decc17f99d88e8db7687e774"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-prepare.py",
+      "bytes": 2590,
+      "sha256": "486bee0aa1b93fecc5f0afe873f0d8311c41b74166fc589de9752ea03b5a353c"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-public-credentials.json",
+      "bytes": 230,
+      "sha256": "cbaffba240a88818818c250ceb0b3dbfd684fe0ccd5bbd67d003102f4e8a4a02"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-rc8-build.ps1",
+      "bytes": 4982,
+      "sha256": "e4fdb5c2036e950beb4fd26dde4c8d65213b5916183152b889cd48e6be5c3ba0"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-rc8-checker-python.py",
+      "bytes": 2379,
+      "sha256": "2f1f9de3f9fd3cd0c82109a6655d61e6e0c4820cab3849fe80ff324a40b44b36"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-rc8-native-suites.py",
+      "bytes": 2545,
+      "sha256": "838bd7914faba5ce15ea61e09788ee1476add6f6445e4871c315f55bad1ab8a7"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-rc8-source-bytes.py",
+      "bytes": 2154,
+      "sha256": "dfb95f38afd33369418ba5ba0f61c70c45407f7be84fe7eb29382f10fbbdf2b7"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-runtime-observe.ps1",
+      "bytes": 2256,
+      "sha256": "b29d12b421b9a37377bfd9d83558e2ed244a732a930b85fe04ac56c026d7e300"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-symlink-probe.lean",
+      "bytes": 225,
+      "sha256": "d5c744553a30ecaf07f5b05bd1552b70677eaf583042565e2069f5bf4151d465"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-test-job.cpp",
+      "bytes": 2691,
+      "sha256": "93918cb1d35a23adca87268fe9732ee4c4af08d55893889c90287d2a1c412831"
+    },
+    {
+      "path": "/home/lsz/Codebase/Mirrors/Plans/qualification-rc7-20261105/windows-tlc-diagnostic.py",
+      "bytes": 1153,
+      "sha256": "9adf65cc0e8f03624dd5a34ad55da071d4b0c1692d964d23f555df7091b4ab36"
+    }
+  ],
+  "sourceCarriers": [
+    {
+      "path": "/home/lsz/Codebase/Mirrors/third_party/mirrorcpp/mirrorcpp-windows-v0.1.1.bundle",
+      "bytes": 345645,
+      "sha256": "fa06550a9d23c6efc50257ac531a1b4bce3b99b06ec050d6a0a95226b437bf0c"
+    }
+  ],
+  "rawEvidenceRetainedOutsideGit": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105",
+  "operatorPrivateKeysOutsidePayload": true,
+  "selfHashExcluded": true
+}
