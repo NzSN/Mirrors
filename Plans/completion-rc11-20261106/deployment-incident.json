@@ -1,0 +1,14 @@
+{
+  "schema": "mirrors.rc11-deployment-incident/v1",
+  "status": "resolved",
+  "initialAttempt": ".golden-build/completion-rc11-20261106/deployment-apply.log",
+  "cause": "Windows PowerShell converted a null File.Replace backup-name argument to an invalid empty path; both the initial replacement and automatic restore invocation refused before replacing active bytes.",
+  "impact": "Production service was stopped until the retained old executable was explicitly restarted; the initial attempt did not replace active executable bytes.",
+  "recovery": "Original executable hash verified, service restarted, sync/async valid/invalid and wrong-pin controls passed.",
+  "correction": "Explicit exclusive backup paths for atomic replacement and rollback; actual NTFS replacement/rollback probe passed before retry.",
+  "correctedController": "deploy-windows-v2.ps1",
+  "correctedControllerSha256": "52c693fd6af143d6e374e31e77f6648a22633a293d0ed8c2db4a97ff1c5d0e23",
+  "finalOutcome": "Exact reviewed rc.11 executable deployed; live controls, automatic startup after actual reboot, preserved configuration/DLLs/certificates/runtime verified.",
+  "qualificationSourceChanged": false,
+  "credentialsExported": false
+}

@@ -1,5 +1,30 @@
 # Rc.11 completion checkpoint — 2026-11-06
 
+## Approved operations completed
+
+The user approved publication, production replacement and reboot. The
+[rc.11 prerelease](https://github.com/NzSN/Mirrors/releases/tag/v0.2.0-rc.11)
+is published, all four assets were downloaded and verified, and it is not Latest.
+The exact native Windows binary is deployed. Automatic startup and fresh
+sync/async valid/invalid plus wrong-pin checks passed after the actual reboot.
+See [completion](completion.json), [publication](release-publication.json),
+[reboot](reboot-result.json), and [retention](retention-index.json).
+
+The initial deployment controller failed on PowerShell null conversion after
+stopping the service but before replacing bytes. The original binary was
+restarted and its health verified; explicit-backup atomic replacement and rollback
+were tested on NTFS before the successful retry. The [incident](deployment-incident.json)
+and corrected [controller](deploy-windows-v2.ps1) retain that history. Production
+configuration, DLLs and credentials were preserved; old and deployed binaries
+and the ZIP are retained under the Windows release directory.
+
+S0–S7 and retention preparation are complete for the declared scope. S8 still
+requires two actual shipped compatibility cycles, real-workload soak records,
+consumer acknowledgements and the separate retirement decision. No compatibility
+removal is approved or performed. The earlier qualification checkpoint below
+retains its original stage state.
+
+
 **Exact-candidate qualification is complete. Publication, production replacement,
 reboot, and the two-release compatibility lifecycle remain separate operations.**
 The machine-readable [result](result.json) and [operation card](operations.md)

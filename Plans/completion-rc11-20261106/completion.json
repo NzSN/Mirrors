@@ -1,0 +1,58 @@
+{
+  "schema": "mirrors.rc11-operation-completion/v1",
+  "status": "approved-publication-deployment-and-reboot-complete",
+  "completedAtUtc": "2026-11-06T08:56:05.519138+00:00",
+  "sourceCommit": "19c31bf09b58e27c2942ca123a2017c30b638216",
+  "tag": "v0.2.0-rc.11",
+  "releaseUrl": "https://github.com/NzSN/Mirrors/releases/tag/v0.2.0-rc.11",
+  "publishedBranches": {
+    "Mirrors": "42a4f73f047d4cfa736045590c1c26b693f298fd",
+    "MirrorGate": "cd4914b2fa68aaa4f22955352b81cbb890ffd6f0"
+  },
+  "releaseAssetsVerified": 4,
+  "windowsDeployedSha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4",
+  "productionVersion": "v0.2.0-rc.11",
+  "productionState": {
+    "pid": 5692,
+    "name": "ModelMirrors",
+    "startMode": "Auto",
+    "state": "Running"
+  },
+  "postRebootHealth": {
+    "status": "passed",
+    "scope": "post-reboot",
+    "clientSha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4",
+    "serverCertificateSha256": "b2fc7265145cf2b89a1a248b0932885df8d300121b47f7854317ece4bac9ce67",
+    "cases": [
+      {
+        "case": "sync-valid",
+        "exitCode": 0,
+        "logSha256": "936af308607b90e4c3a766f83fcb53dc1217c3c70c99c3fa8851d524afae7d1c"
+      },
+      {
+        "case": "sync-invalid",
+        "exitCode": 1,
+        "logSha256": "2530efb9c680b9591ea7a8c0e0ee984282043d535123768900e5a2aec8ccde1a"
+      },
+      {
+        "case": "async-valid",
+        "exitCode": 0,
+        "logSha256": "936af308607b90e4c3a766f83fcb53dc1217c3c70c99c3fa8851d524afae7d1c"
+      },
+      {
+        "case": "async-invalid",
+        "exitCode": 1,
+        "logSha256": "f7fb4c9df75e04be2ad82c1b64c6b2196d87b4ea1ac4be0970543952f921860b"
+      }
+    ],
+    "wrongPinRejected": true,
+    "credentialsExported": false
+  },
+  "bootTimeUtc": "2026-11-06T08:28:59.5000000Z",
+  "configurationDllCredentialsPreserved": true,
+  "initialDeploymentFailure": "retained executable restarted and health verified; explicit-backup File.Replace fix tested and successful retry completed",
+  "rollbackRetained": true,
+  "sharedMainAndIndexPreserved": true,
+  "unrelatedFilesPreserved": 240,
+  "remaining": "S8 full two-shipped-cycle compatibility/real-workload soak/consumer acknowledgements and retirement decision; no compatibility removal authorized or performed"
+}

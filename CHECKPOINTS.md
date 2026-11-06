@@ -5,6 +5,22 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-06 — rc.11 published, Windows deployed and reboot verified
+
+The user's explicit approval covered source/companion publication, the rc.11
+prerelease and Windows asset, production replacement, and host reboot.
+[Completion record](Plans/completion-rc11-20261106/completion.json) binds source
+`19c31bf09b58e27c2942ca123a2017c30b638216` and Gate
+`cd4914b2fa68aaa4f22955352b81cbb890ffd6f0`. All four release assets were downloaded
+and verified; the successful Ubuntu 24.04 workflow remains its own focused scope.
+The Windows binary `5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4`
+is Running/Auto after the observed 2026-11-06 reboot. Four-way mTLS and wrong-pin
+controls pass, configuration/DLLs/credentials are preserved, and rollback bytes
+are retained. The initial replacement-controller failure was recovered, fixed
+with tested explicit backup paths, and retained in the incident record.
+Two-shipped-cycle compatibility/real-workload soak and consumer acknowledgements
+remain future gates; no retirement or broader platform/M4 claim is inferred.
+
 ## 2026-11-06 — rc.11 exact-candidate qualification complete; publication/deployment prepared
 
 [Current record](Plans/completion-rc11-20261106/README.md): Mirrors

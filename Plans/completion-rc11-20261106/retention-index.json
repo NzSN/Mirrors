@@ -1,0 +1,138 @@
+{
+  "schema": "mirrors.rc11-retention-index/v1",
+  "publicReceipts": [
+    {
+      "path": "Plans/completion-rc11-20261106/source-publication.json",
+      "bytes": 480,
+      "sha256": "41d4f02ec42b1ce58b8d247e060f6d07e8b265447a562fb2bb72d2b1cecb5bef"
+    },
+    {
+      "path": "Plans/completion-rc11-20261106/release-publication.json",
+      "bytes": 1461,
+      "sha256": "82e0decee3b30bedf3f262d1800b55d1de30ceab19d67c0274c203af8e7d193e"
+    },
+    {
+      "path": "Plans/completion-rc11-20261106/reboot-result.json",
+      "bytes": 3365,
+      "sha256": "f123e0c8ffc262258854ddeb5281949bf84e150666b2304af4248f7ce5cae704"
+    },
+    {
+      "path": "Plans/completion-rc11-20261106/deployment-incident.json",
+      "bytes": 1211,
+      "sha256": "970130bb0b0644a0c6b3410a70541e5f143054488a1bee52b3a2e9f6ee445bb9"
+    },
+    {
+      "path": "Plans/completion-rc11-20261106/result.json",
+      "bytes": 3188,
+      "sha256": "f658da266352260b09b44a07e4c9197b2538f3f4f0ab2722e1ab76eedb250597"
+    },
+    {
+      "path": "Plans/completion-rc11-20261106/offline-after-shutdown.json",
+      "bytes": 570,
+      "sha256": "936fdf260e9f434368d04baafae5690d3a5472435b1c2bd70fed040aec6cabfc"
+    },
+    {
+      "path": "Plans/completion-rc11-20261106/installed-dpm-result.json",
+      "bytes": 696,
+      "sha256": "e44adb1886757ff023f0d500444e463b1cb10335ee84c1fab0d9d53109b0af57"
+    },
+    {
+      "path": "Plans/completion-rc11-20261106/controlled-model-result.json",
+      "bytes": 664,
+      "sha256": "62b8a7698de17652f524ab8957a143e803837fcf839298cffa2108fe1b752f36"
+    },
+    {
+      "path": "Plans/completion-rc11-20261106/windows-full-result.json",
+      "bytes": 1436,
+      "sha256": "0178bbb120466ede07b50e70e6af0d9ec812c389ab556748455474c64359a6c4"
+    },
+    {
+      "path": "Plans/completion-rc11-20261106/candidate-port.json",
+      "bytes": 1875,
+      "sha256": "e2c5b6fabd9741ffae8fc84e2cca8dd57b945f5d694e9afa8d985e1b086e0c96"
+    }
+  ],
+  "privateOperationReceipts": [
+    {
+      "path": ".golden-build/completion-rc11-20261106/service-recovery.log",
+      "bytes": 1035,
+      "sha256": "6545c7336ab8eec4b921fd91096c38fbfa740682bbd916250fcfdeaec9b63309"
+    },
+    {
+      "path": ".golden-build/completion-rc11-20261106/atomic-replacement-probe.log",
+      "bytes": 289,
+      "sha256": "88c773394cd557af6405046a41ebeb76bc63bf582c899fde112b0c922d665d03"
+    },
+    {
+      "path": ".golden-build/completion-rc11-20261106/deployment-apply.log",
+      "bytes": 645,
+      "sha256": "e8a91d780c56b9923df21141a6cbe6ed3c9d376de699acb4363c083e93882c67"
+    },
+    {
+      "path": ".golden-build/completion-rc11-20261106/deployment-apply-v2.log",
+      "bytes": 997,
+      "sha256": "36fce07ccb94a2a952fa416db2b417100203422e81d796c28b396bfff153bef5"
+    },
+    {
+      "path": ".golden-build/completion-rc11-20261106/deployed-observation.json",
+      "bytes": 3071,
+      "sha256": "922aa1fd8decb598885d1bd789c9bf250d2ded8fe57b4bd7e013c0598c5983a0"
+    },
+    {
+      "path": ".golden-build/completion-rc11-20261106/post-reboot-observation.json",
+      "bytes": 2053,
+      "sha256": "ae1b9d9698caac412792204568d0124f032a263bd4f90c5e8f6a40fabd5a1150"
+    },
+    {
+      "path": ".golden-build/completion-rc11-20261106/windows-release-retention.json",
+      "bytes": 777,
+      "sha256": "672914ea267c71154ecb1f05faea711e8146f6f1968924acf15918a85af1b271"
+    },
+    {
+      "path": ".golden-build/completion-rc11-20261106/failed-staging-retention.json",
+      "bytes": 604,
+      "sha256": "282cbcf77fe594db89ec3dee811d0dad0039746487d7b484c061fb83191c17ec"
+    },
+    {
+      "path": ".golden-build/completion-rc11-20261106/reboot-command.log",
+      "bytes": 275,
+      "sha256": "9e04674ae7bd6b9ee42886f17d9046d68ae97ccf561a058b4d7d16a89099daf3"
+    },
+    {
+      "path": ".golden-build/completion-rc11-20261106/reboot-poll-receipt.json",
+      "bytes": 373,
+      "sha256": "2e2eae910cceea64cadd5e9c9982c73a1e3d78acc75d2b600854215d420b6c19"
+    },
+    {
+      "path": ".golden-build/completion-rc11-20261106/hosted-linux-verification.json",
+      "bytes": 160,
+      "sha256": "b2d792bac7212201eb4ad75de6255cf6bef9d9e9cf5e3c5455bf1e87027b5d8b"
+    }
+  ],
+  "privateQualificationStore": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc11-20261106/qualification/evidence",
+  "publicProjections": "/home/lsz/Codebase/Mirrors/Plans/completion-rc11-20261106/public-evidence",
+  "windowsRetention": {
+    "status": "release-and-rollback-retained",
+    "sourceCommit": "19c31bf09b58e27c2942ca123a2017c30b638216",
+    "files": [
+      {
+        "path": "D:\\ModelMirrors\\releases\\20261106-v0.2.0-rc.11-19c31bf\\previous-ModelMirrors.exe",
+        "bytes": 111196672,
+        "sha256": "8173ddea65f78a88b1a303f8a233dd7113b28e7dc8aefd8916a5add25a3687cc"
+      },
+      {
+        "path": "D:\\ModelMirrors\\releases\\20261106-v0.2.0-rc.11-19c31bf\\mirrors-v0.2.0-rc.11-windows-x86_64.zip",
+        "bytes": 73727146,
+        "sha256": "f5ec1c9ba3204be04f797acb9086c3a6edd00dce81d7f478c5292b377b7c7df0"
+      },
+      {
+        "path": "D:\\ModelMirrors\\releases\\20261106-v0.2.0-rc.11-19c31bf\\deployed-ModelMirrors.exe",
+        "bytes": 111195648,
+        "sha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4"
+      }
+    ],
+    "credentialsIncluded": false,
+    "priorCopiesPreserved": true
+  },
+  "privateCredentialBytesIncluded": false
+}

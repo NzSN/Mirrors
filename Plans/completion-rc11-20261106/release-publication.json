@@ -1,0 +1,39 @@
+{
+  "status": "published-assets-downloaded-and-verified",
+  "url": "https://github.com/NzSN/Mirrors/releases/tag/v0.2.0-rc.11",
+  "tag": "v0.2.0-rc.11",
+  "sourceCommit": "19c31bf09b58e27c2942ca123a2017c30b638216",
+  "prerelease": true,
+  "isLatest": false,
+  "workflow": "https://github.com/NzSN/Mirrors/actions/runs/42186557688",
+  "workflowSucceeded": true,
+  "assets": [
+    {
+      "name": "mirrors-v0.2.0-rc.11-linux-x86_64.build.json",
+      "bytes": 2903,
+      "sha256": "b5cb926fe234c4b5f1518fd2b0967b8b07ad75ed2ce08c0d8537606bb1d5f9d6"
+    },
+    {
+      "name": "mirrors-v0.2.0-rc.11-linux-x86_64.tar.gz",
+      "bytes": 72210949,
+      "sha256": "9a0b069bc3b2f84e6a5825ff256072d129c6041c64777f06e22fcc2bb18cf259"
+    },
+    {
+      "name": "mirrors-v0.2.0-rc.11-windows-x86_64.zip",
+      "bytes": 73727146,
+      "sha256": "f5ec1c9ba3204be04f797acb9086c3a6edd00dce81d7f478c5292b377b7c7df0"
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 218,
+      "sha256": "640f89da23029b28bf896283225f8111e3144b386b3a4e3dcef40a500837c921"
+    }
+  ],
+  "hostedLinuxScope": "Ubuntu 24.04 workflow focused build/runtime gates plus local archive verification; no automatic M5 transfer",
+  "windowsScope": "exact fully tested native Windows binary/package at source commit",
+  "notes": {
+    "path": "Plans/completion-rc11-20261106/release-notes.md",
+    "bytes": 1793,
+    "sha256": "6ba522568e469518e21649ecb22db8c715e97d7e341172785d1f27f89d6975e4"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "status": "reboot-auto-start-and-live-controls-passed",
+  "beforeBootUtc": "2026-10-22T01:23:37.5000000Z",
+  "afterBootUtc": "2026-11-06T08:28:59.5000000Z",
+  "after": {
+    "status": "verified-running-auto-deployment",
+    "observedAt": "2026-11-06T08:29:34.1255955Z",
+    "lastBootUpTimeUtc": "2026-11-06T08:28:59.5000000Z",
+    "service": {
+      "pid": 5692,
+      "name": "ModelMirrors",
+      "startMode": "Auto",
+      "state": "Running"
+    },
+    "binary": {
+      "path": "D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+      "bytes": 111195648,
+      "sha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4"
+    },
+    "dlls": [
+      {
+        "path": "D:\\ModelMirrors\\bin\\libcrypto-3-x64.dll",
+        "bytes": 5689843,
+        "sha256": "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7"
+      },
+      {
+        "path": "D:\\ModelMirrors\\bin\\libssl-3-x64.dll",
+        "bytes": 1025928,
+        "sha256": "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c"
+      },
+      {
+        "path": "D:\\ModelMirrors\\bin\\zlib1.dll",
+        "bytes": 128488,
+        "sha256": "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5"
+      }
+    ],
+    "runtime": [
+      {
+        "path": "D:\\Programs\\apalache\\lib\\apalache.jar",
+        "bytes": 196982672,
+        "sha256": "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8"
+      },
+      {
+        "path": "D:\\Programs\\jdk-25.0.4+7\\bin\\java.exe",
+        "bytes": 49976,
+        "sha256": "58df5c13e5d6e68f242ad9b724479122828523008ef0907d3f2a02f54afaff23"
+      },
+      {
+        "path": "D:\\ModelMirrors\\bin\\apalache-mc.exe",
+        "bytes": 85504,
+        "sha256": "647d5a4924571f7fc605bf08f20dbb8f5abf956b993d151e737e5928aaa2cc94"
+      }
+    ],
+    "serverCertificateSha256": "b2fc7265145cf2b89a1a248b0932885df8d300121b47f7854317ece4bac9ce67",
+    "certificateNotAfterUtc": "2026-11-13T12:50:06.0000000Z",
+    "configurationPreserved": true,
+    "processes": [
+      {
+        "ProcessId": 6956,
+        "ParentProcessId": 5692,
+        "ExecutablePath": "D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+        "CreationDate": "/Date(1793953752418)/"
+      }
+    ],
+    "listeners": [
+      {
+        "LocalAddress": "0.0.0.0",
+        "LocalPort": 8999,
+        "OwningProcess": 6956
+      }
+    ]
+  },
+  "health": {
+    "status": "passed",
+    "scope": "post-reboot",
+    "clientSha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4",
+    "serverCertificateSha256": "b2fc7265145cf2b89a1a248b0932885df8d300121b47f7854317ece4bac9ce67",
+    "cases": [
+      {
+        "case": "sync-valid",
+        "exitCode": 0,
+        "logSha256": "936af308607b90e4c3a766f83fcb53dc1217c3c70c99c3fa8851d524afae7d1c"
+      },
+      {
+        "case": "sync-invalid",
+        "exitCode": 1,
+        "logSha256": "2530efb9c680b9591ea7a8c0e0ee984282043d535123768900e5a2aec8ccde1a"
+      },
+      {
+        "case": "async-valid",
+        "exitCode": 0,
+        "logSha256": "936af308607b90e4c3a766f83fcb53dc1217c3c70c99c3fa8851d524afae7d1c"
+      },
+      {
+        "case": "async-invalid",
+        "exitCode": 1,
+        "logSha256": "f7fb4c9df75e04be2ad82c1b64c6b2196d87b4ea1ac4be0970543952f921860b"
+      }
+    ],
+    "wrongPinRejected": true,
+    "credentialsExported": false
+  },
+  "userApproved": true
+}

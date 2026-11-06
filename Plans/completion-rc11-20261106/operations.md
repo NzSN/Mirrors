@@ -1,5 +1,10 @@
 # Rc.11 reviewed operation card
 
+Executed under the subsequent user approval. See [completion](completion.json)
+and [resolved deployment incident](deployment-incident.json). The original
+operation proposal below remains historical; `deploy-windows-v2.ps1` is the
+corrected controller used for successful replacement.
+
 Status: prepared only. No remote source/tag/release mutation, production
 replacement, or reboot has been performed. The original shared main/index remain
 unchanged. The governing execution plan requires separate approvals for these
