@@ -1,5 +1,4 @@
 import json
-import fcntl
 import os
 import shutil
 import tarfile
@@ -79,8 +78,8 @@ class InstallTransactionTests(unittest.TestCase):
                 "rootPrefix": "node", "include": ["bin/node"]}}},
                 "profiles": {"checked-replay-local": {"catalogProfileId": "declared-target", "combinationId": "fixture"}},
                 "catalog": {"distributionProfiles": [{"profileId": "declared-target", "platform": target_platform}]}}
-            with patch.object(installer.platform, "freedesktop_os_release",
-                              return_value={"ID": "ubuntu", "VERSION_ID": "26.04"}), \
+            with patch.object(installer.sys,"platform","linux"), patch.object(installer.platform, "freedesktop_os_release",
+                              return_value={"ID": "ubuntu", "VERSION_ID": "26.04"}, create=True), \
                  patch.object(installer.platform, "machine", return_value="x86_64"):
                 installer.materialize(cache, root / "runtime", manifest, contract)
             data = json.loads((root / "runtime/framework-input.json").read_text())
@@ -103,8 +102,8 @@ class InstallTransactionTests(unittest.TestCase):
                     installer.observed_package_version(root, "mirrorecma")
 
     def test_platform_observation_does_not_claim_the_catalogs_ubuntu_24_target(self) -> None:
-        with patch.object(installer.platform, "freedesktop_os_release",
-                          return_value={"ID": "ubuntu", "VERSION_ID": "26.04"}), \
+        with patch.object(installer.sys,"platform","linux"), patch.object(installer.platform, "freedesktop_os_release",
+                          return_value={"ID": "ubuntu", "VERSION_ID": "26.04"}, create=True), \
              patch.object(installer.platform, "machine", return_value="x86_64"):
             actual = installer.observed_platform("checked-replay-local")
             self.assertEqual(actual, {"os": "linux", "osRelease": "ubuntu-26.04",
@@ -112,7 +111,7 @@ class InstallTransactionTests(unittest.TestCase):
             self.assertNotEqual(actual["osRelease"], "ubuntu-24.04")
             self.assertEqual(installer.observed_platform("checked-replay-gate")["backend"],
                              "linux-bubblewrap-v1")
-        with patch.object(installer.platform, "freedesktop_os_release", return_value={"ID": "ubuntu"}):
+        with patch.object(installer.sys,"platform","linux"), patch.object(installer.platform, "freedesktop_os_release", return_value={"ID": "ubuntu"}, create=True):
             with self.assertRaisesRegex(ValueError, "incomplete"):
                 installer.observed_platform("checked-replay-local")
         with patch.object(installer.sys, "platform", "darwin"):
@@ -130,7 +129,10 @@ class InstallTransactionTests(unittest.TestCase):
             destination = root / "destination"
             installer.copy_cache_tree(source, destination)
             self.assertEqual((destination / "payload").read_bytes(), b"payload")
-            self.assertEqual(os.stat(destination / "payload").st_mode & 0o777, 0o755)
+            if os.name == 'nt':
+                installer.winfs.check_private(destination/'payload')
+                self.assertFalse((destination/'payload').stat().st_file_attributes&1)
+            else:self.assertEqual(os.stat(destination / "payload").st_mode & 0o777, 0o755)
             linked = root / "linked"
             linked.mkdir()
             (linked / "payload").symlink_to(payload)
@@ -142,11 +144,14 @@ class InstallTransactionTests(unittest.TestCase):
             stage = Path(temporary) / "stage"
             stage.mkdir()
             (stage / "marker").write_text("present\n")
-            descriptor = os.open(stage, os.O_RDONLY | os.O_DIRECTORY)
-            try:
-                installer.remove_real_directory(Path(f"/proc/self/fd/{descriptor}"))
-            finally:
-                os.close(descriptor)
+            if os.name == 'nt':
+                with installer.winfs.pin_directory(stage):installer.remove_real_directory(stage)
+            else:
+                descriptor = os.open(stage, os.O_RDONLY | os.O_DIRECTORY)
+                try:
+                    installer.remove_real_directory(Path(f"/proc/self/fd/{descriptor}"))
+                finally:
+                    os.close(descriptor)
             self.assertFalse(stage.exists())
 
     def test_staged_cache_is_verified_before_materialization(self) -> None:
@@ -212,14 +217,16 @@ class InstallTransactionTests(unittest.TestCase):
             cache = fake_cache(root, "d" * 64)
             prefix = root / "prefix"
             prefix.mkdir(mode=0o700)
+            if os.name == "nt": installer.winfs.set_private(prefix)
             lock = (prefix / ".install.lock").open("w")
-            fcntl.flock(lock.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+            installer.lock_prefix(lock.fileno())
             with self.assertRaisesRegex(ValueError, "locked"):
                 installer.install(cache, prefix, Path("/unused"), "0" * 64, None)
-            fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
+            installer.lock_prefix(lock.fileno(),unlock=True)
             lock.close()
             target = root / "elsewhere"
             target.mkdir(mode=0o700)
+            if os.name == "nt": installer.winfs.set_private(target)
             (prefix / "versions").symlink_to(target, target_is_directory=True)
             with self.assertRaisesRegex(ValueError, "real directory required"):
                 installer.install(cache, prefix, Path("/unused"), "0" * 64, None)
@@ -232,12 +239,31 @@ class InstallTransactionTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "not confined"):
                     installer.install(cache, prefix, Path("/unused"), "0" * 64, None)
 
+    def test_journal_paths_cannot_change_drive_stream_or_transaction_identity(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'transaction.json';digest='a'*64
+            document={'state':'staging','manifestDigest':digest,'previous':None,
+                      'stage':'.staging/'+digest+'.'+'1'*32}
+            path.write_text(json.dumps(document));self.assertEqual(installer.load_journal(path),document)
+            for relative in ['.staging/C:outside','.staging/name:stream','.staging/../outside',
+                             '.staging/nested/name','.staging/'+('b'*64)+'.'+('1'*32),
+                             '.staging/'+digest+'.'+('1'*31),'.staging/'+digest+'.'+('1'*32)+'\\outside']:
+                with self.subTest(relative=relative):
+                    path.write_text(json.dumps({**document,'stage':relative}))
+                    with self.assertRaisesRegex(ValueError,'not confined'):installer.load_journal(path)
+            document={'state':'committed','manifestDigest':digest,'previous':None,'version':'versions/'+digest}
+            path.write_text(json.dumps(document));self.assertEqual(installer.load_journal(path),document)
+            path.write_text(json.dumps({**document,'version':'versions/'+('b'*64)}))
+            with self.assertRaisesRegex(ValueError,'not confined'):installer.load_journal(path)
+
     def test_restart_recovery_verification_failure_restores_previous(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             prefix = Path(temporary) / "prefix"
             prefix.mkdir(mode=0o700)
+            if os.name == "nt": installer.winfs.set_private(prefix)
             versions = prefix / "versions"
             versions.mkdir(mode=0o700)
+            if os.name == "nt": installer.winfs.set_private(versions)
             for digest in ("a" * 64, "b" * 64):
                 version = versions / digest
                 (version / "cache").mkdir(parents=True)

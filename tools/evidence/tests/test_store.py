@@ -87,7 +87,7 @@ class StoreTests(unittest.TestCase):
         self.assertNotEqual(staged.stat().st_ino, retained.stat().st_ino)
         staged.write_bytes(b"mutated staging")
         os.chmod(staged, 0o600)
-        self.assertEqual(retained.read_bytes(), b"ok\n")
+        self.assertEqual(retained.read_bytes(), b"ok"+os.linesep.encode())
         self.assertEqual(verify.verify(bundle)["status"], "verified")
 
     def test_index_is_commit_marker(self):
@@ -154,7 +154,20 @@ class StoreTests(unittest.TestCase):
 
     def test_owner_permissions_are_verified(self):
         _, bundle, _ = self.finalized()
-        os.chmod(bundle, 0o755)
+        if os.name == 'nt':
+            import winfs
+            parent=winfs.open_directory(bundle.parent)
+            try: fd=winfs.open_at(parent,bundle.name,directory=True,acl_write=True)
+            finally: os.close(parent)
+            try:
+                descriptor=winfs.c.c_void_p()
+                sid=winfs.user_sid()
+                winfs._check(winfs.a.ConvertStringSecurityDescriptorToSecurityDescriptorW(
+                    f'D:P(A;;FA;;;{sid})(A;;GR;;;WD)',1,winfs.c.byref(descriptor),None))
+                try:winfs._check(winfs.a.SetKernelObjectSecurity(winfs._handle(fd),4|0x80000000,descriptor))
+                finally:winfs.k.LocalFree(descriptor)
+            finally:os.close(fd)
+        else: os.chmod(bundle, 0o755)
         with self.assertRaisesRegex(ValueError, "owner-only permissions"):
             verify.verify(bundle)
 
@@ -169,7 +182,8 @@ class StoreTests(unittest.TestCase):
 
     def test_regular_reader_rejects_fifo_and_max_plus_one(self):
         fifo = self.root / "record.fifo"
-        os.mkfifo(fifo, 0o600)
+        if os.name == "nt": fifo.mkdir()
+        else: os.mkfifo(fifo, 0o600)
         with self.assertRaisesRegex(ValueError, "not a regular file"):
             store.read_regular(fifo, max_bytes=4)
         record = self.root / "record.bin"
@@ -260,7 +274,8 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(index["status"], "historical-unqualified")
         self.assertIn("no-selected-framework-catalog", index["limitations"])
         self.assertEqual((destination / "files/referenced/Model.tla").read_bytes(), source.read_bytes())
-        self.assertEqual((destination / "source-package-index.json").stat().st_mode & 0o777, 0o600)
+        if os.name == "nt": store.check_private_file(destination/"source-package-index.json")
+        else: self.assertEqual((destination / "source-package-index.json").stat().st_mode & 0o777, 0o600)
         with self.assertRaisesRegex(ValueError, "bounded opaque identifier"):
             retain_source_package.retain(package, manifest, referenced, self.root / "bad-retained", "../escape")
 
@@ -281,8 +296,12 @@ class StoreTests(unittest.TestCase):
     def test_files_are_owner_only_and_public_projection_has_no_private_fields(self):
         _, bundle, _ = self.finalized()
         for path in bundle.rglob("*"):
-            mode = path.stat().st_mode & 0o777
-            self.assertEqual(mode, 0o700 if path.is_dir() else 0o600, path)
+            if os.name == "nt":
+                if path.is_dir(): store.ensure_owner_directory(path)
+                else: store.check_private_file(path)
+            else:
+                mode = path.stat().st_mode & 0o777
+                self.assertEqual(mode, 0o700 if path.is_dir() else 0o600, path)
         summary = json.loads((bundle / "public-summary.json").read_text())
         rendered = json.dumps(summary)
         self.assertNotIn("workingDirectory", rendered)

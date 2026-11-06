@@ -18,6 +18,7 @@ from jsonschema import Draft202012Validator
 from store import (
     create_owner_directory,
     create_owner_directory_exclusive,
+    check_private_file,
     ensure_owner_directory,
     fsync_directory,
     logical_path,
@@ -210,8 +211,7 @@ def finalize(staging_root: Path, store_root: Path | None = None) -> tuple[Path, 
         if total_bytes > MAX_BUNDLE_BYTES:
             raise ValueError("bundle exceeds 512 MiB")
         data, digest = read_regular(source)
-        if stat.S_IMODE(source.lstat().st_mode) != 0o600:
-            raise ValueError(f"staging artifact must use mode 0600: {artifact['artifactId']}")
+        check_private_file(source)
         if len(data) != artifact["bytes"] or digest != artifact["sha256"]:
             raise ValueError(f"staging artifact identity mismatch: {artifact['artifactId']}")
         payload_sources.append((source, relative))

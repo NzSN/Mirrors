@@ -15,6 +15,7 @@ from pathlib import Path
 
 EVIDENCE = Path(__file__).resolve().parents[1]
 COLLECTOR = EVIDENCE / "collect.py"
+sys.path.insert(0,str(EVIDENCE))
 
 
 class CollectorTests(unittest.TestCase):
@@ -57,6 +58,11 @@ class CollectorTests(unittest.TestCase):
     def attachment_plan(self, root: Path, attachments: list[dict], *,
                         adapter="none", adapter_artifact=None,
                         application=None) -> Path:
+        if os.name=='nt':
+            import winfs
+            winfs.set_private(root)
+            for child in root.iterdir():
+                if child.is_file() and not child.is_symlink():winfs.set_private(child)
         path = self.root / f"attachment-plan-{len(list(self.root.glob('attachment-plan-*')))}.json"
         path.write_text(json.dumps({
             "schemaVersion": "mirrors.evidence-attachment-plan/v1",
@@ -224,14 +230,14 @@ class CollectorTests(unittest.TestCase):
             [sys.executable, "-c", "import sys; print('out'); print('err', file=sys.stderr)"],
         )
         self.assertEqual(result.returncode, 0, result.stderr.decode())
-        self.assertEqual(result.stdout, b"out\n")
-        self.assertIn(b"err\n", result.stderr)
+        self.assertEqual(result.stdout, b"out"+os.linesep.encode())
+        self.assertIn(b"err"+os.linesep.encode(), result.stderr)
         envelope, root = self.envelope()
         self.assertEqual(envelope["commands"][0]["exit"], {"kind": "code", "code": 0})
         self.assertEqual(envelope["outcomes"]["behavior"]["status"], "passed")
         self.assertEqual(envelope["outcomes"]["persistence"]["status"], "incomplete")
-        self.assertEqual((root / "artifacts/private/stdout.log").read_bytes(), b"out\n")
-        self.assertEqual((root / "artifacts/private/stderr.log").read_bytes(), b"err\n")
+        self.assertEqual((root / "artifacts/private/stdout.log").read_bytes(), b"out"+os.linesep.encode())
+        self.assertEqual((root / "artifacts/private/stderr.log").read_bytes(), b"err"+os.linesep.encode())
 
     def test_planning_changes_during_command_are_audited_outside_identity(self):
         self.registry_for("fixture.planning", [sys.executable])
@@ -270,9 +276,9 @@ class CollectorTests(unittest.TestCase):
             "fixture.signal",
             [sys.executable, "-c", "import os,signal; os.kill(os.getpid(), signal.SIGTERM)"],
         )
-        self.assertEqual(result.returncode, -signal.SIGTERM)
+        self.assertEqual(result.returncode, 15 if os.name=="nt" else -signal.SIGTERM)
         envelope, _ = self.envelope()
-        self.assertEqual(envelope["commands"][0]["exit"], {"kind": "signal", "signal": "SIGTERM"})
+        self.assertEqual(envelope["commands"][0]["exit"], {"kind":"code","code":15} if os.name=="nt" else {"kind": "signal", "signal": "SIGTERM"})
 
     def test_timeout_is_bounded_and_preserves_child_signal(self):
         self.registry_for("fixture.timeout", [sys.executable])
@@ -281,7 +287,7 @@ class CollectorTests(unittest.TestCase):
             [sys.executable, "-c", "import time; time.sleep(30)"],
             "--timeout-seconds", "0.1",
         )
-        self.assertEqual(result.returncode, -signal.SIGTERM)
+        self.assertEqual(result.returncode, 137 if os.name=="nt" else -signal.SIGTERM)
         envelope, _ = self.envelope()
         self.assertEqual(envelope["outcomes"]["behavior"]["classification"]["code"], "timeout")
 
@@ -313,7 +319,7 @@ class CollectorTests(unittest.TestCase):
             "--timeout-seconds", "0.1",
         )
         self.assertLess(time.monotonic() - started, 3)
-        self.assertEqual(result.returncode, -signal.SIGTERM)
+        self.assertEqual(result.returncode, 137 if os.name=="nt" else -signal.SIGTERM)
         envelope, _ = self.envelope()
         self.assertEqual(envelope["outcomes"]["behavior"]["classification"]["code"], "timeout")
 
@@ -366,16 +372,48 @@ class CollectorTests(unittest.TestCase):
             ],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name=="nt" else 0,
         )
-        deadline = time.monotonic() + 5
-        while not started_marker.exists() and time.monotonic() < deadline:
-            time.sleep(0.02)
-        self.assertTrue(started_marker.exists())
-        process.send_signal(signal.SIGINT)
-        process.communicate(timeout=5)
-        self.assertEqual(process.returncode, -signal.SIGINT)
-        envelope, _ = self.envelope()
-        self.assertEqual(envelope["commands"][0]["exit"], {"kind": "signal", "signal": "SIGINT"})
+        try:
+            deadline = time.monotonic() + 5
+            while not started_marker.exists() and time.monotonic() < deadline:
+                time.sleep(0.02)
+            self.assertTrue(started_marker.exists())
+            if os.name=='nt':
+                result=subprocess.run([sys.executable,str(Path(__file__).with_name('windows_console_interrupt.py')),str(process.pid)],
+                    creationflags=0x8,capture_output=True,timeout=3)
+                self.assertEqual(result.returncode,0,result.stderr)
+            else:process.send_signal(signal.SIGINT)
+            process.communicate(timeout=5)
+            self.assertEqual(process.returncode, 137 if os.name=="nt" else -signal.SIGINT)
+            envelope, _ = self.envelope()
+            self.assertEqual(envelope["commands"][0]["exit"], {"kind":"code","code":137} if os.name=='nt' else {"kind": "signal", "signal": "SIGINT"})
+            if os.name=='nt':self.assertEqual(envelope['outcomes']['behavior']['classification']['code'],'interrupted-sigbreak')
+        finally:
+            if process.poll() is None:
+                process.terminate()
+                try:process.communicate(timeout=5)
+                except subprocess.TimeoutExpired:process.kill();process.communicate(timeout=2)
+
+    def test_installed_audit_must_match_retained_inputs_and_selected_catalog(self):
+        import collect,qualification_scope
+        selection={'selectionKind':'sha256','selectionValue':'a'*64}
+        component={'componentId':'mirrors','revision':'b'*40,'dirty':False}
+        manifest={'profileId':'checked-replay-local','catalogSelectionRef':selection,'componentRefs':[component]}
+        digest=hashlib.sha256(qualification_scope._canonical_framework_json(manifest)).hexdigest()
+        cache={'profileId':'checked-replay-local','catalogSelectionRef':selection,'distributionManifestSha256':digest}
+        receipt={'schemaVersion':'mirrors.installed-consumer-audit/v1','status':'passed',
+                 'manifestDigest':digest,'runs':[{'iteration':0},{'iteration':1}]}
+        plan=type('Plan',(),{'adapter_artifact_id':'install-diagnostics'})()
+        observation=collect.ChildObservation(0,False,False,b'',b'',False,False)
+        def check(value=receipt,selected=selection):
+            captured={key:json.dumps(data).encode() for key,data in [
+                ('install-diagnostics',value),('distribution-manifest',manifest),('cache-index',cache)]}
+            return collect._installed_audit_outcomes(plan,captured,observation,selected,[component])
+        self.assertEqual(check()[2],'passed')
+        with self.assertRaisesRegex(ValueError,'does not bind'):check({**receipt,'manifestDigest':'0'*64})
+        with self.assertRaisesRegex(ValueError,'both independent'):check({**receipt,'runs':[{'iteration':0}]})
+        with self.assertRaisesRegex(ValueError,'collected catalog'):check(selected={**selection,'selectionValue':'c'*64})
 
     def test_write_failure_does_not_replace_child_exit(self):
         self.registry_for("fixture.write-failure", [sys.executable])
@@ -950,7 +988,7 @@ class CollectorTests(unittest.TestCase):
             "schema": "mirrorgate.recovery-receipt/v1", "attemptId": "attempt-1",
             "trigger": "offline_reclaim", "original": None,
             "journalSchema": "mirrorgate.recovery-journal/v1",
-            "controllerInstance": "controller-1", "bootId": "boot-1", "principalUid": os.geteuid(),
+            "controllerInstance": "controller-1", "bootId": "boot-1", "principalUid": (1000 if os.name=="nt" else os.geteuid()),
             "ownershipObservations": ["reclaimed"], "cgroupObservations": [{
                 "resourceId":"resource-1",
                 "settings":{"pids.max":"32","memory.max":"1048576",
@@ -1088,6 +1126,9 @@ if __name__ == "__main__":
 class ReproductionCaptureAdapterTests(unittest.TestCase):
     def plan(self, root: Path, envelope: Path, suite: Path):
         import collect
+        if os.name=='nt':
+            import winfs
+            winfs.set_private(root);winfs.set_private(envelope);winfs.set_private(suite)
         plan_path = root / "plan.json"
         plan_path.write_text(json.dumps({
             "schemaVersion": "mirrors.evidence-attachment-plan/v1",

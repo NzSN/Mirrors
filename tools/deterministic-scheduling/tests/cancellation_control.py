@@ -67,9 +67,9 @@ def reap_adopted_children():
 
 
 def runner(root, scenario):
-    signal.signal(signal.SIGTERM, signal.SIG_IGN)
+    if os.name != 'nt': signal.signal(signal.SIGTERM, signal.SIG_IGN)
     pending = root / 'control/runner.pending'
-    pending.write_text(json.dumps({'pid': os.getpid(), 'pgid': os.getpgrp()}))
+    pending.write_text(json.dumps({'pid': os.getpid(), 'pgid': os.getpgrp() if os.name != 'nt' else os.getpid()}))
     pending.rename(root / 'control/runner.json')
     print('runner-ready', flush=True)
     print('runner-error-log', file=sys.stderr, flush=True)
@@ -88,22 +88,36 @@ def run_host(root, source, scenario):
     exec(compile(ast.Module(body=[cancelled], type_ignores=[]), str(source / 'cli.py'), 'exec'), scope)
     for signum in [signal.SIGTERM, signal.SIGINT]:
         signal.signal(signum, scope['cancelled'])
-    original_mask = signal.pthread_sigmask(signal.SIG_BLOCK, set())
+    original_mask = signal.pthread_sigmask(signal.SIG_BLOCK, set()) if os.name != 'nt' else None
     owned_ast = next(node for node in ast.parse(raw).body
-        if isinstance(node, ast.FunctionDef) and node.name == '_run_owned_process')
-    wait_line = next(node.lineno for node in ast.walk(owned_ast)
-        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
-        and isinstance(node.func.value, ast.Name) and node.func.value.id == 'child'
-        and node.func.attr == 'wait' and any(keyword.arg == 'timeout' for keyword in node.keywords))
+        if isinstance(node, ast.FunctionDef) and node.name == ('_run_windows_process' if os.name == 'nt' else '_run_owned_process'))
+    if os.name == 'nt':
+        wait_line = next(node.lineno for node in ast.walk(owned_ast)
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+            and node.func.attr == 'terminate')
+    else:
+        wait_line = next(node.lineno for node in ast.walk(owned_ast)
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+            and isinstance(node.func.value, ast.Name) and node.func.value.id == 'child'
+            and node.func.attr == 'wait' and any(keyword.arg == 'timeout' for keyword in node.keywords))
     process_try = next(node for node in owned_ast.body if isinstance(node, ast.Try) and node.finalbody)
     cleanup_entry_line = process_try.finalbody[0].lineno
     entry_control = scenario.startswith('cleanup-entry-')
     synchronized = False
+    def check_cancel():
+        if os.name == 'nt':
+            request = root / 'control/cancel'
+            if request.exists():
+                request.unlink()
+                scope['cancelled'](signal.SIGINT, None)
+                pending = root/'control/ack.pending'; pending.write_text('ack')
+                pending.rename(root/'control/cancel-ack')
     def trace(frame, event, _arg):
         nonlocal synchronized
-        if (not synchronized and event == 'line' and frame.f_code.co_name == '_run_owned_process'
+        if event == 'line' and frame.f_code.co_filename == module.__file__: check_cancel()
+        if (not synchronized and event == 'line' and frame.f_code.co_name == owned_ast.name
                 and frame.f_lineno == (cleanup_entry_line if entry_control else wait_line)
-                and (entry_control or frame.f_locals.get('sig') == signal.SIGTERM)):
+                and (os.name == 'nt' or entry_control or frame.f_locals.get('sig') == signal.SIGTERM)):
             synchronized = True
             pending = root / 'control/cleanup.pending'
             pending.write_text(json.dumps({
@@ -112,6 +126,7 @@ def run_host(root, source, scenario):
             pending.rename(root / 'control/cleanup-entered')
             deadline = time.monotonic() + 2
             while not (root / 'control/release').exists():
+                check_cancel()
                 if time.monotonic() > deadline:
                     raise RuntimeError('external cleanup synchronization deadline exceeded')
                 time.sleep(0.001)
@@ -129,17 +144,26 @@ def run_host(root, source, scenario):
     finally:
         sys.settrace(None)
     result['handlersRestored'] = all(signal.getsignal(s) is scope['cancelled'] for s in [signal.SIGINT, signal.SIGTERM])
-    result['maskRestored'] = signal.pthread_sigmask(signal.SIG_BLOCK, set()) == original_mask
+    result['maskRestored'] = (signal.pthread_sigmask(signal.SIG_BLOCK, set()) == original_mask) if os.name != 'nt' else True
     result['ownerRegistrationRestored'] = module._ACTIVE_PROCESS_CANCELLATION is None
     result['retainedBytesAfterReturn'] = module.retained_bytes(root / 'request')
     logs = {str((root / 'request' / name).absolute()) for name in ['stdout.log', 'stderr.log']}
     open_logs = []
-    for descriptor in Path('/proc/self/fd').iterdir():
+    for descriptor in (Path('/proc/self/fd').iterdir() if os.name != 'nt' else []):
         try:
             if os.readlink(descriptor) in logs:
                 open_logs.append(descriptor.name)
         except OSError:
             pass
+    if os.name == 'nt':
+        # Python's file handles do not share delete access on Windows. Probe
+        # before host exit, so leaked handles cannot be hidden by process exit.
+        for name in ['stdout.log','stderr.log']:
+            path = root/'request'/name; moved = path.with_suffix('.closed-probe')
+            try:
+                path.rename(moved); moved.rename(path)
+            except OSError: open_logs.append(name)
+    result['signalMaskApplicable'] = os.name != 'nt'
     result['openLogDescriptorsAfterReturn'] = open_logs
     print(json.dumps(result), flush=True)
     return exit_code
@@ -220,6 +244,62 @@ def control(source, output, scenario):
     return result
 
 
+def control_windows(source, output, scenario):
+    # Windows cannot deliver POSIX signals with os.kill: SIGTERM terminates the
+    # target. Synchronize the exact CLI callback on the host's main thread.
+    module = types.ModuleType('dpm_host'); module.__file__ = str(source / 'dpm_host.py')
+    exec(compile((source/'dpm_host.py').read_bytes(), module.__file__, 'exec'), module.__dict__)
+    root = output / scenario
+    (root/'control').mkdir(parents=True); (root/'request').mkdir()
+    owner = module._WindowsJob()
+    pipes = []
+    def cancel():
+        ack = root/'control/cancel-ack'; ack.unlink(missing_ok=True)
+        pending = root/'control/cancel.pending'; pending.write_text('cancel')
+        pending.rename(root/'control/cancel')
+        deadline = time.monotonic()+3
+        while not ack.exists():
+            if (owner.poll() is not None or time.monotonic()>deadline) and not ack.exists(): raise RuntimeError('cancellation acknowledgement missing')
+            time.sleep(0.001)
+    class Host:
+        def poll(self): return owner.poll()
+    host = Host()
+    try:
+        with open(os.devnull, 'rb') as null:
+            pipes = owner.start([sys.executable,'-I','-S','-B',str(SELF),'--host',str(root),str(source),scenario], root, null)
+        deadline=time.monotonic()+5
+        wait_file(root/'control/runner.json',host,deadline)
+        runner_info=json.loads((root/'control/runner.json').read_text())
+        if scenario in ['single','repeated','cleanup-entry-repeated']: cancel()
+        wait_file(root/'control/cleanup-entered',host,deadline)
+        if scenario in ['repeated','timeout-first'] or scenario.startswith('cleanup-entry-') or scenario=='finalization-first': cancel()
+        if scenario=='cleanup-entry-repeated': cancel()
+        (root/'control/release').write_text('release')
+        # Repeated callbacks remain registered throughout cleanup. Deliver both
+        # before releasing the synchronized cleanup hook to avoid a timing race.
+        while owner.poll() is None:
+            if time.monotonic()>deadline: raise RuntimeError('host deadline exceeded')
+            time.sleep(0.001)
+        stdout,stderr=[pipe.read().decode() for pipe in pipes]
+        if not stdout: raise RuntimeError('host produced no result: '+stderr)
+        final=json.loads(stdout)
+        # No handle to a retained log may remain open when ownership returns.
+        for name in ['stdout.log','stderr.log']:
+            path=root/'request'/name; moved=path.with_suffix('.probe')
+            path.rename(moved); moved.rename(path)
+        if owner.active(): raise RuntimeError('live owned process after host exit')
+        return {'scenario':scenario,'hostExit':owner.poll(),'hostResult':final,
+            'runnerStateAfterHostExit':None,'runnerStateAfterControllerCleanup':None,
+            'hostStateAfterControllerCleanup':None,'allControllerChildrenReaped':True,
+            'controllerReapedRunner':False,'stdoutLog':(root/'request/stdout.log').read_text(),
+            'stderrLog':(root/'request/stderr.log').read_text(),
+            'cancellationTransport':'main-thread-exact-cli-handler-callback',
+            'cleanupSynchronization':json.loads((root/'control/cleanup-entered').read_text())}
+    finally:
+        owner.terminate(); owner.close()
+        for pipe in pipes: pipe.close()
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--source', type=Path, required=True)
@@ -227,10 +307,11 @@ def main():
     parser.add_argument('--scenario', choices=SCENARIOS)
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
-    libc = ctypes.CDLL(None, use_errno=True)
-    if libc.prctl(36, 1, 0, 0, 0) != 0:
-        raise RuntimeError('external controller subreaper unavailable')
-    rows = [control(args.source.absolute(), args.out.absolute(), scenario)
+    if os.name != 'nt':
+        libc = ctypes.CDLL(None, use_errno=True)
+        if libc.prctl(36, 1, 0, 0, 0) != 0:
+            raise RuntimeError('external controller subreaper unavailable')
+    rows = [(control_windows if os.name == 'nt' else control)(args.source.absolute(), args.out.absolute(), scenario)
             for scenario in ([args.scenario] if args.scenario else SCENARIOS)]
     result = {'schema': 'mirrors.dpm-cancellation-controls/v1',
         'scope': 'owned-process-and-exact-cli-handler',

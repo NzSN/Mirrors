@@ -39,10 +39,13 @@ def writeModule (dir : System.FilePath) (name : String)
   IO.FS.writeFile (dir / (name ++ ".tla")) (moduleText name body)
 
 def makeSymlink (target link : System.FilePath) : IO (Except String Unit) := do
-  let output ← IO.Process.output {
-    cmd := "ln"
-    args := #["-s", "--", target.toString, link.toString]
-  }
+  let output ← IO.Process.output <| if System.Platform.isWindows then
+    { cmd := "python3"
+      args := #["-I", "-S", "-B", "-c",
+        "import os,sys;os.symlink(sys.argv[1],sys.argv[2])", target.toString, link.toString] }
+    else
+    { cmd := "ln"
+      args := #["-s", "--", target.toString, link.toString] }
   if output.exitCode == 0 then return .ok ()
   return .error output.stderr
 
@@ -186,17 +189,14 @@ def scenarioBorrowedProvider (fails : Failures) : IO Unit := do
   | _, _ =>
       check fails "adapters: equal logical identity" false "root read failed"
 
-  if System.Platform.isWindows then
-    IO.println "SKIP borrowed symlink case on Windows"
-  else
-    match ← makeSymlink (directory / "Root.tla") (directory / "Alias.tla") with
-    | .error error =>
-        check fails "borrowed: symlink case created" false error
-    | .ok () =>
-        check fails "borrowed: symlink rejected"
-          (match errorOf? (← provider.readDependency (moduleName "Alias")) with
-            | some (.symbolicLink "Alias.tla") => true
-            | _ => false)
+  match ← makeSymlink (directory / "Root.tla") (directory / "Alias.tla") with
+  | .error error =>
+      check fails "borrowed: symlink case created" false error
+  | .ok () =>
+      check fails "borrowed: symlink rejected"
+        (match errorOf? (← provider.readDependency (moduleName "Alias")) with
+          | some (.symbolicLink "Alias.tla") => true
+          | _ => false)
 
   -- Per-file byte bounds are enforced before and during the read.
   let rootBytes := (moduleText "Root" "EXTENDS Base").toUTF8.size
@@ -672,9 +672,6 @@ def scenarioResolverInstances (fails : Failures) : IO Unit := do
           #[#[substitution], #[]].toList)
 
 def scenarioResolverFilesystem (fails : Failures) : IO Unit := do
-  if System.Platform.isWindows then
-    IO.println "SKIP resolver filesystem case on Windows"
-    return
   let root ← IO.FS.createTempDir
   writeModule root "FsRoot" "EXTENDS Alias"
   writeModule root "AliasTarget" "TargetOp == TRUE"

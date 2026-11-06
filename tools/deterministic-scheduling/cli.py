@@ -56,9 +56,10 @@ def main():
     signal.signal(signal.SIGTERM, cancelled)
     signal.signal(signal.SIGINT, cancelled)
     # The runner owner must clean up if its Lean launcher is terminated.
+    if os.name == 'nt': host.watch_windows_parent()
     parent = os.getppid()
-    libc = ctypes.CDLL(None, use_errno=True)
-    if hasattr(libc, 'prctl'):
+    libc = ctypes.CDLL(None, use_errno=True) if os.name != 'nt' else None
+    if libc is not None and hasattr(libc, 'prctl'):
         if libc.prctl(1, signal.SIGTERM, 0, 0, 0) != 0: raise Refusal('parent-death notification unavailable')
         if os.getppid() != parent: raise Refusal('launcher exited during startup')
     parser = argparse.ArgumentParser(prog='mirrors-dpm')

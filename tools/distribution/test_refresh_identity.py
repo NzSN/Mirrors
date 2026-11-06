@@ -76,7 +76,7 @@ class LockProductPropagationTests(unittest.TestCase):
             self.assertEqual(locked["mirrors"]["componentRef"], refs["mirrors"])
 
 
-PREPARED = "0.2.0-rc.8"
+PREPARED = "0.2.0-rc.11"
 
 
 class SourceProductRefreshTests(unittest.TestCase):

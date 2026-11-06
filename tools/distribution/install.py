@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import fcntl
 import json
 import os
 import platform
@@ -15,6 +14,12 @@ import uuid
 import re
 import tempfile
 from pathlib import Path
+
+if os.name != 'nt':
+    import fcntl
+else:
+    sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'evidence'))
+    import winfs
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -29,6 +34,10 @@ MAX_CACHE_BYTES = 2 * 1024 * 1024 * 1024
 
 
 def reject_symlink_chain(path: Path) -> None:
+    if os.name == 'nt':
+        fd=winfs.open_directory(path)
+        os.close(fd)
+        return
     current = Path(path.anchor)
     for part in path.parts[1:]:
         current /= part
@@ -37,6 +46,10 @@ def reject_symlink_chain(path: Path) -> None:
 
 
 def filesystem_type(path: Path) -> str:
+    if os.name == 'nt':
+        fd=winfs.open_directory(path)
+        try:return winfs.filesystem_type(fd)
+        finally:os.close(fd)
     resolved = path.resolve()
     best = (0, "")
     for line in Path("/proc/self/mountinfo").read_text().splitlines():
@@ -67,6 +80,7 @@ def check_case_sensitive(prefix: Path) -> None:
 
 def remove_real_directory(path: Path) -> None:
     """Remove a directory opened through /proc/self/fd without rmtree on the symlink."""
+    if os.name == "nt": return winfs.remove_directory(path)
     target = Path(os.path.realpath(path))
     info = target.lstat()
     if stat.S_ISLNK(info.st_mode) or not stat.S_ISDIR(info.st_mode):
@@ -75,12 +89,17 @@ def remove_real_directory(path: Path) -> None:
 
 
 def fsync_directory(path: Path) -> None:
+    if os.name == "nt": return winfs.fsync_directory(path)
     descriptor = os.open(path, os.O_RDONLY)
     try: os.fsync(descriptor)
     finally: os.close(descriptor)
 
 
 def safe_directory(path: Path) -> None:
+    if os.name == 'nt':
+        try:winfs.create_directory(path)
+        except (OSError,ValueError) as error:raise ValueError(f'real directory required, with owner-only permissions: {path}') from error
+        return
     if path.exists():
         metadata = path.lstat()
         if stat.S_ISLNK(metadata.st_mode) or not stat.S_ISDIR(metadata.st_mode):
@@ -99,6 +118,9 @@ def fsync_tree(root: Path) -> None:
             raise ValueError(f"unsupported staged entry: {path}")
         if stat.S_ISDIR(metadata.st_mode): directories.append(path)
         else:
+            if os.name == "nt":
+                winfs.fsync_file(path)
+                continue
             descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0))
             try: os.fsync(descriptor)
             finally: os.close(descriptor)
@@ -108,6 +130,9 @@ def fsync_tree(root: Path) -> None:
 
 def copy_cache_tree(source: Path, destination: Path) -> None:
     """Copy an untrusted cache through pinned descriptors without following links."""
+    if os.name == 'nt':
+        return winfs.copy_tree(source,destination,max_entries=MAX_CACHE_ENTRIES,
+            max_file_bytes=MAX_CACHE_FILE_BYTES,max_bytes=MAX_CACHE_BYTES)
     source_fd = os.open(source, os.O_RDONLY | os.O_DIRECTORY |
         getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_CLOEXEC", 0))
     destination.mkdir(mode=0o700, exist_ok=False)
@@ -236,10 +261,12 @@ def load_journal(path: Path) -> dict:
         if not isinstance(digest, str) or not DIGEST.fullmatch(digest) or previous["versionDirectory"] != f"versions/{digest}":
             raise ValueError("transaction previous selector is not confined")
     relative = value.get("stage") or value.get("version")
-    if not isinstance(relative, str) or Path(relative).is_absolute() or ".." in Path(relative).parts:
-        raise ValueError("transaction resource path is invalid")
-    expected_prefix = ".staging/" if "stage" in value else "versions/"
-    if not relative.startswith(expected_prefix): raise ValueError("transaction resource path is not confined")
+    digest=value['manifestDigest']
+    if 'stage' in value:
+        valid=isinstance(relative,str) and re.fullmatch(r'\.staging/'+digest+r'\.[0-9a-f]{32}',relative)
+    else:
+        valid=relative=='versions/'+digest
+    if not valid:raise ValueError('transaction resource path is not confined to its manifest digest')
     return value
 
 
@@ -564,7 +591,8 @@ def recover_internal_state(prefix: Path, versions: Path, staging: Path,
             abandoned = stage.with_name(stage.name + ".abandoned")
             if abandoned.exists():
                 raise ValueError("ambiguous abandoned stage already exists")
-            os.replace(stage, abandoned)
+            if os.name=="nt":winfs.rename_directory_in_place(stage,abandoned)
+            else:os.replace(stage, abandoned)
         write_json(journal_path, {**journal, "state": "abandoned-stage"})
     elif state == "activating":
         active = selector(prefix)
@@ -598,7 +626,8 @@ def recover_internal_state(prefix: Path, versions: Path, staging: Path,
 def activate_selector(prefix: Path, value: dict) -> None:
     temporary = prefix / f".active.{uuid.uuid4().hex}.tmp"
     write_json(temporary, value)
-    os.replace(temporary, prefix / "active.json")
+    if os.name=="nt":winfs.replace_file(temporary,prefix/"active.json")
+    else:os.replace(temporary, prefix / "active.json")
     fsync_directory(prefix)
 
 
@@ -630,9 +659,11 @@ def _populate_and_activate(cache: Path, prefix: Path, versions: Path, stage: Pat
         verify_installation(destination, framework_catalog_bin, framework_catalog_sha256)
         remove_real_directory(stage)
     else:
-        if os.fstat(stage_fd).st_dev != os.fstat(versions_fd).st_dev:
+        getstat=winfs.fstat if os.name == "nt" else os.fstat
+        if getstat(stage_fd).st_dev != getstat(versions_fd).st_dev:
             raise ValueError("stage and versions are not on the same filesystem")
-        os.rename(stage_name, digest, src_dir_fd=staging_fd, dst_dir_fd=versions_fd)
+        if os.name == "nt":winfs.rename_pinned_directory(stage,staging_fd,versions_fd,digest)
+        else:os.rename(stage_name, digest, src_dir_fd=staging_fd, dst_dir_fd=versions_fd)
         fsync_directory(versions)
     if fail_at == "after-version-rename": raise RuntimeError("injected after version rename")
     write_json(prefix / "transaction.json", {"state": "activating", "manifestDigest": digest,
@@ -670,6 +701,16 @@ def _install_locked(cache: Path, prefix: Path, versions: Path, staging: Path,
             framework_catalog_sha256)
         return "idempotent", digest
     stage_name = f"{digest}.{uuid.uuid4().hex}"
+    if os.name == 'nt':
+        stage=staging/stage_name
+        created=winfs.open_at(staging_fd,stage_name,directory=True,create=True,exclusive=True,write=True,private=True)
+        try:created_id=winfs.fstat(created).st_ino
+        finally:os.close(created)
+        with winfs.pin_directory(stage) as stage_fd:
+            if winfs.fstat(stage_fd).st_ino!=created_id:raise ValueError('stage changed during acquisition')
+            return _populate_and_activate(cache,prefix,versions,stage,stage_name,stage_fd,
+                staging_fd,versions_fd,manifest,contract,digest,previous,
+                framework_catalog_bin,framework_catalog_sha256,fail_at)
     os.mkdir(stage_name, 0o700, dir_fd=staging_fd)
     stage_fd = os.open(stage_name, os.O_RDONLY | os.O_DIRECTORY |
         getattr(os, "O_NOFOLLOW", 0), dir_fd=staging_fd)
@@ -684,6 +725,7 @@ def _install_locked(cache: Path, prefix: Path, versions: Path, staging: Path,
 
 def install(cache: Path, prefix: Path, framework_catalog_bin: Path,
     framework_catalog_sha256: str, fail_at: str | None) -> tuple[str, str]:
+    if os.name == "nt":return _install_windows(cache,prefix,framework_catalog_bin,framework_catalog_sha256,fail_at)
     prefix = prefix.absolute()
     reject_symlink_chain(prefix.parent)
     if prefix.exists():
@@ -735,6 +777,39 @@ def install(cache: Path, prefix: Path, framework_catalog_bin: Path,
         os.close(prefix_fd)
         fcntl.flock(lock_descriptor, fcntl.LOCK_UN)
         os.close(lock_descriptor)
+
+
+def lock_prefix(fd, *, unlock=False):
+    if os.name == 'nt':return winfs.lock(fd,unlock=unlock)
+    fcntl.flock(fd,fcntl.LOCK_UN if unlock else fcntl.LOCK_EX|fcntl.LOCK_NB)
+
+
+def _install_windows(cache,prefix,framework_catalog_bin,framework_catalog_sha256,fail_at):
+    prefix=prefix.absolute()
+    try:
+        with winfs.pin_directory(prefix,create=True) as prefix_fd:
+            winfs.check_private_fd(prefix_fd)
+            actual_fs=winfs.filesystem_type(prefix_fd)
+            if actual_fs!='ntfs':raise ValueError(f'native Windows transaction requires NTFS, got {actual_fs!r}')
+            lock=winfs.open_at(prefix_fd,'.install.lock',create=True,write=True,private=True)
+            try:
+                winfs.check_private_fd(lock)
+                try:lock_prefix(lock)
+                except BlockingIOError as error:raise ValueError('installation prefix is locked') from error
+                try:
+                    allowed={'versions','.staging','.install.lock','active.json','transaction.json'}
+                    unknown=sorted(set(winfs.listdir(prefix_fd))-allowed)
+                    if unknown:raise ValueError('unknown installation entry: '+unknown[0])
+                    versions=prefix/'versions';staging=prefix/'.staging'
+                    safe_directory(versions);safe_directory(staging)
+                    with winfs.pin_directory(versions,writable=False,share_write=True) as versions_fd,winfs.pin_directory(staging) as staging_fd:
+                        return _install_locked(cache,prefix,versions,staging,versions_fd,staging_fd,
+                            framework_catalog_bin,framework_catalog_sha256,fail_at)
+                finally:lock_prefix(lock,unlock=True)
+            finally:os.close(lock)
+    except OSError as error:
+        if getattr(error,'winerror',None)==32:raise ValueError('installation prefix is locked') from error
+        raise
 
 
 def main() -> int:

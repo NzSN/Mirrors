@@ -16,7 +16,7 @@ import shutil
 import subprocess
 import uuid
 # Generated helper pins; refresh_host_identity.py updates these before packaging.
-_HELPER_SHA256 = {'dpm_host': 'e6177f91bda1088cb711e6c1c4848d23eecfcd60755e0b00f35556daa7bd8e88'}  # refreshed helper identities
+_HELPER_SHA256 = {'dpm_host': '82e97aa3b6672116ffa6b1c1137612328ab62e823dc1bd2398871bbf5b05b77a'}  # refreshed helper identities
 
 def _load_helper(name):
     source = Path(__file__).with_name(name + '.py')
@@ -34,12 +34,16 @@ Refusal, regular, sha, strict, write = (_host.Refusal, _host.regular, _host.sha,
 
 
 def inventory(root):
+    if any(_host._is_link(part) for part in [root, *root.parents]):
+        raise Refusal('symlink installation root')
     rows = {}
     for file in sorted(root.rglob('*')):
-        if file.is_symlink(): raise Refusal('symlink in installation tree')
+        if _host._is_link(file): raise Refusal('symlink in installation tree')
         if file.is_file():
             regular(file)
             rows[str(file.relative_to(root))] = {'sha256':sha(file),'executable':bool(file.stat().st_mode & 0o111)}
+            if os.name == 'nt':
+                rows[str(file.relative_to(root))]['readOnly'] = bool(file.stat().st_file_attributes & 1)
     return rows
 
 
@@ -48,6 +52,11 @@ def verify(root, rows):
 
 
 def no_replace(source, destination):
+    if os.name == 'nt':
+        # os.rename uses MoveFileExW without REPLACE_EXISTING on Windows.
+        # The same-volume rename refuses existing files and directories.
+        os.rename(source, destination)
+        return
     libc = ctypes.CDLL(None, use_errno=True)
     if not hasattr(libc,'renameat2'): raise Refusal('atomic no-overwrite rename unavailable')
     libc.renameat2.argtypes=[ctypes.c_int,ctypes.c_char_p,ctypes.c_int,ctypes.c_char_p,ctypes.c_uint]
@@ -80,9 +89,9 @@ def main():
         if set(project)!= {'path','sha256'} or project['path'] not in manifest['files'] or manifest['files'][project['path']]['sha256']!=project['sha256']:
             raise Refusal('project not bound to installation')
     destination=args.dest.absolute()
-    if destination.exists() or destination.is_symlink(): raise Refusal('existing destination preserved')
+    if destination.exists() or _host._is_link(destination): raise Refusal('existing destination preserved')
     destination.parent.mkdir(parents=True,exist_ok=True)
-    if any(p.is_symlink() for p in [destination.parent,*destination.parent.parents]): raise Refusal('symlink destination parent')
+    if any(_host._is_link(p) for p in [destination.parent,*destination.parent.parents]): raise Refusal('symlink destination parent')
     staging=destination.parent/('.'+destination.name+'.staging-'+uuid.uuid4().hex)
     try:
         shutil.copytree(source,staging)

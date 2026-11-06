@@ -79,7 +79,8 @@ Runner evidence has both per-request `outputBytes` and operation-wide
 request/schedule copies, raw SDK receipts, envelopes, logs, temporary helper
 inputs/outputs, receipt copies and final reports. Duplicate representations count
 separately. Existing project/oracle inputs outside the output tree are excluded.
-Each request gets a new process group and new output directory. Logs are drained
+Each request gets a new process group (POSIX) or creation-time assigned
+kill-on-close job (Windows), and a new output directory. Logs are drained
 through capped streams; nested SDKs inherit those streams. Directory accounting
 runs during execution and after owned processes stop and streams drain; symlinks
 and special files refuse. Host writes are charged before publication. The host

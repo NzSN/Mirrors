@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import platform
 import selectors
 import shutil
 import signal
@@ -26,7 +27,13 @@ from command_registry import parse_registry, select_command
 from source_policy import is_planning_documentation
 from store import (create_owner_directory, create_owner_directory_exclusive,
                    open_owner_directory, read_regular, write_exclusive)
+if os.name == "nt":
+    import winfs
 from validate import ROOT as EVIDENCE_ROOT, load_json, loads_json_bytes
+
+
+def _fstat(fd):
+    return winfs.fstat(fd) if os.name=='nt' else os.fstat(fd)
 
 
 ROOT = Path(__file__).resolve().parent
@@ -154,17 +161,29 @@ def _selected_content_digest(
             kind, mode, size = b"file", stat.S_IMODE(before.st_mode), before.st_size
             if size > MAX_DIRTY_FILE_BYTES or total_bytes + size > MAX_DIRTY_TOTAL_BYTES:
                 raise ValueError(f"dirty source hashing limit exceeded at: {path}")
-            with full.open("rb") as handle:
-                opened = os.fstat(handle.fileno())
-                while chunk := handle.read(1024 * 1024):
-                    content_digest.update(chunk)
-                closed = os.fstat(handle.fileno())
-            stable = (opened.st_dev, opened.st_ino, opened.st_size, opened.st_mtime_ns, opened.st_mode)
-            if stable != (closed.st_dev, closed.st_ino, closed.st_size, closed.st_mtime_ns, closed.st_mode):
-                raise ValueError(f"dirty source changed while hashing: {path}")
-            after = full.lstat()
-            if stable != (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns, after.st_mode):
-                raise ValueError(f"dirty source changed while hashing: {path}")
+            if os.name=='nt':
+                # CPython 3.12 reports expanded volume/file IDs for named stat;
+                # compare those only with named stat, and let the native reader
+                # independently bind its opened and named handles by NTFS ID.
+                data,_digest=winfs.read_regular(full,max_bytes=MAX_DIRTY_FILE_BYTES)
+                content_digest.update(data)
+                after=full.lstat()
+                identity=lambda value:(value.st_dev,value.st_ino,value.st_size,value.st_mtime_ns,value.st_mode)
+                if len(data)!=size or identity(before)!=identity(after):
+                    raise ValueError(f'dirty source changed while hashing: {path}')
+            else:
+                with full.open("rb") as handle:
+                    opened = _fstat(handle.fileno())
+                    while chunk := handle.read(1024 * 1024):
+                        content_digest.update(chunk)
+                    closed = _fstat(handle.fileno())
+                stable = (opened.st_dev, opened.st_ino, opened.st_size, opened.st_mtime_ns, opened.st_mode)
+                if stable != (closed.st_dev, closed.st_ino, closed.st_size, closed.st_mtime_ns, closed.st_mode):
+                    raise ValueError(f"dirty source changed while hashing: {path}")
+                after = full.lstat()
+                if stable != (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns, after.st_mode):
+                    raise ValueError(f"dirty source changed while hashing: {path}")
+
         else:
             raise ValueError(f"dirty path is not a regular file or symlink: {path}")
         total_bytes += size
@@ -245,6 +264,7 @@ class ChildObservation:
     stderr: bytes
     stdout_exceeded: bool
     stderr_exceeded: bool
+    interrupted: str | None = None
 
 
 @dataclass(frozen=True)
@@ -299,7 +319,7 @@ def _attachment_identity(info: os.stat_result) -> tuple[int, int, int, int, int]
 
 def _attachment_stat(root_fd: int, name: str) -> os.stat_result | None:
     try:
-        return os.stat(name, dir_fd=root_fd, follow_symlinks=False)
+        return winfs.stat_at(root_fd, name) if os.name == "nt" else os.stat(name, dir_fd=root_fd, follow_symlinks=False)
     except FileNotFoundError:
         return None
 
@@ -334,7 +354,7 @@ def prepare_attachment_plan(path: Path) -> AttachmentPlan:
     source_root = Path(source_root_value)
     root_fd = open_owner_directory(source_root)
     try:
-        root_info = os.fstat(root_fd)
+        root_info = _fstat(root_fd)
         application = document["application"]
         if application is not None:
             application = _attachment_id(application, "application")
@@ -443,11 +463,12 @@ def prepare_attachment_plan(path: Path) -> AttachmentPlan:
 
 def _read_attachment(plan: AttachmentPlan, spec: AttachmentSpec) -> bytes:
     flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
-    descriptor = os.open(spec.relative_path, flags, dir_fd=plan.root_fd)
+    descriptor = winfs.open_at(plan.root_fd, spec.relative_path) if os.name == "nt" else os.open(spec.relative_path, flags, dir_fd=plan.root_fd)
     try:
-        opened = os.fstat(descriptor)
-        if (not stat.S_ISREG(opened.st_mode) or opened.st_uid != os.geteuid()
-                or stat.S_IMODE(opened.st_mode) != 0o600):
+        opened = _fstat(descriptor)
+        if os.name == "nt": winfs.check_private_fd(descriptor)
+        if (not stat.S_ISREG(opened.st_mode) or (os.name != "nt" and
+                (opened.st_uid != os.geteuid() or stat.S_IMODE(opened.st_mode) != 0o600))):
             raise ValueError(f"attachment must be an owner mode-0600 regular file: {spec.relative_path}")
         if opened.st_size > spec.max_bytes:
             raise ValueError(f"attachment exceeds declared bound: {spec.relative_path}")
@@ -461,10 +482,10 @@ def _read_attachment(plan: AttachmentPlan, spec: AttachmentSpec) -> bytes:
             total += len(chunk)
             if total > spec.max_bytes:
                 raise ValueError(f"attachment exceeds declared bound: {spec.relative_path}")
-        closed = os.fstat(descriptor)
+        closed = _fstat(descriptor)
     finally:
         os.close(descriptor)
-    named = os.stat(spec.relative_path, dir_fd=plan.root_fd, follow_symlinks=False)
+    named = _attachment_stat(plan.root_fd, spec.relative_path)
     identity = _attachment_identity(opened)
     if identity != _attachment_identity(closed) or identity != _attachment_identity(named):
         raise ValueError(f"attachment changed while reading: {spec.relative_path}")
@@ -483,7 +504,7 @@ def capture_attachments(plan: AttachmentPlan | None, private: Path, run_id: str)
         list[dict[str, Any]], list[dict[str, str]], dict[str, bytes], list[str], list[str]]:
     if plan is None:
         return [], [], {}, [], []
-    root = os.fstat(plan.root_fd)
+    root = _fstat(plan.root_fd)
     if (root.st_dev, root.st_ino) != plan.root_identity:
         raise ValueError("attachment source root identity changed")
     artifacts: list[dict[str, Any]] = []
@@ -521,7 +542,7 @@ def capture_attachments(plan: AttachmentPlan | None, private: Path, run_id: str)
             failures.append(f"{spec.artifact_id}:{type(error).__name__}")
             if spec.requirement == "required":
                 missing.append(spec.artifact_id)
-    after = os.fstat(plan.root_fd)
+    after = _fstat(plan.root_fd)
     if (after.st_dev, after.st_ino) != plan.root_identity:
         raise ValueError("attachment source root identity changed")
     return artifacts, producer_results, captured, missing, failures
@@ -607,6 +628,9 @@ def _reproduction_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
 
 
 def run_child(argv: list[str], cwd: Path, timeout: float, output_limit: int) -> ChildObservation:
+    if os.name == "nt":
+        from process_control import capture
+        return ChildObservation(*capture(argv, cwd, timeout, output_limit, forward=True))
     try:
         child = subprocess.Popen(
             argv,
@@ -721,6 +745,12 @@ def _executable_identity(requested: str, cwd: Path) -> dict[str, Any]:
     if selected is None:
         return {"requested": requested, "resolution": "unavailable"}
     path = Path(selected).resolve()
+    if os.name == 'nt':
+        try: raw,digest=winfs.read_regular(path,max_bytes=512*1024*1024)
+        except FileNotFoundError:return {'requested':requested,'resolution':'unavailable'}
+        if not raw:raise ValueError(f'registered executable size changed or is empty: {path}')
+        return {'requested':requested,'resolution':'available','resolvedPath':str(path),
+                'bytes':len(raw),'sha256':digest}
     flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
     try:
         descriptor = os.open(path, flags)
@@ -729,7 +759,7 @@ def _executable_identity(requested: str, cwd: Path) -> dict[str, Any]:
     digest = hashlib.sha256()
     total = 0
     try:
-        opened = os.fstat(descriptor)
+        opened = _fstat(descriptor)
         if not stat.S_ISREG(opened.st_mode):
             raise ValueError(f"registered executable is not a regular file: {path}")
         while chunk := os.read(descriptor, 1024 * 1024):
@@ -737,7 +767,7 @@ def _executable_identity(requested: str, cwd: Path) -> dict[str, Any]:
             if total > 512 * 1024 * 1024:
                 raise ValueError(f"registered executable exceeds 512 MiB: {path}")
             digest.update(chunk)
-        closed = os.fstat(descriptor)
+        closed = _fstat(descriptor)
     finally:
         os.close(descriptor)
     named = path.lstat()
@@ -862,6 +892,9 @@ def _outcomes(observation: ChildObservation) -> tuple[dict[str, str], str, str]:
     if observation.timed_out:
         return {"status": "inconclusive", "classification": {"namespace": "collector", "code": "timeout"}}, "failed", "timeout"
     assert observation.returncode is not None
+    if observation.interrupted is not None:
+        reason='interrupted-'+observation.interrupted.lower()
+        return {'status':'failed','classification':{'namespace':'collector','code':reason}},'failed',reason
     if observation.returncode == 0:
         return {"status": "passed", "classification": {"namespace": "process", "code": "exit-0"}}, "passed", "passed"
     if observation.returncode < 0:
@@ -1993,7 +2026,7 @@ def _suite_result_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
 
 
 def _installed_audit_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
-        observation: ChildObservation) -> tuple[dict[str, Any], list[dict[str, Any]], str]:
+        observation: ChildObservation, catalog_selection: dict, components: list[dict]) -> tuple[dict[str, Any], list[dict[str, Any]], str]:
     artifact_id = plan.adapter_artifact_id
     if artifact_id is None or artifact_id not in captured:
         raise ValueError("installed audit was not captured")
@@ -2004,6 +2037,18 @@ def _installed_audit_outcomes(plan: AttachmentPlan, captured: dict[str, bytes],
             or receipt.get("schemaVersion") != "mirrors.installed-consumer-audit/v1"
             or receipt.get("status") != "passed"):
         raise ValueError("installed audit did not pass")
+    from qualification_scope import validate_installed_audit_binding
+    if not {'distribution-manifest','cache-index'}<=captured.keys():
+        raise ValueError('installed audit lacks retained distribution inputs')
+    manifest=loads_json_bytes(captured['distribution-manifest']);cache=loads_json_bytes(captured['cache-index'])
+    validate_installed_audit_binding(receipt,manifest,cache)
+    observed={item['componentId']:item for item in components}
+    refs=manifest.get('componentRefs')
+    if type(refs) is not list or not refs or any(type(item) is not dict for item in refs):
+        raise ValueError('installed audit retained components are malformed')
+    if (manifest.get('catalogSelectionRef')!=catalog_selection
+            or any(observed.get(item.get('componentId'))!=item for item in refs)):
+        raise ValueError('installed audit inputs differ from collected catalog/components')
     behavior = {"status": "passed", "classification": {
         "namespace": "mirrors.installed-consumer-audit", "code": "passed"}}
     return behavior, [{
@@ -2202,7 +2247,7 @@ def _stage(
             and attachment_plan.adapter_kind == "mirrors.installed-consumer-audit/v1"):
         try:
             native_behavior, cleanup_outcomes, native_tier_status = _installed_audit_outcomes(
-                attachment_plan, captured, observation)
+                attachment_plan, captured, observation, catalog_selection, before)
         except (ValueError, UnicodeError, json.JSONDecodeError):
             native_behavior = {"status": "failed", "classification": {
                 "namespace": "mirrors.installed-consumer-audit",
@@ -2245,8 +2290,8 @@ def _stage(
         "environment": {
             "platformProfile": "local-collector",
             "os": sys.platform,
-            "architecture": os.uname().machine,
-            "kernel": os.uname().release,
+            "architecture": platform.machine() if os.name == "nt" else os.uname().machine,
+            "kernel": platform.version() if os.name == "nt" else os.uname().release,
             "workingDirectory": str(args.cwd),
             "tools": [{"name": "python", "version": sys.version.split()[0]}],
         },

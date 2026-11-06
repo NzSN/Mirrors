@@ -11,7 +11,7 @@ import stat
 import sys
 import tarfile
 import tempfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 HERE = Path(__file__).resolve().parent
 MIRRORS = HERE.parents[1]
@@ -30,10 +30,10 @@ def safe_extract_regular(archive_path: Path, destination: Path) -> None:
     count = 0
     with tarfile.open(archive_path, "r:*") as archive:
         for member in archive:
-            path = Path(member.name)
+            path = PurePosixPath(member.name)
             logical = path.as_posix()
             if (path.is_absolute() or ".." in path.parts or "." in path.parts or
-                    len(logical.encode()) > 1024):
+                    "\\" in member.name or re.match(r"^[A-Za-z]:",member.name) or len(logical.encode()) > 1024):
                 raise ContractError(f"unsafe archive member: {member.name}")
             if logical in seen or logical.casefold() in casefolded:
                 raise ContractError(f"duplicate or case-colliding archive member: {member.name}")
@@ -48,9 +48,13 @@ def safe_extract_regular(archive_path: Path, destination: Path) -> None:
             source = archive.extractfile(member)
             if source is None:
                 raise ContractError(f"cannot read archive member: {member.name}")
+            if os.name=='nt':
+                sys.path.insert(0,str(HERE.parents[0]/'evidence'))
+                import winfs
+                for part in path.parts:winfs._name(part)
             target = destination / path
             target.parent.mkdir(parents=True, exist_ok=True)
-            descriptor = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+            descriptor = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os,"O_BINARY",0), 0o600)
             written = 0
             try:
                 while chunk := source.read(min(1024 * 1024, member.size - written + 1)):

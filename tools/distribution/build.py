@@ -292,7 +292,9 @@ def main() -> int:
         if profile["status"].startswith("blocked"):
             raise ValueError(f"profile is unavailable: {profile['status']}")
         closure, prerequisites, _ = profile_resolution(args.profile, contract["profiles"])
-        batteries_size, batteries_digest = sha256_file(args.batteries_bundle)
+        try:batteries_size, batteries_digest = sha256_file(args.batteries_bundle)
+        except FileNotFoundError as error:
+            raise ValueError('locked Batteries carrier is missing: '+args.batteries_bundle.as_posix()) from error
         batteries = contract["dependencies"]["lean-batteries-source"]
         if batteries_size != batteries["bytes"] or batteries_digest != batteries["sha256"]:
             raise ValueError("Batteries archive differs from dependency lock")
@@ -424,6 +426,9 @@ def main() -> int:
         evidence_out = artifacts_root / "evidence/tools.tar.gz"
         verification_bundle = work / "verification-bundle"
         shutil.copytree(mirrors_work / "tools/evidence", verification_bundle / "tools/evidence")
+        native_helper = verification_bundle / "tools/deterministic-scheduling/windows_process.py"
+        native_helper.parent.mkdir(parents=True)
+        shutil.copyfile(mirrors_work / "tools/deterministic-scheduling/windows_process.py", native_helper)
         distribution_verifier = verification_bundle / "tools/distribution"
         distribution_verifier.mkdir(parents=True)
         for name in ("audit-launcher.mjs", "counter-driver.mjs", "installed-counter.mjs", "distribution_lib.py",

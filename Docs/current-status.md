@@ -1,5 +1,28 @@
 # Current framework status and navigation
 
+The current completion continuation prepares rc.11; see
+[its execution record](../Plans/completion-rc11-20261106/README.md).
+It repairs Windows Rust test admission through native Python and includes the
+separately frozen Gate hosting reply-ordering fix. Exact-candidate qualification
+and release admission are pending renewal; older acceptance below retains its
+original identities and scope.
+
+## November 6 native Windows DPM portability follow-up
+
+The [new fix record](../Plans/windows-fixes-20261106/README.md) validates Windows
+DPM process ownership, bounded pipe capture, cancellation, parent-death cleanup,
+no-overwrite activation and file-attribute handling. Native discovery runs 92
+tests: 89 pass and three existing Linux-only installed tests skip. All five new
+Windows regressions pass; the TLA path assertion also passes with Python 3.12.
+
+The full strict native driver now passes DPM and subsequent model-interface and
+catalog gates, then fails at distribution's POSIX `resource`, `fcntl` and
+`O_DIRECTORY` dependencies. Evidence diagnostics confirm additional POSIX storage
+requirements. Full Windows acceptance remains open. The tested source is the
+recorded rc.8 base plus exact overrides; these uncommitted changes receive no
+transferred source/C0, M5, release or production qualification. The original
+frozen checkout is unchanged, and owned test processes are stopped.
+
 ## November 5 qualification continuation
 
 The [qualification record](../Plans/qualification-rc7-20261105/README.md)

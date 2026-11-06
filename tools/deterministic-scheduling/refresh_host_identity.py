@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 TOOL_DIR = Path(__file__).resolve().parent
 DEFAULT_OUTPUT = ROOT / '.lake/build/dpm-generated/Shell/Dpm/HostIdentity.lean'
-FILES = ['cli.py', 'dpm_host.py', 'timeline.py', 'controlled_model.py']
+FILES = ['cli.py', 'dpm_host.py', 'timeline.py', 'controlled_model.py', 'windows_process.py']
 
 
 class PreparationError(Exception):
@@ -43,7 +43,8 @@ def write_if_changed(destination, expected):
 
 def refresh_helpers(check=False):
     # install_cli is a dependency of check_cli_installed: update in this order.
-    for name, dependencies in [('install_cli.py', ['dpm_host']),
+    for name, dependencies in [('dpm_host.py', ['windows_process']),
+                               ('install_cli.py', ['dpm_host']),
                                ('check_cli_installed.py', ['dpm_host', 'install_cli'])]:
         path = TOOL_DIR / name
         pins = {dependency: hashlib.sha256((TOOL_DIR / (dependency + '.py')).read_bytes()).hexdigest()

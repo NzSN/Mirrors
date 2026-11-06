@@ -108,6 +108,14 @@ def _profile(path: Path, profile_id: str) -> dict[str, Any]:
 
 
 def _run_bounded_validator(executable: Path, snapshot: Path) -> tuple[int, bytes, bytes]:
+    if os.name=='nt':
+        from process_control import capture
+        code,timed_out,unavailable,stdout,stderr,out_full,err_full,_interrupt=capture(
+            [str(executable),'validate',str(snapshot)],snapshot.parent,30,65536,interruptible=False)
+        if unavailable:raise ValueError(f'framework catalog validator is unavailable: {executable}')
+        if timed_out:raise ValueError('framework catalog validation exceeded 30 seconds')
+        if out_full or err_full:raise ValueError('framework catalog validator output exceeded 65536 bytes')
+        return code,stdout,stderr
     try:
         child = subprocess.Popen(
             [str(executable), "validate", str(snapshot)],

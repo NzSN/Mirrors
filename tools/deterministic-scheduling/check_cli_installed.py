@@ -16,7 +16,7 @@ import shutil
 import subprocess
 import time
 # Generated helper pins; refresh_host_identity.py updates these before packaging.
-_HELPER_SHA256 = {'dpm_host': 'e6177f91bda1088cb711e6c1c4848d23eecfcd60755e0b00f35556daa7bd8e88', 'install_cli': 'ac0a1cc94db3be91a746e18baef15869d33dcbdd998a4706e0abae6587ed1059'}  # refreshed helper identities
+_HELPER_SHA256 = {'dpm_host': '82e97aa3b6672116ffa6b1c1137612328ab62e823dc1bd2398871bbf5b05b77a', 'install_cli': 'ef74d5288509b467ee20a8d699633a67c9cd0b5136f2aec6c0e619bad824950e'}  # refreshed helper identities
 
 def _load_helper(name):
     source = Path(__file__).with_name(name + '.py')

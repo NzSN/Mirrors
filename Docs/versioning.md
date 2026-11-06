@@ -2,12 +2,13 @@
 
 The current cross-repository policy is
 [ecosystem versioning](ecosystem-versioning.md). Current source prepares Mirrors
-`v0.2.0-rc.8` in the [qualification continuation](../Plans/qualification-rc7-20261105/README.md).
-This source candidate does not imply a new tag or published package. Branch
-delivery is recorded separately in [CHECKPOINTS.md](../CHECKPOINTS.md).
-Existing rc.1–rc.7 refs and packages remain unchanged. Catalog refresh
-derives the Mirrors product declaration from `Shell/Version.lean` before
-calculating catalog and distribution-lock identities.
+`v0.2.0-rc.11` for the [completion iteration](../Plans/completion-rc10-20261106/README.md),
+including native Windows process/storage tooling and its qualification follow-up.
+The earlier rc.8 source and qualification keep their recorded identity. Source
+preparation alone creates no tag, package, publication or deployment result.
+Existing release refs remain immutable. Catalog refresh derives the Mirrors
+product declaration from `Shell/Version.lean` before calculating catalog and
+distribution-lock identities.
 
 The earlier `v0.1.1` compatible patch covers DPM build preparation and maintained
 status documentation. Its build fix landed in `03510b4`; its
@@ -82,9 +83,9 @@ and is compiled into the executable:
 
 ```console
 $ .lake/build/bin/mirror --version
-v0.2.0-rc.8
+v0.2.0-rc.11
 $ ModelMirrors --version
-v0.2.0-rc.8
+v0.2.0-rc.11
 ```
 
 These examples describe binaries rebuilt from the prepared rc.8 source; they
@@ -216,3 +217,6 @@ two hashes match. This is a local installation procedure; it does not publish
 a release. Before the next release, update the product version and its CLI
 expectation in `tools/StdioSmoke.lean`, validate the build and companion
 compatibility, commit the changes, and create a new annotated tag.
+
+The rc.11 continuation and exact acceptance state are recorded in
+[the current execution record](../Plans/completion-rc11-20261106/README.md).

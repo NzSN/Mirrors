@@ -6,6 +6,7 @@ import json
 import os
 import shutil
 import stat
+import sys
 import subprocess
 import tarfile
 import tempfile
@@ -14,6 +15,11 @@ from typing import Iterable
 
 
 def sha256_file(path: Path) -> tuple[int, str]:
+    if os.name == 'nt':
+        sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'evidence'))
+        import winfs
+        data,digest=winfs.read_regular(path,max_bytes=512*1024*1024)
+        return len(data),digest
     digest = hashlib.sha256()
     size = 0
     descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_CLOEXEC", 0))
@@ -37,7 +43,7 @@ def regular_files(root: Path) -> list[Path]:
     total = 0
     for path in root.rglob("*"):
         metadata = path.lstat()
-        if stat.S_ISLNK(metadata.st_mode) or not (stat.S_ISDIR(metadata.st_mode) or stat.S_ISREG(metadata.st_mode)):
+        if stat.S_ISLNK(metadata.st_mode) or getattr(metadata,"st_file_attributes",0)&0x400 or not (stat.S_ISDIR(metadata.st_mode) or stat.S_ISREG(metadata.st_mode)):
             raise ValueError(f"unsupported tree entry: {path}")
         if stat.S_ISREG(metadata.st_mode):
             result.append(path)
@@ -209,6 +215,10 @@ def dynamic_libraries(path: Path, ldd_bin: Path) -> list[dict]:
 
 def write_json(path: Path, value: dict) -> None:
     data = (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode()
+    if os.name == 'nt':
+        sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'evidence'))
+        import winfs
+        return winfs.atomic_write(path,data)
     temporary = path.with_name(path.name + ".tmp")
     descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     try:

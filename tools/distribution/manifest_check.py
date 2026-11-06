@@ -8,12 +8,13 @@ import hashlib
 import json
 import os
 import re
-import resource
+if os.name != "nt":
+    import resource
 import stat
 import subprocess
 import sys
 import tempfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 MAX_JSON_BYTES = 4 * 1024 * 1024
@@ -59,6 +60,11 @@ def _depth(value: Any, depth: int = 0) -> int:
 
 
 def _read_bounded_regular(path: Path) -> bytes:
+    if os.name == "nt":
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1]/"evidence"))
+        import winfs
+        try: return winfs.read_regular(path, max_bytes=MAX_JSON_BYTES)[0]
+        except (OSError, ValueError) as error: raise ContractError(f"{path}: regular file required or cannot open safely: {error}") from error
     try:
         before = path.lstat()
     except OSError as error:
@@ -223,6 +229,14 @@ def component_identity(value: dict[str, Any]) -> tuple[Any, ...]:
 
 
 def copy_trusted_executable(path: Path, destination: Path, expected_sha256: str | None) -> str:
+    if os.name == 'nt':
+        sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'evidence'))
+        import winfs
+        raw,digest=winfs.read_regular(path,max_bytes=512*1024*1024)
+        if expected_sha256 is not None and digest!=expected_sha256:
+            raise ContractError('trusted framework_catalog executable hash mismatch')
+        winfs.write_exclusive(destination,raw)
+        return digest
     before = path.lstat()
     if not stat.S_ISREG(before.st_mode) or stat.S_ISLNK(before.st_mode):
         raise ContractError(f"trusted executable must be a regular file: {path}")
@@ -261,7 +275,7 @@ def run_trusted_catalog_validation(path: Path, expected_sha256: str | None,
         copy_trusted_executable(path, executable, expected_sha256)
         catalog_snapshot = root / "catalog.json"
         catalog_bytes = _read_bounded_regular(catalog_path)
-        descriptor = os.open(catalog_snapshot, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        descriptor = os.open(catalog_snapshot, os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os,"O_BINARY",0), 0o600)
         try:
             offset = 0
             while offset < len(catalog_bytes):
@@ -269,6 +283,15 @@ def run_trusted_catalog_validation(path: Path, expected_sha256: str | None,
             os.fsync(descriptor)
         finally:
             os.close(descriptor)
+        if os.name == 'nt':
+            sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'evidence'))
+            from process_control import capture
+            code,timed_out,unavailable,stdout,stderr,out_full,err_full,_interrupt=capture(
+                [str(executable),'validate',str(catalog_snapshot)],root,30,1024*1024,interruptible=False)
+            if timed_out:raise ContractError('trusted framework_catalog validation timed out')
+            if unavailable:raise ContractError('trusted framework_catalog could not start')
+            if out_full or err_full:raise ContractError('trusted framework_catalog output exceeded 1 MiB')
+            return code,stdout.decode(errors='replace'),stderr.decode(errors='replace')
         stdout_path = root / "stdout"; stderr_path = root / "stderr"
         with stdout_path.open("wb") as stdout, stderr_path.open("wb") as stderr:
             try:
@@ -388,7 +411,7 @@ def validate_locks(root: Path, framework_catalog_bin: Path | None = None,
         raise ContractError(f"trusted framework_catalog executable is missing: {catalog_bin}")
     with tempfile.TemporaryDirectory(prefix="mirrors-catalog-snapshot-") as temporary:
         snapshot = Path(temporary) / "framework-catalog.json"
-        descriptor = os.open(snapshot, os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_CLOEXEC", 0), 0o600)
+        descriptor = os.open(snapshot, os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_CLOEXEC", 0) | getattr(os,"O_BINARY",0), 0o600)
         try:
             offset = 0
             while offset < len(catalog_raw):
@@ -663,7 +686,7 @@ def validate_distribution_manifest(path: Path, profile_id: str, contract: dict[s
             if not isinstance(library["soname"], str) or not library["soname"] or library["soname"] in seen_sonames:
                 raise ContractError(f"invalid or duplicate dynamic library SONAME: {artifact_id}")
             seen_sonames.add(library["soname"])
-            if not isinstance(library["path"], str) or not Path(library["path"]).is_absolute() or not SHA256.fullmatch(library["sha256"]):
+            if not isinstance(library["path"], str) or not PurePosixPath(library["path"]).is_absolute() or not SHA256.fullmatch(library["sha256"]):
                 raise ContractError(f"invalid dynamic library identity: {artifact_id}")
         dependency = contract["dependencies"].get(artifact_id)
         if source["kind"] == "dependency-lock":

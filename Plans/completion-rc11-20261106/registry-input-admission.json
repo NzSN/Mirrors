@@ -1,0 +1,30 @@
+[
+  {
+    "commandId": "framework.install-diagnostics",
+    "input": "--framework-catalog-bin",
+    "path": "/home/lsz/Codebase/Mirrors/.lake/build/bin/framework_catalog",
+    "sha256": "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126"
+  },
+  {
+    "commandId": "framework.install-diagnostics",
+    "input": "--strace",
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/tracer/bin/strace",
+    "sha256": "10345119eae5a82fc79488417078fc19a145df378311f7e0b8da34e09fb9fadd"
+  },
+  {
+    "commandId": "framework.install-diagnostics-gate",
+    "input": "--framework-catalog-bin",
+    "path": "/home/lsz/Codebase/Mirrors/.lake/build/bin/framework_catalog",
+    "sha256": "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126"
+  },
+  {
+    "commandId": "framework.install-diagnostics-gate",
+    "input": "--strace",
+    "path": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/tracer/bin/strace",
+    "sha256": "10345119eae5a82fc79488417078fc19a145df378311f7e0b8da34e09fb9fadd"
+  },
+  {
+    "installedPrefixesBoundBeforeFreeze": true,
+    "receiptManifestBindingRequired": true
+  }
+]

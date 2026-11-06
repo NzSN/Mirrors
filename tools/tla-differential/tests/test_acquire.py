@@ -355,7 +355,7 @@ class AcquireTests(unittest.TestCase):
             (distribution / "bin/apalache-mc").write_bytes(b"x" * len(fixture.launcher_content))
             with ExitStack() as stack:
                 fixture.patches(stack, self.selected_runtime)
-                with self.assertRaisesRegex(SystemExit, "bin/apalache-mc"):
+                with self.assertRaisesRegex(SystemExit, r"bin[\\/]apalache-mc"):
                     acquire.extract_apalache(fixture.apalache_pin, fixture.apalache_path)
             self.assertEqual((distribution / "bin/apalache-mc").read_bytes(), b"x" * len(fixture.launcher_content))
 

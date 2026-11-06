@@ -262,7 +262,8 @@ class ManifestCheckTests(unittest.TestCase):
             with self.assertRaisesRegex(checker.ContractError, "regular file|required|safely"):
                 checker.load_json(linked)
             fifo = root / "manifest.fifo"
-            os.mkfifo(fifo)
+            if os.name=="nt":fifo.mkdir()
+            else:os.mkfifo(fifo)
             with self.assertRaisesRegex(checker.ContractError, "regular file required"):
                 checker.load_json(fifo)
 

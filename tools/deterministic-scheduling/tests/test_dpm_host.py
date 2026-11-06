@@ -1,6 +1,7 @@
 import copy
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -118,6 +119,19 @@ class DpmHostTests(unittest.TestCase):
             self.assertEqual(owned_process([sys.executable, '-c',
                 'import sys;sys.stdout.write(sys.stdin.read())'], root, 2, 4096, input_path=source), 0)
             self.assertEqual((root/'stdout.log').read_text(), source.read_text())
+
+    def test_native_helper_is_verified_before_its_source_can_execute(self):
+        import types
+        source=ROOT/'tools/deterministic-scheduling/dpm_host.py'
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);marker=root/'executed'
+            (root/'windows_process.py').write_text(
+                'from pathlib import Path;Path('+repr(str(marker))+').touch()')
+            module=types.ModuleType('private_dpm_host');module.__file__=str(root/'dpm_host.py')
+            exec(compile(source.read_bytes(),module.__file__,'exec'),module.__dict__)
+            with self.assertRaisesRegex(module.Refusal,'native process helper differs'):
+                module._WindowsJob()
+            self.assertFalse(marker.exists())
 
     def test_launcher_refuses_changed_host_before_execution(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -521,6 +535,8 @@ class OutputAndImportRegressionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory)
             code="import os,time;from pathlib import Path;pid=os.fork();exec(\"time.sleep(5);Path('late-output').write_text('late')\") if pid==0 else None"
+            if os.name == 'nt':
+                code = "import subprocess,sys;subprocess.Popen([sys.executable,'-c',\"import time;from pathlib import Path;time.sleep(5);Path('late-output').write_text('late')\"])"
             with self.assertRaisesRegex(Refusal,'live owned descendants'):
                 owned_process([sys.executable,'-c',code],root,2,1000)
             self.assertFalse((root/'late-output').exists())
@@ -550,7 +566,9 @@ class OutputAndImportRegressionTests(unittest.TestCase):
             self.assertEqual(report['observedOvershoot'],retained_bytes(root)-100000)
 
     def test_nonregular_output_refuses(self):
-        for code in ["import os;os.symlink('/etc/passwd','foreign')", "import os;os.mkfifo('fifo')"]:
+        codes = ["import os;os.symlink("+repr(str(ROOT/'lean-toolchain'))+",'foreign')"]
+        if os.name != 'nt': codes.append("import os;os.mkfifo('fifo')")
+        for code in codes:
             with tempfile.TemporaryDirectory() as directory:
                 with self.assertRaises(Refusal):owned_process([sys.executable,'-c',code],Path(directory),5,1000)
 

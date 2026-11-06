@@ -14,7 +14,7 @@ from typing import Any
 from jsonschema import Draft202012Validator
 
 from finalize import canonical_json, public_summary, sha256
-from store import ensure_owner_directory, logical_path, read_regular
+from store import ensure_owner_directory, logical_path, read_regular, check_private_file
 from validate import ROOT, load_json, loads_json_bytes, validate_document
 
 
@@ -23,9 +23,7 @@ MAX_BUNDLE_BYTES = 512 * 1024 * 1024
 
 
 def _mode_600(path: Path) -> None:
-    info = path.lstat()
-    if stat.S_IMODE(info.st_mode) != 0o600:
-        raise ValueError(f"bundle record must use mode 0600: {path}")
+    check_private_file(path)
 
 
 def _load_record(path: Path, maximum: int) -> tuple[dict[str, Any], bytes, str]:

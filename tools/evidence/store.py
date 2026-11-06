@@ -10,7 +10,9 @@ from pathlib import Path
 
 
 MAX_RECORD_BYTES = 64 * 1024 * 1024
-_DIRECTORY_FLAGS = os.O_RDONLY | os.O_DIRECTORY | getattr(os, "O_NOFOLLOW", 0)
+if os.name == "nt":
+    import winfs
+_DIRECTORY_FLAGS = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_NOFOLLOW", 0)
 
 
 def logical_path(value: str) -> Path:
@@ -28,6 +30,7 @@ def _absolute_parts(path: Path) -> tuple[str, ...]:
 
 
 def _open_directory_chain(path: Path, *, create_missing: bool = False) -> int:
+    if os.name == "nt": return winfs.open_directory(path, create=create_missing)
     descriptor = os.open("/", _DIRECTORY_FLAGS)
     try:
         for component in _absolute_parts(path):
@@ -47,6 +50,9 @@ def _open_directory_chain(path: Path, *, create_missing: bool = False) -> int:
 
 
 def _check_owner_directory(descriptor: int, path: Path) -> None:
+    if os.name == "nt":
+        winfs.check_private_fd(descriptor)
+        return
     info = os.fstat(descriptor)
     if not stat.S_ISDIR(info.st_mode):
         raise ValueError(f"evidence path is not a real directory: {path}")
@@ -84,6 +90,7 @@ def create_owner_directory(path: Path) -> None:
 
 
 def create_owner_directory_exclusive(path: Path) -> None:
+    if os.name == "nt": return winfs.create_directory(path, exclusive=True)
     parent = _open_directory_chain(path.parent)
     child = -1
     try:
@@ -97,6 +104,7 @@ def create_owner_directory_exclusive(path: Path) -> None:
 
 
 def read_regular(path: Path, *, max_bytes: int = MAX_RECORD_BYTES) -> tuple[bytes, str]:
+    if os.name == "nt": return winfs.read_regular(path, max_bytes=max_bytes)
     parent = _open_directory_chain(path.parent)
     descriptor = -1
     try:
@@ -144,6 +152,7 @@ def read_regular(path: Path, *, max_bytes: int = MAX_RECORD_BYTES) -> tuple[byte
 
 
 def write_exclusive(path: Path, data: bytes) -> None:
+    if os.name == "nt": return winfs.write_exclusive(path, data)
     parent = _open_directory_chain(path.parent)
     descriptor = -1
     try:
@@ -166,6 +175,7 @@ def write_exclusive(path: Path, data: bytes) -> None:
 
 
 def publish_exclusive(directory: Path, temporary_name: str, final_name: str) -> None:
+    if os.name == "nt": return winfs.publish_exclusive(directory, temporary_name, final_name)
     descriptor = _open_directory_chain(directory)
     try:
         os.link(
@@ -182,8 +192,21 @@ def publish_exclusive(directory: Path, temporary_name: str, final_name: str) -> 
 
 
 def fsync_directory(path: Path) -> None:
+    if os.name == "nt": return winfs.fsync_directory(path)
     descriptor = _open_directory_chain(path)
     try:
         os.fsync(descriptor)
     finally:
         os.close(descriptor)
+
+
+def check_private_file(path: Path) -> None:
+    if os.name == 'nt':
+        winfs.check_private(path)
+    elif stat.S_IMODE(path.lstat().st_mode) != 0o600:
+        raise ValueError(f'file must use mode 0600: {path}')
+
+
+def set_private(path: Path) -> None:
+    if os.name == 'nt': winfs.set_private(path)
+    else: path.chmod(0o700 if path.is_dir() else 0o600)

@@ -17,7 +17,7 @@ MIRRORS_DPM_PYTHON=/path/to/python3 lake build mirrors_dpm
 ```
 
 The generator resolves the selected interpreter's actual executable path and
-hashes its bytes and the four packaged host files. It writes
+hashes its bytes and the five packaged host files. It writes
 `.lake/build/dpm-generated/Shell/Dpm/HostIdentity.lean`; the launcher compiles
 those constants. `lake build`, `lake build Shell` and direct launcher builds
 prepare this dependency automatically. An unchanged build preserves the generated
@@ -52,6 +52,20 @@ applications, download packages or start a model checker.
 
 The launcher selects the pure policy executable internally. Public command
 arguments cannot replace that selection.
+
+The Windows process backend uses kill-on-close Job Objects and creation-time
+job assignment (Windows 10 or later). It passes only selected standard handles,
+uses bounded pipe-reader queues, and confirms that no job members remain before
+reporting cleanup. A launcher-death watcher requests the same owned cleanup.
+Windows installation uses a same-volume rename that refuses an existing target;
+its inventory records the native read-only attribute in addition to content and
+executable classification. Windows has no POSIX executable permission bit.
+Reparse points, including directory junctions, refuse in admitted file trees.
+
+The [Windows tooling boundary](windows-tooling.md) describes native storage and
+process constraints. The completion iteration records focused and full-driver
+results; final candidate qualification must bind its own source and runtime.
+Earlier rc.8 qualification remains bound to its original implementation.
 
 ## Select and run a project
 

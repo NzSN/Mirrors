@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -14,7 +15,7 @@ class InstallationTests(unittest.TestCase):
             rows=inventory(root);verify(root,rows)
             file.write_bytes(b'changed')
             with self.assertRaises(Refusal):verify(root,rows)
-            file.write_bytes(b'original');file.chmod(0o755)
+            file.write_bytes(b'original');file.chmod(0o444 if os.name == 'nt' else 0o755)
             with self.assertRaises(Refusal):verify(root,rows)
             file.chmod(0o644);(root/'extra').write_text('extra')
             with self.assertRaises(Refusal):verify(root,rows)

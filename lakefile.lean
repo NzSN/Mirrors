@@ -555,7 +555,7 @@ script test do
     IO.println s!"distribution contract tests FAILED ({distributionContract.exitCode})"
     return distributionContract.exitCode
   let distributionValidate : IO.Process.Output ← IO.Process.output
-    ({ cmd := "tools/distribution/manifest-check", args := #["validate",
+    ({ cmd := "python3", args := #["tools/distribution/manifest_check.py", "validate",
       "distribution/reference-node"] } : IO.Process.SpawnArgs)
   IO.println distributionValidate.stdout
   IO.eprintln distributionValidate.stderr
@@ -731,7 +731,7 @@ script test do
     IO.println s!"model_interface_gen Rust check FAILED ({outMiRustGolden.exitCode})"
     return outMiRustGolden.exitCode
   let outMiRust : IO.Process.Output ← IO.Process.output
-    ({ cmd := "bash", args := #["tools/model-interface-rust/check.sh"] } : IO.Process.SpawnArgs)
+    ({ cmd := "python3", args := #["tools/model-interface-rust/check.py"] } : IO.Process.SpawnArgs)
   IO.println outMiRust.stdout
   if outMiRust.exitCode != 0 then
     IO.eprintln outMiRust.stderr

@@ -11,6 +11,7 @@ EVIDENCE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(EVIDENCE))
 
 import qualification_scope as scope_module  # noqa: E402
+from store import set_private, create_owner_directory
 
 SELECTION_A = "a" * 64
 SELECTION_B = "b" * 64
@@ -52,7 +53,8 @@ class ScopeMultiBindingTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temporary = tempfile.TemporaryDirectory()
         self.store = Path(self.temporary.name)
-        (self.store / "runs").mkdir(mode=0o700)
+        set_private(self.store)
+        create_owner_directory(self.store/"runs")
         self.envelopes: dict[str, dict] = {}
         self.bindings: dict[str, dict] = {}
 
@@ -61,7 +63,7 @@ class ScopeMultiBindingTests(unittest.TestCase):
 
     def add_run(self, run_id: str, command_id: str, components: list[dict], selection: str,
                 binding: bool = False, status: str = "qualified") -> None:
-        (self.store / "runs" / run_id).mkdir(mode=0o700)
+        create_owner_directory(self.store/"runs"/run_id)
         self.envelopes[run_id] = envelope(run_id, command_id, components, selection, status)
         if binding:
             self.bindings[run_id] = {"profileId": "profile", "componentRefs": components,

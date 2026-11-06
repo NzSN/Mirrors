@@ -293,6 +293,25 @@ def _validate_json_schema(document: Any, bundled_name: str, source_name: str) ->
             error.message for error in errors))
 
 
+def validate_installed_audit_binding(receipt,manifest,cache):
+    if (type(receipt) is not dict or receipt.get('schemaVersion')!='mirrors.installed-consumer-audit/v1'
+            or receipt.get('status')!='passed'):
+        raise ValueError('installed audit did not pass')
+    if type(manifest) is not dict or type(cache) is not dict:
+        raise ValueError('installed audit retained inputs must be objects')
+    if cache.get('profileId')!=manifest.get('profileId') or cache.get('catalogSelectionRef')!=manifest.get('catalogSelectionRef'):
+        raise ValueError('installed audit retained cache profile/catalog differs')
+    digest=hashlib.sha256(_canonical_framework_json(manifest)).hexdigest()
+    if receipt.get('manifestDigest')!=digest or cache.get('distributionManifestSha256')!=digest:
+        raise ValueError('installed audit does not bind the retained distribution manifest')
+    runs=receipt.get('runs')
+    if (type(runs) is not list or len(runs)!=2 or any(type(row) is not dict for row in runs)
+            or any(type(row.get('iteration')) is not int for row in runs)
+            or [row['iteration'] for row in runs]!=[0,1]):
+        raise ValueError('installed audit requires both independent relocation iterations')
+    return digest
+
+
 def _distribution_binding(bundle: Path, envelope: dict[str, Any], selected: dict[str, Any]) -> dict[str, Any]:
     _manifest_artifact, manifest_raw = _artifact_bytes(bundle, envelope, "distribution-manifest")
     _cache_artifact, cache_raw = _artifact_bytes(bundle, envelope, "cache-index")
@@ -350,6 +369,12 @@ def _distribution_binding(bundle: Path, envelope: dict[str, Any], selected: dict
         if any(entry[field] != artifact[field]
                for field in ("path", "bytes", "sha256", "mode")):
             raise ValueError(f"qualification cache identity differs: {artifact_id}")
+    audit_refs=[item for item in envelope.get('producerResults',[])
+                if item.get('producer')=='mirrors' and item.get('schemaVersion')=='mirrors.installed-consumer-audit/v1']
+    if len(audit_refs)!=1:raise ValueError('distribution run requires one installed audit producer reference')
+    audit_envelope={'artifacts':[item for item in envelope['artifacts'] if item['artifactId']==audit_refs[0]['artifactId']]}
+    _audit_artifact,audit_raw=_artifact_bytes(bundle,audit_envelope,'producer-result')
+    validate_installed_audit_binding(loads_json_bytes(audit_raw),manifest,cache)
     return {
         "profileId": manifest["profileId"],
         "componentRefs": components,

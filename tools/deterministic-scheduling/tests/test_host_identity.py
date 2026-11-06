@@ -26,7 +26,7 @@ class HostIdentityTests(unittest.TestCase):
         self.tools.mkdir()
         for name in identity.FILES:
             (self.tools / name).write_text('# ' + name + '\n', encoding='utf-8')
-        for name in ['install_cli.py', 'check_cli_installed.py']:
+        for name in ['dpm_host.py', 'install_cli.py', 'check_cli_installed.py']:
             (self.tools / name).write_text(
                 '_HELPER_SHA256 = {}  # refreshed helper identities\n', encoding='utf-8')
         self.interpreter = self.root / 'selected-python'
@@ -120,7 +120,7 @@ class HostIdentityTests(unittest.TestCase):
 
     def test_build_helper_check_refuses_stale_pins_without_any_writes(self):
         self.assertEqual(self.run_main('--check-helpers'), (0, ''))
-        (self.tools / 'dpm_host.py').write_bytes(b'changed helper bytes')
+        (self.tools / 'dpm_host.py').write_bytes((self.tools/'dpm_host.py').read_bytes()+b'changed helper bytes')
         before = self.snapshot()
         for arguments in [('--check-helpers',), ('--check',), ('--helpers-only', '--check')]:
             with self.subTest(arguments=arguments):
@@ -131,7 +131,7 @@ class HostIdentityTests(unittest.TestCase):
                 self.assertEqual(self.snapshot(), before)
 
     def test_helper_refresh_updates_dependent_pin_after_installer_and_skips_runtime(self):
-        (self.tools / 'dpm_host.py').write_bytes(b'updated host')
+        (self.tools / 'dpm_host.py').write_bytes((self.tools/'dpm_host.py').read_bytes()+b'updated host')
         with patch.object(identity.sys, 'executable', str(self.root / 'missing-python')):
             self.assertEqual(self.run_main('--helpers-only'), (0, ''))
         host_hash = hashlib.sha256((self.tools / 'dpm_host.py').read_bytes()).hexdigest()
@@ -143,12 +143,28 @@ class HostIdentityTests(unittest.TestCase):
         self.assertEqual(self.run_main('--helpers-only', '--check'), (0, ''))
 
     def test_default_manual_refreshes_helpers_and_custom_output(self):
-        (self.tools / 'dpm_host.py').write_bytes(b'updated host')
+        (self.tools / 'dpm_host.py').write_bytes((self.tools/'dpm_host.py').read_bytes()+b'updated host')
         destination = self.root / 'custom/output.lean'
         self.assertEqual(self.run_main('--output', str(destination)), (0, ''))
         self.assertTrue(destination.is_file())
         self.assertFalse(self.destination.exists())
         self.assertEqual(self.run_main('--check', '--output', str(destination)), (0, ''))
+
+    def test_native_helper_drift_refreshes_the_complete_pin_chain(self):
+        native=self.tools/'windows_process.py'
+        native.write_bytes(native.read_bytes()+b'changed native helper')
+        before=self.snapshot()
+        result,error=self.run_main('--check-helpers')
+        self.assertEqual(result,2)
+        self.assertIn('helper identities stale: dpm_host.py',error)
+        self.assertEqual(self.snapshot(),before)
+        self.assertEqual(self.run_main('--helpers-only'),(0,''))
+        self.assertEqual(self.helper_pins('dpm_host.py'),
+                         {'windows_process':hashlib.sha256(native.read_bytes()).hexdigest()})
+        self.assertEqual(self.helper_pins('install_cli.py'),
+                         {'dpm_host':hashlib.sha256((self.tools/'dpm_host.py').read_bytes()).hexdigest()})
+        self.assertEqual(self.helper_pins('check_cli_installed.py')['install_cli'],
+                         hashlib.sha256((self.tools/'install_cli.py').read_bytes()).hexdigest())
 
     def test_missing_runtime_reports_error_without_writing(self):
         before = self.snapshot()

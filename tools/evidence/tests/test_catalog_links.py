@@ -19,6 +19,7 @@ import catalog_links  # noqa: E402
 import finalize  # noqa: E402
 import qualification_scope  # noqa: E402
 import verify  # noqa: E402
+from store import set_private
 
 
 class CatalogLinkTests(unittest.TestCase):
@@ -110,11 +111,11 @@ class CatalogLinkTests(unittest.TestCase):
         private.mkdir(mode=0o700, parents=True)
         for directory in (self.store, self.store / "staging", staging,
                           staging / "artifacts", private):
-            os.chmod(directory, 0o700)
+            set_private(directory)
         for artifact_id, role, data, producer_schema in artifacts:
             filename = f"{artifact_id}.dat"
             target = private / filename
-            target.write_bytes(data); os.chmod(target, 0o600)
+            target.write_bytes(data); set_private(target)
             document["artifacts"].append({"artifactId":artifact_id,
                 "mediaType":"application/json" if role != "command-log" else "text/plain",
                 "role":role,"bytes":len(data),"sha256":hashlib.sha256(data).hexdigest(),
@@ -141,7 +142,7 @@ class CatalogLinkTests(unittest.TestCase):
         if mutate is not None:
             mutate(document)
         envelope_path = staging / "envelope.staging.json"
-        envelope_path.write_bytes(finalize.canonical_json(document)); os.chmod(envelope_path, 0o600)
+        envelope_path.write_bytes(finalize.canonical_json(document)); set_private(envelope_path)
         bundle, _ = finalize.finalize(staging, self.store)
         return bundle, verify.verify(bundle)
 
@@ -175,7 +176,11 @@ class CatalogLinkTests(unittest.TestCase):
                 qualification_scope._canonical_framework_json(manifest)).hexdigest(),
             "entries":[{key:artifact[key] for key in ("artifactId","path","bytes","sha256","mode")}]}
         return [("distribution-manifest","distribution-manifest",manifest_raw,None),
-                ("cache-index","cache-index",finalize.canonical_json(cache),None)]
+                ("cache-index","cache-index",finalize.canonical_json(cache),None),
+                ('install-diagnostics','producer-result',finalize.canonical_json({
+                    'schemaVersion':'mirrors.installed-consumer-audit/v1','status':'passed',
+                    'manifestDigest':cache['distributionManifestSha256'],'runs':[{'iteration':0},{'iteration':1}]}),
+                    ('mirrors','mirrors.installed-consumer-audit/v1'))]
 
     def bundle(self, mutate_staging=None, full_profile=True, mutate_scope=None,
                mutate_distribution=None, mismatch_reduction_input=False):
@@ -798,6 +803,18 @@ class CatalogLinkTests(unittest.TestCase):
             "executable differs from argv",
         )
 
+    def test_sealed_distribution_rejects_an_audit_from_another_manifest(self):
+        payloads=self._distribution_payloads()
+        for index,(artifact,role,data,producer) in enumerate(payloads):
+            if artifact=='install-diagnostics':
+                receipt=json.loads(data);receipt['manifestDigest']='0'*64
+                payloads[index]=(artifact,role,finalize.canonical_json(receipt),producer)
+        bundle,checked=self._finalized([('framework.install-diagnostics','qualification.install')],self.components,payloads)
+        envelope=json.loads((bundle/'envelope.json').read_text())
+        self.assertEqual(verify.verify(bundle)['status'],'verified')
+        with self.assertRaisesRegex(ValueError,'does not bind'):
+            qualification_scope._distribution_binding(bundle,envelope,self.selection)
+
     def test_malformed_profile_and_unbounded_validator_output_refuse_deterministically(self):
         bundle, verification = self.bundle()
         catalog_path, _ = self.catalog(bundle, verification)
@@ -811,6 +828,13 @@ class CatalogLinkTests(unittest.TestCase):
         noisy = self.root / "noisy-validator"
         noisy.write_text("#!/usr/bin/env python3\nimport sys\nsys.stdout.write('x' * 70000)\n")
         noisy.chmod(0o755)
+        if os.name=='nt':
+            source=self.root/'noisy-validator.c'
+            source.write_text('#include <stdio.h>\nint main(void){for(int i=0;i<70000;++i)putchar(120);return 0;}\n')
+            noisy=self.root/'noisy-validator.exe'
+            built=subprocess.run([os.environ.get('CC','gcc'),str(source),'-o',str(noisy)],capture_output=True)
+            self.assertEqual(built.returncode,0,built.stderr)
+
         with self.assertRaisesRegex(ValueError, "output exceeded 65536 bytes"):
             catalog_links.evaluate_catalog_link(
                 catalog_path, bundle, verification, "release-candidate",

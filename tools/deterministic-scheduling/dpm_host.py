@@ -60,10 +60,18 @@ def strict_bytes(raw):
     return value
 
 
+def _is_link(path):
+    try:
+        info = Path(path).lstat()
+    except FileNotFoundError:
+        return False
+    return stat.S_ISLNK(info.st_mode) or bool(getattr(info, 'st_file_attributes', 0) & 0x400)
+
+
 def regular(path):
     path = Path(path).absolute()
     for part in [path, *path.parents]:
-        if part.is_symlink():
+        if _is_link(part):
             raise Refusal('symlink artifact: ' + str(path))
     if not stat.S_ISREG(path.stat().st_mode):
         raise Refusal('artifact is not a regular file: ' + str(path))
@@ -104,12 +112,14 @@ def retained_bytes(root):
     entries = 0
     while pending:
         directory = pending.pop()
-        if directory.is_symlink(): raise Refusal('symlink output directory')
+        if any(_is_link(part) for part in [directory, *directory.parents]): raise Refusal('symlink output directory')
         with os.scandir(directory) as children:
             for child in children:
                 entries += 1
                 if entries > 32768: raise Refusal('output entry bound exceeded')
-                info = child.stat(follow_symlinks=False)
+                info = (os.stat(child.path, follow_symlinks=False) if os.name == 'nt'
+                        else child.stat(follow_symlinks=False))
+                if getattr(info, 'st_file_attributes', 0) & 0x400: raise Refusal('reparse output: ' + child.name)
                 if stat.S_ISDIR(info.st_mode): pending.append(Path(child.path))
                 elif stat.S_ISREG(info.st_mode): total += info.st_size
                 else: raise Refusal('nonregular output: ' + child.name)
@@ -169,6 +179,7 @@ def _group_alive(group):
 
 
 _ACTIVE_PROCESS_CANCELLATION = None
+_LAUNCHER_GONE = False
 
 
 def cancel_operation(_signal, _frame):
@@ -177,6 +188,35 @@ def cancel_operation(_signal, _frame):
     if current is None:
         raise Refusal('operation cancelled')
     current.cancelled = True
+
+
+def watch_windows_parent():
+    """A launcher death requests normal owned cleanup, rather than orphaning it."""
+    import ctypes as c
+    from ctypes import wintypes as w
+    import threading
+    api = c.WinDLL('kernel32', use_last_error=True)
+    api.OpenProcess.argtypes = [w.DWORD, w.BOOL, w.DWORD]; api.OpenProcess.restype = w.HANDLE
+    api.WaitForSingleObject.argtypes = [w.HANDLE, w.DWORD]; api.WaitForSingleObject.restype = w.DWORD
+    api.CloseHandle.argtypes = [w.HANDLE]; api.CloseHandle.restype = w.BOOL
+    parent = api.OpenProcess(0x100000, False, os.getppid())
+    if not parent: raise Refusal('launcher parent handle unavailable')
+    if api.WaitForSingleObject(parent, 0) != 258:
+        api.CloseHandle(parent)
+        raise Refusal('launcher exited during startup')
+    def watch():
+        global _LAUNCHER_GONE
+        try:
+            api.WaitForSingleObject(parent, 0xffffffff)
+            _LAUNCHER_GONE = True
+            current = _ACTIVE_PROCESS_CANCELLATION
+            if current is None: os._exit(2)
+            current.cancelled = True
+        finally: api.CloseHandle(parent)
+    try: threading.Thread(target=watch, daemon=True).start()
+    except BaseException:
+        api.CloseHandle(parent)
+        raise
 
 
 class _OwnedCancellation:
@@ -201,11 +241,11 @@ class _OwnedCancellation:
         _ACTIVE_PROCESS_CANCELLATION = self.previous
         # Capture a late flag received after the worker's last cancellation check
         # but before ownership ended. An existing primary exception wins.
-        if exception_type is None and self.cancelled:
+        if exception_type is None and (self.cancelled or _LAUNCHER_GONE):
             raise ProcessFailure(Refusal('operation cancelled'), *self.accounting)
 
     def check(self):
-        if self.cancelled:
+        if self.cancelled or _LAUNCHER_GONE:
             raise Refusal('operation cancelled')
 
 
@@ -216,6 +256,8 @@ def owned_process(command, directory, timeout, max_bytes, budget=None, accepted_
 
 
 def _run_owned_process(command, directory, timeout, max_bytes, budget, cancellation, accepted_exits, input_path):
+    if os.name == 'nt':
+        return _run_windows_process(command, directory, timeout, max_bytes, budget, cancellation, accepted_exits, input_path)
     directory = Path(directory)
     budget = budget or EvidenceBudget(directory, max_bytes, reserve=0)
     logs = [directory / 'stdout.log', directory / 'stderr.log']
@@ -305,6 +347,143 @@ def _run_owned_process(command, directory, timeout, max_bytes, budget, cancellat
             raise ProcessFailure(primary, cleanup, measured, max_bytes, discarded)
         if cleanup != 'confirmed': raise Refusal('owned process cleanup incomplete')
     return child.returncode
+
+
+_HELPER_SHA256 = {'windows_process': 'b2d39406b87b4d46f4898e09a2f6c43fa8dca027baeed458c4f18791968f1c21'}  # refreshed helper identities
+
+
+class _WindowsJob:
+    """Load only the exact packaged native helper selected with this host."""
+    def __init__(self):
+        import types
+        source=Path(__file__).with_name('windows_process.py')
+        raw=source.read_bytes()
+        if len(raw)>1048576 or hashlib.sha256(raw).hexdigest()!=_HELPER_SHA256.get('windows_process'):
+            raise Refusal('DPM native process helper differs from trusted tool')
+        module=types.ModuleType('dpm_windows_process');module.__file__=str(source)
+        exec(compile(raw,str(source),'exec'),module.__dict__)
+        self.backend=module.WindowsJob()
+
+    @property
+    def pid(self): return self.backend.pid
+    def start(self,command,directory,input_handle):return self.backend.start(command,directory,input_handle)
+    def poll(self):return self.backend.poll()
+    def active(self):return self.backend.active()
+    def members(self):return self.backend.members()
+    def terminate(self):return self.backend.terminate()
+    def close(self):return self.backend.close()
+
+
+def _run_windows_process(command, directory, timeout, max_bytes, budget, cancellation, accepted_exits, input_path):
+    """Bounded pipe readers; the owner alone retains bytes and publishes accounting."""
+    import queue
+    import threading
+    directory = Path(directory)
+    budget = budget or EvidenceBudget(directory, max_bytes, reserve=0)
+    messages = queue.Queue(maxsize=4)
+    handles, pipes, readers = [], [], []
+    owner = None
+    input_handle = None
+    primary = None
+    cleanup = 'confirmed'
+    discarded = 0
+    code = None
+    def read_pipe(index, pipe):
+        try:
+            while True:
+                block = pipe.read(65536)
+                if not block: break
+                messages.put((index, block))
+        except OSError as error:
+            messages.put((index, error))
+        finally:
+            pipe.close()
+            messages.put((index, None))
+    def retain(index, block):
+        nonlocal discarded
+        if isinstance(block, OSError): raise block
+        available = max(0, min(max_bytes - max(retained_bytes(directory), sum(handle.tell() for handle in handles)), budget.available()))
+        retained = min(len(block), available)
+        handles[index].write(block[:retained]); handles[index].flush()
+        discarded += len(block) - retained
+        if retained < len(block): raise BudgetExceeded('runner output stream bound exceeded; discardedBytes=' + str(discarded))
+    ended = set()
+    try:
+        cancellation.check(); budget.audit(directory, max_bytes)
+        for name in ['stdout.log', 'stderr.log']: handles.append((directory / name).open('xb'))
+        if input_path is not None:
+            selected = regular(input_path)
+            if selected.stat().st_size > max_bytes: raise Refusal('owned input stream exceeds operation bound')
+            input_handle = selected.open('rb')
+        else: input_handle = open(os.devnull, 'rb')
+        owner = _WindowsJob()
+        pipes = owner.start(command, directory, input_handle)
+        for index, pipe in enumerate(pipes):
+            thread = threading.Thread(target=read_pipe, args=(index, pipe), daemon=True)
+            thread.start(); readers.append(thread)
+        deadline = time.monotonic() + timeout
+        while True:
+            cancellation.check()
+            try:
+                index, block = messages.get(timeout=0.01)
+                if block is None: ended.add(index)
+                else: retain(index, block)
+            except queue.Empty: pass
+            budget.audit(directory, max_bytes)
+            code = owner.poll()
+            if code is not None:
+                # The process handle can signal before job accounting catches up.
+                # Bound that notification grace; persistent descendants still refuse.
+                settled = time.monotonic() + 0.1
+                while owner.active() and time.monotonic() < min(settled, deadline):
+                    if owner.members() - {owner.pid}: raise Refusal('runner exited with live owned descendants')
+                    time.sleep(0.001)
+                if owner.active(): raise Refusal('runner exited with live owned descendants')
+                if len(ended) == len(readers): break
+            if time.monotonic() >= deadline: raise Refusal('runner timeout')
+        if code not in accepted_exits: raise Refusal('runner failed: ' + str(code))
+    except (Refusal, OSError, subprocess.SubprocessError) as error:
+        primary = error
+    finally:
+        if owner is not None:
+            try:
+                owner.terminate()
+                cleanup_deadline = time.monotonic() + 2
+                while owner.active() and time.monotonic() < cleanup_deadline: time.sleep(0.01)
+                if owner.active(): cleanup = 'incomplete'
+            except OSError as error:
+                cleanup = 'incomplete'
+                if primary is None: primary = error
+            finally: owner.close()
+        # Job termination closes every owned writer. Drain the bounded queue so
+        # readers can finish even after a flood or cancellation; retain the cap.
+        drain_deadline = time.monotonic() + 2
+        while len(ended) < len(readers) and time.monotonic() < drain_deadline:
+            try:
+                index, block = messages.get(timeout=0.01)
+                if block is None: ended.add(index)
+                else:
+                    try: retain(index, block)
+                    except (Refusal, OSError) as error:
+                        if primary is None: primary = error
+            except queue.Empty: pass
+        for reader in readers:
+            reader.join(timeout=max(0, drain_deadline-time.monotonic()))
+            if reader.is_alive(): cleanup = 'incomplete'
+        for pipe in pipes:
+            if not pipe.closed and not any(reader.is_alive() for reader in readers): pipe.close()
+        if input_handle is not None: input_handle.close()
+        for handle in handles: handle.close()
+        try: budget.audit(directory, max_bytes)
+        except (Refusal, OSError) as error:
+            if primary is None: primary = error
+        try: measured = retained_bytes(directory)
+        except (Refusal, OSError): measured = None
+        cancellation.accounting = (cleanup, measured, max_bytes, discarded)
+        if cancellation.cancelled and primary is None: primary = Refusal('operation cancelled')
+        if primary is not None: raise ProcessFailure(primary, cleanup, measured, max_bytes, discarded)
+        if cleanup != 'confirmed': raise Refusal('owned process cleanup incomplete')
+    return code
 
 
 class Project:

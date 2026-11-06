@@ -44,6 +44,8 @@ class RemoteVerdictTests(unittest.TestCase):
             base = Path(temporary)
             output = base / "output"; output.mkdir(mode=0o700)
             private = base / "private"; private.mkdir(mode=0o700)
+            from store import set_private
+            set_private(output);set_private(private)
             entry = next(item for item in json.loads((ROOT / "tools/evidence/commands.json").read_text())["commands"]
                          if item["commandId"] == "mirrors.interop")
             plan_path = base / "plan.json"
