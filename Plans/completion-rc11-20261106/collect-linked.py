@@ -16,5 +16,5 @@ def main():
  cid='mirrorgate.recovery';target=BASE/'outputs'/cid;plan=attachment_for(cid,target,{'recovery-origin-envelope.json':Path(origin['bundle'])/'envelope.json','recovery-origin.json':artifact('framework.recovery-origin-installed','recovery-origin')})
  tail=[root/'fixture/state','--run-ref',origin['privateRunRef']['runId'],'--envelope-sha256',origin['privateRunRef']['envelopeSha256'],'--original-behavior','failed','--original-cleanup','unconfirmed','--receipt',target/'recovery-receipt.json']
  collect('rc11-c0-final-prepared-recovery-reclaim',cid,cwd=gate/'gate/mirrorgate-supervisor',tail=tail,env=env,attachment_plan=plan)
- print('RC10 R1 AND PREPARED RECOVERY GREEN',flush=True)
+ print('RC11 R1 AND PREPARED RECOVERY GREEN',flush=True)
 if __name__=='__main__':main()

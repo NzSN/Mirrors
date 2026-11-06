@@ -1,5 +1,29 @@
 # Framework execution decisions
 
+## 2026-11-06 — rc.11 exact-candidate qualification complete; publication/deployment prepared
+
+[Current record](completion-rc11-20261106/README.md): Mirrors
+`19c31bf09b58e27c2942ca123a2017c30b638216`, Gate `cd4914b2fa68aaa4f22955352b81cbb890ffd6f0`,
+C0 `989061a0e10c569c3bae787a97e225a5580679e094fde313e487de17604faa40`.
+Both D audits, the full selected M5 profile, Q1/Q2, 20 sealed bundles and all six
+Q negatives pass. Offline Q2 is identical after owned oracle/tunnel shutdown.
+Full native Windows includes actual seven-test Rust execution; 22 client rows,
+three installed DPM profiles and 13 finite controlled C++ executions pass.
+Linux/Windows packages are verified. Source/tag/companion commits remain private;
+production remains running at its prior hash. Rollback bytes and baseline health
+are verified. [Operation card](completion-rc11-20261106/operations.md)
+separates publication, replacement and reboot approvals. Real two-cycle soak and
+consumer acknowledgements remain open. No unrelated worktree files were removed.
+
+## 2026-11-06 — approved Windows fix transfer and native validation
+
+The user approved copying the prepared fixes to the named `win10` staging path
+and testing there. The [new native record](windows-fixes-20261106/README.md)
+resolves the earlier transfer-approval block and validates the original DPM
+failure fixes. The strict driver remains required and now stops at distribution;
+POSIX storage/locking/collector portability remains open. No narrowed acceptance,
+new framework qualification or release/deployment operation is inferred.
+
 ## 2026-11-05 — publish the exact rc.8 source and qualification progress
 
 The user requested commit/push and a current CHECKPOINTS.md entry. Preserve

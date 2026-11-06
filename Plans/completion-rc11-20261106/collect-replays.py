@@ -17,5 +17,5 @@ def main():
   expected=1 if command=='framework.replay-faulty' else 0
   collect('rc11-c0-final-installed-'+command,command,cwd=gate if gate_mode else runtime,
           tail=tail,env=env,attachment_plan=plan,expected_exit=expected,timeout=2400)
- print('RC10 INSTALLED ORIGIN/REPLAY/MUTATION GATES COLLECTED',flush=True)
+ print('RC11 INSTALLED ORIGIN/REPLAY/MUTATION GATES COLLECTED',flush=True)
 if __name__=='__main__':main()

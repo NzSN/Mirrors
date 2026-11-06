@@ -3,7 +3,7 @@ import json
 from evidence_rc11 import *
 
 def main():
- audits=json.loads((PLAN/'rc11-c0-final-registered-installed-audits.json').read_text())['results']
+ audits=json.loads((PLAN/'rc11-registered-installed-audits.json').read_text())['results']
  dlocal=audits[0]['finalized'];dgate=audits[1]['finalized'];nodes=[]
  def add(result,phase,binding=None,dependencies=(),credit=True):
   node={'phase':phase,'evidenceUse':'qualification-credit' if credit else 'retained-attempt','privateRunRef':result['privateRunRef'],'publicRunRef':result['publicRunRef'],'distributionRunId':binding['privateRunRef']['runId'] if binding else None,'dependsOnRunIds':[r['privateRunRef']['runId'] for r in dependencies]}
@@ -40,6 +40,6 @@ def main():
  run('rc11-c0-final-qualified-catalog-c3',[C3,'validate',final_catalog],env=env)
  run('rc11-c0-final-q1-complete-profile-link',['/usr/bin/python3',SOURCE/'tools/evidence/verify.py','--offline','--catalog',final_catalog,'--profile','m5-wsl-windows-remote',q['bundle']],env=env,timeout=900)
  write(PLAN/'rc11-c0-final-q1-result.json',{'status':'linked-q1-complete-profile-accepted','sourceRevision':FREEZE['freezeRevision'],'c0':SELECTION,'q':q,'scope':identity(scope_path),'catalog':identity(final_catalog),'independentInstalledQ2Pending':True,'fullWindowsAcceptance':'see separate exact-source Windows receipt','releaseOrProductionAdmission':False})
- print('RC10 LINKED Q1 GREEN',flush=True)
+ print('RC11 LINKED Q1 GREEN',flush=True)
 
 if __name__=='__main__':main()

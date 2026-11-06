@@ -1,0 +1,25 @@
+{
+  "status": "all-four-real-mixed-audit-controls-rejected",
+  "controls": [
+    {
+      "profile": "checked-replay-local",
+      "validator": "collector",
+      "reason": "installed audit does not bind the retained distribution manifest"
+    },
+    {
+      "profile": "checked-replay-local",
+      "validator": "independent-scope",
+      "reason": "installed audit does not bind the retained distribution manifest"
+    },
+    {
+      "profile": "checked-replay-gate",
+      "validator": "collector",
+      "reason": "installed audit does not bind the retained distribution manifest"
+    },
+    {
+      "profile": "checked-replay-gate",
+      "validator": "independent-scope",
+      "reason": "installed audit does not bind the retained distribution manifest"
+    }
+  ]
+}

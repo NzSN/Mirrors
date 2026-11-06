@@ -1,0 +1,17 @@
+{
+  "schema": "mirrors.rc11-reviewed-delivery-inputs/v1",
+  "qualifiedSourceRevision": "19c31bf09b58e27c2942ca123a2017c30b638216",
+  "tag": "v0.2.0-rc.11",
+  "gateRevision": "cd4914b2fa68aaa4f22955352b81cbb890ffd6f0",
+  "sourceExpectedRemoteMain": "f889e5e6b3197f5f008866db33848c57127cee2e",
+  "gateExpectedRemoteMain": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+  "followingCommitScope": "planning/checkpoint/public projection metadata only; qualified tag remains on source revision",
+  "originalSharedMainAndIndexModified": false,
+  "remoteMutationPerformed": false,
+  "privateArtifactsExcluded": [
+    ".golden-build stores and archives",
+    "private keys and certificates",
+    "unrelated 240 pre-existing paths",
+    "build/cache outputs"
+  ]
+}

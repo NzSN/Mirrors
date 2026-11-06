@@ -1,0 +1,67 @@
+{
+  "status": "both-registered-installed-audits-finalized-and-offline-verified",
+  "sourceRevision": "19c31bf09b58e27c2942ca123a2017c30b638216",
+  "c0": "989061a0e10c569c3bae787a97e225a5580679e094fde313e487de17604faa40",
+  "registry": {
+    "path": ".golden-build/completion-rc11-20261106/frozen/source/tools/evidence/commands.json",
+    "bytes": 45395,
+    "sha256": "b530e9431175b6a85f4c07c4fbf17d008e0dbcd3e5912bd741de6e520a0f5f2f"
+  },
+  "results": [
+    {
+      "profile": "checked-replay-local",
+      "commandId": "framework.install-diagnostics",
+      "runtime": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc11-20261106/qualification/install/checked-replay-local/versions/687bb7a343eb09f52816993b1128acfdffde148861fc7fb2b9939407bb05e49f/runtime",
+      "manifestDigest": "687bb7a343eb09f52816993b1128acfdffde148861fc7fb2b9939407bb05e49f",
+      "finalized": {
+        "bundle": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc11-20261106/qualification/evidence/runs/run-b15eda9b-6438-44de-a6c5-12f1f7c25884",
+        "privateRunRef": {
+          "envelopeSha256": "fca99df83f6cc1a39fc2f53221c7f018ef3b6d34db6e0f31369bbce6d6be264d",
+          "projectionKind": "private",
+          "runId": "run-b15eda9b-6438-44de-a6c5-12f1f7c25884",
+          "schemaVersion": "mirrors.evidence-envelope/v1.0"
+        },
+        "publicRunRef": {
+          "envelopeSha256": "9267de8e2276710708f6b9d174351e2add486dc2b75ea73620b701deaf3cb335",
+          "projectionKind": "public",
+          "runId": "run-b15eda9b-6438-44de-a6c5-12f1f7c25884",
+          "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+        },
+        "schemaVersion": "mirrors.evidence-finalize-result/v1"
+      },
+      "audit": {
+        "path": ".golden-build/completion-rc11-20261106/qualification/audit/checked-replay-local/install-diagnostics.json",
+        "bytes": 48469,
+        "sha256": "402825cb95e742f90454113a2b4f28a2ca113879e3573583b31e01b0e0a589e9"
+      }
+    },
+    {
+      "profile": "checked-replay-gate",
+      "commandId": "framework.install-diagnostics-gate",
+      "runtime": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc11-20261106/qualification/install/checked-replay-gate/versions/00855821f1220dd3a2b60d2f1dca723529c4ad84a4b6ff2f84e078fb78d16ead/runtime",
+      "manifestDigest": "00855821f1220dd3a2b60d2f1dca723529c4ad84a4b6ff2f84e078fb78d16ead",
+      "finalized": {
+        "bundle": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc11-20261106/qualification/evidence/runs/run-4d7360a9-9720-4d80-a4e0-2bfab0751179",
+        "privateRunRef": {
+          "envelopeSha256": "9b53dff217bbc198c3ba897a45508aba5a4e26e9d528adef237731e0e084f5ed",
+          "projectionKind": "private",
+          "runId": "run-4d7360a9-9720-4d80-a4e0-2bfab0751179",
+          "schemaVersion": "mirrors.evidence-envelope/v1.0"
+        },
+        "publicRunRef": {
+          "envelopeSha256": "686745b7ed6f6e91c7cf0716fa113d412180960960c9627c6f2a11699fcb64b3",
+          "projectionKind": "public",
+          "runId": "run-4d7360a9-9720-4d80-a4e0-2bfab0751179",
+          "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+        },
+        "schemaVersion": "mirrors.evidence-finalize-result/v1"
+      },
+      "audit": {
+        "path": ".golden-build/completion-rc11-20261106/qualification/audit/checked-replay-gate/install-diagnostics-gate.json",
+        "bytes": 49181,
+        "sha256": "72c2510fbae72d3a4220aad8bc45d03f9556a4199f614a42f28df14a612bfb22"
+      }
+    }
+  ],
+  "frameworkQualificationGranted": false
+}

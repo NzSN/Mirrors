@@ -1,0 +1,17 @@
+{
+  "cause": "selected pinned Lean runtime segfaults when TMPDIR names an absent directory",
+  "minimalProbe": [
+    {
+      "case": "present",
+      "exitCode": 0
+    },
+    {
+      "case": "absent",
+      "exitCode": 139
+    }
+  ],
+  "resolution": "create and select an owned ext4 temporary directory before executing release gates",
+  "sourceChangeNeeded": false,
+  "failedAttemptRetained": ".golden-build/completion-rc11-20261106/logs/linux-release-build.json",
+  "tracedDiagnosticNotAcceptance": ".golden-build/completion-rc11-20261106/package-model-interface-probe2.log"
+}

@@ -33,5 +33,5 @@ def main():
  tail+=['--oracle-mode','remote','--service-identity',root/'lease-reduction-service-identity.json']
  for flag,name in [('--tls-ca','ca.crt'),('--tls-cert','linux-client.crt'),('--tls-key','linux-client.key')]:tail +=[flag,ROOT/'.golden-build/qualification-rc7-20261105/private-pki'/name]
  collect('rc11-c0-final-domain-reduction',cid,cwd=runtime,tail=tail,env=env,attachment_plan=plan,timeout=900)
- print('RC10 BOTH REAL REDUCTION BRANCHES GREEN',flush=True)
+ print('RC11 BOTH REAL REDUCTION BRANCHES GREEN',flush=True)
 if __name__=='__main__':main()

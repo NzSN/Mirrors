@@ -1,0 +1,62 @@
+{
+  "status": "verified-exact-source-native-package",
+  "package": {
+    "schema": "mirrors.rc11.windows-package/v1",
+    "sourceCommit": "19c31bf09b58e27c2942ca123a2017c30b638216",
+    "sourceTree": "5a63be079206e356f66edd64f4ed26e4f6ea5b1c",
+    "tag": "v0.2.0-rc.11",
+    "version": "0.2.0-rc.11",
+    "sourceOverlay": false,
+    "sourceGitBlobsVerified": 10113,
+    "fullLakeTest": true,
+    "fullLakeTestLogSha256": "e8120adb8ba6c682019a77f343dbcf11eb1518e93bcc2364d9d4d8eb552c99f7",
+    "files": {
+      "bin/libcrypto-3-x64.dll": {
+        "bytes": 5689843,
+        "sha256": "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7"
+      },
+      "bin/libssl-3-x64.dll": {
+        "bytes": 1025928,
+        "sha256": "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c"
+      },
+      "bin/model_interface_gen.exe": {
+        "bytes": 112594944,
+        "sha256": "e37bfd9269671f88f3179005cec4585d2cff9da7e8327582c836a286782ac4d9"
+      },
+      "bin/ModelMirrors.exe": {
+        "bytes": 111195648,
+        "sha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4"
+      },
+      "bin/zlib1.dll": {
+        "bytes": 128488,
+        "sha256": "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5"
+      }
+    },
+    "dllSources": {
+      "libcrypto-3-x64.dll": {
+        "path": "D:\\Programs\\msys2\\ucrt64\\bin\\libcrypto-3-x64.dll",
+        "sha256": "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7"
+      },
+      "libssl-3-x64.dll": {
+        "path": "D:\\Programs\\msys2\\ucrt64\\bin\\libssl-3-x64.dll",
+        "sha256": "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c"
+      },
+      "zlib1.dll": {
+        "path": "D:\\ModelMirrors\\releases\\20261029-completion-7e9a27d\\candidate-v0.2.0-rc.1\\bin\\zlib1.dll",
+        "sha256": "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5"
+      }
+    },
+    "published": false,
+    "deployed": false,
+    "reproducibleCompilation": false,
+    "releaseAdmission": false
+  },
+  "archive": {
+    "name": "mirrors-v0.2.0-rc.11-windows-x86_64.zip",
+    "sha256": "f5ec1c9ba3204be04f797acb9086c3a6edd00dce81d7f478c5292b377b7c7df0",
+    "bytes": 73727146
+  },
+  "repeatIdentical": true,
+  "restrictedPathSmoke": true,
+  "peClosurePassed": true
+}

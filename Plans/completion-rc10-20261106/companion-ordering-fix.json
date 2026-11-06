@@ -1,0 +1,38 @@
+{
+  "status": "fixed-and-private-source-frozen",
+  "repository": "https://github.com/NzSN/MirrorGate.git",
+  "base": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+  "revision": "cd4914b2fa68aaa4f22955352b81cbb890ffd6f0",
+  "source": ".golden-build/completion-rc10-20261106/MirrorGate-ordering-fix",
+  "paths": [
+    "docs/agent-hosting-control-v2.md",
+    "sdk/node/control.mjs",
+    "tests/node/control-v2.test.mjs"
+  ],
+  "fullGate": {
+    "path": ".golden-build/completion-rc10-20261106/gate-fixed-full-dependencies.log",
+    "bytes": 82587,
+    "sha256": "42126590bd0f3ecd5c4421ac885e371b019cfb6354a40e8f9b5097e9cb6de993"
+  },
+  "red": {
+    "path": ".golden-build/completion-rc10-20261106/logs/gate-ordering-red.stdout",
+    "bytes": 2731,
+    "sha256": "1434662e2aef0fc7dc8d6682338bed2a38a2c1023caebe5252abd82531e52e66"
+  },
+  "green": {
+    "path": ".golden-build/completion-rc10-20261106/logs/gate-ordering-final-focused-admitted.stdout",
+    "bytes": 1922,
+    "sha256": "52d06c6879722439947a60d3dd839904f615f4956b2be72a7d890791e7983e26"
+  },
+  "patch": {
+    "path": ".golden-build/completion-rc10-20261106/gate-ordering-fix.patch",
+    "bytes": 5933,
+    "sha256": "d2afaa82a873a286d49c1b23b534d7f17cb9312fc59ac52b36f123de5ee4b03e"
+  },
+  "bundle": {
+    "path": ".golden-build/completion-rc10-20261106/MirrorGate-ordering-fix.bundle",
+    "bytes": 872690,
+    "sha256": "cd5e10dcd0b74c8845f93275400b263af1fb74790a68e125f5fb5d5b0064193c"
+  },
+  "published": false
+}

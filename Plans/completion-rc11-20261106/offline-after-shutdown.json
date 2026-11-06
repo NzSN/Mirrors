@@ -1,0 +1,16 @@
+{
+  "status": "byte-identical-independent-Q2-after-oracle-shutdown",
+  "bundlesVerified": 20,
+  "negativeControls": 6,
+  "cleanup": {
+    "path": ".golden-build/completion-rc11-20261106/oracle-cleanup-admitted.json",
+    "bytes": 636,
+    "sha256": "1fb78bef46156d333e28f5eb7051523d095e5a673468c33c0d270959d3d37eba"
+  },
+  "verification": {
+    "path": ".golden-build/completion-rc11-20261106/logs/rc11-q2-after-oracle-stop.stdout",
+    "bytes": 3427,
+    "sha256": "6dfd2481de4a586031615a6941619dd7de908264957abac1628b132dd8c2d04f"
+  },
+  "productionModified": false
+}

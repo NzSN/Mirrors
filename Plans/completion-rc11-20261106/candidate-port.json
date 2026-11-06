@@ -1,0 +1,55 @@
+{
+  "status": "packaged-four-way-mtls-and-wrong-pin-passed",
+  "sourceRevision": "19c31bf09b58e27c2942ca123a2017c30b638216",
+  "serverBinarySha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4",
+  "clientBinary": {
+    "path": ".golden-build/completion-rc11-20261106/linux-smoke-admitted/mirrors-v0.2.0-rc.11-linux-x86_64/bin/mirror",
+    "bytes": 129466088,
+    "sha256": "44d588a4dd01b7c7834e821ca88da6147e1eb056c1eed4ba869bfb1c3216a21f"
+  },
+  "cases": [
+    {
+      "case": "valid",
+      "async": false,
+      "exitCode": 0,
+      "receipt": {
+        "path": ".golden-build/completion-rc11-20261106/logs/rc11-packaged-sync-valid.json",
+        "bytes": 1508,
+        "sha256": "b7defc4f5b7ae3a2037c20d7db2fd538afd06e41969d889664d31535135e671f"
+      }
+    },
+    {
+      "case": "invalid",
+      "async": false,
+      "exitCode": 1,
+      "receipt": {
+        "path": ".golden-build/completion-rc11-20261106/logs/rc11-packaged-sync-invalid.json",
+        "bytes": 1528,
+        "sha256": "db207568db23a62f9f0db6b32dc7fa999a504a4cf1e9be5b2a402cb7b93975f6"
+      }
+    },
+    {
+      "case": "valid",
+      "async": true,
+      "exitCode": 0,
+      "receipt": {
+        "path": ".golden-build/completion-rc11-20261106/logs/rc11-packaged-async-valid.json",
+        "bytes": 1526,
+        "sha256": "8d9737194d95ae80f23ee51599ef61990ce27cec88cc758c4e4314a614f493e3"
+      }
+    },
+    {
+      "case": "invalid",
+      "async": true,
+      "exitCode": 1,
+      "receipt": {
+        "path": ".golden-build/completion-rc11-20261106/logs/rc11-packaged-async-invalid.json",
+        "bytes": 1546,
+        "sha256": "5a97bc043ca80735c7868fcc32d8e04d93244063dc004faf5652ee8cf50137fa"
+      }
+    }
+  ],
+  "wrongPinRejected": true,
+  "productionModified": false,
+  "credentialScope": "owned task PKI; production PKI acceptance remains a deployment control"
+}

@@ -1,0 +1,35 @@
+{
+  "status": "full-native-driver-passed-including-native-rust",
+  "source": {
+    "status": "passed",
+    "commit": "19c31bf09b58e27c2942ca123a2017c30b638216",
+    "tree": "5a63be079206e356f66edd64f4ed26e4f6ea5b1c",
+    "gitBlobsVerified": 10113,
+    "mismatches": [],
+    "sourceStatus": [],
+    "sourceOverlay": false,
+    "sourceBuiltMirrorSha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4",
+    "sourceBuiltCompilerSha256": "e37bfd9269671f88f3179005cec4585d2cff9da7e8327582c836a286782ac4d9"
+  },
+  "command": {
+    "name": "rc11-clean-full-test",
+    "exitCode": 0,
+    "startedAt": "2026-11-06T07:17:11.3874024Z",
+    "finishedAt": "2026-11-06T07:21:16.5743582Z",
+    "argv": [
+      "D:\\ModelMirrors\\staging\\qualification-rc7-20261105\\runtime-inputs\\native-test-job-detached.exe",
+      "C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe",
+      "test"
+    ],
+    "log": "D:\\ModelMirrors\\staging\\completion-rc11-20261106\\rc11-clean-full-test.log",
+    "sha256": "e8120adb8ba6c682019a77f343dbcf11eb1518e93bcc2364d9d4d8eb552c99f7"
+  },
+  "rawLog": ".golden-build/completion-rc11-20261106/windows-receipts/rc11-clean-full-test.log",
+  "nativeRustTests": 7,
+  "ownedJobEmpty": true,
+  "linuxOnlyDpmBuildRegressionSkipped": true,
+  "optionalTlaDifferentialUnitSkips": 8,
+  "liveTlcSafetyLivenessAndMutantCasesExecuted": true,
+  "published": false,
+  "deployed": false
+}

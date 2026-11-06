@@ -5,6 +5,68 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-06 — rc.11 exact-candidate qualification complete; publication/deployment prepared
+
+[Current record](Plans/completion-rc11-20261106/README.md): Mirrors
+`19c31bf09b58e27c2942ca123a2017c30b638216`, Gate `cd4914b2fa68aaa4f22955352b81cbb890ffd6f0`,
+C0 `989061a0e10c569c3bae787a97e225a5580679e094fde313e487de17604faa40`.
+Both D audits, the full selected M5 profile, Q1/Q2, 20 sealed bundles and all six
+Q negatives pass. Offline Q2 is identical after owned oracle/tunnel shutdown.
+Full native Windows includes actual seven-test Rust execution; 22 client rows,
+three installed DPM profiles and 13 finite controlled C++ executions pass.
+Linux/Windows packages are verified. Source/tag/companion commits remain private;
+production remains running at its prior hash. Rollback bytes and baseline health
+are verified. [Operation card](Plans/completion-rc11-20261106/operations.md)
+separates publication, replacement and reboot approvals. Real two-cycle soak and
+consumer acknowledgements remain open. No unrelated worktree files were removed.
+
+## 2026-11-06 — Windows DPM fixes validated; full driver reaches distribution
+
+After explicit transfer approval, Codex applied and validated the fixes in a
+separate owned native Windows checkout. The
+[fix record](Plans/windows-fixes-20261106/README.md) binds base `f328e328…` plus
+11 exact overrides and every native attempt. All original DPM/CLI/installation
+failures are resolved: 92 native tests run, 89 pass and three existing Linux-only
+tests skip. Five new Windows ownership/argv/acquisition/junction/parent-death
+controls pass. Linux DPM regressions pass all 87 existing tests; the repaired
+TLA acquisition assertion passes in the 81-test Windows tooling run with eight
+existing skips.
+
+The strict full driver now passes DPM and subsequent model-interface/catalog
+gates, then exits 1 at distribution's unavailable `resource`, `fcntl` and
+`O_DIRECTORY` dependencies. Independent evidence diagnostics expose the same
+POSIX storage boundary. Full Windows acceptance remains open; no required tier
+is downgraded. All 10,034 original Git blobs and 11 overrides verify, the original
+frozen checkout remains byte-identical and clean, and no owned stage executable
+remains. Source changes remain uncommitted; old source/C0 qualification is not
+transferred to this new implementation.
+
+## 2026-11-06 — Windows DPM failure fixes prepared; native retest pending
+
+The user requested failure analysis and fixes. The
+[source-fix record](Plans/windows-fixes-20261106/README.md) covers native Windows
+process ownership/output handling, parent-death cleanup, no-overwrite activation,
+read-only inventory semantics, equivalent cancellation controls and the TLA
+path assertion. Regenerated helper pins and the rebuilt launcher pass all 87
+existing DPM tests on Linux; five new native Windows tests skip there. Offline
+TLA tooling passes 81 tests with six existing skips. Native Windows validation
+is pending explicit transfer approval after automatic review rejected exporting
+the source overlay to the existing test host. No native pass is claimed; full
+Windows qualification remains open and earlier receipts retain their identities.
+
+## 2026-11-06 — full native Windows lake test rerun fails at DPM
+
+At the user's request, the strict native Windows `lake test` was rerun at
+unchanged validated source `f328e328…` on `DESKTOP-6DKB5JD`. The
+[new run record](Plans/windows-full-20261106/README.md) retains the harness,
+exit/hash receipt, raw-log binding and fresh final source/cleanup observation.
+Build preflight and preceding native/compiler/transport/model gates pass.
+DPM discovery runs 87 tests with 10 failures, eight errors and three existing
+skips, reproducing missing Windows process-control/activation/mode support and
+POSIX fixtures. The driver exits 1; later gates are not reached. Full Windows
+acceptance remains open. The source checkout is clean and no owned stage
+process remains. Previous qualification results retain their original scope.
+
 ## 2026-11-05 — rc.8 source and qualification-record publication authorized
 
 The user requested commit/push and recording the current progress here.

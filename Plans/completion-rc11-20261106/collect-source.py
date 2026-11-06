@@ -5,5 +5,5 @@ def main():
  STORE.mkdir(mode=0o700,parents=True,exist_ok=True);(STORE/'staging').mkdir(mode=0o700,exist_ok=True)
  for cid,cwd in [('mirrorecma.project-check',ECMA),('mirrorecma.test',ECMA),('mirrorgate.required',GATE),('mirrors.local-no-model',SOURCE)]:
   collect('rc11-final-source-'+cid,cid,cwd=cwd,env=env,timeout=3600)
- print('RC10 FINAL C0 ALL REQUIRED SOURCE GATES GREEN',flush=True)
+ print('RC11 FINAL C0 ALL REQUIRED SOURCE GATES GREEN',flush=True)
 if __name__=='__main__':main()
