@@ -1,0 +1,25 @@
+{
+  "status": "strict-driver-passed-with-explicit-existing-skips",
+  "overlay": "overlay-20.json",
+  "commandReceipt": {
+    "name": "20261106-iteration-full-lake-test-20",
+    "exitCode": 0,
+    "argv": [
+      "D:\\ModelMirrors\\staging\\qualification-rc7-20261105\\runtime-inputs\\native-test-job.exe",
+      "C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe",
+      "test"
+    ],
+    "log": "D:\\ModelMirrors\\staging\\qualification-rc7-20261105\\logs\\20261106-iteration-full-lake-test-20.log",
+    "sha256": "ef306061e13d5a158e2c348d0edcb2ae7740f9e3c3e9f6b0c9001d9c06b9d088"
+  },
+  "rawLog": ".golden-build/completion-iteration-20261106/20261106-iteration-full-lake-test-20.log",
+  "knownSkips": [
+    "SKIP: isolated DPM build regression requires Linux (copied ELF runtime probe).",
+    "OK (skipped=8)",
+    "SKIP borrowed symlink case on Windows",
+    "SKIP resolver filesystem case on Windows",
+    "SKIP Rust generated binding execution: cargo and a MirrorRust checkout are required (RUST_REPO)."
+  ],
+  "finalCandidateAcceptance": false,
+  "followup": "shared creation-time process helper, real Windows resolver symlink cases, Rust generated execution admission and final freeze still pending"
+}

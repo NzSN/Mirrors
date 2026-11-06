@@ -1,0 +1,17 @@
+﻿{
+    "name":  "20261106-fixes-distribution-py310-1",
+    "exitCode":  1,
+    "argv":  [
+                 "D:\\ModelMirrors\\staging\\qualification-rc7-20261105\\runtime-inputs\\native-test-job.exe",
+                 "D:\\Programs\\Python310\\python.exe",
+                 "-m",
+                 "unittest",
+                 "discover",
+                 "-s",
+                 "tools/distribution",
+                 "-p",
+                 "test_*.py"
+             ],
+    "log":  "D:\\ModelMirrors\\staging\\qualification-rc7-20261105\\logs\\20261106-fixes-distribution-py310-1.log",
+    "sha256":  "5d518c85bd9f47726e5b756f6eecd741976f376bc487b183666473edd8cd81b3"
+}

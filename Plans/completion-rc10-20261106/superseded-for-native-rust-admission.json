@@ -1,0 +1,19 @@
+{
+  "status": "superseded-source-candidate-not-release-admitted",
+  "sourceRevision": "a53fa332f7c8e150e2559ae31ea32b47c23ecf4b",
+  "reason": "native Lean bare bash resolves to WSL before PATH; direct Git Bash Rust passes seven tests, full driver still self-skips Rust; new native Python Rust driver requires a new source freeze",
+  "retainedPassedScope": [
+    "both source-built packages",
+    "clean Git source 10104 verified blobs",
+    "full Windows driver with explicit recorded Rust skip",
+    "all three installed DPM profiles",
+    "finite controlled C++ live comparison",
+    "new Gate cd4914b2 fix and complete standalone gate",
+    "fresh model and 22-client rows at previous C0",
+    "both previous-C0 manifest-bound D audits",
+    "reproduction/mutation/prepared-filesystem recovery"
+  ],
+  "freshQualificationAtNextSourceRequired": true,
+  "published": false,
+  "deployed": false
+}

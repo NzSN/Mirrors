@@ -1,0 +1,20 @@
+{
+  "status": "rejected-for-new-candidate-qualification",
+  "reason": "stale registered prefix audited a different distribution; fixed collector and independent verifier reject the mixed inputs",
+  "cases": [
+    {
+      "profile": "checked-replay-local",
+      "auditManifestDigest": "7347c2ceba41a26b46587c10c3c91ad7dc9a84a93b452607e828d6e2692d814b",
+      "retainedManifestDigest": "62491931b60513f120ef89e332827a29dae1a6304d39e87b24513bf423e0ca50",
+      "matches": false
+    },
+    {
+      "profile": "checked-replay-gate",
+      "auditManifestDigest": "918b8989723dcb3598951f2ae3d959f4fb99f6bb851b520e26685ee35a8fe6c0",
+      "retainedManifestDigest": "a5b765f7e9ae56f47a7600aeb5fba7e6c5ca2706899cadaa9dd5770af8687412",
+      "matches": false
+    }
+  ],
+  "originalAttemptsPreserved": true,
+  "newCandidate": "0.2.0-rc.10"
+}

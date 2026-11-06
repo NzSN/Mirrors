@@ -1,0 +1,13 @@
+{
+  "probe": "console-helper-probe.py",
+  "observedHiddenConsoleMembers": [
+    "conhost.exe",
+    "python.exe"
+  ],
+  "observedDetachedMembers": [
+    "python.exe"
+  ],
+  "rootPidHiddenConsole": 33680,
+  "rootPidDetached": 12832,
+  "scope": "bounded actual owned-job probe, executable basenames queried only for job members"
+}

@@ -1,0 +1,388 @@
+{
+  "schema": "mirrors.rc10-source-c0-freeze/v1",
+  "at": "2026-11-06T06:12:24.091063+00:00",
+  "status": "source-and-fixed-companion-bound-new-c0",
+  "productVersion": "0.2.0-rc.10",
+  "sharedBaseRevision": "f889e5e6b3197f5f008866db33848c57127cee2e",
+  "taskOwnedSource": ".golden-build/completion-rc10-20261106/frozen/source",
+  "freezeRevision": "a53fa332f7c8e150e2559ae31ea32b47c23ecf4b",
+  "freezeTree": "e8449a28803277fecd5625892161dbb6e148a43b",
+  "commitScope": "local task-owned repository only; shared main unchanged",
+  "validatedLiveSourceRef": {
+    "componentId": "mirrors",
+    "repository": "https://github.com/NzSN/Mirrors.git",
+    "revision": "f889e5e6b3197f5f008866db33848c57127cee2e",
+    "dirty": true,
+    "dirtyContent": {
+      "algorithm": "sha256",
+      "digest": "89ff9146ed60ec6a050e1670a5709a8fb91f8fb077cb4ebb00638d7e0134ac18",
+      "method": "git-diff-and-untracked-manifest-v1",
+      "includedPaths": [
+        "Docs/current-status.md",
+        "Docs/dpm-cli-guide.md",
+        "Docs/dpm-runner-contract.md",
+        "Docs/versioning.md",
+        "Docs/windows-tooling.md",
+        "Shell/Version.lean",
+        "lakefile.lean",
+        "tools/TlaModuleResolverSpec.lean",
+        "tools/deterministic-scheduling/check_cli_installed.py",
+        "tools/deterministic-scheduling/cli.py",
+        "tools/deterministic-scheduling/dpm_host.py",
+        "tools/deterministic-scheduling/install_cli.py",
+        "tools/deterministic-scheduling/prepare_cli.py",
+        "tools/deterministic-scheduling/refresh_host_identity.py",
+        "tools/deterministic-scheduling/tests/cancellation_control.py",
+        "tools/deterministic-scheduling/tests/test_dpm_host.py",
+        "tools/deterministic-scheduling/tests/test_dpm_install.py",
+        "tools/deterministic-scheduling/tests/test_dpm_launcher_install.py",
+        "tools/deterministic-scheduling/tests/test_host_identity.py",
+        "tools/deterministic-scheduling/tests/test_windows_process.py",
+        "tools/deterministic-scheduling/windows_process.py",
+        "tools/distribution/build.py",
+        "tools/distribution/distribution_lib.py",
+        "tools/distribution/install.py",
+        "tools/distribution/manifest_check.py",
+        "tools/distribution/test_install.py",
+        "tools/distribution/test_manifest_check.py",
+        "tools/distribution/test_refresh_identity.py",
+        "tools/distribution/verify.py",
+        "tools/evidence/catalog_links.py",
+        "tools/evidence/collect.py",
+        "tools/evidence/commands.json",
+        "tools/evidence/finalize.py",
+        "tools/evidence/process_control.py",
+        "tools/evidence/qualification_scope.py",
+        "tools/evidence/store.py",
+        "tools/evidence/tests/test_catalog_links.py",
+        "tools/evidence/tests/test_collect.py",
+        "tools/evidence/tests/test_qualification_scope.py",
+        "tools/evidence/tests/test_remote_interop.py",
+        "tools/evidence/tests/test_store.py",
+        "tools/evidence/tests/test_winfs.py",
+        "tools/evidence/tests/windows_console_interrupt.py",
+        "tools/evidence/verify.py",
+        "tools/evidence/winfs.py",
+        "tools/model-interface-rust/check.sh",
+        "tools/model-interface-rust/check_windows.py",
+        "tools/tla-differential/tests/test_acquire.py"
+      ],
+      "excludedPaths": []
+    }
+  },
+  "validatedSourceIndex": {
+    "path": ".golden-build/completion-rc10-20261106/frozen/validated-source-index.json",
+    "bytes": 655356,
+    "sha256": "02ec731bb3ad37fa05a40c7028871cc83f709cb2b5fdfa7d4d56566d74b4b583"
+  },
+  "validatedSourceTreeIndexSha256": "236618d250493224a32ed4d5f01e45057bf5346794fc431730b111f6074712c2",
+  "sourceBytesEqualValidatedSource": true,
+  "frameworkCatalog": {
+    "path": ".lake/build/bin/framework_catalog",
+    "bytes": 119687824,
+    "sha256": "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126"
+  },
+  "gateResult": {
+    "path": "Plans/completion-rc10-20261106/rc10-gate-result.json",
+    "bytes": 7340,
+    "sha256": "32c0eeee40f5da291756337d4e16b3765af476f52c03afca56df2f26d2e59af8"
+  },
+  "families": {
+    "base": {
+      "catalog": {
+        "path": ".golden-build/completion-rc10-20261106/frozen/final-layout/base/catalog/framework-catalog.json",
+        "bytes": 26965,
+        "sha256": "79ff170039d38c11ef7db4268b9e7be6057ff0f995f18740a9fa53102ac45221"
+      },
+      "selectionSha256": "f259d225d28a05cccfa1e8849600ed158aebbb4b9bf4e36667fb6ad0691b6179",
+      "locksRoot": ".golden-build/completion-rc10-20261106/frozen/final-layout/base/distribution/reference-node",
+      "snapshotIndex": {
+        "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/snapshots/snapshot-index.json",
+        "bytes": 873261,
+        "sha256": "5685102cf1021648caef8df6d31c1fa93dc5d77686bfc4ef29c245e1c6272108"
+      },
+      "sourceTreeIndexSha256": "236618d250493224a32ed4d5f01e45057bf5346794fc431730b111f6074712c2",
+      "selectedForExecution": false,
+      "candidateFiles": {
+        "catalog.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/catalog.json",
+          "bytes": 26965,
+          "sha256": "79ff170039d38c11ef7db4268b9e7be6057ff0f995f18740a9fa53102ac45221"
+        },
+        "locks/README.md": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/locks/README.md",
+          "bytes": 9363,
+          "sha256": "69ab646cd2af6bfc11b61f008ede755e7aff075020ae663491b8ecc4c31c8c79"
+        },
+        "locks/activation-transaction.md": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/locks/activation-transaction.md",
+          "bytes": 3684,
+          "sha256": "962eb6e9440d840872117094fbeb71ee0b7403c94889df12758cf1cdf25d45ce"
+        },
+        "locks/cache-index.schema.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/locks/cache-index.schema.json",
+          "bytes": 1367,
+          "sha256": "59dbe68542dd94853b1ee79c77e54ae65b1275aecd7298c419814a974c3b4ddc"
+        },
+        "locks/component-lock.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/locks/component-lock.json",
+          "bytes": 9268,
+          "sha256": "fcfde0c95f6cc5b5e14d8fce35ffb7773d92acab4ae5bb63b178183c15a140ff"
+        },
+        "locks/dependency-lock.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/locks/dependency-lock.json",
+          "bytes": 2135,
+          "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
+        },
+        "locks/distribution-manifest.schema.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/locks/distribution-manifest.schema.json",
+          "bytes": 6636,
+          "sha256": "1b8f10da12c61217a5e5e061e0fa947d24617f4dfc94c59e15df4d3020763d1b"
+        },
+        "locks/fixtures/cache-index.checked-replay-gate.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/locks/fixtures/cache-index.checked-replay-gate.valid.json",
+          "bytes": 4399,
+          "sha256": "a0ade416e70c1d79f5b7227606b4b79ee83dc628a76f1109a6b8b093e33d0e59"
+        },
+        "locks/fixtures/cache-index.checked-replay-local.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/locks/fixtures/cache-index.checked-replay-local.valid.json",
+          "bytes": 3440,
+          "sha256": "3302bdf9212e76917cd5c7ed1027bb408a3c341feb171d3e12e200bc954c1976"
+        },
+        "locks/fixtures/distribution-manifest.checked-replay-gate.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/locks/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+          "bytes": 13215,
+          "sha256": "30bef6f510ba1a7b168c6053a33055c520bc191dd113f9ce30b23e454c3911d0"
+        },
+        "locks/fixtures/distribution-manifest.checked-replay-local.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/locks/fixtures/distribution-manifest.checked-replay-local.valid.json",
+          "bytes": 10557,
+          "sha256": "ac9caee44e8853808cba86f1c71f336b61f19ef838a9768286544a32a1420bde"
+        },
+        "locks/profiles.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/base/locks/profiles.json",
+          "bytes": 4307,
+          "sha256": "77feec2fd70a82fb0718753f679788e9670a26481d9eca940221d6be0b2e0632"
+        }
+      }
+    },
+    "wsl2": {
+      "catalog": {
+        "path": ".golden-build/completion-rc10-20261106/frozen/final-layout/wsl2/catalog/framework-catalog-wsl2-26.04.json",
+        "bytes": 27488,
+        "sha256": "e88cb1273348dbbc105547f48fb812abee6faa66d556f92f3e832fcc1283f0b6"
+      },
+      "selectionSha256": "8a3de3af9c22388c8015d7904abfe9eb231bf61aaa3bb6177567423f80607d2b",
+      "locksRoot": ".golden-build/completion-rc10-20261106/frozen/final-layout/wsl2/distribution/reference-node-wsl2-26.04",
+      "snapshotIndex": {
+        "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/wsl2/snapshots/snapshot-index.json",
+        "bytes": 873261,
+        "sha256": "5685102cf1021648caef8df6d31c1fa93dc5d77686bfc4ef29c245e1c6272108"
+      },
+      "sourceTreeIndexSha256": "236618d250493224a32ed4d5f01e45057bf5346794fc431730b111f6074712c2",
+      "selectedForExecution": true,
+      "candidateFiles": {
+        "catalog.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/wsl2/catalog.json",
+          "bytes": 27488,
+          "sha256": "e88cb1273348dbbc105547f48fb812abee6faa66d556f92f3e832fcc1283f0b6"
+        },
+        "locks/README.md": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/wsl2/locks/README.md",
+          "bytes": 1028,
+          "sha256": "67fd638b4dd8c3253b6750451c58040477c231802331da2da704164cd4328d36"
+        },
+        "locks/component-lock.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/wsl2/locks/component-lock.json",
+          "bytes": 9268,
+          "sha256": "2f73c8a10b8929707ebb4a09c99d830c821339fff91fb996450e0639cf29dcb4"
+        },
+        "locks/dependency-lock.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/wsl2/locks/dependency-lock.json",
+          "bytes": 2135,
+          "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
+        },
+        "locks/fixtures/cache-index.checked-replay-gate.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/wsl2/locks/fixtures/cache-index.checked-replay-gate.valid.json",
+          "bytes": 4399,
+          "sha256": "d2970301c4bdc3a9b0d50110e8e86a7992b5b8718b506bd3865d9458c3e70286"
+        },
+        "locks/fixtures/cache-index.checked-replay-local.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/wsl2/locks/fixtures/cache-index.checked-replay-local.valid.json",
+          "bytes": 3440,
+          "sha256": "665d1c317bd4a86a4079ba7b3c12553e2274dfc6ec8afc80d93f256314cc5a6f"
+        },
+        "locks/fixtures/distribution-manifest.checked-replay-gate.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/wsl2/locks/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+          "bytes": 13215,
+          "sha256": "be5217532212f795e0046ae598384c28b538efa28eb15ca4dad4af5068e0e658"
+        },
+        "locks/fixtures/distribution-manifest.checked-replay-local.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/wsl2/locks/fixtures/distribution-manifest.checked-replay-local.valid.json",
+          "bytes": 10557,
+          "sha256": "b6e1b02cf8c05eec0e765a84612ea20710483dc2957c0ea4cbb03b77939c7a93"
+        },
+        "locks/profiles.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/gate-fixed-candidates/wsl2/locks/profiles.json",
+          "bytes": 4933,
+          "sha256": "3f0670d1c4518fa5159f0acbc311c3004252b623c25cd018870f71b29f9d42e7"
+        }
+      }
+    }
+  },
+  "preservedSharedInputs": {
+    "catalog/framework-catalog.json": {
+      "path": "catalog/framework-catalog.json",
+      "bytes": 30563,
+      "sha256": "d69e8f5244d990d652ef6201f2f37ae0b12896d6c235c13d118aeade212e6f4d"
+    },
+    "distribution/reference-node/README.md": {
+      "path": "distribution/reference-node/README.md",
+      "bytes": 9363,
+      "sha256": "69ab646cd2af6bfc11b61f008ede755e7aff075020ae663491b8ecc4c31c8c79"
+    },
+    "distribution/reference-node/activation-transaction.md": {
+      "path": "distribution/reference-node/activation-transaction.md",
+      "bytes": 3684,
+      "sha256": "962eb6e9440d840872117094fbeb71ee0b7403c94889df12758cf1cdf25d45ce"
+    },
+    "distribution/reference-node/cache-index.schema.json": {
+      "path": "distribution/reference-node/cache-index.schema.json",
+      "bytes": 1367,
+      "sha256": "59dbe68542dd94853b1ee79c77e54ae65b1275aecd7298c419814a974c3b4ddc"
+    },
+    "distribution/reference-node/component-lock.json": {
+      "path": "distribution/reference-node/component-lock.json",
+      "bytes": 12866,
+      "sha256": "fce0b3569ed3b6e65bc448acda9fcbb654444f9a38f119c63b0134a8be99795f"
+    },
+    "distribution/reference-node/dependency-lock.json": {
+      "path": "distribution/reference-node/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
+    },
+    "distribution/reference-node/distribution-manifest.schema.json": {
+      "path": "distribution/reference-node/distribution-manifest.schema.json",
+      "bytes": 6636,
+      "sha256": "1b8f10da12c61217a5e5e061e0fa947d24617f4dfc94c59e15df4d3020763d1b"
+    },
+    "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json": {
+      "path": "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+      "bytes": 4399,
+      "sha256": "57949f322829ecfd5292053368839da88bd268b1b575dd1ce05265cbccd86607"
+    },
+    "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json": {
+      "path": "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+      "bytes": 3440,
+      "sha256": "1b161698b410e2251211b7c65f7374ee882df90a1634e805bfdffa82d889e302"
+    },
+    "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json": {
+      "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "bytes": 16690,
+      "sha256": "f47f646736aac51b94e56ffc1f37dd91047e5e1575761d2ef4eb513736b38e86"
+    },
+    "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json": {
+      "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "bytes": 14032,
+      "sha256": "1808ba10b6c53e557ed6745a6ebed4891ef0bf8660bb63abab0bdc1f2e84b625"
+    },
+    "distribution/reference-node/profiles.json": {
+      "path": "distribution/reference-node/profiles.json",
+      "bytes": 4307,
+      "sha256": "549da39669c69f32ec7a2f7810da9a5fa4f05a26af3697d6e0960d6946d3d05f"
+    },
+    "catalog/framework-catalog-wsl2-26.04.json": {
+      "path": "catalog/framework-catalog-wsl2-26.04.json",
+      "bytes": 31086,
+      "sha256": "af47093b7f78d361800008bb03cda2dd2663b17ed9b67aa09ce8fda2b23e34c4"
+    },
+    "distribution/reference-node-wsl2-26.04/README.md": {
+      "path": "distribution/reference-node-wsl2-26.04/README.md",
+      "bytes": 1028,
+      "sha256": "67fd638b4dd8c3253b6750451c58040477c231802331da2da704164cd4328d36"
+    },
+    "distribution/reference-node-wsl2-26.04/component-lock.json": {
+      "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+      "bytes": 12866,
+      "sha256": "4deab387f27d6c43834e8b0a87cd2563000b58bdb18982a525386c8469ca8e93"
+    },
+    "distribution/reference-node-wsl2-26.04/dependency-lock.json": {
+      "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
+    },
+    "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json": {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+      "bytes": 4399,
+      "sha256": "b9a7849afc123157fcb380c042c4293d085f7648236bc2347917eb263f79caa5"
+    },
+    "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json": {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+      "bytes": 3440,
+      "sha256": "3ff457d01308dc1c0d869277259ff7b52b6442c27589b4b5ea9639c2eacf3eec"
+    },
+    "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json": {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "bytes": 16723,
+      "sha256": "162bcec60668b6c3c040904beadc9f408be6852467b531020c8a01a0f3eeb16f"
+    },
+    "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json": {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "bytes": 14065,
+      "sha256": "d7e267beeccbe7bfa3979e7264eacd8e84eb402e5f88a49de14e4a2f00ecf4bc"
+    },
+    "distribution/reference-node-wsl2-26.04/profiles.json": {
+      "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+      "bytes": 4933,
+      "sha256": "87d31ef00f9eb8f5371575eebae9a89224458604f4c6a8ed9355265cd6525d67"
+    }
+  },
+  "carrier": {
+    "path": "third_party/batteries/batteries-v4.33.0.bundle",
+    "bytes": 3684180,
+    "sha256": "f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3"
+  },
+  "selectedProfile": "ubuntu-26.04-wsl2-x86_64",
+  "qualificationGranted": false,
+  "sharedCommitPushTagPackageOrDeploymentPerformed": false,
+  "companionOrderingFix": {
+    "status": "fixed-and-private-source-frozen",
+    "repository": "https://github.com/NzSN/MirrorGate.git",
+    "base": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+    "revision": "cd4914b2fa68aaa4f22955352b81cbb890ffd6f0",
+    "source": ".golden-build/completion-rc10-20261106/MirrorGate-ordering-fix",
+    "paths": [
+      "docs/agent-hosting-control-v2.md",
+      "sdk/node/control.mjs",
+      "tests/node/control-v2.test.mjs"
+    ],
+    "fullGate": {
+      "path": ".golden-build/completion-rc10-20261106/gate-fixed-full-dependencies.log",
+      "bytes": 82587,
+      "sha256": "42126590bd0f3ecd5c4421ac885e371b019cfb6354a40e8f9b5097e9cb6de993"
+    },
+    "red": {
+      "path": ".golden-build/completion-rc10-20261106/logs/gate-ordering-red.stdout",
+      "bytes": 2731,
+      "sha256": "1434662e2aef0fc7dc8d6682338bed2a38a2c1023caebe5252abd82531e52e66"
+    },
+    "green": {
+      "path": ".golden-build/completion-rc10-20261106/logs/gate-ordering-final-focused-admitted.stdout",
+      "bytes": 1922,
+      "sha256": "52d06c6879722439947a60d3dd839904f615f4956b2be72a7d890791e7983e26"
+    },
+    "patch": {
+      "path": ".golden-build/completion-rc10-20261106/gate-ordering-fix.patch",
+      "bytes": 5933,
+      "sha256": "d2afaa82a873a286d49c1b23b534d7f17cb9312fc59ac52b36f123de5ee4b03e"
+    },
+    "bundle": {
+      "path": ".golden-build/completion-rc10-20261106/MirrorGate-ordering-fix.bundle",
+      "bytes": 872690,
+      "sha256": "cd5e10dcd0b74c8845f93275400b263af1fb74790a68e125f5fb5d5b0064193c"
+    },
+    "published": false
+  },
+  "supersedesCatalogOnly": "rc10-freeze-manifest.json",
+  "packagingLayoutCorrection": "canonical distribution/<root>/ lock paths; C0/source/companion identities unchanged; initial cache refused bootstrap and is not credited"
+}

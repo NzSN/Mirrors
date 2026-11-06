@@ -1,0 +1,348 @@
+{
+  "schema": "mirrors.rc10-source-c0-freeze/v1",
+  "at": "2026-11-06T06:12:24.091063+00:00",
+  "status": "prepared-for-independent-verification",
+  "productVersion": "0.2.0-rc.10",
+  "sharedBaseRevision": "f889e5e6b3197f5f008866db33848c57127cee2e",
+  "taskOwnedSource": ".golden-build/completion-rc10-20261106/frozen/source",
+  "freezeRevision": "a53fa332f7c8e150e2559ae31ea32b47c23ecf4b",
+  "freezeTree": "e8449a28803277fecd5625892161dbb6e148a43b",
+  "commitScope": "local task-owned repository only; shared main unchanged",
+  "validatedLiveSourceRef": {
+    "componentId": "mirrors",
+    "repository": "https://github.com/NzSN/Mirrors.git",
+    "revision": "f889e5e6b3197f5f008866db33848c57127cee2e",
+    "dirty": true,
+    "dirtyContent": {
+      "algorithm": "sha256",
+      "digest": "89ff9146ed60ec6a050e1670a5709a8fb91f8fb077cb4ebb00638d7e0134ac18",
+      "method": "git-diff-and-untracked-manifest-v1",
+      "includedPaths": [
+        "Docs/current-status.md",
+        "Docs/dpm-cli-guide.md",
+        "Docs/dpm-runner-contract.md",
+        "Docs/versioning.md",
+        "Docs/windows-tooling.md",
+        "Shell/Version.lean",
+        "lakefile.lean",
+        "tools/TlaModuleResolverSpec.lean",
+        "tools/deterministic-scheduling/check_cli_installed.py",
+        "tools/deterministic-scheduling/cli.py",
+        "tools/deterministic-scheduling/dpm_host.py",
+        "tools/deterministic-scheduling/install_cli.py",
+        "tools/deterministic-scheduling/prepare_cli.py",
+        "tools/deterministic-scheduling/refresh_host_identity.py",
+        "tools/deterministic-scheduling/tests/cancellation_control.py",
+        "tools/deterministic-scheduling/tests/test_dpm_host.py",
+        "tools/deterministic-scheduling/tests/test_dpm_install.py",
+        "tools/deterministic-scheduling/tests/test_dpm_launcher_install.py",
+        "tools/deterministic-scheduling/tests/test_host_identity.py",
+        "tools/deterministic-scheduling/tests/test_windows_process.py",
+        "tools/deterministic-scheduling/windows_process.py",
+        "tools/distribution/build.py",
+        "tools/distribution/distribution_lib.py",
+        "tools/distribution/install.py",
+        "tools/distribution/manifest_check.py",
+        "tools/distribution/test_install.py",
+        "tools/distribution/test_manifest_check.py",
+        "tools/distribution/test_refresh_identity.py",
+        "tools/distribution/verify.py",
+        "tools/evidence/catalog_links.py",
+        "tools/evidence/collect.py",
+        "tools/evidence/commands.json",
+        "tools/evidence/finalize.py",
+        "tools/evidence/process_control.py",
+        "tools/evidence/qualification_scope.py",
+        "tools/evidence/store.py",
+        "tools/evidence/tests/test_catalog_links.py",
+        "tools/evidence/tests/test_collect.py",
+        "tools/evidence/tests/test_qualification_scope.py",
+        "tools/evidence/tests/test_remote_interop.py",
+        "tools/evidence/tests/test_store.py",
+        "tools/evidence/tests/test_winfs.py",
+        "tools/evidence/tests/windows_console_interrupt.py",
+        "tools/evidence/verify.py",
+        "tools/evidence/winfs.py",
+        "tools/model-interface-rust/check.sh",
+        "tools/model-interface-rust/check_windows.py",
+        "tools/tla-differential/tests/test_acquire.py"
+      ],
+      "excludedPaths": []
+    }
+  },
+  "validatedSourceIndex": {
+    "path": ".golden-build/completion-rc10-20261106/frozen/validated-source-index.json",
+    "bytes": 655356,
+    "sha256": "02ec731bb3ad37fa05a40c7028871cc83f709cb2b5fdfa7d4d56566d74b4b583"
+  },
+  "validatedSourceTreeIndexSha256": "236618d250493224a32ed4d5f01e45057bf5346794fc431730b111f6074712c2",
+  "sourceBytesEqualValidatedSource": true,
+  "frameworkCatalog": {
+    "path": ".lake/build/bin/framework_catalog",
+    "bytes": 119687824,
+    "sha256": "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126"
+  },
+  "gateResult": {
+    "path": "Plans/completion-rc10-20261106/rc10-gate-result.json",
+    "bytes": 7340,
+    "sha256": "32c0eeee40f5da291756337d4e16b3765af476f52c03afca56df2f26d2e59af8"
+  },
+  "families": {
+    "base": {
+      "catalog": {
+        "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/catalog/framework-catalog.json",
+        "bytes": 26965,
+        "sha256": "75745981f80202aee90e0eca88caff8a6bc1286825fdd51b792fb131e8eeffaf"
+      },
+      "selectionSha256": "28a9698a795641d71c05bb6ba35de27541cc039c46697b6415d81e2e4a058dab",
+      "locksRoot": ".golden-build/completion-rc10-20261106/frozen/candidates/base/distribution/reference-node",
+      "snapshotIndex": {
+        "path": ".golden-build/completion-rc10-20261106/frozen/snapshots/base/snapshot-index.json",
+        "bytes": 873261,
+        "sha256": "f6646885519ec9b927e06ee29c28bbaf13e8e2d93a6c4c7ccf5cc8bf85c65767"
+      },
+      "sourceTreeIndexSha256": "236618d250493224a32ed4d5f01e45057bf5346794fc431730b111f6074712c2",
+      "selectedForExecution": false,
+      "candidateFiles": {
+        "catalog/framework-catalog.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/catalog/framework-catalog.json",
+          "bytes": 26965,
+          "sha256": "75745981f80202aee90e0eca88caff8a6bc1286825fdd51b792fb131e8eeffaf"
+        },
+        "distribution/reference-node/README.md": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/distribution/reference-node/README.md",
+          "bytes": 9363,
+          "sha256": "69ab646cd2af6bfc11b61f008ede755e7aff075020ae663491b8ecc4c31c8c79"
+        },
+        "distribution/reference-node/activation-transaction.md": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/distribution/reference-node/activation-transaction.md",
+          "bytes": 3684,
+          "sha256": "962eb6e9440d840872117094fbeb71ee0b7403c94889df12758cf1cdf25d45ce"
+        },
+        "distribution/reference-node/cache-index.schema.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/distribution/reference-node/cache-index.schema.json",
+          "bytes": 1367,
+          "sha256": "59dbe68542dd94853b1ee79c77e54ae65b1275aecd7298c419814a974c3b4ddc"
+        },
+        "distribution/reference-node/component-lock.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/distribution/reference-node/component-lock.json",
+          "bytes": 9268,
+          "sha256": "e5e79274bf41e93fe08977337a34fdf0ed4c859768a77925af8ecc65781adcce"
+        },
+        "distribution/reference-node/dependency-lock.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/distribution/reference-node/dependency-lock.json",
+          "bytes": 2135,
+          "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
+        },
+        "distribution/reference-node/distribution-manifest.schema.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/distribution/reference-node/distribution-manifest.schema.json",
+          "bytes": 6636,
+          "sha256": "1b8f10da12c61217a5e5e061e0fa947d24617f4dfc94c59e15df4d3020763d1b"
+        },
+        "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+          "bytes": 4399,
+          "sha256": "269ac05963ec1aba9420187ffb502a78d946a022da8fcb2ae7eea7ed8b618785"
+        },
+        "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+          "bytes": 3440,
+          "sha256": "48b61af01db1440d7606d6e6271512ce8786aefc19e6274d60d72ce695dd5ad3"
+        },
+        "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+          "bytes": 13266,
+          "sha256": "0d5ba0175c0e4cce5e2a2f533d6f0b9e458016aa1bafac8af73b75bd34f4961c"
+        },
+        "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+          "bytes": 10608,
+          "sha256": "3222f04dff01342ee52d6c6e7d859413432d8d8e14c46a2833a567a58d4bb60b"
+        },
+        "distribution/reference-node/profiles.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/base/distribution/reference-node/profiles.json",
+          "bytes": 4307,
+          "sha256": "e2675514a8df99c51dbefa282687a2663575956ea6fef45ef64292db48fe0a85"
+        }
+      }
+    },
+    "wsl2": {
+      "catalog": {
+        "path": ".golden-build/completion-rc10-20261106/frozen/candidates/wsl2/catalog/framework-catalog-wsl2-26.04.json",
+        "bytes": 27488,
+        "sha256": "8e0d18335183ab430c752c82f9c64b313270ced6f53f4132f62fd55712ff799d"
+      },
+      "selectionSha256": "bfa8ce7913b6df0b73b5fdc440047b9d151aba0ae77e5f4f96d9b6823767bbb8",
+      "locksRoot": ".golden-build/completion-rc10-20261106/frozen/candidates/wsl2/distribution/reference-node-wsl2-26.04",
+      "snapshotIndex": {
+        "path": ".golden-build/completion-rc10-20261106/frozen/snapshots/wsl2/snapshot-index.json",
+        "bytes": 873261,
+        "sha256": "f6646885519ec9b927e06ee29c28bbaf13e8e2d93a6c4c7ccf5cc8bf85c65767"
+      },
+      "sourceTreeIndexSha256": "236618d250493224a32ed4d5f01e45057bf5346794fc431730b111f6074712c2",
+      "selectedForExecution": true,
+      "candidateFiles": {
+        "catalog/framework-catalog-wsl2-26.04.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/wsl2/catalog/framework-catalog-wsl2-26.04.json",
+          "bytes": 27488,
+          "sha256": "8e0d18335183ab430c752c82f9c64b313270ced6f53f4132f62fd55712ff799d"
+        },
+        "distribution/reference-node-wsl2-26.04/README.md": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/wsl2/distribution/reference-node-wsl2-26.04/README.md",
+          "bytes": 1028,
+          "sha256": "67fd638b4dd8c3253b6750451c58040477c231802331da2da704164cd4328d36"
+        },
+        "distribution/reference-node-wsl2-26.04/component-lock.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/wsl2/distribution/reference-node-wsl2-26.04/component-lock.json",
+          "bytes": 9268,
+          "sha256": "273a58f0e66b12ae0a001903cebb06cc19933221532fdfd6141956d0697f191d"
+        },
+        "distribution/reference-node-wsl2-26.04/dependency-lock.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/wsl2/distribution/reference-node-wsl2-26.04/dependency-lock.json",
+          "bytes": 2135,
+          "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
+        },
+        "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/wsl2/distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+          "bytes": 4399,
+          "sha256": "b7fcec446a438f03bfbfd3d2d06c7e8c5940579faabd9a1bc67d9ab0bb0441dc"
+        },
+        "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/wsl2/distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+          "bytes": 3440,
+          "sha256": "504fb6bbd5e205a6f5defa8dc0e9a3c1d05b4aabec10a69060fd400e809bff1c"
+        },
+        "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/wsl2/distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+          "bytes": 13299,
+          "sha256": "11bbb9f237d6cbac3e33989683181c888c10970ceb8d184a621d597fc1c09578"
+        },
+        "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/wsl2/distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+          "bytes": 10641,
+          "sha256": "4d1906610ca9587ca511c33cd54e7372c1c32f8ec9c4d181328dba0c748585cc"
+        },
+        "distribution/reference-node-wsl2-26.04/profiles.json": {
+          "path": ".golden-build/completion-rc10-20261106/frozen/candidates/wsl2/distribution/reference-node-wsl2-26.04/profiles.json",
+          "bytes": 4933,
+          "sha256": "79f064aaa8de2eae1e97da9d6f421b4de9101760a4bc9f7017c5f170a0670fb4"
+        }
+      }
+    }
+  },
+  "preservedSharedInputs": {
+    "catalog/framework-catalog.json": {
+      "path": "catalog/framework-catalog.json",
+      "bytes": 30563,
+      "sha256": "d69e8f5244d990d652ef6201f2f37ae0b12896d6c235c13d118aeade212e6f4d"
+    },
+    "distribution/reference-node/README.md": {
+      "path": "distribution/reference-node/README.md",
+      "bytes": 9363,
+      "sha256": "69ab646cd2af6bfc11b61f008ede755e7aff075020ae663491b8ecc4c31c8c79"
+    },
+    "distribution/reference-node/activation-transaction.md": {
+      "path": "distribution/reference-node/activation-transaction.md",
+      "bytes": 3684,
+      "sha256": "962eb6e9440d840872117094fbeb71ee0b7403c94889df12758cf1cdf25d45ce"
+    },
+    "distribution/reference-node/cache-index.schema.json": {
+      "path": "distribution/reference-node/cache-index.schema.json",
+      "bytes": 1367,
+      "sha256": "59dbe68542dd94853b1ee79c77e54ae65b1275aecd7298c419814a974c3b4ddc"
+    },
+    "distribution/reference-node/component-lock.json": {
+      "path": "distribution/reference-node/component-lock.json",
+      "bytes": 12866,
+      "sha256": "fce0b3569ed3b6e65bc448acda9fcbb654444f9a38f119c63b0134a8be99795f"
+    },
+    "distribution/reference-node/dependency-lock.json": {
+      "path": "distribution/reference-node/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
+    },
+    "distribution/reference-node/distribution-manifest.schema.json": {
+      "path": "distribution/reference-node/distribution-manifest.schema.json",
+      "bytes": 6636,
+      "sha256": "1b8f10da12c61217a5e5e061e0fa947d24617f4dfc94c59e15df4d3020763d1b"
+    },
+    "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json": {
+      "path": "distribution/reference-node/fixtures/cache-index.checked-replay-gate.valid.json",
+      "bytes": 4399,
+      "sha256": "57949f322829ecfd5292053368839da88bd268b1b575dd1ce05265cbccd86607"
+    },
+    "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json": {
+      "path": "distribution/reference-node/fixtures/cache-index.checked-replay-local.valid.json",
+      "bytes": 3440,
+      "sha256": "1b161698b410e2251211b7c65f7374ee882df90a1634e805bfdffa82d889e302"
+    },
+    "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json": {
+      "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "bytes": 16690,
+      "sha256": "f47f646736aac51b94e56ffc1f37dd91047e5e1575761d2ef4eb513736b38e86"
+    },
+    "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json": {
+      "path": "distribution/reference-node/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "bytes": 14032,
+      "sha256": "1808ba10b6c53e557ed6745a6ebed4891ef0bf8660bb63abab0bdc1f2e84b625"
+    },
+    "distribution/reference-node/profiles.json": {
+      "path": "distribution/reference-node/profiles.json",
+      "bytes": 4307,
+      "sha256": "549da39669c69f32ec7a2f7810da9a5fa4f05a26af3697d6e0960d6946d3d05f"
+    },
+    "catalog/framework-catalog-wsl2-26.04.json": {
+      "path": "catalog/framework-catalog-wsl2-26.04.json",
+      "bytes": 31086,
+      "sha256": "af47093b7f78d361800008bb03cda2dd2663b17ed9b67aa09ce8fda2b23e34c4"
+    },
+    "distribution/reference-node-wsl2-26.04/README.md": {
+      "path": "distribution/reference-node-wsl2-26.04/README.md",
+      "bytes": 1028,
+      "sha256": "67fd638b4dd8c3253b6750451c58040477c231802331da2da704164cd4328d36"
+    },
+    "distribution/reference-node-wsl2-26.04/component-lock.json": {
+      "path": "distribution/reference-node-wsl2-26.04/component-lock.json",
+      "bytes": 12866,
+      "sha256": "4deab387f27d6c43834e8b0a87cd2563000b58bdb18982a525386c8469ca8e93"
+    },
+    "distribution/reference-node-wsl2-26.04/dependency-lock.json": {
+      "path": "distribution/reference-node-wsl2-26.04/dependency-lock.json",
+      "bytes": 2135,
+      "sha256": "fb7f4e8aea31db1006e06ec71da0e1bfca1f1c4a32decdb924b5322f30f519f5"
+    },
+    "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json": {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-gate.valid.json",
+      "bytes": 4399,
+      "sha256": "b9a7849afc123157fcb380c042c4293d085f7648236bc2347917eb263f79caa5"
+    },
+    "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json": {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/cache-index.checked-replay-local.valid.json",
+      "bytes": 3440,
+      "sha256": "3ff457d01308dc1c0d869277259ff7b52b6442c27589b4b5ea9639c2eacf3eec"
+    },
+    "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json": {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-gate.valid.json",
+      "bytes": 16723,
+      "sha256": "162bcec60668b6c3c040904beadc9f408be6852467b531020c8a01a0f3eeb16f"
+    },
+    "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json": {
+      "path": "distribution/reference-node-wsl2-26.04/fixtures/distribution-manifest.checked-replay-local.valid.json",
+      "bytes": 14065,
+      "sha256": "d7e267beeccbe7bfa3979e7264eacd8e84eb402e5f88a49de14e4a2f00ecf4bc"
+    },
+    "distribution/reference-node-wsl2-26.04/profiles.json": {
+      "path": "distribution/reference-node-wsl2-26.04/profiles.json",
+      "bytes": 4933,
+      "sha256": "87d31ef00f9eb8f5371575eebae9a89224458604f4c6a8ed9355265cd6525d67"
+    }
+  },
+  "carrier": {
+    "path": "third_party/batteries/batteries-v4.33.0.bundle",
+    "bytes": 3684180,
+    "sha256": "f6efbfeb6353195c3318e3ef6e46d3e4e87897659989cd7322156d9e8a5f1cd3"
+  },
+  "selectedProfile": "ubuntu-26.04-wsl2-x86_64",
+  "qualificationGranted": false,
+  "sharedCommitPushTagPackageOrDeploymentPerformed": false
+}

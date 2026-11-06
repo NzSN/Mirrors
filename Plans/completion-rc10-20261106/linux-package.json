@@ -1,0 +1,43 @@
+{
+  "schema": "mirrors.s3-rc10.linux-package/v1",
+  "published": false,
+  "deployed": false,
+  "commit": "a53fa332f7c8e150e2559ae31ea32b47c23ecf4b",
+  "tag": "v0.2.0-rc.10",
+  "tagObject": "f96c8ff320c8eb0cb6602a26950be1968d66fb40",
+  "archive": {
+    "path": ".golden-build/completion-rc10-20261106/linux-dist/mirrors-v0.2.0-rc.10-linux-x86_64.tar.gz",
+    "bytes": 72212160,
+    "sha256": "7b7e1420840c139bea39c3749eb9bf47017ea726c87634f9c80f4a830723c5c4"
+  },
+  "externalManifest": {
+    "path": ".golden-build/completion-rc10-20261106/linux-dist/mirrors-v0.2.0-rc.10-linux-x86_64.build.json",
+    "bytes": 2877,
+    "sha256": "2289b2bdbb7041d76530914da7fe41fc2edf55c7b27e99c9a360f3461b53330d"
+  },
+  "checksums": {
+    "path": ".golden-build/completion-rc10-20261106/linux-dist/SHA256SUMS",
+    "bytes": 218,
+    "sha256": "0c302e15fce49a81c260dfedbbe14b60c74ea4d08e85db73f4b411f5cae39850"
+  },
+  "passedGates": [
+    "fixtures_replay",
+    "diff_cross",
+    "model_interface_spec",
+    "stdio_smoke",
+    "transport_spec",
+    "check-client-framing.py",
+    "relocated-binary-cli-smoke"
+  ],
+  "isolatedSmoke": {
+    "path": "/usr/bin:/bin",
+    "netns": "net:[4026532416]",
+    "sourceHidden": true,
+    "leanUnavailable": true
+  },
+  "mirrorVersion": "v0.2.0-rc.10",
+  "hostRelease": "PRETTY_NAME=\"Ubuntu 26.04.1 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"26.04\"\nVERSION=\"26.04.1 LTS (Resolute Raccoon)\"\nVERSION_CODENAME=resolute\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=resolute\nLOGO=ubuntu-logo\n",
+  "scope": "focused Linux non-model release gates and source-hidden/network-isolated Ubuntu 26.04 WSL2 smoke",
+  "installedDOrM5OrQ": false,
+  "releaseAdmission": false
+}

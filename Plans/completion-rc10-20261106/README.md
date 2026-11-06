@@ -1,5 +1,7 @@
 # Final completion continuation — rc.10, 2026-11-06
 
+**Superseded candidate record.** See [the completed rc.11 checkpoint](../completion-rc11-20261106/README.md). Rc.10 receipts and unsuccessful attempts below remain bound to their original inputs; no rc.10 release or deployment is claimed.
+
 The user requested iterating through the remaining roadmap. The prior
 [iteration](../completion-iteration-20261106/README.md) implemented and tested
 native Windows support, froze rc.9 source and built clean packages. Its installed

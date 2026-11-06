@@ -1,0 +1,37 @@
+{
+  "status": "source-fixes-applied-linux-regressions-passed-windows-validation-pending",
+  "localBaseRevision": "f889e5e6b3197f5f008866db33848c57127cee2e",
+  "windowsOriginalSourceRevision": "f328e328d6f961b49ccffefc0a6d0250bec2fb3c",
+  "dpmTests": {
+    "ran": 92,
+    "passed": 87,
+    "skipped": 5,
+    "skipReason": "new native Windows API tests on Linux"
+  },
+  "offlineTlaTests": {
+    "ran": 81,
+    "skipped": 6,
+    "result": "passed"
+  },
+  "nativeWindowsValidation": false,
+  "blocker": "automatic-review-rejected-source-overlay-transfer-pending-explicit-user-approval",
+  "requestedHost": "win10 (192.168.150.219)",
+  "requestedWindowsStage": "D:\\ModelMirrors\\staging\\windows-fixes-20261106",
+  "logs": [
+    {
+      "path": ".golden-build/windows-fixes-20261106/linux-launcher-build-3.log",
+      "sha256": "6753ed01c443afcfb4667b7e8e4cd679cb317f3f30c629c3383e920741b1e7c0",
+      "bytes": 47498
+    },
+    {
+      "path": ".golden-build/windows-fixes-20261106/linux-dpm-final.log",
+      "sha256": "ab91fde39edb3a89b6e036a1b51d7fc5719964b9cf1f96f36c9f625efe0057c2",
+      "bytes": 204
+    },
+    {
+      "path": ".golden-build/windows-fixes-20261106/linux-tla.log",
+      "sha256": "b1287af24364f2b6567e179a9dea4953aafdd0f02c5f79afd2f4774249505b16",
+      "bytes": 804
+    }
+  ]
+}

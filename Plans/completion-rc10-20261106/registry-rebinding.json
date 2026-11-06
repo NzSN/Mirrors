@@ -1,0 +1,18 @@
+{
+  "reason": "new exact-candidate installed prefixes; stale rc8 prefixes were diagnostic only",
+  "previousRegistrySha256": "9049924ddf5cefdab796ff2d65857c4f9162c6669bd1ec0a96fd42cfb48194eb",
+  "newRegistrySha256": "06aad84aa31451577bae0807637706a34fb687d33b14f053f02183c101439a33",
+  "changes": [
+    {
+      "commandId": "framework.install-diagnostics",
+      "oldPrefix": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/install/checked-replay-local",
+      "newPrefix": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc10-20261106/qualification/install/checked-replay-local"
+    },
+    {
+      "commandId": "framework.install-diagnostics-gate",
+      "oldPrefix": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/refreshed/install/checked-replay-gate",
+      "newPrefix": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc10-20261106/qualification/install/checked-replay-gate"
+    }
+  ],
+  "tracerAndClientPinsUnchanged": true
+}

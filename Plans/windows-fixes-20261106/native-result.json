@@ -1,0 +1,94 @@
+{
+  "status": "original-windows-dpm-failures-fixed-full-driver-open-at-distribution",
+  "transferApprovedByUser": true,
+  "windowsBaseRevision": "f328e328d6f961b49ccffefc0a6d0250bec2fb3c",
+  "testedOverlay": {
+    "path": "Plans/windows-fixes-20261106/source-overlay.json",
+    "sha256": "1eec97c0e7e79581aed9dd65c31152bfbbac3ac0a558ca0b90ceefa001b2ef1f",
+    "archive": ".golden-build/windows-fixes-20261106/overlay-4.tar",
+    "archiveSha256": "eb92e02e5bd2fd17a48cf9ca8bc595c71c7b783551e8fa35a87230a00520a2c9"
+  },
+  "windowsDpmTests": {
+    "ran": 92,
+    "passed": 89,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 3,
+    "skipReason": "pre-existing Linux-only installed launcher tests"
+  },
+  "linuxDpmTests": {
+    "ran": 92,
+    "passed": 87,
+    "skipped": 5,
+    "log": ".golden-build/windows-fixes-20261106/linux-dpm-6.log",
+    "sha256": "50bb9d1038585644ad0461aef99e922c3884f065ff126b021d2af25f475817ef"
+  },
+  "windowsOfflineTlaTests": {
+    "ran": 81,
+    "passed": 73,
+    "skipped": 8,
+    "python": "3.12.10"
+  },
+  "fullWindowsLakeTestPassed": false,
+  "fullDriverStop": "distribution contract tests: resource/fcntl/O_DIRECTORY unavailable",
+  "distributionDiagnostic": {
+    "python": "3.10.11",
+    "discovered": 13,
+    "errors": 12,
+    "allTestsDiscovered": false
+  },
+  "evidenceDiagnostic": {
+    "python": "3.10.11",
+    "discovered": 81,
+    "failures": 26,
+    "errors": 28,
+    "allTestsDiscovered": false
+  },
+  "sourceVerified": true,
+  "originalCheckoutPreserved": true,
+  "ownedProcessCleanupConfirmed": true,
+  "logs": [
+    {
+      "name": "20261106-fixes-launcher-build-4",
+      "exitCode": 0,
+      "path": ".golden-build/windows-fixes-20261106/20261106-fixes-launcher-build-4.log",
+      "sha256": "6f90c3325298570ee4e777f86e7ea44f90406633d4a0b0ffe185c33e232c8d0b",
+      "bytes": 47496
+    },
+    {
+      "name": "20261106-fixes-dpm-4",
+      "exitCode": 0,
+      "path": ".golden-build/windows-fixes-20261106/20261106-fixes-dpm-4.log",
+      "sha256": "ad6d3faeffe424160c31346d82258b458a64725315baf25c35b722eadebf6928",
+      "bytes": 235
+    },
+    {
+      "name": "20261106-fixes-full-lake-test-3",
+      "exitCode": 1,
+      "path": ".golden-build/windows-fixes-20261106/20261106-fixes-full-lake-test-3.log",
+      "sha256": "8ccf9336a4aee0a7775cdec78bea7245a83bff4d5da1c4d5af80ae0a9834b944",
+      "bytes": 18887
+    },
+    {
+      "name": "20261106-fixes-offline-tla-py312-1",
+      "exitCode": 0,
+      "path": ".golden-build/windows-fixes-20261106/20261106-fixes-offline-tla-py312-1.log",
+      "sha256": "bb032f736b95316338bf0260aec00e24e1b408393ecc9a436c8de8b56aee7f88",
+      "bytes": 1047
+    },
+    {
+      "name": "20261106-fixes-distribution-py310-1",
+      "exitCode": 1,
+      "path": ".golden-build/windows-fixes-20261106/20261106-fixes-distribution-py310-1.log",
+      "sha256": "5d518c85bd9f47726e5b756f6eecd741976f376bc487b183666473edd8cd81b3",
+      "bytes": 13375
+    },
+    {
+      "name": "20261106-fixes-evidence-py310-1",
+      "exitCode": 1,
+      "path": ".golden-build/windows-fixes-20261106/20261106-fixes-evidence-py310-1.log",
+      "sha256": "7e2df0f41125dfb1c021636a5e2bd3efe91b1430cd3def5ac5b8361ad4cd6c7e",
+      "bytes": 48649
+    }
+  ]
+}

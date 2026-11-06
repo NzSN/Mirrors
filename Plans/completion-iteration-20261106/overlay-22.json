@@ -1,0 +1,154 @@
+[
+  {
+    "path": "lakefile.lean",
+    "sha256": "ec1644114a7a5d75fa0dbd4623a9d35632f8cd7b6a5d6a03c646873c493e863d"
+  },
+  {
+    "path": "tools/TlaModuleResolverSpec.lean",
+    "sha256": "d411562494cbe8502533c9608135f5cf33680e51dc4e408b435d1242de41f21a"
+  },
+  {
+    "path": "tools/deterministic-scheduling/check_cli_installed.py",
+    "sha256": "4521bfbc62d64c862ee484f00a6ac9383b04ff6ea62b3a0d6a88433d771db5b9"
+  },
+  {
+    "path": "tools/deterministic-scheduling/cli.py",
+    "sha256": "b2bb3afddb87d9f7b27b73eaab25d72620c42ac78f3cd00452e37f84d6e622d1"
+  },
+  {
+    "path": "tools/deterministic-scheduling/dpm_host.py",
+    "sha256": "82e97aa3b6672116ffa6b1c1137612328ab62e823dc1bd2398871bbf5b05b77a"
+  },
+  {
+    "path": "tools/deterministic-scheduling/install_cli.py",
+    "sha256": "ef74d5288509b467ee20a8d699633a67c9cd0b5136f2aec6c0e619bad824950e"
+  },
+  {
+    "path": "tools/deterministic-scheduling/prepare_cli.py",
+    "sha256": "9f42cf6ee437ad64ee998c5aa35ddcf03540d741fa8de8d70a7554060356282c"
+  },
+  {
+    "path": "tools/deterministic-scheduling/refresh_host_identity.py",
+    "sha256": "88d087ea3ba51154026d72c0731c744d23bf120b0bf549ebc929c1acbe40d1ea"
+  },
+  {
+    "path": "tools/deterministic-scheduling/tests/cancellation_control.py",
+    "sha256": "1d990784463be5bcceb13635d185b2becd3a82357f341ec9f0fc2ffe14d44a77"
+  },
+  {
+    "path": "tools/deterministic-scheduling/tests/test_dpm_host.py",
+    "sha256": "420665464b536bdde331aecd14c3aa1ce37ab108f0ef4b09b815ca8db221eeae"
+  },
+  {
+    "path": "tools/deterministic-scheduling/tests/test_dpm_install.py",
+    "sha256": "60b83def0216367b9f8630395124afc85cbaa4ea2fe0b5712889b0f8528b1493"
+  },
+  {
+    "path": "tools/deterministic-scheduling/tests/test_dpm_launcher_install.py",
+    "sha256": "c31663859e7a1607bf5f86dd5bf6d88b2296e85a23d0755b044c988cbcf9757f"
+  },
+  {
+    "path": "tools/deterministic-scheduling/tests/test_host_identity.py",
+    "sha256": "031c33d20cbe84d9469e0d09fd94a8e893a0153aeff19247ad4043a2bb64bfb8"
+  },
+  {
+    "path": "tools/deterministic-scheduling/tests/test_windows_process.py",
+    "sha256": "bd9f995885db3740b4b39797c5954cb9de234412d859c3e5e759f644115167ce"
+  },
+  {
+    "path": "tools/deterministic-scheduling/windows_process.py",
+    "sha256": "b2d39406b87b4d46f4898e09a2f6c43fa8dca027baeed458c4f18791968f1c21"
+  },
+  {
+    "path": "tools/distribution/build.py",
+    "sha256": "d49c08d6b858f9b8f549a8b281d03ef327224e40b4971651c2a582ba706ebba0"
+  },
+  {
+    "path": "tools/distribution/distribution_lib.py",
+    "sha256": "7fa81bce725108dca3c8ca51f8c004c4d542c9f59dd1d79805e1ece8b6341b9d"
+  },
+  {
+    "path": "tools/distribution/install.py",
+    "sha256": "5867868a7e980a5ab4467385d9acf4988aa33d27e02848be612f575895cabe3e"
+  },
+  {
+    "path": "tools/distribution/manifest_check.py",
+    "sha256": "6cbcc7f7a3949734c6e723c6d639b11c828d26850b5b46e9198399f7ebdbd441"
+  },
+  {
+    "path": "tools/distribution/test_install.py",
+    "sha256": "b53014be82c5c293e6abbdd26587a2ddce7fd890729d703916ad15a8689eabfd"
+  },
+  {
+    "path": "tools/distribution/test_manifest_check.py",
+    "sha256": "9f2021a4f289ad4a2f021add9421e8bfaa90d519ae052a6584fea6a2e882810f"
+  },
+  {
+    "path": "tools/distribution/verify.py",
+    "sha256": "d91d8fa865e81b2961f30870b814d6c04e81ce4de5c3fbf1870fc804a63567d8"
+  },
+  {
+    "path": "tools/evidence/catalog_links.py",
+    "sha256": "b8fd31b6657621a1332fc6db69ef0f1ba08b04c5c24606c18676901cd29ab864"
+  },
+  {
+    "path": "tools/evidence/collect.py",
+    "sha256": "d0c009b3f1b675f45202005f7a61ce669d24a749b7dd682e63aefb948ddf76e5"
+  },
+  {
+    "path": "tools/evidence/finalize.py",
+    "sha256": "34c7343b0f7cb52ad3973864e4d9b771f73f5b2ff09c8e9dc1d74b028086c75e"
+  },
+  {
+    "path": "tools/evidence/process_control.py",
+    "sha256": "0c443181a3f2df7478a890f03e3915b859ce4691f83ec4fedd4b0ad5f3ca0e7f"
+  },
+  {
+    "path": "tools/evidence/store.py",
+    "sha256": "5d3088073e515ca5da154631700f82eaf8f13e1412f6be349a0eec3c7f37b1f7"
+  },
+  {
+    "path": "tools/evidence/tests/test_catalog_links.py",
+    "sha256": "af32f817ea835d367288ca4a58603a9d13f983b06fe1fa71596e90169e54d388"
+  },
+  {
+    "path": "tools/evidence/tests/test_collect.py",
+    "sha256": "be0a72c0b1b8248e35ef58a294e363ae58f88257b5c990a2c3e6f485281f2a2b"
+  },
+  {
+    "path": "tools/evidence/tests/test_qualification_scope.py",
+    "sha256": "d4094a6003ad396d68717c1d3418f94f1e0a54c72cb5d4fc6f413e5a2772e1df"
+  },
+  {
+    "path": "tools/evidence/tests/test_remote_interop.py",
+    "sha256": "db5b3ef818e5ebe6d1b0efc47d6bc928bc81e246e3c9a4e4c14ab860d9985eb1"
+  },
+  {
+    "path": "tools/evidence/tests/test_store.py",
+    "sha256": "663aca304ff6c7d7b223ec3054c510d9432679a04c43f62e98b91420d5386deb"
+  },
+  {
+    "path": "tools/evidence/tests/test_winfs.py",
+    "sha256": "af7fe75bad5a460d729f0063ac2dd7e8e90a33ef7e4f200db617955890f211dd"
+  },
+  {
+    "path": "tools/evidence/tests/windows_console_interrupt.py",
+    "sha256": "95e85b25818fa4a02781242defd081beaf560c436a1a22c0177f8a0a91dc1ae2"
+  },
+  {
+    "path": "tools/evidence/verify.py",
+    "sha256": "9f625291ab9c518651b34db44560e3a54294acd3f3472ce2ea3a5dbb4cb7f7e0"
+  },
+  {
+    "path": "tools/evidence/winfs.py",
+    "sha256": "4c9ae5d6e1008611d9bb1bc15c337bb791e57ae80f2b9299cfe4a13a58dd2c67"
+  },
+  {
+    "path": "tools/model-interface-rust/check.sh",
+    "sha256": "13213d5c7992d33ad1bc3ab5069a5ee1d0e206db7d8e57bdb3f35feaa82b950b"
+  },
+  {
+    "path": "tools/tla-differential/tests/test_acquire.py",
+    "sha256": "0689a38eaf4681ece8e49df7b20e9338a73541fafd5d20ee947cd4e77b794316"
+  }
+]

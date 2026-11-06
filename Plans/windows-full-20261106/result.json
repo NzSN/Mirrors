@@ -1,0 +1,27 @@
+{
+  "status": "full-native-windows-lake-test-failed",
+  "sourceRevision": "f328e328d6f961b49ccffefc0a6d0250bec2fb3c",
+  "host": "DESKTOP-6DKB5JD",
+  "command": [
+    "D:\\ModelMirrors\\staging\\qualification-rc7-20261105\\runtime-inputs\\native-test-job.exe",
+    "C:\\Users\\win10\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lake.exe",
+    "test"
+  ],
+  "exitCode": 1,
+  "log": {
+    "path": ".golden-build/windows-full-20261106/20261106-full-lake-test.log",
+    "sha256": "ab94cc0e898ba4bfe92df2c5ae7ef2c2790608b1c8863bc501ffcb8fcd745a43",
+    "bytes": 38399
+  },
+  "dpmSuite": {
+    "ran": 87,
+    "failures": 10,
+    "errors": 8,
+    "skipped": 3
+  },
+  "driverStoppedAt": "tools/deterministic-scheduling/tests",
+  "laterDriverGatesExecuted": false,
+  "sourceUnchanged": true,
+  "ownedProcessCleanupConfirmed": true,
+  "fullWindowsAcceptance": false
+}

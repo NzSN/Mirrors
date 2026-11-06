@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "frozenBase": "f328e328d6f961b49ccffefc0a6d0250bec2fb3c",
+  "trackedFilesVerified": 10034,
+  "overlayFilesVerified": 11,
+  "sourceMismatches": [],
+  "originalCheckoutMismatches": [],
+  "originalCheckoutStatus": [],
+  "modifiedCheckoutStatus": [
+    " M Docs/dpm-cli-guide.md",
+    " M Docs/dpm-runner-contract.md",
+    " M tools/deterministic-scheduling/check_cli_installed.py",
+    " M tools/deterministic-scheduling/cli.py",
+    " M tools/deterministic-scheduling/dpm_host.py",
+    " M tools/deterministic-scheduling/install_cli.py",
+    " M tools/deterministic-scheduling/tests/cancellation_control.py",
+    " M tools/deterministic-scheduling/tests/test_dpm_host.py",
+    " M tools/deterministic-scheduling/tests/test_dpm_install.py",
+    " M tools/tla-differential/tests/test_acquire.py",
+    "?? tools/deterministic-scheduling/tests/test_windows_process.py"
+  ],
+  "launcherSha256": "7a0a9cffea0c7becd1d71402513a8d251e17a6c946e9423c43f8fdfebe90fd2f",
+  "launcherAliasMatches": true
+}

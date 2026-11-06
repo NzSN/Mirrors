@@ -1,0 +1,36 @@
+{
+  "schema": "mirrors.rc10-package-source/v1",
+  "commit": "a53fa332f7c8e150e2559ae31ea32b47c23ecf4b",
+  "tree": "e8449a28803277fecd5625892161dbb6e148a43b",
+  "tag": "v0.2.0-rc.10",
+  "tagObject": "f96c8ff320c8eb0cb6602a26950be1968d66fb40",
+  "tagScope": "task-owned repository only; no remote tag pushed",
+  "sourceArchive": {
+    "path": ".golden-build/completion-rc10-20261106/archive/mirrors-v0.2.0-rc.10-source.tar.gz",
+    "bytes": 28424655,
+    "sha256": "b08cf885576ac422a37a603081c61c2c6f620b2d1a75f0deac0ddaa7a26667c5"
+  },
+  "sourceManifest": {
+    "path": ".golden-build/completion-rc10-20261106/archive/source-manifest.json",
+    "bytes": 2283971,
+    "sha256": "4d9db56db9fd465162810d60827acb87862b6ead830181c1034d977256802141"
+  },
+  "fileCount": 10104,
+  "sourceBundle": {
+    "path": ".golden-build/completion-rc10-20261106/rc10-source.bundle",
+    "bytes": 21151273,
+    "sha256": "d98c24d825be95588f9b3bd5b9af30a17e1bf974708e9de17ed13a9f5c77536c"
+  },
+  "releaseIdentity": {
+    "schema": "mirrors.github-release/v1",
+    "tag": "v0.2.0-rc.10",
+    "commit": "a53fa332f7c8e150e2559ae31ea32b47c23ecf4b",
+    "embeddedVersion": "0.2.0-rc.10",
+    "expectedVersionOutput": "v0.2.0-rc.10\n",
+    "historical": false,
+    "baselineAlias": false,
+    "prerelease": true,
+    "leanToolchain": "leanprover/lean4:v4.33.0",
+    "lakeManifestSha256": "24b5ca4312c41640a3d65f0d9d4443a559c257bbd0e2034c0215e85287566e75"
+  }
+}

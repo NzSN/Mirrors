@@ -1,0 +1,28 @@
+{
+  "status": "RC10 SOURCE FREEZE VERIFY GREEN",
+  "versionOutput": "v0.2.0-rc.10",
+  "cleanTaskOwnedRevision": "a53fa332f7c8e150e2559ae31ea32b47c23ecf4b",
+  "validatedLiveSourceEqualsCleanSource": true,
+  "fixedPoints": [
+    {
+      "family": "base",
+      "byteStableThirdRefresh": true,
+      "selectionSha256": "28a9698a795641d71c05bb6ba35de27541cc039c46697b6415d81e2e4a058dab"
+    },
+    {
+      "family": "wsl2",
+      "byteStableThirdRefresh": true,
+      "selectionSha256": "bfa8ce7913b6df0b73b5fdc440047b9d151aba0ae77e5f4f96d9b6823767bbb8"
+    }
+  ],
+  "negativeControlsRejected": [
+    "base-changed-catalog",
+    "base-substituted-snapshot-component",
+    "wsl2-changed-catalog",
+    "wsl2-substituted-snapshot-component",
+    "missing-carrier",
+    "same-size-carrier-corruption"
+  ],
+  "sharedMainUnchanged": true,
+  "installedDOrM5QOrReleaseQualificationGranted": false
+}

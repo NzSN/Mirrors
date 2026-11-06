@@ -1,0 +1,17 @@
+﻿{
+    "name":  "20261106-fixes-evidence-py310-1",
+    "exitCode":  1,
+    "argv":  [
+                 "D:\\ModelMirrors\\staging\\qualification-rc7-20261105\\runtime-inputs\\native-test-job.exe",
+                 "D:\\Programs\\Python310\\python.exe",
+                 "-m",
+                 "unittest",
+                 "discover",
+                 "-s",
+                 "tools/evidence/tests",
+                 "-p",
+                 "test_*.py"
+             ],
+    "log":  "D:\\ModelMirrors\\staging\\qualification-rc7-20261105\\logs\\20261106-fixes-evidence-py310-1.log",
+    "sha256":  "7e2df0f41125dfb1c021636a5e2bd3efe91b1430cd3def5ac5b8361ad4cd6c7e"
+}
