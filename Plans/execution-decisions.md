@@ -1,5 +1,25 @@
 # Framework execution decisions
 
+## 2026-11-12 — approved practical source-review follow-up
+
+The user approved storage inventory/safe cache cleanup, exact-source local and
+native Windows validation, retained DPM capture checks, documentation
+reconciliation, new-candidate qualification before shipping, and the remaining
+compatibility lifecycle. The [new record](review-followup-20261112/README.md)
+binds completed local work and the external admission gates. Full non-model
+validation passes at published source 37f2d70; existing rc.11 qualification is not
+transferred. Only two Rust incremental caches were removed; dated evidence stays
+intact. Current source and binary identities and all skipped scopes are retained.
+
+This coordinator is Ubuntu 24.04.3 WSL2, not the selected Ubuntu 26.04.1 profile.
+Native Windows SSH access and current configuration are unavailable; no remote
+source transfer or mutation occurred. The exact rc.11 Gate companion was acquired
+in isolation. Current host access, selected environment location, real workload
+and consumer acknowledgement owners are requested. Renew admission and candidate
+bindings before dependent producers. No new tag/publication/deployment/reboot or
+compatibility removal follows from the completed local work. Native-runner/M4
+planning remains withdrawn from this campaign.
+
 ## 2026-11-06 — rc.11 published, Windows deployed and reboot verified
 
 The user's explicit approval covered source/companion publication, the rc.11

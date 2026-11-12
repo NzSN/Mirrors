@@ -1,11 +1,36 @@
 # Current framework status and navigation
 
-The current completion continuation prepares rc.11; see
-[its execution record](../Plans/completion-rc11-20261106/README.md).
-It repairs Windows Rust test admission through native Python and includes the
-separately frozen Gate hosting reply-ordering fix. Exact-candidate qualification
-and release admission are pending renewal; older acceptance below retains its
-original identities and scope.
+## November 12 source-review fixes and local follow-up
+
+Published source `37f2d70651a21e7905e80cecc4ce6016a1c315c2` fixes strict DPM
+oracle/reply identity, POSIX collector interruption reporting and installer
+transaction-temporary recovery. The complete maintained local non-model gate
+passes at that source, with its declared optional/platform skips and live-model
+exclusions. The [follow-up record](../Plans/review-followup-20261112/README.md)
+retains exact source/binary identities, the storage inventory and gate receipt.
+
+The read-only historical DPM audit verifies 260 inventory hashes across 52
+captures. All 88 traces with inline reply data match strictly; 16 traces in eight
+older path-only captures remain unavailable for inline comparison. No matching
+claim is inferred for that unavailable subset. Native Windows regression access,
+the selected Ubuntu 26.04.1 WSL2 host and sufficient package-build storage remain
+admission gates. This coordinator is Ubuntu 24.04.3 WSL2. New source/C0, installed
+D/M5/Q and package acceptance are not transferred from earlier candidates.
+
+## November 6 rc.11 completed qualification and delivery
+
+The [rc.11 completion record](../Plans/completion-rc11-20261106/completion.json)
+records completed exact-candidate qualification at `19c31bf…`, approved
+publication, Windows deployment and reboot verification. Its full native Windows
+driver includes actual Rust execution. These results retain their original
+source, companion and environment identities; they are not a current remote
+health observation or acceptance of the November 12 source changes.
+
+Two actual shipped compatibility cycles, real-workload soak records, consumer
+acknowledgements and the separate retirement decision remain open. Native-runner/
+M4 execution planning was withdrawn from this campaign. The dated sections below
+preserve intermediate historical states; the latest checkpoint and completion
+records determine the current execution boundary.
 
 ## November 6 native Windows DPM portability follow-up
 

@@ -1,0 +1,106 @@
+{
+  "sourceCommit": "37f2d70651a21e7905e80cecc4ce6016a1c315c2",
+  "sourceTree": "acd25c547090609a283687419775afdb93efb829",
+  "trackedSourceUnchangedThroughLocalGate": true,
+  "sourcePayload": [
+    {
+      "path": "tools/deterministic-scheduling/check_cli_installed.py",
+      "sha256": "c55370eb04443779ea64d212a6ccb1fcc62b4ca19793be3e0882a401907f6c9e"
+    },
+    {
+      "path": "tools/deterministic-scheduling/dpm_host.py",
+      "sha256": "4bc962e4db61aaed3421892be0e37ed7259295b0241a8355960ab4c248ad69fe"
+    },
+    {
+      "path": "tools/deterministic-scheduling/install_cli.py",
+      "sha256": "e1e7109689dfd62b954d8dcc5f8e801a07010409298cd34efa8003e768ef1045"
+    },
+    {
+      "path": "tools/deterministic-scheduling/tests/test_dpm_host.py",
+      "sha256": "1b906457fe9f353353f0c92ec220d4b2828757a06b24217a90c2ec0650291e86"
+    },
+    {
+      "path": "tools/distribution/install.py",
+      "sha256": "40fe2e10457442caac51a527d4adde79565a856325872f79ec7f29a7a46d6531"
+    },
+    {
+      "path": "tools/distribution/test_install.py",
+      "sha256": "c5437f2cb0c103703a567733c9f4b652f98ecd3f2acce2455084e85edfc7db81"
+    },
+    {
+      "path": "tools/evidence/collect.py",
+      "sha256": "552caf7706f0945476c2bf9285307e25d763cd670e7233b695fb33790dd33063"
+    },
+    {
+      "path": "tools/evidence/tests/test_collect.py",
+      "sha256": "5d845c99399cbd2833c9f3f7e54df29ca7e56aee2a90629d83d88fe17482d808"
+    }
+  ],
+  "coordinator": {
+    "osRelease": {
+      "NAME": "Ubuntu",
+      "ID": "ubuntu",
+      "PRETTY_NAME": "Ubuntu 24.04.3 LTS",
+      "VERSION_ID": "24.04",
+      "VERSION": "24.04.3 LTS (Noble Numbat)",
+      "VERSION_CODENAME": "noble",
+      "ID_LIKE": "debian",
+      "HOME_URL": "https://www.ubuntu.com/",
+      "SUPPORT_URL": "https://help.ubuntu.com/",
+      "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+      "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+      "UBUNTU_CODENAME": "noble",
+      "LOGO": "ubuntu-logo"
+    },
+    "kernel": "6.18.58.1-microsoft-standard-WSL2",
+    "python": "3.12.3",
+    "pythonExecutable": "/home/nzsn/.venv/bin/python3",
+    "machine": "x86_64"
+  },
+  "companions": {
+    "mirrorecma": {
+      "head": "9192171fc5f8d8457f8d13ffaafa117222914ec2"
+    },
+    "mirrorgate": {
+      "localHead": "4b379ac0c017e7621c945ebf8c106cd98a6c70d1",
+      "requiredRc11Head": "cd4914b2fa68aaa4f22955352b81cbb890ffd6f0",
+      "requiredHeadAcquiredSeparately": true
+    }
+  },
+  "builtArtifacts": [
+    {
+      "path": ".lake/build/bin/mirror",
+      "bytes": 129466152,
+      "sha256": "3ec607a95e7208d39e29766cbc577ad4913f5f8a1a1fd5c186db3ac7baa467a5"
+    },
+    {
+      "path": ".lake/build/bin/model_interface_gen",
+      "bytes": 124703992,
+      "sha256": "16cb89f287df7bfa3f9582415eafaebac03a7b1b5ce202ea620aeefdf3842140"
+    },
+    {
+      "path": ".lake/build/bin/mirrors_dpm",
+      "bytes": 119662088,
+      "sha256": "79cbe457b5b2d16563a2224aa659a3f630c44c871d5d20faf23e6b922dea98ae"
+    },
+    {
+      "path": ".lake/build/bin/framework_catalog",
+      "bytes": 119687824,
+      "sha256": "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126"
+    }
+  ],
+  "windowsAdmission": {
+    "status": "unavailable",
+    "attempt": "ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=8 win10@192.168.150.219 hostname",
+    "exitCode": 255,
+    "diagnostic": "Connection closed by 192.168.150.219 port 22",
+    "recordedConfigAvailable": false,
+    "remoteIdentityAdmitted": false,
+    "sourceTransferOrRemoteMutationPerformed": false
+  },
+  "selectedQualificationEnvironment": {
+    "required": "Ubuntu 26.04.1 WSL2",
+    "coordinatorMatches": false,
+    "scopeSubstitutionPerformed": false
+  }
+}

@@ -1,0 +1,557 @@
+{
+  "sourceCommit": "37f2d70651a21e7905e80cecc4ce6016a1c315c2",
+  "scope": "Git-tracked Plans/dpm*/**/capture.json only; no fresh model execution",
+  "captures": 52,
+  "traces": 104,
+  "comparedTraces": 88,
+  "inventoryFiles": 260,
+  "failedCaptures": 0,
+  "unverifiableCaptures": 8,
+  "legacyCoercionOnlyMatches": 0,
+  "results": [
+    {
+      "path": "Plans/dpm-languages-evidence-20261005/oracles/counter/overlap/capture.json",
+      "sha256": "2412fab8ff264ccb4e30aaa242d0d9c7ff7f73524a43a01151d0fe79c7c66f7b",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-languages-evidence-20261005/oracles/counter/overlap-five/capture.json",
+      "sha256": "49901f1fefad973a96e4ef3167e38f2afbfbf5a8445e82201f874423aba04edc",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-languages-evidence-20261005/oracles/counter/serial/capture.json",
+      "sha256": "ea41ec99842c9681ac8e55c7b107211ddd01709e567bee2d0dfb35b1caf3e481",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-languages-evidence-20261005/oracles/counter/serial-five/capture.json",
+      "sha256": "d83313015ed699a753e4973122acf8764975748d53a566f7bf78b2d884e0d1f2",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-languages-evidence-20261005/oracles/native/overlap-t1/capture.json",
+      "sha256": "ededa96ee9e20207e358fb658e295c2e4956de52a2325be616e3438da2bd8f9a",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 0,
+      "failures": [],
+      "unavailable": [
+        "path-only-reply-no-inline-comparison:trace-0.itf.json",
+        "path-only-reply-no-inline-comparison:trace-1.itf.json"
+      ],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-languages-evidence-20261005/oracles/native/overlap-t2/capture.json",
+      "sha256": "fbd0df5698fc19c1e0354deb84defc1c737da17a9bb4d4cd6bf157a788a84ce9",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 0,
+      "failures": [],
+      "unavailable": [
+        "path-only-reply-no-inline-comparison:trace-0.itf.json",
+        "path-only-reply-no-inline-comparison:trace-1.itf.json"
+      ],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-languages-evidence-20261005/oracles/native/stable-t1/capture.json",
+      "sha256": "e3b0b5cc0fe9985088d0d94e63d2e6e04e95d5ec732207d9fe23deb8ba2c9c7f",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 0,
+      "failures": [],
+      "unavailable": [
+        "path-only-reply-no-inline-comparison:trace-0.itf.json",
+        "path-only-reply-no-inline-comparison:trace-1.itf.json"
+      ],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-languages-evidence-20261005/oracles/native/stable-t2/capture.json",
+      "sha256": "a70bd866a95a53a1949f90b0504223f8fc6aa001af78d685e8da4c4c60d515f1",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 0,
+      "failures": [],
+      "unavailable": [
+        "path-only-reply-no-inline-comparison:trace-0.itf.json",
+        "path-only-reply-no-inline-comparison:trace-1.itf.json"
+      ],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/installed/cpp/oracles/overlap/capture.json",
+      "sha256": "2412fab8ff264ccb4e30aaa242d0d9c7ff7f73524a43a01151d0fe79c7c66f7b",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/installed/cpp/oracles/overlap-five/capture.json",
+      "sha256": "49901f1fefad973a96e4ef3167e38f2afbfbf5a8445e82201f874423aba04edc",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/installed/cpp/oracles/serial/capture.json",
+      "sha256": "ea41ec99842c9681ac8e55c7b107211ddd01709e567bee2d0dfb35b1caf3e481",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/installed/cpp/oracles/serial-five/capture.json",
+      "sha256": "d83313015ed699a753e4973122acf8764975748d53a566f7bf78b2d884e0d1f2",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/installed/ecma/oracles/overlap/capture.json",
+      "sha256": "2412fab8ff264ccb4e30aaa242d0d9c7ff7f73524a43a01151d0fe79c7c66f7b",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/installed/ecma/oracles/overlap-five/capture.json",
+      "sha256": "49901f1fefad973a96e4ef3167e38f2afbfbf5a8445e82201f874423aba04edc",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/installed/ecma/oracles/serial/capture.json",
+      "sha256": "ea41ec99842c9681ac8e55c7b107211ddd01709e567bee2d0dfb35b1caf3e481",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/installed/ecma/oracles/serial-five/capture.json",
+      "sha256": "d83313015ed699a753e4973122acf8764975748d53a566f7bf78b2d884e0d1f2",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/installed/rust/oracles/overlap/capture.json",
+      "sha256": "2412fab8ff264ccb4e30aaa242d0d9c7ff7f73524a43a01151d0fe79c7c66f7b",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/installed/rust/oracles/overlap-five/capture.json",
+      "sha256": "49901f1fefad973a96e4ef3167e38f2afbfbf5a8445e82201f874423aba04edc",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/installed/rust/oracles/serial/capture.json",
+      "sha256": "ea41ec99842c9681ac8e55c7b107211ddd01709e567bee2d0dfb35b1caf3e481",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/installed/rust/oracles/serial-five/capture.json",
+      "sha256": "d83313015ed699a753e4973122acf8764975748d53a566f7bf78b2d884e0d1f2",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/public-controls/empty-argument/oracles/overlap/capture.json",
+      "sha256": "2412fab8ff264ccb4e30aaa242d0d9c7ff7f73524a43a01151d0fe79c7c66f7b",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/public-controls/empty-argument/oracles/overlap-five/capture.json",
+      "sha256": "49901f1fefad973a96e4ef3167e38f2afbfbf5a8445e82201f874423aba04edc",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/public-controls/empty-argument/oracles/serial/capture.json",
+      "sha256": "ea41ec99842c9681ac8e55c7b107211ddd01709e567bee2d0dfb35b1caf3e481",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/public-controls/empty-argument/oracles/serial-five/capture.json",
+      "sha256": "d83313015ed699a753e4973122acf8764975748d53a566f7bf78b2d884e0d1f2",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/public-controls/repeated-cancellation/oracles/overlap/capture.json",
+      "sha256": "2412fab8ff264ccb4e30aaa242d0d9c7ff7f73524a43a01151d0fe79c7c66f7b",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/public-controls/repeated-cancellation/oracles/overlap-five/capture.json",
+      "sha256": "49901f1fefad973a96e4ef3167e38f2afbfbf5a8445e82201f874423aba04edc",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/public-controls/repeated-cancellation/oracles/serial/capture.json",
+      "sha256": "ea41ec99842c9681ac8e55c7b107211ddd01709e567bee2d0dfb35b1caf3e481",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/public-controls/repeated-cancellation/oracles/serial-five/capture.json",
+      "sha256": "d83313015ed699a753e4973122acf8764975748d53a566f7bf78b2d884e0d1f2",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/public-controls/single-cancellation/oracles/overlap/capture.json",
+      "sha256": "2412fab8ff264ccb4e30aaa242d0d9c7ff7f73524a43a01151d0fe79c7c66f7b",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/public-controls/single-cancellation/oracles/overlap-five/capture.json",
+      "sha256": "49901f1fefad973a96e4ef3167e38f2afbfbf5a8445e82201f874423aba04edc",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/public-controls/single-cancellation/oracles/serial/capture.json",
+      "sha256": "ea41ec99842c9681ac8e55c7b107211ddd01709e567bee2d0dfb35b1caf3e481",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-followup-evidence-20261014/public-controls/single-cancellation/oracles/serial-five/capture.json",
+      "sha256": "d83313015ed699a753e4973122acf8764975748d53a566f7bf78b2d884e0d1f2",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-remediation-evidence-20261014/installed/cpp/oracles/overlap/capture.json",
+      "sha256": "2412fab8ff264ccb4e30aaa242d0d9c7ff7f73524a43a01151d0fe79c7c66f7b",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-remediation-evidence-20261014/installed/cpp/oracles/overlap-five/capture.json",
+      "sha256": "49901f1fefad973a96e4ef3167e38f2afbfbf5a8445e82201f874423aba04edc",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-remediation-evidence-20261014/installed/cpp/oracles/serial/capture.json",
+      "sha256": "ea41ec99842c9681ac8e55c7b107211ddd01709e567bee2d0dfb35b1caf3e481",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-remediation-evidence-20261014/installed/cpp/oracles/serial-five/capture.json",
+      "sha256": "d83313015ed699a753e4973122acf8764975748d53a566f7bf78b2d884e0d1f2",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-remediation-evidence-20261014/installed/ecma/oracles/overlap/capture.json",
+      "sha256": "2412fab8ff264ccb4e30aaa242d0d9c7ff7f73524a43a01151d0fe79c7c66f7b",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-remediation-evidence-20261014/installed/ecma/oracles/overlap-five/capture.json",
+      "sha256": "49901f1fefad973a96e4ef3167e38f2afbfbf5a8445e82201f874423aba04edc",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-remediation-evidence-20261014/installed/ecma/oracles/serial/capture.json",
+      "sha256": "ea41ec99842c9681ac8e55c7b107211ddd01709e567bee2d0dfb35b1caf3e481",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-remediation-evidence-20261014/installed/ecma/oracles/serial-five/capture.json",
+      "sha256": "d83313015ed699a753e4973122acf8764975748d53a566f7bf78b2d884e0d1f2",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-remediation-evidence-20261014/installed/rust/oracles/overlap/capture.json",
+      "sha256": "2412fab8ff264ccb4e30aaa242d0d9c7ff7f73524a43a01151d0fe79c7c66f7b",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-remediation-evidence-20261014/installed/rust/oracles/overlap-five/capture.json",
+      "sha256": "49901f1fefad973a96e4ef3167e38f2afbfbf5a8445e82201f874423aba04edc",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-remediation-evidence-20261014/installed/rust/oracles/serial/capture.json",
+      "sha256": "ea41ec99842c9681ac8e55c7b107211ddd01709e567bee2d0dfb35b1caf3e481",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm-review-remediation-evidence-20261014/installed/rust/oracles/serial-five/capture.json",
+      "sha256": "d83313015ed699a753e4973122acf8764975748d53a566f7bf78b2d884e0d1f2",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm2-dpm5-qualified-20261004/counter-oracles/overlap/capture.json",
+      "sha256": "9d0e59b1606226a524d172f7fedd36c6a6ebfa91b7c7d99ff6485f8618ed3e5f",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm2-dpm5-qualified-20261004/counter-oracles/overlap-five/capture.json",
+      "sha256": "504dcc5fff8777c7fcf7f215f9b52db71c1d90bee85fdd7e673a241d2fb9b16d",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm2-dpm5-qualified-20261004/counter-oracles/serial/capture.json",
+      "sha256": "06d2579cc5a3ff63049d2c6f34b119eba064e8db19ff106ef7821d12e726c9c0",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm2-dpm5-qualified-20261004/counter-oracles/serial-five/capture.json",
+      "sha256": "20d2133e5406f5ec2f3bf4ca845d2b68b8a8dba9e027ba11c0b9b2f920b6ddf5",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 2,
+      "failures": [],
+      "unavailable": [],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm2-dpm5-qualified-20261004/native-oracles/overlap-t1/capture.json",
+      "sha256": "5acdfb4e956e9d8eb32ce53bc1ad39bf9a19fdaa97c98315feb3f8265bf5ec1b",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 0,
+      "failures": [],
+      "unavailable": [
+        "path-only-reply-no-inline-comparison:trace-0.itf.json",
+        "path-only-reply-no-inline-comparison:trace-1.itf.json"
+      ],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm2-dpm5-qualified-20261004/native-oracles/overlap-t2/capture.json",
+      "sha256": "a9bfea1cc435d188af8181b0b845dd90067bb1b0e671369e73ef920968f27118",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 0,
+      "failures": [],
+      "unavailable": [
+        "path-only-reply-no-inline-comparison:trace-0.itf.json",
+        "path-only-reply-no-inline-comparison:trace-1.itf.json"
+      ],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm2-dpm5-qualified-20261004/native-oracles/stable-t1/capture.json",
+      "sha256": "dada23908b09c180e91bb51c173ff585819564ced5a3b00dbabc1b10b7c75d0b",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 0,
+      "failures": [],
+      "unavailable": [
+        "path-only-reply-no-inline-comparison:trace-0.itf.json",
+        "path-only-reply-no-inline-comparison:trace-1.itf.json"
+      ],
+      "legacyCoercionMatches": []
+    },
+    {
+      "path": "Plans/dpm2-dpm5-qualified-20261004/native-oracles/stable-t2/capture.json",
+      "sha256": "94fe5ffa6b275c1f977abb864ba046ab6e8d0541cb7ac40eaba0a59fbcf8d9be",
+      "inventoryFiles": 5,
+      "traces": 2,
+      "comparedTraces": 0,
+      "failures": [],
+      "unavailable": [
+        "path-only-reply-no-inline-comparison:trace-0.itf.json",
+        "path-only-reply-no-inline-comparison:trace-1.itf.json"
+      ],
+      "legacyCoercionMatches": []
+    }
+  ]
+}

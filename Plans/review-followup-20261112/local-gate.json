@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "37f2d70651a21e7905e80cecc4ce6016a1c315c2",
+  "command": "bash tools/run-local-no-model-check.sh",
+  "exitCode": 0,
+  "startedAtEpoch": 1794495220.35014,
+  "finishedAtEpoch": 1794495507.6708972,
+  "log": {
+    "path": ".golden-build/review-followup-20261112/local-no-model.log",
+    "bytes": 117501,
+    "sha256": "57d711848aab4ce8bcf642900b439a54f8e469aa271b07503fce9397e8243e9f"
+  },
+  "largeCopyStepsRamScratch": [
+    "tools/check-dpm-build.py",
+    "tools/deterministic-scheduling/tests"
+  ],
+  "scratchWrapper": "\npython3() {\n  if [[ \"$1\" == tools/check-dpm-build.py ]] ||\n     [[ \"$1\" == -m && \"${2:-}\" == unittest && \"${5:-}\" == tools/deterministic-scheduling/tests ]]; then\n    TMPDIR=\"$MIRRORS_REVIEW_RAM_SCRATCH\" command python3 \"$@\"\n  else\n    command python3 \"$@\"\n  fi\n}\nexport -f python3\nbash tools/run-local-no-model-check.sh\n",
+  "otherScratchFilesystem": "ext4",
+  "optionalNativeCppProfile": "not-selected",
+  "modelChecking": "excluded-by-maintained-runner",
+  "allLocalNonModelGatesGreen": true
+}

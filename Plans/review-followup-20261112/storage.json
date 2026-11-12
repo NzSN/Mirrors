@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "37f2d70651a21e7905e80cecc4ce6016a1c315c2",
+  "beforeFreeBytes": 94576640,
+  "removed": [
+    {
+      "path": ".golden-build/mirrorrust-target/debug/incremental",
+      "kind": "regenerable rustc incremental compiler cache",
+      "files": 2028,
+      "bytes": 301451594
+    },
+    {
+      "path": ".golden-build/model-interface-conformance/rust-target/debug/incremental",
+      "kind": "regenerable rustc incremental compiler cache",
+      "files": 648,
+      "bytes": 125610095
+    }
+  ],
+  "preserved": "dated evidence directories and all unrelated worktree files",
+  "afterFreeBytes": 494690304
+}

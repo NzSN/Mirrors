@@ -5,6 +5,36 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-12 — source-review fixes published; full local non-model follow-up passes
+
+The user approved the practical follow-up after source fixes were published at
+`37f2d70651a21e7905e80cecc4ce6016a1c315c2`. The
+[new record](Plans/review-followup-20261112/README.md) retains the storage,
+source/environment, local gate and historical-capture observations. Only two
+regenerable Rust incremental compiler caches were removed; dated evidence and
+unrelated files were preserved. Persistent package-build capacity remains limited.
+
+The maintained full local non-model gate exits zero at unchanged source 37f2d70
+with `ALL LOCAL NON-MODEL GATES GREEN`, including its 744-job build, isolated DPM
+build checks and complete evidence suite. Large-copy DPM steps use owned RAM
+scratch; filesystem-admission tests keep ext4 scratch. Optional/platform skips
+and live-model exclusions remain explicit. This is Ubuntu 24.04.3 WSL2 local
+source evidence, not the selected Ubuntu 26.04.1 installed qualification profile.
+
+The strict read-only audit covers 52 Git-retained DPM captures and 104 traces.
+All 260 inventory hashes match; all 88 inline-comparable traces match exactly.
+Eight path-only native captures contain 16 traces with no inline comparison
+available. No Boolean/integer coercion-only match was found in the compared set.
+
+Exact Gate companion cd4914b2 was acquired separately without changing the
+sibling checkout. Native Windows access is not admitted: the recorded host
+closes SSH and the old local configuration is absent. Current Windows access,
+the selected WSL2 environment and real workload/consumer owners were requested.
+New candidate preparation, packages, installed audits, M5/Q renewal and the
+two-shipped-cycle lifecycle remain gated; no tag, release, deployment or reboot
+operation occurred. The November 6 rc.11 completion remains historical acceptance;
+native-runner/M4 execution planning stays withdrawn.
+
 ## 2026-11-06 — rc.11 published, Windows deployed and reboot verified
 
 The user's explicit approval covered source/companion publication, the rc.11

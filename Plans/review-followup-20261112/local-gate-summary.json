@@ -1,0 +1,22 @@
+{
+  "marker": "ALL LOCAL NON-MODEL GATES GREEN",
+  "skipLines": [
+    "SKIP native integer maps: set MIRRORCPP_PREFIX to the prepared MirrorCPP package",
+    "OK (skipped=5)",
+    "OK (skipped=5)",
+    "OK (skipped=6)",
+    "SKIP integration (APALACHE_MC not set)",
+    "SKIP counter_spec (APALACHE_MC not set)",
+    "SKIP async_spec (APALACHE_MC not set)"
+  ],
+  "testSummaries": [
+    "Ran 2 tests in 0.001s",
+    "DPM pure policy: 25 gates passed; projection preservation theorem checked by kernel",
+    "DPM typed evidence: 11 gates passed",
+    "Ran 95 tests in 24.983s",
+    "Ran 3 tests in 0.464s",
+    "Ran 76 tests in 8.070s",
+    "Ran 154 tests in 47.242s",
+    "Ran 81 tests in 5.735s"
+  ]
+}
