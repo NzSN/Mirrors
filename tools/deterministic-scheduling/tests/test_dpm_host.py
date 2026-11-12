@@ -47,6 +47,55 @@ def check_receipt(receipt, candidate=None, signature='counter-count-delta/v1'):
 
 
 
+class OracleAdmissionTests(unittest.TestCase):
+    def test_remote_oracle_identity_preserves_boolean_and_integer_types(self):
+        for captured, selected, accepted in [(True, True, True), (False, False, True),
+                                              (True, 1, False), (False, 0, False)]:
+            with self.subTest(captured=captured, selected=selected), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+
+                def reference(path):
+                    return {'path': path.name, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+
+                def document(name, value):
+                    path = root / name
+                    path.write_text(json.dumps(value))
+                    return reference(path)
+
+                model = root / 'M.tla'
+                model.write_text('---- MODULE M ----\nVARIABLE flag\nInit == flag = TRUE\n====\n')
+                trace = {'states': [
+                    {'flag': captured, 'action_taken': 'init', 'parameters': {'actor': 'a'}},
+                    {'flag': False, 'action_taken': 'finish', 'parameters': {'actor': 'a'}}]}
+                oracle = copy.deepcopy(trace)
+                oracle['states'][0]['flag'] = selected
+                oracle_ref = document('oracle.json', oracle)
+                request = document('request.json', {
+                    'proto_step': 'register_trace_gen', 'spec': {'sources': [model.read_text()]}})
+                replies = document('replies.jsonl', {
+                    'proto_step': 'gen_traces_done', 'itfTraces': [trace]})
+                capture = document('capture.json', {
+                    'schema': 'mirrors.remote-trace-capture/v1', 'files': [oracle_ref, request, replies]})
+                correspondence = document('correspondence.json', {
+                    'schema': 'mirrors.dpm-trace-correspondence/v1',
+                    'actionPath': ['action_taken'], 'actorPath': ['parameters', 'actor'],
+                    'actionMap': {'finish': '$done'}, 'initialBindings': [], 'ignoredActors': []})
+                provenance = document('provenance.json', {
+                    'schema': 'mirrors.dpm-oracle-binding/v1', 'capture': capture,
+                    'model': reference(model), 'oracleSha256': oracle_ref['sha256'],
+                    'correspondence': correspondence})
+                candidate = {'id': 'base', 'oracle': oracle_ref, 'provenance': provenance,
+                             'schedule': {'steps': [{'actor': 'a', 'checkpoint': '$done'}], 'inputs': {}}}
+                project = Project.__new__(Project)
+                project.root, project.checked, project.oracles = root, {}, {}
+                if accepted:
+                    result = project.oracle(candidate)
+                    self.assertIs(result['states'][0]['flag'], captured)
+                else:
+                    with self.assertRaisesRegex(Refusal, 'oracle differs from actual remote reply'):
+                        project.oracle(candidate)
+
+
 class DpmHostTests(unittest.TestCase):
     def setUp(self):
         fixture = ROOT/'test/fixtures/deterministic-scheduling/timeline/cpp/counter/mutate.receipt.json'

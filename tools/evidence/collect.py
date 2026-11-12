@@ -729,6 +729,7 @@ def run_child(argv: list[str], cwd: Path, timeout: float, output_limit: int) -> 
         bytes(stderr_buffer),
         exceeded["stdout"],
         exceeded["stderr"],
+        interrupted=signal.Signals(forwarded[0]).name if forwarded else None,
     )
 
 

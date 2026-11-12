@@ -633,7 +633,9 @@ class Project:
                     raise Refusal('model-inert actor must finish during initialization')
             else: actual_steps.append(step)
         trace = strict(oracle)
-        if not any(trace in reply.get('itfTraces', []) for reply in replies if reply.get('proto_step') == 'gen_traces_done'):
+        if not any(same_json(trace, captured) for reply in replies
+                   if reply.get('proto_step') == 'gen_traces_done'
+                   for captured in reply.get('itfTraces', [])):
             raise Refusal('oracle differs from actual remote reply')
         states = trace.get('states')
         if not isinstance(states, list) or not states or len(states) > 4097:

@@ -211,6 +211,54 @@ class InstallTransactionTests(unittest.TestCase):
                 self.assertEqual(state, "committed")
                 self.assertTrue(any(path.name.endswith(".abandoned") for path in (prefix / ".staging").iterdir()))
 
+    def test_restart_recovers_selector_and_journal_write_temporaries(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            cache = fake_cache(root, 'c' * 64)
+            prefix = root / 'prefix'
+            with patch.object(installer, 'verify', side_effect=fake_verify), \
+                    patch.object(installer, 'materialize', return_value={}), \
+                    patch.object(installer, 'verify_installation', side_effect=fake_verify_installation):
+                installer.install(cache, prefix, Path('/unused'), '0' * 64, None)
+                previous = installer.selector(prefix)
+                for name in ['.active.' + '1' * 32 + '.tmp',
+                             '.active.' + '2' * 32 + '.tmp.tmp', 'transaction.json.tmp']:
+                    with self.subTest(name=name):
+                        leftover = prefix / name
+                        leftover.write_bytes(b'{partial')
+                        state, _ = installer.install(cache, prefix, Path('/unused'), '0' * 64, None)
+                        self.assertEqual(state, 'idempotent')
+                        self.assertEqual(installer.selector(prefix), previous)
+                        self.assertFalse(leftover.exists())
+
+    def test_restart_refuses_unsafe_or_unknown_transaction_temporaries(self) -> None:
+        for kind in ['unknown', 'directory', 'symlink']:
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                cache = fake_cache(root, 'd' * 64)
+                prefix = root / 'prefix'
+                with patch.object(installer, 'verify', side_effect=fake_verify), \
+                        patch.object(installer, 'materialize', return_value={}), \
+                        patch.object(installer, 'verify_installation', side_effect=fake_verify_installation):
+                    installer.install(cache, prefix, Path('/unused'), '0' * 64, None)
+                    previous = installer.selector(prefix)
+                    target = root / 'unrelated'
+                    target.write_bytes(b'preserved')
+                    leftover = prefix / ('.active.unknown.tmp' if kind == 'unknown'
+                                         else '.active.' + '3' * 32 + '.tmp')
+                    if kind == 'directory':
+                        leftover.mkdir()
+                    elif kind == 'symlink':
+                        leftover.symlink_to(target)
+                    else:
+                        leftover.write_bytes(b'preserved')
+                    with self.assertRaisesRegex(ValueError,
+                            'unknown installation entry' if kind == 'unknown' else 'ambiguous transaction temporary'):
+                        installer.install(cache, prefix, Path('/unused'), '0' * 64, None)
+                    self.assertEqual(installer.selector(prefix), previous)
+                    self.assertTrue(leftover.exists())
+                    self.assertEqual(target.read_bytes(), b'preserved')
+
     def test_lock_symlink_and_selector_confinement(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

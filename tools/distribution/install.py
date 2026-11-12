@@ -567,12 +567,26 @@ def verify_installation(version: Path, framework_catalog_bin: Path,
     return manifest, digest
 
 
+def recover_transaction_temporaries(prefix: Path) -> None:
+    """Discard unpublished writes under the prefix lock before entry admission."""
+    temporaries = []
+    for path in prefix.iterdir():
+        if path.name != "transaction.json.tmp" and not re.fullmatch(
+                r"\.active\.[0-9a-f]{32}\.tmp(?:\.tmp)?", path.name):
+            continue
+        metadata = path.lstat()
+        if not stat.S_ISREG(metadata.st_mode) or getattr(metadata, "st_file_attributes", 0) & 0x400:
+            raise ValueError(f"ambiguous transaction temporary: {path.name}")
+        temporaries.append(path)
+    for path in temporaries:
+        path.unlink()
+    if temporaries:
+        fsync_directory(prefix)
+
+
 def recover_internal_state(prefix: Path, versions: Path, staging: Path,
     framework_catalog_bin: Path, framework_catalog_sha256: str) -> None:
-    for path in prefix.glob(".active.*.tmp"):
-        if not stat.S_ISREG(path.lstat().st_mode):
-            raise ValueError(f"ambiguous active-selector temporary: {path.name}")
-        path.unlink()
+    recover_transaction_temporaries(prefix)
     journal_path = prefix / "transaction.json"
     if not journal_path.exists():
         return
@@ -752,6 +766,7 @@ def install(cache: Path, prefix: Path, framework_catalog_bin: Path,
         os.close(lock_descriptor); os.close(prefix_fd)
         raise ValueError("installation prefix is locked") from error
     try:
+        recover_transaction_temporaries(pinned_prefix)
         allowed = {"versions", ".staging", ".install.lock", "active.json", "transaction.json"}
         unknown = sorted(path.name for path in pinned_prefix.iterdir()
             if path.name not in allowed)
@@ -797,6 +812,7 @@ def _install_windows(cache,prefix,framework_catalog_bin,framework_catalog_sha256
                 try:lock_prefix(lock)
                 except BlockingIOError as error:raise ValueError('installation prefix is locked') from error
                 try:
+                    recover_transaction_temporaries(prefix)
                     allowed={'versions','.staging','.install.lock','active.json','transaction.json'}
                     unknown=sorted(set(winfs.listdir(prefix_fd))-allowed)
                     if unknown:raise ValueError('unknown installation entry: '+unknown[0])

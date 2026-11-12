@@ -395,6 +395,39 @@ class CollectorTests(unittest.TestCase):
                 try:process.communicate(timeout=5)
                 except subprocess.TimeoutExpired:process.kill();process.communicate(timeout=2)
 
+    @unittest.skipIf(os.name == 'nt', 'POSIX signal forwarding; Windows has native interruption controls')
+    def test_collector_interrupt_cannot_pass_when_child_exits_zero(self):
+        self.registry_for('fixture.interrupt-zero', [sys.executable])
+        started_marker = self.root / 'child-started'
+        child_code = (
+            'from pathlib import Path; import signal,sys,time; '
+            'signal.signal(signal.SIGTERM, lambda *_: sys.exit(0)); '
+            f'Path({str(started_marker)!r}).touch(); time.sleep(30)')
+        process = subprocess.Popen([
+            sys.executable, str(COLLECTOR), '--store', str(self.store),
+            '--registry', str(self.registry), '--command-id', 'fixture.interrupt-zero',
+            '--cwd', str(self.repository), '--component', f'fixture={self.repository}',
+            '--', sys.executable, '-c', child_code,
+        ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        try:
+            deadline = time.monotonic() + 5
+            while not started_marker.exists() and time.monotonic() < deadline:
+                time.sleep(0.02)
+            self.assertTrue(started_marker.exists())
+            process.send_signal(signal.SIGTERM)
+            _, stderr = process.communicate(timeout=5)
+            self.assertEqual(process.returncode, 0, stderr)
+            envelope, _ = self.envelope()
+            self.assertEqual(envelope['commands'][0]['exit'], {'kind': 'code', 'code': 0})
+            self.assertEqual(envelope['outcomes']['behavior'], {
+                'status': 'failed',
+                'classification': {'namespace': 'collector', 'code': 'interrupted-sigterm'},
+            })
+        finally:
+            if process.poll() is None:
+                process.kill()
+                process.communicate(timeout=5)
+
     def test_installed_audit_must_match_retained_inputs_and_selected_catalog(self):
         import collect,qualification_scope
         selection={'selectionKind':'sha256','selectionValue':'a'*64}

@@ -16,7 +16,7 @@ import shutil
 import subprocess
 import uuid
 # Generated helper pins; refresh_host_identity.py updates these before packaging.
-_HELPER_SHA256 = {'dpm_host': '82e97aa3b6672116ffa6b1c1137612328ab62e823dc1bd2398871bbf5b05b77a'}  # refreshed helper identities
+_HELPER_SHA256 = {'dpm_host': '4bc962e4db61aaed3421892be0e37ed7259295b0241a8355960ab4c248ad69fe'}  # refreshed helper identities
 
 def _load_helper(name):
     source = Path(__file__).with_name(name + '.py')
