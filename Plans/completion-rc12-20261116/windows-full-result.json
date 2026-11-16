@@ -1,0 +1,28 @@
+{
+  "schema": "mirrors.rc12.windows-full-validation/v1",
+  "status": "exact-source-full-native-driver-passed",
+  "sourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "sourceTree": "79b5bf35a068fce53c41489bb7d2b0e6d508f6cd",
+  "gitBlobsVerified": 10448,
+  "sourceOverlay": false,
+  "fullLakeTest": true,
+  "actualNativeRustExecution": true,
+  "ownedJobCleanupActive": 0,
+  "fullLog": {
+    "path": ".golden-build/completion-rc12-20261116/windows-receipts/rc12-clean-full-test.log",
+    "bytes": 14867,
+    "sha256": "56cde1b223aa170e1298b490fd009669b9db403393068e3c72ae32188c5cd210"
+  },
+  "nativeReceipt": {
+    "path": ".golden-build/completion-rc12-20261116/windows-receipts/rc12-clean-full-test.json",
+    "bytes": 628,
+    "sha256": "36d2b1bdcc1a9c78e47d4ff249b9042ea7c2a923d59bc5d1cdb56abaf9b231e2"
+  },
+  "sourceVerification": {
+    "path": ".golden-build/completion-rc12-20261116/windows-receipts/source-verification.json",
+    "bytes": 439,
+    "sha256": "12ca8db8df45f63603bfdd03c7f8030df7a366eae5fadfc8876f17cdf220cb1a"
+  },
+  "published": false,
+  "deployed": false
+}

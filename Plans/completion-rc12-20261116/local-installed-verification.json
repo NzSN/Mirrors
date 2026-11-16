@@ -1,0 +1,891 @@
+{
+  "schema": "mirrors.rc12.local-installed-verification/v1",
+  "status": "local-subgraph-verified",
+  "verifiedBundles": 16,
+  "sourceAndProducerScratchHidden": true,
+  "networkNamespaceIsolated": true,
+  "inputsReadOnly": true,
+  "installedVerifierUsed": true,
+  "negativeControls": [
+    {
+      "name": "missing-required-artifact",
+      "status": "rejected",
+      "reason": "[Errno 2] No such file or directory: 'stdout.log'"
+    },
+    {
+      "name": "changed-required-byte",
+      "status": "rejected",
+      "reason": "bundle record identity mismatch: artifacts/private/stdout.log"
+    },
+    {
+      "name": "wrong-D-binding",
+      "status": "rejected",
+      "reason": "qualification components differ from bound distribution: run-1c0c1f62-34ea-43ca-b5dd-556c7f794b1e"
+    },
+    {
+      "name": "wrong-R0-to-R1-link",
+      "status": "rejected",
+      "reason": "reproduction input origin does not match a declared dependency"
+    }
+  ],
+  "graph": {
+    "schemaVersion": "mirrors.qualification-scope-verification/v1",
+    "status": "verified",
+    "scopeId": "rc12-local-partial-wsl2-20261116",
+    "qualificationClass": "local-candidate",
+    "selectedCatalogRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "b44fe3d94c0afab187642923f81eef4a387b579289a63231bf649bdb3325456d"
+    },
+    "bindings": [
+      {
+        "runId": "run-c92f615f-10b6-4be8-aa04-32c6160f21d2",
+        "distributionManifestSha256": "ff1c8a9809fb001ebea5344b5f58001b02deeb78b24fe5025f645b08b604d135",
+        "cacheIndexSha256": "7f38143ef4f12b89852d9e112a6fe7cbad14eef34ad7c64dab694a302224cab1",
+        "componentIds": [
+          "mirrorecma",
+          "mirrors"
+        ]
+      },
+      {
+        "runId": "run-b9b9ccc0-8e54-41fd-bff4-7675086fae71",
+        "distributionManifestSha256": "9bb41bcdd593642fa0176a6c5b2477cde9f159d0f0f41917a64bdb81320304b8",
+        "cacheIndexSha256": "f9159ab3115b960aa5e41609d52ed68c4482ca60cf9c6bc25c4ef87c465f63de",
+        "componentIds": [
+          "mirrorecma",
+          "mirrorgate",
+          "mirrors"
+        ]
+      }
+    ],
+    "componentRefs": [
+      {
+        "componentId": "mirrorecma",
+        "repository": "https://github.com/NzSN/MirrorECMA.git",
+        "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+        "dirty": false
+      },
+      {
+        "componentId": "mirrors",
+        "repository": "https://github.com/NzSN/Mirrors.git",
+        "revision": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+        "dirty": false
+      },
+      {
+        "componentId": "mirrorgate",
+        "repository": "https://github.com/NzSN/MirrorGate.git",
+        "revision": "cd4914b2fa68aaa4f22955352b81cbb890ffd6f0",
+        "dirty": false
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "/usr/bin/python3",
+          "verification/bundle/tools/distribution/qualification.py",
+          "--prefix",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-local",
+          "--framework-catalog-bin",
+          "/home/lsz/Codebase/Mirrors/.lake/build/bin/framework_catalog",
+          "--framework-catalog-sha256",
+          "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126",
+          "--bwrap",
+          "/usr/bin/bwrap",
+          "--strace",
+          "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/tracer/bin/strace",
+          "--strace-sha256",
+          "10345119eae5a82fc79488417078fc19a145df378311f7e0b8da34e09fb9fadd",
+          "--hide-root",
+          "/home/lsz/Codebase/Mirrors",
+          "--hide-root",
+          "/home/lsz/Codebase/MirrorECMA",
+          "--hide-root",
+          "/home/lsz/Codebase/MirrorGate",
+          "--audit-out",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/audit/checked-replay-local/install-diagnostics.json"
+        ],
+        "commandId": "framework.install-diagnostics",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-local/versions/ff1c8a9809fb001ebea5344b5f58001b02deeb78b24fe5025f645b08b604d135/runtime",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "qualification.install"
+      },
+      {
+        "argv": [
+          "/usr/bin/python3",
+          "verification/bundle/tools/distribution/qualification.py",
+          "--prefix",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-gate",
+          "--framework-catalog-bin",
+          "/home/lsz/Codebase/Mirrors/.lake/build/bin/framework_catalog",
+          "--framework-catalog-sha256",
+          "5a64a5bd40e999b20dd8268f2846c0f5ad5359067db9f014379c150e27d76126",
+          "--bwrap",
+          "/usr/bin/bwrap",
+          "--strace",
+          "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/tracer/bin/strace",
+          "--strace-sha256",
+          "10345119eae5a82fc79488417078fc19a145df378311f7e0b8da34e09fb9fadd",
+          "--hide-root",
+          "/home/lsz/Codebase/Mirrors",
+          "--hide-root",
+          "/home/lsz/Codebase/MirrorECMA",
+          "--hide-root",
+          "/home/lsz/Codebase/MirrorGate",
+          "--combination",
+          "candidate.node-gate",
+          "--audit-out",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/audit/checked-replay-gate/install-diagnostics-gate.json"
+        ],
+        "commandId": "framework.install-diagnostics-gate",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-gate/versions/9bb41bcdd593642fa0176a6c5b2477cde9f159d0f0f41917a64bdb81320304b8/runtime",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "qualification.install"
+      },
+      {
+        "argv": [
+          "bash",
+          "tools/run-local-no-model-check.sh"
+        ],
+        "commandId": "mirrors.local-no-model",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/frozen/source",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "mirrors.required"
+      },
+      {
+        "argv": [
+          "pnpm",
+          "run",
+          "check"
+        ],
+        "commandId": "mirrorecma.project-check",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorECMA",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "mirrorecma.project"
+      },
+      {
+        "argv": [
+          "pnpm",
+          "run",
+          "test"
+        ],
+        "commandId": "mirrorecma.test",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/mw12-20261103/inputs/companions/MirrorECMA",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "mirrorecma.required"
+      },
+      {
+        "argv": [
+          "bash",
+          "scripts/test.sh"
+        ],
+        "commandId": "mirrorgate.required",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc10-20261106/MirrorGate-ordering-fix",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "mirrorgate.required"
+      },
+      {
+        "argv": [
+          "runtimes/node/bin/node",
+          "applications/examples/application-validation/installed-project-replay.mjs",
+          "correct",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.replay-correct"
+        ],
+        "commandId": "framework.replay-correct",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-local/versions/ff1c8a9809fb001ebea5344b5f58001b02deeb78b24fe5025f645b08b604d135/runtime",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "qualification.replay"
+      },
+      {
+        "argv": [
+          "runtimes/node/bin/node",
+          "applications/examples/application-validation/installed-project-replay.mjs",
+          "faulty",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.replay-faulty"
+        ],
+        "commandId": "framework.replay-faulty",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-local/versions/ff1c8a9809fb001ebea5344b5f58001b02deeb78b24fe5025f645b08b604d135/runtime",
+        "exit": {
+          "code": 1,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "qualification.replay"
+      },
+      {
+        "argv": [
+          "runtimes/node/bin/node",
+          "verification/bundle/tools/evidence/installed-lease-origin.mjs",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.lease-origin-installed"
+        ],
+        "commandId": "framework.lease-origin-installed",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-local/versions/ff1c8a9809fb001ebea5344b5f58001b02deeb78b24fe5025f645b08b604d135/runtime",
+        "exit": {
+          "code": 1,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "qualification.origin-lease"
+      },
+      {
+        "argv": [
+          "runtimes/node/bin/node",
+          "packages/mirrorecma/dist/cli.js",
+          "reproduce",
+          "--project",
+          "applications/reference-project/mirror.faulty.project.json",
+          "--framework-input",
+          "framework-input.json",
+          "--combination",
+          "candidate.local-node-checked",
+          "--server",
+          "bin/ModelMirrors",
+          "--bundle",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reproduction/reproduction-bundle.json",
+          "--evidence-envelope",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reproduction/r0-envelope.json",
+          "--artifact-store",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reproduction-artifact-store",
+          "--output-root",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reproduction"
+        ],
+        "commandId": "framework.reproduction",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-local/versions/ff1c8a9809fb001ebea5344b5f58001b02deeb78b24fe5025f645b08b604d135/runtime",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "qualification.reproduction"
+      },
+      {
+        "argv": [
+          "runtimes/node/bin/node",
+          "packages/mirrorecma/dist/cli.js",
+          "reproduce",
+          "--project",
+          "applications/lease-project/mirror.faulty.project.json",
+          "--framework-input",
+          "framework-input.json",
+          "--combination",
+          "candidate.local-node-checked",
+          "--server",
+          "bin/ModelMirrors",
+          "--bundle",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reproduction-lease/reproduction-bundle.json",
+          "--evidence-envelope",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reproduction-lease/r0-envelope.json",
+          "--artifact-store",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reproduction-lease-artifact-store",
+          "--output-root",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reproduction-lease"
+        ],
+        "commandId": "framework.reproduction-lease",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-local/versions/ff1c8a9809fb001ebea5344b5f58001b02deeb78b24fe5025f645b08b604d135/runtime",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "qualification.reproduction"
+      },
+      {
+        "argv": [
+          "runtimes/node/bin/node",
+          "packages/mirrorecma/scripts/reduce-reproduction-prefix.mjs",
+          "--project",
+          "applications/reference-project/mirror.faulty.project.json",
+          "--bundle",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reduction-prefix-absolute-inputs/prefix-reduction-original-bundle.json",
+          "--stability",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reduction-prefix-absolute-inputs/prefix-reduction-stability.json",
+          "--original-trace",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reduction-prefix-absolute-inputs/prefix-reduction-original-trace.json",
+          "--framework-input",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reduction-prefix-absolute-inputs/prefix-reduction-framework-input.json",
+          "--combination",
+          "candidate.local-node-checked",
+          "--evidence-envelope",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reduction-prefix-absolute-inputs/prefix-reduction-r0-envelope.json",
+          "--output-root",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.reduction-prefix-absolute-inputs",
+          "--candidate-limit",
+          "64",
+          "--total-budget-ms",
+          "600000",
+          "--per-candidate-budget-ms",
+          "60000",
+          "--cleanup-budget-ms",
+          "10000"
+        ],
+        "commandId": "framework.reduction-prefix",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-local/versions/ff1c8a9809fb001ebea5344b5f58001b02deeb78b24fe5025f645b08b604d135/runtime",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "qualification.reduction-prefix"
+      },
+      {
+        "argv": [
+          "runtimes/node/bin/node",
+          "applications/examples/application-validation/run.mjs",
+          "all",
+          "--prevalidated-registry",
+          "installed-registry.json",
+          "--receipt",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.mutation-local/local-application-campaigns.json"
+        ],
+        "commandId": "framework.mutation-local",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-local/versions/ff1c8a9809fb001ebea5344b5f58001b02deeb78b24fe5025f645b08b604d135/runtime",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "qualification.mutation-local"
+      },
+      {
+        "argv": [
+          "runtimes/node/bin/node",
+          "packages/mirrorgate-mirrorecma/scripts/application-program-gate-all.mjs",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.mutation-gate"
+        ],
+        "commandId": "framework.mutation-gate",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-gate/versions/9bb41bcdd593642fa0176a6c5b2477cde9f159d0f0f41917a64bdb81320304b8/runtime",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "qualification.mutation-gate"
+      },
+      {
+        "argv": [
+          "/usr/bin/python3",
+          "-m",
+          "mirrorgate.cli",
+          "recovery",
+          "reclaim",
+          "--state-root",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/framework.recovery-origin-installed-prepared/fixture/state",
+          "--run-ref",
+          "run-6a2e068e-bb8f-48b4-90d9-3b720dfef897",
+          "--envelope-sha256",
+          "be97f2ffc143d852989f64dcb30db996de26e199839ed7757087f21912cae7ae",
+          "--original-behavior",
+          "failed",
+          "--original-cleanup",
+          "unconfirmed",
+          "--receipt",
+          "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/outputs/mirrorgate.recovery/recovery-receipt.json"
+        ],
+        "commandId": "mirrorgate.recovery",
+        "cwd": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/install/checked-replay-gate/versions/9bb41bcdd593642fa0176a6c5b2477cde9f159d0f0f41917a64bdb81320304b8/runtime/gate/mirrorgate-supervisor",
+        "exit": {
+          "code": 0,
+          "kind": "code"
+        },
+        "logArtifactId": "command-stdout",
+        "requirement": "required",
+        "tierId": "qualification.recovery"
+      }
+    ],
+    "tiers": [
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation",
+          "install-diagnostics",
+          "distribution-manifest",
+          "cache-index"
+        ],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.install"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation",
+          "install-diagnostics-gate",
+          "distribution-manifest",
+          "cache-index"
+        ],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.install"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation"
+        ],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "mirrors.required"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation"
+        ],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "mirrorecma.project"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation"
+        ],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "mirrorecma.required"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation"
+        ],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "mirrorgate.required"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation",
+          "replay-correct"
+        ],
+        "reasonCode": "passed",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.replay"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation",
+          "replay-faulty"
+        ],
+        "reasonCode": "mismatch",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.replay"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation",
+          "lease-origin",
+          "lease-baseline"
+        ],
+        "reasonCode": "mismatch",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.origin-lease"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation",
+          "r0-envelope",
+          "r0-suite-result",
+          "reproduction-bundle",
+          "reproduction-result",
+          "reproduction-cleanup"
+        ],
+        "reasonCode": "reproduced",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.reproduction"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation",
+          "r0-envelope",
+          "r0-suite-result",
+          "reproduction-bundle",
+          "reproduction-result",
+          "reproduction-cleanup"
+        ],
+        "reasonCode": "reproduced",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.reproduction"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation",
+          "prefix-reduction-receipt",
+          "prefix-reduction-original-bundle",
+          "prefix-reduction-stability",
+          "prefix-reduction-original-trace",
+          "prefix-reduction-framework-input",
+          "prefix-reduction-r0-envelope"
+        ],
+        "reasonCode": "shortest_reproducing_prefix",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.reduction-prefix"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation",
+          "local-application-campaigns"
+        ],
+        "reasonCode": "all-local-application-campaigns-accepted",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.mutation-local"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation",
+          "work-queue-gate-receipt",
+          "persistent-transfer-gate-receipt",
+          "lease-service-gate-receipt"
+        ],
+        "reasonCode": "all-application-campaigns-accepted",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.mutation-gate"
+      },
+      {
+        "artifactIds": [
+          "command-stdout",
+          "command-stderr",
+          "command-context",
+          "planning-documentation",
+          "recovery-receipt"
+        ],
+        "reasonCode": "recovery-receipt-valid",
+        "requirement": "required",
+        "status": "passed",
+        "tierId": "qualification.recovery"
+      }
+    ],
+    "requiredArtifactRoles": [
+      "cache-index",
+      "cleanup-receipt",
+      "command-log",
+      "diagnostic",
+      "distribution-manifest",
+      "producer-result",
+      "recovery-receipt",
+      "reproduction-input"
+    ],
+    "cleanup": [
+      {
+        "artifactIds": [
+          "install-diagnostics"
+        ],
+        "requirement": "required",
+        "scope": "local-cooperative",
+        "status": "confirmed"
+      },
+      {
+        "artifactIds": [
+          "install-diagnostics-gate"
+        ],
+        "requirement": "required",
+        "scope": "local-cooperative",
+        "status": "confirmed"
+      },
+      {
+        "artifactIds": [],
+        "requirement": "not-applicable",
+        "scope": "local-cooperative",
+        "status": "not_applicable"
+      },
+      {
+        "artifactIds": [],
+        "requirement": "not-applicable",
+        "scope": "local-cooperative",
+        "status": "not_applicable"
+      },
+      {
+        "artifactIds": [],
+        "requirement": "not-applicable",
+        "scope": "local-cooperative",
+        "status": "not_applicable"
+      },
+      {
+        "artifactIds": [],
+        "requirement": "not-applicable",
+        "scope": "local-cooperative",
+        "status": "not_applicable"
+      },
+      {
+        "artifactIds": [
+          "replay-correct"
+        ],
+        "requirement": "required",
+        "scope": "local-cooperative",
+        "status": "confirmed"
+      },
+      {
+        "artifactIds": [
+          "replay-faulty"
+        ],
+        "requirement": "required",
+        "scope": "local-cooperative",
+        "status": "confirmed"
+      },
+      {
+        "artifactIds": [
+          "lease-baseline",
+          "lease-origin"
+        ],
+        "requirement": "required",
+        "scope": "local-cooperative",
+        "status": "confirmed"
+      },
+      {
+        "artifactIds": [
+          "reproduction-cleanup"
+        ],
+        "requirement": "required",
+        "scope": "local-cooperative",
+        "status": "confirmed"
+      },
+      {
+        "artifactIds": [
+          "reproduction-cleanup"
+        ],
+        "requirement": "required",
+        "scope": "local-cooperative",
+        "status": "confirmed"
+      },
+      {
+        "artifactIds": [
+          "prefix-reduction-receipt"
+        ],
+        "requirement": "required",
+        "scope": "local-cooperative",
+        "status": "confirmed"
+      },
+      {
+        "artifactIds": [
+          "local-application-campaigns"
+        ],
+        "requirement": "required",
+        "scope": "local-cooperative",
+        "status": "confirmed"
+      },
+      {
+        "artifactIds": [],
+        "requirement": "not-applicable",
+        "scope": "local-cooperative",
+        "status": "not_applicable"
+      },
+      {
+        "artifactIds": [
+          "work-queue-gate-receipt",
+          "persistent-transfer-gate-receipt",
+          "lease-service-gate-receipt"
+        ],
+        "requirement": "required",
+        "scope": "gate-physical",
+        "status": "confirmed"
+      },
+      {
+        "artifactIds": [],
+        "requirement": "not-applicable",
+        "scope": "local-cooperative",
+        "status": "not_applicable"
+      },
+      {
+        "artifactIds": [
+          "recovery-receipt"
+        ],
+        "requirement": "required",
+        "scope": "gate-recovery",
+        "status": "confirmed"
+      }
+    ],
+    "creditedRunRefs": [
+      {
+        "envelopeSha256": "366309946f593c77526f82b741ffa295a2d103df0418b84971fc6936ca30823e",
+        "projectionKind": "private",
+        "runId": "run-c92f615f-10b6-4be8-aa04-32c6160f21d2",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "81e8816da18e379ba8bfa478fdffa7d38e260476f0001dfb7566766e7ab90299",
+        "projectionKind": "private",
+        "runId": "run-b9b9ccc0-8e54-41fd-bff4-7675086fae71",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "92049abf0e622014bc1b1277ecb976bbeffcce92bbc778d4dadc5a166c1ccae7",
+        "projectionKind": "private",
+        "runId": "run-cece91e0-1ab8-469f-b3c4-204dd1923597",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "854f98862291039151b88625380f38bea418d9f4c635a917418a9ba4132c68c2",
+        "projectionKind": "private",
+        "runId": "run-1544b8b7-5eeb-45b7-b91e-992a08e90c67",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "cd9573d4a773978d95d88194391068e5984a6f51f41c93ee601a43594229a91c",
+        "projectionKind": "private",
+        "runId": "run-b4f49d46-59c7-461a-968e-9915b3323079",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "2d160fcacbba4386fef7abf950f338c9e2dc4294e3f5b35acaab5636c81c7c09",
+        "projectionKind": "private",
+        "runId": "run-6a8faedd-f741-4a25-86ce-6016e00bc8a0",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "b99c851612f3183a8e253450e7ffc9bc127d05485163e16ee43720d2fda00154",
+        "projectionKind": "private",
+        "runId": "run-1c0c1f62-34ea-43ca-b5dd-556c7f794b1e",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "9ae1793f1ebc906a7180bc859f7ba06ad1c25013165b67926657b048c0d1a33a",
+        "projectionKind": "private",
+        "runId": "run-e7e06514-056e-486a-ba5f-ba371002f21f",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "a73e77768abae6fd5fe39aa5f4c2c9194c5f0c1a650e568d5a22e7a258a565f5",
+        "projectionKind": "private",
+        "runId": "run-7a2d5ffe-7876-4a2d-82bf-bf3327964675",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "f70e03d1f8cd64ed59f7dbbe3f8ac4a7cce9dcae4371000a0cec4859763defab",
+        "projectionKind": "private",
+        "runId": "run-b4c9ed45-132d-40f1-ba44-bb3a938b6cdd",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "372a2d7acaec5833a88e9cfd4202856760957b097c04abd464dfebd401aa1de2",
+        "projectionKind": "private",
+        "runId": "run-9afec230-ba9e-4078-840a-65e951170ff3",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "749d6cda7b3710bd0ebde60440a84b408fa8c1e727c8288f5ef4dbc4968798a5",
+        "projectionKind": "private",
+        "runId": "run-4cee69ac-f02d-44db-97f8-8cf713efe039",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "d0ccb6eef6de4376b8bb52daaafe40f9ee2be473f6acd3c9eaaf7f90afb9a4af",
+        "projectionKind": "private",
+        "runId": "run-e283105e-6fe4-4875-b0af-d967356ab46d",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "26661b984841bc8fec3fed6da53d579fa78c0715eea1f16b8f6095b9d3f3bd4d",
+        "projectionKind": "private",
+        "runId": "run-87ad3bfc-8b84-409b-9e47-563727cb6691",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      },
+      {
+        "envelopeSha256": "80b897de44996516a8f44365cbfc956819a95d1edafd85bb23eab877d738e793",
+        "projectionKind": "private",
+        "runId": "run-0cb17aab-c1b0-410a-8607-8c5222b85331",
+        "schemaVersion": "mirrors.evidence-envelope/v1.0"
+      }
+    ],
+    "verifiedRunCount": 16
+  },
+  "fullM5Q1Q2Acceptance": false,
+  "sourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "c0": "b44fe3d94c0afab187642923f81eef4a387b579289a63231bf649bdb3325456d",
+  "missingRequiredCommands": [
+    "mirrors.remote-model-check",
+    "mirrors.interop",
+    "framework.reduction"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "status": "packaged-four-way-mtls-and-wrong-pin-passed",
+  "sourceRevision": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "serverBinarySha256": "5ebfb99399df6006b2dcae81a64525421ca0f4490ac19dcd3a9ed8f51676d5e9",
+  "clientBinary": {
+    "path": ".golden-build/completion-rc12-20261116/linux-smoke/mirrors-v0.2.0-rc.12-linux-x86_64/bin/mirror",
+    "bytes": 129466088,
+    "sha256": "db5abe819cda2c4e9479a59232d08ce6c60d36ca5b7221948725ef7cef1768fb"
+  },
+  "cases": [
+    {
+      "case": "valid",
+      "async": false,
+      "exitCode": 0,
+      "receipt": {
+        "path": ".golden-build/completion-rc12-20261116/logs/rc12-packaged-sync-valid.json",
+        "bytes": 1541,
+        "sha256": "68bdf1c712f123dd2503d0a97837c2d2afe5deff7879e0db0b80af01b683a523"
+      }
+    },
+    {
+      "case": "invalid",
+      "async": false,
+      "exitCode": 1,
+      "receipt": {
+        "path": ".golden-build/completion-rc12-20261116/logs/rc12-packaged-sync-invalid.json",
+        "bytes": 1561,
+        "sha256": "661a565b6b550cd4c7a478114120cab9b32b1dbdeca61709a74034c0ab4befc0"
+      }
+    },
+    {
+      "case": "valid",
+      "async": true,
+      "exitCode": 0,
+      "receipt": {
+        "path": ".golden-build/completion-rc12-20261116/logs/rc12-packaged-async-valid.json",
+        "bytes": 1559,
+        "sha256": "0a3b9bcd950e99118e2b3b5d128674d7d0580b0c313c3edddc288c40d1874692"
+      }
+    },
+    {
+      "case": "invalid",
+      "async": true,
+      "exitCode": 1,
+      "receipt": {
+        "path": ".golden-build/completion-rc12-20261116/logs/rc12-packaged-async-invalid.json",
+        "bytes": 1579,
+        "sha256": "0f96f6177e069d194169af9aa445b44fd460bafaf76b1c03b48abd9e7eee1e18"
+      }
+    }
+  ],
+  "wrongPinRejected": true,
+  "productionModified": false,
+  "credentialScope": "owned task PKI; production PKI acceptance remains a deployment control"
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "mirrors.compatibility-lifecycle-readiness/v1",
+  "status": "awaiting-real-workload-and-consumer-input",
+  "contract": "Plans/compatibility-lifecycle-decision-2026-10-29.md",
+  "requiredConsecutiveShippedCycles": 2,
+  "acceptedCompleteCycles": 0,
+  "knownHistoricalShipment": {
+    "tag": "v0.2.0-rc.11",
+    "sourceCommit": "19c31bf09b58e27c2942ca123a2017c30b638216",
+    "completionRecord": "Plans/completion-rc11-20261106/completion.json",
+    "completeLifecycleCycleClaimed": false
+  },
+  "candidate": {
+    "tag": "v0.2.0-rc.12",
+    "sourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+    "shipped": false
+  },
+  "missingInputs": [
+    "named supported-consumer inventory with maintainers, selected releases and required operation/transport rows",
+    "explicit unknown-consumer policy",
+    "real workload entry point or dated ledger for both Lean and Haskell implementations",
+    "workload hashes, actual run counts, byte comparisons, accepted differences and unresolved/resolved incidents",
+    "named migration acknowledgements and references to tested fallback for the selected cycles"
+  ],
+  "requiredLedgerFields": [
+    "cycleId", "shippedReleaseTag", "sourceCommit", "consumer", "owner",
+    "workloadSha256", "startedAtUtc", "finishedAtUtc", "leanRuns", "haskellRuns",
+    "byteComparisons", "wireDivergences", "acceptedDifferences", "incidentRefs",
+    "compatibilityMatrixRef", "fallbackExerciseRef", "migrationAcknowledgementRef"
+  ],
+  "calendarOrSyntheticCycleCreditGranted": false,
+  "retirementAdmitted": false,
+  "nativeRunnerM4Planning": "withdrawn-from-this-campaign"
+}

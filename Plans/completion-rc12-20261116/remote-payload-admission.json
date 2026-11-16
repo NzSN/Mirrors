@@ -1,0 +1,29 @@
+{
+  "schema": "mirrors.rc12.remote-payload-admission/v1",
+  "recipient": "same approved win10 192.168.150.219; owned loopback fixture 19099 through local SSH tunnel19109",
+  "approvedBundleSha256": "4bc5bc94dec70665b8adeac2f2fb0ee0b4659d76fa1958d9be36658eea132b6d",
+  "approvedUserInstruction": "resume to done the remaining works, iterate to finish this works; subsequent approve of exact source transfer and native tests",
+  "existingUserRepositoryInstruction": "Run live model operations through the Mirrors CLI against the selected owned remote service",
+  "alreadyApprovedAndTransferredSourcePayloads": [
+    {
+      "path": "test/specs/HourClock.tla",
+      "bytes": 1287,
+      "sha256": "3c88f0816b38fc188e1678e26ab15f2d9202ae162c4b427f611209607c67f6e4"
+    },
+    {
+      "path": "specs/Counter.tla",
+      "bytes": 752,
+      "sha256": "405b4ffb80464cdf919d986e142b180e044c41caf8e6aabe978db0e8e7aa0340"
+    },
+    {
+      "path": "tools/interop/remote-clients/ecma-protocol.mjs",
+      "bytes": 4287,
+      "sha256": "47ea270534f937a6c722cfb4fde97c76fb709a8c854bed9fccfba89435ee8656"
+    }
+  ],
+  "remoteNativeGitBlobsVerified": 10448,
+  "requestContentScope": "HourClock fixed fixture validation and synthetic counter/protocol test vectors only; no actual user workload inputs are supplied",
+  "credentialHandling": "client keys remain local and are used only by mTLS; credential bytes are not request artifacts",
+  "productionEndpointUsed": false,
+  "remoteServiceConfigurationChanged": false
+}

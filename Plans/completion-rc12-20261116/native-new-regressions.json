@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "testsRun": 3,
+  "skipped": 0,
+  "failures": 0,
+  "errors": 0,
+  "caseIds": [
+    "test_dpm_host.OracleAdmissionTests.test_remote_oracle_identity_preserves_boolean_and_integer_types",
+    "test_install.InstallTransactionTests.test_restart_recovers_selector_and_journal_write_temporaries",
+    "test_install.InstallTransactionTests.test_restart_refuses_unsafe_or_unknown_transaction_temporaries"
+  ],
+  "nativeDpmDiscoveryCount": 95,
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "log": "test_remote_oracle_identity_preserves_boolean_and_integer_types (test_dpm_host.OracleAdmissionTests.test_remote_oracle_identity_preserves_boolean_and_integer_types) ... ok\ntest_restart_recovers_selector_and_journal_write_temporaries (test_install.InstallTransactionTests.test_restart_recovers_selector_and_journal_write_temporaries) ... ok\ntest_restart_refuses_unsafe_or_unknown_transaction_temporaries (test_install.InstallTransactionTests.test_restart_refuses_unsafe_or_unknown_transaction_temporaries) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.309s\n\nOK\n",
+  "sourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "ownedJobCleanupActive": 0,
+  "priorAttempt": "stdin transport timed out before creating a runner or starting any test; no owned process remained"
+}

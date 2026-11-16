@@ -1,0 +1,12 @@
+{
+  "schema": "mirrors.rc12.native-transfer-admission/v1",
+  "status": "awaiting-specific-source-transfer-approval",
+  "sourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "bundleSha256": "4bc5bc94dec70665b8adeac2f2fb0ee0b4659d76fa1958d9be36658eea132b6d",
+  "destination": "win10 (192.168.150.219):D:\\ModelMirrors\\staging\\completion-rc12-20261116",
+  "automaticReview": "rejected transfer because trusted user content did not specifically authorize sending the private source payload to the remote Windows destination",
+  "specificApprovalRequested": true,
+  "sourceTransferred": false,
+  "remoteCandidateBuildStarted": false,
+  "unaffectedLocalWorkContinuing": true
+}

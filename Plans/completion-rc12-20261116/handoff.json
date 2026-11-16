@@ -1,0 +1,49 @@
+{
+  "schema": "mirrors.rc12.operation-handoff/v1",
+  "status": "exact-candidate-qualified-publication-and-production-approvals-pending",
+  "qualifiedSourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "tag": "v0.2.0-rc.12",
+  "tagObject": "7642edc805797ef331ebc5ae86fdf884d53ca9ad",
+  "qualificationAudit": {
+    "path": "Plans/completion-rc12-20261116/result.json",
+    "bytes": 3178,
+    "sha256": "f194fd72d24108a2036bbe55d809bbe946c34febc36301145f98640305078bf0"
+  },
+  "nativeNewRegressions": {
+    "path": "Plans/completion-rc12-20261116/native-new-regressions.json",
+    "bytes": 1401,
+    "sha256": "b073eeffc6d31d243149b1de30df86fdb522ec64d957e5d6d4222963aa7302fa"
+  },
+  "nativeDpmDiscoveryCount": 95,
+  "operationCard": {
+    "path": "Plans/completion-rc12-20261116/operations.md",
+    "bytes": 5797,
+    "sha256": "fd85144ce3052866d7ad56dc056b462d2bba76f668f3e2985497b994778b0d5c"
+  },
+  "repositoryVisibility": "public",
+  "expectedRemoteMain": "eadc64d670243f78288e76f9f2bccdfc5b05c309",
+  "productionTrustObservation": {
+    "path": "Plans/completion-rc12-20261116/production-renewal-prerequisites.json",
+    "bytes": 2108,
+    "sha256": "55e1c1d08d1c1e5a6034698c6206feb5378fc07a2ff09b450799908ae8cfd1a5"
+  },
+  "productionTrustState": "CA, server and default client certificates expired; full-chain renewal and client coordination required",
+  "productionOldBinarySha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4",
+  "productionCandidateBinarySha256": "5ebfb99399df6006b2dcae81a64525421ca0f4490ac19dcd3a9ed8f51676d5e9",
+  "requiredSubsequentApprovals": [
+    "public source branch, immutable rc.12 tag/automated prerelease and exact Windows asset publication",
+    "production CA/server/default-client trust renewal and hash-guarded deployment with rollback",
+    "shared Windows host reboot window after deployment acceptance"
+  ],
+  "externalLifecycleInputsStillMissing": [
+    "real workload entry point or dated execution ledger",
+    "named consumer/operator owners and migration acknowledgements",
+    "two complete actual shipped compatibility cycles and tested fallback"
+  ],
+  "nativeTransferAndTestsApprovedAndComplete": true,
+  "ownedFixtureStopped": true,
+  "publicPublicationPerformed": false,
+  "productionModified": false,
+  "rebootPerformed": false,
+  "retirementAdmitted": false
+}

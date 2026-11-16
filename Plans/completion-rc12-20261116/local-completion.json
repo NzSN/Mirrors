@@ -1,0 +1,295 @@
+{
+  "schema": "mirrors.rc12.local-continuation-completion/v1",
+  "status": "local-work-complete-awaiting-remote-transfer-approval-and-lifecycle-inputs",
+  "sourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "sourceTree": "79b5bf35a068fce53c41489bb7d2b0e6d508f6cd",
+  "tag": "v0.2.0-rc.12",
+  "tagScope": "isolated local candidate repository only",
+  "c0": "b44fe3d94c0afab187642923f81eef4a387b579289a63231bf649bdb3325456d",
+  "sourcePayloadFilesVerified": 4,
+  "preservedUnrelatedFilesVerified": 240,
+  "sharedHeadAndIndexPreserved": true,
+  "cleanFrozenSourcePreserved": true,
+  "localNonModelSourceGatesPassed": true,
+  "linuxPackageVerified": true,
+  "bothInstalledAuditsPassed": true,
+  "installedDpmProfilesPassed": 3,
+  "sealedLocalBundlesVerified": 16,
+  "independentLocalNegativeControlsRejected": 4,
+  "fullM5Q1Q2Acceptance": false,
+  "windowsSourceTransfer": "automatic-review-rejected-specific-approval-pending",
+  "remotePublicationDeploymentRebootPerformed": false,
+  "postFreezeDocumentationPaths": [
+    "Docs/current-status.md",
+    "CHECKPOINTS.md",
+    "Plans/execution-decisions.md"
+  ],
+  "documentationDoesNotTransferAcceptance": true,
+  "retainedPlanInputs": [
+    {
+      "path": "Plans/completion-rc12-20261116/README.md",
+      "bytes": 5110,
+      "sha256": "bf5d41f6f1379bc30cd319efd4102dd9b2838ff588208060aef7653424d429af"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/admit-host.py",
+      "bytes": 1677,
+      "sha256": "0a30bce371d734bed4aef0b4a6346f33e0490d01af5c28757c9503d5308c5fb5"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/admit-packages.py",
+      "bytes": 3574,
+      "sha256": "062bb3851855f7a5e0bc026754882bc4380f5a25c86035cadf064b0aefb79f44"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/build-distributions.py",
+      "bytes": 1727,
+      "sha256": "eaf91a31c34aa65e4cc7803d6bc2a3aeef847a3adf3aa3132007688094f42abe"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/collect-installed-audits.py",
+      "bytes": 3380,
+      "sha256": "73d2883901c563fa04f176b4f3d3ad5cf31f2255a87b002dddd79ff32fbf5b05"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/collect-linked.py",
+      "bytes": 2672,
+      "sha256": "bc7575dcd6bf0745120575f0f0ec968d1d5fd58af164c55097ca9395703cf33d"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/collect-prefix-reduction.py",
+      "bytes": 2808,
+      "sha256": "1aaf372f237283fc93d1e201628e2f1308cb6cb68e9ab6eb6298071b9ba2ba10"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/collect-reductions.py",
+      "bytes": 5711,
+      "sha256": "2bf27e0dc2e08cea0274b62912eeb081aaa8adf97a15b3aa826af0a646b996dc"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/collect-remote.py",
+      "bytes": 3802,
+      "sha256": "d05396414d7aafe9cad8ecf63364ee3b8b3f17d846b2b57cd33018b4f2f16636"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/collect-replays.py",
+      "bytes": 1353,
+      "sha256": "7b733a5e95e4f8540a7c4c406d201f4910036bf564e6e40780329452ba43d189"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/collect-source.py",
+      "bytes": 1190,
+      "sha256": "d6bed56ead4355979e643b5bb9652c5790060a06c8ce96ea65efa0dba29fb08c"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/common.py",
+      "bytes": 3766,
+      "sha256": "85a9eb808ba66f73dd0964c2758841427fca2c93768dba380a112b9ed0646b99"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/dpm-final.py",
+      "bytes": 2265,
+      "sha256": "e745a75f76905e677f9691939b37fc377d9251fedaa67bf7050578bce331ecbb"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/evidence_rc12.py",
+      "bytes": 4036,
+      "sha256": "2abcbcc7377273f68b88f0594c690d6cb64834f76b3f9f12611467a113720b05"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/final-local-audit.py",
+      "bytes": 4224,
+      "sha256": "97b79af313623e0498768d14b20b14d70a0cdcb77b202853003ef7b73d45b979"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/fixture-pki.json",
+      "bytes": 986,
+      "sha256": "4b4a675633ddf6d00b364508cb22aacc25239fd9179772717d7f4044ac73c6d0"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/freeze-rc12.py",
+      "bytes": 10327,
+      "sha256": "a790b5d1a73de66de29b5aae8b3530d4b45be23c7c5e4fc9ee78dcb605902cdc"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/host-admission.json",
+      "bytes": 1379,
+      "sha256": "5ba00dd13bb4087353f23ad200d8255bbcaf6a56b8f9c865b1330ea87460834f"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/independent-q2.py",
+      "bytes": 6454,
+      "sha256": "c2d6957da234a471cd340214592524ccd93a385b4f411554b550d38ec49a5cda"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/installed-dpm-result.json",
+      "bytes": 696,
+      "sha256": "f4ef65cc013b5507715c4d93c7ba058a6cf2d908b5ce32ee6dcf6d6cd823399c"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/intake.json",
+      "bytes": 50252,
+      "sha256": "4e192c649c8ca1836e8ee03fdf9f3ef7606efe7795a3c0b180b40055ff3edfc5"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/intake.py",
+      "bytes": 3156,
+      "sha256": "82d2252d6e4d851b6a58563ebe91a6af3627146d1418eaec617fd42655273567"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/lifecycle-readiness.json",
+      "bytes": 1619,
+      "sha256": "0581c7da7dfa40f088a0d99c0e0e8e341626ffa4a21471c0227f9a0807da6e7c"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/linux-package.json",
+      "bytes": 1905,
+      "sha256": "a2839808c7fb16640b1f3c72831008b7cf768bc6cfa7b053ecf4c4683f1b6b4f"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/linux-package.py",
+      "bytes": 4697,
+      "sha256": "63a432c110a86587550f75858d087cf3080f9e12bf84f047c0e763f59172da7c"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/local-installed-verification.json",
+      "bytes": 32000,
+      "sha256": "f4560057d269f8f08495c47b2b5d96e20d1eec1d82d6e6ed193d16b993e04f5d"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/local-installed-verifier.py",
+      "bytes": 4209,
+      "sha256": "b193da0388c826917d5315d70c2a87e15e40ff05aab7d10114cfa8f0590345aa"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/native-driver.ps1",
+      "bytes": 4267,
+      "sha256": "7732be405a61f5fc174bef0099b2983a054554700e1880ddba38fa5953225e19"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/native-transfer-status.json",
+      "bytes": 681,
+      "sha256": "d0d7ce0f3d80e69bf41686bd288711630df25787bf4978403340ae91a15787eb"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/observe-windows.ps1",
+      "bytes": 2416,
+      "sha256": "56a2970515615198518217cf856dff0ee0e66c3a35ade5b8f5b7fa07fd73bbf7"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/prepare-pki.py",
+      "bytes": 5077,
+      "sha256": "aeecf2e82b517287780d1292d8f525ac89f0950496d876ed60ce407c81f62751"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/prepare-source.py",
+      "bytes": 1255,
+      "sha256": "64e9fdfd4b20a78d8007dc9351e1dfda48f5f492bcf61e03f3ae38344ca5d170"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/qualify-rc12.py",
+      "bytes": 4993,
+      "sha256": "e0f7ba8c5153744605064de606b3f69cfd82cc12458753197b76f7215b196096"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/rc12-freeze-manifest.json",
+      "bytes": 17024,
+      "sha256": "8d6fa16607eda490d4a66ed13f7dd2dda7e44c26040ceaf662c5844bda4be482"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/rc12-freeze-review.json",
+      "bytes": 887,
+      "sha256": "7e840e102de89e1ea77e3f35dfcddd88078d931bb45965fbd5d8765303aa019b"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/rc12-gate-result-final.json",
+      "bytes": 2761,
+      "sha256": "31f191a621f21f9586febd8d9d2496e859309a7bffb23f98f718f88bda10153d"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/rc12-gate-result.json",
+      "bytes": 2624,
+      "sha256": "17517f54a85008e253ae3693a969cedc2df9e67d325542d1628f5f80fcd953e1"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/rc12-intake-final.json",
+      "bytes": 50246,
+      "sha256": "fc991315f9f8e1d891a5e60e6d5838bb9add44b38bef4509eef18d052f695997"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/rc12-intake.json",
+      "bytes": 50067,
+      "sha256": "c79cb106a06d0c0cb1319d132846c84f6a9dcb3e5ed8cbb8fa8dc6ee126b360e"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/rc12-registered-installed-audits.json",
+      "bytes": 3533,
+      "sha256": "cabc029bd7320084f7e59a20110c241c3c1f1197ca8f0c2ee303e39795f3b848"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/registry-input-admission.json",
+      "bytes": 358,
+      "sha256": "176dcac9d915533d84029405c7eb1af4d0976050b572befae0a190e84cf81253"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/reject-stale-audits.py",
+      "bytes": 2032,
+      "sha256": "55a04d313c6e197baf06e7cddabfd47469a3b360aa1aa3c2344a49f6762c8906"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/remote-before-package.json",
+      "bytes": 120,
+      "sha256": "ed6756c164513b52f9f366609e52c63c47d0a1fd182cd545851cab9bffe49e3a"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/repeat-offline.py",
+      "bytes": 988,
+      "sha256": "fb1b5afba30f8ffb79b81f854cf2d1411f8d6e4374b494ea567ce8555684498b"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/run-independent-q2.py",
+      "bytes": 2723,
+      "sha256": "1891bcfb54c7d35354635267a4739758d1b2cd1827d1e62261cc2b3f43710ce8"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/run-native.py",
+      "bytes": 935,
+      "sha256": "baaa54270f9fe296295699093901351f569c85976af2806a5827907a12f5c5e0"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/run-stable-gate.py",
+      "bytes": 2790,
+      "sha256": "cf8e07eb753fd55a5b3e1c6cc3b4acefcb50f9cb2f8df7962c7522c5047aeb0d"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/source-freeze-intake.py",
+      "bytes": 1683,
+      "sha256": "bac726d9fe295c07c797efc808a60dc9973f6e3be0af34ef853314aa6b0ec22c"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/source-identity.json",
+      "bytes": 1433,
+      "sha256": "3a457cb26fee14312766901e0d879d81b9db5ca2115a3dfd6d9c826bde153ca9"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/stale-audit-negative-controls.json",
+      "bytes": 772,
+      "sha256": "7f266ef7359022f71fc2f96a2eb322e6050988d785a89b31e4ab14aa80db76be"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/verify-local-installed.py",
+      "bytes": 5345,
+      "sha256": "1aeebca792b6e3c1776e68f776c85bd9029e039154f2f8ad1c954c3602528233"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/verify-rc12-freeze.py",
+      "bytes": 8695,
+      "sha256": "8d71cb537fb562f1b57331cea8e32aeb1f8b478cea9383d7a91a8c532ddd73b8"
+    },
+    {
+      "path": "Plans/completion-rc12-20261116/windows-intake.json",
+      "bytes": 3656,
+      "sha256": "0c6785fff76f33d352dee3e14fb0601eadb071f4387073091999138127193951"
+    }
+  ]
+}

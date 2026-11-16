@@ -22,13 +22,13 @@ def main():
  add(result('framework.recovery-origin-installed'),'origin',dgate,[dgate],credit=False)
  add(result('mirrorgate.recovery'),'recovery',dgate,[dgate,result('framework.recovery-origin-installed')])
  assert len(nodes)==19
- scope={'schemaVersion':'mirrors.qualification-scope/v2','scopeId':'rc12-c0-final-wsl-windows-remote-20261106','qualificationClass':'local-candidate','selectedCatalogRef':{'schemaVersion':'mirrors.framework-catalog/v1','selectionKind':'sha256','selectionValue':SELECTION},'distributionBindingRunIds':[dlocal['privateRunRef']['runId'],dgate['privateRunRef']['runId']],'nodes':nodes}
+ scope={'schemaVersion':'mirrors.qualification-scope/v2','scopeId':'rc12-c0-final-wsl-windows-remote-20261116','qualificationClass':'local-candidate','selectedCatalogRef':{'schemaVersion':'mirrors.framework-catalog/v1','selectionKind':'sha256','selectionValue':SELECTION},'distributionBindingRunIds':[dlocal['privateRunRef']['runId'],dgate['privateRunRef']['runId']],'nodes':nodes}
  support=BASE/'qualification';support.mkdir(mode=0o700);scope_path=support/'qualification-scope.json';write(scope_path,scope);scope_path.chmod(0o600)
  env=base_environment();runtime,_=installed('checked-replay-local');env['MIRRORS_INSTALLED_RUNTIME']=str(runtime)
  run('rc12-c0-final-scope-independent-preverify',['/usr/bin/python3',SOURCE/'tools/evidence/qualification_scope.py','--scope',scope_path,'--store',STORE],env=env,timeout=600)
  root=BASE/'outputs/evidence.offline-verify';plan=attachment_for('evidence.offline-verify',root,{'qualification-scope.json':scope_path})
  q=collect('rc12-c0-final-q1-offline-scope','evidence.offline-verify',cwd=runtime,tail=[root/'qualification-scope.json','--store',STORE],env=env,attachment_plan=plan,timeout=900)
- catalog=json.loads((ROOT/FREEZE['families']['wsl2']['catalog']['path']).read_text());evidence_id='rc12.m5.q.20261106'
+ catalog=json.loads((ROOT/FREEZE['families']['wsl2']['catalog']['path']).read_text());evidence_id='rc12.m5.q.20261116'
  catalog['evidenceRefs'].append({'evidenceId':evidence_id,'runRef':q['publicRunRef']})
  combination=next(c for c in catalog['combinations'] if c['combinationId']=='candidate.node-gate');combination['evidenceIds'].append(evidence_id)
  profiles={p['profileId']:p for p in catalog['distributionProfiles']};capabilities={c['capabilityId']:c for c in catalog['capabilities']}

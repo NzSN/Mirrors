@@ -1,5 +1,58 @@
 # Current framework status and navigation
 
+## November 16 rc.12 exact-candidate qualification complete; delivery prepared
+
+The [final continuation](../Plans/completion-rc12-20261116/README.md) qualifies
+clean source `6882d5b8…`, local-only tag `v0.2.0-rc.12` and selected WSL2 C0
+`b44fe3d9…`. Both installed audits, complete M5, linked Q1 and installed-only Q2
+pass over 20 sealed bundles with six actual negative controls. Full native Windows
+includes actual seven-test Rust execution and confirmed Job cleanup; all 10,448
+native source blobs verify. The three new oracle/installer regressions pass
+explicitly on Windows. Clean Linux and repeatable Windows packages verify.
+
+All 22 client rows, remote domain reduction and 13 finite controlled C++ model
+executions pass. The three installed DPM profiles retain `freshModelCheck:false`;
+the separate controlled campaign supplies finite comparison. Q2 is identical
+after the owned oracle/tunnel stop. Results retain their exact source, companion,
+artifact and environment identities; this later status entry transfers no
+qualification to another source identity.
+
+The [operation card](../Plans/completion-rc12-20261116/operations.md) prepares public
+publication and the separate production stages. Production remains rc.11; its
+CA/server/default-client certificates all expired November 13. Current production
+health/deployment admission requires coordinated trust renewal. No public rc.12
+ref/release, production credential/configuration/binary replacement or reboot
+occurred. Two actual shipped compatibility cycles, real workloads, consumer
+acknowledgements and tested fallback remain open. Retirement is separate;
+native-runner/M4 planning remains withdrawn.
+
+## November 16 rc.12 local completion; remote source-transfer approval pending
+
+The [new continuation](../Plans/completion-rc12-20261116/README.md) binds clean
+task-owned source `6882d5b8…`, local-only tag `v0.2.0-rc.12` and selected WSL2
+C0 `b44fe3d9…`. Current Ubuntu 26.04.1 WSL2, storage, SSH and dependency inputs
+are reobserved. The full local non-model gate, source/C0 verification, clean Linux
+package, both installed audits and all four selected local source producers pass.
+All three installed DPM profiles pass with fresh consumers and
+`freshModelCheck:false`. Sixteen sealed local producer bundles and their dependency
+graph verify using installed tools with source hidden, read-only inputs and an
+isolated network namespace. Tamper/link and stale-audit controls reject.
+
+This is incomplete M5 coverage: native Windows/package, remote model, 22-row
+interop, remote domain reduction, finite controlled model comparison and complete
+M5/Q1/Q2 renewal remain open. Automatic approval review rejected the private
+source transfer to Windows pending specific payload/destination approval. The
+prepared bundle and native driver await that approval. No rc.12 source transfer,
+remote publication, deployment or reboot occurred. This status entry is later
+documentation outside the tested candidate; its acceptance remains at `6882d5b8…`.
+
+The Windows service is observed Running/Auto with the released rc.11 binary;
+its server certificate expired November 13. New owned qualification-fixture
+credentials leave production unchanged. Current production mTLS admission needs
+certificate renewal. Two shipped compatibility cycles, actual workload evidence,
+consumer acknowledgements and tested fallback remain required; no retirement
+credit is granted. Native-runner/M4 planning remains withdrawn.
+
 ## November 12 source-review fixes and local follow-up
 
 Published source `37f2d70651a21e7905e80cecc4ce6016a1c315c2` fixes strict DPM

@@ -14,7 +14,8 @@ def remote_env():
  env=base_environment()
  for cid in ['mirrors.remote-model-check','mirrors.interop']:
   for item in old_context(cid)['effectiveEnvironment']:env[item['name']]=item['value']
- env.update(MIRRORS_REMOTE_ADMIN_OBSERVATION=str(path),MIRRORS_REMOTE_HOST='127.0.0.1',MIRRORS_REMOTE_PORT='19109',MIRRORS_REMOTE_SERVICE_SOURCE_REF=COMMIT,MIRRORS_REMOTE_SERVICE_BINARY_SHA256=obs['binary']['sha256'],MIRRORS_REMOTE_SERVER_PIN=obs['serverLeafSha256'])
+ pki=Path(json.loads((PLAN/'fixture-pki.json').read_text())['localRoot'])
+ env.update(MIRRORS_REMOTE_ADMIN_OBSERVATION=str(path),MIRRORS_REMOTE_HOST='127.0.0.1',MIRRORS_REMOTE_PORT='19109',MIRRORS_REMOTE_SERVICE_SOURCE_REF=COMMIT,MIRRORS_REMOTE_SERVICE_BINARY_SHA256=obs['binary']['sha256'],MIRRORS_REMOTE_SERVER_PIN=obs['serverLeafSha256'],MIRRORS_REMOTE_CLIENT_CERT=str(pki/'linux-client.crt'),MIRRORS_REMOTE_CLIENT_KEY=str(pki/'linux-client.key'),MIRRORS_REMOTE_CA=str(pki/'ca.crt'))
  return env
 
 def main():

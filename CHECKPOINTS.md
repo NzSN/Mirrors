@@ -5,6 +5,72 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-16 — rc.12 complete exact-candidate qualification; public/production handoff prepared
+
+The user explicitly approved transferring the exact prepared source bundle to
+the named Windows stage and running native tests. The
+[final continuation audit](Plans/completion-rc12-20261116/result.json) binds source
+`6882d5b8b4787977e847e5a77467b30bfdac19a2`, local-only tag `v0.2.0-rc.12`,
+selected WSL2 C0 `b44fe3d9…`, unchanged MirrorECMA `9192171f…` and Gate `cd4914b2…`.
+The complete native Windows driver passes with actual seven-test Rust execution
+and Job cleanup; all 10,448 native Git blobs verify. Three new oracle/installer
+regressions pass explicitly without skips, and native DPM discovery has 95 cases.
+Both Linux and repeatable Windows packages verify at their declared scopes.
+
+Fresh remote model, all 22 client rows, domain reduction and 13 finite controlled
+C++ model executions pass. Both installed audits and all required local/remote
+producers feed complete M5, linked Q1 and independent installed Q2. Q2 verifies
+20 sealed bundles and six actual negative controls, then is identical after the
+owned oracle/tunnel stop. Production is unchanged. Three installed DPM profiles
+retain `freshModelCheck:false`; the separate finite campaign supplies comparison.
+Supplemental stdin/cleanup SSH failures were retained and recovered through
+bounded file-based/native-Job and identity-guarded retries, respectively.
+
+The [operation card](Plans/completion-rc12-20261116/operations.md) prepares public
+source/tag/prerelease and exact Windows asset delivery. It separately records
+production CA/server/default-client certificates all expired November 13, the
+need for coordinated trust renewal, hash-guarded deployment/rollback and an
+approved host-reboot window. No public ref/release, production trust/configuration/
+binary change or reboot occurred. Shared main/index and all 240 unrelated files
+remain preserved; later status metadata receives no transferred qualification.
+Two real shipped compatibility cycles, workload records, named consumer
+acknowledgements and fallback remain open. Retirement is separate; M4 is withdrawn.
+
+## 2026-11-16 — rc.12 local candidate and installed graph complete; Windows transfer approval pending
+
+The user requested resuming and iterating through the remaining work. The
+[new continuation](Plans/completion-rc12-20261116/README.md) binds clean local
+candidate `6882d5b8b4787977e847e5a77467b30bfdac19a2`, a task-owned local-only
+`v0.2.0-rc.12` tag and selected WSL2 C0 `b44fe3d9…`. Current observations restore
+the Ubuntu 26.04.1 WSL2 host, ample persistent storage, explicit-config Windows
+SSH access, pinned companions/tracer and offline construction inputs.
+
+The full local non-model gate, independent source/C0 regeneration and six
+negative controls pass. The Linux release/archive and isolated smoke gates pass.
+Both distribution profiles are built/installed; both registered audits pass.
+All four selected local source producers and the installed replay, mutation,
+reproduction, prefix reduction and prepared recovery producers pass. Three
+installed DPM profiles pass with fresh consumers and `freshModelCheck:false`.
+An installed-only isolated verifier checks all 16 sealed local bundles and their
+dependency graph, rejecting four tamper/link controls. Four stale-audit controls
+also reject. This incomplete local subgraph grants no complete M5/Q1/Q2 credit.
+
+Fresh Windows observation finds the released rc.11 binary still Running/Auto,
+but its production server certificate expired November 13. New owned fixture
+certificates are prepared without private-key export or production credential
+changes. Automatic approval review rejected transferring the private candidate
+source to Windows for lack of specific payload/destination authorization; exact
+bundle approval was requested and remains pending. Native Windows/package,
+remote model/22-row interop/domain reduction, finite controlled comparison and
+complete M5/Q renewal remain gated. No rc.12 source transfer, remote publication,
+deployment or reboot occurred. Shared main/index and all 240 unrelated files
+are preserved. Maintained status updates are later documentation outside the
+tested candidate; no acceptance is transferred to a later source identity.
+
+Two actual shipped compatibility cycles, real-workload records, named consumer
+acknowledgements and tested fallback remain external lifecycle gates. Retirement
+remains separate; native-runner/M4 planning stays withdrawn.
+
 ## 2026-11-12 — source-review fixes published; full local non-model follow-up passes
 
 The user approved the practical follow-up after source fixes were published at

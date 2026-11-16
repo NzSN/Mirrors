@@ -1,0 +1,16 @@
+{
+  "status": "passed-finite-controlled-model-comparison",
+  "sourceRevision": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "acceptance": {
+    "path": ".golden-build/completion-rc12-20261116/controlled-live-admitted/campaign/acceptance.json",
+    "bytes": 4947,
+    "sha256": "2262402a4512b98860d5b4cab934b42016314c4d710952c8288c8c9739b71c28"
+  },
+  "reduction": {
+    "path": ".golden-build/completion-rc12-20261116/controlled-live-admitted/campaign/reduction.json",
+    "bytes": 1162,
+    "sha256": "72b135177fd09bb4300000cef08cc56a571f50eb45a9e6e2cba415965680166e"
+  },
+  "modelComparison": true,
+  "genericNativeSchedulingOrProductionQualification": false
+}

@@ -1,0 +1,71 @@
+{
+  "schema": "mirrors.completion-rc12-handoff/v1",
+  "status": "qualified-scoped-prerelease-ready-for-separate-publication-and-deployment-approval",
+  "sourceRevision": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "sourceTree": "79b5bf35a068fce53c41489bb7d2b0e6d508f6cd",
+  "tag": "v0.2.0-rc.12",
+  "gateRevision": "cd4914b2fa68aaa4f22955352b81cbb890ffd6f0",
+  "c0": "b44fe3d94c0afab187642923f81eef4a387b579289a63231bf649bdb3325456d",
+  "profile": "m5-wsl-windows-remote",
+  "qualificationClass": "local-candidate",
+  "qualifiedCatalogSha256": "1b37381e53cfee5e8e64054e16d3a3cc231e164589ee83ed1331a135042f6f87",
+  "sealedBundles": 20,
+  "distributionBindings": [
+    {
+      "runId": "run-c92f615f-10b6-4be8-aa04-32c6160f21d2",
+      "distributionManifestSha256": "ff1c8a9809fb001ebea5344b5f58001b02deeb78b24fe5025f645b08b604d135",
+      "cacheIndexSha256": "7f38143ef4f12b89852d9e112a6fe7cbad14eef34ad7c64dab694a302224cab1",
+      "componentIds": [
+        "mirrorecma",
+        "mirrors"
+      ]
+    },
+    {
+      "runId": "run-b9b9ccc0-8e54-41fd-bff4-7675086fae71",
+      "distributionManifestSha256": "9bb41bcdd593642fa0176a6c5b2477cde9f159d0f0f41917a64bdb81320304b8",
+      "cacheIndexSha256": "f9159ab3115b960aa5e41609d52ed68c4482ca60cf9c6bc25c4ef87c465f63de",
+      "componentIds": [
+        "mirrorecma",
+        "mirrorgate",
+        "mirrors"
+      ]
+    }
+  ],
+  "negativeControlsRejected": 6,
+  "staleAuditControlsRejected": 4,
+  "offlineVerificationIdenticalAfterShutdown": true,
+  "windowsFullDriverIncludingNativeRust": true,
+  "installedDpmProfiles": 3,
+  "controlledFreshExecutions": 13,
+  "clientMatrixRows": 22,
+  "linuxArchive": {
+    "path": ".golden-build/completion-rc12-20261116/linux-dist/mirrors-v0.2.0-rc.12-linux-x86_64.tar.gz",
+    "bytes": 72212154,
+    "sha256": "dab25c57260c79228bb539609b09039bfca74c6aacf5f968754a72a3a4353cd1"
+  },
+  "windowsArchive": {
+    "name": "mirrors-v0.2.0-rc.12-windows-x86_64.zip",
+    "sha256": "f7e8b290f26107385ce3e5a44ef0bb2adf17f3ebe81164b1b6d1f30566f929c0",
+    "bytes": 73727146
+  },
+  "sourceFiles": 4,
+  "unrelatedFilesPreserved": 240,
+  "productionModified": false,
+  "published": false,
+  "rebootPerformed": false,
+  "remaining": [
+    "reviewed source/companion branch publication",
+    "tag push including automated GitHub prerelease publication",
+    "separate exact Windows asset upload",
+    "hash-guarded production replacement and post-deployment controls",
+    "separate Windows host reboot and post-boot controls",
+    "two shipped compatibility cycles with real workload ledger and consumer acknowledgements"
+  ],
+  "scopeLimits": [
+    "Ubuntu 26.04.1 WSL2 qualification; local Linux package is not an Ubuntu 24.04 ABI claim",
+    "hosted Linux release asset is built and gated by the approved publication workflow; its bytes are not the local WSL package",
+    "Linux-only DPM build regression and optional TLA differential unit tiers remain explicitly skipped on native Windows",
+    "finite controlled model comparison is not generic/exhaustive native scheduling",
+    "native M4 aggregate enforcement, active-process recovery and Windows/macOS Gate backends remain separate tracks"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "mirrors.rc12.reviewed-delivery-inputs/v1",
+  "qualifiedSourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "tag": "v0.2.0-rc.12",
+  "tagObject": "7642edc805797ef331ebc5ae86fdf884d53ca9ad",
+  "expectedRemoteMain": "eadc64d670243f78288e76f9f2bccdfc5b05c309",
+  "repositoryVisibility": "public",
+  "payload": [
+    "Plans/completion-rc12-20261116/",
+    "CHECKPOINTS.md",
+    "Plans/execution-decisions.md",
+    "Docs/current-status.md"
+  ],
+  "followingCommitScope": "status/evidence documentation and reproducible receipts only; qualified tag stays on source commit",
+  "privateArtifactsExcluded": [
+    "raw stores and private command contexts",
+    "source bundles and package binaries",
+    "private keys and credentials",
+    "all 240 pre-existing unrelated files"
+  ],
+  "pushed": false,
+  "published": false,
+  "productionModified": false,
+  "rebootPerformed": false
+}

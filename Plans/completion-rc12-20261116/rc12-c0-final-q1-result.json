@@ -1,0 +1,34 @@
+{
+  "status": "linked-q1-complete-profile-accepted",
+  "sourceRevision": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "c0": "b44fe3d94c0afab187642923f81eef4a387b579289a63231bf649bdb3325456d",
+  "q": {
+    "bundle": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/qualification/evidence/runs/run-cc37347d-0499-425b-8ac9-126bd82f91b6",
+    "privateRunRef": {
+      "envelopeSha256": "68583c284bee7ef5e37105e26dc183855549cde398e8bc3291d0066518366abe",
+      "projectionKind": "private",
+      "runId": "run-cc37347d-0499-425b-8ac9-126bd82f91b6",
+      "schemaVersion": "mirrors.evidence-envelope/v1.0"
+    },
+    "publicRunRef": {
+      "envelopeSha256": "6b013e4ad0fca4f42473576fb6a23420621f3cabf9075b9f5a4f595b365ae378",
+      "projectionKind": "public",
+      "runId": "run-cc37347d-0499-425b-8ac9-126bd82f91b6",
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0"
+    },
+    "schemaVersion": "mirrors.evidence-finalize-result/v1"
+  },
+  "scope": {
+    "path": ".golden-build/completion-rc12-20261116/qualification/qualification/qualification-scope.json",
+    "bytes": 15893,
+    "sha256": "648d4abb376599295de7b28a2849010d93b8e82e91de542c58fc33e61adb9d8a"
+  },
+  "catalog": {
+    "path": ".golden-build/completion-rc12-20261116/qualification/qualification/qualified-catalog.json",
+    "bytes": 29115,
+    "sha256": "a3e2a74928720a0aa5315b010087aa93b91bc373b8387c4aad51339104fbb6ee"
+  },
+  "independentInstalledQ2Pending": true,
+  "fullWindowsAcceptance": "see separate exact-source Windows receipt",
+  "releaseOrProductionAdmission": false
+}

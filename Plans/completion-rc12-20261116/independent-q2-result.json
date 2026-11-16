@@ -1,0 +1,92 @@
+{
+  "status": "independent-installed-Q2-accepted",
+  "scopeId": "rc12-c0-final-wsl-windows-remote-20261116",
+  "sourceHidden": true,
+  "producerScratchHidden": true,
+  "networkNamespaceIsolated": true,
+  "inputsReadOnly": true,
+  "installedVerifierAndSchemas": "/tmp/runtime/verification/bundle/tools/evidence",
+  "dependencyProvider": "/tmp/q2/python-site/jsonschema/__init__.py",
+  "selectedBundlesVerified": 20,
+  "catalogLink": {
+    "schemaVersion": "mirrors.evidence-catalog-link/v1",
+    "profileId": "m5-wsl-windows-remote",
+    "qualificationClass": "local-candidate",
+    "catalogId": "mirrors.framework.candidate-2026-10-30-wsl2-26.04",
+    "catalogSha256": "1b37381e53cfee5e8e64054e16d3a3cc231e164589ee83ed1331a135042f6f87",
+    "approvalCatalogRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "1b37381e53cfee5e8e64054e16d3a3cc231e164589ee83ed1331a135042f6f87"
+    },
+    "combinationId": "candidate.node-gate",
+    "evidenceId": "rc12.m5.q.20261116",
+    "selectedCatalogRef": {
+      "schemaVersion": "mirrors.framework-catalog/v1",
+      "selectionKind": "sha256",
+      "selectionValue": "b44fe3d94c0afab187642923f81eef4a387b579289a63231bf649bdb3325456d"
+    },
+    "publicRunRef": {
+      "schemaVersion": "mirrors.evidence-public-summary/v1.0",
+      "runId": "run-cc37347d-0499-425b-8ac9-126bd82f91b6",
+      "envelopeSha256": "6b013e4ad0fca4f42473576fb6a23420621f3cabf9075b9f5a4f595b365ae378",
+      "projectionKind": "public"
+    },
+    "qualification": "accepted",
+    "integrity": "verified",
+    "executionProvenance": "evidence-observed",
+    "distributionBindings": [
+      {
+        "runId": "run-c92f615f-10b6-4be8-aa04-32c6160f21d2",
+        "distributionManifestSha256": "ff1c8a9809fb001ebea5344b5f58001b02deeb78b24fe5025f645b08b604d135",
+        "cacheIndexSha256": "7f38143ef4f12b89852d9e112a6fe7cbad14eef34ad7c64dab694a302224cab1",
+        "componentIds": [
+          "mirrorecma",
+          "mirrors"
+        ]
+      },
+      {
+        "runId": "run-b9b9ccc0-8e54-41fd-bff4-7675086fae71",
+        "distributionManifestSha256": "9bb41bcdd593642fa0176a6c5b2477cde9f159d0f0f41917a64bdb81320304b8",
+        "cacheIndexSha256": "f9159ab3115b960aa5e41609d52ed68c4482ca60cf9c6bc25c4ef87c465f63de",
+        "componentIds": [
+          "mirrorecma",
+          "mirrorgate",
+          "mirrors"
+        ]
+      }
+    ]
+  },
+  "negativeControls": [
+    {
+      "name": "missing-required-artifact",
+      "status": "rejected",
+      "reason": "[Errno 2] No such file or directory: 'stdout.log'"
+    },
+    {
+      "name": "changed-required-byte",
+      "status": "rejected",
+      "reason": "bundle record identity mismatch: artifacts/private/stdout.log"
+    },
+    {
+      "name": "wrong-D-binding",
+      "status": "rejected",
+      "reason": "qualification components differ from bound distribution: run-1c0c1f62-34ea-43ca-b5dd-556c7f794b1e"
+    },
+    {
+      "name": "wrong-R0-to-R1-link",
+      "status": "rejected",
+      "reason": "reproduction input origin does not match a declared dependency"
+    },
+    {
+      "name": "wrong-R1-to-R5-link",
+      "status": "rejected",
+      "reason": "reduction input differs from its reproduction dependency"
+    },
+    {
+      "name": "incomplete-required-command-profile",
+      "status": "rejected",
+      "reason": "required command is absent: mirrorecma.project-check"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "observedAt": "2026-11-16T03:08:42.2068249Z",
+  "productionBinarySha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4",
+  "service": {
+    "pid": 3580,
+    "name": "ModelMirrors",
+    "startMode": "Auto",
+    "state": "Running"
+  },
+  "configurationHashes": {
+    "AppEnvironmentExtra": "409bfaaeb34bd24213f5ac0b76c0fd9dbb9e91c5b90ab2db8e517368bbd14c4d",
+    "AppDirectory": "16f34875d1808730796b99db55f0c35ff025f2062b85012d8de1af22e1e1dfc5",
+    "AppParameters": "3ef7175c66534c043f18bb55b056932fa632824beadc8833f28ce0aae1540f4a",
+    "AppStdout": "972ff8241a3e7ccc2788757cf3b2469392f540c3944c8e83bc21a259602621dd",
+    "Application": "1c2d6d9946cdb624c40658a7bea029374d82134a8ecc6cee8f013e8622cc75f7",
+    "AppStderr": "158c00787320d6c15ae800c9d7bb4d5f76593eaf89b3918898abab7b7728c1e8"
+  },
+  "publicCertificates": [
+    {
+      "subject": "CN=ModelMirrors CA",
+      "notAfterUtc": "2026-11-13T12:50:06.0000000Z",
+      "issuer": "CN=ModelMirrors CA",
+      "name": "ca.crt",
+      "validNow": false,
+      "notBeforeUtc": "2026-08-15T12:50:06.0000000Z",
+      "subjectAlternativeNames": [],
+      "sha256": "acf8f2a0b5f378eac723daa2f018ee2a4fe9c2f163abbd3d6e4bd542fdac0a22"
+    },
+    {
+      "subject": "CN=192.168.150.219",
+      "notAfterUtc": "2026-11-13T12:50:06.0000000Z",
+      "issuer": "CN=ModelMirrors CA",
+      "name": "server.crt",
+      "validNow": false,
+      "notBeforeUtc": "2026-08-15T12:50:06.0000000Z",
+      "subjectAlternativeNames": [
+        "IP Address=192.168.150.219"
+      ],
+      "sha256": "b2fc7265145cf2b89a1a248b0932885df8d300121b47f7854317ece4bac9ce67"
+    },
+    {
+      "subject": "CN=modelmirrors-client",
+      "notAfterUtc": "2026-11-13T12:50:06.0000000Z",
+      "issuer": "CN=ModelMirrors CA",
+      "name": "client.crt",
+      "validNow": false,
+      "notBeforeUtc": "2026-08-15T12:50:06.0000000Z",
+      "subjectAlternativeNames": [],
+      "sha256": "4f888df552a8c6ab42894fe19bc6965cd5afc1b3a4c18bda4cd7ed2a1d79d89a"
+    }
+  ],
+  "caSigningKeyPresent": true,
+  "privateKeyBytesReadOrExported": false,
+  "productionModified": false
+}

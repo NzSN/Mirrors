@@ -1,0 +1,14 @@
+{
+  "schema": "mirrors.rc12.native-transfer-approval/v1",
+  "status": "approved",
+  "approvedAt": "2026-11-16T02:48:44.473546+00:00",
+  "userMessage": "approve",
+  "scope": "transfer the prepared rc.12 private source bundle to win10 192.168.150.219 under D:\\ModelMirrors\\staging\\completion-rc12-20261116 and run its native build/tests",
+  "sourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "bundle": {
+    "path": ".golden-build/completion-rc12-20261116/rc12-source.bundle",
+    "bytes": 21444970,
+    "sha256": "4bc5bc94dec70665b8adeac2f2fb0ee0b4659d76fa1958d9be36658eea132b6d"
+  },
+  "priorAutomaticRejectionSupersededByExplicitUserApproval": true
+}

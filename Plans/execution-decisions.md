@@ -1,5 +1,49 @@
 # Framework execution decisions
 
+## 2026-11-16 — approved native transfer completed; exact-candidate M5/Q and handoff complete
+
+The user approved the exact rc.12 source transfer to the named Windows stage and
+native testing. The [new final record](completion-rc12-20261116/result.json)
+binds source `6882d5b8…`, C0 `b44fe3d9…`, full native Windows including Rust,
+clean packages, both D audits, 22 remote rows, 13 finite C++ model executions,
+complete M5/Q1 and installed-only Q2 over 20 sealed bundles with six negative
+controls. Q2 is identical after owned fixture shutdown. Existing continuation
+authorization and fixed-fixture payload admission resolved the later remote-check
+review; no private workload inputs or credential bytes were sent.
+
+Public source/tag/release and Windows asset delivery are prepared for review in
+the [operation card](completion-rc12-20261116/operations.md). Production CA/server/
+default-client certificates are all expired; trust renewal and client coordination
+must precede a current health/deployment claim. Production changes and a shared
+Windows-host reboot remain subsequent explicit operations. Nothing was published,
+deployed, trust-rotated or rebooted in this continuation. The shared main/index,
+all unrelated files and previous dated evidence remain preserved.
+
+Actual shipped-cycle/workload evidence, named acknowledgements and tested fallback
+remain pending user/operator inputs; no retirement or M4 execution is inferred.
+
+## 2026-11-16 — resumed rc.12 local construction; specific Windows source-transfer approval pending
+
+The user requested resuming and iterating through the remaining work. The
+[rc.12 continuation](completion-rc12-20261116/README.md) records fresh selected
+host/input admission, stable source validation, clean owned candidate
+`6882d5b8…`, a local-only tag, Linux packaging, both installed audits, three DPM
+profiles and independent verification of the 16-bundle local graph. Complete
+M5/Q acceptance is withheld while the three required remote producers are absent.
+
+Automatic approval review rejected sending the private source bundle to
+`win10` at its named isolated staging path, citing missing specific authorization
+for that sensitive payload/destination. The exact commit/bundle hash, destination
+and native driver were presented in an asynchronous approval request. No retry
+through another route occurred. Local work continued to completion. Native
+Windows, remote-dependent qualification and subsequent shipping remain pending.
+
+Production rc.11 remains unchanged; its observed server certificate has expired.
+New qualification-fixture certificates do not renew production credentials.
+Real workload/consumer inputs were requested; two shipped cycles, acknowledgements,
+fallback and retirement retain their separate lifecycle requirements. No remote
+branch/tag/release/deployment/reboot action follows from local construction.
+
 ## 2026-11-12 — approved practical source-review follow-up
 
 The user approved storage inventory/safe cache cleanup, exact-source local and
