@@ -5,6 +5,64 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-16 — S8 recipes and aggregate metadata publication authorized
+
+The user requested commit/push of the completed bounded replay work.
+[Publication scope](Plans/s8-dumpledger-workload-20261116/publication-scope.json)
+selects only scripts, aggregate result/lifecycle documentation and ignore rules.
+Four operator-only deployment/admission/approval JSON inputs plus all raw/derived
+private artifacts remain outside Git. This publication supplies no additional
+workload, full-cycle or consumer-acknowledgement credit. Preserve all 240 original
+unrelated files and verify the exact remote main ref after delivery.
+
+## 2026-11-16 — approved DumpLedger three-input engine replay and paired comparison pass
+
+The user approved private processing of the three selected retained inputs on
+win10 and export of only pseudonymous observations/timestamps/hashes/receipts to
+the private local Mirrors artifact directory. The
+[aggregate record](Plans/s8-dumpledger-workload-20261116/replay-summary.json) binds
+three fresh/closed engine sessions, 5,889,824 input bytes, 18 lifecycle transitions
+and 21 observed frames. Those frames cover seven distinct modeled states in one
+declared one-shot/partial-dump profile; setup normalization is recorded separately.
+
+The actual inspector and generated observation/dispatch execute without expected
+state supplied as actual. Both authentic Lean rc.12 and pinned Haskell accept all
+three streams with 16 byte-identical success replies per pair. Both reject all
+three altered-observation controls, with only the documented C10 tail difference;
+no unexplained wire divergence is observed. Exact request streams and raw receiver
+outputs, private source-event metadata and an 84-file implementation hash index
+are retained under the ignored owner-only artifact root. No dump bytes, credentials
+or identifying names leave win10. Native Job/session cleanup, source/model/overlay
+preservation and post-run backend HTTP 200 are verified.
+
+The first approved attempt stopped before selected-data access at an older SDK
+export boundary. The separately retained v2 uses the deployed state encoder and
+passes; production engine/generated source is unchanged. This is bounded recorded
+engine-observation replay, without HTTP/auth/streaming/batch/other-path or fresh
+model-check credit. Historical/long-running soak, full consumer/transport cycle
+evidence, named acknowledgements and retirement remain open; complete-cycle credit
+stays zero. No private evidence is publicly published by this authorization.
+
+## 2026-11-16 — S8 DumpLedger workload source identified; bounded private replay approval pending
+
+The user identified the deployed DumpLedger on `win10` as the workload source.
+[Admission summary](Plans/s8-dumpledger-workload-20261116/README.md)
+binds a read-only domain snapshot with 219 retained dumps and 1,740 audit events,
+plus the observed compiled/model identities and a dirty deployed source base.
+Three one-shot partial-dump lifecycle inputs (about 5.9 MB total) match their
+ledger sizes/hashes and the declared bounded action profile. Raw dump bytes,
+names, credentials and auth state are not exported; production is unchanged.
+
+An isolated real-engine/production-inspector producer and Lean/Haskell paired
+replay are prepared. Local synthetic plumbing passes, including the documented
+C10 mismatch-tail difference, without claiming actual SUT/soak evidence. Automatic
+approval review rejected private input processing and derived observation export
+without specific payload/destination authorization. Exact approval was requested
+for the three aliases and the private local artifact directory; the blocked
+producer was not executed through another route. Workload source availability is
+resolved; actual replay, full shipped-cycle evidence and named acknowledgements
+remain pending. Rc.12 release/deployment/reboot acceptance is unchanged.
+
 ## 2026-11-16 — rc.12 published; production trust renewed, deployed and reboot verified
 
 The user explicitly approved the reviewed publication, production trust renewal/

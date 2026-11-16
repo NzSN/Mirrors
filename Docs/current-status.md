@@ -1,5 +1,48 @@
 # Current framework status and navigation
 
+The subsequent S8 commit/push request authorizes only replay recipes and aggregate
+status documentation under the [publication scope](../Plans/s8-dumpledger-workload-20261116/publication-scope.json).
+Operator-only admission/approval inputs and private workload artifacts remain
+ignored and excluded; original private-processing receipts keep their dated scope.
+
+## November 16 approved bounded DumpLedger replay passes
+
+The user approved the selected three-input private processing/export scope. The
+[aggregate replay result](../Plans/s8-dumpledger-workload-20261116/replay-summary.json)
+records three fresh/closed engine sessions, the real production inspector and
+21 observed frames over seven distinct modeled states. Both published Lean rc.12
+and pinned Haskell accept the three recorded observation streams with byte-identical
+success replies; both reject the three altered-observation controls under the
+documented C10 terminal policy. No unexplained wire divergence is observed.
+
+Actual private observations, input digests, source-event timestamps and full
+receipts stay in the owner-only ignored artifact directory. Raw dumps remain on
+win10. The 84-file implementation index, source/model bytes/overlays, Job/session
+cleanup and backend HTTP 200 are verified; production is not modified. This is a
+bounded engine-level one-shot partial-dump replay, with normalized IDs/time and
+reviewed expected-trace prefixes. HTTP/auth/streaming, batch/other paths, fresh
+model checking and historical/long-running soak receive no credit. Complete
+shipped-cycle evidence and named consumer acknowledgements remain open; complete
+compatibility-cycle credit stays zero. Private publication is not authorized.
+
+## November 16 S8 workload discovery from deployed DumpLedger
+
+The user supplied DumpLedger on `win10` as the real workload source. The
+[new admission](../Plans/s8-dumpledger-workload-20261116/README.md) records read-only
+discovery of 219 retained dumps and 1,740 lifecycle events, with three hash-verified
+bounded one-shot inputs selected. Actual minidump bytes stay on the host; auth
+state, environment secrets and identifying names are excluded. Production is
+unchanged. The deployed checkout has overlays; no clean source identity is assumed.
+
+The isolated-engine/real-inspector replay and authentic Lean/Haskell comparison
+are prepared. Synthetic plumbing passes under the documented C10 client contract.
+Private dump processing and derived-observation export await the specific approval
+requested after automatic review rejected that scope. No actual-input replay,
+historical wire-conformance result or complete lifecycle-cycle credit is inferred
+from discovery. Named consumer ownership, acknowledgements and full cycle evidence
+remain open. The completed rc.12 shipping and production results below retain
+their recorded acceptance.
+
 ## November 16 rc.12 published, production trust renewed and reboot verified
 
 The [completion record](../Plans/completion-rc12-20261116/completion.json) verifies

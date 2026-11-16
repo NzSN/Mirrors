@@ -1,0 +1,20 @@
+# Operator-only discovery/admission inputs; never publish with aggregate results.
+/deployment-intake.json
+/processing-approved.json
+/processing-authorization-status.json
+/workload-source-admission.json
+
+# Raw workload evidence belongs in the ignored owner-only artifact directory.
+/private/
+/observations/
+*.input.jsonl
+*.stdout
+*.stderr
+*.log
+*.dmp
+*.sqlite
+*.sqlite-*
+*.key
+*.pem
+*.crt
+*.zip

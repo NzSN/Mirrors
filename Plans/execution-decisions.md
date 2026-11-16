@@ -1,5 +1,51 @@
 # Framework execution decisions
 
+## 2026-11-16 — publish only S8 code and aggregate metadata
+
+The user requested commit/push. The [scoped payload](s8-dumpledger-workload-20261116/publication-scope.json)
+contains replay scripts, aggregate status/lifecycle documentation and ignore rules.
+Operator-only discovery/admission/approval inputs and all actual observed states,
+production-event timestamps, input digests, transcripts, dumps and credentials are
+excluded. This metadata publication does not expand the earlier private-processing
+permission, award a complete cycle or infer a consumer acknowledgement.
+
+## 2026-11-16 — explicit three-input processing/export approval completed
+
+The user approved replaying the three selected production-retained DumpLedger
+inputs on win10 and returning only pseudonymous modeled observations, source-event
+timestamps, hashes and receipts to the private local Mirrors artifact directory.
+[Aggregate result](s8-dumpledger-workload-20261116/replay-summary.json): three isolated
+engine sessions with the real inspector yield 21 frames; both authentic receiver
+implementations accept all three streams with byte-identical success replies and
+reject three changed-observation controls under the documented C10 policy.
+
+All raw/derived private evidence remains in its approved private locations; no
+raw dump bytes or keys are exported and no public publication is authorized by
+this approval. Engine/generated code and production remain unchanged, 84 compiled
+file identities are retained, all owned processes/sessions close, and backend
+health/source overlays remain preserved. The initial pre-input SDK-export failure
+and successful compatible v2 are separate retained attempts. Scope stays at the
+declared normalized engine-level profile. No historical/full-soak, complete-cycle,
+consumer ownership/acknowledgement or retirement acceptance is inferred.
+
+## 2026-11-16 — DumpLedger supplied as S8 workload source
+
+The user pointed to DumpLedger deployed on win10. Read-only source/deployment/
+domain inspection is complete; [the new record](s8-dumpledger-workload-20261116/README.md)
+pins the actual available corpus and three bounded input candidates without
+exporting dump bytes, names, credentials or auth state. Existing data/services
+and dirty source overlays are preserved. The consumer workload source is no
+longer missing; availability alone grants no historical conformance/cycle credit.
+
+The prepared actual-input replay processes private minidumps on the host and
+would export only pseudonymous modeled observations, timestamps, hashes and
+receipts to the private local Mirrors artifact directory. Automatic review
+requires specific payload/destination authorization and rejected the attempted
+operation. The exact approval request is pending; no alternate execution route
+was used. Local synthetic comparison setup continues independently and passes
+with the already-documented C10 mismatch-tail handling. No real-input replay or
+full compatibility-cycle acceptance is claimed before execution and review.
+
 ## 2026-11-16 — approved rc.12 publication, trust renewal, deployment and reboot completed
 
 The user approved the exact operation card covering public rc.12 publication,

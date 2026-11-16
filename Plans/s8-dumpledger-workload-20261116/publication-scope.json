@@ -1,0 +1,28 @@
+{
+  "schema": "mirrors.s8.publication-scope/v1",
+  "authorizedAtUtc": "2026-11-16T07:44:45.274431+00:00",
+  "userInstruction": "commit and push",
+  "repository": "https://github.com/NzSN/Mirrors.git",
+  "branch": "main",
+  "repositoryVisibility": "public",
+  "approvedPayload": "replay recipes, aggregate summaries, lifecycle/checkpoint/status documentation and the ignore policy",
+  "publicAggregateMetadataPublicationAuthorized": true,
+  "privateEvidencePublicationAuthorized": false,
+  "excludedOperatorInputs": [
+    "deployment-intake.json",
+    "processing-approved.json",
+    "processing-authorization-status.json",
+    "workload-source-admission.json"
+  ],
+  "excludedRawEvidenceRoot": ".golden-build/s8-dumpledger-workload-20261116/",
+  "excludedPrivateContents": [
+    "actual modeled observation streams",
+    "production source-event timestamps",
+    "real input content hashes",
+    "raw request/reply transcripts",
+    "original dump bytes and identifiers",
+    "credentials, auth database and environment values"
+  ],
+  "originalProcessingScopeIsNotExpanded": true,
+  "fullCompatibilityCycleAcceptanceInferred": false
+}
