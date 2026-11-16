@@ -66,37 +66,54 @@ private def parseHex (s : String) : Option Nat :=
     | c :: rest => match hexVal c with
       | some v => go rest (acc * 16 + v)
       | none => none
-  go s.toList 0
+  if s.isEmpty then none else go s.toList 0
 
-/-- Decode a chunked body per RFC 7230 (hex size lines; 0-size ends). -/
-def decodeChunked (b : ByteArray) : Except String String := do
+private partial def crlfAtOrAfter (b : ByteArray) (i : Nat) : Option Nat :=
+  if i + 1 >= b.size then none
+  else if b.get! i == 13 && b.get! (i + 1) == 10 then some i
+  else crlfAtOrAfter b (i + 1)
+
+/-- Parse exactly one chunked body, including its trailers and final CRLF.
+An incomplete prefix needs more bytes; a complete result includes the consumed
+byte count so persistent connections retain the next response. Chunk boundaries
+are byte boundaries and need not be Unicode scalar boundaries. -/
+def parseChunkedPrefix (b : ByteArray) : Except String (Option (ByteArray × Nat)) := do
   let mut i := 0
-  let mut acc := ""
-  let mut done := false
-  let mut err : Option String := none
-  while !done && err.isNone do
-    if i >= b.size then err := some "truncated chunked body"
-    else
-      let mut hexS := ""
-      while i < b.size && b.get! i != 13 do
-        hexS := hexS ++ (String.ofList [Char.ofNat (b.get! i).toNat])
-        i := i + 1
-      if i + 1 >= b.size || b.get! (i+1) != 10 then
-        err := some "bad chunk header"
-      else
-        i := i + 2
-        match parseHex hexS with
-        | none => err := some s!"bad chunk size: {hexS}"
-        | some 0 => done := true
-        | some size =>
-            if i + size > b.size then err := some "truncated chunk"
-            else
-              acc := acc ++ (String.fromUTF8? (b.extract i (i + size)) |>.getD "")
-              i := i + size
-              if i + 1 < b.size && b.get! i == 13 && b.get! (i+1) == 10 then i := i + 2
-  match err with
-  | some e => .error e
-  | none => .ok acc
+  let mut acc := ByteArray.empty
+  repeat
+    let some lineEnd := crlfAtOrAfter b i | return none
+    let some header := String.fromUTF8? (b.extract i lineEnd)
+      | throw "bad chunk header"
+    let some size := parseHex ((header.splitOn ";").head?.getD "")
+      | throw "bad chunk size"
+    i := lineEnd + 2
+    if size == 0 then
+      -- A zero-size chunk is followed by zero or more trailer fields and a
+      -- blank line. Its own size-line CRLF is not the message terminator.
+      repeat
+        let some trailerEnd := crlfAtOrAfter b i | return none
+        if trailerEnd == i then return some (acc, i + 2)
+        let some trailer := String.fromUTF8? (b.extract i trailerEnd)
+          | throw "bad chunk trailer"
+        if !(trailer.contains ':') then throw "bad chunk trailer"
+        i := trailerEnd + 2
+    if i + size + 2 > b.size then return none
+    if b.get! (i + size) != 13 || b.get! (i + size + 1) != 10 then
+      throw "bad chunk data terminator"
+    acc := acc.append (b.extract i (i + size))
+    i := i + size + 2
+  return none
+
+private def utf8Body (bytes : ByteArray) : Except String String :=
+  match String.fromUTF8? bytes with
+  | some text => .ok text
+  | none => .error "HTTP body is not valid UTF-8"
+
+/-- Decode a complete chunked body, validating UTF-8 only after reassembly. -/
+def decodeChunked (b : ByteArray) : Except String String := do
+  let some (bytes, _) ← parseChunkedPrefix b
+    | .error "truncated chunked body"
+  utf8Body bytes
 
 /-- Parse the status code from a raw HTTP status line. -/
 def parseStatusLine (line : String) : Except String Nat :=
@@ -206,6 +223,17 @@ private partial def blankIdx (b : ByteArray) : Option Nat :=
       else go (i + 1)
   go 0
 
+private partial def readChunked (c : Conn) : IO (Except String String) := do
+  let bytes ← c.buf.get
+  match parseChunkedPrefix bytes with
+  | .error error => return .error error
+  | .ok (some (body, consumed)) =>
+      c.buf.set (bytes.extract consumed bytes.size)
+      return utf8Body body
+  | .ok none =>
+      if ← fill c then readChunked c
+      else return .error "eof in chunked body"
+
 /-- One request/response exchange on a persistent connection: POST
 without @Connection: close@, read exactly one response. The leftover
 buffer stays for the next exchange. -/
@@ -233,11 +261,7 @@ def postKa (c : Conn) (port : Nat) (path : String) (body : String) :
   let hdrTail := String.intercalate "\r\n" (lines.tail?.getD [])
   let isChunked := (((headerValue hdrTail "Transfer-Encoding").getD "").toLower == "chunked")
   if isChunked then
-    let gotTerm ← ensurePat c [13, 10, 48, 13, 10]
-    if !gotTerm then return .error "eof in chunked body"
-    let b2 ← c.buf.get
-    c.buf.set (ByteArray.mk (#[] : Array UInt8))
-    match decodeChunked b2 with
+    match ← readChunked c with
     | .ok s => return .ok ⟨status, s⟩
     | .error e => return .error e
   else

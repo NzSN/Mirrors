@@ -133,6 +133,64 @@ def driveSession (bin : String) (tracePaths : List String)
   let (seen, _) ← st.get
   return seen
 
+/-- Exercise the real session dispatcher with scripted reports and optional
+backend outcomes, without starting a model checker. -/
+private def sessionTags (request : Codec.ClientMessage) (reports : List String := [])
+    (oracles : Shell.Mirror.Oracles := stubOracles) : IO (List String) := do
+  let pending ← IO.mkRef ((encodeClient request).compress :: reports)
+  let tags ← IO.mkRef ([] : List String)
+  let transport : Shell.Transport.Transport := {
+    scope := .sharedFilesystem
+    recv := do
+      match ← pending.get with
+      | [] => return none
+      | first :: rest => pending.set rest; return some first
+    send := fun line => do
+      let .ok json := Lean.Json.parse line | throw (IO.userError "invalid response JSON")
+      let .ok tag := json.getObjValAs? String "proto_step"
+        | throw (IO.userError "response tag missing")
+      tags.modify (· ++ [tag]) }
+  Shell.Mirror.run transport oracles
+  return ← tags.get
+
+private def admissionRegressions (dir p1 : String) : IO Bool := do
+  let empty := dir ++ "/empty.itf.json"
+  IO.FS.writeFile empty "{\"vars\":[\"hour\"],\"states\":[]}"
+  let emptyDir := dir ++ "/empty-dir"
+  IO.FS.createDirAll emptyDir
+  for paths in [[], [emptyDir], [empty], [p1, empty]] do
+    let tags ← sessionTags (.registerTraces smokeCfg paths)
+    if tags != ["register_error"] then
+      IO.eprintln s!"empty replay admitted: {paths}: {tags}"
+      return false
+  -- Generated bundles use the same admission guard as supplied files.
+  let .ok normal ← readItfTrace p1 | throw (IO.userError "normal trace did not parse")
+  for traces in [[], [{ normal with traceStates := [] }],
+      [normal, { normal with traceStates := [] }]] do
+    let oracles : Shell.Mirror.Oracles := { stubOracles with
+      generateTraces := fun _ _ _ _ _ => pure (.ok { traces }) }
+    let tags ← sessionTags (.register smokeCfg none { numTraces := 1, view := none }) [] oracles
+    if tags != ["register_error"] then
+      IO.eprintln s!"empty generated replay admitted: {tags}"
+      return false
+  let mapPath := dir ++ "/map.itf.json"
+  IO.FS.writeFile mapPath
+    "{\"vars\":[\"m\"],\"states\":[{\"action_taken\":\"Init\",\"m\":{\"#map\":[[\"k\",1]]}}]}"
+  let valid := "{\"proto_step\":\"report_state\",\"state\":{\"m\":{\"#map\":[[\"k\",1]]}}}"
+  let clean ← sessionTags (.registerTraces smokeCfg [mapPath]) [valid]
+  if clean != ["spec_validated", "initial_state", "step_ok", "all_steps_done"] then
+    IO.eprintln s!"valid map replay refused: {clean}"
+    return false
+  for raw in [
+      "{\"proto_step\":\"report_state\",\"state\":{\"m\":{\"#map\":[[\"k\",1],[\"k\",999]]}}}",
+      "{\"proto_step\":\"report_state\",\"state\":{\"m\":{\"#map\":[[\"k\",1],[\"k\",1]]}}}" ] do
+    let tags ← sessionTags (.registerTraces smokeCfg [mapPath]) [raw]
+    if tags != ["spec_validated", "initial_state", "protocol_error"] then
+      IO.eprintln s!"duplicate map report accepted: {tags}"
+      return false
+  IO.println "replay admission: empty bundles/states and duplicate map reports rejected"
+  return true
+
 def main : IO UInt32 := do
   let bin := ".lake/build/bin/mirror" ++ (if System.Platform.isWindows then ".exe" else "")
   -- Version inspection must exit successfully without entering a protocol session.
@@ -155,6 +213,7 @@ def main : IO UInt32 := do
   let p2 := dir ++ "/t2.itf.json"
   IO.FS.writeFile p1 trace1
   IO.FS.writeFile p2 trace2
+  if !(← admissionRegressions dir p1) then return 1
   -- expected steps: mirror replays the traces in the given path order
   let traces ← match ← loadTraces [p1, p2] with
     | .error e => IO.eprintln s!"smoke: fixture parse failed: {e}"; return 1

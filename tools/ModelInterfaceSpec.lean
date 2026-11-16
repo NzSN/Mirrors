@@ -968,6 +968,9 @@ def scenarioIntegerMapValues (fails : Failures) : IO Unit := do
   check fails "integer maps: empty function map accepts integer schema"
     (valueHasType (.vmap []) (.map .int .int))
   for raw in [
+    "{\"#map\":[[\"k\",1],[\"k\",999]]}",
+    "{\"#map\":[[\"k\",1],[\"k\",1]]}",
+    "{\"nested\":[{\"#map\":[[\"k\",1],[\"k\",999]]}]}",
     "{\"#map\":[[{\"#bigint\":\"1\"},true],[{\"#bigint\":\"1\"},false]]}",
     "{\"#map\":[[true,1]]}",
     "{\"#map\":[[{\"#bigint\":\"1\"},1],[\"1\",2]]}",

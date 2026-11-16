@@ -148,6 +148,8 @@ plus strings/bools/null.
 Wrapper recognition uses the exact singleton marker shape and its expected
 payload kind. A multi-key object with a marker-looking key is an ordinary
 record. The exact two-field `tag`/`value` shape is reserved for variants.
+Map keys must be unique, including inside nested values. Duplicate string or
+integer map keys are rejected rather than selecting one of their bindings.
 
 ## 3. Synchronous interfaces
 
@@ -162,6 +164,9 @@ rejects their ordering).
 ```
 Flow: `spec_validated` → per trace: `initial_state` →
 (`next_step` ↔ `report_state` → `step_ok`)* → `all_steps_done`.
+Replay admission requires at least one trace and at least one state in every
+trace. Empty generated or supplied bundles/traces return `register_error`
+before `spec_validated`, including the legacy and optional-interface paths.
 
 Client replies to `initial_state`/`next_step` with:
 ```json
@@ -323,6 +328,16 @@ Single terminal reply:
 `explore_assume_state {state}` → `explore_assume_status`;
 `explore_rollback {snapshotId}` → `explore_rollback_done`;
 `explore_done` → `explore_session_done`.
+
+Automatic `register_explore` uses the backend-reported transition and invariant
+IDs. Each reported state must have an enabled state assumption and satisfied
+state invariants; transition states also check action invariants. A violated
+invariant emits `step_mismatch`. Disabled/unknown assumptions, unknown checks,
+and RPC failures emit `protocol_error`; the affected state receives no
+`step_ok` or successful completion. Initialization must also be enabled.
+The internal RPC client may retry read-only `health`/`query` operations once.
+It reports ambiguous mutation failures without automatically repeating the
+operation, since a lost response does not imply the mutation was unapplied.
 
 ## 4. Asynchronous interfaces (server modes only)
 

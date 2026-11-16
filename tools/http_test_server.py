@@ -39,7 +39,7 @@ class Handler(socketserver.StreamRequestHandler):
             close = headers.get(b"connection") == b"close"
             connection = b"close" if close else b"keep-alive"
             head = b"HTTP/1.1 200 OK\r\nConnection: " + connection + b"\r\n"
-            if path == b"/chunked":
+            if path in (b"/chunked", b"/chunked-split"):
                 head += b"Transfer-Encoding: chunked\r\n\r\n"
                 mid = max(1, len(body) // 2)
                 payload = head
@@ -48,6 +48,13 @@ class Handler(socketserver.StreamRequestHandler):
                 payload += b"0\r\n\r\n"
             else:
                 payload = head + b"Content-Length: %d\r\n\r\n" % len(body) + body
+            if path == b"/chunked-split":
+                # Force the zero-chunk size line and its final blank line to
+                # arrive in separate reads on a persistent connection.
+                self.wfile.write(payload[:-2])
+                self.wfile.flush()
+                time.sleep(0.05)
+                payload = payload[-2:]
             self.wfile.write(payload)
             self.wfile.flush()
             if close:

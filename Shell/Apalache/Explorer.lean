@@ -119,8 +119,11 @@ def rpcCall (client : RpcClient) (method : String) (params : Json) :
   let res1 ← rpcOnce client body dbg?
   let raw ← match res1 with
     | .ok b => pure b
-    | .error _ =>
-        -- one retry on a fresh connection
+    | .error error =>
+        -- A failed response does not establish that the server did not apply
+        -- the request. Only read-only methods may be repeated automatically;
+        -- a new JSON-RPC id provides no deduplication for session mutations.
+        if method != "health" && method != "query" then return .error error
         let id2 ← client.nextId.modifyGet (fun n => (n, n + 1))
         let body2 := Json.compress (rpcRequestJson method params id2)
         match ← rpcOnce client body2 dbg? with
@@ -516,17 +519,20 @@ def newExplorer (client : RpcClient) (sources : List String)
       return .ok { client := client, sessionId := lsr.sessionId,
                    snapshot := lsr.snapshotId, params := lsr.specParams }
 
-/-- Assume init transition 0 (if any) and advance one step
+/-- Assume the first reported init transition (if any) and advance one step
 (Haskell @exploreInit@). -/
 def exploreInit (expl : Explorer) : IO (RpcResult Explorer) := do
-  if expl.params.initTransitions.isEmpty then
-    return .ok expl
-  else
+  match expl.params.initTransitions.head? with
+  | none => return .ok expl
+  | some (tid, _) =>
     match ← assumeTransition expl.client
-        { sessionId := expl.sessionId, transitionId := 0,
+        { sessionId := expl.sessionId, transitionId := tid,
           checkEnabled := true, timeoutSec := none } with
     | .error e => return .error e
-    | .ok _ =>
+    | .ok atr =>
+        if atr.status != .transEnabled then
+          return .error (.protocolError (-32000)
+            s!"initial transition is {transitionStatusText atr.status}")
         match ← nextStep expl.client expl.sessionId with
         | .error e => return .error e
         | .ok nsr => return .ok { expl with snapshot := nsr.snapshotId }

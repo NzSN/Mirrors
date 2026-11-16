@@ -116,23 +116,42 @@ private def stateVar (m : ValueMap) (k : String) : String :=
 private def convHintsCore : List DiffHint → List Codec.DiffHint :=
   fun hs => hs.map Shell.Mirror.convHint
 
-/-- The interactive replay-like explore flow (Haskell @MkExploreMirror@). -/
-partial def exploreFlow (t : Shell.Transport.Transport) (sources : List String)
+/-- Check every backend-reported state invariant and, after a transition,
+every action invariant. Unknown solver results cannot establish acceptance. -/
+private def checkAutomaticInvariants (expl : Explorer) (afterTransition : Bool) :
+    IO (RpcResult Bool) := do
+  let checks := expl.params.stateInvariants.map (fun (id, _) => (id, InvariantKind.stateInvariant)) ++
+    (if afterTransition then
+      expl.params.actionInvariants.map (fun (id, _) => (id, InvariantKind.actionInvariant))
+     else [])
+  for (id, kind) in checks do
+    match ← checkInvariant expl.client expl.sessionId id kind with
+    | .error error => return .error error
+    | .ok result =>
+        match result.status with
+        | .invViolated => return .ok true
+        | .invSatisfied => pure ()
+        | .invUnknown => return .error (.protocolError (-32000)
+            s!"invariant {id} returned UNKNOWN")
+  return .ok false
+
+/-- Run automatic exploration through a selected RPC client. The production
+wrapper owns the server; tests supply a scripted loopback peer. -/
+partial def exploreFlowWithClient (t : Shell.Transport.Transport) (client : RpcClient)
+    (sources : List String)
     (invs exports : List String) (maxSteps : Nat) : IO Unit := do
-  Shell.Apalache.Explorer.withApalacheServer fun server => do
-    let client ← newRpcClient server.port
-    match ← newExplorer client sources (some "Init") (some "Next") invs exports with
-    | .error err => rpcFail t err "explore register"
-    | .ok expl0 =>
-      match ← exploreInit expl0 with
-      | .error err =>
-          Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
-            (rpcErrorText err))
-      | .ok expl1 =>
-        Shell.Mirror.sendMirror t (Codec.MirrorMessage.specValidated .valid)
-        exploreLoop t expl1 invs maxSteps 0
+  match ← newExplorer client sources (some "Init") (some "Next") invs exports with
+  | .error err => rpcFail t err "explore register"
+  | .ok expl0 =>
+    match ← exploreInit expl0 with
+    | .error err =>
+        Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
+          (rpcErrorText err))
+    | .ok expl1 =>
+      Shell.Mirror.sendMirror t (Codec.MirrorMessage.specValidated .valid)
+      exploreLoop t expl1 maxSteps 0
 where
-  exploreLoop (t : Shell.Transport.Transport) expl invs maxSteps stepIdx := do
+  exploreLoop (t : Shell.Transport.Transport) expl maxSteps stepIdx := do
     match ← exploreQueryState expl with
     | .error err =>
         Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
@@ -162,30 +181,47 @@ where
                   | .error err =>
                       Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
                         (rpcErrorText err))
-                  | .ok (expl', _) =>
-                      Shell.Mirror.sendMirror t Codec.MirrorMessage.stepOk
-                      let violated ←
-                        if invs.isEmpty then pure false
-                        else match ← exploreCheck expl' 0 with
-                          | .ok (.invViolated, _) => pure true
-                          | _ => pure false
-                      if violated then
-                        Shell.Mirror.sendMirror t
-                          (Codec.MirrorMessage.stepMismatch [] [] [])
-                      else if stepIdx + 1 >= maxSteps then
-                        Shell.Mirror.sendMirror t Codec.MirrorMessage.allStepsDone
+                  | .ok (expl', status) =>
+                      if status != .transEnabled then
+                        Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
+                          s!"reported state assumption is {transitionStatusText status}")
                       else
-                        match ← exploreNext expl' 0 with
+                        match ← checkAutomaticInvariants expl' (stepIdx > 0) with
                         | .error err =>
                             Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
                               (rpcErrorText err))
-                        | .ok (_, .transDisabled) =>
-                            Shell.Mirror.sendMirror t Codec.MirrorMessage.allStepsDone
-                        | .ok (expl'', _) =>
-                            exploreLoop t expl'' invs maxSteps (stepIdx + 1)
+                        | .ok true =>
+                            Shell.Mirror.sendMirror t
+                              (Codec.MirrorMessage.stepMismatch [] [] [])
+                        | .ok false =>
+                            Shell.Mirror.sendMirror t Codec.MirrorMessage.stepOk
+                            if stepIdx + 1 >= maxSteps then
+                              Shell.Mirror.sendMirror t Codec.MirrorMessage.allStepsDone
+                            else
+                              match expl'.params.nextTransitions.head? with
+                              | none => Shell.Mirror.sendMirror t Codec.MirrorMessage.allStepsDone
+                              | some (tid, _) =>
+                                match ← exploreNext expl' tid with
+                                | .error err =>
+                                    Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
+                                      (rpcErrorText err))
+                                | .ok (_, .transDisabled) =>
+                                    Shell.Mirror.sendMirror t Codec.MirrorMessage.allStepsDone
+                                | .ok (_, .transUnknown) =>
+                                    Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
+                                      "next transition returned UNKNOWN")
+                                | .ok (expl'', .transEnabled) =>
+                                    exploreLoop t expl'' maxSteps (stepIdx + 1)
           | .ok _ =>
               Shell.Mirror.sendMirror t
                 (Codec.MirrorMessage.protocolError "expected report_state")
+
+/-- The interactive replay-like explore flow (Haskell @MkExploreMirror@). -/
+def exploreFlow (t : Shell.Transport.Transport) (sources : List String)
+    (invs exports : List String) (maxSteps : Nat) : IO Unit :=
+  Shell.Apalache.Explorer.withApalacheServer fun server => do
+    let client ← newRpcClient server.port
+    exploreFlowWithClient t client sources invs exports maxSteps
 
 /-- The interactive explorer session flow (Haskell @MkExploreSession@). -/
 partial def exploreSessionFlow (t : Shell.Transport.Transport) (sources : List String)

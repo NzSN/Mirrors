@@ -683,7 +683,9 @@ def decValueF : Nat → Json → Dec Value
                   | [Json.str k, jv] => optVal k (decValueF fu jv)
                   | _ => derr "value: malformed #map entry"
               | _ => derr "value: malformed #map entry") : Dec (List (String × Value))) with
-          | .ok es => .ok (.vmap es)
+          | .ok es =>
+              if (es.map Prod.fst).Nodup then .ok (.vmap es)
+              else derr "value: duplicate string #map key"
           | .error e =>
               -- Preserve existing string-map errors; integer maps are a
               -- homogeneous extension, never a tagged-string conversion.
@@ -941,13 +943,14 @@ theorem decPairs_mapM_ok {n : Nat} : ∀ (m : ValueMap) (F : Nat), 2 * n + 4 ≤
             | [Json.str k, jv] => optVal k (decValueF F jv)
             | _ => derr "value: malformed #map entry"
         | _ => derr "value: malformed #map entry") = Except.ok ws ∧
+      ws.map Prod.fst = m.map Prod.fst ∧
       (∀ k v, (k, v) ∈ m → ∃ w, (k, w) ∈ ws ∧ valEq v w = true) ∧
       (∀ k w, (k, w) ∈ ws → ∃ v, (k, v) ∈ m ∧ valEq v w = true) := by
   intro m
   induction m with
   | nil =>
       intro F _ _ _ _
-      refine ⟨[], ?_, by simp, by simp⟩
+      refine ⟨[], ?_, rfl, by simp, by simp⟩
       rw [show encPairs [] = [] from by simp [encPairs], List.mapM_nil]
       rfl
   | cons p ps ihm =>
@@ -955,9 +958,9 @@ theorem decPairs_mapM_ok {n : Nat} : ∀ (m : ValueMap) (F : Nat), 2 * n + 4 ≤
       obtain ⟨k, v⟩ := p
       simp only [wireOkMap, Bool.and_eq_true, Bool.not_eq_true', decide_eq_false_iff_not] at hwok
       obtain ⟨w, hw, hval⟩ := ih v hwok.2.1 (hsz k v (by simp)) F hF
-      obtain ⟨ws, hmap, hd1, hd2⟩ :=
+      obtain ⟨ws, hmap, hkeys, hd1, hd2⟩ :=
         ihm F hF hwok.2.2 (fun k' v' hv' => hsz k' v' (List.mem_cons_of_mem _ hv')) ih
-      refine ⟨(k, w) :: ws, ?_, ?_, ?_⟩
+      refine ⟨(k, w) :: ws, ?_, by simp [hkeys], ?_, ?_⟩
       · rw [show encPairs ((k, v) :: ps) =
           Json.arr #[Json.str k, encValue v] :: encPairs ps from by simp [encPairs]]
         rw [List.mapM_cons]
@@ -1235,7 +1238,7 @@ theorem decValueF_encValue :
           have hwokm : wireOkMap m = true := by
             simp only [wireOk] at hw
             exact hw
-          obtain ⟨ws, hmap, hd1m, hd2m⟩ :=
+          obtain ⟨ws, hmap, hkeys, hd1m, hd2m⟩ :=
             decPairs_mapM_ok m F' (by omega) hwokm (fun k v hmem => by
               have := sizeV_pos v
               have := sizeV_mem_map hmem
@@ -1247,6 +1250,7 @@ theorem decValueF_encValue :
           refine ⟨.vmap ws, ?_, ?_⟩
           · simp only [encValue, Json.mkObj, decValueF, toList_ofList_singleton,
               List.toList_toArray, hmap]
+            exact if_pos (hkeys ▸ wireOkMap_pairwise hwokm)
           · simp only [valEq, Bool.and_eq_true]
             refine ⟨mapCont_iff m ws |>.mpr hd1m, mapCont_iff ws m |>.mpr (fun k w hwmem => by
               obtain ⟨v, hv, hval⟩ := hd2m k w hwmem

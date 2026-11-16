@@ -685,6 +685,14 @@ private def rejectNegotiatedRegistration
         "interface_trace_preflight_failed" negotiation.failure
   | .error error => sendError t (errText error)
 
+/-- Every admitted replay must contain a final state at which completion can
+be emitted. This applies to legacy and optional-interface fallback paths too. -/
+private def requireReplayStates (bundle : TraceBundle) : Except String TraceBundle := do
+  if bundle.traces.isEmpty then throw "trace bundle is empty"
+  if bundle.traces.any (fun trace => trace.traceStates.isEmpty) then
+    throw "trace has no states"
+  return bundle
+
 /-- Dispatch one decoded client message (the register dispatch of
 @RecvMsg@/step @exec@, with the oracle outcomes folded in). -/
 private def dispatch (t : Shell.Transport.Transport) (sess : SessionRef)
@@ -702,6 +710,7 @@ private def dispatch (t : Shell.Transport.Transport) (sess : SessionRef)
         (fun request => request.policy == .prefer)
       let r ← orc.generateTraces cfg spec tcfg interfaceWork
         allowResourceFallback
+      let r := r.bind requireReplayStates
       match r with
       | .error error =>
           if !interfaceWork then
@@ -762,6 +771,7 @@ private def dispatch (t : Shell.Transport.Transport) (sess : SessionRef)
       -- loader. A supported `prefer` request may also fall back to it after a
       -- negotiation-only resource-limit failure.
       let r ← loadRegistrationTraceBundle interfaceWork interfaceRequest paths
+      let r := r.bind requireReplayStates
       match r with
       | .error e =>
           if !interfaceWork then

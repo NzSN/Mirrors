@@ -11,7 +11,7 @@ import Lean.Data.Json
 # t14 gate: explorer HTTP + JSON-RPC spike, transcript parity, and the
 HourClock explorer end-to-end.
 
-Three tiers:
+Four tiers:
 
 1. **HTTP spike (design 9.2)**: the pure-Lean HTTP/1.1 client against a
    Lean mini-server on an ephemeral loopback port — JSON body
@@ -20,7 +20,9 @@ Three tiers:
 2. **Transcript parity (Phase 0)**: every recorded line of
    test/fixtures/explorer_transcripts.jsonl must round-trip through the
    request encoder (byte-identical) and the response decoder.
-3. **Integration (APALACHE_MC only)**: a real explorer server, the
+3. **Scripted RPC regressions**: all invariant IDs, rejected/unknown assumptions
+   and checks, and ambiguous mutation failures against a fake loopback peer.
+4. **Integration (APALACHE_MC only)**: a real explorer server, the
    register_explore_session flow, and the register_explore mirror loop,
    both over a mock transport, on HourClock.
 -/
@@ -45,6 +47,33 @@ def loadHcSrc : IO String := do
 
 private def spikeUnused : Nat := 0
 
+private def chunkRegressions (fails : Failures) : IO Unit := do
+  let bytes := "汉".toUTF8
+  let split := "1\r\n".toUTF8 |>.append (bytes.extract 0 1)
+    |>.append "\r\n2\r\n".toUTF8 |>.append (bytes.extract 1 3)
+    |>.append "\r\n0\r\n\r\n".toUTF8
+  check fails "chunked: Unicode crosses chunk boundaries"
+    (Shell.Net.Http.decodeChunked split == .ok "汉")
+  check fails "chunked: invalid UTF-8 rejected"
+    (!(Shell.Net.Http.decodeChunked ("1\r\n".toUTF8 |>.append (bytes.extract 0 1)
+      |>.append "\r\n0\r\n\r\n".toUTF8)).isOk)
+  for raw in ["1\r\naXX0\r\n\r\n", "\r\n\r\n", "z\r\n", "0\r\nbad-trailer\r\n\r\n"] do
+    check fails "chunked: malformed framing rejected" (!(Shell.Net.Http.decodeChunked raw.toUTF8).isOk)
+  let framed := "6;fixture=yes\r\n\r\n0\r\nx\r\n0\r\nX-Fixture: yes\r\n\r\n".toUTF8
+  check fails "chunked: terminator-like data and trailers"
+    (Shell.Net.Http.decodeChunked framed == .ok "\r\n0\r\nx")
+  for count in [:framed.size] do
+    check fails "chunked: incomplete prefixes need more bytes"
+      (match Shell.Net.Http.parseChunkedPrefix (framed.extract 0 count) with
+       | .ok none => true
+       | _ => false)
+  let following := "HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n".toUTF8
+  check fails "chunked: following response bytes preserved"
+    (match Shell.Net.Http.parseChunkedPrefix (framed.append following) with
+     | .ok (some (payload, consumed)) =>
+         payload == "\r\n0\r\nx".toUTF8 && consumed == framed.size
+     | _ => false)
+
 private def httpRegressions (fails : Failures) (port : Nat) : IO Unit := do
   let body := "{\"value\":\"汉🙂\"}"
   match ← Shell.Net.Http.post port "/rpc" body with
@@ -59,6 +88,12 @@ private def httpRegressions (fails : Failures) (port : Nat) : IO Unit := do
           | .error e => check fails "http: Unicode keep-alive framing" false e
           | .ok response =>
               check fails "http: Unicode keep-alive framing" (response.body == text) response.body
+        match ← Shell.Net.Http.postKa conn port "/chunked-split" body with
+        | .error e => check fails "http: split chunk terminator" false e
+        | .ok response => check fails "http: split chunk terminator" (response.body == body) response.body
+        match ← Shell.Net.Http.postKa conn port "/rpc" body with
+        | .error e => check fails "http: request after chunked response" false e
+        | .ok response => check fails "http: request after chunked response" (response.body == body) response.body
       finally Shell.Net.Http.closeConn conn
   let tasks ← (List.range 8).mapM fun worker =>
     IO.asTask (prio := Task.Priority.dedicated) do
@@ -157,7 +192,108 @@ private def transcriptParity (fails : Failures) : IO Unit := do
                   (Shell.Apalache.Explorer.rpcErrorText err)
   check fails "transcripts: nonempty" (n > 0) (toString n)
 
-/-! ## 3. Integration: HourClock explorer end-to-end (APALACHE_MC only) -/
+/-! ## 3. Scripted explorer decision and retry regressions -/
+
+/-- Scripted RPC fixtures exercise the production flow without a model checker. -/
+private def withRpcFixture (mode : String)
+    (act : Shell.Apalache.Explorer.RpcClient → String → IO Unit) : IO Unit := do
+  let dir := ".lake/tmp/explorer-logic"
+  IO.FS.createDirAll dir
+  let audit := dir ++ "/" ++ mode ++ ".jsonl"
+  IO.FS.writeFile audit ""
+  let py := if System.Platform.isWindows then "python" else "python3"
+  let child ← IO.Process.spawn
+    { cmd := py, args := #["tools/explorer_test_server.py", mode, audit],
+      stdin := .piped, stdout := .piped, stderr := .inherit }
+  let client ← Shell.Apalache.Explorer.newRpcClient
+    ((← child.stdout.getLine).trimAscii.toString.toNat?.getD 0)
+  try act client audit
+  finally
+    if let some conn ← client.conn.get then Shell.Net.Http.closeConn conn
+    try child.kill catch _ => pure ()
+    let _ ← child.wait
+    pure ()
+
+private def rpcRequests (path : String) : IO (List Json) := do
+  let lines := (← IO.FS.readFile path).splitOn "\n" |>.filter (!·.isEmpty)
+  lines.mapM fun line => match Json.parse line with
+    | .ok json => pure json
+    | .error error => throw (IO.userError error)
+
+private def methodIs (name : String) (request : Json) : Bool :=
+  request.getObjValAs? String "method" == .ok name
+
+private def parameterNat (key : String) (request : Json) : Nat :=
+  ((request.getObjVal? "params").bind (·.getObjValAs? Nat key)).toOption.getD 9999
+
+private def automaticExplorerRegressions (fails : Failures) : IO Unit := do
+  let first := ["spec_validated", "initial_state"]
+  let second := first ++ ["step_ok", "next_step"]
+  for (mode, steps, wanted) in [
+      ("clean", 2, second ++ ["step_ok", "all_steps_done"]),
+      ("later-violated", 1, first ++ ["step_mismatch"]),
+      ("unknown", 1, first ++ ["protocol_error"]),
+      ("rpc-error", 1, first ++ ["protocol_error"]),
+      ("disabled-state", 1, first ++ ["protocol_error"]),
+      ("unknown-state", 1, first ++ ["protocol_error"]),
+      ("disabled-init", 1, ["protocol_error"]),
+      ("unknown-init", 1, ["protocol_error"]),
+      ("unknown-next", 2, first ++ ["step_ok", "protocol_error"]),
+      ("action-violated", 2, second ++ ["step_mismatch"])] do
+    withRpcFixture mode fun client audit => do
+      let report := (Codec.encodeClient (.reportState [("x", .vint 1)])).compress
+      let pending ← IO.mkRef [report, report]
+      let tags ← IO.mkRef ([] : List String)
+      let transport : Shell.Transport.Transport := {
+        scope := .remote
+        recv := do
+          match ← pending.get with
+          | [] => return none
+          | first :: rest => pending.set rest; return some first
+        send := fun line => do
+          let .ok json := Json.parse line | throw (IO.userError "bad mirror JSON")
+          let .ok tag := json.getObjValAs? String "proto_step"
+            | throw (IO.userError "missing mirror tag")
+          tags.modify (· ++ [tag]) }
+      Shell.Apalache.exploreFlowWithClient transport client ["scripted fixture"] ["InvA", "InvB"] [] steps
+      let actual ← tags.get
+      check fails s!"automatic explorer: {mode}" (actual == wanted) (reprStr actual)
+      let requests ← rpcRequests audit
+      if mode == "clean" then
+        check fails "automatic explorer: all backend invariant IDs checked"
+          ((requests.filter (methodIs "checkInvariant")).map (parameterNat "invariantId") == [3, 7, 3, 7, 11])
+        check fails "automatic explorer: backend transition IDs used"
+          ((requests.filter (methodIs "assumeTransition")).map (parameterNat "transitionId") == [5, 9])
+        check fails "automatic explorer: state and action invariant kinds"
+          ((requests.filter (methodIs "checkInvariant")).map (fun request =>
+            ((request.getObjVal? "params").bind (·.getObjValAs? String "kind")).toOption) ==
+            [some "STATE", some "STATE", some "STATE", some "STATE", some "ACTION"])
+      if mode == "later-violated" then
+        check fails "automatic explorer: second invariant checked"
+          ((requests.filter (methodIs "checkInvariant")).map (parameterNat "invariantId") == [3, 7])
+      if mode == "disabled-init" || mode == "unknown-init" then
+        check fails "automatic explorer: rejected initializer does not advance"
+          ((requests.filter (methodIs "nextStep")).isEmpty)
+      if mode == "disabled-state" || mode == "unknown-state" then
+        check fails "automatic explorer: rejected assumption does not check invariants"
+          ((requests.filter (methodIs "checkInvariant")).isEmpty)
+  withRpcFixture "drop-mutation" fun client audit => do
+    let result ← Shell.Apalache.Explorer.nextStep client "fixture"
+    check fails "RPC: ambiguous mutation failure is returned" (!result.isOk)
+    let state ← Shell.Apalache.Explorer.rpcCall client "query" (.mkObj [])
+    check fails "RPC: lost-response mutation applied exactly once"
+      ((state.toOption.bind fun json => (json.getObjValAs? Nat "appliedSteps").toOption) == some 1)
+    let requests ← rpcRequests audit
+    check fails "RPC: mutation is not retried"
+      ((requests.filter (methodIs "nextStep")).length == 1)
+  withRpcFixture "drop-health" fun client audit => do
+    let result ← Shell.Apalache.Explorer.health client
+    check fails "RPC: read-only retry recovers" result.isOk
+    let requests ← rpcRequests audit
+    check fails "RPC: health retried exactly once"
+      ((requests.filter (methodIs "health")).length == 2)
+
+/-! ## 4. Integration: HourClock explorer end-to-end (APALACHE_MC only) -/
 
 private def sendClient (t : Shell.Transport.Transport) (m : Codec.ClientMessage) :
     IO Unit :=
@@ -254,8 +390,10 @@ def main (args : List String) : IO UInt32 := do
   if args == ["--assertion-failure-control"] then
     check fails "deliberate assertion failure control" false
   else
+    chunkRegressions fails
     httpSpike fails
     transcriptParity fails
+    automaticExplorerRegressions fails
     let control ← IO.Process.output {
       cmd := (← IO.appPath).toString, args := #["--assertion-failure-control"] }
     check fails "runner: failed assertion exits nonzero"
