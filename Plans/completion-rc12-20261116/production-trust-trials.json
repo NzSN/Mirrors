@@ -1,0 +1,92 @@
+{
+  "schema": "mirrors.rc12.renewed-trust-trials/v1",
+  "status": "candidate-and-rollback-renewed-chain-trials-passed",
+  "cases": [
+    {
+      "label": "trust-trial-candidate-v2",
+      "serverSha256": "5ebfb99399df6006b2dcae81a64525421ca0f4490ac19dcd3a9ed8f51676d5e9",
+      "health": {
+        "schema": "mirrors.rc12.production-health/v1",
+        "status": "passed",
+        "scope": "trust-trial-candidate-v2",
+        "endpoint": {
+          "host": "192.168.150.219",
+          "port": 19100
+        },
+        "clientSourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+        "clientSha256": "5ebfb99399df6006b2dcae81a64525421ca0f4490ac19dcd3a9ed8f51676d5e9",
+        "serverCertificateSha256": "07ad867b6f58eeac9969d3b8279dac057e6f1c6e27600eecc5d44ff2a006e976",
+        "cases": [
+          {
+            "case": "sync-valid",
+            "exitCode": 0,
+            "logSha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+          },
+          {
+            "case": "sync-invalid",
+            "exitCode": 1,
+            "logSha256": "3b10b6ed44fc64d5b1b1db1f5ee3dec4843cfe52b9ad3cee4d28732993a6ba95"
+          },
+          {
+            "case": "async-valid",
+            "exitCode": 0,
+            "logSha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+          },
+          {
+            "case": "async-invalid",
+            "exitCode": 1,
+            "logSha256": "1a7c2d776306f31ee3563b30ed03c20fc6f3b9e6af92c3a6f14141cdd2eabb2a"
+          }
+        ],
+        "wrongPinRejected": true,
+        "credentialsExported": false
+      },
+      "ownedPid": 2804
+    },
+    {
+      "label": "trust-trial-rollback-v2",
+      "serverSha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4",
+      "health": {
+        "schema": "mirrors.rc12.production-health/v1",
+        "status": "passed",
+        "scope": "trust-trial-rollback-v2",
+        "endpoint": {
+          "host": "192.168.150.219",
+          "port": 19101
+        },
+        "clientSourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+        "clientSha256": "5ebfb99399df6006b2dcae81a64525421ca0f4490ac19dcd3a9ed8f51676d5e9",
+        "serverCertificateSha256": "07ad867b6f58eeac9969d3b8279dac057e6f1c6e27600eecc5d44ff2a006e976",
+        "cases": [
+          {
+            "case": "sync-valid",
+            "exitCode": 0,
+            "logSha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+          },
+          {
+            "case": "sync-invalid",
+            "exitCode": 1,
+            "logSha256": "5f533b6147eaee51ddb16d195f9462211799b58e5a9b5113f3b5597c4d5ffcd8"
+          },
+          {
+            "case": "async-valid",
+            "exitCode": 0,
+            "logSha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+          },
+          {
+            "case": "async-invalid",
+            "exitCode": 1,
+            "logSha256": "8df87e7b012f9e92f5cc6af5890dd9c8ce44a97ce4f2b1b8154005bd3c9677f5"
+          }
+        ],
+        "wrongPinRejected": true,
+        "credentialsExported": false
+      },
+      "ownedPid": 15292
+    }
+  ],
+  "privateKeysExported": false,
+  "productionModified": false,
+  "trialPortsNotListeningAfterward": true,
+  "ownedJobCleanupActive": 0
+}

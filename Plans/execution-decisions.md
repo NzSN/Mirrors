@@ -1,5 +1,24 @@
 # Framework execution decisions
 
+## 2026-11-16 — approved rc.12 publication, trust renewal, deployment and reboot completed
+
+The user approved the exact operation card covering public rc.12 publication,
+production trust renewal/deployment and reboot after deployment acceptance.
+[Completion](completion-rc12-20261116/completion.json) records verified public
+source/tag/asset delivery, renewed CA/server/default-client certificates with
+existing keys and identities preserved, live old-binary rollback baseline,
+hash-guarded candidate activation and the observed new boot with Running/Auto and
+post-boot mTLS/pin controls. No further approval was inferred or requested for
+already-authorized steps. Public certificate material is retained for the
+requesting operator; no private key was exported and no external-consumer acknowledgement is claimed.
+
+The qualified source/tag stays `6882d5b8…` / `v0.2.0-rc.12`; the recorded C0,
+companions and bounded qualification evidence remain immutable. Final receipt/
+status delivery is metadata only. Preserve all dated attempts and 240 unrelated
+files. The remaining work is the measured compatibility lifecycle with actual
+workload/consumer inputs and a separate future retirement decision. M4 stays
+withdrawn; no generic scheduling/platform claim is added.
+
 ## 2026-11-16 — approved native transfer completed; exact-candidate M5/Q and handoff complete
 
 The user approved the exact rc.12 source transfer to the named Windows stage and

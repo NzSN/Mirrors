@@ -1,17 +1,50 @@
 # rc.12 completion continuation — 2026-11-16
 
 The user requested resuming and iterating through the remaining work. This
-campaign prepares `0.2.0-rc.12` for the November 12 source fixes. Earlier rc.11
+campaign qualifies and publishes `0.2.0-rc.12` for the November 12 source fixes. Earlier rc.11
 source, release, qualification and deployment records keep their original scope.
 
-Fresh intake observes Ubuntu 26.04.1 WSL2, approximately 762 GiB free in the
+Initial intake observed Ubuntu 26.04.1 WSL2, approximately 762 GiB free in the
 repository filesystem, working explicit-config Windows SSH access, exact retained
 MirrorECMA `9192171f…` and MirrorGate `cd4914b2…` checkouts, and the pinned tracer
-and offline distribution inputs. The Windows service is Running/Auto with the
-released rc.11 executable hash. Its server certificate expired November 13;
-service state alone does not admit an mTLS model operation.
+and offline distribution inputs. The Windows service was Running/Auto with the
+released rc.11 executable hash and a server certificate expired November 13;
+that service state alone did not admit an mTLS model operation.
 
-## Current exact-candidate outcome
+## Current publication, production and reboot outcome
+
+The user's explicit shipping approval is complete. The
+[completion record](completion.json) binds source `6882d5b8…`, immutable
+`v0.2.0-rc.12`, the [public prerelease](https://github.com/NzSN/Mirrors/releases/tag/v0.2.0-rc.12),
+the successful hosted workflow and all four downloaded/verified assets. The
+release stays prerelease/not-Latest; hosted Ubuntu 24.04 focused evidence retains
+its own scope beside the selected WSL2 qualification.
+
+The production CA/server/default-client certificates are renewed through
+`2027-02-14T03:49:59Z`, using the original keys, subjects and server IP SAN.
+Keys/ACLs, service configuration, DLLs and configured runtime identities are
+preserved. Candidate and old rollback binaries pass four-way mTLS/pin trials
+under that exact chain. The renewed chain first passes a live baseline with the
+old production binary, then the exact published rc.12 Windows binary is activated
+and passes the same production controls. The approved reboot is observed at
+`2026-11-16T04:16:34.5000000Z`; automatic Running/Auto startup and post-boot
+sync/async valid/invalid plus wrong-pin controls pass. Old certificates, rollback
+bytes and all failed staging/preflight attempts remain retained.
+
+[Renewal](production-pki-renewal.json), [staged trials](production-trust-trials.json),
+[deployment](deployment-result.json), [reboot](reboot-result.json) and
+[public-only trust bundle](public-trust-bundle.json) retain the separate claims.
+The bundle is available to the requesting operator; no private key is included,
+and no external consumer update or acknowledgement is inferred. Clients using
+the old material need the renewed CA/client certificate and server pin.
+
+The measured compatibility lifecycle remains open: actual workload entry points,
+named owners/acknowledgements, complete shipped-cycle matrices and tested fallback
+have not been supplied. [Lifecycle update](lifecycle-update.json) records the two
+known shipments without awarding complete-cycle credit. Retirement is separate;
+native-runner/M4 planning stays withdrawn.
+
+## Exact-candidate qualification retained
 
 The [final identity/qualification audit](result.json) accepts the complete selected
 candidate at `6882d5b8b4787977e847e5a77467b30bfdac19a2` and C0 `b44fe3d9…`.
@@ -32,17 +65,18 @@ six actual integrity/link/profile negative controls. [Offline Q2 after shutdown]
 is identical. [Cleanup](fixture-cleanup.json) verifies the owned oracle and tunnel
 are stopped; production remains unchanged.
 
-This is exact-candidate qualification, with public publication, production trust
-renewal/deployment, reboot and the measured compatibility lifecycle still pending.
-The [operation card](operations.md) names the concrete source/tag/assets, current
-production identities, expired trust chain and proposed renewal/rollback checks.
+This exact-candidate qualification keeps its original fixture/C0 identities.
+Later production lifecycle controls do not silently broaden that qualification.
+The [executed operation card](operations.md) and [byte-identical approved proposal](approved-operation-card.md)
+retain the exact source/tag/assets and reviewed renewal/rollback boundaries.
 
 ## Earlier local completion and retained boundaries
 
 Clean task-owned source is `6882d5b8b4787977e847e5a77467b30bfdac19a2`, with a
 local-only annotated `v0.2.0-rc.12` tag. Selected WSL2 C0 is
 `b44fe3d94c0afab187642923f81eef4a387b579289a63231bf649bdb3325456d`;
-the base C0 remains a structural control. The shared branch and index are unchanged.
+the base C0 remains a structural control. At that local boundary, the shared
+branch and index were unchanged.
 
 | Work | Result and retained evidence |
 | --- | --- |
@@ -61,7 +95,7 @@ All 240 pre-existing unrelated files are inventoried and preserved. The clean
 candidate and its frozen source remain unchanged; this README and maintained
 status/checkpoint follow-up are later documentation, outside that tested commit.
 
-## Remaining work and concrete continuation
+## Earlier admission history and remaining measured lifecycle
 
 The initial automatic rejection of source transfer is historical. The user's
 subsequent explicit approval is recorded in [the approval receipt](native-transfer-approved.json);
@@ -76,14 +110,16 @@ retry under the tested native Job wrapper passes. The first cleanup SSH connecti
 also closed before returning a result; the guarded retry succeeds. Both original
 attempts are retained without changing acceptance or downgrading a required gate.
 
-Public branch/tag/prerelease publication and the Windows asset are prepared but
-not performed. Production CA, server and default client certificates all expired
-November 13. [Read-only prerequisites](production-renewal-prerequisites.json)
-confirm the existing CA signing key is present without reading/exporting it.
-Production trust renewal, client coordination, deployment and a separately approved
-host-reboot window remain required; a leaf-only renewal cannot repair that chain.
-No rc.12 remote branch/tag, hosted release, production credential/configuration/
-binary replacement or reboot operation occurred.
+The original [read-only prerequisites](production-renewal-prerequisites.json)
+observed all three production certificates expired on November 13. Those dated
+bytes are retained; the approved complete-chain renewal and reboot are now
+recorded above. Initial publication preflight selected a read-only account and
+stopped before pushing; the configured repository-owner account was then selected.
+The first renewal helper failed parsing before execution, and the first trust
+trial stopped at unused-port preflight before starting a server. Corrected,
+retained attempts pass parser checks, real listener admission and all native TLS
+controls before any production activation. The operation does not claim external
+consumer coordination or shipped-cycle/workload acceptance.
 
 The two actual shipped compatibility cycles, real-workload soak ledger,
 consumer acknowledgements and tested fallback remain measured external gates.

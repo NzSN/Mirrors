@@ -5,6 +5,37 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-16 — rc.12 published; production trust renewed, deployed and reboot verified
+
+The user explicitly approved the reviewed publication, production trust renewal/
+deployment and reboot operation card. The
+[completion record](Plans/completion-rc12-20261116/completion.json) binds source
+`6882d5b8b4787977e847e5a77467b30bfdac19a2`, immutable `v0.2.0-rc.12`, the successful
+Ubuntu 24.04 hosted workflow and all four downloaded/verified release assets.
+The public release remains prerelease/not-Latest; its hosted focused evidence
+does not inherit the selected WSL2 M5 qualification.
+
+The CA, server and default-client certificates are renewed through
+`2027-02-14T03:49:59Z`, with their existing keys/ACLs, subjects and server IP SAN
+preserved. Staged candidate/rollback trials pass. The renewed chain passes live
+production controls with the old binary before the exact published Windows
+candidate `5ebfb993…` is activated and passes four-way mTLS and wrong-pin controls.
+The approved boot at `2026-11-16T04:16:34.5000000Z` is observed: ModelMirrors is
+Running/Auto and all post-boot identity and native mTLS controls pass. Service
+configuration, DLLs, configured runtime identities and keys remain unchanged;
+old expired certificates and rollback material are retained. Initial account,
+parser and unused-port preflight failures stopped before publication or active-production changes
+and remain in the incident/evidence history.
+
+The public-only CA/server/client trust bundle is available to the requesting
+operator; no private key was exported and no message or acknowledgement from an
+external consumer is claimed. All 240 unrelated files remain preserved. Exact
+qualification remains bound to source/C0 `6882d5b8…`/`b44fe3d9…`; later operational
+and status-documentation receipts do not transfer that acceptance to a new ref.
+Actual workload entry points/records, named consumer owners, complete shipped-cycle
+matrices, acknowledgements and fallback remain open. Two known shipments alone
+earn zero complete lifecycle-cycle credit. Retirement is separate; M4 is withdrawn.
+
 ## 2026-11-16 — rc.12 complete exact-candidate qualification; public/production handoff prepared
 
 The user explicitly approved transferring the exact prepared source bundle to

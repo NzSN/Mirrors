@@ -1,0 +1,101 @@
+{
+  "schema": "mirrors.rc12.operation-completion/v1",
+  "status": "approved-publication-trust-renewal-deployment-and-reboot-complete",
+  "completedAtUtc": "2026-11-16T04:22:21.678762+00:00",
+  "sourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "tag": "v0.2.0-rc.12",
+  "initialPublishedMain": "9758728458200cef1de666069e1ce8927d1371c2",
+  "releaseUrl": "https://github.com/NzSN/Mirrors/releases/tag/v0.2.0-rc.12",
+  "releaseAssetsVerified": 4,
+  "prerelease": true,
+  "isLatest": false,
+  "windowsDeployedSha256": "5ebfb99399df6006b2dcae81a64525421ca0f4490ac19dcd3a9ed8f51676d5e9",
+  "productionState": {
+    "pid": 5632,
+    "name": "ModelMirrors",
+    "startMode": "Auto",
+    "state": "Running"
+  },
+  "newBootUtc": "2026-11-16T04:16:34.5000000Z",
+  "postBootHealth": {
+    "schema": "mirrors.rc12.production-health/v1",
+    "status": "passed",
+    "scope": "post-reboot",
+    "endpoint": {
+      "host": "192.168.150.219",
+      "port": 8999
+    },
+    "clientSourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+    "clientSha256": "5ebfb99399df6006b2dcae81a64525421ca0f4490ac19dcd3a9ed8f51676d5e9",
+    "serverCertificateSha256": "07ad867b6f58eeac9969d3b8279dac057e6f1c6e27600eecc5d44ff2a006e976",
+    "cases": [
+      {
+        "case": "sync-valid",
+        "exitCode": 0,
+        "logSha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+      },
+      {
+        "case": "sync-invalid",
+        "exitCode": 1,
+        "logSha256": "e36bebe09c6a5dce66fa25507c89f74cfef201ad475a7f017f3a99fbbf86bc37"
+      },
+      {
+        "case": "async-valid",
+        "exitCode": 0,
+        "logSha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+      },
+      {
+        "case": "async-invalid",
+        "exitCode": 1,
+        "logSha256": "8281f6d24f00f379474347235879b2b5916713b9f7581933666f934ea6b7afdb"
+      }
+    ],
+    "wrongPinRejected": true,
+    "credentialsExported": false
+  },
+  "newCertificates": {
+    "ca": {
+      "subject": "CN=ModelMirrors CA",
+      "issuer": "CN=ModelMirrors CA",
+      "sha256": "6870798d7629894a3279e6580f8449d8431efa5dbc4d6271e567037ef810c106",
+      "notBeforeUtc": "2026-11-16T03:49:59.0000000Z",
+      "notAfterUtc": "2027-02-14T03:49:59.0000000Z",
+      "validNow": true
+    },
+    "server": {
+      "subject": "CN=192.168.150.219",
+      "issuer": "CN=ModelMirrors CA",
+      "sha256": "07ad867b6f58eeac9969d3b8279dac057e6f1c6e27600eecc5d44ff2a006e976",
+      "notBeforeUtc": "2026-11-16T03:49:59.0000000Z",
+      "notAfterUtc": "2027-02-14T03:49:59.0000000Z",
+      "validNow": true
+    },
+    "client": {
+      "subject": "CN=modelmirrors-client",
+      "issuer": "CN=ModelMirrors CA",
+      "sha256": "4a73c8469d40903abb23fb1faf9ba32a37a511f10612d9281519ba1a20fdb0c5",
+      "notBeforeUtc": "2026-11-16T03:49:59.0000000Z",
+      "notAfterUtc": "2027-02-14T03:49:59.0000000Z",
+      "validNow": true
+    }
+  },
+  "existingPrivateKeysAndAclsPreserved": true,
+  "serviceConfigurationDllsAndRuntimePreserved": true,
+  "oldBinaryRollbackUnderRenewedTrustTested": true,
+  "rollbackMaterialRetained": true,
+  "publicTrustBundle": {
+    "path": ".golden-build/completion-rc12-20261116/operator-trust/mirrors-rc12-public-trust.zip",
+    "bytes": 4258,
+    "sha256": "6756550eeea50211f9cdee9ad5069b5e875f2982bcfb028f3e45bd1a00ce8733"
+  },
+  "privateKeysExported": false,
+  "externalConsumerTrustUpdatesOrAcknowledgementsClaimed": false,
+  "unrelatedFilesPreserved": 240,
+  "qualificationScope": "exact source/C0 selected WSL2/native-Windows-oracle profile; production lifecycle controls remain separate",
+  "remaining": [
+    "two actual shipped compatibility cycles with complete declared matrices and real-workload records",
+    "named consumer/operator trust updates, migration acknowledgements and tested fallback",
+    "separate future retirement decision"
+  ],
+  "nativeRunnerM4Planning": "withdrawn-from-this-campaign"
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "mirrors.rc12.release-publication/v1",
+  "status": "published-assets-downloaded-and-verified",
+  "url": "https://github.com/NzSN/Mirrors/releases/tag/v0.2.0-rc.12",
+  "tag": "v0.2.0-rc.12",
+  "sourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "prerelease": true,
+  "isLatest": false,
+  "workflow": "https://github.com/NzSN/Mirrors/actions/runs/43800494086",
+  "workflowId": "43800494086",
+  "workflowSucceeded": true,
+  "assets": [
+    {
+      "name": "mirrors-v0.2.0-rc.12-linux-x86_64.build.json",
+      "bytes": 2903,
+      "sha256": "3e94d9a0653486c03df461d5f6f6e6ca127fa9fcfab55026c41d932f3c3685e6"
+    },
+    {
+      "name": "mirrors-v0.2.0-rc.12-linux-x86_64.tar.gz",
+      "bytes": 72210915,
+      "sha256": "cee2eab8e36bf50c27c922f6cbadb77bfc5cf5db07b3b8a9244a5455772a1031"
+    },
+    {
+      "name": "mirrors-v0.2.0-rc.12-windows-x86_64.zip",
+      "bytes": 73727146,
+      "sha256": "f7e8b290f26107385ce3e5a44ef0bb2adf17f3ebe81164b1b6d1f30566f929c0"
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 218,
+      "sha256": "be935167558c52be43d455d332129b810a48085922e3a836f43f3251b60dc97a"
+    }
+  ],
+  "hostedLinuxScope": "Ubuntu 24.04 focused build/runtime workflow gates; no automatic M5 transfer",
+  "windowsScope": "exact qualified native source/binary/package at the unchanged source tag",
+  "notes": {
+    "path": "Plans/completion-rc12-20261116/release-notes.md",
+    "bytes": 1922,
+    "sha256": "4e469b74e7c6adc7544307a8e5615d5ed51a8e69b435b3767ccf30eaa61eed60"
+  }
+}

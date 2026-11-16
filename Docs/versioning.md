@@ -1,12 +1,14 @@
 # Product versions and local installation
 
 The current cross-repository policy is
-[ecosystem versioning](ecosystem-versioning.md). Current source prepares Mirrors
-`v0.2.0-rc.12` for the [completion iteration](../Plans/completion-rc12-20261116/README.md),
-including strict DPM reply identity, collector interruption reporting and
-installer recovery fixes. The released rc.11 and its qualification retain their
-recorded identity. Source
-preparation alone creates no tag, package, publication or deployment result.
+[ecosystem versioning](ecosystem-versioning.md). The current released prerelease is
+[`v0.2.0-rc.12`](https://github.com/NzSN/Mirrors/releases/tag/v0.2.0-rc.12), including
+strict DPM reply identity, collector interruption reporting and installer recovery
+fixes. The [completion record](../Plans/completion-rc12-20261116/completion.json)
+binds qualified source `6882d5b8…`, public assets, production trust renewal,
+Windows deployment and actual reboot acceptance. Earlier rc.11 records retain
+their original identity and scope. Preparing a future source version alone
+creates no tag, package, publication or deployment result.
 Existing release refs remain immutable. Catalog refresh derives the Mirrors
 product declaration from `Shell/Version.lean` before calculating catalog and
 distribution-lock identities.
@@ -89,9 +91,10 @@ $ ModelMirrors --version
 v0.2.0-rc.12
 ```
 
-These examples describe binaries rebuilt from the prepared rc.12 source; they
-are not observations of an existing installation. The second command requires
-installation under that name on `PATH`.
+These examples describe binaries from rc.12. The
+[deployment record](../Plans/completion-rc12-20261116/completion.json) binds the
+observed Windows installation; other installations need their own version/hash
+observation. The second command requires installation under that name on `PATH`.
 See the [CLI reference](interface-reference.md) for exit codes and argument
 validation. The examples require rebuilding and, for `ModelMirrors`, reinstalling
 that build. Binaries from the superseded `v0.1.0` alias still print `v0.0.3.2`;

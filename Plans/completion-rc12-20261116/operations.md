@@ -1,5 +1,14 @@
 # rc.12 publication and production operation card
 
+Executed under the subsequent explicit user approval. The
+[completion record](completion.json) verifies public source/tag/release and all
+four assets, full-chain production trust renewal, exact rc.12 activation and the
+observed reboot with automatic startup and post-boot mTLS/pin controls. Private
+keys/configuration/DLLs/runtime identities and rollback bytes remain preserved.
+The [original approved card](approved-operation-card.md) is retained byte-for-byte;
+the proposal below is historical. External consumer trust updates, real workloads,
+complete compatibility cycles and acknowledgements remain unobserved.
+
 Status: exact-candidate qualification complete; publication and production actions
 are prepared for review. The user's latest approval covered the exact Windows
 source transfer and native tests. The owned fixture-only model checks completed

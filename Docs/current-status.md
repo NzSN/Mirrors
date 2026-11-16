@@ -1,5 +1,29 @@
 # Current framework status and navigation
 
+## November 16 rc.12 published, production trust renewed and reboot verified
+
+The [completion record](../Plans/completion-rc12-20261116/completion.json) verifies
+public `v0.2.0-rc.12` at source `6882d5b8…`, the successful hosted release workflow
+and all four downloaded assets. The selected exact-candidate M5/Q1/Q2 and native
+Windows evidence below retain their original C0, companion and environment scope.
+
+Production now runs the exact published Windows binary `5ebfb993…`. Its CA/server/
+default-client chain is renewed through `2027-02-14T03:49:59Z`, preserving existing
+keys/ACLs, subjects, server IP identity, service configuration, DLLs and configured
+runtime identities. Candidate/rollback trials, a live old-binary renewed-trust
+baseline, candidate deployment controls and post-reboot four-way mTLS/wrong-pin
+controls pass. The new boot is `2026-11-16T04:16:34.5000000Z`; service state is
+Running/Auto. Rollback and old certificate bytes are retained.
+
+The [public trust bundle record](../Plans/completion-rc12-20261116/public-trust-bundle.json)
+provides renewed public CA/client material and the server pin for the requesting
+operator. External clients still need their trust/certificate/pin updates; no
+consumer acknowledgement or actual workload execution is inferred. Complete
+shipped compatibility cycles, real-workload records, named acknowledgements and
+tested fallback remain the open lifecycle work. Retirement is separate;
+native-runner/M4 planning remains withdrawn. Later status documentation does not
+transfer qualification to a later source identity.
+
 ## November 16 rc.12 exact-candidate qualification complete; delivery prepared
 
 The [final continuation](../Plans/completion-rc12-20261116/README.md) qualifies

@@ -1,0 +1,21 @@
+{
+  "schema": "mirrors.rc12.shipping-approval/v1",
+  "approvedAtUtc": "2026-11-16T03:38:34.572808+00:00",
+  "userMessage": "approve",
+  "approvedQuestion": "public rc.12 publication, production trust renewal/deployment, and reboot after deployment checks",
+  "operationCard": {
+    "path": "Plans/completion-rc12-20261116/operations.md",
+    "bytes": 5797,
+    "sha256": "fd85144ce3052866d7ad56dc056b462d2bba76f668f3e2985497b994778b0d5c"
+  },
+  "sourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "metadataCommit": "9758728458200cef1de666069e1ce8927d1371c2",
+  "tag": "v0.2.0-rc.12",
+  "scopeIncludes": [
+    "public source/tag/prerelease and Windows asset",
+    "renew production CA/server/default-client certificates preserving existing keys/subjects/SAN with 90-day validity",
+    "staged and production mTLS acceptance, binary rollback under renewed PKI",
+    "host reboot after successful deployment and post-boot identity/health checks"
+  ],
+  "retirementOrConsumerAcknowledgementInferred": false
+}

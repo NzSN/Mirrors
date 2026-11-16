@@ -1,0 +1,23 @@
+{
+  "schema": "mirrors.rc12.final-receipt-delivery-inputs/v1",
+  "qualifiedSourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+  "tag": "v0.2.0-rc.12",
+  "expectedPriorPublishedMain": "9758728458200cef1de666069e1ce8927d1371c2",
+  "operationCompletion": {
+    "path": "Plans/completion-rc12-20261116/completion.json",
+    "bytes": 3925,
+    "sha256": "f0f02177e74a0cfb6d90fb7ee2bb12040c3881c200b0d20d721598d062776994"
+  },
+  "sourceTagAndArtifactsUnchanged": true,
+  "postQualificationDocumentationPaths": [
+    "Docs/current-status.md",
+    "Docs/versioning.md",
+    "CHECKPOINTS.md",
+    "Plans/execution-decisions.md",
+    "Plans/completion-rc12-20261116/"
+  ],
+  "qualificationNotTransferredToMetadataCommit": true,
+  "privateKeysAndRawStoresExcluded": true,
+  "rollbackEvidenceScope": "old binary tested in stage and live with renewed PKI; no failure-triggered production rollback was needed",
+  "unrelatedFilesPreserved": 240
+}

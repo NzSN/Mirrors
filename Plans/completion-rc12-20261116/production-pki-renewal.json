@@ -1,0 +1,85 @@
+{
+  "schema": "mirrors.rc12.production-pki-renewal/v1",
+  "status": "renewed-material-prepared-and-verified",
+  "createdAtUtc": "2026-11-16T03:49:59.6674500Z",
+  "oldCertificates": {
+    "ca": {
+      "subject": "CN=ModelMirrors CA",
+      "issuer": "CN=ModelMirrors CA",
+      "sha256": "acf8f2a0b5f378eac723daa2f018ee2a4fe9c2f163abbd3d6e4bd542fdac0a22",
+      "notBeforeUtc": "2026-08-15T12:50:06.0000000Z",
+      "notAfterUtc": "2026-11-13T12:50:06.0000000Z",
+      "validNow": false
+    },
+    "server": {
+      "subject": "CN=192.168.150.219",
+      "issuer": "CN=ModelMirrors CA",
+      "sha256": "b2fc7265145cf2b89a1a248b0932885df8d300121b47f7854317ece4bac9ce67",
+      "notBeforeUtc": "2026-08-15T12:50:06.0000000Z",
+      "notAfterUtc": "2026-11-13T12:50:06.0000000Z",
+      "validNow": false
+    },
+    "client": {
+      "subject": "CN=modelmirrors-client",
+      "issuer": "CN=ModelMirrors CA",
+      "sha256": "4f888df552a8c6ab42894fe19bc6965cd5afc1b3a4c18bda4cd7ed2a1d79d89a",
+      "notBeforeUtc": "2026-08-15T12:50:06.0000000Z",
+      "notAfterUtc": "2026-11-13T12:50:06.0000000Z",
+      "validNow": false
+    }
+  },
+  "renewedCertificates": {
+    "ca": {
+      "subject": "CN=ModelMirrors CA",
+      "issuer": "CN=ModelMirrors CA",
+      "sha256": "6870798d7629894a3279e6580f8449d8431efa5dbc4d6271e567037ef810c106",
+      "notBeforeUtc": "2026-11-16T03:49:59.0000000Z",
+      "notAfterUtc": "2027-02-14T03:49:59.0000000Z",
+      "validNow": true
+    },
+    "server": {
+      "subject": "CN=192.168.150.219",
+      "issuer": "CN=ModelMirrors CA",
+      "sha256": "07ad867b6f58eeac9969d3b8279dac057e6f1c6e27600eecc5d44ff2a006e976",
+      "notBeforeUtc": "2026-11-16T03:49:59.0000000Z",
+      "notAfterUtc": "2027-02-14T03:49:59.0000000Z",
+      "validNow": true
+    },
+    "client": {
+      "subject": "CN=modelmirrors-client",
+      "issuer": "CN=ModelMirrors CA",
+      "sha256": "4a73c8469d40903abb23fb1faf9ba32a37a511f10612d9281519ba1a20fdb0c5",
+      "notBeforeUtc": "2026-11-16T03:49:59.0000000Z",
+      "notAfterUtc": "2027-02-14T03:49:59.0000000Z",
+      "validNow": true
+    }
+  },
+  "publicKeySha256": {
+    "ca": "9d1647f4700ab3fa70ab40cf5eeb653369cf496c8fe34a76a287d45e4850702e",
+    "server": "f5c7e6e124b6fb562cffb6a20cc69519c8c1e4d8ea58f038c476e80b592cbaaa",
+    "client": "4f4b84c4aad2ddb3db2156b84c9319067abf29856dd82aa4cf5dcb14ac06d50d"
+  },
+  "existingKeysAndAclsPreserved": true,
+  "privateKeysExported": false,
+  "validityDays": 90,
+  "serverIpSan": "192.168.150.219",
+  "caChainAndPurposeChecksPassed": true,
+  "configurationHashes": {
+    "Application": "1c2d6d9946cdb624c40658a7bea029374d82134a8ecc6cee8f013e8622cc75f7",
+    "AppDirectory": "16f34875d1808730796b99db55f0c35ff025f2062b85012d8de1af22e1e1dfc5",
+    "AppParameters": "3ef7175c66534c043f18bb55b056932fa632824beadc8833f28ce0aae1540f4a",
+    "AppEnvironmentExtra": "409bfaaeb34bd24213f5ac0b76c0fd9dbb9e91c5b90ab2db8e517368bbd14c4d",
+    "AppStdout": "972ff8241a3e7ccc2788757cf3b2469392f540c3944c8e83bc21a259602621dd",
+    "AppStderr": "158c00787320d6c15ae800c9d7bb4d5f76593eaf89b3918898abab7b7728c1e8"
+  },
+  "dllHashes": {
+    "libcrypto-3-x64.dll": "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7",
+    "libssl-3-x64.dll": "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+    "zlib1.dll": "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5"
+  },
+  "oldBinarySha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4",
+  "candidateBinarySha256": "5ebfb99399df6006b2dcae81a64525421ca0f4490ac19dcd3a9ed8f51676d5e9",
+  "rollbackRetained": true,
+  "productionModified": false,
+  "externalConsumerAcknowledgementsReceived": false
+}

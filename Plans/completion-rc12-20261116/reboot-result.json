@@ -1,0 +1,118 @@
+{
+  "schema": "mirrors.rc12.reboot-result/v1",
+  "status": "reboot-auto-start-and-mtls-verified",
+  "beforeBootUtc": "2026-11-11T09:56:58.5000000Z",
+  "afterBootUtc": "2026-11-16T04:16:34.5000000Z",
+  "after": {
+    "status": "verified-running-auto-deployment",
+    "observedAtUtc": "2026-11-16T04:17:23.5662087Z",
+    "lastBootUpTimeUtc": "2026-11-16T04:16:34.5000000Z",
+    "service": {
+      "pid": 5632,
+      "name": "ModelMirrors",
+      "startMode": "Auto",
+      "state": "Running"
+    },
+    "serverPid": 6604,
+    "serverCreatedAtUtc": "2026-11-16T04:16:47.2198600Z",
+    "binary": {
+      "sha256": "5ebfb99399df6006b2dcae81a64525421ca0f4490ac19dcd3a9ed8f51676d5e9",
+      "path": "D:\\ModelMirrors\\bin\\ModelMirrors.exe"
+    },
+    "listeners": [
+      {
+        "LocalAddress": "0.0.0.0",
+        "LocalPort": 8999,
+        "OwningProcess": 6604
+      }
+    ],
+    "configurationPreserved": true,
+    "configurationHashes": {
+      "Application": "1c2d6d9946cdb624c40658a7bea029374d82134a8ecc6cee8f013e8622cc75f7",
+      "AppDirectory": "16f34875d1808730796b99db55f0c35ff025f2062b85012d8de1af22e1e1dfc5",
+      "AppParameters": "3ef7175c66534c043f18bb55b056932fa632824beadc8833f28ce0aae1540f4a",
+      "AppEnvironmentExtra": "409bfaaeb34bd24213f5ac0b76c0fd9dbb9e91c5b90ab2db8e517368bbd14c4d",
+      "AppStdout": "972ff8241a3e7ccc2788757cf3b2469392f540c3944c8e83bc21a259602621dd",
+      "AppStderr": "158c00787320d6c15ae800c9d7bb4d5f76593eaf89b3918898abab7b7728c1e8"
+    },
+    "privateKeysAndAclsPreserved": true,
+    "dllHashes": {
+      "libcrypto-3-x64.dll": "7909ab97fd1226890af8448a43cb9acd0e9758bfd595298c46c125211c3e61c7",
+      "libssl-3-x64.dll": "85377317f9fbc5a0b8264ba25c87670dbce2fe0988d186eb98d107460d8b416c",
+      "zlib1.dll": "93e9243a44c29200eeacaf9658efe2558581770e4b11ca4b500e18e424a6e3b5"
+    },
+    "certificates": {
+      "ca": {
+        "subject": "CN=ModelMirrors CA",
+        "issuer": "CN=ModelMirrors CA",
+        "sha256": "6870798d7629894a3279e6580f8449d8431efa5dbc4d6271e567037ef810c106",
+        "notBeforeUtc": "2026-11-16T03:49:59.0000000Z",
+        "notAfterUtc": "2027-02-14T03:49:59.0000000Z",
+        "validNow": true
+      },
+      "server": {
+        "subject": "CN=192.168.150.219",
+        "issuer": "CN=ModelMirrors CA",
+        "sha256": "07ad867b6f58eeac9969d3b8279dac057e6f1c6e27600eecc5d44ff2a006e976",
+        "notBeforeUtc": "2026-11-16T03:49:59.0000000Z",
+        "notAfterUtc": "2027-02-14T03:49:59.0000000Z",
+        "validNow": true
+      },
+      "client": {
+        "subject": "CN=modelmirrors-client",
+        "issuer": "CN=ModelMirrors CA",
+        "sha256": "4a73c8469d40903abb23fb1faf9ba32a37a511f10612d9281519ba1a20fdb0c5",
+        "notBeforeUtc": "2026-11-16T03:49:59.0000000Z",
+        "notAfterUtc": "2027-02-14T03:49:59.0000000Z",
+        "validNow": true
+      }
+    },
+    "runtime": {
+      "javaExecutableSha256": "58df5c13e5d6e68f242ad9b724479122828523008ef0907d3f2a02f54afaff23",
+      "apalacheJarSha256": "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8",
+      "adapterSha256": "647d5a4924571f7fc605bf08f20dbb8f5abf956b993d151e737e5928aaa2cc94"
+    },
+    "sourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2"
+  },
+  "health": {
+    "schema": "mirrors.rc12.production-health/v1",
+    "status": "passed",
+    "scope": "post-reboot",
+    "endpoint": {
+      "host": "192.168.150.219",
+      "port": 8999
+    },
+    "clientSourceCommit": "6882d5b8b4787977e847e5a77467b30bfdac19a2",
+    "clientSha256": "5ebfb99399df6006b2dcae81a64525421ca0f4490ac19dcd3a9ed8f51676d5e9",
+    "serverCertificateSha256": "07ad867b6f58eeac9969d3b8279dac057e6f1c6e27600eecc5d44ff2a006e976",
+    "cases": [
+      {
+        "case": "sync-valid",
+        "exitCode": 0,
+        "logSha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+      },
+      {
+        "case": "sync-invalid",
+        "exitCode": 1,
+        "logSha256": "e36bebe09c6a5dce66fa25507c89f74cfef201ad475a7f017f3a99fbbf86bc37"
+      },
+      {
+        "case": "async-valid",
+        "exitCode": 0,
+        "logSha256": "de545cc7e7ff8eaacefae8fcb4a954555a1224f24fe7ce8ff62b9874c54f3fe2"
+      },
+      {
+        "case": "async-invalid",
+        "exitCode": 1,
+        "logSha256": "8281f6d24f00f379474347235879b2b5916713b9f7581933666f934ea6b7afdb"
+      }
+    ],
+    "wrongPinRejected": true,
+    "credentialsExported": false
+  },
+  "nativeHealthJobCleanupActive": 0,
+  "pollAttempts": 9,
+  "configurationDllRuntimeAndPrivateKeysPreserved": true,
+  "renewedCertificatesPreserved": true,
+  "otherHostOrPlatformAcceptanceInferred": false
+}

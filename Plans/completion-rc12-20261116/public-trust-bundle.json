@@ -1,0 +1,71 @@
+{
+  "schema": "mirrors.rc12.public-trust-bundle/v1",
+  "status": "public-only-trust-bundle-prepared",
+  "archive": {
+    "name": "mirrors-rc12-public-trust.zip",
+    "bytes": 4258,
+    "sha256": "6756550eeea50211f9cdee9ad5069b5e875f2982bcfb028f3e45bd1a00ce8733"
+  },
+  "members": [
+    {
+      "name": "README.txt",
+      "bytes": 846,
+      "sha256": "66e79d09a48bc58a28e2d2b5827d72309820995ccf1a64e97edac847c505c8c5"
+    },
+    {
+      "name": "TRUST.json",
+      "bytes": 1576,
+      "sha256": "2bf2c78cb742ed6280506375e0b0b1b371a2fb2424e1566e642a49c47941d63a"
+    },
+    {
+      "name": "ca.crt",
+      "bytes": 1166,
+      "sha256": "3bf892e9b035f818e416bed8381507231fa03958e27bf61ea3b3108f5a84d9f5"
+    },
+    {
+      "name": "client.crt",
+      "bytes": 1196,
+      "sha256": "cc86a44179b05f8a76fe77a4f156878a7e9da706a570d5461f3e5139443d812f"
+    },
+    {
+      "name": "server.crt",
+      "bytes": 1216,
+      "sha256": "0d7400a19b02010cfb52b735f82942fa3bfb89c39d5f0103bdcd73e4faf3e554"
+    }
+  ],
+  "privateKeysIncluded": false,
+  "certificates": {
+    "ca": {
+      "subject": "CN=ModelMirrors CA",
+      "issuer": "CN=ModelMirrors CA",
+      "sha256": "6870798d7629894a3279e6580f8449d8431efa5dbc4d6271e567037ef810c106",
+      "notBeforeUtc": "2026-11-16T03:49:59.0000000Z",
+      "notAfterUtc": "2027-02-14T03:49:59.0000000Z",
+      "validNow": true
+    },
+    "server": {
+      "subject": "CN=192.168.150.219",
+      "issuer": "CN=ModelMirrors CA",
+      "sha256": "07ad867b6f58eeac9969d3b8279dac057e6f1c6e27600eecc5d44ff2a006e976",
+      "notBeforeUtc": "2026-11-16T03:49:59.0000000Z",
+      "notAfterUtc": "2027-02-14T03:49:59.0000000Z",
+      "validNow": true
+    },
+    "client": {
+      "subject": "CN=modelmirrors-client",
+      "issuer": "CN=ModelMirrors CA",
+      "sha256": "4a73c8469d40903abb23fb1faf9ba32a37a511f10612d9281519ba1a20fdb0c5",
+      "notBeforeUtc": "2026-11-16T03:49:59.0000000Z",
+      "notAfterUtc": "2027-02-14T03:49:59.0000000Z",
+      "validNow": true
+    }
+  },
+  "serverCertificateSha256": "07ad867b6f58eeac9969d3b8279dac057e6f1c6e27600eecc5d44ff2a006e976",
+  "externalDistributionOrAcknowledgementsClaimed": false,
+  "localArchive": {
+    "path": ".golden-build/completion-rc12-20261116/operator-trust/mirrors-rc12-public-trust.zip",
+    "bytes": 4258,
+    "sha256": "6756550eeea50211f9cdee9ad5069b5e875f2982bcfb028f3e45bd1a00ce8733"
+  },
+  "deliveryScope": "available to the requesting operator; no message to another consumer was sent"
+}
