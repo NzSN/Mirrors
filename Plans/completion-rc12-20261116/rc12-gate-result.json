@@ -1,0 +1,78 @@
+{
+  "status": "failed",
+  "startedAt": "2026-11-16T02:10:41.415617+00:00",
+  "finishedAt": "2026-11-16T02:12:23.907853+00:00",
+  "seconds": 102.49223444401287,
+  "exitCode": 1,
+  "before": {
+    "mirrors": {
+      "componentId": "mirrors",
+      "repository": "https://github.com/NzSN/Mirrors.git",
+      "revision": "eadc64d670243f78288e76f9f2bccdfc5b05c309",
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "a4364b9d12a367c7a9e019471810099f1c72953a231fe175d13b5f643b5f750c",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "Docs/versioning.md",
+          "Shell/Version.lean",
+          "tools/evidence/commands.json"
+        ],
+        "excludedPaths": []
+      }
+    },
+    "mirrorecma": {
+      "componentId": "mirrorecma",
+      "repository": "https://github.com/NzSN/MirrorECMA.git",
+      "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+      "dirty": false
+    },
+    "mirrorgate": {
+      "componentId": "mirrorgate",
+      "repository": "https://github.com/NzSN/MirrorGate.git",
+      "revision": "cd4914b2fa68aaa4f22955352b81cbb890ffd6f0",
+      "dirty": false
+    }
+  },
+  "after": {
+    "mirrors": {
+      "componentId": "mirrors",
+      "repository": "https://github.com/NzSN/Mirrors.git",
+      "revision": "eadc64d670243f78288e76f9f2bccdfc5b05c309",
+      "dirty": true,
+      "dirtyContent": {
+        "algorithm": "sha256",
+        "digest": "a4364b9d12a367c7a9e019471810099f1c72953a231fe175d13b5f643b5f750c",
+        "method": "git-diff-and-untracked-manifest-v1",
+        "includedPaths": [
+          "Docs/versioning.md",
+          "Shell/Version.lean",
+          "tools/evidence/commands.json"
+        ],
+        "excludedPaths": []
+      }
+    },
+    "mirrorecma": {
+      "componentId": "mirrorecma",
+      "repository": "https://github.com/NzSN/MirrorECMA.git",
+      "revision": "9192171fc5f8d8457f8d13ffaafa117222914ec2",
+      "dirty": false
+    },
+    "mirrorgate": {
+      "componentId": "mirrorgate",
+      "repository": "https://github.com/NzSN/MirrorGate.git",
+      "revision": "cd4914b2fa68aaa4f22955352b81cbb890ffd6f0",
+      "dirty": false
+    }
+  },
+  "sourceAndCompanionsStable": true,
+  "log": {
+    "path": ".golden-build/completion-rc12-20261116/rc12-stable-local-no-model-final.log",
+    "bytes": 97573,
+    "sha256": "2db3dcedc2ab580d30cc3ada136ff5a06aa33ed52ddd16c5d7fa1581e092cb88"
+  },
+  "nativeCppPrefix": "/home/lsz/Codebase/Mirrors/.golden-build/qualification-rc7-20261105/cpp-prefix-windows-fix",
+  "preservedUnrelatedFiles": 240,
+  "frameworkOrReleaseAcceptance": false
+}

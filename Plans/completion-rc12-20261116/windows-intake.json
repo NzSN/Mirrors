@@ -1,0 +1,115 @@
+{
+  "argv": [
+    "ssh",
+    "-F",
+    "/home/lsz/.ssh/config",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "win10",
+    "powershell -NoProfile -NonInteractive -Command '$code = [Console]::In.ReadToEnd(); Invoke-Expression $code'"
+  ],
+  "exitCode": 0,
+  "stdout": {
+    "path": ".golden-build/completion-rc12-20261116/windows-intake.stdout",
+    "bytes": 4120,
+    "sha256": "09bdcb1bb629cfaa741edd64b8e341a952877c930ff457ed4fdd5fc004a143a9"
+  },
+  "stderr": {
+    "path": ".golden-build/completion-rc12-20261116/windows-intake.stderr",
+    "bytes": 222,
+    "sha256": "048e2ba89ae430962e02f5341cf60c694fb7e131cb417790075a56b32ca09992"
+  },
+  "observation": {
+    "schema": "mirrors.rc12.windows-intake/v1",
+    "observedAt": "2026-11-16T02:07:40.5629895Z",
+    "host": "DESKTOP-6DKB5JD",
+    "os": "Microsoft \u9002\u7528\u4e8e\u865a\u62df\u684c\u9762\u7684 Windows 10 \u4f01\u4e1a\u7248",
+    "osVersion": "10.0.19045",
+    "lastBootUtc": "2026-11-11T09:56:58.5000000Z",
+    "service": {
+      "pid": 3580,
+      "name": "ModelMirrors",
+      "startMode": "Auto",
+      "state": "Running"
+    },
+    "files": [
+      {
+        "path": "D:\\ModelMirrors\\bin\\ModelMirrors.exe",
+        "sha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4",
+        "bytes": 111195648,
+        "exists": true
+      },
+      {
+        "path": "D:\\Programs\\apalache\\lib\\apalache.jar",
+        "sha256": "079b6c2320252469dcf79afec6886b8255d3dd1b34a9484433c88986752efaa8",
+        "bytes": 196982672,
+        "exists": true
+      },
+      {
+        "path": "D:\\Programs\\jdk-25.0.4+7\\bin\\java.exe",
+        "sha256": "58df5c13e5d6e68f242ad9b724479122828523008ef0907d3f2a02f54afaff23",
+        "bytes": 49976,
+        "exists": true
+      },
+      {
+        "path": "D:\\ModelMirrors\\staging\\windows-fixes-20261106\\python312-completion\\python3.exe",
+        "sha256": "4d6f5f81a4bca11191c4c7c6b43632694d0a4ce74e068619d8fdc161d469859a",
+        "bytes": 104952,
+        "exists": true
+      },
+      {
+        "path": "D:\\ModelMirrors\\staging\\qualification-rc7-20261105\\runtime-inputs\\native-test-job-detached.exe",
+        "sha256": "412097597d167606de3bf40c08138b1e6d0e2bd38d2558aebe7d071aa9ab2444",
+        "bytes": 2692179,
+        "exists": true
+      },
+      {
+        "path": "D:\\ModelMirrors\\staging\\qualification-rc7-20261105\\runtime-inputs\\apalache-qualify-job.exe",
+        "sha256": "00569bf55965d7d30ef32ed9143cedee68979fe26914cd47c6d6c718074ba585",
+        "bytes": 2583547,
+        "exists": true
+      },
+      {
+        "path": "D:\\ModelMirrors\\staging\\completion-rc11-20261106\\source\\.lake\\build\\bin\\mirror.exe",
+        "sha256": "5bfb5248a7ab74bfbe6c86361146daa20b0e5e864699c820269279747ef81fd4",
+        "bytes": 111195648,
+        "exists": true
+      }
+    ],
+    "serverCertificate": {
+      "sha256": "b2fc7265145cf2b89a1a248b0932885df8d300121b47f7854317ece4bac9ce67",
+      "notAfterUtc": "2026-11-13T12:50:06.0000000Z",
+      "validNow": false,
+      "notBeforeUtc": "2026-08-15T12:50:06.0000000Z"
+    },
+    "drives": [
+      {
+        "DeviceID": "C:",
+        "Size": 255609606144,
+        "FreeSpace": 4690141184
+      },
+      {
+        "DeviceID": "D:",
+        "Size": 4000768323584,
+        "FreeSpace": 64061390848
+      },
+      {
+        "DeviceID": "E:",
+        "Size": 512208400384,
+        "FreeSpace": 159773396992
+      }
+    ],
+    "listeners": [
+      {
+        "LocalAddress": "0.0.0.0",
+        "LocalPort": 8999,
+        "OwningProcess": 6772
+      }
+    ],
+    "productionMutationPerformed": false
+  }
+}

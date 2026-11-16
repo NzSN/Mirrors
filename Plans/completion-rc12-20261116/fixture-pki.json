@@ -1,0 +1,23 @@
+{
+  "schema": "mirrors.rc12.fixture-pki/v1",
+  "createdAt": "2026-11-16T02:14:28.0757106Z",
+  "server": {
+    "sha256": "509079ba546dced9be83be0658322b2adb1e656a8305af6f7aeb8abb1dc9ccc3",
+    "notAfterUtc": "2026-11-30T02:14:28.0000000Z",
+    "notBeforeUtc": "2026-11-16T02:14:28.0000000Z"
+  },
+  "linuxClient": {
+    "sha256": "740bb96a6f52bd978e519f5e4dd32769ee8669d90a7b66669906d690c0d4bb5a",
+    "notAfterUtc": "2026-11-30T02:14:28.0000000Z",
+    "notBeforeUtc": "2026-11-16T02:14:28.0000000Z"
+  },
+  "windowsClient": {
+    "sha256": "7b7478d2476daaa6e7209650a3bb2edf1cb156aec2b2dc3c32132fbc5bed5ae6",
+    "notAfterUtc": "2026-11-30T02:14:28.0000000Z",
+    "notBeforeUtc": "2026-11-16T02:14:28.0000000Z"
+  },
+  "privateKeysExported": false,
+  "productionCredentialsModified": false,
+  "localRoot": "/home/lsz/Codebase/Mirrors/.golden-build/completion-rc12-20261116/private-pki-attempt2",
+  "remoteRoot": "D:\\ModelMirrors\\staging\\completion-rc12-20261116\\private-pki-attempt2"
+}

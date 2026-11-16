@@ -2,9 +2,10 @@
 
 The current cross-repository policy is
 [ecosystem versioning](ecosystem-versioning.md). Current source prepares Mirrors
-`v0.2.0-rc.11` for the [completion iteration](../Plans/completion-rc10-20261106/README.md),
-including native Windows process/storage tooling and its qualification follow-up.
-The earlier rc.8 source and qualification keep their recorded identity. Source
+`v0.2.0-rc.12` for the [completion iteration](../Plans/completion-rc12-20261116/README.md),
+including strict DPM reply identity, collector interruption reporting and
+installer recovery fixes. The released rc.11 and its qualification retain their
+recorded identity. Source
 preparation alone creates no tag, package, publication or deployment result.
 Existing release refs remain immutable. Catalog refresh derives the Mirrors
 product declaration from `Shell/Version.lean` before calculating catalog and
@@ -83,12 +84,12 @@ and is compiled into the executable:
 
 ```console
 $ .lake/build/bin/mirror --version
-v0.2.0-rc.11
+v0.2.0-rc.12
 $ ModelMirrors --version
-v0.2.0-rc.11
+v0.2.0-rc.12
 ```
 
-These examples describe binaries rebuilt from the prepared rc.8 source; they
+These examples describe binaries rebuilt from the prepared rc.12 source; they
 are not observations of an existing installation. The second command requires
 installation under that name on `PATH`.
 See the [CLI reference](interface-reference.md) for exit codes and argument
@@ -218,5 +219,5 @@ a release. Before the next release, update the product version and its CLI
 expectation in `tools/StdioSmoke.lean`, validate the build and companion
 compatibility, commit the changes, and create a new annotated tag.
 
-The rc.11 continuation and exact acceptance state are recorded in
-[the current execution record](../Plans/completion-rc11-20261106/README.md).
+The rc.12 continuation and exact acceptance state are recorded in
+[the current execution record](../Plans/completion-rc12-20261116/README.md).
