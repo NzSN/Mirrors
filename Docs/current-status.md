@@ -1,5 +1,17 @@
 # Current framework status and navigation
 
+## November 17 source-review fixes pass local validation
+
+The three current review findings are fixed in the working tree based on
+`cc35fd44…`: numeric exponent admission prevents the daemon panic, both explorer
+loops use strict JSON decoding, and scoped RPC cleanup prevents the explorer
+socket leak. [Before/after evidence](../Plans/source-review-fixes-20261117/README.md)
+records failing regressions, passing focused suites and the complete local
+non-model gate. The integral decoding theorem retains its original premises.
+This is local source acceptance only; native Windows, live-model and new
+candidate/package/installed/M5/Q/release/deployment qualification remain separate.
+The published rc.12 and workload records below retain their original identities.
+
 The subsequent S8 commit/push request authorizes only replay recipes and aggregate
 status documentation under the [publication scope](../Plans/s8-dumpledger-workload-20261116/publication-scope.json).
 Operator-only admission/approval inputs and private workload artifacts remain

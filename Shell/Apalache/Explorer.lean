@@ -82,6 +82,18 @@ structure RpcClient where
 def newRpcClient (port : Nat) : IO RpcClient := do
   return ⟨port, ← IO.mkRef 1, ← IO.mkRef none⟩
 
+/-- Release the client's current connection, including after an RPC failure.
+Clearing the reference first makes repeated cleanup harmless. -/
+def closeRpcClient (client : RpcClient) : IO Unit := do
+  if let some conn ← client.conn.modifyGet (fun conn => (conn, none)) then
+    Shell.Net.Http.closeConn conn
+
+/-- RPC clients own a persistent socket for exactly this lexical scope. -/
+def withRpcClient {α : Type} (port : Nat) (act : RpcClient → IO α) : IO α := do
+  let client ← newRpcClient port
+  try act client
+  finally closeRpcClient client
+
 private def rpcOnce (client : RpcClient) (body : String)
     (dbg? : Option String) : IO (RpcResult String) := do
   -- make sure the persistent connection is open
@@ -97,8 +109,7 @@ private def rpcOnce (client : RpcClient) (body : String)
   match ← Shell.Net.Http.postKa c client.port "/rpc" body with
   | .error e =>
       -- stale connection: drop it and fail (caller retries once)
-      Shell.Net.Http.closeConn c
-      client.conn.set none
+      closeRpcClient client
       if dbg?.isSome then IO.eprintln s!"rpc: transport error ({e})"
       return .error (.httpError e)
   | .ok resp =>
@@ -476,18 +487,22 @@ def startApalacheServer (mPort : Option Nat) : IO ApalacheServer := do
     while !line.isEmpty do
       IO.eprint line
       line ← outH.getLine
-  let client ← newRpcClient port
-  let mut ready := false
-  let mut tries := 0
-  while !ready && tries < 60 do
-    match ← health client with
-    | .ok _ => ready := true
-    | _ => IO.sleep 500; tries := tries + 1
-  if !ready then
+  try
+    let ready ← withRpcClient port fun client => do
+      let mut ready := false
+      let mut tries := 0
+      while !ready && tries < 60 do
+        match ← health client with
+        | .ok _ => ready := true
+        | _ => IO.sleep 500; tries := tries + 1
+      return ready
+    if !ready then throw (IO.userError "apalache explorer server did not become healthy")
+    return ⟨port, child, some dir⟩
+  catch error =>
     killIgnoring child
+    let _ ← child.wait
     Shell.Apalache.SpecSource.removeSessionDir dir
-    throw (IO.userError "apalache explorer server did not become healthy")
-  return ⟨port, child, some dir⟩
+    throw error
 
 /-- Terminate + reap the server (total); removes its run dir (t29). -/
 def stopApalacheServer (server : ApalacheServer) : IO Unit := do

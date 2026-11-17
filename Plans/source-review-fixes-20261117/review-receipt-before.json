@@ -1,0 +1,26 @@
+{
+  "head": "cc35fd44d1879af80bc9b415f7327a30c71dbdbd",
+  "worktreeStatus": "",
+  "sourceAndBinarySha256": {
+    "Codec/Json.lean": "f79b467ba06e96f6dd4fccebef1e9c29307a7cffe0686ccf3cdabb9ddbb1b2e3",
+    "Codec/StrictJson.lean": "c08ebff2e0825846b2e59f16a56fb19a46f596b57d1406a131335c31ed393a81",
+    "Shell/Apalache/Explorer.lean": "4cd069c27ae21d6598607128d3764741929e4ea23753bedfaf8581249f1de3d1",
+    "Shell/Apalache/Runner.lean": "193039581a1d3e9680dd93828970947bfaf770a24bdec0b61a9c44b78ffe0594",
+    "Shell/Net/Http.lean": "88861b58b56dcf755ca22d0434ffc466a8802bb1a875c3cf9df7144633b490a0",
+    ".lake/build/bin/mirror": "c6d4c0c018eb32a7c1f52618ff6592acba9aab24202787aadef6bfb4d1e8ee78",
+    ".lake/build/bin/explorer_spec": "b110fa6bfb3b538eeba984bdaf3a5f6457c4c8b7371d0005d2642b113500da7a"
+  },
+  "modelCheckerInvoked": false,
+  "validation": [
+    "lake build mirror explorer_spec: pass",
+    "explorer_spec with APALACHE_MC unset: pass; live integration skipped"
+  ],
+  "evidence": {
+    "Probe.lean": "2e8d5159bc30faf57e0473fb9b279fbf4cf3f75fc95c92b685efcc06034b2533",
+    "daemon-results.json": "af475839b6ec0081d7fd8a736bbb05c31af548d77570ece6274599bfbaa1e509",
+    "explorer-results.txt": "c5d5eb9c9f1b6e63a5b21826652143b14b63e4a7a4065fa60dafee9216368ea3",
+    "numeric-results.json": "8d2986f460de4fcfe0b5a6a985687f1309391fb20cb18382b54852631e47c1b7",
+    "explorer-suite.log": "f42f6c0ad1259608ff3064841d20d8856718df507ed878232eb14a32ddee8958",
+    "run_probes.py": "00a487f3deff84c363414ae4f72e1f3b826e40b0ae7f4818c9c9a6cdeb16969b"
+  }
+}

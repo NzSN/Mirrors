@@ -5,6 +5,97 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-17 — all three current source-review findings fixed; local gates pass
+
+The user requested fixes for the three findings recorded below. All three are
+now corrected in the working tree based on
+`cc35fd44d1879af80bc9b415f7327a30c71dbdbd`, with
+[dated before/after evidence](Plans/source-review-fixes-20261117/README.md) and
+[changed-source/binary hashes](Plans/source-review-fixes-20261117/result.json).
+The earlier finding checkpoint remains an unchanged record of the reviewed base.
+
+Strict JSON now bounds aggregate explicit exponent magnitude before parsing;
+value decoding avoids unsafe powers while preserving the existing integral
+decoding theorem's statement and premises. Both explorer loops use strict,
+bounded-error decoding. Startup health polling and both flows close their RPC
+connections on completion or failure; HTTP close is idempotent. The new
+regressions first reproduced the numeric daemon panic, six explorer assertion
+failures and a 14 → 38 descriptor increase over 12 sessions. After repair,
+those lifecycles hold at 12 → 12 descriptors, malformed reports cannot earn
+acceptance or mutate the assumed state, and extreme numbers leave the shared
+daemon alive. The lifecycle gate is wired into both maintained test entry points.
+
+Focused builds/suites and the complete maintained local non-model gate pass;
+the latter completed a 744-job build and exited 0 with
+`ALL LOCAL NON-MODEL GATES GREEN`. The first focused framing attempt's TLS
+`SSLV3_ALERT_BAD_CERTIFICATE` failure is retained separately; its repeat and the
+full gate pass without a TLS implementation change. Native Windows, live-model
+and optional prepared MirrorCPP tiers were not exercised. These three fixes
+have local source acceptance; fresh candidate/package/installed, M5/Q, release
+and deployment qualification remain separate and receive no transferred credit.
+
+## 2026-11-17 — source-review findings are the current main work
+
+The user designated the following three source-review findings as the current
+main work. All three remain open at reviewed source
+`cc35fd44d1879af80bc9b415f7327a30c71dbdbd`; the review changed no source files.
+Address them in the priority order below, with failing regressions before fixes.
+
+1. **P1 — unbounded numeric exponents terminate the server.**
+   [StrictJson](Codec/StrictJson.lean), lines 178–184, admits unbounded exponent
+   digits before calling `Lean.Json.parse`;
+   [the value decoder](Codec/Json.lean), lines 648–658, computes
+   `10 ^ exponent` for bare numeric values. The following 59-byte JSONL request
+   (including its terminating LF) kills the rebuilt TCP daemon with exit 1 and
+   `INTERNAL PANIC: Nat.pow exponent is too big`, without a protocol reply:
+   `{"proto_step":"report_state","state":{"x":1e-10000000000}}`.
+   An ordinary numeric control returns `protocol_error` without killing the
+   daemon. Positive `1e10000000000` also terminates the stdio process. Bound
+   numeric expansion before invoking Lean's parser and avoid unbounded powers
+   in value decoding; cover both exponent signs and daemon survival.
+
+2. **P2 — explorer messages bypass strict JSON validation.**
+   [The automatic and interactive explorer loops](Shell/Apalache/Runner.lean),
+   lines 167 and 242, call `Lean.Json.parse` directly, collapsing duplicate
+   object keys before decoding. Against the scripted RPC fixture, a report
+   containing `"state":{"x":999,"x":1}` receives `step_ok` and
+   `all_steps_done` for expected `x = 1`, although `Codec.StrictJson` rejects
+   the same raw report. Route both loops through strict decoding and the
+   established bounded client-error handling. Regressions must establish
+   rejection before acceptance or backend mutation for malformed messages.
+
+3. **P2 — explorer clients leak socket descriptors.**
+   [The startup health client](Shell/Apalache/Explorer.lean), lines 479–490,
+   and [the production flow clients](Shell/Apalache/Runner.lean), lines
+   220–237, lack guaranteed connection cleanup. HTTP connections own raw
+   descriptors requiring explicit `Shell.Net.Http.closeConn`; stopping the
+   backend process does not close the mirror's descriptors. A local probe
+   creating and dropping ten successful health clients increased open
+   descriptors from 12 to 22. Add scoped connection cleanup on success and
+   failure, including startup polling, and test repeated complete lifecycles
+   for stable descriptor counts.
+
+Validation at the reviewed identity: `lake build mirror explorer_spec` passed
+(522 jobs), and `explorer_spec` with `APALACHE_MC` unset passed its non-model
+tiers while explicitly skipping live integration. The initial build attempt
+failed on disk exhaustion; the complete rerun passed. The daemon and explorer
+probes used disposable loopback fixtures, with no Apalache/TLC invocation.
+The full local non-model gate, live-model verification and native Windows
+validation were not run. Existing green explorer tests do not cover these
+three failures.
+
+The temporary review artifacts are under
+`/tmp/mirrors-source-review-20261117/`: `review-receipt.json` binds the source
+and binary hashes; `daemon-results.json`, `numeric-results.json` and
+`explorer-results.txt` record the probes; `Probe.lean`, `run_probes.py` and
+`explorer-suite.log` supply the harness and focused-suite result. This is
+temporary local evidence, not an archived qualification bundle. Preserve or
+regenerate it when adding repository regressions, then fix and run the affected
+suites and maintained local non-model gate. Any later candidate/package/live
+qualification must bind the corrected source identity. Historical rc.12,
+workload and lifecycle records retain their original scope; this checkpoint
+grants no new qualification or compatibility-cycle credit.
+
 ## 2026-11-17 — completed and superseded plan navigation cleaned up
 
 The user requested cleanup of already completed plan documents. Eight completed

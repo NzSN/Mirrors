@@ -37,6 +37,14 @@ or indicate whether the build used a modified working tree.
 Protocol framing: **one JSON object per line** (valid UTF-8,
 `\n`-terminated), with at most **65,535 payload bytes** before the newline.
 The bound is enforced before JSON parsing and after final response encoding.
+Client messages, including both explorer flows, reject duplicate object keys,
+invalid Unicode escapes and nesting beyond 128 containers. Before numeric
+parsing, strict JSON admission caps the sum of absolute explicit decimal
+exponents at 65,535 per document; both exponent signs consume this budget.
+Larger disk-artifact byte budgets do not increase the exponent budget.
+Malformed client input receives the bounded `invalid client message` protocol
+error. Integral decimal values retain their exact value; `#bigint` strings
+remain subject to the existing byte limits.
 mTLS policy: TLS 1.3 only, client certificate required, CA chain + SAN
 hostname/IP verification, optional SHA-256 fingerprint pin
 (`--pin`, case-insensitive), client key permissions must satisfy
@@ -338,6 +346,9 @@ and RPC failures emit `protocol_error`; the affected state receives no
 The internal RPC client may retry read-only `health`/`query` operations once.
 It reports ambiguous mutation failures without automatically repeating the
 operation, since a lost response does not imply the mutation was unapplied.
+Startup health polling and both explorer flows close their persistent RPC
+connections on normal completion and failure. Backend shutdown and client
+socket cleanup are both required parts of the explorer lifecycle.
 
 ## 4. Asynchronous interfaces (server modes only)
 

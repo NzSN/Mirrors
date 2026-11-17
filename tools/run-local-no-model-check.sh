@@ -32,6 +32,7 @@ run "validate source closure" python3 tools/check-validate-closure.py
 run "trace capture spec" .lake/build/bin/trace_capture_spec
 run "trace capture CLI" python3 tools/check-trace-capture.py
 run "client JSONL framing" python3 tools/check-client-framing.py
+run "explorer descriptor lifecycle" python3 tools/check-explorer-lifecycle.py
 run "validate async protocol codec" python3 tools/check-validate-async.py
 
 # Deliberately excluded model checks:

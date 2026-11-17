@@ -134,6 +134,7 @@ structure Conn where
   fd : UInt64
   buf : IO.Ref ByteArray
   rbuf : ByteArray
+  closed : IO.Ref Bool
 
 /-- Resolve an IPv4 host name to a dotted address (getaddrinfo via the
 shim); dotted literals and @localhost@ pass through unchanged. -/
@@ -160,7 +161,7 @@ def openConnTo (host : String) (port : Nat) (timeoutMs : Nat) :
     if conn == Ffi.fdError then
       Ffi.closeFd fd
       return .error s!"connect to {host}:{port} failed"
-    return .ok ⟨fd, ← IO.mkRef ByteArray.empty, ← Ffi.freshBuffer 65536⟩
+    return .ok ⟨fd, ← IO.mkRef ByteArray.empty, ← Ffi.freshBuffer 65536, ← IO.mkRef false⟩
 
 def openConn (port : Nat) (timeoutMs : Nat) : IO (Except String Conn) := do
   let fd ← Ffi.tcpSocket
@@ -170,9 +171,12 @@ def openConn (port : Nat) (timeoutMs : Nat) : IO (Except String Conn) := do
   if conn == Ffi.fdError then
     Ffi.closeFd fd
     return .error s!"connect to localhost:{port} failed"
-  return .ok ⟨fd, ← IO.mkRef ByteArray.empty, ← Ffi.freshBuffer 65536⟩
+  return .ok ⟨fd, ← IO.mkRef ByteArray.empty, ← Ffi.freshBuffer 65536, ← IO.mkRef false⟩
 
-def closeConn (c : Conn) : IO Unit := Ffi.closeFd c.fd
+/-- Idempotent even when EOF framing has already closed the socket. -/
+def closeConn (c : Conn) : IO Unit := do
+  unless ← c.closed.modifyGet (fun closed => (closed, true)) do
+    Ffi.closeFd c.fd
 
 private def fill (c : Conn) : IO Bool := do
   let n ← Ffi.recvSome c.fd c.rbuf 65536
@@ -239,6 +243,7 @@ without @Connection: close@, read exactly one response. The leftover
 buffer stays for the next exchange. -/
 def postKa (c : Conn) (port : Nat) (path : String) (body : String) :
     IO (Except String HttpResponse) := do
+  if ← c.closed.get then return .error "connection is closed"
   let req := "POST " ++ path ++ " HTTP/1.1\r\n"
     ++ "Host: localhost:" ++ toString port ++ "\r\n"
     ++ "Content-Type: application/json\r\n"
@@ -284,7 +289,7 @@ def postKa (c : Conn) (port : Nat) (path : String) (body : String) :
           live ← fill c
         let b4 ← c.buf.get
         c.buf.set (ByteArray.mk (#[] : Array UInt8))
-        Ffi.closeFd c.fd
+        closeConn c
         return .ok ⟨status, ascii b4⟩
 
 /-! ## One-shot mode (spike tests) -/
@@ -319,10 +324,10 @@ def requestTo (method : String) (host : String) (port : Nat) (path : String)
         ++ body
       let sent ← Ffi.sendAll c.fd req.toUTF8 (req.toUTF8.size.toUInt64)
       if sent == Ffi.fdError then
-        Ffi.closeFd c.fd
+        closeConn c
         return .error "send failed"
       let raw ← recvAll c.fd
-      Ffi.closeFd c.fd
+      closeConn c
       match raw with
       | .error e => return .error e
       | .ok bs =>

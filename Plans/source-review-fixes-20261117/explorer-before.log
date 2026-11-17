@@ -1,0 +1,18 @@
+explorer integration: skipped (APALACHE_MC not set)
+EXPLORER SPEC: 6 failures
+  FAIL explorer: malformed report receives only bounded error: {"proto_step":"spec_validated","result":"valid"}
+{"action":"Init","proto_step":"initial_state","state":{"action_taken":"Init","x":{"#bigint":"1"}}}
+{"proto_step":"step_ok"}
+{"proto_step":"all_steps_done"}
+  FAIL explorer: malformed report does not assume state or check invariants
+  FAIL explorer: malformed report receives only bounded error: {"proto_step":"spec_validated","result":"valid"}
+{"action":"Init","proto_step":"initial_state","state":{"action_taken":"Init","x":{"#bigint":"1"}}}
+{"proto_step":"step_ok"}
+{"proto_step":"all_steps_done"}
+  FAIL explorer: malformed report does not assume state or check invariants
+  FAIL explorer: malformed report receives only bounded error: {"proto_step":"spec_validated","result":"valid"}
+{"action":"Init","proto_step":"initial_state","state":{"action_taken":"Init","x":{"#bigint":"1"}}}
+{"error":"unknown client proto_step","proto_step":"protocol_error"}
+  FAIL explorer: malformed report receives only bounded error: {"proto_step":"spec_validated","result":"valid"}
+{"action":"Init","proto_step":"initial_state","state":{"action_taken":"Init","x":{"#bigint":"1"}}}
+{"error":"offset 23: unexpected end of input","proto_step":"protocol_error"}

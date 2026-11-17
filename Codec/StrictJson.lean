@@ -5,8 +5,9 @@ import Lean.Data.Json
 
 `Lean.Json` stores objects in a tree map, so duplicate keys are no longer
 observable after parsing.  This module validates raw bytes first: it enforces a
-UTF-8 byte limit, rejects invalid UTF-8, scans the complete JSON grammar, and
-rejects duplicate object keys after decoding JSON string escapes.  Only then
+UTF-8 byte limit, rejects invalid UTF-8, scans the complete JSON grammar, bounds
+decimal exponent expansion, and rejects duplicate object keys after decoding
+JSON string escapes. Only then
 does `parseBytes` call `Lean.Json.parse`.
 
 The scanner deliberately rejects unpaired UTF-16 surrogate escapes.  A valid
@@ -48,10 +49,16 @@ structure Limits where
 /-- Defaults matching the protocol's maximum JSONL payload. -/
 def defaultLimits : Limits := {}
 
+/-- Total magnitude of explicit decimal exponents in one JSON document.
+Bound expansion before Lean's parser constructs arbitrary-precision numbers;
+raising an artifact's byte limit does not raise this numeric work budget. -/
+def maxExponentBudget : Nat := 65535
+
 private structure Cursor where
   chars : Array Char
   pos : Nat
   maxDepth : Nat
+  remainingExponent : Nat
 
 private abbrev ScanResult (α : Type) := Except Error α
 
@@ -158,6 +165,17 @@ private def requireDigit (c : Cursor) (message : String) : ScanResult Cursor :=
   | some ch => if isDigit ch then .ok c else syntaxError c message
   | none => syntaxError c message
 
+private partial def scanExponent (c : Cursor) (value : Nat := 0) : ScanResult Cursor :=
+  match c.current with
+  | some ch =>
+      if isDigit ch then
+        let next := value * 10 + (ch.toNat - '0'.toNat)
+        if next > c.remainingExponent then
+          .error (Error.mk .tooLarge c.pos "JSON decimal exponent budget exceeded")
+        else scanExponent c.advance next
+      else .ok { c with remainingExponent := c.remainingExponent - value }
+  | none => .ok { c with remainingExponent := c.remainingExponent - value }
+
 private def scanNumber (start : Cursor) : ScanResult Cursor := do
   let c := match start.current with
     | some '-' => start.advance
@@ -181,7 +199,7 @@ private def scanNumber (start : Cursor) : ScanResult Cursor := do
           | some sign => if sign == '+' || sign == '-' then exponent.advance else exponent
           | none => exponent
         let first ← requireDigit exponent "exponent requires at least one digit"
-        return consumeDigits first
+        scanExponent first
       else return c
   | _ => return c
 
@@ -253,7 +271,7 @@ mutual
 end
 
 private def validateText (text : String) (limits : Limits) : Except Error Unit := do
-  let start := Cursor.mk text.toList.toArray 0 limits.maxDepth
+  let start := Cursor.mk text.toList.toArray 0 limits.maxDepth maxExponentBudget
   let afterValue ← scanValue start 0
   let rest := skipWhitespace afterValue
   if rest.pos == rest.chars.size then return ()

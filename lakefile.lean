@@ -466,6 +466,12 @@ script test do
   if clientFraming.exitCode != 0 then
     IO.eprintln clientFraming.stderr
     return clientFraming.exitCode
+  let explorerLifecycle ← IO.Process.output
+    ({ cmd := "python3", args := #["tools/check-explorer-lifecycle.py"] } : IO.Process.SpawnArgs)
+  IO.println explorerLifecycle.stdout
+  if explorerLifecycle.exitCode != 0 then
+    IO.eprintln explorerLifecycle.stderr
+    return explorerLifecycle.exitCode
   let validateAsync ← IO.Process.output
     ({ cmd := "python3", args := #["tools/check-validate-async.py"] } : IO.Process.SpawnArgs)
   IO.println validateAsync.stdout

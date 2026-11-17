@@ -226,6 +226,76 @@ private def methodIs (name : String) (request : Json) : Bool :=
 private def parameterNat (key : String) (request : Json) : Nat :=
   ((request.getObjVal? "params").bind (·.getObjValAs? Nat key)).toOption.getD 9999
 
+private def strictExplorerRegressions (fails : Failures) : IO Unit := do
+  for interactive in [false, true] do
+    for report in [
+        "{\"proto_step\":\"report_state\",\"state\":{\"x\":999,\"x\":1}}",
+        "{\"proto_step\":\"report_state\",\"state\":{\"x\":999,\"\\u0078\":1}}",
+        "{\"proto_step\":\"private-input-value\"}",
+        "{\"private-input-value\":",
+        "{\"proto_step\":\"report_state\",\"state\":{\"x\":1e-10000000000}}",
+        "{\"proto_step\":\"report_state\",\"state\":{\"x\":\"\\ud800\"}}",
+        "{\"proto_step\":\"report_state\",\"state\":{\"x\":1},\"ignored\":" ++
+          String.ofList (List.replicate 129 '[') ++ "0" ++
+          String.ofList (List.replicate 129 ']') ++ "}"] do
+      withRpcFixture "clean" fun client audit => do
+        let report := if interactive then report.replace "report_state" "explore_assume_state"
+          else report
+        let pending ← IO.mkRef [report]
+        let replies ← IO.mkRef ([] : List Json)
+        let transport : Shell.Transport.Transport := {
+          scope := .remote
+          recv := pending.modifyGet fun xs => (xs.head?, xs.drop 1)
+          send := fun line => do
+            let .ok json := Json.parse line | throw (IO.userError "bad mirror JSON")
+            replies.modify (· ++ [json]) }
+        if interactive then
+          Shell.Apalache.exploreSessionFlowWithClient transport client ["fixture"] [] []
+        else Shell.Apalache.exploreFlowWithClient transport client ["fixture"] [] [] 1
+        let actual ← replies.get
+        let expected := if interactive then ["explorer_ready", "protocol_error"]
+          else ["spec_validated", "initial_state", "protocol_error"]
+        check fails "explorer: malformed report receives only bounded error"
+          (actual.map (fun j => (j.getObjValAs? String "proto_step").toOption.getD "") ==
+            expected &&
+           actual.getLast?.any (fun j => j.getObjValAs? String "error" ==
+             .ok Shell.Mirror.invalidClientMessageError))
+          (String.intercalate "\n" (actual.map Json.compress))
+        let requests ← rpcRequests audit
+        check fails "explorer: malformed report does not assume state or check invariants"
+          (!(requests.any (methodIs "assumeState")) &&
+           !(requests.any (methodIs "checkInvariant")))
+
+private def rpcCleanupRegressions (fails : Failures) : IO Unit := do
+  withRpcFixture "clean" fun peer _ => do
+    for throws in [false, true] do
+      let saved ← IO.mkRef (none : Option Shell.Apalache.Explorer.RpcClient)
+      try
+        Shell.Apalache.Explorer.withRpcClient peer.port fun client => do
+          saved.set (some client)
+          let result ← Shell.Apalache.Explorer.health client
+          check fails "RPC scope: health succeeds" result.isOk
+          if throws then throw (IO.userError "fixture scope failure")
+      catch _ => check fails "RPC scope: expected exception" throws
+      let some client ← saved.get | throw (IO.userError "client was not saved")
+      check fails "RPC scope: connection cleared on success and exception"
+        (← client.conn.get).isNone
+      Shell.Apalache.Explorer.closeRpcClient client
+    -- EOF framing may already close a connection before its owner finalizes it.
+    let .ok old ← Shell.Net.Http.openConn peer.port 1000
+      | throw (IO.userError "fixture connection failed")
+    Shell.Net.Http.closeConn old
+    let .ok live ← Shell.Net.Http.openConn peer.port 1000
+      | throw (IO.userError "replacement connection failed")
+    try
+      Shell.Net.Http.closeConn old
+      let closedResult ← Shell.Net.Http.postKa old peer.port "/rpc" "{}"
+      check fails "HTTP: closed connection is not reused" (!closedResult.isOk)
+      let reply ← Shell.Net.Http.postKa live peer.port "/rpc"
+        "{\"id\":1,\"method\":\"health\",\"params\":[]}"
+      check fails "HTTP: repeated close preserves replacement descriptor" reply.isOk
+    finally Shell.Net.Http.closeConn live
+
 private def automaticExplorerRegressions (fails : Failures) : IO Unit := do
   let first := ["spec_validated", "initial_state"]
   let second := first ++ ["step_ok", "next_step"]
@@ -393,6 +463,8 @@ def main (args : List String) : IO UInt32 := do
     chunkRegressions fails
     httpSpike fails
     transcriptParity fails
+    strictExplorerRegressions fails
+    rpcCleanupRegressions fails
     automaticExplorerRegressions fails
     let control ← IO.Process.output {
       cmd := (← IO.appPath).toString, args := #["--assertion-failure-control"] }

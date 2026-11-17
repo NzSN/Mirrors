@@ -158,7 +158,7 @@ def run_case(binary: Path, root: Path, label: str, chunks: list[bytes], expected
                 connection.close()
             listener.close()
             thread.join(DEADLINE + 1)
-        assert not thread.is_alive() and not errors, (label, errors)
+        assert not thread.is_alive() and not errors, (label, errors, completed)
         assert completed.returncode == expected, (label, completed)
         assert diagnostic in completed.stderr, (label, completed)
         if expected == 0:
@@ -186,6 +186,43 @@ def stdio_cases(binary: Path) -> None:
     completed = subprocess.run([str(binary)], input=b"", capture_output=True, timeout=10)
     assert completed.returncode == 0 and not completed.stdout, completed
     print("ok: stdio LF/CRLF, partial EOF, bare CR and empty EOF")
+
+
+def numeric_cases(binary: Path) -> None:
+    # Each malformed number must fail the connection, never the shared daemon.
+    payloads = [b'{"proto_step":"report_state","state":{"x":' + token + b'}}\n'
+                for token in (b'1e10000000000', b'1e-10000000000', b'0e999999999999999999999',
+                              b'1e+65536', b'1e-65536')]
+    for payload in payloads:
+        result = subprocess.run([str(binary)], input=payload, capture_output=True, timeout=10)
+        assert result.returncode == 0, (payload, result)
+        assert json.loads(result.stdout) == {
+            'proto_step': 'protocol_error', 'error': 'invalid client message'}, result
+    with socket.socket() as reserve:
+        reserve.bind(('127.0.0.1', 0))
+        port = reserve.getsockname()[1]
+    child = subprocess.Popen([str(binary), '--serve', str(port), '--bind', '127.0.0.1', '--jobs', '1'],
+                             stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    try:
+        deadline = time.monotonic() + DEADLINE
+        while True:
+            try:
+                with socket.create_connection(('127.0.0.1', port), timeout=1):
+                    break
+            except OSError:
+                assert child.poll() is None and time.monotonic() < deadline, 'daemon did not start'
+                time.sleep(.02)
+        for payload in payloads + [encode({'proto_step': 'report_state', 'state': {'x': 1}}) + b'\n']:
+            with socket.create_connection(('127.0.0.1', port), timeout=DEADLINE) as conn:
+                conn.sendall(payload)
+                with conn.makefile('rb') as stream:
+                    reply = json.loads(stream.readline())
+            assert reply['proto_step'] == 'protocol_error', reply
+            assert child.poll() is None, 'numeric input terminated daemon'
+    finally:
+        child.terminate()
+        child.communicate(timeout=DEADLINE)
+    print('ok: oversized numeric exponents rejected; shared daemon survives')
 
 
 def main() -> None:
@@ -225,6 +262,7 @@ def main() -> None:
                 case("read-failure-empty", [], 2, "TLS read failed", close="abrupt")
                 case("san-mismatch", [], 2, wrong_host=True)
         stdio_cases(binary)
+        numeric_cases(binary)
     print("CLIENT FRAMING CLI GREEN (TCP, authenticated TLS 1.3 and stdio; owned peers stopped)")
 
 

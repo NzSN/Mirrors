@@ -1,0 +1,61 @@
+{
+  "schema": "mirrors.source-review-fixes/v1",
+  "baselineCommit": "cc35fd44d1879af80bc9b415f7327a30c71dbdbd",
+  "scope": "uncommitted source fixes with local non-model validation",
+  "sourceSha256": {
+    "Codec/Json.lean": "f5928cf7fa499c0416bc61b45aaa4e4abe239ed758b6afa9e45f2698c77f01a4",
+    "Codec/StrictJson.lean": "d42f837442cf315cdc9dc73c125a5d3e329488e3a43f1e44e6da154ceb206db2",
+    "Shell/Apalache/Explorer.lean": "40c3645dbb62f9f7d205220c21aa738577f51db263702b7e4c25403c80ea994d",
+    "Shell/Apalache/Runner.lean": "f769d0943b5e92b27ae3d8f660d088133c5f0b6492218f33e7794601bb0c8bbe",
+    "Shell/Net/Http.lean": "e513b2f4802b22b708818d52e060f4e1c0ebe585111d236365c85676101c0057",
+    "lakefile.lean": "0d1ff4e51a4fbfdd6c6f690be3625e78fd1d5795cb8ea49e920b236567ae438e",
+    "tools/ExplorerSpec.lean": "9ad8467d534ddc89cc682eb7f9ff9818031bd19c677833cad4161ecf93b5c225",
+    "tools/ModelInterfaceSpec.lean": "e5db44430348a911f2282fadc8695270f323a51b0dc9faa4b88ab14cdfb6c877",
+    "tools/check-client-framing.py": "c110b3d4cc281d689c39701fdd883c18b63d8cd7045109f20cb71ff01957dcea",
+    "tools/check-explorer-lifecycle.py": "5b82e385b6d4f8bd082573e8a5a3a0e56daa63ec48f37ce849c4301b028a6371",
+    "tools/run-local-no-model-check.sh": "7bd5815bba631916f0db2f80f8cf9cd030d31bb0fd03be5714a3e279b020e1e6"
+  },
+  "binarySha256": {
+    ".lake/build/bin/mirror": "3a5ae50be647850973ab9555882d55859607fb01e9c12347faf18cd093de9bb7",
+    ".lake/build/bin/explorer_spec": "3bfcce1677b899978f84d3ca6acbe7dc90b0dff7c81be219387dfb8a11bc8b8d",
+    ".lake/build/bin/model_interface_spec": "8b1da9eed1aded7f4653315d405b6389c0e7f9c7f62bea596fca84c54ac6cbe5",
+    ".lake/build/bin/model_interface_gen": "6dc3318803b2699eaba3ea5467c54ef7c3a91f5c5f4df780aed6fb234fbb7d90"
+  },
+  "evidenceSha256": {
+    "codec-after.log": "b5b0c09f5b8234c1afac9885a1b32293f25a19e8335a7440437dc967b069ed1b",
+    "daemon-before.json": "af475839b6ec0081d7fd8a736bbb05c31af548d77570ece6274599bfbaa1e509",
+    "explorer-after.log": "f42f6c0ad1259608ff3064841d20d8856718df507ed878232eb14a32ddee8958",
+    "explorer-before.log": "d444a97dcfcfe3e13cae1cee7f1d4dd280d1643c8ad4b5a752ce020eb7da0eea",
+    "framing-after.log": "aa527cbcf7a7dcbfadd5951d6c3ec916841924ed3196997ea2ec9e05eb7287e1",
+    "framing-first-attempt.log": "f532a37e893952e9a979cdc2364d78a932b6e5a295db7f771d46c8765e8a4bdc",
+    "lifecycle-after.log": "e2a99d3d24db63bed009cc619ceb566785c2e3f1adead5532f2bd29f98fbb3c3",
+    "lifecycle-before.log": "534f9d14ea0dae5dff1c412eed5a908b7ab85c3bf8eb8ae3586f497afa171a61",
+    "local-gate.log": "ffc1006a6532bc15e81b004e9c2131aafdddeb6225e360dcac0373c13cfefccb",
+    "numeric-before.json": "8d2986f460de4fcfe0b5a6a985687f1309391fb20cb18382b54852631e47c1b7",
+    "review-receipt-before.json": "62768afdbabe700bd2e93161cf79e2b15feaa55a9e355d36bcfb62a2f1ef39de"
+  },
+  "regressionsBefore": {
+    "numeric": "daemon exit 1 with Nat.pow panic",
+    "explorer": "6 failed assertions, including acceptance and mutation of duplicate-key reports",
+    "lifecycle": "14 -> 38 descriptors over 12 sessions"
+  },
+  "validationAfter": {
+    "focusedBuild": "passed (553 jobs)",
+    "fullBuild": "passed (744 jobs)",
+    "explorer": "passed; live integration skipped",
+    "modelInterface": "passed",
+    "framing": "passed on repeat and in full local gate",
+    "lifecycle": "passed; 12 -> 12 descriptors over 12 sessions",
+    "localNonModelGate": "passed (exit 0; ALL LOCAL NON-MODEL GATES GREEN)"
+  },
+  "retainedFailure": "First focused framing attempt failed with TLS SSLV3_ALERT_BAD_CERTIFICATE; unchanged TLS code, repeat and full local gate passed. No TLS remediation claim.",
+  "excluded": [
+    "live Apalache/TLC",
+    "native Windows execution",
+    "optional prepared MirrorCPP checks",
+    "new candidate/package/installed acceptance",
+    "M5/Q/release/deployment qualification"
+  ],
+  "modelCheckerInvoked": false,
+  "candidateQualificationTransferred": false
+}

@@ -651,9 +651,14 @@ def decValueF : Nat → Json → Dec Value
       -- bare numbers in report_state). A @Lean.JsonNumber@ is
       -- @mantissa * 10 ^ (-exponent)@ with @exponent : Nat@, and the
       -- Haskell instance accepts exactly the numbers whose value is
-      -- integral, so accept iff the mantissa is divisible by
-      -- @10 ^ exponent@; the result is the integral quotient.
-      if n.mantissa % ((10 : Nat) ^ n.exponent : Int) = 0 then
+      -- integral. Zero needs no power; a nonzero integral quotient requires
+      -- 2^exponent ≤ |mantissa|. Check that cheap necessary condition first,
+      -- so even a directly constructed JsonNumber cannot request an enormous
+      -- power from a tiny mantissa. This preserves exact integral decoding.
+      if n.mantissa = 0 then .ok (.vint 0)
+      else if n.mantissa.natAbs.log2 < n.exponent then
+        derr "value: bare JSON number not in ITF grammar"
+      else if n.mantissa % ((10 : Nat) ^ n.exponent : Int) = 0 then
         .ok (.vint (n.mantissa / ((10 : Nat) ^ n.exponent : Int)))
       else derr "value: bare JSON number not in ITF grammar"
   | fu+1, .arr as =>
@@ -1150,7 +1155,16 @@ theorem decValueF_num_integral (fu : Nat) (m : Int) (e : Nat)
     (hd : m % ((10 : Nat) ^ e : Int) = 0) :
     decValueF (fu+1) (Json.num (JsonNumber.mk m e))
       = Except.ok (.vint (m / ((10 : Nat) ^ e : Int))) := by
-  simp only [decValueF, if_pos hd]
+  by_cases hm : m = 0
+  · simp [decValueF, hm]
+  · have ha : m.natAbs ≠ 0 := by simpa using hm
+    have hdvd : (10 : Nat) ^ e ∣ m.natAbs := by
+      have h := Int.natAbs_dvd_natAbs.mpr (Int.dvd_iff_emod_eq_zero.mpr hd)
+      simpa using h
+    have hb : e ≤ m.natAbs.log2 := (Nat.le_log2 ha).mpr
+      (Nat.le_trans (Nat.pow_le_pow_left (by decide : 2 ≤ 10) e)
+        (Nat.le_of_dvd (Nat.pos_of_ne_zero ha) hdvd))
+    simp only [decValueF, if_neg hm, if_neg (Nat.not_lt.mpr hb), if_pos hd]
 
 theorem decValueF_num (fu : Nat) (m : Int) :
     decValueF (fu+1) (Json.num (JsonNumber.mk m 0)) = Except.ok (.vint m) := by

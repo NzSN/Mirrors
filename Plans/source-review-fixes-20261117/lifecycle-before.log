@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/nzsn/Repos/Mirrors/tools/check-explorer-lifecycle.py", line 99, in <module>
+    main()
+  File "/home/nzsn/Repos/Mirrors/tools/check-explorer-lifecycle.py", line 91, in main
+    assert after <= before, f'explorer sockets leaked: {before} -> {after} over 12 sessions'
+           ^^^^^^^^^^^^^^^
+AssertionError: explorer sockets leaked: 14 -> 38 over 12 sessions

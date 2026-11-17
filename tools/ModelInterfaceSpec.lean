@@ -169,6 +169,22 @@ def scenarioShaAndStrictJson (fails : Failures) : IO Unit := do
   check fails "strict-json: valid nested value"
     (Codec.StrictJson.parseString
       "{\"left\":{\"x\":1},\"right\":{\"x\":2}}").isOk
+  for raw in ["1e10000000000", "1e-10000000000", "0e999999999999999999999",
+      "1e+65536", "1e-65536", "[1e32768,{\"x\":1e-32768}]"] do
+    check fails "strict-json: excessive exponent rejected before parsing"
+      (strictErrorIs .tooLarge (Codec.StrictJson.parseString raw)) raw
+  for raw in ["1e65535", "1e-65535", "[1e32768,1e-32767]",
+      "1e00000000000000000000001", "12.00", "-1.2e1"] do
+    check fails "strict-json: bounded exponent admitted"
+      (Codec.StrictJson.parseString raw).isOk raw
+  -- Direct JsonNumber construction also bypasses the textual scanner.
+  check fails "value: huge negative scale is rejected without constructing a power"
+    (!(Codec.decodeValue (.num ⟨1, 10000000000⟩)).isOk)
+  check fails "value: zero with huge scale remains zero"
+    ((Codec.decodeValue (.num ⟨0, 10000000000⟩)).toOption.any (valEq (.vint 0)))
+  for (mantissa, scale, expected) in [(120, 1, 12), (-120, 1, -12), (1200, 2, 12)] do
+    check fails "value: integral decimal semantics preserved"
+      ((Codec.decodeValue (.num ⟨mantissa, scale⟩)).toOption.any (valEq (.vint expected)))
 
 def repeatedChar (count : Nat) (value : Char) : String :=
   String.ofList (List.replicate count value)

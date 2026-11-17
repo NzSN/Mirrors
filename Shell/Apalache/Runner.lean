@@ -164,13 +164,15 @@ where
           Shell.Mirror.sendMirror t (Codec.MirrorMessage.nextStep action expected)
         let some line ← t.recv
           | Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError "client closed")
-        match Lean.Json.parse line with
-        | .error e =>
-            Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError e)
+        match Codec.StrictJson.parseString line with
+        | .error _ =>
+            Shell.Mirror.sendMirror t
+              (Codec.MirrorMessage.protocolError Shell.Mirror.invalidClientMessageError)
         | .ok j =>
           match Codec.decodeClient j with
-          | .error e =>
-              Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError e.msg)
+          | .error _ =>
+              Shell.Mirror.sendMirror t
+                (Codec.MirrorMessage.protocolError Shell.Mirror.invalidClientMessageError)
           | .ok (.reportState actual) =>
               match diffState expected actual with
               | .stateMismatch e a hints =>
@@ -220,32 +222,33 @@ where
 def exploreFlow (t : Shell.Transport.Transport) (sources : List String)
     (invs exports : List String) (maxSteps : Nat) : IO Unit :=
   Shell.Apalache.Explorer.withApalacheServer fun server => do
-    let client ← newRpcClient server.port
-    exploreFlowWithClient t client sources invs exports maxSteps
+    withRpcClient server.port fun client =>
+      exploreFlowWithClient t client sources invs exports maxSteps
 
-/-- The interactive explorer session flow (Haskell @MkExploreSession@). -/
-partial def exploreSessionFlow (t : Shell.Transport.Transport) (sources : List String)
+/-- Interactive explorer through a selected client; the caller owns its scope. -/
+partial def exploreSessionFlowWithClient (t : Shell.Transport.Transport) (client : RpcClient)
+    (sources : List String)
     (invs exports : List String) : IO Unit := do
-  Shell.Apalache.Explorer.withApalacheServer fun server => do
-    let client ← newRpcClient server.port
-    match ← newExplorer client sources (some "Init") (some "Next") invs exports with
-    | .error err => rpcFail t err "explore register"
-    | .ok expl0 =>
-      let ps := expl0.params
-      Shell.Mirror.sendMirror t (Codec.MirrorMessage.explorerReady
-        ps.initTransitions.length ps.nextTransitions.length ps.stateInvariants.length)
-      sessionLoop t expl0
+  match ← newExplorer client sources (some "Init") (some "Next") invs exports with
+  | .error err => rpcFail t err "explore register"
+  | .ok expl0 =>
+    let ps := expl0.params
+    Shell.Mirror.sendMirror t (Codec.MirrorMessage.explorerReady
+      ps.initTransitions.length ps.nextTransitions.length ps.stateInvariants.length)
+    sessionLoop t expl0
 where
   sessionLoop (t : Shell.Transport.Transport) expl := do
     let some line ← t.recv
       | Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError "client closed")
-    match Lean.Json.parse line with
-    | .error e =>
-        Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError e)
+    match Codec.StrictJson.parseString line with
+    | .error _ =>
+        Shell.Mirror.sendMirror t
+          (Codec.MirrorMessage.protocolError Shell.Mirror.invalidClientMessageError)
     | .ok j =>
       match Codec.decodeClient j with
-      | .error e =>
-          Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError e.msg)
+      | .error _ =>
+          Shell.Mirror.sendMirror t
+            (Codec.MirrorMessage.protocolError Shell.Mirror.invalidClientMessageError)
       | .ok m =>
         let replyFail (err : RpcError) := do
           Shell.Mirror.sendMirror t (Codec.MirrorMessage.protocolError
@@ -301,6 +304,13 @@ where
             Shell.Mirror.sendMirror t
               (Codec.MirrorMessage.protocolError
                 "unexpected message in explore session")
+
+/-- The interactive explorer session flow (Haskell @MkExploreSession@). -/
+def exploreSessionFlow (t : Shell.Transport.Transport) (sources : List String)
+    (invs exports : List String) : IO Unit :=
+  Shell.Apalache.Explorer.withApalacheServer fun server =>
+    withRpcClient server.port fun client =>
+      exploreSessionFlowWithClient t client sources invs exports
 
 /-! ## Trace generation with source identity -/
 

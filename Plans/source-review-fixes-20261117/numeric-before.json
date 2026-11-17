@@ -1,0 +1,42 @@
+[
+  {
+    "token": "1",
+    "bytes": 46,
+    "exit": 0,
+    "stdout": "{\"error\":\"Expected Register message\",\"proto_step\":\"protocol_error\"}\n",
+    "stderr": "",
+    "peakRssKiB": 60896,
+    "watchdog": null,
+    "seconds": 0.057
+  },
+  {
+    "token": "1e-1",
+    "bytes": 49,
+    "exit": 0,
+    "stdout": "{\"error\":\"invalid client message\",\"proto_step\":\"protocol_error\"}\n",
+    "stderr": "",
+    "peakRssKiB": 65632,
+    "watchdog": null,
+    "seconds": 0.045
+  },
+  {
+    "token": "1e-10000000000",
+    "bytes": 59,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "INTERNAL PANIC: Nat.pow exponent is too big\n",
+    "peakRssKiB": 69108,
+    "watchdog": null,
+    "seconds": 0.046
+  },
+  {
+    "token": "1e10000000000",
+    "bytes": 58,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "INTERNAL PANIC: Nat.pow exponent is too big\n",
+    "peakRssKiB": 67424,
+    "watchdog": null,
+    "seconds": 0.046
+  }
+]
