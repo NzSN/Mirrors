@@ -7,7 +7,7 @@ tooling landed in `c17bae9`. F3 finite-catalog reduction, F4 installed CLI and t
 separate experimental MirrorCPP F5 controlled mutex/FIFO prototype have
 [October 14 remote WSL follow-up acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md).
 F5 retains `modelComparison: false`. The
-[approved feature plan](../Plans/dpm-usability-features-2026-10-07.md) keeps the
+[approved feature plan](../Plans/completed/dpm-usability-features-2026-10-07.md) keeps the
 original feature contracts. The [CLI guide](dpm-cli-guide.md) and
 [runner contract](dpm-runner-contract.md) describe current implementation;
 [October 13 evidence](../Plans/dpm-f3-f5-evidence-20261013/README.md) is historical.

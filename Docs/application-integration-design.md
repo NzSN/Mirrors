@@ -12,7 +12,7 @@ Baseline inspected: Mirrors `616f5a1`, MirrorECMA `008234d`, MirrorGate
 provided the evidence motivating this design. The subsequently delivered
 interfaces and their gates are recorded separately in the execution record.
 
-The [implementation plan](application-integration-implementation-plan.md) assigns
+The [implementation plan](../Plans/completed/application-integration-implementation-plan.md) assigns
 dependency-ordered work packages and acceptance gates. The earlier AIT labels
 are historical; the execution record tracks the recovered baseline and current
 delivery. Task preparation alone is not runtime acceptance.

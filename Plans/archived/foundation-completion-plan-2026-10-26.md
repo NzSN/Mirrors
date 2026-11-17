@@ -1,12 +1,15 @@
 # Foundation completion plan
 
+> Archived 2026-11-17. Superseded historical plan; failed, incomplete and excluded scope remains unaccepted.
+> See the [plan index](../README.md) for current work.
+
 Date: 2026-10-26
 
 Baseline: Mirrors `fe86ec03e8bcd557ac8561321fda3b5141af5dff`
 
 Status reconciliation (2026-10-29): this original design is retained below.
 [The current execution plan](completion-execution-plan-2026-10-29.md) and
-[its evidence](completion-evidence-20261029/README.md) supersede the old queue:
+[its evidence](../completion-evidence-20261029/README.md) supersede the old queue:
 immutable artifact acquisition and journal-v2 recovery source work are already
 implemented; finite F5 comparison and profile-6 qualification now have new scoped
 acceptance. Current framework/platform qualification and release/deployment
@@ -31,7 +34,7 @@ directories rather than rewriting prior receipts.
 
 **Goal:** reproducible inputs that cannot silently change upstream.
 
-Contract: [TLA+ differential validation](../tools/tla-differential/README.md).
+Contract: [TLA+ differential validation](../../tools/tla-differential/README.md).
 
 1. Inventory SANY, Apalache, JDK, launcher, and standard-library identities.
 2. Add an operator-approved content-addressed artifact store keyed by SHA-256.
@@ -55,8 +58,8 @@ Contract: [TLA+ differential validation](../tools/tla-differential/README.md).
 
 **Goal:** establish semantic confidence in the SANY/`Bags` migration.
 
-Contracts: [language profile](../Docs/model-interface-compiler/tla-language-profile.md)
-and [differential validation design](../Docs/model-interface-compiler/tla-differential-validation-design.md).
+Contracts: [language profile](../../Docs/model-interface-compiler/tla-language-profile.md)
+and [differential validation design](../../Docs/model-interface-compiler/tla-differential-validation-design.md).
 
 1. Freeze the candidate source, profile, corpus, catalog, registry, and
    toolchain hashes.
@@ -83,9 +86,9 @@ and [differential validation design](../Docs/model-interface-compiler/tla-differ
 **Goal:** prove the actual source, packages, and deployed binaries rather than
 only the source tree.
 
-References: [October 25 qualification](completed/current-source-qualification-2026-10-25.md),
-[remote server guide](../Docs/remote-server-guide.md), and
-[interop instructions](../tools/interop/INTEROP.md).
+References: [October 25 qualification](../completed/current-source-qualification-2026-10-25.md),
+[remote server guide](../../Docs/remote-server-guide.md), and
+[interop instructions](../../tools/interop/INTEROP.md).
 
 1. Freeze full SHAs for Mirrors, MirrorECMA, MirrorGate, MirrorCPP, and
    MirrorRust, including any dirty-content identities.
@@ -114,8 +117,8 @@ References: [October 25 qualification](completed/current-source-qualification-20
 **Goal:** turn the controlled mutex/FIFO prototype into a verified scheduling
 profile.
 
-Contracts: [approved DPM usability features](dpm-usability-features-2026-10-07.md)
-and [runner contract](../Docs/dpm-runner-contract.md).
+Contracts: [approved DPM usability features](../completed/dpm-usability-features-2026-10-07.md)
+and [runner contract](../../Docs/dpm-runner-contract.md).
 
 1. Define the finite model: actors, mutex ownership, FIFO state, callbacks,
    joins, cleanup, and terminal states.
@@ -139,7 +142,7 @@ and [runner contract](../Docs/dpm-runner-contract.md).
 
 **Goal:** retire legacy behavior without breaking supported clients.
 
-Contract: [Haskell cutover](../Docs/cutover.md).
+Contract: [Haskell cutover](../../Docs/cutover.md).
 
 1. Inventory remaining Haskell/stdio async error-tag consumers.
 2. Publish the compatibility contract, migration path, and deprecation
@@ -162,7 +165,7 @@ Contract: [Haskell cutover](../Docs/cutover.md).
 After items 1–3, prepare the release. F5 may remain a separately scoped roadmap
 capability and must not be advertised as accepted without its gates.
 
-Contract: [ecosystem versioning](../Docs/ecosystem-versioning.md).
+Contract: [ecosystem versioning](../../Docs/ecosystem-versioning.md).
 
 1. Select the version under the ecosystem compatibility policy.
 2. Run focused release tooling and build reproducible archives.

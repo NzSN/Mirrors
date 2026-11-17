@@ -2,6 +2,13 @@
 
 Date: 2026-09-21
 
+Current navigation, 2026-11-17: the [plan index](README.md) separates remaining
+compatibility lifecycle work from completed implementation plans and historical
+task queues. [rc.12 completion](completion-rc12-20261116/completion.json) records
+the later qualified shipment and production operations. The dated roadmap
+positions below retain their original scope; broader M4 remains separate and
+native-runner/M4 execution planning stays withdrawn from this campaign.
+
 Status (2026-10-25): pre-publication working-tree C0
 `ecd80f70bd0f2dbe2cc752645a8f4e43e269985a6fa65f9b07d753b7446cc421`
 is qualified for `m5-wsl-windows-remote/v1`, class `local-candidate`: all 18
@@ -19,7 +26,7 @@ F1 generated DPM kits and F2 receipt timelines are source accepted. Mirrors
 reducer/CLI tooling landed in `c17bae9`. F3 finite-catalog reduction, F4 installed
 CLI and the separate experimental MirrorCPP F5 controlled mutex/FIFO prototype
 have [October 14 follow-up acceptance](dpm-review-followup-evidence-20261014/README.md).
-F5 has no model comparison. Follow [their feature plan](dpm-usability-features-2026-10-07.md)
+F5 has no model comparison. Follow [their feature plan](completed/dpm-usability-features-2026-10-07.md)
 and [current build prerequisites](../Docs/dpm-cli-guide.md#build-and-runtime-prerequisites);
 local build-preparation changes require their own artifact acceptance.
 
@@ -31,7 +38,7 @@ qualification. Broader M4 remains a separate track.
 
 Planning baseline: Mirrors `eb5cd00`, MirrorGate `173075d`
 
-Task decomposition and agent assignments: [task index](mirror-framework-tasks.md).
+Task decomposition and agent assignments: [task index](archived/mirror-framework-tasks.md).
 
 Current topology decision, 2026-10-01: the WSL2 coordinator uses the current
 machine's native Windows host as its designated remote oracle, with Apalache

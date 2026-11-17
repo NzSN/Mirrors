@@ -32,7 +32,7 @@
 > historical "Revision 1" wording names the inherited rule rather than a
 > second, still-selectable profile.
 > Design authority: [general TLA+ frontend design](tla-frontend-design.md).
-> Task package: [TLA+ frontend tasks](tla-frontend-tasks.md), package TF0.
+> Task package: [TLA+ frontend tasks](../../Plans/completed/tla-frontend-tasks.md), package TF0.
 > Conformance corpus: [`test/fixtures/tla-frontend/manifest.json`](../../test/fixtures/tla-frontend/manifest.json).
 > Historical differential status: **profile-4 aggregate validation passed; profile-3
 > remains the historical DC4 closure**. The profile-2 failure remains historical evidence;

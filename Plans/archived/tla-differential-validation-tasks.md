@@ -1,9 +1,12 @@
 # TLA+ differential validation implementation tasks
 
+> Archived 2026-11-17. Superseded historical plan; failed, incomplete and excluded scope remains unaccepted.
+> See the [plan index](../README.md) for current work.
+
 > Status: **harness implemented and exercised, 2026-09-13; full differential
 > acceptance failed. See §10 for executed evidence and remaining work.**.
-> Authority: [differential validation design](../Docs/model-interface-compiler/tla-differential-validation-design.md).
-> Parent acceptance gap: [frontend task ledger §17.6](../Docs/model-interface-compiler/tla-frontend-tasks.md#176-tf8-validation-and-remaining-tiers-2026-09-12).
+> Authority: [differential validation design](../../Docs/model-interface-compiler/tla-differential-validation-design.md).
+> Parent acceptance gap: [frontend task ledger §17.6](../completed/tla-frontend-tasks.md#176-tf8-validation-and-remaining-tiers-2026-09-12).
 
 ## 1. Scope and sequencing
 
@@ -184,7 +187,7 @@ branches and 103 fixture-branch links. The harness captures each source bundle
 and invokes Mirrors, standalone SANY, and Apalache, retaining all 171 observations.
 It checks implementation/binary stability and preserves the source/harness
 snapshot. Two same-input runs produce identical semantic payloads; see the
-[evidence index](../test/fixtures/tla-frontend/differential/evidence/README.md)
+[evidence index](../../test/fixtures/tla-frontend/differential/evidence/README.md)
 for current checksums, exact commands, and raw archive verification.
 
 Checkpoint A established 27 differences. The reviewer and integrator approved
@@ -193,7 +196,7 @@ on the two reference engines. Each entry is pinned to exact source hashes,
 profile, tools, review artifact, and checkpoint evidence. The remaining
 comparisons concern mixed-junction precedence, Unicode baseline rationale,
 ENABLED levels, and missing named-instance qualified operator projections.
-See [triage](../test/fixtures/tla-frontend/differential/evidence/triage.md).
+See [triage](../../test/fixtures/tla-frontend/differential/evidence/triage.md).
 
 Validation includes offline normal/error/mutation tests, opt-in live reference
 calibration (including chained and LOCAL instances), the native Lean build,
@@ -213,7 +216,7 @@ acceptance tiers from the parent ledger.
 
 ## Profile-2 junction follow-up (2026-09-13)
 
-The [junction packages](tla-junction-precedence-tasks.md) are complete. Current
+The [junction packages](../completed/tla-junction-precedence-tasks.md) are complete. Current
 checkpoints J/K cover 60 fixtures and 180 observations each, with identical
 semantic payloads. Precedence is closed without an exception; fourteen inherited
 policy comparisons were independently renewed against the new profile and

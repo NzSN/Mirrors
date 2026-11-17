@@ -53,6 +53,6 @@ Related documents remain at the parent documentation level:
 - [Mirror-Framework usage](../usage-of-mirror-framework.md).
 
 Implementation planning and acceptance evidence are tracked in
-[TLA+ frontend tasks](tla-frontend-tasks.md).
+[TLA+ frontend tasks](../../Plans/completed/tla-frontend-tasks.md).
 The parser slice's recovery plan is recorded in
-[TF2 acceptance recovery tasks](tf2-acceptance-tasks.md).
+[TF2 acceptance recovery tasks](../../Plans/completed/tf2-acceptance-tasks.md).

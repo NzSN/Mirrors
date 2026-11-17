@@ -8,7 +8,7 @@ have passed. MirrorCPP `e73dadbac6055fa3ff94b5ee90c0649e4ad03ebd` and WriteSentr
 immutable SDK revision. [Published-pin acceptance](../../Plans/model-interface-compiler/writesentry-publication-evidence-20261001/acceptance.json)
 records the independent submodule build, 8/8 CTests and fresh-data replay controls.
 The acceptance ledger is in
-[the implementation plan](../../Plans/model-interface-compiler/writesentry-integration-improvements.md).
+[the implementation plan](../../Plans/completed/writesentry-integration-improvements.md).
 
 ## Replay parameters
 

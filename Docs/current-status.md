@@ -401,7 +401,7 @@ historical.
 
 ## October 29 completion campaign in progress
 
-The [execution plan](../Plans/completion-execution-plan-2026-10-29.md) is being
+The [execution plan](../Plans/archived/completion-execution-plan-2026-10-29.md) is being
 performed from published `7e9a27d`. The source prepares `v0.2.0-rc.1`; nothing
 has been published or deployed. The [new evidence record](../Plans/completion-evidence-20261029/README.md)
 records completed finite F5 remote model comparison/reduction, independent
@@ -593,7 +593,7 @@ F4 supplies the [installed CLI](dpm-cli-guide.md) for C++/Node-worker/Rust-threa
 application runners. F5 supplies a separate experimental C++ controlled mutex/
 bounded FIFO profile; its local execution receipts do not establish model comparison.
 See the [runner contract](dpm-runner-contract.md),
-[feature plan](../Plans/dpm-usability-features-2026-10-07.md) and
+[feature plan](../Plans/completed/dpm-usability-features-2026-10-07.md) and
 [October 14 follow-up evidence](../Plans/dpm-review-followup-evidence-20261014/README.md)
 for the accepted source/runtime identities, actual gate results and limits. Both
 remote installed acceptance and the full non-model suite passed in that campaign.
@@ -628,7 +628,7 @@ qualify a new framework release.
 | Control participating threads under MBT | [DPM guide](deterministic-scheduling.md), [build/install/replay CLI](dpm-cli-guide.md) |
 | Review compiler/profile/migration contracts | [Compiler index](model-interface-compiler/README.md), [generated specification](generated-model-interface-spec.md) |
 | Operate model checking remotely | [Remote guide](remote-server-guide.md), [qualification harness](qualification-harness-design.md) |
-| Inspect completion and planned extensions | [Framework roadmap](../Plans/mirror-framework-improvements.md), [execution decisions](../Plans/execution-decisions.md) |
+| Inspect current work and plan history | [Plan index](../Plans/README.md), [completed plans](../Plans/completed/README.md), [superseded plans](../Plans/archived/README.md), [execution decisions](../Plans/execution-decisions.md) |
 | Inspect exact accepted identities | [October 7 readiness](../Plans/completed/q3-published-roadmap-2026-10-07.md), [DPM acceptance](../Plans/dpm-review-followup-evidence-20261014/README.md), [conformance acceptance](../Plans/client-conformance-fix-evidence-20261015/README.md), [release retag scope](../Plans/version-migration-2026-10-22/retag.json), [checkpoint history](../CHECKPOINTS.md) |
 
 Dated baselines, proof statements, frozen fixtures and machine-readable acceptance

@@ -1,7 +1,7 @@
 # TLA+ frontend inspection CLI (`tla_frontend`)
 
 Status: **implemented and accepted on 2026-09-12 as task package TF8 of the
-[general TLA+ frontend tasks](tla-frontend-tasks.md)**. Design authority:
+[general TLA+ frontend tasks](../../Plans/completed/tla-frontend-tasks.md)**. Design authority:
 [inspection tool section of the frontend design](tla-frontend-design.md).
 
 `tla_frontend` is the development-only view of the same captured analysis the

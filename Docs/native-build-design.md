@@ -7,7 +7,7 @@ probe and side-effect compilation through `extraDepTargets`; executable links
 mentioned object paths as plain strings. That graph lacked a dependable C-only
 object-to-link trace edge. Current [Lake targets](../lakefile.lean) use the traced
 inputs, `buildO`, `moreLinkObjs` and fetched OpenSSL libraries described below.
-[Implementation evidence](native-build-plan.md) retains the September 6 regression
+[Implementation evidence](../Plans/completed/native-build-plan.md) retains the September 6 regression
 run; documentation review does not rerun that gate.
 
 A normal `lake build <target>` must compile a changed shim and relink every

@@ -35,7 +35,8 @@ an installed Windows service, a hosted CI run, or a published package.
 | Test TypeScript application code | [Current MirrorECMA MBT tutorial](mirrorecma-typescript-mbt-user-manual.md) |
 | Evaluate framework usability on real applications | [Three-application validation program](application-validation-program.md) |
 | Review integration contracts | [Application integration design](application-integration-design.md) |
-| Plan integration implementation | [Application integration implementation plan](application-integration-implementation-plan.md) (historical baseline, completed work packages and acceptance criteria) |
+| Review completed integration work | [Archived implementation plan](../Plans/completed/application-integration-implementation-plan.md) (historical baseline, completed work packages and acceptance criteria) |
+| Find active plans and completed work | [Plan index](../Plans/README.md), [completed plans](../Plans/completed/README.md), [superseded plans](../Plans/archived/README.md) |
 | Inspect integration acceptance | [Execution record](application-integration-progress.md) (automated gates, actual restricted authors and fresh-agent onboarding) |
 | Build, install, or identify Mirrors | [Product versions and installation](versioning.md) |
 | Run validation inside WSL2 or through `r_windev` | [WSL2 validation](wsl2-validation.md) |

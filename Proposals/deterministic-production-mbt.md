@@ -65,7 +65,7 @@ References:
 - [Application integration design](../Docs/application-integration-design.md).
 - [Generated interface contract](../Docs/generated-model-interface-spec.md).
 - [Client execution contract](../Docs/client-implementation-guide.md).
-- [Compiler improvement plan from WriteSentry](../Plans/model-interface-compiler/writesentry-integration-improvements.md).
+- [Compiler improvement plan from WriteSentry](../Plans/completed/writesentry-integration-improvements.md).
 - [WriteSentry MBT evidence and scope](../../WriteSentry/tests/mbt/README.md).
 - [Current WriteSentry port](../../WriteSentry/tests/mbt/generated_port.h).
 - [Win32 context test seam](../../WriteSentry/src/self_watch_internal.h).

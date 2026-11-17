@@ -7,7 +7,7 @@
 > the captured source/tool identities and is not a fresh run of current HEAD.**
 > Authority: [frontend compatibility contract](tla-frontend-design.md#5-compatibility-authority)
 > and [language profile](tla-language-profile.md).
-> Delivery: [differential validation tasks](../../Drafts/tla-differential-validation-tasks.md).
+> Delivery: [differential validation tasks](../../Plans/archived/tla-differential-validation-tasks.md).
 
 ## 1. Objective and retained evidence
 
@@ -253,5 +253,5 @@ operator facts are missing from Mirrors' existing public elaboration projection.
 The bridge's substitution comparison covers atomic actual values/spellings and
 instance sites; richer resolved expression identity remains uncertified.
 
-See the [execution/task record](../../Drafts/tla-differential-validation-tasks.md#10-executed-evidence-and-acceptance-boundary)
+See the [execution/task record](../../Plans/archived/tla-differential-validation-tasks.md#10-executed-evidence-and-acceptance-boundary)
 and [evidence index](../../test/fixtures/tla-frontend/differential/evidence/README.md).

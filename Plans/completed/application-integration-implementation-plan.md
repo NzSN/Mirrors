@@ -1,12 +1,15 @@
 # Application integration implementation plan
 
+> Archived 2026-11-17. Completed implementation plan; acceptance remains limited to the dated scope below.
+> See the [plan index](../README.md) for current work.
+
 Status: **P00–P12 implemented and accepted locally, 2026-09-16–17.**
 P12 includes three actual restricted authors and an explicitly automated
 fresh-evaluator onboarding study; it does not claim a human usability study.
-See the [execution record](application-integration-progress.md) for current
+See the [execution record](../../Docs/application-integration-progress.md) for current
 acceptance evidence and the remaining package-publication boundary.
 Prepared on 2026-09-16 against the then-current working checkouts. This plan
-implemented the [application integration design](application-integration-design.md), preserving
+implemented the [application integration design](../../Docs/application-integration-design.md), preserving
 its ownership, lifetime, compatibility and disclosure requirements. The listed
 interfaces are available in the locally accepted source revisions; this plan does
 not authorize package publication or claim compatibility for other revisions.
@@ -51,7 +54,7 @@ applications block preservation claims and final migration acceptance.
 The following table records the concrete interface decisions that were resolved
 in the owning repositories and backed by typechecked consumer fixtures and schema
 vectors. Current callers should follow the
-[application integration guide](application-integration-guide.md), not infer an
+[application integration guide](../../Docs/application-integration-guide.md), not infer an
 API from this historical work plan.
 
 | Decision | Resolved implementation direction | Required contract evidence |
@@ -136,10 +139,10 @@ acceptance.
 
 ### P02 — Generate and publish the trusted bundle
 
-Touchpoints: [compiler](../Shell/ModelInterface/Compiler.lean),
-[async emitter](../Shell/ModelInterface/Emit/TypeScriptAsync.lean),
-[shared TypeScript lowering](../Shell/ModelInterface/Emit/TypeScript.lean),
-[CLI](../tools/ModelInterfaceGen.lean), and a new companion emitter under
+Touchpoints: [compiler](../../Shell/ModelInterface/Compiler.lean),
+[async emitter](../../Shell/ModelInterface/Emit/TypeScriptAsync.lean),
+[shared TypeScript lowering](../../Shell/ModelInterface/Emit/TypeScript.lean),
+[CLI](../../tools/ModelInterfaceGen.lean), and a new companion emitter under
 `Shell/ModelInterface/Emit/`.
 
 1. Reuse `loadVerifiedLock`, target emission and sanitized manifest rendering.
@@ -192,7 +195,7 @@ Add an internal opt-in evidence collector to the existing compiled replay path.
 Retain one pending initialization/transition when reporting state; record its
 acceptance only on the associated `step_ok`. Current Mirrors emits this reply
 for every matched state, including the final state
-([server source](../Shell/Mirror/Session.lean)). `all_steps_done` completes the
+([server source](../../Shell/Mirror/Session.lean)). `all_steps_done` completes the
 selected corpus only after all expected occurrences and acknowledgements.
 Validate ordering and occurrence counts. Reset pair adjacency at each trace;
 map labels/aliases through the validated immutable descriptor. Missing,
@@ -254,7 +257,7 @@ Run a generated Counter and an initial Gate-free installed consumer before P09.
 ### P06 — Generate the public Node adapter kit
 
 Build on Gate's validated public manifest and existing
-[`sdk/node/public-model.mjs`](../../MirrorGate/sdk/node/public-model.mjs).
+[`sdk/node/public-model.mjs`](../../../MirrorGate/sdk/node/public-model.mjs).
 Add kit generation/check entry points and declarations without importing a
 descriptor, raw semantic lock or evaluator module.
 Reuse `sdk/node/protocol.mjs` validation and extend
@@ -448,7 +451,7 @@ repository's normal gate, using public interfaces wherever practical.
 | Gate aggregate | `bash scripts/test.sh` under its supported pinned toolchain | Python/Node/C++/Rust plus actual required Bubblewrap conformance/lifecycle gates |
 | Gate integration | From `integrations/mirrorecma`: `npm run build`, `npm run check`, `npm test`, `npm run test:packed`, `npm run test:sandbox`, `npm run test:workflow`; service workflow separately | New kit/profile/suite/receipt/owner cases and existing installed workflow behavior |
 | Applications | Recovered local matrices; Gate `integrations/mirrorecma/scripts/application-program-gate.mjs` and its documented author mode | 17 local mutants, 23 Gate cases, fresh witnesses and real restricted authors |
-| Cross-client | Follow [interop prerequisites](../tools/interop/INTEROP.md), then `bash tools/interop/run.sh` | Relevant wire/emitter/client compatibility; explicit live Apalache and external-client prerequisites |
+| Cross-client | Follow [interop prerequisites](../../tools/interop/INTEROP.md), then `bash tools/interop/run.sh` | Relevant wire/emitter/client compatibility; explicit live Apalache and external-client prerequisites |
 
 Do not run native rebuild validation unless the native dependency graph changes.
 Do not regenerate frozen Haskell fixtures by hand. Use the compiler for generated

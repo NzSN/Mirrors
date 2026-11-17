@@ -29,7 +29,7 @@
 > `project-trace`, `resolve`, and `check` consume one elaborated captured source
 > graph, and `Shell.Apalache.SpecSource` captures borrowed and inline closures
 > through the same provider and parser instead of its retired token scanner
-> (implementation plan: [`tla-frontend-tasks.md`](tla-frontend-tasks.md),
+> (implementation plan: [`tla-frontend-tasks.md`](../../Plans/completed/tla-frontend-tasks.md),
 > TF0–TF8 accepted). `Shell/ModelInterface/SpecVariables.lean` has no production
 > caller and survives only as a development-gate subject.
 

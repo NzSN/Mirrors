@@ -1,7 +1,10 @@
 # Mixed-junction precedence implementation tasks
 
+> Archived 2026-11-17. Completed implementation plan; acceptance remains limited to the dated scope below.
+> See the [plan index](../README.md) for current work.
+
 > Status: **JP0–JP4 completed and accepted, 2026-09-13; broader differential gate still fails**.
-> Authority: [mixed-junction design](../Docs/model-interface-compiler/tla-junction-precedence-design.md).
+> Authority: [mixed-junction design](../../Docs/model-interface-compiler/tla-junction-precedence-design.md).
 
 ## Final acceptance
 
@@ -10,7 +13,7 @@ implemented the parser/profile packages and independently approved all fourteen
 policy renewals; the worker following `test-automator` instructions qualified
 references, checked compiler admission, and produced the final evidence.
 
-[Checkpoints J and K](../test/fixtures/tla-frontend/differential/evidence/README.md)
+[Checkpoints J and K](../../test/fixtures/tla-frontend/differential/evidence/README.md)
 each contain 180 completed observations over 60 fixtures. Their semantic payloads
 are byte-identical (SHA-256
 `5dd32f9003de7c09771dac69282be01a853fcf5dfd11c4302011b6bf3da3f354`):

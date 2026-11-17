@@ -5,13 +5,25 @@ execution scope is complete. Completion is always limited to the identities
 and evidence in each document; it does not qualify the current checkout or a
 later release.
 
-The documents were moved here on 2026-10-26. Markdown references were rebased
-to their new locations. Machine-readable evidence retains its original
-recorded source paths and acceptance semantics; no requalification is implied
-by this housekeeping.
+The first archive pass was on 2026-10-26. Eight further completed implementation
+plans were archived on 2026-11-17, including plans formerly in `Docs/` and
+`Drafts/`. Markdown references were rebased to their new locations. Dated evidence
+and machine-readable records retain their original bytes, source paths and
+acceptance semantics; no requalification is implied by this housekeeping.
+
+See the [plan index](../README.md) for active work and
+[superseded plans](../archived/README.md) for historical queues whose broader
+or intermediate scope was incomplete.
 
 ## Framework and compiler records
 
+- [Native build implementation](native-build-plan.md)
+- [Application integration implementation](application-integration-implementation-plan.md)
+- [TF2 parser acceptance recovery](tf2-acceptance-tasks.md)
+- [TLA+ frontend implementation and closure](tla-frontend-tasks.md)
+- [Mixed-junction precedence implementation](tla-junction-precedence-tasks.md)
+- [WriteSentry compiler integration improvements](writesentry-integration-improvements.md)
+- [Immutable toolchain acquisition](immutable-toolchain-acquisition-tasks-2026-10-26.md)
 - [Implementation baseline](implementation-baseline.md)
 - [Framework checkpoint reference](framework-checkpoint-reference-2026-09-22.md)
 - [Compiler/client follow-ups](compiler-client-followups-2026-10-03.md)
@@ -22,6 +34,7 @@ by this housekeeping.
 
 ## DPM records
 
+- [Approved usability features](dpm-usability-features-2026-10-07.md)
 - [DPM-0–DPM-1](deterministic-production-mbt-dpm0-dpm1.md)
 - [DPM-2–DPM-5](deterministic-production-mbt-dpm2-dpm5.md)
 - [DPM-3 pilot](deterministic-production-mbt-dpm3-pilot.md)
@@ -51,6 +64,18 @@ by this housekeeping.
 - [Published commits](q3-published-commits-2026-10-02.md)
 - [Published roadmap](q3-published-roadmap-2026-10-07.md)
 
-Active roadmaps, the foundation completion plan, unfinished M4/F5 work, dated
-evidence directories, and superseded incomplete readiness reports remain in
-the parent `Plans` directory.
+## Completed handoffs retained at recorded paths
+
+These execution instructions remain in place because retained evidence binds
+their exact paths and bytes. They are historical inputs, not active work orders.
+
+- [October 30 S0/S1 handoff](../completion-executor-handoff-2026-10-30.md)
+- [WSL2 source-freeze handoff](../completion-s1-wsl-executor-handoff-2026-10-30.md)
+- [S2 branch-publication handoff](../completion-s2-executor-handoff-2026-10-30.md)
+- [S3 clean-package handoff](../completion-s3-executor-handoff-2026-10-30.md)
+- [S3 Windows rebuild handoff](../completion-s3-windows-executor-handoff-2026-10-30.md)
+- [S3 package reconciliation handoff](../completion-s3-reconcile-executor-handoff-2026-10-30.md)
+
+Dated evidence directories and incomplete readiness reports remain at their
+original paths. Compatibility cycles, consumer acknowledgements and retirement
+remain open; broader M4 execution planning stays withdrawn from this campaign.

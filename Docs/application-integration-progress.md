@@ -2,7 +2,7 @@
 
 Implementation and automated acceptance completed across 2026-09-16–17 under the
 user's instruction to perform the
-[implementation plan](application-integration-implementation-plan.md). This is a
+[implementation plan](../Plans/completed/application-integration-implementation-plan.md). This is a
 local acceptance record. The remaining P12 gates completed on 2026-09-17 using
 three actual restricted authors and a fresh-agent onboarding study. This is not
 a publication or human-usability claim.

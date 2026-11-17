@@ -2,6 +2,17 @@
 
 Date: 2026-10-30
 
+Current execution boundary, 2026-11-17: rc.12 source `6882d5b8…` completed
+qualification, publication, production trust renewal, deployment and reboot
+verification in the [November 16 completion record](completion-rc12-20261116/completion.json).
+The remaining campaign stage is S8: [bounded replay is complete](s8-dumpledger-workload-20261116/replay-summary.json),
+but [complete compatibility-cycle credit is zero](s8-dumpledger-workload-20261116/lifecycle-progress.json).
+Named consumer ownership, complete shipped-cycle matrices, real-workload soak,
+migration acknowledgements, tested fallback and the later retirement decision
+remain open. See the [plan index](README.md) for current work. Later source
+changes do not inherit rc.12 qualification. The original stage definitions and
+dated input states below remain historical reference.
+
 Status: detailed plan for all remaining stages. Only the design/plan documents
 are being added by this planning task. No acceptance gate, commit, push, tag,
 publication, deployment, or reboot is authorized by this file.

@@ -17,7 +17,7 @@
 >
 > Parent compiler design: [model-interface compiler](design.md)
 >
-> Implementation plan: [TLA+ frontend tasks](tla-frontend-tasks.md)
+> Implementation plan: [TLA+ frontend tasks](../../Plans/completed/tla-frontend-tasks.md)
 >
 > Affected implementation areas: `Shell/Apalache/SpecSource.lean`,
 > `Shell/ModelInterface/SpecVariables.lean`, and

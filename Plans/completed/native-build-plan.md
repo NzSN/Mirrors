@@ -1,5 +1,8 @@
 # Native build implementation plan
 
+> Archived 2026-11-17. Completed implementation plan; acceptance remains limited to the dated scope below.
+> See the [plan index](../README.md) for current work.
+
 Owner: `native_build` subagent. Scope: `lakefile.lean`, native build regression,
 `Ffi/README.md`, and this design/plan pair. Other agents own CI and interop.
 

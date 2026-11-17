@@ -15,7 +15,7 @@ qualification. Stage IDs S5-S8 remain stable for existing evidence references.
 The executable task breakdown is in the
 [October 30 execution plan](../Plans/completion-qualification-release-plan-2026-10-30.md).
 The original campaign and its bounded results remain in the
-[October 29 plan](../Plans/completion-execution-plan-2026-10-29.md) and
+[October 29 plan](../Plans/archived/completion-execution-plan-2026-10-29.md) and
 [evidence record](../Plans/completion-evidence-20261029/README.md).
 
 ## 1. Purpose and scope

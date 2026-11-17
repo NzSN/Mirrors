@@ -5,6 +5,18 @@ entry records the frozen identity, qualified evidence, validation performed,
 and open work at that date. Entries are append-only history, not current
 status; later entries do not implicitly amend earlier ones.
 
+## 2026-11-17 — completed and superseded plan navigation cleaned up
+
+The user requested cleanup of already completed plan documents. Eight completed
+implementation plans now live in [the completed archive](Plans/completed/README.md);
+nine superseded plans/task cards are identified separately in
+[the historical archive](Plans/archived/README.md). The [plan index](Plans/README.md)
+keeps remaining compatibility-cycle, consumer and retirement obligations visible.
+Legacy pointers preserve links from unchanged dated records. Exact historical
+operation handoffs, evidence bytes, machine-readable inventories and pre-existing
+untracked work remain at their recorded paths. This is documentation housekeeping;
+no new qualification, workload, lifecycle-cycle or retirement credit is granted.
+
 ## 2026-11-16 — S8 recipes and aggregate metadata publication authorized
 
 The user requested commit/push of the completed bounded replay work.

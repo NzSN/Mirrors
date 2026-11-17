@@ -2,7 +2,7 @@
 
 > Status: **implemented and validated, 2026-09-13; JP0–JP4 accepted**.
 > Scope: the precedence finding from [differential triage](../../test/fixtures/tla-frontend/differential/evidence/triage.md).
-> Delivery: [implementation tasks](../../Drafts/tla-junction-precedence-tasks.md).
+> Delivery: [implementation tasks](../../Plans/completed/tla-junction-precedence-tasks.md).
 > Authority: [frontend compatibility](tla-frontend-design.md#5-compatibility-authority)
 > and [profile revision rules](tla-language-profile.md#2-profile-identity-and-revision-rules).
 
