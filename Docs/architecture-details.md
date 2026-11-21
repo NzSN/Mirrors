@@ -67,24 +67,22 @@ trusted shell behavior; codec theorems do not prove those IO operations.
 
 ### Selective use of the protocol machine
 
-[`Shell.Mirror.Session`](../Shell/Mirror/Session.lean) owns payloads, loaded
-traces, cursors and actual wire sends. Its relationship to
-[`Core.Protocol`](../Core/Protocol.lean) is specific to each path. The module
-defines the global function `step`, called as `_root_.step` from the shell:
+The shell loads traces and provides the transport. The replay program owns
+its cursor and payloads. Several paths call the global protocol function
+`step`. [Session dispatch](../Shell/Mirror/Session.lean) and
+[protocol transitions](../Core/Protocol.lean).
 
 | Session operation | Control and effect path |
 | --- | --- |
 | `register` | Generate a trace bundle, resolve any eligible model-interface request, preflight when required, then call `step` with the admission result before replay |
 | `register_traces` | Load supplied ITF paths, apply the effective parameter partition, resolve/preflight if eligible, then call `step` before replay |
-| Replay `report_state` | Compare expected and actual states with `diffState`; pass match and final-step bits through `step`; construct payload-bearing replies in the shell |
+| Replay `report_state` | The replay program compares with `diffState`, calls `step` with the match and final-step bits, and selects the next payload-bearing message |
 | Synchronous validate or trace generation | Invoke the corresponding injected oracle and send its result directly |
 | Explorer registrations | Transfer the wire exchange to the explorer flow in `Shell.Apalache.Runner` |
 | Async register/query/await/cancel | Dispatch directly through `Shell.Jobs.Store`, whose job transitions execute `Core.Jobs.transition` |
 
-Consequently, “one `step` per wire message” is not the implementation.
-Even replay constructs its wire replies separately from the abstract output
-list. The tag-level protocol theorem does not establish end-to-end refinement
-of all session paths.
+The protocol theorem covers abstract tags. Synchronous replay also has a
+separate proof for the complete sequence of payload-bearing interactions.
 
 `run` receives one registration and completes its flow. `runAsync` loops over
 async registrations and job operations. A rejected async submission ends that
@@ -98,20 +96,34 @@ The explicit continuation decision implements the
 
 ### Replay and the comparison boundary
 
-Replay runs `traceSteps` over each loaded trace. Step zero sends `initial_state`
-with full expected state variables; later steps send `next_step` with the action
-and parameter bindings. The application client executes its own adapter and
-returns `report_state`. Mirrors compares the reported state; it does not execute
-the application itself.
+An admitted `register` or `register_traces` session begins with
+`spec_validated`. The cursor starts each trace at index zero and constructs
+one step at a time. `session_eq_specification` proves that the resulting
+interaction program equals the specification over `traces.flatMap traceSteps`.
+The equality covers every possible input. A matching report earns `step_ok`,
+a mismatch ends with the exact diff payload, and a decoded input error ends
+with `protocol_error`. Only the empty suffix after a final match emits
+`all_steps_done`. [Replay program and specification](../Core/Replay.lean).
 
-`replayStep` uses `diffState` and threads the resulting match/final-step bits
-through the pure session machine. Every matching report receives `step_ok`, and
-the final matching step also receives `all_steps_done`. The first mismatch
-receives `step_mismatch` with filtered expected/actual states and ordered hints;
-remaining traces are not replayed. This is a comparison against the exercised
-trace, not a proof of every possible application behavior. See the
-[wire reference](interface-reference.md) and
-[client implementation guide](client-implementation-guide.md).
+`wire_prefix` relates the runner's raw framed writes and reads to the replay
+program when a run returns or raises. `FramedPrefix.completion` covers a
+finite prefix of the same send/read instructions even while the last write
+is pending. For the executed runner, `wire_completion` proves that a peer observing `all_steps_done` received
+exactly one final completion after one matching report per expected step.
+The peer must recognize the completion tag correctly on the replay frames it
+observes. Each accepted input line strictly parses as a `report_state` with a
+state object whose fields decode to that step's report. The output contract
+specifies the initialization state, action parameters, mismatch values and
+ordered hints. Compact JSON serialization, frame delivery and the choice of
+admitted traces are trust boundaries. Progress requires reads and writes to
+finish. [JSONL runner and theorems](../Codec/Replay.lean).
+
+`Accepted.faithful_trace_states` lifts that transcript to the application's observable
+state. At each index the decoded report must be well formed and the adapter
+must report the corresponding snapshot faithfully. The conclusion compares each original decoded ITF state’s observable
+variable bindings with the application snapshot at the same index under
+`filterMeta`. [Application-state theorem](../Core/Replay.lean) and
+[client observation contract](client-implementation-guide.md).
 
 ### Connection workers, jobs and resource ownership
 
@@ -235,6 +247,15 @@ have duplicate-key and well-formed-value premises stated in the theorems.
 Cap and path-validity laws are separate. Historical Haskell differential counts
 are recorded in the [initial review](final-review.md); they are not a current
 test result for the extended value domain.
+
+For one replay step, `diffState_matches_iff_of_faithful_report` takes the
+application snapshot and a function specifying its observable state. The
+adapter premise is that the decoded `report_state` agrees with that projection
+under `stateEq` after metadata filtering. Given distinct keys in both filtered
+input maps and well-formed values in the filtered report, Mirrors returns
+`statesMatch` exactly when the expected state agrees with the snapshot on
+those observables. Establishing the adapter premise for a concrete application
+requires knowing what its adapter actually reads at that step.
 
 ### Protocol, jobs and resources
 

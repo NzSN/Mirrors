@@ -17,9 +17,9 @@ has a concrete codec encoding.
 **Design point (payload-at-driver-boundary):** `Core`'s
 `reportState` carries the two protocol-relevant bits `reportMatches` /
 `lastStep` (the TLA+ `report_matches` fact), while the wire
-`reportState` carries only the state payload. The driver computes the
-bits (via `Core.Diff` against the expected state) and constructs the
-abstract message itself with `reportStateBridge`; `protoClientTag`
+`reportState` carries only the state payload. The replay program computes
+the bits from `Core.Diff` and its cursor. Drivers using this bridge
+can supply those bits through `reportStateBridge`. `protoClientTag`
 fills them with placeholder `false` values and must NOT be used for
 `reportState` by drivers.
 -/

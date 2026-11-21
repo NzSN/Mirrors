@@ -346,6 +346,37 @@ theorem traceSteps_nth (t : ItfTrace) (j : Nat) :
     traceStepsAux_nth 0 j t.traceStates]
   simp only [Nat.zero_add]
 
+/-- The initial-state prompt carries the original bindings with the action
+inserted. Replacing a pre-existing action key preserves the rest of the map. -/
+theorem stepOf_vars (i : Nat) (s : TraceState) :
+    (stepOf i s).vars = ValueMap.insert actionTakenKey (.vstr s.actionTaken) s.stateVars := rfl
+
+/-- Replay compares exactly the original model-visible bindings at this index. -/
+theorem stepOf_observable (i : Nat) (s : TraceState) :
+    filterMeta (stepOf i s).vars = filterMeta s.stateVars := by
+  rw [stepOf_vars]
+  simp only [ValueMap.insert, ValueMap.erase, filterMeta, List.filter_cons, List.filter_filter,
+    show isMetaKey actionTakenKey = true by rfl, Bool.not_true, Bool.false_eq_true, if_false]
+  apply List.filter_congr
+  intro entry _
+  by_cases hk : entry.1 = actionTakenKey
+  · simp [hk, isMetaKey, actionTakenKey]
+  · simp [hk]
+
+private theorem traceStepsAux_observables (states : List TraceState) (i : Nat) :
+    (traceStepsAux i states).map (fun st => filterMeta st.vars) =
+      states.map (fun s => filterMeta s.stateVars) := by
+  induction states generalizing i with
+  | nil => rfl
+  | cons s rest ih => simp [traceStepsAux, stepOf_observable, ih]
+
+theorem traceSteps_bundle_observables (traces : List ItfTrace) :
+    (traces.flatMap traceSteps).map (fun st => filterMeta st.vars) =
+      (traces.flatMap ItfTrace.traceStates).map (fun s => filterMeta s.stateVars) := by
+  induction traces with
+  | nil => rfl
+  | cons t ts ih => simp [traceSteps, traceStepsAux_observables, ih, List.map_append]
+
 /-- **§6.2 (action injection).** The injected `action_taken` binding
 equals the state's action name. -/
 theorem stepOf_vars_actionTaken (i : Nat) (s : TraceState) :

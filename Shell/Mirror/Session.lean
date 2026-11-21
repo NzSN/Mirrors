@@ -2,7 +2,7 @@ import Core.Protocol
 import Core.Jobs
 import Shell.Jobs.Store
 import Core.Trace
-import Core.Diff
+import Codec.Replay
 import Core.Value
 import Codec.Json
 import Codec.Bridge
@@ -29,11 +29,9 @@ record below): spec validation, trace generation / trace-file
 production, and the two explorer flows. The core stays pure — this
 module never mentions a proof and the 6.3 refinement never mentions IO.
 
-Payload state (the loaded traces and the step cursor) is driver-side
-bookkeeping, exactly as documented in @Core/Protocol.lean@: the pure
-machine observes only the control-relevant facts (the TLA+
-@report_matches@ bit and the last-step bit), which this driver computes
-with @diffState@ before each @step@ call.
+@Core.Replay.session@ owns the replay cursor, comparison and sequence of
+transport operations. It calls the tag-level @step@ with the report-match
+and final-step bits. This shell supplies the JSONL send and receive operations.
 
 Phase coverage (design 8):
 - Phase 3 (this file): the stdio default mode — all @Register*@ flows
@@ -123,13 +121,6 @@ private def sendJobResult (t : Shell.Transport.Transport) (jobId : String)
     (outcome : Codec.JobOutcome) : IO Unit :=
   sendTracePlan t (Shell.Transport.TraceDelivery.planJobResult jobId outcome)
 
-private def sendSpecValidatedWithInterface (t : Shell.Transport.Transport)
-    (reply : Option Codec.ModelInterfaceDistributionJson.ReplyV1) : IO Unit := do
-  let base := Codec.encodeMirror (.specValidated .valid)
-  match Codec.ModelInterfaceDistributionJson.insertSpecValidatedReply? base reply with
-  | .ok json => t.send (Lean.Json.compress json)
-  | .error e => throw (IO.userError e)
-
 private def sendRegisterErrorWithInterface (t : Shell.Transport.Transport)
     (message : String)
     (failure : Option Codec.ModelInterfaceDistributionJson.FailureV1) : IO Unit := do
@@ -144,7 +135,7 @@ private def sendError (t : Shell.Transport.Transport) (msg : String) : IO Unit :
 /-- Stable wire diagnostic for all untrusted JSON/decode failures. Raw strict
 parser and codec diagnostics may contain attacker-controlled keys or values,
 so they are intentionally retained only on the server side. -/
-def invalidClientMessageError : String := "invalid client message"
+abbrev invalidClientMessageError := Codec.Replay.invalidClientMessageError
 
 private def errText : ProtocolError → String
   | .outOfOrder m => m
@@ -171,28 +162,7 @@ def maxValidateBound : Nat := 100
 
 /-! ## DiffHint conversion (Core.Diff → Codec) -/
 
-private def convPathSeg : PathSeg → Codec.PathSeg
-  | .field s => .field s
-  | .index i => .index i
-
-private def convPath (p : Path) : List Codec.PathSeg := p.map convPathSeg
-
-/-- Convert a core diff hint to its wire form. -/
-def convHint : DiffHint → Codec.DiffHint
-  | .hValueMismatch p e a =>
-      { kind := .valueMismatch, path := convPath p, actual := some a, expected := some e }
-  | .hMissing p v =>
-      { kind := .missing, path := convPath p, actual := none, expected := some v }
-  | .hExtra p v =>
-      { kind := .extra, path := convPath p, actual := some v, expected := none }
-  | .hMissingElem p v =>
-      { kind := .missingElem, path := convPath p, actual := none, expected := some v }
-  | .hExtraElem p v =>
-      { kind := .extraElem, path := convPath p, actual := some v, expected := none }
-  | .hTypeMismatch p e a =>
-      { kind := .typeMismatch, path := convPath p, actual := some a, expected := some e }
-  | .hTruncated p =>
-      { kind := .truncated, path := convPath p, actual := none, expected := none }
+abbrev convHint := Codec.Replay.convHint
 
 /-! ## Trace file IO (port of Apalache.Trace / FromJSON ItfTrace) -/
 
@@ -566,105 +536,13 @@ private def registrationSourceDigests
 
 abbrev SessionRef := IO.Ref ((p : Phase) × Session p)
 
-/-- One replay step (port of @MkReplayOne.go@ / @makeTransportDriver@):
-send the step message, receive the client's reported state, diff it with
-the verified engine, and thread @step@ with the computed
-@report_matches@ / last-step bits. Returns whether the session may
-continue (@true@ = clean, @false@ = mismatch). -/
-private def replayStep (t : Shell.Transport.Transport) (sess : SessionRef)
-    (stp : Step) (lastStep : Bool) : IO Bool := do
-  -- step 0 sends the full state variables, later steps the parameters
-  if stp.idx == 0 then
-    sendMirror t (Codec.MirrorMessage.initialState stp.act stp.vars)
-  else
-    sendMirror t (Codec.MirrorMessage.nextStep stp.act stp.params)
-  -- receive and decode the client's report
-  let line ← t.recv
-  let actual? ← match line with
-    | none =>
-        sendError t "connection closed while expecting report_state"
-        pure none
-    | some l =>
-        match Codec.StrictJson.parseString l with
-        | .error _ =>
-            sendError t invalidClientMessageError
-            pure none
-        | .ok j =>
-            match Codec.decodeClient j with
-            | .error _ =>
-                sendError t invalidClientMessageError
-                pure none
-            | .ok (Codec.ClientMessage.reportState st) => pure (some st)
-            | .ok _ =>
-                sendError t "expected report_state"
-                pure none
-  let some actual := actual? | return false
-  -- diff with the verified engine and run the pure transition
-  let diff := diffState stp.vars actual
-  let repMatches := match diff with
-    | StateDiff.statesMatch => true
-    | StateDiff.stateMismatch _ _ _ => false
-  let s ← sess.get
-  match _root_.step ({ validationOk := true } : _root_.Oracles) s.2
-      (Codec.reportStateBridge repMatches lastStep actual) with
-  | .error e =>
-      sendError t (errText e)
-      return false
-  | .ok ⟨p', s', _⟩ =>
-      sess.set ⟨p', s'⟩
-      if repMatches then
-        -- Haskell replay: every matching report gets step_ok; the
-        -- outer flow adds all_steps_done after the last trace
-        sendMirror t Codec.MirrorMessage.stepOk
-        if lastStep then
-          sendMirror t Codec.MirrorMessage.allStepsDone
-        return true
-      else
-        match diff with
-        | StateDiff.stateMismatch expected actual' hints =>
-            sendMirror t (Codec.MirrorMessage.stepMismatch expected actual'
-              (hints.map convHint))
-        | StateDiff.statesMatch => pure ()
-        return false
-
-/-- Replay one trace; @true@ = no mismatch (port of @MkReplayOne@). -/
-private def replayOne (t : Shell.Transport.Transport) (sess : SessionRef)
-    (trace : ItfTrace) (isLastTrace : Bool) : IO Bool := do
-  let steps := traceSteps trace
-  let n := steps.length
-  let mut i := 0
-  for stp in steps do
-    let lastStep := isLastTrace && (i + 1 == n)
-    let clean ← replayStep t sess stp lastStep
-    if !clean then return false
-    i := i + 1
-  return true
-
-/-- Replay all traces, stopping after the first mismatch (port of
-@MkReplayAll@). Returns @true@ when every trace replayed cleanly. -/
-private def replayAll (t : Shell.Transport.Transport) (sess : SessionRef)
-    (traces : List ItfTrace) : IO Bool := do
-  let n := traces.length
-  let mut i := 0
-  let mut clean := true
-  for trace in traces do
-    clean ← replayOne t sess trace (i + 1 == n)
-    if !clean then break
-    i := i + 1
-  return clean
-
-/-- The in-memory-traces replay flow shared by @register@ and
-@register_traces@: @spec_validated@, replay (ports of @MkRunMirror@ /
-@MkRunMirrorWithTraces@). The @all_steps_done@ tail is emitted by
-replayStep on the LAST matching step (MirrorRecvReportAllDone) — t28
-removed a duplicate wrapper emission here that sent it a second time
-on a clean run (27 messages vs Haskell's 26; the TLA+ model reports
-all-done exactly once, via the last-step handler). -/
+/-- Shared by admitted generated and supplied trace registrations. -/
 private def runReplayFlow (t : Shell.Transport.Transport) (sess : SessionRef)
     (traces : List ItfTrace)
     (interfaceReply : Option Codec.ModelInterfaceDistributionJson.ReplyV1 := none) : IO Unit := do
-  sendSpecValidatedWithInterface t interfaceReply
-  let _ ← replayAll t sess traces
+  let final ← Codec.Replay.run IO.userError t.send t.recv
+    interfaceReply traces (← sess.get)
+  sess.set final
 
 /-- Admit a negotiation-enabled registration failure through the pure protocol
 machine before sending its bounded structured response. The internal oracle or

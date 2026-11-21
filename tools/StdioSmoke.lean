@@ -41,11 +41,11 @@ def trace1 : String :=
     ]}"
 
 def trace2 : String :=
-  "{\"vars\": [\"hour\"], \"param_vars\": [], \"params\": [],
+  "{\"vars\": [\"hour\"], \"param_vars\": [\"delta\"], \"params\": [],
     \"states\": [
       {\"action_taken\": \"Init\", \"hour\": {\"#bigint\": \"7\"}},
-      {\"action_taken\": \"Tick\", \"hour\": {\"#bigint\": \"8\"}},
-      {\"action_taken\": \"Tick\", \"hour\": {\"#bigint\": \"9\"}}
+      {\"action_taken\": \"Tick\", \"delta\": {\"#bigint\": \"1\"}, \"hour\": {\"#bigint\": \"8\"}},
+      {\"action_taken\": \"Tick\", \"delta\": {\"#bigint\": \"1\"}, \"hour\": {\"#bigint\": \"9\"}}
     ]}"
 
 /-- Corrupt a state map for the mismatch scenario (change hour). -/
@@ -61,7 +61,6 @@ def handleLine (out : IO.FS.Handle) (st : SmokeState)
     IO Bool := do
   if line.isEmpty then return false -- EOF: session over
   let line := Shell.Transport.stripEol line
-  if line.isEmpty then return true
   match Lean.Json.parse line with
   | .error e => throw (IO.userError s!"mirror sent undecodable line: {e}")
   | .ok j =>
@@ -75,6 +74,10 @@ def handleLine (out : IO.FS.Handle) (st : SmokeState)
         match steps[stepCount]? with
         | none => throw (IO.userError s!"client model: no step {stepCount}")
         | some s =>
+            let expectedPrompt := if s.idx == 0 then Codec.MirrorMessage.initialState s.act s.vars
+              else .nextStep s.act s.params
+            if line != (encodeMirror expectedPrompt).compress then
+              throw (IO.userError s!"unexpected replay prompt at step {stepCount}: {line}")
             let report :=
               if corruptAtStep == some stepCount then wrongState s.vars
               else s.vars
@@ -99,38 +102,26 @@ def driveSession (bin : String) (tracePaths : List String)
   let child ← IO.Process.spawn
     ({ cmd := bin, args := #[], stdin := .piped, stdout := .piped :
       IO.Process.SpawnArgs })
-  let (out, _) ← child.takeStdin
-  out.putStr (toString (Lean.Json.compress
-    (encodeClient (.registerTraces smokeCfg tracePaths))) ++ "\n")
-  out.flush
-  let st ← IO.mkRef ((#[] : Array String), 0)
-  let mut go := true
-  while go do
-    let l ← (child.stdout : IO.FS.Handle).getLine
-    go ← handleLine out st steps corruptAtStep l
-  -- t28: read to EOF so a duplicate all_steps_done (or any trailing
-  -- junk) cannot hide behind a client that stops at the first
-  -- terminal message; the line protocol never emits blank lines, so
-  -- an empty getLine is EOF
-  let h := (child.stdout : IO.FS.Handle)
-  let mut l2 ← h.getLine
-  while !l2.isEmpty do
-    let l2c := Shell.Transport.stripEol l2
-    if !l2c.isEmpty then
-      match Lean.Json.parse l2c with
-      | .ok j =>
-          let tag := match j.getObjVal? "proto_step" with
-            | .ok (.str s) => s
-            | _ => "?"
-          let (seen, sc) ← st.get
-          st.set (seen.push tag, sc)
-      | .error _ =>
-          let (seen, sc) ← st.get
-          st.set (seen.push "UNPARSEABLE", sc)
-    l2 ← h.getLine
-  -- best-effort cleanup
-  try child.kill catch _ => pure ()
-  let (seen, _) ← st.get
+  let seen ← try
+    let (out, _) ← child.takeStdin
+    out.putStr (toString (Lean.Json.compress
+      (encodeClient (.registerTraces smokeCfg tracePaths))) ++ "\n")
+    out.flush
+    let st ← IO.mkRef ((#[] : Array String), 0)
+    let mut go := true
+    while go do
+      let line ← child.stdout.getLine
+      go ← handleLine out st steps corruptAtStep line
+    -- A duplicate terminal, blank frame or partial final line must be visible.
+    if !(← child.stdout.getLine).isEmpty then
+      throw (IO.userError "unexpected output after terminal replay message")
+    pure (← st.get).1
+  catch err =>
+    try child.kill catch _ => pure ()
+    let _ ← child.wait
+    throw err
+  let code ← child.wait
+  if code != 0 then throw (IO.userError s!"mirror exited with status {code}")
   return seen
 
 /-- Exercise the real session dispatcher with scripted reports and optional
@@ -231,6 +222,21 @@ def main : IO UInt32 := do
       "next_step", "step_ok",
       "next_step", "step_ok",
       "all_steps_done"]
+  -- Interrupt the generated-trace path at its final report after crossing a trace boundary.
+  let oracles : Shell.Mirror.Oracles := { stubOracles with
+    generateTraces := fun _ _ _ _ _ => pure (.ok { traces }) }
+  let request := Codec.ClientMessage.register smokeCfg none { numTraces := 2, view := none }
+  let priorReports := steps.dropLast.map fun step => (encodeClient (.reportState step.vars)).compress
+  let prompts := seen.toList.dropLast.dropLast
+  let finalStep := steps.getLast!
+  let wrong := (encodeClient (.reportState (wrongState finalStep.vars))).compress
+  for (lastInput, terminal) in [
+      ([], "protocol_error"), (["{"], "protocol_error"),
+      ([(encodeClient .exploreDone).compress], "protocol_error"), ([wrong], "step_mismatch")] do
+    let tags ← sessionTags request (priorReports ++ lastInput) oracles
+    if tags != prompts ++ [terminal] then
+      IO.eprintln s!"incorrect final-report termination: {tags}"
+      return 1
   -- 2. mismatch on global step 1 (second step of trace 1)
   let seen2 ← driveSession bin [p1, p2] steps (some 1)
   IO.println s!"mismatch session: {seen2}"

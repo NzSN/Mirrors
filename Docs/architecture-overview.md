@@ -129,11 +129,11 @@ contexts, the model-interface service, and network-server job stores.
 
 [Shell.Mirror.Session](../Shell/Mirror/Session.lean) strictly decodes and dispatches
 messages. The replay path admits registration, obtains generated or supplied ITF
-traces, sends initialization/action inputs, and compares each `report_state`
-through [Core.Diff](../Core/Diff.lean). Its match/last-step decisions drive
-[the pure `step` function](../Core/Protocol.lean) (Lean `_root_.step`); the shell
-constructs wire replies.
-A mismatch returns expected/actual states and ordered hints, then stops replay.
+traces, and runs the verified replay program over that bundle. A completion
+tag implies one matching report per expected step in order, under the framed
+transport contract. A mismatch ends replay with the expected and actual
+states and ordered hints. [Session proof](../Core/Replay.lean) and
+[JSONL runner](../Codec/Replay.lean).
 
 Validation, trace generation, exploration, and asynchronous dispatch have their
 own shell paths. They are not all one pure protocol `step` call per wire message.

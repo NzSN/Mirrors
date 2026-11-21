@@ -795,6 +795,14 @@ theorem diffFields_mapCont_nil {fuel : Nat} {path : Path} {em am : ValueMap}
 def stateEq (e a : ValueMap) : Prop :=
   mapCont e a = true ∧ mapCont a e = true
 
+theorem stateEq.trans {a b c : ValueMap} (hab : stateEq a b) (hbc : stateEq b c) :
+    stateEq a c := by
+  have recordEq (x y : ValueMap) :
+      valEq (.vrecord x) (.vrecord y) = true ↔ stateEq x y := by
+    simp only [valEq, Bool.and_eq_true, stateEq]
+  exact (recordEq a c).mp
+    (valEq_trans _ _ _ ((recordEq a b).mpr hab) ((recordEq b c).mpr hbc))
+
 theorem capHints_eq_nil_iff {hints : List DiffHint} :
     capHints hints = [] ↔ hints = [] := by
   constructor
@@ -859,6 +867,27 @@ theorem diffState_complete {expected actual : ValueMap}
   unfold diffState
   rw [hnil]
   rfl
+
+/-- For one replay step, `observableState` specifies the model-visible fields of
+the application snapshot. If the adapter's decoded report represents those
+fields faithfully, the comparison succeeds iff the expected state agrees with
+that snapshot on the same fields. -/
+theorem diffState_matches_iff_of_faithful_report {AppState : Type u}
+    (observableState : AppState → ValueMap) (snapshot : AppState)
+    {expected reported : ValueMap}
+    (expectedKeys : NodupKeys (filterMeta expected))
+    (reportedKeys : NodupKeys (filterMeta reported))
+    (reportedValues : ∀ p ∈ filterMeta reported, WfValue p.2)
+    (faithful : stateEq (filterMeta reported) (filterMeta (observableState snapshot))) :
+    diffState expected reported = StateDiff.statesMatch ↔
+      stateEq (filterMeta expected) (filterMeta (observableState snapshot)) := by
+  constructor
+  · intro matched
+    exact (diffState_sound reportedKeys reportedValues matched).trans faithful
+  · intro agrees
+    exact diffState_complete expectedKeys reportedKeys reportedValues
+      (agrees.trans ⟨faithful.2, faithful.1⟩)
+
 /-! ## Path validity (§6.1): every hint path denotes a subterm -/
 
 /-- `Denotes p c v`: path `p` navigates in container `c` to value `v`. -/

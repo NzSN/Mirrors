@@ -1,4 +1,5 @@
 import Codec.Json
+import Codec.Replay
 import Codec.ExplorerRpc
 import Codec.Bridge
 import Codec.Consul
