@@ -1,0 +1,572 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+
+\newcommand{\Actor}{\mathsf{Actor}}
+\newcommand{\Checkpoint}{\mathsf{Checkpoint}}
+\newcommand{\Action}{\mathsf{Action}}
+\newcommand{\State}{\Sigma}
+\newcommand{\Obs}{\mathsf{Obs}}
+\newcommand{\Model}{\mathsf{ModelState}}
+\newcommand{\Input}{\mathsf{Input}}
+\newcommand{\Mapping}{\mathsf{Mapping}}
+\newcommand{\Mode}{\mathsf{Mode}}
+\newcommand{\Phase}{\mathsf{Phase}}
+\newcommand{\Fault}{\mathsf{Fault}}
+\newcommand{\Event}{\mathsf{Event}}
+\newcommand{\Receipt}{\mathsf{Receipt}}
+\newcommand{\Config}{\mathsf{Config}}
+\newcommand{\Parked}{\mathsf{parked}}
+\newcommand{\Running}{\mathsf{running}}
+\newcommand{\Done}{\mathsf{done}}
+\newcommand{\Quiet}{\mathsf{quiet}}
+\newcommand{\Run}{\mathsf{run}}
+\newcommand{\CheckPhase}{\mathsf{check}}
+\newcommand{\Failed}{\mathsf{failed}}
+\newcommand{\Succeeded}{\mathsf{succeeded}}
+\newcommand{\CPDone}{\mathsf{\$done}}
+\newcommand{\Internal}{\mathsf{internal}}
+\newcommand{\Stop}{\mathsf{stop}}
+\newcommand{\project}{\mathsf{project}}
+\newcommand{\ScheduleOf}{\mathsf{schedule}}
+\newcommand{\observe}{\mathsf{observe}}
+\newcommand{\matches}{\approx}
+\newcommand{\ReplayValid}{\mathsf{ReplayValid}}
+\newcommand{\Merge}{\mathsf{Merge}}
+
+\title{A Type-Theoretic Model of DPM Replay}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Scope}
+
+This paper gives a proposed formal model of the core deterministic scheduling
+(DPM) replay mechanism in Mirrors. It covers admitted actor/checkpoint
+schedules, cooperative execution of actual application workers, observation of
+actual system-under-test (SUT) states, and comparison with a model trace. It
+uses the restricted profile in which every scheduled checkpoint interval,
+including $\CPDone$, is the image of one fully instantiated model action and
+has one subsequent observation. Spectator initialization and richer native or
+multi-phase mappings are outside this profile. The paper does not formalize
+artifact identities, the command-line interface, reduction, native process
+isolation, installation, timeouts, cancellation, actor or observer exceptions,
+undeclared workers, cleanup failures, or failure recovery.
+
+The central separation is:
+\[
+  \begin{gathered}
+    \text{DPM requires and verifies schedule fidelity on successful replay,}\\
+    \text{while Mirrors checks whether actual observations correspond to
+      expected model states.}
+  \end{gathered}
+\]
+Expected model states are oracles, not inputs used to initialize or steer the
+SUT.
+
+\section{PFPL basis and notation discipline}
+
+We assume as already defined the four transition-system judgment forms from
+PFPL, second edition, Section~5.1 \cite{pfpl}:
+\[
+  s\ \mathsf{state},\qquad
+  s\ \mathsf{initial},\qquad
+  s\ \mathsf{final},\qquad
+  s\longmapsto s'.
+\]
+We also assume PFPL's iterated judgment $s\longmapsto^{*}s'$. We use its
+labeled process-dynamics judgment (Section~39.2) as well. The DPM
+configuration dynamics below uses the unlabeled judgment $C\longmapsto C'$.
+For SUT workers it uses the instance
+\[
+  \sigma\xrightarrow{\lambda}_{a}\sigma'.
+\]
+The subscript $a$ selects the transition system of actor $a$, and $\lambda$ is
+the paper-specific worker label defined in Section~\ref{sec:app-parameters}.
+No general PFPL judgment is redefined here. In our instantiation, finality
+alone does not assert replay success because both successful and failed
+configurations are final.
+
+PFPL notation and ordinary mathematical logic are not redefined. Every symbol
+introduced specifically for this paper is defined below. Application-specific
+objects are defined as explicit parameters with stated types and meanings;
+none is an undocumented global assumption.
+
+\section{Basic types and operators}
+
+\subsection{Paper-specific types}
+
+\begin{center}
+\begin{tabular}{ll}
+  Symbol & Definition\\ \hline
+  $\Actor$ & finite type of declared actor identifiers\\
+  $\Checkpoint$ & finite type of checkpoint identifiers\\
+  $\Action$ & type of fully instantiated model actions, including parameters\\
+  $\State$ & actual SUT states, including shared state and worker continuations\\
+  $\Obs$ & type of observations exposed to Mirrors\\
+  $\Model$ & type of model states\\
+  $\Input$ & type of recorded actual inputs\\
+  $\Mapping$ & type of model-action to actor/checkpoint mappings\\
+  $\Mode$ & actor-mode type, defined in Section~\ref{sec:configuration-statics}\\
+  $\Phase$ & coordinator-phase type, defined in Section~\ref{sec:configuration-statics}\\
+  $\Fault$ & terminal-fault type, defined in Section~\ref{sec:configuration-statics}\\
+  $\Event$ & receipt-event type, defined in Section~\ref{sec:configuration-statics}\\
+  $\Receipt$ & $\mathsf{List}(\Event)$, the type of retained receipts\\
+  $\Config$ & replay-configuration type, defined in Section~\ref{sec:configuration-statics}
+\end{tabular}
+\end{center}
+
+The special checkpoint $\CPDone\in\Checkpoint$ denotes actual worker
+completion, including its relevant effects. The letters $a,b$ range over
+$\Actor$, $\kappa$ over $\Checkpoint$, $\alpha$ over $\Action$, $\sigma$ over
+$\State$, $o$ over $\Obs$, $s$ over $\Model$, and $I$ over $\Input$.
+
+\subsection{Lists and finite maps}
+
+For a type $X$, $\mathsf{List}(X)$ is the type of finite lists over $X$. We
+write $\epsilon$ for the empty list, $x::xs$ for cons, and $|xs|$ for length.
+When $r$ is a receipt and $\eta$ is one event, $r\cdot\eta$ appends $\eta$ at
+the end of $r$. These conventions fix the use of list notation in this paper;
+they are not additional transition judgments.
+
+The symbol $\rightharpoonup$ denotes a finite partial map, and
+$\operatorname{dom}(D)$ denotes its domain. If $\rho$ is a finite map,
+$\rho[a\mapsto m]$ is the map identical to $\rho$ except that its value at $a$
+is $m$. The declared actor set is
+\[
+  \mathcal A=\operatorname{dom}(D).
+\]
+The notation $\rho:\mathcal A\to\Mode$ means that $\rho$ is total on the finite
+set $\mathcal A$.
+
+\subsection{Schedules, traces, and configurations}
+
+A schedule step is $(a,\kappa)\in\Actor\times\Checkpoint$. A schedule $Q$ is a
+list of such steps. The declaration
+\[
+  D:\Actor\rightharpoonup\mathsf{List}(\Checkpoint)
+\]
+assigns a local checkpoint chain to each declared actor. The full admitted
+schedule is written $Q_0$; $Q$ denotes its unexecuted suffix in a configuration.
+
+A model trace with $n$ transitions is
+\[
+  \tau=s_0,\alpha_0,s_1,\ldots,\alpha_{n-1},s_n,
+\]
+where each $s_j$ is a model state and each $\alpha_j$ is a fully instantiated
+model action. Thus two actions with different actor or input parameters are
+different elements of $\Action$. A mapping is a function
+\[
+  \mu:\Action\to\Actor\times\Checkpoint
+\]
+defined at least on the actions occurring in $\tau$. Its schedule interpretation
+is defined by
+\[
+  \ScheduleOf_\mu(\tau)
+  =(\mu(\alpha_0),\ldots,\mu(\alpha_{n-1})).
+\]
+Consequently $|Q_0|=n$. The restricted profile requires the terminal
+$\CPDone$ steps needed by the actor chains to occur among these $n$ mapped
+actions; it does not append unmodeled teardown steps.
+
+The configuration variables have the following meanings:
+\begin{center}
+\begin{tabular}{ll}
+  Symbol & Definition\\ \hline
+  $\rho$ & finite map from declared actors to their modes\\
+  $\sigma$ & current actual SUT state\\
+  $\pi$ & current coordinator phase\\
+  $i$ & index of the next model state to compare, $0\le i\le n+1$\\
+  $r$ & receipt accumulated so far\\
+  $\eta$ & one receipt event\\
+  $e$ & one terminal fault\\
+  $\lambda$ & one labeled SUT-worker action
+\end{tabular}
+\end{center}
+
+\section{Application-supplied parameters}
+\label{sec:app-parameters}
+
+An instantiation of the model must supply the following parameters:
+\[
+\begin{array}{ll}
+  \operatorname{Init}\subseteq\Input\times\State
+    & \text{actual SUT initialization from recorded input},\\
+  \observe:\State\to\Obs
+    & \text{actual-state observation function},\\
+  {\matches}\subseteq\Obs\times\Model
+    & \text{Mirrors observation/model correspondence},\\
+  \operatorname{CleanupOk}\subseteq\State
+    & \text{states with required joins and teardown confirmed}.
+\end{array}
+\]
+Thus $\operatorname{Init}(I,\sigma)$ means that actual input $I$ can construct
+actual SUT state $\sigma$; it has no model-state argument. The judgment
+$o\matches s$ means that observation $o$ corresponds to model state $s$ under
+the supplied Mirrors oracle. The predicate $\operatorname{CleanupOk}(\sigma)$
+does not assert model correspondence.
+
+For each $a\in\mathcal A$, the application also supplies a PFPL-style labeled
+transition relation $\sigma\xrightarrow{\lambda}_{a}\sigma'$. Its labels are
+defined inductively by
+\[
+  \lambda::=\Internal\mid\mathsf{arrive}(\kappa)\mid\Stop .
+\]
+The label $\Internal$ is an actual application step that does not report a
+checkpoint; $\mathsf{arrive}(\kappa)$ reports cooperative arrival at $\kappa$
+and parks the worker while retaining its continuation unless
+$\kappa=\CPDone$; and $\Stop$ reports worker return without such an arrival.
+The expected model trace is not a parameter of this SUT transition relation.
+
+\section{Schedule statics}
+
+The projection $\project_a(Q)$ retains exactly the steps of actor $a$:
+\[
+\begin{aligned}
+  \project_a(\epsilon)&=\epsilon,\\
+  \project_a((b,\kappa)::Q)&=
+  \begin{cases}
+    (a,\kappa)::\project_a(Q)&a=b,\\
+    \project_a(Q)&a\ne b.
+  \end{cases}
+\end{aligned}
+\]
+The set $\operatorname{actors}(Q)$ contains every actor occurring in $Q$. A
+chain $c$ satisfies $\operatorname{wellChain}(c)$ iff it is nonempty, its last
+checkpoint is $\CPDone$, and no earlier checkpoint is $\CPDone$.
+
+The paper-specific admission judgment
+$D;\tau;\mu\vdash Q_0\ \mathsf{admissible}$ is defined inductively by
+\[
+\frac{
+  \begin{array}{c}
+    Q_0=\ScheduleOf_\mu(\tau)\qquad
+    \operatorname{actors}(Q_0)=\mathcal A\\
+    \forall a\in\mathcal A.\
+      \operatorname{wellChain}(D(a))\ \land\
+      \project_a(Q_0)=D(a)
+  \end{array}
+}{
+  D;\tau;\mu\vdash Q_0\ \mathsf{admissible}
+}
+\]
+Every actor therefore preserves its local chain, while $Q_0$ selects one
+interleaving derived from the model trace. Admission does not quantify over
+alternative interleavings.
+
+\section{Configuration statics}
+\label{sec:configuration-statics}
+
+The metavariables $m$, $\pi$, $e$, and $\eta$ range respectively over
+$\Mode$, $\Phase$, $\Fault$, and $\Event$. These four inductive types have the
+following constructors:
+\[
+\begin{array}{rcl}
+m&::=&\Parked\mid\Running\mid\Done,\\[2pt]
+\pi&::=&\Quiet\mid\Run(a,\kappa)\mid\CheckPhase(j)
+       \mid\Failed(e)\mid\Succeeded,\\[2pt]
+e&::=&\mathsf{unexpected}(a,\kappa,b,\kappa')
+       \mid\mathsf{premature}(a)
+       \mid\mathsf{modelMismatch}(j,o,s),\\[2pt]
+\eta&::=&\mathsf{permit}(a,\kappa)
+       \mid\mathsf{arrival}(a,\kappa)
+       \mid\mathsf{observation}(j,o)
+       \mid\mathsf{fault}(e)
+       \mid\mathsf{cleanup}.
+\end{array}
+\]
+In $\CheckPhase(j)$ and $\mathsf{modelMismatch}(j,o,s)$, $j$ is a model-state
+index satisfying $0\le j\le n$. The constructors $\Run$ and $\CheckPhase$ are
+coordinator phases, not SUT-program values. In
+$\mathsf{unexpected}(a,\kappa,b,\kappa')$, the pair $(a,\kappa)$ is the
+expected actor/checkpoint step and $(b,\kappa')$ is the actual arrival.
+The receipt grammar is semantic rather than a raw SDK schema: in particular,
+$\mathsf{permit}(a,\kappa)$ records a grant whose expected destination is
+$\kappa$. Concrete SDK receipts may instead encode actor-local permit origins
+and schedule-step indices.
+
+A configuration is
+\[
+  C=(Q,\rho,\sigma,\pi,i,r)\in\Config.
+\]
+Following PFPL's $\mathsf{state}$ judgment, configuration formation is defined
+by
+\[
+\frac{
+  \begin{array}{c}
+    Q\in\mathsf{List}(\Actor\times\Checkpoint)\qquad
+    \rho:\mathcal A\to\Mode\qquad
+    \sigma:\State\\
+    \pi:\Phase\qquad 0\le i\le n+1\qquad r:\Receipt
+  \end{array}
+}{
+  (Q,\rho,\sigma,\pi,i,r)\ \mathsf{state}
+}
+\]
+This is syntactic state formation. Execution invariants such as mutual
+exclusion of running actors are proved separately rather than assumed here.
+
+The initial-state judgment is defined by
+\[
+\frac{
+  \begin{array}{c}
+    D;\tau;\mu\vdash Q_0\ \mathsf{admissible}\qquad
+    \operatorname{Init}(I,\sigma_0)\\
+    \rho_0=\{(a,\Parked)\mid a\in\mathcal A\}
+  \end{array}
+}{
+  (Q_0,\rho_0,\sigma_0,\CheckPhase(0),0,\epsilon)\ \mathsf{initial}
+}
+\]
+The notation $\{(a,\Parked)\mid a\in\mathcal A\}$ denotes the finite map that
+assigns $\Parked$ to every declared actor. The initial observation is checked
+by the ordinary comparison dynamics below; it is not assumed to match.
+
+\section{Structural dynamics of replay}
+
+All rules below define the single PFPL transition judgment $C\longmapsto C'$
+for the fixed admitted replay instance $(D,Q_0,\tau,I,\mu)$.
+
+\subsection*{Initial or subsequent observation matches}
+\[
+\frac{
+  j=i\qquad o=\observe(\sigma)\qquad o\matches s_j
+}{
+  (Q,\rho,\sigma,\CheckPhase(j),i,r)
+  \longmapsto
+  (Q,\rho,\sigma,\Quiet,i+1,r\cdot\mathsf{observation}(j,o))
+}
+\]
+
+\subsection*{Observation mismatch}
+\[
+\frac{
+  j=i\qquad o=\observe(\sigma)\qquad \neg(o\matches s_j)
+}{
+  (Q,\rho,\sigma,\CheckPhase(j),i,r)
+  \longmapsto
+  (Q,\rho,\sigma,\Failed(\mathsf{modelMismatch}(j,o,s_j)),i,
+    r\cdot\mathsf{fault}(\mathsf{modelMismatch}(j,o,s_j)))
+}
+\]
+
+\subsection*{Permit one actor}
+\[
+\frac{
+  \rho(a)=\Parked
+}{
+  ((a,\kappa)::Q,\rho,\sigma,\Quiet,i,r)
+  \longmapsto
+  ((a,\kappa)::Q,\rho[a\mapsto\Running],\sigma,\Run(a,\kappa),i,
+    r\cdot\mathsf{permit}(a,\kappa))
+}
+\]
+
+\subsection*{Actual internal SUT step}
+\[
+\frac{
+  a\in\mathcal A\qquad \rho(a)=\Running\qquad
+  \sigma\xrightarrow{\Internal}_{a}\sigma'
+}{
+  (Q,\rho,\sigma,\Run(a,\kappa),i,r)
+  \longmapsto
+  (Q,\rho,\sigma',\Run(a,\kappa),i,r)
+}
+\]
+This rule exposes arbitrary real execution inside a checkpoint interval; it
+does not treat that interval as one instruction-level atomic operation.
+
+\subsection*{Expected actual arrival}
+\[
+\frac{
+  \begin{array}{c}
+    a\in\mathcal A\qquad \rho(a)=\Running\qquad 1\le i\le n\\
+    \sigma\xrightarrow{\mathsf{arrive}(\kappa)}_{a}\sigma'
+  \end{array}\qquad
+  m=\begin{cases}
+    \Done&\kappa=\CPDone,\\
+    \Parked&\text{otherwise}
+  \end{cases}
+}{
+  ((a,\kappa)::Q,\rho,\sigma,\Run(a,\kappa),i,r)
+  \longmapsto
+  (Q,\rho[a\mapsto m],\sigma',\CheckPhase(i),i,
+    r\cdot\mathsf{arrival}(a,\kappa))
+}
+\]
+The index guard ensures that the resulting $\CheckPhase(i)$ is well formed.
+Reachable running states satisfy it because the initial observation precedes
+the first permit and each arrival has one corresponding model transition.
+
+\subsection*{Unexpected actual arrival}
+\[
+\frac{
+  \begin{array}{c}
+    a\in\mathcal A\qquad \rho(a)=\Running\qquad b\in\mathcal A\\
+    \sigma\xrightarrow{\mathsf{arrive}(\kappa')}_{b}\sigma'\qquad
+    (b,\kappa')\ne(a,\kappa)\\
+    e=\mathsf{unexpected}(a,\kappa,b,\kappa')
+  \end{array}
+}{
+  ((a,\kappa)::Q,\rho,\sigma,\Run(a,\kappa),i,r)
+  \longmapsto
+  ((a,\kappa)::Q,\rho,\sigma',\Failed(e),i,r\cdot\mathsf{fault}(e))
+}
+\]
+There is no rule that reorders the schedule or repairs an unexpected arrival.
+
+\subsection*{Premature worker return}
+\[
+\frac{
+  a\in\mathcal A\qquad \rho(a)=\Running\qquad
+  \sigma\xrightarrow{\Stop}_{a}\sigma'\qquad
+  e=\mathsf{premature}(a)
+}{
+  ((a,\kappa)::Q,\rho,\sigma,\Run(a,\kappa),i,r)
+  \longmapsto
+  ((a,\kappa)::Q,\rho,\sigma',\Failed(e),i,r\cdot\mathsf{fault}(e))
+}
+\]
+
+\subsection*{Successful cleanup and completion}
+\[
+\frac{
+  \forall a\in\mathcal A.\,\rho(a)=\Done\qquad
+  \operatorname{CleanupOk}(\sigma)
+}{
+  (\epsilon,\rho,\sigma,\Quiet,n+1,r)
+  \longmapsto
+  (\epsilon,\rho,\sigma,\Succeeded,n+1,r\cdot\mathsf{cleanup})
+}
+\]
+
+\subsection*{Final states}
+\[
+\frac{
+  C=(Q,\rho,\sigma,\Succeeded,i,r)\qquad C\ \mathsf{state}
+}{
+  C\ \mathsf{final}
+}
+\qquad
+\frac{
+  C=(Q,\rho,\sigma,\Failed(e),i,r)\qquad C\ \mathsf{state}
+}{
+  C\ \mathsf{final}
+}
+\]
+No transition rule has $\Succeeded$ or $\Failed(e)$ as its source phase, so
+these states satisfy PFPL's requirement that final states have no outgoing
+transition. A failed final state is not a successful replay. Moreover, a
+failed final state is terminal only for this replay machine: it does not
+assert that an actor whose recorded mode is still $\Running$ has stopped or
+been reclaimed. Cancellation, cleanup retries, and failure recovery are
+outside the stated scope.
+
+\section{Replay correctness}
+
+Successful replay is the paper-specific predicate
+\[
+\begin{aligned}
+  \ReplayValid(D,Q_0,\tau,I,\mu)
+  \iff{}&\exists \sigma_0,\rho_s,\sigma_s,r_s.\
+    (Q_0,\rho_0,\sigma_0,\CheckPhase(0),0,\epsilon)\ \mathsf{initial}\\
+    &\land (Q_0,\rho_0,\sigma_0,\CheckPhase(0),0,\epsilon)
+      \longmapsto^{*}
+      (\epsilon,\rho_s,\sigma_s,\Succeeded,n+1,r_s)\\
+    &\land (\epsilon,\rho_s,\sigma_s,\Succeeded,n+1,r_s)\ \mathsf{final}
+\end{aligned}
+\]
+
+A configuration $C$ is \emph{reachable} iff there exists an initial
+configuration $C_0$ such that $C_0\longmapsto^{*}C$. Every initial
+configuration satisfies $C_0\ \mathsf{state}$ by the formation and admission
+rules.
+
+The following properties follow by rule induction on $C\longmapsto C'$ or on
+its PFPL iteration. The induction simultaneously carries the consumed schedule
+prefix, the phase/mode invariant, and the next-model-index invariant; the final
+state alone is not a sufficient induction hypothesis:
+\begin{enumerate}
+\item \textbf{Preservation of state formation.}
+  If $C\ \mathsf{state}$ and $C\longmapsto C'$, then $C'\ \mathsf{state}$.
+
+\item \textbf{Schedule fidelity.}
+  In a successful replay receipt, the sequence of steps carried by permit
+  events is exactly $Q_0$, and the sequence carried by actual-arrival events is
+  also exactly $Q_0$. Each admitted step therefore has both its scheduled
+  permit and its expected actual arrival; observation and cleanup events are
+  not schedule steps.
+
+\item \textbf{Coordinator mode invariant.}
+  In every reachable configuration, at most one declared actor has coordinator
+  mode $\Running$. In every nonfinal reachable configuration, that mode occurs
+  only in a $\Run(a,\kappa)$ phase. A failed final configuration may retain
+  the $\Running$ mode to record an unreclaimed actor. An actual arrival by a
+  different declared actor is rejected by the unexpected-arrival rule rather
+  than being hidden by this coordinator invariant.
+
+\item \textbf{Quiescent observation.}
+  No observation occurs while a declared actor is $\Running$. Observations are
+  made from actual SUT states initially or after the selected actor has parked
+  or finished.
+
+\item \textbf{Observation correspondence.}
+  Successful replay produces actual observations $o_0,\ldots,o_n$ such that
+  \[
+    \forall j\in\{0,\ldots,n\}.\quad o_j\matches s_j.
+  \]
+
+\item \textbf{Oracle separation.}
+  Within the dynamics, model states are used only in comparison rules and
+  resulting fault evidence. They are not arguments of $\operatorname{Init}$ or
+  of any labeled SUT transition. Model actions still influence the schedule
+  through $\mu$. This is a syntactic interface separation, not a proof that an
+  arbitrary application adapter is faithful; an instantiation must supply
+  initialization and SUT relations that do not secretly consult model states.
+
+\item \textbf{Single-path scope.}
+  $\ReplayValid$ establishes one witnessed conforming execution along $Q_0$.
+  It does not assert that every resolution of SUT nondeterminism conforms, or
+  quantify over other schedules, unobserved SUT states, undeclared actors,
+  weak-memory executions, or preemption inside checkpoint intervals.
+\end{enumerate}
+No progress or termination theorem is claimed. Initialization may have no
+result, a worker may diverge through $\Internal$ steps, required cleanup may
+be unconfirmed, and a nonfinal configuration may be stuck. $\ReplayValid$ is
+an existential statement about a complete successful replay, not a guarantee
+that every admitted replay terminates.
+
+\section{Optional finite-interleaving relation}
+
+For lists $x,y,z$ of schedule steps, the order-preserving merges used by finite
+exploration are defined by the paper-specific inductive judgment
+$\Merge(x,y,z)$:
+\[
+\frac{}{\Merge(\epsilon,\epsilon,\epsilon)}
+\]
+\[
+\frac{\Merge(xs,ys,zs)}
+     {\Merge(x::xs,ys,x::zs)}
+\qquad
+\frac{\Merge(xs,ys,zs)}
+     {\Merge(xs,y::ys,y::zs)}
+\]
+The variables $xs$, $ys$, and $zs$ denote the respective list tails. This
+relation describes candidate schedules only. Complete coverage of this finite
+merge space additionally requires a known, untruncated denominator, completed
+execution of every required schedule, and confirmed cleanup. An early mismatch
+does not complete the unexecuted suffix. Even complete finite merge coverage
+does not by itself establish model comparison or universal concurrent-state
+coverage.
+
+\begin{thebibliography}{1}
+\bibitem{pfpl}
+Robert Harper.
+\emph{Practical Foundations for Programming Languages}.
+Second edition, Cambridge University Press, 2016.
+Sections~5.1 and~39.2.
+\end{thebibliography}
+
+\end{document}
